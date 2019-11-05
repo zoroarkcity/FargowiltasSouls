@@ -14,6 +14,15 @@ namespace FargowiltasSouls
 {
     internal class Fargowiltas : Mod
     {
+        #region Recipe Groups
+
+        public const string
+            RECIPE_GROUP_ANY_DRAX_TOOL = "FargowiltasSouls:AnyDrax",
+
+            RECIPE_GROUP_ANY_ADAMANTITE_HEAD = "FargowiltasSouls:AnyAdamantiteHead";
+
+        #endregion
+
         internal static ModHotKey FreezeKey;
         internal static ModHotKey GoldKey;
         internal static ModHotKey SmokeBombKey;
@@ -1327,7 +1336,7 @@ namespace FargowiltasSouls
         {
             //drax
             RecipeGroup group = new RecipeGroup(() => Lang.misc[37] + " Drax", ItemID.Drax, ItemID.PickaxeAxe);
-            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyDrax", group);
+            RecipeGroup.RegisterGroup(RECIPE_GROUP_ANY_DRAX_TOOL, group);
 
             //cobalt
             group = new RecipeGroup(() => Lang.misc[37] + " Cobalt Repeater", ItemID.CobaltRepeater, ItemID.PalladiumRepeater);
@@ -1391,11 +1400,11 @@ namespace FargowiltasSouls
 
             //adamantite head
             group = new RecipeGroup(() => Lang.misc[37] + " Adamantite Head Piece", ItemID.AdamantiteHelmet, ItemID.AdamantiteMask, ItemID.AdamantiteHeadgear);
-            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyAdamHead", group);
+            RecipeGroup.RegisterGroup(RECIPE_GROUP_ANY_ADAMANTITE_HEAD, group);
 
             //chloro head
             group = new RecipeGroup(() => Lang.misc[37] + " Chlorophyte Head Piece", ItemID.ChlorophyteMask, ItemID.ChlorophyteHelmet, ItemID.ChlorophyteHeadgear);
-            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyChloroHead", group);
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyChlorophiteHead", group);
 
             //spectre head
             group = new RecipeGroup(() => Lang.misc[37] + " Spectre Head Piece", ItemID.SpectreHood, ItemID.SpectreMask);
