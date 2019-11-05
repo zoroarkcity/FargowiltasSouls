@@ -333,6 +333,7 @@ namespace FargowiltasSouls
             int positionX = Main.spawnTileX - 1; //offset by dimensions of statue
             int positionY = Main.spawnTileY - 4;
             bool placed = false;
+            List<int> legalBlocks = new List<int> { TileID.Stone, TileID.Grass, TileID.Dirt, TileID.SnowBlock, TileID.IceBlock, TileID.ClayBlock };
             for (int offsetX = -50; offsetX <= 50; offsetX++)
             {
                 for (int offsetY = -30; offsetY <= 10; offsetY++)
@@ -354,7 +355,7 @@ namespace FargowiltasSouls
                     for (int i = 0; i < 3; i++) //check for solid foundation
                     {
                         Tile tile = Framing.GetTileSafely(baseCheckX + i, baseCheckY + 4);
-                        if (!WorldGen.SolidTile(tile))
+                        if (!WorldGen.SolidTile(tile) || !legalBlocks.Contains(tile.type))
                         {
                             canPlaceStatueHere = false;
                             break;
