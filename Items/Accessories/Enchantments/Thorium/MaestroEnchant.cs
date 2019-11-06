@@ -1,13 +1,12 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System.Linq;
 using ThoriumMod;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
-    public class ConductorEnchant : ModItem
+    public class MaestroEnchant : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
 
@@ -18,11 +17,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
         
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Conductor Enchantment");
+            DisplayName.SetDefault("Maestro Enchantment");
             Tooltip.SetDefault(
 @"'I'll be Bach'
 Pressing the Special Ability key will summon a chorus of music playing ghosts
-Inspiration notes that drop are twice as potent and increase your symphonic damage briefly
+While in combat, a rainbow of damaging symphonic symbols will follow your movement and stun enemies
 Effects of Metronome and Purple Music Player");
             DisplayName.AddTranslation(GameCulture.Chinese, "指挥魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -47,7 +46,7 @@ Effects of Metronome and Purple Music Player");
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
 
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            thoriumPlayer.conductorSet = true;
+            thoriumPlayer.setMaestro = true;
 
             if (player.GetModPlayer<FargoPlayer>().ThoriumSoul) return;
 
@@ -57,10 +56,10 @@ Effects of Metronome and Purple Music Player");
             }
             
             //music player
-            thoriumPlayer.musicPlayer = true;
-            thoriumPlayer.MP3MaxMana = 2;
+            //thoriumPlayer.musicPlayer = true;
+            //thoriumPlayer.MP3MaxMana = 2;
             //marching band set 
-            thoriumPlayer.empoweredNotes = true;
+            thoriumPlayer.setMarchingBand = true;
         }
         
         private readonly string[] items =
