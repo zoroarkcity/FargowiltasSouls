@@ -9387,7 +9387,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Nymph:
-                        if (Main.rand.Next(2) == 0)
+                        if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("NymphsPerfume"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.LovePotion, Main.rand.Next(2, 5) + 1);
@@ -9454,7 +9454,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.RuneWizard:
-                        if (Main.rand.Next(2) == 0)
+                        if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("MysticSkull"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.MagicPowerPotion, Main.rand.Next(2, 5) + 1);
