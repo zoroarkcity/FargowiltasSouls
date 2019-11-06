@@ -2952,11 +2952,11 @@ namespace FargowiltasSouls.NPCs
                             npc.TargetClosest(true);
                             if (Main.player[npc.target].dead || Vector2.Distance(npc.Center, Main.player[npc.target].Center) > 3000)
                                 npc.position.X += 20 * Math.Sign(npc.velocity.X);
-                            else if (Math.Abs(npc.velocity.X) > 5f)
-                                npc.position.X -= (Math.Abs(npc.velocity.X) - 5f) * Math.Sign(npc.velocity.X);
+                            else if (Math.Abs(npc.velocity.X) > 7f)
+                                npc.position.X -= (Math.Abs(npc.velocity.X) - 7f) * Math.Sign(npc.velocity.X);
                         }
-                        else if (Math.Abs(npc.velocity.X) > 5f)
-                            npc.position.X -= (Math.Abs(npc.velocity.X) - 5f) * Math.Sign(npc.velocity.X);
+                        else if (Math.Abs(npc.velocity.X) > 7f)
+                            npc.position.X -= (Math.Abs(npc.velocity.X) - 7f) * Math.Sign(npc.velocity.X);
 
                         if (Main.player[Main.myPlayer].active & !Main.player[Main.myPlayer].dead && Main.player[Main.myPlayer].ZoneUnderworldHeight)
                         {
