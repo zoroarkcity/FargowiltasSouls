@@ -266,6 +266,7 @@ namespace FargowiltasSouls
         public bool MutantsPact;
         public bool TwinsEX;
         public bool TimsConcoction;
+        public bool ReceivedMasoGift;
 
         //debuffs
         public bool Hexed;
@@ -327,6 +328,7 @@ namespace FargowiltasSouls
             if (CelestialSeal) FargoDisabledSouls.Add("CelestialSeal");
             if (MutantsDiscountCard) FargoDisabledSouls.Add("MutantsDiscountCard");
             if (MutantsPact) FargoDisabledSouls.Add("MutantsPact");
+            if (ReceivedMasoGift) FargoDisabledSouls.Add("ReceivedMasoGift");
 
             return new TagCompound {
                     {name, FargoDisabledSouls}
@@ -343,6 +345,7 @@ namespace FargowiltasSouls
             CelestialSeal = disabledSouls.Contains("CelestialSeal");
             MutantsDiscountCard = disabledSouls.Contains("MutantsDiscountCard");
             MutantsPact = disabledSouls.Contains("MutantsPact");
+            ReceivedMasoGift = disabledSouls.Contains("ReceivedMasoGift");
         }
 
         public override void OnEnterWorld(Player player)
