@@ -5,198 +5,21 @@ NEW UPDATE - v 1.1.0
 mutant town npc's attacks always crit ech
 
 
-ACCESSORIES
-
-
--All Essences and Enchantments now have custom tooltip colors
-
--Palm Wood Enchantment recipe altered: Lime Kelp replaced with Purple Mucos
--Palm Tree sentry no longer disappears when you place any other sentry after it
--Palm Tree sentry actually deals summon damage
-
-
--Boreal Wood Enchantment recipe altered: Snowball Cannon replaced with Snowballs
--Miner Enchantment recipe altered: Bone Pick replaced with Candy Cane Pick
-
--Tungsten Enchant no longer affects traps, yoyos, or Arkhalis
-
--Smoke Bomb hotkey now actually removes Smoke Bombs from your inventory and cannot be used while attacking
-
-buffed gold ench a LOT
--Platinum Enchantment proc will now count for several kills towards a banner and will no longer award several banners at once
--Spider Enchantment and Tin Enchantment now synergize
-
--Orichalcum Enchantment should not spawn way too many fireballs anymore
--admanatite will never multiply boss spawning projectiles from mutant mod
--Valhalla knockback works for all damage types, but is less effective from projectiles compared to swords (make it even less effective in general)
-
--Renamed Sharpshooter's Soul to Sniper's Soul
--Renamed Sniper's Essence to Sharpshooter's Essence
--Renamed Force of Wood to Force of Timber
--Builder Mode no longer lets you place infinite Platinum or Gold Coins
--Fixed a Soul of Terraria tooltip error
-
--Fixed Thorium Essence tooltips
--Steel Enchantments no longer show the Shield of Cthulhu
--renamed balladeer to shooting star, conductor to Maestro
--updated crier enchant effects to match armor
--updated marching band to new effect
-
--Renamed Force of Syran to Force of Syrus
-
-
--Updated Computation Orb sprite
-
 WEAPONS
 
 added optic staff EX
-rebalanced mutant scale tier
--Flesh Hand and Fish Stick now deal summon damage
-
-destroyer gun functions like destroyer gun EX now
--Destroyer Gun EX and Lanslide EX will actually use swarm drops in their recipe now
-nerfed leash of cthulhu damage 16 -> 12
-
-
-
 
 
 MASOMODE
 
 General
-mutant statue generates near spawn in new worlds
+
 -Enemies spawned from statues will not drop any extra loot added by Masomode
 fall damage immunity now blocks dazed
 fall damage dazed is always two seconds
 MOVED ALL MASO AI TO PRE AI (EXTREMELY DANGEROUS FORBIDDEN TECHNIQUE, PROBABLY BROKE LOTS OF SHIT)
 breaking shadow orb triggers goblin invasion if possible and havent beat goblins yet
 breaking altars triggers pirates if possible and havent beat pirates yet
-
-Debuffs
--All debuff inflictions are now always for the same amount of time, no randomness
--Reduced stun lock by only allowing enemies to inflict stunning debuffs every other hit
-
-Hallowed Flipped can be cleared at nurse
-lethargic slowdown now from -50% to -25%
-lethargic reduces enemy movement speed by 25%
-asocial now forcibly kills minions/sentries
-
-Biomes
-
-removed Frostburn in snow water
-all hell native enemies are immune to on fire
-all space native enemies are immune to suffocation
-all water native enemies have mutant antibodies protection against water debuffs
-enemies in hell are ignited
-enemies in space are suffocated
-enemies in biome waters are affected
-removed hostile falling stars
-removed spreading biome enemies converting blocks
-removed lightning in rain
-removed snow biome debuffs
-removed shadowflame in hell lava
-removed desert, dungeon, marble, granite water debuffs
-cacti now deal 20 damage (40 when in spreading biome)
-jungle water only inflicts poisoned (no more venom)
--added back freezing in snow water :Echceasebegone:, but made you have to stand there for 10 seconds
-
-
-Bosses
-
-
--Removed added potion drops to bosses
-
--King Slime will only stun you while moving
--King Slme no longer inflicts Clipped Wings
--King Slime enrage text now appears correctly in single player
--King Slime's enraged stats have been reduced severely
-
--Reduced Eye of Cthulhu's scythe's speed slightly
-slightly adjusted eoc's scythe trail
-
--Brain of Cthulhu and creepers no linger inflict Feral Bite
-reduced brain flipped duration
-
--Nerfed Royal Subject speed
--Replaced Venom in the Queen Bee fight with Infested and reduced duration
-
--Being hit by a Hungry no longer spawns Wall of Flesh
-Wall of Flesh eyes always shoot lasers
-Wall of Flesh has a new p2 where it alternates between:
-	spewing ichor down the arena
-	firing jets of cursed inferno back up the arena
-when reti and spaz are both in p2
-	spaz always dashes while reti is in normal AI
-	spaz always breathes fire while reti is deathray spinning
-p2 spaz shoots cursed fireballs much more aggressively and accurately
-buffed spaz's charging flamethrower damage to match contact damage, but nerfed range slightly
-
-
-The Destroyer resists Jester Arrows by 50%
-
--Phantasmal Dragon no longer inflicts Clipped Wings
-
--Betsy contact no longer inflicts On Fire, Burning, Ichor, or Feral Bite. Betsy's flames no longer inflict Withered Weapon or Withered Armor 
-
-golem body regen nerfed to 300
-skeletron throws undead miners whenever he spins
-moon lord socket rays restored
-true eyes now synchronize to each other no matter when they're released
-
-queen bee only shoots stingers while royal subjects are alive
-golem fists only explode outside temple
-golem fist max speed reduced drastically
-removed golem shotguns
-removed faster golem jump in p2
-removed golem laser spam/flamethrower
-in temple, golem's stomps now do the following in order:
-	harmless indicator flames across the ground
-	flames erupt into damaging geysers
-	boulders fall from ceiling on the player
-golem head periodically returns to body, fires a deathray down, and does an accelerating dash over you
-	is cancelled upon reaching a lihzahrd brick wall
-	doesnt do other attacks during this
-removed reti's p3 speed buff
-mutant boss will turn back into normal mutant if you die to him
-mutant nuke safespot also has a ritual around it
-more immunities for mutant
-
-golem head targets player for ray when outside temple
-golem has EX movement outside temple
-moon lord sockets will delay their deathrays if true eyes are firing theirs
-
-no bosses will naturally spawn if any other boss is alive (except during a blood moon add this)
-bosses can drop more crates
-eoc drops wood crates
-golem and betsy also drop gold crates now
-brain clone can tp again
-brain and clone will NEVER telefrag you ever
-brain/creeper/clone now do poisoned, darkness, bleeding, slow, weak, broken armor on hit instead of maso debuffs
-lunatic cultist does MFD on touch (was hexed)
-
-wof projs inflict longer crippled
-
-removed golem's venom on spiky ball
-all of golem's attacks inflict withered armor instead of broken armor
-fixed golem head/flying head not inflicting debuffs on touch
-golem body no longer inflicts MFD
-golem head sprays overhead lasers when it finishes a deathray rush
-moon lord p2 no longer inflicts mutant nibble
-eoc servants/scythes now inflict brief obstructed/berserked instead of previous debuffs
-eoc teleport is slower, but eoc is now invul during tp
-nerfed skeletron's skull proj cursed duration, but increased chance
-Nerfed Mutant fang duration from 5s to 3s
-Mutant has pink afterimage
-
-tin crit now goes through mutant presence (you have all crits in p2)
-stabilized gravity is allowed in mutant fight
-added a tabi dash toggle (allowed in mutant fight)
-fixed calamity making cultist's support attacks harmless
-prime wont shoot rockets while spinning in p2
-prime has swipe arms and spin arms now (this is spaghetti)
-removed eow's guaranteed forever weak
-removed fishron squeaky toy, broken armor, withered armor
-tried something that might fix mutant chloros not spawning sometimes?
 
 
 Enemies
