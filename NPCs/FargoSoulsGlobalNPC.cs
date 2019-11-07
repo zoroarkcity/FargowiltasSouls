@@ -2799,7 +2799,7 @@ namespace FargowiltasSouls.NPCs
                                     Vector2 distance = Main.player[npc.target].Center - npc.Center;
                                     distance.X = distance.X / time;
                                     distance.Y = distance.Y / time - 0.5f * gravity * time;
-                                    int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.UndeadMiner);
+                                    int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.BoneThrowingSkeleton);
                                     if (n != 200)
                                     {
                                         Main.npc[n].velocity = distance;
