@@ -256,7 +256,7 @@ namespace FargowiltasSouls
                     break;
 
                 case TileID.DemonAltar:
-                    if (FargoSoulsWorld.MasochistMode && Main.invasionType == 0 && !NPC.downedPirates)
+                    if (FargoSoulsWorld.MasochistMode && Main.hardMode && Main.invasionType == 0 && !NPC.downedPirates)
                     {
                         int p = Player.FindClosest(new Vector2(i * 16, j * 16), 0, 0);
                         if (p != -1 && Main.player[p].statLifeMax2 >= 200)

@@ -2799,7 +2799,7 @@ namespace FargowiltasSouls.NPCs
                                     Vector2 distance = Main.player[npc.target].Center - npc.Center;
                                     distance.X = distance.X / time;
                                     distance.Y = distance.Y / time - 0.5f * gravity * time;
-                                    int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.UndeadMiner);
+                                    int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.BoneThrowingSkeleton);
                                     if (n != 200)
                                     {
                                         Main.npc[n].velocity = distance;
@@ -2952,11 +2952,11 @@ namespace FargowiltasSouls.NPCs
                             npc.TargetClosest(true);
                             if (Main.player[npc.target].dead || Vector2.Distance(npc.Center, Main.player[npc.target].Center) > 3000)
                                 npc.position.X += 20 * Math.Sign(npc.velocity.X);
-                            else if (Math.Abs(npc.velocity.X) > 5f)
-                                npc.position.X -= (Math.Abs(npc.velocity.X) - 5f) * Math.Sign(npc.velocity.X);
+                            else if (Math.Abs(npc.velocity.X) > 7f)
+                                npc.position.X -= (Math.Abs(npc.velocity.X) - 7f) * Math.Sign(npc.velocity.X);
                         }
-                        else if (Math.Abs(npc.velocity.X) > 5f)
-                            npc.position.X -= (Math.Abs(npc.velocity.X) - 5f) * Math.Sign(npc.velocity.X);
+                        else if (Math.Abs(npc.velocity.X) > 7f)
+                            npc.position.X -= (Math.Abs(npc.velocity.X) - 7f) * Math.Sign(npc.velocity.X);
 
                         if (Main.player[Main.myPlayer].active & !Main.player[Main.myPlayer].dead && Main.player[Main.myPlayer].ZoneUnderworldHeight)
                         {
@@ -9345,10 +9345,9 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.WyvernHead:
+                        Item.NewItem(npc.Hitbox, ItemID.FloatingIslandFishingCrate);
                         if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("DragonFang"));
-                        if (Main.rand.Next(3) == 0)
-                            Item.NewItem(npc.Hitbox, ItemID.FloatingIslandFishingCrate);
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.GravitationPotion, Main.rand.Next(2, 5) + 1);
                         break;
@@ -9387,7 +9386,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Nymph:
-                        if (Main.rand.Next(2) == 0)
+                        if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("NymphsPerfume"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.LovePotion, Main.rand.Next(2, 5) + 1);
@@ -9454,7 +9453,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.RuneWizard:
-                        if (Main.rand.Next(2) == 0)
+                        if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("MysticSkull"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.MagicPowerPotion, Main.rand.Next(2, 5) + 1);
@@ -9688,7 +9687,7 @@ namespace FargowiltasSouls.NPCs
                     #region boss drops
                     case NPCID.KingSlime:
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.HerbBag, Main.rand.Next(5) + 1);
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.WoodenCrate, Main.rand.Next(5) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.WoodenCrate, Main.rand.Next(5) + 5);
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("SlimyShield"));
                         if (Main.netMode != 1 && !BossIsAlive(ref mutantBoss, mod.NPCType("MutantBoss")) && Fargowiltas.Instance.FargowiltasLoaded && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Mutant")))
                         {
@@ -9700,7 +9699,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.EyeofCthulhu:
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeCrystal, Main.rand.Next(3) + 1);
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.WoodenCrate, Main.rand.Next(5) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.WoodenCrate, Main.rand.Next(5) + 5);
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AgitatingLens"));
                         break;
 
@@ -9718,7 +9717,7 @@ namespace FargowiltasSouls.NPCs
                         }
                         if (dropItems)
                         {
-                            npc.DropItemInstanced(npc.position, npc.Size, ItemID.CorruptFishingCrate, Main.rand.Next(5) + 1);
+                            npc.DropItemInstanced(npc.position, npc.Size, ItemID.CorruptFishingCrate, Main.rand.Next(5) + 5);
                             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CorruptHeart"));
 
                             //to make up for no loot until dead (lowest possible amount dropped ECH)
@@ -9728,7 +9727,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.BrainofCthulhu:
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.CrimsonFishingCrate, Main.rand.Next(5) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.CrimsonFishingCrate, Main.rand.Next(5) + 5);
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("GuttedHeart"));
 
                         //to make up for no loot creepers (lowest possible amount dropped ECH)
@@ -9737,21 +9736,21 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.SkeletronHead:
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.DungeonFishingCrate, Main.rand.Next(5) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.DungeonFishingCrate, Main.rand.Next(5) + 5);
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("NecromanticBrew"));
                         break;
 
                     case NPCID.QueenBee:
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.JungleFishingCrate, Main.rand.Next(5) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.JungleFishingCrate, Main.rand.Next(5) + 5);
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("QueenStinger"));
                         break;
 
                     case NPCID.WallofFlesh:
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("PungentEyeball"));
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.HallowedFishingCrate, Main.rand.Next(5) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.HallowedFishingCrate, Main.rand.Next(5) + 5);
                         if (Fargowiltas.Instance.FargowiltasLoaded)
                         {
-                            npc.DropItemInstanced(npc.position, npc.Size, ModLoader.GetMod("Fargowiltas").ItemType("ShadowCrate"), Main.rand.Next(5) + 1);
+                            npc.DropItemInstanced(npc.position, npc.Size, ModLoader.GetMod("Fargowiltas").ItemType("ShadowCrate"), Main.rand.Next(5) + 5);
                             if (!Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantsDiscountCard)
                                 npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantsDiscountCard"));
                         }
@@ -9762,7 +9761,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("FusedLens"));
                             npc.DropItemInstanced(npc.position, npc.Size, ItemID.FallenStar, Main.rand.Next(10) + 1);
-                            npc.DropItemInstanced(npc.position, npc.Size, ItemID.IronCrate, Main.rand.Next(5) + 1);
+                            npc.DropItemInstanced(npc.position, npc.Size, ItemID.IronCrate, Main.rand.Next(5) + 5);
                         }
                         break;
 
@@ -9771,36 +9770,36 @@ namespace FargowiltasSouls.NPCs
                         {
                             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("FusedLens"));
                             npc.DropItemInstanced(npc.position, npc.Size, ItemID.FallenStar, Main.rand.Next(10) + 1);
-                            npc.DropItemInstanced(npc.position, npc.Size, ItemID.IronCrate, Main.rand.Next(5) + 1);
+                            npc.DropItemInstanced(npc.position, npc.Size, ItemID.IronCrate, Main.rand.Next(5) + 5);
                         }
                         break;
 
                     case NPCID.TheDestroyer:
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("GroundStick"));
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.FallenStar, Main.rand.Next(10) + 1);
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.IronCrate, Main.rand.Next(5) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.IronCrate, Main.rand.Next(5) + 5);
                         break;
 
                     case NPCID.SkeletronPrime:
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("ReinforcedPlating"));
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.FallenStar, Main.rand.Next(10) + 1);
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.IronCrate, Main.rand.Next(5) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.IronCrate, Main.rand.Next(5) + 5);
                         break;
 
                     case NPCID.Plantera:
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MagicalBulb"));
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.JungleFishingCrate, Main.rand.Next(5) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.JungleFishingCrate, Main.rand.Next(5) + 5);
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeFruit, Main.rand.Next(3) + 1);
                         break;
 
                     case NPCID.Golem:
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("LihzahrdTreasureBox"));
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.GoldenCrate, Main.rand.Next(5) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.GoldenCrate, Main.rand.Next(5) + 5);
                         break;
 
                     case NPCID.DD2Betsy:
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("BetsysHeart"));
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.GoldenCrate, Main.rand.Next(5) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.GoldenCrate, Main.rand.Next(5) + 5);
                         FargoSoulsWorld.downedBetsy = true;
                         break;
 
@@ -9814,7 +9813,7 @@ namespace FargowiltasSouls.NPCs
                         {*/
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantAntibodies"));
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.Bacon, Main.rand.Next(10) + 1);
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.GoldenCrate, Main.rand.Next(5) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.GoldenCrate, Main.rand.Next(5) + 5);
                         if (Fargowiltas.Instance.FargowiltasLoaded && !Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantsPact)
                             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantsPact"));
                         //}
