@@ -3994,26 +3994,20 @@ namespace FargowiltasSouls
 
             OriEnchant = true;
 
-            if (!OriSpawn)
+            int ballAmt = 6;
+
+            if (Eternity)
+                ballAmt = 30;
+
+            if (!OriSpawn && player.ownedProjectileCounts[mod.ProjectileType("OriFireball")] < ballAmt)
             {
-                int[] fireballs = { ProjectileID.BallofFire, ProjectileID.BallofFrost, ProjectileID.CursedFlameFriendly };
-
-                int ballAmt = 6;
-
-                if(Eternity)
-                    ballAmt = 30;
-
-                int ballsOwned = player.ownedProjectileCounts[ProjectileID.BallofFire] + player.ownedProjectileCounts[ProjectileID.BallofFrost] + player.ownedProjectileCounts[ProjectileID.CursedFlameFriendly];
-
-                if (ballsOwned >= ballAmt)
-                    return;
 
                 if (player.whoAmI == Main.myPlayer)
                 {
                     for (int i = 0; i < ballAmt; i++)
                     {
                         float degree = (360 / ballAmt) * i;
-                        Projectile fireball = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, fireballs[i % 3], (int)(10 * player.magicDamage), 0f, player.whoAmI, 5, degree);
+                        Projectile fireball = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, mod.ProjectileType("OriFireball"), (int)(10 * player.magicDamage), 0f, player.whoAmI, degree);
                         if (fireball != null)
                         {
                             fireball.GetGlobalProjectile<FargoGlobalProjectile>().Rotate = true;
