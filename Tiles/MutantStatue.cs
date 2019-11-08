@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Tiles
 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Mutant Statue");
-            AddMapEntry(new Color(255, 215, 0), name);
+            AddMapEntry(new Color(144, 144, 144), name);
         }
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
