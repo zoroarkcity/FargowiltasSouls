@@ -4211,8 +4211,6 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.GolemFistLeft:
                     case NPCID.GolemFistRight:
-                        Main.NewText(npc.velocity.Length().ToString());
-
                         if (npc.buffType[0] != 0)
                         {
                             npc.buffImmune[npc.buffType[0]] = true;
