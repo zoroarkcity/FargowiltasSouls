@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         {
             DisplayName.SetDefault("Lihzahrd Treasure Box");
             Tooltip.SetDefault(@"'Too many booby traps to open'
-Grants immunity to Burning and Fused
+Grants immunity to Burning, Fused, and Low Ground
 You erupt into spiky balls when injured
 Press down in the air to fastfall
 Fastfall will create a fiery eruption on impact after falling a certain distance");
@@ -37,6 +37,7 @@ Fastfall will create a fiery eruption on impact after falling a certain distance
         {
             player.buffImmune[BuffID.Burning] = true;
             player.buffImmune[mod.BuffType("Fused")] = true;
+            player.buffImmune[mod.BuffType("LowGround")] = true;
             player.GetModPlayer<FargoPlayer>().LihzahrdTreasureBox = true;
         }
     }

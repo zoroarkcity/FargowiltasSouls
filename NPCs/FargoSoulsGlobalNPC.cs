@@ -3985,6 +3985,9 @@ namespace FargowiltasSouls.NPCs
                             }
                         }*/
 
+                        if (Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].Distance(npc.Center) < 2000)
+                            Main.player[Main.myPlayer].AddBuff(mod.BuffType("LowGround"), 2);
+
                         if (!masoBool[3])
                         {
                             npc.position.X += npc.velocity.X / 2f;
@@ -4138,9 +4141,9 @@ namespace FargowiltasSouls.NPCs
                             masoBool[0] = true;
                         }
 
-                        if (++Counter2 >= 540)
+                        if (++Counter2 >= 540 && npc.velocity.Y == 0) //spray spiky balls, only when on ground
                         {
-                            Counter2 = 0; //spray spiky balls
+                            Counter2 = 0;
                             if (Main.tile[(int)npc.Center.X / 16, (int)npc.Center.Y / 16] != null && //in temple
                                 Main.tile[(int)npc.Center.X / 16, (int)npc.Center.Y / 16].wall == WallID.LihzahrdBrickUnsafe)
                             {
@@ -4208,6 +4211,8 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.GolemFistLeft:
                     case NPCID.GolemFistRight:
+                        Main.NewText(npc.velocity.Length().ToString());
+
                         if (npc.buffType[0] != 0)
                         {
                             npc.buffImmune[npc.buffType[0]] = true;
@@ -4222,8 +4227,8 @@ namespace FargowiltasSouls.NPCs
                         }
                         masoBool[0] = npc.ai[0] != 0f;
 
-                        if (npc.velocity.Length() > 16)
-                            npc.position -= Vector2.Normalize(npc.velocity) * (npc.velocity.Length() - 16);
+                        if (npc.velocity.Length() > 12)
+                            npc.position -= Vector2.Normalize(npc.velocity) * (npc.velocity.Length() - 12);
 
                         if (npc.life < npc.lifeMax / 2 && NPC.golemBoss > -1 && NPC.golemBoss < 200 && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem)
                         {
