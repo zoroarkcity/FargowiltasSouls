@@ -4149,7 +4149,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 for (int i = 0; i < 8; i++)
                                     Projectile.NewProjectile(npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
-                                        0, Main.rand.Next(-10, -4), ProjectileID.SpikyBallTrap, npc.damage / 5, 0f, Main.myPlayer);
+                                        Main.rand.NextFloat(-0.5f, 0.5f), Main.rand.NextFloat(-10, -6), ProjectileID.SpikyBallTrap, npc.damage / 5, 0f, Main.myPlayer);
                             }
                             else //outside temple
                             {
