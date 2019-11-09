@@ -7,4 +7,4 @@ buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*, lib\*, .git\*
 languageVersion = 6
 hideCode = true
 hideResources = true
-sortAfter = ThoriumMod, CalamityMod, SacredTools, DBZMOD, MasomodeEX
+sortAfter = ThoriumMod, CalamityMod, SacredTools, DBZMOD
