@@ -3,7 +3,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using CalamityMod.CalPlayer;
 using System;
 using Terraria.Localization;
 
@@ -23,7 +22,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
             DisplayName.SetDefault("God Slayer Enchantment");
             Tooltip.SetDefault(
 @"'The power to slay gods resides within you...'
-Attacks have a 2% chance to do no damage to you
 You will survive fatal damage and will be healed 150 HP if an attack would have killed you
 This effect can only occur once every 45 seconds
 Taking over 80 damage in one hit will cause you to release a swarm of high-damage god killer darts
@@ -83,28 +81,19 @@ Summons a Chibii Doggo pet");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-
             if (SoulConfig.Instance.GetValue("God Slayer Effects"))
             {
-                //body
-                modPlayer.godSlayerReflect = true;
-                //all
-                modPlayer.godSlayer = true;
-                //melee
-                modPlayer.godSlayerDamage = true;
-                //ranged
-                modPlayer.godSlayerRanged = true;
-                //magic
-                modPlayer.godSlayerMage = true;
-                //throw
-                modPlayer.godSlayerThrowing = true;
+                calamity.Call("SetSetBonus", player, "godslayer", true);
+                calamity.Call("SetSetBonus", player, "godslayer_melee", true);
+                calamity.Call("SetSetBonus", player, "godslayer_ranged", true);
+                calamity.Call("SetSetBonus", player, "godslayer_magic", true);
+                calamity.Call("SetSetBonus", player, "godslayer_rogue", true);
             }
             
             if (SoulConfig.Instance.GetValue("Mechworm Minion"))
             {
                 //summon
-                modPlayer.godSlayerSummon = true;
+                calamity.Call("SetSetBonus", player, "godslayer_summon", true);
                 if (player.whoAmI == Main.myPlayer)
                 {
                     if (player.FindBuffIndex(calamity.BuffType("Mechworm")) == -1)
@@ -222,82 +211,11 @@ Summons a Chibii Doggo pet");
             
             if (SoulConfig.Instance.GetValue("Nebulous Core"))
             {
-                //nebulous core
-                modPlayer.nCore = true;
-                int dmg = 300;
-                float kb = 3f;
-                if (Main.rand.Next(15) == 0)
-                {
-                    int num3 = 0;
-                    for (int i = 0; i < 1000; i++)
-                    {
-                        if (Main.projectile[i].active && Main.projectile[i].owner == player.whoAmI && Main.projectile[i].type == calamity.ProjectileType("NebulaStar"))
-                        {
-                            num3++;
-                        }
-                    }
-                    if (Main.rand.Next(15) >= num3 && num3 < 10)
-                    {
-                        int num4 = 50;
-                        int num5 = 24;
-                        int num6 = 90;
-                        for (int j = 0; j < num4; j++)
-                        {
-                            int num7 = Main.rand.Next(200 - j * 2, 400 + j * 2);
-                            Vector2 center = player.Center;
-                            center.X += Main.rand.Next(-num7, num7 + 1);
-                            center.Y += Main.rand.Next(-num7, num7 + 1);
-                            if (!Collision.SolidCollision(center, num5, num5) && !Collision.WetCollision(center, num5, num5))
-                            {
-                                center.X += (num5 / 2);
-                                center.Y += (num5 / 2);
-                                if (Collision.CanHit(new Vector2(player.Center.X, player.position.Y), 1, 1, center, 1, 1) || Collision.CanHit(new Vector2(player.Center.X, player.position.Y - 50f), 1, 1, center, 1, 1))
-                                {
-                                    int num8 = (int)center.X / 16;
-                                    int num9 = (int)center.Y / 16;
-                                    bool flag = false;
-                                    if (Main.rand.Next(3) == 0 && Main.tile[num8, num9] != null && Main.tile[num8, num9].wall > 0)
-                                    {
-                                        flag = true;
-                                    }
-                                    else
-                                    {
-                                        center.X -= (num6 / 2);
-                                        center.Y -= (num6 / 2);
-                                        if (Collision.SolidCollision(center, num6, num6))
-                                        {
-                                            center.X += (num6 / 2);
-                                            center.Y += (num6 / 2);
-                                            flag = true;
-                                        }
-                                    }
-                                    if (flag)
-                                    {
-                                        for (int k = 0; k < 1000; k++)
-                                        {
-                                            if (Main.projectile[k].active && Main.projectile[k].owner == player.whoAmI && Main.projectile[k].type == calamity.ProjectileType("NebulaStar") && (center - Main.projectile[k].Center).Length() < 48f)
-                                            {
-                                                flag = false;
-                                                break;
-                                            }
-                                        }
-                                        if (flag && Main.myPlayer == player.whoAmI)
-                                        {
-                                            Projectile.NewProjectile(center.X, center.Y, 0f, 0f, calamity.ProjectileType("NebulaStar"), dmg, kb, player.whoAmI, 0f, 0f);
-                                            return;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                calamity.GetItem("NebulousCore").UpdateAccessory(player, hideVisual);
             }
 
             //draedons heart
-            modPlayer.draedonsHeart = true;
-            player.buffImmune[calamity.BuffType("Horror")] = true;
-            modPlayer.draedonsStressGain = true;
+            calamity.GetItem("DraedonsHeart").UpdateAccessory(player, hideVisual);
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.GodSlayerEnchant = true;

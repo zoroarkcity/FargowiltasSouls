@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             Tooltip.SetDefault(
 @"'Beautifully crafted'
 Symphonic critical strikes cause the attack's empowerment to ascend to a fourth level of intensity
-Effects of Concert Tickets and Brown Music Player");
+Effects of Concert Tickets");
             DisplayName.AddTranslation(GameCulture.Chinese, "华贵魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'精心设计'
@@ -56,9 +56,6 @@ Effects of Concert Tickets and Brown Music Player");
                     thoriumPlayer.inspirationRegenBonus += 0.02f;
                 }
             }
-            //music player
-            //thoriumPlayer.musicPlayer = true;
-            //thoriumPlayer.MP3AmmoConsumption = 2;
         }
         
         private readonly string[] items =
@@ -67,7 +64,7 @@ Effects of Concert Tickets and Brown Music Player");
             "OrnateJerkin",
             "OrnateLeggings",
             "ConcertTickets",
-            "TunePlayerAmmoConsume",
+            "MythrilMelodica",
             "GreenTambourine",
             "VuvuzelaBlue",
             "VuvuzelaGreen",

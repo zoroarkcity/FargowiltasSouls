@@ -827,6 +827,8 @@ namespace FargowiltasSouls
             public bool daedalusEffects = true;
             [Label("$Mods.FargowiltasSouls.CalamityReaverEffectsConfig")]
             public bool reaverEffects = true;
+            [Label("$Mods.FargowiltasSouls.CalamityFabledTurtleConfig")]
+            public bool fabledTurtle = true;
             [Label("$Mods.FargowiltasSouls.CalamityAstralStarsConfig")]
             public bool astralStars = true;
             [Label("$Mods.FargowiltasSouls.CalamityAtaxiaEffectsConfig")]
@@ -906,6 +908,7 @@ namespace FargowiltasSouls
                 SoulConfig.Instance.calamityToggles["Poisonous Sea Water"] = poisonSeawater;
                 SoulConfig.Instance.calamityToggles["Daedalus Effects"] = daedalusEffects;
                 SoulConfig.Instance.calamityToggles["Reaver Effects"] = reaverEffects;
+                SoulConfig.Instance.calamityToggles["Fabled Turtle Shell"] = fabledTurtle;
                 SoulConfig.Instance.calamityToggles["Astral Stars"] = astralStars;
                 SoulConfig.Instance.calamityToggles["Ataxia Effects"] = ataxiaEffects;
                 SoulConfig.Instance.calamityToggles["Xeroc Effects"] = xerocEffects;
@@ -945,6 +948,7 @@ namespace FargowiltasSouls
             thoriummenu.Change();
             calamenu.Change();
         }
+
         public override void OnLoaded()
         {
             SoulConfig.Instance = this;
@@ -1208,6 +1212,7 @@ namespace FargowiltasSouls
             calamityToggles.Add("Poisonous Sea Water", calamenu.poisonSeawater);
             calamityToggles.Add("Daedalus Effects", calamenu.daedalusEffects);
             calamityToggles.Add("Reaver Effects", calamenu.reaverEffects);
+            calamityToggles.Add("Fabled Turtle Shell", calamenu.fabledTurtle);
             calamityToggles.Add("Astral Stars", calamenu.reaverEffects);
             calamityToggles.Add("Ataxia Effects", calamenu.reaverEffects);
             calamityToggles.Add("Xeroc Effects", calamenu.xerocEffects);

@@ -3,8 +3,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using CalamityMod.CalPlayer;
-using System;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
@@ -82,40 +80,24 @@ Effects of the Core of the Blood God and Affliction");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-
             if (SoulConfig.Instance.GetValue("Bloodflare Effects"))
             {
-                modPlayer.bloodflareSet = true;
-                modPlayer.bloodflareMelee = true;
-                modPlayer.bloodflareRanged = true;
-                modPlayer.bloodflareMage = true;
-                modPlayer.bloodflareThrowing = true;
+                calamity.Call("SetSetBonus", player, "bloodflare", true);
+                calamity.Call("SetSetBonus", player, "bloodflare_melee", true);
+                calamity.Call("SetSetBonus", player, "bloodflare_ranged", true);
+                calamity.Call("SetSetBonus", player, "bloodflare_magic", true);
+                calamity.Call("SetSetBonus", player, "bloodflare_rogue", true);
             }
            
             if (SoulConfig.Instance.GetValue("Polterghast Mines"))
             {
-                modPlayer.bloodflareSummon = true;
+                calamity.Call("SetSetBonus", player, "bloodflare_summon", true);
             }
-            
+
             //core of the blood god
-            modPlayer.coreOfTheBloodGod = true;
-            modPlayer.fleshTotem = true;
+            calamity.GetItem("CoreOfTheBloodGod").UpdateAccessory(player, hideVisual);
             //affliction
-            modPlayer.affliction = true;
-            if (player.whoAmI != Main.myPlayer && player.miscCounter % 10 == 0)
-            {
-                int myPlayer = Main.myPlayer;
-                if (Main.player[myPlayer].team == player.team && player.team != 0)
-                {
-                    float num = player.position.X - Main.player[myPlayer].position.X;
-                    float num2 = player.position.Y - Main.player[myPlayer].position.Y;
-                    if ((float)Math.Sqrt((num * num + num2 * num2)) < 2800f)
-                    {
-                        Main.player[myPlayer].AddBuff(calamity.BuffType("Afflicted"), 20, true);
-                    }
-                }
-            }
+            calamity.GetItem("Affliction").UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

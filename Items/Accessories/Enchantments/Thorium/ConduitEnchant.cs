@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 Moving around generates up to 5 static rings, with each one generating life shielding
 When fully charged, a bubble of energy will protect you from one attack 
 When the bubble blocks an attack, an electrical discharge is released at nearby enemies
-Summons a pet Omega and I.F.O.");
+Summons a pet Omega");
             DisplayName.AddTranslation(GameCulture.Chinese, "电容魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'震惊世界'
@@ -70,7 +70,6 @@ Summons a pet Omega and I.F.O.");
             }
             //pets
             //modPlayer.AddPet("Omega Pet", hideVisual, thorium.BuffType("OmegaBuff"), thorium.ProjectileType("Omega"));
-            modPlayer.AddPet("I.F.O. Pet", hideVisual, thorium.BuffType("Identified"), thorium.ProjectileType("IFO"));
             modPlayer.ConduitEnchant = true;
         }
 
@@ -88,8 +87,8 @@ Summons a pet Omega and I.F.O.");
             recipe.AddIngredient(thorium.ItemType("SuperPlasmaCannon"));
             recipe.AddIngredient(thorium.ItemType("ElectroRebounder"), 300);
             recipe.AddIngredient(thorium.ItemType("Triangle"));
+            recipe.AddIngredient(thorium.ItemType("Turntable"));
             recipe.AddIngredient(thorium.ItemType("OmegaDrive"));
-            recipe.AddIngredient(thorium.ItemType("UFOCommunicator"));
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

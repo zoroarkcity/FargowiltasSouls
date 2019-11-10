@@ -62,7 +62,6 @@ Summons several pets");
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.value = 5000000;
-            item.shieldSlot = 5;
 
             item.rare = -12;
         }

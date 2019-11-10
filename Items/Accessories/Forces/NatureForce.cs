@@ -65,7 +65,7 @@ Summons several pets";
 Enemies that you set on fire or singe will take additional damage over time
 Dealing damage will release a poisoning spore explosion
 Attacks may inflict Fungal Growth
-Effects of Night Shade Petal, Sub-Zero Subwoofer, and Toxic Subwoofer 
+Effects of Night Shade Petal
 Effects of Flower Boots, Spring Steps and Slag Stompers
 Summons several pets";
 
@@ -213,17 +213,6 @@ Summons several pets";
 
             //magma
             thoriumPlayer.magmaSet = true;
-            //subwoofer
-            /*thoriumPlayer.bardRangeBoost += 450;
-            for (int i = 0; i < 255; i++)
-            {
-                Player player2 = Main.player[i];
-                if (player2.active && !player2.dead && Vector2.Distance(player2.Center, player.Center) < 450f)
-                {
-                    thoriumPlayer.empowerPoison = true;
-                    thoriumPlayer.empowerFrost = true;
-                }
-            }*/
             //night shade petal
             thoriumPlayer.nightshadeBoost = true;
         }

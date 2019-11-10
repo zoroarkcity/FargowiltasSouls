@@ -1,7 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.CalPlayer;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
@@ -44,12 +43,10 @@ Summons a Danny Devito pet");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-
             if (SoulConfig.Instance.GetValue("Shellfish Minions"))
             {
                 //set bonus clams
-                modPlayer.molluskSet = true;
+                calamity.Call("SetSetBonus", player, "mollusk", true);
                 player.maxMinions += 4;
                 if (player.whoAmI == Main.myPlayer)
                 {
@@ -66,8 +63,7 @@ Summons a Danny Devito pet");
 
             if (SoulConfig.Instance.GetValue("Giant Pearl"))
             {
-                modPlayer.giantPearl = true;
-                Lighting.AddLight((int)(player.position.X + (float)(player.width / 2)) / 16, (int)(player.position.Y + (float)(player.height / 2)) / 16, 0.45f, 0.8f, 0.8f);
+                calamity.GetItem("GiantPearl").UpdateAccessory(player, hideVisual);
             }
 
             if (SoulConfig.Instance.GetValue("Amidias' Pendant"))
@@ -77,7 +73,7 @@ Summons a Danny Devito pet");
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.MolluskEnchant = true;
-            fargoPlayer.AddPet("Danny Pet", hideVisual, calamity.BuffType("DannyDevito"), calamity.ProjectileType("DannyDevito"));
+            fargoPlayer.AddPet("Danny Pet", hideVisual, calamity.BuffType("DannyDevito"), calamity.ProjectileType("DannyDevitoPet"));
         }
 
         public override void AddRecipes()

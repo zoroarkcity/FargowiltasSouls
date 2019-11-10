@@ -71,7 +71,7 @@ Effects of Spiked Bracer");
         {
             "BallnChain",
             "eeDarksteelMace",
-            "eeSoulSiphon",
+            "gDarkSteelCrossBow",
             "ManHacker",
             "DarksteelHelmetStand",
             "GrayDPaintingItem",

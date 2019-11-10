@@ -24,7 +24,7 @@ Projects a mystical barrier around you
 While above 50% life, every seventh attack will unleash damaging mana bolts
 While below 50% life, your defensive capabilities are increased
 Critical strikes engulf enemies in a long lasting void flame
-Effects of Mana-Charged Rocketeers and Gray Music Player");
+Effects of Mana-Charged Rocketeers");
             DisplayName.AddTranslation(GameCulture.Chinese, "弗古魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'谜一样的男人...'
@@ -64,9 +64,6 @@ Effects of Mana-Charged Rocketeers and Gray Music Player");
                 thoriumPlayer.thoriumEndurance += 0.1f;
                 player.noKnockback = true;
             }
-            //music player
-            //thoriumPlayer.musicPlayer = true;
-            //thoriumPlayer.MP3Defense = 2;
             //malignant
             modPlayer.MalignantEnchant = true;
             //mana charge rockets
@@ -83,8 +80,8 @@ Effects of Mana-Charged Rocketeers and Gray Music Player");
             recipe.AddIngredient(thorium.ItemType("FolvRobe"));
             recipe.AddIngredient(thorium.ItemType("FolvLegging"));
             recipe.AddIngredient(null, "MalignantEnchant");
-            recipe.AddIngredient(thorium.ItemType("TunePlayerDefense"));
             recipe.AddIngredient(ItemID.UnholyTrident);
+            recipe.AddIngredient(thorium.ItemType("TerrariumSageStaff"));
             recipe.AddIngredient(thorium.ItemType("AncientFlame"));
             recipe.AddIngredient(thorium.ItemType("AncientFrost"));
             recipe.AddIngredient(thorium.ItemType("AncientSpark"));

@@ -79,7 +79,7 @@ namespace FargowiltasSouls.Items.Accessories.Essences
             "ForestOcarina",
             "AquamarineWineGlass",
             "SonarCannon",
-            "MusicSheet2",
+            "Calaveras",
             "GraniteBoomBox",
             "TuningFork",
             "HotHorn",

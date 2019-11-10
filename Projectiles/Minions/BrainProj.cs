@@ -26,6 +26,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.ignoreWater = true;
             ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
             ProjectileID.Sets.Homing[projectile.type] = true;
+            ProjectileID.Sets.MinionTargettingFeature[base.projectile.type] = true;
             Inertia = 20f;
             Shoot = mod.ProjectileType("CreeperProj");
             ShootSpeed = 12f; // 

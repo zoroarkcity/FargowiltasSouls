@@ -54,18 +54,14 @@ Effects of Metronome and Purple Music Player");
             {
                 thorium.GetItem("Metronome").UpdateAccessory(player, hideVisual);
             }
-            
-            //music player
-            //thoriumPlayer.musicPlayer = true;
-            //thoriumPlayer.MP3MaxMana = 2;
-            //marching band set 
+
             thoriumPlayer.setMarchingBand = true;
         }
         
         private readonly string[] items =
         {
             "Metronome",
-            "TunePlayerMaxMana",
+            "Organ",
             "BoneTrumpet",
             "Clarinet",
             "FrenchHorn",
@@ -78,9 +74,9 @@ Effects of Metronome and Purple Music Player");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("PowderedWig"));
-            recipe.AddIngredient(thorium.ItemType("ConductorSuit"));
-            recipe.AddIngredient(thorium.ItemType("ConductorLeggings"));
+            recipe.AddIngredient(thorium.ItemType("MaestroWig"));
+            recipe.AddIngredient(thorium.ItemType("MaestroSuit"));
+            recipe.AddIngredient(thorium.ItemType("MaestroLeggings"));
             recipe.AddIngredient(null, "MarchingBandEnchant");
 
             foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));

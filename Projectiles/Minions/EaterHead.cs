@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.Minions
@@ -26,6 +27,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.tileCollide = false;
             projectile.alpha = 255;
             projectile.netImportant = true;
+            ProjectileID.Sets.MinionTargettingFeature[base.projectile.type] = true;
         }
 
         public override void SendExtraAI(BinaryWriter writer)

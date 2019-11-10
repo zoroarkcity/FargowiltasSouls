@@ -61,9 +61,9 @@ One attack gains 10% life steal every 4 seconds, capped at 8 HP");
             recipe.AddIngredient(ItemID.PalladiumRepeater);
 
             if (Fargowiltas.Instance.ThoriumLoaded)
-            {      
+            {
                 recipe.AddIngredient(thorium.ItemType("PalladiumStaff"));
-                recipe.AddIngredient(thorium.ItemType("eeeLifeLeech")); //um WTF
+                recipe.AddIngredient(thorium.ItemType("EvisceratingClaw"), 300);
                 recipe.AddIngredient(thorium.ItemType("VampireScepter"));
             }
             

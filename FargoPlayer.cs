@@ -3146,8 +3146,7 @@ namespace FargowiltasSouls
 
         private void CalamityDamage(float dmg)
         {
-            player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().throwingDamage += dmg;
-            
+            ModLoader.GetMod("CalamityMod").Call("AddRogueDamage", player, dmg);
         }
 
         private void DBTDamage(float dmg)
@@ -3179,7 +3178,7 @@ namespace FargowiltasSouls
 
         private void CalamityCrit(int crit)
         {
-            player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().throwingCrit += crit;
+            ModLoader.GetMod("CalamityMod").Call("AddRogueCrit", player, crit);
         }
 
         private void DBTCrit(int crit)
@@ -4005,34 +4004,19 @@ namespace FargowiltasSouls
 
             OriEnchant = true;
 
-            if (!OriSpawn)
+            int ballAmt = 6;
+
+            if (Eternity)
+                ballAmt = 30;
+
+            if (!OriSpawn && player.ownedProjectileCounts[mod.ProjectileType("OriFireball")] < ballAmt)
             {
-                int[] fireballs = { ProjectileID.BallofFire, ProjectileID.BallofFrost, ProjectileID.CursedFlameFriendly };
-
-                int ballAmt = 6;
-
-                if(Eternity)
-                    ballAmt = 30;
-
-                int ballsOwned = player.ownedProjectileCounts[ProjectileID.BallofFire] + player.ownedProjectileCounts[ProjectileID.BallofFrost] + player.ownedProjectileCounts[ProjectileID.CursedFlameFriendly];
-
-                if (ballsOwned >= ballAmt)
-                    return;
-
                 if (player.whoAmI == Main.myPlayer)
                 {
                     for (int i = 0; i < ballAmt; i++)
                     {
                         float degree = (360 / ballAmt) * i;
-                        Projectile fireball = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, fireballs[i % 3], (int)(10 * player.magicDamage), 0f, player.whoAmI, 5, degree);
-                        if (fireball != null)
-                        {
-                            fireball.GetGlobalProjectile<FargoGlobalProjectile>().Rotate = true;
-                            fireball.GetGlobalProjectile<FargoGlobalProjectile>().RotateDist = 120;
-                            fireball.timeLeft = 2;
-                            fireball.penetrate = -1;
-                            fireball.ignoreWater = true;
-                        }
+                        Projectile fireball = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, mod.ProjectileType("OriFireball"), HighestDamageTypeScaling(25), 0f, player.whoAmI, 5, degree);
                     }
                 }
 

@@ -8671,28 +8671,28 @@ namespace FargowiltasSouls.NPCs
                     //mutually exclusive world layers
                     if (surface)
                     {
-                        if (night)
+                        if (night && normalSpawn)
                         {
-                            if (normalSpawn && NPC.downedBoss1)
+                            if (noBiome)
                             {
-                                if (noBiome)
-                                {
-                                    pool[NPCID.CorruptBunny] = .05f;
-                                    pool[NPCID.CrimsonBunny] = .05f;
-                                }
+                                pool[NPCID.CorruptBunny] = NPC.downedBoss1 ? .05f : .025f;
+                                pool[NPCID.CrimsonBunny] = NPC.downedBoss1 ? .05f : .025f;
+                            }
 
-                                if (snow)
-                                {
-                                    pool[NPCID.CorruptPenguin] = .1f;
-                                    pool[NPCID.CrimsonPenguin] = .1f;
-                                }
+                            if (snow)
+                            {
+                                pool[NPCID.CorruptPenguin] = NPC.downedBoss1 ? .1f : .05f;
+                                pool[NPCID.CrimsonPenguin] = NPC.downedBoss1 ? .1f : .05f;
+                            }
 
-                                if (ocean || Main.raining)
-                                {
-                                    pool[NPCID.CorruptGoldfish] = .1f;
-                                    pool[NPCID.CrimsonGoldfish] = .1f;
-                                }
+                            if (ocean || Main.raining)
+                            {
+                                pool[NPCID.CorruptGoldfish] = NPC.downedBoss1 ? .1f : .05f;
+                                pool[NPCID.CrimsonGoldfish] = NPC.downedBoss1 ? .1f : .05f;
+                            }
 
+                            if (NPC.downedBoss1)
+                            {
                                 if (jungle)
                                     pool[NPCID.DoctorBones] = .05f;
 
@@ -10601,13 +10601,14 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.AnomuraFungus:
                     case NPCID.MushiLadybug:
                     case NPCID.FungoFish:
-                        if (Main.netMode != 1 && Main.hardMode)
+                        if (Main.netMode != 1)// && Main.hardMode)
                         {
                             for (int i = 0; i < 10; i++)
                             {
                                 int spore = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.FungiSpore);
                                 if (spore < 200)
                                 {
+                                    Main.npc[spore].damage = npc.damage / 3;
                                     Main.npc[spore].velocity = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
                                     if (Main.netMode == 2)
                                         NetMessage.SendData(23, -1, -1, null, spore);
@@ -11514,7 +11515,7 @@ namespace FargowiltasSouls.NPCs
             if (modPlayer.ValhallaEnchant && SoulConfig.Instance.GetValue("Valhalla Knockback") 
                 && !npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune && npc.knockBackResist < 1)
             {
-                npc.knockBackResist += .01f;
+                npc.knockBackResist += .002f;
                 if (npc.knockBackResist > .5f)
                     npc.knockBackResist = .5f;
             }
@@ -11913,28 +11914,28 @@ namespace FargowiltasSouls.NPCs
                         Main.golemTexture[2] = mod.GetTexture(recolor ? "NPCs/Resprites/GolemLights2" : "NPCs/Vanilla/GolemLights2");
                         Main.golemTexture[3] = mod.GetTexture(recolor ? "NPCs/Resprites/GolemLights3" : "NPCs/Vanilla/GolemLights3");
                         Main.npcHeadBossTexture[5] = mod.GetTexture((recolor ? "NPCs/Resprites/" : "NPCs/Vanilla/") + "NPC_Head_Boss_5");
-                        Main.goreTexture[360] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_360");
-                        Main.goreTexture[361] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_361");
-                        Main.goreTexture[362] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_362");
-                        Main.goreTexture[363] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_363");
-                        Main.goreTexture[364] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_364");
-                        Main.goreTexture[365] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_365");
-                        Main.goreTexture[366] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_366");
-                        Main.goreTexture[367] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_367");
-                        Main.goreTexture[368] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_368");
-                        Main.goreTexture[369] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_369");
-                        Main.goreTexture[370] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_370");
-                        Main.goreLoaded[360] = true;
-                        Main.goreLoaded[361] = true;
-                        Main.goreLoaded[362] = true;
-                        Main.goreLoaded[363] = true;
-                        Main.goreLoaded[364] = true;
-                        Main.goreLoaded[365] = true;
-                        Main.goreLoaded[366] = true;
-                        Main.goreLoaded[367] = true;
-                        Main.goreLoaded[368] = true;
-                        Main.goreLoaded[369] = true;
-                        Main.goreLoaded[370] = true;
+                        //Main.goreTexture[360] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_360");
+                        //Main.goreTexture[361] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_361");
+                        //Main.goreTexture[362] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_362");
+                        //Main.goreTexture[363] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_363");
+                        //Main.goreTexture[364] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_364");
+                       // Main.goreTexture[365] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_365");
+                       // Main.goreTexture[366] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_366");
+                       // Main.goreTexture[367] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_367");
+                       // Main.goreTexture[368] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_368");
+                        //Main.goreTexture[369] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_369");
+                        //Main.goreTexture[370] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_370");
+                        //Main.goreLoaded[360] = true;
+                        //Main.goreLoaded[361] = true;
+                        //Main.goreLoaded[362] = true;
+                        //Main.goreLoaded[363] = true;
+                        //Main.goreLoaded[364] = true;
+                        //Main.goreLoaded[365] = true;
+                        //Main.goreLoaded[366] = true;
+                        //Main.goreLoaded[367] = true;
+                        //Main.goreLoaded[368] = true;
+                        //Main.goreLoaded[369] = true;
+                        //Main.goreLoaded[370] = true;
                         break;
 
                     case NPCID.DukeFishron:
