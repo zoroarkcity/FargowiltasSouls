@@ -308,6 +308,7 @@ namespace FargowiltasSouls
         public bool Midas;
         public bool MutantPresence;
         public bool Swarming;
+        public bool LowGround;
 
         public int MasomodeCrystalTimer = 0;
         public int MasomodeFreezeTimer = 0;
@@ -661,6 +662,7 @@ namespace FargowiltasSouls
             Midas = false;
             MutantPresence = false;
             Swarming = false;
+            LowGround = false;
         }
 
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
@@ -1079,6 +1081,12 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (LowGround)
+            {
+                player.waterWalk = false;
+                player.waterWalk2 = false;
+            }
+
             if (BetsysHeart && BetsyDashCD > 0)
             {
                 BetsyDashCD--;

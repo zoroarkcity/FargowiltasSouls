@@ -70,7 +70,6 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             width = 26;
             height = 26;
-            fallThrough = false;
             return true;
         }
 

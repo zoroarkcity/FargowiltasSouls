@@ -1439,8 +1439,8 @@ namespace FargowiltasSouls.Projectiles
                         target.AddBuff(BuffID.OnFire, 300);
                         if (NPC.golemBoss != -1 && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem)
                         {
-                            target.AddBuff(mod.BuffType("Defenseless"), 480);
-                            target.AddBuff(BuffID.WitheredArmor, 480);
+                            target.AddBuff(mod.BuffType("Defenseless"), 600);
+                            target.AddBuff(BuffID.WitheredArmor, 600);
                             if (Main.tile[(int)Main.npc[NPC.golemBoss].Center.X / 16, (int)Main.npc[NPC.golemBoss].Center.Y / 16] == null || //outside temple
                                 Main.tile[(int)Main.npc[NPC.golemBoss].Center.X / 16, (int)Main.npc[NPC.golemBoss].Center.Y / 16].wall != WallID.LihzahrdBrickUnsafe)
                             {
