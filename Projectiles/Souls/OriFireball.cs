@@ -56,6 +56,11 @@ namespace FargowiltasSouls.Projectiles.Souls
             projectile.ai[1] += projectile.ai[0];
         }
 
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            target.AddBuff(BuffID.OnFire, 300);
+        }
+
         public override void Kill(int timeLeft)
         {
             //dust soon tm
