@@ -102,3 +102,18 @@ True Mutant Armor's phantasmal ring now disappears when toggled off
 
 
 
+
+
+
+
+
+
+orichalcum enchant fireballs are now their own projectile, and they deal 25 base damage instead of 10
+-updated calamity compatability, should break much less easily now
+-bee enchant now actually works with wasps too
+-new toggle for calamaity turtle shell
+-calamaity breakage almost begoned 
+-gravity control toggle also works with valadium 
+
+
+

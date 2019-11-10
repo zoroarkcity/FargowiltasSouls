@@ -236,7 +236,7 @@ namespace FargowiltasSouls.Projectiles
                         projectile.timeLeft = 600;
                     }
 
-                    if (modPlayer.BeeEnchant && (projectile.type == ProjectileID.GiantBee || projectile.type == ProjectileID.Bee) && Main.rand.Next(2) == 0)
+                    if (modPlayer.BeeEnchant && (projectile.type == ProjectileID.GiantBee || projectile.type == ProjectileID.Bee || projectile.type == ProjectileID.Wasp) && Main.rand.Next(2) == 0)
                     {
                         projectile.usesLocalNPCImmunity = true;
                         projectile.localNPCHitCooldown = 5;
@@ -414,11 +414,6 @@ namespace FargowiltasSouls.Projectiles
                 else
                 {
                     projectile.ai[1] -= projectile.ai[0];
-                }
-
-                if (modPlayer.OriEnchant && (projectile.type == ProjectileID.BallofFire || projectile.type == ProjectileID.CursedFlameFriendly || projectile.type == ProjectileID.BallofFrost) && SoulConfig.Instance.GetValue("Orichalcum Fireballs"))
-                {
-                    projectile.timeLeft = 2;
                 }
 
                 retVal = false;
@@ -1627,9 +1622,6 @@ namespace FargowiltasSouls.Projectiles
 
                 modPlayer.CobaltCD = 60;
             }
-
-            if (modPlayer.OriEnchant && Rotate && projectile.type != ProjectileID.Bone)
-                modPlayer.OriSpawn = false;
         }
 
         public override void GrapplePullSpeed(Projectile projectile, Player player, ref float speed)

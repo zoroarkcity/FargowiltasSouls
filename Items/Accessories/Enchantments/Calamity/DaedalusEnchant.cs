@@ -1,7 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.CalPlayer;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
@@ -56,21 +55,19 @@ Summons a Bear and Third Sage pet");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-
             if (SoulConfig.Instance.GetValue("Daedalus Effects"))
             {
-                modPlayer.daedalusReflect = true;
-                modPlayer.daedalusShard = true;
-                modPlayer.daedalusAbsorb = true;
-                modPlayer.daedalusCrystal = true;
-                modPlayer.daedalusSplit = true;
+                calamity.Call("SetSetBonus", player, "daedalus_melee", true);
+                calamity.Call("SetSetBonus", player, "daedalus_ranged", true);
+                calamity.Call("SetSetBonus", player, "daedalus_magic", true);
+                calamity.Call("SetSetBonus", player, "daedalus_summon", true);
+                calamity.Call("SetSetBonus", player, "daedalus_rogue", true);
             }
             
             if (SoulConfig.Instance.GetValue("Permafrost's Concoction"))
             {
                 //permafrost concoction
-                modPlayer.permafrostsConcoction = true;
+                calamity.GetItem("PermafrostsConcoction").UpdateAccessory(player, hideVisual);
             }
             
             if (player.GetModPlayer<FargoPlayer>().Eternity) return;
@@ -89,7 +86,7 @@ Summons a Bear and Third Sage pet");
 
             //regenerator
             if (SoulConfig.Instance.GetValue("Regenator"))
-                modPlayer.regenator = true;
+                calamity.GetItem("Regenator").UpdateAccessory(player, hideVisual);
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.DaedalusEnchant = true;

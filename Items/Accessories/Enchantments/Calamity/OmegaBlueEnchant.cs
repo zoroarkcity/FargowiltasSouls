@@ -51,12 +51,11 @@ Summons a Siren pet");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-            player.ignoreWater = true;
-
             if (SoulConfig.Instance.GetValue("Omega Blue Tentacles"))
             {
-                modPlayer.omegaBlueSet = true;
+                calamity.Call("SetSetBonus", player, "omegablue", true);
+                CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
+                
                 if (modPlayer.omegaBlueCooldown > 0)
                 {
                     if (modPlayer.omegaBlueCooldown == 1)
@@ -86,26 +85,15 @@ Summons a Siren pet");
             //abyssal diving suit
             if (SoulConfig.Instance.GetValue("Abyssal Diving Suit"))
             {
-                //because screw that slow speed out of water ech
-                if (!Collision.DrownCollision(player.position, player.width, player.height, player.gravDir))
-                {
-                    player.runAcceleration *= 2.5f;
-                    player.maxRunSpeed *= 2.5f;
-                }
-                modPlayer.abyssalDivingSuit = true;
-                if (hideVisual)
-                {
-                    modPlayer.abyssalDivingSuitHide = true;
-                }
+                calamity.GetItem("AbyssalDivingSuit").UpdateAccessory(player, hideVisual);
             }
 
             //lumenous amulet
-            modPlayer.abyssalAmulet = true;
-            modPlayer.lumenousAmulet = true;
+            calamity.GetItem("LumenousAmulet").UpdateAccessory(player, hideVisual);
             //reaper tooth necklace
-            player.armorPenetration += 100;
+            calamity.GetItem("ReaperToothNecklace").UpdateAccessory(player, hideVisual);
             //aquatic emblem
-            modPlayer.aquaticEmblem = true;
+            calamity.GetItem("AquaticEmblem").UpdateAccessory(player, hideVisual);
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.OmegaBlueEnchant = true;

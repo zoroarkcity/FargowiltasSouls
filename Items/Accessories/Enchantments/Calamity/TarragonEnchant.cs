@@ -78,31 +78,24 @@ Debuff状态下, 增加10%盗贼伤害
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-
             if (SoulConfig.Instance.GetValue("Tarragon Effects"))
             {
-                modPlayer.tarraSet = true;
-                //melee
-                modPlayer.tarraMelee = true;
-                //range
-                modPlayer.tarraRanged = true;
-                //magic
-                modPlayer.tarraMage = true;
-                //summon
-                modPlayer.tarraSummon = true;
-                //throw
-                modPlayer.tarraThrowing = true;
+                calamity.Call("SetSetBonus", player, "tarragon", true);
+                calamity.Call("SetSetBonus", player, "tarragon_melee", true);
+                calamity.Call("SetSetBonus", player, "tarragon_ranged", true);
+                calamity.Call("SetSetBonus", player, "tarragon_magic", true);
+                calamity.Call("SetSetBonus", player, "tarragon_summon", true);
+                calamity.Call("SetSetBonus", player, "tarragon_rogue", true);
             }
             
             if (SoulConfig.Instance.GetValue("Profaned Soul Artifact"))
             {
                 //profaned soul artifact
-                modPlayer.pArtifact = true;
+                calamity.GetItem("ProfanedSoulArtifact").UpdateAccessory(player, hideVisual);
             }
 
             //dark sun ring
-            modPlayer.darkSunRing = true;
+            calamity.GetItem("DarkSunRing").UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

@@ -39,6 +39,7 @@ All fishing rods will have 4 extra lures");
             item.width = 20;
             item.height = 20;
             item.accessory = true;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
             item.value = 100000;
             item.rare = 5;
         }

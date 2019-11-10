@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
-using Microsoft.Xna.Framework;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
@@ -103,10 +102,13 @@ Summons a pet Pink Slime");
             if (modPlayer.ThoriumSoul) return;
 
             //valadium
-            player.gravControl = true;
-            if (player.gravDir == -1f)
+            if (SoulConfig.Instance.GetValue("Gravity Control"))
             {
-                modPlayer.AllDamageUp(.12f);
+                player.gravControl = true;
+                if (player.gravDir == -1f)
+                {
+                    modPlayer.AllDamageUp(.12f);
+                }
             }
 
             /*//terrarium woofer

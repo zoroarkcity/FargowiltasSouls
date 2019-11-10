@@ -24,6 +24,7 @@ namespace FargowiltasSouls.Projectiles.Souls
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
+            projectile.usesLocalNPCImmunity = true;
         }
 
         public override void AI()
@@ -31,38 +32,39 @@ namespace FargowiltasSouls.Projectiles.Souls
             Player player = Main.player[projectile.owner];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            projectile.timeLeft++;
+            projectile.timeLeft = 2;
 
             if (player.dead)
             {
                 modPlayer.OriEnchant = false;
             }
 
-            if (!(modPlayer.OriEnchant || modPlayer.TerrariaSoul) || !SoulConfig.Instance.GetValue("Orichalcum Fireballs"))
+            if (!(modPlayer.OriEnchant) || !SoulConfig.Instance.GetValue("Orichalcum Fireballs"))
             {
                 projectile.Kill();
                 return;
             }
 
-            if (projectile.owner == Main.myPlayer)
-            {
-                //rotation mumbo jumbo
-                float distanceFromPlayer = 120;
+            //Factors for calculations
+            double deg = projectile.ai[1];
+            double rad = deg * (Math.PI / 180);
+            int dist = 120;
 
-                projectile.position = player.Center + new Vector2(distanceFromPlayer, 0f).RotatedBy(projectile.ai[1]);
-                projectile.position.X -= projectile.width / 2;
-                projectile.position.Y -= projectile.height / 2;
+            projectile.position.X = player.Center.X - (int)(Math.Cos(rad) * dist) - projectile.width / 2;
+            projectile.position.Y = player.Center.Y - (int)(Math.Sin(rad) * dist) - projectile.height / 2;
 
-                float rotation = .07f;
-                projectile.ai[1] += rotation;
-                if (projectile.ai[1] > (float)Math.PI)
-                {
-                    projectile.ai[1] -= 2f * (float)Math.PI;
-                    projectile.netUpdate = true;
-                }
+            projectile.ai[1] += projectile.ai[0];
+        }
 
-                projectile.rotation = (Main.MouseWorld - projectile.Center).ToRotation() - 5;
-            }
+        public override void Kill(int timeLeft)
+        {
+            //dust soon tm
+
+
+            Player player = Main.player[projectile.owner];
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+
+            modPlayer.OriSpawn = false;
         }
     }
 }

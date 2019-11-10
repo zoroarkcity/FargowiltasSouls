@@ -992,6 +992,7 @@ namespace FargowiltasSouls
             "Poisonous Sea Water",
             "Daedalus Effects",
             "Reaver Effects",
+            "Fabled Turtle Shell",
             "Astral Stars",
             "Ataxia Effects",
             "Xeroc Effects",
@@ -1045,6 +1046,7 @@ namespace FargowiltasSouls
             "CalamityPoisonSeawaterConfig",
             "CalamityDaedalusEffectsConfig",
             "CalamityReaverEffectsConfig",
+            "CalamityFabledTurtleConfig",
             "CalamityAstralStarsConfig",
             "CalamityAtaxiaEffectsConfig",
             "CalamityXerocEffectsConfig",
@@ -1098,6 +1100,7 @@ namespace FargowiltasSouls
             "SilvaEnchant",
             "DaedalusEnchant",
             "ReaverEnchant",
+            "ReaverEnchant",
             "AstralEnchant",
             "AtaxiaEnchant",
             "XerocEnchant",
@@ -1125,6 +1128,7 @@ namespace FargowiltasSouls
             "DemonShadeEnchant"};
 
             string[] calamityColor = {
+            "ffffff",
             "ffffff",
             "ffffff",
             "ffffff",
@@ -1302,12 +1306,12 @@ namespace FargowiltasSouls
                 if (CalamityLoaded)
                 {
                     Mod calamity = ModLoader.GetMod("CalamityMod");
-                    ModProjDict.Add(calamity.ProjectileType("Kendra"), 101);
+                    ModProjDict.Add(calamity.ProjectileType("KendraPet"), 101);
                     ModProjDict.Add(calamity.ProjectileType("PerforaMini"), 102);
                     ModProjDict.Add(calamity.ProjectileType("ThirdSage"), 103);
                     ModProjDict.Add(calamity.ProjectileType("Bear"), 104);
-                    ModProjDict.Add(calamity.ProjectileType("Brimling"), 105);
-                    ModProjDict.Add(calamity.ProjectileType("DannyDevito"), 106);
+                    ModProjDict.Add(calamity.ProjectileType("BrimlingPet"), 105);
+                    ModProjDict.Add(calamity.ProjectileType("DannyDevitoPet"), 106);
                     ModProjDict.Add(calamity.ProjectileType("SirenYoung"), 107);
                     ModProjDict.Add(calamity.ProjectileType("ChibiiDoggo"), 108);
                     ModProjDict.Add(calamity.ProjectileType("ChibiiDoggoFly"), 109);

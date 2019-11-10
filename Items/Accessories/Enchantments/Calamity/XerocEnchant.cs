@@ -53,16 +53,13 @@ Effects of The Community");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-
             if (SoulConfig.Instance.GetValue("Xeroc Effects"))
             {
-               
-                modPlayer.xerocSet = true;
+                calamity.Call("SetSetBonus", player, "xeroc", true);
             }
 
             //the community
-            modPlayer.community = true;
+            calamity.GetItem("TheCommunity").UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()

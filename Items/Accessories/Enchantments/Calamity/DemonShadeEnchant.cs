@@ -25,8 +25,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 All attacks inflict Demon Flames
 Shadowbeams and Demon Scythes fall from the sky on hit
 A friendly red devil follows you around
-Enemies take ungodly damage when they touch you
-Standing still lets you absorb the shadows and boost your life regen
 Press Y to enrage nearby enemies with a dark magic spell for 10 seconds
 This makes them do 1.5 times more damage but they also take five times as much damage
 Summons a Levi pet");
@@ -68,13 +66,8 @@ Summons a Levi pet");
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
             CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-            //body
-            modPlayer.shadeRegen = true;
-            player.thorns = 100f;
-            //legs
-            modPlayer.shadowSpeed = true;
             //set bonus
-            modPlayer.dsSetBonus = true;
+            calamity.Call("SetSetBonus", player, "demonshade", true);
 
             if (SoulConfig.Instance.GetValue("Red Devil Minion"))
             {
