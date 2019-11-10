@@ -64,7 +64,7 @@ Increases your max number of sentries by 1");
                 recipe.AddIngredient(ItemID.SummonerEmblem);
                 recipe.AddIngredient(thorium.ItemType("RosySlimeStaff"));
                 recipe.AddIngredient(thorium.ItemType("HatchlingStaff"));
-                recipe.AddIngredient(thorium.ItemType("MeatBallStaff"));
+                recipe.AddIngredient(thorium.ItemType("FalconeerCane"));
                 recipe.AddIngredient(thorium.ItemType("AmberMinion"));
                 recipe.AddIngredient(thorium.ItemType("MeteorStaff"));
                 recipe.AddIngredient(thorium.ItemType("NanoClamCane"));

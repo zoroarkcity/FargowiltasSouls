@@ -114,6 +114,9 @@ orichalcum enchant fireballs are now their own projectile, and they deal 25 base
 -new toggle for calamaity turtle shell
 -calamaity breakage almost begoned 
 -gravity control toggle also works with valadium 
+-evil critters still spawn pre eoc but are rarer until he is defeated
+-updated noble to its new effect
+-fixed all thorium recipes
 
 
 

@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             Tooltip.SetDefault(
 @"'Techno rave!'
 Pressing the 'Special Ability' key will cycle you through four states
-Effects of Auto Tuner and Red Music Player");
+Effects of Auto Tuner and Metal Music Player");
             DisplayName.AddTranslation(GameCulture.Chinese, "赛博朋克魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'科技电音狂欢!'
@@ -50,19 +50,25 @@ Effects of Auto Tuner and Red Music Player");
             if (SoulConfig.Instance.GetValue("Cyber Punk States"))
             {
                 //cyber set bonus, good lord
-                thoriumPlayer.cyberHeadAllowed = false;
-                thoriumPlayer.cyberBodyAllowed = false;
-                thoriumPlayer.cyberLegsAllowed = false;
-
-
-
+                thoriumPlayer.cyberHeadAllowed = true;
+                thoriumPlayer.cyberBodyAllowed = true;
+                thoriumPlayer.cyberLegsAllowed = true;
 
                 thoriumPlayer.setCyberPunk = true;
-                //BardItem.ApplyEmpowerments(player);
+
+                //EmpowermentPool empowermentPool = new EmpowermentPool();
+                
+                //empowermentPool.Add<FlatDamage>(2);
+                //empowermentPool.Add<Damage>(2);
+
+                Main.NewText(thoriumPlayer.setCyberPunkValue);
+
                 switch (thoriumPlayer.setCyberPunkValue)
                 {
                     case 0:
                         {
+                            //EmpowermentLoader.appl
+
                             Lighting.AddLight(player.position, 0.45f, 0.1f, 0.1f);
                             EmpowermentTimer empTimer = thoriumPlayer.GetEmpTimer<FlatDamage>();
                             if (empTimer.level == 2)
@@ -134,8 +140,8 @@ Effects of Auto Tuner and Red Music Player");
             //auto tuner
             thoriumPlayer.accAutoTuner = true;
             //music player
-            //thoriumPlayer.musicPlayer = true;
-            //thoriumPlayer.MP3Damage = 2;
+            thoriumPlayer.accMusicPlayer = true;
+            thoriumPlayer.accMP3Brass = true;
         }
        
         private readonly string[] items =

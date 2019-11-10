@@ -32,11 +32,9 @@ Your attacks inflict Frostburn
             if (thorium != null)
             {
                 tooltip +=
-@"Effects of Sub-Zero Subwoofer
-Summons a pet Snowman";
+@"Summons a pet Snowman";
                 tooltip_ch +=
-@"拥有零度音箱的效果
-召唤一个小雪人";
+@"召唤一个小雪人";
             }
             else
             {
@@ -73,24 +71,9 @@ Summons a pet Snowman";
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<FargoPlayer>().FrostEffect(50, hideVisual);
-
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
         }
 
-        private void Thorium(Player player)
-        {
-            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            //subwoofer
-            /*thoriumPlayer.bardRangeBoost += 450;
-            for (int i = 0; i < 255; i++)
-            {
-                Player player2 = Main.player[i];
-                if (player2.active && !player2.dead && Vector2.Distance(player2.Center, player.Center) < 450f)
-                {
-                    thoriumPlayer.empowerFrost = true;
-                }
-            }*/
-        }
+
 
         public override void AddRecipes()
         {
@@ -101,9 +84,9 @@ Summons a pet Snowman";
             
             if(Fargowiltas.Instance.ThoriumLoaded)
             {
-                recipe.AddIngredient(thorium.ItemType("FrostSubwoofer"));
                 recipe.AddIngredient(ItemID.Frostbrand);
                 recipe.AddIngredient(thorium.ItemType("BlizzardsEdge"));
+                recipe.AddIngredient(thorium.ItemType("GlacierFang"));
                 recipe.AddIngredient(thorium.ItemType("Glacieor"));
                 recipe.AddIngredient(ItemID.IceBow);
                 recipe.AddIngredient(thorium.ItemType("FreezeRay"));

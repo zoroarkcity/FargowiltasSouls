@@ -46,7 +46,7 @@ Increases flight time by 50%
 
             if (thorium != null)
             {
-                tooltip += "Effects of Bee Booties and Arachnid's Subwoofer\n";
+                tooltip += "Effects of Bee Booties\n";
                 tooltip_ch += "拥有蜜蜂靴和蛛网音箱的效果\n";
             }
 
@@ -104,18 +104,6 @@ Increases flight time by 50%
                 player.moveSpeed -= 0.15f;
                 player.maxRunSpeed -= 1f;
             }
-
-            if (modPlayer.ThoriumSoul) return;
-
-            /*//venom woofer
-            for (int i = 0; i < 255; i++)
-            {
-                Player player2 = Main.player[i];
-                if (player2.active && !player2.dead && Vector2.Distance(player2.Center, player.Center) < 450f)
-                {
-                    thoriumPlayer.empowerVenom = true;
-                }
-            }*/
         }
 
         public override void AddRecipes()

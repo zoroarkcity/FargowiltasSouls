@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 Allows you and nearby allies to breathe underwater
 Grants the ability to swim
 You and nearby allies gain 10% increased damage and movement speed
-Effects of Sea Breeze Pendant, Bubble Magnet, and Deep Dark Subwoofer
+Effects of Sea Breeze Pendant and Bubble Magnet
 Summons a pet Jellyfish");
             DisplayName.AddTranslation(GameCulture.Chinese, "深渊潜游者魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -62,17 +62,7 @@ Summons a pet Jellyfish");
                     player2.AddBuff(thorium.BuffType("DepthBreath"), 30, false);
                 }
             }
-            //depth woofer
-            /*thoriumPlayer.bardRangeBoost += 450;
-            for (int i = 0; i < 255; i++)
-            {
-                Player player2 = Main.player[i];
-                if (player2.active && !player2.dead && Vector2.Distance(player2.Center, player.Center) < 450f)
-                {
-                    thoriumPlayer.empowerGouge = true;
-                }
-            }*/
-
+            
             //sea breeze pendant
             player.accFlipper = true;
 
@@ -90,10 +80,10 @@ Summons a pet Jellyfish");
         
         private readonly string[] items =
         {
-            "DepthSubwoofer",
             "FrostPelter",
             "MagicConch",
             "GeyserStaff",
+            "ScubaCurva",
             "AnglerBulb",
             "JellyFishIdol"
         };

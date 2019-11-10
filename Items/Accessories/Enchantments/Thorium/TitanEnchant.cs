@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             Tooltip.SetDefault(
 @"'Infused with primordial energy'
 15% increased damage
-Effects of Mask of the Crystal Eye, Abyssal Shell, and Cyan Music Player");
+Effects of Mask of the Crystal Eye, Abyssal Shell, and Rock Music Player");
             DisplayName.AddTranslation(GameCulture.Chinese, "泰坦魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'充溢着原始能量'
@@ -51,8 +51,8 @@ Effects of Mask of the Crystal Eye, Abyssal Shell, and Cyan Music Player");
             //abyssal shell
             thoriumPlayer.AbyssalShell = true;
             //music player
-            //thoriumPlayer.musicPlayer = true;
-            //thoriumPlayer.MP3DamageReduction = 2;
+            thoriumPlayer.accMusicPlayer = true;
+            thoriumPlayer.accMP3String = true;
         }
 
         public override void AddRecipes()

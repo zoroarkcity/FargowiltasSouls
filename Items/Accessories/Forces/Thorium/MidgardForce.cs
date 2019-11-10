@@ -111,16 +111,9 @@ Summons a pet Pink Slime");
                 }
             }
 
-            /*//terrarium woofer
-            thoriumPlayer.bardRangeBoost += 450;
-            for (int i = 0; i < 255; i++)
-            {
-                Player player2 = Main.player[i];
-                if (player2.active && !player2.dead && Vector2.Distance(player2.Center, player.Center) < 450f)
-                {
-                    thoriumPlayer.empowerTerrarium = true;
-                }
-            }*/
+            //terrarium woofer
+            thoriumPlayer.accSubwooferTerrarium = true;
+
         }
 
         public override void AddRecipes()

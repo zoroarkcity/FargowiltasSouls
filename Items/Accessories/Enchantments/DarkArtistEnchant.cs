@@ -103,6 +103,7 @@ Greatly enhances Flameburst effectiveness
                 recipe.AddIngredient(thorium.ItemType("DarkMageStaff"));
                 recipe.AddIngredient(ItemID.ShadowFlameHexDoll);
                 recipe.AddIngredient(ItemID.InfernoFork);
+                recipe.AddIngredient(thorium.ItemType("ShadowFlareBow"));
             }
             else
             {

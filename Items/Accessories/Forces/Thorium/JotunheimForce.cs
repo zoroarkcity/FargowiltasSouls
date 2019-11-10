@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
-using Microsoft.Xna.Framework;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
@@ -23,7 +22,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
 @"'A bitter cold, the power of the Jotuns...'
 All armor bonuses from Depth Diver, Yew Wood, and Tide Hunter
 All armor bonuses from Naga Skin, Icy, Cryo Magus, and Whispering
-Effects of Sea Breeze Pendant, Bubble Magnet, and Deep Dark Subwoofer
+Effects of Sea Breeze Pendant and Bubble Magnet
 Effects of Goblin War Shield, Agnor's Bowl, and Ice Bound Strider Hide
 Summons several pets");
             DisplayName.AddTranslation(GameCulture.Chinese, "约顿海姆之力");
@@ -117,17 +116,6 @@ Summons several pets");
             {
                 player.moveSpeed += 0.15f;
             }
-
-            //depth woofer
-            /*thoriumPlayer.bardRangeBoost += 450;
-            for (int i = 0; i < 255; i++)
-            {
-                Player player2 = Main.player[i];
-                if (player2.active && !player2.dead && Vector2.Distance(player2.Center, player.Center) < 450f)
-                {
-                    thoriumPlayer.empowerGouge = true;
-                }
-            }*/
 
             //goblin war shield
             thorium.GetItem("GoblinWarshield").UpdateAccessory(player, hideVisual);

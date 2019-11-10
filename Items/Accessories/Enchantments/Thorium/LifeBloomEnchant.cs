@@ -64,7 +64,7 @@ Effects of Flawless Chrysalis and Guide to Plant Fiber Cordage");
         {
             "Chrysalis",
             "HiveMind",
-            "ButterflyStaff5",
+            "ButterflyStaff",
             "HoneyBlade",
             "MushymenStaff",
             "OdinsEye"

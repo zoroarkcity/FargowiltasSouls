@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 @"'What killed the dinosaurs? The ice age!'
 Damage will duplicate itself for 33% of the damage and apply the Frozen debuff to hit enemies
 An icy aura surrounds you, which freezes nearby enemies after a short delay
-Effects of Frostburn Pouch, Ice Bound Strider Hide, and Blue Music Player
+Effects of Frostburn Pouch and Ice Bound Strider Hide
 Summons a pet Penguin and Owl");
             DisplayName.AddTranslation(GameCulture.Chinese, "冰法魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -53,9 +53,6 @@ Summons a pet Penguin and Owl");
             modPlayer.CryoEnchant = true;
             //strider hide
             thoriumPlayer.frostBonusDamage = true;
-            //music player
-            //thoriumPlayer.musicPlayer = true;
-            //thoriumPlayer.MP3ManaRegen = 2;
             //pets
             modPlayer.IcyEnchant = true;
             modPlayer.AddPet("Penguin Pet", hideVisual, BuffID.BabyPenguin, ProjectileID.Penguin);
@@ -81,9 +78,9 @@ Summons a pet Penguin and Owl");
             recipe.AddIngredient(thorium.ItemType("CryoMagusLeggings"));
             recipe.AddIngredient(null, "IcyEnchant");
             recipe.AddIngredient(thorium.ItemType("IceBoundStriderHide"));
-            recipe.AddIngredient(thorium.ItemType("TunePlayerManaRegen"));
             recipe.AddIngredient(thorium.ItemType("IceFairyStaff"));
             recipe.AddIngredient(ItemID.FrostStaff);
+            recipe.AddIngredient(ItemID.IceRod);
             recipe.AddIngredient(thorium.ItemType("Cryotherapy"));
             recipe.AddIngredient(thorium.ItemType("LostMail"));
 

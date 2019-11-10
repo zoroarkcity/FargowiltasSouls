@@ -77,10 +77,10 @@ These effects needs to recharge for 1 minute");
             "RallyHat",
             "RhapsodistChestWoofer",
             "RhapsodistBoots",
-            "MusicSheet6",
             "SirensAllure",
             "TerrariumAutoharp",
             "Sousaphone",
+            "Holophonor",
             "EdgeofImagination",
             "BlackMIDI"
         };

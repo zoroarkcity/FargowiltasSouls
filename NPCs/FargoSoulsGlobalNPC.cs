@@ -8671,28 +8671,28 @@ namespace FargowiltasSouls.NPCs
                     //mutually exclusive world layers
                     if (surface)
                     {
-                        if (night)
+                        if (night && normalSpawn)
                         {
-                            if (normalSpawn && NPC.downedBoss1)
+                            if (noBiome)
                             {
-                                if (noBiome)
-                                {
-                                    pool[NPCID.CorruptBunny] = .05f;
-                                    pool[NPCID.CrimsonBunny] = .05f;
-                                }
+                                pool[NPCID.CorruptBunny] = NPC.downedBoss1 ? .05f : .025f;
+                                pool[NPCID.CrimsonBunny] = NPC.downedBoss1 ? .05f : .025f;
+                            }
 
-                                if (snow)
-                                {
-                                    pool[NPCID.CorruptPenguin] = .1f;
-                                    pool[NPCID.CrimsonPenguin] = .1f;
-                                }
+                            if (snow)
+                            {
+                                pool[NPCID.CorruptPenguin] = NPC.downedBoss1 ? .1f : .05f;
+                                pool[NPCID.CrimsonPenguin] = NPC.downedBoss1 ? .1f : .05f;
+                            }
 
-                                if (ocean || Main.raining)
-                                {
-                                    pool[NPCID.CorruptGoldfish] = .1f;
-                                    pool[NPCID.CrimsonGoldfish] = .1f;
-                                }
+                            if (ocean || Main.raining)
+                            {
+                                pool[NPCID.CorruptGoldfish] = NPC.downedBoss1 ? .1f : .05f;
+                                pool[NPCID.CrimsonGoldfish] = NPC.downedBoss1 ? .1f : .05f;
+                            }
 
+                            if (NPC.downedBoss1)
+                            {
                                 if (jungle)
                                     pool[NPCID.DoctorBones] = .05f;
 
@@ -11514,7 +11514,7 @@ namespace FargowiltasSouls.NPCs
             if (modPlayer.ValhallaEnchant && SoulConfig.Instance.GetValue("Valhalla Knockback") 
                 && !npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune && npc.knockBackResist < 1)
             {
-                npc.knockBackResist += .01f;
+                npc.knockBackResist += .002f;
                 if (npc.knockBackResist > .5f)
                     npc.knockBackResist = .5f;
             }

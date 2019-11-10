@@ -21,9 +21,8 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
             Tooltip.SetDefault(
 @"'A world of mist, a sign of the dead...'
 All armor bonuses from Crier, Noble, Cyber Punk, Ornate, and Maestro
-Effects of Ring of Unity, Mix Tape and Devil's Subwoofer
-Effects of Auto Tuner, Concert Tickets, and Metronome
-Effects of Red, Brown, and Purple Music Players");
+Effects of Ring of Unity and Mix Tape
+Effects of Auto Tuner, Concert Tickets, and Metronome");
             DisplayName.AddTranslation(GameCulture.Chinese, "尼福尔海姆之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'迷雾之界, 死亡的象征...'
