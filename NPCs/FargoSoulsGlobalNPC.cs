@@ -6373,9 +6373,22 @@ namespace FargowiltasSouls.NPCs
                         }
                         break;
 
+                    case NPCID.GoblinArcher:
+                    case NPCID.GoblinPeon:
+                    case NPCID.GoblinScout:
+                    case NPCID.GoblinSorcerer:
+                    case NPCID.GoblinWarrior:
+                        if (npc.HasPlayerTarget && (!Main.player[npc.target].active || Main.player[npc.target].dead))
+                        {
+                            npc.TargetClosest();
+                            if (npc.HasPlayerTarget && (!Main.player[npc.target].active || Main.player[npc.target].dead))
+                                npc.noTileCollide = true;
+                        }
+                        break;
+
                     case NPCID.GoblinThief:
                         npc.position.X += npc.velocity.X;
-                        break;
+                        goto case NPCID.GoblinArcher;
 
                     case NPCID.VileSpit:
                         /*if (--Counter2 < 0)

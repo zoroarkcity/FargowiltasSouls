@@ -2,6 +2,7 @@ goblins only forced on 2+ orbs broken
 pirates only forced on 4+ altars broken
 defeating goblins for the first time will force a meteor drop
 debug text...
+goblins through floor when everyone dead
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
