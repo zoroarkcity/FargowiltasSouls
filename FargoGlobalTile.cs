@@ -237,26 +237,34 @@ namespace FargowiltasSouls
             switch(type)
             {
                 case TileID.ShadowOrbs:
-                    if (FargoSoulsWorld.MasochistMode && Main.invasionType == 0 && !NPC.downedGoblins)
+                    Main.NewText(WorldGen.shadowOrbCount.ToString());
+                    if (FargoSoulsWorld.MasochistMode)
                     {
-                        int p = Player.FindClosest(new Vector2(i * 16, j * 16), 0, 0);
-                        if (p != -1 && Main.player[p].statLifeMax2 >= 200)
+                        if (WorldGen.shadowOrbCount == 1 && !NPC.downedGoblins)
+                            FargoSoulsWorld.forceMeteor = true;
+
+                        if (Main.invasionType == 0 && !NPC.downedGoblins && WorldGen.shadowOrbCount % 3 != 1) //force goblins
                         {
-                            if (Main.netMode != 1)
+                            int p = Player.FindClosest(new Vector2(i * 16, j * 16), 0, 0);
+                            if (p != -1 && Main.player[p].statLifeMax2 >= 200)
                             {
-                                Main.invasionDelay = 0;
-                                Main.StartInvasion(1);
-                            }
-                            else
-                            {
-                                NetMessage.SendData(61, -1, -1, null, p, -1f);
+                                if (Main.netMode != 1)
+                                {
+                                    Main.invasionDelay = 0;
+                                    Main.StartInvasion(1);
+                                }
+                                else
+                                {
+                                    NetMessage.SendData(61, -1, -1, null, p, -1f);
+                                }
                             }
                         }
                     }
                     break;
 
                 case TileID.DemonAltar:
-                    if (FargoSoulsWorld.MasochistMode && Main.hardMode && Main.invasionType == 0 && !NPC.downedPirates)
+                    Main.NewText(WorldGen.altarCount.ToString());
+                    if (FargoSoulsWorld.MasochistMode && Main.hardMode && Main.invasionType == 0 && !NPC.downedPirates && WorldGen.altarCount > 3)
                     {
                         int p = Player.FindClosest(new Vector2(i * 16, j * 16), 0, 0);
                         if (p != -1 && Main.player[p].statLifeMax2 >= 200)

@@ -9369,12 +9369,25 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, ItemID.WrathPotion, Main.rand.Next(2, 5) + 1);
                         break;
 
+                    case NPCID.GoblinArcher:
+                    case NPCID.GoblinPeon:
+                    case NPCID.GoblinScout:
+                    case NPCID.GoblinSorcerer:
+                    case NPCID.GoblinThief:
+                    case NPCID.GoblinWarrior:
+                        if (NPC.downedGoblins && FargoSoulsWorld.forceMeteor)
+                        {
+                            FargoSoulsWorld.forceMeteor = false;
+                            WorldGen.dropMeteor();
+                        }
+                        break;
+
                     case NPCID.GoblinSummoner:
                         if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("WretchedPouch"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.SummoningPotion, Main.rand.Next(2, 5) + 1);
-                        break;
+                        goto case NPCID.GoblinArcher;
 
                     case NPCID.PirateCaptain:
                         if (Main.rand.Next(15) == 0)
