@@ -3113,7 +3113,7 @@ namespace FargowiltasSouls
 
             int timeLeft = player.buffTime[buffIndex];
             float baseVal = (float)(MaxInfestTime - timeLeft) / 75; //change the denominator to adjust max power of DOT
-            int modifier = (int)(baseVal * baseVal + 4);
+            int modifier = (int)(baseVal * baseVal + 6);
 
             InfestedDust = baseVal / 10 + 1f;
             if (InfestedDust > 5f)
