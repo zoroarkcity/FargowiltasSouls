@@ -237,13 +237,12 @@ namespace FargowiltasSouls
             switch(type)
             {
                 case TileID.ShadowOrbs:
-                    Main.NewText(WorldGen.shadowOrbCount.ToString());
                     if (FargoSoulsWorld.MasochistMode)
                     {
-                        if (WorldGen.shadowOrbCount == 1 && !NPC.downedGoblins)
+                        if (!WorldGen.shadowOrbSmashed && !NPC.downedGoblins)
                             FargoSoulsWorld.forceMeteor = true;
 
-                        if (Main.invasionType == 0 && !NPC.downedGoblins && WorldGen.shadowOrbCount % 3 != 1) //force goblins
+                        if (Main.invasionType == 0 && !NPC.downedGoblins && WorldGen.shadowOrbSmashed) //force goblins
                         {
                             int p = Player.FindClosest(new Vector2(i * 16, j * 16), 0, 0);
                             if (p != -1 && Main.player[p].statLifeMax2 >= 200)
@@ -263,8 +262,7 @@ namespace FargowiltasSouls
                     break;
 
                 case TileID.DemonAltar:
-                    Main.NewText(WorldGen.altarCount.ToString());
-                    if (FargoSoulsWorld.MasochistMode && Main.hardMode && Main.invasionType == 0 && !NPC.downedPirates && WorldGen.altarCount > 3)
+                    if (FargoSoulsWorld.MasochistMode && Main.hardMode && Main.invasionType == 0 && !NPC.downedPirates && WorldGen.altarCount > 2)
                     {
                         int p = Player.FindClosest(new Vector2(i * 16, j * 16), 0, 0);
                         if (p != -1 && Main.player[p].statLifeMax2 >= 200)

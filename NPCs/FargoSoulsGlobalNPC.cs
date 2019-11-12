@@ -6376,7 +6376,6 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.GoblinArcher:
                     case NPCID.GoblinPeon:
                     case NPCID.GoblinScout:
-                    case NPCID.GoblinSorcerer:
                     case NPCID.GoblinWarrior:
                         if (npc.HasPlayerTarget && (!Main.player[npc.target].active || Main.player[npc.target].dead))
                         {
@@ -6385,6 +6384,15 @@ namespace FargowiltasSouls.NPCs
                                 npc.noTileCollide = true;
                         }
                         break;
+
+                    case NPCID.GoblinSorcerer:
+                        if (npc.HasPlayerTarget && (!Main.player[npc.target].active || Main.player[npc.target].dead))
+                        {
+                            npc.TargetClosest();
+                            if (npc.HasPlayerTarget && (!Main.player[npc.target].active || Main.player[npc.target].dead))
+                                npc.noTileCollide = true;
+                        }
+                        goto case NPCID.DarkCaster;
 
                     case NPCID.GoblinThief:
                         npc.position.X += npc.velocity.X;
@@ -6562,7 +6570,6 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.DarkCaster:
                     case NPCID.FireImp:
-                    case NPCID.GoblinSorcerer:
                         if (Counter2 > 0)
                         {
                             if (Counter2 == 1)
@@ -9381,10 +9388,8 @@ namespace FargowiltasSouls.NPCs
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.WrathPotion, Main.rand.Next(2, 5) + 1);
                         break;
-
-                    case NPCID.GoblinArcher:
+                        
                     case NPCID.GoblinPeon:
-                    case NPCID.GoblinScout:
                     case NPCID.GoblinSorcerer:
                     case NPCID.GoblinThief:
                     case NPCID.GoblinWarrior:
@@ -9392,6 +9397,12 @@ namespace FargowiltasSouls.NPCs
                         {
                             FargoSoulsWorld.forceMeteor = false;
                             WorldGen.dropMeteor();
+                            if (Fargowiltas.Instance.FargowiltasLoaded && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn")))
+                            {
+                                int p = Player.FindClosest(npc.Center, 0, 0);
+                                if (p != -1)
+                                    NPC.SpawnOnPlayer(p, ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
+                            }
                         }
                         break;
 
@@ -9400,7 +9411,7 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, mod.ItemType("WretchedPouch"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.SummoningPotion, Main.rand.Next(2, 5) + 1);
-                        goto case NPCID.GoblinArcher;
+                        goto case NPCID.GoblinPeon;
 
                     case NPCID.PirateCaptain:
                         if (Main.rand.Next(15) == 0)
@@ -9555,7 +9566,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.GoblinArcher:
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.ArcheryPotion, Main.rand.Next(0, 2) + 1);
-                        break;
+                        goto case NPCID.GoblinPeon;
 
                     case NPCID.Antlion:
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
@@ -9652,7 +9663,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.GoblinScout:
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.BattlePotion, Main.rand.Next(2, 5) + 1);
-                        break;
+                        goto case NPCID.GoblinPeon;
 
                     case NPCID.Bunny:
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
