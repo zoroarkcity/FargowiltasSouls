@@ -1412,7 +1412,7 @@ namespace FargowiltasSouls
 
             //chloro head
             group = new RecipeGroup(() => Lang.misc[37] + " Chlorophyte Head Piece", ItemID.ChlorophyteMask, ItemID.ChlorophyteHelmet, ItemID.ChlorophyteHeadgear);
-            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyChlorophiteHead", group);
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyChloroHead", group);
 
             //spectre head
             group = new RecipeGroup(() => Lang.misc[37] + " Spectre Head Piece", ItemID.SpectreHood, ItemID.SpectreMask);

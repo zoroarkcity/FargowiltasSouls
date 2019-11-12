@@ -19,8 +19,8 @@ Every 8th projectile you shoot will split into 3
 Any secondary projectiles may also split";
 
 
-        public AdamantiteEnchant() : base("Adamantite Enchantment", TOOLTIP, 20, 20, 
-            Item.sellPrice(gold: 2), TileID.CrystalBall, ItemRarityID.Lime)
+        public AdamantiteEnchant() : base("Adamantite Enchantment", TOOLTIP, 20, 20,
+            TileID.CrystalBall, Item.sellPrice(gold: 2), ItemRarityID.Lime, new Color(221, 85, 125))
         {
         }
 
@@ -34,17 +34,6 @@ Any secondary projectiles may also split";
 分裂出的抛射物同样可以分裂");
 
             base.SetStaticDefaults();
-        }
-
-        public override void ModifyTooltips(List<TooltipLine> list)
-        {
-            foreach (TooltipLine tooltipLine in list)
-            {
-                if (tooltipLine.mod == nameof(Terraria) && tooltipLine.Name == TooltipLines.ITEM_NAME)
-                {
-                    tooltipLine.overrideColor = new Color(221, 85, 125);
-                }
-            }
         }
 
 
@@ -70,7 +59,6 @@ Any secondary projectiles may also split";
             recipe.AddIngredient(ItemID.TitaniumTrident);
             recipe.AddIngredient(ItemID.CrystalSerpent);
         }
-
 
         protected override void AddThoriumRecipe(ModRecipe recipe, Mod thorium)
         {

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using FargowiltasSouls.ModCompatibilities;
+using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -7,10 +9,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public abstract class EnchantmentItem : FargowiltasSoulsItem
     {
-        protected EnchantmentItem(string displayName, string tooltip, int width, int height, int craftedAt, int value, int rarity) : 
+        protected EnchantmentItem(string displayName, string tooltip, int width, int height, int craftedAt, int value, int rarity, Color nameColor) : 
             base(displayName, tooltip, width, height, value: value, rarity: rarity)
         {
             CraftedAt = craftedAt;
+
+            NameColor = nameColor;
         }
 
 
@@ -21,6 +25,14 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             ItemID.Sets.ItemNoGravity[item.type] = true;
 
             base.SetDefaults();
+        }
+
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+                if (tooltipLine.mod == nameof(Terraria) && tooltipLine.Name == TooltipLines.ITEM_NAME)
+                    tooltipLine.overrideColor = NameColor;
         }
 
 
@@ -65,5 +77,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 
         public bool RecipeAffectedByMods { get; private set; }
         public int CraftedAt { get; }
+
+        public Color NameColor { get; }
     }
 }

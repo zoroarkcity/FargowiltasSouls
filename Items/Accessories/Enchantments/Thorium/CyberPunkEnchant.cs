@@ -5,7 +5,6 @@ using ThoriumMod;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using ThoriumMod.Empowerments;
-using ThoriumMod.Items;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
