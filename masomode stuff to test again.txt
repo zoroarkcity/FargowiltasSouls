@@ -1,6 +1,7 @@
 goblins only forced on 2+ orbs broken
 pirates only forced on 4+ altars broken
 defeating goblins for the first time will force a meteor drop and spawn abom
+jellyfish aura wont display outside liquids
 goblins through floor when everyone dead
 
 -------------------------------------------------------------------------------------------------------------------

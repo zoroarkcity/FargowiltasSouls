@@ -6014,6 +6014,8 @@ namespace FargowiltasSouls.NPCs
                                 double angle = Main.rand.NextDouble() * 2d * Math.PI;
                                 offset.X += (float)(Math.Sin(angle) * 200);
                                 offset.Y += (float)(Math.Cos(angle) * 200);
+                                if (Framing.GetTileSafely(npc.Center + offset - new Vector2(4, 4)).liquid == 0) //dont display outside liquids
+                                    continue;
                                 Dust dust = Main.dust[Dust.NewDust(
                                     npc.Center + offset - new Vector2(4, 4), 0, 0,
                                     DustID.Electric, 0, 0, 100, Color.White, 1f
