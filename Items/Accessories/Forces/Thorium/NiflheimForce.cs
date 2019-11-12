@@ -20,10 +20,9 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
             DisplayName.SetDefault("Force of Niflheim");
             Tooltip.SetDefault(
 @"'A world of mist, a sign of the dead...'
-All armor bonuses from Crier, Noble, Cyber Punk, Ornate, and Conductor
-Effects of Ring of Unity, Mix Tape and Devil's Subwoofer
-Effects of Auto Tuner, Concert Tickets, and Metronome
-Effects of Red, Brown, and Purple Music Players");
+All armor bonuses from Crier, Noble, Cyber Punk, Ornate, and Maestro
+Effects of Ring of Unity and Mix Tape
+Effects of Auto Tuner, Concert Tickets, and Metronome");
             DisplayName.AddTranslation(GameCulture.Chinese, "尼福尔海姆之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'迷雾之界, 死亡的象征...'
@@ -59,13 +58,13 @@ Effects of Red, Brown, and Purple Music Players");
             mod.GetItem("NobleEnchant").UpdateAccessory(player, hideVisual);
             //cyber punk
             mod.GetItem("CyberPunkEnchant").UpdateAccessory(player, hideVisual);
-            //conductor
-            mod.GetItem("ConductorEnchant").UpdateAccessory(player, hideVisual);
+            //Maestro
+            mod.GetItem("MaestroEnchant").UpdateAccessory(player, hideVisual);
 
             if (modPlayer.ThoriumSoul) return;
 
             //crier
-            thoriumPlayer.bardResourceRecharge += 10;
+            thoriumPlayer.bardBuffDuration += 180;
             //ornate
             mod.GetItem("OrnateEnchant").UpdateAccessory(player, hideVisual);
         }
@@ -80,7 +79,7 @@ Effects of Red, Brown, and Purple Music Players");
             recipe.AddIngredient(null, "NobleEnchant");
             recipe.AddIngredient(null, "CyberPunkEnchant");
             recipe.AddIngredient(null, "OrnateEnchant");
-            recipe.AddIngredient(null, "ConductorEnchant");
+            recipe.AddIngredient(null, "MaestroEnchant");
 
             recipe.AddTile(TileID.LunarCraftingStation);
 

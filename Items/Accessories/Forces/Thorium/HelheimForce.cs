@@ -23,8 +23,8 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
 @"'From the halls of Hel, a vision of the end...'
 All armor bonuses from Spirit Trapper, Dragon, Dread, Flesh, and Demon Blood
 All armor bonuses from White Knight, and Harbinger, Lich, and Plague Doctor
-Effects of Inner Flame, Crash Boots, Dragon Talon Necklace, and Grim Subwoofer
-Effects of Vampire Gland, Demon Blood Badge, and Blood Demon's Subwoofer 
+Effects of Inner Flame, Crash Boots, and Dragon Talon Necklace
+Effects of Vampire Gland and Demon Blood Badge
 Effects of Shade Band, Lich's Gaze, and Plague Lord's Flask
 Summons several pets");
             DisplayName.AddTranslation(GameCulture.Chinese, "海姆冥界之力");
@@ -133,17 +133,6 @@ Summons several pets");
 
             if (modPlayer.ThoriumSoul) return;
 
-            //woofers
-            thoriumPlayer.bardRangeBoost += 450;
-            for (int i = 0; i < 255; i++)
-            {
-                Player player2 = Main.player[i];
-                if (player2.active && !player2.dead && Vector2.Distance(player2.Center, player.Center) < 450f)
-                {
-                    thoriumPlayer.empowerCursed = true;
-                    thoriumPlayer.empowerIchor = true;
-                }
-            }
             //dragon tooth necklace
             player.armorPenetration += 15;
 

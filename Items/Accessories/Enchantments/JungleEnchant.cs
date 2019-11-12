@@ -27,12 +27,7 @@ All herb collection is doubled
 受到伤害会释放出有毒的孢子爆炸
 所有草药收获翻倍";
 
-            if(thorium != null)
-            {
-                tooltip += "Effects of Toxic Subwoofer";
-                tooltip_ch += "拥有剧毒音响的效果";
-            }
-            else
+            if(thorium == null)
             {
                 tooltip += "Effects of Guide to Plant Fiber Cordage";
                 tooltip_ch += "拥有植物纤维绳索指南的效果";
@@ -72,22 +67,6 @@ All herb collection is doubled
             {
 
             }*/
-
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
-        }
-
-        private void Thorium(Player player)
-        {
-            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            thoriumPlayer.bardRangeBoost += 450;
-            for (int i = 0; i < 255; i++)
-            {
-                Player player2 = Main.player[i];
-                if (player2.active && !player2.dead && Vector2.Distance(player2.Center, player.Center) < 450f)
-                {
-                    thoriumPlayer.empowerPoison = true;
-                }
-            }
         }
 
         public override void AddRecipes()
@@ -99,12 +78,12 @@ All herb collection is doubled
             
             if(Fargowiltas.Instance.ThoriumLoaded)
             {      
-                recipe.AddIngredient(thorium.ItemType("PoisonSubwoofer"));
                 recipe.AddIngredient(ItemID.JungleRose);
                 recipe.AddIngredient(ItemID.ThornChakram);
                 recipe.AddIngredient(ItemID.Boomstick);
                 recipe.AddIngredient(ItemID.PoisonedKnife, 300);
-                recipe.AddIngredient(thorium.ItemType("WeirdMud"));
+                recipe.AddIngredient(thorium.ItemType("MantisCane"));
+                recipe.AddIngredient(thorium.ItemType("RivetingTadpole"));
                 recipe.AddIngredient(ItemID.Buggy);
             }
             else

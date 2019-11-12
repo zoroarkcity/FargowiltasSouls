@@ -86,7 +86,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            npc.localAI[2] = reader.ReadFloat();
+            npc.localAI[2] = reader.ReadSingle();
         }
 
         public override void AI()
@@ -758,6 +758,12 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     else if (npc.ai[1] == 120)
                     {
+                        for (int i = 0; i < Main.maxProjectiles; i++)
+                            if (Main.projectile[i].active && Main.projectile[i].friendly && !Main.projectile[i].minion && Main.projectile[i].damage > 0)
+                                Main.projectile[i].Kill();
+                        for (int i = 0; i < Main.maxProjectiles; i++)
+                            if (Main.projectile[i].active && Main.projectile[i].friendly && !Main.projectile[i].minion && Main.projectile[i].damage > 0)
+                                Main.projectile[i].Kill();
                         if (Main.netMode != 1)
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);

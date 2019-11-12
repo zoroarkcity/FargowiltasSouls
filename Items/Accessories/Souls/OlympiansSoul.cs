@@ -87,16 +87,17 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             //dead mans patch
             thoriumPlayer.deadEyeBool = true;
             //mermaid canteen
-            thoriumPlayer.canteenEffect += 750;
+            thoriumPlayer.throwerExhaustionMax += 1125;
             thoriumPlayer.canteenCadet = true;
         }
 
         private void Calamity(Player player)
         {
+            calamity.Call("AddRogueDamage", player, 0.3f);
+            calamity.Call("AddRogueCrit", player, 15);
+            calamity.Call("AddRogueVelocity", player, 0.15f);
+
             player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().nanotech = true;
-            player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().throwingDamage += 0.3f;
-            player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().throwingCrit += 15;
-            player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().throwingVelocity += 0.15f;
         }
 
         public override void AddRecipes()

@@ -97,7 +97,8 @@ Any projectiles shot through your storm gain 50% damage
                 recipe.AddIngredient(ItemID.SpiritFlame);
                 recipe.AddIngredient(ItemID.BookStaff);
             }
-            
+
+            recipe.AddIngredient(ItemID.DjinnsCurse);
             recipe.AddIngredient(ItemID.Scorpion);
             
             recipe.AddTile(TileID.CrystalBall);

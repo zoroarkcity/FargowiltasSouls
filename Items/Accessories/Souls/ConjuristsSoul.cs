@@ -123,7 +123,7 @@ Increased minion knockback";
                 recipe.AddIngredient(thorium.ItemType("HailBomber"));
                 recipe.AddIngredient(ItemID.PirateStaff);
                 recipe.AddIngredient(ItemID.OpticStaff);
-                recipe.AddIngredient(thorium.ItemType("TrueSilversBlade"));
+                recipe.AddIngredient(thorium.ItemType("TerrariumSummon"));
                 recipe.AddIngredient(ItemID.StaffoftheFrostHydra);
                 recipe.AddIngredient(ItemID.RavenStaff);
                 recipe.AddIngredient(ItemID.XenoStaff);

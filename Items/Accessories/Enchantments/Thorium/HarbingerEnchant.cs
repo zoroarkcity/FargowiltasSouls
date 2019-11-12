@@ -24,7 +24,7 @@ Maximum mana increased by 50%
 While above 75% maximum mana, you become unstable
 Enemies that attack friendly NPCs are marked as Villains
 You deal 50% bonus damage to Villains
-Effects of Shade Band and White Music Player
+Effects of Shade Band
 Summons a Moogle pet");
             DisplayName.AddTranslation(GameCulture.Chinese, "先知魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -61,9 +61,6 @@ Summons a Moogle pet");
                 player.magicDamage += 0.5f;
                 player.magicCrit += 26;
             }
-            //music player
-            thoriumPlayer.musicPlayer = true;
-            thoriumPlayer.MP3MaxLife = 2;
             //shade band
             thoriumPlayer.shadeBand = true;
             //pet
@@ -74,12 +71,12 @@ Summons a Moogle pet");
         
         private readonly string[] items =
         {
-            "TunePlayerMaxLife",
             "NightStaff",
             "BlackholeCannon",
             "GodKiller",
             "HarbingerSpear",
-            "HarbingerBow"
+            "HarbingerBow",
+            "HarbingerSurgeWand"
         };
 
         public override void AddRecipes()

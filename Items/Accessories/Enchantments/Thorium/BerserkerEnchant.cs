@@ -26,8 +26,7 @@ Fire surrounds your armour and melee weapons
 Enemies that you set on fire or singe will take additional damage over time
 Nearby enemies are ignited
 When you die, you violently explode dealing massive damage
-Effects of Spring Steps and Slag Stompers
-Effects of Molten Spear Tip and Orange Music Player");
+Effects of Spring Steps, Slag Stompers, and Orange Music Player");
             DisplayName.AddTranslation(GameCulture.Chinese, "狂战士魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'我更愿意为自己的生命而战斗, 而不只是为活而活'
@@ -78,9 +77,6 @@ Effects of Molten Spear Tip and Orange Music Player");
                 modPlayer.AllDamageUp(.6f);
                 thoriumPlayer.berserkStage = 4;
             }
-            //music player
-            thoriumPlayer.musicPlayer = true;
-            thoriumPlayer.MP3AttackSpeed = 2;
             //magma
             mod.GetItem("MagmaEnchant").UpdateAccessory(player, hideVisual);
             //molten
@@ -89,7 +85,7 @@ Effects of Molten Spear Tip and Orange Music Player");
         
         private readonly string[] items =
         {
-            "TunePlayerAttackSpeed",
+            "DoomFireAxe",
             "SurtrsSword",
             "ThermogenicImpaler",
             "WyvernSlayer"

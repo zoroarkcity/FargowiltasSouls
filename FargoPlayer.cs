@@ -12,6 +12,7 @@ using Terraria.Graphics.Capture;
 using FargowiltasSouls.NPCs;
 using FargowiltasSouls.Projectiles;
 using ThoriumMod;
+using ThoriumMod.Projectiles;
 
 // ReSharper disable CompareOfFloatsByEqualityOperator
 
@@ -265,6 +266,7 @@ namespace FargowiltasSouls
         public bool MutantsPact;
         public bool TwinsEX;
         public bool TimsConcoction;
+        public bool ReceivedMasoGift;
 
         //debuffs
         public bool Hexed;
@@ -307,6 +309,7 @@ namespace FargowiltasSouls
         public bool Midas;
         public bool MutantPresence;
         public bool Swarming;
+        public bool LowGround;
 
         public int MasomodeCrystalTimer = 0;
         public int MasomodeFreezeTimer = 0;
@@ -326,6 +329,7 @@ namespace FargowiltasSouls
             if (CelestialSeal) FargoDisabledSouls.Add("CelestialSeal");
             if (MutantsDiscountCard) FargoDisabledSouls.Add("MutantsDiscountCard");
             if (MutantsPact) FargoDisabledSouls.Add("MutantsPact");
+            if (ReceivedMasoGift) FargoDisabledSouls.Add("ReceivedMasoGift");
 
             return new TagCompound {
                     {name, FargoDisabledSouls}
@@ -342,6 +346,7 @@ namespace FargowiltasSouls
             CelestialSeal = disabledSouls.Contains("CelestialSeal");
             MutantsDiscountCard = disabledSouls.Contains("MutantsDiscountCard");
             MutantsPact = disabledSouls.Contains("MutantsPact");
+            ReceivedMasoGift = disabledSouls.Contains("ReceivedMasoGift");
         }
 
         public override void OnEnterWorld(Player player)
@@ -660,6 +665,7 @@ namespace FargowiltasSouls
             Midas = false;
             MutantPresence = false;
             Swarming = false;
+            LowGround = false;
         }
 
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
@@ -1078,6 +1084,12 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (LowGround)
+            {
+                player.waterWalk = false;
+                player.waterWalk2 = false;
+            }
+
             if (BetsysHeart && BetsyDashCD > 0)
             {
                 BetsyDashCD--;
@@ -1436,12 +1448,12 @@ namespace FargowiltasSouls
             }
         }
 
-        public override void SetupStartInventory(IList<Item> items)
+       /* public override void SetupStartInventory(IList<Item> items)
         {
             Item item = new Item();
             item.SetDefaults(mod.ItemType("Masochist"));
             items.Add(item);
-        }
+        }*/
 
         public override float UseTimeMultiplier(Item item)
         {
@@ -3134,7 +3146,7 @@ namespace FargowiltasSouls
 
         private void CalamityDamage(float dmg)
         {
-            player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().throwingDamage += dmg;
+            ModLoader.GetMod("CalamityMod").Call("AddRogueDamage", player, dmg);
         }
 
         private void DBTDamage(float dmg)
@@ -3166,7 +3178,7 @@ namespace FargowiltasSouls
 
         private void CalamityCrit(int crit)
         {
-            player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().throwingCrit += crit;
+            ModLoader.GetMod("CalamityMod").Call("AddRogueCrit", player, crit);
         }
 
         private void DBTCrit(int crit)
@@ -3992,34 +4004,19 @@ namespace FargowiltasSouls
 
             OriEnchant = true;
 
-            if (!OriSpawn)
+            int ballAmt = 6;
+
+            if (Eternity)
+                ballAmt = 30;
+
+            if (!OriSpawn && player.ownedProjectileCounts[mod.ProjectileType("OriFireball")] < ballAmt)
             {
-                int[] fireballs = { ProjectileID.BallofFire, ProjectileID.BallofFrost, ProjectileID.CursedFlameFriendly };
-
-                int ballAmt = 6;
-
-                if(Eternity)
-                    ballAmt = 30;
-
-                int ballsOwned = player.ownedProjectileCounts[ProjectileID.BallofFire] + player.ownedProjectileCounts[ProjectileID.BallofFrost] + player.ownedProjectileCounts[ProjectileID.CursedFlameFriendly];
-
-                if (ballsOwned >= ballAmt)
-                    return;
-
                 if (player.whoAmI == Main.myPlayer)
                 {
                     for (int i = 0; i < ballAmt; i++)
                     {
                         float degree = (360 / ballAmt) * i;
-                        Projectile fireball = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, fireballs[i % 3], (int)(10 * player.magicDamage), 0f, player.whoAmI, 5, degree);
-                        if (fireball != null)
-                        {
-                            fireball.GetGlobalProjectile<FargoGlobalProjectile>().Rotate = true;
-                            fireball.GetGlobalProjectile<FargoGlobalProjectile>().RotateDist = 120;
-                            fireball.timeLeft = 2;
-                            fireball.penetrate = -1;
-                            fireball.ignoreWater = true;
-                        }
+                        Projectile fireball = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, mod.ProjectileType("OriFireball"), HighestDamageTypeScaling(25), 0f, player.whoAmI, 5, degree);
                     }
                 }
 

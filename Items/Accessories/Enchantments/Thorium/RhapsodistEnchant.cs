@@ -64,11 +64,11 @@ These effects needs to recharge for 1 minute");
 
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
             //notes heal more and give random empowerments
-            thoriumPlayer.inspirator = true;
+            thoriumPlayer.armInspirator = true;
             //hotkey buff allies 
-            thoriumPlayer.rallySet = true;
+            thoriumPlayer.setInspirator = true;
             //hotkey buff self
-            thoriumPlayer.soloistSet = true;
+            thoriumPlayer.setSoloist = true;
         }
         
         private readonly string[] items =
@@ -77,10 +77,10 @@ These effects needs to recharge for 1 minute");
             "RallyHat",
             "RhapsodistChestWoofer",
             "RhapsodistBoots",
-            "MusicSheet6",
             "SirensAllure",
             "TerrariumAutoharp",
             "Sousaphone",
+            "Holophonor",
             "EdgeofImagination",
             "BlackMIDI"
         };

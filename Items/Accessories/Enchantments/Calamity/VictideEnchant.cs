@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using CalamityMod.CalPlayer;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -47,16 +46,15 @@ Effects of Deep Diver, The Transformer, and Luxor's Gift");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
             //all
-            modPlayer.victideSet = true;
+            calamity.Call("SetSetBonus", player, "victide", true);
 
             if (player.GetModPlayer<FargoPlayer>().Eternity) return;
 
             if (SoulConfig.Instance.GetValue("Victide Sea Urchin"))
             {
                 //summon
-                modPlayer.urchin = true;
+                calamity.Call("SetSetBonus", player, "victide_summon", true);
                 if (player.whoAmI == Main.myPlayer)
                 {
                     if (player.FindBuffIndex(calamity.BuffType("Urchin")) == -1)

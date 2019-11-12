@@ -59,12 +59,7 @@ Summons several pets");
             if (!modPlayer.TerrariaSoul)
             {
                 //WULFRUM
-                //spirit glyph
-                calamityPlayer.sGenerator = true;
-                //raiders talisman
-                calamityPlayer.raiderTalisman = true;
-                //trinket of chi
-                calamityPlayer.trinketOfChi = true;
+                mod.GetItem("WulfrumEnchant").UpdateAccessory(player, hideVisual);
             }
             //AEROSPEC
             mod.GetItem("AerospecEnchant").UpdateAccessory(player, hideVisual);

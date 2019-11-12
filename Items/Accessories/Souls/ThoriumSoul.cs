@@ -23,7 +23,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 All armor bonuses from Living Wood, Life Bloom, Yew Wood, and Tide Hunter
 All armor bonuses from Icy, Cryo Magus, and Whispering
 All armor bonuses from Sacred, Warlock, and Biotech
-All armor bonuses from Cyber Punk and Conductor
+All armor bonuses from Cyber Punk and Maestro
 All armor bonuses from Bronze, Darksteel, and Durasteel
 All armor bonuses from Conduit, Lodestone, and Illumite
 All armor bonuses from Jester, Thorium, and Terrarium
@@ -62,7 +62,6 @@ Summons several pets");
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.value = 5000000;
-            item.shieldSlot = 5;
 
             item.rare = -12;
         }

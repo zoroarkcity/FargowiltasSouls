@@ -2,7 +2,6 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using CalamityMod.CalPlayer;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -48,16 +47,14 @@ Summons a Kendra pet");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-            modPlayer.aeroSet = true;
+            calamity.Call("SetSetBonus", player, "aerospec", true);
             player.noFallDmg = true;
 
             if (player.GetModPlayer<FargoPlayer>().Eternity) return;
 
             if (SoulConfig.Instance.GetValue("Valkyrie Minion"))
             {
-                modPlayer.valkyrie = true;
+                calamity.Call("SetSetBonus", player, "aerospec_summon", true);
                 if (player.whoAmI == Main.myPlayer)
                 {
                     if (player.FindBuffIndex(calamity.BuffType("Valkyrie")) == -1)
@@ -78,7 +75,7 @@ Summons a Kendra pet");
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.AerospecEnchant = true;
-            fargoPlayer.AddPet("Kendra Pet", hideVisual, calamity.BuffType("Kendra"), calamity.ProjectileType("Kendra"));
+            fargoPlayer.AddPet("Kendra Pet", hideVisual, calamity.BuffType("Kendra"), calamity.ProjectileType("KendraPet"));
         }
 
         public override void AddRecipes()

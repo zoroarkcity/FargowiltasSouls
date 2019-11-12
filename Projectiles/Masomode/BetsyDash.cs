@@ -58,6 +58,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
             player.controlHook = false;
             player.controlMount = false;
 
+            if (player.mount.Active)
+                player.mount.Dismount(player);
+
             player.immune = true;
             player.immuneTime = 2;
             player.hurtCooldowns[0] = 2;

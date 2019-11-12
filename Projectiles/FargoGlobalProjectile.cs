@@ -170,7 +170,7 @@ namespace FargowiltasSouls.Projectiles
                         player.ClearBuff(mod.BuffType("FirstStrike"));
                     }
 
-                    if (!townNPCProj && !projectile.trap && projectile.aiStyle != 99 && modPlayer.TungstenEnchant && projectile.friendly && SoulConfig.Instance.GetValue("Tungsten Effect", false))
+                    if (!townNPCProj && !projectile.trap && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && modPlayer.TungstenEnchant && projectile.friendly && SoulConfig.Instance.GetValue("Tungsten Effect", false))
                     {
                         projectile.position = projectile.Center;
                         projectile.scale *= 2f;
@@ -236,7 +236,7 @@ namespace FargowiltasSouls.Projectiles
                         projectile.timeLeft = 600;
                     }
 
-                    if (modPlayer.BeeEnchant && (projectile.type == ProjectileID.GiantBee || projectile.type == ProjectileID.Bee) && Main.rand.Next(2) == 0)
+                    if (modPlayer.BeeEnchant && (projectile.type == ProjectileID.GiantBee || projectile.type == ProjectileID.Bee || projectile.type == ProjectileID.Wasp) && Main.rand.Next(2) == 0)
                     {
                         projectile.usesLocalNPCImmunity = true;
                         projectile.localNPCHitCooldown = 5;
@@ -416,11 +416,6 @@ namespace FargowiltasSouls.Projectiles
                     projectile.ai[1] -= projectile.ai[0];
                 }
 
-                if (modPlayer.OriEnchant && (projectile.type == ProjectileID.BallofFire || projectile.type == ProjectileID.CursedFlameFriendly || projectile.type == ProjectileID.BallofFrost) && SoulConfig.Instance.GetValue("Orichalcum Fireballs"))
-                {
-                    projectile.timeLeft = 2;
-                }
-
                 retVal = false;
             }
 
@@ -460,6 +455,11 @@ namespace FargowiltasSouls.Projectiles
 
         public static void SplitProj(Projectile projectile, int number)
         {
+            if (Fargowiltas.Instance.FargowiltasLoaded && projectile.type == ModLoader.GetMod("Fargowiltas").ProjectileType("SpawnProj"))
+            {
+                return;
+            }
+
             //if its odd, we just keep the original 
             if (number % 2 != 0)
             {
@@ -1439,8 +1439,8 @@ namespace FargowiltasSouls.Projectiles
                         target.AddBuff(BuffID.OnFire, 300);
                         if (NPC.golemBoss != -1 && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem)
                         {
-                            target.AddBuff(mod.BuffType("Defenseless"), 480);
-                            target.AddBuff(BuffID.WitheredArmor, 480);
+                            target.AddBuff(mod.BuffType("Defenseless"), 600);
+                            target.AddBuff(BuffID.WitheredArmor, 600);
                             if (Main.tile[(int)Main.npc[NPC.golemBoss].Center.X / 16, (int)Main.npc[NPC.golemBoss].Center.Y / 16] == null || //outside temple
                                 Main.tile[(int)Main.npc[NPC.golemBoss].Center.X / 16, (int)Main.npc[NPC.golemBoss].Center.Y / 16].wall != WallID.LihzahrdBrickUnsafe)
                             {
@@ -1622,9 +1622,6 @@ namespace FargowiltasSouls.Projectiles
 
                 modPlayer.CobaltCD = 60;
             }
-
-            if (modPlayer.OriEnchant && Rotate && projectile.type != ProjectileID.Bone)
-                modPlayer.OriSpawn = false;
         }
 
         public override void GrapplePullSpeed(Projectile projectile, Player player, ref float speed)

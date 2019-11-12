@@ -26,8 +26,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 The energy of Terraria seeks to protect you
 Shortlived Divermen will occasionally spawn when hitting enemies
 Critical strikes ring a bell over your head, slowing all nearby enemies briefly
-Effects of Crietz and Band of Replenishment
-Effects of Fan Letter and Terrarium Surround Sound");
+Effects of Crietz and Band of Replenishmen
+Effects of Terrarium Surround Sound and Fan Letter");
             DisplayName.AddTranslation(GameCulture.Chinese, "元素之灵魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'万物都臣服于你的力量...'
@@ -55,7 +55,7 @@ Effects of Fan Letter and Terrarium Surround Sound");
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 2; //rainbow
+            item.rare = 10; //rainbow
             item.value = 250000;
         }
 
@@ -78,16 +78,9 @@ Effects of Fan Letter and Terrarium Surround Sound");
                 Projectile.NewProjectile(player.Center.X - 14f, player.Center.Y - 20f, 0f, 2f, thorium.ProjectileType("TerraPurple"), 50, 0f, Main.myPlayer, 0f, 0f);
                 timer = 0;
             }
-            //terrarium woofer
-            thoriumPlayer.bardRangeBoost += 450;
-            for (int i = 0; i < 255; i++)
-            {
-                Player player2 = Main.player[i];
-                if (player2.active && !player2.dead && Vector2.Distance(player2.Center, player.Center) < 450f)
-                {
-                    thoriumPlayer.empowerTerrarium = true;
-                }
-            }
+            //subwoofer
+            thoriumPlayer.accSubwooferTerrarium = true;
+
             //diverman meme
             modPlayer.ThoriumEnchant = true;
             //crietz
@@ -104,10 +97,10 @@ Effects of Fan Letter and Terrarium Surround Sound");
         {
             "TerrariumSubwoofer",
             "EssenceofFlame",
-            "SearingBlade",
             "TerrariumSaber",
             "SickThrow",
-            "TerrariumBomber"
+            "TerrariumBomber",
+            "TerrariumKnife"
         };
 
         public override void AddRecipes()

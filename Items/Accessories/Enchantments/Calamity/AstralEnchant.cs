@@ -1,7 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.CalPlayer;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
@@ -45,11 +44,9 @@ Effects of the Astral Arcanum and Hide of Astrum Deus");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-
             if (SoulConfig.Instance.GetValue("Astral Stars"))
             {
-                modPlayer.astralStarRain = true;
+                calamity.Call("SetSetBonus", player, "astral", true);
             }
 
             calamity.GetItem("AstralArcanum").UpdateAccessory(player, hideVisual);

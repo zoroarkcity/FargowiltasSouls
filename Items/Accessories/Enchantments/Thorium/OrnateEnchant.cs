@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             Tooltip.SetDefault(
 @"'Beautifully crafted'
 Symphonic critical strikes cause the attack's empowerment to ascend to a fourth level of intensity
-Effects of Concert Tickets and Brown Music Player");
+Effects of Concert Tickets");
             DisplayName.AddTranslation(GameCulture.Chinese, "华贵魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'精心设计'
@@ -45,19 +45,17 @@ Effects of Concert Tickets and Brown Music Player");
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
 
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            thoriumPlayer.ornateSet = true;
+            thoriumPlayer.setOrnate = true;
             //concert tickets
-            for (int i = 0; i < 255; i++)
+            thoriumPlayer.bardResourceMax2 += 2;
+            for (int i = 0; i < Main.myPlayer; i++)
             {
                 Player player2 = Main.player[i];
-                if (player2.active && player2 != player && Vector2.Distance(player2.Center, player.Center) < 450f)
+                if (player2.active && !player2.dead && i != player.whoAmI && (!player2.hostile || (player2.team == player.team && player2.team != 0)) && player2.DistanceSQ(player.Center) < 202500f)
                 {
-                    thoriumPlayer.bardResourceRecharge++;
+                    thoriumPlayer.inspirationRegenBonus += 0.02f;
                 }
             }
-            //music player
-            thoriumPlayer.musicPlayer = true;
-            thoriumPlayer.MP3AmmoConsumption = 2;
         }
         
         private readonly string[] items =
@@ -66,7 +64,7 @@ Effects of Concert Tickets and Brown Music Player");
             "OrnateJerkin",
             "OrnateLeggings",
             "ConcertTickets",
-            "TunePlayerAmmoConsume",
+            "MythrilMelodica",
             "GreenTambourine",
             "VuvuzelaBlue",
             "VuvuzelaGreen",

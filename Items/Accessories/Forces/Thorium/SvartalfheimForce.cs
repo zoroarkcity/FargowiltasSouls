@@ -24,10 +24,10 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
 @"'Behold the craftsmanship of the Dark Elves...'
 All armor bonuses from Granite, Bronze, and Darksteel
 All armor bonuses from Durasteel, Titan, and Conduit
-Effects of Eye of the Storm, Energized Subwoofer, and Spartan's Subwoofer
-Effects of Champion's Rebuttal, Incandescent Spark, and Spiked Bracers
+Effects of Eye of the Storm and Champion's Rebuttal
+Effects of Incandescent Spark and Spiked Bracers
 Effects of the Greedy Magnet, Mask of the Crystal Eye, and Abyssal Shell
-Summons a pet Omega, I.F.O., and Bio-Feeder");
+Summons a pet Omega and Bio-Feeder");
             DisplayName.AddTranslation(GameCulture.Chinese, "瓦特阿尔海姆之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'黑暗精灵的精湛技艺'
@@ -53,7 +53,6 @@ Summons a pet Omega, I.F.O., and Bio-Feeder");
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.rare = 11;
             item.value = 600000;
-            item.shieldSlot = 5;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -63,7 +62,6 @@ Summons a pet Omega, I.F.O., and Bio-Feeder");
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
             
-
             if (SoulConfig.Instance.GetValue("Eye of the Storm"))
             {
                 //eye of the storm
@@ -90,17 +88,6 @@ Summons a pet Omega, I.F.O., and Bio-Feeder");
             player.fireWalk = true;
             player.lavaImmune = true;
             player.buffImmune[24] = true;
-            //woofers
-            thoriumPlayer.bardRangeBoost += 450;
-            for (int i = 0; i < 255; i++)
-            {
-                Player player2 = Main.player[i];
-                if (player2.active && !player2.dead && Vector2.Distance(player2.Center, player.Center) < 450f)
-                {
-                    thoriumPlayer.empowerGranite = true;
-                    thoriumPlayer.empowerMarble = true;
-                }
-            }
             //titan
             modPlayer.AllDamageUp(.1f);
             //crystal eye mask

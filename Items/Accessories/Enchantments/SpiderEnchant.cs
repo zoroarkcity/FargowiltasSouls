@@ -24,12 +24,6 @@ Your minions can now crit with a 20% chance
 @"'蜘蛛该死'
 召唤物现在有20%的暴击率";
 
-            if(thorium != null)
-            {
-                tooltip += "Effects of Arachnid's Subwoofer\n";
-                tooltip_ch += "拥有蛛网音箱的效果\n";
-            }
-
             tooltip += "Summons a pet Spider";
             tooltip_ch += "召唤一只宠物蜘蛛";
 
@@ -62,22 +56,6 @@ Your minions can now crit with a 20% chance
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<FargoPlayer>().SpiderEffect(hideVisual);
-
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
-        }
-
-        private void Thorium(Player player)
-        {
-            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            thoriumPlayer.bardRangeBoost += 450;
-            for (int i = 0; i < 255; i++)
-            {
-                Player player2 = Main.player[i];
-                if (player2.active && !player2.dead && Vector2.Distance(player2.Center, player.Center) < 450f)
-                {
-                    thoriumPlayer.empowerVenom = true;
-                }
-            }
         }
 
         public override void AddRecipes()
@@ -89,20 +67,14 @@ Your minions can now crit with a 20% chance
             
             if(Fargowiltas.Instance.ThoriumLoaded)
             {      
-                recipe.AddIngredient(thorium.ItemType("VenomSubwoofer"));
                 recipe.AddIngredient(thorium.ItemType("Webgun"));
                 recipe.AddIngredient(thorium.ItemType("Arthropod"));
-                recipe.AddIngredient(ItemID.SpiderStaff);
-                recipe.AddIngredient(ItemID.QueenSpiderStaff);
-                recipe.AddIngredient(ItemID.BatScepter);
+                recipe.AddIngredient(thorium.ItemType("Lullaby"));
             }
-            else
-            {
-                recipe.AddIngredient(ItemID.SpiderStaff);
-                recipe.AddIngredient(ItemID.QueenSpiderStaff);
-                recipe.AddIngredient(ItemID.BatScepter);
-            }   
-            
+
+            recipe.AddIngredient(ItemID.SpiderStaff);
+            recipe.AddIngredient(ItemID.QueenSpiderStaff);
+            recipe.AddIngredient(ItemID.WebSlinger);
             recipe.AddIngredient(ItemID.SpiderEgg);
             
             recipe.AddTile(TileID.CrystalBall);
