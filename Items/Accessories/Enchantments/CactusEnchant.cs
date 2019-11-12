@@ -4,20 +4,30 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using ThoriumMod.Items.Consumable;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.ThrownItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class CactusEnchant : ModItem
+    public class CactusEnchant : EnchantmentItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
+        public const string TOOLTIP =
+            @"'It's the quenchiest!' 
+25% of contact damage is reflected
+Enemies may explode into needles on death";
+        
+
+        public CactusEnchant() : base("Cactus Enchantment", TOOLTIP, 20, 20, 
+            TileID.DemonAltar, Item.sellPrice(silver: 40), ItemRarityID.Green, new Color(121, 158, 29))
+        {
+        }
+
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cactus Enchantment");
-            Tooltip.SetDefault(
-@"'It's the quenchiest!' 
-25% of contact damage is reflected
-Enemies may explode into needles on death");
+            base.SetStaticDefaults();
+
             DisplayName.AddTranslation(GameCulture.Chinese, "仙人掌魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'太解渴了!'
@@ -25,26 +35,6 @@ Enemies may explode into needles on death");
 敌人在死亡时可能会爆出刺");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
-        {
-            foreach (TooltipLine tooltipLine in list)
-            {
-                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
-                {
-                    tooltipLine.overrideColor = new Color(121, 158, 29);
-                }
-            }
-        }
-
-        public override void SetDefaults()
-        {
-            item.width = 20;
-            item.height = 20;
-            item.accessory = true;
-            ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 2;
-            item.value = 20000;
-        }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -52,32 +42,30 @@ Enemies may explode into needles on death");
             player.thorns = .25f;
         }
 
-        public override void AddRecipes()
+
+        protected override void AddRecipeBase(ModRecipe recipe)
         {
-            ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.CactusHelmet);
             recipe.AddIngredient(ItemID.CactusBreastplate);
             recipe.AddIngredient(ItemID.CactusLeggings);
             recipe.AddIngredient(ItemID.CactusSword);
             recipe.AddIngredient(ItemID.Sandgun);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(thorium.ItemType("CactusNeedle"), 300);
-                recipe.AddIngredient(ItemID.ThornsPotion, 5);
-                recipe.AddIngredient(thorium.ItemType("CactusFruit"), 5);
-                recipe.AddIngredient(thorium.ItemType("PricklyJam"), 5);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.PinkPricklyPear);
-            }
-            
+
             recipe.AddIngredient(ItemID.SecretoftheSands);
-            
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+        }
+
+        protected override void AddThoriumRecipe(ModRecipe recipe, Mod thorium)
+        {
+            recipe.AddIngredient(ItemID.ThornsPotion, 5);
+
+            recipe.AddIngredient(ModContent.ItemType<CactusNeedle>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<CactusFruit>(), 5);
+            recipe.AddIngredient(ModContent.ItemType<PricklyJam>(), 5);
+        }
+
+        protected override void FinishRecipeVanilla(ModRecipe recipe)
+        {
+            recipe.AddIngredient(ItemID.PinkPricklyPear);
         }
     }
 }

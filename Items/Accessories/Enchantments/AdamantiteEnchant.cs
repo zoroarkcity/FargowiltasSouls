@@ -27,13 +27,13 @@ Any secondary projectiles may also split";
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             DisplayName.AddTranslation(GameCulture.Chinese, "精金魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'谁需要瞄准?'
 第8个抛射物将会分裂成3个
 分裂出的抛射物同样可以分裂");
-
-            base.SetStaticDefaults();
         }
 
 
