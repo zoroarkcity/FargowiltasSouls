@@ -9365,6 +9365,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.IceGolem:
                         if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("FrigidGemstone"));
+                        if (Main.rand.Next(20) == 0)
+                            Item.NewItem(npc.Hitbox, ItemID.BlizzardinaBottle);
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.TitanPotion, Main.rand.Next(2, 5) + 1);
                         break;
@@ -9373,6 +9375,8 @@ namespace FargowiltasSouls.NPCs
                         Item.NewItem(npc.Hitbox, ItemID.FloatingIslandFishingCrate);
                         if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("DragonFang"));
+                        if (Main.rand.Next(20) == 0)
+                            Item.NewItem(npc.Hitbox, ItemID.CloudinaBottle);
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.GravitationPotion, Main.rand.Next(2, 5) + 1);
                         break;
@@ -9387,6 +9391,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.SandElemental:
                         if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("SandsofTime"));
+                        if (Main.rand.Next(20) == 0)
+                            Item.NewItem(npc.Hitbox, ItemID.SandstorminaBottle);
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.WrathPotion, Main.rand.Next(2, 5) + 1);
                         break;

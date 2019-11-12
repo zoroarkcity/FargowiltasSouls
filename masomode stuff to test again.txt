@@ -3,6 +3,9 @@ pirates only forced on 4+ altars broken
 defeating goblins for the first time will force a meteor drop and spawn abom
 jellyfish aura wont display outside liquids
 goblins through floor when everyone dead
+ice golem drop blizzard in bottle 5%
+wyvern drop cloud bottle 5%
+sand ele drop sandstorm bottle 5%
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
