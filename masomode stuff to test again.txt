@@ -6,6 +6,7 @@ goblins through floor when everyone dead
 ice golem drop blizzard in bottle 5%
 wyvern drop cloud bottle 5%
 sand ele drop sandstorm bottle 5%
+removed chest of the jungle
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
