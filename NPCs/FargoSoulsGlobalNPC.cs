@@ -343,13 +343,6 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.RedDevil:
-                        if (!Main.hardMode)
-                        {
-                            npc.lifeMax /= 2;
-                            npc.damage /= 2;
-                        }
-                        break;
-
                     case NPCID.AngryNimbus:
                     case NPCID.Mimic:
                     case NPCID.IchorSticker:
@@ -360,7 +353,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.ZombieMushroomHat:
                     case NPCID.Medusa:
                         if (!Main.hardMode)
-                            npc.lifeMax /= 2;
+                            npc.defense = 0;
                         break;
 
                     #region maso bosses
@@ -370,6 +363,10 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.BrainofCthulhu:
                         npc.scale += 0.25f;
+                        break;
+
+                    case NPCID.Creeper:
+                        Timer = Main.rand.Next(600);
                         break;
 
                     case NPCID.WallofFlesh:
@@ -5376,10 +5373,12 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Creeper:
-                        Timer++;
-                        if (Timer >= 600)
+                        if (++Timer >= 600)
                         {
-                            Timer = Main.rand.Next(300);
+                            int count = NPC.CountNPCS(NPCID.Creeper) - 1;
+                            Timer = (20 - count) * 29;
+                            if (Timer < 0)
+                                Timer = 0;
 
                             if (npc.HasPlayerTarget && Main.netMode != 1)
                             {
@@ -6366,7 +6365,9 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.MossHornet:
                         if (npc.HasPlayerTarget)
                         {
-                            bool shouldNotTileCollide = Main.player[npc.target].active && !Main.player[npc.target].dead && Main.player[npc.target].GetModPlayer<FargoPlayer>().Swarming;
+                            bool shouldNotTileCollide = Main.player[npc.target].active && !Main.player[npc.target].dead
+                                && Main.player[npc.target].GetModPlayer<FargoPlayer>().Swarming
+                                && !Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0);
                             if (shouldNotTileCollide)
                                 npc.noTileCollide = true;
                             else if (npc.noTileCollide && !Collision.SolidCollision(npc.position, npc.width, npc.height)) //still intangible, but should stop, and isnt on tiles

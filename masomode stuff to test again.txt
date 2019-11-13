@@ -7,6 +7,10 @@ ice golem drop blizzard in bottle 5%
 wyvern drop cloud bottle 5%
 sand ele drop sandstorm bottle 5%
 removed chest of the jungle
+hornets dont through walls if have line of sight to player
+creepers shoot faster as creeper count reduces
+hm enemies in pre-hm have full life but no defense
+soul of terraria no longer disables pumpkin enchant pie heal
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
