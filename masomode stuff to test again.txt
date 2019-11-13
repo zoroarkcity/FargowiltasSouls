@@ -12,6 +12,8 @@ creepers shoot faster as creeper count reduces
 hm enemies in pre-hm have full life but no defense
 soul of terraria no longer disables pumpkin enchant pie heal
 
+qb wont regen while subjects alive
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)

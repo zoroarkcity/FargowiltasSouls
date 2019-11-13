@@ -2644,6 +2644,7 @@ namespace FargowiltasSouls.NPCs
                         if (NPC.AnyNPCs(mod.NPCType("RoyalSubject")))
                         {
                             npc.ai[0] = 3; //always shoot stingers mode
+                            RegenTimer = 480;
                         }
 
                         //only while stationary mode
