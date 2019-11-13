@@ -5,19 +5,29 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.BasicAccessories;
+using ThoriumMod.Items.Donate;
+using ThoriumMod.Items.NPCItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class GoldEnchant : ModItem
+    public class GoldEnchant : EnchantmentItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
         public int timer;
+
+
+        public GoldEnchant() : base("Gold Enchantment", "", 20, 20,
+            TileID.CrystalBall, Item.sellPrice(gold: 3), ItemRarityID.Pink, new Color(231, 178, 28))
+        {
+            
+        }
+
 
         public override bool CloneNewInstances => true;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Gold Enchantment");
+            base.SetStaticDefaults();
 
             string tooltip =
 @"'Gold makes the world go round'
@@ -32,7 +42,7 @@ You will not be able to move or attack, but will be immune to all damage
 你将不能移动或攻击,但免疫所有伤害
 ";
 
-            if (thorium != null)
+            if (Fargowiltas.Instance.ThoriumLoaded)
             {
                 tooltip += 
 @"Effects of Gold Aegis, Proof of Avarice, and Greedy Ring
@@ -52,30 +62,11 @@ Summons a pet Parrot";
             }
 
             Tooltip.SetDefault(tooltip);
+
             DisplayName.AddTranslation(GameCulture.Chinese, "黄金魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
-        {
-            foreach (TooltipLine tooltipLine in list)
-            {
-                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
-                {
-                    tooltipLine.overrideColor = new Color(231, 178, 28);
-                }
-            }
-        }
-
-        public override void SetDefaults()
-        {
-            item.width = 20;
-            item.height = 20;
-            item.accessory = true;
-            ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 5;
-            item.value = 150000;
-        }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -115,34 +106,32 @@ Summons a pet Parrot";
             player.GetModPlayer<FargoPlayer>().AddPet("Coin Bag Pet", hideVisual, thorium.BuffType("DrachmaBuff"), thorium.ProjectileType("DrachmaBag"));
         }
 
-        public override void AddRecipes()
+
+        protected override void AddRecipeBase(ModRecipe recipe)
         {
-            ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.GoldHelmet);
             recipe.AddIngredient(ItemID.GoldChainmail);
             recipe.AddIngredient(ItemID.GoldGreaves);
-           
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("GoldAegis"));
-                recipe.AddIngredient(thorium.ItemType("ProofAvarice"));
-                recipe.AddIngredient(ItemID.GreedyRing);
-                recipe.AddIngredient(ItemID.CoinGun);
-                recipe.AddIngredient(ItemID.SquirrelGold);
-                recipe.AddIngredient(ItemID.ParrotCracker);
-                recipe.AddIngredient(thorium.ItemType("AncientDrachma"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.GreedyRing);
-                recipe.AddIngredient(ItemID.CoinGun);
-                recipe.AddIngredient(ItemID.SquirrelGold);
-                recipe.AddIngredient(ItemID.ParrotCracker);
-            }
-            
-            recipe.AddTile(TileID.CrystalBall);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+        }
+
+        protected override void AddThoriumRecipe(ModRecipe recipe, Mod thorium)
+        {
+            recipe.AddIngredient(ModContent.ItemType<GoldAegis>());
+            recipe.AddIngredient(ModContent.ItemType<ProofAvarice>());
+            recipe.AddIngredient(ModContent.ItemType<AncientDrachma>());
+
+            recipe.AddIngredient(ItemID.GreedyRing);
+            recipe.AddIngredient(ItemID.CoinGun);
+            recipe.AddIngredient(ItemID.SquirrelGold);
+            recipe.AddIngredient(ItemID.ParrotCracker);
+        }
+
+        protected override void FinishRecipeVanilla(ModRecipe recipe)
+        {
+            recipe.AddIngredient(ItemID.GreedyRing);
+            recipe.AddIngredient(ItemID.CoinGun);
+            recipe.AddIngredient(ItemID.SquirrelGold);
+            recipe.AddIngredient(ItemID.ParrotCracker);
         }
     }
 }
