@@ -2813,6 +2813,11 @@ namespace FargowiltasSouls.NPCs
                         }
                         break;
 
+                    case NPCID.TheHungry:
+                        if (BossIsAlive(ref wallBoss, NPCID.WallofFlesh) && Main.npc[wallBoss].GetGlobalNPC<FargoSoulsGlobalNPC>().masoBool[0])
+                            npc.Transform(NPCID.TheHungryII);
+                        break;
+
                     case NPCID.WallofFlesh:
                         wallBoss = npc.whoAmI;
 

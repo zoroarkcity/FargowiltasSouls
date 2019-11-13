@@ -13,6 +13,7 @@ hm enemies in pre-hm have full life but no defense
 soul of terraria no longer disables pumpkin enchant pie heal
 
 qb wont regen while subjects alive
+wof's hungries instantly detach and start flying when wof in p2
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
