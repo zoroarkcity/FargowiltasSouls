@@ -45,7 +45,9 @@ namespace FargowiltasSouls.NPCs
         public int LifePrevious = -1;
         public bool GodEater;
         public bool Suffocation;
-        public bool Villain = false;
+        public bool Villain;
+        public bool Lethargic;
+        public int LethargicCounter;
 
         public bool SpecialEnchantImmune;
 
@@ -115,6 +117,8 @@ namespace FargowiltasSouls.NPCs
 
             if (FargoSoulsWorld.MasochistMode)
             {
+                npc.value = (int)(npc.value * 1.3);
+
                 ResetRegenTimer(npc);
 
                 switch (npc.type)
@@ -1044,6 +1048,12 @@ namespace FargowiltasSouls.NPCs
                 }
 
                 FirstTick = true;
+            }
+
+            if (Lethargic && ++LethargicCounter > 3)
+            {
+                LethargicCounter = 0;
+                return false;
             }
 
             if (FargoSoulsWorld.MasochistMode)
@@ -5589,6 +5599,9 @@ namespace FargowiltasSouls.NPCs
                                 npc.StrikeNPCNoInteraction(9999, 0f, 0); //die if prime gone
                                 return false;
                             }
+                            npc.target = Main.npc[ai1].target;
+                            if (!npc.HasValidTarget) //return to normal AI
+                                break;
                             if (masoBool[1]) //swipe AI
                             {
                                 if (!masoBool[3])
@@ -5605,8 +5618,6 @@ namespace FargowiltasSouls.NPCs
                                 }
                                 if (++npc.ai[2] < 180)
                                 {
-                                    if (!npc.HasValidTarget)
-                                        npc.TargetClosest(false);
                                     Vector2 target = Main.player[npc.target].Center;
                                     target.X += 400 * Counter;
                                     target.Y += 400 * Counter2;
