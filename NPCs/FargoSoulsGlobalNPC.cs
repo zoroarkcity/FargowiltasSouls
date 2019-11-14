@@ -378,8 +378,10 @@ namespace FargowiltasSouls.NPCs
                         npc.buffImmune[mod.BuffType("ClippedWings")] = true;
                         break;
                     case NPCID.TheHungry:
-                        npc.lifeMax *= 3;
                         npc.knockBackResist = 0f;
+                        break;
+                    case NPCID.TheHungryII:
+                        npc.noTileCollide = true;
                         break;
 
                     case NPCID.SkeletronPrime:

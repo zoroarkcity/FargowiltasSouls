@@ -14,6 +14,8 @@ soul of terraria no longer disables pumpkin enchant pie heal
 
 qb wont regen while subjects alive
 wof's hungries instantly detach and start flying when wof in p2
+leashed hungry no longer have boosted life
+flying hungry ignore blocks
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
