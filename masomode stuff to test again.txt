@@ -19,6 +19,7 @@ low ground actuates platforms instead of breaking (?)
 prime limbs fall with regular limbs when prime is despawning
 all mobs drop 40% more coins in maso (this stacks with expert's x2.5, total x3.5)
 lethargic now has a mild reverse hyper mode effect on enemies
+flying dutchman now has 1% chance to drop coin gun!!!!!
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

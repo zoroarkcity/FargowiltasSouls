@@ -9446,6 +9446,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.PirateShip:
                         if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("SecurityWallet"));
+                        if (Main.rand.Next(100) == 0)
+                            Item.NewItem(npc.Hitbox, ItemID.CoinGun);
                         break;
 
                     case NPCID.Nymph:
