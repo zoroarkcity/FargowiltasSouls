@@ -5,17 +5,27 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
 using System.Collections.Generic;
+using ThoriumMod.Items.BasicAccessories;
+using ThoriumMod.Items.Misc;
+using ThoriumMod.Items.NPCItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class LeadEnchant : ModItem
+    public class LeadEnchant : EnchantmentItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
         public int timer;
 
+
+        public LeadEnchant() : base("Lead Enchantment", "", 20, 20,
+            TileID.DemonAltar, Item.sellPrice(silver: 40), ItemRarityID.Blue, new Color(67, 69, 88))
+        {
+        }
+
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lead Enchantment");
+            base.SetStaticDefaults();
 
             string tooltip =
 @"'Not recommended for eating'
@@ -33,30 +43,11 @@ Lead Poisoning deals damage over time and spreads to nearby enemies";
             }
 
             Tooltip.SetDefault(tooltip);
+
             DisplayName.AddTranslation(GameCulture.Chinese, "铅魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
-        {
-            foreach (TooltipLine tooltipLine in list)
-            {
-                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
-                {
-                    tooltipLine.overrideColor = new Color(67, 69, 88);
-                }
-            }
-        }
-
-        public override void SetDefaults()
-        {
-            item.width = 20;
-            item.height = 20;
-            item.accessory = true;
-            ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 1;
-            item.value = 20000;
-        }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -64,6 +55,7 @@ Lead Poisoning deals damage over time and spreads to nearby enemies";
 
             if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
         }
+
 
         private void Thorium(Player player)
         {
@@ -86,34 +78,32 @@ Lead Poisoning deals damage over time and spreads to nearby enemies";
             }
         }
 
-        public override void AddRecipes()
+
+        protected override void AddRecipeBase(ModRecipe recipe)
         {
-            ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.LeadHelmet);
             recipe.AddIngredient(ItemID.LeadChainmail);
             recipe.AddIngredient(ItemID.LeadGreaves);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("LeadShield"));
-                recipe.AddIngredient(ItemID.LeadShortsword);
-                recipe.AddIngredient(ItemID.LeadPickaxe);
-                recipe.AddIngredient(thorium.ItemType("OnyxStaff"));
-                recipe.AddIngredient(thorium.ItemType("RustySword"));
-                recipe.AddIngredient(ItemID.GrayPaint, 100);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.LeadShortsword);
-                recipe.AddIngredient(ItemID.LeadPickaxe);
-                recipe.AddIngredient(ItemID.GrayPaint, 100);
-            }
-            
+
             recipe.AddIngredient(ItemID.SulphurButterfly);
-            
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+        }
+
+        protected override void AddThoriumRecipe(ModRecipe recipe, Mod thorium)
+        {
+            recipe.AddIngredient(ModContent.ItemType<LeadShield>());
+            recipe.AddIngredient(ModContent.ItemType<OnyxStaff>());
+            recipe.AddIngredient(ModContent.ItemType<RustySword>());
+
+            recipe.AddIngredient(ItemID.LeadShortsword);
+            recipe.AddIngredient(ItemID.LeadPickaxe);
+            recipe.AddIngredient(ItemID.GrayPaint, 100);
+        }
+
+        protected override void FinishRecipeVanilla(ModRecipe recipe)
+        {
+            recipe.AddIngredient(ItemID.LeadShortsword);
+            recipe.AddIngredient(ItemID.LeadPickaxe);
+            recipe.AddIngredient(ItemID.GrayPaint, 100);
         }
     }
 }

@@ -5,9 +5,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Buffs.Pet;
 using ThoriumMod.Items.BasicAccessories;
 using ThoriumMod.Items.Donate;
 using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Projectiles.Pets;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
@@ -19,7 +21,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         public GoldEnchant() : base("Gold Enchantment", "", 20, 20,
             TileID.CrystalBall, Item.sellPrice(gold: 3), ItemRarityID.Pink, new Color(231, 178, 28))
         {
-            
         }
 
 
@@ -78,13 +79,14 @@ Summons a pet Parrot";
 
         private void Thorium(Player player, bool hideVisual)
         {
-            ThoriumPlayer thoriumPlayer = (ThoriumPlayer)player.GetModPlayer(thorium, "ThoriumPlayer");
+            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
+
             if (SoulConfig.Instance.GetValue("Proof of Avarice"))
             {
                 //proof of avarice
                 thoriumPlayer.avarice = true;
             }
-            
+
             //shield
             timer++;
             if (timer >= 30)
@@ -103,7 +105,7 @@ Summons a pet Parrot";
                 timer = 0;
             }
 
-            player.GetModPlayer<FargoPlayer>().AddPet("Coin Bag Pet", hideVisual, thorium.BuffType("DrachmaBuff"), thorium.ProjectileType("DrachmaBag"));
+            player.GetModPlayer<FargoPlayer>().AddPet("Coin Bag Pet", hideVisual, ModContent.BuffType<DrachmaBuff>(), ModContent.ProjectileType<DrachmaBag>());
         }
 
 

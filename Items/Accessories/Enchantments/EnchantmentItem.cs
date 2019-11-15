@@ -70,11 +70,18 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 
         private void TryAddModRecipe(ModCompatibility compatibility, Action<ModRecipe, Mod> recipeMethod, ModRecipe recipe)
         {
-            if (compatibility == null)
-                return;
+            try
+            {
+                if (compatibility == null)
+                    return;
 
-            recipeMethod(recipe, compatibility.ModInstance);
-            RecipeAffectedByMods = true;
+                recipeMethod(recipe, compatibility.ModInstance);
+                RecipeAffectedByMods = true;
+            }
+            catch (Exception)
+            {
+                mod.Logger.Error($"Error while adding recipe: method {recipeMethod.Method.Name} failed completing.");
+            }
         }
         
 
