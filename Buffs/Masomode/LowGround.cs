@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Buffs.Masomode
 
                 Tile tile = Framing.GetTileSafely((int)(pos.X / 16), (int)(pos.Y / 16));
                 if (tile.type == TileID.Platforms)
-                    WorldGen.KillTile((int)(pos.X / 16), (int)(pos.Y / 16));
+                    tile.inActive(true);
             }
         }
     }

@@ -13,7 +13,16 @@ hm enemies in pre-hm have full life but no defense
 soul of terraria no longer disables pumpkin enchant pie heal
 
 qb wont regen while subjects alive
-wof's hungries instantly detach and start flying when wof in p2
+leashed hungry no longer have boosted life
+flying hungry ignore blocks
+low ground actuates platforms instead of breaking
+prime limbs fall with regular limbs when prime is despawning
+all mobs drop 40% more coins in maso (this stacks with expert's x2.5, total x3.5)
+lethargic now has a mild reverse hyper mode effect on enemies
+flying dutchman now has 1% chance to drop coin gun!!!!!
+nerfed boss crate drops to always 5 (was 5-9)
+on fire wears off faster when raining, on surface, and not in front of a wall
+fixed slimed slowing you outside maso
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
