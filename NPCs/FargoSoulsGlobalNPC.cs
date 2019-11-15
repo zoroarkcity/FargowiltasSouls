@@ -5600,7 +5600,7 @@ namespace FargowiltasSouls.NPCs
                                 return false;
                             }
                             npc.target = Main.npc[ai1].target;
-                            if (!npc.HasValidTarget) //return to normal AI
+                            if (npc.ai[1] == 3) //return to normal AI
                                 break;
                             if (masoBool[1]) //swipe AI
                             {

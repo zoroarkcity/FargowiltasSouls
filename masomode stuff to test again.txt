@@ -15,7 +15,7 @@ soul of terraria no longer disables pumpkin enchant pie heal
 qb wont regen while subjects alive
 leashed hungry no longer have boosted life
 flying hungry ignore blocks
-low ground actuates platforms instead of breaking (?)
+low ground actuates platforms instead of breaking
 prime limbs fall with regular limbs when prime is despawning
 all mobs drop 40% more coins in maso (this stacks with expert's x2.5, total x3.5)
 lethargic now has a mild reverse hyper mode effect on enemies
