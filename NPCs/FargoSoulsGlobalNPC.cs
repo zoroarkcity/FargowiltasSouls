@@ -2148,7 +2148,7 @@ namespace FargowiltasSouls.NPCs
                             masoBool[1] = true;
                         }
                         if (masoBool[1])
-                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 3000;
+                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 4500;
                         break;
 
                     case NPCID.LunarTowerSolar:
@@ -2182,7 +2182,7 @@ namespace FargowiltasSouls.NPCs
                             masoBool[1] = true;
                         }
                         if (masoBool[1])
-                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 3000;
+                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 4500;
                         break;
 
                     case NPCID.LunarTowerStardust:
@@ -2227,7 +2227,7 @@ namespace FargowiltasSouls.NPCs
                             masoBool[1] = true;
                         }
                         if (masoBool[1])
-                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 3000;
+                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 4500;
                         break;
 
                     case NPCID.LunarTowerVortex:
@@ -2283,7 +2283,7 @@ namespace FargowiltasSouls.NPCs
                             masoBool[1] = true;
                         }
                         if (masoBool[1])
-                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 3000;
+                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 4500;
                         break;
 
                     case NPCID.CultistBoss:
@@ -9298,11 +9298,11 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.IlluminantSlime:
                     case NPCID.EnchantedSword:
                         if (Main.rand.Next(3) == 0)
-                            Item.NewItem(npc.Hitbox, mod.ItemType("VolatileEnergy"), Main.rand.Next(3) + 1);
+                            Item.NewItem(npc.Hitbox, mod.ItemType("VolatileEnergy"), 1);
                         break;
 
                     case NPCID.ChaosElemental:
-                        Item.NewItem(npc.Hitbox, mod.ItemType("VolatileEnergy"), Main.rand.Next(3, 7));
+                        Item.NewItem(npc.Hitbox, mod.ItemType("VolatileEnergy"), 3);
 
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.TeleportationPotion, Main.rand.Next(0, 2) + 1);
@@ -9855,6 +9855,7 @@ namespace FargowiltasSouls.NPCs
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MagicalBulb"));
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.JungleFishingCrate, 5);
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeFruit, Main.rand.Next(3) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.ChlorophyteOre, Main.rand.Next(101) + 100);
                         break;
 
                     case NPCID.Golem:

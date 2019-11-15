@@ -24,6 +24,10 @@ nerfed boss crate drops to always 5 (was 5-9)
 on fire wears off faster when raining, on surface, and not in front of a wall
 fixed slimed slowing you outside maso
 
+nerfed volatile energy drops
+plantera drops 100-200 chloro ore
+increased pillar mortality range
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)
