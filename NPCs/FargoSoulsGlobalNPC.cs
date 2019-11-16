@@ -6112,6 +6112,30 @@ namespace FargowiltasSouls.NPCs
                         {
                             masoBool[0] = true;
                         }
+                        if (npc.position.Y < Main.worldSurface * 16)
+                        {
+                            if (++Counter > 300)
+                            {
+                                Counter = 0;
+                                masoBool[1] = !masoBool[1];
+                            }
+                            if (masoBool[1] && ++Counter2 > 6)
+                            {
+                                Counter2 = 0;
+                                if (npc.HasPlayerTarget)
+                                {
+                                    Vector2 speed = Main.player[npc.target].Center - npc.Center;
+                                    speed.X += Main.rand.Next(-80, 81);
+                                    speed.Y += Main.rand.Next(-80, 81);
+                                    speed.Normalize();
+                                    speed *= 11f;
+                                    if (Main.netMode != 1)
+                                        Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("MimicCoin"), npc.damage / 4, 0f, Main.myPlayer, Main.rand.Next(3));
+
+                                    Main.PlaySound(SoundID.Item11, npc.Center);
+                                }
+                            }
+                        }
                         break;
 
                     case NPCID.DD2Betsy:

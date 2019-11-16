@@ -27,6 +27,7 @@ fixed slimed slowing you outside maso
 nerfed volatile energy drops
 plantera drops 100-200 chloro ore
 increased pillar mortality range
+biome mimics enrage above ground, shooting coins
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
