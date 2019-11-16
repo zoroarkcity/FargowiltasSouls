@@ -28,6 +28,8 @@ nerfed volatile energy drops
 plantera drops 100-200 chloro ore
 increased pillar mortality range
 biome mimics enrage above ground, shooting coins
+red devils drop blindfolds too, but their tridents now inflict darkness too
+brain gets closer
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

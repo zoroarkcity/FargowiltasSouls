@@ -1514,6 +1514,7 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.UnholyTridentHostile:
+                        target.AddBuff(BuffID.Darkness, 300);
                         target.AddBuff(BuffID.Blackout, 300);
                         target.AddBuff(mod.BuffType("Shadowflame"), 600);
                         target.AddBuff(mod.BuffType("MarkedforDeath"), 180);
