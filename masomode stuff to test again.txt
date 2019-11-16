@@ -32,6 +32,7 @@ red devils drop blindfolds too, but their tridents now inflict darkness too
 brain gets closer
 corrupt/crim/hallow cacti now inflict a corresponding debuff instead of poisoned
 rainbow slime spikes ignore walls
+low ground now disables planter boxes
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
