@@ -934,10 +934,20 @@ namespace FargowiltasSouls
                     if (currentTile != null && currentTile.type == TileID.Cactus && currentTile.nactive())
                     {
                         int damage = 20;
-                        if (player.ZoneCorrupt || player.ZoneCrimson || player.ZoneHoly)
+                        if (player.ZoneCorrupt)
                         {
                             damage = 40;
-                            player.AddBuff(BuffID.Poisoned, Main.expertMode && Main.expertDebuffTime > 1 ? 150 : 300);
+                            player.AddBuff(BuffID.CursedInferno, Main.expertMode && Main.expertDebuffTime > 1 ? 150 : 300);
+                        }
+                        if (player.ZoneCrimson)
+                        {
+                            damage = 40;
+                            player.AddBuff(BuffID.Ichor, Main.expertMode && Main.expertDebuffTime > 1 ? 150 : 300);
+                        }
+                        if (player.ZoneHoly)
+                        {
+                            damage = 40;
+                            player.AddBuff(BuffID.Confused, Main.expertMode && Main.expertDebuffTime > 1 ? 150 : 300);
                         }
                         if (player.hurtCooldowns[0] <= 0) //same i-frames as spike tiles
                             player.Hurt(PlayerDeathReason.ByCustomReason(player.name + " was pricked by a Cactus."), damage, 0, false, false, false, 0);

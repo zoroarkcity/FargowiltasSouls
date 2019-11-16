@@ -30,6 +30,7 @@ increased pillar mortality range
 biome mimics enrage above ground, shooting coins
 red devils drop blindfolds too, but their tridents now inflict darkness too
 brain gets closer
+corrupt/crim/hallow cacti now inflict a corresponding debuff instead of poisoned
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
