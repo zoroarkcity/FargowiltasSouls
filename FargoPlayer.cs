@@ -2929,7 +2929,7 @@ namespace FargowiltasSouls
 
             HurtTimer = 20;
 
-            if (Midas && Main.netMode == 0)
+            if (Midas && Main.myPlayer == player.whoAmI)
                 player.DropCoins();
         }
 

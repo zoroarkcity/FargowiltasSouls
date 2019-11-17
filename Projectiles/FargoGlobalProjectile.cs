@@ -1529,6 +1529,7 @@ namespace FargowiltasSouls.Projectiles
                             target.AddBuff(BuffID.Ichor, 600);
                         break;
 
+                    case ProjectileID.BulletDeadeye:
                     case ProjectileID.CannonballHostile:
                         target.AddBuff(mod.BuffType("Defenseless"), 600);
                         target.AddBuff(mod.BuffType("Midas"), 900);

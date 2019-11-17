@@ -33,6 +33,8 @@ brain gets closer
 corrupt/crim/hallow cacti now inflict a corresponding debuff instead of poisoned
 rainbow slime spikes ignore walls
 low ground now disables planter boxes
+midas works in mp
+recolored qb
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
