@@ -91,15 +91,17 @@ Any projectiles shot through your storm gain 50% damage
                 recipe.AddIngredient(thorium.ItemType("AxeBlade"), 300);
                 recipe.AddIngredient(ItemID.SpiritFlame);
                 recipe.AddIngredient(ItemID.BookStaff);
-            }
+				recipe.AddIngredient(ItemID.Scorpion);
+			}
             else
             {
                 recipe.AddIngredient(ItemID.SpiritFlame);
                 recipe.AddIngredient(ItemID.BookStaff);
+				recipe.AddRecipeGroup("Scorpions");
             }
 
             recipe.AddIngredient(ItemID.DjinnsCurse);
-            recipe.AddIngredient(ItemID.Scorpion);
+            
             
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

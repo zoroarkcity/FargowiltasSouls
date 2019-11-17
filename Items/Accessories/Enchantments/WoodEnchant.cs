@@ -52,16 +52,24 @@ When critters die, they release their souls to aid you");
             player.buffImmune[mod.BuffType("Guilty")] = true;
         }
 
-        public override void AddRecipes()
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.WoodHelmet);
+		public override void AddRecipes()
+		{
+			ModRecipe recipe = new ModRecipe(mod);
+			if (Fargowiltas.Instance.ThoriumLoaded)
+			{
+				recipe.AddIngredient(ItemID.Bird);
+			}
+			else
+			{
+				recipe.AddRecipeGroup("Birds");
+			}
+			recipe.AddIngredient(ItemID.WoodHelmet);
             recipe.AddIngredient(ItemID.WoodBreastplate);
             recipe.AddIngredient(ItemID.WoodGreaves);
             recipe.AddIngredient(ItemID.LivingWoodWand);
             recipe.AddIngredient(ItemID.Bunny);
-            recipe.AddIngredient(ItemID.Squirrel);
-            recipe.AddIngredient(ItemID.Bird);        
+			recipe.AddRecipeGroup("Squirrels");
+			        
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

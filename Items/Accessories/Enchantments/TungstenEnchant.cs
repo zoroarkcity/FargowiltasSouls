@@ -103,14 +103,14 @@ Projectiles still have the same tile collision hitbox";
                 recipe.AddIngredient(ItemID.TungstenHammer);
                 recipe.AddIngredient(ItemID.EmeraldStaff);
                 recipe.AddIngredient(ItemID.GreenPhaseblade);
-                recipe.AddIngredient(ItemID.Snail);
-                recipe.AddIngredient(ItemID.Sluggy);
+				recipe.AddRecipeGroup("Snails");
+				recipe.AddIngredient(ItemID.Sluggy);
             }
             else
             {
                 recipe.AddIngredient(ItemID.GreenPhaseblade);
                 recipe.AddIngredient(ItemID.EmeraldStaff);
-                recipe.AddIngredient(ItemID.Snail);
+                recipe.AddRecipeGroup("Snails");
                 recipe.AddIngredient(ItemID.Sluggy);
             }
 
