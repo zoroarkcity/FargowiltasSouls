@@ -1333,8 +1333,14 @@ namespace FargowiltasSouls
 
         public override void AddRecipeGroups()
         {
-            //drax
-            RecipeGroup group = new RecipeGroup(() => Lang.misc[37] + " Drax", ItemID.Drax, ItemID.PickaxeAxe);
+			//add top hat squirrel to squirrel group
+			if (RecipeGroup.recipeGroupIDs.ContainsKey("Squirrels"))
+			{
+				int index = RecipeGroup.recipeGroupIDs["Squirrels"];
+				RecipeGroup.recipeGroups[index].ValidItems.Add(ItemType("TophatSquirrel"));
+			}
+			//drax
+			RecipeGroup group = new RecipeGroup(() => Lang.misc[37] + " Drax", ItemID.Drax, ItemID.PickaxeAxe);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyDrax", group);
 
             //cobalt
