@@ -38,6 +38,10 @@ recolored qb
 
 plantera tentacle life down to 30 (was 120)
 plantera no longer speeds up in p2 against venomed player
+queen's stinger and upgrades grant effects of honey buff
+plantera's child poison seed inflicts infested/poisoned
+changed how sands of time works (will now make respawn faster if killed by a boss and boss has despawned)
+destroyer stars slower but now shot in a double V
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

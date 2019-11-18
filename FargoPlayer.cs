@@ -672,12 +672,13 @@ namespace FargowiltasSouls
         {
             if (Eternity)
                 player.respawnTimer = (int)(player.respawnTimer * .1);
-            else if (SandsofTime && !FargoSoulsGlobalNPC.AnyBossAlive())
-                player.respawnTimer = (int)(player.respawnTimer * .5);
         }
 
         public override void UpdateDead()
         {
+            if (SandsofTime && !FargoSoulsGlobalNPC.AnyBossAlive() && player.respawnTimer > 1)
+                player.respawnTimer--;
+
             wingTimeModifier = 1f;
 
             //debuffs

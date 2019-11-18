@@ -5081,13 +5081,13 @@ namespace FargowiltasSouls.NPCs
                                     if (Main.netMode != 1 && npc.HasPlayerTarget)
                                     {
                                         Vector2 distance = Main.player[npc.target].Center - npc.Center;
-                                        //double angleModifier = MathHelper.ToRadians(5) * distance.Length() / 1800.0;
+                                        double angleModifier = MathHelper.ToRadians(5) * distance.Length() / 1800.0;
                                         distance.Normalize();
-                                        distance *= 10f;
+                                        distance *= 8f;
                                         int type = mod.ProjectileType("DarkStar");
-                                        //Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
-                                        Projectile.NewProjectile(npc.Center, distance * 1.5f, type, npc.damage / 5, 0f, Main.myPlayer);
-                                        //Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
+                                        //Projectile.NewProjectile(npc.Center, distance * 1.5f, type, npc.damage / 5, 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
                                     }
                                 }
                             }

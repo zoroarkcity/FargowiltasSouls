@@ -37,10 +37,5 @@ namespace FargowiltasSouls.Projectiles.Minions
                     projectile.frame = 0;
             }
         }
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.AddBuff(BuffID.Poisoned, 180);
-        }
     }
 }
