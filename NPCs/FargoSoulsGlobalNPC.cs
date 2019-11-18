@@ -123,6 +123,10 @@ namespace FargowiltasSouls.NPCs
 
                 switch (npc.type)
                 {
+                    case NPCID.PlanterasTentacle:
+                        npc.lifeMax /= 4;
+                        break;
+
                     case NPCID.Pixie:
                         npc.noTileCollide = true;
                         break;
@@ -4638,7 +4642,6 @@ namespace FargowiltasSouls.NPCs
                             {
                                 if (Main.player[npc.target].venom)
                                 {
-                                    npc.position += npc.velocity / 3f;
                                     npc.defense *= 2;
                                     Counter++;
                                     SharkCount = 1;

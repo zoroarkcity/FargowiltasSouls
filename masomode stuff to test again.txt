@@ -36,6 +36,9 @@ low ground now disables planter boxes
 midas works in mp
 recolored qb
 
+plantera tentacle life down to 30 (was 120)
+plantera no longer speeds up in p2 against venomed player
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)
