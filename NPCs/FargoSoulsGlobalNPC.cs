@@ -5208,7 +5208,7 @@ namespace FargowiltasSouls.NPCs
                                 speed.Y += Main.rand.Next(-20, 21);
                                 speed.Normalize();
                                 Vector2 spinningpoint = speed;
-                                speed *= 10f;
+                                speed *= 8f;
 
                                 int damage = Main.expertMode ? 36 : 45;
 
@@ -6692,7 +6692,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.FungiSpore:
-                        npc.dontTakeDamage = Counter < 120;
+                        npc.dontTakeDamage = Counter < 60;
                         if (npc.dontTakeDamage)
                             Counter++;
                         break;
@@ -8917,7 +8917,7 @@ namespace FargowiltasSouls.NPCs
                                     }
 
                                     if (!sinisterIcon && !AnyBossAlive())
-                                        pool[NPCID.EyeofCthulhu] = .02f;
+                                        pool[NPCID.EyeofCthulhu] = .01f;
 
                                     if (NPC.downedMechBossAny)
                                         pool[NPCID.Probe] = 0.1f;
@@ -8926,17 +8926,17 @@ namespace FargowiltasSouls.NPCs
                                     {
                                         if (!sinisterIcon && !AnyBossAlive())
                                         {
-                                            pool[NPCID.Retinazer] = .005f;
-                                            pool[NPCID.Spazmatism] = .005f;
-                                            pool[NPCID.TheDestroyer] = .005f;
-                                            pool[NPCID.SkeletronPrime] = .005f;
+                                            pool[NPCID.Retinazer] = .001f;
+                                            pool[NPCID.Spazmatism] = .001f;
+                                            pool[NPCID.TheDestroyer] = .001f;
+                                            pool[NPCID.SkeletronPrime] = .001f;
                                         }
 
                                         if (!spawnInfo.player.GetModPlayer<FargoPlayer>().SkullCharm)
                                         {
-                                            pool[NPCID.SkeletonSniper] = .03f;
-                                            pool[NPCID.SkeletonCommando] = .03f;
-                                            pool[NPCID.TacticalSkeleton] = .03f;
+                                            pool[NPCID.SkeletonSniper] = .02f;
+                                            pool[NPCID.SkeletonCommando] = .02f;
+                                            pool[NPCID.TacticalSkeleton] = .02f;
                                         }
                                     }
                                 }
@@ -8961,7 +8961,7 @@ namespace FargowiltasSouls.NPCs
                                     if (NPC.downedHalloweenKing)
                                     {
                                         //pool[NPCID.HeadlessHorseman] = .01f;
-                                        pool[NPCID.Pumpking] = .005f;
+                                        pool[NPCID.Pumpking] = .0025f;
                                     }
                                 }
                                 else //in some biome
@@ -8976,7 +8976,7 @@ namespace FargowiltasSouls.NPCs
 
                                         if (NPC.downedHalloweenTree)
                                         {
-                                            pool[NPCID.MourningWood] = .005f;
+                                            pool[NPCID.MourningWood] = .0025f;
                                         }
                                     }
 
@@ -8992,12 +8992,12 @@ namespace FargowiltasSouls.NPCs
 
                                         if (NPC.downedChristmasTree)
                                         {
-                                            pool[NPCID.Everscream] = .005f;
+                                            pool[NPCID.Everscream] = .0025f;
                                         }
 
                                         if (NPC.downedChristmasSantank)
                                         {
-                                            pool[NPCID.SantaNK1] = .005f;
+                                            pool[NPCID.SantaNK1] = .0025f;
                                         }
                                     }
                                 }
@@ -9027,7 +9027,7 @@ namespace FargowiltasSouls.NPCs
                             pool[NPCID.PigronCrimson] = .01f;
                             pool[NPCID.PigronHallow] = .01f;
                             if (NPC.downedFishron && !sinisterIcon && !AnyBossAlive())
-                                pool[NPCID.DukeFishron] = .004f;
+                                pool[NPCID.DukeFishron] = .002f;
                         }
                         else if (desert)
                         {
@@ -9072,19 +9072,19 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     pool[NPCID.Krampus] = .025f;
                                     if (NPC.downedChristmasIceQueen)
-                                        pool[NPCID.IceQueen] = .005f;
+                                        pool[NPCID.IceQueen] = .0025f;
                                 }
                             }
                         }
 
                         if (NPC.downedPlantBoss && !spawnInfo.player.GetModPlayer<FargoPlayer>().SkullCharm)
                         {
-                            pool[NPCID.DiabolistRed] = .002f;
-                            pool[NPCID.DiabolistWhite] = .002f;
-                            pool[NPCID.Necromancer] = .002f;
-                            pool[NPCID.NecromancerArmored] = .002f;
-                            pool[NPCID.RaggedCaster] = .002f;
-                            pool[NPCID.RaggedCasterOpenCoat] = .002f;
+                            pool[NPCID.DiabolistRed] = .001f;
+                            pool[NPCID.DiabolistWhite] = .001f;
+                            pool[NPCID.Necromancer] = .001f;
+                            pool[NPCID.NecromancerArmored] = .001f;
+                            pool[NPCID.RaggedCaster] = .001f;
+                            pool[NPCID.RaggedCasterOpenCoat] = .001f;
                         }
 
                         if (NPC.downedAncientCultist && dungeon && !sinisterIcon && !AnyBossAlive())
@@ -9117,12 +9117,12 @@ namespace FargowiltasSouls.NPCs
 
                         if (NPC.downedPlantBoss && !spawnInfo.player.GetModPlayer<FargoPlayer>().SkullCharm)
                         {
-                            pool[NPCID.DiabolistRed] = .002f;
-                            pool[NPCID.DiabolistWhite] = .002f;
-                            pool[NPCID.Necromancer] = .002f;
-                            pool[NPCID.NecromancerArmored] = .002f;
-                            pool[NPCID.RaggedCaster] = .002f;
-                            pool[NPCID.RaggedCasterOpenCoat] = .002f;
+                            pool[NPCID.DiabolistRed] = .001f;
+                            pool[NPCID.DiabolistWhite] = .001f;
+                            pool[NPCID.Necromancer] = .001f;
+                            pool[NPCID.NecromancerArmored] = .001f;
+                            pool[NPCID.RaggedCaster] = .001f;
+                            pool[NPCID.RaggedCasterOpenCoat] = .001f;
                         }
 
                         if (FargoSoulsWorld.downedBetsy && !sinisterIcon && !AnyBossAlive())
@@ -9161,13 +9161,13 @@ namespace FargowiltasSouls.NPCs
                     if (corruption)
                     {
                         if (normalSpawn && !sinisterIcon && !AnyBossAlive())
-                            pool[NPCID.EaterofWorldsHead] = .004f;
+                            pool[NPCID.EaterofWorldsHead] = .002f;
                     }
 
                     if (crimson)
                     {
                         if (normalSpawn && !sinisterIcon && !AnyBossAlive())
-                            pool[NPCID.BrainofCthulhu] = .004f;
+                            pool[NPCID.BrainofCthulhu] = .002f;
                     }
 
                     if (jungle)
@@ -10692,6 +10692,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.AnomuraFungus:
                     case NPCID.MushiLadybug:
                     case NPCID.FungoFish:
+                    case NPCID.FungiBulb:
+                    case NPCID.GiantFungiBulb:
                         if (Main.netMode != 1)// && Main.hardMode)
                         {
                             for (int i = 0; i < 10; i++)
@@ -10700,7 +10702,7 @@ namespace FargowiltasSouls.NPCs
                                 if (spore < 200)
                                 {
                                     Main.npc[spore].damage = npc.damage / 3;
-                                    Main.npc[spore].velocity = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
+                                    Main.npc[spore].velocity = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5)) / 2;
                                     if (Main.netMode == 2)
                                         NetMessage.SendData(23, -1, -1, null, spore);
                                 }

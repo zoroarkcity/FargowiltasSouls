@@ -42,6 +42,11 @@ queen's stinger and upgrades grant effects of honey buff
 plantera's child poison seed inflicts infested/poisoned
 changed how sands of time works (will now make respawn faster if killed by a boss and boss has despawned)
 destroyer stars slower but now shot in a double V
+fungus spore invul on spawn halved
+fungus spore velocity from mushroom enemies reduced
+fixed fungi bulbs not making spores on death
+nerfed elf archer arrow velocity
+nerfed boss/mage skeleton spawn rates
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
