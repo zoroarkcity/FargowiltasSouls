@@ -4239,8 +4239,8 @@ namespace FargowiltasSouls.NPCs
                         }
                         masoBool[0] = npc.ai[0] != 0f;
 
-                        if (npc.velocity.Length() > 12)
-                            npc.position -= Vector2.Normalize(npc.velocity) * (npc.velocity.Length() - 12);
+                        if (npc.velocity.Length() > 14)
+                            npc.position -= Vector2.Normalize(npc.velocity) * (npc.velocity.Length() - 14);
 
                         if (npc.life < npc.lifeMax / 2 && NPC.golemBoss > -1 && NPC.golemBoss < 200 && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem)
                         {
@@ -4263,6 +4263,9 @@ namespace FargowiltasSouls.NPCs
                         {
                             npc.position += npc.velocity * 0.25f;
                             npc.position.Y += npc.velocity.Y * 0.25f;
+
+                            if (!npc.noTileCollide && npc.HasPlayerTarget && Collision.SolidCollision(npc.position, npc.width, npc.height)) //unstick from walls
+                                npc.position += npc.DirectionTo(Main.player[npc.target].Center) * 4;
 
                             if (++Counter > 540)
                             {
@@ -4300,7 +4303,13 @@ namespace FargowiltasSouls.NPCs
                             if (++Counter < fireTime) //move to above golem
                             {
                                 Vector2 target = Main.npc[NPC.golemBoss].Center;
-                                if (masoBool[2]) //in temple
+                                target.Y -= 250;
+                                if (target.Y > Counter2) //counter2 stores lowest remembered golem position
+                                    Counter2 = (int)target.Y;
+                                target.Y = Counter2;
+                                if (npc.HasPlayerTarget && Main.player[npc.target].position.Y < target.Y)
+                                    target.Y = Main.player[npc.target].position.Y;
+                                /*if (masoBool[2]) //in temple
                                 {
                                     target.Y -= 250;
                                     if (target.Y > Counter2) //counter2 stores lowest remembered golem position
@@ -4310,7 +4319,7 @@ namespace FargowiltasSouls.NPCs
                                 else if (npc.HasPlayerTarget)
                                 {
                                     target.Y = Main.player[npc.target].Center.Y - 250;
-                                }
+                                }*/
                                 npc.velocity = (target - npc.Center) / 30;
                             }
                             else if (Counter == fireTime) //fire deathray
@@ -4324,7 +4333,7 @@ namespace FargowiltasSouls.NPCs
                             }
                             else if (Counter < fireTime + 150)
                             {
-                                npc.velocity.X += masoBool[1] ? -.17f : .17f;
+                                npc.velocity.X += masoBool[1] ? -.18f : .18f;
                                 
                                 Tile tile = Framing.GetTileSafely(npc.Center); //stop if reached a wall, but only 1sec after started firing
                                 if (Counter > fireTime + 60 & tile.nactive() && tile.type == TileID.LihzahrdBrick && tile.wall == WallID.LihzahrdBrickUnsafe)
@@ -6071,6 +6080,15 @@ namespace FargowiltasSouls.NPCs
                             {
                                 npc.damage = 150;
                                 masoBool[0] = true;
+                            }
+                        }
+                        if (masoBool[0])
+                        {
+                            if (++Counter > 1800)
+                            {
+                                if (Main.netMode != 1)
+                                    Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("FuseBomb"), npc.damage / 4, 0f, Main.myPlayer);
+                                npc.StrikeNPCNoInteraction(999999, 0f, 0);
                             }
                         }
                         break;

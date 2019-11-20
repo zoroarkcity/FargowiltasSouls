@@ -48,6 +48,12 @@ fixed fungi bulbs not making spores on death
 nerfed elf archer arrow velocity
 nerfed boss/mage skeleton spawn rates
 
+golem head shouldnt get stuck in walls
+changed golem head targeting for deathray and increased speed during ray slightly
+increased max speed of fists
+biocluster/maso soul have sands/skull effects in inv too
+temple spike balls/wheels selfdestruct 30sec after spawn
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)
