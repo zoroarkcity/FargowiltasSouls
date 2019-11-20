@@ -811,17 +811,6 @@ namespace FargowiltasSouls.NPCs
                 {
                     switch (npc.type)
                     {
-                        case NPCID.Duck:
-                        case NPCID.Duck2:
-                        case NPCID.DuckWhite:
-                        case NPCID.DuckWhite2:
-                            for (int i = 0; i < Main.maxNPCs; i++)
-                                if (Main.npc[i].active && (Main.npc[i].type == NPCID.Duck || Main.npc[i].type == NPCID.Duck2 || Main.npc[i].type == NPCID.DuckWhite || Main.npc[i].type == NPCID.DuckWhite2))
-                                    Counter++;
-                            if (Counter > 50)
-                                npc.StrikeNPCNoInteraction(9999, 0f, 0);
-                            break;
-
                         case NPCID.Zombie:
                             if (Main.rand.Next(8) == 0)
                                 Horde(npc, 6);

@@ -48,8 +48,6 @@ fixed fungi bulbs not making spores on death
 nerfed elf archer arrow velocity
 nerfed boss/mage skeleton spawn rates
 
-max 50 ducks alive
-
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)
