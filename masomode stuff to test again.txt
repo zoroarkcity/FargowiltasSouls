@@ -24,6 +24,36 @@ nerfed boss crate drops to always 5 (was 5-9)
 on fire wears off faster when raining, on surface, and not in front of a wall
 fixed slimed slowing you outside maso
 
+nerfed volatile energy drops
+plantera drops 100-200 chloro ore
+increased pillar mortality range
+biome mimics enrage above ground, shooting coins
+red devils drop blindfolds too, but their tridents now inflict darkness too
+brain gets closer
+corrupt/crim/hallow cacti now inflict a corresponding debuff instead of poisoned
+rainbow slime spikes ignore walls
+low ground now disables planter boxes
+midas works in mp
+recolored qb
+
+plantera tentacle life down to 30 (was 120)
+plantera no longer speeds up in p2 against venomed player
+queen's stinger and upgrades grant effects of honey buff
+plantera's child poison seed inflicts infested/poisoned
+changed how sands of time works (will now make respawn faster if killed by a boss and boss has despawned)
+destroyer stars slower but now shot in a double V
+fungus spore invul on spawn halved
+fungus spore velocity from mushroom enemies reduced
+fixed fungi bulbs not making spores on death
+nerfed elf archer arrow velocity
+nerfed boss/mage skeleton spawn rates
+
+golem head shouldnt get stuck in walls
+changed golem head targeting for deathray and increased speed during ray slightly
+increased max speed of fists
+biocluster/maso soul have sands/skull effects in inv too
+temple spike balls/wheels selfdestruct 30sec after spawn
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)

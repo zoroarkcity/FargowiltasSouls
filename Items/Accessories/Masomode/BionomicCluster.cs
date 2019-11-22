@@ -47,6 +47,15 @@ Summons a friendly rainbow slime");
             item.defense = 6;
         }
 
+        public override void UpdateInventory(Player player)
+        {
+            FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
+            player.buffImmune[BuffID.WindPushed] = true;
+            fargoPlayer.SandsofTime = true;
+            player.buffImmune[BuffID.Suffocation] = true;
+            player.manaFlower = true;
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();

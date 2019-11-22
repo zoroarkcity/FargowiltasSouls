@@ -24,7 +24,7 @@ Empowers Cute Fishron and makes armed and magic skeletons less hostile outside t
 Your attacks create additional attacks, hearts, and inflict a cocktail of Masochist Mode debuffs
 Press the Fireball Dash key to perform a short invincible dash
 Certain enemies will drop potions when defeated
-You respawn twice as fast, have improved night vision, and erupt into various attacks when injured
+You respawn twice as fast, have Honey buff, improved night vision, and erupt into various attacks when injured
 Prevents boss spawns, increases spawn rate, and attacks may squeak and deal 1 damage to you
 Summons the aid of all Masochist Mode bosses to your side");
 
@@ -64,6 +64,15 @@ Summons the aid of all Masochist Mode bosses to your side");
             }
         }
 
+        public override void UpdateInventory(Player player)
+        {
+            FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
+            player.buffImmune[BuffID.WindPushed] = true;
+            fargoPlayer.SandsofTime = true;
+            player.buffImmune[BuffID.Suffocation] = true;
+            player.manaFlower = true;
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
@@ -96,6 +105,7 @@ Summons the aid of all Masochist Mode bosses to your side");
             fargoPlayer.AgitatingLens = true;
 
             //queen stinger
+            player.honey = true;
             player.npcTypeNoAggro[210] = true;
             player.npcTypeNoAggro[211] = true;
             player.npcTypeNoAggro[42] = true;

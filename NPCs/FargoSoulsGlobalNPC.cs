@@ -123,6 +123,10 @@ namespace FargowiltasSouls.NPCs
 
                 switch (npc.type)
                 {
+                    case NPCID.PlanterasTentacle:
+                        npc.lifeMax /= 4;
+                        break;
+
                     case NPCID.Pixie:
                         npc.noTileCollide = true;
                         break;
@@ -2148,7 +2152,7 @@ namespace FargowiltasSouls.NPCs
                             masoBool[1] = true;
                         }
                         if (masoBool[1])
-                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 3000;
+                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 4500;
                         break;
 
                     case NPCID.LunarTowerSolar:
@@ -2182,7 +2186,7 @@ namespace FargowiltasSouls.NPCs
                             masoBool[1] = true;
                         }
                         if (masoBool[1])
-                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 3000;
+                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 4500;
                         break;
 
                     case NPCID.LunarTowerStardust:
@@ -2227,7 +2231,7 @@ namespace FargowiltasSouls.NPCs
                             masoBool[1] = true;
                         }
                         if (masoBool[1])
-                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 3000;
+                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 4500;
                         break;
 
                     case NPCID.LunarTowerVortex:
@@ -2283,7 +2287,7 @@ namespace FargowiltasSouls.NPCs
                             masoBool[1] = true;
                         }
                         if (masoBool[1])
-                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 3000;
+                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 4500;
                         break;
 
                     case NPCID.CultistBoss:
@@ -4235,8 +4239,8 @@ namespace FargowiltasSouls.NPCs
                         }
                         masoBool[0] = npc.ai[0] != 0f;
 
-                        if (npc.velocity.Length() > 12)
-                            npc.position -= Vector2.Normalize(npc.velocity) * (npc.velocity.Length() - 12);
+                        if (npc.velocity.Length() > 14)
+                            npc.position -= Vector2.Normalize(npc.velocity) * (npc.velocity.Length() - 14);
 
                         if (npc.life < npc.lifeMax / 2 && NPC.golemBoss > -1 && NPC.golemBoss < 200 && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem)
                         {
@@ -4259,6 +4263,9 @@ namespace FargowiltasSouls.NPCs
                         {
                             npc.position += npc.velocity * 0.25f;
                             npc.position.Y += npc.velocity.Y * 0.25f;
+
+                            if (!npc.noTileCollide && npc.HasPlayerTarget && Collision.SolidCollision(npc.position, npc.width, npc.height)) //unstick from walls
+                                npc.position += npc.DirectionTo(Main.player[npc.target].Center) * 4;
 
                             if (++Counter > 540)
                             {
@@ -4296,7 +4303,13 @@ namespace FargowiltasSouls.NPCs
                             if (++Counter < fireTime) //move to above golem
                             {
                                 Vector2 target = Main.npc[NPC.golemBoss].Center;
-                                if (masoBool[2]) //in temple
+                                target.Y -= 250;
+                                if (target.Y > Counter2) //counter2 stores lowest remembered golem position
+                                    Counter2 = (int)target.Y;
+                                target.Y = Counter2;
+                                if (npc.HasPlayerTarget && Main.player[npc.target].position.Y < target.Y)
+                                    target.Y = Main.player[npc.target].position.Y;
+                                /*if (masoBool[2]) //in temple
                                 {
                                     target.Y -= 250;
                                     if (target.Y > Counter2) //counter2 stores lowest remembered golem position
@@ -4306,7 +4319,7 @@ namespace FargowiltasSouls.NPCs
                                 else if (npc.HasPlayerTarget)
                                 {
                                     target.Y = Main.player[npc.target].Center.Y - 250;
-                                }
+                                }*/
                                 npc.velocity = (target - npc.Center) / 30;
                             }
                             else if (Counter == fireTime) //fire deathray
@@ -4320,7 +4333,7 @@ namespace FargowiltasSouls.NPCs
                             }
                             else if (Counter < fireTime + 150)
                             {
-                                npc.velocity.X += masoBool[1] ? -.17f : .17f;
+                                npc.velocity.X += masoBool[1] ? -.18f : .18f;
                                 
                                 Tile tile = Framing.GetTileSafely(npc.Center); //stop if reached a wall, but only 1sec after started firing
                                 if (Counter > fireTime + 60 & tile.nactive() && tile.type == TileID.LihzahrdBrick && tile.wall == WallID.LihzahrdBrickUnsafe)
@@ -4638,7 +4651,6 @@ namespace FargowiltasSouls.NPCs
                             {
                                 if (Main.player[npc.target].venom)
                                 {
-                                    npc.position += npc.velocity / 3f;
                                     npc.defense *= 2;
                                     Counter++;
                                     SharkCount = 1;
@@ -5078,13 +5090,13 @@ namespace FargowiltasSouls.NPCs
                                     if (Main.netMode != 1 && npc.HasPlayerTarget)
                                     {
                                         Vector2 distance = Main.player[npc.target].Center - npc.Center;
-                                        //double angleModifier = MathHelper.ToRadians(5) * distance.Length() / 1800.0;
+                                        double angleModifier = MathHelper.ToRadians(5) * distance.Length() / 1800.0;
                                         distance.Normalize();
-                                        distance *= 10f;
+                                        distance *= 8f;
                                         int type = mod.ProjectileType("DarkStar");
-                                        //Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
-                                        Projectile.NewProjectile(npc.Center, distance * 1.5f, type, npc.damage / 5, 0f, Main.myPlayer);
-                                        //Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
+                                        //Projectile.NewProjectile(npc.Center, distance * 1.5f, type, npc.damage / 5, 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
                                     }
                                 }
                             }
@@ -5205,7 +5217,7 @@ namespace FargowiltasSouls.NPCs
                                 speed.Y += Main.rand.Next(-20, 21);
                                 speed.Normalize();
                                 Vector2 spinningpoint = speed;
-                                speed *= 10f;
+                                speed *= 8f;
 
                                 int damage = Main.expertMode ? 36 : 45;
 
@@ -5340,9 +5352,9 @@ namespace FargowiltasSouls.NPCs
                         else
                         {
                             npc.damage = 0;
-                            if (npc.ai[0] != -2 && npc.HasPlayerTarget && npc.Distance(Main.player[npc.target].Center) < 500) //stay at a minimum distance
+                            if (npc.ai[0] != -2 && npc.HasPlayerTarget && npc.Distance(Main.player[npc.target].Center) < 300) //stay at a minimum distance
                             {
-                                npc.Center = Main.player[npc.target].Center + Main.player[npc.target].DirectionTo(npc.Center) * 500;
+                                npc.Center = Main.player[npc.target].Center + Main.player[npc.target].DirectionTo(npc.Center) * 300;
                             }
                         }
 
@@ -6070,6 +6082,15 @@ namespace FargowiltasSouls.NPCs
                                 masoBool[0] = true;
                             }
                         }
+                        if (masoBool[0])
+                        {
+                            if (++Counter > 1800)
+                            {
+                                if (Main.netMode != 1)
+                                    Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("FuseBomb"), npc.damage / 4, 0f, Main.myPlayer);
+                                npc.StrikeNPCNoInteraction(999999, 0f, 0);
+                            }
+                        }
                         break;
 
                     case NPCID.GraniteGolem:
@@ -6111,6 +6132,30 @@ namespace FargowiltasSouls.NPCs
                         else if (npc.velocity.Y > 0 && npc.noTileCollide) //mega jump
                         {
                             masoBool[0] = true;
+                        }
+                        if (npc.position.Y < Main.worldSurface * 16)
+                        {
+                            if (++Counter > 300)
+                            {
+                                Counter = 0;
+                                masoBool[1] = !masoBool[1];
+                            }
+                            if (masoBool[1] && ++Counter2 > 6)
+                            {
+                                Counter2 = 0;
+                                if (npc.HasPlayerTarget)
+                                {
+                                    Vector2 speed = Main.player[npc.target].Center - npc.Center;
+                                    speed.X += Main.rand.Next(-80, 81);
+                                    speed.Y += Main.rand.Next(-80, 81);
+                                    speed.Normalize();
+                                    speed *= 11f;
+                                    if (Main.netMode != 1)
+                                        Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("MimicCoin"), npc.damage / 4, 0f, Main.myPlayer, Main.rand.Next(3));
+
+                                    Main.PlaySound(SoundID.Item11, npc.Center);
+                                }
+                            }
                         }
                         break;
 
@@ -6665,7 +6710,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.FungiSpore:
-                        npc.dontTakeDamage = Counter < 120;
+                        npc.dontTakeDamage = Counter < 60;
                         if (npc.dontTakeDamage)
                             Counter++;
                         break;
@@ -8890,7 +8935,7 @@ namespace FargowiltasSouls.NPCs
                                     }
 
                                     if (!sinisterIcon && !AnyBossAlive())
-                                        pool[NPCID.EyeofCthulhu] = .02f;
+                                        pool[NPCID.EyeofCthulhu] = .01f;
 
                                     if (NPC.downedMechBossAny)
                                         pool[NPCID.Probe] = 0.1f;
@@ -8899,17 +8944,17 @@ namespace FargowiltasSouls.NPCs
                                     {
                                         if (!sinisterIcon && !AnyBossAlive())
                                         {
-                                            pool[NPCID.Retinazer] = .005f;
-                                            pool[NPCID.Spazmatism] = .005f;
-                                            pool[NPCID.TheDestroyer] = .005f;
-                                            pool[NPCID.SkeletronPrime] = .005f;
+                                            pool[NPCID.Retinazer] = .001f;
+                                            pool[NPCID.Spazmatism] = .001f;
+                                            pool[NPCID.TheDestroyer] = .001f;
+                                            pool[NPCID.SkeletronPrime] = .001f;
                                         }
 
                                         if (!spawnInfo.player.GetModPlayer<FargoPlayer>().SkullCharm)
                                         {
-                                            pool[NPCID.SkeletonSniper] = .03f;
-                                            pool[NPCID.SkeletonCommando] = .03f;
-                                            pool[NPCID.TacticalSkeleton] = .03f;
+                                            pool[NPCID.SkeletonSniper] = .02f;
+                                            pool[NPCID.SkeletonCommando] = .02f;
+                                            pool[NPCID.TacticalSkeleton] = .02f;
                                         }
                                     }
                                 }
@@ -8934,7 +8979,7 @@ namespace FargowiltasSouls.NPCs
                                     if (NPC.downedHalloweenKing)
                                     {
                                         //pool[NPCID.HeadlessHorseman] = .01f;
-                                        pool[NPCID.Pumpking] = .005f;
+                                        pool[NPCID.Pumpking] = .0025f;
                                     }
                                 }
                                 else //in some biome
@@ -8949,7 +8994,7 @@ namespace FargowiltasSouls.NPCs
 
                                         if (NPC.downedHalloweenTree)
                                         {
-                                            pool[NPCID.MourningWood] = .005f;
+                                            pool[NPCID.MourningWood] = .0025f;
                                         }
                                     }
 
@@ -8965,12 +9010,12 @@ namespace FargowiltasSouls.NPCs
 
                                         if (NPC.downedChristmasTree)
                                         {
-                                            pool[NPCID.Everscream] = .005f;
+                                            pool[NPCID.Everscream] = .0025f;
                                         }
 
                                         if (NPC.downedChristmasSantank)
                                         {
-                                            pool[NPCID.SantaNK1] = .005f;
+                                            pool[NPCID.SantaNK1] = .0025f;
                                         }
                                     }
                                 }
@@ -9000,7 +9045,7 @@ namespace FargowiltasSouls.NPCs
                             pool[NPCID.PigronCrimson] = .01f;
                             pool[NPCID.PigronHallow] = .01f;
                             if (NPC.downedFishron && !sinisterIcon && !AnyBossAlive())
-                                pool[NPCID.DukeFishron] = .004f;
+                                pool[NPCID.DukeFishron] = .002f;
                         }
                         else if (desert)
                         {
@@ -9045,19 +9090,19 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     pool[NPCID.Krampus] = .025f;
                                     if (NPC.downedChristmasIceQueen)
-                                        pool[NPCID.IceQueen] = .005f;
+                                        pool[NPCID.IceQueen] = .0025f;
                                 }
                             }
                         }
 
                         if (NPC.downedPlantBoss && !spawnInfo.player.GetModPlayer<FargoPlayer>().SkullCharm)
                         {
-                            pool[NPCID.DiabolistRed] = .002f;
-                            pool[NPCID.DiabolistWhite] = .002f;
-                            pool[NPCID.Necromancer] = .002f;
-                            pool[NPCID.NecromancerArmored] = .002f;
-                            pool[NPCID.RaggedCaster] = .002f;
-                            pool[NPCID.RaggedCasterOpenCoat] = .002f;
+                            pool[NPCID.DiabolistRed] = .001f;
+                            pool[NPCID.DiabolistWhite] = .001f;
+                            pool[NPCID.Necromancer] = .001f;
+                            pool[NPCID.NecromancerArmored] = .001f;
+                            pool[NPCID.RaggedCaster] = .001f;
+                            pool[NPCID.RaggedCasterOpenCoat] = .001f;
                         }
 
                         if (NPC.downedAncientCultist && dungeon && !sinisterIcon && !AnyBossAlive())
@@ -9090,12 +9135,12 @@ namespace FargowiltasSouls.NPCs
 
                         if (NPC.downedPlantBoss && !spawnInfo.player.GetModPlayer<FargoPlayer>().SkullCharm)
                         {
-                            pool[NPCID.DiabolistRed] = .002f;
-                            pool[NPCID.DiabolistWhite] = .002f;
-                            pool[NPCID.Necromancer] = .002f;
-                            pool[NPCID.NecromancerArmored] = .002f;
-                            pool[NPCID.RaggedCaster] = .002f;
-                            pool[NPCID.RaggedCasterOpenCoat] = .002f;
+                            pool[NPCID.DiabolistRed] = .001f;
+                            pool[NPCID.DiabolistWhite] = .001f;
+                            pool[NPCID.Necromancer] = .001f;
+                            pool[NPCID.NecromancerArmored] = .001f;
+                            pool[NPCID.RaggedCaster] = .001f;
+                            pool[NPCID.RaggedCasterOpenCoat] = .001f;
                         }
 
                         if (FargoSoulsWorld.downedBetsy && !sinisterIcon && !AnyBossAlive())
@@ -9134,13 +9179,13 @@ namespace FargowiltasSouls.NPCs
                     if (corruption)
                     {
                         if (normalSpawn && !sinisterIcon && !AnyBossAlive())
-                            pool[NPCID.EaterofWorldsHead] = .004f;
+                            pool[NPCID.EaterofWorldsHead] = .002f;
                     }
 
                     if (crimson)
                     {
                         if (normalSpawn && !sinisterIcon && !AnyBossAlive())
-                            pool[NPCID.BrainofCthulhu] = .004f;
+                            pool[NPCID.BrainofCthulhu] = .002f;
                     }
 
                     if (jungle)
@@ -9298,11 +9343,11 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.IlluminantSlime:
                     case NPCID.EnchantedSword:
                         if (Main.rand.Next(3) == 0)
-                            Item.NewItem(npc.Hitbox, mod.ItemType("VolatileEnergy"), Main.rand.Next(3) + 1);
+                            Item.NewItem(npc.Hitbox, mod.ItemType("VolatileEnergy"), 1);
                         break;
 
                     case NPCID.ChaosElemental:
-                        Item.NewItem(npc.Hitbox, mod.ItemType("VolatileEnergy"), Main.rand.Next(3, 7));
+                        Item.NewItem(npc.Hitbox, mod.ItemType("VolatileEnergy"), 3);
 
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.TeleportationPotion, Main.rand.Next(0, 2) + 1);
@@ -9555,6 +9600,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Demon:
+                    case NPCID.RedDevil:
                         if (Main.rand.Next(50) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.Blindfold);
                         break;
@@ -9855,6 +9901,7 @@ namespace FargowiltasSouls.NPCs
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MagicalBulb"));
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.JungleFishingCrate, 5);
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeFruit, Main.rand.Next(3) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.ChlorophyteOre, Main.rand.Next(101) + 100);
                         break;
 
                     case NPCID.Golem:
@@ -10663,6 +10710,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.AnomuraFungus:
                     case NPCID.MushiLadybug:
                     case NPCID.FungoFish:
+                    case NPCID.FungiBulb:
+                    case NPCID.GiantFungiBulb:
                         if (Main.netMode != 1)// && Main.hardMode)
                         {
                             for (int i = 0; i < 10; i++)
@@ -10671,7 +10720,7 @@ namespace FargowiltasSouls.NPCs
                                 if (spore < 200)
                                 {
                                     Main.npc[spore].damage = npc.damage / 3;
-                                    Main.npc[spore].velocity = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5));
+                                    Main.npc[spore].velocity = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5)) / 2;
                                     if (Main.netMode == 2)
                                         NetMessage.SendData(23, -1, -1, null, spore);
                                 }
