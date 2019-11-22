@@ -5,9 +5,11 @@ using ThoriumMod;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using ThoriumMod.Buffs.Pet;
 using ThoriumMod.Items.Donate;
 using ThoriumMod.Items.RangedItems;
 using ThoriumMod.Items.Scouter;
+using ThoriumMod.Projectiles.Pets;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
@@ -55,7 +57,8 @@ A meteor shower initiates every few seconds while attacking";
         {
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
             thoriumPlayer.bioPet = true;
-            player.GetModPlayer<FargoPlayer>().AddPet("Bio-Feeder Pet", hideVisual, thorium.BuffType("BioFeederBuff"), thorium.ProjectileType("BioFeederPet"));
+
+            player.GetModPlayer<FargoPlayer>().AddPet("Bio-Feeder Pet", hideVisual, ModContent.BuffType<BioFeederBuff>(), ModContent.ProjectileType<BioFeederPet>());
         }
 
 
