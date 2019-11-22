@@ -9503,13 +9503,13 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.MourningWood:
-                        Item.NewItem(npc.Hitbox, ItemID.GoodieBag);
+                        Item.NewItem(npc.Hitbox, ItemID.GoodieBag, Main.rand.Next(5) + 1);
                         if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.BloodyMachete);
                         break;
 
                     case NPCID.Pumpking:
-                        Item.NewItem(npc.Hitbox, ItemID.GoodieBag);
+                        Item.NewItem(npc.Hitbox, ItemID.GoodieBag, Main.rand.Next(5) + 1);
                         if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.BladedGlove);
                         if (Main.pumpkinMoon && Main.rand.Next(10) == 0)
@@ -9518,11 +9518,11 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.Everscream:
                     case NPCID.SantaNK1:
-                        Item.NewItem(npc.Hitbox, ItemID.Present);
+                        Item.NewItem(npc.Hitbox, ItemID.Present, Main.rand.Next(5) + 1);
                         break;
 
                     case NPCID.IceQueen:
-                        Item.NewItem(npc.Hitbox, ItemID.Present);
+                        Item.NewItem(npc.Hitbox, ItemID.Present, Main.rand.Next(5) + 1);
                         if (Main.snowMoon && Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("IceQueensCrown"));
                         break;

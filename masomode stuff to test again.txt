@@ -54,6 +54,9 @@ increased max speed of fists
 biocluster/maso soul have sands/skull effects in inv too
 temple spike balls/wheels selfdestruct 30sec after spawn
 
+increased miniboss present/goodie bag drops to 1-5
+mutant antibodies lets you instacatch fish
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)
