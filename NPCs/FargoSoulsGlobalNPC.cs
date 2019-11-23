@@ -5635,6 +5635,14 @@ namespace FargowiltasSouls.NPCs
                                     target.X += 400 * Counter;
                                     target.Y += 400 * Counter2;
                                     npc.velocity = (target - npc.Center) / 30;
+                                    if (npc.ai[2] == 140)
+                                        for (int i = 0; i < 20; i++)
+                                        {
+                                            int d = Dust.NewDust(npc.position, npc.width, npc.height, 112, npc.velocity.X * .4f, npc.velocity.Y * .4f, 0, Color.White, 2);
+                                            Main.dust[d].scale += 1f;
+                                            Main.dust[d].velocity *= 3f;
+                                            Main.dust[d].noGravity = true;
+                                        }
                                 }
                                 else if (npc.ai[2] == 180)
                                 {
@@ -5697,6 +5705,8 @@ namespace FargowiltasSouls.NPCs
                                     {
                                         masoBool[2] = true;
                                         Counter = (int)Main.npc[ai1].Distance(npc.Center);
+                                        if (Counter < 300)
+                                            Counter = 300;
                                         npc.localAI[3] = Main.npc[ai1].DirectionTo(npc.Center).ToRotation();
                                         
                                         if (Main.netMode == 2) //MP sync
@@ -5713,7 +5723,11 @@ namespace FargowiltasSouls.NPCs
                                 }
                                 else //spinning
                                 {
-                                    npc.Center = Main.npc[ai1].Center + new Vector2(Counter, 0f).RotatedBy(npc.localAI[3]);
+                                    float range = Counter; //extend further to hit player if beyond current range
+                                    if (Main.npc[ai1].HasValidTarget && Main.npc[ai1].Distance(Main.player[Main.npc[ai1].target].Center) > range)
+                                        range = Main.npc[ai1].Distance(Main.player[Main.npc[ai1].target].Center);
+                                    
+                                    npc.Center = Main.npc[ai1].Center + new Vector2(range, 0f).RotatedBy(npc.localAI[3]);
                                     const float rotation = 0.1f;
                                     npc.localAI[3] += rotation;
                                     if (npc.localAI[3] > (float)Math.PI)

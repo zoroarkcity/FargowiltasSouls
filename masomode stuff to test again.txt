@@ -57,6 +57,9 @@ temple spike balls/wheels selfdestruct 30sec after spawn
 increased miniboss present/goodie bag drops to 1-5
 mutant antibodies lets you instacatch fish
 replace cultist's phantasmal eye attack with flow invader shot
+prime blender arms reach out further to smack you if you're too far away
+prime blender arms have a minimum range
+prime swipe arms flash before they dive in
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
