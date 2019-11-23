@@ -703,9 +703,10 @@ namespace FargowiltasSouls.Projectiles
                         if (projectile.ai[0] > 120f && projectile.ai[0] < 299f) //instant ritual
                         {
                             projectile.ai[0] = 299f;
-                            float ai0 = Main.rand.Next(4);
                             if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.cultBoss, NPCID.CultistBoss))
                             {
+                                float ai0 = Main.rand.Next(4);
+
                                 NPC cultist = Main.npc[FargoSoulsGlobalNPC.cultBoss];
                                 FargoSoulsGlobalNPC fargoCultist = cultist.GetGlobalNPC<FargoSoulsGlobalNPC>();
                                 int[] weight = new int[4];
@@ -723,10 +724,11 @@ namespace FargowiltasSouls.Projectiles
                                         max = i;
                                 if (weight[max] > 0)
                                     ai0 = max;
+
+                                if (cultist.life < cultist.lifeMax / 2 && Main.netMode != 1)
+                                    Projectile.NewProjectile(projectile.Center, Vector2.UnitY * -10f, mod.ProjectileType("CelestialPillar"),
+                                        (int)(75 * (1 + FargoSoulsWorld.CultistCount * .0125)), 0f, Main.myPlayer, ai0);
                             }
-                            if (Main.netMode != 1)
-                                Projectile.NewProjectile(projectile.Center, Vector2.UnitY * -10f, mod.ProjectileType("CelestialPillar"),
-                                    (int)(75 * (1 + FargoSoulsWorld.CultistCount * .0125)), 0f, Main.myPlayer, ai0);
                         }
                     }
                     break;

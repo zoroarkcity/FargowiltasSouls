@@ -2402,14 +2402,15 @@ namespace FargowiltasSouls.NPCs
                                         {
                                             if (Main.npc[i].active && Main.npc[i].type == NPCID.CultistBossClone)
                                             {
-                                                Vector2 speed = Vector2.UnitX.RotatedByRandom(Math.PI);
+                                                Projectile.NewProjectile(Main.npc[i].Center, Main.npc[i].DirectionTo(Main.player[npc.target].Center) * 10f, ProjectileID.StardustJellyfishSmall, damage / 3, 0f, Main.myPlayer);
+                                                /*Vector2 speed = Vector2.UnitX.RotatedByRandom(Math.PI);
                                                 speed *= 6f;
                                                 Projectile.NewProjectile(Main.npc[i].Center, speed,
                                                     ProjectileID.PhantasmalEye, damage / 3, 0f, Main.myPlayer);
                                                 Projectile.NewProjectile(Main.npc[i].Center, speed.RotatedBy(Math.PI * 2 / 3),
                                                     ProjectileID.PhantasmalEye, damage / 3, 0f, Main.myPlayer);
                                                 Projectile.NewProjectile(Main.npc[i].Center, speed.RotatedBy(-Math.PI * 2 / 3),
-                                                    ProjectileID.PhantasmalEye, damage / 3, 0f, Main.myPlayer);
+                                                    ProjectileID.PhantasmalEye, damage / 3, 0f, Main.myPlayer);*/
                                             }
                                         }
                                     }
