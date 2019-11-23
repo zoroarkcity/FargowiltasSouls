@@ -725,7 +725,7 @@ namespace FargowiltasSouls.Projectiles
                                 if (weight[max] > 0)
                                     ai0 = max;
 
-                                if (cultist.life < cultist.lifeMax / 2 && Main.netMode != 1)
+                                if (Main.netMode != 1)
                                     Projectile.NewProjectile(projectile.Center, Vector2.UnitY * -10f, mod.ProjectileType("CelestialPillar"),
                                         (int)(75 * (1 + FargoSoulsWorld.CultistCount * .0125)), 0f, Main.myPlayer, ai0);
                             }
