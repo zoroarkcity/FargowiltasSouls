@@ -60,6 +60,7 @@ replace cultist's phantasmal eye attack with flow invader shot
 prime blender arms reach out further to smack you if you're too far away
 prime blender arms have a minimum range
 prime swipe arms flash before they dive in
+fixed red squirrels not being convertible into gold at dipping vat
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

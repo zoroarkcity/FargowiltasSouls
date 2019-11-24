@@ -1428,6 +1428,10 @@ namespace FargowiltasSouls
                 ItemID.RedAdmiralButterfly, ItemID.SulphurButterfly, ItemID.TreeNymphButterfly, ItemID.UlyssesButterfly, ItemID.ZebraSwallowtailButterfly);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyButterfly", group);
 
+            //vanilla squirrels
+            group = new RecipeGroup(() => Lang.misc[37] + " Squirrel", ItemID.Squirrel, ItemID.SquirrelRed);
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnySquirrel", group);
+
             group = new RecipeGroup(() => Lang.misc[37] + " Gold Pickaxe", ItemID.GoldPickaxe, ItemID.PlatinumPickaxe);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyGoldPickaxe", group);
 
