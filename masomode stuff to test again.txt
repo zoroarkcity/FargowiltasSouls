@@ -66,6 +66,7 @@ flying dutchman now has 1% chance to drop lucky coin!!!!!
 removed ML's rigged pillar enemy spawns
 pillar enemies in space dont spawn during boss fights
 selenians wont dash again when hit if very close to you
+asocial makes minions do no damage
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

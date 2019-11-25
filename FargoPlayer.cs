@@ -1768,6 +1768,13 @@ namespace FargowiltasSouls
                 return;
             }
 
+            if (proj.minion && Asocial)
+            {
+                damage = 0;
+                knockback = 0;
+                crit = false;
+            }
+
             if (Fargowiltas.Instance.ThoriumLoaded) ThoriumModifyProj(proj, target, damage, crit);
         }
 
