@@ -63,6 +63,10 @@ prime swipe arms flash before they dive in
 fixed red squirrels not being convertible into gold at dipping vat
 flying dutchman now has 1% chance to drop lucky coin!!!!!
 
+removed ML's rigged pillar enemy spawns
+pillar enemies in space dont spawn during boss fights
+selenians wont dash again when hit if very close to you
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)

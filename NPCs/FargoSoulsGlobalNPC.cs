@@ -9176,7 +9176,7 @@ namespace FargowiltasSouls.NPCs
                                 pool[NPCID.AncientCultistSquidhead] = .03f;
                                 pool[NPCID.CultistDragonHead] = .03f;
                             }
-                            else if (NPC.downedMechBossAny)
+                            else if (NPC.downedMechBossAny && !AnyBossAlive())
                             {
                                 pool[NPCID.SolarCrawltipedeHead] = .01f;
                                 pool[NPCID.VortexHornetQueen] = .01f;
@@ -9230,7 +9230,7 @@ namespace FargowiltasSouls.NPCs
                 }
 
                 //maybe make moon lord core handle these spawns...?
-                if (BossIsAlive(ref moonBoss, NPCID.MoonLordCore))
+                /*if (BossIsAlive(ref moonBoss, NPCID.MoonLordCore))
                 {
                     pool[NPCID.SolarCrawltipedeHead] = 1f;
                     pool[NPCID.StardustJellyfishBig] = 3f;
@@ -9239,7 +9239,7 @@ namespace FargowiltasSouls.NPCs
 
                     pool[NPCID.AncientCultistSquidhead] = 3f;
                     pool[NPCID.CultistDragonHead] = .5f;
-                }
+                }*/
             }
 
             if (monsterMadhouse)
@@ -11086,7 +11086,8 @@ namespace FargowiltasSouls.NPCs
                         if (npc.ai[2] <= -6f)
                         {
                             damage /= 3;
-                            npc.ai[2] = -6f;
+                            if (npc.HasPlayerTarget && npc.Distance(Main.player[npc.target].Center) > 150)
+                                npc.ai[2] = -6f;
                         }
                         break;
 
