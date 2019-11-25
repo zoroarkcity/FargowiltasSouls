@@ -4580,7 +4580,12 @@ namespace FargowiltasSouls
                         }
                     }
                 }
-                
+                if (spawned)
+                {
+                    bait.stack--;
+                    if (bait.stack <= 0)
+                        bait.SetDefaults(0);
+                }
             }
         }
 
