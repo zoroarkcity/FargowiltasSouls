@@ -1,3 +1,67 @@
+goblins only forced on 2+ orbs broken
+pirates only forced on 4+ altars broken
+defeating goblins for the first time will force a meteor drop and spawn abom
+jellyfish aura wont display outside liquids
+goblins through floor when everyone dead
+ice golem drop blizzard in bottle 5%
+wyvern drop cloud bottle 5%
+sand ele drop sandstorm bottle 5%
+removed chest of the jungle
+hornets dont through walls if have line of sight to player
+creepers shoot faster as creeper count reduces
+hm enemies in pre-hm have full life but no defense
+soul of terraria no longer disables pumpkin enchant pie heal
+
+qb wont regen while subjects alive
+leashed hungry no longer have boosted life
+flying hungry ignore blocks
+low ground actuates platforms instead of breaking
+prime limbs fall with regular limbs when prime is despawning
+all mobs drop 40% more coins in maso (this stacks with expert's x2.5, total x3.5)
+lethargic now has a mild reverse hyper mode effect on enemies
+flying dutchman now has 1% chance to drop coin gun!!!!!
+nerfed boss crate drops to always 5 (was 5-9)
+on fire wears off faster when raining, on surface, and not in front of a wall
+fixed slimed slowing you outside maso
+
+nerfed volatile energy drops
+plantera drops 100-200 chloro ore
+increased pillar mortality range
+biome mimics enrage above ground, shooting coins
+red devils drop blindfolds too, but their tridents now inflict darkness too
+brain gets closer
+corrupt/crim/hallow cacti now inflict a corresponding debuff instead of poisoned
+rainbow slime spikes ignore walls
+low ground now disables planter boxes
+midas works in mp
+recolored qb
+
+plantera tentacle life down to 30 (was 120)
+plantera no longer speeds up in p2 against venomed player
+queen's stinger and upgrades grant effects of honey buff
+plantera's child poison seed inflicts infested/poisoned
+changed how sands of time works (will now make respawn faster if killed by a boss and boss has despawned)
+destroyer stars slower but now shot in a double V
+fungus spore invul on spawn halved
+fungus spore velocity from mushroom enemies reduced
+fixed fungi bulbs not making spores on death
+nerfed elf archer arrow velocity
+nerfed boss/mage skeleton spawn rates
+
+golem head shouldnt get stuck in walls
+changed golem head targeting for deathray and increased speed during ray slightly
+increased max speed of fists
+biocluster/maso soul have sands/skull effects in inv too
+temple spike balls/wheels selfdestruct 30sec after spawn
+
+increased miniboss present/goodie bag drops to 1-5
+mutant antibodies lets you instacatch fish
+replace cultist's phantasmal eye attack with flow invader shot
+prime blender arms reach out further to smack you if you're too far away
+prime blender arms have a minimum range
+prime swipe arms flash before they dive in
+fixed red squirrels not being convertible into gold at dipping vat
+flying dutchman now has 1% chance to drop lucky coin!!!!!
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
