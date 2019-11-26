@@ -485,12 +485,9 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.MoonLordHand:
                     case NPCID.MoonLordHead:
                     case NPCID.MoonLordFreeEye:
-                        npc.buffImmune[mod.BuffType("ClippedWings")] = true;
-                        isMasoML = true;
-                        break;
                     case NPCID.MoonLordLeechBlob:
                         npc.buffImmune[mod.BuffType("ClippedWings")] = true;
-                        npc.lifeMax *= 5;
+                        isMasoML = true;
                         break;
 
                     #endregion
@@ -5866,9 +5863,10 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.MoonLordFreeEye:
-                        if (!masoBool[0]) //sync to other eyes of same core when spawned
+                        if (!masoBool[0] & ++Counter > 2) //sync to other eyes of same core when spawned
                         {
                             masoBool[0] = true;
+                            Counter = 0;
                             for (int i = 0; i < Main.maxNPCs; i++)
                                 if (Main.npc[i].active && Main.npc[i].type == NPCID.MoonLordFreeEye && Main.npc[i].ai[3] == npc.ai[3])
                                 {

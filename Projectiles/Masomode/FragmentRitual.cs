@@ -55,7 +55,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
 
             projectile.timeLeft = 2;
-            projectile.scale = 1f - projectile.alpha / 255f + (Main.mouseTextColor / 200f - 0.35f) * 0.2f; //throbbing
+            projectile.scale = (1f - projectile.alpha / 255f) * 1.25f + (Main.mouseTextColor / 200f - 0.35f) * 0.2f; //throbbing
             if (projectile.scale < 0.1f) //clamp scale
                 projectile.scale = 0.1f;
             projectile.ai[0] += rotationPerTick;
