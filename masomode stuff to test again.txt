@@ -76,6 +76,7 @@ removed thrown hentai spear item
 replaced hentai spear right click with thrown hentai spear
 thrown hentai spear can now be charged by holding right click
 changed left click hentai spear to hopefully fix speed breaking it and other possible memes
+replaced ML's vulnerability fireball indicator with a larger ring of fragments
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

@@ -3713,8 +3713,11 @@ namespace FargowiltasSouls.NPCs
                         {
                             masoBool[3] = true;
                             if (Main.netMode != 1)
+                            {
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("LunarRitual"),
-                                    (int)(100.0 * (1.0 + FargoSoulsWorld.MoonlordCount * .0125)), 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                      (int)(100.0 * (1.0 + FargoSoulsWorld.MoonlordCount * .0125)), 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("FragmentRitual"), 0, 0f, Main.myPlayer);
+                            }
                         }
 
                         if (!masoBool[0])
@@ -3956,7 +3959,7 @@ namespace FargowiltasSouls.NPCs
                             }
                         }
 
-                        int dustType = 87;
+                        /*int dustType = 87;
                         switch (masoStateML)
                         {
                             case 0: Main.monolithType = 3; break;
@@ -3972,7 +3975,7 @@ namespace FargowiltasSouls.NPCs
                             int MLdust = Dust.NewDust(npc.Center + new Vector2(120f, 0f).RotatedBy(Math.PI * 2 / 4 * i + MLoffset), 0, 0, dustType, npc.velocity.X * 0.5f, npc.velocity.Y * 0.5f, 0, default(Color), 2f);
                             Main.dust[MLdust].noGravity = true;
                             Main.dust[MLdust].velocity.Y -= 3.5f;
-                        }
+                        }*/
                         break;
 
                     case NPCID.Splinterling:
