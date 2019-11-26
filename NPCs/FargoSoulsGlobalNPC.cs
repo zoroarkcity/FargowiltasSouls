@@ -5100,16 +5100,16 @@ namespace FargowiltasSouls.NPCs
                                 pivot += Vector2.Normalize(Main.npc[npc.realLife].velocity.RotatedBy(Math.PI / 2)) * 600;
                                 if (npc.Distance(pivot) < 600) //make sure body doesnt coil into the circling zone
                                     npc.Center = pivot + npc.DirectionFrom(pivot) * 600;
-                                if (Main.npc[npc.realLife].ai[1] > 120 && Main.player[Main.npc[npc.realLife].target].Distance(pivot) > 600 && Main.netMode != 1 && Main.rand.Next(180) == 0)
+                                if (Main.npc[npc.realLife].ai[1] > 180 && Main.player[Main.npc[npc.realLife].target].Distance(pivot) > 600 && Main.netMode != 1 && Main.rand.Next(180) == 0)
                                 {
                                     Vector2 distance = Main.player[npc.target].Center - npc.Center;
                                     double angleModifier = MathHelper.ToRadians(10) * distance.Length() / 1800.0;
                                     distance.Normalize();
                                     distance *= 24f;
                                     int type = mod.ProjectileType("DarkStar");
-                                    Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(npc.Center, distance, type, npc.damage / 5, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center, distance, type, npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
 
