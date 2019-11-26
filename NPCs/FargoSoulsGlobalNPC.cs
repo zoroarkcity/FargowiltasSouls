@@ -485,10 +485,12 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.MoonLordHand:
                     case NPCID.MoonLordHead:
                     case NPCID.MoonLordFreeEye:
-                    case NPCID.MoonLordLeechBlob:
                         npc.buffImmune[mod.BuffType("ClippedWings")] = true;
                         isMasoML = true;
                         break;
+                    case NPCID.MoonLordLeechBlob:
+                        npc.lifeMax *= 3;
+                        goto case NPCID.MoonLordHand;
 
                     #endregion
 
@@ -3713,7 +3715,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("LunarRitual"),
                                       (int)(100.0 * (1.0 + FargoSoulsWorld.MoonlordCount * .0125)), 0f, Main.myPlayer, 0f, npc.whoAmI);
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("FragmentRitual"), 0, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("FragmentRitual"), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
                             }
                         }
 

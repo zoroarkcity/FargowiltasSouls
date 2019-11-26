@@ -64,8 +64,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 projectile.ai[0] -= 2f * PI;
                 projectile.netUpdate = true;
             }
+            projectile.rotation = projectile.ai[0];
 
-            switch(NPCs.FargoSoulsGlobalNPC.masoStateML) //match ML vulnerability to fragment
+            switch (NPCs.FargoSoulsGlobalNPC.masoStateML) //match ML vulnerability to fragment
             {
                 case 0: projectile.frame = 1; break;
                 case 1: projectile.frame = 2; break;

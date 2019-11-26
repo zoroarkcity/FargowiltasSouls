@@ -15,8 +15,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Penetrator");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+            /*ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;*/
         }
 
         public override void SetDefaults()
@@ -43,6 +43,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.ai[0]++;
 
             Player player = Main.player[projectile.owner];
+            projectile.Center = player.Center;
             player.itemAnimation = useTime;
             player.itemTime = useTime;
             player.phantasmTime = useTime;
@@ -52,13 +53,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 projectile.netUpdate = true; //for mp sync
                 projectile.velocity = player.DirectionTo(Main.MouseWorld) * projectile.velocity.Length();
-
-                if (!player.controlUseItem || player.altFunctionUse != 2) //released right click or switched to left click
+                
+                if (player.altFunctionUse != 2) //released right click or switched to left click
                     projectile.Kill();
             }
 
-            player.itemRotation = projectile.ai[1] + MathHelper.ToRadians(135f);
-            projectile.rotation = projectile.ai[1] + MathHelper.ToRadians(135f);
+            player.direction = projectile.velocity.X > 0 ? 1 : -1;
+            player.itemRotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
+            projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
 
             if (++projectile.localAI[0] > useTime / 2) //charging up dusts
             {
@@ -67,11 +69,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 for (int i = 0; i < maxDust; i++)
                 {
                     Vector2 spawnPos = player.Center;
-                    spawnPos += 9f * Vector2.Normalize(projectile.velocity).RotatedBy((i - (maxDust / 2 - 1)) * 6.28318548f / maxDust);
+                    spawnPos += 50f * Vector2.Normalize(projectile.velocity).RotatedBy((i - (maxDust / 2 - 1)) * 6.28318548f / maxDust);
                     Vector2 speed = player.Center - spawnPos;
-                    int num228 = Dust.NewDust(spawnPos, 0, 0, 15, 0f, 0f, 0, default(Color), 2f);
+                    int num228 = Dust.NewDust(spawnPos, 0, 0, 15, 0f, 0f, 100, default(Color), 2f);
                     Main.dust[num228].noGravity = true;
-                    Main.dust[num228].velocity = speed;
+                    Main.dust[num228].velocity = speed * .1f;
                 }
             }
 
@@ -116,7 +118,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
 
-            Color color26 = lightColor;
+            /*Color color26 = lightColor;
             color26 = projectile.GetAlpha(color26);
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i += 2)
@@ -126,7 +128,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Vector2 value4 = projectile.oldPos[i];
                 float num165 = projectile.oldRot[i];
                 Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
-            }
+            }*/
 
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
             return false;

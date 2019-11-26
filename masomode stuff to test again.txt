@@ -74,10 +74,9 @@ dark stars actually go through walls now
 
 removed thrown hentai spear item
 replaced hentai spear right click with thrown hentai spear
-thrown hentai spear can now be charged by holding right click
 changed left click hentai spear to hopefully fix speed breaking it and other possible memes
 replaced ML's vulnerability fireball indicator with a larger ring of fragments
-removed leech clot's boosted life, but it is now protected by null curse
+reduced leech clot's boosted life to x3, but it is now protected by null curse
 fixed(?) true eyes desyncing
 
 -------------------------------------------------------------------------------------------------------------------
