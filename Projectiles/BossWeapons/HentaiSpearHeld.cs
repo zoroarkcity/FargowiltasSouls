@@ -6,11 +6,11 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
-    public class HentaiSpearThrown : ModProjectile
+    public class HentaiSpearHeld : ModProjectile
     {
         public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/HentaiSpear";
 
-        //throw with 25 velocity, 1000 damage, 10 knockback
+        public const int useTime = 90;
 
         public override void SetStaticDefaults()
         {
@@ -26,21 +26,57 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.aiStyle = -1;
             projectile.friendly = true;
             projectile.penetrate = -1;
-            projectile.tileCollide = false;
             projectile.ignoreWater = true;
-            projectile.timeLeft = 180;
-            projectile.extraUpdates = 1;
+            projectile.tileCollide = false;
             projectile.scale = 1.3f;
             projectile.alpha = 0;
+            projectile.thrown = true;
+            projectile.hide = true;
 
-            projectile.localNPCHitCooldown = 0;
-            projectile.usesLocalNPCImmunity = true;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
         }
 
         public override void AI()
         {
+            projectile.hide = false;
+            projectile.timeLeft = 2;
+            projectile.ai[0]++;
+
+            Player player = Main.player[projectile.owner];
+            player.itemAnimation = useTime;
+            player.itemTime = useTime;
+            player.phantasmTime = useTime;
+            player.heldProj = projectile.whoAmI;
+
+            if (player.whoAmI == Main.myPlayer)
+            {
+                projectile.netUpdate = true; //for mp sync
+                projectile.velocity = player.DirectionTo(Main.MouseWorld) * projectile.velocity.Length();
+
+                if (!player.controlUseItem || player.altFunctionUse != 2) //released right click or switched to left click
+                    projectile.Kill();
+            }
+
+            player.itemRotation = projectile.ai[1] + MathHelper.ToRadians(135f);
+            projectile.rotation = projectile.ai[1] + MathHelper.ToRadians(135f);
+
+            if (++projectile.localAI[0] > useTime / 2) //charging up dusts
+            {
+                projectile.localAI[0] = 0;
+                const int maxDust = 36;
+                for (int i = 0; i < maxDust; i++)
+                {
+                    Vector2 spawnPos = player.Center;
+                    spawnPos += 9f * Vector2.Normalize(projectile.velocity).RotatedBy((i - (maxDust / 2 - 1)) * 6.28318548f / maxDust);
+                    Vector2 speed = player.Center - spawnPos;
+                    int num228 = Dust.NewDust(spawnPos, 0, 0, 15, 0f, 0f, 0, default(Color), 2f);
+                    Main.dust[num228].noGravity = true;
+                    Main.dust[num228].velocity = speed;
+                }
+            }
+
             //dust!
-            int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width / 2, projectile.height + 5, 15, projectile.velocity.X * 0.2f,
+            /*int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width / 2, projectile.height + 5, 15, projectile.velocity.X * 0.2f,
                 projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
             Main.dust[dustId].noGravity = true;
             int dustId3 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width / 2, projectile.height + 5, 15, projectile.velocity.X * 0.2f,
@@ -51,37 +87,25 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 projectile.localAI[0] = 3;
                 if (projectile.owner == Main.myPlayer)
-                {
-                    int p = Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("PhantasmalSphere"), projectile.damage, projectile.knockBack / 2, projectile.owner);
-                    if (p < 1000)
-                    {
-                        Main.projectile[p].melee = false;
-                        Main.projectile[p].thrown = true;
-                    }
-                }
+                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("PhantasmalSphere"), projectile.damage, projectile.knockBack / 2, projectile.owner);
             }
 
-            if (projectile.localAI[1] == 0f)
-            {
-                projectile.localAI[1] = 1f;
-                Main.PlaySound(SoundID.Item1, projectile.Center);
-            }
-
-            projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
+            if (projectile.velocity != Vector2.Zero)
+                projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);*/
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void Kill(int timeLeft)
         {
             if (projectile.owner == Main.myPlayer)
             {
-                int p = Projectile.NewProjectile(target.position + new Vector2(Main.rand.Next(target.width), Main.rand.Next(target.height)), Vector2.Zero, mod.ProjectileType("PhantasmalBlast"), projectile.damage, 0f, projectile.owner);
-                if (p < 1000)
-                {
-                    Main.projectile[p].melee = false;
-                    Main.projectile[p].thrown = true;
-                }
+                int damage = (int)(projectile.damage * (1f + projectile.ai[0] / useTime));
+                Projectile.NewProjectile(projectile.Center, projectile.velocity, mod.ProjectileType("HentaiSpearThrown"), damage, projectile.knockBack, projectile.owner);
             }
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 600);
+        }
+
+        public override bool CanDamage()
+        {
+            return false;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

@@ -23,14 +23,14 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.useStyle = 5;
             item.useAnimation = 16;
             item.useTime = 16;
-            item.shootSpeed = 3.7f;
+            item.shootSpeed = 25f;
             item.knockBack = 7f;
             item.width = 32;
             item.height = 32;
             item.scale = 1f;
             item.rare = 11;
             item.UseSound = SoundID.Item1;
-            item.shoot = mod.ProjectileType("HentaiSpear");
+            item.shoot = mod.ProjectileType("HentaiSpearDash");
             item.value = Item.sellPrice(0, 70);
             item.noMelee = true; // Important because the spear is acutally a projectile instead of an item. This prevents the melee hitbox of this item.
             item.noUseGraphic = true; // Important, it's kind of wired if people see two spears at one time. This prevents the melee animation of this item.
@@ -45,7 +45,21 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override bool CanUseItem(Player player)
         {
-            if (player.altFunctionUse == 2) //right click
+            if (player.altFunctionUse == 2)
+            {
+                item.shoot = mod.ProjectileType("HentaiSpearHeld");
+                item.thrown = true;
+                item.melee = false;
+            }
+            else
+            {
+                item.shoot = mod.ProjectileType("HentaiSpearDash");
+                item.thrown = false;
+                item.melee = true;
+            }
+            return true;
+
+            /*if (player.altFunctionUse == 2) //right click
             {
                 item.useAnimation = 32;
                 item.useTime = 32;
@@ -55,7 +69,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 item.useAnimation = 16;
                 item.useTime = 16;
             }
-            return player.ownedProjectileCounts[item.shoot] < 1; // This is to ensure the spear doesn't bug out when using autoReuse = true
+            return player.ownedProjectileCounts[item.shoot] < 1; // This is to ensure the spear doesn't bug out when using autoReuse = true*/
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)
@@ -69,7 +83,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             }
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        /*public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             if (player.altFunctionUse == 2) //right click
             {
@@ -84,7 +98,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             Projectile.NewProjectile(position.X, position.Y, speedX, speedY, item.shoot, damage, knockBack, item.owner, 0f, 1f);
             Projectile.NewProjectile(position.X, position.Y, speedX * 5f, speedY * 5f, mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI);
             return false;
-        }
+        }*/
 
         public override void AddRecipes()
         {

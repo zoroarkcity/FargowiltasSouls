@@ -72,6 +72,11 @@ destroyer has a new spin attack
 	body stops shooting during spin but gains omega defense
 dark stars actually go through walls now
 
+removed thrown hentai spear item
+replaced hentai spear right click with thrown hentai spear
+thrown hentai spear can now be charged by holding right click
+changed left click hentai spear to hopefully fix speed breaking it and other possible memes
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)
