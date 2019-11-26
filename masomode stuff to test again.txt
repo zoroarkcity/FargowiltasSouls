@@ -67,6 +67,10 @@ removed ML's rigged pillar enemy spawns
 pillar enemies in space dont spawn during boss fights
 selenians wont dash again when hit if very close to you
 asocial makes minions do no damage
+only destroyer has jester resistance (fixed all mechs secretly having it)
+destroyer has a new spin attack
+	body stops shooting during spin but gains omega defense
+dark stars actually go through walls now
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
