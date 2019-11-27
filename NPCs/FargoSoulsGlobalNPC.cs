@@ -3958,6 +3958,14 @@ namespace FargowiltasSouls.NPCs
                             }
                         }
 
+                        switch (masoStateML)
+                        {
+                            case 0: Main.monolithType = 3; break;
+                            case 1: Main.monolithType = 0; break;
+                            case 2: Main.monolithType = 1; break;
+                            case 3: Main.monolithType = 2; break;
+                        }
+
                         /*int dustType = 87;
                         switch (masoStateML)
                         {
