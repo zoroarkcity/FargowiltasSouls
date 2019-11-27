@@ -9213,26 +9213,30 @@ namespace FargowiltasSouls.NPCs
                         if (normalSpawn)
                         {
                             pool[NPCID.AngryNimbus] = .05f;
+                            
+                            if (!AnyBossAlive())
+                            {
+                                if (NPC.downedGolemBoss)
+                                {
+                                    pool[NPCID.SolarCrawltipedeHead] = .03f;
+                                    pool[NPCID.VortexHornetQueen] = .03f;
+                                    pool[NPCID.NebulaBrain] = .03f;
+                                    pool[NPCID.StardustJellyfishBig] = .03f;
+                                    pool[NPCID.AncientCultistSquidhead] = .03f;
+                                    pool[NPCID.CultistDragonHead] = .03f;
+                                }
+                                else if (NPC.downedMechBossAny)
+                                {
+                                    pool[NPCID.SolarCrawltipedeHead] = .01f;
+                                    pool[NPCID.VortexHornetQueen] = .01f;
+                                    pool[NPCID.NebulaBrain] = .01f;
+                                    pool[NPCID.StardustJellyfishBig] = .01f;
+                                }
 
-                            if (NPC.downedGolemBoss)
-                            {
-                                pool[NPCID.SolarCrawltipedeHead] = .03f;
-                                pool[NPCID.VortexHornetQueen] = .03f;
-                                pool[NPCID.NebulaBrain] = .03f;
-                                pool[NPCID.StardustJellyfishBig] = .03f;
-                                pool[NPCID.AncientCultistSquidhead] = .03f;
-                                pool[NPCID.CultistDragonHead] = .03f;
-                            }
-                            else if (NPC.downedMechBossAny && !AnyBossAlive())
-                            {
-                                pool[NPCID.SolarCrawltipedeHead] = .01f;
-                                pool[NPCID.VortexHornetQueen] = .01f;
-                                pool[NPCID.NebulaBrain] = .01f;
-                                pool[NPCID.StardustJellyfishBig] = .01f;
-                            }
-                            if (NPC.downedMoonlord && !sinisterIcon && !AnyBossAlive())
-                            {
-                                pool[NPCID.MoonLordCore] = 0.002f;
+                                if (NPC.downedMoonlord && !sinisterIcon)
+                                {
+                                    pool[NPCID.MoonLordCore] = 0.002f;
+                                }
                             }
                         }
                     }
