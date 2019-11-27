@@ -80,6 +80,7 @@ reduced leech clot's boosted life to x3, but it is now protected by null curse
 fixed(?) true eyes desyncing
 velocity of immune enemies is no longer affected by clipped wings
 removed ML core DR
+biocluster/maso soul have security wallet effect while in inv
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

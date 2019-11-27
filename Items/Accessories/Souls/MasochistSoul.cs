@@ -71,6 +71,7 @@ Summons the aid of all Masochist Mode bosses to your side");
             fargoPlayer.SandsofTime = true;
             player.buffImmune[BuffID.Suffocation] = true;
             player.manaFlower = true;
+            fargoPlayer.SecurityWallet = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
