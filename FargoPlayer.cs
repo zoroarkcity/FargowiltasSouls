@@ -11,6 +11,8 @@ using Terraria.ModLoader.IO;
 using Terraria.Graphics.Capture;
 using FargowiltasSouls.NPCs;
 using FargowiltasSouls.Projectiles;
+using FargowiltasSouls.Buffs;
+using FargowiltasSouls.Buffs.Masomode;
 using ThoriumMod;
 using ThoriumMod.Projectiles;
 
@@ -2589,7 +2591,7 @@ namespace FargowiltasSouls
             if (GoldEnchant)
                 target.AddBuff(BuffID.Midas, 120, true);
 
-            if (DragonFang && !target.boss && Main.rand.Next(10) == 0)
+            if (DragonFang && !target.boss && !target.buffImmune[mod.BuffType("ClippedWings")] && Main.rand.Next(10) == 0)
             {
                 target.velocity.X = 0f;
                 target.velocity.Y = 10f;
