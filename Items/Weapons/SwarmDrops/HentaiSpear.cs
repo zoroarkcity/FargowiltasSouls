@@ -49,8 +49,8 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             {
                 item.shoot = mod.ProjectileType("HentaiSpearThrown");
                 item.shootSpeed = 25f;
-                item.useAnimation = 120;
-                item.useTime = 120;
+                item.useAnimation = 100;
+                item.useTime = 100;
                 item.thrown = true;
                 item.melee = false;
             }
