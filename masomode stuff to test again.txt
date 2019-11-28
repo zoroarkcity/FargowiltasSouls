@@ -86,6 +86,9 @@ removed ML core defense
 ML core's bonus socket attacks (besides deathray) only occur below 66% life
 fixed nullification curse debuff not appearing in phase 2
 
+adjusted ML deathray delays
+adjusted prime swipe arm despawn condition again
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)

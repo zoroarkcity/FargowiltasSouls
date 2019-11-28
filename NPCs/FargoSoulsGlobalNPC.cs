@@ -5647,7 +5647,7 @@ namespace FargowiltasSouls.NPCs
                                 return false;
                             }
                             npc.target = Main.npc[ai1].target;
-                            if (npc.ai[1] == 3) //return to normal AI
+                            if (Main.npc[ai1].ai[1] == 3 || !npc.HasValidTarget) //return to normal AI
                                 break;
                             if (masoBool[1]) //swipe AI
                             {
@@ -5810,7 +5810,7 @@ namespace FargowiltasSouls.NPCs
                                             if (Main.npc[i].ai[0] == 4 && Main.npc[i].ai[1] > 800) //if free eyes are firing deathray, delay own ray
                                             {
                                                 fireLaser = false;
-                                                Timer = 28;
+                                                Timer = 27;
                                             }
                                             break;
                                         }
@@ -5832,7 +5832,7 @@ namespace FargowiltasSouls.NPCs
                                         }
                                     }
                                 }
-                                if (Timer == 2) //FIRE LASER
+                                if (Timer == 3) //FIRE LASER
                                 {
                                     int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
                                     if (t != -1)
