@@ -39,6 +39,7 @@ namespace FargowiltasSouls
         public static int MoonlordCount;
 
         public static bool downedMM = false;
+        public static bool forceMeteor;
 
         public override void Initialize()
         {
@@ -67,6 +68,8 @@ namespace FargowiltasSouls
             FishronCount = 0;
             CultistCount = 0;
             MoonlordCount = 0;
+
+            forceMeteor = false;
         }
 
         public override TagCompound Save()
@@ -98,7 +101,7 @@ namespace FargowiltasSouls
             if (downedMutant) downed.Add("downedMutant");
             if (AngryMutant) downed.Add("AngryMutant");
             if (downedMM) downed.Add("downedMadhouse");
-            
+            if (forceMeteor) downed.Add("forceMeteor");
 
             return new TagCompound
             {
@@ -136,6 +139,7 @@ namespace FargowiltasSouls
             downedMutant = downed.Contains("downedMutant");
             AngryMutant = downed.Contains("AngryMutant");
             downedMM = downed.Contains("downedMadhouse");
+            forceMeteor = downed.Contains("forceMeteor");
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -164,6 +168,7 @@ namespace FargowiltasSouls
             downedMutant = flags[4];
             AngryMutant = flags[5];
             downedMM = flags[6];
+            forceMeteor = flags[7];
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -192,7 +197,8 @@ namespace FargowiltasSouls
                 [3] = downedFishronEX,
                 [4] = downedMutant,
                 [5] = AngryMutant,
-                [6] = downedMM
+                [6] = downedMM,
+                [7] = forceMeteor
             };
 
             writer.Write(flags);

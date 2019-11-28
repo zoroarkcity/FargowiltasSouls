@@ -17,7 +17,14 @@ namespace FargowiltasSouls.Buffs
 
                 case BuffID.Slimed:
                     Main.buffNoTimeDisplay[type] = false;
-                    player.GetModPlayer<FargoPlayer>().Slimed = true;
+                    if (FargoSoulsWorld.MasochistMode)
+                        player.GetModPlayer<FargoPlayer>().Slimed = true;
+                    break;
+
+                case BuffID.OnFire:
+                    if (FargoSoulsWorld.MasochistMode && Main.raining && player.position.Y < Main.worldSurface
+                        && Framing.GetTileSafely(player.Center).wall == WallID.None && player.buffTime[buffIndex] > 1)
+                        player.buffTime[buffIndex] -= 1;
                     break;
 
                 default:
@@ -61,6 +68,12 @@ namespace FargowiltasSouls.Buffs
 
                 case BuffID.Suffocation:
                     npc.GetGlobalNPC<NPCs.FargoSoulsGlobalNPC>().Suffocation = true;
+                    break;
+
+                case BuffID.OnFire:
+                    if (FargoSoulsWorld.MasochistMode && Main.raining && npc.position.Y < Main.worldSurface
+                        && Framing.GetTileSafely(npc.Center).wall == WallID.None && npc.buffTime[buffIndex] > 1)
+                        npc.buffTime[buffIndex] -= 1;
                     break;
 
                 default:

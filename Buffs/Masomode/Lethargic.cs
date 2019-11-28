@@ -26,7 +26,7 @@ namespace FargowiltasSouls.Buffs.Masomode
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.position -= npc.velocity * .25f;
+            npc.GetGlobalNPC<NPCs.FargoSoulsGlobalNPC>().Lethargic = true;
         }
     }
 }
