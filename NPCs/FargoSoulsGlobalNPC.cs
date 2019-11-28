@@ -3731,11 +3731,11 @@ namespace FargowiltasSouls.NPCs
 
                         if (!masoBool[0])
                         {
-                            masoBool[0] = npc.life < npc.lifeMax / 2; //remembers even if core goes above 50% hp
+                            masoBool[0] = npc.life < (int)(npc.lifeMax * .75); //remembers even if core goes above 75% hp
                             if (masoBool[0]) //roar
                                 Main.PlaySound(15, Main.player[Main.myPlayer].Center, 0);
                         }
-                        else //phase 3, went below 50% life
+                        else //phase 3, went below 75% life
                         {
                             Timer++;
                             if (Timer >= 240)
