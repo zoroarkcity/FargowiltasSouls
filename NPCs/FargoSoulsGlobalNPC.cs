@@ -481,6 +481,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.MoonLordCore:
                         isMasoML = true;
                         masoStateML = 0;
+                        npc.defense = 0;
                         break;
                     case NPCID.MoonLordHand:
                     case NPCID.MoonLordHead:
@@ -3719,36 +3720,23 @@ namespace FargowiltasSouls.NPCs
                             }
                         }
 
-                        if (!masoBool[0])
-                        {
-                            masoBool[0] = !npc.dontTakeDamage; //remembers even if core becomes invulnerable again
-                            if (Main.player[Main.myPlayer].active && !Main.player[Main.myPlayer].dead)
-                                Main.player[Main.myPlayer].AddBuff(mod.BuffType("NullificationCurse"), 2);
-                        }
-                        else
-                        {
+                        if (masoStateML == 3 && RegenTimer < 2) //no regen during stardust
+                            RegenTimer = 2;
+
+                        if (!npc.dontTakeDamage)
                             Counter++; //phases transition twice as fast when core is exposed
 
-                            if (masoStateML == 3 && RegenTimer < 2)
-                                RegenTimer = 2;
+                        if (Main.player[Main.myPlayer].active && !Main.player[Main.myPlayer].dead)
+                            Main.player[Main.myPlayer].AddBuff(mod.BuffType("NullificationCurse"), 2);
 
-                            /*if (Main.player[Main.myPlayer].active && !Main.player[Main.myPlayer].dead)
-                            {
-                                Player player = Main.player[Main.myPlayer];
-                                if (player.moonLeech && !player.buffImmune[mod.BuffType("MutantNibble")]) //replace moon bite with mutant nibble
-                                {
-                                    int buffIndex = player.FindBuffIndex(BuffID.MoonLeech);
-                                    if (buffIndex != -1)
-                                    {
-                                        player.AddBuff(mod.BuffType("MutantNibble"), player.buffTime[buffIndex]);
-                                        player.DelBuff(buffIndex);
-                                    }
-                                }
-                                //player.AddBuff(BuffID.WaterCandle, 2);
-                                //player.AddBuff(BuffID.Battle, 2);
-                                player.AddBuff(mod.BuffType("NullificationCurse"), 2);
-                            }*/
-
+                        if (!masoBool[0])
+                        {
+                            masoBool[0] = npc.life < npc.lifeMax / 2; //remembers even if core goes above 50% hp
+                            if (masoBool[0]) //roar
+                                Main.PlaySound(15, Main.player[Main.myPlayer].Center, 0);
+                        }
+                        else //phase 3, went below 50% life
+                        {
                             Timer++;
                             if (Timer >= 240)
                             {

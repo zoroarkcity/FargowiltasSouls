@@ -82,6 +82,9 @@ velocity of immune enemies is no longer affected by clipped wings
 removed ML core DR
 biocluster/maso soul have security wallet effect while in inv
 tims concoction has sprite
+removed ML core defense
+ML core's bonus socket attacks (besides deathray) only occur below 50% life
+fixed nullification curse debuff not appearing in phase 2
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
