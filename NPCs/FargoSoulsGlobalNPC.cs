@@ -9194,7 +9194,7 @@ namespace FargowiltasSouls.NPCs
                         }
 
                         if (FargoSoulsWorld.downedBetsy && !sinisterIcon && !AnyBossAlive())
-                            pool[NPCID.DD2Betsy] = .01f;
+                            pool[NPCID.DD2Betsy] = .002f;
                     }
                     else if (sky)
                     {
