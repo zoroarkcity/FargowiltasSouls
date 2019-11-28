@@ -5861,7 +5861,6 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.MoonLordFreeEye:
-                        PrintAI(npc);
                         if (!masoBool[0] & ++Counter > 2) //sync to other eyes of same core when spawned
                         {
                             masoBool[0] = true;
