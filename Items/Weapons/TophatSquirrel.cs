@@ -49,7 +49,7 @@ namespace FargowiltasSouls.Items.Weapons
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Squirrel);
+            recipe.AddRecipeGroup("Squirrels");
             recipe.AddIngredient(ItemID.TopHat);
 
             recipe.AddTile(TileID.CrystalBall);
