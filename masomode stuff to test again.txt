@@ -88,6 +88,7 @@ fixed nullification curse debuff not appearing in phase 2
 
 adjusted ML deathray delays
 adjusted prime swipe arm despawn condition again
+pickaxes and other tools wont trigger celestial rune bonus attacks
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
