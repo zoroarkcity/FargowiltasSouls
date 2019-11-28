@@ -43,6 +43,17 @@ Has a cooldown of 1 minute");
             item.value = 250000;
         }
 
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(61, 155, 189);
+                }
+            }
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (!Fargowiltas.Instance.SoALoaded) return;
