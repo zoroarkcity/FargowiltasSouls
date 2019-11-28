@@ -1412,9 +1412,9 @@ namespace FargowiltasSouls
             //book cases
             group = new RecipeGroup(() => Lang.misc[37] + " Bookcase", new int[]
             {
+                ItemID.Bookcase,
                 ItemID.BlueDungeonBookcase,
                 ItemID.BoneBookcase,
-                ItemID.Bookcase,
                 ItemID.BorealWoodBookcase,
                 ItemID.CactusBookcase,
                 ItemID.CrystalBookCase,
