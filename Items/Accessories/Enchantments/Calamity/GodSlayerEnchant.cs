@@ -62,7 +62,7 @@ Summons a Chibii Doggo pet");
             {
                 if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
                 {
-                    tooltipLine.overrideColor = new Color?(new Color(43, 96, 222));
+                    tooltipLine.overrideColor = new Color(100, 108, 156);
                 }
             }
         }
