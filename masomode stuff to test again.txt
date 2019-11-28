@@ -90,6 +90,7 @@ adjusted ML deathray delays
 adjusted prime swipe arm despawn condition again
 pickaxes and other tools wont trigger celestial rune bonus attacks
 crucible crafts with any bookcase
+ML's ritual disappears immediately on defeat
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
