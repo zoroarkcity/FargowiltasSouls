@@ -60,7 +60,7 @@ Effects of Auto Tuner and Metal Music Player");
                 //empowermentPool.Add<FlatDamage>(2);
                 //empowermentPool.Add<Damage>(2);
 
-                Main.NewText(thoriumPlayer.setCyberPunkValue);
+                //Main.NewText(thoriumPlayer.setCyberPunkValue);
 
                 switch (thoriumPlayer.setCyberPunkValue)
                 {

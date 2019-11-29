@@ -38,7 +38,7 @@ namespace FargowiltasSouls.Items.Misc
             AddCritter(ItemID.Frog, ItemID.GoldFrog);
             AddCritter(ItemID.Grasshopper, ItemID.GoldGrasshopper);
             AddCritter(ItemID.Mouse, ItemID.GoldMouse);
-            AddCritter(ItemID.Squirrel, ItemID.SquirrelGold);
+            //AddCritter(ItemID.Squirrel, ItemID.SquirrelGold);
             AddCritter(ItemID.Worm, ItemID.GoldWorm);
 
             ModRecipe recipe = new ModRecipe(mod);
@@ -46,6 +46,13 @@ namespace FargowiltasSouls.Items.Misc
             recipe.AddIngredient(ItemID.GoldDust, 500);
             recipe.AddTile(mod.TileType("GoldenDippingVatSheet"));
             recipe.SetResult(ItemID.GoldButterfly);
+            recipe.AddRecipe();
+
+            recipe = new ModRecipe(mod);
+            recipe.AddRecipeGroup("FargowiltasSouls:AnySquirrel");
+            recipe.AddIngredient(ItemID.GoldDust, 500);
+            recipe.AddTile(mod.TileType("GoldenDippingVatSheet"));
+            recipe.SetResult(ItemID.SquirrelGold);
             recipe.AddRecipe();
         }
 

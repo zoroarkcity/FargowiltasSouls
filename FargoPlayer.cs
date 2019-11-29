@@ -4591,21 +4591,6 @@ namespace FargowiltasSouls
                         }
                     }
                 }
-                /*if (FargoSoulsWorld.MasochistMode && bait.owner == Main.myPlayer && !NPC.AnyNPCs(NPCID.DukeFishron))
-                {
-                    if (Main.netMode != 1)
-                    {
-                        Main.NewText("now spawning");
-                        FargoSoulsGlobalNPC.spawnFishronEX = true;
-                        NPC.SpawnOnPlayer(bait.owner, NPCID.DukeFishron);
-                        FargoSoulsGlobalNPC.spawnFishronEX = false;
-                    }
-                    else
-                    {
-                        Main.NewText("other netmode?");
-                        NetMessage.SendData(61, -1, -1, null, bait.owner, NPCID.DukeFishron);
-                    }
-                }*/
                 if (spawned)
                 {
                     bait.stack--;

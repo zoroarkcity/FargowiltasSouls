@@ -1342,9 +1342,15 @@ namespace FargowiltasSouls
 
         public override void AddRecipeGroups()
         {
-            //drax
-            RecipeGroup group = new RecipeGroup(() => Lang.misc[37] + " Drax", ItemID.Drax, ItemID.PickaxeAxe);
-            RecipeGroup.RegisterGroup(RECIPE_GROUP_ANY_DRAX_TOOL, group);
+			//add top hat squirrel to squirrel group
+			if (RecipeGroup.recipeGroupIDs.ContainsKey("Squirrels"))
+			{
+				int index = RecipeGroup.recipeGroupIDs["Squirrels"];
+				RecipeGroup.recipeGroups[index].ValidItems.Add(ItemType("TophatSquirrel"));
+			}
+			//drax
+			RecipeGroup group = new RecipeGroup(() => Lang.misc[37] + " Drax", ItemID.Drax, ItemID.PickaxeAxe);
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyDrax", group);
 
             //cobalt
             group = new RecipeGroup(() => Lang.misc[37] + " Cobalt Repeater", ItemID.CobaltRepeater, ItemID.PalladiumRepeater);
@@ -1436,6 +1442,10 @@ namespace FargowiltasSouls
             group = new RecipeGroup(() => Lang.misc[37] + " Butterfly", ItemID.JuliaButterfly, ItemID.MonarchButterfly, ItemID.PurpleEmperorButterfly,
                 ItemID.RedAdmiralButterfly, ItemID.SulphurButterfly, ItemID.TreeNymphButterfly, ItemID.UlyssesButterfly, ItemID.ZebraSwallowtailButterfly);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyButterfly", group);
+
+            //vanilla squirrels
+            group = new RecipeGroup(() => Lang.misc[37] + " Squirrel", ItemID.Squirrel, ItemID.SquirrelRed);
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnySquirrel", group);
 
             group = new RecipeGroup(() => Lang.misc[37] + " Gold Pickaxe", ItemID.GoldPickaxe, ItemID.PlatinumPickaxe);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyGoldPickaxe", group);

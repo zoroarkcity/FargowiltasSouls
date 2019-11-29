@@ -71,25 +71,29 @@ Any projectiles shot through your storm gain 50% damage
             recipe.AddIngredient(ItemID.AncientBattleArmorHat);
             recipe.AddIngredient(ItemID.AncientBattleArmorShirt);
             recipe.AddIngredient(ItemID.AncientBattleArmorPants);
+            
+            if(Fargowiltas.Instance.ThoriumLoaded)
+            {      
+                recipe.AddIngredient(thorium.ItemType("KarmicHolder"));
+                recipe.AddIngredient(thorium.ItemType("WhisperRa"));
+                recipe.AddIngredient(thorium.ItemType("AxeBlade"), 300);
+                recipe.AddIngredient(ItemID.SpiritFlame);
+                recipe.AddIngredient(ItemID.BookStaff);
+				recipe.AddIngredient(ItemID.Scorpion);
+			}
+            else
+            {
+                recipe.AddIngredient(ItemID.SpiritFlame);
+                recipe.AddIngredient(ItemID.BookStaff);
+				recipe.AddRecipeGroup("Scorpions");
+            }
 
             recipe.AddIngredient(ItemID.DjinnsCurse);
-            recipe.AddIngredient(ItemID.Scorpion);
-        }
-
-        protected override void AddThoriumRecipe(ModRecipe recipe, Mod thorium)
-        {
-            recipe.AddIngredient(ModContent.ItemType<KarmicHolder>());
-            recipe.AddIngredient(ModContent.ItemType<WhisperRa>());
-            recipe.AddIngredient(ModContent.ItemType<AxeBlade>(), 300);
-
-            recipe.AddIngredient(ItemID.SpiritFlame);
-            recipe.AddIngredient(ItemID.BookStaff);
-        }
-
-        protected override void FinishRecipeVanilla(ModRecipe recipe)
-        {
-            recipe.AddIngredient(ItemID.SpiritFlame);
-            recipe.AddIngredient(ItemID.BookStaff);
+            
+            
+            recipe.AddTile(TileID.CrystalBall);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

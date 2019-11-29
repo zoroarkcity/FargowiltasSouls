@@ -703,9 +703,10 @@ namespace FargowiltasSouls.Projectiles
                         if (projectile.ai[0] > 120f && projectile.ai[0] < 299f) //instant ritual
                         {
                             projectile.ai[0] = 299f;
-                            float ai0 = Main.rand.Next(4);
                             if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.cultBoss, NPCID.CultistBoss))
                             {
+                                float ai0 = Main.rand.Next(4);
+
                                 NPC cultist = Main.npc[FargoSoulsGlobalNPC.cultBoss];
                                 FargoSoulsGlobalNPC fargoCultist = cultist.GetGlobalNPC<FargoSoulsGlobalNPC>();
                                 int[] weight = new int[4];
@@ -723,10 +724,11 @@ namespace FargowiltasSouls.Projectiles
                                         max = i;
                                 if (weight[max] > 0)
                                     ai0 = max;
+
+                                if (Main.netMode != 1)
+                                    Projectile.NewProjectile(projectile.Center, Vector2.UnitY * -10f, mod.ProjectileType("CelestialPillar"),
+                                        (int)(75 * (1 + FargoSoulsWorld.CultistCount * .0125)), 0f, Main.myPlayer, ai0);
                             }
-                            if (Main.netMode != 1)
-                                Projectile.NewProjectile(projectile.Center, Vector2.UnitY * -10f, mod.ProjectileType("CelestialPillar"),
-                                    (int)(75 * (1 + FargoSoulsWorld.CultistCount * .0125)), 0f, Main.myPlayer, ai0);
                         }
                     }
                     break;
@@ -1061,6 +1063,13 @@ namespace FargowiltasSouls.Projectiles
             {
                 int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.GoldFlame, projectile.velocity.X, projectile.velocity.Y, 100, default(Color), 1.5f);
                 Main.dust[dustId].noGravity = true;
+            }
+
+            if (projectile.bobber && modPlayer.MutantAntibodies)
+            {
+                if (projectile.wet && projectile.ai[0] == 0 && projectile.localAI[1] < 660)
+                    projectile.localAI[1] = 660;
+                //Main.NewText(projectile.ai[0].ToString() + " " + projectile.ai[1].ToString() + ", " + projectile.localAI[0].ToString() + " " + projectile.localAI[1].ToString());
             }
         }
 

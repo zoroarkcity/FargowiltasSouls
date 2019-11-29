@@ -2402,14 +2402,15 @@ namespace FargowiltasSouls.NPCs
                                         {
                                             if (Main.npc[i].active && Main.npc[i].type == NPCID.CultistBossClone)
                                             {
-                                                Vector2 speed = Vector2.UnitX.RotatedByRandom(Math.PI);
+                                                Projectile.NewProjectile(Main.npc[i].Center, Main.npc[i].DirectionTo(Main.player[npc.target].Center) * 10f, ProjectileID.StardustJellyfishSmall, damage / 3, 0f, Main.myPlayer);
+                                                /*Vector2 speed = Vector2.UnitX.RotatedByRandom(Math.PI);
                                                 speed *= 6f;
                                                 Projectile.NewProjectile(Main.npc[i].Center, speed,
                                                     ProjectileID.PhantasmalEye, damage / 3, 0f, Main.myPlayer);
                                                 Projectile.NewProjectile(Main.npc[i].Center, speed.RotatedBy(Math.PI * 2 / 3),
                                                     ProjectileID.PhantasmalEye, damage / 3, 0f, Main.myPlayer);
                                                 Projectile.NewProjectile(Main.npc[i].Center, speed.RotatedBy(-Math.PI * 2 / 3),
-                                                    ProjectileID.PhantasmalEye, damage / 3, 0f, Main.myPlayer);
+                                                    ProjectileID.PhantasmalEye, damage / 3, 0f, Main.myPlayer);*/
                                             }
                                         }
                                     }
@@ -5634,6 +5635,14 @@ namespace FargowiltasSouls.NPCs
                                     target.X += 400 * Counter;
                                     target.Y += 400 * Counter2;
                                     npc.velocity = (target - npc.Center) / 30;
+                                    if (npc.ai[2] == 140)
+                                        for (int i = 0; i < 20; i++)
+                                        {
+                                            int d = Dust.NewDust(npc.position, npc.width, npc.height, 112, npc.velocity.X * .4f, npc.velocity.Y * .4f, 0, Color.White, 2);
+                                            Main.dust[d].scale += 1f;
+                                            Main.dust[d].velocity *= 3f;
+                                            Main.dust[d].noGravity = true;
+                                        }
                                 }
                                 else if (npc.ai[2] == 180)
                                 {
@@ -5696,6 +5705,8 @@ namespace FargowiltasSouls.NPCs
                                     {
                                         masoBool[2] = true;
                                         Counter = (int)Main.npc[ai1].Distance(npc.Center);
+                                        if (Counter < 300)
+                                            Counter = 300;
                                         npc.localAI[3] = Main.npc[ai1].DirectionTo(npc.Center).ToRotation();
                                         
                                         if (Main.netMode == 2) //MP sync
@@ -5712,7 +5723,11 @@ namespace FargowiltasSouls.NPCs
                                 }
                                 else //spinning
                                 {
-                                    npc.Center = Main.npc[ai1].Center + new Vector2(Counter, 0f).RotatedBy(npc.localAI[3]);
+                                    float range = Counter; //extend further to hit player if beyond current range
+                                    if (Main.npc[ai1].HasValidTarget && Main.npc[ai1].Distance(Main.player[Main.npc[ai1].target].Center) > range)
+                                        range = Main.npc[ai1].Distance(Main.player[Main.npc[ai1].target].Center);
+                                    
+                                    npc.Center = Main.npc[ai1].Center + new Vector2(range, 0f).RotatedBy(npc.localAI[3]);
                                     const float rotation = 0.1f;
                                     npc.localAI[3] += rotation;
                                     if (npc.localAI[3] > (float)Math.PI)
@@ -9493,6 +9508,8 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, mod.ItemType("SecurityWallet"));
                         if (Main.rand.Next(100) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.CoinGun);
+                        if (Main.rand.Next(100) == 0)
+                            Item.NewItem(npc.Hitbox, ItemID.LuckyCoin);
                         break;
 
                     case NPCID.Nymph:
@@ -9503,13 +9520,13 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.MourningWood:
-                        Item.NewItem(npc.Hitbox, ItemID.GoodieBag);
+                        Item.NewItem(npc.Hitbox, ItemID.GoodieBag, Main.rand.Next(5) + 1);
                         if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.BloodyMachete);
                         break;
 
                     case NPCID.Pumpking:
-                        Item.NewItem(npc.Hitbox, ItemID.GoodieBag);
+                        Item.NewItem(npc.Hitbox, ItemID.GoodieBag, Main.rand.Next(5) + 1);
                         if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.BladedGlove);
                         if (Main.pumpkinMoon && Main.rand.Next(10) == 0)
@@ -9518,11 +9535,11 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.Everscream:
                     case NPCID.SantaNK1:
-                        Item.NewItem(npc.Hitbox, ItemID.Present);
+                        Item.NewItem(npc.Hitbox, ItemID.Present, Main.rand.Next(5) + 1);
                         break;
 
                     case NPCID.IceQueen:
-                        Item.NewItem(npc.Hitbox, ItemID.Present);
+                        Item.NewItem(npc.Hitbox, ItemID.Present, Main.rand.Next(5) + 1);
                         if (Main.snowMoon && Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("IceQueensCrown"));
                         break;
