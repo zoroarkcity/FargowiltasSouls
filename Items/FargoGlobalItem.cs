@@ -110,7 +110,7 @@ namespace FargowiltasSouls.Items
 
                 if (modPlayer.CelestialRune && SoulConfig.Instance.GetValue("Celestial Rune Support"))
                 {
-                    if (item.melee) //fireball
+                    if (item.melee && item.pick == 0 && item.axe == 0 && item.hammer == 0) //fireball
                     {
                         Main.PlaySound(SoundID.Item34, position);
                         for (int i = 0; i < 3; i++)

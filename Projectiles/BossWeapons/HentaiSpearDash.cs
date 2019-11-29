@@ -6,11 +6,9 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
-    public class HentaiSpearThrown : ModProjectile
+    public class HentaiSpearDash : ModProjectile
     {
         public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/HentaiSpear";
-
-        //throw with 25 velocity, 1000 damage, 10 knockback
 
         public override void SetStaticDefaults()
         {
@@ -26,19 +24,45 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.aiStyle = -1;
             projectile.friendly = true;
             projectile.penetrate = -1;
-            projectile.tileCollide = false;
             projectile.ignoreWater = true;
-            projectile.timeLeft = 180;
-            projectile.extraUpdates = 1;
+            projectile.timeLeft = 30;
             projectile.scale = 1.3f;
             projectile.alpha = 0;
+            projectile.melee = true;
+            projectile.extraUpdates = 1;
 
             projectile.localNPCHitCooldown = 0;
             projectile.usesLocalNPCImmunity = true;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
         }
 
         public override void AI()
         {
+            Player player = Main.player[projectile.owner];
+            player.Center = projectile.Center;
+            /*if (projectile.timeLeft > 1) //trying to avoid wallclipping
+                player.position += projectile.velocity;*/
+            player.velocity = projectile.velocity * .5f;
+            player.direction = projectile.velocity.X > 0 ? 1 : -1;
+
+            player.controlLeft = false;
+            player.controlRight = false;
+            player.controlJump = false;
+            player.controlDown = false;
+            player.controlUseItem = false;
+            player.controlUseTile = false;
+            player.controlHook = false;
+            player.controlMount = false;
+            
+
+            if (player.mount.Active)
+                player.mount.Dismount(player);
+
+            player.immune = true;
+            player.immuneTime = 2;
+            player.hurtCooldowns[0] = 2;
+            player.hurtCooldowns[1] = 2;
+
             //dust!
             int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width / 2, projectile.height + 5, 15, projectile.velocity.X * 0.2f,
                 projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
@@ -51,36 +75,30 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 projectile.localAI[0] = 3;
                 if (projectile.owner == Main.myPlayer)
-                {
-                    int p = Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("PhantasmalSphere"), projectile.damage, projectile.knockBack / 2, projectile.owner);
-                    if (p < 1000)
-                    {
-                        Main.projectile[p].melee = false;
-                        Main.projectile[p].thrown = true;
-                    }
-                }
+                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("PhantasmalSphere"), projectile.damage, projectile.knockBack / 2, projectile.owner);
             }
 
-            if (projectile.localAI[1] == 0f)
-            {
-                projectile.localAI[1] = 1f;
-                Main.PlaySound(SoundID.Item1, projectile.Center);
-            }
+            if (projectile.velocity != Vector2.Zero)
+                projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
+        }
 
-            projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        {
+            width = Player.defaultWidth;
+            height = Player.defaultHeight;
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            projectile.velocity = oldVelocity;
+            return false;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             if (projectile.owner == Main.myPlayer)
-            {
-                int p = Projectile.NewProjectile(target.position + new Vector2(Main.rand.Next(target.width), Main.rand.Next(target.height)), Vector2.Zero, mod.ProjectileType("PhantasmalBlast"), projectile.damage, 0f, projectile.owner);
-                if (p < 1000)
-                {
-                    Main.projectile[p].melee = false;
-                    Main.projectile[p].thrown = true;
-                }
-            }
+                Projectile.NewProjectile(target.position + new Vector2(Main.rand.Next(target.width), Main.rand.Next(target.height)), Vector2.Zero, mod.ProjectileType("PhantasmalBlast"), projectile.damage, 0f, projectile.owner);
             target.AddBuff(mod.BuffType("CurseoftheMoon"), 600);
         }
 

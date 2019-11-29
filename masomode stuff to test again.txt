@@ -63,6 +63,37 @@ prime swipe arms flash before they dive in
 fixed red squirrels not being convertible into gold at dipping vat
 flying dutchman now has 1% chance to drop lucky coin!!!!!
 
+removed ML's rigged pillar enemy spawns
+pillar enemies in space dont spawn during boss fights
+selenians wont dash again when hit if very close to you
+asocial makes minions do no damage
+only destroyer has jester resistance (fixed all mechs secretly having it)
+destroyer has a new spin attack
+	body stops shooting during spin but gains omega defense
+dark stars actually go through walls now
+
+removed thrown hentai spear item
+replaced hentai spear right click with thrown hentai spear
+changed left click hentai spear to hopefully fix speed breaking it and other possible memes
+replaced ML's vulnerability fireball indicator with a larger ring of fragments
+reduced leech clot's boosted life to x3, but it is now protected by null curse
+fixed(?) true eyes desyncing
+velocity of immune enemies is no longer affected by clipped wings
+removed ML core DR
+biocluster/maso soul have security wallet effect while in inv
+tims concoction has sprite
+removed ML core defense
+ML core's bonus socket attacks (besides deathray) only occur below 66% life
+fixed nullification curse debuff not appearing in phase 2
+
+adjusted ML deathray delays
+adjusted prime swipe arm despawn condition again
+pickaxes and other tools wont trigger celestial rune bonus attacks
+crucible crafts with any bookcase
+ML's ritual disappears immediately on defeat
+tried to make sure eyes dont desync AGAIN
+added mutant trophy
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)

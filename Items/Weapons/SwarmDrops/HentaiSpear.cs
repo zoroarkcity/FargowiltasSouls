@@ -23,7 +23,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.useStyle = 5;
             item.useAnimation = 16;
             item.useTime = 16;
-            item.shootSpeed = 3.7f;
+            item.shootSpeed = 6f;
             item.knockBack = 7f;
             item.width = 32;
             item.height = 32;
@@ -45,7 +45,27 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override bool CanUseItem(Player player)
         {
-            if (player.altFunctionUse == 2) //right click
+            if (player.altFunctionUse == 2)
+            {
+                item.shoot = mod.ProjectileType("HentaiSpearThrown");
+                item.shootSpeed = 25f;
+                item.useAnimation = 100;
+                item.useTime = 100;
+                item.thrown = true;
+                item.melee = false;
+            }
+            else
+            {
+                item.shoot = mod.ProjectileType("HentaiSpear");
+                item.shootSpeed = 6f;
+                item.useAnimation = 16;
+                item.useTime = 16;
+                item.thrown = false;
+                item.melee = true;
+            }
+            return true;
+
+            /*if (player.altFunctionUse == 2) //right click
             {
                 item.useAnimation = 32;
                 item.useTime = 32;
@@ -55,7 +75,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 item.useAnimation = 16;
                 item.useTime = 16;
             }
-            return player.ownedProjectileCounts[item.shoot] < 1; // This is to ensure the spear doesn't bug out when using autoReuse = true
+            return player.ownedProjectileCounts[item.shoot] < 1; // This is to ensure the spear doesn't bug out when using autoReuse = true*/
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)
@@ -73,16 +93,15 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             if (player.altFunctionUse == 2) //right click
             {
-                Vector2 speed = new Vector2(speedX, speedY);
-                speed.Normalize();
-                speed *= 3.7f * 32 / player.itemAnimationMax;
-                speedX = speed.X;
-                speedY = speed.Y;
+                damage /= 4;
                 return true;
             }
 
-            Projectile.NewProjectile(position.X, position.Y, speedX, speedY, item.shoot, damage, knockBack, item.owner, 0f, 1f);
-            Projectile.NewProjectile(position.X, position.Y, speedX * 5f, speedY * 5f, mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI);
+            if (player.ownedProjectileCounts[item.shoot] < 1 && player.ownedProjectileCounts[mod.ProjectileType("Dash")] < 1)
+            {
+                Projectile.NewProjectile(position.X, position.Y, speedX * 5f, speedY * 5f, mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI);
+                Projectile.NewProjectile(position.X, position.Y, speedX, speedY, item.shoot, damage, knockBack, item.owner, 0f, 1f);
+            }
             return false;
         }
 

@@ -1,9 +1,7 @@
-NEW UPDATE - v 1.1.0
+NEW UPDATE - v 1.1.1
 
--Added Tim's Concoction and Optic Staff EX
--Added Mutant Statue, Mutant Discount Card, and Mutant Pact
--Fixed all Thorium and Calamity related freezes and explosions
--Several Enchantment fixes and rebalances
--Several Masochist Mode rebalances and reworks
+-Added Enchantment tooltip colors for Calamity and SoA
+-Added some sprites
+-Pandora's Box now can only summon bosses in Hard Mode
 
 -See the full changelog on the wiki

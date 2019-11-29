@@ -8,25 +8,24 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.Masomode
 {
-    public class LunarRitual : ModProjectile
+    public class FragmentRitual : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_454";
+        public override string Texture => "FargowiltasSouls/Projectiles/Masomode/CelestialFragment";
 
         private const float PI = (float)Math.PI;
         private const float rotationPerTick = PI / 140f;
-        private const float threshold = 1400f;
+        private const float threshold = 700f;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lunar Ritual");
-            Main.projFrames[projectile.type] = 2;
+            Main.projFrames[projectile.type] = 4;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 46;
-            projectile.height = 46;
-            projectile.scale *= 2f;
+            projectile.width = 8;
+            projectile.height = 8;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.alpha = 255;
@@ -43,46 +42,6 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     projectile.alpha = 0;
 
                 projectile.Center = Main.npc[ai1].Center;
-
-                Player player = Main.player[Main.myPlayer];
-                if (player.active && !player.dead)
-                {
-                    float distance = player.Distance(projectile.Center);
-                    if (Math.Abs(distance - threshold) < 46f && player.hurtCooldowns[0] == 0 && projectile.alpha == 0)
-                    {
-                        int hitDirection = projectile.Center.X > player.Center.X ? 1 : -1;
-                        player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, projectile.whoAmI),
-                            projectile.damage, hitDirection, false, false, false, 0);
-                        player.AddBuff(mod.BuffType("CurseoftheMoon"), Main.rand.Next(300, 600));
-                    }
-                    if (distance > threshold && distance < threshold * 5f)
-                    {
-                        if (distance > threshold * 2f)
-                        {
-                            player.frozen = true;
-                            player.controlHook = false;
-                            player.controlUseItem = false;
-                            if (player.mount.Active)
-                                player.mount.Dismount(player);
-                            player.velocity.X = 0f;
-                            player.velocity.Y = -0.4f;
-                        }
-
-                        Vector2 movement = projectile.Center - player.Center;
-                        float difference = movement.Length() - threshold;
-                        movement.Normalize();
-                        movement *= difference < 17f ? difference : 17f;
-                        player.position += movement;
-
-                        for (int i = 0; i < 20; i++)
-                        {
-                            int d = Dust.NewDust(player.position, player.width, player.height, 135, 0f, 0f, 0, default(Color), 2.5f);
-                            Main.dust[d].noGravity = true;
-                            Main.dust[d].noLight = true;
-                            Main.dust[d].velocity *= 5f;
-                        }
-                    }
-                }
             }
             else
             {
@@ -96,22 +55,34 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
 
             projectile.timeLeft = 2;
-            projectile.scale = (1f - projectile.alpha / 255f) * 2f;
-            projectile.ai[0] -= rotationPerTick;
-            if (projectile.ai[0] < -PI)
+            projectile.scale = (1f - projectile.alpha / 255f) * 1.25f + (Main.mouseTextColor / 200f - 0.35f) * 0.2f; //throbbing
+            if (projectile.scale < 0.1f) //clamp scale
+                projectile.scale = 0.1f;
+            projectile.ai[0] += rotationPerTick;
+            if (projectile.ai[0] > PI)
             {
-                projectile.ai[0] += 2f * PI;
+                projectile.ai[0] -= 2f * PI;
                 projectile.netUpdate = true;
             }
+            projectile.rotation = projectile.ai[0];
 
-            projectile.frameCounter++;
+            switch (NPCs.FargoSoulsGlobalNPC.masoStateML) //match ML vulnerability to fragment
+            {
+                case 0: projectile.frame = 1; break;
+                case 1: projectile.frame = 2; break;
+                case 2: projectile.frame = 0; break;
+                case 3: projectile.frame = 3; break;
+                default:
+                    break;
+            }
+            /*projectile.frameCounter++;
             if (projectile.frameCounter >= 6)
             {
                 projectile.frameCounter = 0;
                 projectile.frame++;
                 if (projectile.frame > 1)
                     projectile.frame = 0;
-            }
+            }*/
         }
 
         public override bool CanDamage()
@@ -129,19 +100,20 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
             Color color26 = projectile.GetAlpha(lightColor);
 
-            for (int x = 0; x < 32; x++)
+            const int max = 16;
+            for (int x = 0; x < max; x++)
             {
                 Vector2 drawOffset = new Vector2(threshold * projectile.scale / 2f, 0f).RotatedBy(projectile.ai[0]);
-                drawOffset = drawOffset.RotatedBy(2f * PI / 32f * x);
-                const int max = 4;
+                drawOffset = drawOffset.RotatedBy(2f * PI / max * x);
+                /*const int max = 4;
                 for (int i = 0; i < max; i++)
                 {
                     Color color27 = color26;
                     color27 *= (float)(max - i) / max;
-                    Vector2 value4 = projectile.Center + drawOffset.RotatedBy(rotationPerTick * i);
+                    Vector2 value4 = projectile.Center + drawOffset.RotatedBy(-rotationPerTick * i);
                     float num165 = projectile.rotation;
                     Main.spriteBatch.Draw(texture2D13, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
-                }
+                }*/
                 Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
             }
             return false;
@@ -149,7 +121,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * projectile.Opacity;
+            return Color.White * projectile.Opacity * .5f;
         }
     }
 }

@@ -116,6 +116,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             Player player = Main.player[projectile.owner];
             player.velocity = DashStep / DASH_STEP_COUNT;
+            player.itemAnimation = 0;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

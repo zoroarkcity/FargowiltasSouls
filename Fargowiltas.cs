@@ -1410,8 +1410,40 @@ namespace FargowiltasSouls
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnySpectreHead", group);
 
             //book cases
-            group = new RecipeGroup(() => Lang.misc[37] + " Wooden Bookcase", ItemID.Bookcase, ItemID.EbonwoodBookcase, ItemID.RichMahoganyBookcase, ItemID.LivingWoodBookcase,
-                ItemID.ShadewoodBookcase, ItemID.PalmWoodBookcase, ItemID.BorealWoodBookcase);
+            group = new RecipeGroup(() => Lang.misc[37] + " Bookcase", new int[]
+            {
+                ItemID.Bookcase,
+                ItemID.BlueDungeonBookcase,
+                ItemID.BoneBookcase,
+                ItemID.BorealWoodBookcase,
+                ItemID.CactusBookcase,
+                ItemID.CrystalBookCase,
+                ItemID.DynastyBookcase,
+                ItemID.EbonwoodBookcase,
+                ItemID.FleshBookcase,
+                ItemID.FrozenBookcase,
+                ItemID.GlassBookcase,
+                ItemID.GoldenBookcase,
+                ItemID.GothicBookcase,
+                ItemID.GraniteBookcase,
+                ItemID.GreenDungeonBookcase,
+                ItemID.HoneyBookcase,
+                ItemID.LivingWoodBookcase,
+                ItemID.MarbleBookcase,
+                ItemID.MeteoriteBookcase,
+                ItemID.MushroomBookcase,
+                ItemID.ObsidianBookcase,
+                ItemID.PalmWoodBookcase,
+                ItemID.PearlwoodBookcase,
+                ItemID.PinkDungeonBookcase,
+                ItemID.PumpkinBookcase,
+                ItemID.RichMahoganyBookcase,
+                ItemID.ShadewoodBookcase,
+                ItemID.SkywareBookcase,
+                ItemID.SlimeBookcase,
+                ItemID.SpookyBookcase,
+                ItemID.SteampunkBookcase
+            });
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyBookcase", group);
 
             //beetle body

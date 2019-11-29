@@ -57,9 +57,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.position.X = ownerMountedCenter.X - projectile.width / 2;
             projectile.position.Y = ownerMountedCenter.Y - projectile.height / 2;
             // Change the spear position based off of the velocity and the movementFactor
-            projectile.position += projectile.velocity * MovementFactor;
+            projectile.position += Vector2.Normalize(projectile.velocity) * 116f;
             // As long as the player isn't frozen, the spear can move
-            if (!projOwner.frozen)
+            /*if (!projOwner.frozen)
             {
                 if (MovementFactor == 0f) // When intially thrown out, the ai0 will be 0f
                 {
@@ -88,7 +88,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 {
                     MovementFactor += 2.1f;
                 }
-            }
+            }*/
 
             // When we reach the end of the animation, we can kill the spear projectile
             if (projOwner.itemAnimation == 0) projectile.Kill();
@@ -111,7 +111,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                         Vector2.Zero, mod.ProjectileType("PhantasmalBlast"), projectile.damage, projectile.knockBack * 3f, projectile.owner);
                     Projectile.NewProjectile(target.position + new Vector2(Main.rand.Next(target.width), Main.rand.Next(target.height)),
                         Vector2.Zero, mod.ProjectileType("PhantasmalBlast"), projectile.damage, projectile.knockBack * 3f, projectile.owner);
-
                 }
                 else if (projectile.numHits % 3 == 0)
                 {

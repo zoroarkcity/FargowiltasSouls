@@ -54,6 +54,7 @@ Summons a friendly rainbow slime");
             fargoPlayer.SandsofTime = true;
             player.buffImmune[BuffID.Suffocation] = true;
             player.manaFlower = true;
+            fargoPlayer.SecurityWallet = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
