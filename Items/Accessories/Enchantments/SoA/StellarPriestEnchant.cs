@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using SacredTools;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.SoA
 {

@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             DisplayName.SetDefault("Darksteel Enchantment");
             Tooltip.SetDefault(
 @"'Light yet durable'
-50% damage reduction at Full HP
+25% damage reduction at Full HP
 Nothing will stop your movement 
 Double tap to dash
 Grants immunity to shambler chain-balls
@@ -59,7 +59,7 @@ Effects of Spiked Bracer");
             //steel effect
             if (player.statLife == player.statLifeMax2)
             {
-                player.endurance += .5f;
+                player.endurance += .25f;
             }
             //spiked bracers
             player.thorns += 0.35f;

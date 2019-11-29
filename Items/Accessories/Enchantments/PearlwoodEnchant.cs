@@ -14,8 +14,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Pearlwood Enchantment");
             Tooltip.SetDefault(
 @"'Too little, too late…'
-You leave behind a trail of rainbows that may shrink enemies
-While in the Hallow, the rainbow trail lasts much longer");
+Projectiles will spawn a star when they hit something
+While in the Hallow, stars have damaging rainbow trails");
             DisplayName.AddTranslation(GameCulture.Chinese, "珍珠木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'为时已晚'
@@ -46,7 +46,7 @@ While in the Hallow, the rainbow trail lasts much longer");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().PearlEffect();
+            player.GetModPlayer<FargoPlayer>().PearlEnchant = true; ;
         }
 
         public override void AddRecipes()

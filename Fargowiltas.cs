@@ -65,7 +65,7 @@ namespace FargowiltasSouls
             #region Toggles
             #region enchants
             ModTranslation text = CreateTranslation("WoodHeader");
-            text.SetDefault("[i:" + Instance.ItemType("WoodForce") + "] Force of Wood");
+            text.SetDefault("[i:" + Instance.ItemType("LumberForce") + "] Force of Lumber");
             AddTranslation(text);
             text = CreateTranslation("LifeHeader");
             text.SetDefault("[i:" + Instance.ItemType("LifeForce") + "] Force of Life");

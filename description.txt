@@ -4,4 +4,15 @@ NEW UPDATE - v 1.1.1
 -Added some sprites
 -Pandora's Box now can only summon bosses in Hard Mode
 
+-Steel DR reduced to 15% from 33%
+-Darksteel DR reduced to 25% from 50%
+-Durasteel DR reduced from 90% to 50%
+-Increased the amount of Sadism Mutant boss drops and Lunar Crystals Moon Lord drops
+-Tungsten Enchantment no longer affects projectiles that deal no damage (mostly pets)
+
+-Shadewood Enchantment
+-Pearlwood Enchantment
+
+-All hard mode enemies spawning early have half max HP
+
 -See the full changelog on the wiki

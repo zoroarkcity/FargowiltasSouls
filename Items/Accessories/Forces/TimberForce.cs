@@ -68,7 +68,7 @@ You leave behind a trail of rainbows that may shrink enemies");
             //palm
             modPlayer.PalmEffect();
             //pearl
-            modPlayer.PearlEffect();
+            //modPlayer.PearlEffect();
         }
 
         public override void AddRecipes()

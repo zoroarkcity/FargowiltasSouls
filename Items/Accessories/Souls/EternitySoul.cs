@@ -21,7 +21,6 @@ namespace FargowiltasSouls.Items.Accessories.Souls
         public bool jumped;
         public bool canHover;
         public int hoverTimer;
-        //public int jumpTimer;
 
         public static int tooltipIndex = 0;
         public static int Counter = 10;
