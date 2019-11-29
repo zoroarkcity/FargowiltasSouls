@@ -5,8 +5,6 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class TimsConcoction : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tim's Concoction");

@@ -42,6 +42,17 @@ Effects of Deep Diver, The Transformer, and Luxor's Gift");
             item.value = 80000;
         }
 
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(67, 92, 191);
+                }
+            }
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;

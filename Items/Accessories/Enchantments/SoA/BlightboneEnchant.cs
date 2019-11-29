@@ -39,6 +39,17 @@ Effects Dreadflame Emblem");
             item.value = 100000;
         }
 
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(124, 10, 10);
+                }
+            }
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (!Fargowiltas.Instance.SoALoaded) return;

@@ -38,6 +38,17 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.SoA
             item.value = 50000;
         }
 
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(129, 19, 29);
+                }
+            }
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (!Fargowiltas.Instance.SoALoaded) return;

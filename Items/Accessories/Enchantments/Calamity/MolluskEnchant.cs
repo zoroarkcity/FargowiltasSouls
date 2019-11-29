@@ -39,6 +39,17 @@ Summons a Danny Devito pet");
             item.value = 150000;
         }
 
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(74, 97, 96);
+                }
+            }
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
