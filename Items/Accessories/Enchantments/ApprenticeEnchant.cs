@@ -8,7 +8,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
     public class ApprenticeEnchant : ModItem
     {
         public override string Texture => "FargowiltasSouls/Items/Placeholder";
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
 
         public override bool Autoload(ref string name)
         {

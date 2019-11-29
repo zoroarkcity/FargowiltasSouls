@@ -6,17 +6,25 @@ using ThoriumMod;
 using ThoriumMod.NPCs;
 using Terraria.Localization;
 using System.Collections.Generic;
+using ThoriumMod.Buffs.Healer;
+using ThoriumMod.Items.DD;
+using ThoriumMod.Items.Donate;
+using ThoriumMod.Items.HealerItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class DarkArtistEnchant : ModItem
+    public class DarkArtistEnchant : EnchantmentItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
+        public DarkArtistEnchant() : base("Dark Artist Enchantment", "", 20, 20, 
+            TileID.CrystalBall, Item.sellPrice(gold: 5), ItemRarityID.Yellow, new Color(155, 92, 176))
+        {
+        }
+
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dark Artist Enchantment");
-
+            base.SetStaticDefaults();
+            
             string tooltip =
 @"'The shadows hold more than they seem'
 While attacking, Flameburst shots manifest themselves from your shadows
@@ -28,7 +36,7 @@ Greatly enhances Flameburst effectiveness
 大大增强焰爆炮塔能力
 ";
 
-            if(thorium != null)
+            if(Fargowiltas.Instance.ThoriumLoaded)
             {
                 tooltip += "Effects of Dark Effigy\n";
                 tooltip_ch += "拥有阴影雕塑的效果\n";
@@ -37,31 +45,12 @@ Greatly enhances Flameburst effectiveness
             tooltip += "Summons a pet Flickerwick";
             tooltip_ch += "召唤一个闪烁烛芯";
 
-            Tooltip.SetDefault(tooltip); 
+            Tooltip.SetDefault(tooltip);
+
             DisplayName.AddTranslation(GameCulture.Chinese, "暗黑艺术家魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
-        {
-            foreach (TooltipLine tooltipLine in list)
-            {
-                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
-                {
-                    tooltipLine.overrideColor = new Color(155, 92, 176);
-                }
-            }
-        }
-
-        public override void SetDefaults()
-        {
-            item.width = 20;
-            item.height = 20;
-            item.accessory = true;
-            ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 8;
-            item.value = 250000;
-        }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -85,38 +74,36 @@ Greatly enhances Flameburst effectiveness
             }
             if (thoriumPlayer.effigy > 0)
             {
-                player.AddBuff(thorium.BuffType("EffigyRegen"), 2, true);
+                player.AddBuff(ModContent.BuffType< EffigyRegen>(), 2, true);
             }
         }
 
-        public override void AddRecipes()
+
+        protected override void AddRecipeBase(ModRecipe recipe)
         {
-            ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.ApprenticeAltHead);
             recipe.AddIngredient(ItemID.ApprenticeAltShirt);
             recipe.AddIngredient(ItemID.ApprenticeAltPants);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("Effigy"));
-                recipe.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
-                recipe.AddIngredient(thorium.ItemType("DarkMageStaff"));
-                recipe.AddIngredient(ItemID.ShadowFlameHexDoll);
-                recipe.AddIngredient(ItemID.InfernoFork);
-                recipe.AddIngredient(thorium.ItemType("ShadowFlareBow"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
-                recipe.AddIngredient(ItemID.ShadowFlameHexDoll);
-                recipe.AddIngredient(ItemID.InfernoFork);
-            }
-            
+
             recipe.AddIngredient(ItemID.DD2PetGhost);
-            
-            recipe.AddTile(TileID.CrystalBall);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+        }
+
+        protected override void AddThoriumRecipe(ModRecipe recipe, Mod thorium)
+        {
+            recipe.AddIngredient(ModContent.ItemType<Effigy>());
+            recipe.AddIngredient(ModContent.ItemType<DarkMageStaff>());
+            recipe.AddIngredient(ModContent.ItemType<ShadowFlareBow>());
+
+            recipe.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
+            recipe.AddIngredient(ItemID.ShadowFlameHexDoll);
+            recipe.AddIngredient(ItemID.InfernoFork);
+        }
+
+        protected override void FinishRecipeVanilla(ModRecipe recipe)
+        {
+            recipe.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
+            recipe.AddIngredient(ItemID.ShadowFlameHexDoll);
+            recipe.AddIngredient(ItemID.InfernoFork);
         }
     }
 }
