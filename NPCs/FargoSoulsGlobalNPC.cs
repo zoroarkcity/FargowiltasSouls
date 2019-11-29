@@ -5866,7 +5866,7 @@ namespace FargowiltasSouls.NPCs
                             masoBool[0] = true;
                             Counter = 0;
                             for (int i = 0; i < Main.maxNPCs; i++)
-                                if (Main.npc[i].active && Main.npc[i].type == NPCID.MoonLordFreeEye && Main.npc[i].ai[3] == npc.ai[3])
+                                if (Main.npc[i].active && Main.npc[i].type == NPCID.MoonLordFreeEye && Main.npc[i].ai[3] == npc.ai[3] && i != npc.whoAmI)
                                 {
                                     npc.ai[0] = Main.npc[i].ai[0];
                                     npc.ai[1] = Main.npc[i].ai[1];
