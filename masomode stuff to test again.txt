@@ -92,6 +92,7 @@ pickaxes and other tools wont trigger celestial rune bonus attacks
 crucible crafts with any bookcase
 ML's ritual disappears immediately on defeat
 tried to make sure eyes dont desync AGAIN
+added mutant trophy
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
