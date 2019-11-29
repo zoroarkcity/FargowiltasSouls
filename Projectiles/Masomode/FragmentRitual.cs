@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             int ai1 = (int)projectile.ai[1];
             if (projectile.ai[1] >= 0f && projectile.ai[1] < 200f &&
-                Main.npc[ai1].active && Main.npc[ai1].type == NPCID.MoonLordCore)
+                Main.npc[ai1].active && Main.npc[ai1].type == NPCID.MoonLordCore && Main.npc[ai1].ai[0] != 2f)
             {
                 projectile.alpha -= 2;
                 if (projectile.alpha < 0)
