@@ -70,12 +70,12 @@ namespace FargowiltasSouls.Items.Misc
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(ItemID.TruffleWorm);
+            recipe.AddIngredient(ItemID.TruffleWorm, 3);
             recipe.AddIngredient(ItemID.ShrimpyTruffle);
-            recipe.AddIngredient(mod.ItemType("LunarCrystal"), 3);
+            recipe.AddIngredient(mod.ItemType("LunarCrystal"), 9);
 
             recipe.AddTile(mod.TileType("CrucibleCosmosSheet"));
-            recipe.SetResult(this);
+            recipe.SetResult(this, 3);
             recipe.AddRecipe();
         }
     }

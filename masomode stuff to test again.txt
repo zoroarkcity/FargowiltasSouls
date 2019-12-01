@@ -95,6 +95,7 @@ tried to make sure eyes dont desync AGAIN
 added mutant trophy
 pickaxes and other tools wont trigger pumpkings cape bonus attacks
 clowns drop 1-10 happy grenades on kill
+truffle worm EX recipe is now for 3 worms
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
