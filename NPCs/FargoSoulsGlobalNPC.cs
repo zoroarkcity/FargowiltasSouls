@@ -11129,7 +11129,7 @@ namespace FargowiltasSouls.NPCs
                         if (npc.ai[2] <= -6f)
                         {
                             damage /= 3;
-                            if (npc.HasPlayerTarget && npc.Distance(Main.player[npc.target].Center) > 150)
+                            if (npc.HasPlayerTarget && npc.Distance(Main.player[npc.target].Center) > 250)
                                 npc.ai[2] = -6f;
                         }
                         break;
