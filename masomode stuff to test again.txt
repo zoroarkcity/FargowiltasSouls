@@ -94,6 +94,7 @@ ML's ritual disappears immediately on defeat
 tried to make sure eyes dont desync AGAIN
 added mutant trophy
 pickaxes and other tools wont trigger pumpkings cape bonus attacks
+clowns drop 1-10 happy grenades on kill
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

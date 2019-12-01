@@ -9683,6 +9683,10 @@ namespace FargowiltasSouls.NPCs
                         Item.NewItem(npc.Hitbox, ItemID.DefenderMedal, 10);
                         break;
 
+                    case NPCID.Clown:
+                        Item.NewItem(npc.Hitbox, ItemID.PartyGirlGrenade, Main.rand.Next(10) + 1);
+                        break;
+
                     #region potion drops
 
                     case NPCID.BlueSlime:
