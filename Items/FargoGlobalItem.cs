@@ -138,7 +138,7 @@ namespace FargowiltasSouls.Items
 
                 if (modPlayer.PumpkingsCape && SoulConfig.Instance.GetValue("Pumpking's Cape Support"))
                 {
-                    if (item.melee) //flaming jack
+                    if (item.melee && item.pick == 0 && item.axe == 0 && item.hammer == 0) //flaming jack
                     {
                         float distance = 2000f;
                         int target = -1;
