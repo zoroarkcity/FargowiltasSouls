@@ -102,7 +102,7 @@ namespace FargowiltasSouls.Items
 
                 if (modPlayer.BorealEnchant && SoulConfig.Instance.GetValue("Boreal Snowballs"))
                 {
-                    Vector2 vel = Vector2.Normalize(Main.MouseWorld - player.Center) * (item.shootSpeed > 0 ? item.shootSpeed : 10) * .75f;
+                    Vector2 vel = Vector2.Normalize(Main.MouseWorld - player.Center) * 17f;
                     int p = Projectile.NewProjectile(player.Center, vel, ProjectileID.SnowBallFriendly, (int)(item.damage * .5f), 1, Main.myPlayer);
                     if (p != 1000 && (player.ZoneSnow || modPlayer.WoodForce))
                         FargoGlobalProjectile.SplitProj(Main.projectile[p], 5);
@@ -138,7 +138,7 @@ namespace FargowiltasSouls.Items
 
                 if (modPlayer.PumpkingsCape && SoulConfig.Instance.GetValue("Pumpking's Cape Support"))
                 {
-                    if (item.melee) //flaming jack
+                    if (item.melee && item.pick == 0 && item.axe == 0 && item.hammer == 0) //flaming jack
                     {
                         float distance = 2000f;
                         int target = -1;

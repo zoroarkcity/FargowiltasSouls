@@ -9682,6 +9682,10 @@ namespace FargowiltasSouls.NPCs
                         Item.NewItem(npc.Hitbox, ItemID.DefenderMedal, 10);
                         break;
 
+                    case NPCID.Clown:
+                        Item.NewItem(npc.Hitbox, ItemID.PartyGirlGrenade, Main.rand.Next(10) + 1);
+                        break;
+
                     #region potion drops
 
                     case NPCID.BlueSlime:
@@ -11124,7 +11128,7 @@ namespace FargowiltasSouls.NPCs
                         if (npc.ai[2] <= -6f)
                         {
                             damage /= 3;
-                            if (npc.HasPlayerTarget && npc.Distance(Main.player[npc.target].Center) > 150)
+                            if (npc.HasPlayerTarget && npc.Distance(Main.player[npc.target].Center) > 250)
                                 npc.ai[2] = -6f;
                         }
                         break;
