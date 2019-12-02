@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Projectiles
         private bool tungstenProjectile = false;
         private bool tikiMinion = false;
         private int tikiTimer = 300;
-        private bool rainbowTrail = false;
+        public bool rainbowTrail = false;
         private int rainbowCounter = 0;
         public bool Rainbow = false;
 

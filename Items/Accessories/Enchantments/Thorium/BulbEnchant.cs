@@ -9,7 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
     public class BulbEnchant : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        public int timer;
 
         public override bool Autoload(ref string name)
         {
@@ -22,7 +21,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             Tooltip.SetDefault(
 @"'Has a surprisingly sweet aroma'
 Your damage has a chance to poison hit enemies with a spore cloud
-Effects of Night Shade Petal and Petal Shield");
+Effects of Bee Booties and Petal Shield");
             DisplayName.AddTranslation(GameCulture.Chinese, "花瓣魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'香气逼人'
@@ -51,8 +50,13 @@ Effects of Night Shade Petal and Petal Shield");
             //petal shield
             thorium.GetItem("PetalShield").UpdateAccessory(player, hideVisual);
             player.statDefense -= 2;
-            //night shade petal
-            thoriumPlayer.nightshadeBoost = true;
+            //bee booties
+            if (SoulConfig.Instance.GetValue("Bee Booties"))
+            {
+                thorium.GetItem("BeeBoots").UpdateAccessory(player, hideVisual);
+                player.moveSpeed -= 0.15f;
+                player.maxRunSpeed -= 1f;
+            }
         }
         
         private readonly string[] items =
@@ -61,7 +65,7 @@ Effects of Night Shade Petal and Petal Shield");
             "BulbChestplate",
             "BulbLeggings",
             "PetalShield",
-            "NightShadePetal",
+            "BeeBoots",
             "BloomingBlade",
             "CreepingVineStaff"
         };

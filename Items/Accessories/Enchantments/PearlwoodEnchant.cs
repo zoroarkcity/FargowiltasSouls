@@ -46,7 +46,7 @@ While in the Hallow, stars have damaging rainbow trails");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().PearlEnchant = true; ;
+            player.GetModPlayer<FargoPlayer>().PearlEnchant = true;
         }
 
         public override void AddRecipes()

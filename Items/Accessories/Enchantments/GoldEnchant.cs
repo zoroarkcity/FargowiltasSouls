@@ -11,9 +11,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
     public class GoldEnchant : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        public int timer;
 
-        public override bool CloneNewInstances => true;
+        //public override bool CloneNewInstances => true;
 
         public override void SetStaticDefaults()
         {
@@ -35,7 +34,7 @@ You will not be able to move or attack, but will be immune to all damage
             if (thorium != null)
             {
                 tooltip += 
-@"Effects of Gold Aegis, Proof of Avarice, and Greedy Ring
+@"Effects of Proof of Avarice, and Greedy Ring
 Summons a pet Parrot and Coin Bag";
                 tooltip_ch +=
 @"拥有金之庇护,贪婪之证和贪婪戒指的效果
@@ -94,24 +93,6 @@ Summons a pet Parrot";
                 thoriumPlayer.avarice = true;
             }
             
-            //shield
-            timer++;
-            if (timer >= 30)
-            {
-                int num = 16;
-                if (thoriumPlayer.shieldHealth <= num)
-                {
-                    thoriumPlayer.shieldHealthTimerStop = true;
-                }
-                if (thoriumPlayer.shieldHealth < num)
-                {
-                    CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(51, 255, 255), 1, false, true);
-                    thoriumPlayer.shieldHealth++;
-                    player.statLife++;
-                }
-                timer = 0;
-            }
-
             player.GetModPlayer<FargoPlayer>().AddPet("Coin Bag Pet", hideVisual, thorium.BuffType("DrachmaBuff"), thorium.ProjectileType("DrachmaBag"));
         }
 

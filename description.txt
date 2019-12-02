@@ -15,4 +15,25 @@ NEW UPDATE - v 1.1.1
 
 -All hard mode enemies spawning early have half max HP
 
+
+
+Thorium
+-Removed Copper Buckler effect from Copper Enchantment
+-Removed Tungsten Bulwark effect from Tungsten Enchantment
+-Removed Tin Buckler effect from Tin Enchantment
+-Removed Silver Bulwark effect from Silver Enchantment
+-Removed Platinum Aegis effect from Platinum Enchantment
+-Removed Lead Shield effect from Lead Enchantment
+-Removed Iron Shield effect from Iron Enchantment
+-Removed Gold Aegis effect from Gold Enchantment
+-Removed Bee Booties from Bee Enchantment, added Venus Magnum
+-Added Bee Booties to Bulb Enchantment
+-Removed Night Shade Petal from Bulb Enchantment
+-Added Night Shade Petal and removed Danger Devastator to Danger Enchantment
+-Removed regen from Danger
+-Removed Bulb Enchantment from Chlorophyte Enchantment
+-Added Chlorophyte Saber to Chlorophyte
+-Added Bulb to Life Bloom Enchantment
+-Removed Eye of Odin from Life Bloom
+
 -See the full changelog on the wiki
