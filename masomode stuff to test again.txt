@@ -96,6 +96,9 @@ added mutant trophy
 pickaxes and other tools wont trigger pumpkings cape bonus attacks
 clowns drop 1-10 happy grenades on kill
 truffle worm EX recipe is now for 3 worms
+boreal ench uses fixed velocity
+mutant antibodies works with truffle worm EX
+updated force of wood to timber in soul toggles
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
