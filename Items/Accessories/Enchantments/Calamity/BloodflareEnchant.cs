@@ -61,7 +61,7 @@ Effects of the Core of the Blood God and Affliction");
             {
                 if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
                 {
-                    tooltipLine.overrideColor = new Color?(new Color(0, 255, 0));
+                    tooltipLine.overrideColor = new Color(191, 68, 59);
                 }
             }
         }

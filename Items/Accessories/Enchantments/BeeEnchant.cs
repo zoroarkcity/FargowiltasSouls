@@ -26,11 +26,6 @@ Mega Bees ignore most enemy defense, immune frames, and last twice as long
 50%概率使友善的蜜蜂成为巨型蜜蜂
 巨型蜜蜂忽略大多数敌人的防御, 无敌帧, 并持续双倍的时间
 ";
-            if(thorium != null)
-            {
-                tooltip += "Effects of Bee Booties\n";
-                tooltip_ch += "拥有蜜蜂靴的效果\n";
-            }
 
             tooltip += "Summons a pet Baby Hornet";
             tooltip_ch += "召唤一只小黄蜂";
@@ -64,19 +59,6 @@ Mega Bees ignore most enemy defense, immune frames, and last twice as long
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<FargoPlayer>().BeeEffect(hideVisual);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded) Thorium(player, hideVisual);
-        }
-
-        private void Thorium(Player player, bool hideVisual)
-        {
-            //bee booties
-            if (SoulConfig.Instance.GetValue("Bee Booties"))
-            {
-                thorium.GetItem("BeeBoots").UpdateAccessory(player, hideVisual);
-                player.moveSpeed -= 0.15f;
-                player.maxRunSpeed -= 1f;
-            }
         }
 
         public override void AddRecipes()
@@ -89,11 +71,11 @@ Mega Bees ignore most enemy defense, immune frames, and last twice as long
             
             if(Fargowiltas.Instance.ThoriumLoaded)
             {      
-                recipe.AddIngredient(thorium.ItemType("BeeBoots"));
                 recipe.AddIngredient(ItemID.BeeGun);
                 recipe.AddIngredient(thorium.ItemType("HoneyRecorder"));
                 recipe.AddIngredient(ItemID.WaspGun);
                 recipe.AddIngredient(ItemID.NettleBurst);
+                recipe.AddIngredient(ItemID.VenusMagnum);
             }
             else
             {

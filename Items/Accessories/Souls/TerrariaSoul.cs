@@ -29,9 +29,9 @@ Throw a smoke bomb to teleport to it and gain the First Strike Buff
 Attacks may spawn lightning, flower petals, spectre orbs, a Dungeon Guardian, snowballs, spears, or buff boosters
 Attacks cause increased life regen, shadow dodge, Flameburst shots, meteor showers, and reduced enemy knockback immunity
 Critical chance is set to 25%, Crit to increase it by 5%, At 100% every 10th attack gains 4% life steal
-Getting hit drops your crit back down, inflicts Blood Geyser, releases a spore explosion and reflects damage
-Projectiles may split or shatter, item and projectile size increased, attract items from further away
-Nearby enemies are ignited, You leave behind a trail of fire and rainbows when you walk
+Getting hit drops your crit back down, trigger a blood geyser, releases a spore explosion and reflects damage
+Projectiles may split or shatter and spawn stars, item and projectile size increased, attract items from further away
+Nearby enemies are ignited, You leave behind a trail of fire
 Grants Crimson regen, immunity to fire, fall damage, and lava, and doubled herb collection
 Grants 50% chance for Mega Bees, 15% chance for minion crits, 20% chance for bonus loot
 Critters have increased defense and their souls will aid you, You may summon temporary minions

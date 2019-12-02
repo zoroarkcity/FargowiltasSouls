@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.SoA
 {
@@ -36,6 +38,17 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.SoA
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.rare = 1;
             item.value = 50000;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(129, 19, 29);
+                }
+            }
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

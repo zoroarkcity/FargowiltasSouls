@@ -4,6 +4,8 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using CalamityMod.CalPlayer;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -45,6 +47,17 @@ Summons a Siren pet");
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.rare = 13;
             item.value = 1000000;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(35, 95, 161);
+                }
+            }
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

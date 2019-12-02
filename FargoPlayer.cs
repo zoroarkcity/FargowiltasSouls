@@ -126,8 +126,9 @@ namespace FargowiltasSouls
         public bool BorealEnchant;
         public bool WoodEnchant;
         public bool ShadeEnchant;
-        private int pearlCounter = 0;
+        private int shadeCD = 0;
         public bool SuperBleed;
+        public bool PearlEnchant;
 
         public bool CosmoForce;
         public bool EarthForce;
@@ -517,6 +518,7 @@ namespace FargowiltasSouls
             WoodEnchant = false;
             ShadeEnchant = false;
             SuperBleed = false;
+            PearlEnchant = false;
 
             CosmoForce = false;
             EarthForce = false;
@@ -1151,6 +1153,26 @@ namespace FargowiltasSouls
                 {
                     smokeBombCD--;
                 }
+            }
+
+            if (((ShadeEnchant && player.ZoneCrimson) || WoodForce) && shadeCD == 0)
+            {
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC npc = Main.npc[i];
+
+                    if (!npc.friendly && Vector2.Distance(player.Center, npc.Center) <= 50)
+                    {
+                        shadeCD = 300;
+                        player.Hurt(PlayerDeathReason.ByNPC(npc.type), 0, 0);
+                        break;
+                    }
+                }
+            }
+
+            if (shadeCD != 0)
+            {
+                shadeCD--;
             }
 
             if (Atrophied)
@@ -2150,6 +2172,42 @@ namespace FargowiltasSouls
                 }
             }
 
+            if (PearlEnchant && proj.type != ProjectileID.HallowStar)
+            {
+                //holy stars
+                Main.PlaySound(SoundID.Item10, proj.position);
+                for (int num479 = 0; num479 < 10; num479++)
+                {
+                    Dust.NewDust(proj.position, proj.width, proj.height, 58, proj.velocity.X * 0.1f, proj.velocity.Y * 0.1f, 150, default(Color), 1.2f);
+                }
+                for (int num480 = 0; num480 < 3; num480++)
+                {
+                    Gore.NewGore(proj.position, new Vector2(proj.velocity.X * 0.05f, proj.velocity.Y * 0.05f), Main.rand.Next(16, 18), 1f);
+                }
+                float x = proj.position.X + (float)Main.rand.Next(-400, 400);
+                float y = proj.position.Y - (float)Main.rand.Next(600, 900);
+                Vector2 vector12 = new Vector2(x, y);
+                float num483 = proj.position.X + (float)(proj.width / 2) - vector12.X;
+                float num484 = proj.position.Y + (float)(proj.height / 2) - vector12.Y;
+                int num485 = 22;
+                float num486 = (float)Math.Sqrt((double)(num483 * num483 + num484 * num484));
+                num486 = (float)num485 / num486;
+                num483 *= num486;
+                num484 *= num486;
+                int num487 = proj.damage;
+                int num488 = Projectile.NewProjectile(x, y, num483, num484, 92, num487, proj.knockBack, proj.owner, 0f, 0f);
+                Main.projectile[num488].ai[1] = proj.position.Y;
+                //Main.projectile[num488].ai[0] = 1f;
+
+                //Main.projectile[num488].localNPCHitCooldown = 2;
+                //Main.projectile[num488].usesLocalNPCImmunity = true;
+
+                if (player.ZoneHoly)
+                {
+                    Main.projectile[num488].GetGlobalProjectile<FargoGlobalProjectile>().rainbowTrail = true;
+                }
+            }
+
             if (CyclonicFin)
             {
                 target.AddBuff(mod.BuffType("OceanicMaul"), 900);
@@ -2859,13 +2917,11 @@ namespace FargowiltasSouls
 
             if (ShadeEnchant && SoulConfig.Instance.GetValue("Blood Geyser On Hit"))
             {
-                if (player.ZoneCrimson || WoodForce)
-                    player.AddBuff(mod.BuffType("SuperBleed"), 300);
                 for (int i = 0; i < 10; i++)
                     Projectile.NewProjectile(player.Center.X, player.Center.Y - 40, Main.rand.Next(-5, 6), Main.rand.Next(-6, -2), mod.ProjectileType("SuperBlood"), 5, 0f, Main.myPlayer);
             }
 
-            if(TinEnchant)
+            if(TinEnchant && shadeCD != 300)
             {
                 if(Eternity)
                 {
@@ -4518,24 +4574,6 @@ namespace FargowiltasSouls
                     }
 
                     Projectile.NewProjectile(mouse.X, mouse.Y - 10, 0f, 0f, mod.ProjectileType("PalmTreeSentry"), WoodForce ? 45 : 15, 0f, player.whoAmI);
-                }
-            }
-        }
-
-        public void PearlEffect()
-        {
-            pearlCounter++;
-
-            if (pearlCounter >= 4)
-            {
-                pearlCounter = 0;
-                if (SoulConfig.Instance.GetValue("Pearlwood Rainbow") && player.velocity.Length() > 1 && player.whoAmI == Main.myPlayer)
-                {
-                    int direction = player.velocity.X > 0 ? 1 : -1;
-                    int p = Projectile.NewProjectile(player.Center, player.velocity, ProjectileID.RainbowBack, 30, 0, Main.myPlayer);
-                    Projectile proj = Main.projectile[p];
-                    proj.GetGlobalProjectile<FargoGlobalProjectile>().Rainbow = true;
-                    proj.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
                 }
             }
         }

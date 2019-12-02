@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using SacredTools;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.SoA
 {
@@ -37,6 +38,17 @@ Summons a Stellar Guardian behind you that attacks enemies");
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.rare = 11;
             item.value = 350000;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(108, 116, 204);
+                }
+            }
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

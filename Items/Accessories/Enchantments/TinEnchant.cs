@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 using System.Collections.Generic;
 
@@ -27,12 +26,6 @@ Getting hit drops your crit back down";
 暴击率设为4%
 每次暴击增加4%
 被击中降低暴击率";
-
-            if(thorium != null)
-            {
-                tooltip += "\nEffects of Tin Buckler";
-                tooltip_ch += "\n拥有锡制圆盾的效果";
-            }
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "锡魔石");
@@ -63,29 +56,6 @@ Getting hit drops your crit back down";
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<FargoPlayer>().TinEffect();
-
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
-        }
-
-        private void Thorium(Player player)
-        {
-            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            timer++;
-            if (timer >= 30)
-            {
-                int num = 11;
-                if (thoriumPlayer.shieldHealth <= num)
-                {
-                    thoriumPlayer.shieldHealthTimerStop = true;
-                }
-                if (thoriumPlayer.shieldHealth < num)
-                {
-                    CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(51, 255, 255), 1, false, true);
-                    thoriumPlayer.shieldHealth++;
-                    player.statLife++;
-                }
-                timer = 0;
-            }
         }
 
         public override void AddRecipes()

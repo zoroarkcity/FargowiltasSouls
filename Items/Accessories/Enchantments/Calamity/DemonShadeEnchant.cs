@@ -56,7 +56,7 @@ Summons a Levi pet");
             {
                 if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
                 {
-                    tooltipLine.overrideColor = new Color?(new Color(255, 0, 255));
+                    tooltipLine.overrideColor = new Color(173, 52, 70);
                 }
             }
         }

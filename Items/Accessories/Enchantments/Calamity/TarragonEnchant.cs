@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria.Localization;
-using CalamityMod.CalPlayer;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -59,7 +58,7 @@ Debuff状态下, 增加10%盗贼伤害
             {
                 if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
                 {
-                    tooltipLine.overrideColor = new Color?(new Color(0, 255, 200));
+                    tooltipLine.overrideColor = new Color(169, 106, 52);
                 }
             }
         }

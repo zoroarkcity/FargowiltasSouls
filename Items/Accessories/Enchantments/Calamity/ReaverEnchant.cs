@@ -2,7 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using CalamityMod.CalPlayer;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -47,6 +48,17 @@ Effects of Fabled Tortoise Shell");
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.rare = 7;
             item.value = 400000;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(54, 164, 66);
+                }
+            }
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

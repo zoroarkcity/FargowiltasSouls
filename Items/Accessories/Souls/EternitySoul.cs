@@ -21,7 +21,6 @@ namespace FargowiltasSouls.Items.Accessories.Souls
         public bool jumped;
         public bool canHover;
         public int hoverTimer;
-        //public int jumpTimer;
 
         public static int tooltipIndex = 0;
         public static int Counter = 10;
@@ -68,9 +67,9 @@ namespace FargowiltasSouls.Items.Accessories.Souls
     "Attacks cause meteor showers",
     "Projectiles may split",
     "Projectiles may shatter",
+    "Projectiles spawn stars",
     "Item and projectile size increased",
     "You leave a trail of fire",
-    "You leave a trail of rainbows",
     "Nearby enemies are ignited",
     "Minions occasionally spew scythes",
     "You may spawn temporary minions",
@@ -89,9 +88,10 @@ namespace FargowiltasSouls.Items.Accessories.Souls
     "Solar shield allows you to dash",
     "Dashing into solid blocks teleports you through them",
     "Throw a smoke bomb to teleport to it and gain the first strike buff",
+    "Enemies getting too close will trigger all on hit effects",
     "Getting hit reflects damage",
     "Getting hit releases a spore explosion",
-    "Getting hit inflicts Blood Geyser",
+    "Getting hit triggers a blood geyser",
     "Getting hit may squeak",
     "Getting hit causes you to erupt into spiky balls",
     "Getting hit causes you to erupt into Ancient Visions",
