@@ -346,10 +346,6 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.PigronCorruption:
                     case NPCID.PigronCrimson:
                     case NPCID.PigronHallow:
-                        if (!Main.hardMode)
-                            npc.damage /= 2;
-                        break;
-
                     case NPCID.RedDevil:
                     case NPCID.AngryNimbus:
                     case NPCID.Mimic:
@@ -361,7 +357,10 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.ZombieMushroomHat:
                     case NPCID.Medusa:
                         if (!Main.hardMode)
+                        {
+                            npc.lifeMax /= 2;
                             npc.defense = 0;
+                        }
                         break;
 
                     #region maso bosses
@@ -9999,7 +9998,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.MoonLordCore:
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("GalacticGlobe"));
-                        npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("LunarCrystal"), Main.rand.Next(10) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("LunarCrystal"), Main.rand.Next(10) + 5);
                         break;
 
                     case NPCID.DungeonGuardian:

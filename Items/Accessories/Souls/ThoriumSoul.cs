@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             DisplayName.SetDefault("Soul of Yggdrasil");
 
             Tooltip.SetDefault(@"'The true might of the 9 realms is yours!'
-All armor bonuses from Living Wood, Life Bloom, Yew Wood, and Tide Hunter
+All armor bonuses from Living Wood, Bulb, Life Bloom, Yew Wood, and Tide Hunter
 All armor bonuses from Icy, Cryo Magus, and Whispering
 All armor bonuses from Sacred, Warlock, and Biotech
 All armor bonuses from Cyber Punk and Maestro
@@ -30,7 +30,7 @@ All armor bonuses from Jester, Thorium, and Terrarium
 All armor bonuses from Malignant, Folv, White Dwarf, and Celestial
 All armor bonuses from Spirit Trapper, Dragon, Dread, Flesh, and Demon Blood
 All armor bonuses from Tide Turner, Assassin, Pyromancer, and Dream Weaver 
-Effects of Flawless Chrysalis, Bubble Magnet, and Agnor's Bowl
+Effects of Flawless Chrysalis, Bee Booties, Bubble Magnet, and Agnor's Bowl
 Effects of Ice Bound Strider Hide, Ring of Unity, and Mix Tape 
 Effects of Eye of the Storm, Champion's Rebuttal, and Incandescent Spark
 Effects of the Greedy Magnet, Abyssal Shell, and Astro-Beetle Husk

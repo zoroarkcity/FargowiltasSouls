@@ -44,12 +44,6 @@ Increases flight time by 50%
 甲虫保护你免受伤害
 增加50%飞行时间";
 
-            if (thorium != null)
-            {
-                tooltip += "Effects of Bee Booties\n";
-                tooltip_ch += "拥有蜜蜂靴和蛛网音箱的效果\n";
-            }
-
             tooltip += "Summons several pets";
             tooltip_ch += "召唤数个宠物";
 
@@ -88,22 +82,7 @@ Increases flight time by 50%
             player.thorns = 1f;
             player.turtleThorns = true;
             //needle spray
-            modPlayer.CactusEffect();
-
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player, hideVisual);           
-        }
-
-        private void Thorium(Player player, bool hideVisual)
-        {
-            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            //bee booties
-            if (SoulConfig.Instance.GetValue("Bee Booties"))
-            {
-                thorium.GetItem("BeeBoots").UpdateAccessory(player, hideVisual);
-                player.moveSpeed -= 0.15f;
-                player.maxRunSpeed -= 1f;
-            }
+            modPlayer.CactusEffect();         
         }
 
         public override void AddRecipes()

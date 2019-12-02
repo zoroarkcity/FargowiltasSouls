@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             DisplayName.SetDefault("Durasteel Enchantment");
             Tooltip.SetDefault(
 @"'Masterfully forged by the Blacksmith'
-Reduces damage taken by 12%
+50% damage reduction at Full HP
 Grants immunity to shambler chain-balls
 Effects of the Incandescent Spark, Spiked Bracers, and Greedy Magnet");
             DisplayName.AddTranslation(GameCulture.Chinese, "耐刚魔石");
@@ -47,7 +47,10 @@ Effects of the Incandescent Spark, Spiked Bracers, and Greedy Magnet");
 
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
             //durasteel effect
-            player.endurance += .12f;
+            if (player.statLife == player.statLifeMax2)
+            {
+                player.endurance += .5f;
+            }
 
             if (SoulConfig.Instance.GetValue("Incandescent Spark"))
             {

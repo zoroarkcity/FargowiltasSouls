@@ -11,7 +11,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
     public class IronEnchant : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        public int timer;
 
         public override void SetStaticDefaults()
         {
@@ -28,12 +27,6 @@ You attract items from a larger range";
 @"允许使用者向敌人冲刺
 右键用盾牌防御
 拾取物品半径增大";
-
-            if (thorium != null)
-            {
-                tooltip += "\nEffects of Iron Shield";
-                tooltip_ch += "\n拥有铁盾的效果";
-            }
 
             Tooltip.SetDefault(tooltip); 
             DisplayName.AddTranslation(GameCulture.Chinese, "铁魔石");
@@ -74,30 +67,6 @@ You attract items from a larger range";
             }
             //EoC Shield
             player.dash = 2;
-
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
-        }
-
-        private void Thorium(Player player)
-        {
-            ThoriumPlayer thoriumPlayer = (ThoriumPlayer)player.GetModPlayer(thorium, "ThoriumPlayer");
-            //thorium shield
-            timer++;
-            if (timer >= 30)
-            {
-                int num = 18;
-                if (thoriumPlayer.shieldHealth <= num)
-                {
-                    thoriumPlayer.shieldHealthTimerStop = true;
-                }
-                if (thoriumPlayer.shieldHealth < num)
-                {
-                    CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(51, 255, 255), 1, false, true);
-                    thoriumPlayer.shieldHealth++;
-                    player.statLife++;
-                }
-                timer = 0;
-            }
         }
 
         public override void AddRecipes()

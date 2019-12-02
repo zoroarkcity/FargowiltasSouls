@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 using System.Collections.Generic;
 
@@ -27,12 +26,6 @@ Attacks that cause Wet cannot proc the lightning";
 攻击有概率用闪电打击敌人
 如果敌人处于潮湿状态,增加概率和伤害
 造成潮湿的攻击不能触发闪电";
-
-            if(thorium != null)
-            {
-                tooltip += "\nEffects of the Copper Buckler";
-                tooltip_ch += "\n拥有铜制圆盾的效果";
-            }
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "铜魔石");
@@ -63,30 +56,6 @@ Attacks that cause Wet cannot proc the lightning";
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<FargoPlayer>().CopperEnchant = true;
-
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
-        }
-
-        private void Thorium(Player player)
-        {
-            ThoriumPlayer thoriumPlayer = (ThoriumPlayer)player.GetModPlayer(thorium, "ThoriumPlayer");
-            //copper shield
-            timer++;
-            if (timer >= 30)
-            {
-                int num = 10;
-                if (thoriumPlayer.shieldHealth <= num)
-                {
-                    thoriumPlayer.shieldHealthTimerStop = true;
-                }
-                if (thoriumPlayer.shieldHealth < num)
-                {
-                    CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(51, 255, 255), 1, false, true);
-                    thoriumPlayer.shieldHealth++;
-                    player.statLife++;
-                }
-                timer = 0;
-            }
         }
 
         public override void AddRecipes()

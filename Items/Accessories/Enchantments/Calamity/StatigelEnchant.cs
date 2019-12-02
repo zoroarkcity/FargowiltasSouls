@@ -2,8 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using CalamityMod.Buffs.Summon;
-using CalamityMod.Projectiles.Summon;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -41,6 +41,17 @@ Effects of Counter Scarf and Fungal Symbiote");
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.rare = 5;
             item.value = 200000;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(181, 0, 156);
+                }
+            }
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

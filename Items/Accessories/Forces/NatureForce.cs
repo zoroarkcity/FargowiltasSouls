@@ -63,9 +63,7 @@ Summons several pets";
                 tooltip +=
 @"Attack speed is increased by 5% at every 25% segment of life
 Enemies that you set on fire or singe will take additional damage over time
-Dealing damage will release a poisoning spore explosion
 Attacks may inflict Fungal Growth
-Effects of Night Shade Petal
 Effects of Flower Boots, Spring Steps and Slag Stompers
 Summons several pets";
 
@@ -206,15 +204,11 @@ Summons several pets";
                     timer = 0;
                 }
             }
-            //bulb 
-            modPlayer.BulbEnchant = true;
 
             if (modPlayer.ThoriumSoul) return;
 
             //magma
             thoriumPlayer.magmaSet = true;
-            //night shade petal
-            thoriumPlayer.nightshadeBoost = true;
         }
 
         public override void AddRecipes()

@@ -26,12 +26,6 @@ Lead Poisoning deals damage over time and spreads to nearby enemies";
 攻击概率使敌人铅中毒
 铅中毒随时间造成伤害,并传播给附近敌人";
 
-            if(thorium != null)
-            {
-                tooltip += "\nEffects of Lead Shield";
-                tooltip_ch += "\n拥有铅盾的效果";
-            }
-
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "铅魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
@@ -61,29 +55,6 @@ Lead Poisoning deals damage over time and spreads to nearby enemies";
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<FargoPlayer>().LeadEnchant = true;
-
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
-        }
-
-        private void Thorium(Player player)
-        {
-            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            timer++;
-            if (timer >= 30)
-            {
-                int num = 13;
-                if (thoriumPlayer.shieldHealth <= num)
-                {
-                    thoriumPlayer.shieldHealthTimerStop = true;
-                }
-                if (thoriumPlayer.shieldHealth < num)
-                {
-                    CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(51, 255, 255), 1, false, true);
-                    thoriumPlayer.shieldHealth++;
-                    player.statLife++;
-                }
-                timer = 0;
-            }
         }
 
         public override void AddRecipes()

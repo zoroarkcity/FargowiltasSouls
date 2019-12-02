@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -38,6 +40,17 @@ Effects of the Astral Arcanum and Hide of Astrum Deus");
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.rare = 7;
             item.value = 1000000;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(123, 99, 130);
+                }
+            }
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

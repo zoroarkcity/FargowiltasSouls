@@ -22,7 +22,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 @"'You are one with nature'
 Attacks have a 33% chance to heal you lightly
 Summons a living wood sapling and its attacks will home in on enemies
-Effects of Flawless Chrysalis and Guide to Plant Fiber Cordage");
+Your damage has a chance to poison hit enemies with a spore cloud
+Effects of Bee Booties, Petal Shield, Flawless Chrysalis, and Guide to Plant Fiber Cordage");
             DisplayName.AddTranslation(GameCulture.Chinese, "树人魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'大自然的一员'
@@ -58,6 +59,19 @@ Effects of Flawless Chrysalis and Guide to Plant Fiber Cordage");
             modPlayer.AddMinion("Sapling Minion", thorium.ProjectileType("MinionSapling"), 25, 2f);
             //vine rope thing
             player.cordage = true;
+
+            //bulb set bonus
+            modPlayer.BulbEnchant = true;
+            //petal shield
+            thorium.GetItem("PetalShield").UpdateAccessory(player, hideVisual);
+            player.statDefense -= 2;
+            //bee booties
+            if (SoulConfig.Instance.GetValue("Bee Booties"))
+            {
+                thorium.GetItem("BeeBoots").UpdateAccessory(player, hideVisual);
+                player.moveSpeed -= 0.15f;
+                player.maxRunSpeed -= 1f;
+            }
         }
         
         private readonly string[] items =
@@ -66,8 +80,7 @@ Effects of Flawless Chrysalis and Guide to Plant Fiber Cordage");
             "HiveMind",
             "ButterflyStaff",
             "HoneyBlade",
-            "MushymenStaff",
-            "OdinsEye"
+            "MushymenStaff"
         };
 
         public override void AddRecipes()
@@ -80,6 +93,7 @@ Effects of Flawless Chrysalis and Guide to Plant Fiber Cordage");
             recipe.AddIngredient(thorium.ItemType("LifeBloomMail"));
             recipe.AddIngredient(thorium.ItemType("LifeBloomLeggings"));
             recipe.AddIngredient(null, "LivingWoodEnchant");
+            recipe.AddIngredient(null, "BulbEnchant");
 
             foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 

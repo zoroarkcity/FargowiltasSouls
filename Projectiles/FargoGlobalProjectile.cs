@@ -35,6 +35,10 @@ namespace FargowiltasSouls.Projectiles
         private bool tungstenProjectile = false;
         private bool tikiMinion = false;
         private int tikiTimer = 300;
+        public bool rainbowTrail = false;
+        private int rainbowCounter = 0;
+        public bool Rainbow = false;
+
 
         public bool Rotate = false;
         public int RotateDist = 32;
@@ -45,7 +49,7 @@ namespace FargowiltasSouls.Projectiles
         public int TimeFrozen = 0;
         public bool TimeFreezeImmune;
 
-        public bool Rainbow = false;
+        
 
         public bool masobool;
 
@@ -170,7 +174,7 @@ namespace FargowiltasSouls.Projectiles
                         player.ClearBuff(mod.BuffType("FirstStrike"));
                     }
 
-                    if (!townNPCProj && !projectile.trap && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && modPlayer.TungstenEnchant && projectile.friendly && SoulConfig.Instance.GetValue("Tungsten Effect", false))
+                    if (modPlayer.TungstenEnchant && !townNPCProj && projectile.damage != 0 && !projectile.trap && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && projectile.friendly && SoulConfig.Instance.GetValue("Tungsten Effect", false))
                     {
                         projectile.position = projectile.Center;
                         projectile.scale *= 2f;
@@ -298,6 +302,29 @@ namespace FargowiltasSouls.Projectiles
                 if (modPlayer.StardustEnchant && projectile.type == ProjectileID.StardustGuardian)
                 {
                     projectile.localAI[0] = 0f;
+                }
+
+                if (rainbowTrail)
+                {
+                    rainbowCounter++;
+
+                    if (rainbowCounter >= 5)
+                    {
+                        //rainbowCounter = 0;
+                        if (player.whoAmI == Main.myPlayer)
+                        {
+                            int direction = projectile.velocity.X > 0 ? 1 : -1;
+                            int p = Projectile.NewProjectile(projectile.Center, projectile.velocity, ProjectileID.RainbowBack, 30, 0, Main.myPlayer);
+                            Projectile proj = Main.projectile[p];
+                            proj.GetGlobalProjectile<FargoGlobalProjectile>().Rainbow = true;
+                            proj.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+
+                            p = Projectile.NewProjectile(projectile.Center + (projectile.velocity / 2), projectile.velocity, ProjectileID.RainbowBack, 30, 0, Main.myPlayer);
+                            proj = Main.projectile[p];
+                            proj.GetGlobalProjectile<FargoGlobalProjectile>().Rainbow = true;
+                            proj.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                        }
+                    }
                 }
 
 
@@ -439,12 +466,10 @@ namespace FargowiltasSouls.Projectiles
                 if (counter >= 5)
                     projectile.velocity = Vector2.Zero;
 
-                int deathTimer = 30;
+                int deathTimer = 15;
 
                 if (projectile.hostile)
                     deathTimer = 60;
-                else if(p.ZoneHoly || p.GetModPlayer<FargoPlayer>().WoodForce)
-                    deathTimer = 90;
 
                 if (counter >= deathTimer)
                     projectile.Kill();
@@ -1194,6 +1219,42 @@ namespace FargowiltasSouls.Projectiles
                     NetMessage.SendData(65, -1, -1, null, 0, player.whoAmI, teleportPos.X, teleportPos.Y, 1);
 
                     player.AddBuff(mod.BuffType("FirstStrike"), 60);
+                }
+            }
+
+            if (modPlayer.PearlEnchant && projectile.type != ProjectileID.HallowStar)
+            {
+                //holy stars
+                Main.PlaySound(SoundID.Item10, projectile.position);
+                for (int num479 = 0; num479 < 10; num479++)
+                {
+                    Dust.NewDust(projectile.position, projectile.width, projectile.height, 58, projectile.velocity.X * 0.1f, projectile.velocity.Y * 0.1f, 150, default(Color), 1.2f);
+                }
+                for (int num480 = 0; num480 < 3; num480++)
+                {
+                    Gore.NewGore(projectile.position, new Vector2(projectile.velocity.X * 0.05f, projectile.velocity.Y * 0.05f), Main.rand.Next(16, 18), 1f);
+                }
+                float x = projectile.position.X + (float)Main.rand.Next(-400, 400);
+                float y = projectile.position.Y - (float)Main.rand.Next(600, 900);
+                Vector2 vector12 = new Vector2(x, y);
+                float num483 = projectile.position.X + (float)(projectile.width / 2) - vector12.X;
+                float num484 = projectile.position.Y + (float)(projectile.height / 2) - vector12.Y;
+                int num485 = 22;
+                float num486 = (float)Math.Sqrt((double)(num483 * num483 + num484 * num484));
+                num486 = (float)num485 / num486;
+                num483 *= num486;
+                num484 *= num486;
+                int num487 = projectile.damage;
+                int num488 = Projectile.NewProjectile(x, y, num483, num484, 92, num487, projectile.knockBack, projectile.owner, 0f, 0f);
+                Main.projectile[num488].ai[1] = projectile.position.Y;
+                //Main.projectile[num488].ai[0] = 1f;
+
+                //Main.projectile[num488].localNPCHitCooldown = 2;
+                //Main.projectile[num488].usesLocalNPCImmunity = true;
+
+                if (player.ZoneHoly)
+                {
+                    Main.projectile[num488].GetGlobalProjectile<FargoGlobalProjectile>().rainbowTrail = true;
                 }
             }
 

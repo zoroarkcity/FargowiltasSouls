@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -40,6 +42,17 @@ Effects of Deep Diver, The Transformer, and Luxor's Gift");
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.rare = 2;
             item.value = 80000;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(67, 92, 191);
+                }
+            }
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

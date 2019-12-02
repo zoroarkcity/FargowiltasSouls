@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             DisplayName.SetDefault("Steel Enchantment");
             Tooltip.SetDefault(
 @"'Expertly forged by the Blacksmith'
-33% damage reduction at Full HP
+15% damage reduction at Full HP
 Effects of Spiked Bracers");
             DisplayName.AddTranslation(GameCulture.Chinese, "钢魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -48,7 +48,7 @@ Effects of Spiked Bracers");
             //steel effect
             if (player.statLife == player.statLifeMax2)
             {
-                player.endurance += .33f;
+                player.endurance += .15f;
             }
             
             //spiked bracers

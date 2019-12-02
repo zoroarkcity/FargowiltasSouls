@@ -21,8 +21,8 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
             Tooltip.SetDefault(
 @"'A blazing heat, the mark of Surtr...'
 All armor bonuses from Sandstone, Danger, and Feral Fur
-All armor bonuses from Living Wood and Life Bloom
-Effects of Flawless Chrysalis and Guide to Plant Fiber Cordage");
+All armor bonuses from Living Wood, Bulb, and Life Bloom
+Effects of Night Shade Petal, Flawless Chrysalis, Bee Booties, and Guide to Plant Fiber Cordage");
             DisplayName.AddTranslation(GameCulture.Chinese, "穆斯贝尔海姆之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'炽热之火, 史尔特尔的标志...'
@@ -61,6 +61,16 @@ Effects of Flawless Chrysalis and Guide to Plant Fiber Cordage");
             modPlayer.LivingWoodEnchant = true;
             modPlayer.AddMinion("Sapling Minion", thorium.ProjectileType("MinionSapling"), 25, 2f);
 
+            //bulb set bonus
+            modPlayer.BulbEnchant = true;
+            //bee booties
+            if (SoulConfig.Instance.GetValue("Bee Booties"))
+            {
+                thorium.GetItem("BeeBoots").UpdateAccessory(player, hideVisual);
+                player.moveSpeed -= 0.15f;
+                player.maxRunSpeed -= 1f;
+            }
+
             if (modPlayer.ThoriumSoul) return;
 
             //sandstone
@@ -71,6 +81,8 @@ Effects of Flawless Chrysalis and Guide to Plant Fiber Cordage");
             player.buffImmune[BuffID.OnFire] = true;
             player.buffImmune[BuffID.Bleeding] = true;
             player.buffImmune[BuffID.Venom] = true;
+            //night shade petal
+            thoriumPlayer.nightshadeBoost = true;
             //feral fur
             modPlayer.FeralFurEnchant = true;
             //vine rope thing

@@ -63,7 +63,7 @@ Summons an Akato and Fox pet");
             {
                 if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
                 {
-                    tooltipLine.overrideColor = new Color?(new Color(108, 45, 199));
+                    tooltipLine.overrideColor = new Color(176, 112, 70);
                 }
             }
         }

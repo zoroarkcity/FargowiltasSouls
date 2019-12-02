@@ -54,7 +54,7 @@ Effects of Heart of the Elements and The Sponge");
             {
                 if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
                 {
-                    tooltipLine.overrideColor = new Color?(new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB));
+                    tooltipLine.overrideColor = new Color(217, 142, 67);
                 }
             }
         }
