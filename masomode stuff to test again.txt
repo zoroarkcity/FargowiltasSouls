@@ -99,6 +99,7 @@ truffle worm EX recipe is now for 3 worms
 boreal ench uses fixed velocity
 mutant antibodies works with truffle worm EX
 updated force of wood to timber in soul toggles
+mutant skips p1 after the first time (TEST IN MP)
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
