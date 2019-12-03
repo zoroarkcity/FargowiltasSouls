@@ -1008,7 +1008,7 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case 12:
-                    KillPet(projectile, player, thorium.BuffType("SnowyOwlBuff"), modPlayer.IcyEnchant, "Owl Pet");
+                    KillPet(projectile, player, thorium.BuffType("SnowyOwlBuff"), modPlayer.CryoEnchant, "Owl Pet");
                     break;
 
                 case 13:
