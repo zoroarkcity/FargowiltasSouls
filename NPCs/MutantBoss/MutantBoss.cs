@@ -877,7 +877,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (npc.ai[3] == 0)
                     {
                         npc.ai[3] = 1;
-                        if (Main.netMode != 1)
+                        if (npc.ai[2] < 5 && Main.netMode != 1)
                             Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center + player.velocity * 30f), mod.ProjectileType("MutantDeathrayAim"), 0, 0f, Main.myPlayer, 30f, npc.whoAmI);
                     }
                     if (++npc.ai[1] > 30)
@@ -885,6 +885,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.netUpdate = true;
                         npc.ai[0]++;
                         npc.ai[1] = 0;
+                        npc.ai[3] = 0;
                         if (++npc.ai[2] > 5)
                         {
                             npc.ai[0]++; //go to next attack after dashes
@@ -1129,7 +1130,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     else if (npc.ai[1] == 1 && npc.ai[2] < 5 && Main.netMode != 1)
                     {
                         Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center + player.velocity * 30f), mod.ProjectileType("MutantDeathrayAim"), 0, 0f, Main.myPlayer, 60f, npc.whoAmI);
-                        Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantSpearAim"), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
+                        Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantSpearAim"), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 2);
                     }
                     break;
 
