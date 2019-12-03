@@ -452,8 +452,16 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     else if (npc.ai[1] == 61 && npc.ai[2] < 5 && Main.netMode != 1)
                     {
-                        if (FargoSoulsWorld.skipMutantP1)
+                        if (FargoSoulsWorld.skipMutantP1 >= 5)
                         {
+                            if (FargoSoulsWorld.skipMutantP1 == 5)
+                            {
+                                string text = "Mutant tires of the charade...";
+                                if (Main.netMode == 0)
+                                    Main.NewText(text, Color.LimeGreen);
+                                else if (Main.netMode == 2)
+                                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), Color.LimeGreen);
+                            }
                             npc.ai[0] = 10;
                             npc.netUpdate = true;
                             break;
@@ -764,9 +772,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     else if (npc.ai[1] == 120)
                     {
-                        if (!FargoSoulsWorld.skipMutantP1)
+                        if (FargoSoulsWorld.skipMutantP1 <= 5)
                         {
-                            FargoSoulsWorld.skipMutantP1 = true;
+                            FargoSoulsWorld.skipMutantP1++;
                             if (Main.netMode == 2)
                                 NetMessage.SendData(7);
                         }
