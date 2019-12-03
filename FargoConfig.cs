@@ -178,7 +178,7 @@ namespace FargowiltasSouls
                     SoulConfig.Instance.enchantToggles["Blood Geyser On Hit"] = shadeBlood;
                     SoulConfig.Instance.enchantToggles["Mahogany Hook Speed"] = mahoganyHook;
                     SoulConfig.Instance.enchantToggles["Palmwood Sentry"] = palmSentry;
-                    SoulConfig.Instance.enchantToggles["Pearlwood Rainbow"] = pearlTrail;
+                    SoulConfig.Instance.enchantToggles["Pearlwood Rain"] = pearlTrail;
                     SoulConfig.Instance.enchantToggles["Adamantite Projectile Splitting"] = adamSplit;
                     SoulConfig.Instance.enchantToggles["Cobalt Shards"] = cobaltShards;
                     SoulConfig.Instance.enchantToggles["Mythril Weapon Speed"] = mythSpeed;
@@ -957,7 +957,7 @@ namespace FargowiltasSouls
             enchantToggles.Add("Blood Geyser On Hit", terrmenu.terenchmenu.shadeBlood);
             enchantToggles.Add("Mahogany Hook Speed", terrmenu.terenchmenu.mahoganyHook);
             enchantToggles.Add("Palmwood Sentry", terrmenu.terenchmenu.palmSentry);
-            enchantToggles.Add("Pearlwood Rainbow", terrmenu.terenchmenu.pearlTrail);
+            enchantToggles.Add("Pearlwood Rain", terrmenu.terenchmenu.pearlTrail);
 
             enchantToggles.Add("Adamantite Projectile Splitting", terrmenu.terenchmenu.adamSplit);
             enchantToggles.Add("Cobalt Shards", terrmenu.terenchmenu.cobaltShards);

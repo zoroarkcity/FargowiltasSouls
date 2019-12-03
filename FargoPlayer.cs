@@ -2170,7 +2170,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (PearlEnchant && proj.type != ProjectileID.HallowStar && proj.damage > 0)
+            if (PearlEnchant && SoulConfig.Instance.GetValue("Pearlwood Rain") && proj.type != ProjectileID.HallowStar && proj.damage > 0)
             {
                 //holy stars
                 Main.PlaySound(SoundID.Item10, proj.position);
@@ -2194,13 +2194,14 @@ namespace FargowiltasSouls
                 num484 *= num486;
                 int num487 = proj.damage;
                 int num488 = Projectile.NewProjectile(x, y, num483, num484, 92, num487, proj.knockBack, proj.owner, 0f, 0f);
-                Main.projectile[num488].ai[1] = proj.position.Y;
+                if (num488 != 1000)
+                    Main.projectile[num488].ai[1] = proj.position.Y;
                 //Main.projectile[num488].ai[0] = 1f;
 
                 //Main.projectile[num488].localNPCHitCooldown = 2;
                 //Main.projectile[num488].usesLocalNPCImmunity = true;
 
-                if (player.ZoneHoly)
+                if (player.ZoneHoly || WoodForce)
                 {
                     Main.projectile[num488].GetGlobalProjectile<FargoGlobalProjectile>().rainbowTrail = true;
                 }
@@ -3069,7 +3070,7 @@ namespace FargowiltasSouls
                 damageSource = PlayerDeathReason.ByCustomReason(player.name + " rotted away.");
             }
 
-            if ((GodEater || FlamesoftheUniverse || CurseoftheMoon) && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+            if ((GodEater || FlamesoftheUniverse || CurseoftheMoon || player.HasBuff(mod.BuffType("MutantFang"))) && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
             {
                 damageSource = PlayerDeathReason.ByCustomReason(player.name + " was annihilated by divine wrath.");
             }
@@ -4606,8 +4607,7 @@ namespace FargowiltasSouls
                         Main.projectile[i].ai[0] = 2f; //cut fishing lines
                         Main.projectile[i].netUpdate = true;
 
-                        if (!spawned && Main.projectile[i].wet && Main.projectile[i].velocity.Y == 0f
-                            && FargoSoulsWorld.MasochistMode && !NPC.AnyNPCs(NPCID.DukeFishron)) //should spawn boss
+                        if (!spawned && Main.projectile[i].wet && FargoSoulsWorld.MasochistMode && !NPC.AnyNPCs(NPCID.DukeFishron)) //should spawn boss
                         {
                             spawned = true;
                             if (Main.netMode == 0) //singleplayer
