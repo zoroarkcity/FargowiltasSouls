@@ -3071,7 +3071,7 @@ namespace FargowiltasSouls
                 damageSource = PlayerDeathReason.ByCustomReason(player.name + " rotted away.");
             }
 
-            if ((GodEater || FlamesoftheUniverse || CurseoftheMoon) && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+            if ((GodEater || FlamesoftheUniverse || CurseoftheMoon || player.HasBuff(mod.BuffType("MutantFang"))) && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
             {
                 damageSource = PlayerDeathReason.ByCustomReason(player.name + " was annihilated by divine wrath.");
             }
