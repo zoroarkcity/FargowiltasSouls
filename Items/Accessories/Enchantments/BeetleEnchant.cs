@@ -64,12 +64,6 @@ Increases flight time by 50%";
             recipe.AddIngredient(ItemID.BeetleHelmet);
             recipe.AddRecipeGroup("FargowiltasSouls:AnyBeetle");
             recipe.AddIngredient(ItemID.BeetleLeggings);
-
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(null, "FlightEnchant");
-            }
-
             recipe.AddIngredient(ItemID.BeetleWings);
             recipe.AddIngredient(ItemID.BeeWings);
             recipe.AddIngredient(ItemID.ButterflyWings);
@@ -79,6 +73,7 @@ Increases flight time by 50%";
             {      
                 recipe.AddIngredient(ItemID.GolemFist);
                 recipe.AddIngredient(thorium.ItemType("SolScorchedSlab"));
+                recipe.AddIngredient(ItemID.HeatRay);
             }
               
             recipe.AddTile(TileID.CrystalBall);

@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.NPCs;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -22,7 +23,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 @"'Better than a wizard'
 Critical strikes will generate up to 15 shadow wisps
 Pressing the 'Special Ability' key will unleash every stored shadow wisp towards your cursor's position
-Effects of Demon Tongue
+Effects of Demon Tongue and Dark Effigy
 Summons a Li'l Devil to attack enemies");
             DisplayName.AddTranslation(GameCulture.Chinese, "术士魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -60,14 +61,30 @@ Summons a Li'l Devil to attack enemies");
             //demon tongue
             thoriumPlayer.darkAura = true;
             thoriumPlayer.radiantLifeCost = 2;
+
+            //dark effigy
+            thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
+
+            for (int i = 0; i < 200; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (npc.active && !npc.friendly && (npc.shadowFlame || npc.GetGlobalNPC<ThoriumGlobalNPC>().lightLament) && npc.DistanceSQ(player.Center) < 1000000f)
+                {
+                    thoriumPlayer.effigy++;
+                }
+            }
+            if (thoriumPlayer.effigy > 0)
+            {
+                player.AddBuff(thorium.BuffType("EffigyRegen"), 2, true);
+            }
         }
         
         private readonly string[] items =
         {
             "DemonTongue",
+            "Effigy",
             "Omen",
             "ShadowStaff",
-            "BloodRage",
             "NecroticStaff",
             "DevilStaff"
         };

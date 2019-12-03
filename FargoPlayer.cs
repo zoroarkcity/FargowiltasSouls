@@ -141,7 +141,6 @@ namespace FargowiltasSouls
         public bool WoodForce;
 
         //thorium 
-        public bool IcyEnchant;
         public bool WarlockEnchant;
         public bool SacredEnchant;
         public bool BinderEnchant;
@@ -531,7 +530,6 @@ namespace FargowiltasSouls
             WoodForce = false;
 
             //thorium
-            IcyEnchant = false;
             WarlockEnchant = false;
             SacredEnchant = false;
             BinderEnchant = false;
@@ -2172,7 +2170,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (PearlEnchant && proj.type != ProjectileID.HallowStar)
+            if (PearlEnchant && proj.type != ProjectileID.HallowStar && proj.damage > 0)
             {
                 //holy stars
                 Main.PlaySound(SoundID.Item10, proj.position);
@@ -3729,9 +3727,7 @@ namespace FargowiltasSouls
             }
             
             AddPet("Snowman Pet", hideVisual, BuffID.BabySnowman, ProjectileID.BabySnowman);
-
-            if(!Fargowiltas.Instance.ThoriumLoaded)
-                AddPet("Penguin Pet", hideVisual, BuffID.BabyPenguin, ProjectileID.Penguin);
+            AddPet("Penguin Pet", hideVisual, BuffID.BabyPenguin, ProjectileID.Penguin);   
         }
 
         public void GladiatorEffect(bool hideVisual)
@@ -3893,7 +3889,7 @@ namespace FargowiltasSouls
         {
             JungleEnchant = true;
 
-            if (Fargowiltas.Instance.ThoriumLoaded || NatureForce) return;
+            if (NatureForce) return;
 
             player.cordage = true;
         }

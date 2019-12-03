@@ -23,7 +23,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 Attacks have a 33% chance to heal you lightly
 Summons a living wood sapling and its attacks will home in on enemies
 Your damage has a chance to poison hit enemies with a spore cloud
-Effects of Bee Booties, Petal Shield, Flawless Chrysalis, and Guide to Plant Fiber Cordage");
+Effects of Bee Booties, Petal Shield, and Flawless Chrysalis");
             DisplayName.AddTranslation(GameCulture.Chinese, "树人魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'大自然的一员'
@@ -57,8 +57,6 @@ Effects of Bee Booties, Petal Shield, Flawless Chrysalis, and Guide to Plant Fib
             //free boi
             modPlayer.LivingWoodEnchant = true;
             modPlayer.AddMinion("Sapling Minion", thorium.ProjectileType("MinionSapling"), 25, 2f);
-            //vine rope thing
-            player.cordage = true;
 
             //bulb set bonus
             modPlayer.BulbEnchant = true;

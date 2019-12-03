@@ -10,8 +10,6 @@ namespace FargowiltasSouls.Items.Accessories.Forces
     public class NatureForce : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        public int timer;
-        public bool allowJump = true;
 
         public override void SetStaticDefaults()
         {
@@ -61,10 +59,8 @@ Summons several pets";
             else
             {
                 tooltip +=
-@"Attack speed is increased by 5% at every 25% segment of life
-Enemies that you set on fire or singe will take additional damage over time
-Attacks may inflict Fungal Growth
-Effects of Flower Boots, Spring Steps and Slag Stompers
+@"Attacks may inflict Fungal Growth
+Effects of Flower Boots
 Summons several pets";
 
                 tooltip_ch +=
@@ -110,105 +106,6 @@ Summons several pets";
             modPlayer.FlowerBoots();
             //stealth, crits, pet
             modPlayer.ShroomiteEffect(hideVisual);
-
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player, hideVisual); ;
-        }
-
-        private void Thorium(Player player, bool hideVisual)
-        {
-            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-
-            //berserker effect
-            if (SoulConfig.Instance.GetValue("Berserker Effect"))
-            {
-                thoriumPlayer.orbital = true;
-                thoriumPlayer.orbitalRotation3 = Utils.RotatedBy(thoriumPlayer.orbitalRotation3, -0.075000002980232239, default(Vector2));
-                //making divers code less of a meme :scuseme:
-                if (player.statLife > player.statLifeMax * 0.75)
-                {
-                    thoriumPlayer.berserkStage = 1;
-                }
-                else if (player.statLife > player.statLifeMax * 0.5)
-                {
-                    modPlayer.AttackSpeed *= 1.05f;
-                    thoriumPlayer.berserkStage = 2;
-                }
-                else if (player.statLife > player.statLifeMax * 0.25)
-                {
-                    modPlayer.AttackSpeed *= 1.1f;
-                    thoriumPlayer.berserkStage = 3;
-                }
-                else
-                {
-                    modPlayer.AttackSpeed *= 1.15f;
-                    thoriumPlayer.berserkStage = 4;
-                }
-            }
-
-            //spring steps
-            if (SoulConfig.Instance.GetValue("Spring Steps"))
-            {
-                player.extraFall += 10;
-                if (player.velocity.Y < 0f && allowJump)
-                {
-                    allowJump = false;
-                    thoriumPlayer.jumps++;
-                }
-                if (player.velocity.Y > 0f || player.sliding || player.justJumped)
-                {
-                    allowJump = true;
-                }
-                if (thoriumPlayer.jumps == 0)
-                {
-                    player.jumpSpeedBoost += 5f;
-                }
-                if (thoriumPlayer.jumps == 1)
-                {
-                    player.jumpSpeedBoost += 1f;
-                }
-                if (thoriumPlayer.jumps == 2)
-                {
-                    player.jumpSpeedBoost += 1.75f;
-                }
-                if (thoriumPlayer.jumps >= 3)
-                {
-                    float num = 16f;
-                    int num2 = 0;
-                    while (num2 < num)
-                    {
-                        Vector2 vector = Vector2.UnitX * 0f;
-                        vector += -Utils.RotatedBy(Vector2.UnitY, (num2 * (6.28318548f / num)), default(Vector2)) * new Vector2(5f, 20f);
-                        vector = Utils.RotatedBy(vector, Utils.ToRotation(player.velocity), default(Vector2));
-                        int num3 = Dust.NewDust(player.Center, 0, 0, 127, 0f, 0f, 0, default(Color), 1f);
-                        Main.dust[num3].scale = 1.35f;
-                        Main.dust[num3].noGravity = true;
-                        Main.dust[num3].position = player.Center + vector;
-                        Dust dust = Main.dust[num3];
-                        dust.position.Y = dust.position.Y + 12f;
-                        Main.dust[num3].velocity = player.velocity * 0f + Utils.SafeNormalize(vector, Vector2.UnitY) * 1f;
-                        int num4 = num2;
-                        num2 = num4 + 1;
-                    }
-                    Main.PlaySound(SoundID.Item74, player.position);
-                    thoriumPlayer.jumps = 0;
-                }
-            }
-            if (SoulConfig.Instance.GetValue("Slag Stompers"))
-            {
-                //slag stompers
-                timer++;
-                if (timer > 20)
-                {
-                    Projectile.NewProjectile(player.Center.X, player.Center.Y, 0.1f * Main.rand.Next(-25, 25), 2f, thorium.ProjectileType("SlagPro"), 20, 1f, Main.myPlayer, 0f, 0f);
-                    timer = 0;
-                }
-            }
-
-            if (modPlayer.ThoriumSoul) return;
-
-            //magma
-            thoriumPlayer.magmaSet = true;
         }
 
         public override void AddRecipes()
@@ -216,21 +113,10 @@ Summons several pets";
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddIngredient(null, "CrimsonEnchant");
-            
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(null, "FrostEnchant");
-                recipe.AddIngredient(null, "ChlorophyteEnchant");
-                recipe.AddIngredient(null, "ShroomiteEnchant");
-                recipe.AddIngredient(null, "BerserkerEnchant"); 
-            }
-            else
-            {
-                recipe.AddIngredient(null, "MoltenEnchant");
-                recipe.AddIngredient(null, "FrostEnchant");
-                recipe.AddIngredient(null, "ChlorophyteEnchant");
-                recipe.AddIngredient(null, "ShroomiteEnchant");
-            }
+            recipe.AddIngredient(null, "MoltenEnchant");
+            recipe.AddIngredient(null, "FrostEnchant");
+            recipe.AddIngredient(null, "ChlorophyteEnchant");
+            recipe.AddIngredient(null, "ShroomiteEnchant");
 
             recipe.AddTile(TileID.LunarCraftingStation);
 

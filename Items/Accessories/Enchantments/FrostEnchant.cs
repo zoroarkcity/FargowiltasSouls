@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 using System.Collections.Generic;
 
@@ -16,31 +15,19 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Frost Enchantment");
             
-            string tooltip = 
+            string tooltip =
 @"'Let's coat the world in a deep freeze' 
 Icicles will start to appear around you
 When there are three, attacking will launch them towards the cursor
 Your attacks inflict Frostburn
-";
+Summons a pet Penguin and Snowman";
+
             string tooltip_ch =
 @"'让我们给世界披上一层厚厚的冰衣'
 周围将出现冰柱
 当冰柱达到三个时,攻击会将它们向光标位置发射
 攻击造成寒焰效果
-";
-
-            if (thorium != null)
-            {
-                tooltip +=
-@"Summons a pet Snowman";
-                tooltip_ch +=
-@"召唤一个小雪人";
-            }
-            else
-            {
-                tooltip += "Summons a pet Penguin and Snowman";
-                tooltip_ch += "召唤一个宠物企鹅和小雪人";
-            }
+召唤一个宠物企鹅和小雪人";
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "霜冻魔石");
@@ -73,8 +60,6 @@ Your attacks inflict Frostburn
             player.GetModPlayer<FargoPlayer>().FrostEffect(50, hideVisual);
         }
 
-
-
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
@@ -84,20 +69,14 @@ Your attacks inflict Frostburn
             
             if(Fargowiltas.Instance.ThoriumLoaded)
             {
-                recipe.AddIngredient(ItemID.Frostbrand);
                 recipe.AddIngredient(thorium.ItemType("BlizzardsEdge"));
-                recipe.AddIngredient(thorium.ItemType("GlacierFang"));
                 recipe.AddIngredient(thorium.ItemType("Glacieor"));
-                recipe.AddIngredient(ItemID.IceBow);
                 recipe.AddIngredient(thorium.ItemType("FreezeRay"));
             }
-            else
-            {
-                recipe.AddIngredient(ItemID.Frostbrand);
-                recipe.AddIngredient(ItemID.IceBow);
-                recipe.AddIngredient(ItemID.Fish);
-            }
-            
+
+            recipe.AddIngredient(ItemID.Frostbrand);
+            recipe.AddIngredient(ItemID.IceBow);
+            recipe.AddIngredient(ItemID.Fish);
             recipe.AddIngredient(ItemID.ToySled);
 
             recipe.AddTile(TileID.CrystalBall);

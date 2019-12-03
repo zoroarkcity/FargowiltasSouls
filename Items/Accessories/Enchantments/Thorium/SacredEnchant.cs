@@ -25,6 +25,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 Healing potions heal 50% more life
 Every 5 seconds you generate up to 3 holy crosses
 When casting healing spells, a cross is used instead of mana
+Effects of Karmic Holder
 Summons a Li'l Cherub to periodically heal damaged allies
 Summons a pet Life Spirit");
             DisplayName.AddTranslation(GameCulture.Chinese, "圣骑士魔石");
@@ -80,11 +81,18 @@ Summons a pet Life Spirit");
             {
                 timer = 0;
             }
+
+            //karmic holder
+            thoriumPlayer.karmicHolder = true;
+            if (thoriumPlayer.healStreak >= 0 && player.ownedProjectileCounts[thorium.ProjectileType("KarmicHolderPro")] < 1)
+            {
+                Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, thorium.ProjectileType("KarmicHolderPro"), 0, 0f, player.whoAmI, 0f, 0f);
+            }
         }
         
         private readonly string[] items =
         {
-            "RegenStaff",
+            "KarmicHolder",
             "LightBurstWand",
             "HallowedBludgeon",
             "AngelStaff",

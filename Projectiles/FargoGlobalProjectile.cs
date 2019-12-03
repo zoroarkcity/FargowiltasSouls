@@ -606,7 +606,7 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case ProjectileID.Penguin:
-                    KillPet(projectile, player, BuffID.BabyPenguin, modPlayer.FrostEnchant || modPlayer.IcyEnchant, "Penguin Pet");
+                    KillPet(projectile, player, BuffID.BabyPenguin, modPlayer.FrostEnchant, "Penguin Pet");
                     break;
 
                 case ProjectileID.BabySnowman:
