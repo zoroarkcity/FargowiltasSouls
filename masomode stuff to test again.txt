@@ -102,6 +102,7 @@ updated force of wood to timber in soul toggles
 mutant skips p1 after five times (TEST IN MP)
 fixed mutant antibodies fucking truffle worm ex
 toggle for pearlwood effect
+added telegraph for mutant's aim prediction attacks
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
