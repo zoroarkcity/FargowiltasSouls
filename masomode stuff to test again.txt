@@ -100,6 +100,7 @@ boreal ench uses fixed velocity
 mutant antibodies works with truffle worm EX
 updated force of wood to timber in soul toggles
 mutant skips p1 after five times (TEST IN MP)
+fixed mutant antibodies fucking truffle worm ex
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

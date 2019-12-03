@@ -1092,8 +1092,9 @@ namespace FargowiltasSouls.Projectiles
 
             if (projectile.bobber && modPlayer.MutantAntibodies)
             {
-                if (projectile.wet && projectile.ai[0] == 0 && projectile.localAI[1] < 650)
-                    projectile.localAI[1] = 650;
+                
+                if (projectile.wet && projectile.ai[0] == 0 && projectile.localAI[1] < 655)
+                    projectile.localAI[1] = 655;
                 //Main.NewText(projectile.ai[0].ToString() + " " + projectile.ai[1].ToString() + ", " + projectile.localAI[0].ToString() + " " + projectile.localAI[1].ToString());
             }
         }

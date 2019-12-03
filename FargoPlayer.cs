@@ -4610,8 +4610,7 @@ namespace FargowiltasSouls
                         Main.projectile[i].ai[0] = 2f; //cut fishing lines
                         Main.projectile[i].netUpdate = true;
 
-                        if (!spawned && Main.projectile[i].wet && Main.projectile[i].velocity.Y == 0f
-                            && FargoSoulsWorld.MasochistMode && !NPC.AnyNPCs(NPCID.DukeFishron)) //should spawn boss
+                        if (!spawned && Main.projectile[i].wet && FargoSoulsWorld.MasochistMode && !NPC.AnyNPCs(NPCID.DukeFishron)) //should spawn boss
                         {
                             spawned = true;
                             if (Main.netMode == 0) //singleplayer
