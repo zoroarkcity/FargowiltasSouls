@@ -98,7 +98,7 @@ namespace FargowiltasSouls
             text.SetDefault("[i:" + Instance.ItemType("PalmWoodEnchant") + "][c/b78d56: Palmwood Sentry]");
             AddTranslation(text);
             text = CreateTranslation("PearlConfig");
-            text.SetDefault("[i:" + Instance.ItemType("PearlwoodEnchant") + "][c/ad9a5f: Pearlwood Rainbow]");
+            text.SetDefault("[i:" + Instance.ItemType("PearlwoodEnchant") + "][c/ad9a5f: Pearlwood Rain]");
             AddTranslation(text);
             text = CreateTranslation("EarthHeader");
             text.SetDefault("[i:" + Instance.ItemType("EarthForce") + "] Force of Earth");

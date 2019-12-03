@@ -2172,7 +2172,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (PearlEnchant && proj.type != ProjectileID.HallowStar)
+            if (PearlEnchant && SoulConfig.Instance.GetValue("Pearlwood Rain") && proj.type != ProjectileID.HallowStar)
             {
                 //holy stars
                 Main.PlaySound(SoundID.Item10, proj.position);
@@ -2196,13 +2196,14 @@ namespace FargowiltasSouls
                 num484 *= num486;
                 int num487 = proj.damage;
                 int num488 = Projectile.NewProjectile(x, y, num483, num484, 92, num487, proj.knockBack, proj.owner, 0f, 0f);
-                Main.projectile[num488].ai[1] = proj.position.Y;
+                if (num488 != 1000)
+                    Main.projectile[num488].ai[1] = proj.position.Y;
                 //Main.projectile[num488].ai[0] = 1f;
 
                 //Main.projectile[num488].localNPCHitCooldown = 2;
                 //Main.projectile[num488].usesLocalNPCImmunity = true;
 
-                if (player.ZoneHoly)
+                if (player.ZoneHoly || WoodForce)
                 {
                     Main.projectile[num488].GetGlobalProjectile<FargoGlobalProjectile>().rainbowTrail = true;
                 }
