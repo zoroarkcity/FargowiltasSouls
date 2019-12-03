@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -60,14 +59,8 @@ A meteor shower initiates every few seconds while attacking";
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             modPlayer.MeteorEffect(50);
 
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player, hideVisual);
-        }
-
-        private void Thorium(Player player, bool hideVisual)
-        {
-            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            thoriumPlayer.bioPet = true;
-            player.GetModPlayer<FargoPlayer>().AddPet("Bio-Feeder Pet", hideVisual, thorium.BuffType("BioFeederBuff"), thorium.ProjectileType("BioFeederPet"));
+            if (Fargowiltas.Instance.ThoriumLoaded)
+                modPlayer.AddPet("Bio-Feeder Pet", hideVisual, thorium.BuffType("BioFeederBuff"), thorium.ProjectileType("BioFeederPet"));
         }
 
         public override void AddRecipes()

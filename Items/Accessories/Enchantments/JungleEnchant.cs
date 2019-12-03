@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 using System.Collections.Generic;
 
@@ -21,17 +20,13 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 Taking damage will release a lingering spore explosion
 Spore damage scales with magic damage
 All herb collection is doubled
-";
+Effects of Guide to Plant Fiber Cordage";
+
             string tooltip_ch =
 @"'丛林之怒深藏其中'
 受到伤害会释放出有毒的孢子爆炸
-所有草药收获翻倍";
-
-            if(thorium == null)
-            {
-                tooltip += "Effects of Guide to Plant Fiber Cordage";
-                tooltip_ch += "拥有植物纤维绳索指南的效果";
-            }
+所有草药收获翻倍
+拥有植物纤维绳索指南的效果";
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "丛林魔石");
@@ -75,25 +70,19 @@ All herb collection is doubled
             recipe.AddIngredient(ItemID.JungleHat);
             recipe.AddIngredient(ItemID.JungleShirt);
             recipe.AddIngredient(ItemID.JunglePants);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
+            recipe.AddIngredient(ItemID.CordageGuide);
+            recipe.AddIngredient(ItemID.JungleRose);
+            recipe.AddIngredient(ItemID.ThornChakram);
+
+            if (Fargowiltas.Instance.ThoriumLoaded)
             {      
-                recipe.AddIngredient(ItemID.JungleRose);
-                recipe.AddIngredient(ItemID.ThornChakram);
-                recipe.AddIngredient(ItemID.Boomstick);
                 recipe.AddIngredient(ItemID.PoisonedKnife, 300);
                 recipe.AddIngredient(thorium.ItemType("MantisCane"));
                 recipe.AddIngredient(thorium.ItemType("RivetingTadpole"));
-                recipe.AddIngredient(ItemID.Buggy);
             }
-            else
-            {
-                recipe.AddIngredient(ItemID.CordageGuide);
-                recipe.AddIngredient(ItemID.JungleRose);
-                recipe.AddIngredient(ItemID.ThornChakram);
-                recipe.AddIngredient(ItemID.Buggy);
-            }
-            
+
+            recipe.AddIngredient(ItemID.Buggy);
+
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();

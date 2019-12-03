@@ -606,7 +606,7 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case ProjectileID.Penguin:
-                    KillPet(projectile, player, BuffID.BabyPenguin, modPlayer.FrostEnchant || modPlayer.IcyEnchant, "Penguin Pet");
+                    KillPet(projectile, player, BuffID.BabyPenguin, modPlayer.FrostEnchant, "Penguin Pet");
                     break;
 
                 case ProjectileID.BabySnowman:
@@ -1008,7 +1008,7 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case 12:
-                    KillPet(projectile, player, thorium.BuffType("SnowyOwlBuff"), modPlayer.IcyEnchant, "Owl Pet");
+                    KillPet(projectile, player, thorium.BuffType("SnowyOwlBuff"), modPlayer.CryoEnchant, "Owl Pet");
                     break;
 
                 case 13:

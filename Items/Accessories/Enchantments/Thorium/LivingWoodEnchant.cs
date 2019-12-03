@@ -20,8 +20,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             DisplayName.SetDefault("Living Wood Enchantment");
             Tooltip.SetDefault(
 @"'Become one with nature'
-Summons a living wood sapling and its attacks will home in on enemies
-Effects of Guide to Plant Fiber Cordage");
+Summons a living wood sapling and its attacks will home in on enemies");
             DisplayName.AddTranslation(GameCulture.Chinese, "生命木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'与自然融为一体'
@@ -47,8 +46,6 @@ Effects of Guide to Plant Fiber Cordage");
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
             //set bonus
             thoriumPlayer.livingWood = true;
-            //vine rope thing
-            player.cordage = true;
             //free boi
             modPlayer.LivingWoodEnchant = true;
             modPlayer.AddMinion("Sapling Minion", thorium.ProjectileType("MinionSapling"), 10, 2f);
@@ -63,10 +60,10 @@ Effects of Guide to Plant Fiber Cordage");
             recipe.AddIngredient(thorium.ItemType("LivingWoodMask"));
             recipe.AddIngredient(thorium.ItemType("LivingWoodChestguard"));
             recipe.AddIngredient(thorium.ItemType("LivingWoodBoots"));
-            recipe.AddIngredient(ItemID.CordageGuide);
             recipe.AddIngredient(thorium.ItemType("LivingWoodSprout"));
             recipe.AddIngredient(ItemID.SlimeStaff);
             recipe.AddIngredient(ItemID.Blowpipe);
+            recipe.AddIngredient(ItemID.LeafWand);
             recipe.AddIngredient(thorium.ItemType( "ChiTea"), 5);
             recipe.AddIngredient(ItemID.TreeNymphButterfly);
             recipe.AddIngredient(ItemID.Grasshopper);

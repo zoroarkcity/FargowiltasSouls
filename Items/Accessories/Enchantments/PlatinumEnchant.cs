@@ -62,16 +62,18 @@ Summons a pet Glitter";
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().PlatinumEnchant = true;
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            modPlayer.PlatinumEnchant = true;
 
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player, hideVisual);
+            if (Fargowiltas.Instance.ThoriumLoaded)
+                modPlayer.AddPet("Glitter Pet", hideVisual, thorium.BuffType("ShineDust"), thorium.ProjectileType("ShinyPet"));
         }
 
         private void Thorium(Player player, bool hideVisual)
         {
             ThoriumPlayer thoriumPlayer = (ThoriumPlayer)player.GetModPlayer(thorium, "ThoriumPlayer");
             
-            player.GetModPlayer<FargoPlayer>().AddPet("Glitter Pet", hideVisual, thorium.BuffType("ShineDust"), thorium.ProjectileType("ShinyPet"));
+            
         }
 
         public override void AddRecipes()

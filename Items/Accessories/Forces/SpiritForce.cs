@@ -25,8 +25,7 @@ You may continue to summon temporary minions after maxing out on your slots
 Infested deals increasing damage over time
 Damage has a chance to spawn damaging orbs
 If you crit, you might also get a healing orb
-Summons several pets
-";
+Summons several pets";
 
             string tooltip_ch =
 @"'从尘世飞升'

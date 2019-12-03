@@ -52,8 +52,11 @@ Effects of Spring Steps, Slag Stompers, and Molten Spear Tip");
             player.magmaStone = true;
             thoriumPlayer.magmaSet = true;
             //spring steps
-            thorium.GetItem("SpringSteps").UpdateAccessory(player, hideVisual);
-
+            if (SoulConfig.Instance.GetValue("Spring Steps"))
+            {
+                thorium.GetItem("SpringSteps").UpdateAccessory(player, hideVisual);
+            }
+                
             if (SoulConfig.Instance.GetValue("Slag Stompers"))
             {
                 //slag stompers

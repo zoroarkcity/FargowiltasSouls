@@ -23,7 +23,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 Damage will duplicate itself for 33% of the damage and apply the Frozen debuff to hit enemies
 An icy aura surrounds you, which freezes nearby enemies after a short delay
 Effects of Frostburn Pouch and Ice Bound Strider Hide
-Summons a pet Penguin and Owl");
+Summons a pet Owl");
             DisplayName.AddTranslation(GameCulture.Chinese, "冰法魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'是什么灭绝了恐龙? 冰河时代!'
@@ -54,8 +54,6 @@ Summons a pet Penguin and Owl");
             //strider hide
             thoriumPlayer.frostBonusDamage = true;
             //pets
-            modPlayer.IcyEnchant = true;
-            modPlayer.AddPet("Penguin Pet", hideVisual, BuffID.BabyPenguin, ProjectileID.Penguin);
             modPlayer.AddPet("Owl Pet", hideVisual, thorium.BuffType("SnowyOwlBuff"), thorium.ProjectileType("SnowyOwlPet"));
             //icy set bonus
             thoriumPlayer.icySet = true;

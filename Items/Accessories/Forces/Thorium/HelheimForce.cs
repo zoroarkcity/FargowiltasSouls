@@ -21,10 +21,10 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
             DisplayName.SetDefault("Force of Helheim");
             Tooltip.SetDefault(
 @"'From the halls of Hel, a vision of the end...'
-All armor bonuses from Spirit Trapper, Dragon, Dread, Flesh, and Demon Blood
-All armor bonuses from White Knight, and Harbinger, Lich, and Plague Doctor
+All armor bonuses from Spirit Trapper, Dragon, Dread, Flesh, Demon Blood, and Magma
+All armor bonuses from Berserker, White Knight, and Harbinger, Lich, and Plague Doctor
 Effects of Inner Flame, Crash Boots, and Dragon Talon Necklace
-Effects of Vampire Gland and Demon Blood Badge
+Effects of Vampire Gland, Demon Blood Badge, Spring Steps, and Slag Stompers
 Effects of Shade Band, Lich's Gaze, and Plague Lord's Flask
 Summons several pets");
             DisplayName.AddTranslation(GameCulture.Chinese, "海姆冥界之力");
@@ -130,6 +130,8 @@ Summons several pets");
             //lich gaze
             thoriumPlayer.lichGaze = true;
             modPlayer.PlagueAcc = true;
+            //berserker
+            mod.GetItem("BerserkerEnchant").UpdateAccessory(player, hideVisual);
 
             if (modPlayer.ThoriumSoul) return;
 
@@ -162,6 +164,7 @@ Summons several pets");
             recipe.AddIngredient(null, "SpiritTrapperEnchant");
             recipe.AddIngredient(null, "DreadEnchant");
             recipe.AddIngredient(null, "DemonBloodEnchant");
+            recipe.AddIngredient(null, "BerserkerEnchant");
             recipe.AddIngredient(null, "HarbingerEnchant");
             recipe.AddIngredient(null, "PlagueDoctorEnchant");
 
