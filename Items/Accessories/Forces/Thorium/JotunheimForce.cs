@@ -74,8 +74,6 @@ Summons several pets");
             //strider hide
             thoriumPlayer.frostBonusDamage = true;
             //pets
-            modPlayer.IcyEnchant = true;
-            modPlayer.AddPet("Penguin Pet", hideVisual, BuffID.BabyPenguin, ProjectileID.Penguin);
             modPlayer.AddPet("Owl Pet", hideVisual, thorium.BuffType("SnowyOwlBuff"), thorium.ProjectileType("SnowyOwlPet"));
 
             if (SoulConfig.Instance.GetValue("Icy Barrier"))

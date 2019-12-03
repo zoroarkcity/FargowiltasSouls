@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 Summons a ring of leaf crystals to shoot at nearby enemies
 Taking damage will release a lingering spore explosion
 All herb collection is doubled
-Effects of Guide to Plant Fiber Cordage and Flower Boots
+Effects of Flower Boots
 Summons a pet Seedling";
 
             string tooltip_ch =

@@ -21,12 +21,10 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             DisplayName.SetDefault("Berserker Enchantment");
             Tooltip.SetDefault(
 @"'I'd rather fight for my life than live it'
-Damage is increased by 15% at every 25% segment of life
+Attack speed is increased by 5% at every 25% segment of life
 Fire surrounds your armour and melee weapons
 Enemies that you set on fire or singe will take additional damage over time
-Nearby enemies are ignited
-When you die, you violently explode dealing massive damage
-Effects of Spring Steps, Slag Stompers, and Orange Music Player");
+Effects of Spring Steps and Slag Stompers");
             DisplayName.AddTranslation(GameCulture.Chinese, "狂战士魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'我更愿意为自己的生命而战斗, 而不只是为活而活'
@@ -54,37 +52,41 @@ Effects of Spring Steps, Slag Stompers, and Orange Music Player");
 
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            thoriumPlayer.orbital = true;
-            thoriumPlayer.orbitalRotation3 = Utils.RotatedBy(thoriumPlayer.orbitalRotation3, -0.075000002980232239, default(Vector2));
-            //making divers code less of a meme :scuseme:
-            if (player.statLife > player.statLifeMax * 0.75)
+
+            if (SoulConfig.Instance.GetValue("Berserker Effect"))
             {
-                modPlayer.AllDamageUp(.15f);
-                thoriumPlayer.berserkStage = 1;
+                thoriumPlayer.orbital = true;
+                thoriumPlayer.orbitalRotation3 = Utils.RotatedBy(thoriumPlayer.orbitalRotation3, -0.075000002980232239, default(Vector2));
+                //making divers code less of a meme :scuseme:
+                if (player.statLife > player.statLifeMax * 0.75)
+                {
+                    modPlayer.AllDamageUp(.15f);
+                    thoriumPlayer.berserkStage = 1;
+                }
+                else if (player.statLife > player.statLifeMax * 0.5)
+                {
+                    modPlayer.AllDamageUp(.3f);
+                    thoriumPlayer.berserkStage = 2;
+                }
+                else if (player.statLife > player.statLifeMax * 0.25)
+                {
+                    modPlayer.AllDamageUp(.45f);
+                    thoriumPlayer.berserkStage = 3;
+                }
+                else
+                {
+                    modPlayer.AllDamageUp(.6f);
+                    thoriumPlayer.berserkStage = 4;
+                }
             }
-            else if (player.statLife > player.statLifeMax * 0.5)
-            {
-                modPlayer.AllDamageUp(.3f);
-                thoriumPlayer.berserkStage = 2;
-            }
-            else if (player.statLife > player.statLifeMax * 0.25)
-            {
-                modPlayer.AllDamageUp(.45f);
-                thoriumPlayer.berserkStage = 3;
-            }
-            else
-            {
-                modPlayer.AllDamageUp(.6f);
-                thoriumPlayer.berserkStage = 4;
-            }
+
             //magma
             mod.GetItem("MagmaEnchant").UpdateAccessory(player, hideVisual);
-            //molten
-            modPlayer.MoltenEffect(15);
         }
         
         private readonly string[] items =
         {
+            "BerserkBlade",
             "DoomFireAxe",
             "SurtrsSword",
             "ThermogenicImpaler",
@@ -101,7 +103,6 @@ Effects of Spring Steps, Slag Stompers, and Orange Music Player");
             recipe.AddIngredient(thorium.ItemType("BerserkerBreastplate"));
             recipe.AddIngredient(thorium.ItemType("BerserkerGreaves"));
             recipe.AddIngredient(null, "MagmaEnchant");
-            recipe.AddIngredient(null, "MoltenEnchant");
 
             foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 

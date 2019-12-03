@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
 @"'A blazing heat, the mark of Surtr...'
 All armor bonuses from Sandstone, Danger, and Feral Fur
 All armor bonuses from Living Wood, Bulb, and Life Bloom
-Effects of Night Shade Petal, Flawless Chrysalis, Bee Booties, and Guide to Plant Fiber Cordage");
+Effects of Night Shade Petal, Flawless Chrysalis, and Bee Booties");
             DisplayName.AddTranslation(GameCulture.Chinese, "穆斯贝尔海姆之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'炽热之火, 史尔特尔的标志...'
@@ -85,8 +85,6 @@ Effects of Night Shade Petal, Flawless Chrysalis, Bee Booties, and Guide to Plan
             thoriumPlayer.nightshadeBoost = true;
             //feral fur
             modPlayer.FeralFurEnchant = true;
-            //vine rope thing
-            player.cordage = true;
 
         }
 

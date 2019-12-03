@@ -36,4 +36,33 @@ Thorium
 -Added Bulb to Life Bloom Enchantment
 -Removed Eye of Odin from Life Bloom
 
+-Removed Flight Enchant from Beetle Enchantment
+-Added Heat Ray to Beetle Enchantment
+-Removed Dark Effigy from Dark Artist and added it to Warlock Enchant
+-Added Wither Staff to Dark Artist
+-Removed Blood Transfusion from Warlock
+-Removed Aura Staff from Sacred Enchant
+-Added Karmic Holder to Sacred
+-Removed Karmic Holder from Forbidden Enchant
+-Added Aeon Staff to Forbidden Enchant
+-Removed Glacier from Frost Enchant
+-Added Fish (item) to Frost Enchant always
+-Removed Fish from Icy Enchant
+-Added Ice Lance to Icy Enchant
+-Removed Proof of Avarice from Gold Enchant, added Ship's Helm
+-Jungle Enchant always uses Guide to Plant Fiber, removed Boomstick
+-Removed Guide to Plant Fiber from Living Wood Enchant, added Leaf Wand
+-Removed Molten Enchant from Berserker Enchant
+-Removed Berserker from Force of Nature
+-Added Berserker Blade to Berserker Enchant
+-Changed Berserker to increase attack speed as you lose health instead of damage
+-Added Berserker Enchant to Force of Helheim
+
+
+
+
+
+
+-Added Flight Enchant to 
+
 -See the full changelog on the wiki
