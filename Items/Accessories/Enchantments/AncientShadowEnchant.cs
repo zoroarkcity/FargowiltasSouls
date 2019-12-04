@@ -5,23 +5,21 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class HuntressEnchant : ModItem
+    public class AncientShadowEnchant : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Huntress Enchantment");
+            DisplayName.SetDefault("Ancient Shadow Enchantment");
             Tooltip.SetDefault(
-@"'The Hunt is On'
-Explosive Traps recharge faster and oil enemies
-Set oiled enemies on fire for extra damage
+@"''
 
-Double tap DOWN / press special key to create a localized rain of arrows at the cursor's position for a few seconds, but has a lengthy cooldown. 
-The arrows that rain down are based on the arrows in the player's inventory.
+A Shadow Orb (or 2) will orbit around the player a set distance away. 
+Attacking the Shadow Orb will cause it to release a burst of 2-3 homing shadow energy that each deal a percentage of the weapon's damage and inflicts Shadowflame for a short period of time.
 
-If the player does not have any arrows, it defaults to basic Wooden Arrows pre-Golem and special Huntress Bolts post-Golem. 
-Huntress Bolts inflict both Oiled and Betsy's Curse, as well as exploding like Hellfire Arrows.
+After being struck, the Shadow Orb cannot be hit for 3 seconds.
+
 ");
         }
 
@@ -37,7 +35,7 @@ Huntress Bolts inflict both Oiled and Betsy's Curse, as well as exploding like H
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().HuntressEnchant = true;
+            player.GetModPlayer<FargoPlayer>().AncientShadowEnchant = true;
         }
 
         public override void AddRecipes()
@@ -47,16 +45,13 @@ Huntress Bolts inflict both Oiled and Betsy's Curse, as well as exploding like H
             armor 1
             armor 2
             armor 3
+            
+            shadow enchant
 
+            Ancient Iron Helmet
+Ancient Gold Helmet
+Ancient Shadow Armor, Ancient Iron Helmet, Ancient Gold Helmet, Shadowflame Hades Dye, Shadowflame Bow
 
-            Explosive Trap Rod
-Explosive Trap Cane
-Huntress's Buckler
-Phantom Phoenix
-Daedalus Stormbow
-
-Cinder String (with Thorium)
-Chlorophyte Shotbow
 
 
             recipe.AddTile(TileID.CrystalBall);

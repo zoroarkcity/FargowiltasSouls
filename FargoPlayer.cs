@@ -130,6 +130,15 @@ namespace FargowiltasSouls
         public bool SuperBleed;
         public bool PearlEnchant;
 
+        public bool RainEnchant;
+        public bool AncientCobaltEnchant;
+        public bool AncientShadowEnchant;
+        public bool SquireEnchant;
+        public bool ApprenticeEnchant;
+        public bool HuntressEnchant;
+        public bool MonkEnchant;
+        public bool EskimoEnchant;
+
         public bool CosmoForce;
         public bool EarthForce;
         public bool LifeForce;
@@ -519,6 +528,15 @@ namespace FargowiltasSouls
             ShadeEnchant = false;
             SuperBleed = false;
             PearlEnchant = false;
+
+            RainEnchant = false;
+            AncientCobaltEnchant = false;
+            AncientShadowEnchant = false;
+            SquireEnchant = false;
+            ApprenticeEnchant = false;
+            HuntressEnchant = false;
+            MonkEnchant = false;
+            EskimoEnchant = false;
 
             CosmoForce = false;
             EarthForce = false;
@@ -4575,6 +4593,21 @@ namespace FargowiltasSouls
                     Projectile.NewProjectile(mouse.X, mouse.Y - 10, 0f, 0f, mod.ProjectileType("PalmTreeSentry"), WoodForce ? 45 : 15, 0f, player.whoAmI);
                 }
             }
+        }
+
+        public void HuntressEffect()
+        {
+
+        }
+
+        public void EskimoEffect()
+        {
+
+        }
+
+        public void AncientShadowEffect()
+        {
+
         }
 
         public override bool PreItemCheck()

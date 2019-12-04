@@ -5,23 +5,17 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class HuntressEnchant : ModItem
+    public class AncientCobaltEnchant : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Huntress Enchantment");
+            DisplayName.SetDefault("Ancient Cobalt Enchantment");
             Tooltip.SetDefault(
-@"'The Hunt is On'
-Explosive Traps recharge faster and oil enemies
-Set oiled enemies on fire for extra damage
+@"'The jungle of old empowers you'
+Your projectiles will occasionally split into stingers that deal damage and poison enemies
 
-Double tap DOWN / press special key to create a localized rain of arrows at the cursor's position for a few seconds, but has a lengthy cooldown. 
-The arrows that rain down are based on the arrows in the player's inventory.
-
-If the player does not have any arrows, it defaults to basic Wooden Arrows pre-Golem and special Huntress Bolts post-Golem. 
-Huntress Bolts inflict both Oiled and Betsy's Curse, as well as exploding like Hellfire Arrows.
 ");
         }
 
@@ -37,7 +31,7 @@ Huntress Bolts inflict both Oiled and Betsy's Curse, as well as exploding like H
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().HuntressEnchant = true;
+            player.GetModPlayer<FargoPlayer>().AncientCobaltEnchant = true;
         }
 
         public override void AddRecipes()
@@ -48,18 +42,16 @@ Huntress Bolts inflict both Oiled and Betsy's Curse, as well as exploding like H
             armor 2
             armor 3
 
-
-            Explosive Trap Rod
-Explosive Trap Cane
-Huntress's Buckler
-Phantom Phoenix
-Daedalus Stormbow
-
-Cinder String (with Thorium)
-Chlorophyte Shotbow
+            Ancient Necro Helmet
+Rally, Blowpipe, 30 Poisoned Flasks
 
 
-            recipe.AddTile(TileID.CrystalBall);
+
+            goes into cobalt?
+
+
+
+            recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();*/
         }

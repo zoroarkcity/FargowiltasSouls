@@ -34,11 +34,7 @@ A miniature storm may appear when an enemy dies");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            /*
-             * Rain
-
-spawn rain clouds when a enemy dies 
-             */
+            player.GetModPlayer<FargoPlayer>().RainEnchant = true;
         }
 
         public override void AddRecipes()
@@ -47,11 +43,11 @@ spawn rain clouds when a enemy dies
 
             recipe.AddIngredient(ItemID.RainHat);
             recipe.AddIngredient(ItemID.RainCoat);
-            recipe.AddIngredient(ItemID.RainCloud);
-            recipe.AddIngredient(ItemID.Umbrella);
             recipe.AddIngredient(ItemID.UmbrellaHat);
+            recipe.AddIngredient(ItemID.Umbrella);
             recipe.AddIngredient(ItemID.NimbusRod);
-            //
+            recipe.AddIngredient(ItemID.WaterGun);
+            recipe.AddIngredient(ItemID.RainCloud);
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

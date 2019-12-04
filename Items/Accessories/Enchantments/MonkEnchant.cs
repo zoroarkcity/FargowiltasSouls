@@ -7,26 +7,19 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class MonkEnchant : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Adamantite Enchantment");
+            DisplayName.SetDefault("Monk Enchantment");
             Tooltip.SetDefault(
-@"'Who needs to aim?'
-Every 8th projectile you shoot will split into 3
-Any secondary projectiles may also split");
-            DisplayName.AddTranslation(GameCulture.Chinese, "精金魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
-@"'谁需要瞄准?'
-第8个抛射物将会分裂成3个
-分裂出的抛射物同样可以分裂");
+@"'Hours of Meditation have led to this…'
+
+Lee Sin Q or R lol
+
+Lightning Aura can now crit and strikes faster
+
+");
         }
 
         public override void SetDefaults()
@@ -41,36 +34,33 @@ Any secondary projectiles may also split");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().AdamantiteEnchant = true;
+            player.GetModPlayer<FargoPlayer>().MonkEnchant = true;
         }
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyAdamHead");
-            recipe.AddIngredient(ItemID.AdamantiteBreastplate);
-            recipe.AddIngredient(ItemID.AdamantiteLeggings);
+            /*ModRecipe recipe = new ModRecipe(mod);
+            
+            armor 1
+            armor 2
+            armor 3
+            monk belt
+            sleepy octopod
+            ghastly glaive
+            lightning staff tier 2
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(ItemID.AdamantiteGlaive);
-                recipe.AddIngredient(thorium.ItemType("AdamantiteStaff"));
-                recipe.AddIngredient(thorium.ItemType("DynastyWarFan"));
-                recipe.AddIngredient(thorium.ItemType("Scorn"));
-                recipe.AddIngredient(thorium.ItemType("OgreSnotGun"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.DarkLance);
-                recipe.AddIngredient(ItemID.AdamantiteGlaive);
-            }
+            Dao of Pow
+Fetid Baghnakhs
+Ale Tosser
 
-            recipe.AddIngredient(ItemID.Shotgun);
-            recipe.AddIngredient(ItemID.VenomStaff);
+Schmelze (with Thorium)
+Rocket Fist (with Thorium)
+
+
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.AddRecipe();*/
         }
     }
 }
