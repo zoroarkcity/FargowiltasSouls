@@ -63,16 +63,6 @@ Effects of Flower Boots, Master Ninja Gear, Greedy Ring, Celestial Shell, and Sh
 死亡时爆炸并以200生命值重生
 拥有花之靴, 忍者极意, 贪婪戒指, 天界贝壳和闪耀石的效果";
 
-            if (thorium != null)
-            {
-                tooltip +=
-@"
-Effects of Spring Steps and Slag Stompers";
-                tooltip_ch +=
-@"拥有弹簧鞋, 熔渣重踏和贪婪之证的效果";
-            }
-
-
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "泰拉之魂");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);

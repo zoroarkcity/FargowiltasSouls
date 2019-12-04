@@ -98,21 +98,15 @@ Summons a pet Gato and Black Cat";
             recipe.AddIngredient(ItemID.MonkAltHead);
             recipe.AddIngredient(ItemID.MonkAltShirt);
             recipe.AddIngredient(ItemID.MonkAltPants);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
+            recipe.AddIngredient(null, "NinjaEnchant");
+            recipe.AddIngredient(ItemID.MasterNinjaGear);
+            recipe.AddIngredient(ItemID.MonkBelt);
+
+            if (Fargowiltas.Instance.ThoriumLoaded)
             {
-                recipe.AddIngredient(null, "ShadeMasterEnchant");
-                recipe.AddIngredient(ItemID.MasterNinjaGear);
-                recipe.AddIngredient(ItemID.MonkBelt);
                 recipe.AddIngredient(thorium.ItemType("ShadeKusarigama"));
                 recipe.AddIngredient(ItemID.DD2LightningAuraT3Popper);
                 recipe.AddIngredient(ItemID.DeadlySphereStaff);
-            }
-            else
-            {
-                recipe.AddIngredient(null, "NinjaEnchant");
-                recipe.AddIngredient(ItemID.MasterNinjaGear);
-                recipe.AddIngredient(ItemID.MonkBelt);
             }
             
             recipe.AddIngredient(ItemID.DD2PetGato);

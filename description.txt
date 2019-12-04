@@ -59,10 +59,13 @@ Thorium
 -Added Berserker Enchant to Force of Helheim
 
 
+-Removed Fungus Enchant from Shroomite Enchant, added it to Force of Muspelheim
+-Added Flight Enchant to Force of Muspelheim
+-Added Funggat to Shroomite Enchantment
+-Removed Shade Master from Shinobi Enchant
+-Added it to Force of Midgard
+-Removed Ninja Enchant from Shade Master
+-Added Corrodling Staff to Shade Master
 
-
-
-
--Added Flight Enchant to 
 
 -See the full changelog on the wiki

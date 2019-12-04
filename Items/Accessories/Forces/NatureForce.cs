@@ -1,8 +1,6 @@
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Forces
@@ -29,7 +27,8 @@ Taking damage will release a lingering spore explosion
 All herb collection is doubled
 Not moving puts you in stealth
 While in stealth, crits deal 3x damage
-";
+Effects of Flower Boots
+Summons several pets";
             string tooltip_ch =
 @"'挖掘了荒野的每一个秘密'
 极大增加生命恢复速度
@@ -44,34 +43,8 @@ While in stealth, crits deal 3x damage
 所有药草收获翻倍
 站立不动时潜行
 潜行时, 暴击造成3倍伤害
-";
-
-            if (thorium == null)
-            {
-                tooltip +=
-@"Effects of Flower Boots
-Summons several pets";
-
-                tooltip_ch +=
-@"拥有花之靴的效果
+拥有花之靴的效果
 召唤数个宠物";
-            }
-            else
-            {
-                tooltip +=
-@"Attacks may inflict Fungal Growth
-Effects of Flower Boots
-Summons several pets";
-
-                tooltip_ch +=
-@"生命值每下降25%, 增加5%攻击速度
-随着时间的推移, 被你点燃或烧伤的敌人会受到额外的伤害
-造成伤害会释放出有毒的孢子爆炸
-攻击概率造成真菌寄生效果
-拥有影缀花, 零度音箱和剧毒音箱的效果
-拥有花之靴, 弹簧鞋和熔渣重踏的效果
-召唤数个宠物";
-            }
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "自然之力");
@@ -91,7 +64,7 @@ Summons several pets";
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            //bulb, cryo effect
+            //
             modPlayer.NatureForce = true;
             //regen, pets
             modPlayer.CrimsonEffect(hideVisual);

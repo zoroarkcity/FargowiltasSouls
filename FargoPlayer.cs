@@ -141,6 +141,7 @@ namespace FargowiltasSouls
         public bool WoodForce;
 
         //thorium 
+        public bool FungusEnchant;
         public bool WarlockEnchant;
         public bool SacredEnchant;
         public bool BinderEnchant;
@@ -530,6 +531,7 @@ namespace FargowiltasSouls
             WoodForce = false;
 
             //thorium
+            FungusEnchant = false;
             WarlockEnchant = false;
             SacredEnchant = false;
             BinderEnchant = false;
@@ -1804,7 +1806,7 @@ namespace FargowiltasSouls
         {
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
 
-            if (ShroomEnchant && !TerrariaSoul && Main.rand.Next(5) == 0)
+            if (FungusEnchant && !ThoriumSoul && Main.rand.Next(5) == 0)
                 target.AddBuff(thorium.BuffType("Mycelium"), 120);
 
             if (proj.type == thorium.ProjectileType("MeteorPlasmaDamage") || proj.type == thorium.ProjectileType("PyroBurst") || proj.type == thorium.ProjectileType("LightStrike") || proj.type == thorium.ProjectileType("WhiteFlare") || proj.type == thorium.ProjectileType("CryoDamage") || proj.type == thorium.ProjectileType("MixtapeNote") || proj.type == thorium.ProjectileType("DragonPulse"))
@@ -1992,7 +1994,7 @@ namespace FargowiltasSouls
         {
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
 
-            if (ShroomEnchant && !TerrariaSoul && Main.rand.Next(5) == 0)
+            if (FungusEnchant && !ThoriumSoul && Main.rand.Next(5) == 0)
                 target.AddBuff(thorium.BuffType("Mycelium"), 120);
 
             if (TideTurnerEnchant)
