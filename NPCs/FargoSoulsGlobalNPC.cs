@@ -2150,8 +2150,6 @@ namespace FargowiltasSouls.NPCs
 
                             masoBool[1] = true;
                         }
-                        if (masoBool[1])
-                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 4500;
                         break;
 
                     case NPCID.LunarTowerSolar:
@@ -2184,8 +2182,6 @@ namespace FargowiltasSouls.NPCs
                             }
                             masoBool[1] = true;
                         }
-                        if (masoBool[1])
-                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 4500;
                         break;
 
                     case NPCID.LunarTowerStardust:
@@ -2229,8 +2225,6 @@ namespace FargowiltasSouls.NPCs
                             }
                             masoBool[1] = true;
                         }
-                        if (masoBool[1])
-                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 4500;
                         break;
 
                     case NPCID.LunarTowerVortex:
@@ -2285,8 +2279,6 @@ namespace FargowiltasSouls.NPCs
                             }
                             masoBool[1] = true;
                         }
-                        if (masoBool[1])
-                            npc.immortal = npc.Distance(Main.player[Main.myPlayer].Center) > 4500;
                         break;
 
                     case NPCID.CultistBoss:
@@ -11293,6 +11285,14 @@ namespace FargowiltasSouls.NPCs
             {
                 switch (npc.type)
                 {
+                    case NPCID.LunarTowerNebula:
+                    case NPCID.LunarTowerSolar:
+                    case NPCID.LunarTowerStardust:
+                    case NPCID.LunarTowerVortex:
+                        if (npc.Distance(Main.player[projectile.owner].Center) > 4500)
+                            damage = 0;
+                        break;
+
                     case NPCID.Salamander:
                     case NPCID.Salamander2:
                     case NPCID.Salamander3:
