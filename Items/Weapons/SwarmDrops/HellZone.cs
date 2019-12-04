@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hell Zone");
-            Tooltip.SetDefault("'The reward for slaughtering many...'");
+            Tooltip.SetDefault("'The reward for slaughtering many...'\nUses gel for ammo\n66% chance to not consume ammo");
             DisplayName.AddTranslation(GameCulture.Chinese, "地狱领域");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励...'");
         }
@@ -46,8 +46,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override bool ConsumeAmmo(Player player)
         {
-            //
-            return Main.rand.Next(4) != 0;
+            return Main.rand.Next(3) == 0;
         }
 
         //make them hold it different
