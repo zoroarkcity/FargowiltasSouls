@@ -35,7 +35,10 @@ After being struck, the Shadow Orb cannot be hit for 3 seconds.
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().AncientShadowEnchant = true;
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            modPlayer.AncientShadowEnchant = true;
+            modPlayer.AncientShadowEffect();
+
         }
 
         public override void AddRecipes()

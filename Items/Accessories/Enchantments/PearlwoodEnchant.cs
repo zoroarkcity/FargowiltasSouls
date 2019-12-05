@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Pearlwood Enchantment");
             Tooltip.SetDefault(
 @"'Too little, too late…'
-Projectiles will spawn a star when they hit something
+Projectiles may spawn a star when they hit something
 While in the Hallow, stars have damaging rainbow trails");
             DisplayName.AddTranslation(GameCulture.Chinese, "珍珠木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 

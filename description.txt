@@ -57,8 +57,6 @@ Thorium
 -Added Berserker Blade to Berserker Enchant
 -Changed Berserker to increase attack speed as you lose health instead of damage
 -Added Berserker Enchant to Force of Helheim
-
-
 -Removed Fungus Enchant from Shroomite Enchant, added it to Force of Muspelheim
 -Added Flight Enchant to Force of Muspelheim
 -Added Funggat to Shroomite Enchantment
@@ -66,6 +64,12 @@ Thorium
 -Added it to Force of Midgard
 -Removed Ninja Enchant from Shade Master
 -Added Corrodling Staff to Shade Master
+
+
+
+-Added Ancient Cobalt Enchant
+-Buffed Cobalt to produce 5 shards instead of 3
+-Chloro crystals will disappear when you die now
 
 
 -See the full changelog on the wiki

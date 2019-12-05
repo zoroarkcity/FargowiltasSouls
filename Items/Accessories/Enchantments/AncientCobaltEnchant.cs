@@ -14,9 +14,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Ancient Cobalt Enchantment");
             Tooltip.SetDefault(
 @"'The jungle of old empowers you'
-Your projectiles will occasionally split into stingers that deal damage and poison enemies
-
-");
+20% chance for your projectiles to explode into stingers
+This can only happen once every second");
         }
 
         public override void SetDefaults()
@@ -25,8 +24,8 @@ Your projectiles will occasionally split into stingers that deal damage and pois
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 7;
-            item.value = 100000;
+            item.rare = 3;
+            item.value = 50000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -36,24 +35,25 @@ Your projectiles will occasionally split into stingers that deal damage and pois
 
         public override void AddRecipes()
         {
-            /*ModRecipe recipe = new ModRecipe(mod);
-            
-            armor 1
-            armor 2
-            armor 3
+            ModRecipe recipe = new ModRecipe(mod);
 
-            Ancient Necro Helmet
-Rally, Blowpipe, 30 Poisoned Flasks
+            recipe.AddIngredient(ItemID.AncientCobaltHelmet);
+            recipe.AddIngredient(ItemID.AncientCobaltBreastplate);
+            recipe.AddIngredient(ItemID.AncientCobaltLeggings);
+            recipe.AddIngredient(ItemID.AncientNecroHelmet);
 
 
+//Rally, Blowpipe, 30 Poisoned Flasks
 
-            goes into cobalt?
+
+
+            //goes into cobalt?
 
 
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
-            recipe.AddRecipe();*/
+            recipe.AddRecipe();
         }
     }
 }

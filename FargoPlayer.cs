@@ -755,7 +755,6 @@ namespace FargowiltasSouls
 
         public override void PreUpdate()
         {
-
             if (HurtTimer > 0)
                 HurtTimer--;
 
@@ -1049,7 +1048,7 @@ namespace FargowiltasSouls
                     Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, mod.ProjectileType("GoldShellProj"), 0, 0, Main.myPlayer);
             }
 
-            if (CobaltEnchant && CobaltCD > 0)
+            if ((CobaltEnchant || AncientCobaltEnchant) && CobaltCD > 0)
                 CobaltCD--;
 
             if (LihzahrdTreasureBox && player.gravDir > 0 && SoulConfig.Instance.GetValue("Lihzahrd Ground Pound"))
@@ -2190,7 +2189,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (PearlEnchant && SoulConfig.Instance.GetValue("Pearlwood Rain") && proj.type != ProjectileID.HallowStar && proj.damage > 0)
+            if (PearlEnchant && SoulConfig.Instance.GetValue("Pearlwood Rain") && Main.rand.Next(4) == 0 && proj.type != ProjectileID.HallowStar && proj.damage > 0)
             {
                 //holy stars
                 Main.PlaySound(SoundID.Item10, proj.position);
@@ -4607,7 +4606,18 @@ namespace FargowiltasSouls
 
         public void AncientShadowEffect()
         {
+            if (SoulConfig.Instance.GetValue("Ancient Shadow Orbs") && player.ownedProjectileCounts[mod.ProjectileType("AncientShadowOrb")] == 0)
+            {
+                const int max = 2;
+                float rotation = 2f * (float)Math.PI / max;
 
+                for (int i = 0; i < max; i++)
+                {
+                    Vector2 spawnPos = player.Center + new Vector2(60, 0f).RotatedBy(rotation * i);
+                    int p = Projectile.NewProjectile(spawnPos, Vector2.Zero, mod.ProjectileType("AncientShadowOrb"), 0, 10f, player.whoAmI, 0, rotation * i);
+                    Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                }
+            }
         }
 
         public override bool PreItemCheck()

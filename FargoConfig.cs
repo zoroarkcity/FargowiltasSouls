@@ -70,6 +70,8 @@ namespace FargowiltasSouls
                 public bool adamSplit = true;
                 [Label("$Mods.FargowiltasSouls.CobaltConfig")]
                 public bool cobaltShards = true;
+                [Label("$Mods.FargowiltasSouls.AncientCobaltConfig")]
+                public bool cobaltStingers = true;
                 [Label("$Mods.FargowiltasSouls.MythrilConfig")]
                 public bool mythSpeed = true;
                 [Label("$Mods.FargowiltasSouls.OrichalcumConfig")]
@@ -134,6 +136,8 @@ namespace FargowiltasSouls
                 public bool dArtEffect = true;
                 [Label("$Mods.FargowiltasSouls.NecroConfig")]
                 public bool necroGuard = true;
+                [Label("$Mods.FargowiltasSouls.AncientShadowConfig")]
+                public bool ancientShadow = true;
                 [Label("$Mods.FargowiltasSouls.ShadowConfig")]
                 public bool shadowDark = true;
                 [Label("$Mods.FargowiltasSouls.ShinobiConfig")]
@@ -181,6 +185,7 @@ namespace FargowiltasSouls
                     SoulConfig.Instance.enchantToggles["Pearlwood Rain"] = pearlTrail;
                     SoulConfig.Instance.enchantToggles["Adamantite Projectile Splitting"] = adamSplit;
                     SoulConfig.Instance.enchantToggles["Cobalt Shards"] = cobaltShards;
+                    SoulConfig.Instance.enchantToggles["Ancient Cobalt Stingers"] = cobaltStingers;
                     SoulConfig.Instance.enchantToggles["Mythril Weapon Speed"] = mythSpeed;
                     SoulConfig.Instance.enchantToggles["Orichalcum Fireballs"] = oriFire;
                     SoulConfig.Instance.enchantToggles["Palladium Healing"] = palHeal;
@@ -210,6 +215,7 @@ namespace FargowiltasSouls
                     //shadow force
                     SoulConfig.Instance.enchantToggles["Dark Artist Effect"] = dArtEffect;
                     SoulConfig.Instance.enchantToggles["Necro Guardian"] = necroGuard;
+                    SoulConfig.Instance.enchantToggles["Ancient Shadow Orbs"] = ancientShadow;
                     SoulConfig.Instance.enchantToggles["Shadow Darkness"] = shadowDark;
                     SoulConfig.Instance.enchantToggles["Shinobi Through Walls"] = shinWalls;
                     SoulConfig.Instance.enchantToggles["Tabi Dash"] = shinTabi;
@@ -961,6 +967,7 @@ namespace FargowiltasSouls
 
             enchantToggles.Add("Adamantite Projectile Splitting", terrmenu.terenchmenu.adamSplit);
             enchantToggles.Add("Cobalt Shards", terrmenu.terenchmenu.cobaltShards);
+            enchantToggles.Add("Ancient Cobalt Stingers", terrmenu.terenchmenu.cobaltStingers);
             enchantToggles.Add("Mythril Weapon Speed", terrmenu.terenchmenu.mythSpeed);
             enchantToggles.Add("Orichalcum Fireballs", terrmenu.terenchmenu.oriFire);
             enchantToggles.Add("Palladium Healing", terrmenu.terenchmenu.palHeal);
@@ -993,6 +1000,7 @@ namespace FargowiltasSouls
 
             enchantToggles.Add("Dark Artist Effect", terrmenu.terenchmenu.dArtEffect);
             enchantToggles.Add("Necro Guardian", terrmenu.terenchmenu.necroGuard);
+            enchantToggles.Add("Ancient Shadow Orbs", terrmenu.terenchmenu.ancientShadow);
             enchantToggles.Add("Shadow Darkness", terrmenu.terenchmenu.shadowDark);
             enchantToggles.Add("Shinobi Through Walls", terrmenu.terenchmenu.shinWalls);
             enchantToggles.Add("Tabi Dash", terrmenu.terenchmenu.shinTabi);
