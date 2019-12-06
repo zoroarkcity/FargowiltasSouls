@@ -217,6 +217,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     break;
 
                 case -5: //FINAL SPARK
+                    if (!AliveCheck(player))
+                        break;
                     npc.velocity = Vector2.Zero;
                     if (++npc.ai[1] > 120)
                     {
