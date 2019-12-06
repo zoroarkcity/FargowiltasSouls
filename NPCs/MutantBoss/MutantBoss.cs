@@ -217,8 +217,6 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     break;
 
                 case -5: //FINAL SPARK
-                    if (!AliveCheck(player))
-                        break;
                     npc.velocity = Vector2.Zero;
                     if (++npc.ai[1] > 120)
                     {
@@ -463,6 +461,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), Color.LimeGreen);
                             }
                             npc.ai[0] = 10;
+                            npc.ai[1] = 0;
+                            npc.ai[2] = 0;
+                            npc.ai[3] = 0;
                             npc.netUpdate = true;
                             break;
                         }
