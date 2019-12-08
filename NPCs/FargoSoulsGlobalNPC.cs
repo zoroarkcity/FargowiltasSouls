@@ -2254,6 +2254,11 @@ namespace FargowiltasSouls.NPCs
                         if (npc.dontTakeDamage)
                         {
                             npc.life = npc.lifeMax;
+                            if (++Counter2 > 180)
+                            {
+                                Counter2 = 0;
+                                npc.netUpdate = true;
+                            }
                         }
                         else
                         {
