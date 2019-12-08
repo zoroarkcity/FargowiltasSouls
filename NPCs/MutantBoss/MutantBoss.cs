@@ -463,6 +463,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), Color.LimeGreen);
                             }
                             npc.ai[0] = 10;
+                            npc.ai[1] = 0;
+                            npc.ai[2] = 0;
+                            npc.ai[3] = 0;
                             npc.netUpdate = true;
                             break;
                         }
@@ -1280,6 +1283,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (!AliveCheck(player))
                         break;
                     targetPos = player.Center;
+                    targetPos.X += 400 * (npc.Center.X < targetPos.X ? -1 : 1);
                     targetPos.Y -= 400;
                     Movement(targetPos, 0.6f, false);
                     if (++npc.ai[1] > 180)
@@ -1751,6 +1755,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
         public override void NPCLoot()
         {
             FargoSoulsWorld.downedMutant = true;
+            FargoSoulsWorld.skipMutantP1 = 0;
             if (Main.netMode == 2)
                 NetMessage.SendData(7); //sync world
             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantBag"));

@@ -2087,7 +2087,11 @@ namespace FargowiltasSouls.NPCs
                             npc.netUpdate = true;
                             npc.buffImmune[mod.BuffType("ClippedWings")] = true;
                         }
-                        if (!npc.dontTakeDamage)
+                        if (npc.dontTakeDamage)
+                        {
+                            npc.life = npc.lifeMax;
+                        }
+                        else
                         {
                             if (++Counter > 180)
                             {
@@ -2164,7 +2168,11 @@ namespace FargowiltasSouls.NPCs
                             npc.netUpdate = true;
                             npc.buffImmune[mod.BuffType("ClippedWings")] = true;
                         }
-                        if (!npc.dontTakeDamage)
+                        if (npc.dontTakeDamage)
+                        {
+                            npc.life = npc.lifeMax;
+                        }
+                        else
                         {
                             if (++Timer > 240)
                             {
@@ -2196,7 +2204,11 @@ namespace FargowiltasSouls.NPCs
                         Aura(npc, 5000, mod.BuffType("Atrophied"), false, 20);
                         Aura(npc, 5000, mod.BuffType("Jammed"));
                         Aura(npc, 5000, mod.BuffType("ReverseManaFlow"));
-                        if (!npc.dontTakeDamage)
+                        if (npc.dontTakeDamage)
+                        {
+                            npc.life = npc.lifeMax;
+                        }
+                        else
                         {
                             if (++Timer > 420)
                             {
@@ -2239,7 +2251,16 @@ namespace FargowiltasSouls.NPCs
                         Aura(npc, 5000, mod.BuffType("Atrophied"), false, DustID.Vortex);
                         Aura(npc, 5000, mod.BuffType("ReverseManaFlow"));
                         Aura(npc, 5000, mod.BuffType("Antisocial"));
-                        if (!npc.dontTakeDamage)
+                        if (npc.dontTakeDamage)
+                        {
+                            npc.life = npc.lifeMax;
+                            if (++Counter2 > 180)
+                            {
+                                Counter2 = 0;
+                                npc.netUpdate = true;
+                            }
+                        }
+                        else
                         {
                             if (++Counter > 360) //triggers "shield going down" animation
                             {

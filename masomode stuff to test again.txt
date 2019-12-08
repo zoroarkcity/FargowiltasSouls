@@ -104,6 +104,10 @@ fixed mutant antibodies fucking truffle worm ex
 toggle for pearlwood effect
 added telegraph for mutant's aim prediction attacks
 fixed pillars being immortal in mp
+mutant shouldnt bump you from eyes to bomb anymore
+revives shouldnt be memed by mutant fang anymore
+hellzone has 66% chance to not consume ammo
+fixed pillar health when relogging in mp i think
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
