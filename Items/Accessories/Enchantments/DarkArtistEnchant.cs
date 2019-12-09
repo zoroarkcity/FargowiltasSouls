@@ -17,6 +17,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 
             string tooltip =
 @"'The shadows hold more than they seem'
+The player has a Flameburst Tower behind their back at all times that fires at nearby enemies. 
+It has a slow fire rate and its fireballs travel slowly, but they create a large explosion on hit, and home in on enemies.
+
+
+
 While attacking, Flameburst shots manifest themselves from your shadows
 Greatly enhances Flameburst effectiveness
 Summons a pet Flickerwick";
@@ -63,6 +68,7 @@ Summons a pet Flickerwick";
             recipe.AddIngredient(ItemID.ApprenticeAltHead);
             recipe.AddIngredient(ItemID.ApprenticeAltShirt);
             recipe.AddIngredient(ItemID.ApprenticeAltPants);
+            //apprentice enchant
             
             if(Fargowiltas.Instance.ThoriumLoaded)
             {      
@@ -80,6 +86,9 @@ Summons a pet Flickerwick";
                 recipe.AddIngredient(ItemID.ShadowFlameHexDoll);
                 recipe.AddIngredient(ItemID.InfernoFork);
             }
+
+
+            //betsy wrath
             
             recipe.AddIngredient(ItemID.DD2PetGhost);
             

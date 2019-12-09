@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             string tooltip =
 @"'The jungle's essence crystallizes around you'
 Summons a ring of leaf crystals to shoot at nearby enemies
-Taking damage will release a lingering spore explosion
+Jumping will release a lingering spore explosion
 All herb collection is doubled
 Effects of Flower Boots
 Summons a pet Seedling";

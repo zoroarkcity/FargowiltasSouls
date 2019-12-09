@@ -1677,24 +1677,45 @@ namespace FargowiltasSouls.Projectiles
             Player player = Main.player[projectile.owner];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (!townNPCProj && modPlayer.CobaltEnchant && SoulConfig.Instance.GetValue("Cobalt Shards") && modPlayer.CobaltCD == 0 && CanSplit && projectile.friendly && projectile.damage > 0  && !projectile.minion && projectile.aiStyle != 19 && !Rotate && Main.rand.Next(4) == 0)
+            if (!townNPCProj && CanSplit && projectile.friendly && projectile.damage > 0 && !projectile.minion && projectile.aiStyle != 19 && !Rotate)
             {
-                int damage = 40;
-                if(modPlayer.EarthForce)
-                    damage = 80;
-
-                Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 27);
-
-                for (int i = 0; i < 3; i++)
+                if (modPlayer.CobaltEnchant && SoulConfig.Instance.GetValue("Cobalt Shards") && modPlayer.CobaltCD == 0 && Main.rand.Next(4) == 0)
                 {
-                    float velX = -projectile.velocity.X * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
-                    float velY = -projectile.velocity.Y * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
-                    int p = Projectile.NewProjectile(projectile.position.X + velX, projectile.position.Y + velY, velX, velY, ProjectileID.CrystalShard, damage, 0f, projectile.owner);
+                    int damage = 40;
+                    if (modPlayer.EarthForce)
+                        damage = 80;
 
-                    Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                    Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 27);
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        float velX = -projectile.velocity.X * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
+                        float velY = -projectile.velocity.Y * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
+                        int p = Projectile.NewProjectile(projectile.position.X + velX, projectile.position.Y + velY, velX, velY, ProjectileID.CrystalShard, damage, 0f, projectile.owner);
+
+                        Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                    }
+
+                    modPlayer.CobaltCD = 60;
+                }
+                else if (modPlayer.AncientCobaltEnchant && SoulConfig.Instance.GetValue("Ancient Cobalt Stingers") && modPlayer.CobaltCD == 0 && Main.rand.Next(5) == 0)
+                {
+                    //Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 27);
+
+                   Projectile[] projs = XWay(3, projectile.Center, ProjectileID.HornetStinger, 5f, 15, 0);
+
+                    for (int i = 0; i < projs.Length; i++)
+                    {
+                        projs[i].penetrate = 3;
+                        projs[i].timeLeft /= 2;
+                    }
+
+                    modPlayer.CobaltCD = 60;
                 }
 
-                modPlayer.CobaltCD = 60;
+
+
+                
             }
         }
 
@@ -1721,7 +1742,7 @@ namespace FargowiltasSouls.Projectiles
 
         public static Projectile[] XWay(int num, Vector2 pos, int type, float speed, int damage, float knockback)
         {
-            Projectile[] projs = new Projectile[16];
+            Projectile[] projs = new Projectile[num];
             double spread = 2 * Math.PI / num;
             for (int i = 0; i < num; i++)
                 projs[i] = NewProjectileDirectSafe(pos, new Vector2(speed, speed).RotatedBy(spread * i), type, damage, knockback, Main.myPlayer);

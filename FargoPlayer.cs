@@ -11,8 +11,6 @@ using Terraria.ModLoader.IO;
 using Terraria.Graphics.Capture;
 using FargowiltasSouls.NPCs;
 using FargowiltasSouls.Projectiles;
-using FargowiltasSouls.Buffs;
-using FargowiltasSouls.Buffs.Masomode;
 using ThoriumMod;
 using ThoriumMod.Projectiles;
 
@@ -54,6 +52,7 @@ namespace FargowiltasSouls
         public bool FossilBones = false;
         private int boneCD = 0;
         public bool JungleEnchant;
+        private int jungleCD;
         public bool ElementEnchant;
         public bool ShroomEnchant;
         public bool CobaltEnchant;
@@ -130,6 +129,15 @@ namespace FargowiltasSouls
         public bool SuperBleed;
         public bool PearlEnchant;
 
+        public bool RainEnchant;
+        public bool AncientCobaltEnchant;
+        public bool AncientShadowEnchant;
+        public bool SquireEnchant;
+        public bool ApprenticeEnchant;
+        public bool HuntressEnchant;
+        public bool MonkEnchant;
+        public bool EskimoEnchant;
+
         public bool CosmoForce;
         public bool EarthForce;
         public bool LifeForce;
@@ -141,6 +149,7 @@ namespace FargowiltasSouls
         public bool WoodForce;
 
         //thorium 
+        public bool FungusEnchant;
         public bool WarlockEnchant;
         public bool SacredEnchant;
         public bool BinderEnchant;
@@ -519,6 +528,15 @@ namespace FargowiltasSouls
             SuperBleed = false;
             PearlEnchant = false;
 
+            RainEnchant = false;
+            AncientCobaltEnchant = false;
+            AncientShadowEnchant = false;
+            SquireEnchant = false;
+            ApprenticeEnchant = false;
+            HuntressEnchant = false;
+            MonkEnchant = false;
+            EskimoEnchant = false;
+
             CosmoForce = false;
             EarthForce = false;
             LifeForce = false;
@@ -530,6 +548,7 @@ namespace FargowiltasSouls
             WoodForce = false;
 
             //thorium
+            FungusEnchant = false;
             WarlockEnchant = false;
             SacredEnchant = false;
             BinderEnchant = false;
@@ -735,7 +754,6 @@ namespace FargowiltasSouls
 
         public override void PreUpdate()
         {
-
             if (HurtTimer > 0)
                 HurtTimer--;
 
@@ -1029,7 +1047,7 @@ namespace FargowiltasSouls
                     Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, mod.ProjectileType("GoldShellProj"), 0, 0, Main.myPlayer);
             }
 
-            if (CobaltEnchant && CobaltCD > 0)
+            if ((CobaltEnchant || AncientCobaltEnchant) && CobaltCD > 0)
                 CobaltCD--;
 
             if (LihzahrdTreasureBox && player.gravDir > 0 && SoulConfig.Instance.GetValue("Lihzahrd Ground Pound"))
@@ -1804,7 +1822,7 @@ namespace FargowiltasSouls
         {
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
 
-            if (ShroomEnchant && !TerrariaSoul && Main.rand.Next(5) == 0)
+            if (FungusEnchant && !ThoriumSoul && Main.rand.Next(5) == 0)
                 target.AddBuff(thorium.BuffType("Mycelium"), 120);
 
             if (proj.type == thorium.ProjectileType("MeteorPlasmaDamage") || proj.type == thorium.ProjectileType("PyroBurst") || proj.type == thorium.ProjectileType("LightStrike") || proj.type == thorium.ProjectileType("WhiteFlare") || proj.type == thorium.ProjectileType("CryoDamage") || proj.type == thorium.ProjectileType("MixtapeNote") || proj.type == thorium.ProjectileType("DragonPulse"))
@@ -1992,7 +2010,7 @@ namespace FargowiltasSouls
         {
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
 
-            if (ShroomEnchant && !TerrariaSoul && Main.rand.Next(5) == 0)
+            if (FungusEnchant && !ThoriumSoul && Main.rand.Next(5) == 0)
                 target.AddBuff(thorium.BuffType("Mycelium"), 120);
 
             if (TideTurnerEnchant)
@@ -2170,7 +2188,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (PearlEnchant && SoulConfig.Instance.GetValue("Pearlwood Rain") && proj.type != ProjectileID.HallowStar && proj.damage > 0)
+            if (PearlEnchant && SoulConfig.Instance.GetValue("Pearlwood Rain") && Main.rand.Next(4) == 0 && proj.type != ProjectileID.HallowStar && proj.damage > 0)
             {
                 //holy stars
                 Main.PlaySound(SoundID.Item10, proj.position);
@@ -2507,7 +2525,8 @@ namespace FargowiltasSouls
             if (SoulConfig.Instance.GetValue("Spawn Divers") && ThoriumEnchant && NPC.CountNPCS(thorium.NPCType("Diverman")) < 5 && Main.rand.Next(20) == 0)
             {
                 int diver = NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, thorium.NPCType("Diverman"));
-                Main.npc[diver].AddBuff(BuffID.ShadowFlame, 3600);
+                Main.npc[diver].AddBuff(BuffID.ShadowFlame, 9999999);
+                Main.npc[diver].AddBuff(BuffID.CursedInferno, 9999999);
             }
 
             if (SolarEnchant && !TerrariaSoul && Main.rand.Next(4) == 0)
@@ -2907,13 +2926,6 @@ namespace FargowiltasSouls
 
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
-            if (JungleEnchant && SoulConfig.Instance.GetValue("Jungle Spores"))
-            {
-                int dmg = NatureForce ? 100 : 30;
-                Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 62);
-                Projectile[] projs2 = FargoGlobalProjectile.XWay(10, player.Center, mod.ProjectileType("SporeBoom"), 3f, HighestDamageTypeScaling(dmg), 0f);
-            }
-
             if (ShadeEnchant && SoulConfig.Instance.GetValue("Blood Geyser On Hit"))
             {
                 for (int i = 0; i < 10; i++)
@@ -3893,6 +3905,19 @@ namespace FargowiltasSouls
         {
             JungleEnchant = true;
 
+            if (SoulConfig.Instance.GetValue("Jungle Spores") && player.jump > 0 && jungleCD == 0)
+            {
+                int dmg = NatureForce ? 50 : 15;
+                Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 62);
+                FargoGlobalProjectile.XWay(10, player.Center, mod.ProjectileType("SporeBoom"), 3f, HighestDamageTypeScaling(dmg), 0f);
+                jungleCD = 30;
+            }
+
+            if (jungleCD != 0)
+            {
+                jungleCD--;
+            }
+
             if (NatureForce) return;
 
             player.cordage = true;
@@ -4574,6 +4599,32 @@ namespace FargowiltasSouls
                     }
 
                     Projectile.NewProjectile(mouse.X, mouse.Y - 10, 0f, 0f, mod.ProjectileType("PalmTreeSentry"), WoodForce ? 45 : 15, 0f, player.whoAmI);
+                }
+            }
+        }
+
+        public void HuntressEffect()
+        {
+
+        }
+
+        public void EskimoEffect()
+        {
+
+        }
+
+        public void AncientShadowEffect()
+        {
+            if (SoulConfig.Instance.GetValue("Ancient Shadow Orbs") && player.ownedProjectileCounts[mod.ProjectileType("AncientShadowOrb")] == 0)
+            {
+                const int max = 2;
+                float rotation = 2f * (float)Math.PI / max;
+
+                for (int i = 0; i < max; i++)
+                {
+                    Vector2 spawnPos = player.Center + new Vector2(60, 0f).RotatedBy(rotation * i);
+                    int p = Projectile.NewProjectile(spawnPos, Vector2.Zero, mod.ProjectileType("AncientShadowOrb"), 0, 10f, player.whoAmI, 0, rotation * i);
+                    Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
                 }
             }
         }

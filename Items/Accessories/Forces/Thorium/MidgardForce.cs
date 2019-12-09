@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
             DisplayName.SetDefault("Force of Midgard");
             Tooltip.SetDefault(
 @"'Behold the power of Mankind...'
-All armor bonuses from Lodestone, Valadium, and Illumite
+All armor bonuses from Lodestone, Valadium, Illumite, and Shade Master
 All armor bonuses from Jester, Thorium, and Terrarium
 Effects of Astro-Beetle Husk and Eye of the Beholder
 Effects of Crietz and Terrarium Surround Sound
@@ -72,6 +72,9 @@ Summons a pet Pink Slime");
             //illumite
             modPlayer.AddPet("Pink Slime Pet", hideVisual, thorium.BuffType("PinkSlimeBuff"), thorium.ProjectileType("PinkSlime"));
             modPlayer.IllumiteEnchant = true;
+
+            //shade
+            thoriumPlayer.shadeSet = true;
 
             if (SoulConfig.Instance.GetValue("Terrarium Spirits"))
             {
@@ -125,6 +128,7 @@ Summons a pet Pink Slime");
             recipe.AddIngredient(null, "LodestoneEnchant");
             recipe.AddIngredient(null, "ValadiumEnchant");
             recipe.AddIngredient(null, "IllumiteEnchant");
+            recipe.AddIngredient(null, "ShadeMasterEnchant");
             recipe.AddIngredient(null, "TerrariumEnchant");
 
             recipe.AddTile(TileID.LunarCraftingStation);

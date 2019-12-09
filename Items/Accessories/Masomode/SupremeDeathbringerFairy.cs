@@ -5,6 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
+    [AutoloadEquip(EquipType.Shield)]
     public class SupremeDeathbringerFairy : ModItem
     {
         public override void SetStaticDefaults()

@@ -5417,7 +5417,7 @@ namespace FargowiltasSouls.NPCs
                                 masoBool[0] = true;
                                 if (Main.netMode != 1)
                                 {
-                                    bool recolor = SoulConfig.Instance.masoTogDict.ContainsKey("Boss Recolors (Restart to use)") && SoulConfig.Instance.masoTogDict["Boss Recolors (Restart to use)"] && FargoSoulsWorld.MasochistMode;
+                                    bool recolor = SoulConfig.Instance.bossRecolors && FargoSoulsWorld.MasochistMode;
                                     int type = recolor ? mod.NPCType("BrainIllusion2") : mod.NPCType("BrainIllusion");
                                     int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, npc.whoAmI, npc.whoAmI, -1, 1);
                                     if (n != 200 && Main.netMode == 2)
@@ -11825,7 +11825,7 @@ namespace FargowiltasSouls.NPCs
             if (Main.dedServ || Main.netMode == 2)
                 return;
 
-            bool recolor = SoulConfig.Instance.masoTogDict.ContainsKey("Boss Recolors (Restart to use)") && SoulConfig.Instance.masoTogDict["Boss Recolors (Restart to use)"] && FargoSoulsWorld.MasochistMode;
+            bool recolor = SoulConfig.Instance.bossRecolors && FargoSoulsWorld.MasochistMode;
             if (recolor || Fargowiltas.Instance.LoadedNewSprites)
             {
                 Fargowiltas.Instance.LoadedNewSprites = true;

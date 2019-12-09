@@ -57,12 +57,28 @@ Thorium
 -Added Berserker Blade to Berserker Enchant
 -Changed Berserker to increase attack speed as you lose health instead of damage
 -Added Berserker Enchant to Force of Helheim
+-Removed Fungus Enchant from Shroomite Enchant, added it to Force of Muspelheim
+-Added Flight Enchant to Force of Muspelheim
+-Added Funggat to Shroomite Enchantment
+-Removed Shade Master from Shinobi Enchant
+-Added it to Force of Midgard
+-Removed Ninja Enchant from Shade Master
+-Added Corrodling Staff to Shade Master
 
 
 
+-Added Ancient Cobalt Enchant and Ancient Shadow Enchantment
+-Buffed Cobalt to produce 5 shards instead of 3
+-Chloro crystals will disappear when you die now
 
+-Added sprite for Dubious Circuitry, Oceanic Maul, and Oceanic Seal
+-Fixed True Mutant Head sprite sheet
+-Added a shield sprite to Iron Enchantment and Slimy Shield
+-Thorium Enchant divers die more quickly
+-World Shaper Soul's Builder Mode now makes all tile producing items have maximum use time
+-Added Eurus Socks (add to mutant mod ech)
+-Changed Jungle Enchant to activate on jump, lowered spore duration and damage
+-Ocean Enchantment, added Ocean Polearm, removed Breathing Reed
 
-
--Added Flight Enchant to 
 
 -See the full changelog on the wiki

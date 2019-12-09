@@ -5,19 +5,20 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class MonkEnchant : ModItem
+    public class AncientShadowEnchant : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Monk Enchantment");
+            DisplayName.SetDefault("Ancient Shadow Enchantment");
             Tooltip.SetDefault(
-@"'Hours of Meditation have led to this…'
+@"''
 
-Lee Sin Q or R lol
+A Shadow Orb (or 2) will orbit around the player a set distance away. 
+Attacking the Shadow Orb will cause it to release a burst of 2-3 homing shadow energy that each deal a percentage of the weapon's damage and inflicts Shadowflame for a short period of time.
 
-Lightning Aura can now crit and strikes faster
+After being struck, the Shadow Orb cannot be hit for 3 seconds.
 
 ");
         }
@@ -34,7 +35,10 @@ Lightning Aura can now crit and strikes faster
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().MonkEnchant = true;
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            modPlayer.AncientShadowEnchant = true;
+            modPlayer.AncientShadowEffect();
+
         }
 
         public override void AddRecipes()
@@ -44,17 +48,12 @@ Lightning Aura can now crit and strikes faster
             armor 1
             armor 2
             armor 3
-            monk belt
-            sleepy octopod
-            ghastly glaive
-            lightning staff tier 2
+            
+            shadow enchant
 
-            Dao of Pow
-Fetid Baghnakhs
-Ale Tosser
-
-Schmelze (with Thorium)
-Rocket Fist (with Thorium)
+            Ancient Iron Helmet
+Ancient Gold Helmet
+Ancient Shadow Armor, Ancient Iron Helmet, Ancient Gold Helmet, Shadowflame Hades Dye, Shadowflame Bow
 
 
 

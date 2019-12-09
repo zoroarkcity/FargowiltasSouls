@@ -20,8 +20,8 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
             DisplayName.SetDefault("Force of Muspelheim");
             Tooltip.SetDefault(
 @"'A blazing heat, the mark of Surtr...'
-All armor bonuses from Sandstone, Danger, and Feral Fur
-All armor bonuses from Living Wood, Bulb, and Life Bloom
+All armor bonuses from Sandstone, Danger, Flight, and Fungus
+All armor bonuses from Feral Fur, Living Wood, Bulb, and Life Bloom
 Effects of Night Shade Petal, Flawless Chrysalis, and Bee Booties");
             DisplayName.AddTranslation(GameCulture.Chinese, "穆斯贝尔海姆之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -83,6 +83,10 @@ Effects of Night Shade Petal, Flawless Chrysalis, and Bee Booties");
             player.buffImmune[BuffID.Venom] = true;
             //night shade petal
             thoriumPlayer.nightshadeBoost = true;
+            //flight
+            modPlayer.wingTimeModifier += 1f;
+            //fungus
+            modPlayer.FungusEnchant = true;
             //feral fur
             modPlayer.FeralFurEnchant = true;
 
@@ -96,7 +100,9 @@ Effects of Night Shade Petal, Flawless Chrysalis, and Bee Booties");
 
             recipe.AddIngredient(null, "SandstoneEnchant");
             recipe.AddIngredient(null, "DangerEnchant");
+            recipe.AddIngredient(null, "FlightEnchant");
             recipe.AddIngredient(null, "FeralFurEnchant");
+            recipe.AddIngredient(null, "FungusEnchant");
             recipe.AddIngredient(null, "LifeBloomEnchant");
 
             recipe.AddTile(TileID.LunarCraftingStation);
