@@ -104,7 +104,7 @@ namespace FargowiltasSouls
 
         [Label("$Mods.FargowiltasSouls.GoldConfig")]
         [DefaultValue(true)]
-        public bool goldCoin;
+        public bool LuckyCoin;
 
         [Label("$Mods.FargowiltasSouls.RedRidingConfig")]
         [DefaultValue(true)]
@@ -243,353 +243,331 @@ namespace FargowiltasSouls
         //death fairy
         [Label("$Mods.FargowiltasSouls.MasoSlimeConfig")]
         [DefaultValue(true)]
-        public bool slimeShield;
+        public bool SlimyShield;
 
         [Label("$Mods.FargowiltasSouls.MasoEyeConfig")]
         [DefaultValue(true)]
-        public bool eyeScythes;
+        public bool AgitatedLens;
 
         [Label("$Mods.FargowiltasSouls.MasoSkeleConfig")]
         [DefaultValue(true)]
-        public bool skeleArms;
+        public bool NecromanticBrew;
 
         //pure heart
         [Label("$Mods.FargowiltasSouls.MasoEaterConfig")]
         [DefaultValue(true)]
-        public bool tinyEaters;
+        public bool CorruptHeart;
 
         [Label("$Mods.FargowiltasSouls.MasoBrainConfig")]
         [DefaultValue(true)]
-        public bool awwMan;
+        public bool GuttedHeart;
 
         //bionomic cluster
         [Label("$Mods.FargowiltasSouls.MasoConcoctionConfig")]
         [DefaultValue(true)]
-        public bool concoction;
+        public bool TimsConcoction;
 
         [Label("$Mods.FargowiltasSouls.MasoRainbowConfig")]
         [DefaultValue(true)]
-        public bool rainSlime;
+        public bool RainbowSlime;
 
         [Label("$Mods.FargowiltasSouls.MasoFrigidConfig")]
         [DefaultValue(true)]
-        public bool frostFire;
+        public bool FrigidGemstone;
 
         [Label("$Mods.FargowiltasSouls.MasoNymphConfig")]
         [DefaultValue(true)]
-        public bool heartAttacks;
+        public bool NymphPerfume;
 
         [Label("$Mods.FargowiltasSouls.MasoSqueakConfig")]
         [DefaultValue(true)]
-        public bool squeakToy;
+        public bool SqueakyToy;
 
         [Label("$Mods.FargowiltasSouls.MasoPouchConfig")]
         [DefaultValue(true)]
-        public bool pouchTentacles;
+        public bool WretchedPouch;
 
         [Label("$Mods.FargowiltasSouls.MasoClippedConfig")]
         [DefaultValue(true)]
-        public bool clipAttack;
+        public bool DragonFang;
 
         //dubious circutry
         [Label("$Mods.FargowiltasSouls.MasoLightningConfig")]
         [DefaultValue(true)]
-        public bool lightRod;
+        public bool LightningRod;
 
         [Label("$Mods.FargowiltasSouls.MasoProbeConfig")]
         [DefaultValue(true)]
-        public bool destroyProbe;
+        public bool ProbeMinion;
 
         //heart of the masochist
         [Label("$Mods.FargowiltasSouls.MasoGravConfig")]
         [DefaultValue(true)]
-        public bool gravGlobe;
+        public bool GravityControl;
 
         [Label("$Mods.FargowiltasSouls.MasoGrav2Config")]
         [DefaultValue(true)]
-        public bool gravGlobe2;
+        public bool StabilizedGravity;
 
         [Label("$Mods.FargowiltasSouls.MasoPump")]
         [DefaultValue(true)]
-        public bool pumpCape;
+        public bool PumpkingCape;
 
         [Label("$Mods.FargowiltasSouls.MasoFlockoConfig")]
         [DefaultValue(true)]
-        public bool flockoMinion;
+        public bool FlockoMinion;
 
         [Label("$Mods.FargowiltasSouls.MasoUfoConfig")]
         [DefaultValue(true)]
-        public bool ufoMinion;
+        public bool UFOMinion;
 
         [Label("$Mods.FargowiltasSouls.MasoTrueEyeConfig")]
         [DefaultValue(true)]
-        public bool trueEoc;
+        public bool TrueEyes;
 
         //chalice of the moon
         [Label("$Mods.FargowiltasSouls.MasoCelestConfig")]
         [DefaultValue(true)]
-        public bool celestRune;
+        public bool CelestialRune;
 
         [Label("$Mods.FargowiltasSouls.MasoPlantConfig")]
         [DefaultValue(true)]
-        public bool plantMinion;
+        public bool PlanteraMinion;
 
         [Label("$Mods.FargowiltasSouls.MasoGolemConfig")]
         [DefaultValue(true)]
-        public bool golemGround;
+        public bool LihzahrdBoxGeysers;
 
         [Label("$Mods.FargowiltasSouls.MasoVisionConfig")]
         [DefaultValue(true)]
-        public bool ancientVision;
+        public bool AncientVisions;
 
         [Label("$Mods.FargowiltasSouls.MasoCultistConfig")]
         [DefaultValue(true)]
-        public bool cultMinion;
+        public bool CultistMinion;
 
         [Label("$Mods.FargowiltasSouls.MasoFishronConfig")]
         [DefaultValue(true)]
-        public bool fishMinion;
+        public bool FishronMinion;
 
         //lump of flesh
         [Label("$Mods.FargowiltasSouls.MasoPugentConfig")]
         [DefaultValue(true)]
-        public bool pungentEye;
+        public bool PungentEye;
 
         //mutant armor
         [Label("$Mods.FargowiltasSouls.MasoAbomConfig")]
         [DefaultValue(true)]
-        public bool abomMinion;
+        public bool AbomMinion;
 
         [Label("$Mods.FargowiltasSouls.MasoRingConfig")]
         [DefaultValue(true)]
-        public bool ringMinion;
+        public bool RingMinion;
 
         //other
         [Label("$Mods.FargowiltasSouls.MasoSpikeConfig")]
         [DefaultValue(true)]
-        public bool spikeHit;
+        public bool LihzahrdBoxSpikyBalls;
 
         [Label("$Mods.FargowiltasSouls.MasoIconConfig")]
         [DefaultValue(true)]
-        public bool sinIcon;
+        public bool SinisterIcon;
 
         [Label("$Mods.FargowiltasSouls.MasoBossRecolors")]
         [DefaultValue(true)]
-        public bool bossRecolors;
+        public bool BossRecolors;
 
 
-        [Label("Security wallet")]
-        public WalletMenu wallet = new WalletMenu();
+        [Header("$Mods.FargowiltasSouls.WalletHeader")]
+        [Label("$Mods.FargowiltasSouls.WalletWardingConfig")]
+        [DefaultValue(true)]
+        public bool Warding;
 
-        public class WalletMenu
-        {
-            [Label("$Mods.FargowiltasSouls.WalletWardingConfig")]
-            [DefaultValue(true)]
-            public bool warding;
+        [Label("$Mods.FargowiltasSouls.WalletViolentConfig")]
+        [DefaultValue(true)]
+        public bool Violent;
 
-            [Label("$Mods.FargowiltasSouls.WalletViolentConfig")]
-            [DefaultValue(true)]
-            public bool violent;
+        [Label("$Mods.FargowiltasSouls.WalletQuickConfig")]
+        [DefaultValue(true)]
+        public bool Quick;
 
-            [Label("$Mods.FargowiltasSouls.WalletQuickConfig")]
-            [DefaultValue(true)]
-            public bool quick;
+        [Label("$Mods.FargowiltasSouls.WalletLuckyConfig")]
+        [DefaultValue(true)]
+        public bool Lucky;
 
-            [Label("$Mods.FargowiltasSouls.WalletLuckyConfig")]
-            [DefaultValue(true)]
-            public bool lucky;
+        [Label("$Mods.FargowiltasSouls.WalletMenacingConfig")]
+        [DefaultValue(true)]
+        public bool Menacing;
 
-            [Label("$Mods.FargowiltasSouls.WalletMenacingConfig")]
-            [DefaultValue(true)]
-            public bool menacing;
+        [Label("$Mods.FargowiltasSouls.WalletLegendaryConfig")]
+        [DefaultValue(true)]
+        public bool Legendary;
 
-            [Label("$Mods.FargowiltasSouls.WalletLegendaryConfig")]
-            [DefaultValue(true)]
-            public bool legendary;
+        [Label("$Mods.FargowiltasSouls.WalletUnrealConfig")]
+        [DefaultValue(true)]
+        public bool Unreal;
 
-            [Label("$Mods.FargowiltasSouls.WalletUnrealConfig")]
-            [DefaultValue(true)]
-            public bool unreal;
+        [Label("$Mods.FargowiltasSouls.WalletMythicalConfig")]
+        [DefaultValue(true)]
+        public bool Mythical;
 
-            [Label("$Mods.FargowiltasSouls.WalletMythicalConfig")]
-            [DefaultValue(true)]
-            public bool mythical;
+        [Label("$Mods.FargowiltasSouls.WalletGodlyConfig")]
+        [DefaultValue(true)]
+        public bool Godly;
 
-            [Label("$Mods.FargowiltasSouls.WalletGodlyConfig")]
-            [DefaultValue(true)]
-            public bool godly;
+        [Label("$Mods.FargowiltasSouls.WalletDemonicConfig")]
+        [DefaultValue(true)]
+        public bool Demonic;
 
-            [Label("$Mods.FargowiltasSouls.WalletDemonicConfig")]
-            [DefaultValue(true)]
-            public bool demonic;
+        [Label("$Mods.FargowiltasSouls.WalletRuthlessConfig")]
+        [DefaultValue(true)]
+        public bool Ruthless;
 
-            [Label("$Mods.FargowiltasSouls.WalletRuthlessConfig")]
-            [DefaultValue(true)]
-            public bool ruthless;
+        [Label("$Mods.FargowiltasSouls.WalletLightConfig")]
+        [DefaultValue(true)]
+        public bool Light;
 
-            [Label("$Mods.FargowiltasSouls.WalletLightConfig")]
-            [DefaultValue(true)]
-            public bool light;
+        [Label("$Mods.FargowiltasSouls.WalletDeadlyConfig")]
+        [DefaultValue(true)]
+        public bool Deadly;
 
-            [Label("$Mods.FargowiltasSouls.WalletDeadlyConfig")]
-            [DefaultValue(true)]
-            public bool deadly;
+        [Label("$Mods.FargowiltasSouls.WalletRapidConfig")]
+        [DefaultValue(true)]
+        public bool Rapid;
 
-            [Label("$Mods.FargowiltasSouls.WalletRapidConfig")]
-            [DefaultValue(true)]
-            public bool rapid;
-
-            public void Change()
-            {
-                SoulConfig.Instance.walletToggles["Warding"] = warding;
-                SoulConfig.Instance.walletToggles["Violent"] = violent;
-                SoulConfig.Instance.walletToggles["Quick"] = quick;
-                SoulConfig.Instance.walletToggles["Lucky"] = lucky;
-                SoulConfig.Instance.walletToggles["Menacing"] = menacing;
-                SoulConfig.Instance.walletToggles["Legendary"] = legendary;
-                SoulConfig.Instance.walletToggles["Unreal"] = unreal;
-                SoulConfig.Instance.walletToggles["Mythical"] = mythical;
-                SoulConfig.Instance.walletToggles["Godly"] = godly;
-                SoulConfig.Instance.walletToggles["Demonic"] = demonic;
-                SoulConfig.Instance.walletToggles["Ruthless"] = ruthless;
-                SoulConfig.Instance.walletToggles["Light"] = light;
-                SoulConfig.Instance.walletToggles["Deadly"] = deadly;
-                SoulConfig.Instance.walletToggles["Rapid"] = rapid;
-            }
-        }
         #endregion
 
         #region souls
         [Label("$Mods.FargowiltasSouls.MeleeConfig")]
         [DefaultValue(true)]
-        public bool gladSpeed;
+        public bool BerserkerAttackSpeed;
 
         [Label("$Mods.FargowiltasSouls.SniperConfig")]
         [DefaultValue(true)]
-        public bool sharpSniper;
+        public bool SniperScope;
 
         [Label("$Mods.FargowiltasSouls.UniverseConfig")]
         [DefaultValue(true)]
-        public bool universeSpeed;
+        public bool UniverseAttackSpeed;
 
         [Label("$Mods.FargowiltasSouls.MiningHuntConfig")]
         [DefaultValue(true)]
-        public bool mineHunt;
+        public bool MinerHunter;
 
         [Label("$Mods.FargowiltasSouls.MiningDangerConfig")]
         [DefaultValue(true)]
-        public bool mineDanger;
+        public bool MinerDanger;
 
         [Label("$Mods.FargowiltasSouls.MiningSpelunkConfig")]
         [DefaultValue(true)]
-        public bool mineSpelunk;
+        public bool MinerSpelunker;
 
         [Label("$Mods.FargowiltasSouls.MiningShineConfig")]
         [DefaultValue(true)]
-        public bool mineShine;
+        public bool MinerShine;
 
         [Label("$Mods.FargowiltasSouls.BuilderConfig")]
         [DefaultValue(true)]
-        public bool worldBuild;
+        public bool BuilderMode;
 
         [Label("$Mods.FargowiltasSouls.DefenseSporeConfig")]
         [DefaultValue(true)]
-        public bool colSpore;
+        public bool SporeSac;
 
         [Label("$Mods.FargowiltasSouls.DefenseStarConfig")]
         [DefaultValue(true)]
-        public bool colStar;
+        public bool StarCloak;
 
         [Label("$Mods.FargowiltasSouls.DefenseBeeConfig")]
         [DefaultValue(true)]
-        public bool colBee;
+        public bool BeesOnHit;
 
         [Label("$Mods.FargowiltasSouls.SupersonicConfig")]
         [DefaultValue(true)]
-        public bool supersonicSpeed;
+        public bool SupersonicSpeed;
 
         [Label("$Mods.FargowiltasSouls.EternityConfig")]
         [DefaultValue(true)]
-        public bool eternityStack;
+        public bool EternityStacking;
 
         #endregion
 
         #region pets
         [Label("$Mods.FargowiltasSouls.PetCatConfig")]
         [DefaultValue(true)]
-        public bool bCat;
+        public bool BlackCatPet;
 
         [Label("$Mods.FargowiltasSouls.PetCubeConfig")]
         [DefaultValue(true)]
-        public bool cCube;
+        public bool CompanionCubePet;
 
         [Label("$Mods.FargowiltasSouls.PetCurseSapConfig")]
         [DefaultValue(true)]
-        public bool cSapling;
+        public bool CursedSaplingPet;
 
         [Label("$Mods.FargowiltasSouls.PetDinoConfig")]
         [DefaultValue(true)]
-        public bool dino;
+        public bool DinoPet;
 
         [Label("$Mods.FargowiltasSouls.PetDragonConfig")]
         [DefaultValue(true)]
-        public bool dragon;
+        public bool DragonPet;
 
         [Label("$Mods.FargowiltasSouls.PetEaterConfig")]
         [DefaultValue(true)]
-        public bool eater;
+        public bool EaterPet;
 
         [Label("$Mods.FargowiltasSouls.PetEyeSpringConfig")]
         [DefaultValue(true)]
-        public bool eSpring;
+        public bool EyeSpringPet;
 
         [Label("$Mods.FargowiltasSouls.PetFaceMonsterConfig")]
         [DefaultValue(true)]
-        public bool fMonster;
+        public bool FaceMonsterPet;
 
         [Label("$Mods.FargowiltasSouls.PetGatoConfig")]
         [DefaultValue(true)]
-        public bool gato;
+        public bool GatoPet;
 
         [Label("$Mods.FargowiltasSouls.PetHornetConfig")]
         [DefaultValue(true)]
-        public bool hornet;
+        public bool HornetPet;
 
         [Label("$Mods.FargowiltasSouls.PetLizardConfig")]
         [DefaultValue(true)]
-        public bool lizard;
+        public bool LizardPet;
 
         [Label("$Mods.FargowiltasSouls.PetMinitaurConfig")]
         [DefaultValue(true)]
-        public bool mMinitaur;
+        public bool MinotaurPet;
 
         [Label("$Mods.FargowiltasSouls.PetParrotConfig")]
         [DefaultValue(true)]
-        public bool parrot;
+        public bool ParrotPet;
 
         [Label("$Mods.FargowiltasSouls.PetPenguinConfig")]
         [DefaultValue(true)]
-        public bool penguin;
+        public bool PenguinPet;
 
         [Label("$Mods.FargowiltasSouls.PetPupConfig")]
         [DefaultValue(true)]
-        public bool puppy;
+        public bool PuppyPet;
 
         [Label("$Mods.FargowiltasSouls.PetSeedConfig")]
         [DefaultValue(true)]
-        public bool seedling;
+        public bool SeedlingPet;
 
         [Label("$Mods.FargowiltasSouls.PetDGConfig")]
         [DefaultValue(true)]
-        public bool dGuard;
+        public bool DGPet;
 
         [Label("$Mods.FargowiltasSouls.PetSnowmanConfig")]
         [DefaultValue(true)]
-        public bool snowman;
+        public bool SnowmanPet;
 
         [Label("$Mods.FargowiltasSouls.PetSpiderConfig")]
         [DefaultValue(true)]
-        public bool spider;
+        public bool SpiderPet;
 
         [Label("$Mods.FargowiltasSouls.PetSquashConfig")]
         [DefaultValue(true)]
@@ -597,363 +575,363 @@ namespace FargowiltasSouls
 
         [Label("$Mods.FargowiltasSouls.PetTikiConfig")]
         [DefaultValue(true)]
-        public bool tiki;
+        public bool TikiPet;
 
         [Label("$Mods.FargowiltasSouls.PetShroomConfig")]
         [DefaultValue(true)]
-        public bool truffle;
+        public bool TrufflePet;
 
         [Label("$Mods.FargowiltasSouls.PetTurtleConfig")]
         [DefaultValue(true)]
-        public bool turtle;
+        public bool TurtlePet;
 
         [Label("$Mods.FargowiltasSouls.PetZephyrConfig")]
         [DefaultValue(true)]
-        public bool zFish;
+        public bool ZephyrFishPet;
 
         //LIGHT PETS
         [Label("$Mods.FargowiltasSouls.PetHeartConfig")]
         [DefaultValue(true)]
-        public bool cHeart;
+        public bool CrimsonHeartPet;
 
         [Label("$Mods.FargowiltasSouls.PetNaviConfig")]
         [DefaultValue(true)]
-        public bool fairy;
+        public bool FairyPet;
 
         [Label("$Mods.FargowiltasSouls.PetFlickerConfig")]
         [DefaultValue(true)]
-        public bool flick;
+        public bool FlickerwickPet;
 
         [Label("$Mods.FargowiltasSouls.PetLanturnConfig")]
         [DefaultValue(true)]
-        public bool mLanturn;
+        public bool MagicLanternPet;
 
         [Label("$Mods.FargowiltasSouls.PetOrbConfig")]
         [DefaultValue(true)]
-        public bool sOrb;
+        public bool ShadowOrbPet;
 
         [Label("$Mods.FargowiltasSouls.PetSuspEyeConfig")]
         [DefaultValue(true)]
-        public bool sEye;
+        public bool SuspiciousEyePet;
 
         [Label("$Mods.FargowiltasSouls.PetWispConfig")]
         [DefaultValue(true)]
-        public bool wisp;
+        public bool WispPet;
 
         #endregion
 
         #region thorium
         [Label("$Mods.FargowiltasSouls.ThoriumAirWalkersConfig")]
         [DefaultValue(true)]
-        public bool airWalkers;
+        public bool AirWalkers;
 
         [Label("$Mods.FargowiltasSouls.ThoriumCrystalScorpionConfig")]
         [DefaultValue(true)]
-        public bool crystalScorpion;
+        public bool CrystalScorpion;
 
         [Label("$Mods.FargowiltasSouls.ThoriumYumasPendantConfig")]
         [DefaultValue(true)]
-        public bool yumasPendant;
+        public bool YumasPendant;
 
         [Label("$Mods.FargowiltasSouls.ThoriumHeadMirrorConfig")]
         [DefaultValue(true)]
-        public bool headMirror;
+        public bool HeadMirror;
 
         [Label("$Mods.FargowiltasSouls.ThoriumCelestialAuraConfig")]
         [DefaultValue(true)]
-        public bool celestialAura;
+        public bool CelestialAura;
 
         [Label("$Mods.FargowiltasSouls.ThoriumAscensionStatueConfig")]
         [DefaultValue(true)]
-        public bool ascensionStatue;
+        public bool AscensionStatue;
 
         [Label("$Mods.FargowiltasSouls.ThoriumManaBootsConfig")]
         [DefaultValue(true)]
-        public bool manaBoots;
+        public bool ManaBoots;
 
         [Label("$Mods.FargowiltasSouls.ThoriumBronzeLightningConfig")]
         [DefaultValue(true)]
-        public bool bronzeLightning;
+        public bool BronzeLightning;
 
         [Label("$Mods.FargowiltasSouls.ThoriumIllumiteMissileConfig")]
         [DefaultValue(true)]
-        public bool illumiteMissile;
+        public bool IllumiteMissile;
 
         [Label("$Mods.FargowiltasSouls.ThoriumJesterBellConfig")]
         [DefaultValue(true)]
-        public bool jesterBell;
+        public bool JesterBell;
 
         [Label("$Mods.FargowiltasSouls.ThoriumBeholderEyeConfig")]
         [DefaultValue(true)]
-        public bool beholderEye;
+        public bool BeholderEye;
 
         [Label("$Mods.FargowiltasSouls.ThoriumTerrariumSpiritsConfig")]
         [DefaultValue(true)]
-        public bool terrariumSpirits;
+        public bool TerrariumSpirits;
 
         [Label("$Mods.FargowiltasSouls.ThoriumCrietzConfig")]
         [DefaultValue(true)]
-        public bool crietz;
+        public bool Crietz;
 
         [Label("$Mods.FargowiltasSouls.ThoriumYewCritsConfig")]
         [DefaultValue(true)]
-        public bool yewCrits;
+        public bool YewCrits;
 
         [Label("$Mods.FargowiltasSouls.ThoriumCryoDamageConfig")]
         [DefaultValue(true)]
-        public bool cryoDamage;
+        public bool CryoDamage;
 
         [Label("$Mods.FargowiltasSouls.ThoriumWhiteDwarfConfig")]
         [DefaultValue(true)]
-        public bool whiteDwarf;
+        public bool WhiteDwarf;
 
         [Label("$Mods.FargowiltasSouls.ThoriumTideFoamConfig")]
         [DefaultValue(true)]
-        public bool tideFoam;
+        public bool TideFoam;
 
         [Label("$Mods.FargowiltasSouls.ThoriumWhisperingTentaclesConfig")]
         [DefaultValue(true)]
-        public bool whisperingTentacles;
+        public bool WhisperingTentacles;
 
         [Label("$Mods.FargowiltasSouls.ThoriumIcyBarrierConfig")]
         [DefaultValue(true)]
-        public bool icyBarrier;
+        public bool IcyBarrier;
 
         [Label("$Mods.FargowiltasSouls.ThoriumPlagueFlaskConfig")]
         [DefaultValue(true)]
-        public bool plagueFlask;
+        public bool PlagueFlask;
 
         [Label("$Mods.FargowiltasSouls.ThoriumTideGlobulesConfig")]
         [DefaultValue(true)]
-        public bool tideGlobules;
+        public bool TideGlobules;
 
         [Label("$Mods.FargowiltasSouls.ThoriumTideDaggersConfig")]
         [DefaultValue(true)]
-        public bool tideDaggers;
+        public bool TideDaggers;
 
         [Label("$Mods.FargowiltasSouls.ThoriumFolvAuraConfig")]
         [DefaultValue(true)]
-        public bool folvAura;
+        public bool FolvAura;
 
         [Label("$Mods.FargowiltasSouls.ThoriumFolvBoltsConfig")]
         [DefaultValue(true)]
-        public bool folvBolts;
+        public bool FolvBolts;
 
         [Label("$Mods.FargowiltasSouls.ThoriumVampireGlandConfig")]
         [DefaultValue(true)]
-        public bool vampireGland;
+        public bool VampireGland;
 
         [Label("$Mods.FargowiltasSouls.ThoriumFleshDropsConfig")]
         [DefaultValue(true)]
-        public bool fleshDrops;
+        public bool FleshDrops;
 
         [Label("$Mods.FargowiltasSouls.ThoriumDragonFlamesConfig")]
         [DefaultValue(true)]
-        public bool dragonFlames;
+        public bool DragonFlames;
 
         [Label("$Mods.FargowiltasSouls.ThoriumHarbingerOverchargeConfig")]
         [DefaultValue(true)]
-        public bool harbingerOvercharge;
+        public bool HarbingerOvercharge;
 
         [Label("$Mods.FargowiltasSouls.ThoriumAssassinDamageConfig")]
         [DefaultValue(true)]
-        public bool assassinDamage;
+        public bool AssassinDamage;
 
         [Label("$Mods.FargowiltasSouls.ThoriumpyromancerBurstsConfig")]
         [DefaultValue(true)]
-        public bool pyromancerBursts;
+        public bool PyromancerBursts;
 
         [Label("$Mods.FargowiltasSouls.ThoriumConduitShieldConfig")]
         [DefaultValue(true)]
-        public bool conduitShield;
+        public bool ConduitShield;
 
         [Label("$Mods.FargowiltasSouls.ThoriumIncandescentSparkConfig")]
         [DefaultValue(true)]
-        public bool incandescentSpark;
+        public bool IncandescentSpark;
 
         [Label("$Mods.FargowiltasSouls.ThoriumGreedyMagnetConfig")]
         [DefaultValue(true)]
-        public bool greedyMagnet;
+        public bool GreedyMagnet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumCyberStatesConfig")]
         [DefaultValue(true)]
-        public bool cyberStates;
+        public bool CyberStates;
 
         [Label("$Mods.FargowiltasSouls.ThoriumMetronomeConfig")]
         [DefaultValue(true)]
-        public bool metronome;
+        public bool Metronome;
 
         [Label("$Mods.FargowiltasSouls.ThoriumMixTapeConfig")]
         [DefaultValue(true)]
-        public bool mixTape;
+        public bool MixTape;
 
         [Label("$Mods.FargowiltasSouls.ThoriumLodestoneConfig")]
         [DefaultValue(true)]
-        public bool lodestoneResist;
+        public bool LodestoneResist;
 
         [Label("$Mods.FargowiltasSouls.ThoriumBiotechProbeConfig")]
         [DefaultValue(true)]
-        public bool biotechProbe;
+        public bool BiotechProbe;
 
         [Label("$Mods.FargowiltasSouls.ThoriumProofAvariceConfig")]
         [DefaultValue(true)]
-        public bool proofAvarice;
+        public bool ProofAvarice;
 
         [Label("$Mods.FargowiltasSouls.ThoriumSlagStompersConfig")]
         [DefaultValue(true)]
-        public bool slagStompers;
+        public bool SlagStompers;
 
         [Label("$Mods.FargowiltasSouls.ThoriumSpringStepsConfig")]
         [DefaultValue(true)]
-        public bool springSteps;
+        public bool SpringSteps;
 
         [Label("$Mods.FargowiltasSouls.ThoriumBerserkerConfig")]
         [DefaultValue(true)]
-        public bool berserker;
+        public bool Berserker;
 
         [Label("$Mods.FargowiltasSouls.ThoriumBeeBootiesConfig")]
         [DefaultValue(true)]
-        public bool beeBooties;
+        public bool BeeBooties;
 
         [Label("$Mods.FargowiltasSouls.ThoriumGhastlyCarapaceConfig")]
         [DefaultValue(true)]
-        public bool ghastlyCarapace;
+        public bool GhastlyCarapace;
 
         [Label("$Mods.FargowiltasSouls.ThoriumSpiritWispsConfig")]
         [DefaultValue(true)]
-        public bool spiritWisps;
+        public bool SpiritTrapperWisps;
 
         [Label("$Mods.FargowiltasSouls.ThoriumWarlockWispsConfig")]
         [DefaultValue(true)]
-        public bool warlockWisps;
+        public bool WarlockWisps;
 
         [Label("$Mods.FargowiltasSouls.ThoriumDreadConfig")]
         [DefaultValue(true)]
-        public bool dreadSpeed;
+        public bool DreadSpeed;
 
         [Label("$Mods.FargowiltasSouls.ThoriumDiverConfig")]
         [DefaultValue(true)]
-        public bool divers;
+        public bool ThoriumDivers;
 
         [Label("$Mods.FargowiltasSouls.ThoriumDemonBloodConfig")]
         [DefaultValue(true)]
-        public bool demonBlood;
+        public bool DemonBloodEffect;
 
         [Label("$Mods.FargowiltasSouls.ThoriumDevilMinionConfig")]
         [DefaultValue(true)]
-        public bool devilMinion;
+        public bool DevilMinion;
 
         [Label("$Mods.FargowiltasSouls.ThoriumCherubMinionConfig")]
         [DefaultValue(true)]
-        public bool cherubMinion;
+        public bool CherubMinion;
 
         [Label("$Mods.FargowiltasSouls.ThoriumSaplingMinionConfig")]
         [DefaultValue(true)]
-        public bool saplingMinion;
+        public bool SaplingMinion;
 
         //pets
         [Label("$Mods.FargowiltasSouls.ThoriumOmegaPetConfig")]
         [DefaultValue(true)]
-        public bool omegaPet;
+        public bool OmegaPet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumIFOPetConfig")]
         [DefaultValue(true)]
-        public bool ifoPet;
+        public bool IFOPet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumBioFeederPetConfig")]
         [DefaultValue(true)]
-        public bool bioFeederPet;
+        public bool BioFeederPet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumBlisterPetConfig")]
         [DefaultValue(true)]
-        public bool blisterPet;
+        public bool BlisterPet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumWyvernPetConfig")]
         [DefaultValue(true)]
-        public bool wyvernPet;
+        public bool WyvernPet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumLanternPetConfig")]
         [DefaultValue(true)]
-        public bool lanternPet;
+        public bool LanternPet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumBoxPetConfig")]
         [DefaultValue(true)]
-        public bool boxPet;
+        public bool BoxPet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumSpiritPetConfig")]
         [DefaultValue(true)]
-        public bool spiritPet;
+        public bool SpiritPet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumGoatPetConfig")]
         [DefaultValue(true)]
-        public bool goatPet;
+        public bool GoatPet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumOwlPetConfig")]
         [DefaultValue(true)]
-        public bool owlPet;
+        public bool OwlPet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumJellyfishPetConfig")]
         [DefaultValue(true)]
-        public bool jellyfishPet;
+        public bool JellyfishPet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumMooglePetConfig")]
         [DefaultValue(true)]
-        public bool mooglePet;
+        public bool MooglePet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumMaidPetConfig")]
         [DefaultValue(true)]
-        public bool maidPet;
+        public bool MaidPet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumSlimePetConfig")]
         [DefaultValue(true)]
-        public bool slimePet;
+        public bool SlimePet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumGlitterPetConfig")]
         [DefaultValue(true)]
-        public bool glitterPet;
+        public bool GlitterPet;
 
         [Label("$Mods.FargowiltasSouls.ThoriumCoinPetConfig")]
         [DefaultValue(true)]
-        public bool coinPet;
+        public bool CoinPet;
 
         #endregion
 
         #region calamity
         [Label("$Mods.FargowiltasSouls.CalamityUrchinConfig")]
         [DefaultValue(true)]
-        public bool urchin;
+        public bool UrchinMinion;
 
         [Label("$Mods.FargowiltasSouls.CalamityProfanedArtifactConfig")]
         [DefaultValue(true)]
-        public bool profanedSoulArtifact;
+        public bool ProfanedSoulArtifact;
 
         [Label("$Mods.FargowiltasSouls.CalamitySlimeMinionConfig")]
         [DefaultValue(true)]
-        public bool slimeMinion;
+        public bool SlimeMinion;
 
         [Label("$Mods.FargowiltasSouls.CalamityReaverMinionConfig")]
         [DefaultValue(true)]
-        public bool reaverMinion;
+        public bool ReaverMinion;
 
         [Label("$Mods.FargowiltasSouls.CalamityOmegaTentaclesConfig")]
         [DefaultValue(true)]
-        public bool omegaTentacles;
+        public bool OmegaTentacles;
 
         [Label("$Mods.FargowiltasSouls.CalamitySilvaMinionConfig")]
         [DefaultValue(true)]
-        public bool silvaMinion;
+        public bool SilvaMinion;
 
         [Label("$Mods.FargowiltasSouls.CalamityGodlyArtifactConfig")]
         [DefaultValue(true)]
-        public bool godlySoulArtifact;
+        public bool GodlySoulArtifact;
 
         [Label("$Mods.FargowiltasSouls.CalamityMechwormMinionConfig")]
         [DefaultValue(true)]
-        public bool mechwormMinion;
+        public bool MechwormMinion;
 
         [Label("$Mods.FargowiltasSouls.CalamityNebulousCoreConfig")]
         [DefaultValue(true)]
-        public bool nebulousCore;
+        public bool NebulousCore;
 
         [Label("$Mods.FargowiltasSouls.CalamityDevilMinionConfig")]
         [DefaultValue(true)]
@@ -961,168 +939,168 @@ namespace FargowiltasSouls
 
         [Label("$Mods.FargowiltasSouls.CalamityPermafrostPotionConfig")]
         [DefaultValue(true)]
-        public bool permafrostPotion;
+        public bool PermafrostPotion;
 
         [Label("$Mods.FargowiltasSouls.CalamityDaedalusMinionConfig")]
         [DefaultValue(true)]
-        public bool daedalusMinion;
+        public bool DaedalusMinion;
 
         [Label("$Mods.FargowiltasSouls.CalamityPolterMinesConfig")]
         [DefaultValue(true)]
-        public bool polterMines;
+        public bool PolterMines;
 
         [Label("$Mods.FargowiltasSouls.CalamityPlagueHiveConfig")]
         [DefaultValue(true)]
-        public bool plagueHive;
+        public bool PlagueHive;
 
         [Label("$Mods.FargowiltasSouls.CalamityChaosMinionConfig")]
         [DefaultValue(true)]
-        public bool chaosMinion;
+        public bool ChaosMinion;
 
         [Label("$Mods.FargowiltasSouls.CalamityValkyrieMinionConfig")]
         [DefaultValue(true)]
-        public bool valkyrieMinion;
+        public bool ValkyrieMinion;
 
         [Label("$Mods.FargowiltasSouls.CalamityYharimGiftConfig")]
         [DefaultValue(true)]
-        public bool yharimGift;
+        public bool YharimGift;
 
         [Label("$Mods.FargowiltasSouls.CalamityFungalMinionConfig")]
         [DefaultValue(true)]
-        public bool fungalMinion;
+        public bool FungalMinion;
 
         [Label("$Mods.FargowiltasSouls.CalamityWaifuMinionsConfig")]
         [DefaultValue(true)]
-        public bool waifuMinions;
+        public bool WaifuMinions;
 
         [Label("$Mods.FargowiltasSouls.CalamityShellfishMinionConfig")]
         [DefaultValue(true)]
-        public bool shellfishMinion;
+        public bool ShellfishMinion;
 
         [Label("$Mods.FargowiltasSouls.CalamityAmidiasPendantConfig")]
         [DefaultValue(true)]
-        public bool amidiasPendant;
+        public bool AmidiasPendant;
 
         [Label("$Mods.FargowiltasSouls.CalamityGiantPearlConfig")]
         [DefaultValue(true)]
-        public bool giantPearl;
+        public bool GiantPearl;
 
         [Label("$Mods.FargowiltasSouls.CalamityPoisonSeawaterConfig")]
         [DefaultValue(true)]
-        public bool poisonSeawater;
+        public bool PoisonSeawater;
 
         [Label("$Mods.FargowiltasSouls.CalamityDaedalusEffectsConfig")]
         [DefaultValue(true)]
-        public bool daedalusEffects;
+        public bool DaedalusEffects;
 
         [Label("$Mods.FargowiltasSouls.CalamityReaverEffectsConfig")]
         [DefaultValue(true)]
-        public bool reaverEffects;
+        public bool ReaverEffects;
 
         [Label("$Mods.FargowiltasSouls.CalamityFabledTurtleConfig")]
         [DefaultValue(true)]
-        public bool fabledTurtle;
+        public bool FabledTurtleShell;
 
         [Label("$Mods.FargowiltasSouls.CalamityAstralStarsConfig")]
         [DefaultValue(true)]
-        public bool astralStars;
+        public bool AstralStars;
 
         [Label("$Mods.FargowiltasSouls.CalamityAtaxiaEffectsConfig")]
         [DefaultValue(true)]
-        public bool ataxiaEffects;
+        public bool AtaxiaEffects;
 
         [Label("$Mods.FargowiltasSouls.CalamityXerocEffectsConfig")]
         [DefaultValue(true)]
-        public bool xerocEffects;
+        public bool XerocEffects;
 
         [Label("$Mods.FargowiltasSouls.CalamityTarragonEffectsConfig")]
         [DefaultValue(true)]
-        public bool tarragonEffects;
+        public bool TarragonEffects;
 
         [Label("$Mods.FargowiltasSouls.CalamityBloodflareEffectsConfig")]
         [DefaultValue(true)]
-        public bool bloodflareEffects;
+        public bool BloodflareEffects;
 
         [Label("$Mods.FargowiltasSouls.CalamityGodSlayerEffectsConfig")]
         [DefaultValue(true)]
-        public bool godSlayerEffects;
+        public bool GodSlayerEffects;
 
         [Label("$Mods.FargowiltasSouls.CalamitySilvaEffectsConfig")]
         [DefaultValue(true)]
-        public bool silvaEffects;
+        public bool SilvaEffects;
 
         [Label("$Mods.FargowiltasSouls.CalamityAuricEffectsConfig")]
         [DefaultValue(true)]
-        public bool auricEffects;
+        public bool AuricEffects;
 
         [Label("$Mods.FargowiltasSouls.CalamityElementalQuiverConfig")]
         [DefaultValue(true)]
-        public bool elementalQuiver;
+        public bool ElementalQuiver;
 
         [Label("$Mods.FargowiltasSouls.CalamityLuxorGiftConfig")]
         [DefaultValue(true)]
-        public bool luxorGift;
+        public bool LuxorGift;
 
         [Label("$Mods.FargowiltasSouls.CalamityGladiatorLocketConfig")]
         [DefaultValue(true)]
-        public bool gladiatorLocket;
+        public bool GladiatorLocket;
 
         [Label("$Mods.FargowiltasSouls.CalamityUnstablePrismConfig")]
         [DefaultValue(true)]
-        public bool unstablePrism;
+        public bool UnstablePrism;
 
         [Label("$Mods.FargowiltasSouls.CalamityRegeneratorConfig")]
         [DefaultValue(true)]
-        public bool regenerator;
+        public bool Regenerator;
 
         [Label("$Mods.FargowiltasSouls.CalamityDivingSuitConfig")]
         [DefaultValue(true)]
-        public bool divingSuit;
+        public bool DivingSuit;
 
         //pets
         [Label("$Mods.FargowiltasSouls.CalamityKendraConfig")]
         [DefaultValue(true)]
-        public bool kendraPet;
+        public bool KendraPet;
 
         [Label("$Mods.FargowiltasSouls.CalamityPerforatorConfig")]
         [DefaultValue(true)]
-        public bool perforatorPet;
+        public bool PerforatorPet;
 
         [Label("$Mods.FargowiltasSouls.CalamityBearConfig")]
         [DefaultValue(true)]
-        public bool bearPet;
+        public bool BearPet;
 
         [Label("$Mods.FargowiltasSouls.CalamityThirdSageConfig")]
         [DefaultValue(true)]
-        public bool thirdSagePet;
+        public bool ThirdSagePet;
 
         [Label("$Mods.FargowiltasSouls.CalamityBrimlingConfig")]
         [DefaultValue(true)]
-        public bool brimlingPet;
+        public bool BrimlingPet;
 
         [Label("$Mods.FargowiltasSouls.CalamityDannyConfig")]
         [DefaultValue(true)]
-        public bool dannyPet;
+        public bool DannyPet;
 
         [Label("$Mods.FargowiltasSouls.CalamitySirenConfig")]
         [DefaultValue(true)]
-        public bool sirenPet;
+        public bool SirenPet;
 
         [Label("$Mods.FargowiltasSouls.CalamityChibiiConfig")]
         [DefaultValue(true)]
-        public bool chibiiPet;
+        public bool ChibiiPet;
 
         [Label("$Mods.FargowiltasSouls.CalamityAkatoConfig")]
         [DefaultValue(true)]
-        public bool akatoPet;
+        public bool AkatoPet;
 
         [Label("$Mods.FargowiltasSouls.CalamityFoxConfig")]
         [DefaultValue(true)]
-        public bool foxPet;
+        public bool FoxPet;
 
         [Label("$Mods.FargowiltasSouls.CalamityLeviConfig")]
         [DefaultValue(true)]
-        public bool leviPet;
+        public bool LeviPet;
 
         #endregion
 
@@ -1132,54 +1110,19 @@ namespace FargowiltasSouls
 
 
 
-        [JsonIgnore]
-        public Dictionary<string, bool> walletToggles = new Dictionary<string, bool>();
-
 
         public override void OnLoaded()
         {
             Instance = this;
-
-            walletToggles.Add("Warding", wallet.warding);
-            walletToggles.Add("Violent", wallet.violent);
-            walletToggles.Add("Quick", wallet.quick);
-            walletToggles.Add("Lucky", wallet.lucky);
-            walletToggles.Add("Menacing", wallet.menacing);
-            walletToggles.Add("Legendary", wallet.legendary);
-            walletToggles.Add("Unreal", wallet.unreal);
-            walletToggles.Add("Mythical", wallet.mythical);
-            walletToggles.Add("Godly", wallet.godly);
-            walletToggles.Add("Demonic", wallet.demonic);
-            walletToggles.Add("Ruthless", wallet.ruthless);
-            walletToggles.Add("Light", wallet.light);
-            walletToggles.Add("Deadly", wallet.deadly);
-            walletToggles.Add("Rapid", wallet.rapid);
-
         }
 
 
-        public bool GetValue2(bool toggle, bool checkForMutantPresence = true)
-        {
-            if (!toggle || (checkForMutantPresence && Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantPresence))
-                return false;
-
-            return true;
-        }
-
-        public bool GetValue(string input, bool checkForMutantPresence = true)
+        public bool GetValue(bool toggle, bool checkForMutantPresence = true)
         {
             if (checkForMutantPresence && Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantPresence)
                 return false;
 
-
-            if (walletToggles.ContainsKey(input))
-            {
-                return walletToggles[input];
-            }
-
-
-
-            return false;
+            return toggle;
         }
     }
 }

@@ -174,7 +174,7 @@ namespace FargowiltasSouls.Projectiles
                         player.ClearBuff(mod.BuffType("FirstStrike"));
                     }
 
-                    if (modPlayer.TungstenEnchant && !townNPCProj && projectile.damage != 0 && !projectile.trap && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && projectile.friendly && SoulConfig.Instance.GetValue("Tungsten Effect", false))
+                    if (modPlayer.TungstenEnchant && !townNPCProj && projectile.damage != 0 && !projectile.trap && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && projectile.friendly && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenSize, false))
                     {
                         projectile.position = projectile.Center;
                         projectile.scale *= 2f;
@@ -209,7 +209,7 @@ namespace FargowiltasSouls.Projectiles
 
                     if (!townNPCProj && (modPlayer.AdamantiteEnchant || modPlayer.TerrariaSoul) && CanSplit && projectile.friendly && !projectile.hostile
                         && !Rotate && projectile.damage > 0 && !projectile.minion && projectile.aiStyle != 19 && projectile.aiStyle != 99
-                        && SoulConfig.Instance.GetValue("Adamantite Projectile Splitting") && Array.IndexOf(noSplit, projectile.type) <= -1)
+                        && SoulConfig.Instance.GetValue(SoulConfig.Instance.AdamantiteSplit) && Array.IndexOf(noSplit, projectile.type) <= -1)
                     {
                         if (adamantiteCD != 0)
                         {
@@ -251,7 +251,7 @@ namespace FargowiltasSouls.Projectiles
                     }
                 }
 
-                if (tungstenProjectile && (!modPlayer.TungstenEnchant || !SoulConfig.Instance.GetValue("Tungsten Effect", false)))
+                if (tungstenProjectile && (!modPlayer.TungstenEnchant || !SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenSize, false)))
                 {
                     projectile.position = projectile.Center;
                     projectile.scale /= 2f;
@@ -382,7 +382,7 @@ namespace FargowiltasSouls.Projectiles
                         projectile.Kill();
                     }
 
-                    if (modPlayer.SpookyEnchant && SoulConfig.Instance.GetValue("Spooky Scythes") && projectile.owner == Main.myPlayer
+                    if (modPlayer.SpookyEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.SpookyScythes) && projectile.owner == Main.myPlayer
                         && projectile.minion && projectile.minionSlots > 0
                         && counter % 60 == 0 && Main.rand.Next(8 + Main.player[projectile.owner].maxMinions) == 0)
                     {
@@ -400,7 +400,7 @@ namespace FargowiltasSouls.Projectiles
 
                 //hook AI
                 if (modPlayer.MahoganyEnchant && projectile.aiStyle == 7 && (player.ZoneJungle || modPlayer.WoodForce) && counter >= 60
-                    && SoulConfig.Instance.GetValue("Mahogany Hook Speed"))
+                    && SoulConfig.Instance.GetValue(SoulConfig.Instance.MahoganyHook))
                 {
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
@@ -1150,7 +1150,7 @@ namespace FargowiltasSouls.Projectiles
             Player player = Main.player[Main.myPlayer];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (SoulConfig.Instance.GetValue("Jester Bell"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.JesterBell))
             {
                 //jester effect
                 if (modPlayer.JesterEnchant && crit)
@@ -1679,7 +1679,7 @@ namespace FargowiltasSouls.Projectiles
 
             if (!townNPCProj && CanSplit && projectile.friendly && projectile.damage > 0 && !projectile.minion && projectile.aiStyle != 19 && !Rotate)
             {
-                if (modPlayer.CobaltEnchant && SoulConfig.Instance.GetValue("Cobalt Shards") && modPlayer.CobaltCD == 0 && Main.rand.Next(4) == 0)
+                if (modPlayer.CobaltEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CobaltShards) && modPlayer.CobaltCD == 0 && Main.rand.Next(4) == 0)
                 {
                     int damage = 40;
                     if (modPlayer.EarthForce)
@@ -1698,7 +1698,7 @@ namespace FargowiltasSouls.Projectiles
 
                     modPlayer.CobaltCD = 60;
                 }
-                else if (modPlayer.AncientCobaltEnchant && SoulConfig.Instance.GetValue("Ancient Cobalt Stingers") && modPlayer.CobaltCD == 0 && Main.rand.Next(5) == 0)
+                else if (modPlayer.AncientCobaltEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CobaltStingers) && modPlayer.CobaltCD == 0 && Main.rand.Next(5) == 0)
                 {
                     //Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 27);
 

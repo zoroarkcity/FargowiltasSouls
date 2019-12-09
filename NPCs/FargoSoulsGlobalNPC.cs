@@ -11689,7 +11689,7 @@ namespace FargowiltasSouls.NPCs
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (modPlayer.ValhallaEnchant && SoulConfig.Instance.GetValue("Valhalla Knockback")
+            if (modPlayer.ValhallaEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaKB)
                 && !npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune && npc.knockBackResist < 1)
             {
                 npc.knockBackResist += .02f;
@@ -11703,7 +11703,7 @@ namespace FargowiltasSouls.NPCs
             FargoPlayer modPlayer = Main.player[projectile.owner].GetModPlayer<FargoPlayer>();
 
             //spears
-            if (modPlayer.ValhallaEnchant && SoulConfig.Instance.GetValue("Valhalla Knockback") 
+            if (modPlayer.ValhallaEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaKB) 
                 && !npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune && npc.knockBackResist < 1)
             {
                 npc.knockBackResist += .002f;
