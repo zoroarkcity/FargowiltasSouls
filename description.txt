@@ -67,9 +67,18 @@ Thorium
 
 
 
--Added Ancient Cobalt Enchant
+-Added Ancient Cobalt Enchant and Ancient Shadow Enchantment
 -Buffed Cobalt to produce 5 shards instead of 3
 -Chloro crystals will disappear when you die now
+
+-Added sprite for Dubious Circuitry, Oceanic Maul, and Oceanic Seal
+-Fixed True Mutant Head sprite sheet
+-Added a shield sprite to Iron Enchantment and Slimy Shield
+-Thorium Enchant divers die more quickly
+-World Shaper Soul's Builder Mode now makes all tile producing items have maximum use time
+-Added Eurus Socks (add to mutant mod ech)
+-Changed Jungle Enchant to activate on jump, lowered spore duration and damage
+-Ocean Enchantment, added Ocean Polearm, removed Breathing Reed
 
 
 -See the full changelog on the wiki

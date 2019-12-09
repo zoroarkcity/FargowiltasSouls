@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Projectiles.Souls
 			projectile.aiStyle = 0;
 			projectile.friendly = true;
 			projectile.penetrate = -1;
-			projectile.timeLeft = 300;
+			projectile.timeLeft = 180;
 			projectile.tileCollide = false;
 			aiType = ProjectileID.Bullet;
 		}

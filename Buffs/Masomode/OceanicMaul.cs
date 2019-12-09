@@ -17,12 +17,6 @@ namespace FargowiltasSouls.Buffs.Masomode
             Description.AddTranslation(GameCulture.Chinese, "降低防御力和最大生命值");
         }
 
-        public override bool Autoload(ref string name, ref string texture)
-        {
-            texture = "FargowiltasSouls/Buffs/PlaceholderDebuff";
-            return true;
-        }
-
         public override void Update(Player player, ref int buffIndex)
         {
             player.GetModPlayer<FargoPlayer>().OceanicMaul = true;

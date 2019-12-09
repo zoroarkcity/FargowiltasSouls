@@ -10,6 +10,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
     public class JungleEnchant : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
+        public int jungleCD = 0;
 
         public override void SetStaticDefaults()
         {
@@ -17,8 +18,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 
             string tooltip =
 @"'The wrath of the jungle dwells within'
-Taking damage will release a lingering spore explosion
-Spore damage scales with magic damage
+Jumping will release a lingering spore explosion
 All herb collection is doubled
 Effects of Guide to Plant Fiber Cordage";
 
@@ -56,12 +56,7 @@ Effects of Guide to Plant Fiber Cordage";
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().JungleEffect();
-
-            /*if (player.jump)
-            {
-
-            }*/
+            player.GetModPlayer<FargoPlayer>().JungleEffect();            
         }
 
         public override void AddRecipes()

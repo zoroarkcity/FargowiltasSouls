@@ -11,8 +11,6 @@ using Terraria.ModLoader.IO;
 using Terraria.Graphics.Capture;
 using FargowiltasSouls.NPCs;
 using FargowiltasSouls.Projectiles;
-using FargowiltasSouls.Buffs;
-using FargowiltasSouls.Buffs.Masomode;
 using ThoriumMod;
 using ThoriumMod.Projectiles;
 
@@ -54,6 +52,7 @@ namespace FargowiltasSouls
         public bool FossilBones = false;
         private int boneCD = 0;
         public bool JungleEnchant;
+        private int jungleCD;
         public bool ElementEnchant;
         public bool ShroomEnchant;
         public bool CobaltEnchant;
@@ -2526,7 +2525,8 @@ namespace FargowiltasSouls
             if (SoulConfig.Instance.GetValue("Spawn Divers") && ThoriumEnchant && NPC.CountNPCS(thorium.NPCType("Diverman")) < 5 && Main.rand.Next(20) == 0)
             {
                 int diver = NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, thorium.NPCType("Diverman"));
-                Main.npc[diver].AddBuff(BuffID.ShadowFlame, 3600);
+                Main.npc[diver].AddBuff(BuffID.ShadowFlame, 9999999);
+                Main.npc[diver].AddBuff(BuffID.CursedInferno, 9999999);
             }
 
             if (SolarEnchant && !TerrariaSoul && Main.rand.Next(4) == 0)
@@ -2926,13 +2926,6 @@ namespace FargowiltasSouls
 
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
-            if (JungleEnchant && SoulConfig.Instance.GetValue("Jungle Spores"))
-            {
-                int dmg = NatureForce ? 100 : 30;
-                Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 62);
-                Projectile[] projs2 = FargoGlobalProjectile.XWay(10, player.Center, mod.ProjectileType("SporeBoom"), 3f, HighestDamageTypeScaling(dmg), 0f);
-            }
-
             if (ShadeEnchant && SoulConfig.Instance.GetValue("Blood Geyser On Hit"))
             {
                 for (int i = 0; i < 10; i++)
@@ -3911,6 +3904,19 @@ namespace FargowiltasSouls
         public void JungleEffect()
         {
             JungleEnchant = true;
+
+            if (SoulConfig.Instance.GetValue("Jungle Spores") && player.jump > 0 && jungleCD == 0)
+            {
+                int dmg = NatureForce ? 50 : 15;
+                Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 62);
+                FargoGlobalProjectile.XWay(10, player.Center, mod.ProjectileType("SporeBoom"), 3f, HighestDamageTypeScaling(dmg), 0f);
+                jungleCD = 30;
+            }
+
+            if (jungleCD != 0)
+            {
+                jungleCD--;
+            }
 
             if (NatureForce) return;
 

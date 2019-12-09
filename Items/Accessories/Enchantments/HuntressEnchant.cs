@@ -42,26 +42,26 @@ Huntress Bolts inflict both Oiled and Betsy's Curse, as well as exploding like H
 
         public override void AddRecipes()
         {
-            /*ModRecipe recipe = new ModRecipe(mod);
-            
-            armor 1
-            armor 2
-            armor 3
+            ModRecipe recipe = new ModRecipe(mod);
+
+            recipe.AddIngredient(ItemID.HuntressWig);
+            recipe.AddIngredient(ItemID.HuntressJerkin);
+            recipe.AddIngredient(ItemID.HuntressPants);
+            recipe.AddIngredient(ItemID.HuntressBuckler);
+            recipe.AddIngredient(ItemID.DD2ExplosiveTrapT2Popper);
+            recipe.AddIngredient(ItemID.DD2PhoenixBow);
+            recipe.AddIngredient(ItemID.DaedalusStormbow);
 
 
-            Explosive Trap Rod
-Explosive Trap Cane
-Huntress's Buckler
-Phantom Phoenix
-Daedalus Stormbow
+            /*  
 
-Cinder String (with Thorium)
-Chlorophyte Shotbow
+          Cinder String (with Thorium)
+          Chlorophyte Shotbow*/
 
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
-            recipe.AddRecipe();*/
+            recipe.AddRecipe();
         }
     }
 }

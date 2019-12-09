@@ -76,7 +76,7 @@ Summons a pet Puppy");
             recipe.AddIngredient(ItemID.HuntressAltHead);
             recipe.AddIngredient(ItemID.HuntressAltShirt);
             recipe.AddIngredient(ItemID.HuntressAltPants);
-            recipe.AddIngredient(ItemID.HuntressBuckler);
+            //recipe.AddIngredient(ItemID.HuntressBuckler);
             recipe.AddIngredient(ItemID.CelestialShell);
 
             //huntress enchant
@@ -85,12 +85,13 @@ Summons a pet Puppy");
             {
                 recipe.AddIngredient(thorium.ItemType("BloodyHighClaws"));
                 recipe.AddIngredient(thorium.ItemType("LadyLight"));
-                recipe.AddIngredient(ItemID.DD2PhoenixBow);
+                //recipe.AddIngredient(ItemID.DD2PhoenixBow);
                 recipe.AddIngredient(ItemID.DD2ExplosiveTrapT3Popper);
             }
             else
             {
-                recipe.AddIngredient(ItemID.DD2PhoenixBow);
+                //recipe.AddIngredient(ItemID.DD2PhoenixBow);
+                //aerial bane
             }
             
             recipe.AddIngredient(ItemID.DogWhistle);

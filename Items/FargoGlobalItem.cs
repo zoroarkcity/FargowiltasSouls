@@ -90,6 +90,12 @@ namespace FargowiltasSouls.Items
                 player.immuneTime = 0;
             }
 
+            if (modPlayer.BuilderMode && (item.createTile != -1 || item.createWall != -1) && item.type != ItemID.PlatinumCoin && item.type != ItemID.GoldCoin)
+            {
+                item.useTime = 1;
+                item.useAnimation = 1;
+            }
+
             //non weapons and weapons with no ammo begone
             if (item.damage <= 0 || !player.HasAmmo(item, true) || (item.mana > 0 && player.statMana < item.mana)) return true;
 
@@ -100,7 +106,7 @@ namespace FargowiltasSouls.Items
                 Vector2 position = player.Center;
                 Vector2 velocity = Vector2.Normalize(Main.MouseWorld - position);
 
-                if (modPlayer.BorealEnchant && SoulConfig.Instance.GetValue("Boreal Snowballs"))
+                if (modPlayer.BorealEnchant && SoulConfig.Instance.GetValue2(SoulConfig.Instance.BorealSnowballs))
                 {
                     Vector2 vel = Vector2.Normalize(Main.MouseWorld - player.Center) * 17f;
                     int p = Projectile.NewProjectile(player.Center, vel, ProjectileID.SnowBallFriendly, (int)(item.damage * .5f), 1, Main.myPlayer);

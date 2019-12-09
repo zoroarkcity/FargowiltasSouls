@@ -2,12 +2,12 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
+    [AutoloadEquip(EquipType.Shield)]
     public class IronEnchant : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
@@ -52,7 +52,7 @@ You attract items from a larger range";
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.rare = 2;
             item.value = 40000;
-            item.shieldSlot = 5;
+            //item.shieldSlot = 5;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

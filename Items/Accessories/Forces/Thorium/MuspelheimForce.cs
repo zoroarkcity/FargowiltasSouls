@@ -100,7 +100,7 @@ Effects of Night Shade Petal, Flawless Chrysalis, and Bee Booties");
 
             recipe.AddIngredient(null, "SandstoneEnchant");
             recipe.AddIngredient(null, "DangerEnchant");
-            recipe.AddIngredient(null, "FlightFurEnchant");
+            recipe.AddIngredient(null, "FlightEnchant");
             recipe.AddIngredient(null, "FeralFurEnchant");
             recipe.AddIngredient(null, "FungusEnchant");
             recipe.AddIngredient(null, "LifeBloomEnchant");
