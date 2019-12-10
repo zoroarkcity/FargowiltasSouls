@@ -2446,7 +2446,7 @@ namespace FargowiltasSouls
             }
 
             //mixtape
-            if (MixTape && SoulConfig.Instance.GetValue("Mix Tape") && crit && proj.type != thorium.ProjectileType("MixtapeNote"))
+            if (MixTape && SoulConfig.Instance.GetValue(SoulConfig.Instance.MixTape) && crit && proj.type != thorium.ProjectileType("MixtapeNote"))
             {
                 int num23 = Main.rand.Next(3);
                 Main.PlaySound(2, (int)target.position.X, (int)target.position.Y, 73, 1f, 0f);
@@ -3123,7 +3123,7 @@ namespace FargowiltasSouls
             }
         }
 
-        public void AddPet(string toggle, bool vanityToggle, int buff, int proj)
+        public void AddPet(bool toggle, bool vanityToggle, int buff, int proj)
         {
             if(vanityToggle)
             {
@@ -3137,7 +3137,7 @@ namespace FargowiltasSouls
             }
         }
 
-        public void AddMinion(string toggle, int proj, int damage, float knockback)
+        public void AddMinion(bool toggle, int proj, int damage, float knockback)
         {
             if(player.ownedProjectileCounts[proj] < 1 && player.whoAmI == Main.myPlayer && SoulConfig.Instance.GetValue(toggle))
                 Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, proj, damage, knockback, Main.myPlayer);
@@ -3410,7 +3410,7 @@ namespace FargowiltasSouls
             player.strongBees = true;
             //bees ignore defense
             BeeEnchant = true;  
-            AddPet("Hornet Pet", hideVisual, BuffID.BabyHornet, ProjectileID.BabyHornet);
+            AddPet(SoulConfig.Instance.HornetPet, hideVisual, BuffID.BabyHornet, ProjectileID.BabyHornet);
         }
 
         public void BeetleEffect()
@@ -3529,7 +3529,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            AddPet("Seedling Pet", hideVisual, BuffID.PetSapling, ProjectileID.Sapling);
+            AddPet(SoulConfig.Instance.SeedlingPet, hideVisual, BuffID.PetSapling, ProjectileID.Sapling);
         }
 
         public void CopperEffect(NPC target)
@@ -3596,8 +3596,8 @@ namespace FargowiltasSouls
             }
             
             CrimsonEnchant = true;
-            AddPet("Face Monster Pet", hideVisual, BuffID.BabyFaceMonster, ProjectileID.BabyFaceMonster);
-            AddPet("Crimson Heart Pet", hideVisual, BuffID.CrimsonHeart, ProjectileID.CrimsonHeart);
+            AddPet(SoulConfig.Instance.FaceMonsterPet, hideVisual, BuffID.BabyFaceMonster, ProjectileID.BabyFaceMonster);
+            AddPet(SoulConfig.Instance.CrimsonHeartPet, hideVisual, BuffID.CrimsonHeart, ProjectileID.CrimsonHeart);
         }
 
         public void DarkArtistEffect(bool hideVisual)
@@ -3636,7 +3636,7 @@ namespace FargowiltasSouls
             }
 
             DarkEnchant = true;
-            AddPet("Flickerwick Pet", hideVisual, BuffID.PetDD2Ghost, ProjectileID.DD2PetGhost);
+            AddPet(SoulConfig.Instance.FlickerwickPet, hideVisual, BuffID.PetDD2Ghost, ProjectileID.DD2PetGhost);
         }
 
         public void ForbiddenEffect()
@@ -3699,7 +3699,7 @@ namespace FargowiltasSouls
                     FossilBones = false;
             }
 
-            AddPet("Dino Pet", hideVisual, BuffID.BabyDinosaur, ProjectileID.BabyDino);
+            AddPet(SoulConfig.Instance.DinoPet, hideVisual, BuffID.BabyDinosaur, ProjectileID.BabyDino);
         }
 
         public void FrostEffect(int dmg, bool hideVisual)
@@ -3742,8 +3742,8 @@ namespace FargowiltasSouls
                 }
             }
             
-            AddPet("Snowman Pet", hideVisual, BuffID.BabySnowman, ProjectileID.BabySnowman);
-            AddPet("Penguin Pet", hideVisual, BuffID.BabyPenguin, ProjectileID.Penguin);   
+            AddPet(SoulConfig.Instance.SnowmanPet, hideVisual, BuffID.BabySnowman, ProjectileID.BabySnowman);
+            AddPet(SoulConfig.Instance.PenguinPet, hideVisual, BuffID.BabyPenguin, ProjectileID.Penguin);   
         }
 
         public void GladiatorEffect(bool hideVisual)
@@ -3756,7 +3756,7 @@ namespace FargowiltasSouls
             }
 
 
-            AddPet("Mini Minotaur Pet", hideVisual, BuffID.MiniMinotaur, ProjectileID.MiniMinotaur);
+            AddPet(SoulConfig.Instance.MinotaurPet, hideVisual, BuffID.MiniMinotaur, ProjectileID.MiniMinotaur);
         }
 
         public void GoldEffect(bool hideVisual)
@@ -3771,13 +3771,13 @@ namespace FargowiltasSouls
             //midas
             GoldEnchant = true;
 
-            AddPet("Parrot Pet", hideVisual, BuffID.PetParrot, ProjectileID.Parrot);
+            AddPet(SoulConfig.Instance.ParrotPet, hideVisual, BuffID.PetParrot, ProjectileID.Parrot);
         }
 
         public void HallowEffect(bool hideVisual, int dmg)
         {
             HallowEnchant = true;
-            AddMinion("Hallowed Enchanted Sword Familiar", mod.ProjectileType("HallowSword"), (int)(dmg * player.minionDamage), 0f);
+            AddMinion(SoulConfig.Instance.HallowSword, mod.ProjectileType("HallowSword"), (int)(dmg * player.minionDamage), 0f);
 
             //reflect proj
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.HallowShield) && !noDodge)
@@ -3839,7 +3839,7 @@ namespace FargowiltasSouls
                 });
             }
 
-            AddPet("Fairy Pet", hideVisual, BuffID.FairyBlue, ProjectileID.BlueFairy);
+            AddPet(SoulConfig.Instance.FairyPet, hideVisual, BuffID.FairyBlue, ProjectileID.BlueFairy);
         }
 
         private int internalTimer = 0;
@@ -3992,7 +3992,7 @@ namespace FargowiltasSouls
 
             MinerEnchant = true;
 
-            AddPet("Magic Lantern Pet", hideVisual, BuffID.MagicLantern, ProjectileID.MagicLantern);
+            AddPet(SoulConfig.Instance.MagicLanternPet, hideVisual, BuffID.MagicLantern, ProjectileID.MagicLantern);
         }
 
         public void MoltenEffect(int dmg)
@@ -4058,7 +4058,7 @@ namespace FargowiltasSouls
             if (necroCD != 0)
                 necroCD--;
 
-            AddPet("Skeletron Pet", hideVisual, BuffID.BabySkeletronHead, ProjectileID.BabySkeletronHead);
+            AddPet(SoulConfig.Instance.DGPet, hideVisual, BuffID.BabySkeletronHead, ProjectileID.BabySkeletronHead);
         }
 
         public void NinjaEffect(bool hideVisual)
@@ -4069,7 +4069,7 @@ namespace FargowiltasSouls
             }
 
             NinjaEnchant = true;
-            AddPet("Black Cat Pet", hideVisual, BuffID.BlackCat, ProjectileID.BlackCat);
+            AddPet(SoulConfig.Instance.BlackCatPet, hideVisual, BuffID.BlackCat, ProjectileID.BlackCat);
         }
 
         public void ObsidianEffect()
@@ -4158,7 +4158,7 @@ namespace FargowiltasSouls
                 pumpkinCD--;
             }
 
-            AddPet("Squashling Pet", hideVisual, BuffID.Squashling, ProjectileID.Squashling);
+            AddPet(SoulConfig.Instance.SquashlingPet, hideVisual, BuffID.Squashling, ProjectileID.Squashling);
         }
 
         public void RedRidingEffect(bool hideVisual)
@@ -4167,14 +4167,14 @@ namespace FargowiltasSouls
             player.setHuntressT3 = true;
             //super bleed, low hp dmg
             RedEnchant = true;
-            AddPet("Puppy Pet", hideVisual, BuffID.Puppy, ProjectileID.Puppy);
+            AddPet(SoulConfig.Instance.PuppyPet, hideVisual, BuffID.Puppy, ProjectileID.Puppy);
         }
         
         public void ShadowEffect(bool hideVisual)
         {
             ShadowEnchant = true;
-            AddPet("Eater Pet", hideVisual, BuffID.BabyEater, ProjectileID.BabyEater);
-            AddPet("Shadow Orb Pet", hideVisual, BuffID.ShadowOrb, ProjectileID.ShadowOrb);
+            AddPet(SoulConfig.Instance.EaterPet, hideVisual, BuffID.BabyEater, ProjectileID.BabyEater);
+            AddPet(SoulConfig.Instance.ShadowOrbPet, hideVisual, BuffID.ShadowOrb, ProjectileID.ShadowOrb);
         }
 
         public void ShinobiEffect(bool hideVisual)
@@ -4209,7 +4209,7 @@ namespace FargowiltasSouls
             }
 
             ShinobiEnchant = true;
-            AddPet("Gato Pet", hideVisual, BuffID.PetDD2Gato, ProjectileID.DD2PetGato);
+            AddPet(SoulConfig.Instance.GatoPet, hideVisual, BuffID.PetDD2Gato, ProjectileID.DD2PetGato);
         }
 
         public void ShroomiteEffect(bool hideVisual)
@@ -4218,7 +4218,7 @@ namespace FargowiltasSouls
                 player.shroomiteStealth = true;
 
             ShroomEnchant = true;
-            AddPet("Truffle Pet", hideVisual, BuffID.BabyTruffle, ProjectileID.Truffle);
+            AddPet(SoulConfig.Instance.TrufflePet, hideVisual, BuffID.BabyTruffle, ProjectileID.Truffle);
         }
 
         public void SolarEffect()
@@ -4285,7 +4285,7 @@ namespace FargowiltasSouls
         public void SpectreEffect(bool hideVisual)
         {
             SpectreEnchant = true;
-            AddPet("Wisp Pet", hideVisual, BuffID.Wisp, ProjectileID.Wisp);
+            AddPet(SoulConfig.Instance.WispPet, hideVisual, BuffID.Wisp, ProjectileID.Wisp);
         }
 
         public void SpectreHeal(NPC npc, Projectile proj)
@@ -4396,21 +4396,21 @@ namespace FargowiltasSouls
                 SummonCrit = 20;
             }
 
-            AddPet("Spider Pet", hideVisual, BuffID.PetSpider, ProjectileID.Spider);
+            AddPet(SoulConfig.Instance.SpiderPet, hideVisual, BuffID.PetSpider, ProjectileID.Spider);
         }
 
         public void SpookyEffect(bool hideVisual)
         {
             //scythe doom
             SpookyEnchant = true;
-            AddPet("Cursed Sapling Pet", hideVisual, BuffID.CursedSapling, ProjectileID.CursedSapling);
-            AddPet("Eye Spring Pet", hideVisual, BuffID.EyeballSpring, ProjectileID.EyeSpring);
+            AddPet(SoulConfig.Instance.CursedSaplingPet, hideVisual, BuffID.CursedSapling, ProjectileID.CursedSapling);
+            AddPet(SoulConfig.Instance.EyeSpringPet, hideVisual, BuffID.EyeballSpring, ProjectileID.EyeSpring);
         }
 
         public void StardustEffect()
         {
             StardustEnchant = true;
-            AddPet("Stardust Guardian", false, BuffID.StardustGuardianMinion, ProjectileID.StardustGuardian);
+            AddPet(SoulConfig.Instance.StardustGuardian, false, BuffID.StardustGuardianMinion, ProjectileID.StardustGuardian);
             player.setStardust = true;
 
             if (FreezeTime && freezeLength != 0)
@@ -4460,7 +4460,7 @@ namespace FargowiltasSouls
         public void TikiEffect(bool hideVisual)
         {
             TikiEnchant = true;
-            AddPet("Tiki Pet", hideVisual, BuffID.TikiSpirit, ProjectileID.TikiSpirit);
+            AddPet(SoulConfig.Instance.TikiPet, hideVisual, BuffID.TikiSpirit, ProjectileID.TikiSpirit);
         }
 
         public void TinEffect()
@@ -4490,8 +4490,8 @@ namespace FargowiltasSouls
         public void TurtleEffect(bool hideVisual)
         {
             TurtleEnchant = true;
-            AddPet("Turtle Pet", hideVisual, BuffID.PetTurtle, ProjectileID.Turtle);
-            AddPet("Lizard Pet", hideVisual, BuffID.PetLizard, ProjectileID.PetLizard);
+            AddPet(SoulConfig.Instance.TurtlePet, hideVisual, BuffID.PetTurtle, ProjectileID.Turtle);
+            AddPet(SoulConfig.Instance.LizardPet, hideVisual, BuffID.PetLizard, ProjectileID.PetLizard);
 
             if (!TerrariaSoul && SoulConfig.Instance.GetValue(SoulConfig.Instance.TurtleShell) && IsStandingStill && !player.controlUseItem && !noDodge)
                 player.AddBuff(mod.BuffType("ShellHide"), 2);
@@ -4503,7 +4503,7 @@ namespace FargowiltasSouls
             player.setSquireT3 = true;
             //knockback memes
             ValhallaEnchant = true;
-            AddPet("Dragon Pet", hideVisual, BuffID.PetDD2Dragon, ProjectileID.DD2PetDragon);
+            AddPet(SoulConfig.Instance.DragonPet, hideVisual, BuffID.PetDD2Dragon, ProjectileID.DD2PetDragon);
         }
 
         public void VortexEffect(bool hideVisual)
@@ -4540,7 +4540,7 @@ namespace FargowiltasSouls
                 player.stealth = 0f;
             }
 
-            AddPet("Companion Cube Pet", hideVisual, BuffID.CompanionCube, ProjectileID.CompanionCube);
+            AddPet(SoulConfig.Instance.CompanionCubePet, hideVisual, BuffID.CompanionCube, ProjectileID.CompanionCube);
         }
 
         public void EbonEffect()

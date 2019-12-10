@@ -69,7 +69,7 @@ Summons a pet Maid");
             //enemies slowed and take more dmg hot key
             thoriumPlayer.dreamSet = true;
             //maid pet
-            modPlayer.AddPet("Maid Pet", hideVisual, thorium.BuffType("MaidBuff"), thorium.ProjectileType("Maid1"));
+            modPlayer.AddPet(SoulConfig.Instance.MaidPet, hideVisual, thorium.BuffType("MaidBuff"), thorium.ProjectileType("Maid1"));
             modPlayer.DreamEnchant = true;
         }
         

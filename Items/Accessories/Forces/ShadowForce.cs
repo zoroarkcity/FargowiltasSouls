@@ -69,7 +69,7 @@ Summons several pets";
             //ninja gear
             player.blackBelt = true;
             player.spikedBoots = 2;
-            if (SoulConfig.Instance.GetValue("Tabi Dash", false))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShinobiTabi, false))
                 player.dash = 1;
             //tele thru walls, pet
             modPlayer.ShinobiEffect(hideVisual);

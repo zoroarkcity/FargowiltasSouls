@@ -80,8 +80,8 @@ Summons several pets";
 
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
-                modPlayer.AddPet("Coin Bag Pet", hideVisual, thorium.BuffType("DrachmaBuff"), thorium.ProjectileType("DrachmaBag"));
-                modPlayer.AddPet("Glitter Pet", hideVisual, thorium.BuffType("ShineDust"), thorium.ProjectileType("ShinyPet"));
+                modPlayer.AddPet(SoulConfig.Instance.CoinPet, hideVisual, thorium.BuffType("DrachmaBuff"), thorium.ProjectileType("DrachmaBag"));
+                modPlayer.AddPet(SoulConfig.Instance.GlitterPet, hideVisual, thorium.BuffType("ShineDust"), thorium.ProjectileType("ShinyPet"));
             }
         }
 

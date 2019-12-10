@@ -117,7 +117,7 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
             //use speed, velocity, debuffs, crit dmg, mana up, double knockback
             modPlayer.UniverseEffect = true;
             
-            if (SoulConfig.Instance.GetValue("Universe Attack Speed"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.UniverseAttackSpeed))
             {
                 modPlayer.AttackSpeed *= 1.5f;
             }
@@ -129,7 +129,7 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
             player.counterWeight = 556 + Main.rand.Next(6);
             player.yoyoGlove = true;
             player.yoyoString = true;
-            if (SoulConfig.Instance.GetValue("Sniper Scope"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SniperScope))
             {
                 player.scope = true;
             }
@@ -153,12 +153,12 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
                 player.AddBuff(thorium.BuffType("LichActive"), 60, true);
             }
             //crystal scorpion
-            if (SoulConfig.Instance.GetValue("Crystal Scorpion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.CrystalScorpion))
             {
                 thoriumPlayer.crystalScorpion = true;
             }
             //yumas pendant
-            if (SoulConfig.Instance.GetValue("Yuma's Pendant"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.YumasPendant))
             {
                 thoriumPlayer.yuma = true;
             }
@@ -199,7 +199,7 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
             //medical bag
             thoriumPlayer.medicalAcc = true;
             //head mirror arrow 
-            if (SoulConfig.Instance.GetValue("Head Mirror"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.HeadMirror))
             {
                 float num = 0f;
                 int num2 = player.whoAmI;
@@ -251,7 +251,7 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
             player.meleeSpeed -= .15f;
             player.meleeCrit -= 5;
 
-            if (SoulConfig.Instance.GetValue("Elemental Quiver"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ElementalQuiver))
             {
                 //range
                 modPlayer.eQuiver = true;

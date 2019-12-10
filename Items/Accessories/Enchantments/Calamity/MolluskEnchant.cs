@@ -56,7 +56,7 @@ Summons a Danny Devito pet");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue("Shellfish Minions"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShellfishMinion))
             {
                 //set bonus clams
                 calamity.Call("SetSetBonus", player, "mollusk", true);
@@ -74,19 +74,19 @@ Summons a Danny Devito pet");
                 }
             }
 
-            if (SoulConfig.Instance.GetValue("Giant Pearl"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.GiantPearl))
             {
                 calamity.GetItem("GiantPearl").UpdateAccessory(player, hideVisual);
             }
 
-            if (SoulConfig.Instance.GetValue("Amidias' Pendant"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.AmidiasPendant))
             {
                 calamity.GetItem("AmidiasPendant").UpdateAccessory(player, hideVisual);
             }
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.MolluskEnchant = true;
-            fargoPlayer.AddPet("Danny Pet", hideVisual, calamity.BuffType("DannyDevito"), calamity.ProjectileType("DannyDevitoPet"));
+            fargoPlayer.AddPet(SoulConfig.Instance.DannyPet, hideVisual, calamity.BuffType("DannyDevito"), calamity.ProjectileType("DannyDevitoPet"));
         }
 
         public override void AddRecipes()

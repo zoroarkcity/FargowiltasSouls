@@ -53,7 +53,7 @@ Briefly become invulnerable after striking an enemy");
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             //mythril
-            if (SoulConfig.Instance.GetValue("Mythril Weapon Speed") && !modPlayer.TerrariaSoul)
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MythrilSpeed) && !modPlayer.TerrariaSoul)
                 modPlayer.AttackSpeed *= 1.2f;
             //shards
             modPlayer.CobaltEnchant = true;

@@ -65,7 +65,7 @@ Effects of Fabled Tortoise Shell");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue("Reaver Effects"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ReaverEffects))
             {
                 calamity.Call("SetSetBonus", player, "reaver_melee", true);
                 calamity.Call("SetSetBonus", player, "reaver_ranged", true);
@@ -75,7 +75,7 @@ Effects of Fabled Tortoise Shell");
             
             if (player.GetModPlayer<FargoPlayer>().Eternity) return;
 
-            if (SoulConfig.Instance.GetValue("Reaver Orb Minion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ReaverMinion))
             {
                 calamity.Call("SetSetBonus", player, "reaver_summon", true);
                 if (player.whoAmI == Main.myPlayer)
@@ -92,7 +92,7 @@ Effects of Fabled Tortoise Shell");
             }
 
             //fabled tortoise shell
-            if (SoulConfig.Instance.GetValue("Fabled Turtle Shell"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.FabledTurtleShell))
             {
                 calamity.GetItem("FabledTortoiseShell").UpdateAccessory(player, hideVisual);
                 player.statDefense += 35;

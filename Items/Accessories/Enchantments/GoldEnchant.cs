@@ -78,7 +78,7 @@ Effects of Greedy Ring
             modPlayer.GoldEffect(hideVisual);
 
             if (Fargowiltas.Instance.ThoriumLoaded)
-                player.GetModPlayer<FargoPlayer>().AddPet("Coin Bag Pet", hideVisual, thorium.BuffType("DrachmaBuff"), thorium.ProjectileType("DrachmaBag"));
+                player.GetModPlayer<FargoPlayer>().AddPet(SoulConfig.Instance.CoinPet, hideVisual, thorium.BuffType("DrachmaBuff"), thorium.ProjectileType("DrachmaBag"));
         }
 
         public override void AddRecipes()

@@ -571,7 +571,7 @@ namespace FargowiltasSouls
 
         [Label("$Mods.FargowiltasSouls.PetSquashConfig")]
         [DefaultValue(true)]
-        public bool squash;
+        public bool SquashlingPet;
 
         [Label("$Mods.FargowiltasSouls.PetTikiConfig")]
         [DefaultValue(true)]
@@ -787,7 +787,7 @@ namespace FargowiltasSouls
 
         [Label("$Mods.FargowiltasSouls.ThoriumBerserkerConfig")]
         [DefaultValue(true)]
-        public bool Berserker;
+        public bool BerserkerEffect;
 
         [Label("$Mods.FargowiltasSouls.ThoriumBeeBootiesConfig")]
         [DefaultValue(true)]
@@ -816,6 +816,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.ThoriumDemonBloodConfig")]
         [DefaultValue(true)]
         public bool DemonBloodEffect;
+
+        [Label("$Mods.FargowiltasSouls.ThoriumEyeoftheStormConfig")]
+        [DefaultValue(true)]
+        public bool EyeoftheStorm;
 
         [Label("$Mods.FargowiltasSouls.ThoriumDevilMinionConfig")]
         [DefaultValue(true)]

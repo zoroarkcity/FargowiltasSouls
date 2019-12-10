@@ -97,7 +97,7 @@ Summons the aid of all Masochist Mode bosses to your side");
 
             //slimy shield
             player.buffImmune[BuffID.Slimed] = true;
-            if (SoulConfig.Instance.GetValue("Slimy Shield Effects"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SlimyShield))
             {
                 player.maxFallSpeed *= 2f;
                 fargoPlayer.SlimyShield = true;
@@ -161,16 +161,16 @@ Summons the aid of all Masochist Mode bosses to your side");
             }
 
             //sinister icon
-            if (SoulConfig.Instance.GetValue("Sinister Icon"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SinisterIcon))
                 player.GetModPlayer<FargoPlayer>().SinisterIcon = true;
 
             //dragon fang
-            if (SoulConfig.Instance.GetValue("Inflict Clipped Wings"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DragonFang))
                 fargoPlayer.DragonFang = true;
 
             //frigid gemstone
             player.buffImmune[BuffID.Frostburn] = true;
-            if (SoulConfig.Instance.GetValue("Frostfireballs"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.FrigidGemstone))
             {
                 fargoPlayer.FrigidGemstone = true;
                 if (fargoPlayer.FrigidGemstoneCD > 0)
@@ -205,7 +205,7 @@ Summons the aid of all Masochist Mode bosses to your side");
             //nymph's perfume
             player.buffImmune[BuffID.Lovestruck] = true;
             player.buffImmune[BuffID.Stinky] = true;
-            if (SoulConfig.Instance.GetValue("Attacks Spawn Hearts"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.NymphPerfume))
             {
                 fargoPlayer.NymphsPerfume = true;
                 if (fargoPlayer.NymphsPerfumeCD > 0)
@@ -213,7 +213,7 @@ Summons the aid of all Masochist Mode bosses to your side");
             }
 
             //tim's concoction
-            if (SoulConfig.Instance.GetValue("Tim's Concoction"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.TimsConcoction))
                 player.GetModPlayer<FargoPlayer>().TimsConcoction = true;
 
             //dubious circuitry
@@ -256,7 +256,7 @@ Summons the aid of all Masochist Mode bosses to your side");
             player.buffImmune[BuffID.VortexDebuff] = true;
             player.buffImmune[BuffID.ChaosState] = true;
             fargoPlayer.GravityGlobeEX = true;
-            if (SoulConfig.Instance.GetValue("Gravity Control"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.GravityControl))
                 player.gravControl = true;
 
             //heart of maso

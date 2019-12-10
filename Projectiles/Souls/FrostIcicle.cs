@@ -38,7 +38,7 @@ namespace FargowiltasSouls.Projectiles.Souls
                 modPlayer.FrostEnchant = false;
             }
 
-            if (!(modPlayer.FrostEnchant || modPlayer.TerrariaSoul) || !SoulConfig.Instance.GetValue("Frost Icicles"))
+            if (!(modPlayer.FrostEnchant || modPlayer.TerrariaSoul) || !SoulConfig.Instance.GetValue(SoulConfig.Instance.FrostIcicles))
             {
                 projectile.Kill();
                 return;

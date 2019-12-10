@@ -53,7 +53,7 @@ Summons a pet Holy Goat");
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
             //goat pet
             modPlayer.BinderEnchant = true;
-            modPlayer.AddPet("Holy Goat Pet", hideVisual, thorium.BuffType("HolyGoatBuff"), thorium.ProjectileType("HolyGoat"));
+            modPlayer.AddPet(SoulConfig.Instance.GoatPet, hideVisual, thorium.BuffType("HolyGoatBuff"), thorium.ProjectileType("HolyGoat"));
 
             if (modPlayer.ThoriumSoul) return;
 

@@ -77,7 +77,7 @@ Debuff状态下, 增加10%盗贼伤害
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue("Tarragon Effects"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.TarragonEffects))
             {
                 calamity.Call("SetSetBonus", player, "tarragon", true);
                 calamity.Call("SetSetBonus", player, "tarragon_melee", true);
@@ -87,7 +87,7 @@ Debuff状态下, 增加10%盗贼伤害
                 calamity.Call("SetSetBonus", player, "tarragon_rogue", true);
             }
             
-            if (SoulConfig.Instance.GetValue("Profaned Soul Artifact"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ProfanedSoulArtifact))
             {
                 //profaned soul artifact
                 calamity.GetItem("ProfanedSoulArtifact").UpdateAccessory(player, hideVisual);

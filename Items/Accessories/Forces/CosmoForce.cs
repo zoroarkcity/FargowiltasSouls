@@ -78,7 +78,7 @@ Summons a pet Companion Cube";
             modPlayer.NebulaEffect();
             //guardian and time freeze
             modPlayer.StardustEffect();
-            modPlayer.AddPet("Suspicious Eye Pet", hideVisual, BuffID.SuspiciousTentacle, ProjectileID.SuspiciousTentacle);
+            modPlayer.AddPet(SoulConfig.Instance.SuspiciousEyePet, hideVisual, BuffID.SuspiciousTentacle, ProjectileID.SuspiciousTentacle);
         }
 
         public override void AddRecipes()

@@ -60,7 +60,7 @@ A meteor shower initiates every few seconds while attacking";
             modPlayer.MeteorEffect(50);
 
             if (Fargowiltas.Instance.ThoriumLoaded)
-                modPlayer.AddPet("Bio-Feeder Pet", hideVisual, thorium.BuffType("BioFeederBuff"), thorium.ProjectileType("BioFeederPet"));
+                modPlayer.AddPet(SoulConfig.Instance.BioFeederPet, hideVisual, thorium.BuffType("BioFeederBuff"), thorium.ProjectileType("BioFeederPet"));
         }
 
         public override void AddRecipes()

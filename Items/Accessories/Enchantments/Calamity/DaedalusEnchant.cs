@@ -68,7 +68,7 @@ Summons a Bear and Third Sage pet");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue("Daedalus Effects"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DaedalusEffects))
             {
                 calamity.Call("SetSetBonus", player, "daedalus_melee", true);
                 calamity.Call("SetSetBonus", player, "daedalus_ranged", true);
@@ -77,7 +77,7 @@ Summons a Bear and Third Sage pet");
                 calamity.Call("SetSetBonus", player, "daedalus_rogue", true);
             }
             
-            if (SoulConfig.Instance.GetValue("Permafrost's Concoction"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.PermafrostPotion))
             {
                 //permafrost concoction
                 calamity.GetItem("PermafrostsConcoction").UpdateAccessory(player, hideVisual);
@@ -85,7 +85,7 @@ Summons a Bear and Third Sage pet");
             
             if (player.GetModPlayer<FargoPlayer>().Eternity) return;
 
-            if (SoulConfig.Instance.GetValue("Daedalus Crystal Minion") && player.whoAmI == Main.myPlayer)
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DaedalusMinion) && player.whoAmI == Main.myPlayer)
             {
                 if (player.FindBuffIndex(calamity.BuffType("DaedalusCrystal")) == -1)
                 {
@@ -98,13 +98,13 @@ Summons a Bear and Third Sage pet");
             }
 
             //regenerator
-            if (SoulConfig.Instance.GetValue("Regenator"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Regenerator))
                 calamity.GetItem("Regenator").UpdateAccessory(player, hideVisual);
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.DaedalusEnchant = true;
-            fargoPlayer.AddPet("Third Sage Pet", hideVisual, calamity.BuffType("ThirdSageBuff"), calamity.ProjectileType("ThirdSage"));
-            fargoPlayer.AddPet("Bear Pet", hideVisual, calamity.BuffType("BearBuff"), calamity.ProjectileType("Bear"));
+            fargoPlayer.AddPet(SoulConfig.Instance.ThirdSagePet, hideVisual, calamity.BuffType("ThirdSageBuff"), calamity.ProjectileType("ThirdSage"));
+            fargoPlayer.AddPet(SoulConfig.Instance.BearPet, hideVisual, calamity.BuffType("BearBuff"), calamity.ProjectileType("Bear"));
         }
 
         public override void AddRecipes()

@@ -82,18 +82,18 @@ While standing in lava, you gain 20 armor penetration, 15% attack speed, and you
             //lava immune (obsidian)
             modPlayer.ObsidianEffect();
             //EoC Shield
-            if (SoulConfig.Instance.GetValue("Shield of Cthulhu"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.CthulhuShield))
             {
                 player.dash = 2;
             }
             
-            if (SoulConfig.Instance.GetValue("Iron Shield"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.IronShield))
             {
                 //shield
                 modPlayer.IronEffect();
             }
             //magnet
-            if (SoulConfig.Instance.GetValue("Iron Magnet"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.IronMagnet))
             {
                 modPlayer.IronEnchant = true;
             }

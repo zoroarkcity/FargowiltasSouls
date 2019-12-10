@@ -52,7 +52,7 @@ Summons a pet Wyvern");
             //dragon tooth necklace
             player.armorPenetration += 15;
             //wyvern pet
-            modPlayer.AddPet("Wyvern Pet", hideVisual, thorium.BuffType("WyvernPetBuff"), thorium.ProjectileType("WyvernPet"));
+            modPlayer.AddPet(SoulConfig.Instance.WyvernPet, hideVisual, thorium.BuffType("WyvernPetBuff"), thorium.ProjectileType("WyvernPet"));
             modPlayer.DragonEnchant = true;
         }
         

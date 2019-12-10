@@ -51,7 +51,7 @@ Summons a friendly Cultist and plant to fight at your side");
             player.buffImmune[mod.BuffType("IvyVenom")] = true;
             player.buffImmune[mod.BuffType("Swarming")] = true;
 
-            if (SoulConfig.Instance.GetValue("Plantera Minion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.PlanteraMinion))
                 player.AddBuff(mod.BuffType("PlanterasChild"), 2);
 
             //lihzahrd treasure
@@ -72,7 +72,7 @@ Summons a friendly Cultist and plant to fight at your side");
             player.buffImmune[mod.BuffType("Antisocial")] = true;
             fargoPlayer.MoonChalice = true;
 
-            if (SoulConfig.Instance.GetValue("Cultist Minion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.CultistMinion))
                 player.AddBuff(mod.BuffType("LunarCultist"), 2);
         }
 

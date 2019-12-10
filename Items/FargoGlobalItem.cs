@@ -106,7 +106,7 @@ namespace FargowiltasSouls.Items
                 Vector2 position = player.Center;
                 Vector2 velocity = Vector2.Normalize(Main.MouseWorld - position);
 
-                if (modPlayer.BorealEnchant && SoulConfig.Instance.GetValue2(SoulConfig.Instance.BorealSnowballs))
+                if (modPlayer.BorealEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.BorealSnowballs))
                 {
                     Vector2 vel = Vector2.Normalize(Main.MouseWorld - player.Center) * 17f;
                     int p = Projectile.NewProjectile(player.Center, vel, ProjectileID.SnowBallFriendly, (int)(item.damage * .5f), 1, Main.myPlayer);
