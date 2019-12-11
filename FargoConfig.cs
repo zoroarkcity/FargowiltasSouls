@@ -379,59 +379,59 @@ namespace FargowiltasSouls
 
 
         [Header("$Mods.FargowiltasSouls.WalletHeader")]
-        [Label("$Mods.FargowiltasSouls.WalletWardingConfig")]
+        [Label("Warding")]
         [DefaultValue(true)]
         public bool Warding;
 
-        [Label("$Mods.FargowiltasSouls.WalletViolentConfig")]
+        [Label("Violent")]
         [DefaultValue(true)]
         public bool Violent;
 
-        [Label("$Mods.FargowiltasSouls.WalletQuickConfig")]
+        [Label("Quick")]
         [DefaultValue(true)]
         public bool Quick;
 
-        [Label("$Mods.FargowiltasSouls.WalletLuckyConfig")]
+        [Label("Lucky")]
         [DefaultValue(true)]
         public bool Lucky;
 
-        [Label("$Mods.FargowiltasSouls.WalletMenacingConfig")]
+        [Label("Menacing")]
         [DefaultValue(true)]
         public bool Menacing;
 
-        [Label("$Mods.FargowiltasSouls.WalletLegendaryConfig")]
+        [Label("Legendary")]
         [DefaultValue(true)]
         public bool Legendary;
 
-        [Label("$Mods.FargowiltasSouls.WalletUnrealConfig")]
+        [Label("Unreal")]
         [DefaultValue(true)]
         public bool Unreal;
 
-        [Label("$Mods.FargowiltasSouls.WalletMythicalConfig")]
+        [Label("Mythical")]
         [DefaultValue(true)]
         public bool Mythical;
 
-        [Label("$Mods.FargowiltasSouls.WalletGodlyConfig")]
+        [Label("Godly")]
         [DefaultValue(true)]
         public bool Godly;
 
-        [Label("$Mods.FargowiltasSouls.WalletDemonicConfig")]
+        [Label("Demonic")]
         [DefaultValue(true)]
         public bool Demonic;
 
-        [Label("$Mods.FargowiltasSouls.WalletRuthlessConfig")]
+        [Label("Ruthless")]
         [DefaultValue(true)]
         public bool Ruthless;
 
-        [Label("$Mods.FargowiltasSouls.WalletLightConfig")]
+        [Label("Light")]
         [DefaultValue(true)]
         public bool Light;
 
-        [Label("$Mods.FargowiltasSouls.WalletDeadlyConfig")]
+        [Label("Deadly")]
         [DefaultValue(true)]
         public bool Deadly;
 
-        [Label("$Mods.FargowiltasSouls.WalletRapidConfig")]
+        [Label("Rapid")]
         [DefaultValue(true)]
         public bool Rapid;
 
