@@ -14,13 +14,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Ancient Shadow Enchantment");
             Tooltip.SetDefault(
 @"''
-
-A Shadow Orb (or 2) will orbit around the player a set distance away. 
-Attacking the Shadow Orb will cause it to release a burst of 2-3 homing shadow energy that each deal a percentage of the weapon's damage and inflicts Shadowflame for a short period of time.
-
-After being struck, the Shadow Orb cannot be hit for 3 seconds.
-
-");
+Two Shadow Orbs will orbit around you
+Attacking a Shadow Orb will cause it to release a burst of homing shadow energy that deal a percentage of the weapon's damage and inflicts Shadowflame for a short period of time
+After being struck, the Shadow Orb cannot be hit for ech seconds");
         }
 
         public override void SetDefaults()

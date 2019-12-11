@@ -79,11 +79,9 @@ Summons a pet Gato and Black Cat";
             recipe.AddIngredient(ItemID.MonkAltShirt);
             recipe.AddIngredient(ItemID.MonkAltPants);
             recipe.AddIngredient(null, "NinjaEnchant");
-            recipe.AddIngredient(ItemID.MasterNinjaGear);
-            recipe.AddIngredient(ItemID.MonkBelt);
-
             //monk enchant
-
+            recipe.AddIngredient(ItemID.MasterNinjaGear);
+            
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
                 recipe.AddIngredient(thorium.ItemType("ShadeKusarigama"));

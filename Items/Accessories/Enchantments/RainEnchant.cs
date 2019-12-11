@@ -15,11 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             Tooltip.SetDefault(
 @"'Come again some other day'
 Immunity to Wet
-A miniature storm may appear when an enemy dies");
+A miniature storm may appear when an enemy dies or a boss is heavily damaged
+Shooting it with some kind of water will make it grow");
             DisplayName.AddTranslation(GameCulture.Chinese, "云雨魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
-@"'改天再来'
-敌人死亡时可能会出现微型风暴");
         }
 
         public override void SetDefaults()

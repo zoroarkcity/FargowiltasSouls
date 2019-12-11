@@ -6,12 +6,7 @@ using Terraria.Localization;
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class EskimoEnchant : ModItem
-    {
-    public override bool Autoload(ref string name)
-        {
-            return false;
-        }
-        
+    {        
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
 
         public override void SetStaticDefaults()
@@ -19,13 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Eskimo Enchantment");
             Tooltip.SetDefault(
 @"'It's Burning Cold Outside'
-
-you have a small area around you that frostburns enemies and slows projectiles
-if you wear both it applies frozen to enemies and projectiles for like .5 seconds upon entering
-
-
-
-");
+You have a small area around you that Frostburns enemies and slows projectiles");
         }
 
         public override void SetDefaults()

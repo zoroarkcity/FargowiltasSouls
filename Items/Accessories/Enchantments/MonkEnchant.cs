@@ -15,11 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             Tooltip.SetDefault(
 @"'Hours of Meditation have led to this…'
 
-Lee Sin Q or R lol
+Standing still for ech seconds grants you a single use dash that will launch any enemy, or its really long nimmun n does damage n yes
 
-Lightning Aura can now crit and strikes faster
-
-");
+Lightning Aura can now crit and strikes faster");
         }
 
         public override void SetDefaults()
@@ -44,7 +42,7 @@ Lightning Aura can now crit and strikes faster
             armor 1
             armor 2
             armor 3
-            monk belt
+            recipe.AddIngredient(ItemID.MonkBelt);
             sleepy octopod
             ghastly glaive
             lightning staff tier 2

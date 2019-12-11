@@ -66,17 +66,13 @@ namespace FargowiltasSouls
             #region enchants
             
             AddToggle("WoodHeader", "Force of Timber", "TimberForce", "ffffff");
-            AddToggle("LifeHeader", "Force of Life", "LifeForce", "ffffff");
-            AddToggle("NatureHeader", "Force of Nature", "NatureForce", "ffffff");
-            AddToggle("ShadowHeader", "Shadow Force", "ShadowForce", "ffffff");
-            AddToggle("SpiritHeader", "Force of Spirit", "SpiritForce", "ffffff");
-            AddToggle("CosmoHeader", "Force of Cosmos", "CosmoForce", "ffffff");
             AddToggle("BorealConfig", "Boreal Snowballs", "BorealWoodEnchant", "8B7464");
             AddToggle("MahoganyConfig", "Mahogany Hook Speed", "RichMahoganyEnchant", "b56c64");
             AddToggle("EbonConfig", "Ebonwood Shadowflame", "EbonwoodEnchant", "645a8d");
             AddToggle("ShadeConfig", "Blood Geyser On Hit", "ShadewoodEnchant", "586876");
             AddToggle("PalmConfig", "Palmwood Sentry", "PalmWoodEnchant", "b78d56");
             AddToggle("PearlConfig", "Pearlwood Rain", "PearlwoodEnchant", "ad9a5f");
+
             AddToggle("EarthHeader", "Force of Earth", "EarthForce", "ffffff");
             AddToggle("AdamantiteConfig", "Adamantite Projectile Splitting", "AdamantiteEnchant", "dd557d");
             AddToggle("CobaltConfig", "Cobalt Shards", "CobaltEnchant", "3da4c4");
@@ -84,6 +80,7 @@ namespace FargowiltasSouls
             AddToggle("OrichalcumConfig", "Orichalcum Fireballs", "OrichalcumEnchant", "eb3291");
             AddToggle("PalladiumConfig", "Palladium Healing", "PalladiumEnchant", "f5ac28");
             AddToggle("TitaniumConfig", "Titanium Shadow Dodge", "TitaniumEnchant", "828c88");
+
             AddToggle("TerraHeader", "Terra Force", "TerraForce", "ffffff");
             AddToggle("CopperConfig", "Copper Lightning", "CopperEnchant", "d56617");
             AddToggle("IronMConfig", "Iron Magnet", "IronEnchant", "988e83");
@@ -91,34 +88,45 @@ namespace FargowiltasSouls
             AddToggle("CthulhuShield", "Shield of Cthulhu", "IronEnchant", "988e83");
             AddToggle("TinConfig", "Tin Crits", "TinEnchant", "a28b4e");
             AddToggle("TungstenConfig", "Tungsten Effect", "TungstenEnchant", "b0d2b2");
+
             AddToggle("WillHeader", "Force of Will", "WillForce", "ffffff");
             AddToggle("GladiatorConfig", "Gladiator Rain", "GladiatorEnchant", "9c924e");
             AddToggle("GoldConfig", "Gold Lucky Coin", "GoldEnchant", "e7b21c");
             AddToggle("RedRidingConfig", "Red Riding Super Bleed", "RedRidingEnchant", "c01b3c");
             AddToggle("ValhallaConfig", "Valhalla Knockback", "ValhallaKnightEnchant", "93651e");
+
+            AddToggle("LifeHeader", "Force of Life", "LifeForce", "ffffff");
             AddToggle("BeetleConfig", "Beetles", "BeetleEnchant", "6D5C85");
             AddToggle("CactusConfig", "Cactus Needles", "CactusEnchant", "799e1d");
             AddToggle("PumpkinConfig", "Pumpkin Fire", "PumpkinEnchant", "e3651c");
             AddToggle("SpiderConfig", "Spider Swarm", "SpiderEnchant", "6d4e45");
             AddToggle("TurtleConfig", "Turtle Shell Buff", "TurtleEnchant", "f89c5c");
+
+            AddToggle("NatureHeader", "Force of Nature", "NatureForce", "ffffff");
             AddToggle("ChlorophyteConfig", "Chlorophyte Leaf Crystal", "ChlorophyteEnchant", "248900");
             AddToggle("CrimsonConfig", "Crimson Regen", "CrimsonEnchant", "C8364B");
             AddToggle("FrostConfig", "Frost Icicles", "FrostEnchant", "7abdb9");
             AddToggle("JungleConfig", "Jungle Spores", "JungleEnchant", "71971f");
             AddToggle("MoltenConfig", "Molten Inferno Buff", "MoltenEnchant", "c12b2b");
             AddToggle("ShroomiteConfig", "Shroomite Stealth", "ShroomiteEnchant", "008cf4");
+
+            AddToggle("ShadowHeader", "Shadow Force", "ShadowForce", "ffffff");
             AddToggle("DarkArtConfig", "Dark Artist Effect", "DarkArtistEnchant", "9b5cb0");
             AddToggle("NecroConfig", "Necro Guardian", "NecroEnchant", "565643");
             AddToggle("ShadowConfig", "Shadow Darkness", "ShadowEnchant", "42356f");
             AddToggle("ShinobiConfig", "Shinobi Through Walls", "ShinobiEnchant", "935b18");
             AddToggle("ShinobiTabiConfig", "Tabi Dash", "ShinobiEnchant", "935b18");
             AddToggle("SpookyConfig", "Spooky Scythes", "SpookyEnchant", "644e74");
+
+            AddToggle("SpiritHeader", "Force of Spirit", "SpiritForce", "ffffff");
             AddToggle("ForbiddenConfig", "Forbidden Storm", "ForbiddenEnchant", "e7b21c");
             AddToggle("HallowedConfig", "Hallowed Enchanted Sword Familiar", "HallowEnchant", "968564");
             AddToggle("HalllowSConfig", "Hallowed Shield", "HallowEnchant", "968564");
             AddToggle("SilverConfig", "Silver Sword Familiar", "SilverEnchant", "b4b4cc");
             AddToggle("SpectreConfig", "Spectre Orbs", "SpectreEnchant", "accdfc");
             AddToggle("TikiConfig", "Tiki Minions", "TikiEnchant", "56A52B");
+
+            AddToggle("CosmoHeader", "Force of Cosmos", "CosmoForce", "ffffff");
             AddToggle("MeteorConfig", "Meteor Shower", "MeteorEnchant", "5f4752");
             AddToggle("NebulaConfig", "Nebula Boosters", "NebulaEnchant", "fe7ee5");
             AddToggle("SolarConfig", "Solar Shield", "SolarEnchant", "fe9e23");
@@ -130,26 +138,34 @@ namespace FargowiltasSouls
 
             #region masomode toggles
 
-            AddToggle("MasoSlimeConfig", "Slimy Shield Effects", "SecurityWallet", "ffffff");
-            AddToggle("MasoEyeConfig", "Scythes When Dashing", "SecurityWallet", "ffffff");
-            AddToggle("MasoSkeleConfig", "Skeletron Arms Minion", "SecurityWallet", "ffffff");
-            AddToggle("MasoEaterConfig", "Tiny Eaters", "SecurityWallet", "ffffff");
-            AddToggle("MasoBrainConfig", "Creeper Shield", "SecurityWallet", "ffffff");
-            AddToggle("MasoConcoctionConfig", "Tim's Concoction", "SecurityWallet", "ffffff");
-            AddToggle("MasoRainbowConfig", "Rainbow Slime Minion", "SecurityWallet", "ffffff");
-            AddToggle("MasoFrigidConfig", "Frostfireballs", "SecurityWallet", "ffffff");
-            AddToggle("MasoNymphConfig", "Attacks Spawn Hearts", "SecurityWallet", "ffffff");
-            AddToggle("MasoSqueakConfig", "Squeaky Toy On Hit", "SecurityWallet", "ffffff");
-            AddToggle("MasoPouchConfig", "Tentacles On Hit", "SecurityWallet", "ffffff");
-            AddToggle("MasoClippedConfig", "Inflict Clipped Wings", "SecurityWallet", "ffffff");
+            //Masomode Header
+            AddToggle("MasoBossRecolors", "Boss Recolors (Restart to use)", "Masochist", "ffffff");
+
+            AddToggle("MasoSlimeConfig", "Slimy Shield Effects", "SlimyShield", "ffffff");
+            AddToggle("MasoEyeConfig", "Scythes When Dashing", "AgitatedLens", "ffffff");
+            AddToggle("MasoSkeleConfig", "Skeletron Arms Minion", "NecromanticBrew", "ffffff");
+
+            AddToggle("MasoEaterConfig", "Tiny Eaters", "CorruptHeart", "ffffff");
+            AddToggle("MasoBrainConfig", "Creeper Shield", "GuttedHeart", "ffffff");
+
+            AddToggle("MasoConcoctionConfig", "Tim's Concoction", "TimsConcoction", "ffffff");
+            AddToggle("MasoRainbowConfig", "Rainbow Slime Minion", "ConcentratedRainbowMatter", "ffffff");
+            AddToggle("MasoFrigidConfig", "Frostfireballs", "FrigidGemstone", "ffffff");
+            AddToggle("MasoNymphConfig", "Attacks Spawn Hearts", "NymphPerfume", "ffffff");
+            AddToggle("MasoSqueakConfig", "Squeaky Toy On Hit", "SqueakyToy", "ffffff");
+            AddToggle("MasoPouchConfig", "Tentacles On Hit", "WretchedPouch", "ffffff");
+            AddToggle("MasoClippedConfig", "Inflict Clipped Wings", "DragonFang", "ffffff");
+
             AddToggle("MasoLightningConfig", "Inflict Lightning Rod", "SecurityWallet", "ffffff");
             AddToggle("MasoProbeConfig", "Probes Minion", "SecurityWallet", "ffffff");
+
             AddToggle("MasoGravConfig", "Gravity Control", "SecurityWallet", "ffffff");
             AddToggle("MasoGrav2Config", "Stabilized Gravity", "SecurityWallet", "ffffff");
             AddToggle("MasoPump", "Pumpking's Cape Support", "SecurityWallet", "ffffff");
             AddToggle("MasoFlockoConfig", "Flocko Minion", "SecurityWallet", "ffffff");
             AddToggle("MasoUfoConfig", "Saucer Minion", "SecurityWallet", "ffffff");
             AddToggle("MasoTrueEyeConfig", "True Eyes Minion", "SecurityWallet", "ffffff");
+
             AddToggle("MasoCelestConfig", "Celestial Rune Support", "SecurityWallet", "ffffff");
             AddToggle("MasoPlantConfig", "Plantera Minion", "SecurityWallet", "ffffff");
             AddToggle("MasoGolemConfig", "Lihzahrd Ground Pound", "SecurityWallet", "ffffff");
@@ -157,11 +173,13 @@ namespace FargowiltasSouls
             AddToggle("MasoCultistConfig", "Cultist Minion", "SecurityWallet", "ffffff");
             AddToggle("MasoFishronConfig", "Spectral Fishron", "SecurityWallet", "ffffff");
             AddToggle("MasoPugentConfig", "Pungent Eye Minion", "SecurityWallet", "ffffff");
+
             AddToggle("MasoAbomConfig", "Abominationn Minion", "SecurityWallet", "ffffff");
             AddToggle("MasoRingConfig", "Phantasmal Ring Minion", "SecurityWallet", "ffffff");
+
             AddToggle("MasoSpikeConfig", "Spiky Balls On Hit", "SecurityWallet", "ffffff");
             AddToggle("MasoIconConfig", "Sinister Icon", "SecurityWallet", "ffffff");
-            AddToggle("MasoBossRecolors", "Boss Recolors (Restart to use)", "SecurityWallet", "ffffff");
+            
             AddToggle("WalletHeader", "Security Wallet", "SecurityWallet", "ffffff");
 
             #endregion
@@ -221,6 +239,7 @@ namespace FargowiltasSouls
             #endregion
 
             #region thorium
+            //thorium header
 
             AddToggle("ThoriumAirWalkersConfig", "Air Walkers", "SupersonicSoul", "ffffff");
             AddToggle("ThoriumCrystalScorpionConfig", "Crystal Scorpion", "ConjuristsSoul", "ffffff");
@@ -294,7 +313,7 @@ namespace FargowiltasSouls
         #endregion
 
             #region calamity
-
+            //calamity header
             AddToggle("CalamityUrchinConfig", "Victide Sea Urchin", "VictideEnchant", "ffffff");
             AddToggle("CalamityProfanedArtifactConfig", "Profaned Soul Artifact", "TarragonEnchant", "ffffff");
             AddToggle("CalamitySlimeMinionConfig", "Slime God Minion", "StatigelEnchant", "ffffff");

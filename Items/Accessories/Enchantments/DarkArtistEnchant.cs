@@ -21,8 +21,6 @@ The player has a Flameburst Tower behind their back at all times that fires at n
 It has a slow fire rate and its fireballs travel slowly, but they create a large explosion on hit, and home in on enemies.
 
 
-
-While attacking, Flameburst shots manifest themselves from your shadows
 Greatly enhances Flameburst effectiveness
 Summons a pet Flickerwick";
             string tooltip_ch =

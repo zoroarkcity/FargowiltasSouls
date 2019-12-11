@@ -14,15 +14,10 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Huntress Enchantment");
             Tooltip.SetDefault(
 @"'The Hunt is On'
+Double tap down to create a localized rain of arrows at the cursor's position for a few seconds
+This has a cooldown of ech seconds
 Explosive Traps recharge faster and oil enemies
-Set oiled enemies on fire for extra damage
-
-Double tap DOWN / press special key to create a localized rain of arrows at the cursor's position for a few seconds, but has a lengthy cooldown. 
-The arrows that rain down are based on the arrows in the player's inventory.
-
-If the player does not have any arrows, it defaults to basic Wooden Arrows pre-Golem and special Huntress Bolts post-Golem. 
-Huntress Bolts inflict both Oiled and Betsy's Curse, as well as exploding like Hellfire Arrows.
-");
+Set oiled enemies on fire for extra damage");
         }
 
         public override void SetDefaults()
@@ -38,6 +33,28 @@ Huntress Bolts inflict both Oiled and Betsy's Curse, as well as exploding like H
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<FargoPlayer>().HuntressEnchant = true;
+
+
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.HuntressAbility) && (player.controlDown && player.releaseDown))
+            {
+                if (player.doubleTapCardinalTimer[0] > 0 && player.doubleTapCardinalTimer[0] != 15)
+                {
+                    Vector2 mouse = Main.MouseWorld;
+
+                    if(huntressCD == 0)
+                    {
+                        //find arrow type to use, for red riding only
+                        int arrowType = ProjectileID.WoodenArrow;
+
+
+
+                        Projectile.NewProjectile(mouse.X, mouse.Y - 100, 0f, 0f, mod.ProjectileType("ArrowRain"), 25, 0f, player.whoAmI, arrowType);
+                        //proj spawns arrows all around it until it dies
+                    }
+
+
+                }
+            }
         }
 
         public override void AddRecipes()
