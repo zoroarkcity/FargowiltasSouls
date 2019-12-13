@@ -3652,7 +3652,16 @@ namespace FargowiltasSouls.NPCs
                                     break;
 
                                 case 9: //phase 3 transition
-                                    goto case 4;
+                                    npc.dontTakeDamage = true;
+                                    masoBool[1] = false;
+                                    if (npc.ai[2] == 120)
+                                    {
+                                        int max = Fargowiltas.Instance.MasomodeEXLoaded ? npc.lifeMax : npc.lifeMax / 2;
+                                        int heal = max - npc.life;
+                                        npc.life = max;
+                                        CombatText.NewText(npc.Hitbox, CombatText.HealLife, heal);
+                                    }
+                                    break;
 
                                 case 10: //phase 3
                                     Timer++;

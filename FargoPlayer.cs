@@ -1243,7 +1243,7 @@ namespace FargowiltasSouls
                 if (AgitatingLensCD++ > 10)
                 {
                     AgitatingLensCD = 0;
-                    if (player.velocity.Length() >= 6f && player.whoAmI == Main.myPlayer && SoulConfig.Instance.GetValue(SoulConfig.Instance.AgitatedLens))
+                    if ((Math.Abs(player.velocity.X) >= 5 || Math.Abs(player.velocity.Y) >= 5) && player.whoAmI == Main.myPlayer && SoulConfig.Instance.GetValue(SoulConfig.Instance.AgitatedLens))
                     {
                         int damage = 20;
                         if (SupremeDeathbringerFairy)

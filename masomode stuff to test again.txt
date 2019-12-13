@@ -109,6 +109,11 @@ revives shouldnt be memed by mutant fang anymore
 hellzone has 66% chance to not consume ammo
 fixed pillar health when relogging in mp i think
 
+mutant now requires 10 p1s before skipping
+cultist only throws pillars below 50% life
+fishron and fish EX only heal up to 50% in p3
+lowered speed threshold to trigger agitating lens scythes, made it check x and y not length
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)
