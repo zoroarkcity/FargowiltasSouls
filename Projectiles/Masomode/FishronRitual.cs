@@ -120,8 +120,6 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 int heal = 24 * (int)(projectile.ai[0] * Main.rand.NextFloat(0.1f, 0.12f));
                 fishron.lifeMax += heal;
                 int max = (int)projectile.ai[0] * 25;
-                if (fishron.ai[0] >= 9 && !Fargowiltas.Instance.MasomodeEXLoaded)
-                    max = fishron.lifeMax / 2;
                 if (fishron.lifeMax > max)
                     fishron.lifeMax = max;
                 fishron.life = fishron.lifeMax;

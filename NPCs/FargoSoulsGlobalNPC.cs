@@ -123,10 +123,6 @@ namespace FargowiltasSouls.NPCs
 
                 switch (npc.type)
                 {
-                    case NPCID.QueenBee:
-                        npc.value /= 4;
-                        break;
-
                     case NPCID.PlanterasTentacle:
                         npc.lifeMax /= 4;
                         break;
@@ -3401,8 +3397,9 @@ namespace FargowiltasSouls.NPCs
                                             Counter = 0;
                                             int heal = (int)(npc.lifeMax * Main.rand.NextFloat(0.1f, 0.12f));
                                             npc.life += heal;
-                                            if (npc.life > npc.lifeMax)
-                                                npc.life = npc.lifeMax;
+                                            int max = npc.ai[0] == 9 && !Fargowiltas.Instance.MasomodeEXLoaded ? npc.lifeMax / 2 : npc.lifeMax;
+                                            if (npc.life > max)
+                                                npc.life = max;
                                             CombatText.NewText(npc.Hitbox, CombatText.HealLife, heal);
                                         }
                                     }
@@ -10609,10 +10606,10 @@ namespace FargowiltasSouls.NPCs
                                 Main.PlaySound(npc.DeathSound, npc.Center);
                                 npc.DropBossBags();
                                 npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CyclonicFin"));
-                                int maxEX = Main.rand.Next(5) + 1;
+                                int maxEX = Main.rand.Next(5) + 5;
                                 for (int i = 0; i < maxEX; i++)
                                     npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbominationnVoodooDoll"));
-                                maxEX = 5;
+                                maxEX = Main.rand.Next(5) + 5;
                                 for (int i = 0; i < maxEX; i++)
                                     npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantScale"));
 

@@ -116,6 +116,7 @@ lowered speed threshold to trigger agitating lens scythes, made it check x and y
 mimics drop no money
 moon lord drops 20 gold (higher because multipliers)
 queen bee drops 75% less gold
+increased fish EX's drops
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
