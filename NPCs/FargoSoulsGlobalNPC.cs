@@ -343,12 +343,15 @@ namespace FargowiltasSouls.NPCs
                         npc.buffImmune[mod.BuffType("ClippedWings")] = true;
                         break;
 
+                    case NPCID.Mimic:
+                        npc.value = 0;
+                        goto case NPCID.Medusa;
+
                     case NPCID.PigronCorruption:
                     case NPCID.PigronCrimson:
                     case NPCID.PigronHallow:
                     case NPCID.RedDevil:
                     case NPCID.AngryNimbus:
-                    case NPCID.Mimic:
                     case NPCID.IchorSticker:
                     case NPCID.SeekerHead:
                     case NPCID.MushiLadybug:
@@ -481,6 +484,7 @@ namespace FargowiltasSouls.NPCs
                         isMasoML = true;
                         masoStateML = 0;
                         npc.defense = 0;
+                        npc.value += Item.buyPrice(0, 20);
                         break;
                     case NPCID.MoonLordHand:
                     case NPCID.MoonLordHead:

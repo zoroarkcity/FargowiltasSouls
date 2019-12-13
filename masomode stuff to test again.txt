@@ -113,6 +113,8 @@ mutant now requires 10 p1s before skipping
 cultist only throws pillars below 50% life
 fishron and fish EX only heal up to 50% in p3
 lowered speed threshold to trigger agitating lens scythes, made it check x and y not length
+mimics drop no money
+moon lord drops 20 gold (higher because multipliers)
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
