@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using CalamityMod.CalPlayer;
 using Terraria.Localization;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -64,7 +63,7 @@ Summons a Siren pet");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue("Omega Blue Tentacles"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.OmegaTentacles))
             {
                 calamity.Call("SetSetBonus", player, "omegablue", true);
                 CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
@@ -96,7 +95,7 @@ Summons a Siren pet");
             }
 
             //abyssal diving suit
-            if (SoulConfig.Instance.GetValue("Abyssal Diving Suit"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DivingSuit))
             {
                 calamity.GetItem("AbyssalDivingSuit").UpdateAccessory(player, hideVisual);
             }
@@ -110,7 +109,7 @@ Summons a Siren pet");
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.OmegaBlueEnchant = true;
-            fargoPlayer.AddPet("Siren Pet", hideVisual, calamity.BuffType("StrangeOrb"), calamity.ProjectileType("SirenYoung"));
+            fargoPlayer.AddPet(SoulConfig.Instance.SirenPet, hideVisual, calamity.BuffType("StrangeOrb"), calamity.ProjectileType("SirenYoung"));
         }
 
         public override void AddRecipes()

@@ -57,9 +57,9 @@ Summons a pet Life Spirit");
             //sacred effect
             modPlayer.SacredEnchant = true;
             //lil cherub
-            modPlayer.AddMinion("Li'l Cherub Minion", thorium.ProjectileType("Angel"), 0, 0f);
+            modPlayer.AddMinion(SoulConfig.Instance.CherubMinion, thorium.ProjectileType("Angel"), 0, 0f);
             //twinkle pet
-            modPlayer.AddPet("Life Spirit Pet", hideVisual, thorium.BuffType("LifeSpiritBuff"), thorium.ProjectileType("LifeSpirit"));
+            modPlayer.AddPet(SoulConfig.Instance.SpiritPet, hideVisual, thorium.BuffType("LifeSpiritBuff"), thorium.ProjectileType("LifeSpirit"));
 
             if (modPlayer.ThoriumSoul) return;
 

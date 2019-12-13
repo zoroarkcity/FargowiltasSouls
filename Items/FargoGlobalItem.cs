@@ -106,7 +106,7 @@ namespace FargowiltasSouls.Items
                 Vector2 position = player.Center;
                 Vector2 velocity = Vector2.Normalize(Main.MouseWorld - position);
 
-                if (modPlayer.BorealEnchant && SoulConfig.Instance.GetValue2(SoulConfig.Instance.BorealSnowballs))
+                if (modPlayer.BorealEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.BorealSnowballs))
                 {
                     Vector2 vel = Vector2.Normalize(Main.MouseWorld - player.Center) * 17f;
                     int p = Projectile.NewProjectile(player.Center, vel, ProjectileID.SnowBallFriendly, (int)(item.damage * .5f), 1, Main.myPlayer);
@@ -114,7 +114,7 @@ namespace FargowiltasSouls.Items
                         FargoGlobalProjectile.SplitProj(Main.projectile[p], 5);
                 }
 
-                if (modPlayer.CelestialRune && SoulConfig.Instance.GetValue("Celestial Rune Support"))
+                if (modPlayer.CelestialRune && SoulConfig.Instance.GetValue(SoulConfig.Instance.CelestialRune))
                 {
                     if (item.melee && item.pick == 0 && item.axe == 0 && item.hammer == 0) //fireball
                     {
@@ -142,7 +142,7 @@ namespace FargowiltasSouls.Items
                     }
                 }
 
-                if (modPlayer.PumpkingsCape && SoulConfig.Instance.GetValue("Pumpking's Cape Support"))
+                if (modPlayer.PumpkingsCape && SoulConfig.Instance.GetValue(SoulConfig.Instance.PumpkingCape))
                 {
                     if (item.melee && item.pick == 0 && item.axe == 0 && item.hammer == 0) //flaming jack
                     {
@@ -190,7 +190,7 @@ namespace FargowiltasSouls.Items
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
 
-            if (SoulConfig.Instance.GetValue("Illumite Missile"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.IllumiteMissile))
             {
                 //illumite effect
                 if (modPlayer.IllumiteEnchant)
@@ -208,7 +208,7 @@ namespace FargowiltasSouls.Items
             }
 
             //plague flask
-            if (modPlayer.PlagueAcc && SoulConfig.Instance.GetValue("Plague Lord's Flask"))
+            if (modPlayer.PlagueAcc && SoulConfig.Instance.GetValue(SoulConfig.Instance.PlagueFlask))
             {
                 if (item.damage >= 1 && Main.rand.Next(5) == 0)
                 {
@@ -226,7 +226,7 @@ namespace FargowiltasSouls.Items
             }
             
             //folv effect
-            if (modPlayer.FolvEnchant && SoulConfig.Instance.GetValue("Folv's Bolts"))
+            if (modPlayer.FolvEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.FolvBolts))
             {
                 thoriumPlayer.magicCast++;
                 if (thoriumPlayer.magicCast >= 7)
@@ -286,20 +286,20 @@ namespace FargowiltasSouls.Items
             {
                 switch(item.prefix)
                 {
-                    case PrefixID.Warding:  if (SoulConfig.Instance.GetValue("Warding"))  return false; break;
-                    case PrefixID.Violent:  if (SoulConfig.Instance.GetValue("Violent"))  return false; break;
-                    case PrefixID.Quick:    if (SoulConfig.Instance.GetValue("Quick"))    return false; break;
-                    case PrefixID.Lucky:    if (SoulConfig.Instance.GetValue("Lucky"))    return false; break;
-                    case PrefixID.Menacing: if (SoulConfig.Instance.GetValue("Menacing")) return false; break;
-                    case PrefixID.Legendary:if (SoulConfig.Instance.GetValue("Legendary"))return false; break;
-                    case PrefixID.Unreal:   if (SoulConfig.Instance.GetValue("Unreal"))   return false; break;
-                    case PrefixID.Mythical: if (SoulConfig.Instance.GetValue("Mythical")) return false; break;
-                    case PrefixID.Godly:    if (SoulConfig.Instance.GetValue("Godly"))    return false; break;
-                    case PrefixID.Demonic:  if (SoulConfig.Instance.GetValue("Demonic"))  return false; break;
-                    case PrefixID.Ruthless: if (SoulConfig.Instance.GetValue("Ruthless")) return false; break;
-                    case PrefixID.Light:    if (SoulConfig.Instance.GetValue("Light"))    return false; break;
-                    case PrefixID.Deadly:   if (SoulConfig.Instance.GetValue("Deadly"))   return false; break;
-                    case PrefixID.Rapid:    if (SoulConfig.Instance.GetValue("Rapid"))    return false; break;
+                    case PrefixID.Warding:  if (SoulConfig.Instance.Warding)  return false; break;
+                    case PrefixID.Violent:  if (SoulConfig.Instance.Violent)  return false; break;
+                    case PrefixID.Quick:    if (SoulConfig.Instance.Quick)    return false; break;
+                    case PrefixID.Lucky:    if (SoulConfig.Instance.Lucky)    return false; break;
+                    case PrefixID.Menacing: if (SoulConfig.Instance.Menacing) return false; break;
+                    case PrefixID.Legendary:if (SoulConfig.Instance.Legendary)return false; break;
+                    case PrefixID.Unreal:   if (SoulConfig.Instance.Unreal)   return false; break;
+                    case PrefixID.Mythical: if (SoulConfig.Instance.Mythical) return false; break;
+                    case PrefixID.Godly:    if (SoulConfig.Instance.Godly)    return false; break;
+                    case PrefixID.Demonic:  if (SoulConfig.Instance.Demonic)  return false; break;
+                    case PrefixID.Ruthless: if (SoulConfig.Instance.Ruthless) return false; break;
+                    case PrefixID.Light:    if (SoulConfig.Instance.Light)    return false; break;
+                    case PrefixID.Deadly:   if (SoulConfig.Instance.Deadly)   return false; break;
+                    case PrefixID.Rapid:    if (SoulConfig.Instance.Rapid)    return false; break;
                     default: break;
                 }
             }

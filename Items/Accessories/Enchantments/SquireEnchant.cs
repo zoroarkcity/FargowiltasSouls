@@ -7,13 +7,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class SquireEnchant : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
 
         public override void SetStaticDefaults()
         {
@@ -52,8 +46,9 @@ Ballista pierces more targets and panics when you take damage");
             armor 1
             armor 2
             armor 3
+            recipe.AddIngredient(ItemID.SquireShield);
             brand of the inferno
-            squire shield
+            
             ballista tier 2
 
             Breaker Blade

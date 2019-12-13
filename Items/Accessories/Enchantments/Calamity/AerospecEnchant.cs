@@ -65,7 +65,7 @@ Summons a Kendra pet");
 
             if (player.GetModPlayer<FargoPlayer>().Eternity) return;
 
-            if (SoulConfig.Instance.GetValue("Valkyrie Minion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ValkyrieMinion))
             {
                 calamity.Call("SetSetBonus", player, "aerospec_summon", true);
                 if (player.whoAmI == Main.myPlayer)
@@ -81,14 +81,14 @@ Summons a Kendra pet");
                 }
             }
 
-            if (SoulConfig.Instance.GetValue("Gladiator's Locket"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.GladiatorLocket))
                 calamity.GetItem("GladiatorsLocket").UpdateAccessory(player, hideVisual);
-            if (SoulConfig.Instance.GetValue("Unstable Prism"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.UnstablePrism))
                 calamity.GetItem("UnstablePrism").UpdateAccessory(player, hideVisual);
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.AerospecEnchant = true;
-            fargoPlayer.AddPet("Kendra Pet", hideVisual, calamity.BuffType("Kendra"), calamity.ProjectileType("KendraPet"));
+            fargoPlayer.AddPet(SoulConfig.Instance.KendraPet, hideVisual, calamity.BuffType("Kendra"), calamity.ProjectileType("KendraPet"));
         }
 
         public override void AddRecipes()

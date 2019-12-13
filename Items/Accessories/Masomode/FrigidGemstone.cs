@@ -31,7 +31,7 @@ Your attacks summon Frostfireballs to attack your enemies");
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.buffImmune[BuffID.Frostburn] = true;
-            if (SoulConfig.Instance.GetValue("Frostfireballs"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.FrigidGemstone))
             {
                 FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
                 fargoPlayer.FrigidGemstone = true;

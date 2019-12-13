@@ -80,5 +80,10 @@ Thorium
 -Changed Jungle Enchant to activate on jump, lowered spore duration and damage
 -Ocean Enchantment, added Ocean Polearm, removed Breathing Reed
 
+-Updated Config, no more sub menus, adding new ones much easier, more efficent tm
+
+
+-remove stuff from spectre boi
+
 
 -See the full changelog on the wiki

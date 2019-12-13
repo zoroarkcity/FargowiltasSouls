@@ -16,14 +16,17 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Red Riding Enchantment");
             Tooltip.SetDefault(
 @"'Big Bad Red Riding Hood'
+Double tap down to create a localized rain of arrows at the cursor's position for a few seconds
+The arrows that rain down are based on the arrows in the player's inventory
+This has a cooldown of ech seconds
+Greatly enhances Explosive Traps effectiveness
+Effects of Celestial Shell
+Summons a pet Puppy
 
 
 
 During a Full Moon, attacks may cause enemies to Super Bleed - meme
-Your attacks deal increasing damage to low HP enemies - meme
-Greatly enhances Explosive Traps effectiveness
-Effects of Celestial Shell
-Summons a pet Puppy");
+Your attacks deal increasing damage to low HP enemies - meme");
             DisplayName.AddTranslation(GameCulture.Chinese, "红色游侠魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'大坏红帽'
@@ -76,21 +79,18 @@ Summons a pet Puppy");
             recipe.AddIngredient(ItemID.HuntressAltHead);
             recipe.AddIngredient(ItemID.HuntressAltShirt);
             recipe.AddIngredient(ItemID.HuntressAltPants);
-            //recipe.AddIngredient(ItemID.HuntressBuckler);
+            //huntress enchant
             recipe.AddIngredient(ItemID.CelestialShell);
 
-            //huntress enchant
-            
             if(Fargowiltas.Instance.ThoriumLoaded)
             {
                 recipe.AddIngredient(thorium.ItemType("BloodyHighClaws"));
                 recipe.AddIngredient(thorium.ItemType("LadyLight"));
-                //recipe.AddIngredient(ItemID.DD2PhoenixBow);
+                //aerial bane
                 recipe.AddIngredient(ItemID.DD2ExplosiveTrapT3Popper);
             }
             else
             {
-                //recipe.AddIngredient(ItemID.DD2PhoenixBow);
                 //aerial bane
             }
             

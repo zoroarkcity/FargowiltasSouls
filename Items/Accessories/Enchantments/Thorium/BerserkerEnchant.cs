@@ -53,7 +53,7 @@ Effects of Spring Steps and Slag Stompers");
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
 
-            if (SoulConfig.Instance.GetValue("Berserker Effect"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BerserkerEffect))
             {
                 thoriumPlayer.orbital = true;
                 thoriumPlayer.orbitalRotation3 = Utils.RotatedBy(thoriumPlayer.orbitalRotation3, -0.075000002980232239, default(Vector2));

@@ -37,28 +37,6 @@ When you land after a jump, slime will fall from the sky over your cursor");
             player.buffImmune[BuffID.Slimed] = true;
             player.maxFallSpeed *= 2f;
             player.GetModPlayer<FargoPlayer>().SlimyShield = true;
-
-            /*if (falling)
-            {
-                if (player.velocity.Y == 0f) //landing
-                {
-                    falling = false;
-                    Main.PlaySound(SoundID.Item21, player.Center);
-                    Vector2 mouse = Main.MouseWorld;
-                    for (int i = 0; i < 5; i++)
-                    {
-                        Vector2 spawn = new Vector2(mouse.X + Main.rand.Next(-200, 201), mouse.Y - Main.rand.Next(600, 901));
-                        Vector2 speed = mouse - spawn;
-                        speed.Normalize();
-                        speed *= 10f;
-                        Projectile.NewProjectile(spawn, speed, mod.ProjectileType("SlimeBall"), 20, 1f, Main.myPlayer);
-                    }
-                }
-            }
-            else if (player.velocity.Y > 0)
-            {
-                falling = true;
-            }*/
         }
     }
 }

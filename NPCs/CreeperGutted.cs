@@ -81,7 +81,7 @@ namespace FargowiltasSouls.NPCs
                 npc.ai[1] = 0f;
                 npc.velocity = npc.velocity.RotatedByRandom(2 * Math.PI);
 
-                if (player.whoAmI == Main.myPlayer && !SoulConfig.Instance.GetValue("Creeper Shield"))
+                if (player.whoAmI == Main.myPlayer && !SoulConfig.Instance.GetValue(SoulConfig.Instance.GuttedHeart))
                 {
                     int n = npc.whoAmI;
                     npc.StrikeNPCNoInteraction(9999, 0f, 0);

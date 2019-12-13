@@ -54,7 +54,7 @@ Summons a sword familiar that scales with minion damage";
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             modPlayer.SilverEnchant = true;
-            modPlayer.AddMinion("Silver Sword Familiar", mod.ProjectileType("SilverSword"), (int) (30 * player.minionDamage), 0f);
+            modPlayer.AddMinion(SoulConfig.Instance.SilverSword, mod.ProjectileType("SilverSword"), (int) (30 * player.minionDamage), 0f);
         }
 
         public override void AddRecipes()

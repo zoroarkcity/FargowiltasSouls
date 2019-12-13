@@ -66,7 +66,7 @@ Summons a pet Glitter";
             modPlayer.PlatinumEnchant = true;
 
             if (Fargowiltas.Instance.ThoriumLoaded)
-                modPlayer.AddPet("Glitter Pet", hideVisual, thorium.BuffType("ShineDust"), thorium.ProjectileType("ShinyPet"));
+                modPlayer.AddPet(SoulConfig.Instance.GlitterPet, hideVisual, thorium.BuffType("ShineDust"), thorium.ProjectileType("ShinyPet"));
         }
 
         private void Thorium(Player player, bool hideVisual)

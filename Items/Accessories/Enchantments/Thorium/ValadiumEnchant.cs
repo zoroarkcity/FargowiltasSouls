@@ -48,7 +48,7 @@ Effects of Eye of the Beholder");
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
             //set bonus
-            if (SoulConfig.Instance.GetValue("Gravity Control"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.GravityControl))
             {
                 player.gravControl = true;
                 if (player.gravDir == -1f)
@@ -57,7 +57,7 @@ Effects of Eye of the Beholder");
                 }
             }
             
-            if (SoulConfig.Instance.GetValue("Eye of the Beholder"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BeholderEye))
             {
                 //eye of beholder
                 thorium.GetItem("EyeofBeholder").UpdateAccessory(player, hideVisual);

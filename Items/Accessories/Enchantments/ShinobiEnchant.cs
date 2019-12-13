@@ -64,7 +64,7 @@ Summons a pet Gato and Black Cat";
             //ninja gear
             player.blackBelt = true;
             player.spikedBoots = 2;
-            if (SoulConfig.Instance.GetValue("Tabi Dash", false))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShinobiTabi, false))
                 player.dash = 1;
             //tele thru wall
             modPlayer.ShinobiEffect(hideVisual);
@@ -79,11 +79,9 @@ Summons a pet Gato and Black Cat";
             recipe.AddIngredient(ItemID.MonkAltShirt);
             recipe.AddIngredient(ItemID.MonkAltPants);
             recipe.AddIngredient(null, "NinjaEnchant");
-            recipe.AddIngredient(ItemID.MasterNinjaGear);
-            recipe.AddIngredient(ItemID.MonkBelt);
-
             //monk enchant
-
+            recipe.AddIngredient(ItemID.MasterNinjaGear);
+            
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
                 recipe.AddIngredient(thorium.ItemType("ShadeKusarigama"));

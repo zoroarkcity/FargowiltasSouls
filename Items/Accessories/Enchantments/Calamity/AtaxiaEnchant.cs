@@ -66,7 +66,7 @@ Summons a Brimling pet");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue("Ataxia Effects"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.AtaxiaEffects))
             {
                 calamity.Call("SetSetBonus", player, "ataxia", true);
                 calamity.Call("SetSetBonus", player, "ataxia_melee", true);
@@ -75,14 +75,14 @@ Summons a Brimling pet");
                 calamity.Call("SetSetBonus", player, "ataxia_rogue", true);
             }
             
-            if (SoulConfig.Instance.GetValue("Plague Hive"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.PlagueHive))
             {
                 calamity.GetItem("PlagueHive").UpdateAccessory(player, hideVisual);
             }
             
             if (player.GetModPlayer<FargoPlayer>().Eternity) return;
 
-            if (SoulConfig.Instance.GetValue("Chaos Spirit Minion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ChaosMinion))
             {
                 //summon
                 calamity.Call("SetSetBonus", player, "ataxia_summon", true);
@@ -101,7 +101,7 @@ Summons a Brimling pet");
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.AtaxiaEnchant = true;
-            fargoPlayer.AddPet("Brimling Pet", hideVisual, calamity.BuffType("BrimlingBuff"), calamity.ProjectileType("BrimlingPet"));
+            fargoPlayer.AddPet(SoulConfig.Instance.BrimlingPet, hideVisual, calamity.BuffType("BrimlingBuff"), calamity.ProjectileType("BrimlingPet"));
         }
 
         public override void AddRecipes()

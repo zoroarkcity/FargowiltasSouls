@@ -56,7 +56,7 @@ Effects of Bee Booties, Petal Shield, and Flawless Chrysalis");
             thoriumPlayer.livingWood = true;
             //free boi
             modPlayer.LivingWoodEnchant = true;
-            modPlayer.AddMinion("Sapling Minion", thorium.ProjectileType("MinionSapling"), 25, 2f);
+            modPlayer.AddMinion(SoulConfig.Instance.SaplingMinion, thorium.ProjectileType("MinionSapling"), 25, 2f);
 
             //bulb set bonus
             modPlayer.BulbEnchant = true;
@@ -64,7 +64,7 @@ Effects of Bee Booties, Petal Shield, and Flawless Chrysalis");
             thorium.GetItem("PetalShield").UpdateAccessory(player, hideVisual);
             player.statDefense -= 2;
             //bee booties
-            if (SoulConfig.Instance.GetValue("Bee Booties"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BeeBooties))
             {
                 thorium.GetItem("BeeBoots").UpdateAccessory(player, hideVisual);
                 player.moveSpeed -= 0.15f;

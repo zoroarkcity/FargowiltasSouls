@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Projectiles.Souls
                 modPlayer.OriEnchant = false;
             }
 
-            if (!(modPlayer.OriEnchant) || !SoulConfig.Instance.GetValue("Orichalcum Fireballs"))
+            if (!(modPlayer.OriEnchant) || !SoulConfig.Instance.GetValue(SoulConfig.Instance.OrichalcumFire))
             {
                 projectile.Kill();
                 return;

@@ -57,13 +57,13 @@ Effects of Mana-Charged Rocketeers and Ascension Statuette");
             //folv
             modPlayer.MalignantEnchant = true;
             modPlayer.FolvEnchant = true;
-            if (SoulConfig.Instance.GetValue("Folv's Aura"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.FolvAura))
             {
                 thoriumPlayer.folvSet = true;
                 Lighting.AddLight(player.position, 0.03f, 0.3f, 0.5f);
                 thoriumPlayer.folvBonus2 = true;
             }
-            if (SoulConfig.Instance.GetValue("Mana-Charged Rocketeers"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ManaBoots))
             {
                 //mana charge rockets
                 thorium.GetItem("ManaChargedRocketeers").UpdateAccessory(player, hideVisual);
@@ -72,7 +72,7 @@ Effects of Mana-Charged Rocketeers and Ascension Statuette");
             //white dwarf
             modPlayer.WhiteDwarfEnchant = true;
             
-            if (SoulConfig.Instance.GetValue("Celestial Aura"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.CelestialAura))
             {
                 //celestial
                 thoriumPlayer.celestialSet = true;
@@ -80,73 +80,11 @@ Effects of Mana-Charged Rocketeers and Ascension Statuette");
 
             if (modPlayer.ThoriumSoul) return;
 
-            if (SoulConfig.Instance.GetValue("Ascension Statuette"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.AscensionStatue))
             {
                 //ascension statue
                 thoriumPlayer.ascension = true;
             }
-            
-            /*//balladeer meme hell
-            if (thoriumPlayer.empowerDamage > 0)
-            {
-                modPlayer.AllDamageUp(.08f);
-                player.moveSpeed += 0.03f;
-            }
-            if (thoriumPlayer.empowerAttackSpeed > 0)
-            {
-                modPlayer.AllDamageUp(.08f);
-                player.moveSpeed += 0.03f;
-            }
-            if (thoriumPlayer.empowerCriticalStrike > 0)
-            {
-                modPlayer.AllDamageUp(.08f);
-                player.moveSpeed += 0.03f;
-            }
-            if (thoriumPlayer.empowerMovementSpeed > 0)
-            {
-                modPlayer.AllDamageUp(.08f);
-                player.moveSpeed += 0.03f;
-            }
-            if (thoriumPlayer.empowerInspirationRegen > 0)
-            {
-                modPlayer.AllDamageUp(.08f);
-                player.moveSpeed += 0.03f;
-            }
-            if (thoriumPlayer.empowerDamageReduction > 0)
-            {
-                modPlayer.AllDamageUp(.08f);
-                player.moveSpeed += 0.03f;
-            }
-            if (thoriumPlayer.empowerManaRegen > 0)
-            {
-                modPlayer.AllDamageUp(.08f);
-                player.moveSpeed += 0.03f;
-            }
-            if (thoriumPlayer.empowerMaxMana > 0)
-            {
-                modPlayer.AllDamageUp(.08f);
-                player.moveSpeed += 0.03f;
-            }
-            if (thoriumPlayer.empowerLifeRegen > 0)
-            {
-                modPlayer.AllDamageUp(.08f);
-                player.moveSpeed += 0.03f;
-            }
-            if (thoriumPlayer.empowerMaxLife > 0)
-            {
-                modPlayer.AllDamageUp(.08f);
-                player.moveSpeed += 0.03f;
-            }
-            if (thoriumPlayer.empowerDefense > 0)
-            {
-                modPlayer.AllDamageUp(.08f);
-                player.moveSpeed += 0.03f;
-            }
-            if (thoriumPlayer.empowerAmmoConsumption > 0)
-            {
-                modPlayer.AllDamageUp(.08f);
-                player.moveSpeed += 0.03f;
-            }*/
         }
 
         public override void AddRecipes()

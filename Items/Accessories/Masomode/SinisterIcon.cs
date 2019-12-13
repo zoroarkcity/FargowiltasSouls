@@ -29,7 +29,7 @@ Increases spawn rate");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (SoulConfig.Instance.GetValue("Sinister Icon"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SinisterIcon))
                 player.GetModPlayer<FargoPlayer>().SinisterIcon = true;
         }
     }
