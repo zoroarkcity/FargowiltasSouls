@@ -123,6 +123,10 @@ namespace FargowiltasSouls.NPCs
 
                 switch (npc.type)
                 {
+                    case NPCID.QueenBee:
+                        npc.value /= 4;
+                        break;
+
                     case NPCID.PlanterasTentacle:
                         npc.lifeMax /= 4;
                         break;
@@ -478,6 +482,10 @@ namespace FargowiltasSouls.NPCs
                         npc.buffImmune[BuffID.OnFire] = true;
                         npc.lavaImmune = true;
                         masoBool[0] = BossIsAlive(ref moonBoss, NPCID.MoonLordCore);
+                        break;
+
+                    case NPCID.QueenBee:
+                        npc.value /= 4;
                         break;
 
                     case NPCID.MoonLordCore:
