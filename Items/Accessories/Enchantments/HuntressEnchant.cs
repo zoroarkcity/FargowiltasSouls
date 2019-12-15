@@ -2,12 +2,14 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class HuntressEnchant : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
+        private int huntressCD = 0;
 
         public override void SetStaticDefaults()
         {
@@ -44,16 +46,24 @@ Set oiled enemies on fire for extra damage");
                     if(huntressCD == 0)
                     {
                         //find arrow type to use, for red riding only
-                        int arrowType = ProjectileID.WoodenArrow;
+                        int arrowType = ProjectileID.WoodenArrowFriendly;
 
 
 
-                        Projectile.NewProjectile(mouse.X, mouse.Y - 100, 0f, 0f, mod.ProjectileType("ArrowRain"), 25, 0f, player.whoAmI, arrowType);
+                        Projectile.NewProjectile(mouse.X, player.Center.Y - 500, 0f, 0f, mod.ProjectileType("ArrowRain"), 75, 0f, player.whoAmI, arrowType, player.direction);
                         //proj spawns arrows all around it until it dies
+                        
+
+                        huntressCD = 300;
                     }
 
 
                 }
+            }
+
+            if (huntressCD != 0)
+            {
+                huntressCD--;
             }
         }
 

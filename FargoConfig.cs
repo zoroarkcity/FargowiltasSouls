@@ -13,9 +13,6 @@ namespace FargowiltasSouls
         public override ConfigScope Mode => ConfigScope.ClientSide;
         public static SoulConfig Instance;
 
-        //[JsonIgnore]
-        //public Dictionary<string, bool> Toggles = new Dictionary<string, bool>();
-
         [Header("$Mods.FargowiltasSouls.WoodHeader")]
         [Label("$Mods.FargowiltasSouls.BorealConfig")]
         [DefaultValue(true)]
@@ -31,7 +28,7 @@ namespace FargowiltasSouls
 
         //[Label("[" +  "i:19][c/00FF00: Green Text]")]
         [Label("$Mods.FargowiltasSouls.MahoganyConfig")]
-        [BackgroundColor(181, 108, 100)]
+        //[BackgroundColor(181, 108, 100)]
         [DefaultValue(true)]
         public bool MahoganyHook;
 
@@ -105,6 +102,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.GoldConfig")]
         [DefaultValue(true)]
         public bool LuckyCoin;
+
+        [Label("$Mods.FargowiltasSouls.HuntressConfig")]
+        [DefaultValue(true)]
+        public bool HuntressAbility;
 
         [Label("$Mods.FargowiltasSouls.RedRidingConfig")]
         [DefaultValue(true)]
