@@ -343,12 +343,15 @@ namespace FargowiltasSouls.NPCs
                         npc.buffImmune[mod.BuffType("ClippedWings")] = true;
                         break;
 
+                    case NPCID.Mimic:
+                        npc.value = 0;
+                        goto case NPCID.Medusa;
+
                     case NPCID.PigronCorruption:
                     case NPCID.PigronCrimson:
                     case NPCID.PigronHallow:
                     case NPCID.RedDevil:
                     case NPCID.AngryNimbus:
-                    case NPCID.Mimic:
                     case NPCID.IchorSticker:
                     case NPCID.SeekerHead:
                     case NPCID.MushiLadybug:
@@ -477,10 +480,15 @@ namespace FargowiltasSouls.NPCs
                         masoBool[0] = BossIsAlive(ref moonBoss, NPCID.MoonLordCore);
                         break;
 
+                    case NPCID.QueenBee:
+                        npc.value /= 4;
+                        break;
+
                     case NPCID.MoonLordCore:
                         isMasoML = true;
                         masoStateML = 0;
                         npc.defense = 0;
+                        npc.value += Item.buyPrice(0, 20);
                         break;
                     case NPCID.MoonLordHand:
                     case NPCID.MoonLordHead:
@@ -3389,8 +3397,9 @@ namespace FargowiltasSouls.NPCs
                                             Counter = 0;
                                             int heal = (int)(npc.lifeMax * Main.rand.NextFloat(0.1f, 0.12f));
                                             npc.life += heal;
-                                            if (npc.life > npc.lifeMax)
-                                                npc.life = npc.lifeMax;
+                                            int max = npc.ai[0] == 9 && !Fargowiltas.Instance.MasomodeEXLoaded ? npc.lifeMax / 2 : npc.lifeMax;
+                                            if (npc.life > max)
+                                                npc.life = max;
                                             CombatText.NewText(npc.Hitbox, CombatText.HealLife, heal);
                                         }
                                     }
@@ -3652,7 +3661,16 @@ namespace FargowiltasSouls.NPCs
                                     break;
 
                                 case 9: //phase 3 transition
-                                    goto case 4;
+                                    npc.dontTakeDamage = true;
+                                    masoBool[1] = false;
+                                    if (npc.ai[2] == 120)
+                                    {
+                                        int max = Fargowiltas.Instance.MasomodeEXLoaded ? npc.lifeMax : npc.lifeMax / 2;
+                                        int heal = max - npc.life;
+                                        npc.life = max;
+                                        CombatText.NewText(npc.Hitbox, CombatText.HealLife, heal);
+                                    }
+                                    break;
 
                                 case 10: //phase 3
                                     Timer++;
@@ -10588,10 +10606,10 @@ namespace FargowiltasSouls.NPCs
                                 Main.PlaySound(npc.DeathSound, npc.Center);
                                 npc.DropBossBags();
                                 npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CyclonicFin"));
-                                int maxEX = Main.rand.Next(5) + 1;
+                                int maxEX = Main.rand.Next(5) + 5;
                                 for (int i = 0; i < maxEX; i++)
                                     npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbominationnVoodooDoll"));
-                                maxEX = 5;
+                                maxEX = Main.rand.Next(5) + 5;
                                 for (int i = 0; i < maxEX; i++)
                                     npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantScale"));
 
