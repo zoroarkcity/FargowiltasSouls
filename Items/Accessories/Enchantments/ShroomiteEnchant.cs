@@ -60,7 +60,7 @@ Summons a pet Truffle";
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyShroomHead");
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_SHROOMITE_HEADPIECE);
             recipe.AddIngredient(ItemID.ShroomiteBreastplate);
             recipe.AddIngredient(ItemID.ShroomiteLeggings);
             

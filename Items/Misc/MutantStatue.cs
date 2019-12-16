@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Items.Misc
         /*public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyButterfly");
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_BUTTERFLY);
             recipe.AddIngredient(ItemID.GoldDust, 500);
             recipe.AddTile(mod.TileType("GoldenDippingVatSheet"));
             recipe.SetResult(ItemID.GoldButterfly);

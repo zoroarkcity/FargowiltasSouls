@@ -77,7 +77,7 @@ Summons a pet Wisp";
             }
             else
             {
-                recipe.AddRecipeGroup("FargowiltasSouls:AnySpectreHead");
+                recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_SPECTRE_HEADPIECE);
                 recipe.AddIngredient(ItemID.SpectreRobe);
                 recipe.AddIngredient(ItemID.SpectrePants);
                 recipe.AddIngredient(ItemID.Keybrand);

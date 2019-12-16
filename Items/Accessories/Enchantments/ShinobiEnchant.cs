@@ -78,7 +78,8 @@ Summons a pet Gato and Black Cat";
             recipe.AddIngredient(ItemID.MonkAltHead);
             recipe.AddIngredient(ItemID.MonkAltShirt);
             recipe.AddIngredient(ItemID.MonkAltPants);
-            recipe.AddIngredient(null, "NinjaEnchant");
+            recipe.AddIngredient(ModContent.ItemType<NinjaEnchant>());
+
             //monk enchant
             recipe.AddIngredient(ItemID.MasterNinjaGear);
             

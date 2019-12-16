@@ -66,7 +66,7 @@ Summons a pet Puppy");
             recipe.AddIngredient(ItemID.HuntressAltHead);
             recipe.AddIngredient(ItemID.HuntressAltShirt);
             recipe.AddIngredient(ItemID.HuntressAltPants);
-            recipe.AddIngredient(null, "HuntressEnchant");
+            recipe.AddIngredient(ModContent.ItemType<HuntressEnchant>());
             recipe.AddIngredient(ItemID.CelestialShell);
 
             if(Fargowiltas.Instance.ThoriumLoaded)

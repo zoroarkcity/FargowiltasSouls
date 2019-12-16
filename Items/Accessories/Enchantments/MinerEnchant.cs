@@ -57,7 +57,7 @@ Summons a pet Magic Lantern";
         {
             recipe.AddIngredient(thorium.ItemType("EnforcedThoriumPax"));
             recipe.AddIngredient(thorium.ItemType("aSandstonePickaxe"));
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyGoldPickaxe");
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_GOLD_PICKAXE);
 
             recipe.AddIngredient(ItemID.CnadyCanePickaxe); //gj 
             recipe.AddIngredient(ItemID.MoltenPickaxe);

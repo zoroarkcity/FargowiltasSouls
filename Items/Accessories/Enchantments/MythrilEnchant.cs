@@ -43,8 +43,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 
         protected override void AddRecipeBase(ModRecipe recipe)
         {
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyMythrilHead");
-
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_MYTHRIL_HEADPIECE);
             recipe.AddIngredient(ItemID.MythrilChainmail);
             recipe.AddIngredient(ItemID.MythrilGreaves);
         }

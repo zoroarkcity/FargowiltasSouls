@@ -54,7 +54,7 @@ One attack gains 10% life steal every 4 seconds, capped at 8 HP");
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyPallaHead");
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_PALLADIUM_HEADPIECE);
             recipe.AddIngredient(ItemID.PalladiumBreastplate);
             recipe.AddIngredient(ItemID.PalladiumLeggings);
             recipe.AddIngredient(ItemID.PalladiumSword);

@@ -74,7 +74,7 @@ namespace FargowiltasSouls.Items.Accessories.Essences
                 recipe.AddIngredient(thorium.ItemType("Whip"));
                 recipe.AddIngredient(ItemID.BeeKeeper);
                 recipe.AddIngredient(thorium.ItemType("EnergyStormPartisan"));
-                recipe.AddRecipeGroup("FargowiltasSouls:AnyThoriumYoyo");
+                recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_THORIUM_YOYO);
             }
             else
             {

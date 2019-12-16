@@ -46,7 +46,7 @@ Summons a magical fairy";
 
         protected override void AddRecipeBase(ModRecipe recipe)
         {
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyHallowHead");
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_HALLOWED_HEADPIECE);
 
             recipe.AddIngredient(ModContent.ItemType<SilverEnchant>());
 

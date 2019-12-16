@@ -1,5 +1,8 @@
-﻿using Terraria;
+﻿using System.Collections.Generic;
+using Terraria;
 using Terraria.ModLoader;
+using ThoriumMod.Items.BardItems;
+using ThoriumMod.Items.Butter;
 using ThoriumMod.Items.MeleeItems;
 using ThoriumMod.Items.NPCItems;
 using ThoriumMod.Items.Steel;
@@ -16,7 +19,7 @@ namespace FargowiltasSouls.ModCompatibilities
 
         protected override void AddRecipes()
         {
-            int 
+            /*int 
                 //foldedMetal = ModContent.ItemType<FoldedMetal>(),
                 arcaneArmorFabricator = ModContent.TileType<ArcaneArmorFabricator>();
 
@@ -122,8 +125,33 @@ namespace FargowiltasSouls.ModCompatibilities
 
         protected override void AddRecipeGroups()
         {
-            RecipeGroup group = new RecipeGroup(() => Lang.misc[37] + " Combination Yoyo", ModContent.ItemType<Nocturnal>(), ModContent.ItemType<Sanguine>());
-            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyThoriumYoyo", group);
+            Fargowiltas.RecipeGroups.RegisterGroups(new Dictionary<string, RecipeGroup>()
+            {
+                { Fargowiltas.RecipeGroups.ANY_THORIUM_YOYO, 
+                    new RecipeGroup(() => Lang.misc[37] + " Combination Yoyo", ModContent.ItemType<Nocturnal>(), ModContent.ItemType<Sanguine>()) },
+
+
+                { Fargowiltas.RecipeGroups.ANY_THORIUM_JESTER_HEADPIECE, 
+                    new RecipeGroup(() => Lang.misc[37] + " Jester Mask", ModContent.ItemType<JestersMask>(), ModContent.ItemType<JestersMask2>()) },
+
+                { Fargowiltas.RecipeGroups.ANY_THORIUM_JESTER_BODY, 
+                    new RecipeGroup(() => Lang.misc[37] + " Jester Shirt", ModContent.ItemType<JestersShirt>(), ModContent.ItemType<JestersShirt2>())  },
+
+                { Fargowiltas.RecipeGroups.ANY_THORIUM_JESTER_LEGGINGS, 
+                    new RecipeGroup(() => Lang.misc[37] + " Jester Leggings", ModContent.ItemType<JestersLeggings>(), ModContent.ItemType<JestersLeggings2>()) },
+
+
+                { Fargowiltas.RecipeGroups.ANY_THORIUM_TAMBOURINE, 
+                    new RecipeGroup(() => Lang.misc[37] + " Evil Wood Tambourine", ModContent.ItemType<EbonWoodTambourine>(), ModContent.ItemType<ShadeWoodTambourine>()) },
+
+
+                { Fargowiltas.RecipeGroups.ANY_THORIUM_FAN_LETTER, 
+                    new RecipeGroup(() => Lang.misc[37] + " Fan Letter", ModContent.ItemType<FanLetter>(), ModContent.ItemType<FanLetter2>()) },
+
+                { Fargowiltas.RecipeGroups.ANY_THORIUM_DUNGEON_BUTTERFLY, 
+                    new RecipeGroup(() => Lang.misc[37] + " Dungeon Butterfly", 
+                        ModContent.ItemType<BlueDungeonButterfly>(), ModContent.ItemType<GreenDungeonButterfly>(), ModContent.ItemType<PinkDungeonButterfly>()) }
+            });
         }
     }
 }

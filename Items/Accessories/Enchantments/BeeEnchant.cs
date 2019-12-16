@@ -4,10 +4,11 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using ThoriumMod.Items.BardItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class BeeEnchant : ModItem
+    public class BeeEnchant : EnchantmentItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
         public int timer;
@@ -61,33 +62,27 @@ Mega Bees ignore most enemy defense, immune frames, and last twice as long
             player.GetModPlayer<FargoPlayer>().BeeEffect(hideVisual);
         }
 
-        public override void AddRecipes()
+
+        protected override void AddRecipeBase(ModRecipe recipe)
         {
-            ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.BeeHeadgear);
             recipe.AddIngredient(ItemID.BeeBreastplate);
             recipe.AddIngredient(ItemID.BeeGreaves);
             recipe.AddIngredient(ItemID.HiveBackpack);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(ItemID.BeeGun);
-                recipe.AddIngredient(thorium.ItemType("HoneyRecorder"));
-                recipe.AddIngredient(ItemID.WaspGun);
-                recipe.AddIngredient(ItemID.NettleBurst);
-                recipe.AddIngredient(ItemID.VenusMagnum);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.BeeGun);
-                recipe.AddIngredient(ItemID.WaspGun);
-            }
-            
+
+            recipe.AddIngredient(ItemID.BeeGun);
+            recipe.AddIngredient(ItemID.WaspGun);
+
             recipe.AddIngredient(ItemID.Nectar);
-            
             recipe.AddTile(TileID.CrystalBall);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+        }
+
+        protected override void AddThoriumRecipe(ModRecipe recipe, Mod thorium)
+        {
+            recipe.AddIngredient(ModContent.ItemType<HoneyRecorder>());
+
+            recipe.AddIngredient(ItemID.NettleBurst);
+            recipe.AddIngredient(ItemID.VenusMagnum);
         }
     }
 }

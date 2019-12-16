@@ -71,10 +71,11 @@ Summons a pet Seedling";
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyChloroHead");
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_CHLOROPHITE_HEADPIECE);
             recipe.AddIngredient(ItemID.ChlorophytePlateMail);
             recipe.AddIngredient(ItemID.ChlorophyteGreaves);
-            recipe.AddIngredient(null, "JungleEnchant");
+
+            recipe.AddIngredient(ModContent.ItemType<JungleEnchant>());
             
             if(Fargowiltas.Instance.ThoriumLoaded)
             {

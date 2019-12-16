@@ -46,15 +46,15 @@ namespace FargowiltasSouls.Items.Misc
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.HeavyWorkBench);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyForge");
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyAnvil");
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_FORGE);
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_ANVIL);
             recipe.AddIngredient(ItemID.AlchemyTable);
             recipe.AddIngredient(ItemID.Sawmill);
             recipe.AddIngredient(ItemID.CookingPot);
             recipe.AddIngredient(ItemID.Solidifier);
             recipe.AddIngredient(ItemID.DyeVat);
             recipe.AddIngredient(ItemID.TinkerersWorkshop);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyBookcase");
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_BOOKCASE);
             recipe.AddIngredient(ItemID.CrystalBall);
             recipe.AddIngredient(ItemID.Autohammer);
             recipe.AddIngredient(ItemID.LunarCraftingStation);

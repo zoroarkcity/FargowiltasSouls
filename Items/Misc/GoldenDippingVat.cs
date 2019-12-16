@@ -42,14 +42,14 @@ namespace FargowiltasSouls.Items.Misc
             AddCritter(ItemID.Worm, ItemID.GoldWorm);
 
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyButterfly");
+            recipe.AddRecipeGroup(nameof(RecipeGroupID.Squirrels));
             recipe.AddIngredient(ItemID.GoldDust, 500);
             recipe.AddTile(mod.TileType("GoldenDippingVatSheet"));
             recipe.SetResult(ItemID.GoldButterfly);
             recipe.AddRecipe();
 
             recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnySquirrel");
+            recipe.AddRecipeGroup(nameof(RecipeGroupID.Squirrels));
             recipe.AddIngredient(ItemID.GoldDust, 500);
             recipe.AddTile(mod.TileType("GoldenDippingVatSheet"));
             recipe.SetResult(ItemID.SquirrelGold);

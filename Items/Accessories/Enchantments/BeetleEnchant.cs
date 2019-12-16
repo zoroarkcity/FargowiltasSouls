@@ -61,10 +61,12 @@ Increases flight time by 50%";
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
+
             recipe.AddIngredient(ItemID.BeetleHelmet);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyBeetle");
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_BEETLE_BODY);
             recipe.AddIngredient(ItemID.BeetleLeggings);
             recipe.AddIngredient(ItemID.BeetleWings);
+
             recipe.AddIngredient(ItemID.BeeWings);
             recipe.AddIngredient(ItemID.ButterflyWings);
             recipe.AddIngredient(ItemID.MothronWings);

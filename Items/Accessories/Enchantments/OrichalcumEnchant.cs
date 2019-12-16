@@ -54,7 +54,8 @@ Spawns 6 fireballs to rotate around you");
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyOriHead");
+
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_ORICHALCUM_HEADPIECE);
             recipe.AddIngredient(ItemID.OrichalcumBreastplate);
             recipe.AddIngredient(ItemID.OrichalcumLeggings);
             recipe.AddIngredient(ItemID.OrichalcumWaraxe);

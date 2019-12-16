@@ -54,7 +54,7 @@ This can only happen once every second");
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyCobaltHead");
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_COBALT_HEADPIECE);
             recipe.AddIngredient(ItemID.CobaltBreastplate);
             recipe.AddIngredient(ItemID.CobaltLeggings);
             

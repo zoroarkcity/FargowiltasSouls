@@ -52,7 +52,7 @@ Briefly become invulnerable after striking an enemy");
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyTitaHead");
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_TITANIUM_HEADPIECE);
             recipe.AddIngredient(ItemID.TitaniumBreastplate);
             recipe.AddIngredient(ItemID.TitaniumLeggings);
 

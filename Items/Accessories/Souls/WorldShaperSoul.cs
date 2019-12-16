@@ -160,7 +160,7 @@ Summons a pet Magic Lantern");
             recipe.AddIngredient(CellPhone);
             recipe.AddIngredient(GravityGlobe);
             recipe.AddIngredient(BonePickaxe);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyDrax");
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_DRAX);
             recipe.AddIngredient(ShroomiteDiggingClaw);
             recipe.AddIngredient(DrillContainmentUnit);
 

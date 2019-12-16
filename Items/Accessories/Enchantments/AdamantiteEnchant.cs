@@ -45,7 +45,7 @@ Any secondary projectiles may also split";
 
         protected override void AddRecipeBase(ModRecipe recipe)
         {
-            recipe.AddRecipeGroup(Fargowiltas.RECIPE_GROUP_ANY_ADAMANTITE_HEAD);
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_ADAMANTITE_HEADPIECE);
 
             recipe.AddIngredient(ItemID.AdamantiteBreastplate);
             recipe.AddIngredient(ItemID.AdamantiteLeggings);

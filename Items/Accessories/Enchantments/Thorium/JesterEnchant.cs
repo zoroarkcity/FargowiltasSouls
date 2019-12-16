@@ -56,11 +56,11 @@ Effects of Fan Letter");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyJesterMask");
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyJesterShirt");
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyJesterLeggings");
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyLetter");
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyTambourine");
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_THORIUM_JESTER_HEADPIECE);
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_THORIUM_JESTER_BODY);
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_THORIUM_JESTER_LEGGINGS);
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_THORIUM_FAN_LETTER);
+            recipe.AddRecipeGroup(Fargowiltas.RecipeGroups.ANY_THORIUM_TAMBOURINE);
             recipe.AddIngredient(thorium.ItemType("Oboe"));
             recipe.AddIngredient(thorium.ItemType("SkywareLute"));
             recipe.AddIngredient(thorium.ItemType("Panflute"));
