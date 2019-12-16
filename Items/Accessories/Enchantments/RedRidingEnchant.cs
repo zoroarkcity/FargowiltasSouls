@@ -16,8 +16,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Red Riding Enchantment");
             Tooltip.SetDefault(
 @"'Big Bad Red Riding Hood'
-During a Full Moon, attacks may cause enemies to Super Bleed
-Your attacks deal increasing damage to low HP enemies
+Double tap down to create a localized rain of arrows at the cursor's position for a few seconds
+The arrow type and damage is based on your first ammo slot
+This has a cooldown of 15 seconds
 Greatly enhances Explosive Traps effectiveness
 Effects of Celestial Shell
 Summons a pet Puppy");
@@ -54,17 +55,9 @@ Summons a pet Puppy");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            //celestial shell
-            player.accMerman = true;
-            player.wolfAcc = true;
-
-            if (hideVisual)
-            {
-                player.hideMerman = true;
-                player.hideWolf = true;
-            }
-
-            player.GetModPlayer<FargoPlayer>().RedRidingEffect(hideVisual);
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            modPlayer.RedRidingEffect(hideVisual);
+            modPlayer.HuntressEffect();
         }
 
         public override void AddRecipes()
@@ -73,19 +66,19 @@ Summons a pet Puppy");
             recipe.AddIngredient(ItemID.HuntressAltHead);
             recipe.AddIngredient(ItemID.HuntressAltShirt);
             recipe.AddIngredient(ItemID.HuntressAltPants);
-            recipe.AddIngredient(ItemID.HuntressBuckler);
+            recipe.AddIngredient(null, "HuntressEnchant");
             recipe.AddIngredient(ItemID.CelestialShell);
-            
+
             if(Fargowiltas.Instance.ThoriumLoaded)
             {
                 recipe.AddIngredient(thorium.ItemType("BloodyHighClaws"));
                 recipe.AddIngredient(thorium.ItemType("LadyLight"));
-                recipe.AddIngredient(ItemID.DD2PhoenixBow);
+                recipe.AddIngredient(ItemID.DD2BetsyBow);
                 recipe.AddIngredient(ItemID.DD2ExplosiveTrapT3Popper);
             }
             else
             {
-                recipe.AddIngredient(ItemID.DD2PhoenixBow);
+                recipe.AddIngredient(ItemID.DD2BetsyBow);
             }
             
             recipe.AddIngredient(ItemID.DogWhistle);

@@ -5,8 +5,6 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class TimsConcoction : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tim's Concoction");
@@ -25,7 +23,7 @@ Certain enemies will drop potions when defeated");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (SoulConfig.Instance.GetValue("Tim's Concoction"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.TimsConcoction))
                 player.GetModPlayer<FargoPlayer>().TimsConcoction = true;
         }
     }

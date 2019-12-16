@@ -47,7 +47,10 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             if (mutant.active && mutant.type == mod.NPCType("MutantBoss"))
             {
                 projectile.Center = mutant.Center;
-                projectile.rotation = mutant.DirectionTo(Main.player[mutant.target].Center).ToRotation() + MathHelper.ToRadians(135f);
+                if (projectile.ai[1] == 2)
+                    projectile.rotation = mutant.DirectionTo(Main.player[mutant.target].Center + Main.player[mutant.target].velocity * 30).ToRotation() + MathHelper.ToRadians(135f);
+                else
+                    projectile.rotation = mutant.DirectionTo(Main.player[mutant.target].Center).ToRotation() + MathHelper.ToRadians(135f);
             }
             else
             {

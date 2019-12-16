@@ -33,7 +33,7 @@ Two friendly probes fight by your side");
         {
             player.buffImmune[mod.BuffType("LightningRod")] = true;
             player.GetModPlayer<FargoPlayer>().GroundStick = true;
-            if (SoulConfig.Instance.GetValue("Probes Minion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ProbeMinion))
                 player.AddBuff(mod.BuffType("Probes"), 2);
         }
     }

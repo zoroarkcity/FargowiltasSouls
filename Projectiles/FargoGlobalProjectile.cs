@@ -35,6 +35,10 @@ namespace FargowiltasSouls.Projectiles
         private bool tungstenProjectile = false;
         private bool tikiMinion = false;
         private int tikiTimer = 300;
+        public bool rainbowTrail = false;
+        private int rainbowCounter = 0;
+        public bool Rainbow = false;
+
 
         public bool Rotate = false;
         public int RotateDist = 32;
@@ -45,7 +49,7 @@ namespace FargowiltasSouls.Projectiles
         public int TimeFrozen = 0;
         public bool TimeFreezeImmune;
 
-        public bool Rainbow = false;
+        
 
         public bool masobool;
 
@@ -170,7 +174,7 @@ namespace FargowiltasSouls.Projectiles
                         player.ClearBuff(mod.BuffType("FirstStrike"));
                     }
 
-                    if (!townNPCProj && !projectile.trap && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && modPlayer.TungstenEnchant && projectile.friendly && SoulConfig.Instance.GetValue("Tungsten Effect", false))
+                    if (modPlayer.TungstenEnchant && !townNPCProj && projectile.damage != 0 && !projectile.trap && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && projectile.friendly && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenSize, false))
                     {
                         projectile.position = projectile.Center;
                         projectile.scale *= 2f;
@@ -205,7 +209,7 @@ namespace FargowiltasSouls.Projectiles
 
                     if (!townNPCProj && (modPlayer.AdamantiteEnchant || modPlayer.TerrariaSoul) && CanSplit && projectile.friendly && !projectile.hostile
                         && !Rotate && projectile.damage > 0 && !projectile.minion && projectile.aiStyle != 19 && projectile.aiStyle != 99
-                        && SoulConfig.Instance.GetValue("Adamantite Projectile Splitting") && Array.IndexOf(noSplit, projectile.type) <= -1)
+                        && SoulConfig.Instance.GetValue(SoulConfig.Instance.AdamantiteSplit) && Array.IndexOf(noSplit, projectile.type) <= -1)
                     {
                         if (adamantiteCD != 0)
                         {
@@ -247,7 +251,7 @@ namespace FargowiltasSouls.Projectiles
                     }
                 }
 
-                if (tungstenProjectile && (!modPlayer.TungstenEnchant || !SoulConfig.Instance.GetValue("Tungsten Effect", false)))
+                if (tungstenProjectile && (!modPlayer.TungstenEnchant || !SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenSize, false)))
                 {
                     projectile.position = projectile.Center;
                     projectile.scale /= 2f;
@@ -298,6 +302,29 @@ namespace FargowiltasSouls.Projectiles
                 if (modPlayer.StardustEnchant && projectile.type == ProjectileID.StardustGuardian)
                 {
                     projectile.localAI[0] = 0f;
+                }
+
+                if (rainbowTrail)
+                {
+                    rainbowCounter++;
+
+                    if (rainbowCounter >= 5)
+                    {
+                        //rainbowCounter = 0;
+                        if (player.whoAmI == Main.myPlayer)
+                        {
+                            int direction = projectile.velocity.X > 0 ? 1 : -1;
+                            int p = Projectile.NewProjectile(projectile.Center, projectile.velocity, ProjectileID.RainbowBack, 30, 0, Main.myPlayer);
+                            Projectile proj = Main.projectile[p];
+                            proj.GetGlobalProjectile<FargoGlobalProjectile>().Rainbow = true;
+                            proj.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+
+                            p = Projectile.NewProjectile(projectile.Center + (projectile.velocity / 2), projectile.velocity, ProjectileID.RainbowBack, 30, 0, Main.myPlayer);
+                            proj = Main.projectile[p];
+                            proj.GetGlobalProjectile<FargoGlobalProjectile>().Rainbow = true;
+                            proj.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                        }
+                    }
                 }
 
 
@@ -355,7 +382,7 @@ namespace FargowiltasSouls.Projectiles
                         projectile.Kill();
                     }
 
-                    if (modPlayer.SpookyEnchant && SoulConfig.Instance.GetValue("Spooky Scythes") && projectile.owner == Main.myPlayer
+                    if (modPlayer.SpookyEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.SpookyScythes) && projectile.owner == Main.myPlayer
                         && projectile.minion && projectile.minionSlots > 0
                         && counter % 60 == 0 && Main.rand.Next(8 + Main.player[projectile.owner].maxMinions) == 0)
                     {
@@ -373,7 +400,7 @@ namespace FargowiltasSouls.Projectiles
 
                 //hook AI
                 if (modPlayer.MahoganyEnchant && projectile.aiStyle == 7 && (player.ZoneJungle || modPlayer.WoodForce) && counter >= 60
-                    && SoulConfig.Instance.GetValue("Mahogany Hook Speed"))
+                    && SoulConfig.Instance.GetValue(SoulConfig.Instance.MahoganyHook))
                 {
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
@@ -439,12 +466,10 @@ namespace FargowiltasSouls.Projectiles
                 if (counter >= 5)
                     projectile.velocity = Vector2.Zero;
 
-                int deathTimer = 30;
+                int deathTimer = 15;
 
                 if (projectile.hostile)
                     deathTimer = 60;
-                else if(p.ZoneHoly || p.GetModPlayer<FargoPlayer>().WoodForce)
-                    deathTimer = 90;
 
                 if (counter >= deathTimer)
                     projectile.Kill();
@@ -488,7 +513,7 @@ namespace FargowiltasSouls.Projectiles
             }
         }
 
-        private void KillPet(Projectile projectile, Player player, int buff, bool enchant, string toggle, bool minion = false)
+        private void KillPet(Projectile projectile, Player player, int buff, bool enchant, bool toggle, bool minion = false)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
@@ -509,131 +534,131 @@ namespace FargowiltasSouls.Projectiles
                 #region pets
 
                 case ProjectileID.BabyHornet:
-                    KillPet(projectile, player, BuffID.BabyHornet, modPlayer.BeeEnchant, "Hornet Pet");
+                    KillPet(projectile, player, BuffID.BabyHornet, modPlayer.BeeEnchant, SoulConfig.Instance.HornetPet);
                     break;
 
                 case ProjectileID.Sapling:
-                    KillPet(projectile, player, BuffID.PetSapling, modPlayer.ChloroEnchant, "Seedling Pet");
+                    KillPet(projectile, player, BuffID.PetSapling, modPlayer.ChloroEnchant, SoulConfig.Instance.SeedlingPet);
                     break;
 
                 case ProjectileID.BabyFaceMonster:
-                    KillPet(projectile, player, BuffID.BabyFaceMonster, modPlayer.CrimsonEnchant, "Face Monster Pet");
+                    KillPet(projectile, player, BuffID.BabyFaceMonster, modPlayer.CrimsonEnchant, SoulConfig.Instance.FaceMonsterPet);
                     break;
 
                 case ProjectileID.CrimsonHeart:
-                    KillPet(projectile, player, BuffID.CrimsonHeart, modPlayer.CrimsonEnchant, "Crimson Heart Pet");
+                    KillPet(projectile, player, BuffID.CrimsonHeart, modPlayer.CrimsonEnchant, SoulConfig.Instance.CrimsonHeartPet);
                     break;
 
                 case ProjectileID.MagicLantern:
-                    KillPet(projectile, player, BuffID.MagicLantern, modPlayer.MinerEnchant, "Magic Lantern Pet");
+                    KillPet(projectile, player, BuffID.MagicLantern, modPlayer.MinerEnchant, SoulConfig.Instance.MagicLanternPet);
                     break;
 
                 case ProjectileID.MiniMinotaur:
-                    KillPet(projectile, player, BuffID.MiniMinotaur, modPlayer.GladEnchant, "Mini Minotaur Pet");
+                    KillPet(projectile, player, BuffID.MiniMinotaur, modPlayer.GladEnchant, SoulConfig.Instance.MinotaurPet);
                     break;
 
                 case ProjectileID.BlackCat:
-                    KillPet(projectile, player, BuffID.BlackCat, modPlayer.NinjaEnchant, "Black Cat Pet");
+                    KillPet(projectile, player, BuffID.BlackCat, modPlayer.NinjaEnchant, SoulConfig.Instance.BlackCatPet);
                     break;
 
                 case ProjectileID.Wisp:
-                    KillPet(projectile, player, BuffID.Wisp, modPlayer.SpectreEnchant, "Wisp Pet");
+                    KillPet(projectile, player, BuffID.Wisp, modPlayer.SpectreEnchant, SoulConfig.Instance.WispPet);
                     break;
 
                 case ProjectileID.CursedSapling:
-                    KillPet(projectile, player, BuffID.CursedSapling, modPlayer.SpookyEnchant, "Cursed Sapling Pet");
+                    KillPet(projectile, player, BuffID.CursedSapling, modPlayer.SpookyEnchant, SoulConfig.Instance.CursedSaplingPet);
                     break;
 
                 case ProjectileID.EyeSpring:
-                    KillPet(projectile, player, BuffID.EyeballSpring, modPlayer.SpookyEnchant, "Eye Spring Pet");
+                    KillPet(projectile, player, BuffID.EyeballSpring, modPlayer.SpookyEnchant, SoulConfig.Instance.EyeSpringPet);
                     break;
 
                 case ProjectileID.Turtle:
-                    KillPet(projectile, player, BuffID.PetTurtle, modPlayer.TurtleEnchant, "Turtle Pet");
+                    KillPet(projectile, player, BuffID.PetTurtle, modPlayer.TurtleEnchant, SoulConfig.Instance.TurtlePet);
                     break;
 
                 case ProjectileID.PetLizard:
-                    KillPet(projectile, player, BuffID.PetLizard, modPlayer.TurtleEnchant, "Lizard Pet");
+                    KillPet(projectile, player, BuffID.PetLizard, modPlayer.TurtleEnchant, SoulConfig.Instance.LizardPet);
                     break;
 
                 case ProjectileID.Truffle:
-                    KillPet(projectile, player, BuffID.BabyTruffle, modPlayer.ShroomEnchant, "Truffle Pet");
+                    KillPet(projectile, player, BuffID.BabyTruffle, modPlayer.ShroomEnchant, SoulConfig.Instance.TrufflePet);
                     break;
 
                 case ProjectileID.Spider:
-                    KillPet(projectile, player, BuffID.PetSpider, modPlayer.SpiderEnchant, "Spider Pet");
+                    KillPet(projectile, player, BuffID.PetSpider, modPlayer.SpiderEnchant, SoulConfig.Instance.SpiderPet);
                     break;
 
                 case ProjectileID.Squashling:
-                    KillPet(projectile, player, BuffID.Squashling, modPlayer.PumpkinEnchant, "Squashling Pet");
+                    KillPet(projectile, player, BuffID.Squashling, modPlayer.PumpkinEnchant, SoulConfig.Instance.SquashlingPet);
                     break;
 
                 case ProjectileID.BlueFairy:
-                    KillPet(projectile, player, BuffID.FairyBlue, modPlayer.HallowEnchant, "Fairy Pet");
+                    KillPet(projectile, player, BuffID.FairyBlue, modPlayer.HallowEnchant, SoulConfig.Instance.FairyPet);
                     break;
 
                 case ProjectileID.StardustGuardian:
-                    KillPet(projectile, player, BuffID.StardustGuardianMinion, modPlayer.StardustEnchant, "Stardust Guardian", true);
+                    KillPet(projectile, player, BuffID.StardustGuardianMinion, modPlayer.StardustEnchant, SoulConfig.Instance.StardustGuardian, true);
                     break;
 
                 case ProjectileID.TikiSpirit:
-                    KillPet(projectile, player, BuffID.TikiSpirit, modPlayer.TikiEnchant, "Tiki Pet");
+                    KillPet(projectile, player, BuffID.TikiSpirit, modPlayer.TikiEnchant, SoulConfig.Instance.TikiPet);
                     break;
 
                 case ProjectileID.Penguin:
-                    KillPet(projectile, player, BuffID.BabyPenguin, modPlayer.FrostEnchant || modPlayer.IcyEnchant, "Penguin Pet");
+                    KillPet(projectile, player, BuffID.BabyPenguin, modPlayer.FrostEnchant, SoulConfig.Instance.PenguinPet);
                     break;
 
                 case ProjectileID.BabySnowman:
-                    KillPet(projectile, player, BuffID.BabySnowman, modPlayer.FrostEnchant, "Snowman Pet");
+                    KillPet(projectile, player, BuffID.BabySnowman, modPlayer.FrostEnchant, SoulConfig.Instance.SnowmanPet);
                     break;
 
                 case ProjectileID.DD2PetGato:
-                    KillPet(projectile, player, BuffID.PetDD2Gato, modPlayer.ShinobiEnchant, "Gato Pet");
+                    KillPet(projectile, player, BuffID.PetDD2Gato, modPlayer.ShinobiEnchant, SoulConfig.Instance.GatoPet);
                     break;
 
                 case ProjectileID.Parrot:
-                    KillPet(projectile, player, BuffID.PetParrot, modPlayer.GoldEnchant, "Parrot Pet");
+                    KillPet(projectile, player, BuffID.PetParrot, modPlayer.GoldEnchant, SoulConfig.Instance.ParrotPet);
                     break;
 
                 case ProjectileID.Puppy:
-                    KillPet(projectile, player, BuffID.Puppy, modPlayer.RedEnchant, "Puppy Pet");
+                    KillPet(projectile, player, BuffID.Puppy, modPlayer.RedEnchant, SoulConfig.Instance.PuppyPet);
                     break;
 
                 case ProjectileID.CompanionCube:
-                    KillPet(projectile, player, BuffID.CompanionCube, modPlayer.VortexEnchant, "Companion Cube Pet");
+                    KillPet(projectile, player, BuffID.CompanionCube, modPlayer.VortexEnchant, SoulConfig.Instance.CompanionCubePet);
                     break;
 
                 case ProjectileID.DD2PetDragon:
-                    KillPet(projectile, player, BuffID.PetDD2Dragon, modPlayer.ValhallaEnchant, "Dragon Pet");
+                    KillPet(projectile, player, BuffID.PetDD2Dragon, modPlayer.ValhallaEnchant, SoulConfig.Instance.DragonPet);
                     break;
 
                 case ProjectileID.BabySkeletronHead:
-                    KillPet(projectile, player, BuffID.BabySkeletronHead, modPlayer.NecroEnchant, "Skeletron Pet");
+                    KillPet(projectile, player, BuffID.BabySkeletronHead, modPlayer.NecroEnchant, SoulConfig.Instance.DGPet);
                     break;
 
                 case ProjectileID.BabyDino:
-                    KillPet(projectile, player, BuffID.BabyDinosaur, modPlayer.FossilEnchant, "Dino Pet");
+                    KillPet(projectile, player, BuffID.BabyDinosaur, modPlayer.FossilEnchant, SoulConfig.Instance.DinoPet);
                     break;
 
                 case ProjectileID.BabyEater:
-                    KillPet(projectile, player, BuffID.BabyEater, modPlayer.ShadowEnchant, "Eater Pet");
+                    KillPet(projectile, player, BuffID.BabyEater, modPlayer.ShadowEnchant, SoulConfig.Instance.EaterPet);
                     break;
 
                 case ProjectileID.ShadowOrb:
-                    KillPet(projectile, player, BuffID.ShadowOrb, modPlayer.ShadowEnchant, "Shadow Orb Pet");
+                    KillPet(projectile, player, BuffID.ShadowOrb, modPlayer.ShadowEnchant, SoulConfig.Instance.ShadowOrbPet);
                     break;
 
                 case ProjectileID.SuspiciousTentacle:
-                    KillPet(projectile, player, BuffID.SuspiciousTentacle, modPlayer.CosmoForce, "Suspicious Eye Pet");
+                    KillPet(projectile, player, BuffID.SuspiciousTentacle, modPlayer.CosmoForce, SoulConfig.Instance.SuspiciousEyePet);
                     break;
 
                 case ProjectileID.DD2PetGhost:
-                    KillPet(projectile, player, BuffID.PetDD2Ghost, modPlayer.DarkEnchant, "Flickerwick Pet");
+                    KillPet(projectile, player, BuffID.PetDD2Ghost, modPlayer.DarkEnchant, SoulConfig.Instance.FlickerwickPet);
                     break;
 
                 case ProjectileID.ZephyrFish:
-                    KillPet(projectile, player, BuffID.ZephyrFish, modPlayer.FishSoul2, "Zephyr Fish Pet");
+                    KillPet(projectile, player, BuffID.ZephyrFish, modPlayer.FishSoul2, SoulConfig.Instance.ZephyrFishPet);
                     break;
 
                 /*case ProjectileID.BabyGrinch:
@@ -725,7 +750,7 @@ namespace FargowiltasSouls.Projectiles
                                 if (weight[max] > 0)
                                     ai0 = max;
 
-                                if (Main.netMode != 1)
+                                if ((cultist.life < cultist.lifeMax / 2 || Fargowiltas.Instance.MasomodeEXLoaded) && Main.netMode != 1)
                                     Projectile.NewProjectile(projectile.Center, Vector2.UnitY * -10f, mod.ProjectileType("CelestialPillar"),
                                         (int)(75 * (1 + FargoSoulsWorld.CultistCount * .0125)), 0f, Main.myPlayer, ai0);
                             }
@@ -939,121 +964,121 @@ namespace FargowiltasSouls.Projectiles
 
                 #region thorium pets
                 case 1:
-                    KillPet(projectile, player, thorium.BuffType("Identified"), modPlayer.ConduitEnchant, "I.F.O. Pet");
+                    KillPet(projectile, player, thorium.BuffType("Identified"), modPlayer.ConduitEnchant, SoulConfig.Instance.thoriumToggles.IFOPet);
                     break;
 
                 case 2:
-                    KillPet(projectile, player, thorium.BuffType("BioFeederBuff"), modPlayer.MeteorEnchant, "Bio-Feeder Pet");
+                    KillPet(projectile, player, thorium.BuffType("BioFeederBuff"), modPlayer.MeteorEnchant, SoulConfig.Instance.thoriumToggles.BioFeederPet);
                     break;
 
                 case 3:
-                    KillPet(projectile, player, thorium.BuffType("BlisterBuff"), modPlayer.FleshEnchant, "Blister Pet");
+                    KillPet(projectile, player, thorium.BuffType("BlisterBuff"), modPlayer.FleshEnchant, SoulConfig.Instance.thoriumToggles.BlisterPet);
                     break;
 
                 case 4:
-                    KillPet(projectile, player, thorium.BuffType("WyvernPetBuff"), modPlayer.DragonEnchant, "Wyvern Pet");
+                    KillPet(projectile, player, thorium.BuffType("WyvernPetBuff"), modPlayer.DragonEnchant, SoulConfig.Instance.thoriumToggles.WyvernPet);
                     break;
 
                 case 5:
-                    KillPet(projectile, player, thorium.BuffType("SupportLanternBuff"), modPlayer.MinerEnchant, "Inspiring Lantern Pet");
+                    KillPet(projectile, player, thorium.BuffType("SupportLanternBuff"), modPlayer.MinerEnchant, SoulConfig.Instance.thoriumToggles.LanternPet);
                     break;
 
                 case 6:
-                    KillPet(projectile, player, thorium.BuffType("LockBoxBuff"), modPlayer.MinerEnchant, "Lock Box Pet");
+                    KillPet(projectile, player, thorium.BuffType("LockBoxBuff"), modPlayer.MinerEnchant, SoulConfig.Instance.thoriumToggles.BoxPet);
                     break;
 
                 case 7:
-                    KillPet(projectile, player, thorium.BuffType("DevilBuff"), modPlayer.WarlockEnchant, "Li'l Devil Minion", true);
+                    KillPet(projectile, player, thorium.BuffType("DevilBuff"), modPlayer.WarlockEnchant, SoulConfig.Instance.thoriumToggles.DevilMinion, true);
                     break;
 
                 case 8:
-                    KillPet(projectile, player, thorium.BuffType("AngelBuff"), modPlayer.SacredEnchant, "Li'l Cherub Minion", true);
+                    KillPet(projectile, player, thorium.BuffType("AngelBuff"), modPlayer.SacredEnchant, SoulConfig.Instance.thoriumToggles.CherubMinion, true);
                     break;
 
                 case 9:
-                    KillPet(projectile, player, thorium.BuffType("LifeSpiritBuff"), modPlayer.SacredEnchant, "Life Spirit Pet");
+                    KillPet(projectile, player, thorium.BuffType("LifeSpiritBuff"), modPlayer.SacredEnchant, SoulConfig.Instance.thoriumToggles.SpiritPet);
                     break;
 
                 case 10:
-                    KillPet(projectile, player, thorium.BuffType("HolyGostBuff"), modPlayer.BinderEnchant, "Holy Goat Pet");
+                    KillPet(projectile, player, thorium.BuffType("HolyGostBuff"), modPlayer.BinderEnchant, SoulConfig.Instance.thoriumToggles.GoatPet);
                     break;
 
                 case 11:
-                    KillPet(projectile, player, thorium.BuffType("SaplingBuff"), modPlayer.LivingWoodEnchant, "Sapling Minion", true);
+                    KillPet(projectile, player, thorium.BuffType("SaplingBuff"), modPlayer.LivingWoodEnchant, SoulConfig.Instance.thoriumToggles.SaplingMinion, true);
                     break;
 
                 case 12:
-                    KillPet(projectile, player, thorium.BuffType("SnowyOwlBuff"), modPlayer.IcyEnchant, "Owl Pet");
+                    KillPet(projectile, player, thorium.BuffType("SnowyOwlBuff"), modPlayer.CryoEnchant, SoulConfig.Instance.thoriumToggles.OwlPet);
                     break;
 
                 case 13:
-                    KillPet(projectile, player, thorium.BuffType("JellyPet"), modPlayer.DepthEnchant, "Jellyfish Pet");
+                    KillPet(projectile, player, thorium.BuffType("JellyPet"), modPlayer.DepthEnchant, SoulConfig.Instance.thoriumToggles.JellyfishPet);
                     break;
 
                 case 14:
-                    KillPet(projectile, player, thorium.BuffType("LilMogBuff"), modPlayer.KnightEnchant, "Moogle Pet");
+                    KillPet(projectile, player, thorium.BuffType("LilMogBuff"), modPlayer.KnightEnchant, SoulConfig.Instance.thoriumToggles.MooglePet);
                     break;
 
                 case 15:
-                    KillPet(projectile, player, thorium.BuffType("MaidBuff"), modPlayer.DreamEnchant, "Maid Pet");
+                    KillPet(projectile, player, thorium.BuffType("MaidBuff"), modPlayer.DreamEnchant, SoulConfig.Instance.thoriumToggles.MaidPet);
                     break;
 
                 case 16:
-                    KillPet(projectile, player, thorium.BuffType("PinkSlimeBuff"), modPlayer.IllumiteEnchant, "Pink Slime Pet");
+                    KillPet(projectile, player, thorium.BuffType("PinkSlimeBuff"), modPlayer.IllumiteEnchant, SoulConfig.Instance.thoriumToggles.SlimePet);
                     break;
 
                 case 17:
-                    KillPet(projectile, player, thorium.BuffType("ShineDust"), modPlayer.PlatinumEnchant, "Glitter Pet");
+                    KillPet(projectile, player, thorium.BuffType("ShineDust"), modPlayer.PlatinumEnchant, SoulConfig.Instance.thoriumToggles.GlitterPet);
                     break;
 
                 case 18:
-                    KillPet(projectile, player, thorium.BuffType("DrachmaBuff"), modPlayer.GoldEnchant, "Coin Bag Pet");
+                    KillPet(projectile, player, thorium.BuffType("DrachmaBuff"), modPlayer.GoldEnchant, SoulConfig.Instance.thoriumToggles.CoinPet);
                     break;
 
                     //calamity
                 case 101:
-                    KillPet(projectile, player, calamity.BuffType("Kendra"), modPlayer.AerospecEnchant, "Kendra Pet");
+                    KillPet(projectile, player, calamity.BuffType("Kendra"), modPlayer.AerospecEnchant, SoulConfig.Instance.calamityToggles.KendraPet);
                     break;
 
                 case 102:
-                    KillPet(projectile, player, calamity.BuffType("BloodBound"), modPlayer.StatigelEnchant, "Perforator Pet");
+                    KillPet(projectile, player, calamity.BuffType("BloodBound"), modPlayer.StatigelEnchant, SoulConfig.Instance.calamityToggles.PerforatorPet);
                     break;
 
                 case 103:
-                    KillPet(projectile, player, calamity.BuffType("ThirdSageBuff"), modPlayer.DaedalusEnchant, "Third Sage Pet");
+                    KillPet(projectile, player, calamity.BuffType("ThirdSageBuff"), modPlayer.DaedalusEnchant, SoulConfig.Instance.calamityToggles.ThirdSagePet);
                     break;
 
                 case 104:
-                    KillPet(projectile, player, calamity.BuffType("BearBuff"), modPlayer.DaedalusEnchant, "Bear Pet");
+                    KillPet(projectile, player, calamity.BuffType("BearBuff"), modPlayer.DaedalusEnchant, SoulConfig.Instance.calamityToggles.BearPet);
                     break;
 
                 case 105:
-                    KillPet(projectile, player, calamity.BuffType("BrimlingBuff"), modPlayer.AtaxiaEnchant, "Brimling Pet");
+                    KillPet(projectile, player, calamity.BuffType("BrimlingBuff"), modPlayer.AtaxiaEnchant, SoulConfig.Instance.calamityToggles.BrimlingPet);
                     break;
 
                 case 106:
-                    KillPet(projectile, player, calamity.BuffType("DannyDevito"), modPlayer.MolluskEnchant, "Danny Pet");
+                    KillPet(projectile, player, calamity.BuffType("DannyDevito"), modPlayer.MolluskEnchant, SoulConfig.Instance.calamityToggles.DannyPet);
                     break;
 
                 case 107:
-                    KillPet(projectile, player, calamity.BuffType("StrangeOrb"), modPlayer.OmegaBlueEnchant, "Siren Pet");
+                    KillPet(projectile, player, calamity.BuffType("StrangeOrb"), modPlayer.OmegaBlueEnchant, SoulConfig.Instance.calamityToggles.SirenPet);
                     break;
 
                 case 108:
                 case 109:
-                    KillPet(projectile, player, calamity.BuffType("ChibiiBuff"), modPlayer.GodSlayerEnchant, "Chibii Pet");
+                    KillPet(projectile, player, calamity.BuffType("ChibiiBuff"), modPlayer.GodSlayerEnchant, SoulConfig.Instance.calamityToggles.ChibiiPet);
                     break;
 
                 case 110:
-                    KillPet(projectile, player, calamity.BuffType("AkatoYharonBuff"), modPlayer.SilvaEnchant, "Akato Pet");
+                    KillPet(projectile, player, calamity.BuffType("AkatoYharonBuff"), modPlayer.SilvaEnchant, SoulConfig.Instance.calamityToggles.AkatoPet);
                     break;
 
                 case 111:
-                    KillPet(projectile, player, calamity.BuffType("Fox"), modPlayer.SilvaEnchant, "Fox Pet");
+                    KillPet(projectile, player, calamity.BuffType("Fox"), modPlayer.SilvaEnchant, SoulConfig.Instance.calamityToggles.FoxPet);
                     break;
 
                 case 112:
-                    KillPet(projectile, player, calamity.BuffType("Levi"), modPlayer.DemonShadeEnchant, "Levi Pet");
+                    KillPet(projectile, player, calamity.BuffType("Levi"), modPlayer.DemonShadeEnchant, SoulConfig.Instance.calamityToggles.LeviPet);
                     break;
 
                     #endregion
@@ -1067,8 +1092,9 @@ namespace FargowiltasSouls.Projectiles
 
             if (projectile.bobber && modPlayer.MutantAntibodies)
             {
-                if (projectile.wet && projectile.ai[0] == 0 && projectile.localAI[1] < 660)
-                    projectile.localAI[1] = 660;
+                
+                if (projectile.wet && projectile.ai[0] == 0 && projectile.localAI[1] < 655)
+                    projectile.localAI[1] = 655;
                 //Main.NewText(projectile.ai[0].ToString() + " " + projectile.ai[1].ToString() + ", " + projectile.localAI[0].ToString() + " " + projectile.localAI[1].ToString());
             }
         }
@@ -1124,7 +1150,7 @@ namespace FargowiltasSouls.Projectiles
             Player player = Main.player[Main.myPlayer];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (SoulConfig.Instance.GetValue("Jester Bell"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.JesterBell))
             {
                 //jester effect
                 if (modPlayer.JesterEnchant && crit)
@@ -1196,6 +1222,43 @@ namespace FargowiltasSouls.Projectiles
                     player.AddBuff(mod.BuffType("FirstStrike"), 60);
                 }
             }
+
+            /*if (modPlayer.PearlEnchant && SoulConfig.Instance.GetValue("Pearlwood Rain") && projectile.type != ProjectileID.HallowStar)
+            {
+                //holy stars
+                Main.PlaySound(SoundID.Item10, projectile.position);
+                for (int num479 = 0; num479 < 10; num479++)
+                {
+                    Dust.NewDust(projectile.position, projectile.width, projectile.height, 58, projectile.velocity.X * 0.1f, projectile.velocity.Y * 0.1f, 150, default(Color), 1.2f);
+                }
+                for (int num480 = 0; num480 < 3; num480++)
+                {
+                    Gore.NewGore(projectile.position, new Vector2(projectile.velocity.X * 0.05f, projectile.velocity.Y * 0.05f), Main.rand.Next(16, 18), 1f);
+                }
+                float x = projectile.position.X + (float)Main.rand.Next(-400, 400);
+                float y = projectile.position.Y - (float)Main.rand.Next(600, 900);
+                Vector2 vector12 = new Vector2(x, y);
+                float num483 = projectile.position.X + (float)(projectile.width / 2) - vector12.X;
+                float num484 = projectile.position.Y + (float)(projectile.height / 2) - vector12.Y;
+                int num485 = 22;
+                float num486 = (float)Math.Sqrt((double)(num483 * num483 + num484 * num484));
+                num486 = (float)num485 / num486;
+                num483 *= num486;
+                num484 *= num486;
+                int num487 = projectile.damage;
+                int num488 = Projectile.NewProjectile(x, y, num483, num484, 92, num487, projectile.knockBack, projectile.owner, 0f, 0f);
+                if (num488 != 1000)
+                    Main.projectile[num488].ai[1] = projectile.position.Y;
+                //Main.projectile[num488].ai[0] = 1f;
+
+                //Main.projectile[num488].localNPCHitCooldown = 2;
+                //Main.projectile[num488].usesLocalNPCImmunity = true;
+
+                if (player.ZoneHoly || modPlayer.WoodForce)
+                {
+                    Main.projectile[num488].GetGlobalProjectile<FargoGlobalProjectile>().rainbowTrail = true;
+                }
+            }*/
 
             return true;
         }
@@ -1614,24 +1677,45 @@ namespace FargowiltasSouls.Projectiles
             Player player = Main.player[projectile.owner];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (!townNPCProj && modPlayer.CobaltEnchant && SoulConfig.Instance.GetValue("Cobalt Shards") && modPlayer.CobaltCD == 0 && CanSplit && projectile.friendly && projectile.damage > 0  && !projectile.minion && projectile.aiStyle != 19 && !Rotate && Main.rand.Next(4) == 0)
+            if (!townNPCProj && CanSplit && projectile.friendly && projectile.damage > 0 && !projectile.minion && projectile.aiStyle != 19 && !Rotate)
             {
-                int damage = 40;
-                if(modPlayer.EarthForce)
-                    damage = 80;
-
-                Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 27);
-
-                for (int i = 0; i < 3; i++)
+                if (modPlayer.CobaltEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CobaltShards) && modPlayer.CobaltCD == 0 && Main.rand.Next(4) == 0)
                 {
-                    float velX = -projectile.velocity.X * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
-                    float velY = -projectile.velocity.Y * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
-                    int p = Projectile.NewProjectile(projectile.position.X + velX, projectile.position.Y + velY, velX, velY, ProjectileID.CrystalShard, damage, 0f, projectile.owner);
+                    int damage = 40;
+                    if (modPlayer.EarthForce)
+                        damage = 80;
 
-                    Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                    Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 27);
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        float velX = -projectile.velocity.X * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
+                        float velY = -projectile.velocity.Y * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
+                        int p = Projectile.NewProjectile(projectile.position.X + velX, projectile.position.Y + velY, velX, velY, ProjectileID.CrystalShard, damage, 0f, projectile.owner);
+
+                        Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                    }
+
+                    modPlayer.CobaltCD = 60;
+                }
+                else if (modPlayer.AncientCobaltEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CobaltStingers) && modPlayer.CobaltCD == 0 && Main.rand.Next(5) == 0)
+                {
+                    //Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 27);
+
+                   Projectile[] projs = XWay(3, projectile.Center, ProjectileID.HornetStinger, 5f, 15, 0);
+
+                    for (int i = 0; i < projs.Length; i++)
+                    {
+                        projs[i].penetrate = 3;
+                        projs[i].timeLeft /= 2;
+                    }
+
+                    modPlayer.CobaltCD = 60;
                 }
 
-                modPlayer.CobaltCD = 60;
+
+
+                
             }
         }
 
@@ -1658,7 +1742,7 @@ namespace FargowiltasSouls.Projectiles
 
         public static Projectile[] XWay(int num, Vector2 pos, int type, float speed, int damage, float knockback)
         {
-            Projectile[] projs = new Projectile[16];
+            Projectile[] projs = new Projectile[num];
             double spread = 2 * Math.PI / num;
             for (int i = 0; i < num; i++)
                 projs[i] = NewProjectileDirectSafe(pos, new Vector2(speed, speed).RotatedBy(spread * i), type, damage, knockback, Main.myPlayer);

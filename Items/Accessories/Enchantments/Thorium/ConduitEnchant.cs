@@ -51,7 +51,7 @@ Summons a pet Omega");
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
 
-            if (SoulConfig.Instance.GetValue("Conduit Shield"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.ConduitShield))
             {
                 //conduit set bonus
                 thoriumPlayer.conduitSet = true;

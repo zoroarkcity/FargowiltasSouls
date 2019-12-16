@@ -22,8 +22,8 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
 @"'Elven mysteries unfold before you...'
 All armor bonuses from Novice Cleric, Sacred, Warlock, and Biotech
 All armor bonuses from Iridescent, Life Binder, Templar, and Fallen Paladin
-Effects of Demon Tongue, Aloe Leaf, and Equalizer 
-Effects of Wynebgwrthucher and Rebirth Statuette
+Effects of Demon Tongue, Dark Effigy, Aloe Leaf, and Equalizer
+Effects of Karmic Holder, Wynebgwrthucher, and Rebirth Statuette
 Summons a pet Life Spirit and Holy Goat");
             DisplayName.AddTranslation(GameCulture.Chinese, "亚尔夫海姆之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 

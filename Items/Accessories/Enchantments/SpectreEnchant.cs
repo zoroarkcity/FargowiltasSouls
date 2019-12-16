@@ -16,25 +16,17 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Spectre Enchantment");
 
-            string tooltip = 
+            string tooltip =
 @"'Their lifeforce will be their undoing'
 Damage has a chance to spawn damaging orbs
 If you crit, you might also get a healing orb
-";
+Summons a pet Wisp";
+
             string tooltip_ch =
 @"'他们的生命力将毁灭自己'
 魔法伤害有机会产生伤害法球
 暴击会造成治疗球爆发
-";
-
-            if(thorium != null)
-            {
-                tooltip += "Effects of Ghastly Carapace\n";
-                tooltip_ch += "拥有惊魂甲壳的效果\n";
-            }
-
-            tooltip += "Summons a pet Wisp";
-            tooltip_ch += "召唤一个瓶中精灵";
+召唤一个瓶中精灵";
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "幽魂魔石");
@@ -65,21 +57,6 @@ If you crit, you might also get a healing orb
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<FargoPlayer>().SpectreEffect(hideVisual);
-
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
-        }
-
-        private void Thorium(Player player)
-        {
-            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            if (SoulConfig.Instance.GetValue("Ghastly Carapace"))
-            {
-                //ghastly carapace
-                if (!thoriumPlayer.lifePrevent)
-                {
-                    player.AddBuff(thorium.BuffType("GhastlySoul"), 60, true);
-                }
-            }
         }
 
         public override void AddRecipes()
@@ -92,9 +69,9 @@ If you crit, you might also get a healing orb
                 recipe.AddIngredient(ItemID.SpectreHood);
                 recipe.AddIngredient(ItemID.SpectreRobe);
                 recipe.AddIngredient(ItemID.SpectrePants);
-                recipe.AddIngredient(thorium.ItemType("GhastlyCarapace"));
-                recipe.AddIngredient(ItemID.Keybrand);
                 recipe.AddIngredient(ItemID.MagicalHarp);
+                recipe.AddIngredient(ItemID.BubbleGun);
+                recipe.AddIngredient(ItemID.Keybrand);
                 recipe.AddIngredient(ItemID.SpectreStaff);
                 recipe.AddIngredient(ItemID.UnholyTrident);
             }

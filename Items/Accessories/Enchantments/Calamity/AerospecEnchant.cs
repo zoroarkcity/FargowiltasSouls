@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -43,6 +45,17 @@ Summons a Kendra pet");
             item.value = 200000;
         }
 
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(159, 112, 112);
+                }
+            }
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
@@ -52,7 +65,7 @@ Summons a Kendra pet");
 
             if (player.GetModPlayer<FargoPlayer>().Eternity) return;
 
-            if (SoulConfig.Instance.GetValue("Valkyrie Minion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ValkyrieMinion))
             {
                 calamity.Call("SetSetBonus", player, "aerospec_summon", true);
                 if (player.whoAmI == Main.myPlayer)
@@ -68,14 +81,14 @@ Summons a Kendra pet");
                 }
             }
 
-            if (SoulConfig.Instance.GetValue("Gladiator's Locket"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.GladiatorLocket))
                 calamity.GetItem("GladiatorsLocket").UpdateAccessory(player, hideVisual);
-            if (SoulConfig.Instance.GetValue("Unstable Prism"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.UnstablePrism))
                 calamity.GetItem("UnstablePrism").UpdateAccessory(player, hideVisual);
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.AerospecEnchant = true;
-            fargoPlayer.AddPet("Kendra Pet", hideVisual, calamity.BuffType("Kendra"), calamity.ProjectileType("KendraPet"));
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.KendraPet, hideVisual, calamity.BuffType("Kendra"), calamity.ProjectileType("KendraPet"));
         }
 
         public override void AddRecipes()

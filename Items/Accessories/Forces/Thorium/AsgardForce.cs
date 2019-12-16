@@ -70,7 +70,7 @@ Summons a pet Maid");
             thoriumPlayer.dreamHoodSet = true;
             thoriumPlayer.dreamSet = true;
             //maid pet
-            modPlayer.AddPet("Maid Pet", hideVisual, thorium.BuffType("MaidBuff"), thorium.ProjectileType("Maid1"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.MaidPet, hideVisual, thorium.BuffType("MaidBuff"), thorium.ProjectileType("Maid1"));
             modPlayer.DreamEnchant = true;
 
             if (modPlayer.ThoriumSoul) return;

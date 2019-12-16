@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using CalamityMod.CalPlayer;
 using Terraria.Localization;
+using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -47,11 +48,22 @@ Summons a Siren pet");
             item.value = 1000000;
         }
 
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(35, 95, 161);
+                }
+            }
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue("Omega Blue Tentacles"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.OmegaTentacles))
             {
                 calamity.Call("SetSetBonus", player, "omegablue", true);
                 CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
@@ -83,7 +95,7 @@ Summons a Siren pet");
             }
 
             //abyssal diving suit
-            if (SoulConfig.Instance.GetValue("Abyssal Diving Suit"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.DivingSuit))
             {
                 calamity.GetItem("AbyssalDivingSuit").UpdateAccessory(player, hideVisual);
             }
@@ -97,7 +109,7 @@ Summons a Siren pet");
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.OmegaBlueEnchant = true;
-            fargoPlayer.AddPet("Siren Pet", hideVisual, calamity.BuffType("StrangeOrb"), calamity.ProjectileType("SirenYoung"));
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.SirenPet, hideVisual, calamity.BuffType("StrangeOrb"), calamity.ProjectileType("SirenYoung"));
         }
 
         public override void AddRecipes()

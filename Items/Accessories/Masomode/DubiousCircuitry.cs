@@ -7,8 +7,6 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class DubiousCircuitry : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dubious Circuitry");
@@ -46,7 +44,7 @@ Reduces damage taken by 6%");
             player.buffImmune[mod.BuffType("LightningRod")] = true;
             player.GetModPlayer<FargoPlayer>().FusedLens = true;
             player.GetModPlayer<FargoPlayer>().GroundStick = true;
-            if (SoulConfig.Instance.GetValue("Probes Minion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ProbeMinion))
                 player.AddBuff(mod.BuffType("Probes"), 2);
             player.endurance += 0.06f;
             player.noKnockback = true;

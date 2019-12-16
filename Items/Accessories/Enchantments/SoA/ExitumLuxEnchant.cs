@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using SacredTools;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.SoA
 {
@@ -37,6 +39,17 @@ Effects of Stone of Resonance");
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.rare = 11;
             item.value = 350000;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(137, 154, 178);
+                }
+            }
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

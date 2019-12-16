@@ -20,8 +20,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             DisplayName.SetDefault("Danger Enchantment");
             Tooltip.SetDefault(
 @"'Let's get dangerous...'
-While in combat, your life recovery is increased by 2
-You are immune to most damage-inflicting debuffs");
+You are immune to most damage-inflicting debuffs
+Effects of Night Shade Petal");
             DisplayName.AddTranslation(GameCulture.Chinese, "致危魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'Let's get dangerous...'
@@ -44,16 +44,14 @@ You are immune to most damage-inflicting debuffs");
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
 
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            if (!thoriumPlayer.outOfCombat)
-            {
-                thoriumPlayer.lifeRecovery += 2;
-            }
-
             player.buffImmune[BuffID.Frostburn] = true;
             player.buffImmune[BuffID.Poisoned] = true;
             player.buffImmune[BuffID.OnFire] = true;
             player.buffImmune[BuffID.Bleeding] = true;
             player.buffImmune[BuffID.Venom] = true;
+
+            //night shade petal
+            thoriumPlayer.nightshadeBoost = true;
         }
         
         private readonly string[] items =
@@ -61,8 +59,8 @@ You are immune to most damage-inflicting debuffs");
             "DangerHelmet",
             "DangerMail",
             "DangerGreaves",
+            "NightShadePetal",
             "TrackerBlade",
-            "DangerDevestator",
             "DangerDaikatana",
             "DangerDoomerang",
             "DangerDuelShot" //really diver

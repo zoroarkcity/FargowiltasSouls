@@ -52,7 +52,7 @@ Summons a pet Pink Slime");
             thoriumPlayer.accMusicPlayer = true;
             thoriumPlayer.accMP3Wind = true;
             //slime pet
-            modPlayer.AddPet("Pink Slime Pet", hideVisual, thorium.BuffType("PinkSlimeBuff"), thorium.ProjectileType("PinkSlime"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.SlimePet, hideVisual, thorium.BuffType("PinkSlimeBuff"), thorium.ProjectileType("PinkSlime"));
         }
         
         private readonly string[] items =

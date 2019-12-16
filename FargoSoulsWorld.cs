@@ -38,8 +38,9 @@ namespace FargowiltasSouls
         public static int CultistCount;
         public static int MoonlordCount;
 
-        public static bool downedMM = false;
+        public static bool downedMM;
         public static bool forceMeteor;
+        public static int skipMutantP1;
 
         public override void Initialize()
         {
@@ -70,6 +71,7 @@ namespace FargowiltasSouls
             MoonlordCount = 0;
 
             forceMeteor = false;
+            skipMutantP1 = 0;
         }
 
         public override TagCompound Save()
@@ -105,7 +107,7 @@ namespace FargowiltasSouls
 
             return new TagCompound
             {
-                {"downed", downed}, {"count", count}
+                {"downed", downed}, {"count", count}, {"mutantP1", skipMutantP1}
             };
         }
 
@@ -140,6 +142,9 @@ namespace FargowiltasSouls
             AngryMutant = downed.Contains("AngryMutant");
             downedMM = downed.Contains("downedMadhouse");
             forceMeteor = downed.Contains("forceMeteor");
+
+            if (tag.ContainsKey("mutantP1"))
+                skipMutantP1 = tag.GetAsInt("mutantP1");
         }
 
         public override void NetReceive(BinaryReader reader)
@@ -159,6 +164,7 @@ namespace FargowiltasSouls
             FishronCount = reader.ReadInt32();
             CultistCount = reader.ReadInt32();
             MoonlordCount = reader.ReadInt32();
+            skipMutantP1 = reader.ReadInt32();
 
             BitsByte flags = reader.ReadByte();
             downedBetsy = flags[0];
@@ -188,6 +194,7 @@ namespace FargowiltasSouls
             writer.Write(FishronCount);
             writer.Write(CultistCount);
             writer.Write(MoonlordCount);
+            writer.Write(skipMutantP1);
 
             BitsByte flags = new BitsByte
             {

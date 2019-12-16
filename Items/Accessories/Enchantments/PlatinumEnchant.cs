@@ -11,7 +11,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
     public class PlatinumEnchant : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        public int timer;
 
         public override void SetStaticDefaults()
         {
@@ -28,7 +27,6 @@ If the enemy has Midas, the chance and bonus is doubled";
             {
                 tooltip +=
 @"
-Effects of Platinum Aegis
 Summons a pet Glitter";
                 tooltip_ch +=
 @"
@@ -64,32 +62,18 @@ Summons a pet Glitter";
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().PlatinumEnchant = true;
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            modPlayer.PlatinumEnchant = true;
 
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player, hideVisual);
+            if (Fargowiltas.Instance.ThoriumLoaded)
+                modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.GlitterPet, hideVisual, thorium.BuffType("ShineDust"), thorium.ProjectileType("ShinyPet"));
         }
 
         private void Thorium(Player player, bool hideVisual)
         {
             ThoriumPlayer thoriumPlayer = (ThoriumPlayer)player.GetModPlayer(thorium, "ThoriumPlayer");
-            timer++;
-            if (timer >= 30)
-            {
-                int num = 17;
-                if (thoriumPlayer.shieldHealth <= num)
-                {
-                    thoriumPlayer.shieldHealthTimerStop = true;
-                }
-                if (thoriumPlayer.shieldHealth < num)
-                {
-                    CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(51, 255, 255), 1, false, true);
-                    thoriumPlayer.shieldHealth++;
-                    player.statLife++;
-                }
-                timer = 0;
-            }
-
-            player.GetModPlayer<FargoPlayer>().AddPet("Glitter Pet", hideVisual, thorium.BuffType("ShineDust"), thorium.ProjectileType("ShinyPet"));
+            
+            
         }
 
         public override void AddRecipes()

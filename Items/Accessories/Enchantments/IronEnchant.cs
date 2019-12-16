@@ -2,29 +2,19 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 using System.Collections.Generic;
-using ThoriumMod.Items.BasicAccessories;
-using ThoriumMod.Items.Misc;
-using ThoriumMod.Items.Thorium;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class IronEnchant : EnchantmentItem
+    [AutoloadEquip(EquipType.Shield)]
+    public class IronEnchant : ModItem
     {
-        public int timer;
-
-
-        public IronEnchant() : base("Iron Enchantment", "", 20, 20,
-            TileID.DemonAltar, Item.sellPrice(silver: 80), ItemRarityID.Green, new Color(152, 142, 131))
-        {
-        }
-
+        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DisplayName.SetDefault("Iron Enchantment");
 
             string tooltip = "'Strike while the iron is hot'\n";
             string tooltip_ch = "'趁热打铁'\n";
@@ -38,18 +28,32 @@ You attract items from a larger range";
 右键用盾牌防御
 拾取物品半径增大";
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                tooltip += "\nEffects of Iron Shield";
-                tooltip_ch += "\n拥有铁盾的效果";
-            }
-
             Tooltip.SetDefault(tooltip); 
-
             DisplayName.AddTranslation(GameCulture.Chinese, "铁魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
 
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(152, 142, 131);
+                }
+            }
+        }
+
+        public override void SetDefaults()
+        {
+            item.width = 20;
+            item.height = 20;
+            item.accessory = true;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
+            item.rare = 2;
+            item.value = 40000;
+            //item.shieldSlot = 5;
+        }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -57,66 +61,42 @@ You attract items from a larger range";
             //sheild raise
             modPlayer.IronEffect();
             //magnet
-            if (SoulConfig.Instance.GetValue("Iron Magnet"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.IronMagnet))
             {
                 modPlayer.IronEnchant = true;
             }
             //EoC Shield
             player.dash = 2;
-
-            if (Fargowiltas.Instance.ThoriumLoaded) 
-                Thorium(player);
         }
 
-        private void Thorium(Player player)
+        public override void AddRecipes()
         {
-            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-
-            //thorium shield
-            timer++;
-            if (timer >= 30)
-            {
-                int num = 18;
-                if (thoriumPlayer.shieldHealth <= num)
-                {
-                    thoriumPlayer.shieldHealthTimerStop = true;
-                }
-                if (thoriumPlayer.shieldHealth < num)
-                {
-                    CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height), new Color(51, 255, 255), 1, false, true);
-                    thoriumPlayer.shieldHealth++;
-                    player.statLife++;
-                }
-                timer = 0;
-            }
-        }
-
-
-        protected override void AddRecipeBase(ModRecipe recipe)
-        {
+            ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.IronHelmet);
             recipe.AddIngredient(ItemID.IronChainmail);
             recipe.AddIngredient(ItemID.IronGreaves);
 
+            if(Fargowiltas.Instance.ThoriumLoaded)
+            {      
+                recipe.AddIngredient(thorium.ItemType("IronShield"));
+                recipe.AddIngredient(thorium.ItemType("ThoriumShield"));
+                recipe.AddIngredient(ItemID.EoCShield);
+                recipe.AddIngredient(ItemID.IronBroadsword);
+                recipe.AddIngredient(thorium.ItemType("OpalStaff"));
+                recipe.AddIngredient(ItemID.IronAnvil);
+            }
+            else
+            {
+                recipe.AddIngredient(ItemID.EoCShield);
+                recipe.AddIngredient(ItemID.IronBroadsword);
+                recipe.AddIngredient(ItemID.IronAnvil);
+            }
+            
             recipe.AddIngredient(ItemID.ZebraSwallowtailButterfly);
-        }
 
-        protected override void AddThoriumRecipe(ModRecipe recipe, Mod thorium)
-        {
-            recipe.AddIngredient(ModContent.ItemType<IronShield>());
-            recipe.AddIngredient(ModContent.ItemType<ThoriumShield>());
-            recipe.AddIngredient(ModContent.ItemType<OpalStaff>());
-
-            recipe.AddIngredient(ItemID.EoCShield);
-            recipe.AddIngredient(ItemID.IronBroadsword);
-            recipe.AddIngredient(ItemID.IronAnvil);
-        }
-
-        protected override void FinishRecipeVanilla(ModRecipe recipe)
-        {
-            recipe.AddIngredient(ItemID.EoCShield);
-            recipe.AddIngredient(ItemID.IronBroadsword);
-            recipe.AddIngredient(ItemID.IronAnvil);
+            recipe.AddTile(TileID.DemonAltar);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

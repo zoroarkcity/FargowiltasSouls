@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -49,11 +51,22 @@ Summons a Brimling pet");
             item.value = 1000000;
         }
 
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(194, 89, 89);
+                }
+            }
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue("Ataxia Effects"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.AtaxiaEffects))
             {
                 calamity.Call("SetSetBonus", player, "ataxia", true);
                 calamity.Call("SetSetBonus", player, "ataxia_melee", true);
@@ -62,14 +75,14 @@ Summons a Brimling pet");
                 calamity.Call("SetSetBonus", player, "ataxia_rogue", true);
             }
             
-            if (SoulConfig.Instance.GetValue("Plague Hive"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.PlagueHive))
             {
                 calamity.GetItem("PlagueHive").UpdateAccessory(player, hideVisual);
             }
             
             if (player.GetModPlayer<FargoPlayer>().Eternity) return;
 
-            if (SoulConfig.Instance.GetValue("Chaos Spirit Minion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ChaosMinion))
             {
                 //summon
                 calamity.Call("SetSetBonus", player, "ataxia_summon", true);
@@ -88,7 +101,7 @@ Summons a Brimling pet");
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.AtaxiaEnchant = true;
-            fargoPlayer.AddPet("Brimling Pet", hideVisual, calamity.BuffType("BrimlingBuff"), calamity.ProjectileType("BrimlingPet"));
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.BrimlingPet, hideVisual, calamity.BuffType("BrimlingBuff"), calamity.ProjectileType("BrimlingPet"));
         }
 
         public override void AddRecipes()

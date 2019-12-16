@@ -89,12 +89,12 @@ Increased minion knockback";
                 player.AddBuff(thorium.BuffType("LichActive"), 60, true);
             }
             //crystal scorpion
-            if (SoulConfig.Instance.GetValue("Crystal Scorpion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.CrystalScorpion))
             {
                 thoriumPlayer.crystalScorpion = true;
             }
             //yumas pendant
-            if (SoulConfig.Instance.GetValue("Yuma's Pendant"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.YumasPendant))
             {
                 thoriumPlayer.yuma = true;
             }

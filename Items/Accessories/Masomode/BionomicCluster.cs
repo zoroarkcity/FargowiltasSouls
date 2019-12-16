@@ -54,6 +54,7 @@ Summons a friendly rainbow slime");
             fargoPlayer.SandsofTime = true;
             player.buffImmune[BuffID.Suffocation] = true;
             player.manaFlower = true;
+            fargoPlayer.SecurityWallet = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -62,18 +63,18 @@ Summons a friendly rainbow slime");
 
             //concentrated rainbow matter
             player.buffImmune[mod.BuffType("FlamesoftheUniverse")] = true;
-            if (SoulConfig.Instance.GetValue("Rainbow Slime Minion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.RainbowSlime))
                 player.AddBuff(mod.BuffType("RainbowSlime"), 2);
 
             //dragon fang
             player.buffImmune[mod.BuffType("ClippedWings")] = true;
             player.buffImmune[mod.BuffType("Crippled")] = true;
-            if (SoulConfig.Instance.GetValue("Inflict Clipped Wings"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DragonFang))
                 fargoPlayer.DragonFang = true;
 
             //frigid gemstone
             player.buffImmune[BuffID.Frostburn] = true;
-            if (SoulConfig.Instance.GetValue("Frostfireballs"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.FrigidGemstone))
             {
                 fargoPlayer.FrigidGemstone = true;
                 if (fargoPlayer.FrigidGemstoneCD > 0)
@@ -115,7 +116,7 @@ Summons a friendly rainbow slime");
             player.buffImmune[mod.BuffType("Lovestruck")] = true;
             player.buffImmune[mod.BuffType("Hexed")] = true;
             player.buffImmune[BuffID.Stinky] = true;
-            if (SoulConfig.Instance.GetValue("Attacks Spawn Hearts"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.NymphPerfume))
             {
                 fargoPlayer.NymphsPerfume = true;
                 if (fargoPlayer.NymphsPerfumeCD > 0)
@@ -123,7 +124,7 @@ Summons a friendly rainbow slime");
             }
 
             //tim's concoction
-            if (SoulConfig.Instance.GetValue("Tim's Concoction"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.TimsConcoction))
                 player.GetModPlayer<FargoPlayer>().TimsConcoction = true;
         }
 

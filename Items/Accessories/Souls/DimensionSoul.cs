@@ -144,18 +144,18 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
             //charm of myths
             player.pStone = true;
             //bee cloak, sweet heart necklace, star veil
-            if (SoulConfig.Instance.GetValue("Stars On Hit"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.StarCloak))
             {
                 player.starCloak = true;
             }
-            if (SoulConfig.Instance.GetValue("Bees On Hit"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BeesOnHit))
             {
                 player.bee = true;
             }
             player.panic = true;
             player.longInvince = true;
             //spore sac
-            if (SoulConfig.Instance.GetValue("Spore Sac"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SporeSac))
             {
                 player.SporeSac();
                 player.sporeSac = true;
@@ -178,7 +178,7 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
 
             //SUPERSONIC
             //frost spark plus super speed
-            if (SoulConfig.Instance.GetValue("Supersonic Speed Boosts") && !player.GetModPlayer<FargoPlayer>().noSupersonic)
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicSpeed) && !player.GetModPlayer<FargoPlayer>().noSupersonic)
             {
                 player.maxRunSpeed += 15f;
                 player.runAcceleration += .25f;
@@ -248,7 +248,7 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
             //pick speed
             player.pickSpeed -= 0.75f;
             //mining helmet
-            if (SoulConfig.Instance.GetValue("Mining Shine Buff")) Lighting.AddLight(player.Center, 0.8f, 0.8f, 0f);
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MinerShine)) Lighting.AddLight(player.Center, 0.8f, 0.8f, 0f);
             //presserator
             player.autoActuator = true;
             //royal gel
@@ -274,7 +274,7 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
             player.npcTypeNoAggro[336] = true;
             player.npcTypeNoAggro[537] = true;
             //builder mode
-            if (SoulConfig.Instance.GetValue("Builder Mode"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BuilderMode))
                 modPlayer.BuilderMode = true;
             //cell phone
             player.accWatch = 3;
@@ -388,7 +388,7 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
                 }
             }
             //air walkers
-            if (SoulConfig.Instance.GetValue("Air Walkers"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.AirWalkers))
             {
                 if (player.controlDown)
                 {
@@ -449,8 +449,8 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
 
             //WORLD SHAPER
             //pets
-            modPlayer.AddPet("Inspiring Lantern Pet", hideVisual, thorium.BuffType("SupportLanternBuff"), thorium.ProjectileType("SupportLantern"));
-            modPlayer.AddPet("Lock Box Pet", hideVisual, thorium.BuffType("LockBoxBuff"), thorium.ProjectileType("LockBoxPet"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.LanternPet, hideVisual, thorium.BuffType("SupportLanternBuff"), thorium.ProjectileType("SupportLantern"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.BoxPet, hideVisual, thorium.BuffType("LockBoxBuff"), thorium.ProjectileType("LockBoxPet"));
         }
 
         private void Calamity(Player player, bool hideVisual)
@@ -485,7 +485,7 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
 
         public override void HorizontalWingSpeeds(Player player, ref float speed, ref float acceleration)
         {
-            speed = SoulConfig.Instance.GetValue("Dimension Speed Boosts") ? 25f : 15f;
+            speed = SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicSpeed) ? 25f : 15f;
             acceleration *= 3.5f;
         }
 

@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -39,11 +41,22 @@ Summons a Danny Devito pet");
             item.value = 150000;
         }
 
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(74, 97, 96);
+                }
+            }
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue("Shellfish Minions"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ShellfishMinion))
             {
                 //set bonus clams
                 calamity.Call("SetSetBonus", player, "mollusk", true);
@@ -61,19 +74,19 @@ Summons a Danny Devito pet");
                 }
             }
 
-            if (SoulConfig.Instance.GetValue("Giant Pearl"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.GiantPearl))
             {
                 calamity.GetItem("GiantPearl").UpdateAccessory(player, hideVisual);
             }
 
-            if (SoulConfig.Instance.GetValue("Amidias' Pendant"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.AmidiasPendant))
             {
                 calamity.GetItem("AmidiasPendant").UpdateAccessory(player, hideVisual);
             }
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.MolluskEnchant = true;
-            fargoPlayer.AddPet("Danny Pet", hideVisual, calamity.BuffType("DannyDevito"), calamity.ProjectileType("DannyDevitoPet"));
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.DannyPet, hideVisual, calamity.BuffType("DannyDevito"), calamity.ProjectileType("DannyDevitoPet"));
         }
 
         public override void AddRecipes()

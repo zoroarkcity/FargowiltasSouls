@@ -62,7 +62,7 @@ Summons a Chibii Doggo pet");
             {
                 if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
                 {
-                    tooltipLine.overrideColor = new Color?(new Color(43, 96, 222));
+                    tooltipLine.overrideColor = new Color(100, 108, 156);
                 }
             }
         }
@@ -81,7 +81,7 @@ Summons a Chibii Doggo pet");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue("God Slayer Effects"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.GodSlayerEffects))
             {
                 calamity.Call("SetSetBonus", player, "godslayer", true);
                 calamity.Call("SetSetBonus", player, "godslayer_melee", true);
@@ -90,7 +90,7 @@ Summons a Chibii Doggo pet");
                 calamity.Call("SetSetBonus", player, "godslayer_rogue", true);
             }
             
-            if (SoulConfig.Instance.GetValue("Mechworm Minion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.MechwormMinion))
             {
                 //summon
                 calamity.Call("SetSetBonus", player, "godslayer_summon", true);
@@ -209,7 +209,7 @@ Summons a Chibii Doggo pet");
                 }
             }
             
-            if (SoulConfig.Instance.GetValue("Nebulous Core"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.NebulousCore))
             {
                 calamity.GetItem("NebulousCore").UpdateAccessory(player, hideVisual);
             }
@@ -219,7 +219,7 @@ Summons a Chibii Doggo pet");
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.GodSlayerEnchant = true;
-            fargoPlayer.AddPet("Chibii Pet", hideVisual, calamity.BuffType("ChibiiBuff"), calamity.ProjectileType("ChibiiDoggo"));
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.ChibiiPet, hideVisual, calamity.BuffType("ChibiiBuff"), calamity.ProjectileType("ChibiiDoggo"));
 
         }
 

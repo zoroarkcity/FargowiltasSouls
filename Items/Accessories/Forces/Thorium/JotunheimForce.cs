@@ -62,7 +62,7 @@ Summons several pets");
             //bubble magnet
             thoriumPlayer.bubbleMagnet = true;
             modPlayer.DepthEnchant = true;
-            modPlayer.AddPet("Jellyfish Pet", hideVisual, thorium.BuffType("JellyPet"), thorium.ProjectileType("JellyfishPet"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.JellyfishPet, hideVisual, thorium.BuffType("JellyPet"), thorium.ProjectileType("JellyfishPet"));
 
             //tide hunter
             modPlayer.TideHunterEnchant = true;
@@ -74,11 +74,9 @@ Summons several pets");
             //strider hide
             thoriumPlayer.frostBonusDamage = true;
             //pets
-            modPlayer.IcyEnchant = true;
-            modPlayer.AddPet("Penguin Pet", hideVisual, BuffID.BabyPenguin, ProjectileID.Penguin);
-            modPlayer.AddPet("Owl Pet", hideVisual, thorium.BuffType("SnowyOwlBuff"), thorium.ProjectileType("SnowyOwlPet"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.OwlPet, hideVisual, thorium.BuffType("SnowyOwlBuff"), thorium.ProjectileType("SnowyOwlPet"));
 
-            if (SoulConfig.Instance.GetValue("Icy Barrier"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.IcyBarrier))
             {
                 //icy set bonus
                 thoriumPlayer.icySet = true;
@@ -90,7 +88,7 @@ Summons several pets");
             //cryo
             modPlayer.CryoEnchant = true;
             
-            if (SoulConfig.Instance.GetValue("Whispering Tentacles"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.WhisperingTentacles))
             {
                 mod.GetItem("WhisperingEnchant").UpdateAccessory(player, hideVisual);
             }

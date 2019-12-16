@@ -61,6 +61,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 }
             }
 
+            if (projectile.localAI[1] == 0f)
+            {
+                projectile.localAI[1] = 1f;
+                Main.PlaySound(SoundID.Item1, projectile.Center);
+            }
+
             projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
         }
 

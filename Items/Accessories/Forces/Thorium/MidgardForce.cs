@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
             DisplayName.SetDefault("Force of Midgard");
             Tooltip.SetDefault(
 @"'Behold the power of Mankind...'
-All armor bonuses from Lodestone, Valadium, and Illumite
+All armor bonuses from Lodestone, Valadium, Illumite, and Shade Master
 All armor bonuses from Jester, Thorium, and Terrarium
 Effects of Astro-Beetle Husk and Eye of the Beholder
 Effects of Crietz and Terrarium Surround Sound
@@ -63,17 +63,20 @@ Summons a pet Pink Slime");
             //lodestone
             mod.GetItem("LodestoneEnchant").UpdateAccessory(player, hideVisual);
 
-            if (SoulConfig.Instance.GetValue("Eye of the Beholder"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.BeholderEye))
             {
                 //eye of beholder
                 thorium.GetItem("EyeofBeholder").UpdateAccessory(player, hideVisual);
             }
 
             //illumite
-            modPlayer.AddPet("Pink Slime Pet", hideVisual, thorium.BuffType("PinkSlimeBuff"), thorium.ProjectileType("PinkSlime"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.SlimePet, hideVisual, thorium.BuffType("PinkSlimeBuff"), thorium.ProjectileType("PinkSlime"));
             modPlayer.IllumiteEnchant = true;
 
-            if (SoulConfig.Instance.GetValue("Terrarium Spirits"))
+            //shade
+            thoriumPlayer.shadeSet = true;
+
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.TerrariumSpirits))
             {
                 //terrarium set bonus
                 timer++;
@@ -93,7 +96,7 @@ Summons a pet Pink Slime");
             modPlayer.ThoriumEnchant = true;
             //jester
             modPlayer.JesterEnchant = true;
-            if (SoulConfig.Instance.GetValue("Crietz"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.Crietz))
             {
                 //crietz
                 thoriumPlayer.crietzAcc = true;
@@ -102,7 +105,7 @@ Summons a pet Pink Slime");
             if (modPlayer.ThoriumSoul) return;
 
             //valadium
-            if (SoulConfig.Instance.GetValue("Gravity Control"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.GravityControl))
             {
                 player.gravControl = true;
                 if (player.gravDir == -1f)
@@ -125,6 +128,7 @@ Summons a pet Pink Slime");
             recipe.AddIngredient(null, "LodestoneEnchant");
             recipe.AddIngredient(null, "ValadiumEnchant");
             recipe.AddIngredient(null, "IllumiteEnchant");
+            recipe.AddIngredient(null, "ShadeMasterEnchant");
             recipe.AddIngredient(null, "TerrariumEnchant");
 
             recipe.AddTile(TileID.LunarCraftingStation);

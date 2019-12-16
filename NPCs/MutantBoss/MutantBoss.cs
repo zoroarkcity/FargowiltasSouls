@@ -452,6 +452,23 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     else if (npc.ai[1] == 61 && npc.ai[2] < 5 && Main.netMode != 1)
                     {
+                        if (FargoSoulsWorld.skipMutantP1 >= 10)
+                        {
+                            if (FargoSoulsWorld.skipMutantP1 == 10)
+                            {
+                                string text = "Mutant tires of the charade...";
+                                if (Main.netMode == 0)
+                                    Main.NewText(text, Color.LimeGreen);
+                                else if (Main.netMode == 2)
+                                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), Color.LimeGreen);
+                            }
+                            npc.ai[0] = 10;
+                            npc.ai[1] = 0;
+                            npc.ai[2] = 0;
+                            npc.ai[3] = 0;
+                            npc.netUpdate = true;
+                            break;
+                        }
                         Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantSpearAim"), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                     }
                     break;
@@ -758,6 +775,12 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     else if (npc.ai[1] == 120)
                     {
+                        if (FargoSoulsWorld.skipMutantP1 <= 10)
+                        {
+                            FargoSoulsWorld.skipMutantP1++;
+                            if (Main.netMode == 2)
+                                NetMessage.SendData(7);
+                        }
                         for (int i = 0; i < Main.maxProjectiles; i++)
                             if (Main.projectile[i].active && Main.projectile[i].friendly && !Main.projectile[i].minion && Main.projectile[i].damage > 0)
                                 Main.projectile[i].Kill();
@@ -854,11 +877,18 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
                 case 14: //pause and then initiate dash
                     npc.velocity *= 0.9f;
+                    if (npc.ai[3] == 0)
+                    {
+                        npc.ai[3] = 1;
+                        if (npc.ai[2] < 5 && Main.netMode != 1)
+                            Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center + player.velocity * 30f), mod.ProjectileType("MutantDeathrayAim"), 0, 0f, Main.myPlayer, 30f, npc.whoAmI);
+                    }
                     if (++npc.ai[1] > 30)
                     {
                         npc.netUpdate = true;
                         npc.ai[0]++;
                         npc.ai[1] = 0;
+                        npc.ai[3] = 0;
                         if (++npc.ai[2] > 5)
                         {
                             npc.ai[0]++; //go to next attack after dashes
@@ -1102,7 +1132,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     else if (npc.ai[1] == 1 && npc.ai[2] < 5 && Main.netMode != 1)
                     {
-                        Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantSpearAim"), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
+                        Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center + player.velocity * 30f), mod.ProjectileType("MutantDeathrayAim"), 0, 0f, Main.myPlayer, 60f, npc.whoAmI);
+                        Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantSpearAim"), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 2);
                     }
                     break;
 
@@ -1252,6 +1283,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (!AliveCheck(player))
                         break;
                     targetPos = player.Center;
+                    targetPos.X += 400 * (npc.Center.X < targetPos.X ? -1 : 1);
                     targetPos.Y -= 400;
                     Movement(targetPos, 0.6f, false);
                     if (++npc.ai[1] > 180)
@@ -1723,9 +1755,12 @@ namespace FargowiltasSouls.NPCs.MutantBoss
         public override void NPCLoot()
         {
             FargoSoulsWorld.downedMutant = true;
+            FargoSoulsWorld.skipMutantP1 = 0;
             if (Main.netMode == 2)
                 NetMessage.SendData(7); //sync world
             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantBag"));
+            if (Main.rand.Next(10) == 0)
+                Item.NewItem(npc.Hitbox, mod.ItemType("MutantTrophy"));
         }
 
         public override void BossLoot(ref string name, ref int potionType)

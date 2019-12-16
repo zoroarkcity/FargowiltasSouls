@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -37,6 +39,17 @@ Effects of the Spirit Glyph, Raider's Talisman, and Trinket of Chi");
             item.rare = 1;
             item.value = 40000;
             item.defense = 3;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(129, 168, 109);
+                }
+            }
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

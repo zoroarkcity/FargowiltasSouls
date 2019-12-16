@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria.Localization;
-using CalamityMod.CalPlayer;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -59,7 +58,7 @@ Debuff状态下, 增加10%盗贼伤害
             {
                 if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
                 {
-                    tooltipLine.overrideColor = new Color?(new Color(0, 255, 200));
+                    tooltipLine.overrideColor = new Color(169, 106, 52);
                 }
             }
         }
@@ -78,7 +77,7 @@ Debuff状态下, 增加10%盗贼伤害
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue("Tarragon Effects"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.TarragonEffects))
             {
                 calamity.Call("SetSetBonus", player, "tarragon", true);
                 calamity.Call("SetSetBonus", player, "tarragon_melee", true);
@@ -88,7 +87,7 @@ Debuff状态下, 增加10%盗贼伤害
                 calamity.Call("SetSetBonus", player, "tarragon_rogue", true);
             }
             
-            if (SoulConfig.Instance.GetValue("Profaned Soul Artifact"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ProfanedSoulArtifact))
             {
                 //profaned soul artifact
                 calamity.GetItem("ProfanedSoulArtifact").UpdateAccessory(player, hideVisual);

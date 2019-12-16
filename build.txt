@@ -9,4 +9,3 @@ includeSource = false
 hideCode = false
 hideResources = true
 sortAfter = ThoriumMod, CalamityMod, SacredTools, DBZMOD
-modReferences = WebmilioCommons@0.1.7.10

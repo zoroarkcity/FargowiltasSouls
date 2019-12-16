@@ -72,6 +72,7 @@ Effects of Sea Breeze Pendant and Bubble Magnet");
             "SeaBreezePendant",
             "BubbleMagnet",
             "OceanSlasher",
+            "OceanPolearm",
             "StarfishWand"
         };
 
@@ -83,7 +84,6 @@ Effects of Sea Breeze Pendant and Bubble Magnet");
             
             foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
-            recipe.AddIngredient(ItemID.BreathingReed);
             recipe.AddIngredient(ItemID.Swordfish);
             recipe.AddIngredient(ItemID.Tuna);
 

@@ -2,31 +2,23 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class HuntressEnchant : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Adamantite Enchantment");
+            DisplayName.SetDefault("Huntress Enchantment");
             Tooltip.SetDefault(
-@"'Who needs to aim?'
-Every 8th projectile you shoot will split into 3
-Any secondary projectiles may also split");
-            DisplayName.AddTranslation(GameCulture.Chinese, "精金魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
-@"'谁需要瞄准?'
-第8个抛射物将会分裂成3个
-分裂出的抛射物同样可以分裂");
+@"'The Hunt is On'
+Double tap down to create a localized rain of arrows at the cursor's position for a few seconds
+This has a cooldown of 15 seconds
+Explosive Traps recharge faster and oil enemies
+Set oiled enemies on fire for extra damage");
         }
 
         public override void SetDefaults()
@@ -41,32 +33,24 @@ Any secondary projectiles may also split");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().AdamantiteEnchant = true;
+            player.GetModPlayer<FargoPlayer>().HuntressEffect();
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyAdamHead");
-            recipe.AddIngredient(ItemID.AdamantiteBreastplate);
-            recipe.AddIngredient(ItemID.AdamantiteLeggings);
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(ItemID.AdamantiteGlaive);
-                recipe.AddIngredient(thorium.ItemType("AdamantiteStaff"));
-                recipe.AddIngredient(thorium.ItemType("DynastyWarFan"));
-                recipe.AddIngredient(thorium.ItemType("Scorn"));
-                recipe.AddIngredient(thorium.ItemType("OgreSnotGun"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.DarkLance);
-                recipe.AddIngredient(ItemID.AdamantiteGlaive);
-            }
+            recipe.AddIngredient(ItemID.HuntressWig);
+            recipe.AddIngredient(ItemID.HuntressJerkin);
+            recipe.AddIngredient(ItemID.HuntressPants);
+            recipe.AddIngredient(ItemID.HuntressBuckler);
+            recipe.AddIngredient(ItemID.DD2ExplosiveTrapT2Popper);
+            recipe.AddIngredient(ItemID.DD2PhoenixBow);
+            recipe.AddIngredient(ItemID.DaedalusStormbow);
 
-            recipe.AddIngredient(ItemID.Shotgun);
-            recipe.AddIngredient(ItemID.VenomStaff);
+            /*  
+          Cinder String (with Thorium)
+          Chlorophyte Shotbow*/
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

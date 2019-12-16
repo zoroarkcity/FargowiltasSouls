@@ -20,9 +20,9 @@ Every 5th attack will be accompanied by several snowballs
 All grappling hooks pull you in and retract twice as fast
 Any hook will periodically fire homing shots at enemies
 You have a large aura of Shadowflame
-When you take damage, you are inflicted with Blood Geyser
+Enemies getting too close will trigger a blood geyser and all other on hit effects
 Double tap down to spawn a palm tree sentry that throws nuts at enemies
-You leave behind a trail of rainbows that may shrink enemies");
+Projectiles will spawn a star when they hit something");
             DisplayName.AddTranslation(GameCulture.Chinese, "森林之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'很刚'
@@ -68,7 +68,7 @@ You leave behind a trail of rainbows that may shrink enemies");
             //palm
             modPlayer.PalmEffect();
             //pearl
-            modPlayer.PearlEffect();
+            modPlayer.PearlEnchant = true;
         }
 
         public override void AddRecipes()

@@ -20,9 +20,9 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
             DisplayName.SetDefault("Force of Muspelheim");
             Tooltip.SetDefault(
 @"'A blazing heat, the mark of Surtr...'
-All armor bonuses from Sandstone, Danger, and Feral Fur
-All armor bonuses from Living Wood and Life Bloom
-Effects of Flawless Chrysalis and Guide to Plant Fiber Cordage");
+All armor bonuses from Sandstone, Danger, Flight, and Fungus
+All armor bonuses from Feral Fur, Living Wood, Bulb, and Life Bloom
+Effects of Night Shade Petal, Flawless Chrysalis, and Bee Booties");
             DisplayName.AddTranslation(GameCulture.Chinese, "穆斯贝尔海姆之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'炽热之火, 史尔特尔的标志...'
@@ -59,7 +59,17 @@ Effects of Flawless Chrysalis and Guide to Plant Fiber Cordage");
             thoriumPlayer.livingWood = true;
             //free boi
             modPlayer.LivingWoodEnchant = true;
-            modPlayer.AddMinion("Sapling Minion", thorium.ProjectileType("MinionSapling"), 25, 2f);
+            modPlayer.AddMinion(SoulConfig.Instance.thoriumToggles.SaplingMinion, thorium.ProjectileType("MinionSapling"), 25, 2f);
+
+            //bulb set bonus
+            modPlayer.BulbEnchant = true;
+            //bee booties
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.BeeBooties))
+            {
+                thorium.GetItem("BeeBoots").UpdateAccessory(player, hideVisual);
+                player.moveSpeed -= 0.15f;
+                player.maxRunSpeed -= 1f;
+            }
 
             if (modPlayer.ThoriumSoul) return;
 
@@ -71,10 +81,14 @@ Effects of Flawless Chrysalis and Guide to Plant Fiber Cordage");
             player.buffImmune[BuffID.OnFire] = true;
             player.buffImmune[BuffID.Bleeding] = true;
             player.buffImmune[BuffID.Venom] = true;
+            //night shade petal
+            thoriumPlayer.nightshadeBoost = true;
+            //flight
+            modPlayer.wingTimeModifier += 1f;
+            //fungus
+            modPlayer.FungusEnchant = true;
             //feral fur
             modPlayer.FeralFurEnchant = true;
-            //vine rope thing
-            player.cordage = true;
 
         }
 
@@ -86,7 +100,9 @@ Effects of Flawless Chrysalis and Guide to Plant Fiber Cordage");
 
             recipe.AddIngredient(null, "SandstoneEnchant");
             recipe.AddIngredient(null, "DangerEnchant");
+            recipe.AddIngredient(null, "FlightEnchant");
             recipe.AddIngredient(null, "FeralFurEnchant");
+            recipe.AddIngredient(null, "FungusEnchant");
             recipe.AddIngredient(null, "LifeBloomEnchant");
 
             recipe.AddTile(TileID.LunarCraftingStation);

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
+    [AutoloadEquip(EquipType.Shield)]
     public class TerrariaSoul : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
@@ -29,9 +30,9 @@ Throw a smoke bomb to teleport to it and gain the First Strike Buff
 Attacks may spawn lightning, flower petals, spectre orbs, a Dungeon Guardian, snowballs, spears, or buff boosters
 Attacks cause increased life regen, shadow dodge, Flameburst shots, meteor showers, and reduced enemy knockback immunity
 Critical chance is set to 25%, Crit to increase it by 5%, At 100% every 10th attack gains 4% life steal
-Getting hit drops your crit back down, inflicts Blood Geyser, releases a spore explosion and reflects damage
-Projectiles may split or shatter, item and projectile size increased, attract items from further away
-Nearby enemies are ignited, You leave behind a trail of fire and rainbows when you walk
+Getting hit drops your crit back down, trigger a blood geyser, and reflects damage
+Projectiles may split or shatter and spawn stars, item and projectile size increased, attract items from further away
+Nearby enemies are ignited, You leave behind a trail of fire, jump to create a spore explosion
 Grants Crimson regen, immunity to fire, fall damage, and lava, and doubled herb collection
 Grants 50% chance for Mega Bees, 15% chance for minion crits, 20% chance for bonus loot
 Critters have increased defense and their souls will aid you, You may summon temporary minions
@@ -63,16 +64,6 @@ Effects of Flower Boots, Master Ninja Gear, Greedy Ring, Celestial Shell, and Sh
 死亡时爆炸并以200生命值重生
 拥有花之靴, 忍者极意, 贪婪戒指, 天界贝壳和闪耀石的效果";
 
-            if (thorium != null)
-            {
-                tooltip +=
-@"
-Effects of Spring Steps, Slag Stompers, and Proof of Avarice";
-                tooltip_ch +=
-@"拥有弹簧鞋, 熔渣重踏和贪婪之证的效果";
-            }
-
-
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "泰拉之魂");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
@@ -98,7 +89,6 @@ Effects of Spring Steps, Slag Stompers, and Proof of Avarice";
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.value = 5000000;
-            item.shieldSlot = 5;
 
             item.rare = -12;
         }

@@ -63,7 +63,7 @@ Summons an Akato and Fox pet");
             {
                 if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
                 {
-                    tooltipLine.overrideColor = new Color?(new Color(108, 45, 199));
+                    tooltipLine.overrideColor = new Color(176, 112, 70);
                 }
             }
         }
@@ -82,7 +82,7 @@ Summons an Akato and Fox pet");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue("Silva Effects"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.SilvaEffects))
             {
                 calamity.Call("SetSetBonus", player, "silva", true);
                 calamity.Call("SetSetBonus", player, "silva_melee", true);
@@ -91,7 +91,7 @@ Summons an Akato and Fox pet");
                 calamity.Call("SetSetBonus", player, "silva_rogue", true);
             }
 
-            if (SoulConfig.Instance.GetValue("Silva Crystal Minion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.SilvaMinion))
             {
                 //summon
                 calamity.Call("SetSetBonus", player, "silva_summon", true);
@@ -108,25 +108,25 @@ Summons an Akato and Fox pet");
                 }
             }
 
-            if (SoulConfig.Instance.GetValue("Fungal Clump Minion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.FungalMinion))
             {
                 calamity.GetItem("TheAmalgam").UpdateAccessory(player, hideVisual);
             }
 
-            if (SoulConfig.Instance.GetValue("Godly Soul Artifact"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.GodlySoulArtifact))
             {
                 calamity.GetItem("GodlySoulArtifact").UpdateAccessory(player, hideVisual);
             }
 
-            if (SoulConfig.Instance.GetValue("Yharim's Gift"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.YharimGift))
             {
                 calamity.GetItem("YharimsGift").UpdateAccessory(player, hideVisual);
             }
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.SilvaEnchant = true;
-            fargoPlayer.AddPet("Akato Pet", hideVisual, calamity.BuffType("AkatoYharonBuff"), calamity.ProjectileType("Akato"));
-            fargoPlayer.AddPet("Fox Pet", hideVisual, calamity.BuffType("Fox"), calamity.ProjectileType("Fox"));
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.AkatoPet, hideVisual, calamity.BuffType("AkatoYharonBuff"), calamity.ProjectileType("Akato"));
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.FoxPet, hideVisual, calamity.BuffType("Fox"), calamity.ProjectileType("Fox"));
         }
 
         public override void AddRecipes()

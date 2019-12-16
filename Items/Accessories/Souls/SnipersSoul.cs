@@ -74,12 +74,12 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             player.rangedDamage += .3f;
             player.rangedCrit += 15;
 
-            if (SoulConfig.Instance.GetValue("Sniper Scope"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SniperScope))
             {
                 player.scope = true;
             }
 
-            if (Fargowiltas.Instance.CalamityLoaded && SoulConfig.Instance.GetValue("Elemental Quiver")) Calamity(player);
+            if (Fargowiltas.Instance.CalamityLoaded && SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ElementalQuiver)) Calamity(player);
         }
 
         private void Calamity(Player player)

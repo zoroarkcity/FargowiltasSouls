@@ -24,7 +24,7 @@ Shows the location of enemies, traps, and treasures
 Auto paint and actuator effect 
 Provides light and allows gravity control
 Grants the ability to enable Builder Mode:
-Anything that creates a tile will not be consumed 
+Anything that creates a tile will not be consumed and can be used much faster
 No enemies can spawn
 Effect can be disabled in Soul Toggles menu
 Effects of the Cell Phone and Royal Gel
@@ -121,7 +121,7 @@ Summons a pet Magic Lantern");
             player.npcTypeNoAggro[336] = true;
             player.npcTypeNoAggro[537] = true;
 
-            if (SoulConfig.Instance.GetValue("Builder Mode"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BuilderMode))
                 modPlayer.BuilderMode = true;
 
             //cell phone
@@ -141,8 +141,8 @@ Summons a pet Magic Lantern");
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
 
             //pets
-            modPlayer.AddPet("Inspiring Lantern Pet", hideVisual, thorium.BuffType("SupportLanternBuff"), thorium.ProjectileType("SupportLantern"));
-            modPlayer.AddPet("Lock Box Pet", hideVisual, thorium.BuffType("LockBoxBuff"), thorium.ProjectileType("LockBoxPet"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.LanternPet, hideVisual, thorium.BuffType("SupportLanternBuff"), thorium.ProjectileType("SupportLantern"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.BoxPet, hideVisual, thorium.BuffType("LockBoxBuff"), thorium.ProjectileType("LockBoxPet"));
         }
 
         public override void AddRecipes()

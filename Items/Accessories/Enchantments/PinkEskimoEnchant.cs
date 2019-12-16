@@ -66,6 +66,7 @@ if(modPlayer.EskimoEnchant && tile.type == IceRodBlock)
             recipe.AddIngredient(ItemID.AtlanticCod);
             recipe.AddIngredient(ItemID.MarshmallowonaStick);
             
+            //grinch pet? or steal pets from frost??!
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

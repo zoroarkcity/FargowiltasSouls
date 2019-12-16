@@ -56,7 +56,7 @@ Summons a Levi pet");
             {
                 if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
                 {
-                    tooltipLine.overrideColor = new Color?(new Color(255, 0, 255));
+                    tooltipLine.overrideColor = new Color(173, 52, 70);
                 }
             }
         }
@@ -69,7 +69,7 @@ Summons a Levi pet");
             //set bonus
             calamity.Call("SetSetBonus", player, "demonshade", true);
 
-            if (SoulConfig.Instance.GetValue("Red Devil Minion"))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.RedDevilMinion))
             {
                 modPlayer.redDevil = true;
                 if (player.whoAmI == Main.myPlayer)
@@ -87,7 +87,7 @@ Summons a Levi pet");
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.DemonShadeEnchant = true;
-            fargoPlayer.AddPet("Levi Pet", hideVisual, calamity.BuffType("Levi"), calamity.ProjectileType("Levi"));
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.LeviPet, hideVisual, calamity.BuffType("Levi"), calamity.ProjectileType("Levi"));
         }
 
         public override void AddRecipes()
