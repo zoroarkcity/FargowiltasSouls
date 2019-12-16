@@ -11672,22 +11672,6 @@ namespace FargowiltasSouls.NPCs
                 damage += 5;
             }
 
-            if (modPlayer.RedEnchant && !modPlayer.TerrariaSoul)
-            {
-                switch (npc.life / npc.lifeMax * 100)
-                {
-                    case 50:
-                        damage *= 1.1;
-                        break;
-                    case 25:
-                        damage *= 1.4;
-                        break;
-                    case 10:
-                        damage *= 2;
-                        break;
-                }
-            }
-
             if (modPlayer.KnightEnchant && Villain && !npc.boss)
             {
                 damage *= 1.5;

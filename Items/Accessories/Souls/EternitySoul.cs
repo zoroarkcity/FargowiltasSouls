@@ -727,12 +727,12 @@ Additionally grants:");
                 player.AddBuff(thorium.BuffType("LichActive"), 60, true);
             }
             //crystal scorpion
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.CrystalScorpion))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.CrystalScorpion))
             {
                 thoriumPlayer.crystalScorpion = true;
             }
             //yumas pendant
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.YumasPendant))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.YumasPendant))
             {
                 thoriumPlayer.yuma = true;
             }
@@ -769,7 +769,7 @@ Additionally grants:");
             //medical bag
             thoriumPlayer.medicalAcc = true;
             //head mirror arrow 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.HeadMirror))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.HeadMirror))
             {
                 float num = 0f;
                 int num2 = player.whoAmI;
@@ -835,7 +835,7 @@ Additionally grants:");
             magmaPlayer.magmaLine = true;
             //SUPERSONIC
             //air walkers
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.AirWalkers))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.AirWalkers))
             {
                 if (player.controlDown)
                 {
@@ -895,8 +895,8 @@ Additionally grants:");
             }
             //WORLD SHAPER
             //pets
-            modPlayer.AddPet(SoulConfig.Instance.LanternPet, hideVisual, thorium.BuffType("SupportLanternBuff"), thorium.ProjectileType("SupportLantern"));
-            modPlayer.AddPet(SoulConfig.Instance.BoxPet, hideVisual, thorium.BuffType("LockBoxBuff"), thorium.ProjectileType("LockBoxPet"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.LanternPet, hideVisual, thorium.BuffType("SupportLanternBuff"), thorium.ProjectileType("SupportLantern"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.BoxPet, hideVisual, thorium.BuffType("LockBoxBuff"), thorium.ProjectileType("LockBoxPet"));
 
             //THORIUM SOUL
             mod.GetItem("ThoriumSoul").UpdateAccessory(player, hideVisual);
@@ -913,7 +913,7 @@ Additionally grants:");
             player.meleeSpeed -= .15f;
             player.meleeCrit -= 5;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ElementalQuiver))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ElementalQuiver))
             {
                 //range
                 modPlayer.eQuiver = true;

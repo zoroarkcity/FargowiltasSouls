@@ -65,7 +65,7 @@ Effects of The Community");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.XerocEffects))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.XerocEffects))
             {
                 calamity.Call("SetSetBonus", player, "xeroc", true);
             }

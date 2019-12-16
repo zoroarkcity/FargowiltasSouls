@@ -190,7 +190,7 @@ namespace FargowiltasSouls.Items
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.IllumiteMissile))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.IllumiteMissile))
             {
                 //illumite effect
                 if (modPlayer.IllumiteEnchant)
@@ -208,7 +208,7 @@ namespace FargowiltasSouls.Items
             }
 
             //plague flask
-            if (modPlayer.PlagueAcc && SoulConfig.Instance.GetValue(SoulConfig.Instance.PlagueFlask))
+            if (modPlayer.PlagueAcc && SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.PlagueFlask))
             {
                 if (item.damage >= 1 && Main.rand.Next(5) == 0)
                 {
@@ -226,7 +226,7 @@ namespace FargowiltasSouls.Items
             }
             
             //folv effect
-            if (modPlayer.FolvEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.FolvBolts))
+            if (modPlayer.FolvEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.FolvBolts))
             {
                 thoriumPlayer.magicCast++;
                 if (thoriumPlayer.magicCast >= 7)
@@ -286,20 +286,20 @@ namespace FargowiltasSouls.Items
             {
                 switch(item.prefix)
                 {
-                    case PrefixID.Warding:  if (SoulConfig.Instance.Warding)  return false; break;
-                    case PrefixID.Violent:  if (SoulConfig.Instance.Violent)  return false; break;
-                    case PrefixID.Quick:    if (SoulConfig.Instance.Quick)    return false; break;
-                    case PrefixID.Lucky:    if (SoulConfig.Instance.Lucky)    return false; break;
-                    case PrefixID.Menacing: if (SoulConfig.Instance.Menacing) return false; break;
-                    case PrefixID.Legendary:if (SoulConfig.Instance.Legendary)return false; break;
-                    case PrefixID.Unreal:   if (SoulConfig.Instance.Unreal)   return false; break;
-                    case PrefixID.Mythical: if (SoulConfig.Instance.Mythical) return false; break;
-                    case PrefixID.Godly:    if (SoulConfig.Instance.Godly)    return false; break;
-                    case PrefixID.Demonic:  if (SoulConfig.Instance.Demonic)  return false; break;
-                    case PrefixID.Ruthless: if (SoulConfig.Instance.Ruthless) return false; break;
-                    case PrefixID.Light:    if (SoulConfig.Instance.Light)    return false; break;
-                    case PrefixID.Deadly:   if (SoulConfig.Instance.Deadly)   return false; break;
-                    case PrefixID.Rapid:    if (SoulConfig.Instance.Rapid)    return false; break;
+                    case PrefixID.Warding:  if (SoulConfig.Instance.walletToggles.Warding)  return false; break;
+                    case PrefixID.Violent:  if (SoulConfig.Instance.walletToggles.Violent)  return false; break;
+                    case PrefixID.Quick:    if (SoulConfig.Instance.walletToggles.Quick)    return false; break;
+                    case PrefixID.Lucky:    if (SoulConfig.Instance.walletToggles.Lucky)    return false; break;
+                    case PrefixID.Menacing: if (SoulConfig.Instance.walletToggles.Menacing) return false; break;
+                    case PrefixID.Legendary:if (SoulConfig.Instance.walletToggles.Legendary)return false; break;
+                    case PrefixID.Unreal:   if (SoulConfig.Instance.walletToggles.Unreal)   return false; break;
+                    case PrefixID.Mythical: if (SoulConfig.Instance.walletToggles.Mythical) return false; break;
+                    case PrefixID.Godly:    if (SoulConfig.Instance.walletToggles.Godly)    return false; break;
+                    case PrefixID.Demonic:  if (SoulConfig.Instance.walletToggles.Demonic)  return false; break;
+                    case PrefixID.Ruthless: if (SoulConfig.Instance.walletToggles.Ruthless) return false; break;
+                    case PrefixID.Light:    if (SoulConfig.Instance.walletToggles.Light)    return false; break;
+                    case PrefixID.Deadly:   if (SoulConfig.Instance.walletToggles.Deadly)   return false; break;
+                    case PrefixID.Rapid:    if (SoulConfig.Instance.walletToggles.Rapid)    return false; break;
                     default: break;
                 }
             }

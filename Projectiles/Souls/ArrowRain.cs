@@ -6,6 +6,8 @@ namespace FargowiltasSouls.Projectiles.Souls
 {
     public class ArrowRain : ModProjectile
     {
+        private bool launchArrow = true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Arrow Rain");
@@ -22,24 +24,36 @@ namespace FargowiltasSouls.Projectiles.Souls
 
         public override void AI()
         {
-            Vector2 position = new Vector2(projectile.Center.X + Main.rand.Next(-100, 100), projectile.Center.Y + Main.rand.Next(-50, 50));
-
-            float direction = projectile.ai[1];
-            Vector2 velocity;
-
-            if (direction == 1)
+            if (projectile.timeLeft > 120)
             {
-                velocity = new Vector2(Main.rand.NextFloat(0, 2), Main.rand.NextFloat(12, 15));
+                return;
+            }
+
+            if (launchArrow)
+            {
+                Vector2 position = new Vector2(projectile.Center.X + Main.rand.Next(-100, 100), projectile.Center.Y + Main.rand.Next(-50, 50));
+
+                float direction = projectile.ai[1];
+                Vector2 velocity;
+
+                if (direction == 1)
+                {
+                    velocity = new Vector2(Main.rand.NextFloat(0, 2), Main.rand.NextFloat(12, 15));
+                }
+                else
+                {
+                    velocity = new Vector2(Main.rand.NextFloat(-2, 0), Main.rand.NextFloat(12, 15));
+                }
+
+                int p = Projectile.NewProjectile(position, velocity, (int)projectile.ai[0], projectile.damage, 0, projectile.owner);
+                Main.projectile[p].noDropItem = true;
+
+                launchArrow = false;
             }
             else
             {
-                velocity = new Vector2(Main.rand.NextFloat(-2, 0), Main.rand.NextFloat(12, 15));
+                launchArrow = true;
             }
-
-             
-
-            int p = Projectile.NewProjectile(position, velocity, (int)projectile.ai[0], projectile.damage, 0, projectile.owner);
-            Main.projectile[p].noDropItem = true;
         }
     }
 }

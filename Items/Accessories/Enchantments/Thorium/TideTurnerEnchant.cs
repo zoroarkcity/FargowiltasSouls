@@ -69,7 +69,7 @@ Attacks have a 20% chance to unleash aquatic homing daggers all around you");
             //mini crits and daggers
             modPlayer.TideTurnerEnchant = true;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.TideGlobules))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.TideGlobules))
             {
                 //floating globs and defense
                 thoriumPlayer.tideHelmet = true;

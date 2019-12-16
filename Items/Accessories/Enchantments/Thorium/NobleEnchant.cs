@@ -49,7 +49,7 @@ Effects of Ring of Unity and Mix Tape");
             //ring of unity
             thorium.GetItem("RingofUnity").UpdateAccessory(player, hideVisual);
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MixTape))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.MixTape))
             {
                 //mix tape
                 modPlayer.MixTape = true;

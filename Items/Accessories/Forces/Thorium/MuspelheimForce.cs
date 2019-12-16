@@ -59,12 +59,12 @@ Effects of Night Shade Petal, Flawless Chrysalis, and Bee Booties");
             thoriumPlayer.livingWood = true;
             //free boi
             modPlayer.LivingWoodEnchant = true;
-            modPlayer.AddMinion(SoulConfig.Instance.SaplingMinion, thorium.ProjectileType("MinionSapling"), 25, 2f);
+            modPlayer.AddMinion(SoulConfig.Instance.thoriumToggles.SaplingMinion, thorium.ProjectileType("MinionSapling"), 25, 2f);
 
             //bulb set bonus
             modPlayer.BulbEnchant = true;
             //bee booties
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BeeBooties))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.BeeBooties))
             {
                 thorium.GetItem("BeeBoots").UpdateAccessory(player, hideVisual);
                 player.moveSpeed -= 0.15f;

@@ -57,7 +57,7 @@ Effects of Eye of the Beholder");
                 }
             }
             
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BeholderEye))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.BeholderEye))
             {
                 //eye of beholder
                 thorium.GetItem("EyeofBeholder").UpdateAccessory(player, hideVisual);

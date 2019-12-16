@@ -964,121 +964,121 @@ namespace FargowiltasSouls.Projectiles
 
                 #region thorium pets
                 case 1:
-                    KillPet(projectile, player, thorium.BuffType("Identified"), modPlayer.ConduitEnchant, SoulConfig.Instance.IFOPet);
+                    KillPet(projectile, player, thorium.BuffType("Identified"), modPlayer.ConduitEnchant, SoulConfig.Instance.thoriumToggles.IFOPet);
                     break;
 
                 case 2:
-                    KillPet(projectile, player, thorium.BuffType("BioFeederBuff"), modPlayer.MeteorEnchant, SoulConfig.Instance.BioFeederPet);
+                    KillPet(projectile, player, thorium.BuffType("BioFeederBuff"), modPlayer.MeteorEnchant, SoulConfig.Instance.thoriumToggles.BioFeederPet);
                     break;
 
                 case 3:
-                    KillPet(projectile, player, thorium.BuffType("BlisterBuff"), modPlayer.FleshEnchant, SoulConfig.Instance.BlisterPet);
+                    KillPet(projectile, player, thorium.BuffType("BlisterBuff"), modPlayer.FleshEnchant, SoulConfig.Instance.thoriumToggles.BlisterPet);
                     break;
 
                 case 4:
-                    KillPet(projectile, player, thorium.BuffType("WyvernPetBuff"), modPlayer.DragonEnchant, SoulConfig.Instance.WyvernPet);
+                    KillPet(projectile, player, thorium.BuffType("WyvernPetBuff"), modPlayer.DragonEnchant, SoulConfig.Instance.thoriumToggles.WyvernPet);
                     break;
 
                 case 5:
-                    KillPet(projectile, player, thorium.BuffType("SupportLanternBuff"), modPlayer.MinerEnchant, SoulConfig.Instance.LanternPet);
+                    KillPet(projectile, player, thorium.BuffType("SupportLanternBuff"), modPlayer.MinerEnchant, SoulConfig.Instance.thoriumToggles.LanternPet);
                     break;
 
                 case 6:
-                    KillPet(projectile, player, thorium.BuffType("LockBoxBuff"), modPlayer.MinerEnchant, SoulConfig.Instance.BoxPet);
+                    KillPet(projectile, player, thorium.BuffType("LockBoxBuff"), modPlayer.MinerEnchant, SoulConfig.Instance.thoriumToggles.BoxPet);
                     break;
 
                 case 7:
-                    KillPet(projectile, player, thorium.BuffType("DevilBuff"), modPlayer.WarlockEnchant, SoulConfig.Instance.DevilMinion, true);
+                    KillPet(projectile, player, thorium.BuffType("DevilBuff"), modPlayer.WarlockEnchant, SoulConfig.Instance.thoriumToggles.DevilMinion, true);
                     break;
 
                 case 8:
-                    KillPet(projectile, player, thorium.BuffType("AngelBuff"), modPlayer.SacredEnchant, SoulConfig.Instance.CherubMinion, true);
+                    KillPet(projectile, player, thorium.BuffType("AngelBuff"), modPlayer.SacredEnchant, SoulConfig.Instance.thoriumToggles.CherubMinion, true);
                     break;
 
                 case 9:
-                    KillPet(projectile, player, thorium.BuffType("LifeSpiritBuff"), modPlayer.SacredEnchant, SoulConfig.Instance.SpiritPet);
+                    KillPet(projectile, player, thorium.BuffType("LifeSpiritBuff"), modPlayer.SacredEnchant, SoulConfig.Instance.thoriumToggles.SpiritPet);
                     break;
 
                 case 10:
-                    KillPet(projectile, player, thorium.BuffType("HolyGostBuff"), modPlayer.BinderEnchant, SoulConfig.Instance.GoatPet);
+                    KillPet(projectile, player, thorium.BuffType("HolyGostBuff"), modPlayer.BinderEnchant, SoulConfig.Instance.thoriumToggles.GoatPet);
                     break;
 
                 case 11:
-                    KillPet(projectile, player, thorium.BuffType("SaplingBuff"), modPlayer.LivingWoodEnchant, SoulConfig.Instance.SaplingMinion, true);
+                    KillPet(projectile, player, thorium.BuffType("SaplingBuff"), modPlayer.LivingWoodEnchant, SoulConfig.Instance.thoriumToggles.SaplingMinion, true);
                     break;
 
                 case 12:
-                    KillPet(projectile, player, thorium.BuffType("SnowyOwlBuff"), modPlayer.CryoEnchant, SoulConfig.Instance.OwlPet);
+                    KillPet(projectile, player, thorium.BuffType("SnowyOwlBuff"), modPlayer.CryoEnchant, SoulConfig.Instance.thoriumToggles.OwlPet);
                     break;
 
                 case 13:
-                    KillPet(projectile, player, thorium.BuffType("JellyPet"), modPlayer.DepthEnchant, SoulConfig.Instance.JellyfishPet);
+                    KillPet(projectile, player, thorium.BuffType("JellyPet"), modPlayer.DepthEnchant, SoulConfig.Instance.thoriumToggles.JellyfishPet);
                     break;
 
                 case 14:
-                    KillPet(projectile, player, thorium.BuffType("LilMogBuff"), modPlayer.KnightEnchant, SoulConfig.Instance.MooglePet);
+                    KillPet(projectile, player, thorium.BuffType("LilMogBuff"), modPlayer.KnightEnchant, SoulConfig.Instance.thoriumToggles.MooglePet);
                     break;
 
                 case 15:
-                    KillPet(projectile, player, thorium.BuffType("MaidBuff"), modPlayer.DreamEnchant, SoulConfig.Instance.MaidPet);
+                    KillPet(projectile, player, thorium.BuffType("MaidBuff"), modPlayer.DreamEnchant, SoulConfig.Instance.thoriumToggles.MaidPet);
                     break;
 
                 case 16:
-                    KillPet(projectile, player, thorium.BuffType("PinkSlimeBuff"), modPlayer.IllumiteEnchant, SoulConfig.Instance.SlimePet);
+                    KillPet(projectile, player, thorium.BuffType("PinkSlimeBuff"), modPlayer.IllumiteEnchant, SoulConfig.Instance.thoriumToggles.SlimePet);
                     break;
 
                 case 17:
-                    KillPet(projectile, player, thorium.BuffType("ShineDust"), modPlayer.PlatinumEnchant, SoulConfig.Instance.GlitterPet);
+                    KillPet(projectile, player, thorium.BuffType("ShineDust"), modPlayer.PlatinumEnchant, SoulConfig.Instance.thoriumToggles.GlitterPet);
                     break;
 
                 case 18:
-                    KillPet(projectile, player, thorium.BuffType("DrachmaBuff"), modPlayer.GoldEnchant, SoulConfig.Instance.CoinPet);
+                    KillPet(projectile, player, thorium.BuffType("DrachmaBuff"), modPlayer.GoldEnchant, SoulConfig.Instance.thoriumToggles.CoinPet);
                     break;
 
                     //calamity
                 case 101:
-                    KillPet(projectile, player, calamity.BuffType("Kendra"), modPlayer.AerospecEnchant, SoulConfig.Instance.KendraPet);
+                    KillPet(projectile, player, calamity.BuffType("Kendra"), modPlayer.AerospecEnchant, SoulConfig.Instance.calamityToggles.KendraPet);
                     break;
 
                 case 102:
-                    KillPet(projectile, player, calamity.BuffType("BloodBound"), modPlayer.StatigelEnchant, SoulConfig.Instance.PerforatorPet);
+                    KillPet(projectile, player, calamity.BuffType("BloodBound"), modPlayer.StatigelEnchant, SoulConfig.Instance.calamityToggles.PerforatorPet);
                     break;
 
                 case 103:
-                    KillPet(projectile, player, calamity.BuffType("ThirdSageBuff"), modPlayer.DaedalusEnchant, SoulConfig.Instance.ThirdSagePet);
+                    KillPet(projectile, player, calamity.BuffType("ThirdSageBuff"), modPlayer.DaedalusEnchant, SoulConfig.Instance.calamityToggles.ThirdSagePet);
                     break;
 
                 case 104:
-                    KillPet(projectile, player, calamity.BuffType("BearBuff"), modPlayer.DaedalusEnchant, SoulConfig.Instance.BearPet);
+                    KillPet(projectile, player, calamity.BuffType("BearBuff"), modPlayer.DaedalusEnchant, SoulConfig.Instance.calamityToggles.BearPet);
                     break;
 
                 case 105:
-                    KillPet(projectile, player, calamity.BuffType("BrimlingBuff"), modPlayer.AtaxiaEnchant, SoulConfig.Instance.BrimlingPet);
+                    KillPet(projectile, player, calamity.BuffType("BrimlingBuff"), modPlayer.AtaxiaEnchant, SoulConfig.Instance.calamityToggles.BrimlingPet);
                     break;
 
                 case 106:
-                    KillPet(projectile, player, calamity.BuffType("DannyDevito"), modPlayer.MolluskEnchant, SoulConfig.Instance.DannyPet);
+                    KillPet(projectile, player, calamity.BuffType("DannyDevito"), modPlayer.MolluskEnchant, SoulConfig.Instance.calamityToggles.DannyPet);
                     break;
 
                 case 107:
-                    KillPet(projectile, player, calamity.BuffType("StrangeOrb"), modPlayer.OmegaBlueEnchant, SoulConfig.Instance.SirenPet);
+                    KillPet(projectile, player, calamity.BuffType("StrangeOrb"), modPlayer.OmegaBlueEnchant, SoulConfig.Instance.calamityToggles.SirenPet);
                     break;
 
                 case 108:
                 case 109:
-                    KillPet(projectile, player, calamity.BuffType("ChibiiBuff"), modPlayer.GodSlayerEnchant, SoulConfig.Instance.ChibiiPet);
+                    KillPet(projectile, player, calamity.BuffType("ChibiiBuff"), modPlayer.GodSlayerEnchant, SoulConfig.Instance.calamityToggles.ChibiiPet);
                     break;
 
                 case 110:
-                    KillPet(projectile, player, calamity.BuffType("AkatoYharonBuff"), modPlayer.SilvaEnchant, SoulConfig.Instance.AkatoPet);
+                    KillPet(projectile, player, calamity.BuffType("AkatoYharonBuff"), modPlayer.SilvaEnchant, SoulConfig.Instance.calamityToggles.AkatoPet);
                     break;
 
                 case 111:
-                    KillPet(projectile, player, calamity.BuffType("Fox"), modPlayer.SilvaEnchant, SoulConfig.Instance.FoxPet);
+                    KillPet(projectile, player, calamity.BuffType("Fox"), modPlayer.SilvaEnchant, SoulConfig.Instance.calamityToggles.FoxPet);
                     break;
 
                 case 112:
-                    KillPet(projectile, player, calamity.BuffType("Levi"), modPlayer.DemonShadeEnchant, SoulConfig.Instance.LeviPet);
+                    KillPet(projectile, player, calamity.BuffType("Levi"), modPlayer.DemonShadeEnchant, SoulConfig.Instance.calamityToggles.LeviPet);
                     break;
 
                     #endregion
@@ -1150,7 +1150,7 @@ namespace FargowiltasSouls.Projectiles
             Player player = Main.player[Main.myPlayer];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.JesterBell))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.JesterBell))
             {
                 //jester effect
                 if (modPlayer.JesterEnchant && crit)

@@ -80,7 +80,7 @@ Effects of the Core of the Blood God and Affliction");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BloodflareEffects))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.BloodflareEffects))
             {
                 calamity.Call("SetSetBonus", player, "bloodflare", true);
                 calamity.Call("SetSetBonus", player, "bloodflare_melee", true);
@@ -89,7 +89,7 @@ Effects of the Core of the Blood God and Affliction");
                 calamity.Call("SetSetBonus", player, "bloodflare_rogue", true);
             }
            
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.PolterMines))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.PolterMines))
             {
                 calamity.Call("SetSetBonus", player, "bloodflare_summon", true);
             }

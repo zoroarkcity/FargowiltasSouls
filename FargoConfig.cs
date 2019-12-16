@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Terraria;
+using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
 namespace FargowiltasSouls
@@ -242,10 +243,14 @@ namespace FargowiltasSouls
 
         #region maso accessories
 
-
+        [Header("$Mods.FargowiltasSouls.MasoHeader")]
         [Label("$Mods.FargowiltasSouls.MasoBossRecolors")]
         [DefaultValue(true)]
         public bool BossRecolors;
+
+        [Label("$Mods.FargowiltasSouls.MasoIconConfig")]
+        [DefaultValue(true)]
+        public bool SinisterIcon;
 
         [Header("$Mods.FargowiltasSouls.SupremeFairyHeader")]
         [Label("$Mods.FargowiltasSouls.MasoSlimeConfig")]
@@ -288,6 +293,9 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.MasoClippedConfig")]
         [DefaultValue(true)]
         public bool DragonFang;
+
+        [Label("$Mods.FargowiltasSouls.WalletHeader")]
+        public WalletToggles walletToggles = new WalletToggles();
 
         [Header("$Mods.FargowiltasSouls.DubiousHeader")]
         [Label("$Mods.FargowiltasSouls.MasoLightningConfig")]
@@ -337,9 +345,6 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool AncientVisions;
 
-
-
-
         [Header("$Mods.FargowiltasSouls.HeartHeader")]
         [Label("$Mods.FargowiltasSouls.MasoPump")]
         [DefaultValue(true)]
@@ -379,76 +384,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool RingMinion;
 
-
-
-
-        //other
-        
-        [Label("$Mods.FargowiltasSouls.MasoIconConfig")]
-        [DefaultValue(true)]
-        public bool SinisterIcon;
-
-
-        [Header("$Mods.FargowiltasSouls.WalletHeader")]
-        [Label("Warding")]
-        [DefaultValue(true)]
-        public bool Warding;
-
-        [Label("Violent")]
-        [DefaultValue(true)]
-        public bool Violent;
-
-        [Label("Quick")]
-        [DefaultValue(true)]
-        public bool Quick;
-
-        [Label("Lucky")]
-        [DefaultValue(true)]
-        public bool Lucky;
-
-        [Label("Menacing")]
-        [DefaultValue(true)]
-        public bool Menacing;
-
-        [Label("Legendary")]
-        [DefaultValue(true)]
-        public bool Legendary;
-
-        [Label("Unreal")]
-        [DefaultValue(true)]
-        public bool Unreal;
-
-        [Label("Mythical")]
-        [DefaultValue(true)]
-        public bool Mythical;
-
-        [Label("Godly")]
-        [DefaultValue(true)]
-        public bool Godly;
-
-        [Label("Demonic")]
-        [DefaultValue(true)]
-        public bool Demonic;
-
-        [Label("Ruthless")]
-        [DefaultValue(true)]
-        public bool Ruthless;
-
-        [Label("Light")]
-        [DefaultValue(true)]
-        public bool Light;
-
-        [Label("Deadly")]
-        [DefaultValue(true)]
-        public bool Deadly;
-
-        [Label("Rapid")]
-        [DefaultValue(true)]
-        public bool Rapid;
-
         #endregion
 
         #region souls
+        [Header("$Mods.FargowiltasSouls.SoulHeader")]
         [Label("$Mods.FargowiltasSouls.MeleeConfig")]
         [DefaultValue(true)]
         public bool BerserkerAttackSpeed;
@@ -504,6 +443,7 @@ namespace FargowiltasSouls
         #endregion
 
         #region pets
+        [Header("$Mods.FargowiltasSouls.PetHeader")]
         [Label("$Mods.FargowiltasSouls.PetCatConfig")]
         [DefaultValue(true)]
         public bool BlackCatPet;
@@ -631,8 +571,102 @@ namespace FargowiltasSouls
 
         #endregion
 
-        #region thorium
+        [Label("$Mods.FargowiltasSouls.ThoriumHeader")]
+        public ThoriumToggles thoriumToggles = new ThoriumToggles();
 
+        [Label("$Mods.FargowiltasSouls.CalamityHeader")]
+        public CalamityToggles calamityToggles = new CalamityToggles();
+
+
+        //soa soon tm
+       
+        public override void OnLoaded()
+        {
+            Instance = this;
+        }
+
+        // Proper cloning of reference types is required because behind the scenes many instances of ModConfig classes co-exist.
+        /*public override ModConfig Clone()
+        {
+            var clone = (SoulConfig)base.Clone();
+
+            clone.walletToggles = walletToggles == null ? null : new WalletToggles();
+            clone.thoriumToggles = thoriumToggles == null ? null : new ThoriumToggles();
+            clone.calamityToggles = calamityToggles == null ? null : new CalamityToggles();
+
+            return clone;
+        }*/
+
+        public bool GetValue(bool toggle, bool checkForMutantPresence = true)
+        {
+            if (checkForMutantPresence && Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantPresence)
+                return false;
+
+            return toggle;
+        }
+    }
+
+    public class WalletToggles
+    {
+        [Label("Warding")]
+        [DefaultValue(true)]
+        public bool Warding;
+
+        [Label("Violent")]
+        [DefaultValue(true)]
+        public bool Violent;
+
+        [Label("Quick")]
+        [DefaultValue(true)]
+        public bool Quick;
+
+        [Label("Lucky")]
+        [DefaultValue(true)]
+        public bool Lucky;
+
+        [Label("Menacing")]
+        [DefaultValue(true)]
+        public bool Menacing;
+
+        [Label("Legendary")]
+        [DefaultValue(true)]
+        public bool Legendary;
+
+        [Label("Unreal")]
+        [DefaultValue(true)]
+        public bool Unreal;
+
+        [Label("Mythical")]
+        [DefaultValue(true)]
+        public bool Mythical;
+
+        [Label("Godly")]
+        [DefaultValue(true)]
+        public bool Godly;
+
+        [Label("Demonic")]
+        [DefaultValue(true)]
+        public bool Demonic;
+
+        [Label("Ruthless")]
+        [DefaultValue(true)]
+        public bool Ruthless;
+
+        [Label("Light")]
+        [DefaultValue(true)]
+        public bool Light;
+
+        [Label("Deadly")]
+        [DefaultValue(true)]
+        public bool Deadly;
+
+        [Label("Rapid")]
+        [DefaultValue(true)]
+        public bool Rapid;
+    }
+
+    public class ThoriumToggles
+    {
         [Label("$Mods.FargowiltasSouls.ThoriumCrystalScorpionConfig")]
         [DefaultValue(true)]
         public bool CrystalScorpion;
@@ -669,7 +703,7 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool BoxPet;
 
-        //header muspelheim
+        [Header("$Mods.FargowiltasSouls.MuspelheimForce")]
         [Label("$Mods.FargowiltasSouls.ThoriumBeeBootiesConfig")]
         [DefaultValue(true)]
         public bool BeeBooties;
@@ -678,7 +712,7 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool SaplingMinion;
 
-        //header jotunheim
+        [Header("$Mods.FargowiltasSouls.JotunheimForce")]
         [Label("$Mods.FargowiltasSouls.ThoriumJellyfishPetConfig")]
         [DefaultValue(true)]
         public bool JellyfishPet;
@@ -707,7 +741,7 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool WhisperingTentacles;
 
-        //header alfheim
+        [Header("$Mods.FargowiltasSouls.AlfheimForce")]
         [Label("$Mods.FargowiltasSouls.ThoriumCherubMinionConfig")]
         [DefaultValue(true)]
         public bool CherubMinion;
@@ -732,7 +766,7 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool GoatPet;
 
-        //header niflheim
+        [Header("$Mods.FargowiltasSouls.NiflheimForce")]
         [Label("$Mods.FargowiltasSouls.ThoriumMixTapeConfig")]
         [DefaultValue(true)]
         public bool MixTape;
@@ -745,7 +779,7 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool Metronome;
 
-        //header svartl
+        [Header("$Mods.FargowiltasSouls.SvartalfheimForce")]
         [Label("$Mods.FargowiltasSouls.ThoriumEyeoftheStormConfig")]
         [DefaultValue(true)]
         public bool EyeoftheStorm;
@@ -774,7 +808,7 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool IFOPet;
 
-        //header midgard
+        [Header("$Mods.FargowiltasSouls.MidgardForce")]
         [Label("$Mods.FargowiltasSouls.ThoriumLodestoneConfig")]
         [DefaultValue(true)]
         public bool LodestoneResist;
@@ -807,7 +841,7 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool JesterBell;
 
-        //header vanaheim
+        [Header("$Mods.FargowiltasSouls.VanaheimForce")]
         [Label("$Mods.FargowiltasSouls.ThoriumFolvAuraConfig")]
         [DefaultValue(true)]
         public bool FolvAura;
@@ -832,7 +866,7 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool AscensionStatue;
 
-        //header helheim
+        [Header("$Mods.FargowiltasSouls.HelheimForce")]
         [Label("$Mods.FargowiltasSouls.ThoriumSpiritWispsConfig")]
         [DefaultValue(true)]
         public bool SpiritTrapperWisps;
@@ -889,7 +923,7 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool PlagueFlask;
 
-        //header asgard
+        [Header("$Mods.FargowiltasSouls.AsgardForce")]
         [Label("$Mods.FargowiltasSouls.ThoriumTideGlobulesConfig")]
         [DefaultValue(true)]
         public bool TideGlobules;
@@ -910,27 +944,15 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.ThoriumMaidPetConfig")]
         [DefaultValue(true)]
         public bool MaidPet;
+    }
 
-
-
-
-
-
-
-
-        [Label("$Mods.FargowiltasSouls.ThoriumGhastlyCarapaceConfig")]
-        [DefaultValue(true)]
-        public bool GhastlyCarapace;
-
-        #endregion
-
-        #region calamity
-
+    public class CalamityToggles
+    {
         [Label("$Mods.FargowiltasSouls.CalamityElementalQuiverConfig")]
         [DefaultValue(true)]
         public bool ElementalQuiver;
 
-        //header apocalypse
+        [Header("$Mods.FargowiltasSouls.ApocalypseForce")]
         [Label("$Mods.FargowiltasSouls.CalamityValkyrieMinionConfig")]
         [DefaultValue(true)]
         public bool ValkyrieMinion;
@@ -987,7 +1009,7 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool PolterMines;
 
-        //header desolation
+        [Header("$Mods.FargowiltasSouls.DesolationForce")]
         [Label("$Mods.FargowiltasSouls.CalamityUrchinConfig")]
         [DefaultValue(true)]
         public bool UrchinMinion;
@@ -1068,7 +1090,7 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool WaifuMinions;
 
-        //header devastation
+        [Header("$Mods.FargowiltasSouls.DevastationForce")]
         [Label("$Mods.FargowiltasSouls.CalamityShellfishMinionConfig")]
         [DefaultValue(true)]
         public bool ShellfishMinion;
@@ -1132,28 +1154,5 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.CalamityLeviConfig")]
         [DefaultValue(true)]
         public bool LeviPet;
-
-        #endregion
-
-        #region Soa
-
-        #endregion
-
-
-
-
-        public override void OnLoaded()
-        {
-            Instance = this;
-        }
-
-
-        public bool GetValue(bool toggle, bool checkForMutantPresence = true)
-        {
-            if (checkForMutantPresence && Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantPresence)
-                return false;
-
-            return toggle;
-        }
     }
 }

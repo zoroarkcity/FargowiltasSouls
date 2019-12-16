@@ -51,7 +51,7 @@ Effects of Bee Booties and Petal Shield");
             thorium.GetItem("PetalShield").UpdateAccessory(player, hideVisual);
             player.statDefense -= 2;
             //bee booties
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BeeBooties))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.BeeBooties))
             {
                 thorium.GetItem("BeeBoots").UpdateAccessory(player, hideVisual);
                 player.moveSpeed -= 0.15f;

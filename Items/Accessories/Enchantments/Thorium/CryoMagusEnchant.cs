@@ -54,7 +54,7 @@ Summons a pet Owl");
             //strider hide
             thoriumPlayer.frostBonusDamage = true;
             //pets
-            modPlayer.AddPet(SoulConfig.Instance.OwlPet, hideVisual, thorium.BuffType("SnowyOwlBuff"), thorium.ProjectileType("SnowyOwlPet"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.OwlPet, hideVisual, thorium.BuffType("SnowyOwlBuff"), thorium.ProjectileType("SnowyOwlPet"));
             //icy set bonus
             thoriumPlayer.icySet = true;
             if (player.ownedProjectileCounts[thorium.ProjectileType("IcyAura")] < 1)
