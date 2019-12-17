@@ -17,16 +17,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             Tooltip.SetDefault(
 @"'Big Bad Red Riding Hood'
 Double tap down to create a localized rain of arrows at the cursor's position for a few seconds
-The arrows that rain down are based on the arrows in the player's inventory
-This has a cooldown of ech seconds
+The arrow type and damage is based on your first ammo slot
+This has a cooldown of 15 seconds
 Greatly enhances Explosive Traps effectiveness
 Effects of Celestial Shell
-Summons a pet Puppy
-
-
-
-During a Full Moon, attacks may cause enemies to Super Bleed - meme
-Your attacks deal increasing damage to low HP enemies - meme");
+Summons a pet Puppy");
             DisplayName.AddTranslation(GameCulture.Chinese, "红色游侠魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'大坏红帽'
@@ -60,17 +55,9 @@ Your attacks deal increasing damage to low HP enemies - meme");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            //celestial shell
-            player.accMerman = true;
-            player.wolfAcc = true;
-
-            if (hideVisual)
-            {
-                player.hideMerman = true;
-                player.hideWolf = true;
-            }
-
-            player.GetModPlayer<FargoPlayer>().RedRidingEffect(hideVisual);
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            modPlayer.RedRidingEffect(hideVisual);
+            modPlayer.HuntressEffect();
         }
 
         public override void AddRecipes()
@@ -79,19 +66,19 @@ Your attacks deal increasing damage to low HP enemies - meme");
             recipe.AddIngredient(ItemID.HuntressAltHead);
             recipe.AddIngredient(ItemID.HuntressAltShirt);
             recipe.AddIngredient(ItemID.HuntressAltPants);
-            //huntress enchant
+            recipe.AddIngredient(null, "HuntressEnchant");
             recipe.AddIngredient(ItemID.CelestialShell);
 
             if(Fargowiltas.Instance.ThoriumLoaded)
             {
                 recipe.AddIngredient(thorium.ItemType("BloodyHighClaws"));
                 recipe.AddIngredient(thorium.ItemType("LadyLight"));
-                //aerial bane
+                recipe.AddIngredient(ItemID.DD2BetsyBow);
                 recipe.AddIngredient(ItemID.DD2ExplosiveTrapT3Popper);
             }
             else
             {
-                //aerial bane
+                recipe.AddIngredient(ItemID.DD2BetsyBow);
             }
             
             recipe.AddIngredient(ItemID.DogWhistle);

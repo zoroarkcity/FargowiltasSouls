@@ -63,20 +63,20 @@ Summons a pet Pink Slime");
             //lodestone
             mod.GetItem("LodestoneEnchant").UpdateAccessory(player, hideVisual);
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BeholderEye))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.BeholderEye))
             {
                 //eye of beholder
                 thorium.GetItem("EyeofBeholder").UpdateAccessory(player, hideVisual);
             }
 
             //illumite
-            modPlayer.AddPet(SoulConfig.Instance.SlimePet, hideVisual, thorium.BuffType("PinkSlimeBuff"), thorium.ProjectileType("PinkSlime"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.SlimePet, hideVisual, thorium.BuffType("PinkSlimeBuff"), thorium.ProjectileType("PinkSlime"));
             modPlayer.IllumiteEnchant = true;
 
             //shade
             thoriumPlayer.shadeSet = true;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.TerrariumSpirits))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.TerrariumSpirits))
             {
                 //terrarium set bonus
                 timer++;
@@ -96,7 +96,7 @@ Summons a pet Pink Slime");
             modPlayer.ThoriumEnchant = true;
             //jester
             modPlayer.JesterEnchant = true;
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Crietz))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.Crietz))
             {
                 //crietz
                 thoriumPlayer.crietzAcc = true;

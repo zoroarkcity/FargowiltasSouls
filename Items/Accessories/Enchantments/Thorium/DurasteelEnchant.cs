@@ -52,12 +52,12 @@ Effects of the Incandescent Spark, Spiked Bracers, and Greedy Magnet");
                 player.endurance += .5f;
             }
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.IncandescentSpark))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.IncandescentSpark))
             {
                 thorium.GetItem("IncandescentSpark").UpdateAccessory(player, hideVisual);
             }
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.GreedyMagnet))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.GreedyMagnet))
             {
                 thorium.GetItem("GreedyMagnet").HoldItem(player);
             }

@@ -48,7 +48,7 @@ Summons a living wood sapling and its attacks will home in on enemies");
             thoriumPlayer.livingWood = true;
             //free boi
             modPlayer.LivingWoodEnchant = true;
-            modPlayer.AddMinion(SoulConfig.Instance.SaplingMinion, thorium.ProjectileType("MinionSapling"), 10, 2f);
+            modPlayer.AddMinion(SoulConfig.Instance.thoriumToggles.SaplingMinion, thorium.ProjectileType("MinionSapling"), 10, 2f);
         }
 
         public override void AddRecipes()

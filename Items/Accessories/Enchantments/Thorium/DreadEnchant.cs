@@ -53,7 +53,7 @@ Summons a pet Wyvern");
 
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DreadSpeed))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.DreadSpeed))
             {
                 //dread set bonus
                 player.moveSpeed += 0.8f;
@@ -87,7 +87,7 @@ Summons a pet Wyvern");
             //dragon tooth necklace
             player.armorPenetration += 15;
             //wyvern pet
-            modPlayer.AddPet(SoulConfig.Instance.WyvernPet, hideVisual, thorium.BuffType("WyvernPetBuff"), thorium.ProjectileType("WyvernPet"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.WyvernPet, hideVisual, thorium.BuffType("WyvernPetBuff"), thorium.ProjectileType("WyvernPet"));
             modPlayer.DragonEnchant = true;
         }
 

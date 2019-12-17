@@ -64,7 +64,7 @@ Summons a Moogle pet");
             //shade band
             thoriumPlayer.shadeBand = true;
             //pet
-            modPlayer.AddPet(SoulConfig.Instance.MooglePet, hideVisual, thorium.BuffType("LilMogBuff"), thorium.ProjectileType("LilMog"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.MooglePet, hideVisual, thorium.BuffType("LilMogBuff"), thorium.ProjectileType("LilMog"));
             //villain damage 
             modPlayer.KnightEnchant = true;
         }

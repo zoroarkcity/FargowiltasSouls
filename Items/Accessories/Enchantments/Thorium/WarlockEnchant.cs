@@ -54,7 +54,7 @@ Summons a Li'l Devil to attack enemies");
             thoriumPlayer.warlockSet = true;
             modPlayer.WarlockEnchant = true;
             //lil devil
-            modPlayer.AddMinion(SoulConfig.Instance.DevilMinion, thorium.ProjectileType("Devil"), 20, 2f);
+            modPlayer.AddMinion(SoulConfig.Instance.thoriumToggles.DevilMinion, thorium.ProjectileType("Devil"), 20, 2f);
 
             if (modPlayer.ThoriumSoul) return;
 

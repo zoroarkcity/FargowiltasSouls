@@ -64,6 +64,11 @@ Thorium
 -Added it to Force of Midgard
 -Removed Ninja Enchant from Shade Master
 -Added Corrodling Staff to Shade Master
+-Removed Ghastly Carapace from Spectre
+-Added Bubble Gun
+
+
+
 
 
 
@@ -80,10 +85,20 @@ Thorium
 -Changed Jungle Enchant to activate on jump, lowered spore duration and damage
 -Ocean Enchantment, added Ocean Polearm, removed Breathing Reed
 
--Updated Config, no more sub menus, adding new ones much easier, more efficent tm
+-Updated Config, no more sub menus, adding new ones much easier, more efficent tm, more headers everywhere, organized
 
 
--remove stuff from spectre boi
+
+
+
+
+
+
+
+
+
+
+-checkout mimic and queen bee money?
 
 
 -See the full changelog on the wiki

@@ -63,7 +63,7 @@ Summons a Siren pet");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.OmegaTentacles))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.OmegaTentacles))
             {
                 calamity.Call("SetSetBonus", player, "omegablue", true);
                 CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
@@ -95,7 +95,7 @@ Summons a Siren pet");
             }
 
             //abyssal diving suit
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DivingSuit))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.DivingSuit))
             {
                 calamity.GetItem("AbyssalDivingSuit").UpdateAccessory(player, hideVisual);
             }
@@ -109,7 +109,7 @@ Summons a Siren pet");
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.OmegaBlueEnchant = true;
-            fargoPlayer.AddPet(SoulConfig.Instance.SirenPet, hideVisual, calamity.BuffType("StrangeOrb"), calamity.ProjectileType("SirenYoung"));
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.SirenPet, hideVisual, calamity.BuffType("StrangeOrb"), calamity.ProjectileType("SirenYoung"));
         }
 
         public override void AddRecipes()

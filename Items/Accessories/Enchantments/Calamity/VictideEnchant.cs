@@ -64,7 +64,7 @@ Effects of Deep Diver, The Transformer, and Luxor's Gift");
 
             if (player.GetModPlayer<FargoPlayer>().Eternity) return;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.UrchinMinion))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.UrchinMinion))
             {
                 //summon
                 calamity.Call("SetSetBonus", player, "victide_summon", true);
@@ -83,7 +83,7 @@ Effects of Deep Diver, The Transformer, and Luxor's Gift");
 
             calamity.GetItem("DeepDiver").UpdateAccessory(player, hideVisual);
             calamity.GetItem("TheTransformer").UpdateAccessory(player, hideVisual);
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.LuxorGift))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.LuxorGift))
                 calamity.GetItem("LuxorsGift").UpdateAccessory(player, hideVisual);
         }
 

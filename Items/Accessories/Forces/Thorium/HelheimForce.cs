@@ -72,7 +72,7 @@ Summons several pets");
             //inner flame
             thoriumPlayer.spiritFlame = true;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DreadSpeed))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.DreadSpeed))
             {
                 //dread
                 player.moveSpeed += 0.8f;
@@ -98,34 +98,34 @@ Summons several pets");
             thorium.GetItem("CrashBoots").UpdateAccessory(player, hideVisual);
             player.moveSpeed -= 0.15f;
             player.maxRunSpeed -= 1f;
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DragonFlames))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.DragonFlames))
             {
                 //dragon 
                 thoriumPlayer.dragonSet = true;
             }
             //wyvern pet
-            modPlayer.AddPet(SoulConfig.Instance.WyvernPet, hideVisual, thorium.BuffType("WyvernPetBuff"), thorium.ProjectileType("WyvernPet"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.WyvernPet, hideVisual, thorium.BuffType("WyvernPetBuff"), thorium.ProjectileType("WyvernPet"));
             modPlayer.DragonEnchant = true;
 
             //demon blood effect
             modPlayer.DemonBloodEnchant = true;
             //demon blood badge
             thoriumPlayer.CrimsonBadge = true;
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.FleshDrops))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.FleshDrops))
             {
                 //flesh set bonus
                 thoriumPlayer.Symbiotic = true;
             }
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.VampireGland))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.VampireGland))
             {
                 //vampire gland
                 thoriumPlayer.vampireGland = true;
             }
             //blister pet
-            modPlayer.AddPet(SoulConfig.Instance.BlisterPet, hideVisual, thorium.BuffType("BlisterBuff"), thorium.ProjectileType("BlisterPet"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.BlisterPet, hideVisual, thorium.BuffType("BlisterBuff"), thorium.ProjectileType("BlisterPet"));
             modPlayer.FleshEnchant = true;
             //pet
-            modPlayer.AddPet(SoulConfig.Instance.MooglePet, hideVisual, thorium.BuffType("LilMogBuff"), thorium.ProjectileType("LilMog"));
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.MooglePet, hideVisual, thorium.BuffType("LilMogBuff"), thorium.ProjectileType("LilMog"));
             modPlayer.KnightEnchant = true;
             //lich gaze
             thoriumPlayer.lichGaze = true;
@@ -138,7 +138,7 @@ Summons several pets");
             //dragon tooth necklace
             player.armorPenetration += 15;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.HarbingerOvercharge))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.HarbingerOvercharge))
             {
                 //harbinger
                 if (player.statLife > (int)(player.statLifeMax2 * 0.75))

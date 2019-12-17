@@ -47,7 +47,7 @@ Effects of Auto Tuner and Metal Music Player");
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
 
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.CyberStates))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.CyberStates))
             {
                 //cyber set bonus, good lord
                 thoriumPlayer.cyberHeadAllowed = true;

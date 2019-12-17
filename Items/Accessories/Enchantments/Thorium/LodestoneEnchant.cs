@@ -47,7 +47,7 @@ Effects of Astro-Beetle Husk");
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
 
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.LodestoneResist))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.LodestoneResist))
             {
                 //set bonus
                 thoriumPlayer.orbital = true;
