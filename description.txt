@@ -73,6 +73,7 @@ Thorium
 
 
 -Added Ancient Cobalt Enchant and Ancient Shadow Enchantment
+-Removed Chik from Cobalt Enchantment
 -Buffed Cobalt to produce 5 shards instead of 3
 -Chloro crystals will disappear when you die now
 
@@ -92,7 +93,7 @@ Thorium
 -Removed Ghastly Glaive from Berserker's Soul, added Sky Dragon's Fury
 -Removed Tome of infinite Wisdom from Forbidden Enchant and added RainbowRod
 
-
+-Iron Enchantment toggles work with just Iron Enchantment now
 
 
 

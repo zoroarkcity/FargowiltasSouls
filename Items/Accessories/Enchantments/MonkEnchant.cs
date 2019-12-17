@@ -7,6 +7,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class MonkEnchant : ModItem
     {
+        private int monkTimer;
+
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
 
         public override void SetStaticDefaults()
@@ -14,9 +16,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Monk Enchantment");
             Tooltip.SetDefault(
 @"'Hours of Meditation have led to this…'
-
-Standing still for ech seconds grants you a single use dash that will launch any enemy, or its really long nimmun n does damage n yes
-
+Standing still for 2 seconds grants you a single use immune dash that works in any cardinal direction
 Lightning Aura can now crit and strikes faster");
         }
 
@@ -33,6 +33,17 @@ Lightning Aura can now crit and strikes faster");
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<FargoPlayer>().MonkEnchant = true;
+
+            if(!player.HasBuff(mod.BuffType("MonkBuff")) && player.GetModPlayer<FargoPlayer>().IsStandingStill)
+            {
+                monkTimer++;
+
+                if (monkTimer >= 120)
+                {
+                    player.AddBuff(mod.BuffType("MonkBuff"), 2);
+                    monkTimer = 0;
+                }
+            }
         }
 
         public override void AddRecipes()

@@ -40,16 +40,12 @@ This can only happen once every second");
             recipe.AddIngredient(ItemID.AncientCobaltHelmet);
             recipe.AddIngredient(ItemID.AncientCobaltBreastplate);
             recipe.AddIngredient(ItemID.AncientCobaltLeggings);
-            recipe.AddIngredient(ItemID.AncientNecroHelmet);
-
-
-//Rally, Blowpipe, 30 Poisoned Flasks
-
-
-
-            //goes into cobalt?
-
-
+           
+            //poison darts
+            //amazon
+            //thorn chakram
+            //flask of ppoison
+            //blowpipe
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

@@ -14,8 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Squire Enchantment");
             Tooltip.SetDefault(
 @"'Squire, will you hurry?'
-Attacks will slowly remove enemy knockback immunity
-This does not affect bosses
+Continually attacking an enemy will eventually remove its knockback immunity for 1 second
 Ballista pierces more targets and panics when you take damage");
             DisplayName.AddTranslation(GameCulture.Chinese, "精金魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -30,8 +29,8 @@ Ballista pierces more targets and panics when you take damage");
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 7;
-            item.value = 100000;
+            item.rare = 8;
+            item.value = 150000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -39,23 +39,23 @@ After being struck, the Shadow Orb cannot be hit for ech seconds");
 
         public override void AddRecipes()
         {
-            /*ModRecipe recipe = new ModRecipe(mod);
-            
-            armor 1
-            armor 2
-            armor 3
-            
-            shadow enchant
+            ModRecipe recipe = new ModRecipe(mod);
+
+            recipe.AddIngredient(ItemID.AncientShadowHelmet);
+            recipe.AddIngredient(ItemID.AncientShadowScalemail);
+            recipe.AddIngredient(ItemID.AncientShadowGreaves);
+            recipe.AddIngredient(ItemID.AncientNecroHelmet);
+
+            /*shadow enchant
 
             Ancient Iron Helmet
-Ancient Gold Helmet
-Ancient Shadow Armor, Ancient Iron Helmet, Ancient Gold Helmet, Shadowflame Hades Dye, Shadowflame Bow
-
+            Ancient Gold Helmet
+            Shadowflame Hades Dye, Shadowflame Bow*/
 
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
-            recipe.AddRecipe();*/
+            recipe.AddRecipe();
         }
     }
 }

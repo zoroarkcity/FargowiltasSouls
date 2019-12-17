@@ -58,15 +58,22 @@ You attract items from a larger range";
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            //sheild raise
-            modPlayer.IronEffect();
+
+            //EoC Shield
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.CthulhuShield))
+            {
+                player.dash = 2;
+            }
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.IronShield))
+            {
+                //shield
+                modPlayer.IronEffect();
+            }
             //magnet
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.IronMagnet))
             {
                 modPlayer.IronEnchant = true;
             }
-            //EoC Shield
-            player.dash = 2;
         }
 
         public override void AddRecipes()

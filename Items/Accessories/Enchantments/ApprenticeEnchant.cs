@@ -24,8 +24,8 @@ Flameburst field of view and range are dramatically increased");
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 7;
-            item.value = 100000;
+            item.rare = 8;
+            item.value = 150000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -130,6 +130,8 @@ namespace FargowiltasSouls
         public bool PearlEnchant;
 
         public bool RainEnchant;
+        private int rainDamage;
+
         public bool AncientCobaltEnchant;
         public bool AncientShadowEnchant;
         public bool SquireEnchant;
@@ -2523,7 +2525,18 @@ namespace FargowiltasSouls
                 gladCount = WillForce ? 30 : 60;
             }
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.ThoriumDivers) && ThoriumEnchant && NPC.CountNPCS(thorium.NPCType("Diverman")) < 5 && Main.rand.Next(20) == 0)
+            if(RainEnchant && target.maxLife > 1000 && player.ownedProjectileCounts[mod.ProjectileType("RainCloud")] < 1)
+            {
+                rainDamage += damage;
+
+                if(rainDamage > 500)
+                {
+                    Projectile.NewProjectile(target.Center, new Vector2(0, -5f), mod.ProjectileType("RainCloud"), damage, 0, Main.myPlayer);
+                    rainDamage = 0;
+                }
+            }
+
+            if (ThoriumEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.ThoriumDivers) && NPC.CountNPCS(thorium.NPCType("Diverman")) < 5 && Main.rand.Next(20) == 0)
             {
                 int diver = NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, thorium.NPCType("Diverman"));
                 Main.npc[diver].AddBuff(BuffID.ShadowFlame, 9999999);
