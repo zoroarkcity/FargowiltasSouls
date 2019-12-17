@@ -41,30 +41,24 @@ Ballista pierces more targets and panics when you take damage");
 
         public override void AddRecipes()
         {
-            /*ModRecipe recipe = new ModRecipe(mod);
-            
-            armor 1
-            armor 2
-            armor 3
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.SquireGreatHelm);
+            recipe.AddIngredient(ItemID.SquirePlating);
+            recipe.AddIngredient(ItemID.SquireGreaves);
             recipe.AddIngredient(ItemID.SquireShield);
-            brand of the inferno
-            
-            ballista tier 2
+            recipe.AddIngredient(ItemID.DD2BallistraTowerT2Popper);
+            recipe.AddIngredient(ItemID.DD2SquireDemonSword);
+            recipe.AddIngredient(ItemID.RedPhasesaber);
 
-            Breaker Blade
-Chlorophyte Saber
-Chlorophyte Claymore
-
-Doom Fire Axe (with Thorium)
-Dragon's Tooth (with Thorium)
-Rapier (with Thorium)
-Warp Slicer (with Thorium)
-Scalper (with Thorium)
-
+//Doom Fire Axe (with Thorium)
+//Dragon's Tooth (with Thorium)
+//Rapier (with Thorium)
+//Warp Slicer (with Thorium)
+//Scalper (with Thorium)
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
-            recipe.AddRecipe();*/
+            recipe.AddRecipe();
         }
     }
 }

@@ -49,6 +49,8 @@ namespace FargowiltasSouls.NPCs
         public bool Lethargic;
         public int LethargicCounter;
 
+        private int squireCounter = 0;
+        private int squireCD = 0;
         public bool SpecialEnchantImmune;
 
         //masochist doom
@@ -11691,12 +11693,18 @@ namespace FargowiltasSouls.NPCs
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (modPlayer.ValhallaEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaKB)
-                && !npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune && npc.knockBackResist < 1)
+            if (modPlayer.SquireEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaKB)
+                && !npc.boss && !npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune && npc.knockBackResist < 1 && squireCD == 0)
             {
-                npc.knockBackResist += .02f;
-                if (npc.knockBackResist > .5f)
-                    npc.knockBackResist = .5f;
+                squireCounter++;
+
+
+                if (squireCounter >= 25)
+                {
+                    npc.knockBackResist = 1f;
+                    squireCounter = 0;
+                    squireCD = 900;
+                }
             }
         }
 
@@ -11711,13 +11719,6 @@ namespace FargowiltasSouls.NPCs
                 npc.knockBackResist += .002f;
                 if (npc.knockBackResist > .5f)
                     npc.knockBackResist = .5f;
-            }
-
-            //pearlwood
-            if (projectile.type == ProjectileID.RainbowBack && projectile.GetGlobalProjectile<FargoGlobalProjectile>().Rainbow && Main.rand.Next(2) == 0
-                && !npc.boss && !SpecialEnchantImmune)
-            {
-                npc.scale = .5f;
             }
         }
 

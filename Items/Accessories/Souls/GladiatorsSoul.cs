@@ -109,19 +109,19 @@ Increased melee knockback
                 recipe.AddIngredient(KOCannon);
                 recipe.AddIngredient(IceSickle);
                 recipe.AddIngredient(thorium.ItemType("PrimesFury"));
-                recipe.AddIngredient(MonkStaffT2);
                 recipe.AddIngredient(TerraBlade);
                 recipe.AddIngredient(ScourgeoftheCorruptor);
                 recipe.AddIngredient(thorium.ItemType("Spearmint"));
+                recipe.AddIngredient(MonkStaffT3);
             }
             else
             {
                 recipe.AddIngredient(IceSickle);
-                recipe.AddIngredient(MonkStaffT2);
                 recipe.AddIngredient(TerraBlade);
                 recipe.AddIngredient(ScourgeoftheCorruptor);
                 recipe.AddIngredient(Kraken);
                 recipe.AddIngredient(Flairon);
+                recipe.AddIngredient(MonkStaffT3);
                 recipe.AddIngredient(TheHorsemansBlade);
             }
 

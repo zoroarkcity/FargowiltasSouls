@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Apprentice Enchantment");
             Tooltip.SetDefault(
-@"''
+@"'A long way to perfection'
 While attacking, Flameburst shots manifest themselves from your shadows
 Flameburst field of view and range are dramatically increased");
         }
@@ -30,35 +30,29 @@ Flameburst field of view and range are dramatically increased");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().ApprenticeEnchant = true;
+            player.GetModPlayer<FargoPlayer>().ApprenticeEffect();
         }
 
         public override void AddRecipes()
         {
-            //ModRecipe recipe = new ModRecipe(mod);
-            //recipe.AddIngredient(ItemID.);
-            //recipe.AddIngredient(ItemID.);
-            //recipe.AddIngredient(ItemID.);
-            //recipe.AddIngredient(ItemID.ApprenticeScarf);
-            //recipe.AddIngredient(ItemID.FlameStaff2);
-            //recipe.AddIngredient(ItemID.TomeofInfiniteWisdom);
-
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.ApprenticeHat);
+            recipe.AddIngredient(ItemID.ApprenticeRobe);
+            recipe.AddIngredient(ItemID.ApprenticeTrousers);
+            recipe.AddIngredient(ItemID.ApprenticeScarf);
+            recipe.AddIngredient(ItemID.DD2FlameburstTowerT2Popper);
+            recipe.AddIngredient(ItemID.BookStaff);
+            recipe.AddIngredient(ItemID.ClingerStaff);
 
             /*
-             * Clinger Staff
-Golden Shower
-
-Demon Fire Blast-Wand (with Thorium)
-Wither Staff (with Thorium)
-Kinetic Knife (with Thorium)
-Rainbow Rod
-
+            Demon Fire Blast-Wand (with Thorium)
+            Wither Staff (with Thorium)
+            Kinetic Knife (with Thorium)
              */
 
-
-            //recipe.AddTile(TileID.CrystalBall);
-            //recipe.SetResult(this);
-            //recipe.AddRecipe();
+            recipe.AddTile(TileID.CrystalBall);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

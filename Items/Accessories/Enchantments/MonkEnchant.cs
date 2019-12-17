@@ -37,28 +37,22 @@ Lightning Aura can now crit and strikes faster");
 
         public override void AddRecipes()
         {
-            /*ModRecipe recipe = new ModRecipe(mod);
-            
-            armor 1
-            armor 2
-            armor 3
+            ModRecipe recipe = new ModRecipe(mod);
+
+            recipe.AddIngredient(ItemID.MonkBrows);
+            recipe.AddIngredient(ItemID.MonkShirt);
+            recipe.AddIngredient(ItemID.MonkPants);
             recipe.AddIngredient(ItemID.MonkBelt);
-            sleepy octopod
-            ghastly glaive
-            lightning staff tier 2
+            recipe.AddIngredient(ItemID.DD2LightningAuraT2Popper);
+            recipe.AddIngredient(ItemID.MonkStaffT2);
+            recipe.AddIngredient(ItemID.DaoofPow);
 
-            Dao of Pow
-Fetid Baghnakhs
-Ale Tosser
-
-Schmelze (with Thorium)
-Rocket Fist (with Thorium)
-
-
+            //Schmelze (with Thorium)
+            //Rocket Fist (with Thorium)
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
-            recipe.AddRecipe();*/
+            recipe.AddRecipe();
         }
     }
 }

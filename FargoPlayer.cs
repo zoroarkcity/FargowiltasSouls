@@ -115,7 +115,7 @@ namespace FargowiltasSouls
         public bool ShinobiEnchant;
         public bool ValhallaEnchant;
         public bool DarkEnchant;
-        private int darkCD = 0;
+        private int apprenticeCD = 0;
         Vector2 prevPosition;
         public bool RedEnchant;
         public bool TungstenEnchant;
@@ -3598,40 +3598,15 @@ namespace FargowiltasSouls
 
         public void DarkArtistEffect(bool hideVisual)
         {
-            player.setApprenticeT2 = true;
             player.setApprenticeT3 = true;
-
-            //shadow shoot meme
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DarkArtistEffect))
-            {
-                Item heldItem = player.HeldItem;
-
-                if (darkCD == 0 && heldItem.shoot > 0 && heldItem.damage > 0 && player.controlUseItem && prevPosition != null)
-                {
-                    if (prevPosition != null)
-                    {
-                        Vector2 vel = (Main.MouseWorld - prevPosition).SafeNormalize(-Vector2.UnitY);
-
-                        Projectile.NewProjectile(prevPosition, vel * heldItem.shootSpeed, ProjectileID.DD2FlameBurstTowerT3Shot, heldItem.damage / 2, 1, player.whoAmI);
-
-                        for (int i = 0; i < 5; i++)
-                        {
-                            int dustId = Dust.NewDust(new Vector2(prevPosition.X, prevPosition.Y + 2f), player.width, player.height + 5, DustID.Shadowflame, 0, 0, 100, Color.Black, 2f);
-                            Main.dust[dustId].noGravity = true;
-                        }
-                    }
-
-                    prevPosition = player.position;
-                    darkCD = 20;
-                }
-
-                if (darkCD > 0)
-                {
-                    darkCD--;
-                }
-            }
-
             DarkEnchant = true;
+
+            //spawn tower boi
+            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[mod.ProjectileType("FlameburstMinion")] < 1)
+                Projectile.NewProjectile(player.Center, Vector2.Zero, mod.ProjectileType("FlameburstMinion"), 0, 0f, player.whoAmI);
+
+
+
             AddPet(SoulConfig.Instance.FlickerwickPet, hideVisual, BuffID.PetDD2Ghost, ProjectileID.DD2PetGhost);
         }
 
@@ -4604,6 +4579,41 @@ namespace FargowiltasSouls
                     }
 
                     Projectile.NewProjectile(mouse.X, mouse.Y - 10, 0f, 0f, mod.ProjectileType("PalmTreeSentry"), WoodForce ? 45 : 15, 0f, player.whoAmI);
+                }
+            }
+        }
+
+        public void ApprenticeEffect()
+        {
+            player.setApprenticeT2 = true;
+
+            //shadow shoot meme
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DarkArtistEffect))
+            {
+                Item heldItem = player.HeldItem;
+
+                if (apprenticeCD == 0 && heldItem.shoot > 0 && heldItem.damage > 0 && player.controlUseItem && prevPosition != null)
+                {
+                    if (prevPosition != null)
+                    {
+                        Vector2 vel = (Main.MouseWorld - prevPosition).SafeNormalize(-Vector2.UnitY);
+
+                        Projectile.NewProjectile(prevPosition, vel * heldItem.shootSpeed, ProjectileID.DD2FlameBurstTowerT3Shot, heldItem.damage / 2, 1, player.whoAmI);
+
+                        for (int i = 0; i < 5; i++)
+                        {
+                            int dustId = Dust.NewDust(new Vector2(prevPosition.X, prevPosition.Y + 2f), player.width, player.height + 5, DustID.Shadowflame, 0, 0, 100, Color.Black, 2f);
+                            Main.dust[dustId].noGravity = true;
+                        }
+                    }
+
+                    prevPosition = player.position;
+                    apprenticeCD = 20;
+                }
+
+                if (apprenticeCD > 0)
+                {
+                    apprenticeCD--;
                 }
             }
         }

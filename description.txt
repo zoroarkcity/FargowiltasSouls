@@ -87,6 +87,11 @@ Thorium
 
 -Updated Config, no more sub menus, adding new ones much easier, more efficent tm, more headers everywhere, organized
 
+-Added Huntress Enchant
+-reworked Red Riding Enchant
+-Removed Ghastly Glaive from Berserker's Soul, added Sky Dragon's Fury
+-Removed Tome of infinite Wisdom from Forbidden Enchant and added RainbowRod
+
 
 
 
