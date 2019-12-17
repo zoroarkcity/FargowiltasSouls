@@ -118,6 +118,12 @@ moon lord drops 20 gold (higher because multipliers)
 queen bee drops 75% less gold
 increased fish EX's drops
 
+changed all attack speed up to additive (was multiplicative, bruh)
+mythril ench now has disrupted focus when damaged
+removed queen bee DR when a royal subject is alive
+reduced tim's concoction drop rate to 10%
+queen bee has new bee shitting attack below 50% life
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)

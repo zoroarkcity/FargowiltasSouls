@@ -2678,6 +2678,12 @@ namespace FargowiltasSouls.NPCs
                             }
                         }
 
+                        if (!masoBool[2] && npc.life < npc.lifeMax / 2) //enable new attack and roar below 50%
+                        {
+                            masoBool[2] = true;
+                            Main.PlaySound(15, npc.Center, 0);
+                        }
+
                         if (NPC.AnyNPCs(mod.NPCType("RoyalSubject")))
                         {
                             npc.ai[0] = 3; //always shoot stingers mode
@@ -2687,6 +2693,32 @@ namespace FargowiltasSouls.NPCs
                         //only while stationary mode
                         if (npc.ai[0] == 3f || npc.ai[0] == 1f)
                         {
+                            if (masoBool[2] && ++Timer > 600)
+                            {
+                                if (Timer < 690) //slow down
+                                {
+                                    npc.velocity *= 0.99f;
+                                }
+                                else if (Timer < 810) //spray bees
+                                {
+                                    npc.velocity = Vector2.Zero;
+                                    if (++Counter > 2)
+                                    {
+                                        Counter = 0;
+                                        if (Main.netMode != 1)
+                                        {
+                                            Projectile.NewProjectile(npc.Center, 16f * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.Next(-90, 91))), mod.ProjectileType("Bee"), npc.damage / 5, 0f, Main.myPlayer);
+                                            Projectile.NewProjectile(npc.Center, -16f * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.Next(-90, 91))), mod.ProjectileType("Bee"), npc.damage / 5, 0f, Main.myPlayer);
+                                        }
+                                    }
+                                }
+                                else if (Timer > 900) //wait for 1.5 seconds then return to normal AI
+                                {
+                                    Timer = 0;
+                                }
+                                return false;
+                            }
+
                             Counter++;
                             if (Counter >= 90)
                             {
@@ -9642,7 +9674,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Tim:
-                        if (Main.rand.Next(2) == 0)
+                        if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("TimsConcoction"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.ManaRegenerationPotion, Main.rand.Next(2, 5) + 1);
@@ -11646,9 +11678,6 @@ namespace FargowiltasSouls.NPCs
             if (FargoSoulsWorld.MasochistMode)
             {
                 if (PaladinsShield)
-                    damage /= 2;
-
-                if (npc.type == NPCID.QueenBee && NPC.AnyNPCs(mod.NPCType("RoyalSubject")))
                     damage /= 2;
 
                 if (npc.realLife == -1)

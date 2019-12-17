@@ -509,7 +509,7 @@ Additionally grants:");
             modPlayer.AllDamageUp(2f);
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.UniverseAttackSpeed))
             {
-                modPlayer.AttackSpeed *= 2;
+                modPlayer.AttackSpeed += 1;
             }
             player.maxMinions += 20;
             player.maxTurrets += 10;

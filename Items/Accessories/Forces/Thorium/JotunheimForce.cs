@@ -106,7 +106,7 @@ Summons several pets");
             {
                 player.AddBuff(thorium.BuffType("AquaticAptitude"), 60, true);
                 player.GetModPlayer<FargoPlayer>().AllDamageUp(.1f);
-                modPlayer.AttackSpeed *= 1.2f;
+                modPlayer.AttackSpeed += .2f;
             }
             //quicker in water
             player.ignoreWater = true;

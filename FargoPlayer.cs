@@ -1519,22 +1519,22 @@ namespace FargowiltasSouls
 
             if (RangedEssence && item.ranged)
             {
-                AttackSpeed *= 1.05f;
+                AttackSpeed += .05f;
             }
 
             if (RangedSoul && item.ranged)
             {
-                AttackSpeed *= 1.2f;
+                AttackSpeed += .2f;
             }
 
             if (MagicSoul && item.magic)
             {
-                AttackSpeed *= 1.2f;
+                AttackSpeed += .2f;
             }
 
             if (ThrowSoul && item.thrown)
             {
-                AttackSpeed *= 1.2f;
+                AttackSpeed += .2f;
             }
 
             //checks so weapons dont break
@@ -2922,6 +2922,11 @@ namespace FargowiltasSouls
 
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
+            if (MythrilEnchant && !EarthForce)
+            {
+                player.AddBuff(mod.BuffType("DisruptedFocus"), 300);
+            }
+
             if (ShadeEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ShadewoodEffect))
             {
                 for (int i = 0; i < 10; i++)
@@ -4088,7 +4093,7 @@ namespace FargowiltasSouls
             if (player.lavaWet && !TerrariaSoul)
             {
                 player.armorPenetration += 20;
-                AttackSpeed *= 1.15f;
+                AttackSpeed += .15f;
                 ObsidianEnchant = true;
             }
         }
