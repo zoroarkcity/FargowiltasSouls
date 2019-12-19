@@ -15,8 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             Tooltip.SetDefault(
 @"'Come again some other day'
 Grants immunity to Wet
-A miniature storm may appear when an enemy dies or a boss is heavily damaged
-Shooting it with some kind of water will make it grow");
+A miniature storm will appear after heavily damaging enemies
+Shooting it with any kind of water will make it grow
+At maximum size, water will turn into lightning bolts");
             DisplayName.AddTranslation(GameCulture.Chinese, "云雨魔石");
         }
 
@@ -32,7 +33,6 @@ Shooting it with some kind of water will make it grow");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            //spawn generic nimbus cloud, attack with water projectiles to make it multiply and shoot lightning at max size
             player.GetModPlayer<FargoPlayer>().RainEnchant = true;
         }
 

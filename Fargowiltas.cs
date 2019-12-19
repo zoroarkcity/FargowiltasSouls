@@ -108,6 +108,7 @@ namespace FargowiltasSouls
             AddToggle("NatureHeader", "Force of Nature", "NatureForce", "ffffff");
             AddToggle("ChlorophyteConfig", "Chlorophyte Leaf Crystal", "ChlorophyteEnchant", "248900");
             AddToggle("CrimsonConfig", "Crimson Regen", "CrimsonEnchant", "C8364B");
+            AddToggle("RainConfig", "Rain Clouds", "RainEnchant", "ffffff");
             AddToggle("FrostConfig", "Frost Icicles", "FrostEnchant", "7abdb9");
             AddToggle("JungleConfig", "Jungle Spores", "JungleEnchant", "71971f");
             AddToggle("MoltenConfig", "Molten Inferno Buff", "MoltenEnchant", "c12b2b");

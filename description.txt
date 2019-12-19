@@ -22,6 +22,9 @@ NEW UPDATE - v 1.1.1
 -Iron Enchantment toggles work with just Iron Enchantment now
 
 
+-Added Rain Enchant
+
+
 
 -checkout mimic and queen bee money?
 

@@ -103,7 +103,7 @@ namespace FargowiltasSouls.Projectiles.Souls
 
                     if (proj.active && proj.owner == projectile.owner && proj.type != mod.ProjectileType("AncientShadowBall") && !proj.minion && proj.damage > 0 && proj.Hitbox.Intersects(projectile.Hitbox))
                     {
-                        FargoGlobalProjectile.XWay(10, projectile.Center, mod.ProjectileType("AncientShadowBall"), 3, 30, 0);
+                        FargoGlobalProjectile.XWay(10, projectile.Center, mod.ProjectileType("AncientShadowBall"), 6, 30, 0);
                         projectile.ai[0] = 300;
 
                         break;

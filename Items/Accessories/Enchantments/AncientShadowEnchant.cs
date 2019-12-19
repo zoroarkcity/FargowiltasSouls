@@ -45,11 +45,10 @@ After being struck, the Shadow Orb cannot be hit for ech seconds");
             recipe.AddIngredient(ItemID.AncientShadowScalemail);
             recipe.AddIngredient(ItemID.AncientShadowGreaves);
             recipe.AddIngredient(ItemID.AncientNecroHelmet);
+            recipe.AddIngredient(ItemID.AncientGoldHelmet);
 
             /*shadow enchant
 
-            Ancient Iron Helmet
-            Ancient Gold Helmet
             Shadowflame Hades Dye, Shadowflame Bow*/
 
 

@@ -1700,8 +1700,6 @@ namespace FargowiltasSouls.Projectiles
                 }
                 else if (modPlayer.AncientCobaltEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CobaltStingers) && modPlayer.CobaltCD == 0 && Main.rand.Next(5) == 0)
                 {
-                    //Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 27);
-
                    Projectile[] projs = XWay(3, projectile.Center, ProjectileID.HornetStinger, 5f, 15, 0);
 
                     for (int i = 0; i < projs.Length; i++)
@@ -1712,10 +1710,6 @@ namespace FargowiltasSouls.Projectiles
 
                     modPlayer.CobaltCD = 60;
                 }
-
-
-
-                
             }
         }
 
