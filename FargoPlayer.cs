@@ -2177,7 +2177,10 @@ namespace FargowiltasSouls
             OnHitNPCEither(target, damage, knockback, crit, proj.type);
 
             if (Array.IndexOf(wetProj, proj.type) > -1)
+            {
                 target.AddBuff(BuffID.Wet, 180, true);
+            }
+                
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SpectreOrbs) && !target.immortal)
             {
                 if (SpectreEnchant && proj.type != ProjectileID.SpectreWrath)
@@ -2525,14 +2528,14 @@ namespace FargowiltasSouls
                 gladCount = WillForce ? 30 : 60;
             }
 
-            if(RainEnchant && target.maxLife > 1000 && player.ownedProjectileCounts[mod.ProjectileType("RainCloud")] < 1)
+            if(RainEnchant && SoulConfig.Instance.RainCloud && projectile != ProjectileID.RainFriendly && player.ownedProjectileCounts[mod.ProjectileType("RainCloud")] < 1)
             {
                 rainDamage += damage;
 
-                if(rainDamage > 500)
+                if(rainDamage > 1000)
                 {
-                    Projectile.NewProjectile(target.Center, new Vector2(0, -5f), mod.ProjectileType("RainCloud"), damage, 0, Main.myPlayer);
-                    rainDamage = 0;
+                    Projectile.NewProjectile(target.Center, new Vector2(0, -2f), mod.ProjectileType("RainCloud"), damage / 2, 0, Main.myPlayer);
+                    rainDamage = -500;
                 }
             }
 

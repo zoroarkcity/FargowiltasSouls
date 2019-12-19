@@ -19,6 +19,8 @@ Greatly increases life regen
 Nearby enemies are ignited
 The closer they are to you the more damage they take
 When you die, you violently explode dealing massive damage
+Grants immunity to Wet
+A miniature storm will appear after heavily damaging enemies
 Icicles will start to appear around you
 When there are three, attacking will launch them towards the cursor
 Your attacks inflict Frostburn
@@ -29,6 +31,7 @@ Not moving puts you in stealth
 While in stealth, crits deal 3x damage
 Effects of Flower Boots
 Summons several pets";
+
             string tooltip_ch =
 @"'挖掘了荒野的每一个秘密'
 极大增加生命恢复速度
@@ -70,6 +73,8 @@ Summons several pets";
             modPlayer.CrimsonEffect(hideVisual);
             //inferno and explode
             modPlayer.MoltenEffect(30);
+            //rain
+            modPlayer.RainEnchant = true;
             //icicles, pets
             modPlayer.FrostEffect(75, hideVisual);
             //spores
@@ -87,6 +92,7 @@ Summons several pets";
 
             recipe.AddIngredient(null, "CrimsonEnchant");
             recipe.AddIngredient(null, "MoltenEnchant");
+            recipe.AddIngredient(null, "RainEnchant");
             recipe.AddIngredient(null, "FrostEnchant");
             recipe.AddIngredient(null, "ChlorophyteEnchant");
             recipe.AddIngredient(null, "ShroomiteEnchant");

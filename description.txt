@@ -96,7 +96,7 @@ Thorium
 -Iron Enchantment toggles work with just Iron Enchantment now
 
 
-
+-Added Rain Enchant
 
 
 

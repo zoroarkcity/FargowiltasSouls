@@ -27,7 +27,6 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool ShadewoodEffect;
 
-        //[Label("[" +  "i:19][c/00FF00: Green Text]")]
         [Label("$Mods.FargowiltasSouls.MahoganyConfig")]
         //[BackgroundColor(181, 108, 100)]
         [DefaultValue(true)]
@@ -157,6 +156,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.MoltenConfig")]
         [DefaultValue(true)]
         public bool MoltenInferno;
+
+        [Label("$Mods.FargowiltasSouls.RainConfig")]
+        [DefaultValue(true)]
+        public bool RainCloud;
 
         [Label("$Mods.FargowiltasSouls.ShroomiteConfig")]
         [DefaultValue(true)]
