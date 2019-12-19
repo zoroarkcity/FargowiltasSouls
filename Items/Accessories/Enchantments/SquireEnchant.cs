@@ -15,6 +15,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             Tooltip.SetDefault(
 @"'Squire, will you hurry?'
 Continually attacking an enemy will eventually remove its knockback immunity for 1 second
+There is a 15 second cooldown per enemy
 Ballista pierces more targets and panics when you take damage");
             DisplayName.AddTranslation(GameCulture.Chinese, "精金魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -36,6 +37,7 @@ Ballista pierces more targets and panics when you take damage");
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<FargoPlayer>().SquireEnchant = true;
+            player.setSquireT2 = true;
         }
 
         public override void AddRecipes()

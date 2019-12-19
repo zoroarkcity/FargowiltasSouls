@@ -50,7 +50,7 @@ namespace FargowiltasSouls.NPCs
         public int LethargicCounter;
 
         private int squireCounter = 0;
-        private int squireCD = 0;
+        public float originalKB;
         public bool SpecialEnchantImmune;
 
         //masochist doom
@@ -11694,16 +11694,16 @@ namespace FargowiltasSouls.NPCs
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
             if (modPlayer.SquireEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaKB)
-                && !npc.boss && !npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune && npc.knockBackResist < 1 && squireCD == 0)
+                 && !npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune && npc.knockBackResist < 1 && !npc.HasBuff(mod.BuffType("SquireKBDebuff")))
             {
                 squireCounter++;
 
-
                 if (squireCounter >= 25)
                 {
+                    originalKB = npc.knockbackResist;
                     npc.knockBackResist = 1f;
+                    npc.AddBuff(mod.BuffType("SquireKBDebuff"), 960);
                     squireCounter = 0;
-                    squireCD = 900;
                 }
             }
         }
@@ -11712,13 +11712,18 @@ namespace FargowiltasSouls.NPCs
         {
             FargoPlayer modPlayer = Main.player[projectile.owner].GetModPlayer<FargoPlayer>();
 
-            //spears
-            if (modPlayer.ValhallaEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaKB) 
-                && !npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune && npc.knockBackResist < 1)
+            if (modPlayer.SquireEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaKB)
+                 && !npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune && npc.knockBackResist < 1 && !npc.HasBuff(mod.BuffType("SquireKBDebuff")))
             {
-                npc.knockBackResist += .002f;
-                if (npc.knockBackResist > .5f)
-                    npc.knockBackResist = .5f;
+                squireCounter++;
+
+                if (squireCounter >= 200)
+                {
+                    originalKB = npc.knockbackResist;
+                    npc.knockBackResist = 1f;
+                    npc.AddBuff(mod.BuffType("SquireKBDebuff"), 960);
+                    squireCounter = 0;
+                }
             }
         }
 

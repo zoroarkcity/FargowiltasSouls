@@ -1,28 +1,11 @@
 NEW UPDATE - v 1.1.1
 
--Added Enchantment tooltip colors for Calamity and SoA
 -Pandora's Box now can only summon bosses in Hard Mode
-
--Increased the amount of Sadism Mutant boss drops and Lunar Crystals Moon Lord drops
-
 
 -All hard mode enemies spawning early have half max HP
 
-
 -Fixed True Mutant Head sprite sheet
--Added a shield sprite to Iron Enchantment and Slimy Shield
--Thorium Enchant divers die more quickly
--World Shaper Soul's Builder Mode now makes all tile producing items have maximum use time
 -Added Eurus Socks (add to mutant mod ech)
--Ocean Enchantment, added Ocean Polearm, removed Breathing Reed
-
--Removed Ghastly Glaive from Berserker's Soul, added Sky Dragon's Fury
--Removed Tome of infinite Wisdom from Forbidden Enchant and added Rainbow Rod
-
--Iron Enchantment toggles work with just Iron Enchantment now
-
-
--Added Rain Enchant
 
 
 
