@@ -119,7 +119,7 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
             
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.UniverseAttackSpeed))
             {
-                modPlayer.AttackSpeed *= 1.5f;
+                modPlayer.AttackSpeed += .5f;
             }
 
             player.maxMinions += 8;

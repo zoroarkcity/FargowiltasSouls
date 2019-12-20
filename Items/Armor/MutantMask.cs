@@ -75,7 +75,7 @@ You can survive fatal damage and recover with 100% life every two minutes
 
             player.GetModPlayer<FargoPlayer>().MutantSetBonus = true;
             player.GetModPlayer<FargoPlayer>().GodEaterImbue = true;
-            player.GetModPlayer<FargoPlayer>().AttackSpeed *= 1.2f;
+            player.GetModPlayer<FargoPlayer>().AttackSpeed += .2f;
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)

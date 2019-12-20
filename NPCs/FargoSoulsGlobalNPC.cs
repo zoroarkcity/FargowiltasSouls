@@ -2669,30 +2669,35 @@ namespace FargowiltasSouls.NPCs
                             Main.npc[num594].netUpdate = true;
 
                             if (Main.netMode == 0)
-                                Main.NewText("A Royal Subject has awoken!", 175, 75, 255);
+                                Main.NewText("Royal Subject has awoken!", 175, 75, 255);
                             else if (Main.netMode == 2)
-                                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("A Royal Subject has awoken!"), new Color(175, 75, 255));
+                                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Royal Subject has awoken!"), new Color(175, 75, 255));
                         }
 
                         if (!masoBool[1] && npc.life < npc.lifeMax / 3 && npc.HasPlayerTarget)
                         {
                             masoBool[1] = true;
+                            
+                            Vector2 vector72 = new Vector2(npc.position.X + (float)(npc.width / 2) + (float)(Main.rand.Next(20) * npc.direction), npc.position.Y + (float)npc.height * 0.8f);
 
-                            for (int i = 0; i < 2; i++)
-                            {
-                                Vector2 vector72 = new Vector2(npc.position.X + (float)(npc.width / 2) + (float)(Main.rand.Next(20) * npc.direction), npc.position.Y + (float)npc.height * 0.8f);
+                            int num594 = NPC.NewNPC((int)vector72.X, (int)vector72.Y, mod.NPCType("RoyalSubject"), 0, 0f, 0f, 0f, 0f, 255);
+                            Main.npc[num594].velocity.X = (float)Main.rand.Next(-200, 201) * 0.1f;
+                            Main.npc[num594].velocity.Y = (float)Main.rand.Next(-200, 201) * 0.1f;
+                            Main.npc[num594].localAI[0] = 60f;
+                            Main.npc[num594].netUpdate = true;
 
-                                int num594 = NPC.NewNPC((int)vector72.X, (int)vector72.Y, mod.NPCType("RoyalSubject"), 0, 0f, 0f, 0f, 0f, 255);
-                                Main.npc[num594].velocity.X = (float)Main.rand.Next(-200, 201) * 0.1f;
-                                Main.npc[num594].velocity.Y = (float)Main.rand.Next(-200, 201) * 0.1f;
-                                Main.npc[num594].localAI[0] = 60f;
-                                Main.npc[num594].netUpdate = true;
+                            if (Main.netMode == 0)
+                                Main.NewText("Royal Subject has awoken!", 175, 75, 255);
+                            else if (Main.netMode == 2)
+                                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Royal Subject has awoken!"), new Color(175, 75, 255));
 
-                                if (Main.netMode == 0)
-                                    Main.NewText("A Royal Subject has awoken!", 175, 75, 255);
-                                else if (Main.netMode == 2)
-                                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("A Royal Subject has awoken!"), new Color(175, 75, 255));
-                            }
+                            NPC.SpawnOnPlayer(npc.target, mod.NPCType("RoyalSubject")); //so that both dont stack for being spawned from qb
+                        }
+
+                        if (!masoBool[2] && npc.life < npc.lifeMax / 2) //enable new attack and roar below 50%
+                        {
+                            masoBool[2] = true;
+                            Main.PlaySound(15, npc.Center, 0);
                         }
 
                         if (NPC.AnyNPCs(mod.NPCType("RoyalSubject")))
@@ -2704,6 +2709,56 @@ namespace FargowiltasSouls.NPCs
                         //only while stationary mode
                         if (npc.ai[0] == 3f || npc.ai[0] == 1f)
                         {
+                            if (masoBool[2] && ++Timer > 600)
+                            {
+                                if (Timer < 690) //slow down
+                                {
+                                    if (!masoBool[3])
+                                    {
+                                        masoBool[3] = true;
+                                        for (int i = 0; i < 36; i++)
+                                        {
+                                            Vector2 vector6 = Vector2.UnitY * 9f;
+                                            vector6 = vector6.RotatedBy((i - (36 / 2 - 1)) * 6.28318548f / 36) + npc.Center;
+                                            Vector2 vector7 = vector6 - npc.Center;
+                                            int d = Dust.NewDust(vector6 + vector7, 0, 0, 87, 0f, 0f, 0, default(Color), 4f);
+                                            Main.dust[d].noGravity = true;
+                                            Main.dust[d].velocity = vector7;
+                                        }
+                                        Main.PlaySound(15, npc.Center, 0);
+                                    }
+
+                                    if (Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
+                                    {
+                                        npc.velocity *= 0.975f;
+                                    }
+                                    else
+                                    {
+                                        Timer--; //stall this section until has line of sight
+                                        break;
+                                    }
+                                }
+                                else if (Timer < 840) //spray bees
+                                {
+                                    masoBool[3] = false;
+                                    npc.velocity = Vector2.Zero;
+                                    if (++Counter > 2)
+                                    {
+                                        Counter = 0;
+                                        if (Main.netMode != 1)
+                                        {
+                                            Projectile.NewProjectile(npc.Center + Vector2.UnitY * 15, 12f * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))), mod.ProjectileType("Bee"), npc.damage / 5, 0f, Main.myPlayer);
+                                            Projectile.NewProjectile(npc.Center + Vector2.UnitY * 15, -12f * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))), mod.ProjectileType("Bee"), npc.damage / 5, 0f, Main.myPlayer);
+                                        }
+                                    }
+                                }
+                                else if (Timer > 900) //wait for 1 second then return to normal AI
+                                {
+                                    Timer = 0;
+                                }
+                                return false;
+                            }
+
                             Counter++;
                             if (Counter >= 90)
                             {
@@ -9659,7 +9714,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Tim:
-                        if (Main.rand.Next(2) == 0)
+                        if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("TimsConcoction"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.ManaRegenerationPotion, Main.rand.Next(2, 5) + 1);
@@ -11663,9 +11718,6 @@ namespace FargowiltasSouls.NPCs
             if (FargoSoulsWorld.MasochistMode)
             {
                 if (PaladinsShield)
-                    damage /= 2;
-
-                if (npc.type == NPCID.QueenBee && NPC.AnyNPCs(mod.NPCType("RoyalSubject")))
                     damage /= 2;
 
                 if (npc.realLife == -1)

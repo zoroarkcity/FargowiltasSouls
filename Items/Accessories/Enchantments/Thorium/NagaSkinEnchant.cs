@@ -48,7 +48,7 @@ Allows quicker movement in water");
             //naga effect
             if (player.wet)
             {
-                modPlayer.AttackSpeed *= 1.2f;
+                modPlayer.AttackSpeed += .2f;
             }
 
             //quicker in water
