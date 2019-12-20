@@ -15,8 +15,8 @@ namespace FargowiltasSouls.Items.Accessories.Forces
             DisplayName.SetDefault("Shadow Force");
 
             string tooltip = @"'Dark, Darker, Yet Darker'
+Two Shadow Orbs will orbit around you
 Your attacks may inflict Darkness on enemies
-Darkened enemies occasionally fire shadowflame tentacles at other enemies
 A Dungeon Guardian will occasionally annihilate a foe when struck
 All of your minions may occasionally spew massive scythes everywhere
 Throw a smoke bomb to teleport to it and gain the First Strike Buff
@@ -64,6 +64,8 @@ Summons several pets";
             modPlayer.DarkArtistEffect(hideVisual);
             //DG meme, pet
             modPlayer.NecroEffect(hideVisual);
+            //shadow orbs
+            modPlayer.AncientShadowEffect();
             //darkness debuff, pets
             modPlayer.ShadowEffect(hideVisual);
             //ninja gear
@@ -83,7 +85,7 @@ Summons several pets";
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(null, "ShadowEnchant");
+            recipe.AddIngredient(null, "AncientShadowEnchant");
             recipe.AddIngredient(null, "NecroEnchant");
             recipe.AddIngredient(null, "SpookyEnchant");
             recipe.AddIngredient(null, "ShinobiEnchant");

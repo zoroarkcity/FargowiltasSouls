@@ -94,9 +94,9 @@ namespace FargowiltasSouls
             AddToggle("WillHeader", "Force of Will", "WillForce", "ffffff");
             AddToggle("GladiatorConfig", "Gladiator Rain", "GladiatorEnchant", "9c924e");
             AddToggle("GoldConfig", "Gold Lucky Coin", "GoldEnchant", "e7b21c");
-            AddToggle("RedRidingConfig", "Red Riding Super Bleed", "RedRidingEnchant", "c01b3c");
             AddToggle("HuntressConfig", "Huntress Ability", "HuntressEnchant", "ffffff");
-            AddToggle("ValhallaConfig", "Valhalla Knockback", "ValhallaKnightEnchant", "93651e");
+            AddToggle("ValhallaConfig", "Valhalla Effect", "ValhallaKnightEnchant", "93651e");
+            AddToggle("SquireConfig", "Squire Knockback", "SquireEnchant", "ffffff");
 
             AddToggle("LifeHeader", "Force of Life", "LifeForce", "ffffff");
             AddToggle("BeetleConfig", "Beetles", "BeetleEnchant", "6D5C85");

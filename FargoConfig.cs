@@ -107,13 +107,13 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool HuntressAbility;
 
-        [Label("$Mods.FargowiltasSouls.RedRidingConfig")]
-        [DefaultValue(true)]
-        public bool redBleed;
-
         [Label("$Mods.FargowiltasSouls.ValhallaConfig")]
         [DefaultValue(true)]
-        public bool ValhallaKB;
+        public bool ValhallaEffect;
+
+        [Label("$Mods.FargowiltasSouls.SquireConfig")]
+        [DefaultValue(true)]
+        public bool SquireKB;
 
         [Header("$Mods.FargowiltasSouls.LifeHeader")]
         [Label("$Mods.FargowiltasSouls.BeetleConfig")]

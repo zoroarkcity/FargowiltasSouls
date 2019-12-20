@@ -49,7 +49,7 @@ Summons a pet Flickerwick";
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             //spawns flameburst minion - make it .. fire a barrage at max charge, massive homing, leaves inferno blast behind
-            player.GetModPlayer<FargoPlayer>().DarkArtistEffect(hideVisual);
+            ///player.GetModPlayer<FargoPlayer>().DarkArtistEffect(hideVisual);
         }
 
         public override void AddRecipes()

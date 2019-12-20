@@ -4497,7 +4497,7 @@ namespace FargowiltasSouls
         {
             player.setSquireT2 = true;
             player.setSquireT3 = true;
-            //knockback memes
+            //immune frames
             ValhallaEnchant = true;
             AddPet(SoulConfig.Instance.DragonPet, hideVisual, BuffID.PetDD2Dragon, ProjectileID.DD2PetDragon);
         }
@@ -4681,6 +4681,8 @@ namespace FargowiltasSouls
 
         public void AncientShadowEffect()
         {
+            AncientShadowEnchant = true;
+
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.AncientShadow) && player.ownedProjectileCounts[mod.ProjectileType("AncientShadowOrb")] == 0)
             {
                 const int max = 2;

@@ -13,10 +13,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Ancient Shadow Enchantment");
             Tooltip.SetDefault(
-@"''
+@"'Archaic, yet functional'
 Two Shadow Orbs will orbit around you
-Attacking a Shadow Orb will cause it to release a burst of homing shadow energy that deal a percentage of the weapon's damage and inflicts Shadowflame for a short period of time
-After being struck, the Shadow Orb cannot be hit for ech seconds");
+Attacking a Shadow Orb will cause it to release a burst of homing shadow energy
+After being struck, a Shadow Orb cannot be hit for 5 seconds
+Your attacks may inflict Darkness
+Summons a pet Eater of Souls and Shadow Orb");
         }
 
         public override void SetDefaults()
@@ -25,16 +27,15 @@ After being struck, the Shadow Orb cannot be hit for ech seconds");
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 7;
+            item.rare = 5;
             item.value = 100000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            modPlayer.AncientShadowEnchant = true;
             modPlayer.AncientShadowEffect();
-
+            modPlayer.ShadowEffect(hideVisual);
         }
 
         public override void AddRecipes()
@@ -46,11 +47,8 @@ After being struck, the Shadow Orb cannot be hit for ech seconds");
             recipe.AddIngredient(ItemID.AncientShadowGreaves);
             recipe.AddIngredient(ItemID.AncientNecroHelmet);
             recipe.AddIngredient(ItemID.AncientGoldHelmet);
-
-            /*shadow enchant
-
-            Shadowflame Hades Dye, Shadowflame Bow*/
-
+            recipe.AddIngredient(null, "ShadowEnchant");
+            recipe.AddIngredient(ItemID.ShadowFlameBow);
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

@@ -21,7 +21,7 @@ You will not be able to move or attack, but will be immune to all damage
 20% chance for enemies to drop 8x loot
 Spears will rain down on struck enemies 
 Double tap down to create a localized rain of arrows
-All attacks will slowly remove enemy knockback immunity
+Continually attacking an enemy will drastically reduce its immunity frames
 Greatly enhances Ballista and Explosive Traps effectiveness
 Effects of Greedy Ring, Celestial Shell, and Shiny Stone
 Summons several pets";
@@ -67,7 +67,7 @@ Summons several pets";
             //arrow rain, celestial shell, pet
             modPlayer.RedRidingEffect(hideVisual);
             modPlayer.HuntressEffect();
-            //knockback kill, pet
+            //immune frame kill, pet
             modPlayer.ValhallaEffect(hideVisual);
             player.shinyStone = true;
 

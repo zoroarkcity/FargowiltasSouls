@@ -26,9 +26,9 @@ namespace FargowiltasSouls.Buffs.Souls
         public override void Update(NPC npc, ref int buffIndex)
         {
             //after 1 second, revert KB, cooldown for rest of debuff
-            if (npc.buffTime[buffIndex] < 900 && npc.knockbackResist == 1f)
+            if (npc.buffTime[buffIndex] < 900 && npc.knockBackResist == 1f)
             {
-                npc.knockbackResist = npc.GetGlobalNPC<FargoSoulsGlobalNPC>().originalKB;
+                npc.knockBackResist = npc.GetGlobalNPC<FargoSoulsGlobalNPC>().originalKB;
             }
         }
     }

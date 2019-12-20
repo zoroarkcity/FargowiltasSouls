@@ -101,5 +101,10 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Main.dust[num469].velocity *= 2f;
             }
         }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.AddBuff(BuffID.ShadowFlame, 240);
+        }
     }
 }
