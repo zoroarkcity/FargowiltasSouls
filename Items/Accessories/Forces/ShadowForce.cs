@@ -20,8 +20,9 @@ Your attacks may inflict Darkness on enemies
 A Dungeon Guardian will occasionally annihilate a foe when struck
 All of your minions may occasionally spew massive scythes everywhere
 Throw a smoke bomb to teleport to it and gain the First Strike Buff
-Using the Rod of Discord will also grant this buff
+Stand still to gain a single use monk dash
 Dash into any walls, to teleport through them to the next opening
+Summons a Flameburst minion that will fire after charging up
 While attacking, Flameburst shots manifest themselves from your shadows
 Greatly enhances Flameburst and Lightning Aura effectiveness
 Effects of Master Ninja Gear
@@ -62,6 +63,8 @@ Summons several pets";
             modPlayer.ShadowForce = true;
             //shoot from where you were meme, pet
             modPlayer.DarkArtistEffect(hideVisual);
+            modPlayer.ApprenticeEffect();
+
             //DG meme, pet
             modPlayer.NecroEffect(hideVisual);
             //shadow orbs

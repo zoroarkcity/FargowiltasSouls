@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
@@ -26,7 +27,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.useAnimation = 15;
             item.useStyle = 1;
             item.noMelee = true;
-            item.UseSound = new LegacySoundStyle(4, 13);
+            item.UseSound = SoundID.Item78;
             item.value = 50000;
             item.rare = 3;
             item.shoot = mod.ProjectileType("HiveSentry");

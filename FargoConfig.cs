@@ -168,7 +168,11 @@ namespace FargowiltasSouls
         [Header("$Mods.FargowiltasSouls.ShadowHeader")]
         [Label("$Mods.FargowiltasSouls.DarkArtConfig")]
         [DefaultValue(true)]
-        public bool DarkArtistEffect;
+        public bool DarkArtistMinion;
+
+        [Label("$Mods.FargowiltasSouls.ApprenticeConfig")]
+        [DefaultValue(true)]
+        public bool ApprenticeEffect;
 
         [Label("$Mods.FargowiltasSouls.NecroConfig")]
         [DefaultValue(true)]
@@ -189,6 +193,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.ShinobiTabiConfig")]
         [DefaultValue(true)]
         public bool ShinobiTabi;
+
+        [Label("$Mods.FargowiltasSouls.ShinobiClimbingConfig")]
+        [DefaultValue(true)]
+        public bool ShinobiClimbing;
 
         [Label("$Mods.FargowiltasSouls.SpookyConfig")]
         [DefaultValue(true)]
@@ -781,6 +789,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.ThoriumMetronomeConfig")]
         [DefaultValue(true)]
         public bool Metronome;
+
+        [Label("$Mods.FargowiltasSouls.ThoriumMarchingBandConfig")]
+        [DefaultValue(true)]
+        public bool MarchingBand;
 
         [Header("$Mods.FargowiltasSouls.SvartalfheimForce")]
         [Label("$Mods.FargowiltasSouls.ThoriumEyeoftheStormConfig")]

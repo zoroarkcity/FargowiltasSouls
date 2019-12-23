@@ -83,13 +83,13 @@ namespace FargowiltasSouls.Items.Accessories.Essences
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
                 recipe.AddIngredient(thorium.ItemType("NinjaEmblem"));
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("WoodenYoyoThrown") : ItemID.WoodYoyo);
+                recipe.AddIngredient(fargos != null ? fargos.ItemType("WoodYoyoThrown") : ItemID.WoodYoyo);
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("BloodyMacheteThrown") : ItemID.BloodyMachete);
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("IceBoomerangThrown") : ItemID.IceBoomerang);
                 recipe.AddIngredient(ItemID.AleThrowingGlove);
                 recipe.AddIngredient(thorium.ItemType("EnchantedKnife"));
                 recipe.AddIngredient(thorium.ItemType("StarfishSlicer"), 300);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("AmazonThrown") : ItemID.JungleYoyo);
+                recipe.AddIngredient(fargos != null ? fargos.ItemType("JungleYoyoThrown") : ItemID.JungleYoyo);
                 recipe.AddIngredient(ItemID.Beenade, 300);
                 recipe.AddIngredient(ItemID.BoneGlove);
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("BlueMoonThrown") : ItemID.BlueMoon);
@@ -100,13 +100,13 @@ namespace FargowiltasSouls.Items.Accessories.Essences
             else
             {
                 //no others
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("WoodenYoyoThrown") : ItemID.WoodYoyo);
+                recipe.AddIngredient(fargos != null ? fargos.ItemType("WoodYoyoThrown") : ItemID.WoodYoyo);
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("BloodyMacheteThrown") : ItemID.BloodyMachete);
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("IceBoomerangThrown") : ItemID.IceBoomerang);
                 recipe.AddIngredient(ItemID.AleThrowingGlove);
                 recipe.AddIngredient(ItemID.PartyGirlGrenade, 300);
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("TheMeatballThrown") : ItemID.TheMeatball);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("AmazonThrown") : ItemID.JungleYoyo);
+                recipe.AddIngredient(fargos != null ? fargos.ItemType("JungleYoyoThrown") : ItemID.JungleYoyo);
                 recipe.AddIngredient(ItemID.Beenade, 300);
                 recipe.AddIngredient(ItemID.BoneGlove);
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("BlueMoonThrown") : ItemID.BlueMoon);

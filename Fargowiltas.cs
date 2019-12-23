@@ -115,12 +115,14 @@ namespace FargowiltasSouls
             AddToggle("ShroomiteConfig", "Shroomite Stealth", "ShroomiteEnchant", "008cf4");
 
             AddToggle("ShadowHeader", "Shadow Force", "ShadowForce", "ffffff");
-            AddToggle("DarkArtConfig", "Dark Artist Effect", "DarkArtistEnchant", "9b5cb0");
+            AddToggle("DarkArtConfig", "Flameburst Minion", "DarkArtistEnchant", "9b5cb0");
+            AddToggle("ApprenticeConfig", "Apprentice Effect", "ApprenticeEnchant", "ffffff");
             AddToggle("NecroConfig", "Necro Guardian", "NecroEnchant", "565643");
             AddToggle("ShadowConfig", "Shadow Darkness", "ShadowEnchant", "42356f");
             AddToggle("AncientShadowConfig", "Ancient Shadow Orbs", "AncientShadowEnchant", "42356f");
             AddToggle("ShinobiConfig", "Shinobi Through Walls", "ShinobiEnchant", "935b18");
             AddToggle("ShinobiTabiConfig", "Tabi Dash", "ShinobiEnchant", "935b18");
+            AddToggle("ShinobiClimbingConfig", "Tiger Climbing Gear", "ShinobiEnchant", "935b18");
             AddToggle("SpookyConfig", "Spooky Scythes", "SpookyEnchant", "644e74");
 
             AddToggle("SpiritHeader", "Force of Spirit", "SpiritForce", "ffffff");
@@ -305,6 +307,7 @@ namespace FargowiltasSouls
                 AddToggle("ThoriumMixTapeConfig", "Mix Tape", "NobleEnchant", "ffffff");
                 AddToggle("ThoriumCyberStatesConfig", "Cyber Punk States", "CyberPunkEnchant", "ffffff");
                 AddToggle("ThoriumMetronomeConfig", "Metronome", "MaestroEnchant", "ffffff");
+                AddToggle("ThoriumMarchingBandConfig", "Marching Band Effect", "MarchingBandEnchant", "ffffff");
 
                 AddToggle("SvartalfheimForce", "Force of Svartalfheim", "SvartalfheimForce", "ffffff");
                 AddToggle("ThoriumEyeoftheStormConfig", "Eye of the Storm", "GraniteEnchant", "ffffff");

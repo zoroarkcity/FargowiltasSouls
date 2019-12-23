@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Valhalla Knight Enchantment");
             Tooltip.SetDefault(
 @"'Valhalla calls'
-Continually attacking an enemy will eventually drastically reduce its immunity frames for 2 second
+Continually attacking an enemy will eventually drastically reduce its immunity frames for 2 seconds
 There is a 15 second cooldown per enemy
 Greatly enhances Ballista effectiveness
 Effects of Shiny Stone
