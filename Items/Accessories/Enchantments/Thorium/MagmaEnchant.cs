@@ -79,7 +79,6 @@ Effects of Spring Steps, Slag Stompers, and Molten Spear Tip");
             "SpringSteps",
             "SlagStompers",
             "MoltenSpearTip",
-            "MagmaShiv",
             "MagmaPolearm",
             "MagmaticRicochet",
             "MagmaFlail"
@@ -92,6 +91,8 @@ Effects of Spring Steps, Slag Stompers, and Molten Spear Tip");
             ModRecipe recipe = new ModRecipe(mod);
             
             foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(thorium.ItemType("MagmaShiv"), 300);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

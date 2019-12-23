@@ -65,8 +65,11 @@ Effects of Bee Booties and Petal Shield");
             "BulbChestplate",
             "BulbLeggings",
             "PetalShield",
+            "KickPetal",
             "BeeBoots",
+            "FragrantCorsage",
             "BloomingBlade",
+            "BloomerBell",
             "CreepingVineStaff"
         };
 
@@ -77,10 +80,6 @@ Effects of Bee Booties and Petal Shield");
             ModRecipe recipe = new ModRecipe(mod);
             
             foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
-
-            recipe.AddIngredient(ItemID.Sunflower);
-            recipe.AddIngredient(ItemID.SkyBlueFlower);
-            recipe.AddIngredient(ItemID.YellowMarigold);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

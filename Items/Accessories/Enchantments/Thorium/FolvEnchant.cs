@@ -80,7 +80,7 @@ Effects of Mana-Charged Rocketeers");
             recipe.AddIngredient(thorium.ItemType("FolvRobe"));
             recipe.AddIngredient(thorium.ItemType("FolvLegging"));
             recipe.AddIngredient(null, "MalignantEnchant");
-            recipe.AddIngredient(ItemID.UnholyTrident);
+            recipe.AddIngredient(thorium.ItemType("SandweaversTiara"));
             recipe.AddIngredient(thorium.ItemType("TerrariumSageStaff"));
             recipe.AddIngredient(thorium.ItemType("AncientFlame"));
             recipe.AddIngredient(thorium.ItemType("AncientFrost"));

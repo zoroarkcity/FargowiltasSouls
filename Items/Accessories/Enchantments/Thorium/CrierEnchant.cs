@@ -48,28 +48,22 @@ Effects of Music Notes");
             //music notes
             thoriumPlayer.bardBuffDuration += 120;
         }
-        
-        private readonly string[] items =
-        {
-            "BardCap",
-            "BardChest",
-            "BardLeggings",
-            "MusicNotes",
-            "WoodenWhistle",
-            "Flute",
-            "DrumMallet",
-            "Harmonica",
-            "DynastyGuzheng",
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
+            recipe.AddIngredient(thorium.ItemType("BardCap"));
+            recipe.AddIngredient(thorium.ItemType("BardChest"));
+            recipe.AddIngredient(thorium.ItemType("BardLeggings"));
+            recipe.AddRecipeGroup("FargowiltasSouls:AnyBugleHorn");
+            recipe.AddIngredient(thorium.ItemType("WoodenWhistle"));
+            recipe.AddIngredient(thorium.ItemType("Ukulele"));
+            recipe.AddIngredient(thorium.ItemType("DrumMallet"));
+            recipe.AddIngredient(thorium.ItemType("Harmonica"));
+            recipe.AddIngredient(thorium.ItemType("DynastyGuzheng"));
             //because bards attract birds?
             recipe.AddIngredient(ItemID.Cardinal);
 

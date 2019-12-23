@@ -151,7 +151,7 @@ Effects of Auto Tuner and Metal Music Player");
             "CyberPunkLeggings",
             "AutoTuner",
             "TunePlayerDamage",
-            "VinylRecord",
+            "DissTrack",
             "Kazoo",
             "HallowedMegaphone",
             "BassBooster",

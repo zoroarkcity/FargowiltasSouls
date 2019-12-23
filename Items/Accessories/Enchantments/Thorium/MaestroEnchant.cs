@@ -64,8 +64,8 @@ Effects of Metronome and Purple Music Player");
         private readonly string[] items =
         {
             "Metronome",
+            "ConductorsBaton",
             "Organ",
-            "BoneTrumpet",
             "Clarinet",
             "FrenchHorn",
             "Saxophone"
