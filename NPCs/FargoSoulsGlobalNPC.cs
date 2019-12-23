@@ -348,7 +348,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Mimic:
-                        npc.value = 0;
+                        npc.value /= 4;
                         goto case NPCID.Medusa;
 
                     case NPCID.PigronCorruption:
@@ -485,7 +485,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.QueenBee:
-                        npc.value /= 4;
+                        npc.value /= 2;
                         break;
 
                     case NPCID.MoonLordCore:
