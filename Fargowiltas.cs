@@ -743,6 +743,9 @@ namespace FargowiltasSouls
                 //fan letter
                 group = new RecipeGroup(() => Lang.misc[37] + " Fan Letter", thorium.ItemType("FanLetter"), thorium.ItemType("FanLetter2"));
                 RecipeGroup.RegisterGroup("FargowiltasSouls:AnyLetter", group);
+                //bugle horn
+                group = new RecipeGroup(() => Lang.misc[37] + " Bugle Horn", thorium.ItemType("GoldenBugleHorn"), thorium.ItemType("PlatinumBugle"));
+                RecipeGroup.RegisterGroup("FargowiltasSouls:AnyBugleHorn", group);
 
                 //butterflies
                 group = new RecipeGroup(() => Lang.misc[37] + " Dungeon Butterfly", thorium.ItemType("BlueDungeonButterfly"), thorium.ItemType("GreenDungeonButterfly"), thorium.ItemType("PinkDungeonButterfly"));

@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 @"'Which way is up?'
 Reverse gravity by pressing UP
 While reversed, damage is increased by 12%
-Effects of Eye of the Beholder");
+Effects of Mirror of the Beholder");
             DisplayName.AddTranslation(GameCulture.Chinese, "虚金魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'哪儿是上?'
