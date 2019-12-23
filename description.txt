@@ -6,7 +6,8 @@ NEW UPDATE - v 1.1.1
 
 -Fixed True Mutant Head sprite sheet
 -Added Eurus Socks (add to mutant mod ech)
-
+-updated Hive Staff's use sound 
+-Added climbing claws and marching band toggles
 
 
 -checkout mimic and queen bee money?

@@ -42,8 +42,13 @@ While in combat, a rainbow of damaging symphonic symbols will follow your moveme
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
 
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            //marching band set 
-            thoriumPlayer.setMarchingBand = true;
+
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.MarchingBand))
+            {
+                //marching band set 
+                thoriumPlayer.setMarchingBand = true;
+            }
+            
         }
         
         private readonly string[] items =

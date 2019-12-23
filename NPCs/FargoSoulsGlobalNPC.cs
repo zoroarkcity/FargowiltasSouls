@@ -1076,11 +1076,6 @@ namespace FargowiltasSouls.NPCs
             if (valhallaCounter > 0)
             {
                 valhallaCounter--;
-
-                if (valhallaCounter > 900)
-                {
-                    npc.immune[valhallaPlayer] = 2;
-                }
             }
             
 
@@ -7230,6 +7225,12 @@ namespace FargowiltasSouls.NPCs
                 return drawColor;
             }
 
+            if (valhallaCounter > 900)
+            {
+                drawColor = Color.SandyBrown;
+                return drawColor;
+            }
+
             return null;
         }
 
@@ -11791,16 +11792,22 @@ namespace FargowiltasSouls.NPCs
         {
             FargoPlayer modPlayer = Main.player[projectile.owner].GetModPlayer<FargoPlayer>();
 
-            if (modPlayer.ValhallaEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaEffect)
-                 && valhallaCounter == 0)
+            if (modPlayer.ValhallaEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaEffect))
             {
-                squireCounter++;
-
-                if (squireCounter >= 100)
+                if (valhallaCounter == 0)
                 {
-                    valhallaCounter = 1020;
-                    valhallaPlayer = projectile.owner;
-                    squireCounter = 0;
+                    squireCounter++;
+
+                    if (squireCounter >= 100)
+                    {
+                        valhallaCounter = 1020;
+                        valhallaPlayer = projectile.owner;
+                        squireCounter = 0;
+                    }
+                }
+                else if (valhallaCounter > 900)
+                {
+                    npc.immune[valhallaPlayer] = 2;
                 }
             }
             else if (modPlayer.SquireEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.SquireKB)

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Pungent Eyeball");
+            DisplayName.SetDefault("Flameburst Minion");
         }
 
         public override void SetDefaults()
@@ -30,14 +30,20 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override void AI()
         {
             Player player = Main.player[projectile.owner];
-            if (player.active && !player.dead && player.GetModPlayer<FargoPlayer>().DarkEnchant)
+            if (player.active && !player.dead)
             {
                 projectile.timeLeft = 2;
             }
 
+            if (player.dead || !player.GetModPlayer<FargoPlayer>().DarkEnchant || !SoulConfig.Instance.GetValue(SoulConfig.Instance.DarkArtistMinion))
+            {
+                projectile.Kill();
+                return;
+            }
+
             //float above player
             projectile.position.X = player.Center.X - (float)(projectile.width / 2);
-            projectile.position.Y = player.Center.Y - (float)(projectile.height / 2) + player.gfxOffY - 60f;
+            projectile.position.Y = player.Center.Y - (float)(projectile.height / 2) + player.gfxOffY - 50f;
 
             //pulsation mumbo jumbo
             projectile.position.X = (float)((int)projectile.position.X);
@@ -67,8 +73,8 @@ namespace FargowiltasSouls.Projectiles.Minions
                 target.ToRotation(), rotationModifier);
             }
 
-            //3 seconds
-            const float chargeTime = 180f;
+            //4 seconds
+            const float chargeTime = 240;
             if (projectile.localAI[1] > 0)
             {
                 projectile.localAI[1]--;
@@ -88,46 +94,21 @@ namespace FargowiltasSouls.Projectiles.Minions
                 {
                     if (projectile.owner == Main.myPlayer)
                         projectile.netUpdate = true;
-                    const int num226 = 12;
-                    for (int i = 0; i < num226; i++)
+
+                    double spread = 2 * Math.PI / 36;
+                    for (int i = 0; i < 36; i++)
                     {
-                        Vector2 vector6 = Vector2.UnitX.RotatedBy(projectile.rotation) * 6f;
-                        vector6 = vector6.RotatedBy(((i - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + projectile.Center;
-                        Vector2 vector7 = vector6 - projectile.Center;
-                        int num228 = Dust.NewDust(vector6 + vector7, 0, 0, DustID.FlameBurst, 0f, 0f, 0, default(Color), 1.5f);
-                        Main.dust[num228].noGravity = true;
-                        Main.dust[num228].velocity = vector7;
+                        Vector2 velocity = new Vector2(2, 2).RotatedBy(spread * i);
+
+                        int index2 = Dust.NewDust(projectile.Center, 0, 0, DustID.FlameBurst, velocity.X, velocity.Y, 100);
+                        Main.dust[index2].noGravity = true;
+                        Main.dust[index2].noLight = true;
                     }
                 }
                 //charging further
                 if (projectile.localAI[0] > chargeTime)
                 {
                     int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.FlameBurst, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f);
-                    Main.dust[d].noGravity = true;
-                }
-                //charge level 2
-                if (projectile.localAI[0] == chargeTime * 2f)
-                {
-                    if (projectile.owner == Main.myPlayer)
-                        projectile.netUpdate = true;
-                    const int num226 = 24; //dusts indicate charged up
-                    for (int i = 0; i < num226; i++)
-                    {
-                        Vector2 vector6 = Vector2.UnitX.RotatedBy(projectile.rotation) * 9f;
-                        vector6 = vector6.RotatedBy(((i - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + projectile.Center;
-                        Vector2 vector7 = vector6 - projectile.Center;
-                        int num228 = Dust.NewDust(vector6 + vector7, 0, 0, DustID.FlameBurst, 0f, 0f, 0, default(Color), 2.5f);
-                        Main.dust[num228].noGravity = true;
-                        Main.dust[num228].velocity = vector7;
-                    }
-                }
-                //fully charged
-                if (projectile.localAI[0] > chargeTime * 2f)
-                {
-                    int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.FlameBurst, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f);
-                    Main.dust[d].noGravity = true;
-                    Main.dust[d].scale += 0.5f;
-                    d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.FlameBurst, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f);
                     Main.dust[d].noGravity = true;
                 }
             }
@@ -141,14 +122,13 @@ namespace FargowiltasSouls.Projectiles.Minions
                     projectile.localAI[1] = 120f;
                     if (projectile.owner == Main.myPlayer)
                     {
-                        Vector2 velocity = Vector2.UnitX.RotatedBy(projectile.rotation) * 15 * (projectile.spriteDirection == 1 ? 1 : -1);
+                        Vector2 velocity = Vector2.UnitX.RotatedBy(projectile.rotation) * 6 * (projectile.spriteDirection == 1 ? 1 : -1);
 
-                        //add another custom fireball
-
-                        int type = (projectile.localAI[0] >= chargeTime * 2f) ? mod.ProjectileType("LunarCultistFireball") : ProjectileID.DD2FlameBurstTowerT3Shot;
+                        int type = mod.ProjectileType("MegaFlameburst");
 
                         Projectile.NewProjectile(projectile.Center, velocity, type,
-                            projectile.damage, 4f, projectile.owner, projectile.whoAmI);
+                            player.GetModPlayer<FargoPlayer>().HighestDamageTypeScaling(200), 4f, projectile.owner, projectile.whoAmI);
+                        Main.PlayTrackedSound(SoundID.DD2_FlameburstTowerShot, projectile.Center);
                     }
                 }
                 projectile.localAI[0] = 0;

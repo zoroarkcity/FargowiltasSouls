@@ -17,7 +17,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 
             string tooltip =
 @"'The shadows hold more than they seem'
-Summons a Flameburst minion that charges its attack while you do
+Summons a Flameburst minion that will fire after charging up
+While attacking, Flameburst shots manifest themselves from your shadows
 Greatly enhances Flameburst effectiveness
 Summons a pet Flickerwick";
 
@@ -48,8 +49,9 @@ Summons a pet Flickerwick";
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            //spawns flameburst minion - make it .. fire a barrage at max charge, massive homing, leaves inferno blast behind
-            ///player.GetModPlayer<FargoPlayer>().DarkArtistEffect(hideVisual);
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            modPlayer.DarkArtistEffect(hideVisual);
+            modPlayer.ApprenticeEffect();
         }
 
         public override void AddRecipes()

@@ -139,6 +139,8 @@ namespace FargowiltasSouls
         public bool HuntressEnchant;
         private int huntressCD = 0;
         public bool MonkEnchant;
+        public int MonkDashing = 0;
+        private int monkTimer;
         public bool EskimoEnchant;
 
         public bool CosmoForce;
@@ -1023,12 +1025,6 @@ namespace FargowiltasSouls
                 unstableCD--;
             }
 
-            if (SuperBleed && Main.rand.Next(4) == 0)
-            {
-                Projectile.NewProjectile(player.position.X + Main.rand.Next(player.width), player.Center.Y + Main.rand.Next(player.height),
-                    0f + Main.rand.Next(-5, 5),  Main.rand.Next(-6, -2), mod.ProjectileType("SuperBlood"), 5, 0f, Main.myPlayer);
-            }
-
             if (CopperEnchant && copperCD > 0)
                 copperCD--;
 
@@ -1112,6 +1108,40 @@ namespace FargowiltasSouls
                         player.maxFallSpeed = 15f;
                         GroundPound++;
                     }
+                }
+            }
+
+            //horizontal dash
+            if (MonkDashing > 0)
+            {
+                MonkDashing--;
+
+                //no loss of height
+                //player.maxFallSpeed = 0f;
+                //player.fallStart = (int)(player.position.Y / 16f);
+                //player.gravity = 0f;
+                player.position.Y = player.oldPosition.Y;
+                player.immune = true;
+
+                if (MonkDashing == 0)
+                {
+                    player.velocity *= 0.5f;
+                    player.dashDelay = 0;
+                }
+            }
+            //vertical dash
+            else if (MonkDashing < 0)
+            {
+                MonkDashing++;
+
+                player.immune = true;
+                player.maxFallSpeed *= 30f;
+                player.gravity = 1.5f;
+
+                if (MonkDashing == 0)
+                {
+                    player.velocity *= 0.5f;
+                    player.dashDelay = 0;
                 }
             }
         }
@@ -4180,10 +4210,9 @@ namespace FargowiltasSouls
 
         public void ShinobiEffect(bool hideVisual)
         {
-            player.setMonkT2 = true;
             player.setMonkT3 = true;
             //tele through wall until open space on dash into wall
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShinobiWalls) && player.dashDelay > 0 && player.mount.Type == -1 && player.velocity.X == 0)
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShinobiWalls) && player.dashDelay == -1 && player.mount.Type == -1 && player.velocity.X == 0)
             {
                 var teleportPos = new Vector2();
                 int direction = player.direction;
@@ -4609,7 +4638,7 @@ namespace FargowiltasSouls
             player.setApprenticeT2 = true;
 
             //shadow shoot meme
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DarkArtistEffect))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ApprenticeEffect))
             {
                 Item heldItem = player.HeldItem;
 
@@ -4676,6 +4705,33 @@ namespace FargowiltasSouls
             if (huntressCD != 0)
             {
                 huntressCD--;
+            }
+        }
+
+        public void MonkEffect()
+        {
+            player.setMonkT2 = true;
+            MonkEnchant = true;
+
+            if (!player.HasBuff(mod.BuffType("MonkBuff")) && IsStandingStill && !player.mount.Active)
+            {
+                monkTimer++;
+
+                if (monkTimer >= 60)
+                {
+                    player.AddBuff(mod.BuffType("MonkBuff"), 2);
+                    monkTimer = 0;
+
+                    double spread = 2 * Math.PI / 36;
+                    for (int i = 0; i < 36; i++)
+                    {
+                        Vector2 velocity = new Vector2(2, 2).RotatedBy(spread * i);
+
+                        int index2 = Dust.NewDust(player.Center, 0, 0, DustID.GoldCoin, velocity.X, velocity.Y, 100);
+                        Main.dust[index2].noGravity = true;
+                        Main.dust[index2].noLight = true;
+                    }
+                }
             }
         }
 
