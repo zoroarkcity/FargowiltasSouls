@@ -3930,7 +3930,7 @@ namespace FargowiltasSouls
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.JungleSpores) && player.jump > 0 && jungleCD == 0)
             {
                 int dmg = NatureForce ? 50 : 15;
-                Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 62);
+                Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 62, 0.5f);
                 FargoGlobalProjectile.XWay(10, player.Center, mod.ProjectileType("SporeBoom"), 3f, HighestDamageTypeScaling(dmg), 0f);
                 jungleCD = 30;
             }

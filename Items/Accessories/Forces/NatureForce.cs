@@ -75,6 +75,7 @@ Summons several pets";
             modPlayer.MoltenEffect(30);
             //rain
             modPlayer.RainEnchant = true;
+            player.buffImmune[BuffID.Wet] = true;
             //icicles, pets
             modPlayer.FrostEffect(75, hideVisual);
             //spores

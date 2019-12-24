@@ -33,6 +33,7 @@ At maximum size, water will turn into lightning bolts");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
+            player.buffImmune[BuffID.Wet] = true;
             player.GetModPlayer<FargoPlayer>().RainEnchant = true;
         }
 
