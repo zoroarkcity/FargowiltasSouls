@@ -61,6 +61,7 @@ Effects of Ring of the Fallen, Memento Mori, and Arcanum of the Caster");
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             ModdedPlayer modPlayer = player.GetModPlayer<ModdedPlayer>();
 
+            mod.GetItem("FoundationsForce").UpdateAccessory(player, hideVisual);
             mod.GetItem("GenerationsForce").UpdateAccessory(player, hideVisual);
             mod.GetItem("SoranForce").UpdateAccessory(player, hideVisual);
             mod.GetItem("SyranForce").UpdateAccessory(player, hideVisual);
@@ -73,6 +74,7 @@ Effects of Ring of the Fallen, Memento Mori, and Arcanum of the Caster");
 
             ModRecipe recipe = new ModRecipe(mod);
 
+            recipe.AddIngredient(null, "FoundationsForce");
             recipe.AddIngredient(null, "GenerationsForce");
             recipe.AddIngredient(null, "SoranForce");
             recipe.AddIngredient(null, "SyranForce");

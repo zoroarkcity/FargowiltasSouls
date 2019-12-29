@@ -1,4 +1,4 @@
-﻿using Terraria;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
@@ -6,7 +6,7 @@ using SacredTools;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.SoA
 {
-    public class GenerationsForce : ModItem
+    public class FoundationsForce : ModItem
     {
         private readonly Mod soa = ModLoader.GetMod("SacredTools");
 
@@ -17,12 +17,11 @@ namespace FargowiltasSouls.Items.Accessories.Forces.SoA
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Force of Generations");
+            DisplayName.SetDefault("Force of Foundations");
             Tooltip.SetDefault(
-@"'Through all this world's years, none have seen anything quite like you'
-All armor bonuses from Eerie, Bismuth, and Dreadfire
-All armor bonuses from Space Junk and Marstech
-Effects of Pumpkin Amulet");
+@"':HeyMF:'
+All armor bonuses from Prairie, Frosthunter, Lapis, and Blightbone
+Effects of Frigid Pendant, Lapis Pendant, and Dreadflame Emblem");
             DisplayName.AddTranslation(GameCulture.Chinese, "世代之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'这么多年来, 从未出现过像你这样的人'
@@ -49,20 +48,18 @@ Effects of Pumpkin Amulet");
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             ModdedPlayer modPlayer = player.GetModPlayer<ModdedPlayer>();
 
-            //eerie
-            modPlayer.EerieEffect = true;
-
-            //bismuth
-            modPlayer.bismuthArmor = true;
-
-            //dreadfire
-            modPlayer.DreadEffect = true;
-            //pumpkin amulet
-            modPlayer.pumpkinAmulet = true;
-            //marstech
-            modPlayer.marsArmor = true;
-            //space junk
-            modPlayer.spaceJunk = true;
+            //frosthunter
+            modPlayer.frostburnRanged = true;
+            //frigid pendant
+            modPlayer.decreePendant = true;
+            if (hideVisual)
+            {
+                modPlayer.decreePendantHide = true;
+            }
+            //blightbone
+            modPlayer.blightEmpowerment = true;
+            //dreadflame emblem
+            modPlayer.dreadEmblem = true;
 
             //pets soon tm
         }
@@ -74,10 +71,10 @@ Effects of Pumpkin Amulet");
 
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(null, "EerieEnchant");
-            recipe.AddIngredient(null, "BismuthEnchant");
-            recipe.AddIngredient(null, "DreadfireEnchant");
-            recipe.AddIngredient(null, "MarstechEnchant");
+            recipe.AddIngredient(null, "PrairieEnchant");
+            recipe.AddIngredient(null, "LapisEnchant");
+            recipe.AddIngredient(null, "FrosthunterEnchant");
+            recipe.AddIngredient(null, "BlightboneEnchant");
 
             recipe.AddTile(mod, "CrucibleCosmosSheet");
             recipe.SetResult(this);
