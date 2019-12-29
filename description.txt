@@ -1,15 +1,7 @@
 NEW UPDATE - v 1.1.1
-
--Pandora's Box now can only summon bosses in Hard Mode
-
--All hard mode enemies spawning early have half max HP
-
--Fixed True Mutant Head sprite sheet
--Added Eurus Socks (add to mutant mod ech)
--updated Hive Staff's use sound 
--Added climbing claws and marching band toggles
-
-
--checkout mimic and queen bee money?
+-Added and reworked several new Enchantments
+-Rearranged several recipes
+-Many balance changes to Masochist Mode
+-Toggles look better and added a few new ones
 
 -See the full changelog on the wiki
