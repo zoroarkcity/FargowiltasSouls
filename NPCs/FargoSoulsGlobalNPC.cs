@@ -10494,11 +10494,16 @@ namespace FargowiltasSouls.NPCs
 
                         if (Main.netMode != 1)
                         {
-                            int type = Main.rand.Next(2) == 0 ? NPCID.EaterofSouls
+                            int count = NPC.CountNPCS(NPCID.BigEater) + NPC.CountNPCS(NPCID.EaterofSouls) + NPC.CountNPCS(NPCID.LittleEater);
+
+                            if (count < 40)
+                            {
+                                int type = Main.rand.Next(2) == 0 ? NPCID.EaterofSouls
                                 : (Main.rand.Next(2) == 0 ? NPCID.BigEater : NPCID.LittleEater);
-                            int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type);
-                            if (n < 200 && Main.netMode == 2)
-                                NetMessage.SendData(23, -1, -1, null, n);
+                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type);
+                                if (n < 200 && Main.netMode == 2)
+                                    NetMessage.SendData(23, -1, -1, null, n);
+                            }
                         }
 
                         for (int i = 0; i < 200; i++)
