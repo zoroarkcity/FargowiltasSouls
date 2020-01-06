@@ -132,7 +132,7 @@ reti emits dust and roars when beginning laser
 increased reti's reverse aura max range
 destroyer's coil enrage does more damage and has more rng ech
 destroyer has pierce resist - first hit deals full damage, depreciates as it hits more segments
-
+mutant boss has 10% DR
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
