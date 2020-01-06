@@ -24,6 +24,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.penetrate = 4;
             projectile.timeLeft = 300;
             aiType = ProjectileID.Bullet;
+
+           // projectile.usesIDStaticNPCImmunity = true;
+            //projectile.idStaticNPCHitCooldown = 10;
         }
 
         public override void AI()
@@ -36,9 +39,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 projectile.velocity.Y * 0.2f, 100, default(Color), 1f);
             Main.dust[dustId3].noGravity = true;
 
+
+
+
+
+
             const int aislotHomingCooldown = 0;
-            const int homingDelay = 30;
-            const float desiredFlySpeedInPixelsPerFrame = 40;
+            const int homingDelay = 15;
+            const float desiredFlySpeedInPixelsPerFrame = 15;
             const float amountOfFramesToLerpBy = 20; // minimum of 1, please keep in full numbers even though it's a float!
 
             projectile.ai[aislotHomingCooldown]++;
@@ -92,6 +100,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     -projectile.velocity.Y * 0.2f, 100);
                 Main.dust[num469].velocity *= 2f;
             }
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.AddBuff(BuffID.ShadowFlame, 240);
         }
     }
 }

@@ -16,8 +16,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Valhalla Knight Enchantment");
             Tooltip.SetDefault(
 @"'Valhalla calls'
-Attacks will slowly remove enemy knockback immunity AND immunity frames 
-After not being hit for a ech seconds, enemies will recover, or meme ballista minion echcease
+Continually attacking an enemy will eventually drastically reduce its immunity frames for 2 seconds
+There is a 15 second cooldown per enemy
 Greatly enhances Ballista effectiveness
 Effects of Shiny Stone
 Summons a pet Dragon");
@@ -62,7 +62,7 @@ Summons a pet Dragon");
             recipe.AddIngredient(ItemID.SquireAltHead);
             recipe.AddIngredient(ItemID.SquireAltShirt);
             recipe.AddIngredient(ItemID.SquireAltPants);
-            //squire enchant
+            recipe.AddIngredient(null, "SquireEnchant");
             recipe.AddIngredient(ItemID.ShinyStone);
             
             if(Fargowiltas.Instance.ThoriumLoaded)

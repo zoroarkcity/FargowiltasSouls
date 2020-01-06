@@ -27,7 +27,6 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool ShadewoodEffect;
 
-        //[Label("[" +  "i:19][c/00FF00: Green Text]")]
         [Label("$Mods.FargowiltasSouls.MahoganyConfig")]
         //[BackgroundColor(181, 108, 100)]
         [DefaultValue(true)]
@@ -108,13 +107,13 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool HuntressAbility;
 
-        [Label("$Mods.FargowiltasSouls.RedRidingConfig")]
-        [DefaultValue(true)]
-        public bool redBleed;
-
         [Label("$Mods.FargowiltasSouls.ValhallaConfig")]
         [DefaultValue(true)]
-        public bool ValhallaKB;
+        public bool ValhallaEffect;
+
+        [Label("$Mods.FargowiltasSouls.SquireConfig")]
+        [DefaultValue(true)]
+        public bool SquireKB;
 
         [Header("$Mods.FargowiltasSouls.LifeHeader")]
         [Label("$Mods.FargowiltasSouls.BeetleConfig")]
@@ -158,6 +157,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool MoltenInferno;
 
+        [Label("$Mods.FargowiltasSouls.RainConfig")]
+        [DefaultValue(true)]
+        public bool RainCloud;
+
         [Label("$Mods.FargowiltasSouls.ShroomiteConfig")]
         [DefaultValue(true)]
         public bool ShroomiteStealth;
@@ -165,7 +168,11 @@ namespace FargowiltasSouls
         [Header("$Mods.FargowiltasSouls.ShadowHeader")]
         [Label("$Mods.FargowiltasSouls.DarkArtConfig")]
         [DefaultValue(true)]
-        public bool DarkArtistEffect;
+        public bool DarkArtistMinion;
+
+        [Label("$Mods.FargowiltasSouls.ApprenticeConfig")]
+        [DefaultValue(true)]
+        public bool ApprenticeEffect;
 
         [Label("$Mods.FargowiltasSouls.NecroConfig")]
         [DefaultValue(true)]
@@ -186,6 +193,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.ShinobiTabiConfig")]
         [DefaultValue(true)]
         public bool ShinobiTabi;
+
+        [Label("$Mods.FargowiltasSouls.ShinobiClimbingConfig")]
+        [DefaultValue(true)]
+        public bool ShinobiClimbing;
 
         [Label("$Mods.FargowiltasSouls.SpookyConfig")]
         [DefaultValue(true)]
@@ -778,6 +789,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.ThoriumMetronomeConfig")]
         [DefaultValue(true)]
         public bool Metronome;
+
+        [Label("$Mods.FargowiltasSouls.ThoriumMarchingBandConfig")]
+        [DefaultValue(true)]
+        public bool MarchingBand;
 
         [Header("$Mods.FargowiltasSouls.SvartalfheimForce")]
         [Label("$Mods.FargowiltasSouls.ThoriumEyeoftheStormConfig")]

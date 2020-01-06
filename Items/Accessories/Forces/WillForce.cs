@@ -15,13 +15,13 @@ namespace FargowiltasSouls.Items.Accessories.Forces
 
             string tooltip =
 @"'A mind of unbreakable determination'
-Your attacks inflict Midas and Super Bleed
+Your attacks inflict Midas
 Press the Gold hotkey to be encased in a Golden Shell
 You will not be able to move or attack, but will be immune to all damage
 20% chance for enemies to drop 8x loot
 Spears will rain down on struck enemies 
-Your attacks deal increasing damage to low HP enemies
-All attacks will slowly remove enemy knockback immunity
+Double tap down to create a localized rain of arrows
+Continually attacking an enemy will drastically reduce its immunity frames
 Greatly enhances Ballista and Explosive Traps effectiveness
 Effects of Greedy Ring, Celestial Shell, and Shiny Stone
 Summons several pets";
@@ -64,17 +64,10 @@ Summons several pets";
             modPlayer.PlatinumEnchant = true;
             //javelins and pets
             modPlayer.GladiatorEffect(hideVisual);
-            //super bleed, pet
+            //arrow rain, celestial shell, pet
             modPlayer.RedRidingEffect(hideVisual);
-            //celestial shell
-            player.accMerman = true;
-            player.wolfAcc = true;
-            if (hideVisual)
-            {
-                player.hideMerman = true;
-                player.hideWolf = true;
-            }
-            //knockback kill, pet
+            modPlayer.HuntressEffect();
+            //immune frame kill, pet
             modPlayer.ValhallaEffect(hideVisual);
             player.shinyStone = true;
 

@@ -14,8 +14,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Squire Enchantment");
             Tooltip.SetDefault(
 @"'Squire, will you hurry?'
-Attacks will slowly remove enemy knockback immunity
-This does not affect bosses
+Continually attacking an enemy will eventually remove its knockback immunity for 2 seconds
+There is a 15 second cooldown per enemy
 Ballista pierces more targets and panics when you take damage");
             DisplayName.AddTranslation(GameCulture.Chinese, "精金魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -30,41 +30,36 @@ Ballista pierces more targets and panics when you take damage");
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 7;
-            item.value = 100000;
+            item.rare = 8;
+            item.value = 150000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<FargoPlayer>().SquireEnchant = true;
+            player.setSquireT2 = true;
         }
 
         public override void AddRecipes()
         {
-            /*ModRecipe recipe = new ModRecipe(mod);
-            
-            armor 1
-            armor 2
-            armor 3
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.SquireGreatHelm);
+            recipe.AddIngredient(ItemID.SquirePlating);
+            recipe.AddIngredient(ItemID.SquireGreaves);
             recipe.AddIngredient(ItemID.SquireShield);
-            brand of the inferno
-            
-            ballista tier 2
+            recipe.AddIngredient(ItemID.DD2BallistraTowerT2Popper);
+            recipe.AddIngredient(ItemID.DD2SquireDemonSword);
+            recipe.AddIngredient(ItemID.RedPhasesaber);
 
-            Breaker Blade
-Chlorophyte Saber
-Chlorophyte Claymore
-
-Doom Fire Axe (with Thorium)
-Dragon's Tooth (with Thorium)
-Rapier (with Thorium)
-Warp Slicer (with Thorium)
-Scalper (with Thorium)
-
+//Doom Fire Axe (with Thorium)
+//Dragon's Tooth (with Thorium)
+//Rapier (with Thorium)
+//Warp Slicer (with Thorium)
+//Scalper (with Thorium)
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
-            recipe.AddRecipe();*/
+            recipe.AddRecipe();
         }
     }
 }

@@ -82,6 +82,7 @@ Summons several pets");
             recipe.AddIngredient(null, "AerospecEnchant");
             recipe.AddIngredient(null, "StatigelEnchant");
             recipe.AddIngredient(null, "DaedalusEnchant");
+            //recipe.AddIngredient(null, "UmbraphileEnchant");
             recipe.AddIngredient(null, "BloodflareEnchant");
 
             recipe.AddTile(mod, "CrucibleCosmosSheet");

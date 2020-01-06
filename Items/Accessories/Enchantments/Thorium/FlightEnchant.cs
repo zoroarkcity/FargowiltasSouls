@@ -50,6 +50,7 @@ Increases flight time by 100%");
             "FlightMail",
             "FlightBoots",
             "ChampionWing",
+            "FabergeEgg",
             "HarpyTalon",
             "Aerial"
         };
@@ -63,7 +64,6 @@ Increases flight time by 100%");
             foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
             recipe.AddIngredient(thorium.ItemType("HarpiesBarrage"), 300);
-            recipe.AddIngredient(thorium.ItemType("ShinobiSlicer"), 300);
             recipe.AddIngredient(thorium.ItemType("Bolas"), 300);
             recipe.AddIngredient(thorium.ItemType("WackWrench"), 300);
 

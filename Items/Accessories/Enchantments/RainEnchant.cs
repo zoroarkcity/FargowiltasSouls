@@ -14,9 +14,10 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Rain Enchantment");
             Tooltip.SetDefault(
 @"'Come again some other day'
-Immunity to Wet
-A miniature storm may appear when an enemy dies or a boss is heavily damaged
-Shooting it with some kind of water will make it grow");
+Grants immunity to Wet
+A miniature storm will appear after heavily damaging enemies
+Shooting it with any kind of water will make it grow
+At maximum size, water will turn into lightning bolts");
             DisplayName.AddTranslation(GameCulture.Chinese, "云雨魔石");
         }
 
@@ -26,12 +27,13 @@ Shooting it with some kind of water will make it grow");
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 7;
-            item.value = 100000;
+            item.rare = 6;
+            item.value = 150000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
+            player.buffImmune[BuffID.Wet] = true;
             player.GetModPlayer<FargoPlayer>().RainEnchant = true;
         }
 
@@ -45,7 +47,7 @@ Shooting it with some kind of water will make it grow");
             recipe.AddIngredient(ItemID.Umbrella);
             recipe.AddIngredient(ItemID.NimbusRod);
             recipe.AddIngredient(ItemID.WaterGun);
-            recipe.AddIngredient(ItemID.RainCloud);
+            recipe.AddIngredient(ItemID.RainCloud, 25);
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

@@ -21,14 +21,14 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 
             string tooltip =
 @"'A true master of Terraria'
-Summons fireballs, icicles, leaf crystals, hallowed sword and shield, beetles, and several pets
+Summons fireballs, shadow orbs, icicles, leaf crystals, flameburst minion, hallowed sword and shield, beetles, and several pets
 Toggle vanity to remove all Pets, Right Click to Guard
-Double tap down to spawn a sentry, call an ancient storm, toggle stealth, spawn a portal, and direct your empowered guardian
+Double tap down to spawn a sentry and portal, call a storm and arrow rain, toggle stealth, and direct your empowered guardian
 Gold Key encases you in gold, Freeze Key freezes time for 5 seconds, minions spew scythes
 Solar shield allows you to dash, Dash into any walls, to teleport through them
 Throw a smoke bomb to teleport to it and gain the First Strike Buff
-Attacks may spawn lightning, flower petals, spectre orbs, a Dungeon Guardian, snowballs, spears, or buff boosters
-Attacks cause increased life regen, shadow dodge, Flameburst shots, meteor showers, and reduced enemy knockback immunity
+Attacks may spawn lightning, a storm cloud, flower petals, spectre orbs, a Dungeon Guardian, snowballs, spears, or buff boosters
+Attacks cause increased life regen, shadow dodge, Flameburst shots, meteor showers, and reduced enemy immune frames
 Critical chance is set to 25%, Crit to increase it by 5%, At 100% every 10th attack gains 4% life steal
 Getting hit drops your crit back down, trigger a blood geyser, and reflects damage
 Projectiles may split or shatter and spawn stars, item and projectile size increased, attract items from further away

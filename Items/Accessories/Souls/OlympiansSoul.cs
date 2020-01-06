@@ -131,7 +131,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("BananarangThrown") : ItemID.Bananarang, 5);
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("AmarokThrown") : ItemID.Amarok);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("ShadowflameKnifeThrown") : ItemID.ShadowFlameKnife);
+                recipe.AddIngredient(fargos != null ? fargos.ItemType("ShadowFlameKnifeThrown") : ItemID.ShadowFlameKnife);
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("FlyingKnifeThrown") : ItemID.FlyingKnife);
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("LightDiscThrown") : ItemID.LightDisc, 5);
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("FlowerPowThrown") : ItemID.FlowerPow);
@@ -139,7 +139,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("VampireKnivesThrown") : ItemID.VampireKnives);
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("PaladinsHammerThrown") : ItemID.PaladinsHammer);
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("PossessedHatchetThrown") : ItemID.PossessedHatchet);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("TheEyeofCthulhuThrown") : ItemID.TheEyeOfCthulhu);
+                recipe.AddIngredient(fargos != null ? fargos.ItemType("TheEyeOfCthulhuThrown") : ItemID.TheEyeOfCthulhu);
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("TerrarianThrown") : ItemID.Terrarian);
             }
 

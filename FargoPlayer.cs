@@ -115,7 +115,7 @@ namespace FargowiltasSouls
         public bool ShinobiEnchant;
         public bool ValhallaEnchant;
         public bool DarkEnchant;
-        private int darkCD = 0;
+        private int apprenticeCD = 0;
         Vector2 prevPosition;
         public bool RedEnchant;
         public bool TungstenEnchant;
@@ -130,6 +130,8 @@ namespace FargowiltasSouls
         public bool PearlEnchant;
 
         public bool RainEnchant;
+        private int rainDamage;
+
         public bool AncientCobaltEnchant;
         public bool AncientShadowEnchant;
         public bool SquireEnchant;
@@ -137,6 +139,8 @@ namespace FargowiltasSouls
         public bool HuntressEnchant;
         private int huntressCD = 0;
         public bool MonkEnchant;
+        public int MonkDashing = 0;
+        private int monkTimer;
         public bool EskimoEnchant;
 
         public bool CosmoForce;
@@ -1021,12 +1025,6 @@ namespace FargowiltasSouls
                 unstableCD--;
             }
 
-            if (SuperBleed && Main.rand.Next(4) == 0)
-            {
-                Projectile.NewProjectile(player.position.X + Main.rand.Next(player.width), player.Center.Y + Main.rand.Next(player.height),
-                    0f + Main.rand.Next(-5, 5),  Main.rand.Next(-6, -2), mod.ProjectileType("SuperBlood"), 5, 0f, Main.myPlayer);
-            }
-
             if (CopperEnchant && copperCD > 0)
                 copperCD--;
 
@@ -1110,6 +1108,40 @@ namespace FargowiltasSouls
                         player.maxFallSpeed = 15f;
                         GroundPound++;
                     }
+                }
+            }
+
+            //horizontal dash
+            if (MonkDashing > 0)
+            {
+                MonkDashing--;
+
+                //no loss of height
+                //player.maxFallSpeed = 0f;
+                //player.fallStart = (int)(player.position.Y / 16f);
+                //player.gravity = 0f;
+                player.position.Y = player.oldPosition.Y;
+                player.immune = true;
+
+                if (MonkDashing == 0)
+                {
+                    player.velocity *= 0.5f;
+                    player.dashDelay = 0;
+                }
+            }
+            //vertical dash
+            else if (MonkDashing < 0)
+            {
+                MonkDashing++;
+
+                player.immune = true;
+                player.maxFallSpeed *= 30f;
+                player.gravity = 1.5f;
+
+                if (MonkDashing == 0)
+                {
+                    player.velocity *= 0.5f;
+                    player.dashDelay = 0;
                 }
             }
         }
@@ -2175,7 +2207,10 @@ namespace FargowiltasSouls
             OnHitNPCEither(target, damage, knockback, crit, proj.type);
 
             if (Array.IndexOf(wetProj, proj.type) > -1)
+            {
                 target.AddBuff(BuffID.Wet, 180, true);
+            }
+                
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SpectreOrbs) && !target.immortal)
             {
                 if (SpectreEnchant && proj.type != ProjectileID.SpectreWrath)
@@ -2523,7 +2558,18 @@ namespace FargowiltasSouls
                 gladCount = WillForce ? 30 : 60;
             }
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.ThoriumDivers) && ThoriumEnchant && NPC.CountNPCS(thorium.NPCType("Diverman")) < 5 && Main.rand.Next(20) == 0)
+            if(RainEnchant && SoulConfig.Instance.RainCloud && projectile != ProjectileID.RainFriendly && player.ownedProjectileCounts[mod.ProjectileType("RainCloud")] < 1)
+            {
+                rainDamage += damage;
+
+                if(rainDamage > 1000)
+                {
+                    Projectile.NewProjectile(target.Center, new Vector2(0, -2f), mod.ProjectileType("RainCloud"), damage / 2, 0, Main.myPlayer);
+                    rainDamage = -500;
+                }
+            }
+
+            if (ThoriumEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.ThoriumDivers) && NPC.CountNPCS(thorium.NPCType("Diverman")) < 5 && Main.rand.Next(20) == 0)
             {
                 int diver = NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, thorium.NPCType("Diverman"));
                 Main.npc[diver].AddBuff(BuffID.ShadowFlame, 9999999);
@@ -3603,40 +3649,15 @@ namespace FargowiltasSouls
 
         public void DarkArtistEffect(bool hideVisual)
         {
-            player.setApprenticeT2 = true;
             player.setApprenticeT3 = true;
-
-            //shadow shoot meme
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DarkArtistEffect))
-            {
-                Item heldItem = player.HeldItem;
-
-                if (darkCD == 0 && heldItem.shoot > 0 && heldItem.damage > 0 && player.controlUseItem && prevPosition != null)
-                {
-                    if (prevPosition != null)
-                    {
-                        Vector2 vel = (Main.MouseWorld - prevPosition).SafeNormalize(-Vector2.UnitY);
-
-                        Projectile.NewProjectile(prevPosition, vel * heldItem.shootSpeed, ProjectileID.DD2FlameBurstTowerT3Shot, heldItem.damage / 2, 1, player.whoAmI);
-
-                        for (int i = 0; i < 5; i++)
-                        {
-                            int dustId = Dust.NewDust(new Vector2(prevPosition.X, prevPosition.Y + 2f), player.width, player.height + 5, DustID.Shadowflame, 0, 0, 100, Color.Black, 2f);
-                            Main.dust[dustId].noGravity = true;
-                        }
-                    }
-
-                    prevPosition = player.position;
-                    darkCD = 20;
-                }
-
-                if (darkCD > 0)
-                {
-                    darkCD--;
-                }
-            }
-
             DarkEnchant = true;
+
+            //spawn tower boi
+            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[mod.ProjectileType("FlameburstMinion")] < 1)
+                Projectile.NewProjectile(player.Center, Vector2.Zero, mod.ProjectileType("FlameburstMinion"), 0, 0f, player.whoAmI);
+
+
+
             AddPet(SoulConfig.Instance.FlickerwickPet, hideVisual, BuffID.PetDD2Ghost, ProjectileID.DD2PetGhost);
         }
 
@@ -3909,7 +3930,7 @@ namespace FargowiltasSouls
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.JungleSpores) && player.jump > 0 && jungleCD == 0)
             {
                 int dmg = NatureForce ? 50 : 15;
-                Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 62);
+                Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 62, 0.5f);
                 FargoGlobalProjectile.XWay(10, player.Center, mod.ProjectileType("SporeBoom"), 3f, HighestDamageTypeScaling(dmg), 0f);
                 jungleCD = 30;
             }
@@ -4189,10 +4210,9 @@ namespace FargowiltasSouls
 
         public void ShinobiEffect(bool hideVisual)
         {
-            player.setMonkT2 = true;
             player.setMonkT3 = true;
             //tele through wall until open space on dash into wall
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShinobiWalls) && player.dashDelay > 0 && player.mount.Type == -1 && player.velocity.X == 0)
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShinobiWalls) && player.dashDelay == -1 && player.mount.Type == -1 && player.velocity.X == 0)
             {
                 var teleportPos = new Vector2();
                 int direction = player.direction;
@@ -4511,7 +4531,7 @@ namespace FargowiltasSouls
         {
             player.setSquireT2 = true;
             player.setSquireT3 = true;
-            //knockback memes
+            //immune frames
             ValhallaEnchant = true;
             AddPet(SoulConfig.Instance.DragonPet, hideVisual, BuffID.PetDD2Dragon, ProjectileID.DD2PetDragon);
         }
@@ -4613,6 +4633,41 @@ namespace FargowiltasSouls
             }
         }
 
+        public void ApprenticeEffect()
+        {
+            player.setApprenticeT2 = true;
+
+            //shadow shoot meme
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ApprenticeEffect))
+            {
+                Item heldItem = player.HeldItem;
+
+                if (apprenticeCD == 0 && heldItem.shoot > 0 && heldItem.damage > 0 && player.controlUseItem && prevPosition != null)
+                {
+                    if (prevPosition != null)
+                    {
+                        Vector2 vel = (Main.MouseWorld - prevPosition).SafeNormalize(-Vector2.UnitY);
+
+                        Projectile.NewProjectile(prevPosition, vel * heldItem.shootSpeed, ProjectileID.DD2FlameBurstTowerT3Shot, heldItem.damage / 2, 1, player.whoAmI);
+
+                        for (int i = 0; i < 5; i++)
+                        {
+                            int dustId = Dust.NewDust(new Vector2(prevPosition.X, prevPosition.Y + 2f), player.width, player.height + 5, DustID.Shadowflame, 0, 0, 100, Color.Black, 2f);
+                            Main.dust[dustId].noGravity = true;
+                        }
+                    }
+
+                    prevPosition = player.position;
+                    apprenticeCD = 20;
+                }
+
+                if (apprenticeCD > 0)
+                {
+                    apprenticeCD--;
+                }
+            }
+        }
+
         public void HuntressEffect()
         {
             player.setHuntressT2 = true;
@@ -4653,6 +4708,33 @@ namespace FargowiltasSouls
             }
         }
 
+        public void MonkEffect()
+        {
+            player.setMonkT2 = true;
+            MonkEnchant = true;
+
+            if (!player.HasBuff(mod.BuffType("MonkBuff")) && IsStandingStill && !player.mount.Active)
+            {
+                monkTimer++;
+
+                if (monkTimer >= 60)
+                {
+                    player.AddBuff(mod.BuffType("MonkBuff"), 2);
+                    monkTimer = 0;
+
+                    double spread = 2 * Math.PI / 36;
+                    for (int i = 0; i < 36; i++)
+                    {
+                        Vector2 velocity = new Vector2(2, 2).RotatedBy(spread * i);
+
+                        int index2 = Dust.NewDust(player.Center, 0, 0, DustID.GoldCoin, velocity.X, velocity.Y, 100);
+                        Main.dust[index2].noGravity = true;
+                        Main.dust[index2].noLight = true;
+                    }
+                }
+            }
+        }
+
         public void EskimoEffect()
         {
 
@@ -4660,6 +4742,8 @@ namespace FargowiltasSouls
 
         public void AncientShadowEffect()
         {
+            AncientShadowEnchant = true;
+
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.AncientShadow) && player.ownedProjectileCounts[mod.ProjectileType("AncientShadowOrb")] == 0)
             {
                 const int max = 2;

@@ -94,9 +94,9 @@ namespace FargowiltasSouls
             AddToggle("WillHeader", "Force of Will", "WillForce", "ffffff");
             AddToggle("GladiatorConfig", "Gladiator Rain", "GladiatorEnchant", "9c924e");
             AddToggle("GoldConfig", "Gold Lucky Coin", "GoldEnchant", "e7b21c");
-            AddToggle("RedRidingConfig", "Red Riding Super Bleed", "RedRidingEnchant", "c01b3c");
             AddToggle("HuntressConfig", "Huntress Ability", "HuntressEnchant", "ffffff");
-            AddToggle("ValhallaConfig", "Valhalla Knockback", "ValhallaKnightEnchant", "93651e");
+            AddToggle("ValhallaConfig", "Valhalla Effect", "ValhallaKnightEnchant", "93651e");
+            AddToggle("SquireConfig", "Squire Knockback", "SquireEnchant", "ffffff");
 
             AddToggle("LifeHeader", "Force of Life", "LifeForce", "ffffff");
             AddToggle("BeetleConfig", "Beetles", "BeetleEnchant", "6D5C85");
@@ -108,18 +108,21 @@ namespace FargowiltasSouls
             AddToggle("NatureHeader", "Force of Nature", "NatureForce", "ffffff");
             AddToggle("ChlorophyteConfig", "Chlorophyte Leaf Crystal", "ChlorophyteEnchant", "248900");
             AddToggle("CrimsonConfig", "Crimson Regen", "CrimsonEnchant", "C8364B");
+            AddToggle("RainConfig", "Rain Clouds", "RainEnchant", "ffffff");
             AddToggle("FrostConfig", "Frost Icicles", "FrostEnchant", "7abdb9");
             AddToggle("JungleConfig", "Jungle Spores", "JungleEnchant", "71971f");
             AddToggle("MoltenConfig", "Molten Inferno Buff", "MoltenEnchant", "c12b2b");
             AddToggle("ShroomiteConfig", "Shroomite Stealth", "ShroomiteEnchant", "008cf4");
 
             AddToggle("ShadowHeader", "Shadow Force", "ShadowForce", "ffffff");
-            AddToggle("DarkArtConfig", "Dark Artist Effect", "DarkArtistEnchant", "9b5cb0");
+            AddToggle("DarkArtConfig", "Flameburst Minion", "DarkArtistEnchant", "9b5cb0");
+            AddToggle("ApprenticeConfig", "Apprentice Effect", "ApprenticeEnchant", "ffffff");
             AddToggle("NecroConfig", "Necro Guardian", "NecroEnchant", "565643");
             AddToggle("ShadowConfig", "Shadow Darkness", "ShadowEnchant", "42356f");
             AddToggle("AncientShadowConfig", "Ancient Shadow Orbs", "AncientShadowEnchant", "42356f");
             AddToggle("ShinobiConfig", "Shinobi Through Walls", "ShinobiEnchant", "935b18");
             AddToggle("ShinobiTabiConfig", "Tabi Dash", "ShinobiEnchant", "935b18");
+            AddToggle("ShinobiClimbingConfig", "Tiger Climbing Gear", "ShinobiEnchant", "935b18");
             AddToggle("SpookyConfig", "Spooky Scythes", "SpookyEnchant", "644e74");
 
             AddToggle("SpiritHeader", "Force of Spirit", "SpiritForce", "ffffff");
@@ -304,6 +307,7 @@ namespace FargowiltasSouls
                 AddToggle("ThoriumMixTapeConfig", "Mix Tape", "NobleEnchant", "ffffff");
                 AddToggle("ThoriumCyberStatesConfig", "Cyber Punk States", "CyberPunkEnchant", "ffffff");
                 AddToggle("ThoriumMetronomeConfig", "Metronome", "MaestroEnchant", "ffffff");
+                AddToggle("ThoriumMarchingBandConfig", "Marching Band Effect", "MarchingBandEnchant", "ffffff");
 
                 AddToggle("SvartalfheimForce", "Force of Svartalfheim", "SvartalfheimForce", "ffffff");
                 AddToggle("ThoriumEyeoftheStormConfig", "Eye of the Storm", "GraniteEnchant", "ffffff");
@@ -742,6 +746,9 @@ namespace FargowiltasSouls
                 //fan letter
                 group = new RecipeGroup(() => Lang.misc[37] + " Fan Letter", thorium.ItemType("FanLetter"), thorium.ItemType("FanLetter2"));
                 RecipeGroup.RegisterGroup("FargowiltasSouls:AnyLetter", group);
+                //bugle horn
+                group = new RecipeGroup(() => Lang.misc[37] + " Bugle Horn", thorium.ItemType("GoldenBugleHorn"), thorium.ItemType("PlatinumBugle"));
+                RecipeGroup.RegisterGroup("FargowiltasSouls:AnyBugleHorn", group);
 
                 //butterflies
                 group = new RecipeGroup(() => Lang.misc[37] + " Dungeon Butterfly", thorium.ItemType("BlueDungeonButterfly"), thorium.ItemType("GreenDungeonButterfly"), thorium.ItemType("PinkDungeonButterfly"));

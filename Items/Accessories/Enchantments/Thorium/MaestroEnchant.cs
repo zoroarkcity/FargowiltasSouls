@@ -55,14 +55,17 @@ Effects of Metronome and Purple Music Player");
                 thorium.GetItem("Metronome").UpdateAccessory(player, hideVisual);
             }
 
-            thoriumPlayer.setMarchingBand = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.MarchingBand))
+            {
+                thoriumPlayer.setMarchingBand = true;
+            }
         }
         
         private readonly string[] items =
         {
             "Metronome",
+            "ConductorsBaton",
             "Organ",
-            "BoneTrumpet",
             "Clarinet",
             "FrenchHorn",
             "Saxophone"

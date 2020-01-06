@@ -17,21 +17,13 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 
             string tooltip =
 @"'The shadows hold more than they seem'
-The player has a Flameburst Tower behind their back at all times that fires at nearby enemies. 
-It has a slow fire rate and its fireballs travel slowly, but they create a large explosion on hit, and home in on enemies.
-
-
+Summons a Flameburst minion that will fire after charging up
+While attacking, Flameburst shots manifest themselves from your shadows
 Greatly enhances Flameburst effectiveness
 Summons a pet Flickerwick";
-            string tooltip_ch =
-@"'阴影比看起来更多'
-攻击时, 焰爆炮塔的射击会从你的阴影中显现出来
-大大增强焰爆炮塔能力
-召唤一个闪烁烛芯";
 
             Tooltip.SetDefault(tooltip); 
             DisplayName.AddTranslation(GameCulture.Chinese, "暗黑艺术家魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)
@@ -57,7 +49,9 @@ Summons a pet Flickerwick";
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().DarkArtistEffect(hideVisual);
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            modPlayer.DarkArtistEffect(hideVisual);
+            modPlayer.ApprenticeEffect();
         }
 
         public override void AddRecipes()
@@ -66,9 +60,9 @@ Summons a pet Flickerwick";
             recipe.AddIngredient(ItemID.ApprenticeAltHead);
             recipe.AddIngredient(ItemID.ApprenticeAltShirt);
             recipe.AddIngredient(ItemID.ApprenticeAltPants);
-            //apprentice enchant
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
+            recipe.AddIngredient(null, "ApprenticeEnchant");
+
+            if (Fargowiltas.Instance.ThoriumLoaded)
             {      
                 
                 recipe.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
@@ -84,7 +78,6 @@ Summons a pet Flickerwick";
                 recipe.AddIngredient(ItemID.ShadowFlameHexDoll);
                 recipe.AddIngredient(ItemID.InfernoFork);
             }
-
 
             //betsy wrath
             

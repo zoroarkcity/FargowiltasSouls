@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -19,6 +18,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             string tooltip =
 @"'Village Hidden in the Wall'
 Dash into any walls, to teleport through them to the next opening
+Stand still to gain a single use monk dash
 Throw a smoke bomb to teleport to it and gain the First Strike Buff
 Using the Rod of Discord will also grant this buff
 Greatly enhances Lightning Aura effectiveness
@@ -68,6 +68,8 @@ Summons a pet Gato and Black Cat";
                 player.dash = 1;
             //tele thru wall
             modPlayer.ShinobiEffect(hideVisual);
+            //monk dash mayhem
+            modPlayer.MonkEffect();
             //ninja, smoke bombs, pet
             modPlayer.NinjaEffect(hideVisual);
         }
@@ -79,7 +81,7 @@ Summons a pet Gato and Black Cat";
             recipe.AddIngredient(ItemID.MonkAltShirt);
             recipe.AddIngredient(ItemID.MonkAltPants);
             recipe.AddIngredient(null, "NinjaEnchant");
-            //monk enchant
+            recipe.AddIngredient(null, "MonkEnchant");
             recipe.AddIngredient(ItemID.MasterNinjaGear);
             
             if (Fargowiltas.Instance.ThoriumLoaded)

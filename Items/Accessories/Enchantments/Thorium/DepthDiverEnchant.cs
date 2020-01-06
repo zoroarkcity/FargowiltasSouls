@@ -80,11 +80,11 @@ Summons a pet Jellyfish");
         
         private readonly string[] items =
         {
-            "FrostPelter",
             "MagicConch",
             "GeyserStaff",
             "ScubaCurva",
             "AnglerBulb",
+            "QueensGlowstick",
             "JellyFishIdol"
         };
 

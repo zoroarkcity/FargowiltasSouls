@@ -69,12 +69,12 @@ Any projectiles shot through your storm gain 50% damage";
                 recipe.AddIngredient(thorium.ItemType("WhisperRa"));
                 recipe.AddIngredient(thorium.ItemType("AxeBlade"), 300);
                 recipe.AddIngredient(ItemID.SpiritFlame);
-                recipe.AddIngredient(ItemID.BookStaff);
+                recipe.AddIngredient(ItemID.RainbowRod);
             }
             else
             {
                 recipe.AddIngredient(ItemID.SpiritFlame);
-                recipe.AddIngredient(ItemID.BookStaff);
+                recipe.AddIngredient(ItemID.RainbowRod);
             }
 
             recipe.AddIngredient(ItemID.DjinnsCurse);

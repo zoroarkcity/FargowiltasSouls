@@ -57,15 +57,16 @@ This can only happen once every second");
             recipe.AddRecipeGroup("FargowiltasSouls:AnyCobaltHead");
             recipe.AddIngredient(ItemID.CobaltBreastplate);
             recipe.AddIngredient(ItemID.CobaltLeggings);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
+            recipe.AddIngredient(null, "AncientCobaltEnchant");
+
+
+            if (Fargowiltas.Instance.ThoriumLoaded)
             {      
                 recipe.AddIngredient(thorium.ItemType("CobaltPopper"));
                 recipe.AddIngredient(thorium.ItemType("CobaltStaff"));
                 recipe.AddIngredient(thorium.ItemType("CrystalPhaser"));
             }
             
-            recipe.AddIngredient(ItemID.Chik);
             recipe.AddIngredient(ItemID.CrystalDart, 300);
             recipe.AddIngredient(ItemID.CrystalStorm);
             recipe.AddIngredient(ItemID.CrystalVileShard);

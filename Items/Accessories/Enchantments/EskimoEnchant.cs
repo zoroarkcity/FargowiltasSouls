@@ -9,6 +9,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
     {        
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
 
+        public override bool Autoload(ref string name)
+        {
+            return false;
+        }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eskimo Enchantment");

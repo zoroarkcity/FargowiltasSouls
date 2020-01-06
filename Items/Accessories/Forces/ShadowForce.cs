@@ -15,13 +15,14 @@ namespace FargowiltasSouls.Items.Accessories.Forces
             DisplayName.SetDefault("Shadow Force");
 
             string tooltip = @"'Dark, Darker, Yet Darker'
+Two Shadow Orbs will orbit around you
 Your attacks may inflict Darkness on enemies
-Darkened enemies occasionally fire shadowflame tentacles at other enemies
 A Dungeon Guardian will occasionally annihilate a foe when struck
 All of your minions may occasionally spew massive scythes everywhere
 Throw a smoke bomb to teleport to it and gain the First Strike Buff
-Using the Rod of Discord will also grant this buff
+Stand still to gain a single use monk dash
 Dash into any walls, to teleport through them to the next opening
+Summons a Flameburst minion that will fire after charging up
 While attacking, Flameburst shots manifest themselves from your shadows
 Greatly enhances Flameburst and Lightning Aura effectiveness
 Effects of Master Ninja Gear
@@ -62,8 +63,12 @@ Summons several pets";
             modPlayer.ShadowForce = true;
             //shoot from where you were meme, pet
             modPlayer.DarkArtistEffect(hideVisual);
+            modPlayer.ApprenticeEffect();
+
             //DG meme, pet
             modPlayer.NecroEffect(hideVisual);
+            //shadow orbs
+            modPlayer.AncientShadowEffect();
             //darkness debuff, pets
             modPlayer.ShadowEffect(hideVisual);
             //ninja gear
@@ -83,7 +88,7 @@ Summons several pets";
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(null, "ShadowEnchant");
+            recipe.AddIngredient(null, "AncientShadowEnchant");
             recipe.AddIngredient(null, "NecroEnchant");
             recipe.AddIngredient(null, "SpookyEnchant");
             recipe.AddIngredient(null, "ShinobiEnchant");

@@ -1,7 +1,7 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
+using System;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
@@ -14,9 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Monk Enchantment");
             Tooltip.SetDefault(
 @"'Hours of Meditation have led to this…'
-
-Standing still for ech seconds grants you a single use dash that will launch any enemy, or its really long nimmun n does damage n yes
-
+Standing still for 1 second grants you a single use monk dash that works in any cardinal direction
 Lightning Aura can now crit and strikes faster");
         }
 
@@ -27,38 +25,32 @@ Lightning Aura can now crit and strikes faster");
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.rare = 7;
-            item.value = 100000;
+            item.value = 150000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().MonkEnchant = true;
+            player.GetModPlayer<FargoPlayer>().MonkEffect();
         }
 
         public override void AddRecipes()
         {
-            /*ModRecipe recipe = new ModRecipe(mod);
-            
-            armor 1
-            armor 2
-            armor 3
+            ModRecipe recipe = new ModRecipe(mod);
+
+            recipe.AddIngredient(ItemID.MonkBrows);
+            recipe.AddIngredient(ItemID.MonkShirt);
+            recipe.AddIngredient(ItemID.MonkPants);
             recipe.AddIngredient(ItemID.MonkBelt);
-            sleepy octopod
-            ghastly glaive
-            lightning staff tier 2
+            recipe.AddIngredient(ItemID.DD2LightningAuraT2Popper);
+            recipe.AddIngredient(ItemID.MonkStaffT2);
+            recipe.AddIngredient(ItemID.DaoofPow);
 
-            Dao of Pow
-Fetid Baghnakhs
-Ale Tosser
-
-Schmelze (with Thorium)
-Rocket Fist (with Thorium)
-
-
+            //Schmelze (with Thorium)
+            //Rocket Fist (with Thorium)
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
-            recipe.AddRecipe();*/
+            recipe.AddRecipe();
         }
     }
 }
