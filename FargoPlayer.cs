@@ -758,7 +758,7 @@ namespace FargowiltasSouls
             Bloodthirsty = false;
             SinisterIcon = false;
             Graze = false;
-            CritDamage = 1f;
+            GrazeBonus = 0;
 
             MaxLifeReduction = 0;
         }
@@ -1154,19 +1154,11 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
-            if (Graze)
+            if (Graze && ++GrazeCounter > 60) //decrease graze bonus over time
             {
-                if (++GrazeCounter > 60) //decrease graze bonus over time
-                {
-                    GrazeCounter = 0;
-                    if (GrazeBonus > 0f)
-                        GrazeBonus -= 0.1;
-                }
-
-                if (GrazeBonus >= 1.25) //do some sparkles
-                {
-
-                }
+                GrazeCounter = 0;
+                if (GrazeBonus > 0f)
+                    GrazeBonus -= 0.01;
             }
 
             if (LowGround)
@@ -3103,6 +3095,9 @@ namespace FargowiltasSouls
 
             if (Midas && Main.myPlayer == player.whoAmI)
                 player.DropCoins();
+
+            GrazeBonus = 0;
+            GrazeCounter = 0;
         }
 
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)

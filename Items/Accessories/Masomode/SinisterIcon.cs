@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             Tooltip.SetDefault(@"'Most definitely not alive'
 Prevents Masochist Mode-induced natural boss spawns
 Increases spawn rate
-Graze projectiles to gain up to 25% increased crit damage
+Graze projectiles to gain up to 30% increased crit damage
 Crit damage bonus decreases over time and is fully lost on hit");
             DisplayName.AddTranslation(GameCulture.Chinese, "邪恶画像");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'肯定不是活着的'

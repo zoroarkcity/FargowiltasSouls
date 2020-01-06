@@ -1727,7 +1727,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            damage *= 0.8;
+            damage *= 0.85;
             return true;
         }
 
@@ -1748,10 +1748,10 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 npc.dontTakeDamage = true;
                 npc.netUpdate = true;
                 for (int i = 0; i < 1000; i++)
-                    if (Main.projectile[i].active && Main.projectile[i].hostile)
+                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && (Main.projectile[i].hostile || Main.projectile[i].friendly))
                         Main.projectile[i].Kill();
                 for (int i = 0; i < 1000; i++)
-                    if (Main.projectile[i].active && Main.projectile[i].hostile)
+                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && (Main.projectile[i].hostile || Main.projectile[i].friendly))
                         Main.projectile[i].Kill();
                 EdgyBossText("You're pretty good...");
             }

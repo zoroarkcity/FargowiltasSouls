@@ -9,13 +9,14 @@ destroyer has pierce resist - first hit deals full damage, depreciates as it hit
 molten enchant now causes explosion on hit, not death
 molten explosion has a toggle
 molten explosion nerfed to 150 base (250 in force, 500 in SOT)
-mutant boss has 20% DR
+mutant boss has 15% DR
 sinister icon now also grants graze mechanics
 	a proj cant give graze bonus for 1sec after you graze it, each graze gives +1%
 	this bonus depreciates back to zero, -1% per second
 	caps at x1.25 crit damage
 	small dust ring whenever you graze
 something attempted to make sure multiplayer QB works
+mutant's death projectile clear also clears friendly projs
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

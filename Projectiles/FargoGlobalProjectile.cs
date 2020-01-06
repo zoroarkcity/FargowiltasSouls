@@ -1113,30 +1113,34 @@ namespace FargowiltasSouls.Projectiles
             {
                 FargoPlayer fargoPlayer = Main.LocalPlayer.GetModPlayer<FargoPlayer>();
 
-                //remember to put this in the distance check later
-                int distance = (projectile.width + projectile.height) / 2 + Player.defaultHeight + 50;
-
-                if (fargoPlayer.Graze && --GrazeCD < 0 && projectile.Distance(Main.LocalPlayer.Center) < distance)
+                if (fargoPlayer.Graze && --GrazeCD < 0 && !Main.LocalPlayer.immune && Main.LocalPlayer.hurtCooldowns[0] <= 0 && Main.LocalPlayer.hurtCooldowns[1] <= 0)
                 {
-                    GrazeCD = 60;
-                    if (fargoPlayer.GrazeBonus < 1.25)
-                        fargoPlayer.GrazeBonus += 0.1;
-                    fargoPlayer.GrazeCounter = 0; //reset counter whenever successful graze
-
-                    //make some indicator dusts, changes color when bonus is maxed
-                    const int max = 20;
-                    for (int i = 0; i < max; i++)
+                    if (projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + 70 && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0))
                     {
-                        Vector2 vector6 = Vector2.UnitY * 6f;
-                        vector6 = vector6.RotatedBy((i - (max / 2 - 1)) * 6.28318548f / max) + projectile.Center;
-                        Vector2 vector7 = vector6 - projectile.Center;
-                        int d = Dust.NewDust(vector6 + vector7, 0, 0, fargoPlayer.GrazeBonus >= 1.25 ? 86 : 228, 0f, 0f, 0, default(Color), 2f);
-                        Main.dust[d].noGravity = true;
-                        Main.dust[d].velocity = vector7;
+                        GrazeCD = 60;
+                        if (fargoPlayer.GrazeBonus < 0.3)
+                            fargoPlayer.GrazeBonus += 0.01;
+                        fargoPlayer.GrazeCounter = -1; //reset counter whenever successful graze
+
+                        //make some indicator dusts, changes color when bonus is maxed
+                        const int max = 30;
+                        for (int i = 0; i < max; i++)
+                        {
+                            Vector2 vector6 = Vector2.UnitY * 5f;
+                            vector6 = vector6.RotatedBy((i - (max / 2 - 1)) * 6.28318548f / max) + Main.LocalPlayer.Center;
+                            Vector2 vector7 = vector6 - Main.LocalPlayer.Center;
+                            int d = Dust.NewDust(vector6 + vector7, 0, 0, fargoPlayer.GrazeBonus >= .3 ? 86 : 228, 0f, 0f, 0, default(Color), 2f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity = vector7;
+                        }
+                    }
+                    else
+                    {
+                        GrazeCD = 6; //don't check per tick ech
                     }
                 }
 
-                if (fargoPlayer.Graze) //debug to view aura range
+                /*if (fargoPlayer.Graze) //debug to view aura range
                 {
                     for (int i = 0; i < 20; i++)
                     {
@@ -1148,7 +1152,7 @@ namespace FargowiltasSouls.Projectiles
                         dust.velocity = projectile.velocity;
                         dust.noGravity = true;
                     }
-                }
+                }*/
             }
         }
 

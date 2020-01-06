@@ -1775,12 +1775,12 @@ namespace FargowiltasSouls.NPCs
                                                 npc.ai[2] = 295f;
                                             masoBool[2] = (Main.player[npc.target].Center.X - npc.Center.X < 0);
 
-                                            for (int i = 0; i < 36; i++) //warning dust ring
+                                            for (int i = 0; i < 72; i++) //warning dust ring
                                             {
-                                                Vector2 vector6 = Vector2.UnitY * 30f;
-                                                vector6 = vector6.RotatedBy((i - (36 / 2 - 1)) * 6.28318548f / 36) + npc.Center;
+                                                Vector2 vector6 = Vector2.UnitY * 60f;
+                                                vector6 = vector6.RotatedBy((i - (72 / 2 - 1)) * 6.28318548f / 72) + npc.Center;
                                                 Vector2 vector7 = vector6 - npc.Center;
-                                                int d = Dust.NewDust(vector6 + vector7, 0, 0, 90, 0f, 0f, 0, default(Color), 4f);
+                                                int d = Dust.NewDust(vector6 + vector7, 0, 0, 90, 0f, 0f, 0, default(Color), 3f);
                                                 Main.dust[d].noGravity = true;
                                                 Main.dust[d].velocity = vector7;
                                             }
@@ -11546,7 +11546,7 @@ namespace FargowiltasSouls.NPCs
                         if (projectile.type == ProjectileID.HallowStar)
                             damage /= 4;
                         if (projectile.numHits > 0)
-                            damage = (int)(damage * (0.5 + 0.5 * 1 / projectile.numHits));
+                            damage = (int)(damage * (0.25 + 0.75 * 1 / projectile.numHits));
                         break;
                     case NPCID.PrimeCannon:
                     case NPCID.PrimeLaser:
