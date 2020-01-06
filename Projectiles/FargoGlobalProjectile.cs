@@ -75,6 +75,14 @@ namespace FargowiltasSouls.Projectiles
                             projectile.timeLeft = 1;
                         break;
 
+                    case ProjectileID.CursedFlameHostile:
+                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.wallBoss, NPCID.WallofFlesh))
+                        {
+                            projectile.tileCollide = false;
+                            projectile.timeLeft = 120;
+                        }
+                        break;
+
                     case ProjectileID.SharknadoBolt:
                         if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.fishBossEX, NPCID.DukeFishron))
                             projectile.extraUpdates++;

@@ -124,6 +124,16 @@ removed queen bee DR when a royal subject is alive
 reduced tim's concoction drop rate to 10%
 queen bee has new bee shitting attack below 50% life
 
+wof's p2 cursed flame wall also shoots fireballs
+increased wof's cursed flame wall damage
+increased wof's max speed slightly
+reti immediately does ray spin entering p3
+reti emits dust and roars when beginning laser
+increased reti's reverse aura max range
+destroyer's coil enrage does more damage and has more rng ech
+destroyer has pierce resist - first hit deals full damage, depreciates as it hits more segments
+
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)
