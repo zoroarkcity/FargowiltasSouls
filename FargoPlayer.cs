@@ -283,6 +283,9 @@ namespace FargowiltasSouls
         public bool TwinsEX;
         public bool TimsConcoction;
         public bool ReceivedMasoGift;
+        public bool Graze;
+        public int GrazeCounter;
+        public double GrazeBonus;
 
         //debuffs
         public bool Hexed;
@@ -659,6 +662,7 @@ namespace FargowiltasSouls
             PhantasmalRing = false;
             TwinsEX = false;
             TimsConcoction = false;
+            Graze = false;
 
             //debuffs
             Hexed = false;
@@ -753,6 +757,8 @@ namespace FargowiltasSouls
             SuperBleed = false;
             Bloodthirsty = false;
             SinisterIcon = false;
+            Graze = false;
+            CritDamage = 1f;
 
             MaxLifeReduction = 0;
         }
@@ -1148,6 +1154,21 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (Graze)
+            {
+                if (++GrazeCounter > 60) //decrease graze bonus over time
+                {
+                    GrazeCounter = 0;
+                    if (GrazeBonus > 0f)
+                        GrazeBonus -= 0.1;
+                }
+
+                if (GrazeBonus >= 1.25) //do some sparkles
+                {
+
+                }
+            }
+
             if (LowGround)
             {
                 player.waterWalk = false;
@@ -1707,7 +1728,7 @@ namespace FargowiltasSouls
                 fullBright = true;
             }
 
-            if (GodEater) //plague dust code but its pink
+            if (GodEater)
             {
                 if (Main.rand.Next(3) == 0 && drawInfo.shadow == 0f)
                 {
@@ -1717,10 +1738,9 @@ namespace FargowiltasSouls
                     Main.dust[dust].velocity.Y -= 0.15f;
                     Main.playerDrawDust.Add(dust);
                 }
-                //plague -> proportions HEX DEC newcolor
-                r *= 0.15f; //0.07f -> 0.50 FF 255 0.15f
-                g *= 0.03f; //0.15f -> 1.00 33 051 0.03f
-                b *= 0.09f; //0.01f -> ?.?? 99 153 0.09f
+                r *= 0.15f;
+                g *= 0.03f;
+                b *= 0.09f;
                 fullBright = true;
             }
 
@@ -2004,6 +2024,21 @@ namespace FargowiltasSouls
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
         {
+            if (Eternity)
+            {
+                if (crit)
+                {
+                    damage *= 5;
+                }
+            }
+            else if (UniverseEffect)
+            {
+                if (crit)
+                {
+                    damage = (int)(damage * 2.5f);
+                }
+            }
+
             if (Hexed)
             {
                 target.life += damage;

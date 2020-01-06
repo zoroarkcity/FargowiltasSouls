@@ -38,7 +38,7 @@ namespace FargowiltasSouls.Projectiles
         public bool rainbowTrail = false;
         private int rainbowCounter = 0;
         public bool Rainbow = false;
-
+        public int GrazeCD;
 
         public bool Rotate = false;
         public int RotateDist = 32;
@@ -1104,6 +1104,51 @@ namespace FargowiltasSouls.Projectiles
                 if (projectile.wet && projectile.ai[0] == 0 && projectile.localAI[1] < 655)
                     projectile.localAI[1] = 655;
                 //Main.NewText(projectile.ai[0].ToString() + " " + projectile.ai[1].ToString() + ", " + projectile.localAI[0].ToString() + " " + projectile.localAI[1].ToString());
+            }
+        }
+
+        public override void PostAI(Projectile projectile)
+        {
+            if (projectile.hostile && Main.LocalPlayer.active && !Main.LocalPlayer.dead) //graze
+            {
+                FargoPlayer fargoPlayer = Main.LocalPlayer.GetModPlayer<FargoPlayer>();
+
+                //remember to put this in the distance check later
+                int distance = (projectile.width + projectile.height) / 2 + Player.defaultHeight + 50;
+
+                if (fargoPlayer.Graze && --GrazeCD < 0 && projectile.Distance(Main.LocalPlayer.Center) < distance)
+                {
+                    GrazeCD = 60;
+                    if (fargoPlayer.GrazeBonus < 1.25)
+                        fargoPlayer.GrazeBonus += 0.1;
+                    fargoPlayer.GrazeCounter = 0; //reset counter whenever successful graze
+
+                    //make some indicator dusts, changes color when bonus is maxed
+                    const int max = 20;
+                    for (int i = 0; i < max; i++)
+                    {
+                        Vector2 vector6 = Vector2.UnitY * 6f;
+                        vector6 = vector6.RotatedBy((i - (max / 2 - 1)) * 6.28318548f / max) + projectile.Center;
+                        Vector2 vector7 = vector6 - projectile.Center;
+                        int d = Dust.NewDust(vector6 + vector7, 0, 0, fargoPlayer.GrazeBonus >= 1.25 ? 86 : 228, 0f, 0f, 0, default(Color), 2f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity = vector7;
+                    }
+                }
+
+                if (fargoPlayer.Graze) //debug to view aura range
+                {
+                    for (int i = 0; i < 20; i++)
+                    {
+                        Vector2 offset = new Vector2();
+                        double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                        offset.X += (float)(Math.Sin(angle) * distance);
+                        offset.Y += (float)(Math.Cos(angle) * distance);
+                        Dust dust = Main.dust[Dust.NewDust(projectile.Center + offset, 0, 0, DustID.GoldFlame, 0, 0, 100, Color.White)];
+                        dust.velocity = projectile.velocity;
+                        dust.noGravity = true;
+                    }
+                }
             }
         }
 

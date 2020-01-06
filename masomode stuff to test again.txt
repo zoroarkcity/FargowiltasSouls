@@ -6,10 +6,15 @@ reti emits dust and roars when beginning laser
 increased reti's reverse aura max range
 destroyer's coil enrage does more damage and has more rng ech
 destroyer has pierce resist - first hit deals full damage, depreciates as it hits more segments
-mutant boss has 10% DR
 molten enchant now causes explosion on hit, not death
 molten explosion has a toggle
 molten explosion nerfed to 150 base (250 in force, 500 in SOT)
+mutant boss has 20% DR
+sinister icon now also grants graze mechanics
+	a proj cant give graze bonus for 1sec after you graze it, each graze gives +1%
+	this bonus depreciates back to zero, -1% per second
+	caps at x1.25 crit damage
+	small dust ring whenever you graze
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

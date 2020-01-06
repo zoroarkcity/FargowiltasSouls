@@ -1777,12 +1777,12 @@ namespace FargowiltasSouls.NPCs
 
                                             for (int i = 0; i < 36; i++) //warning dust ring
                                             {
-                                                Vector2 vector6 = Vector2.UnitY * 9f;
+                                                Vector2 vector6 = Vector2.UnitY * 30f;
                                                 vector6 = vector6.RotatedBy((i - (36 / 2 - 1)) * 6.28318548f / 36) + npc.Center;
                                                 Vector2 vector7 = vector6 - npc.Center;
                                                 int d = Dust.NewDust(vector6 + vector7, 0, 0, 90, 0f, 0f, 0, default(Color), 4f);
                                                 Main.dust[d].noGravity = true;
-                                                Main.dust[d].velocity = vector7 * 3;
+                                                Main.dust[d].velocity = vector7;
                                             }
 
                                             Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f); //eoc roar
@@ -11750,8 +11750,6 @@ namespace FargowiltasSouls.NPCs
 
         public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            bool retValue = true;
-
             Player player = Main.player[Main.myPlayer];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
@@ -11788,12 +11786,16 @@ namespace FargowiltasSouls.NPCs
 
             if (crit && modPlayer.ShroomEnchant && !modPlayer.TerrariaSoul && player.stealth == 0)
             {
-                damage *= 3;
-                retValue = false;
+                damage *= 1.5;
+            }
+
+            if (crit && modPlayer.Graze)
+            {
+                damage *= 1.0 + modPlayer.GrazeBonus;
             }
 
             //normal damage calc
-            return retValue;
+            return true;
         }
 
         public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
