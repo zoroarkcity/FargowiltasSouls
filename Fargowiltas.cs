@@ -112,6 +112,7 @@ namespace FargowiltasSouls
             AddToggle("FrostConfig", "Frost Icicles", "FrostEnchant", "7abdb9");
             AddToggle("JungleConfig", "Jungle Spores", "JungleEnchant", "71971f");
             AddToggle("MoltenConfig", "Molten Inferno Buff", "MoltenEnchant", "c12b2b");
+            AddToggle("MoltenEConfig", "Molten Explosion On Hit", "MoltenEnchant", "c12b2b");
             AddToggle("ShroomiteConfig", "Shroomite Stealth", "ShroomiteEnchant", "008cf4");
 
             AddToggle("ShadowHeader", "Shadow Force", "ShadowForce", "ffffff");

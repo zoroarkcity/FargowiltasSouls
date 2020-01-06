@@ -129,7 +129,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
     "Near infinite mining reach",
     "Mining speed dramatically increased",
     "You reflect all projectiles",
-    "When you die, you explode",
+    "When you are hurt, you violently explode to damage nearby enemies",
     "When you die, you revive with full HP",
     "Effects of Fire Gauntlet",
     "Effects of Yoyo Bag",

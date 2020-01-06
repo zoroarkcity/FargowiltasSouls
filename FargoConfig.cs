@@ -157,6 +157,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool MoltenInferno;
 
+        [Label("$Mods.FargowiltasSouls.MoltenEConfig")]
+        [DefaultValue(true)]
+        public bool MoltenExplosion;
+
         [Label("$Mods.FargowiltasSouls.RainConfig")]
         [DefaultValue(true)]
         public bool RainCloud;

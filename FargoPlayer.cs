@@ -3002,6 +3002,8 @@ namespace FargowiltasSouls
 
             if (HurtTimer <= 0)
             {
+                HurtTimer = 20;
+
                 if (MoonChalice)
                 {
                     if (SoulConfig.Instance.GetValue(SoulConfig.Instance.AncientVisions))
@@ -3049,9 +3051,20 @@ namespace FargowiltasSouls
                             (int)(dam * player.magicDamage), 3.75f, player.whoAmI, ai0, ai1);
                     }
                 }
-            }
 
-            HurtTimer = 20;
+                if (MoltenEnchant)
+                {
+                    int baseDamage = 150;
+                    if (NatureForce)
+                        baseDamage = 250;
+                    if (TerrariaSoul)
+                        baseDamage = 500;
+
+                    Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, mod.ProjectileType("Explosion"), (int)(baseDamage * player.meleeDamage), 0f, Main.myPlayer);
+                    if (p != null)
+                        p.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                }
+            }
 
             if (Midas && Main.myPlayer == player.whoAmI)
                 player.DropCoins();
@@ -3060,13 +3073,6 @@ namespace FargowiltasSouls
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
             bool retVal = true;
-
-            if (MoltenEnchant)
-            {
-                Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, mod.ProjectileType("Explosion"), (int)(500 * player.meleeDamage), 0f, Main.myPlayer);
-                if (p != null)
-                    p.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
-            }
 
             if (MutantSetBonus && player.whoAmI == Main.myPlayer && retVal && player.FindBuffIndex(mod.BuffType("MutantRebirth")) == -1)
             {
