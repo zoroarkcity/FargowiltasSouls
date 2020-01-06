@@ -2724,6 +2724,7 @@ namespace FargowiltasSouls.NPCs
                                     if (!masoBool[3])
                                     {
                                         masoBool[3] = true;
+                                        npc.netUpdate = true;
                                         for (int i = 0; i < 36; i++)
                                         {
                                             Vector2 vector6 = Vector2.UnitY * 9f;
@@ -2748,7 +2749,11 @@ namespace FargowiltasSouls.NPCs
                                 }
                                 else if (Timer < 840) //spray bees
                                 {
-                                    masoBool[3] = false;
+                                    if (masoBool[3])
+                                    {
+                                        masoBool[3] = false;
+                                        npc.netUpdate = true;
+                                    }
                                     npc.velocity = Vector2.Zero;
                                     if (++Counter > 2)
                                     {
@@ -2763,6 +2768,24 @@ namespace FargowiltasSouls.NPCs
                                 else if (Timer > 900) //wait for 1 second then return to normal AI
                                 {
                                     Timer = 0;
+                                    npc.netUpdate = true;
+                                }
+
+                                if (npc.netUpdate)
+                                {
+                                    if (Main.netMode == 2)
+                                    {
+                                        NetMessage.SendData(27, -1, -1, null, npc.whoAmI);
+                                        var netMessage = mod.GetPacket();
+                                        netMessage.Write((byte)15);
+                                        netMessage.Write((byte)npc.whoAmI);
+                                        netMessage.Write(masoBool[2]);
+                                        netMessage.Write(masoBool[3]);
+                                        netMessage.Write(Counter);
+                                        netMessage.Write(Timer);
+                                        netMessage.Send();
+                                    }
+                                    npc.netUpdate = false;
                                 }
                                 return false;
                             }

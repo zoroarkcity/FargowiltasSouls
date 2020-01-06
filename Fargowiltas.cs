@@ -925,6 +925,18 @@ namespace FargowiltasSouls
                     }
                     break;
 
+                case 15: //queen bee resync
+                    if (Main.netMode == 1)
+                    {
+                        int n = reader.ReadByte();
+                        FargoSoulsGlobalNPC bee = Main.npc[n].GetGlobalNPC<FargoSoulsGlobalNPC>();
+                        bee.masoBool[2] = reader.ReadBoolean();
+                        bee.masoBool[3] = reader.ReadBoolean();
+                        bee.Counter = reader.ReadInt32();
+                        bee.Timer = reader.ReadInt32();
+                    }
+                    break;
+
                 case 77: //server side spawning fishron EX
                     if (Main.netMode == 2)
                     {

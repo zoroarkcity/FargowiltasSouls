@@ -15,6 +15,7 @@ sinister icon now also grants graze mechanics
 	this bonus depreciates back to zero, -1% per second
 	caps at x1.25 crit damage
 	small dust ring whenever you graze
+something attempted to make sure multiplayer QB works
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
