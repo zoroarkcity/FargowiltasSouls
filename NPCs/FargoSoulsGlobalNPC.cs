@@ -11546,7 +11546,7 @@ namespace FargowiltasSouls.NPCs
                         if (projectile.type == ProjectileID.HallowStar)
                             damage /= 4;
                         if (projectile.numHits > 0)
-                            damage = (int)(damage * (0.25 + 0.75 * 1 / projectile.numHits));
+                            damage = (int)(damage * (0.5 + 0.5 * 1 / projectile.numHits));
                         break;
                     case NPCID.PrimeCannon:
                     case NPCID.PrimeLaser:
