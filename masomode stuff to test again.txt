@@ -18,6 +18,12 @@ sinister icon now also grants graze mechanics
 something attempted to make sure multiplayer QB works
 mutant's death projectile clear also clears friendly projs
 
+fixed molten toggle not working lol
+graze now increases by 2% per graze
+hostile npcs can give graze now
+fixed rain ench ignoring mutant presence
+added graze sound
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)

@@ -1100,35 +1100,36 @@ namespace FargowiltasSouls.Projectiles
 
             if (projectile.bobber && modPlayer.MutantAntibodies)
             {
-                
-                if (projectile.wet && projectile.ai[0] == 0 && projectile.localAI[1] < 655)
-                    projectile.localAI[1] = 655;
-                //Main.NewText(projectile.ai[0].ToString() + " " + projectile.ai[1].ToString() + ", " + projectile.localAI[0].ToString() + " " + projectile.localAI[1].ToString());
+                if (projectile.wet && projectile.ai[0] == 0 && projectile.localAI[1] < 655) //ai0 = in water, localai1 = counter up to catching an item
+                    projectile.localAI[1] = 655; //quick catch. not 660 and up (that breaks fishron summoning)
             }
         }
 
         public override void PostAI(Projectile projectile)
         {
-            if (projectile.hostile && Main.LocalPlayer.active && !Main.LocalPlayer.dead) //graze
+            if (projectile.hostile && projectile.damage > 0 && Main.LocalPlayer.active && !Main.LocalPlayer.dead) //graze
             {
                 FargoPlayer fargoPlayer = Main.LocalPlayer.GetModPlayer<FargoPlayer>();
-
                 if (fargoPlayer.Graze && --GrazeCD < 0 && !Main.LocalPlayer.immune && Main.LocalPlayer.hurtCooldowns[0] <= 0 && Main.LocalPlayer.hurtCooldowns[1] <= 0)
                 {
                     if (projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + 70 && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0))
                     {
                         GrazeCD = 60;
-                        if (fargoPlayer.GrazeBonus < 0.3)
-                            fargoPlayer.GrazeBonus += 0.01;
+                        fargoPlayer.GrazeBonus += 0.02;
+                        if (fargoPlayer.GrazeBonus > 0.3)
+                            fargoPlayer.GrazeBonus = 0.3;
                         fargoPlayer.GrazeCounter = -1; //reset counter whenever successful graze
 
-                        //make some indicator dusts, changes color when bonus is maxed
-                        const int max = 30;
+                        if (!Main.dedServ) //is this check needed...?
+                            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Graze").WithVolume(1f), Main.LocalPlayer.Center);
+
+                        const int max = 30; //make some indicator dusts
                         for (int i = 0; i < max; i++)
                         {
                             Vector2 vector6 = Vector2.UnitY * 5f;
                             vector6 = vector6.RotatedBy((i - (max / 2 - 1)) * 6.28318548f / max) + Main.LocalPlayer.Center;
                             Vector2 vector7 = vector6 - Main.LocalPlayer.Center;
+                            //changes color when bonus is maxed
                             int d = Dust.NewDust(vector6 + vector7, 0, 0, fargoPlayer.GrazeBonus >= .3 ? 86 : 228, 0f, 0f, 0, default(Color), 2f);
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity = vector7;
@@ -1139,20 +1140,6 @@ namespace FargowiltasSouls.Projectiles
                         GrazeCD = 6; //don't check per tick ech
                     }
                 }
-
-                /*if (fargoPlayer.Graze) //debug to view aura range
-                {
-                    for (int i = 0; i < 20; i++)
-                    {
-                        Vector2 offset = new Vector2();
-                        double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                        offset.X += (float)(Math.Sin(angle) * distance);
-                        offset.Y += (float)(Math.Cos(angle) * distance);
-                        Dust dust = Main.dust[Dust.NewDust(projectile.Center + offset, 0, 0, DustID.GoldFlame, 0, 0, 100, Color.White)];
-                        dust.velocity = projectile.velocity;
-                        dust.noGravity = true;
-                    }
-                }*/
             }
         }
 

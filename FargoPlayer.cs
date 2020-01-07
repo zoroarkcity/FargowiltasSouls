@@ -2585,7 +2585,7 @@ namespace FargowiltasSouls
                 gladCount = WillForce ? 30 : 60;
             }
 
-            if(RainEnchant && SoulConfig.Instance.RainCloud && projectile != ProjectileID.RainFriendly && player.ownedProjectileCounts[mod.ProjectileType("RainCloud")] < 1)
+            if(RainEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.RainCloud) && projectile != ProjectileID.RainFriendly && player.ownedProjectileCounts[mod.ProjectileType("RainCloud")] < 1)
             {
                 rainDamage += damage;
 
@@ -3079,7 +3079,7 @@ namespace FargowiltasSouls
                     }
                 }
 
-                if (MoltenEnchant)
+                if (MoltenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.MoltenExplosion))
                 {
                     int baseDamage = 150;
                     if (NatureForce)
