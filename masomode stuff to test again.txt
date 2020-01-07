@@ -20,7 +20,6 @@ mutant's death projectile clear also clears friendly projs
 
 fixed molten toggle not working lol
 graze now increases by 2% per graze
-hostile npcs can give graze now
 fixed rain ench ignoring mutant presence
 added graze sound
 MURDERED the steel enchantment family echprimeceasebegone
