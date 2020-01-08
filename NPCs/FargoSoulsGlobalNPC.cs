@@ -8712,7 +8712,7 @@ namespace FargowiltasSouls.NPCs
                 {
                     NPC spread = Main.npc[i];
 
-                    if (spread.active && !spread.townNPC && !spread.friendly && spread.lifeMax > 1 && !spread.HasBuff(mod.BuffType("LeadPoison")) && Vector2.Distance(npc.Center, spread.Center) < 50)
+                    if (spread.active && !spread.townNPC && !spread.friendly && spread.lifeMax > 5 && !spread.HasBuff(mod.BuffType("LeadPoison")) && Vector2.Distance(npc.Center, spread.Center) < 50 && Collision.CanHitLine(npc.Center, 0, 0, spread.Center, 0, 0))
                     {
                         spread.AddBuff(mod.BuffType("LeadPoison"), 120);
                     }

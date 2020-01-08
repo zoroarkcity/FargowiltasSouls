@@ -25,6 +25,7 @@ added graze sound
 MURDERED the steel enchantment family echprimeceasebegone
 
 creepers respawn faster when standing still and not using items
+lead poison no longer spreads through walls (doesn't vore EOW instantly)
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
