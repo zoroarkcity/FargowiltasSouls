@@ -24,6 +24,8 @@ fixed rain ench ignoring mutant presence
 added graze sound
 MURDERED the steel enchantment family echprimeceasebegone
 
+creepers respawn faster when standing still and not using items
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)

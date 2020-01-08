@@ -1303,14 +1303,18 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (GuttedHeart)
+            if (GuttedHeart && player.whoAmI == Main.myPlayer)
             {
                 //player.statLifeMax2 += player.statLifeMax / 10;
                 GuttedHeartCD--;
+
+                if (player.velocity == Vector2.Zero && player.itemAnimation == 0)
+                    GuttedHeartCD--;
+
                 if (GuttedHeartCD <= 0)
                 {
                     GuttedHeartCD = 900;
-                    if (player.whoAmI == Main.myPlayer && SoulConfig.Instance.GetValue(SoulConfig.Instance.GuttedHeart))
+                    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.GuttedHeart))
                     {
                         int count = 0;
                         for (int i = 0; i < 200; i++)
