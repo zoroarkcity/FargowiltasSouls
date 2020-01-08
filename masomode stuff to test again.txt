@@ -32,7 +32,6 @@ adjusted MP sync for the following:
 	queen bee
 updated plantera's child sprite
 gutted heart creeper sprite changes w/ strength
-mutant EX music is now handled in maso EX
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
