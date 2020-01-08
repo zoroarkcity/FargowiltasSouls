@@ -17,9 +17,8 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override void SetDefaults()
         {
             projectile.netImportant = true;
-            projectile.width = 25;
-            projectile.height = 25;
-            projectile.scale = 1.5f;
+            projectile.width = 46;
+            projectile.height = 46;
             projectile.timeLeft *= 5;
             projectile.aiStyle = -1;
             projectile.friendly = true;

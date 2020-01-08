@@ -30,6 +30,7 @@ adjusted MP sync for the following:
 	destroyer (something attempted to make rev not break btw)
 	golem head
 	queen bee
+updated plantera's child sprite
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
