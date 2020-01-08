@@ -795,6 +795,9 @@ namespace FargowiltasSouls
                     fargoNPC.masoBool[1] = reader.ReadBoolean();
                     fargoNPC.masoBool[2] = reader.ReadBoolean();
                     fargoNPC.masoBool[3] = reader.ReadBoolean();
+                    fargoNPC.Counter = reader.ReadInt32();
+                    fargoNPC.Counter2 = reader.ReadInt32();
+                    fargoNPC.Timer = reader.ReadInt32();
                     break;
 
                 case 3: //rainbow slime/paladin, MP clients syncing to server
@@ -909,31 +912,6 @@ namespace FargowiltasSouls
                         FargoSoulsGlobalNPC limb = Main.npc[n].GetGlobalNPC<FargoSoulsGlobalNPC>();
                         limb.Counter = reader.ReadInt32();
                         limb.Counter2 = reader.ReadInt32();
-                    }
-                    break;
-
-                case 14: //golem free head resync
-                    if (Main.netMode == 1)
-                    {
-                        int n = reader.ReadByte();
-                        FargoSoulsGlobalNPC head = Main.npc[n].GetGlobalNPC<FargoSoulsGlobalNPC>();
-                        head.masoBool[0] = reader.ReadBoolean();
-                        head.masoBool[1] = reader.ReadBoolean();
-                        head.masoBool[2] = reader.ReadBoolean();
-                        head.Counter = reader.ReadInt32();
-                        head.Counter2 = reader.ReadInt32();
-                    }
-                    break;
-
-                case 15: //queen bee resync
-                    if (Main.netMode == 1)
-                    {
-                        int n = reader.ReadByte();
-                        FargoSoulsGlobalNPC bee = Main.npc[n].GetGlobalNPC<FargoSoulsGlobalNPC>();
-                        bee.masoBool[2] = reader.ReadBoolean();
-                        bee.masoBool[3] = reader.ReadBoolean();
-                        bee.Counter = reader.ReadInt32();
-                        bee.Timer = reader.ReadInt32();
                     }
                     break;
 

@@ -2776,14 +2776,7 @@ namespace FargowiltasSouls.NPCs
                                     if (Main.netMode == 2)
                                     {
                                         NetMessage.SendData(27, -1, -1, null, npc.whoAmI);
-                                        var netMessage = mod.GetPacket();
-                                        netMessage.Write((byte)15);
-                                        netMessage.Write((byte)npc.whoAmI);
-                                        netMessage.Write(masoBool[2]);
-                                        netMessage.Write(masoBool[3]);
-                                        netMessage.Write(Counter);
-                                        netMessage.Write(Timer);
-                                        netMessage.Send();
+                                        NetUpdateMaso(npc.whoAmI);
                                     }
                                     npc.netUpdate = false;
                                 }
@@ -3236,7 +3229,7 @@ namespace FargowiltasSouls.NPCs
                             if (npc.life < (int)(npc.lifeMax * .75))
                             {
                                 masoBool[0] = true;
-                                npc.ai[1] = 720;
+                                Counter = 720;
                                 npc.netUpdate = true;
                                 if (npc.HasPlayerTarget)
                                     Main.PlaySound(15, (int)Main.player[npc.target].position.X, (int)Main.player[npc.target].position.Y, 0);
@@ -3250,7 +3243,7 @@ namespace FargowiltasSouls.NPCs
                                 if (masoBool[1]) //spinning
                                 {
                                     npc.netUpdate = true;
-                                    npc.velocity += npc.velocity.RotatedBy(Math.PI / 2) * npc.velocity.Length() / npc.ai[2];
+                                    npc.velocity += npc.velocity.RotatedBy(Math.PI / 2) * npc.velocity.Length() / Counter2;
                                     npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) + 1.57f;
 
                                     if (++npc.localAI[2] > 40) //shoot star spreads into the circle
@@ -3269,10 +3262,10 @@ namespace FargowiltasSouls.NPCs
                                         }
                                     }
 
-                                    if (++npc.ai[1] > 300) //go back to normal AI
+                                    if (++Counter > 300) //go back to normal AI
                                     {
-                                        npc.ai[1] = 0;
-                                        npc.ai[2] = 0;
+                                        Counter = 0;
+                                        Counter2 = 0;
                                         masoBool[1] = false;
                                         masoBool[2] = false;
                                         NetUpdateMaso(npc.whoAmI);
@@ -3291,10 +3284,10 @@ namespace FargowiltasSouls.NPCs
                                         num16 = 0.5f;
 
                                         target += Main.player[npc.target].DirectionTo(npc.Center) * 600;
-                                        if (++npc.ai[1] > 300 || npc.Distance(target) < 50)
+                                        if (++Counter > 300 || npc.Distance(target) < 50)
                                         {
-                                            npc.ai[1] = 0;
-                                            npc.ai[2] = npc.Distance(Main.player[npc.target].Center);
+                                            Counter = 0;
+                                            Counter2 = (int)npc.Distance(Main.player[npc.target].Center);
                                             masoBool[1] = true;
                                             npc.velocity = 20 * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(-Math.PI / 2);
                                             NetUpdateMaso(npc.whoAmI);
@@ -3303,9 +3296,9 @@ namespace FargowiltasSouls.NPCs
                                     }
                                     else
                                     {
-                                        if (++npc.ai[1] > 720) //change state
+                                        if (++Counter > 720) //change state
                                         {
-                                            npc.ai[1] = 0;
+                                            Counter = 0;
                                             masoBool[2] = true;
                                             NetUpdateMaso(npc.whoAmI);
                                         }
@@ -4412,18 +4405,7 @@ namespace FargowiltasSouls.NPCs
                                 masoBool[2] = Framing.GetTileSafely(npc.Center).wall == WallID.LihzahrdBrickUnsafe;
                                 npc.netUpdate = true;
                                 if (Main.netMode == 2)
-                                {
-                                    var netMessage = mod.GetPacket();
-                                    netMessage.Write((byte)14);
-                                    netMessage.Write((byte)npc.whoAmI);
-                                    netMessage.Write(masoBool[0]);
-                                    netMessage.Write(masoBool[1]);
-                                    netMessage.Write(masoBool[2]);
-                                    netMessage.Write(Counter);
-                                    netMessage.Write(Counter2);
-                                    netMessage.Send();
-                                    NetMessage.SendData(23, -1, -1, null, npc.whoAmI);
-                                }
+                                    NetUpdateMaso(npc.whoAmI);
                             }
                         }
                         else //deathray time
@@ -4502,72 +4484,10 @@ namespace FargowiltasSouls.NPCs
                             {
                                 npc.netUpdate = false;
                                 if (Main.netMode == 2)
-                                {
-                                    var netMessage = mod.GetPacket();
-                                    netMessage.Write((byte)14);
-                                    netMessage.Write((byte)npc.whoAmI);
-                                    netMessage.Write(masoBool[0]);
-                                    netMessage.Write(masoBool[1]);
-                                    netMessage.Write(masoBool[2]);
-                                    netMessage.Write(Counter);
-                                    netMessage.Write(Counter2);
-                                    netMessage.Send();
-                                    NetMessage.SendData(23, -1, -1, null, npc.whoAmI);
-                                }
+                                    NetUpdateMaso(npc.whoAmI);
                             }
                             return false;
                         }
-
-                        /*if (Timer > 0) //flamethrower after firing lasers
-                        {
-                            Timer--;
-                            if (Timer % 3 == 0)
-                            {
-                                if (Main.netMode != 1)
-                                    Projectile.NewProjectile(npc.Center.X + npc.velocity.X * 5, npc.position.Y + npc.velocity.Y * 5,
-                                        Main.rand.NextFloat(-2f, 2f), 9f, ProjectileID.FlamesTrap, npc.damage / 4, 0f, Main.myPlayer);
-                                Main.PlaySound(SoundID.Item34, npc.Center);
-                            }
-                        }
-
-                        if (Counter-- <= 0)
-                        {
-                            int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer(); //shoot lasers
-                            if (t != -1 && NPC.golemBoss > -1 && NPC.golemBoss < 200 && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem)
-                            {
-                                Counter = (int)(300f * Main.npc[NPC.golemBoss].life / Main.npc[NPC.golemBoss].lifeMax);
-                                bool inTemple = Main.tile[(int)npc.Center.X / 16, (int)npc.Center.Y / 16] != null &&
-                                    Main.tile[(int)npc.Center.X / 16, (int)npc.Center.Y / 16].wall == WallID.LihzahrdBrickUnsafe;
-                                if (!inTemple)
-                                    Timer = 60; //breathe fire outside temple
-
-                                Vector2 velocity = Main.player[t].Center - npc.Center;
-                                velocity.Normalize();
-                                velocity *= 11f;
-                                int max;
-                                masoBool[1] = !masoBool[1];
-                                if (masoBool[1])
-                                {
-                                    velocity = velocity.RotatedBy(MathHelper.ToRadians(-15));
-                                    max = 4;
-                                }
-                                else
-                                {
-                                    velocity = velocity.RotatedBy(MathHelper.ToRadians(-10));
-                                    max = 3;
-                                }
-                                for (int i = 0; i < max; i++)
-                                {
-                                    int p = Projectile.NewProjectile(npc.Center, velocity, ProjectileID.EyeBeam, 28, 0f, Main.myPlayer);
-                                    Main.projectile[p].timeLeft = 300;
-                                    velocity = velocity.RotatedBy(MathHelper.ToRadians(10));
-                                }
-                            }
-                            else
-                            {
-                                Counter = 300; //failsafe
-                            }
-                        }*/
                         break;
 
                     case NPCID.GolemHead:
@@ -7113,7 +7033,7 @@ namespace FargowiltasSouls.NPCs
             return true;
         }
 
-        public void NetUpdateMaso(int npc)
+        public void NetUpdateMaso(int npc) //MAKE SURE THAT YOU CALL THIS FROM THE GLOBALNPC INSTANCE OF THE NPC ITSELF
         {
             if (Main.netMode == 0)
                 return;
@@ -7121,10 +7041,13 @@ namespace FargowiltasSouls.NPCs
             var netMessage = mod.GetPacket();
             netMessage.Write((byte)2);
             netMessage.Write((byte)npc);
-            netMessage.Write(masoBool[0]);
-            netMessage.Write(masoBool[1]);
+            netMessage.Write(masoBool[0]); //these are the variables of the instance THAT CALLS THIS METHOD
+            netMessage.Write(masoBool[1]); //rule of thumb is to only call this method server-side
             netMessage.Write(masoBool[2]);
             netMessage.Write(masoBool[3]);
+            netMessage.Write(Counter);
+            netMessage.Write(Counter2);
+            netMessage.Write(Timer);
             netMessage.Send();
         }
 
