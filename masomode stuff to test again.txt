@@ -33,6 +33,8 @@ adjusted MP sync for the following:
 updated plantera's child sprite
 gutted heart creeper sprite changes w/ strength
 
+all hornets have 10% chance to drop jungle grass seed
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)

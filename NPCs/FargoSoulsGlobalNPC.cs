@@ -9722,6 +9722,16 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.TinyMossHornet:
                         if (Main.rand.Next(2) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.Stinger);
+                        goto case NPCID.Hornet;
+
+                    case NPCID.Hornet:
+                    case NPCID.HornetFatty:
+                    case NPCID.HornetHoney:
+                    case NPCID.HornetLeafy:
+                    case NPCID.HornetSpikey:
+                    case NPCID.HornetStingy:
+                        if (Main.rand.Next(10) == 0)
+                            Item.NewItem(npc.Hitbox, ItemID.JungleGrassSeeds);
                         break;
 
                     case NPCID.FungiBulb:
