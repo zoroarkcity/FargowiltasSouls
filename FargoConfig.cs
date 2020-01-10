@@ -141,6 +141,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool ChlorophyteCrystals;
 
+        [Label("$Mods.FargowiltasSouls.ChlorophyteFlowerConfig")]
+        [DefaultValue(true)]
+        public bool ChlorophyteFlowerBoots;
+
         [Label("$Mods.FargowiltasSouls.CrimsonConfig")]
         [DefaultValue(true)]
         public bool CrimsonRegen;

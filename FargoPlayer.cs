@@ -3406,6 +3406,9 @@ namespace FargowiltasSouls
 
         public void FlowerBoots()
         {
+            if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.ChlorophyteFlowerBoots))
+                return;
+
             int x = (int)player.Center.X / 16;
             int y = (int)(player.position.Y + player.height - 1f) / 16;
 

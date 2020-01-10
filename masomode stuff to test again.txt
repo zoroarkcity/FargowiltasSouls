@@ -34,6 +34,7 @@ updated plantera's child sprite
 gutted heart creeper sprite changes w/ strength
 
 all hornets have 10% chance to drop jungle grass seed
+toggle for flower boots effect
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
