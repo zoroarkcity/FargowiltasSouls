@@ -37,6 +37,10 @@ all hornets have 10% chance to drop jungle grass seed
 toggle for flower boots effect
 golem's geysers are now from ceiling in temple
 golem geysers are way taller outside temple
+changed how golem's geysers trigger
+removed golem flying head's laser spray after deathray dash
+removed horizontal random spread on golem spiky balls in temple
+golem fists no longer explode inside temple
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

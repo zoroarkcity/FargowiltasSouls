@@ -4178,7 +4178,7 @@ namespace FargowiltasSouls.NPCs
                                                 Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, mod.ProjectileType("GolemGeyser"), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
                                             }
                                         }
-                                        else if (Counter == 3) //2 = geysers erupt, 3 = boulders fall
+                                        else if (Counter == 2) //rocks fall
                                         {
                                             Counter = 0;
                                             if (npc.HasPlayerTarget)
@@ -4232,7 +4232,9 @@ namespace FargowiltasSouls.NPCs
                                             }
 
                                             Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, -8f, ProjectileID.GeyserTrap, npc.damage / 5, 0f, Main.myPlayer);
-                                            Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8 - 320, 0f, -8f, ProjectileID.GeyserTrap, npc.damage / 5, 0f, Main.myPlayer);
+
+                                            Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8 - 640, 0f, -8f, ProjectileID.GeyserTrap, npc.damage / 5, 0f, Main.myPlayer);
+                                            Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8 - 640, 0f, 8f, ProjectileID.GeyserTrap, npc.damage / 5, 0f, Main.myPlayer);
                                         }
                                         if (npc.HasPlayerTarget)
                                         {
@@ -4294,7 +4296,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 for (int i = 0; i < 8; i++)
                                     Projectile.NewProjectile(npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
-                                        Main.rand.NextFloat(-0.5f, 0.5f), Main.rand.NextFloat(-10, -6), ProjectileID.SpikyBallTrap, npc.damage / 5, 0f, Main.myPlayer);
+                                        0f, Main.rand.NextFloat(-10, -6), ProjectileID.SpikyBallTrap, npc.damage / 5, 0f, Main.myPlayer);
                             }
                             else //outside temple
                             {
@@ -4362,7 +4364,7 @@ namespace FargowiltasSouls.NPCs
                             npc.DelBuff(0);
                         }
 
-                        if (npc.ai[0] == 0f && masoBool[0]) //&& Framing.GetTileSafely(npc.Center).wall != WallID.LihzahrdBrickUnsafe)
+                        if (npc.ai[0] == 0f && masoBool[0] && Framing.GetTileSafely(npc.Center).wall != WallID.LihzahrdBrickUnsafe)
                         {
                             masoBool[0] = false;
                             if (Main.netMode != 1)
@@ -4474,12 +4476,12 @@ namespace FargowiltasSouls.NPCs
                                 masoBool[0] = false;
                             }
 
-                            if (!masoBool[0] && Main.netMode != 1)
+                            /*if (!masoBool[0] && Main.netMode != 1) //spray overhead lasers after dash
                             {
                                 const int max = 10;
                                 for (int i = -max; i <= max; i++)
                                     Projectile.NewProjectile(npc.Center, -11 * Vector2.UnitY.RotatedBy(Math.PI / 2 / max * i), ProjectileID.EyeBeam, npc.damage / 5, 0f, Main.myPlayer);
-                            }
+                            }*/
 
                             if (npc.netUpdate)
                             {

@@ -54,11 +54,13 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
             else //has exited ground tiles and reached air tiles, now stop the next time you reach a ground tile
             {
-                if (tile.nactive() && Main.tileSolid[tile.type]) //if inside solid tile, go back down
+                if (tile.nactive() && Main.tileSolid[tile.type] && tile.type != TileID.Platforms && tile.type != TileID.PlanterBox) //if inside solid tile, go back down
                 {
+                    if (projectile.timeLeft > 120)
+                        projectile.timeLeft = 120;
                     projectile.position.Y += 16;
                     //make warning dusts
-                    int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire, 0f, 8f, 0, default(Color), 2f);
+                    int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire, 0f, 8f);
                     Main.dust[d].velocity *= 3f;
                 }
                 else //if in air, go up
@@ -67,16 +69,22 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 }
             }
 
-            int d1 = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire);
-            Main.dust[d1].velocity *= 2f;
+            if (projectile.timeLeft <= 120) //about to erupt, make more dust
+                Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire);
 
-            NPC golem = Main.npc[ai0];
+            /*NPC golem = Main.npc[ai0];
             if (golem.GetGlobalNPC<NPCs.FargoSoulsGlobalNPC>().Counter == 2 && Main.netMode != 1) //when golem does second stomp, erupt
             {
                 Projectile.NewProjectile(projectile.Center, Vector2.UnitY * 8, ProjectileID.GeyserTrap, projectile.damage, 0f, Main.myPlayer);
                 projectile.Kill();
                 return;
-            }
+            }*/
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            if (Main.netMode != 1)
+                Projectile.NewProjectile(projectile.Center, Vector2.UnitY * 8, ProjectileID.GeyserTrap, projectile.damage, 0f, Main.myPlayer);
         }
     }
 }
