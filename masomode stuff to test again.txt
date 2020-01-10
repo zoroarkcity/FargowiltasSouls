@@ -42,6 +42,8 @@ removed golem flying head's laser spray after deathray dash
 removed horizontal random spread on golem spiky balls in temple
 golem fists no longer explode inside temple
 
+mp destroyer fix?
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)

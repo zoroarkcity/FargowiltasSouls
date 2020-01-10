@@ -5144,11 +5144,8 @@ namespace FargowiltasSouls.NPCs
                             if (Main.npc[npc.realLife].GetGlobalNPC<FargoSoulsGlobalNPC>().masoBool[1]) //spinning
                             {
                                 if (!masoBool[0])
-                                {
                                     masoBool[0] = true;
-                                    if (Main.netMode == 2)
-                                        NetMessage.SendData(23, -1, -1, null, npc.whoAmI);
-                                }
+
                                 Counter2 = 180;
                                 Vector2 pivot = Main.npc[npc.realLife].Center;
                                 pivot += Vector2.Normalize(Main.npc[npc.realLife].velocity.RotatedBy(Math.PI / 2)) * 600;
@@ -5156,7 +5153,7 @@ namespace FargowiltasSouls.NPCs
                                     npc.Center = pivot + npc.DirectionFrom(pivot) * 600;
 
                                 //enrage if player is outside the ring
-                                if (Main.npc[npc.realLife].ai[1] > 30 && Main.player[Main.npc[npc.realLife].target].Distance(pivot) > 600 && Main.netMode != 1 && Main.rand.Next(120) == 0)
+                                if (Main.npc[npc.realLife].GetGlobalNPC<FargoSoulsGlobalNPC>().Counter > 30 && Main.player[Main.npc[npc.realLife].target].Distance(pivot) > 600 && Main.netMode != 1 && Main.rand.Next(120) == 0)
                                 {
                                     Vector2 distance = Main.player[npc.target].Center - npc.Center;
                                     distance.X += Main.rand.Next(-200, 201);
@@ -5201,9 +5198,11 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
                         }
-                        else
+                        else if (Main.netMode != 1)
                         {
                             npc.life = 0;
+                            if (Main.netMode == 2)
+                                NetMessage.SendData(23, -1, -1, null, npc.whoAmI);
                             npc.active = false;
                             //npc.checkDead();
                             break;

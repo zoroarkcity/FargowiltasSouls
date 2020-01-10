@@ -939,7 +939,7 @@ namespace FargowiltasSouls
             }
 
             //BaseMod Stuff
-            MsgType msg = (MsgType)reader.ReadByte();
+            /*MsgType msg = (MsgType)reader.ReadByte();
             if (msg == MsgType.ProjectileHostility) //projectile hostility and ownership
             {
                 int owner = reader.ReadInt32();
@@ -976,7 +976,7 @@ namespace FargowiltasSouls
                     ((ParentProjectile)Main.projectile[id].modProjectile).SetAI(newAI, aitype);
                 }
                 if (Main.netMode == 2) BaseNet.SyncAI(classID, id, newAI, aitype);
-            }
+            }*/
         }
 
         public override void UpdateMusic(ref int music, ref MusicPriority priority)
