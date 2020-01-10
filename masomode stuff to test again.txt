@@ -35,6 +35,8 @@ gutted heart creeper sprite changes w/ strength
 
 all hornets have 10% chance to drop jungle grass seed
 toggle for flower boots effect
+golem's geysers are now from ceiling in temple
+golem geysers are way taller outside temple
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

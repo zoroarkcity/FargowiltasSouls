@@ -4165,7 +4165,7 @@ namespace FargowiltasSouls.NPCs
                                                 int tilePosX = (int)spawnPos.X / 16 + npc.width * i * 3 / 16;
                                                 int tilePosY = (int)spawnPos.Y / 16;// + 1;
 
-                                                if (Main.tile[tilePosX, tilePosY] == null)
+                                                /*if (Main.tile[tilePosX, tilePosY] == null)
                                                     Main.tile[tilePosX, tilePosY] = new Tile();
 
                                                 while (!(Main.tile[tilePosX, tilePosY].nactive() && Main.tileSolid[(int)Main.tile[tilePosX, tilePosY].type]))
@@ -4173,7 +4173,7 @@ namespace FargowiltasSouls.NPCs
                                                     tilePosY++;
                                                     if (Main.tile[tilePosX, tilePosY] == null)
                                                         Main.tile[tilePosX, tilePosY] = new Tile();
-                                                }
+                                                }*/
 
                                                 Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, mod.ProjectileType("GolemGeyser"), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
                                             }
@@ -4232,6 +4232,7 @@ namespace FargowiltasSouls.NPCs
                                             }
 
                                             Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, -8f, ProjectileID.GeyserTrap, npc.damage / 5, 0f, Main.myPlayer);
+                                            Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8 - 320, 0f, -8f, ProjectileID.GeyserTrap, npc.damage / 5, 0f, Main.myPlayer);
                                         }
                                         if (npc.HasPlayerTarget)
                                         {
