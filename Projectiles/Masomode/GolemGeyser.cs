@@ -25,6 +25,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.hide = true;
+            projectile.extraUpdates = 14;
         }
 
         public override bool CanDamage()
@@ -56,8 +57,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
             {
                 if (tile.nactive() && Main.tileSolid[tile.type] && tile.type != TileID.Platforms && tile.type != TileID.PlanterBox) //if inside solid tile, go back down
                 {
-                    if (projectile.timeLeft > 120)
-                        projectile.timeLeft = 120;
+                    if (projectile.timeLeft > 90)
+                        projectile.timeLeft = 90;
+                    projectile.extraUpdates = 0;
                     projectile.position.Y += 16;
                     //make warning dusts
                     int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire, 0f, 8f);

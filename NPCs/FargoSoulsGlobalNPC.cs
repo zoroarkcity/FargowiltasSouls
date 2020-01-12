@@ -421,6 +421,7 @@ namespace FargowiltasSouls.NPCs
                         break;
                     case NPCID.GolemHeadFree:
                         Timer = 0;
+                        Counter = 540;
                         break;
                     case NPCID.GolemFistLeft:
                     case NPCID.GolemFistRight:
@@ -4296,7 +4297,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 for (int i = 0; i < 8; i++)
                                     Projectile.NewProjectile(npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
-                                        0f, Main.rand.NextFloat(-10, -6), ProjectileID.SpikyBallTrap, npc.damage / 5, 0f, Main.myPlayer);
+                                        Main.rand.NextFloat(-0.1f, 0.1f), Main.rand.NextFloat(-10, -6), ProjectileID.SpikyBallTrap, npc.damage / 5, 0f, Main.myPlayer);
                             }
                             else //outside temple
                             {
@@ -4421,7 +4422,7 @@ namespace FargowiltasSouls.NPCs
 
                             npc.noTileCollide = true;
 
-                            const int fireTime = 90;
+                            const int fireTime = 120;
                             if (++Counter < fireTime) //move to above golem
                             {
                                 Vector2 target = Main.npc[NPC.golemBoss].Center;

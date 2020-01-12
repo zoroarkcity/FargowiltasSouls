@@ -39,10 +39,14 @@ golem's geysers are now from ceiling in temple
 golem geysers are way taller outside temple
 changed how golem's geysers trigger
 removed golem flying head's laser spray after deathray dash
-removed horizontal random spread on golem spiky balls in temple
 golem fists no longer explode inside temple
 
 mp destroyer fix?
+reduced horizontal random spread on golem spiky balls in temple
+golem head free takes longer to fire deathray
+golem head free immediately deathrays when spawned
+golem boulders don't move (i think) until fully faded in
+golem geysers activate faster
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
