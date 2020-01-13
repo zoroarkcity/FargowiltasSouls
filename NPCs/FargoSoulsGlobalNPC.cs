@@ -127,6 +127,10 @@ namespace FargowiltasSouls.NPCs
 
                 switch (npc.type)
                 {
+                    case NPCID.Plantera:
+                        npc.lifeMax = (int)(npc.lifeMax * 1.25);
+                        break;
+
                     case NPCID.PlanterasTentacle:
                         npc.lifeMax /= 4;
                         break;
@@ -193,7 +197,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Shark:
-                        Counter2 = Main.rand.Next(120);
+                        Counter2 = Main.rand.Next(60);
                         break;
 
                     case NPCID.Piranha:
@@ -3914,7 +3918,7 @@ namespace FargowiltasSouls.NPCs
                                             }
                                             break;
                                         case 1: //ranged
-                                            for (int i = 0; i < 12; i++) //spawn lightning
+                                            /*for (int i = 0; i < 12; i++) //spawn lightning
                                             {
                                                 Point tileCoordinates = Main.player[npc.target].Top.ToTileCoordinates();
 
@@ -3933,6 +3937,22 @@ namespace FargowiltasSouls.NPCs
                                                     tileCoordinates.Y -= 1;
 
                                                 Projectile.NewProjectile(tileCoordinates.X * 16 + 8, tileCoordinates.Y * 16 + 17, 0f, 0f, 578, 0, 1f, Main.myPlayer);
+                                            }*/
+                                            for (int i = 0; i < 3; i++) //shoot lightning bolt
+                                            {
+                                                NPC bodyPart = Main.npc[(int)npc.localAI[i]];
+
+                                                if (bodyPart.active &&
+                                                    ((i == 2 && bodyPart.type == NPCID.MoonLordHead) ||
+                                                    bodyPart.type == NPCID.MoonLordHand))
+                                                {
+                                                    Vector2 dir = Main.player[npc.target].Center - bodyPart.Center;
+                                                    float ai1New = Main.rand.Next(100);
+                                                    Vector2 vel = Vector2.Normalize(dir.RotatedByRandom(Math.PI / 4)) * 6f;
+                                                    int damage = (int)(30 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
+                                                    Projectile.NewProjectile(bodyPart.Center, vel, ProjectileID.CultistBossLightningOrbArc,
+                                                        damage, 0, Main.myPlayer, dir.ToRotation(), ai1New);
+                                                }
                                             }
                                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.CultistBossLightningOrb,
                                                 (int)(30 * (1 + FargoSoulsWorld.MoonlordCount * .0125)), 0f, Main.myPlayer);
@@ -3952,10 +3972,10 @@ namespace FargowiltasSouls.NPCs
                                                     int damage = (int)(35 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
                                                     for (int j = -1; j <= 1; j += 2) //aim above and below player
                                                     {
-                                                        Vector2 speed = distance.RotatedBy(Math.PI / 24 * j);
+                                                        Vector2 speed = distance.RotatedBy(Math.PI / 18 * j);
                                                         for (int k = -2; k <= 2; k++) //fire a 5-spread each
                                                         {
-                                                            Projectile.NewProjectile(bodyPart.Center, speed.RotatedBy(Math.PI / 96 * k),
+                                                            Projectile.NewProjectile(bodyPart.Center, speed.RotatedBy(Math.PI / 84 * k),
                                                                 ProjectileID.NebulaLaser, damage, 0f, Main.myPlayer);
                                                         }
                                                     }
@@ -4606,7 +4626,7 @@ namespace FargowiltasSouls.NPCs
                             masoBool[0] = true;
                             if (Main.netMode != 1)
                             {
-                                const int max = 5;
+                                const int max = 4;
                                 const float distance = 125f;
                                 float rotation = 2f * (float)Math.PI / max;
                                 for (int i = 0; i < max; i++)
@@ -6009,21 +6029,28 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.DialatedEye:
                     case NPCID.GreenEye:
                     case NPCID.PurpleEye:
-                        //npc.position += npc.velocity;
                         Counter++;
 
-                        if (Counter >= 380 && Counter <= 420)
+                        if (Counter == 360) //warning dust
                         {
-                            Lighting.AddLight(npc.Center, 1f, 0f, 0f);
+                            for (int i = 0; i < 20; i++)
+                            {
+                                Vector2 vector6 = Vector2.UnitY * 6f;
+                                vector6 = vector6.RotatedBy((i - (20 / 2 - 1)) * 6.28318548f / 20) + npc.Center;
+                                Vector2 vector7 = vector6 - npc.Center;
+                                int d = Dust.NewDust(vector6 + vector7, 0, 0, DustID.Fire);
+                                Main.dust[d].noGravity = true;
+                                Main.dust[d].velocity = vector7;
+                            }
                         }
-
-                        if (Counter >= 420)
+                        else if (Counter >= 420)
                         {
                             npc.TargetClosest();
-                            Vector2 velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 12;
+                            Vector2 velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 8;
                             npc.velocity = velocity;
                             Counter = Main.rand.Next(-300, 0);
                         }
+
                         if (Math.Abs(npc.velocity.Y) > 5 || Math.Abs(npc.velocity.X) > 5)
                         {
                             int dustId = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y + 2f), npc.width, npc.height + 5, DustID.Stone, npc.velocity.X * 0.2f,

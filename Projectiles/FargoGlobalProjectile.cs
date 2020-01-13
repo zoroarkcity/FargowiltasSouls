@@ -818,6 +818,10 @@ namespace FargowiltasSouls.Projectiles
                     }
                     break;
 
+                case ProjectileID.PhantasmalEye:
+                    projectile.position.X -= projectile.velocity.X / 2;
+                    break;
+
                 #region maso boss scaling (CHECK THAT YOU'RE NOT DOUBLE DIPPING)
 
                 case ProjectileID.CursedFlameHostile: //spaz p3 balls are already scaled

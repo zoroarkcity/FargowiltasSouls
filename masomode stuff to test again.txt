@@ -48,6 +48,16 @@ golem head free immediately deathrays when spawned
 golem boulders don't move (i think) until fully faded in
 golem geysers activate faster
 
+sharks will jump a little earlier when brought below 50%
+reduced plantera inner ring from 5 crystals to 4
+buffed plantera hp 25%
+demon eyes now emit a ring of dust before dashing
+reduced demon eye dash velocity a bit
+removed ML's lightning portal spam attack
+ML now shoots lightning bolts from sockets instead
+adjusted spread on ML's nebula laser attack
+halved phantasmal eye horiz speed
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)
