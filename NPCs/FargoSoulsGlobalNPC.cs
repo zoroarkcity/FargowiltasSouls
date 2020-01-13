@@ -89,6 +89,7 @@ namespace FargowiltasSouls.NPCs
         public static int guardBoss = -1;
         public static int fishBossEX = -1;
         public static bool spawnFishronEX;
+        public static int abomBoss = -1;
         public static int mutantBoss = -1;
 
         public static bool Revengeance => CalamityMod.World.CalamityWorld.revenge;
