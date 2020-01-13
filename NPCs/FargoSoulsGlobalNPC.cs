@@ -3969,14 +3969,14 @@ namespace FargowiltasSouls.NPCs
                                                 {
                                                     Vector2 distance = Main.player[npc.target].Center - bodyPart.Center;
                                                     distance.Normalize();
-                                                    distance *= 6f;
+                                                    distance *= 7f;
                                                     int damage = (int)(35 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
                                                     for (int j = -1; j <= 1; j += 2) //aim above and below player
                                                     {
-                                                        Vector2 speed = distance.RotatedBy(Math.PI / 18 * j);
+                                                        Vector2 speed = distance.RotatedBy(Math.PI / 6 * j);
                                                         for (int k = -2; k <= 2; k++) //fire a 5-spread each
                                                         {
-                                                            Projectile.NewProjectile(bodyPart.Center, speed.RotatedBy(Math.PI / 84 * k),
+                                                            Projectile.NewProjectile(bodyPart.Center, speed.RotatedBy(Math.PI / 32 * k),
                                                                 ProjectileID.NebulaLaser, damage, 0f, Main.myPlayer);
                                                         }
                                                     }
@@ -6031,23 +6031,23 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.GreenEye:
                     case NPCID.PurpleEye:
                         Counter++;
-
                         if (Counter == 360) //warning dust
                         {
                             for (int i = 0; i < 20; i++)
                             {
-                                Vector2 vector6 = Vector2.UnitY * 6f;
+                                Vector2 vector6 = Vector2.UnitY * 5f;
                                 vector6 = vector6.RotatedBy((i - (20 / 2 - 1)) * 6.28318548f / 20) + npc.Center;
                                 Vector2 vector7 = vector6 - npc.Center;
                                 int d = Dust.NewDust(vector6 + vector7, 0, 0, DustID.Fire);
                                 Main.dust[d].noGravity = true;
                                 Main.dust[d].velocity = vector7;
+                                Main.dust[d].scale = 1.5f;
                             }
                         }
                         else if (Counter >= 420)
                         {
                             npc.TargetClosest();
-                            Vector2 velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 8;
+                            Vector2 velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 10;
                             npc.velocity = velocity;
                             Counter = Main.rand.Next(-300, 0);
                         }

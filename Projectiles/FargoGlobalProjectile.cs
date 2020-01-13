@@ -818,10 +818,6 @@ namespace FargowiltasSouls.Projectiles
                     }
                     break;
 
-                case ProjectileID.PhantasmalEye:
-                    projectile.position.X -= projectile.velocity.X / 2;
-                    break;
-
                 #region maso boss scaling (CHECK THAT YOU'RE NOT DOUBLE DIPPING)
 
                 case ProjectileID.CursedFlameHostile: //spaz p3 balls are already scaled
@@ -954,13 +950,14 @@ namespace FargowiltasSouls.Projectiles
                         projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.MoonlordCount * .0125));
                     }
                     break;
-                case ProjectileID.PhantasmalEye: //also spawned w/ scaling by cultist
+                case ProjectileID.PhantasmalEye:
                     if (FargoSoulsWorld.MasochistMode && !masobool)
                     {
                         masobool = true;
                         if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.moonBoss, NPCID.MoonLordCore))
                             projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.MoonlordCount * .0125));
                     }
+                    projectile.position.X -= projectile.velocity.X / 2;
                     break;
 
                 #endregion
