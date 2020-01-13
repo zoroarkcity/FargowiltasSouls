@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces
 Greatly increases life regen
 Nearby enemies are ignited
 The closer they are to you the more damage they take
-When you die, you violently explode dealing massive damage
+When you are hurt, you violently explode to damage nearby enemies
 Grants immunity to Wet
 A miniature storm will appear after heavily damaging enemies
 Icicles will start to appear around you

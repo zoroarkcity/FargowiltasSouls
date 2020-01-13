@@ -39,6 +39,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
             if (projectile.alpha < 0)
                 projectile.alpha = 0;
 
+            if (projectile.alpha > 0) //pause in air until fully faded in
+                return;
+
             if (!projectile.tileCollide)
             {
                 Tile tile = Framing.GetTileSafely(projectile.Center - Vector2.UnitY * 26);

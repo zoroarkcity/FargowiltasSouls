@@ -25,6 +25,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.hide = true;
+            projectile.extraUpdates = 14;
         }
 
         public override bool CanDamage()
@@ -42,25 +43,50 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
 
             Tile tile = Framing.GetTileSafely(projectile.Center);
-            if (tile.nactive() && Main.tileSolid[tile.type]) //if inside solid tile
+
+            if (projectile.ai[1] == 0) //spawned, while in ground tile
             {
-                //go up, make warning dust
-                projectile.position.Y -= 8;
-                int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire, 0f, -8f);
-                Main.dust[d].velocity *= 3f;
+                projectile.position.Y -= 16;
+                if (!(tile.nactive() && Main.tileSolid[tile.type])) //if reached air tile
+                {
+                    projectile.ai[1] = 1;
+                    projectile.netUpdate = true;
+                }
             }
-            else //if in air, go down
+            else //has exited ground tiles and reached air tiles, now stop the next time you reach a ground tile
             {
-                projectile.position.Y += 8;
+                if (tile.nactive() && Main.tileSolid[tile.type] && tile.type != TileID.Platforms && tile.type != TileID.PlanterBox) //if inside solid tile, go back down
+                {
+                    if (projectile.timeLeft > 90)
+                        projectile.timeLeft = 90;
+                    projectile.extraUpdates = 0;
+                    projectile.position.Y += 16;
+                    //make warning dusts
+                    int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire, 0f, 8f);
+                    Main.dust[d].velocity *= 3f;
+                }
+                else //if in air, go up
+                {
+                    projectile.position.Y -= 16;
+                }
             }
 
-            NPC golem = Main.npc[ai0];
+            if (projectile.timeLeft <= 120) //about to erupt, make more dust
+                Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire);
+
+            /*NPC golem = Main.npc[ai0];
             if (golem.GetGlobalNPC<NPCs.FargoSoulsGlobalNPC>().Counter == 2 && Main.netMode != 1) //when golem does second stomp, erupt
             {
-                Projectile.NewProjectile(projectile.Center, Vector2.UnitY * -8, ProjectileID.GeyserTrap, projectile.damage, 0f, Main.myPlayer);
+                Projectile.NewProjectile(projectile.Center, Vector2.UnitY * 8, ProjectileID.GeyserTrap, projectile.damage, 0f, Main.myPlayer);
                 projectile.Kill();
                 return;
-            }
+            }*/
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            if (Main.netMode != 1)
+                Projectile.NewProjectile(projectile.Center, Vector2.UnitY * 8, ProjectileID.GeyserTrap, projectile.damage, 0f, Main.myPlayer);
         }
     }
 }

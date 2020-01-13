@@ -1,128 +1,62 @@
-goblins only forced on 2+ orbs broken
-pirates only forced on 4+ altars broken
-defeating goblins for the first time will force a meteor drop and spawn abom
-jellyfish aura wont display outside liquids
-goblins through floor when everyone dead
-ice golem drop blizzard in bottle 5%
-wyvern drop cloud bottle 5%
-sand ele drop sandstorm bottle 5%
-removed chest of the jungle
-hornets dont through walls if have line of sight to player
-creepers shoot faster as creeper count reduces
-hm enemies in pre-hm have full life but no defense
-soul of terraria no longer disables pumpkin enchant pie heal
+wof's p2 cursed flame wall also shoots fireballs
+increased wof's cursed flame wall damage
+increased wof's max speed slightly
+reti immediately does ray spin entering p3
+reti emits dust and roars when beginning laser
+increased reti's reverse aura max range
+destroyer's coil enrage does more damage and has more rng ech
+destroyer has pierce resist - first hit deals full damage, depreciates as it hits more segments
+molten enchant now causes explosion on hit, not death
+molten explosion has a toggle
+molten explosion nerfed to 150 base (250 in force, 500 in SOT)
+mutant boss has 15% DR
+sinister icon now also grants graze mechanics
+	a proj cant give graze bonus for 1sec after you graze it, each graze gives +1%
+	this bonus depreciates back to zero, -1% per second
+	caps at x1.3 crit damage
+	small dust ring whenever you graze
+something attempted to make sure multiplayer QB works
+mutant's death projectile clear also clears friendly projs
 
-qb wont regen while subjects alive
-leashed hungry no longer have boosted life
-flying hungry ignore blocks
-low ground actuates platforms instead of breaking
-prime limbs fall with regular limbs when prime is despawning
-all mobs drop 40% more coins in maso (this stacks with expert's x2.5, total x3.5)
-lethargic now has a mild reverse hyper mode effect on enemies
-flying dutchman now has 1% chance to drop coin gun!!!!!
-nerfed boss crate drops to always 5 (was 5-9)
-on fire wears off faster when raining, on surface, and not in front of a wall
-fixed slimed slowing you outside maso
+fixed molten toggle not working lol
+graze now increases by 2% per graze
+fixed rain ench ignoring mutant presence
+added graze sound
+MURDERED the steel enchantment family echprimeceasebegone
 
-nerfed volatile energy drops
-plantera drops 100-200 chloro ore
-increased pillar mortality range
-biome mimics enrage above ground, shooting coins
-red devils drop blindfolds too, but their tridents now inflict darkness too
-brain gets closer
-corrupt/crim/hallow cacti now inflict a corresponding debuff instead of poisoned
-rainbow slime spikes ignore walls
-low ground now disables planter boxes
-midas works in mp
-recolored qb
+creepers respawn faster when standing still and not using items
+lead poison no longer spreads through walls (doesn't vore EOW instantly)
+adjusted MP sync for the following:
+	destroyer (something attempted to make rev not break btw)
+	golem head
+	queen bee
+updated plantera's child sprite
+gutted heart creeper sprite changes w/ strength
 
-plantera tentacle life down to 30 (was 120)
-plantera no longer speeds up in p2 against venomed player
-queen's stinger and upgrades grant effects of honey buff
-plantera's child poison seed inflicts infested/poisoned
-changed how sands of time works (will now make respawn faster if killed by a boss and boss has despawned)
-destroyer stars slower but now shot in a double V
-fungus spore invul on spawn halved
-fungus spore velocity from mushroom enemies reduced
-fixed fungi bulbs not making spores on death
-nerfed elf archer arrow velocity
-nerfed boss/mage skeleton spawn rates
+all hornets have 10% chance to drop jungle grass seed
+toggle for flower boots effect
+golem's geysers are now from ceiling in temple
+golem geysers are way taller outside temple
+changed how golem's geysers trigger
+removed golem flying head's laser spray after deathray dash
+golem fists no longer explode inside temple
 
-golem head shouldnt get stuck in walls
-changed golem head targeting for deathray and increased speed during ray slightly
-increased max speed of fists
-biocluster/maso soul have sands/skull effects in inv too
-temple spike balls/wheels selfdestruct 30sec after spawn
+mp destroyer fix?
+reduced horizontal random spread on golem spiky balls in temple
+golem head free takes longer to fire deathray
+golem head free immediately deathrays when spawned
+golem boulders don't move (i think) until fully faded in
+golem geysers activate faster
 
-increased miniboss present/goodie bag drops to 1-5
-mutant antibodies lets you instacatch fish
-replace cultist's phantasmal eye attack with flow invader shot
-prime blender arms reach out further to smack you if you're too far away
-prime blender arms have a minimum range
-prime swipe arms flash before they dive in
-fixed red squirrels not being convertible into gold at dipping vat
-flying dutchman now has 1% chance to drop lucky coin!!!!!
-
-removed ML's rigged pillar enemy spawns
-pillar enemies in space dont spawn during boss fights
-selenians wont dash again when hit if very close to you
-asocial makes minions do no damage
-only destroyer has jester resistance (fixed all mechs secretly having it)
-destroyer has a new spin attack
-	body stops shooting during spin but gains omega defense
-dark stars actually go through walls now
-
-removed thrown hentai spear item
-replaced hentai spear right click with thrown hentai spear
-changed left click hentai spear to hopefully fix speed breaking it and other possible memes
-replaced ML's vulnerability fireball indicator with a larger ring of fragments
-reduced leech clot's boosted life to x3, but it is now protected by null curse
-fixed(?) true eyes desyncing
-velocity of immune enemies is no longer affected by clipped wings
-removed ML core DR
-biocluster/maso soul have security wallet effect while in inv
-tims concoction has sprite
-removed ML core defense
-ML core's bonus socket attacks (besides deathray) only occur below 66% life
-fixed nullification curse debuff not appearing in phase 2
-
-adjusted ML deathray delays
-adjusted prime swipe arm despawn condition again
-pickaxes and other tools wont trigger celestial rune bonus attacks
-crucible crafts with any bookcase
-ML's ritual disappears immediately on defeat
-tried to make sure eyes dont desync AGAIN
-added mutant trophy
-pickaxes and other tools wont trigger pumpkings cape bonus attacks
-clowns drop 1-10 happy grenades on kill
-truffle worm EX recipe is now for 3 worms
-boreal ench uses fixed velocity
-mutant antibodies works with truffle worm EX
-updated force of wood to timber in soul toggles
-mutant skips p1 after five times (TEST IN MP)
-fixed mutant antibodies fucking truffle worm ex
-toggle for pearlwood effect
-added telegraph for mutant's aim prediction attacks
-fixed pillars being immortal in mp
-mutant shouldnt bump you from eyes to bomb anymore
-revives shouldnt be memed by mutant fang anymore
-hellzone has 66% chance to not consume ammo
-fixed pillar health when relogging in mp i think
-
-mutant now requires 10 p1s before skipping
-cultist only throws pillars below 50% life
-fishron and fish EX only heal up to 50% in p3
-lowered speed threshold to trigger agitating lens scythes, made it check x and y not length
-mimics drop no money
-moon lord drops 20 gold (higher because multipliers)
-queen bee drops 75% less gold
-increased fish EX's drops
-
-changed all attack speed up to additive (was multiplicative, bruh)
-mythril ench now has disrupted focus when damaged
-removed queen bee DR when a royal subject is alive
-reduced tim's concoction drop rate to 10%
-queen bee has new bee shitting attack below 50% life
+sharks will jump a little earlier when brought below 50%
+reduced plantera inner ring from 5 crystals to 4
+buffed plantera hp 25%
+demon eyes now emit a ring of dust before dashing
+reduced demon eye dash velocity a bit
+removed ML's lightning portal spam attack
+ML now shoots lightning bolts from sockets instead
+adjusted spread on ML's nebula laser attack
+halved phantasmal eye horiz speed
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

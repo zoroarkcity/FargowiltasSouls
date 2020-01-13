@@ -38,7 +38,7 @@ Grants 50% chance for Mega Bees, 15% chance for minion crits, 20% chance for bon
 Critters have increased defense and their souls will aid you, You may summon temporary minions
 All grappling hooks are more effective and fire homing shots, Greatly enhances all DD2 sentries
 Your attacks inflict Midas, Enemies explode into needles
-When you die, you explode and revive with 200 HP
+You violently explode to damage nearby enemies when hurt and revive with 200 HP when killed
 Effects of Flower Boots, Master Ninja Gear, Greedy Ring, Celestial Shell, and Shiny Stone";
 
 

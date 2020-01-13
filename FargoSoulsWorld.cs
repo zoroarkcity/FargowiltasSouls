@@ -20,6 +20,7 @@ namespace FargowiltasSouls
 
         public static bool MasochistMode;
         public static bool downedFishronEX;
+        public static bool downedAbom;
         public static bool downedMutant;
         public static bool AngryMutant;
         public static int EyeCount;
@@ -52,6 +53,7 @@ namespace FargowiltasSouls
             //masomode
             MasochistMode = false;
             downedFishronEX = false;
+            downedAbom = false;
             downedMutant = false;
             AngryMutant = false;
             EyeCount = 0;
@@ -100,6 +102,7 @@ namespace FargowiltasSouls
             if (_downedBoss) downed.Add("boss");
             if (MasochistMode) downed.Add("masochist");
             if (downedFishronEX) downed.Add("downedFishronEX");
+            if (downedAbom) downed.Add("downedAbom");
             if (downedMutant) downed.Add("downedMutant");
             if (AngryMutant) downed.Add("AngryMutant");
             if (downedMM) downed.Add("downedMadhouse");
@@ -138,6 +141,7 @@ namespace FargowiltasSouls
             _downedBoss = downed.Contains("boss");
             MasochistMode = downed.Contains("masochist");
             downedFishronEX = downed.Contains("downedFishronEX");
+            downedAbom = downed.Contains("downedAbom");
             downedMutant = downed.Contains("downedMutant");
             AngryMutant = downed.Contains("AngryMutant");
             downedMM = downed.Contains("downedMadhouse");
@@ -171,10 +175,11 @@ namespace FargowiltasSouls
             _downedBoss = flags[1];
             MasochistMode = flags[2];
             downedFishronEX = flags[3];
-            downedMutant = flags[4];
-            AngryMutant = flags[5];
-            downedMM = flags[6];
-            forceMeteor = flags[7];
+            downedAbom = flags[4];
+            downedMutant = flags[5];
+            AngryMutant = flags[6];
+            downedMM = flags[7];
+            forceMeteor = flags[8];
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -202,10 +207,11 @@ namespace FargowiltasSouls
                 [1] = _downedBoss,
                 [2] = MasochistMode,
                 [3] = downedFishronEX,
-                [4] = downedMutant,
-                [5] = AngryMutant,
-                [6] = downedMM,
-                [7] = forceMeteor
+                [4] = downedAbom,
+                [5] = downedMutant,
+                [6] = AngryMutant,
+                [7] = downedMM,
+                [8] = forceMeteor
             };
 
             writer.Write(flags);

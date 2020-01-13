@@ -107,11 +107,13 @@ namespace FargowiltasSouls
 
             AddToggle("NatureHeader", "Force of Nature", "NatureForce", "ffffff");
             AddToggle("ChlorophyteConfig", "Chlorophyte Leaf Crystal", "ChlorophyteEnchant", "248900");
+            AddToggle("ChlorophyteFlowerConfig", "Flower Boots", "ChlorophyteEnchant", "248900");
             AddToggle("CrimsonConfig", "Crimson Regen", "CrimsonEnchant", "C8364B");
             AddToggle("RainConfig", "Rain Clouds", "RainEnchant", "ffffff");
             AddToggle("FrostConfig", "Frost Icicles", "FrostEnchant", "7abdb9");
             AddToggle("JungleConfig", "Jungle Spores", "JungleEnchant", "71971f");
             AddToggle("MoltenConfig", "Molten Inferno Buff", "MoltenEnchant", "c12b2b");
+            AddToggle("MoltenEConfig", "Molten Explosion On Hit", "MoltenEnchant", "c12b2b");
             AddToggle("ShroomiteConfig", "Shroomite Stealth", "ShroomiteEnchant", "008cf4");
 
             AddToggle("ShadowHeader", "Shadow Force", "ShadowForce", "ffffff");
@@ -794,6 +796,9 @@ namespace FargowiltasSouls
                     fargoNPC.masoBool[1] = reader.ReadBoolean();
                     fargoNPC.masoBool[2] = reader.ReadBoolean();
                     fargoNPC.masoBool[3] = reader.ReadBoolean();
+                    fargoNPC.Counter = reader.ReadInt32();
+                    fargoNPC.Counter2 = reader.ReadInt32();
+                    fargoNPC.Timer = reader.ReadInt32();
                     break;
 
                 case 3: //rainbow slime/paladin, MP clients syncing to server
@@ -911,19 +916,6 @@ namespace FargowiltasSouls
                     }
                     break;
 
-                case 14: //golem free head resync
-                    if (Main.netMode == 1)
-                    {
-                        int n = reader.ReadByte();
-                        FargoSoulsGlobalNPC head = Main.npc[n].GetGlobalNPC<FargoSoulsGlobalNPC>();
-                        head.masoBool[0] = reader.ReadBoolean();
-                        head.masoBool[1] = reader.ReadBoolean();
-                        head.masoBool[2] = reader.ReadBoolean();
-                        head.Counter = reader.ReadInt32();
-                        head.Counter2 = reader.ReadInt32();
-                    }
-                    break;
-
                 case 77: //server side spawning fishron EX
                     if (Main.netMode == 2)
                     {
@@ -947,7 +939,7 @@ namespace FargowiltasSouls
             }
 
             //BaseMod Stuff
-            MsgType msg = (MsgType)reader.ReadByte();
+            /*MsgType msg = (MsgType)reader.ReadByte();
             if (msg == MsgType.ProjectileHostility) //projectile hostility and ownership
             {
                 int owner = reader.ReadInt32();
@@ -984,7 +976,7 @@ namespace FargowiltasSouls
                     ((ParentProjectile)Main.projectile[id].modProjectile).SetAI(newAI, aitype);
                 }
                 if (Main.netMode == 2) BaseNet.SyncAI(classID, id, newAI, aitype);
-            }
+            }*/
         }
 
         public override void UpdateMusic(ref int music, ref MusicPriority priority)
@@ -996,12 +988,12 @@ namespace FargowiltasSouls
                     music = GetSoundSlot(SoundType.Music, "Sounds/Music/MonsterMadhouse");
                     priority = MusicPriority.Event;
                 }
-                if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.mutantBoss, ModContent.NPCType<NPCs.MutantBoss.MutantBoss>())
+                /*if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.mutantBoss, ModContent.NPCType<NPCs.MutantBoss.MutantBoss>())
                     && Main.player[Main.myPlayer].Distance(Main.npc[FargoSoulsGlobalNPC.mutantBoss].Center) < 3000)
                 {
                     music = GetSoundSlot(SoundType.Music, "Sounds/Music/SteelRed");
                     priority = (MusicPriority)12;
-                }
+                }*/
             }
         }
 

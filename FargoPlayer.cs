@@ -283,6 +283,9 @@ namespace FargowiltasSouls
         public bool TwinsEX;
         public bool TimsConcoction;
         public bool ReceivedMasoGift;
+        public bool Graze;
+        public int GrazeCounter;
+        public double GrazeBonus;
 
         //debuffs
         public bool Hexed;
@@ -659,6 +662,7 @@ namespace FargowiltasSouls
             PhantasmalRing = false;
             TwinsEX = false;
             TimsConcoction = false;
+            Graze = false;
 
             //debuffs
             Hexed = false;
@@ -753,6 +757,8 @@ namespace FargowiltasSouls
             SuperBleed = false;
             Bloodthirsty = false;
             SinisterIcon = false;
+            Graze = false;
+            GrazeBonus = 0;
 
             MaxLifeReduction = 0;
         }
@@ -1148,6 +1154,13 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (Graze && ++GrazeCounter > 60) //decrease graze bonus over time
+            {
+                GrazeCounter = 0;
+                if (GrazeBonus > 0f)
+                    GrazeBonus -= 0.01;
+            }
+
             if (LowGround)
             {
                 player.waterWalk = false;
@@ -1290,14 +1303,18 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (GuttedHeart)
+            if (GuttedHeart && player.whoAmI == Main.myPlayer)
             {
                 //player.statLifeMax2 += player.statLifeMax / 10;
                 GuttedHeartCD--;
+
+                if (player.velocity == Vector2.Zero && player.itemAnimation == 0)
+                    GuttedHeartCD--;
+
                 if (GuttedHeartCD <= 0)
                 {
                     GuttedHeartCD = 900;
-                    if (player.whoAmI == Main.myPlayer && SoulConfig.Instance.GetValue(SoulConfig.Instance.GuttedHeart))
+                    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.GuttedHeart))
                     {
                         int count = 0;
                         for (int i = 0; i < 200; i++)
@@ -1707,7 +1724,7 @@ namespace FargowiltasSouls
                 fullBright = true;
             }
 
-            if (GodEater) //plague dust code but its pink
+            if (GodEater)
             {
                 if (Main.rand.Next(3) == 0 && drawInfo.shadow == 0f)
                 {
@@ -1717,10 +1734,9 @@ namespace FargowiltasSouls
                     Main.dust[dust].velocity.Y -= 0.15f;
                     Main.playerDrawDust.Add(dust);
                 }
-                //plague -> proportions HEX DEC newcolor
-                r *= 0.15f; //0.07f -> 0.50 FF 255 0.15f
-                g *= 0.03f; //0.15f -> 1.00 33 051 0.03f
-                b *= 0.09f; //0.01f -> ?.?? 99 153 0.09f
+                r *= 0.15f;
+                g *= 0.03f;
+                b *= 0.09f;
                 fullBright = true;
             }
 
@@ -2004,6 +2020,21 @@ namespace FargowiltasSouls
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
         {
+            if (Eternity)
+            {
+                if (crit)
+                {
+                    damage *= 5;
+                }
+            }
+            else if (UniverseEffect)
+            {
+                if (crit)
+                {
+                    damage = (int)(damage * 2.5f);
+                }
+            }
+
             if (Hexed)
             {
                 target.life += damage;
@@ -2558,7 +2589,7 @@ namespace FargowiltasSouls
                 gladCount = WillForce ? 30 : 60;
             }
 
-            if(RainEnchant && SoulConfig.Instance.RainCloud && projectile != ProjectileID.RainFriendly && player.ownedProjectileCounts[mod.ProjectileType("RainCloud")] < 1)
+            if(RainEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.RainCloud) && projectile != ProjectileID.RainFriendly && player.ownedProjectileCounts[mod.ProjectileType("RainCloud")] < 1)
             {
                 rainDamage += damage;
 
@@ -3002,6 +3033,8 @@ namespace FargowiltasSouls
 
             if (HurtTimer <= 0)
             {
+                HurtTimer = 20;
+
                 if (MoonChalice)
                 {
                     if (SoulConfig.Instance.GetValue(SoulConfig.Instance.AncientVisions))
@@ -3049,24 +3082,31 @@ namespace FargowiltasSouls
                             (int)(dam * player.magicDamage), 3.75f, player.whoAmI, ai0, ai1);
                     }
                 }
-            }
 
-            HurtTimer = 20;
+                if (MoltenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.MoltenExplosion))
+                {
+                    int baseDamage = 150;
+                    if (NatureForce)
+                        baseDamage = 250;
+                    if (TerrariaSoul)
+                        baseDamage = 500;
+
+                    Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, mod.ProjectileType("Explosion"), (int)(baseDamage * player.meleeDamage), 0f, Main.myPlayer);
+                    if (p != null)
+                        p.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                }
+            }
 
             if (Midas && Main.myPlayer == player.whoAmI)
                 player.DropCoins();
+
+            GrazeBonus = 0;
+            GrazeCounter = 0;
         }
 
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
             bool retVal = true;
-
-            if (MoltenEnchant)
-            {
-                Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, mod.ProjectileType("Explosion"), (int)(500 * player.meleeDamage), 0f, Main.myPlayer);
-                if (p != null)
-                    p.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
-            }
 
             if (MutantSetBonus && player.whoAmI == Main.myPlayer && retVal && player.FindBuffIndex(mod.BuffType("MutantRebirth")) == -1)
             {
@@ -3366,6 +3406,9 @@ namespace FargowiltasSouls
 
         public void FlowerBoots()
         {
+            if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.ChlorophyteFlowerBoots))
+                return;
+
             int x = (int)player.Center.X / 16;
             int y = (int)(player.position.Y + player.height - 1f) / 16;
 
