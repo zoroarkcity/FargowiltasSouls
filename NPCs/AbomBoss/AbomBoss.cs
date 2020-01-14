@@ -11,8 +11,6 @@ namespace FargowiltasSouls.NPCs.AbomBoss
     [AutoloadBossHead]
     public class AbomBoss : ModNPC
     {
-        public bool inPhase2;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Abominationn");
@@ -50,7 +48,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.buffImmune[mod.BuffType("OceanicMaul")] = true;
             npc.timeLeft = NPC.activeTime * 30;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/SteelRed");
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma");
             musicPriority = (MusicPriority)12;
         }
 
@@ -68,12 +66,14 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         public override void SendExtraAI(BinaryWriter writer)
         {
-            writer.Write(inPhase2);
+            writer.Write(npc.localAI[0]);
+            writer.Write(npc.localAI[1]);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            inPhase2 = reader.ReadBoolean();
+            npc.localAI[0] = reader.ReadSingle();
+            npc.localAI[1] = reader.ReadSingle();
         }
 
         public override void AI()
@@ -156,7 +156,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity *= 4f;
                         }
-                        npc.localAI[3] = 2;
+                        npc.localAI[3] = 2; //this marks p2
                         if (++npc.ai[2] > 15)
                         {
                             int heal = (int)(npc.lifeMax / 2 / 60 * Main.rand.NextFloat(1.5f, 2f));
@@ -190,12 +190,11 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     }
                     break;
 
-                case 0: //track player, throw penetrators
+                case 0: //track player, throw scythes (makes 4way using orig vel in p1, 8way targeting you in p2)
                     if (!AliveCheck(player))
                         break;
                     if (Phase2Check())
                         break;
-                    npc.localAI[2] = 0;
                     npc.dontTakeDamage = false;
                     targetPos = player.Center;
                     targetPos.X += 500 * (npc.Center.X < targetPos.X ? -1 : 1);
@@ -256,9 +255,154 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     }
                     break;
 
-                
+                case 1: //flaming scythe 8way (becomes homing in p2)
+                    if (!AliveCheck(player))
+                        break;
+                    targetPos = player.Center + player.DirectionTo(npc.Center) * 600;
+                    if (npc.Distance(targetPos) > 50)
+                    {
+                        Movement(targetPos, 0.5f);
+                    }
+                    if (++npc.ai[1] > 60)
+                    {
+                        npc.ai[1] = 0;
+                        if (++npc.ai[2] > 3)
+                        {
+                            npc.ai[0]++;
+                            npc.ai[2] = 0;
+                            npc.TargetClosest();
+                        }
+                        else
+                        {
+                            Main.NewText("flaming scythe 8way");
+                            /*if (Main.netMode != 1)
+                                for (int i = 0; i < 8; i++)
+                                    Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 4 * i) * 10f, mod.ProjectileType("MutantScythe1"), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
+                            Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f);*/
+                        }
+                        npc.netUpdate = true;
+                        break;
+                    }
+                    break;
+
+                case 2: //pause and then initiate dash
+                    if (Phase2Check())
+                        break;
+                    npc.velocity *= 0.9f;
+                    if (++npc.ai[1] > 15)
+                    {
+                        npc.netUpdate = true;
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        if (++npc.ai[2] > 5)
+                        {
+                            npc.ai[0]++; //go to next attack after dashes
+                            npc.ai[2] = 0;
+                        }
+                        else
+                        {
+                            npc.velocity = npc.DirectionTo(player.Center + player.velocity) * 30f;
+                        }
+                    }
+                    break;
+
+                case 3: //while dashing (p2 makes side scythes)
+                    if (++npc.ai[3] > 4)
+                    {
+                        npc.ai[3] = 0;
+                        if (npc.localAI[3] > 1 && Main.netMode != 1)
+                            Main.NewText("fishron side scythes");
+                    }
+                    if (++npc.ai[1] > 30)
+                    {
+                        npc.netUpdate = true;
+                        npc.ai[0]--;
+                        npc.ai[1] = 0;
+                        npc.ai[3] = 0;
+                    }
+                    break;
+
+                case 4: //choose the next attack
+                    npc.netUpdate = true;
+                    npc.ai[0] += ++npc.localAI[0];
+                    if (npc.localAI[0] >= 3) //reset p1 hard option counter
+                        npc.localAI[0] = 0;
+                    break;
+
+                case 5: //mutant scythe 8way (p2 also shoots flaming scythes)
+                    if (++npc.ai[1] > 120)
+                    {
+                        Main.NewText("did scythe");
+                        npc.netUpdate = true;
+                        npc.ai[0] = 8;
+                        npc.ai[1] = 0;
+                    }
+                    break;
+
+                case 6: //flocko swarm (p2 shoots ice waves up/down after)
+                    if (++npc.ai[1] > 120)
+                    {
+                        Main.NewText("did flocko");
+                        npc.netUpdate = true;
+                        npc.ai[0] = 8;
+                        npc.ai[1] = 0;
+                    }
+                    break;
+
+                case 7: //saucer laser spam  (p2 shoots rockets)
+                    if (++npc.ai[1] > 120)
+                    {
+                        Main.NewText("did laser spam");
+                        npc.netUpdate = true;
+                        npc.ai[0] = 8;
+                        npc.ai[1] = 0;
+                    }
+                    break;
+
+                case 8: //return to beginning in p1, proceed in p2
+                    npc.netUpdate = true;
+                    if (npc.localAI[3] > 1)
+                    {
+                        if (npc.localAI[1] == 0)
+                        {
+                            npc.localAI[1] = 1;
+                            npc.ai[0]++;
+                        }
+                        else
+                        {
+                            npc.localAI[1] = 0;
+                            npc.ai[0] = 12;
+                        }
+                    }
+                    else
+                    {
+                        npc.ai[0] = 0;
+                    }
+                    break;
+
+                case 9: //beginning of scythe rows and deathray rain
+                    if (++npc.ai[1] > 120)
+                    {
+                        Main.NewText("did scythe rows");
+                        npc.netUpdate = true;
+                        npc.ai[0] = 0;
+                        npc.ai[1] = 0;
+                    }
+                    break;
+
+                case 12: //beginning of laevateinn
+                    if (++npc.ai[1] > 120)
+                    {
+                        Main.NewText("did laevateinns");
+                        npc.netUpdate = true;
+                        npc.ai[0] = 0;
+                        npc.ai[1] = 0;
+                    }
+                    break;
 
                 default:
+                    Main.NewText("UH OH, STINKY");
+                    npc.netUpdate = true;
                     npc.ai[0] = 0;
                     goto case 0;
             }
@@ -325,14 +469,13 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         private bool Phase2Check()
         {
-            if (inPhase2)
+            if (npc.localAI[3] > 1)
                 return false;
 
             if (npc.life < npc.lifeMax / 2)
             {
                 if (Main.netMode != 1)
                 {
-                    inPhase2 = true;
                     npc.ai[0] = -1;
                     npc.ai[1] = 0;
                     npc.ai[2] = 0;
