@@ -61,6 +61,8 @@ nerfed oceanic maul effect to -15 def, -15% DR
 reduced fish EX health by x2.5
 
 ALL pillar enemies dont count towards shield if you kill them while out of range
+fixed monk dash not being in shadow force
+climbing toggle works
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
