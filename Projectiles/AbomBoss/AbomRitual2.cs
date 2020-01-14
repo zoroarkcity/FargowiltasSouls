@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.AbomBoss
@@ -12,19 +13,17 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         private const float PI = (float)Math.PI;
         private const float rotationPerTick = PI / 57f;
-        private const float threshold = 350;
+        private const float threshold = 150;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Abominationn Seal");
-            Main.projFrames[projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 46;
-            projectile.height = 46;
-            projectile.scale *= 2f;
+            projectile.width = 42;
+            projectile.height = 42;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.alpha = 255;
@@ -40,6 +39,20 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 projectile.alpha -= 2;
                 if (projectile.alpha < 0)
                     projectile.alpha = 0;
+
+                float distance = threshold * projectile.scale / 2f;
+                for (int i = 0; i < 30; i++)
+                {
+                    Vector2 offset = new Vector2();
+                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                    offset.X += (float)(Math.Sin(angle) * distance);
+                    offset.Y += (float)(Math.Cos(angle) * distance);
+                    Dust dust = Main.dust[Dust.NewDust(
+                        Main.npc[ai1].Center + offset - new Vector2(4, 4), 0, 0,
+                        DustID.Shadowflame, 0, 0, 100, Color.White, 1f)];
+                    dust.velocity = Main.npc[ai1].velocity;
+                    dust.noGravity = true;
+                }
             }
             else
             {
@@ -55,7 +68,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             projectile.Center = Main.npc[ai1].Center;
 
             projectile.timeLeft = 2;
-            projectile.scale = (1f - projectile.alpha / 255f) * 0.5f;
+            projectile.scale = 1f - projectile.alpha / 255f;
             projectile.ai[0] += rotationPerTick;
             if (projectile.ai[0] > PI)
             {
@@ -63,14 +76,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 projectile.netUpdate = true;
             }
 
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 6)
-            {
-                projectile.frameCounter = 0;
-                projectile.frame++;
-                if (projectile.frame > 1)
-                    projectile.frame = 0;
-            }
+            projectile.rotation += 0.5f;
         }
 
         public override bool CanDamage()
@@ -108,7 +114,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * projectile.Opacity * .3f;
+            return Color.White * projectile.Opacity;
         }
     }
 }

@@ -459,7 +459,7 @@ namespace FargowiltasSouls.NPCs
                         npc.buffImmune[mod.BuffType("ClippedWings")] = true;
                         if (BossIsAlive(ref fishBossEX, NPCID.DukeFishron))
                         {
-                            npc.lifeMax *= 20;
+                            npc.lifeMax *= 8;
                             npc.defense *= 2;
                             npc.buffImmune[mod.BuffType("FlamesoftheUniverse")] = true;
                             npc.buffImmune[mod.BuffType("LightningRod")] = true;
@@ -10707,13 +10707,20 @@ namespace FargowiltasSouls.NPCs
                                 npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CyclonicFin"));
                                 int maxEX = Main.rand.Next(5) + 5;
                                 for (int i = 0; i < maxEX; i++)
-                                    npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbominationnVoodooDoll"));
-                                maxEX = Main.rand.Next(5) + 5;
-                                for (int i = 0; i < maxEX; i++)
                                     npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantScale"));
 
-                                int max = 5;
-                                for (int i = 0; i < max; i++)
+                                if (FargoSoulsWorld.downedAbom)
+                                {
+                                    int maxDoll = Main.rand.Next(5) + 5;
+                                    for (int i = 0; i < maxDoll; i++)
+                                        npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbominationnVoodooDoll"));
+
+                                    int maxEnergy = Main.rand.Next(5) + 5;
+                                    for (int i = 0; i < maxEnergy; i++)
+                                        npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"));
+                                }
+                                
+                                for (int i = 0; i < 5; i++)
                                     Item.NewItem(npc.Hitbox, ItemID.Heart);
                                 return false;
                             }

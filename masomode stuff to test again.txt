@@ -57,6 +57,8 @@ removed ML's lightning portal spam attack
 ML now shoots lightning bolts from sockets instead
 adjusted spread on ML's nebula laser attack
 halved phantasmal eye horiz speed
+nerfed oceanic maul effect to -15 def, -15% DR
+reduced fish EX health by x2.5
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

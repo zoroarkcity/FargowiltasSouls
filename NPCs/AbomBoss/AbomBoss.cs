@@ -19,13 +19,18 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             Main.npcFrameCount[npc.type] = 4;
         }
 
+        /*public override bool Autoload(ref string name)
+        {
+            return false;
+        }*/
+
         public override void SetDefaults()
         {
-            npc.width = 34;
-            npc.height = 50;
+            npc.width = 120;
+            npc.height = 120;
             npc.damage = 300;
             npc.defense = 300;
-            npc.lifeMax = 2500000;
+            npc.lifeMax = 1000000;
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -45,7 +50,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.buffImmune[mod.BuffType("OceanicMaul")] = true;
             npc.timeLeft = NPC.activeTime * 30;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma");
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/SteelRed");
             musicPriority = (MusicPriority)12;
         }
 
@@ -149,7 +154,6 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         {
                             int d = Dust.NewDust(npc.position, npc.width, npc.height, 87, 0f, 0f, 0, default(Color), 1.5f);
                             Main.dust[d].noGravity = true;
-                            Main.dust[d].noLight = true;
                             Main.dust[d].velocity *= 4f;
                         }
                         npc.localAI[3] = 2;
@@ -321,10 +325,14 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         private bool Phase2Check()
         {
+            if (inPhase2)
+                return false;
+
             if (npc.life < npc.lifeMax / 2)
             {
                 if (Main.netMode != 1)
                 {
+                    inPhase2 = true;
                     npc.ai[0] = -1;
                     npc.ai[1] = 0;
                     npc.ai[2] = 0;
@@ -386,7 +394,6 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             {
                 int d = Dust.NewDust(npc.position, npc.width, npc.height, 87, 0f, 0f, 0, default(Color), 1f);
                 Main.dust[d].noGravity = true;
-                Main.dust[d].noLight = true;
                 Main.dust[d].velocity *= 3f;
             }
         }

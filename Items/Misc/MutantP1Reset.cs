@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Items.Misc
 
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Boss Count Reset");
+			DisplayName.SetDefault("Mutant P1 Reset");
             Tooltip.SetDefault(@"Makes Mutant forget you have defeated his first phase
 Results not guaranteed in multiplayer
 You probably shouldn't be reading this...");

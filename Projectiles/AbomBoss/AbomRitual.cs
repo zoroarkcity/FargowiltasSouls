@@ -22,8 +22,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         public override void SetDefaults()
         {
-            projectile.width = 46;
-            projectile.height = 46;
+            projectile.width = 42;
+            projectile.height = 42;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.alpha = 255;
@@ -75,9 +75,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
                         for (int i = 0; i < 20; i++)
                         {
-                            int d = Dust.NewDust(player.position, player.width, player.height, 87, 0f, 0f, 0, default(Color), 2.5f);
+                            int d = Dust.NewDust(player.position, player.width, player.height, 87, 0f, 0f, 0, default(Color), 2f);
                             Main.dust[d].noGravity = true;
-                            Main.dust[d].noLight = true;
                             Main.dust[d].velocity *= 5f;
                         }
                     }
@@ -103,14 +102,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 projectile.netUpdate = true;
             }
 
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 6)
-            {
-                projectile.frameCounter = 0;
-                projectile.frame++;
-                if (projectile.frame > 1)
-                    projectile.frame = 0;
-            }
+            projectile.rotation += 0.5f;
         }
 
         public override bool CanDamage()
