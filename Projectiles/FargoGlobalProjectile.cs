@@ -155,8 +155,6 @@ namespace FargowiltasSouls.Projectiles
             {
                 if (firstTick)
                 {
-                    firstTick = false;
-
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];
@@ -454,7 +452,7 @@ namespace FargowiltasSouls.Projectiles
                 retVal = false;
             }
 
-            if (TimeFrozen > 0)
+            if (TimeFrozen > 0 && !firstTick)
             {
                 if (Main.player[projectile.owner].heldProj == projectile.whoAmI) //dont freeze held projs like phantasm
                 {
@@ -489,6 +487,9 @@ namespace FargowiltasSouls.Projectiles
                 if (counter >= deathTimer)
                     projectile.Kill();
             }
+
+            if (firstTick)
+                firstTick = false;
 
             return retVal;
         }
