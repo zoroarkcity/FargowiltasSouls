@@ -456,11 +456,18 @@ namespace FargowiltasSouls.Projectiles
 
             if (TimeFrozen > 0)
             {
-                projectile.position = projectile.oldPosition;
-                projectile.frameCounter--;
-                projectile.timeLeft++;
-                TimeFrozen--;
-                retVal = false;
+                if (Main.player[projectile.owner].heldProj == projectile.whoAmI) //dont freeze held projs like phantasm
+                {
+                    TimeFrozen = 0;
+                }
+                else
+                {
+                    projectile.position = projectile.oldPosition;
+                    projectile.frameCounter--;
+                    projectile.timeLeft++;
+                    TimeFrozen--;
+                    retVal = false;
+                }
             }
 
             //masomode unicorn meme and pearlwood meme

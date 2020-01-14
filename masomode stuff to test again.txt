@@ -65,6 +65,7 @@ fixed monk dash not being in shadow force
 climbing toggle works
 oceanic maul no longer inflicts -60 defense, -ALL DR
 increased fishron ex arena radius
+fixed(?) stardust ench working on phantasm-like projectiles
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
