@@ -10758,90 +10758,6 @@ namespace FargowiltasSouls.NPCs
                             Projectile.NewProjectile(npc.Center, Vector2.UnitY * -6, ProjectileID.SpikyBallTrap, 30, 0f, Main.myPlayer);
                         break;
 
-                    case NPCID.StardustJellyfishBig:
-                    case NPCID.StardustSoldier:
-                    case NPCID.StardustSpiderBig:
-                    case NPCID.StardustWormHead:
-                        if (NPC.TowerActiveStardust && Main.netMode != 1 && NPC.CountNPCS(NPCID.StardustCellSmall) < 10)
-                        {
-                            for (int i = 0; i < 3; i++)
-                            {
-                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.StardustCellSmall);
-                                if (n < 200)
-                                {
-                                    Main.npc[n].velocity.X = Main.rand.Next(-10, 11);
-                                    Main.npc[n].velocity.Y = Main.rand.Next(-10, 11);
-                                    if (Main.netMode == 2)
-                                        NetMessage.SendData(23, -1, -1, null, n);
-                                }
-                            }
-                        }
-                        break;
-
-                    case NPCID.SolarSpearman:
-                        int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
-                        if (t != -1 && Main.player[t].active && !Main.player[t].dead && Main.netMode != 1)
-                        {
-                            Vector2 velocity = Main.player[t].Center - npc.Center;
-                            velocity.Normalize();
-                            velocity *= 14f;
-                            Projectile.NewProjectile(npc.Center, velocity, mod.ProjectileType("DrakanianDaybreak"), npc.damage / 4, 1f, Main.myPlayer);
-                        }
-                        Main.PlaySound(SoundID.Item1, npc.Center);
-                        if (Main.rand.Next(2) == 0)
-                        {
-                            npc.Transform(NPCID.SolarSolenian);
-                            return false;
-                        }
-                        break;
-
-                    case NPCID.NebulaBrain:
-                        int t2 = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
-                        if (t2 != -1 && Main.player[t2].active && !Main.player[t2].dead)
-                        {
-                            Player target = Main.player[npc.target];
-                            Vector2 boltVel = target.Center - npc.Center;
-                            boltVel.Normalize();
-                            boltVel *= 9;
-
-                            for (int i = 0; i < (int)npc.localAI[2] / 60; i++)
-                            {
-                                Vector2 spawnPos = npc.position;
-                                spawnPos.X += Main.rand.Next(npc.width);
-                                spawnPos.Y += Main.rand.Next(npc.height);
-
-                                Vector2 boltVel2 = boltVel.RotatedBy(MathHelper.ToRadians(Main.rand.Next(-20, 21)));
-                                boltVel2 *= Main.rand.NextFloat(0.8f, 1.2f);
-
-                                if (Main.netMode != 1)
-                                    Projectile.NewProjectile(spawnPos, boltVel2, ProjectileID.NebulaLaser, 48, 0f, Main.myPlayer);
-                            }
-                        }
-                        break;
-
-                    case NPCID.VortexHornet:
-                        if (Main.rand.Next(3) != 0)
-                        {
-                            Main.PlaySound(npc.DeathSound, npc.Center); //die without contributing to pillar shield
-                            npc.active = false;
-                            return false;
-                        }
-                        break;
-
-                    case NPCID.NebulaHeadcrab:
-                        if (npc.ai[0] == 5f) //latched on player
-                        {
-                            npc.Transform(NPCID.NebulaBrain);
-                            return false;
-                        }
-                        else if (Main.rand.Next(3) != 0) //die without contributing to pillar shield
-                        {
-                            Main.PlaySound(npc.DeathSound, npc.Center);
-                            npc.active = false;
-                            return false;
-                        }
-                        break;
-
                     case NPCID.SkeletronHand:
                         NPC head = Main.npc[(int)npc.ai[1]];
                         if (head.active && head.type == NPCID.SkeletronHead && head.GetGlobalNPC<FargoSoulsGlobalNPC>().Counter == 0)
@@ -11126,6 +11042,153 @@ namespace FargowiltasSouls.NPCs
                                 speed.Y -= 3f;
                                 if (Main.netMode != 1)
                                     Projectile.NewProjectile(npc.Center, speed, ProjectileID.SkeletonBone, npc.damage / 4, 0f, Main.myPlayer);
+                            }
+                        }
+                        break;
+
+                    case NPCID.SolarSpearman:
+                        int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
+                        if (t != -1 && Main.player[t].active && !Main.player[t].dead && Main.netMode != 1)
+                        {
+                            Vector2 velocity = Main.player[t].Center - npc.Center;
+                            velocity.Normalize();
+                            velocity *= 14f;
+                            Projectile.NewProjectile(npc.Center, velocity, mod.ProjectileType("DrakanianDaybreak"), npc.damage / 4, 1f, Main.myPlayer);
+                        }
+                        Main.PlaySound(SoundID.Item1, npc.Center);
+                        if (Main.rand.Next(2) == 0)
+                        {
+                            npc.Transform(NPCID.SolarSolenian);
+                            return false;
+                        }
+                        goto case NPCID.SolarSolenian;
+
+                    case NPCID.SolarSolenian:
+                    case NPCID.SolarCorite:
+                    case NPCID.SolarCrawltipedeHead:
+                    case NPCID.SolarCrawltipedeBody:
+                    case NPCID.SolarCrawltipedeTail:
+                    case NPCID.SolarDrakomire:
+                    case NPCID.SolarDrakomireRider:
+                    case NPCID.SolarSroller:
+                        if (NPC.TowerActiveSolar && NPC.ShieldStrengthTowerSolar > 0)
+                        {
+                            int p = NPC.FindFirstNPC(NPCID.LunarTowerSolar);
+                            if (p != -1 && Main.npc[p].active && npc.lastInteraction != -1 && Main.player[npc.lastInteraction].Distance(Main.npc[p].Center) < 5000)
+                            {
+                                break;
+                            }
+                            else //if pillar active, but out of range, dont contribute to shield
+                            {
+                                Main.PlaySound(npc.DeathSound, npc.Center);
+                                return false;
+                            }
+                        }
+                        break;
+
+                    case NPCID.VortexHornet:
+                    case NPCID.VortexHornetQueen:
+                    case NPCID.VortexLarva:
+                    case NPCID.VortexRifleman:
+                    case NPCID.VortexSoldier:
+                        if (NPC.TowerActiveVortex && NPC.ShieldStrengthTowerVortex > 0)
+                        {
+                            int p = NPC.FindFirstNPC(NPCID.LunarTowerVortex);
+                            if (p != -1 && Main.npc[p].active && npc.lastInteraction != -1 && Main.player[npc.lastInteraction].Distance(Main.npc[p].Center) < 5000)
+                            {
+                                break;
+                            }
+                            else //if pillar active, but out of range, dont contribute to shield
+                            {
+                                Main.PlaySound(npc.DeathSound, npc.Center);
+                                return false;
+                            }
+                        }
+                        break;
+
+                    case NPCID.NebulaBrain:
+                        if (npc.HasValidTarget)
+                        {
+                            Player target = Main.player[npc.target];
+                            Vector2 boltVel = target.Center - npc.Center;
+                            boltVel.Normalize();
+                            boltVel *= 9;
+
+                            for (int i = 0; i < (int)npc.localAI[2] / 60; i++)
+                            {
+                                Vector2 spawnPos = npc.position;
+                                spawnPos.X += Main.rand.Next(npc.width);
+                                spawnPos.Y += Main.rand.Next(npc.height);
+
+                                Vector2 boltVel2 = boltVel.RotatedBy(MathHelper.ToRadians(Main.rand.Next(-20, 21)));
+                                boltVel2 *= Main.rand.NextFloat(0.8f, 1.2f);
+
+                                if (Main.netMode != 1)
+                                    Projectile.NewProjectile(spawnPos, boltVel2, ProjectileID.NebulaLaser, 48, 0f, Main.myPlayer);
+                            }
+                        }
+                        goto case NPCID.NebulaSoldier;
+
+                    case NPCID.NebulaHeadcrab:
+                        if (npc.ai[0] == 5f) //latched on player
+                        {
+                            npc.Transform(NPCID.NebulaBrain);
+                            return false;
+                        }
+                        else if (Main.rand.Next(3) != 0) //die without contributing to pillar shield
+                        {
+                            Main.PlaySound(npc.DeathSound, npc.Center);
+                            return false;
+                        }
+                        goto case NPCID.NebulaSoldier;
+
+                    case NPCID.NebulaBeast:
+                    case NPCID.NebulaSoldier:
+                        if (NPC.TowerActiveNebula && NPC.ShieldStrengthTowerNebula > 0)
+                        {
+                            int p = NPC.FindFirstNPC(NPCID.LunarTowerNebula);
+                            if (p != -1 && Main.npc[p].active && npc.lastInteraction != -1 && Main.player[npc.lastInteraction].Distance(Main.npc[p].Center) < 5000)
+                            {
+                                break;
+                            }
+                            else //if pillar active, but out of range, dont contribute to shield
+                            {
+                                Main.PlaySound(npc.DeathSound, npc.Center);
+                                return false;
+                            }
+                        }
+                        break;
+
+                    case NPCID.StardustJellyfishBig:
+                    case NPCID.StardustSoldier:
+                    case NPCID.StardustSpiderBig:
+                    case NPCID.StardustWormHead:
+                        if (NPC.TowerActiveStardust && Main.netMode != 1 && NPC.CountNPCS(NPCID.StardustCellSmall) < 10)
+                        {
+                            for (int i = 0; i < 3; i++)
+                            {
+                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.StardustCellSmall);
+                                if (n < 200)
+                                {
+                                    Main.npc[n].velocity.X = Main.rand.Next(-10, 11);
+                                    Main.npc[n].velocity.Y = Main.rand.Next(-10, 11);
+                                    if (Main.netMode == 2)
+                                        NetMessage.SendData(23, -1, -1, null, n);
+                                }
+                            }
+                        }
+
+                        if (NPC.TowerActiveStardust && NPC.ShieldStrengthTowerStardust > 0)
+                        {
+                            int p = NPC.FindFirstNPC(NPCID.LunarTowerStardust);
+                            if (p != -1 && Main.npc[p].active && npc.lastInteraction != -1 && Main.player[npc.lastInteraction].Distance(Main.npc[p].Center) < 5000)
+                            {
+                                break;
+                            }
+                            else //if pillar active, but out of range, dont contribute to shield
+                            {
+                                Main.PlaySound(npc.DeathSound, npc.Center);
+                                return false;
                             }
                         }
                         break;

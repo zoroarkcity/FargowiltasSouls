@@ -60,6 +60,8 @@ halved phantasmal eye horiz speed
 nerfed oceanic maul effect to -15 def, -15% DR
 reduced fish EX health by x2.5
 
+ALL pillar enemies dont count towards shield if you kill them while out of range
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)
