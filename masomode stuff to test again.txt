@@ -63,6 +63,8 @@ reduced fish EX health by x2.5
 ALL pillar enemies dont count towards shield if you kill them while out of range
 fixed monk dash not being in shadow force
 climbing toggle works
+oceanic maul no longer inflicts -60 defense, -ALL DR
+increased fishron ex arena radius
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

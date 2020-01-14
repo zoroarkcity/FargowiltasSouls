@@ -1454,9 +1454,6 @@ namespace FargowiltasSouls
 
             if (OceanicMaul)
             {
-                player.statDefense -= 60;
-                player.endurance = 0;
-
                 if (MaxLifeReduction > player.statLifeMax2 - 100)
                     MaxLifeReduction = player.statLifeMax2 - 100;
                 player.statLifeMax2 -= MaxLifeReduction;

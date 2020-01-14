@@ -56,7 +56,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 if (player.active && !player.dead)
                 {
                     float distance = player.Distance(projectile.Center);
-                    const float threshold = 1200f;
+                    const float threshold = 1400f;
                     if (targetIsMe && Math.Abs(distance - threshold) < 30f && player.hurtCooldowns[0] == 0 && projectile.alpha == 0)
                     {
                         int hitDirection = projectile.Center.X > player.Center.X ? 1 : -1;
