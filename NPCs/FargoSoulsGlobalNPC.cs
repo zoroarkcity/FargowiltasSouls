@@ -128,6 +128,10 @@ namespace FargowiltasSouls.NPCs
 
                 switch (npc.type)
                 {
+                    case NPCID.GoblinWarrior:
+                        npc.knockBackResist = 0;
+                        break;
+
                     case NPCID.Plantera:
                         npc.lifeMax = (int)(npc.lifeMax * 1.25);
                         break;
@@ -1635,6 +1639,11 @@ namespace FargowiltasSouls.NPCs
                                         {
                                             Vector2 distance = npc.Center - Main.player[npc.target].Center;
                                             npc.Center = Main.player[npc.target].Center;
+                                            distance.X *= 1.5f;
+                                            if (distance.X > 1200)
+                                                distance.X = 1200;
+                                            else if (distance.X < -1200)
+                                                distance.X = -1200;
                                             if (distance.Y > 0)
                                                 distance.Y *= -1;
                                             npc.position.X -= distance.X;
@@ -3265,6 +3274,42 @@ namespace FargowiltasSouls.NPCs
                                             Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
                                             Projectile.NewProjectile(npc.Center, distance, type, npc.damage / 5, 0f, Main.myPlayer);
                                             Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
+                                        }
+                                    }
+
+                                    Vector2 pivot = npc.Center;
+                                    pivot += Vector2.Normalize(npc.velocity.RotatedBy(Math.PI / 2)) * 600;
+
+                                    for (int i = 0; i < 20; i++) //arena dust
+                                    {
+                                        Vector2 offset = new Vector2();
+                                        double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                                        offset.X += (float)(Math.Sin(angle) * 600);
+                                        offset.Y += (float)(Math.Cos(angle) * 600);
+                                        Dust dust = Main.dust[Dust.NewDust(pivot + offset - new Vector2(4, 4), 0, 0, 112, 0, 0, 100, Color.White, 1f)];
+                                        dust.velocity = Vector2.Zero;
+                                        if (Main.rand.Next(3) == 0)
+                                            dust.velocity += Vector2.Normalize(offset) * 5f;
+                                        dust.noGravity = true;
+                                    }
+
+                                    if (Main.LocalPlayer.active && !Main.LocalPlayer.dead) //arena effect
+                                    {
+                                        float distance = Main.LocalPlayer.Distance(pivot);
+                                        if (distance > 600 && distance < 3000)
+                                        {
+                                            Vector2 movement = pivot - Main.LocalPlayer.Center;
+                                            float difference = movement.Length() - 600;
+                                            movement.Normalize();
+                                            movement *= difference < 17f ? difference : 17f;
+                                            Main.LocalPlayer.position += movement;
+
+                                            for (int i = 0; i < 20; i++)
+                                            {
+                                                int d = Dust.NewDust(Main.LocalPlayer.position, Main.LocalPlayer.width, Main.LocalPlayer.height, 112, 0f, 0f, 0, default(Color), 2f);
+                                                Main.dust[d].noGravity = true;
+                                                Main.dust[d].velocity *= 5f;
+                                            }
                                         }
                                     }
 

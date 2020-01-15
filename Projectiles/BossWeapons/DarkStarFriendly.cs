@@ -26,7 +26,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.ignoreWater = true;
             projectile.timeLeft = 900;
             projectile.friendly = true;
-            cooldownSlot = 1;
+            projectile.ranged = true;
         }
 
         public override void AI()

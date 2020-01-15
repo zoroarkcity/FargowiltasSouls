@@ -66,6 +66,11 @@ climbing toggle works
 oceanic maul no longer inflicts -60 defense, -ALL DR
 increased fishron ex arena radius
 fixed(?) stardust ench working on phantasm-like projectiles
+adjusted eoc's x distance after teleport slightly
+destroyer coil now has an arena effect and warning dust
+goblin warriors are kb immune
+fixed dark star cannon's stars not counting as ranged
+adjusted goblins forcing meteor condition
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

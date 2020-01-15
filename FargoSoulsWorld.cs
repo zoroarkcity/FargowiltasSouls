@@ -72,7 +72,7 @@ namespace FargowiltasSouls
             CultistCount = 0;
             MoonlordCount = 0;
 
-            forceMeteor = false;
+            forceMeteor = true;
             skipMutantP1 = 0;
         }
 
