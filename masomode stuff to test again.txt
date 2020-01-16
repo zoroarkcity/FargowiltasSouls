@@ -75,6 +75,7 @@ added monk dash toggle
 flight mastery soul is infinite flight
 halved fish EX and sharkron EX defense
 quartered sharkron EX life
+fishron EX spawns sharknados in p3 slower
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
