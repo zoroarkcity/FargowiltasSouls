@@ -72,6 +72,7 @@ goblin warriors are kb immune
 fixed dark star cannon's stars not counting as ranged
 adjusted goblins forcing meteor condition
 added monk dash toggle
+flight mastery soul is infinite flight
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

@@ -26,8 +26,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
         {
             npc.width = 120;
             npc.height = 120;
-            npc.damage = 300;
-            npc.defense = 300;
+            npc.damage = 240;
+            npc.defense = 120;
             npc.lifeMax = 1000000;
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
@@ -191,9 +191,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 0: //track player, throw scythes (makes 4way using orig vel in p1, 8way targeting you in p2)
-                    if (!AliveCheck(player))
-                        break;
-                    if (Phase2Check())
+                    if (!AliveCheck(player) || Phase2Check())
                         break;
                     npc.dontTakeDamage = false;
                     targetPos = player.Center;
@@ -249,23 +247,20 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         }
                         else if (Main.netMode != 1)
                         {
-                            Main.NewText("throw splitter scythe");
-                            //Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center) * 25f, mod.ProjectileType("MutantSpearThrown"), npc.damage / 4, 0f, Main.myPlayer, npc.target);
+                            float ai0 = npc.Distance(player.Center) / 30 * 2f;
+                            float ai1 = npc.localAI[3] > 1 ? 1f : 0f;
+                            Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center) * 30f, mod.ProjectileType("AbomScytheSplit"), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
                         }
                     }
                     break;
 
-                case 1: //flaming scythe 8way (becomes homing in p2)
-                    if (!AliveCheck(player))
+                case 1: //flaming scythe spread (shoots out further in p2)
+                    if (!AliveCheck(player) || Phase2Check())
                         break;
-                    targetPos = player.Center + player.DirectionTo(npc.Center) * 450;
-                    if (npc.Distance(targetPos) > 50)
+                    npc.velocity = npc.DirectionTo(player.Center) * 6f;
+                    if (--npc.ai[1] < 0)
                     {
-                        Movement(targetPos, 0.5f);
-                    }
-                    if (++npc.ai[1] > 60)
-                    {
-                        npc.ai[1] = 0;
+                        npc.ai[1] = 60;
                         if (++npc.ai[2] > 3)
                         {
                             npc.ai[0]++;
@@ -274,11 +269,12 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         }
                         else
                         {
-                            Main.NewText("flaming scythe 8way");
-                            /*if (Main.netMode != 1)
-                                for (int i = 0; i < 8; i++)
-                                    Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 4 * i) * 10f, mod.ProjectileType("MutantScythe1"), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
-                            Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f);*/
+                            float baseDelay = npc.localAI[3] > 1 ? 30 : 20;
+                            float speed = npc.localAI[3] > 1 ? 20 : 10;
+                            if (Main.netMode != 1)
+                                for (int i = 0; i < 6; i++)
+                                    Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center).RotatedBy(Math.PI / 3 * i) * speed, mod.ProjectileType("AbomScytheFlaming"), npc.damage / 5, 0f, Main.myPlayer, baseDelay, baseDelay + 90);
+                            Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f);
                         }
                         npc.netUpdate = true;
                         break;
@@ -307,11 +303,20 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 3: //while dashing (p2 makes side scythes)
-                    if (++npc.ai[3] > 4)
+                    if (Phase2Check())
+                        break;
+                    if (++npc.ai[3] > 5)
                     {
                         npc.ai[3] = 0;
-                        if (npc.localAI[3] > 1 && Main.netMode != 1)
-                            Main.NewText("fishron side scythes");
+                        if (Main.netMode != 1)
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity), mod.ProjectileType("AbomSickle"), npc.damage / 5, 0, Main.myPlayer);
+                            if (npc.localAI[3] > 1)
+                            {
+                                Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2), mod.ProjectileType("AbomSickle"), npc.damage / 5, 0, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(-Math.PI / 2), mod.ProjectileType("AbomSickle"), npc.damage / 5, 0, Main.myPlayer);
+                            }
+                        }
                     }
                     if (++npc.ai[1] > 30)
                     {
@@ -330,17 +335,38 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 5: //mutant scythe 8way (p2 also shoots flaming scythes)
-                    if (++npc.ai[1] > 120)
+                    if (!AliveCheck(player))
+                        break;
+                    targetPos = player.Center + player.DirectionTo(npc.Center) * 400;
+                    if (npc.Distance(targetPos) > 50)
                     {
-                        Main.NewText("did scythe");
-                        npc.netUpdate = true;
-                        npc.ai[0] = 8;
+                        Movement(targetPos, 0.5f);
+                    }
+                    if (++npc.ai[1] > 60)
+                    {
                         npc.ai[1] = 0;
+                        if (++npc.ai[2] > 3)
+                        {
+                            npc.ai[0] = 8;
+                            npc.ai[2] = 0;
+                            npc.TargetClosest();
+                        }
+                        else
+                        {
+                            if (Main.netMode != 1)
+                            {
+                                for (int i = 0; i < 8; i++)
+                                    Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 4 * i) * 10f, mod.ProjectileType("MutantScythe1"), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
+                            }
+                            Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f);
+                        }
+                        npc.netUpdate = true;
+                        break;
                     }
                     break;
 
                 case 6: //flocko swarm (p2 shoots ice waves up/down after)
-                    if (++npc.ai[1] > 120)
+                    if (++npc.ai[1] > 60)
                     {
                         Main.NewText("did flocko");
                         npc.netUpdate = true;
@@ -350,7 +376,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 7: //saucer laser spam  (p2 shoots rockets)
-                    if (++npc.ai[1] > 120)
+                    if (++npc.ai[1] > 60)
                     {
                         Main.NewText("did laser spam");
                         npc.netUpdate = true;
@@ -381,7 +407,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 9: //beginning of scythe rows and deathray rain
-                    if (++npc.ai[1] > 120)
+                    if (++npc.ai[1] > 60)
                     {
                         Main.NewText("did scythe rows");
                         npc.netUpdate = true;
@@ -391,7 +417,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 12: //beginning of laevateinn
-                    if (++npc.ai[1] > 120)
+                    if (++npc.ai[1] > 60)
                     {
                         Main.NewText("did laevateinns");
                         npc.netUpdate = true;

@@ -1,31 +1,32 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Projectiles.MutantBoss
+namespace FargowiltasSouls.Projectiles.AbomBoss
 {
-    public class MutantScythe2 : ModProjectile
+    public class AbomScytheFlaming : ModProjectile
     {
+        public override string Texture => "Terraria/Projectile_329";
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mutant Sickle");
+            DisplayName.SetDefault("Abominationn Scythe");
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 48;
-            projectile.height = 48;
-            projectile.alpha = 100;
-            projectile.light = 0.2f;
+            projectile.width = 80;
+            projectile.height = 80;
             projectile.hostile = true;
-            projectile.timeLeft = 240;
-            projectile.tileCollide = false;
+            projectile.penetrate = -1;
+            projectile.timeLeft = 420;
             projectile.ignoreWater = true;
-            projectile.aiStyle = -1;
+            projectile.tileCollide = false;
             cooldownSlot = 1;
         }
 
@@ -33,29 +34,32 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         {
             if (projectile.localAI[0] == 0)
             {
-                projectile.localAI[0] = 1;
-                Main.PlaySound(SoundID.Item8, projectile.Center);
+                projectile.localAI[0] = Main.rand.Next(2) + 1; //become 1 or 2
             }
-            projectile.rotation += 0.8f;
-            if (++projectile.localAI[1] > 30 && projectile.localAI[1] < 100)
-                projectile.velocity *= 1.06f;
-            for (int i = 0; i < 2; i++)
-            {
-                int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 27, 0f, 0f, 100);
-                Main.dust[d].noGravity = true;
-            }
-        }
 
-        public override Color? GetAlpha(Color lightColor)
-        {
-            return Color.White;
+            if (projectile.localAI[0] == 1)
+                projectile.rotation += .5f;
+            else
+                projectile.rotation -= .5f;
+
+            if (--projectile.ai[0] == 0)
+            {
+                projectile.netUpdate = true;
+                projectile.velocity = Vector2.Zero;
+            }
+
+            if (--projectile.ai[1] == 0)
+            {
+                projectile.netUpdate = true;
+                Player target = Main.player[Player.FindClosest(projectile.position, projectile.width, projectile.height)];
+                projectile.velocity = projectile.DirectionTo(target.Center) * 20;
+                Main.PlaySound(SoundID.Item84, projectile.Center);
+            }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(mod.BuffType("MutantFang"), 180);
-            target.AddBuff(mod.BuffType("Shadowflame"), 300);
-            target.AddBuff(BuffID.Bleeding, 600);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -80,6 +84,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
             return false;
+        }
+
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White;
         }
     }
 }

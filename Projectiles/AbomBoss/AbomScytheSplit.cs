@@ -1,31 +1,32 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Projectiles.MutantBoss
+namespace FargowiltasSouls.Projectiles.AbomBoss
 {
-    public class MutantScythe2 : ModProjectile
+    public class AbomScytheSplit : ModProjectile
     {
+        public override string Texture => "Terraria/Projectile_274";
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mutant Sickle");
+            DisplayName.SetDefault("Abominationn Scythe");
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 48;
-            projectile.height = 48;
-            projectile.alpha = 100;
-            projectile.light = 0.2f;
+            projectile.width = 40;
+            projectile.height = 40;
             projectile.hostile = true;
-            projectile.timeLeft = 240;
-            projectile.tileCollide = false;
+            projectile.penetrate = -1;
+            projectile.timeLeft = 600;
             projectile.ignoreWater = true;
-            projectile.aiStyle = -1;
+            projectile.tileCollide = false;
             cooldownSlot = 1;
         }
 
@@ -34,28 +35,40 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             if (projectile.localAI[0] == 0)
             {
                 projectile.localAI[0] = 1;
-                Main.PlaySound(SoundID.Item8, projectile.Center);
+                Main.PlaySound(SoundID.Item71, projectile.Center);
             }
-            projectile.rotation += 0.8f;
-            if (++projectile.localAI[1] > 30 && projectile.localAI[1] < 100)
-                projectile.velocity *= 1.06f;
-            for (int i = 0; i < 2; i++)
-            {
-                int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 27, 0f, 0f, 100);
-                Main.dust[d].noGravity = true;
-            }
+
+            projectile.rotation += 1f;
+
+            if (--projectile.ai[0] <= 0)
+                projectile.Kill();
         }
 
-        public override Color? GetAlpha(Color lightColor)
+        public override void Kill(int timeLeft)
         {
-            return Color.White;
+            if (Main.netMode != 1)
+            {
+                if (projectile.ai[1] == 0)
+                {
+                    for (int i = 0; i < 6; i++)
+                        Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity).RotatedBy(Math.PI / 3 * i), mod.ProjectileType("AbomSickle"), projectile.damage, projectile.knockBack, projectile.owner);
+                }
+                else
+                {
+                    int p = Player.FindClosest(projectile.Center, 0, 0);
+                    if (p != 1)
+                    {
+                        Vector2 speed = projectile.DirectionTo(Main.player[p].Center);
+                        for (int i = 0; i < 8; i++)
+                            Projectile.NewProjectile(projectile.Center, speed.RotatedBy(Math.PI / 4 * i), mod.ProjectileType("AbomSickle"), projectile.damage, projectile.knockBack, projectile.owner);
+                    }
+                }
+            }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(mod.BuffType("MutantFang"), 180);
-            target.AddBuff(mod.BuffType("Shadowflame"), 300);
-            target.AddBuff(BuffID.Bleeding, 600);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -80,6 +93,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
             return false;
+        }
+
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White;
         }
     }
 }
