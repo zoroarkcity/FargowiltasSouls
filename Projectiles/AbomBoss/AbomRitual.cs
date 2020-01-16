@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         private const float PI = (float)Math.PI;
         private const float rotationPerTick = PI / 140f;
-        private const float threshold = 1200f;
+        private const float threshold = 1400f;
 
         public override void SetStaticDefaults()
         {
@@ -40,7 +40,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                     projectile.alpha = 0;
 
                 projectile.velocity = Main.npc[ai1].Center - projectile.Center;
-                projectile.velocity /= 60f;
+                projectile.velocity /= 40f;
 
                 Player player = Main.player[Main.myPlayer];
                 if (player.active && !player.dead)

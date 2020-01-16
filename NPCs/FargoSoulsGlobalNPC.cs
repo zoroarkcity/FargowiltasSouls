@@ -446,7 +446,6 @@ namespace FargowiltasSouls.NPCs
                             masoBool[3] = true;
                             npc.GivenName = "Duke Fishron EX";
                             npc.damage = (int)(npc.damage * 1.5);
-                            npc.defense *= 2;
                             npc.buffImmune[mod.BuffType("FlamesoftheUniverse")] = true;
                             npc.buffImmune[mod.BuffType("LightningRod")] = true;
                         }
@@ -463,8 +462,7 @@ namespace FargowiltasSouls.NPCs
                         npc.buffImmune[mod.BuffType("ClippedWings")] = true;
                         if (BossIsAlive(ref fishBossEX, NPCID.DukeFishron))
                         {
-                            npc.lifeMax *= 8;
-                            npc.defense *= 2;
+                            npc.lifeMax *= 2;
                             npc.buffImmune[mod.BuffType("FlamesoftheUniverse")] = true;
                             npc.buffImmune[mod.BuffType("LightningRod")] = true;
                             SpecialEnchantImmune = true;

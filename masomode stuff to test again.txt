@@ -73,6 +73,8 @@ fixed dark star cannon's stars not counting as ranged
 adjusted goblins forcing meteor condition
 added monk dash toggle
 flight mastery soul is infinite flight
+halved fish EX and sharkron EX defense
+quartered sharkron EX life
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
