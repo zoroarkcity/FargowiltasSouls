@@ -94,20 +94,11 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
             Color color26 = projectile.GetAlpha(lightColor);
 
-            for (int x = 0; x < 7; x++)
+            for (int x = 0; x < 6; x++)
             {
                 Vector2 drawOffset = new Vector2(threshold * projectile.scale / 2f, 0f).RotatedBy(projectile.ai[0]);
-                drawOffset = drawOffset.RotatedBy(2f * PI / 7f * x);
-                const int max = 4;
-                for (int i = 0; i < max; i++)
-                {
-                    Color color27 = color26;
-                    color27 *= (float)(max - i) / max;
-                    Vector2 value4 = projectile.Center + drawOffset.RotatedBy(rotationPerTick * -i);
-                    float num165 = projectile.rotation;
-                    Main.spriteBatch.Draw(texture2D13, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
-                }
-                Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+                drawOffset = drawOffset.RotatedBy(2f * PI / 6f * x);
+                Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, x % 2 == 0 ? projectile.rotation : -projectile.rotation, origin2, projectile.scale, x % 2 == 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             }
             return false;
         }

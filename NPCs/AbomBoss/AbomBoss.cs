@@ -48,8 +48,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.buffImmune[mod.BuffType("OceanicMaul")] = true;
             npc.timeLeft = NPC.activeTime * 30;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma");
-            musicPriority = (MusicPriority)12;
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/SteelRed");
+            musicPriority = (MusicPriority)11;
         }
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -258,7 +258,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 case 1: //flaming scythe 8way (becomes homing in p2)
                     if (!AliveCheck(player))
                         break;
-                    targetPos = player.Center + player.DirectionTo(npc.Center) * 600;
+                    targetPos = player.Center + player.DirectionTo(npc.Center) * 450;
                     if (npc.Distance(targetPos) > 50)
                     {
                         Movement(targetPos, 0.5f);
@@ -289,7 +289,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     if (Phase2Check())
                         break;
                     npc.velocity *= 0.9f;
-                    if (++npc.ai[1] > 15)
+                    if (++npc.ai[1] > 30)
                     {
                         npc.netUpdate = true;
                         npc.ai[0]++;
