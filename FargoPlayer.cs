@@ -4753,7 +4753,7 @@ namespace FargowiltasSouls
             player.setMonkT2 = true;
             MonkEnchant = true;
 
-            if (!player.HasBuff(mod.BuffType("MonkBuff")) && IsStandingStill && !player.mount.Active)
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MonkDash) && IsStandingStill && !player.mount.Active && !player.HasBuff(mod.BuffType("MonkBuff")))
             {
                 monkTimer++;
 

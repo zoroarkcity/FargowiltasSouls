@@ -71,6 +71,7 @@ destroyer coil now has an arena effect and warning dust
 goblin warriors are kb immune
 fixed dark star cannon's stars not counting as ranged
 adjusted goblins forcing meteor condition
+added monk dash toggle
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

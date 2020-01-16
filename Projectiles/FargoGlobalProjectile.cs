@@ -48,6 +48,7 @@ namespace FargowiltasSouls.Projectiles
         private bool squeakyToy = false;
         public int TimeFrozen = 0;
         public bool TimeFreezeImmune;
+        public bool TimeFreezeCheck;
 
         
 
@@ -452,20 +453,13 @@ namespace FargowiltasSouls.Projectiles
                 retVal = false;
             }
 
-            if (TimeFrozen > 0 && !firstTick)
+            if (TimeFrozen > 0 && !firstTick && !TimeFreezeImmune)
             {
-                if (Main.player[projectile.owner].heldProj == projectile.whoAmI) //dont freeze held projs like phantasm
-                {
-                    TimeFrozen = 0;
-                }
-                else
-                {
-                    projectile.position = projectile.oldPosition;
-                    projectile.frameCounter--;
-                    projectile.timeLeft++;
-                    TimeFrozen--;
-                    retVal = false;
-                }
+                projectile.position = projectile.oldPosition;
+                projectile.frameCounter--;
+                projectile.timeLeft++;
+                TimeFrozen--;
+                retVal = false;
             }
 
             //masomode unicorn meme and pearlwood meme
@@ -1116,6 +1110,13 @@ namespace FargowiltasSouls.Projectiles
 
         public override void PostAI(Projectile projectile)
         {
+            if (!TimeFreezeCheck)
+            {
+                TimeFreezeCheck = true;
+                if (projectile.whoAmI == Main.player[projectile.owner].heldProj)
+                    TimeFreezeImmune = true;
+            }
+
             if (projectile.hostile && projectile.damage > 0 && Main.LocalPlayer.active && !Main.LocalPlayer.dead) //graze
             {
                 FargoPlayer fargoPlayer = Main.LocalPlayer.GetModPlayer<FargoPlayer>();

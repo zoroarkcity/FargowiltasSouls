@@ -122,6 +122,7 @@ namespace FargowiltasSouls
             AddToggle("NecroConfig", "Necro Guardian", "NecroEnchant", "565643");
             AddToggle("ShadowConfig", "Shadow Darkness", "ShadowEnchant", "42356f");
             AddToggle("AncientShadowConfig", "Ancient Shadow Orbs", "AncientShadowEnchant", "42356f");
+            AddToggle("MonkConfig", "Monk Dash", "MonkEnchant", "ffffff");
             AddToggle("ShinobiConfig", "Shinobi Through Walls", "ShinobiEnchant", "935b18");
             AddToggle("ShinobiTabiConfig", "Tabi Dash", "ShinobiEnchant", "935b18");
             AddToggle("ShinobiClimbingConfig", "Tiger Climbing Gear", "ShinobiEnchant", "935b18");
