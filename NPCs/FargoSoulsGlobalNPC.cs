@@ -6643,6 +6643,8 @@ namespace FargowiltasSouls.NPCs
                             if (npc.HasPlayerTarget && (!Main.player[npc.target].active || Main.player[npc.target].dead))
                                 npc.noTileCollide = true;
                         }
+                        if (npc.noTileCollide)
+                            npc.velocity.Y++;
                         break;
 
                     case NPCID.GoblinSorcerer:
