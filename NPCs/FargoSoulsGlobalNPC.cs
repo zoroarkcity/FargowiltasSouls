@@ -10753,9 +10753,9 @@ namespace FargowiltasSouls.NPCs
                                 Main.PlaySound(npc.DeathSound, npc.Center);
                                 npc.DropBossBags();
                                 npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CyclonicFin"));
-                                int maxEX = Main.rand.Next(5) + 5;
+                                /*int maxEX = Main.rand.Next(5) + 5;
                                 for (int i = 0; i < maxEX; i++)
-                                    npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantScale"));
+                                    npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantScale"));*/
 
                                 if (FargoSoulsWorld.downedAbom)
                                 {

@@ -648,6 +648,13 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             return true;
         }
 
+        public override bool CheckDead()
+        {
+            for (int i = 0; i < 30; i++)
+                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * Math.PI) * Main.rand.NextFloat(30f), mod.ProjectileType("AbomDeathScythe"), 0, 0f, Main.myPlayer);
+            return true;
+        }
+
         public override void NPCLoot()
         {
             FargoSoulsWorld.downedAbom = true;
@@ -660,6 +667,17 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             for (int i = 0; i < 1000; i++)
                 if (Main.projectile[i].active && Main.projectile[i].hostile)
                     Main.projectile[i].Kill();
+
+            if (FargoSoulsWorld.downedFishronEX)
+            {
+                int maxDoll = Main.rand.Next(5) + 5;
+                for (int i = 0; i < maxDoll; i++)
+                    npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbominationnVoodooDoll"));
+
+                int maxEnergy = Main.rand.Next(5) + 5;
+                for (int i = 0; i < maxEnergy; i++)
+                    npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"));
+            }
 
             if (Main.netMode != 1 && Fargowiltas.Instance.FargowiltasLoaded && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn")))
             {
