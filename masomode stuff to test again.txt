@@ -79,7 +79,6 @@ fishron EX spawns sharknados in p3 slower
 nerfed biome mimic enrage bullet speed and damage
 brain scrambler has 1% chance to drop brain scrambler
 lowered mutant's attack and defense to 300
-lowered mutant's DR to 10%
 SCRAMBLED MUTANT'S P2 ATTACKS
 
 -------------------------------------------------------------------------------------------------------------------
