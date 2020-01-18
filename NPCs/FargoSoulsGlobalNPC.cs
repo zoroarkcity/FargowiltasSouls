@@ -6654,6 +6654,8 @@ namespace FargowiltasSouls.NPCs
                             if (npc.HasPlayerTarget && (!Main.player[npc.target].active || Main.player[npc.target].dead))
                                 npc.noTileCollide = true;
                         }
+                        if (npc.noTileCollide)
+                            npc.velocity.Y++;
                         goto case NPCID.DarkCaster;
 
                     case NPCID.GoblinThief:
