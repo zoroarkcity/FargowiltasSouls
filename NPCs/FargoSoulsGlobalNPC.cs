@@ -6347,9 +6347,9 @@ namespace FargowiltasSouls.NPCs
                                     speed.X += Main.rand.Next(-80, 81);
                                     speed.Y += Main.rand.Next(-80, 81);
                                     speed.Normalize();
-                                    speed *= 11f;
+                                    speed *= 8f;
                                     if (Main.netMode != 1)
-                                        Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("MimicCoin"), npc.damage / 4, 0f, Main.myPlayer, Main.rand.Next(3));
+                                        Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("MimicCoin"), npc.damage / 5, 0f, Main.myPlayer, Main.rand.Next(3));
 
                                     Main.PlaySound(SoundID.Item11, npc.Center);
                                 }
@@ -9535,6 +9535,11 @@ namespace FargowiltasSouls.NPCs
             {
                 switch (npc.type)
                 {
+                    case NPCID.BrainScrambler:
+                        if (Main.rand.Next(100) == 0)
+                            Item.NewItem(npc.Hitbox, ItemID.BrainScrambler);
+                        break;
+
                     case NPCID.JungleBat:
                     case NPCID.IceBat:
                     case NPCID.Vampire:

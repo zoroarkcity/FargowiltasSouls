@@ -76,6 +76,8 @@ flight mastery soul is infinite flight
 halved fish EX and sharkron EX defense
 quartered sharkron EX life
 fishron EX spawns sharknados in p3 slower
+nerfed biome mimic enrage bullet speed and damage
+brain scrambler has 1% chance to drop brain scrambler
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

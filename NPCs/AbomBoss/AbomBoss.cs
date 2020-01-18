@@ -27,7 +27,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.width = 120;
             npc.height = 120;
             npc.damage = 240;
-            npc.defense = 120;
+            npc.defense = 60;
             npc.lifeMax = 1000000;
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
@@ -249,7 +249,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         {
                             float ai0 = npc.Distance(player.Center) / 30 * 2f;
                             float ai1 = npc.localAI[3] > 1 ? 1f : 0f;
-                            Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center) * 30f, mod.ProjectileType("AbomScytheSplit"), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
+                            Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center) * 30f, mod.ProjectileType("AbomScytheSplit"), npc.damage / 5, 0f, Main.myPlayer, ai0, ai1);
                         }
                     }
                     break;
@@ -365,10 +365,38 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     }
                     break;
 
-                case 6: //flocko swarm (p2 shoots ice waves up/down after)
-                    if (++npc.ai[1] > 60)
+                case 6: //flocko swarm (p2 shoots ice waves horizontally after)
+                    npc.velocity *= 0.99f;
+                    if (npc.ai[2] == 0)
                     {
-                        Main.NewText("did flocko");
+                        npc.ai[2] = 1;
+                        if (Main.netMode != 1)
+                        {
+                            for (int i = -3; i <= 3; i++) //make flockos
+                            {
+                                if (i == 0) //dont shoot one straight up
+                                    continue;
+                                Vector2 speed = new Vector2(Main.rand.NextFloat(20f) * Math.Sign(i), Main.rand.NextFloat(-10f, 10f));
+                                Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomFlocko"), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 360 / 3 * i);
+                            }
+                            if (npc.localAI[3] > 1) //prepare ice waves
+                            {
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("AbomFlocko2"), npc.damage / 4, 0f, Main.myPlayer, npc.target, -1);
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("AbomFlocko2"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 1);
+                            }
+                        }
+                        
+                        Main.PlaySound(SoundID.Item27, npc.Center);
+                        for (int index1 = 0; index1 < 30; ++index1)
+                        {
+                            int index2 = Dust.NewDust(npc.position, npc.width, npc.height, 76, 0.0f, 0.0f, 0, new Color(), 1f);
+                            Main.dust[index2].noGravity = true;
+                            Main.dust[index2].noLight = true;
+                            Main.dust[index2].velocity *= 5f;
+                        }
+                    }
+                    if (++npc.ai[1] > 420)
+                    {
                         npc.netUpdate = true;
                         npc.ai[0] = 8;
                         npc.ai[1] = 0;
@@ -376,12 +404,59 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 7: //saucer laser spam  (p2 shoots rockets)
-                    if (++npc.ai[1] > 60)
+                    npc.velocity *= 0.99f;
+                    if (++npc.ai[1] > 600)
                     {
-                        Main.NewText("did laser spam");
                         npc.netUpdate = true;
                         npc.ai[0] = 8;
                         npc.ai[1] = 0;
+                    }
+                    else if (npc.ai[1] > 120) //spam lasers, lerp aim
+                    {
+                        float targetRot = npc.DirectionTo(player.Center).ToRotation();
+                        while (targetRot < -(float)Math.PI)
+                            targetRot += 2f * (float)Math.PI;
+                        while (targetRot > (float)Math.PI)
+                            targetRot -= 2f * (float)Math.PI;
+                        npc.ai[3] = npc.ai[3].AngleLerp(targetRot, 0.08f);
+
+                        if (++npc.ai[2] > 3) //spam lasers
+                        {
+                            npc.ai[2] = 0;
+                            if (Main.netMode != 1)
+                            {
+                                Vector2 speed = npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 3.0);
+                                speed *= 16f;
+                                Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                            }
+                        }
+
+                        if (npc.localAI[3] > 1 && ++npc.localAI[2] > 60) //shoot rockets
+                        {
+                            npc.localAI[2] = 0;
+                            if (Main.netMode != 1)
+                            {
+                                Vector2 vel = (npc.ai[3] + (float)Math.PI / 2).ToRotationVector2() * 10;
+                                Projectile.NewProjectile(npc.Center, vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 30f);
+                                Projectile.NewProjectile(npc.Center, -vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 30f);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        npc.ai[3] = npc.DirectionFrom(player.Center).ToRotation() - 0.001f;
+                        while (npc.ai[3] < -(float)Math.PI)
+                            npc.ai[3] += 2f * (float)Math.PI;
+                        while (npc.ai[3] > (float)Math.PI)
+                            npc.ai[3] -= 2f * (float)Math.PI;
+
+                        //make warning dust
+                        for (int i = 0; i < 5; i++)
+                        {
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, 87, 0f, 0f, 0, default(Color), 1.5f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity *= 4f;
+                        }
                     }
                     break;
 
