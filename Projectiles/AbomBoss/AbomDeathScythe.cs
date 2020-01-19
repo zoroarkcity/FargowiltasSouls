@@ -24,6 +24,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             projectile.height = 40;
             projectile.penetrate = -1;
             projectile.timeLeft = 300;
+            projectile.alpha = 100;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
         }
@@ -73,7 +74,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White;
+            return Color.White * projectile.Opacity;
         }
     }
 }

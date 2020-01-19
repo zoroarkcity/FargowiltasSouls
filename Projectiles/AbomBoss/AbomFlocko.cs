@@ -106,9 +106,9 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             }
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override bool CanDamage()
         {
-            target.AddBuff(mod.BuffType("MutantFang"), 120);
+            return false;
         }
 
         public override Color? GetAlpha(Color lightColor)

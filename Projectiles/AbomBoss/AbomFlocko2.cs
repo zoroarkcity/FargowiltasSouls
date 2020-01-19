@@ -40,13 +40,13 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                     projectile.velocity *= 1.05f;
             }
             
-            if (++projectile.localAI[0] > 120 && ++projectile.localAI[1] > 75) //fire frost wave
+            if (++projectile.localAI[0] > 60 && ++projectile.localAI[1] > 60) //fire frost wave
             {
                 projectile.localAI[1] = 0f;
                 Main.PlaySound(SoundID.Item120, projectile.position);
                 if (Main.netMode != 1)
                 {
-                    Vector2 vel = projectile.DirectionTo(player.Center) * 6f;
+                    Vector2 vel = projectile.DirectionTo(player.Center) * 7f;
                     for (int i = -1; i <= 1; i++)
                         Projectile.NewProjectile(projectile.Center, vel.RotatedBy(MathHelper.ToRadians(10) * i), mod.ProjectileType("AbomFrostWave"), projectile.damage, projectile.knockBack, projectile.owner);
                 }

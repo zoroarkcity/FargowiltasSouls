@@ -277,9 +277,13 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         {
                             float ai0 = npc.Distance(player.Center) / 30 * 2f;
                             float ai1 = npc.localAI[3] > 1 ? 1f : 0f;
-                            Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center) * 30f, mod.ProjectileType("AbomScytheSplit"), npc.damage / 5, 0f, Main.myPlayer, ai0, ai1);
+                            Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center) * 30f, mod.ProjectileType("AbomScytheSplit"), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
                         }
                     }
+                    /*else if (npc.ai[1] == 90)
+                    {
+                        Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center + player.velocity * 30) * 30f, mod.ProjectileType("AbomScythe"), npc.damage / 5, 0f, Main.myPlayer);
+                    }*/
                     break;
 
                 case 1: //flaming scythe spread (shoots out further in p2)
@@ -297,11 +301,11 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         }
                         else
                         {
-                            float baseDelay = npc.localAI[3] > 1 ? 30 : 20;
-                            float speed = npc.localAI[3] > 1 ? 20 : 10;
+                            float baseDelay = npc.localAI[3] > 1 ? 40 : 20;
+                            float speed = npc.localAI[3] > 1 ? 30 : 10;
                             if (Main.netMode != 1)
                                 for (int i = 0; i < 6; i++)
-                                    Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center).RotatedBy(Math.PI / 3 * i) * speed, mod.ProjectileType("AbomScytheFlaming"), npc.damage / 5, 0f, Main.myPlayer, baseDelay, baseDelay + 90);
+                                    Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center).RotatedBy(Math.PI / 3 * i + Math.PI / 6) * speed, mod.ProjectileType("AbomScytheFlaming"), npc.damage / 5, 0f, Main.myPlayer, baseDelay, baseDelay + 90);
                             Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f);
                         }
                         npc.netUpdate = true;
@@ -356,6 +360,9 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 4: //choose the next attack
+                    if (!AliveCheck(player))
+                        break;
+                    Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
                     npc.netUpdate = true;
                     npc.TargetClosest();
                     npc.ai[0] += ++npc.localAI[0];
@@ -466,9 +473,13 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             npc.localAI[2] = 0;
                             if (Main.netMode != 1)
                             {
-                                Vector2 vel = (npc.ai[3] + (float)Math.PI / 2).ToRotationVector2() * 7;
+                                Vector2 vel = (npc.ai[3] + (float)Math.PI / 2).ToRotationVector2() * 6;
                                 Projectile.NewProjectile(npc.Center, vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 60f);
                                 Projectile.NewProjectile(npc.Center, -vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 60f);
+
+                                Vector2 speed = npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
+                                speed *= 6f;
+                                Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 150f);
                             }
                         }
                     }
@@ -493,9 +504,12 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 8: //return to beginning in p1, proceed in p2
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
                     npc.velocity *= 0.9f;
                     if (++npc.ai[1] > 90)
                     {
+                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         npc.netUpdate = true;
                         npc.ai[1] = 0;
                         npc.TargetClosest();
@@ -660,7 +674,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("MutantFang"), 120);
+            target.AddBuff(mod.BuffType("AbomFang"), 300);
         }
 
         public override void HitEffect(int hitDirection, double damage)
@@ -677,6 +691,12 @@ namespace FargowiltasSouls.NPCs.AbomBoss
         {
             damage *= 0.9;
             return true;
+        }
+
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (projectile.ranged)
+                damage = (int)(damage * 2.0 / 3.0);
         }
 
         public override bool CheckDead()
