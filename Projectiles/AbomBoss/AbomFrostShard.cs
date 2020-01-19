@@ -36,6 +36,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 if (projectile.frame > 5)
                     projectile.frame = 0;
             }
+
+            projectile.velocity.X *= 0.95f;
         }
 
         public override void Kill(int timeLeft)
@@ -52,7 +54,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("MutantFang"), 180);
+            target.AddBuff(mod.BuffType("MutantFang"), 120);
         }
 
         public override Color? GetAlpha(Color lightColor)

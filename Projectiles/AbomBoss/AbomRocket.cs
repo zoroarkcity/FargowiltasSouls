@@ -60,7 +60,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                             num4 -= 2.0 * Math.PI;
                         if (num4 < -1.0 * Math.PI)
                             num4 += 2.0 * Math.PI;
-                        projectile.velocity = projectile.velocity.RotatedBy(num4 * 0.2f, new Vector2());
+                        projectile.velocity = projectile.velocity.RotatedBy(num4 * 0.1f, new Vector2());
                     }
                 }
                 else //retarget
@@ -102,7 +102,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("MutantFang"), 180);
+            target.AddBuff(mod.BuffType("MutantFang"), 120);
             projectile.timeLeft = 0;
         }
 

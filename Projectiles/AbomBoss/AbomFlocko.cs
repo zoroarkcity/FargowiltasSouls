@@ -15,6 +15,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
         {
             DisplayName.SetDefault("Super Flocko");
             Main.projFrames[projectile.type] = 6;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
@@ -39,8 +41,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             NPC npc = Main.npc[(int)projectile.ai[0]];
 
             Vector2 target = npc.Center;
-            target.X += 1100 * (float)Math.Sin(2 * Math.PI / 180 * projectile.ai[1]++);
-            target.Y -= 1100;
+            target.X += 1000 * (float)Math.Sin(2 * Math.PI / 720 * projectile.ai[1]++);
+            target.Y -= 1000;
 
             Vector2 distance = target - projectile.Center;
             float length = distance.Length();
@@ -69,16 +71,29 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 }
             }*/
             
-            if (++projectile.localAI[0] > 120 && ++projectile.localAI[1] > 6) //spray shards
+            if (++projectile.localAI[0] > 60 && ++projectile.localAI[1] > 6) //spray shards
             {
+                Main.PlaySound(SoundID.Item27, projectile.position);
                 projectile.localAI[1] = 0f;
-                if (Main.netMode != 1 && Math.Abs(npc.Center.X - projectile.Center.X) > 200)
+                if (Main.netMode != 1)
                 {
-                    Vector2 speed = new Vector2(Main.rand.Next(-1000, 1001), Main.rand.Next(-1000, 1001));
-                    speed.Normalize();
-                    speed *= 8f;
-                    Projectile.NewProjectile(projectile.Center + speed * 4f, speed, mod.ProjectileType("AbomFrostShard"), projectile.damage, projectile.knockBack, projectile.owner);
-                    Projectile.NewProjectile(projectile.Center + Vector2.UnitY * 8f, Vector2.UnitY * 8f, mod.ProjectileType("AbomFrostShard"), projectile.damage, projectile.knockBack, projectile.owner);
+                    if (Math.Abs(npc.Center.X - projectile.Center.X) > 300)
+                    {
+                        Vector2 speed = new Vector2(Main.rand.Next(-1000, 1001), Main.rand.Next(-1000, 1001));
+                        speed.Normalize();
+                        speed *= 8f;
+                        Projectile.NewProjectile(projectile.Center + speed * 4f, speed, mod.ProjectileType("AbomFrostShard"), projectile.damage, projectile.knockBack, projectile.owner);
+                        Projectile.NewProjectile(projectile.Center + Vector2.UnitY * 8f, Vector2.UnitY * 8f, mod.ProjectileType("AbomFrostShard"), projectile.damage, projectile.knockBack, projectile.owner);
+                    }
+                    if (Main.player[npc.target].active && !Main.player[npc.target].dead && Main.player[npc.target].Center.Y < projectile.Center.Y)
+                    {
+                        Main.PlaySound(SoundID.Item120, projectile.position);
+                        if (Main.netMode != 1)
+                        {
+                            Vector2 vel = projectile.DirectionTo(Main.player[npc.target].Center + new Vector2(Main.rand.Next(-200, 201), Main.rand.Next(-200, 201))) * 12f;
+                            Projectile.NewProjectile(projectile.Center, vel, mod.ProjectileType("AbomFrostWave"), projectile.damage, projectile.knockBack, projectile.owner);
+                        }
+                    }
                 }
             }
             
@@ -93,7 +108,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("MutantFang"), 180);
+            target.AddBuff(mod.BuffType("MutantFang"), 120);
         }
 
         public override Color? GetAlpha(Color lightColor)
@@ -108,6 +123,19 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
+
+            Color color26 = lightColor;
+            color26 = projectile.GetAlpha(color26);
+
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+            {
+                Color color27 = color26;
+                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                Vector2 value4 = projectile.oldPos[i];
+                float num165 = projectile.oldRot[i];
+                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
+            }
+
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
             return false;
         }

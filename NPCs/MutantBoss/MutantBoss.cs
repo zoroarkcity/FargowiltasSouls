@@ -22,8 +22,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
         {
             npc.width = 34;
             npc.height = 50;
-            npc.damage = 300;
-            npc.defense = 300;
+            npc.damage = 360;
+            npc.defense = 360;
             npc.lifeMax = 7700000;
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
@@ -527,8 +527,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         {
                             if (npc.ai[0] == 32)
                             {
-                                float[] options = { 13, 21, 33, 40 };
-                                npc.ai[0] = options[Main.rand.Next(options.Length)];
+                                /*float[] options = { 13, 21, 33, 40 };
+                                npc.ai[0] = options[Main.rand.Next(options.Length)];*/
+                                npc.ai[0]++;
                             }
                             else
                             {
@@ -851,8 +852,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         {
                             npc.TargetClosest();
                             npc.netUpdate = true;
-                            float[] options = { 13, 16, 18, 20, 21, 24, 25, 26, 33, 39, 40, 41 };
-                            npc.ai[0] = options[Main.rand.Next(options.Length)];
+                            /*float[] options = { 13, 16, 18, 20, 21, 24, 25, 26, 33, 39, 40, 41 };
+                            npc.ai[0] = options[Main.rand.Next(options.Length)];*/
+                            npc.ai[0]++;
                             npc.ai[1] = 0;
                             npc.ai[2] = 0;
                             npc.ai[3] = 0;
@@ -899,8 +901,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[3] = 0;
                         if (++npc.ai[2] > 5)
                         {
-                            float[] options = { 11, 16, 18, 20, 21, 24, 25, 26, 33, 35, 39, 40, 41 };
-                            npc.ai[0] = options[Main.rand.Next(options.Length)]; //go to next attack after dashes
+                            /*float[] options = { 11, 16, 18, 20, 21, 24, 25, 26, 33, 35, 39, 40, 41 };
+                            npc.ai[0] = options[Main.rand.Next(options.Length)]; //go to next attack after dashes*/
+                            npc.ai[0]++;
                             npc.ai[2] = 0;
                         }
                         else
@@ -944,8 +947,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (++npc.ai[3] > 360)
                     {
                         npc.TargetClosest();
-                        float[] options = { 11, 18, 20, 25, 40 };
-                        npc.ai[0] = options[Main.rand.Next(options.Length)];
+                        /*float[] options = { 11, 18, 20, 25, 40 };
+                        npc.ai[0] = options[Main.rand.Next(options.Length)];*/
+                        npc.ai[0]++;
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
@@ -983,8 +987,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (++npc.ai[1] > 360)
                     {
                         npc.TargetClosest();
-                        float[] options = { 13, 20, 21, 24, 25, 35, 39, 40 };
-                        npc.ai[0] = options[Main.rand.Next(options.Length)];
+                        /*float[] options = { 13, 20, 21, 24, 25, 35, 39, 40 };
+                        npc.ai[0] = options[Main.rand.Next(options.Length)];*/
+                        npc.ai[0]++;
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
@@ -1010,8 +1015,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[1] = 0;
                         if (++npc.ai[2] > 3)
                         {
-                            float[] options = { 13, 18, 21, 24, 26, 31, 33, 40 };
-                            npc.ai[0] = options[Main.rand.Next(options.Length)];
+                            /*float[] options = { 13, 18, 21, 24, 26, 31, 33, 40 };
+                            npc.ai[0] = options[Main.rand.Next(options.Length)];*/
+                            npc.ai[0]++;
                             npc.ai[2] = 0;
                             npc.TargetClosest();
                         }
@@ -1058,8 +1064,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[1] = 0;
                         if (++npc.ai[2] > 5)
                         {
-                            float[] options = { 13, 24, 25, 31, 41 };
-                            npc.ai[0] = options[Main.rand.Next(options.Length)]; //go to next attack after dashes
+                            /*float[] options = { 13, 24, 25, 31, 41 };
+                            npc.ai[0] = options[Main.rand.Next(options.Length)]; //go to next attack after dashes*/
+                            npc.ai[0]++;
                             npc.ai[2] = 0;
                         }
                         else
@@ -1093,8 +1100,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (++npc.ai[2] > 5)
                         {
                             npc.TargetClosest();
-                            float[] options = { 13, 20, 21, 25, 29, 31, 35, 40 };
-                            npc.ai[0] = options[Main.rand.Next(options.Length)];
+                            /*float[] options = { 13, 20, 21, 25, 29, 31, 35, 40 };
+                            npc.ai[0] = options[Main.rand.Next(options.Length)];*/
+                            npc.ai[0]++;
                             npc.ai[1] = 0;
                             npc.ai[2] = 0;
                         }
@@ -1131,8 +1139,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[1] = 0;
                         if (++npc.ai[2] > 5)
                         {
-                            float[] options = { 11, 13, 20, 21, 24, 26, 31, 39, 40, 41 };
-                            npc.ai[0] = options[Main.rand.Next(options.Length)];
+                            /*float[] options = { 11, 13, 20, 21, 24, 26, 31, 39, 40, 41 };
+                            npc.ai[0] = options[Main.rand.Next(options.Length)];*/
+                            npc.ai[0]++;
                             npc.ai[1] = 0;
                             npc.ai[2] = 0;
                             npc.TargetClosest();
@@ -1230,8 +1239,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     if (++npc.ai[3] > 120)
                     {
-                        float[] options = { 29, 31, 39, 41 };
-                        npc.ai[0] = options[Main.rand.Next(options.Length)];
+                        /*float[] options = { 29, 31, 39, 41 };
+                        npc.ai[0] = options[Main.rand.Next(options.Length)];*/
+                        npc.ai[0]++;
                         npc.ai[1] = 0;
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
@@ -1253,8 +1263,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[1] = 20;
                         if (++npc.ai[2] > 3)
                         {
-                            float[] options = { 11, 18, 26, 31, 33 };
-                            npc.ai[0] = options[Main.rand.Next(options.Length)];
+                            /*float[] options = { 11, 18, 26, 31, 33 };
+                            npc.ai[0] = options[Main.rand.Next(options.Length)];*/
+                            npc.ai[0]++;
                             npc.ai[2] = 0;
                             npc.netUpdate = true;
                             npc.TargetClosest();
@@ -1347,8 +1358,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     if (++npc.ai[1] > 360)
                     {
-                        float[] options = { 11, 13, 16, 18, 20, 21, 24, 25, 26, 39, 40, 41 };
-                        npc.ai[0] = options[Main.rand.Next(options.Length)];
+                        /*float[] options = { 11, 13, 16, 18, 20, 21, 24, 25, 26, 39, 40, 41 };
+                        npc.ai[0] = options[Main.rand.Next(options.Length)];*/
+                        npc.ai[0]++;
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.netUpdate = true;
@@ -1400,8 +1412,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     {
                         if (npc.ai[0] == 38)
                         {
-                            float[] options = { 11, 16, 18, 39, 41 };
-                            npc.ai[0] = options[Main.rand.Next(options.Length)];
+                            /*float[] options = { 11, 16, 18, 39, 41 };
+                            npc.ai[0] = options[Main.rand.Next(options.Length)];*/
+                            npc.ai[0]++;
                         }
                         else
                         {
@@ -1483,8 +1496,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[1] = 180;
                         if (++npc.ai[2] > 5)
                         {
-                            float[] options = { 11, 13, 18, 20, 21, 24, 25, 26, 31, 35, 41 };
-                            npc.ai[0] = options[Main.rand.Next(options.Length)];
+                            /*float[] options = { 11, 13, 18, 20, 21, 24, 25, 26, 31, 35, 41 };
+                            npc.ai[0] = options[Main.rand.Next(options.Length)];*/
+                            npc.ai[0]++;
                             npc.ai[1] = 0;
                             npc.ai[2] = 0;
                             npc.TargetClosest();
@@ -1561,8 +1575,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (++npc.ai[3] > 300)
                     {
                         npc.netUpdate = true;
-                        float[] options = { 11, 13, 18, 20, 21, 24, 26, 29, 33, 35, 39 };
-                        npc.ai[0] = options[Main.rand.Next(options.Length)];
+                        /*float[] options = { 11, 13, 18, 20, 21, 24, 26, 29, 33, 35, 39 };
+                        npc.ai[0] = options[Main.rand.Next(options.Length)];*/
+                        npc.ai[0]++;
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;

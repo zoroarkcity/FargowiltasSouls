@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.AbomBoss
 {
-    public class AbomScytheSplit : ModProjectile
+    public class AbomDeathScythe : ModProjectile
     {
         public override string Texture => "Terraria/Projectile_274";
 
@@ -22,53 +22,29 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
         {
             projectile.width = 40;
             projectile.height = 40;
-            projectile.hostile = true;
             projectile.penetrate = -1;
-            projectile.timeLeft = 600;
+            projectile.timeLeft = 300;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
-            cooldownSlot = 1;
+        }
+
+        public override bool CanDamage()
+        {
+            return false;
         }
 
         public override void AI()
         {
             if (projectile.localAI[0] == 0)
             {
-                projectile.localAI[0] = 1;
+                projectile.localAI[0] = Main.rand.Next(2) == 0 ? -1 : 1;
                 Main.PlaySound(SoundID.Item71, projectile.Center);
             }
 
-            projectile.rotation += 1f;
+            projectile.velocity.X *= 0.96f;
+            projectile.velocity.Y -= 0.6f;
 
-            if (--projectile.ai[0] <= 0)
-                projectile.Kill();
-        }
-
-        public override void Kill(int timeLeft)
-        {
-            if (Main.netMode != 1)
-            {
-                if (projectile.ai[1] == 0)
-                {
-                    for (int i = 0; i < 6; i++)
-                        Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity).RotatedBy(Math.PI / 3 * i), mod.ProjectileType("AbomSickle"), projectile.damage, projectile.knockBack, projectile.owner);
-                }
-                else
-                {
-                    int p = Player.FindClosest(projectile.Center, 0, 0);
-                    if (p != 1)
-                    {
-                        Vector2 speed = projectile.DirectionTo(Main.player[p].Center);
-                        for (int i = 0; i < 8; i++)
-                            Projectile.NewProjectile(projectile.Center, speed.RotatedBy(Math.PI / 4 * i), mod.ProjectileType("AbomSickle"), projectile.damage, projectile.knockBack, projectile.owner);
-                    }
-                }
-            }
-        }
-
-        public override void OnHitPlayer(Player target, int damage, bool crit)
-        {
-            target.AddBuff(mod.BuffType("MutantFang"), 120);
+            projectile.rotation += projectile.localAI[0];
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

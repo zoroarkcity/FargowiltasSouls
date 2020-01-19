@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             projectile.height = 80;
             projectile.hostile = true;
             projectile.penetrate = -1;
-            projectile.timeLeft = 420;
+            projectile.timeLeft = 720;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             cooldownSlot = 1;
@@ -59,7 +59,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("MutantFang"), 180);
+            target.AddBuff(mod.BuffType("MutantFang"), 120);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

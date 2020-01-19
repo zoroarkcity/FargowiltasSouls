@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             Player player = Main.player[(int)projectile.ai[0]];
 
             Vector2 target = player.Center;
-            target.X += 500 * projectile.ai[1];
+            target.X += 700 * projectile.ai[1];
 
             Vector2 distance = target - projectile.Center;
             float length = distance.Length();
@@ -43,11 +43,10 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             if (++projectile.localAI[0] > 120 && ++projectile.localAI[1] > 75) //fire frost wave
             {
                 projectile.localAI[1] = 0f;
+                Main.PlaySound(SoundID.Item120, projectile.position);
                 if (Main.netMode != 1)
                 {
-                    Vector2 vel = distance;
-                    vel.Normalize();
-                    vel *= 7f;
+                    Vector2 vel = projectile.DirectionTo(player.Center) * 6f;
                     for (int i = -1; i <= 1; i++)
                         Projectile.NewProjectile(projectile.Center, vel.RotatedBy(MathHelper.ToRadians(10) * i), mod.ProjectileType("AbomFrostWave"), projectile.damage, projectile.knockBack, projectile.owner);
                 }

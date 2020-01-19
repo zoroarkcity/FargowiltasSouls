@@ -143,6 +143,34 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             float speedModifier;
             switch ((int)npc.ai[0])
             {
+                case -2: //dead
+                    npc.velocity *= 0.9f;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        int d = Dust.NewDust(npc.position, npc.width, npc.height, 87, 0f, 0f, 0, default(Color), 1.5f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity *= 4f;
+                    }
+                    if (++npc.ai[1] > 180)
+                    {
+                        if (Main.netMode != 1)
+                        {
+                            for (int i = 0; i < 30; i++)
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * Math.PI) * Main.rand.NextFloat(30f), mod.ProjectileType("AbomDeathScythe"), 0, 0f, Main.myPlayer);
+
+                            if (Fargowiltas.Instance.FargowiltasLoaded && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn")))
+                            {
+                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
+                                if (n != 200 && Main.netMode == 2)
+                                    NetMessage.SendData(23, -1, -1, null, n);
+                            }
+                        }
+                        npc.NPCLoot();
+                        npc.life = 0;
+                        npc.active = false;
+                    }
+                    break;
+
                 case -1: //phase 2 transition
                     npc.velocity *= 0.9f;
                     npc.dontTakeDamage = true;
@@ -329,6 +357,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
                 case 4: //choose the next attack
                     npc.netUpdate = true;
+                    npc.TargetClosest();
                     npc.ai[0] += ++npc.localAI[0];
                     if (npc.localAI[0] >= 3) //reset p1 hard option counter
                         npc.localAI[0] = 0;
@@ -405,27 +434,28 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
                 case 7: //saucer laser spam  (p2 shoots rockets)
                     npc.velocity *= 0.99f;
-                    if (++npc.ai[1] > 600)
+                    if (++npc.ai[1] > 420)
                     {
                         npc.netUpdate = true;
                         npc.ai[0] = 8;
                         npc.ai[1] = 0;
                     }
-                    else if (npc.ai[1] > 120) //spam lasers, lerp aim
+                    else if (npc.ai[1] > 60) //spam lasers, lerp aim
                     {
                         float targetRot = npc.DirectionTo(player.Center).ToRotation();
                         while (targetRot < -(float)Math.PI)
                             targetRot += 2f * (float)Math.PI;
                         while (targetRot > (float)Math.PI)
                             targetRot -= 2f * (float)Math.PI;
-                        npc.ai[3] = npc.ai[3].AngleLerp(targetRot, 0.08f);
+                        npc.ai[3] = npc.ai[3].AngleLerp(targetRot, 0.05f);
 
-                        if (++npc.ai[2] > 3) //spam lasers
+                        if (++npc.ai[2] > 1) //spam lasers
                         {
                             npc.ai[2] = 0;
+                            Main.PlaySound(SoundID.Item12, npc.Center);
                             if (Main.netMode != 1)
                             {
-                                Vector2 speed = npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 3.0);
+                                Vector2 speed = npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
                                 speed *= 16f;
                                 Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomLaser"), npc.damage / 4, 0f, Main.myPlayer);
                             }
@@ -436,9 +466,9 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             npc.localAI[2] = 0;
                             if (Main.netMode != 1)
                             {
-                                Vector2 vel = (npc.ai[3] + (float)Math.PI / 2).ToRotationVector2() * 10;
-                                Projectile.NewProjectile(npc.Center, vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 30f);
-                                Projectile.NewProjectile(npc.Center, -vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 30f);
+                                Vector2 vel = (npc.ai[3] + (float)Math.PI / 2).ToRotationVector2() * 7;
+                                Projectile.NewProjectile(npc.Center, vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 60f);
+                                Projectile.NewProjectile(npc.Center, -vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 60f);
                             }
                         }
                     }
@@ -449,6 +479,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             npc.ai[3] += 2f * (float)Math.PI;
                         while (npc.ai[3] > (float)Math.PI)
                             npc.ai[3] -= 2f * (float)Math.PI;
+
+                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
 
                         //make warning dust
                         for (int i = 0; i < 5; i++)
@@ -461,44 +493,44 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 8: //return to beginning in p1, proceed in p2
-                    npc.netUpdate = true;
-                    if (npc.localAI[3] > 1)
+                    npc.velocity *= 0.9f;
+                    if (++npc.ai[1] > 90)
                     {
-                        if (npc.localAI[1] == 0)
+                        npc.netUpdate = true;
+                        npc.ai[1] = 0;
+                        npc.TargetClosest();
+                        if (npc.localAI[3] > 1)
                         {
-                            npc.localAI[1] = 1;
-                            npc.ai[0]++;
+                            if (npc.localAI[1] == 0)
+                            {
+                                npc.localAI[1] = 1;
+                                npc.ai[0]++;
+                            }
+                            else
+                            {
+                                npc.localAI[1] = 0;
+                                npc.ai[0] = 12;
+                            }
                         }
                         else
                         {
-                            npc.localAI[1] = 0;
-                            npc.ai[0] = 12;
+                            npc.ai[0] = 0;
                         }
-                    }
-                    else
-                    {
-                        npc.ai[0] = 0;
                     }
                     break;
 
                 case 9: //beginning of scythe rows and deathray rain
-                    if (++npc.ai[1] > 60)
-                    {
-                        Main.NewText("did scythe rows");
-                        npc.netUpdate = true;
-                        npc.ai[0] = 0;
-                        npc.ai[1] = 0;
-                    }
+                    Main.NewText("did scythe rows");
+                    npc.netUpdate = true;
+                    npc.ai[0] = 0;
+                    npc.ai[1] = 0;
                     break;
 
                 case 12: //beginning of laevateinn
-                    if (++npc.ai[1] > 60)
-                    {
-                        Main.NewText("did laevateinns");
-                        npc.netUpdate = true;
-                        npc.ai[0] = 0;
-                        npc.ai[1] = 0;
-                    }
+                    Main.NewText("did laevateinns");
+                    npc.netUpdate = true;
+                    npc.ai[0] = 0;
+                    npc.ai[1] = 0;
                     break;
 
                 default:
@@ -628,8 +660,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 600);
-            target.AddBuff(mod.BuffType("MutantFang"), 180);
+            target.AddBuff(mod.BuffType("MutantFang"), 120);
         }
 
         public override void HitEffect(int hitDirection, double damage)
@@ -650,9 +681,22 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         public override bool CheckDead()
         {
-            for (int i = 0; i < 30; i++)
-                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * Math.PI) * Main.rand.NextFloat(30f), mod.ProjectileType("AbomDeathScythe"), 0, 0f, Main.myPlayer);
-            return true;
+            npc.life = 1;
+            npc.active = true;
+            npc.localAI[3] = 2;
+            if (Main.netMode != 1 && npc.ai[0] > -2)
+            {
+                npc.ai[0] = -2;
+                npc.ai[1] = 0;
+                npc.ai[2] = 0;
+                npc.ai[3] = 0;
+                npc.dontTakeDamage = true;
+                npc.netUpdate = true;
+                for (int i = 0; i < 1000; i++)
+                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && (Main.projectile[i].hostile || Main.projectile[i].friendly))
+                        Main.projectile[i].Kill();
+            }
+            return false;
         }
 
         public override void NPCLoot()
@@ -677,13 +721,6 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 int maxEnergy = Main.rand.Next(5) + 5;
                 for (int i = 0; i < maxEnergy; i++)
                     npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"));
-            }
-
-            if (Main.netMode != 1 && Fargowiltas.Instance.FargowiltasLoaded && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn")))
-            {
-                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
-                if (n != 200 && Main.netMode == 2)
-                    NetMessage.SendData(23, -1, -1, null, n);
             }
         }
 
