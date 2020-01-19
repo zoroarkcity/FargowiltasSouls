@@ -31,8 +31,8 @@ namespace FargowiltasSouls.Buffs
             player.chaosState = true;
             player.bleed = true;
 
-            player.statDefense -= 30;
-            player.endurance -= 0.3f;
+            player.statDefense -= 15;
+            player.endurance -= 0.15f;
         }
     }
 }
