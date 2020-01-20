@@ -111,6 +111,18 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             return false;
         }
 
+        public override void Kill(int timeLeft)
+        {
+            for (int index1 = 0; index1 < 20; ++index1)
+            {
+                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, Main.rand.Next(2) == 0 ? 80 : 76, 0.0f, 0.0f, 0, new Color(), 1f);
+                Main.dust[index2].noGravity = true;
+                Main.dust[index2].noLight = true;
+                Main.dust[index2].scale++;
+                Main.dust[index2].velocity *= 4f;
+            }
+        }
+
         public override Color? GetAlpha(Color lightColor)
         {
             return new Color(255, 255, 255, 200);
