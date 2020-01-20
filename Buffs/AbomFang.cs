@@ -28,10 +28,7 @@ namespace FargowiltasSouls.Buffs
             player.ichor = true;
             player.onFire2 = true;
             player.electrified = true;
-            
-            fargoPlayer.MutantNibble = true;
             player.moonLeech = true;
-            player.potionDelay = player.buffTime[buffIndex];
         }
     }
 }

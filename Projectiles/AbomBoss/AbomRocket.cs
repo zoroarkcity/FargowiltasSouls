@@ -38,7 +38,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
                 if (--projectile.ai[1] == 0) //do for one tick right before homing
                 {
-                    projectile.velocity = Vector2.Normalize(projectile.velocity) * (projectile.velocity.Length() + 5f);
+                    projectile.velocity = Vector2.Normalize(projectile.velocity) * (projectile.velocity.Length() + 6f);
                     projectile.netUpdate = true;
                     for (int index1 = 0; index1 < 8; ++index1)
                     {
@@ -55,7 +55,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             {
                 if (projectile.ai[0] >= 0 && projectile.ai[0] < Main.maxPlayers) //have target
                 {
-                    if (--projectile.ai[1] > -60) //only home for a bit
+                    if (--projectile.ai[1] > -45) //only home for a bit
                     {
                         double num4 = (Main.player[(int)projectile.ai[0]].Center - projectile.Center).ToRotation() - (double)projectile.velocity.ToRotation();
                         if (num4 > Math.PI)

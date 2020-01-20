@@ -265,11 +265,12 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         if (npc.ai[3] == 0)
                         {
                             npc.ai[3] = 1;
-                            if (npc.localAI[3] > 1 && Main.netMode != 1) //phase 2 saucers
+                            if (Main.netMode != 1) //phase 2 saucers
                             {
-                                for (int i = 0; i < 3; i++)
+                                int max = npc.localAI[3] > 1 ? 5 : 3;
+                                for (int i = 0; i < max; i++)
                                 {
-                                    float ai2 = i * 2 * (float)Math.PI / 3; //rotation offset
+                                    float ai2 = i * 2 * (float)Math.PI / max; //rotation offset
                                     int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("AbomSaucer"), 0, npc.whoAmI, 0, ai2);
                                     if (n != Main.maxNPCs && Main.netMode == 2)
                                         NetMessage.SendData(23, -1, -1, null, n);
@@ -462,6 +463,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.netUpdate = true;
                         npc.ai[0] = 8;
                         npc.ai[1] = 0;
+                        npc.ai[3] = 0;
                     }
                     else if (npc.ai[1] > 60) //spam lasers, lerp aim
                     {
@@ -488,10 +490,10 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                                 if (npc.localAI[3] > 1) //p2 shoots to either side of you
                                 {
                                     Vector2 speed = 16f * npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
-                                    Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(10)), mod.ProjectileType("AbomLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(30)), mod.ProjectileType("AbomLaser"), npc.damage / 4, 0f, Main.myPlayer);
 
                                     speed = 16f * npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
-                                    Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(-10)), mod.ProjectileType("AbomLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(-30)), mod.ProjectileType("AbomLaser"), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                                 else //p1 shoots directly
                                 {
@@ -507,12 +509,12 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             if (Main.netMode != 1)
                             {
                                 Vector2 vel = (npc.ai[3] + (float)Math.PI / 2).ToRotationVector2() * 5;
-                                Projectile.NewProjectile(npc.Center, vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 60f);
-                                Projectile.NewProjectile(npc.Center, -vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 60f);
+                                Projectile.NewProjectile(npc.Center, vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 30f);
+                                Projectile.NewProjectile(npc.Center, -vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 30f);
 
                                 Vector2 speed = npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
                                 speed *= 5f;
-                                Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 150f);
+                                Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 60f);
                             }
                         }
                     }

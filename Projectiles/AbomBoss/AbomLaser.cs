@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             aiType = ProjectileID.SaucerLaser;
             projectile.hostile = true;
             projectile.alpha = 255;
-            projectile.extraUpdates = 1;
+            projectile.extraUpdates = 2;
             projectile.timeLeft = 360;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;

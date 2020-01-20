@@ -53,22 +53,6 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                     dust.velocity = Main.npc[ai1].velocity;
                     dust.noGravity = true;
                 }
-
-                if (++projectile.localAI[0] > 5) //extra dust rings
-                {
-                    projectile.localAI[0] = 0f;
-                    double dustRotation = Main.rand.NextDouble() * Math.PI;
-                    const int max = 4;
-                    for (int index1 = 0; index1 < max; ++index1)
-                    {
-                        Vector2 vector2 = 5f * (Vector2.UnitX * -8f + -Vector2.UnitY.RotatedBy(index1 * Math.PI / max) * new Vector2(2f, 4f)).RotatedBy(dustRotation - 1.57079637050629);
-                        int index2 = Dust.NewDust(projectile.Center, 0, 0, 87, 0f, 0f, 0, new Color(), 1f);
-                        Main.dust[index2].scale = 2f;
-                        Main.dust[index2].noGravity = true;
-                        Main.dust[index2].position = projectile.Center + vector2;
-                        Main.dust[index2].velocity = Vector2.Zero;
-                    }
-                }
             }
             else
             {

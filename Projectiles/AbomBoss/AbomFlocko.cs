@@ -42,7 +42,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
             Vector2 target = npc.Center;
             target.X += 1000 * (float)Math.Sin(2 * Math.PI / 720 * projectile.ai[1]++);
-            target.Y -= 1000;
+            target.Y -= 1100;
 
             Vector2 distance = target - projectile.Center;
             float length = distance.Length();
