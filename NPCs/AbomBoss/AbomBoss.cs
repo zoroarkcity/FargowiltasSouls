@@ -259,8 +259,24 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                                 npc.velocity.Y = 24 * Math.Sign(npc.velocity.Y);
                         }
                     }
-                    if (npc.localAI[3] > 0)
+                    if (npc.localAI[3] > 0) //in range, fight has begun
+                    {
                         npc.ai[1]++;
+                        if (npc.ai[3] == 0)
+                        {
+                            npc.ai[3] = 1;
+                            if (npc.localAI[3] > 1 && Main.netMode != 1) //phase 2 saucers
+                            {
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    float ai2 = i * 2 * (float)Math.PI / 3; //rotation offset
+                                    int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, mod.NPCType("AbomSaucer"), 0, npc.whoAmI, 0, ai2);
+                                    if (n != Main.maxNPCs && Main.netMode == 2)
+                                        NetMessage.SendData(23, -1, -1, null, n);
+                                }
+                            }
+                        }
+                    }
                     if (npc.ai[1] > 120)
                     {
                         npc.netUpdate = true;
