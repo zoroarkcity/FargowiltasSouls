@@ -12,7 +12,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Abominationn Saucer");
+            DisplayName.SetDefault("Mini Saucer");
         }
 
         public override void SetDefaults()
@@ -80,6 +80,11 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             {
                 Vector2 target = Main.player[npc.target].Center; //targeting
                 target += Vector2.UnitX.RotatedBy(npc.ai[2]) * 600;
+
+                npc.ai[2] -= 0.015f; //spin around target
+                if (npc.ai[2] < (float)-Math.PI)
+                    npc.ai[2] += 2 * (float)Math.PI;
+
                 Vector2 distance = target - npc.Center;
                 float length = distance.Length();
                 if (length > 100f)
