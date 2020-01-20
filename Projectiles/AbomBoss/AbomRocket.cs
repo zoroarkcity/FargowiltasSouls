@@ -38,7 +38,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
                 if (--projectile.ai[1] == 0) //do for one tick right before homing
                 {
-                    projectile.velocity = Vector2.Normalize(projectile.velocity) * (projectile.velocity.Length() + 6f);
+                    projectile.velocity = Vector2.Normalize(projectile.velocity) * (projectile.velocity.Length() + 5f);
                     projectile.netUpdate = true;
                     for (int index1 = 0; index1 < 8; ++index1)
                     {
@@ -62,7 +62,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                             num4 -= 2.0 * Math.PI;
                         if (num4 < -1.0 * Math.PI)
                             num4 += 2.0 * Math.PI;
-                        projectile.velocity = projectile.velocity.RotatedBy(num4 * 0.1f, new Vector2());
+                        projectile.velocity = projectile.velocity.RotatedBy(num4 * 0.05f, new Vector2());
                     }
                 }
                 else //retarget

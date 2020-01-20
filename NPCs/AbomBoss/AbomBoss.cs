@@ -455,7 +455,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     }
                     break;
 
-                case 7: //saucer laser spam  (p2 shoots rockets)
+                case 7: //saucer laser spam with rockets (p2 does two spams)
                     npc.velocity *= 0.99f;
                     if (++npc.ai[1] > 420)
                     {
@@ -465,12 +465,19 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     }
                     else if (npc.ai[1] > 60) //spam lasers, lerp aim
                     {
-                        float targetRot = npc.DirectionTo(player.Center).ToRotation();
-                        while (targetRot < -(float)Math.PI)
-                            targetRot += 2f * (float)Math.PI;
-                        while (targetRot > (float)Math.PI)
-                            targetRot -= 2f * (float)Math.PI;
-                        npc.ai[3] = npc.ai[3].AngleLerp(targetRot, 0.05f);
+                        if (npc.localAI[3] > 1) //p2 lock directly onto you
+                        {
+                            npc.ai[3] = npc.DirectionTo(player.Center).ToRotation();
+                        }
+                        else //p1 lerps slowly at you
+                        {
+                            float targetRot = npc.DirectionTo(player.Center).ToRotation();
+                            while (targetRot < -(float)Math.PI)
+                                targetRot += 2f * (float)Math.PI;
+                            while (targetRot > (float)Math.PI)
+                                targetRot -= 2f * (float)Math.PI;
+                            npc.ai[3] = npc.ai[3].AngleLerp(targetRot, 0.05f);
+                        }
 
                         if (++npc.ai[2] > 1) //spam lasers
                         {
@@ -478,23 +485,33 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             Main.PlaySound(SoundID.Item12, npc.Center);
                             if (Main.netMode != 1)
                             {
-                                Vector2 speed = npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
-                                speed *= 16f;
-                                Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                if (npc.localAI[3] > 1) //p2 shoots to either side of you
+                                {
+                                    Vector2 speed = 16f * npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
+                                    Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(10)), mod.ProjectileType("AbomLaser"), npc.damage / 4, 0f, Main.myPlayer);
+
+                                    speed = 16f * npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
+                                    Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(-10)), mod.ProjectileType("AbomLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                }
+                                else //p1 shoots directly
+                                {
+                                    Vector2 speed = 16f * npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
+                                    Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                }
                             }
                         }
 
-                        if (npc.localAI[3] > 1 && ++npc.localAI[2] > 60) //shoot rockets
+                        if (++npc.localAI[2] > 60) //shoot rockets
                         {
                             npc.localAI[2] = 0;
                             if (Main.netMode != 1)
                             {
-                                Vector2 vel = (npc.ai[3] + (float)Math.PI / 2).ToRotationVector2() * 6;
+                                Vector2 vel = (npc.ai[3] + (float)Math.PI / 2).ToRotationVector2() * 5;
                                 Projectile.NewProjectile(npc.Center, vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 60f);
                                 Projectile.NewProjectile(npc.Center, -vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 60f);
 
                                 Vector2 speed = npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
-                                speed *= 6f;
+                                speed *= 5f;
                                 Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 150f);
                             }
                         }
