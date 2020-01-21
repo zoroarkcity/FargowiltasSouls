@@ -2056,7 +2056,7 @@ namespace FargowiltasSouls.NPCs
                                     npc.ai[1] = 0; //switch to not dashing
                                     npc.netUpdate = true;
                                 }
-                                if (npc.HasPlayerTarget && Main.player[npc.target].active && ++Counter > 3) //cursed flamethrower when dashing
+                                if (npc.HasValidTarget && ++Counter > 3) //cursed flamethrower when dashing
                                 {
                                     Counter = 0;
                                     Projectile.NewProjectile(npc.Center, npc.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-6f, 6f))) * 0.5f, ProjectileID.EyeFire, npc.damage / 4, 0f, Main.myPlayer);
@@ -10763,11 +10763,11 @@ namespace FargowiltasSouls.NPCs
 
                                 if (FargoSoulsWorld.downedAbom)
                                 {
-                                    int maxDoll = Main.rand.Next(5) + 5;
+                                    /*int maxDoll = Main.rand.Next(5) + 5;
                                     for (int i = 0; i < maxDoll; i++)
-                                        npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbominationnVoodooDoll"));
+                                        npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbominationnVoodooDoll"));*/
 
-                                    int maxEnergy = Main.rand.Next(5) + 5;
+                                    int maxEnergy = Main.rand.Next(10) + 10;
                                     for (int i = 0; i < maxEnergy; i++)
                                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"));
                                 }

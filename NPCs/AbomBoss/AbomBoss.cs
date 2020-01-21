@@ -759,7 +759,10 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             FargoSoulsWorld.downedAbom = true;
             if (Main.netMode == 2)
                 NetMessage.SendData(7); //sync world
-            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbomBag"));
+            //npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbomBag"));
+            int maxEX = Main.rand.Next(10) + 10;
+            for (int i = 0; i < maxEX; i++)
+                npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantScale"));
             if (Main.rand.Next(10) == 0)
                 Item.NewItem(npc.Hitbox, mod.ItemType("AbomTrophy"));
 
@@ -769,11 +772,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
             if (FargoSoulsWorld.downedFishronEX)
             {
-                int maxDoll = Main.rand.Next(5) + 5;
-                for (int i = 0; i < maxDoll; i++)
-                    npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbominationnVoodooDoll"));
-
-                int maxEnergy = Main.rand.Next(5) + 5;
+                int maxEnergy = Main.rand.Next(10) + 10;
                 for (int i = 0; i < maxEnergy; i++)
                     npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"));
             }
