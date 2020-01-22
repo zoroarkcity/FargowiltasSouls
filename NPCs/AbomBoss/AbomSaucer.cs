@@ -71,8 +71,12 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     Main.PlaySound(SoundID.Item12, npc.Center);
                     if (Main.netMode != 1)
                     {
-                        Vector2 speed = npc.ai[3].ToRotationVector2() * 16f;
-                        Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomLaser"), abom.damage / 4, 0f, Main.myPlayer);
+                        for (int i = 0; i < 5; i++)
+                        {
+                            Vector2 speed = 16f * npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 4.0);
+                            speed *= Main.rand.NextFloat(0.8f, 1.2f);
+                            Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomLaser"), abom.damage / 4, 0f, Main.myPlayer);
+                        }
                     }
                     npc.netUpdate = true;
                     npc.ai[1] = 0;
