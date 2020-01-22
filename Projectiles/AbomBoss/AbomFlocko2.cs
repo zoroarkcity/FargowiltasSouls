@@ -40,7 +40,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                     projectile.velocity *= 1.05f;
             }
             
-            if (++projectile.localAI[0] > 60 && ++projectile.localAI[1] > 60) //fire frost wave
+            if (++projectile.localAI[0] > 90 && ++projectile.localAI[1] > 60) //fire frost wave
             {
                 projectile.localAI[1] = 0f;
                 Main.PlaySound(SoundID.Item120, projectile.position);

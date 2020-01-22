@@ -25,6 +25,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             projectile.height = 50;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
         }
 
         public override void AI()

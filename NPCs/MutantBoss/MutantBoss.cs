@@ -46,7 +46,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             npc.buffImmune[mod.BuffType("OceanicMaul")] = true;
             npc.buffImmune[mod.BuffType("TimeFrozen")] = true;
             npc.timeLeft = NPC.activeTime * 30;
-            if (FargoSoulsWorld.AngryMutant || Fargowiltas.Instance.CalamityLoaded)
+            if (FargoSoulsWorld.AngryMutant)
             {
                 npc.lifeMax = 377000000;
                 npc.damage *= 2;
@@ -101,13 +101,13 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 {
                     npc.localAI[3] = 1;
                     Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
-                    EdgyBossText("I hope you're ready to embrace suffering.");
+                    //EdgyBossText("I hope you're ready to embrace suffering.");
                     if (Main.netMode != 1)
                     {
                         if (Fargowiltas.Instance.MasomodeEXLoaded)
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModLoader.GetMod("MasomodeEX").ProjectileType("MutantText"), 0, 0f, Main.myPlayer, npc.whoAmI);
 
-                        if (FargoSoulsWorld.downedFishronEX && (Fargowiltas.Instance.MasomodeEXLoaded || FargoSoulsWorld.AngryMutant || Fargowiltas.Instance.CalamityLoaded))
+                        if (FargoSoulsWorld.downedFishronEX && (Fargowiltas.Instance.MasomodeEXLoaded || FargoSoulsWorld.AngryMutant))// || Fargowiltas.Instance.CalamityLoaded))
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("BossRush"), 0, 0f, Main.myPlayer, npc.whoAmI);
 
                         int number = 0;
@@ -186,7 +186,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             if (n != 200 && Main.netMode == 2)
                                 NetMessage.SendData(23, -1, -1, null, n);
                         }
-                        EdgyBossText("Oh, right... my revive...");
+                        //EdgyBossText("Oh, right... my revive...");
                     }
                     break;
 
@@ -204,7 +204,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.netUpdate = true;
                         if (Main.netMode != 1) //shoot harmless mega ray
                             Projectile.NewProjectile(npc.Center, Vector2.UnitY * -1, mod.ProjectileType("MutantGiantDeathray"), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
-                        EdgyBossText("I have not a single regret in my existence!");
+                        //EdgyBossText("I have not a single regret in my existence!");
                     }
                     for (int i = 0; i < 5; i++)
                     {
@@ -370,7 +370,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
                             if (player.Center.X < npc.Center.X)
                                 npc.ai[3] *= -1;
-                            EdgyBossText("But we're not done yet!");
+                            //EdgyBossText("But we're not done yet!");
                         }
                     }
                     else
@@ -808,8 +808,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Main.dust[d].noLight = true;
                             Main.dust[d].velocity *= 9f;
                         }
-                        if (player.GetModPlayer<FargoPlayer>().TerrariaSoul)
-                            EdgyBossText("Hand it over. That thing, your soul toggles.");
+                        //if (player.GetModPlayer<FargoPlayer>().TerrariaSoul) EdgyBossText("Hand it over. That thing, your soul toggles.");
                     }
                     break;
 
@@ -1699,7 +1698,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     for (int i = 0; i < 1000; i++)
                         if (Main.projectile[i].active && Main.projectile[i].hostile)
                             Main.projectile[i].Kill();
-                    EdgyBossText("Time to stop playing around.");
+                    //EdgyBossText("Time to stop playing around.");
                 }
                 return true;
             }
@@ -1738,7 +1737,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 npc.velocity.Y = 24 * Math.Sign(npc.velocity.Y);
         }
 
-        private void EdgyBossText(string text)
+        /*private void EdgyBossText(string text)
         {
             if (Fargowiltas.Instance.CalamityLoaded) //edgy boss text
             {
@@ -1747,7 +1746,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 else if (Main.netMode == 2)
                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), Color.LimeGreen);
             }
-        }
+        }*/
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
@@ -1796,7 +1795,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 for (int i = 0; i < 1000; i++)
                     if (Main.projectile[i].active && Main.projectile[i].damage > 0 && (Main.projectile[i].hostile || Main.projectile[i].friendly))
                         Main.projectile[i].Kill();
-                EdgyBossText("You're pretty good...");
+                //EdgyBossText("You're pretty good...");
             }
             return false;
         }

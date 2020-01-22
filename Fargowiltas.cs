@@ -592,6 +592,17 @@ namespace FargowiltasSouls
         public override void AddRecipes()
         {
             ThoriumCompatibility?.TryAddRecipes();
+
+            if (FargowiltasLoaded)
+            {
+                ModRecipe recipe = new ModRecipe(this);
+                recipe.AddIngredient(ItemID.SoulofLight, 7);
+                recipe.AddIngredient(ItemID.SoulofNight, 7);
+                recipe.AddIngredient(ItemType("VolatileEnergy"));
+                recipe.AddTile(TileID.MythrilAnvil);
+                recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("JungleChest"));
+                recipe.AddRecipe();
+            }
         }
 
         public override void AddRecipeGroups()

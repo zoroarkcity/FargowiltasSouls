@@ -322,7 +322,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             float speed = npc.localAI[3] > 1 ? 30 : 10;
                             if (Main.netMode != 1)
                                 for (int i = 0; i < 6; i++)
-                                    Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center).RotatedBy(Math.PI / 3 * i + Math.PI / 6) * speed, mod.ProjectileType("AbomScytheFlaming"), npc.damage / 5, 0f, Main.myPlayer, baseDelay, baseDelay + 90);
+                                    Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center).RotatedBy(Math.PI / 3 * i + Math.PI / 6) * speed, mod.ProjectileType("AbomScytheFlaming"), npc.damage / 4, 0f, Main.myPlayer, baseDelay, baseDelay + 90);
                             Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f);
                         }
                         npc.netUpdate = true;
@@ -359,11 +359,11 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.ai[3] = 0;
                         if (Main.netMode != 1)
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity), mod.ProjectileType("AbomSickle"), npc.damage / 5, 0, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity), mod.ProjectileType("AbomSickle"), npc.damage / 4, 0, Main.myPlayer);
                             if (npc.localAI[3] > 1)
                             {
-                                Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2), mod.ProjectileType("AbomSickle"), npc.damage / 5, 0, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(-Math.PI / 2), mod.ProjectileType("AbomSickle"), npc.damage / 5, 0, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2), mod.ProjectileType("AbomSickle"), npc.damage / 4, 0, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(-Math.PI / 2), mod.ProjectileType("AbomSickle"), npc.damage / 4, 0, Main.myPlayer);
                             }
                         }
                     }
@@ -388,7 +388,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 5: //mutant scythe 8way (p2 also shoots flaming scythes)
-                    if (!AliveCheck(player))
+                    if (!AliveCheck(player) || Phase2Check())
                         break;
                     targetPos = player.Center + player.DirectionTo(npc.Center) * 400;
                     if (npc.Distance(targetPos) > 50)
@@ -419,6 +419,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 6: //flocko swarm (p2 shoots ice waves horizontally after)
+                    if (Phase2Check())
+                        break;
                     npc.velocity *= 0.99f;
                     if (npc.ai[2] == 0)
                     {
@@ -429,13 +431,14 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             {
                                 if (i == 0) //dont shoot one straight up
                                     continue;
-                                Vector2 speed = new Vector2(Main.rand.NextFloat(20f) * Math.Sign(i), Main.rand.NextFloat(-10f, 10f));
+                                Vector2 speed = new Vector2(Main.rand.NextFloat(40f), Main.rand.NextFloat(-20f, 20f));
                                 Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomFlocko"), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 360 / 3 * i);
                             }
                             if (npc.localAI[3] > 1) //prepare ice waves
                             {
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("AbomFlocko2"), npc.damage / 4, 0f, Main.myPlayer, npc.target, -1);
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("AbomFlocko2"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 1);
+                                Vector2 speed = new Vector2(Main.rand.NextFloat(40f), Main.rand.NextFloat(-20f, 20f));
+                                Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomFlocko2"), npc.damage / 4, 0f, Main.myPlayer, npc.target, -1);
+                                Projectile.NewProjectile(npc.Center, -speed, mod.ProjectileType("AbomFlocko2"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 1);
                             }
                         }
                         
@@ -457,6 +460,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 7: //saucer laser spam with rockets (p2 does two spams)
+                    if (Phase2Check())
+                        break;
                     npc.velocity *= 0.99f;
                     if (++npc.ai[1] > 420)
                     {
