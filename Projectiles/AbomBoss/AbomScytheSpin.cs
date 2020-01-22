@@ -70,6 +70,20 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 Main.dust[index2].scale++;
                 Main.dust[index2].velocity *= 4f;
             }
+
+            if (Main.netMode != 1) //fire triple spread at player
+            {
+                int p = Player.FindClosest(projectile.Center, 0, 0);
+                if (p != -1)
+                {
+                    Vector2 speed = projectile.DirectionTo(Main.player[p].Center);
+                    for (int i = -1; i <= 1; i++)
+                    {
+                        Projectile.NewProjectile(projectile.Center, speed.RotatedBy(MathHelper.ToRadians(15) * i), mod.ProjectileType("AbomSickle"), projectile.damage, projectile.knockBack, projectile.owner);
+                        Projectile.NewProjectile(projectile.Center, speed.RotatedBy(MathHelper.ToRadians(15) * i), mod.ProjectileType("AbomDeathraySmall"), projectile.damage, projectile.knockBack, projectile.owner);
+                    }
+                }
+            }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

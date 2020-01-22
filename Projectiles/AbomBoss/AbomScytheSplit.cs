@@ -60,7 +60,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 else
                 {
                     int p = Player.FindClosest(projectile.Center, 0, 0);
-                    if (p != 1)
+                    if (p != -1)
                     {
                         Vector2 speed = projectile.DirectionTo(Main.player[p].Center);
                         for (int i = 0; i < 8; i++)
