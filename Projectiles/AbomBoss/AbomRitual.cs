@@ -51,7 +51,10 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                         int hitDirection = projectile.Center.X > player.Center.X ? 1 : -1;
                         player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, projectile.whoAmI),
                             projectile.damage, hitDirection, false, false, false, 0);
-                        player.AddBuff(mod.BuffType("AbomFang"), 300);
+                        target.AddBuff(mod.BuffType("AbomFang"), 300);
+                        target.AddBuff(mod.BuffType("Unstable"), 240);
+                        target.AddBuff(mod.BuffType("Berserked"), 120);
+                        target.AddBuff(BuffID.Bleeding, 600);
                     }
                     if (distance > threshold && distance < threshold * 5f)
                     {

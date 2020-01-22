@@ -106,6 +106,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
         {
             target.AddBuff(mod.BuffType("AbomFang"), 300);
             target.AddBuff(mod.BuffType("Defenseless"), 300);
+            target.AddBuff(BuffID.BrokenArmor, 300);
+            target.AddBuff(BuffID.Confused, 180);
             projectile.timeLeft = 0;
         }
 

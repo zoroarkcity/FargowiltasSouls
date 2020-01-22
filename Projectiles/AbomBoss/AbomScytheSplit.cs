@@ -76,6 +76,9 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(mod.BuffType("AbomFang"), 300);
+            target.AddBuff(mod.BuffType("Unstable"), 240);
+            target.AddBuff(mod.BuffType("Berserked"), 120);
+            target.AddBuff(BuffID.Bleeding, 600);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
