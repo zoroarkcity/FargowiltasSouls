@@ -513,7 +513,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             npc.localAI[2] = 0;
                             if (Main.netMode != 1)
                             {
-                                Vector2 vel = (npc.ai[3] + (float)Math.PI / 2).ToRotationVector2() * 5;
+                                Vector2 vel = (npc.ai[3] + (float)Math.PI / 2).ToRotationVector2();
+                                vel *= npc.localAI[3] > 1 ? 5 : 8;
                                 Projectile.NewProjectile(npc.Center, vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 30f);
                                 Projectile.NewProjectile(npc.Center, -vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 30f);
 
