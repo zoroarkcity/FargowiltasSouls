@@ -583,13 +583,19 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     }
                     else if (npc.ai[1] == 31)
                     {
-                        Main.NewText("spawn the things");
                         if (Main.netMode != 1)
                         {
-
+                            const int max = 15;
+                            const float gap = 1200 / max;
+                            for (int i = 1; i <= max; i++)
+                            {
+                                float speed = i * gap / 30;
+                                float ai1 = i % 2 == 0 ? -1 : 1;
+                                Projectile.NewProjectile(npc.Center, speed * npc.ai[3].ToRotationVector2(), mod.ProjectileType("AbomScytheSpin"), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, ai1);
+                            }
                         }
                     }
-                    else if (npc.ai[1] > 360)
+                    else if (npc.ai[1] > 31 + 300)
                     {
                         npc.netUpdate = true;
                         npc.ai[0]++;

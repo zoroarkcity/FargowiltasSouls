@@ -44,7 +44,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 if (Main.npc[ai1].ai[0] < 9)
                 {
                     projectile.velocity = Main.npc[ai1].Center - projectile.Center;
-                    projectile.velocity /= Main.npc[ai1].ai[0] == 8 ? 20f : 40f; //track much faster when abom is preparing a p2
+                    if (Main.npc[ai1].ai[0] != 8) //snaps directly to abom when preparing for p2 attack
+                        projectile.velocity /= 40f;
                 }
                 else //remains still in higher AIs
                 {
