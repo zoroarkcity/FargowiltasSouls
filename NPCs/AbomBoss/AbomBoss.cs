@@ -653,11 +653,14 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         Main.dust[d].velocity *= 4f;
                     }
                     npc.velocity *= 0.95f;
+                    npc.ai[3] += npc.velocity.Length();
                     if (++npc.ai[1] > 120)
                     {
+                        Main.NewText(npc.ai[3]); //debug to check how far this goes, should be 100
                         npc.netUpdate = true;
                         npc.ai[0]++;
                         npc.ai[1] = 0;
+                        npc.ai[3] = 0;
                     }
                     break;
 
