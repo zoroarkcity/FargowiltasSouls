@@ -553,7 +553,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.netUpdate = true;
                         npc.ai[1] = 0;
                         npc.TargetClosest();
-                        if (npc.localAI[3] > 1)
+                        if (npc.localAI[3] > 1) //if in p2
                         {
                             if (npc.localAI[1] == 0)
                             {
@@ -563,10 +563,10 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             else
                             {
                                 npc.localAI[1] = 0;
-                                npc.ai[0] = 12;
+                                npc.ai[0] = 15;
                             }
                         }
-                        else
+                        else //still in p1
                         {
                             npc.ai[0] = 0;
                         }
@@ -574,13 +574,122 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 9: //beginning of scythe rows and deathray rain
-                    Main.NewText("did scythe rows");
-                    npc.netUpdate = true;
-                    npc.ai[0] = 0;
-                    npc.ai[1] = 0;
+                    npc.velocity = Vector2.Zero;
+                    if (++npc.ai[1] == 1)
+                    {
+                        npc.ai[3] = npc.DirectionTo(player.Center).ToRotation();
+                        if (Main.netMode != 1)
+                            Projectile.NewProjectile(npc.Center, npc.ai[3].ToRotationVector2(), mod.ProjectileType("AbomDeathraySmall"), 0, 0f, Main.myPlayer);
+                    }
+                    else if (npc.ai[1] == 31)
+                    {
+                        Main.NewText("spawn the things");
+                        if (Main.netMode != 1)
+                        {
+
+                        }
+                    }
+                    else if (npc.ai[1] > 360)
+                    {
+                        npc.netUpdate = true;
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[3] = 0;
+                    }
                     break;
 
-                case 12: //beginning of laevateinn
+                case 10: //prepare deathray rain
+                    for (int i = 0; i < 5; i++) //make warning dust
+                    {
+                        int d = Dust.NewDust(npc.position, npc.width, npc.height, 87, 0f, 0f, 0, default(Color), 1.5f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity *= 4f;
+                    }
+                    if (npc.ai[2] == 0 && npc.ai[3] == 0) //target one corner of arena
+                    {
+                        npc.ai[2] = npc.Center.X + (player.Center.X < npc.Center.X ? -1200 : 1200);
+                        npc.ai[3] = npc.Center.Y - 1200;
+                    }
+                    if (npc.localAI[2] == 0) //direction to dash in next
+                    {
+                        npc.localAI[2] = npc.ai[2] > npc.Center.X ? -1 : 1;
+                    }
+                    targetPos = new Vector2(npc.ai[2], npc.ai[3]);
+                    Movement(targetPos, 0.7f);
+                    if (++npc.ai[1] > 120)
+                    {
+                        npc.netUpdate = true;
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = npc.localAI[2];
+                        npc.ai[3] = 0;
+                    }
+                    break;
+
+                case 11: //dash and make deathrays
+                    npc.localAI[2] = 0;
+                    npc.velocity = Vector2.UnitX * npc.ai[2] * 25f;
+                    if (++npc.ai[3] > 3)
+                    {
+                        npc.ai[3] = 0;
+                        Main.PlaySound(SoundID.Item12, npc.Center);
+                        if (Main.netMode != 1)
+                            Projectile.NewProjectile(npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height)), Vector2.UnitY.RotatedBy(MathHelper.ToRadians(5) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
+                    }
+                    if (++npc.ai[1] > 1100 / 25)
+                    {
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        //npc.ai[2] = 0; //will be reused shortly
+                        npc.ai[3] = 0;
+                    }
+                    break;
+
+                case 12: //prepare for next deathrain
+                    for (int i = 0; i < 5; i++) //make warning dust
+                    {
+                        int d = Dust.NewDust(npc.position, npc.width, npc.height, 87, 0f, 0f, 0, default(Color), 1.5f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity *= 4f;
+                    }
+                    npc.velocity *= 0.95f;
+                    if (++npc.ai[1] > 120)
+                    {
+                        npc.netUpdate = true;
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                    }
+                    break;
+
+                case 13: //second deathray dash
+                    npc.velocity = Vector2.UnitX * npc.ai[2] * -25f;
+                    if (++npc.ai[3] > 3)
+                    {
+                        npc.ai[3] = 0;
+                        Main.PlaySound(SoundID.Item12, npc.Center);
+                        if (Main.netMode != 1)
+                            Projectile.NewProjectile(npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height)), Vector2.UnitY.RotatedBy(MathHelper.ToRadians(5) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
+                    }
+                    if (++npc.ai[1] > 1100 / 25)
+                    {
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                    }
+                    break;
+
+                case 14: //pause before looping back to first attack
+                    npc.velocity *= 0.9f;
+                    if (++npc.ai[1] > 120)
+                    {
+                        npc.netUpdate = true;
+                        npc.ai[0] = 0;
+                        npc.ai[1] = 0;
+                    }
+                    break;
+
+                case 15: //beginning of laevateinn
                     Main.NewText("did laevateinns");
                     npc.netUpdate = true;
                     npc.ai[0] = 0;

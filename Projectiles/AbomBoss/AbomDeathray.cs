@@ -2,18 +2,19 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Enums;
 
 namespace FargowiltasSouls.Projectiles.AbomBoss
 {
-    public class AbomDeathraySmall : ModProjectile
+    public class AbomDeathray : ModProjectile
     {
-        private const float maxTime = 30;
+        private const float maxTime = 120;
 
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Deathray");
+			DisplayName.SetDefault("Abominable Deathray");
 		}
     	
         public override void SetDefaults()
@@ -29,7 +30,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             cooldownSlot = 1;
         }
 
-        public override bool CanDamage()
+        public override bool? CanHitNPC(NPC target)
         {
             return false;
         }
@@ -54,11 +55,11 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            /*if (projectile.localAI[0] == 0f)
+            if (projectile.localAI[0] == 0f)
             {
                 Main.PlaySound(29, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
-            }*/
-            float num801 = 0.3f;
+            }
+            float num801 = 1.5f;
             projectile.localAI[0] += 1f;
             if (projectile.localAI[0] >= maxTime)
             {
@@ -191,6 +192,14 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 return true;
             }
             return false;
+        }
+
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            target.AddBuff(mod.BuffType("AbomFang"), 300);
+            target.AddBuff(BuffID.WitheredArmor, 600);
+            target.AddBuff(BuffID.WitheredWeapon, 600);
+            target.AddBuff(BuffID.Burning, 180);
         }
     }
 }

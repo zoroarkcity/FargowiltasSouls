@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
@@ -27,6 +28,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.alpha = 255;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
         }
 
         public override void AI()
@@ -39,8 +41,15 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 if (projectile.alpha < 0)
                     projectile.alpha = 0;
 
-                projectile.velocity = Main.npc[ai1].Center - projectile.Center;
-                projectile.velocity /= 40f;
+                if (Main.npc[ai1].ai[0] < 9)
+                {
+                    projectile.velocity = Main.npc[ai1].Center - projectile.Center;
+                    projectile.velocity /= Main.npc[ai1].ai[0] == 8 ? 20f : 40f; //track much faster when abom is preparing a p2
+                }
+                else //remains still in higher AIs
+                {
+                    projectile.velocity = Vector2.Zero;
+                }
 
                 Player player = Main.player[Main.myPlayer];
                 if (player.active && !player.dead)
@@ -51,10 +60,10 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                         int hitDirection = projectile.Center.X > player.Center.X ? 1 : -1;
                         player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, projectile.whoAmI),
                             projectile.damage, hitDirection, false, false, false, 0);
-                        target.AddBuff(mod.BuffType("AbomFang"), 300);
-                        target.AddBuff(mod.BuffType("Unstable"), 240);
-                        target.AddBuff(mod.BuffType("Berserked"), 120);
-                        target.AddBuff(BuffID.Bleeding, 600);
+                        player.AddBuff(mod.BuffType("AbomFang"), 300);
+                        player.AddBuff(mod.BuffType("Unstable"), 240);
+                        player.AddBuff(mod.BuffType("Berserked"), 120);
+                        player.AddBuff(BuffID.Bleeding, 600);
                     }
                     if (distance > threshold && distance < threshold * 5f)
                     {

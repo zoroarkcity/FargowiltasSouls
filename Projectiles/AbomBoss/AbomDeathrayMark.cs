@@ -7,7 +7,7 @@ using Terraria.Enums;
 
 namespace FargowiltasSouls.Projectiles.AbomBoss
 {
-    public class AbomDeathraySmall : ModProjectile
+    public class AbomDeathrayMark : ModProjectile
     {
         private const float maxTime = 30;
 
@@ -123,6 +123,12 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
             projectile.position -= projectile.velocity;
             projectile.rotation = projectile.velocity.ToRotation() - 1.57079637f;
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            if (Main.netMode != 1)
+                Projectile.NewProjectile(projectile.Center, projectile.velocity, mod.ProjectileType("AbomDeathray"), projectile.damage, projectile.knockBack, projectile.owner);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
