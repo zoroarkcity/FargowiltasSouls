@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             projectile.height = 40;
             projectile.hostile = true;
             projectile.penetrate = -1;
-            projectile.timeLeft = 300;
+            projectile.timeLeft = 330;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             cooldownSlot = 1;
@@ -38,12 +38,16 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 Main.PlaySound(SoundID.Item71, projectile.Center);
             }
 
-            if (projectile.timeLeft == 270)
+            if (projectile.timeLeft == 300)
             {
                 projectile.velocity = Vector2.Zero;
                 projectile.netUpdate = true;
             }
-            else if (projectile.timeLeft <= 240)
+            else if (projectile.timeLeft == 240)
+            {
+                Main.PlaySound(SoundID.Item84, projectile.Center);
+            }
+            else if (projectile.timeLeft < 240)
             {
                 if (projectile.ai[0] < 0 || projectile.ai[0] >= Main.maxNPCs || !Main.npc[(int)projectile.ai[0]].active || Main.npc[(int)projectile.ai[0]].type != mod.NPCType("AbomBoss"))
                 {
@@ -51,12 +55,12 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                     return;
                 }
                 Vector2 pivot = Main.npc[(int)projectile.ai[0]].Center;
-                Vector2 speed = (pivot - projectile.Center).RotatedBy(Math.PI * projectile.ai[1]);
-                speed *= 2 * (float)Math.PI / 240;
+                projectile.velocity = (pivot - projectile.Center).RotatedBy(Math.PI / 2 * projectile.ai[1]);
+                projectile.velocity *= 2 * (float)Math.PI / 240;
             }
             
             projectile.spriteDirection = (int)projectile.ai[1];
-            projectile.rotation += projectile.spriteDirection;
+            projectile.rotation += projectile.spriteDirection * 0.5f;
         }
 
         public override void Kill(int timeLeft)
@@ -71,17 +75,14 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 Main.dust[index2].velocity *= 4f;
             }
 
-            if (Main.netMode != 1) //fire triple spread at player
+            if (Main.netMode != 1) //fire at player
             {
                 int p = Player.FindClosest(projectile.Center, 0, 0);
                 if (p != -1)
                 {
                     Vector2 speed = projectile.DirectionTo(Main.player[p].Center);
-                    for (int i = -1; i <= 1; i++)
-                    {
-                        Projectile.NewProjectile(projectile.Center, speed.RotatedBy(MathHelper.ToRadians(15) * i), mod.ProjectileType("AbomSickle"), projectile.damage, projectile.knockBack, projectile.owner);
-                        Projectile.NewProjectile(projectile.Center, speed.RotatedBy(MathHelper.ToRadians(15) * i), mod.ProjectileType("AbomDeathraySmall"), projectile.damage, projectile.knockBack, projectile.owner);
-                    }
+                    Projectile.NewProjectile(projectile.Center, speed, mod.ProjectileType("AbomSickle"), projectile.damage, projectile.knockBack, projectile.owner);
+                    Projectile.NewProjectile(projectile.Center, speed, mod.ProjectileType("AbomDeathraySmall"), projectile.damage, projectile.knockBack, projectile.owner);
                 }
             }
         }

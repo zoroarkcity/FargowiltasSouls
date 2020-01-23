@@ -307,7 +307,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     if (!AliveCheck(player) || Phase2Check())
                         break;
                     npc.velocity = npc.DirectionTo(player.Center) * 6f;
-                    if (--npc.ai[1] < 0)
+                    if (++npc.ai[1] > 120)
                     {
                         npc.ai[1] = 60;
                         if (++npc.ai[2] > 3)
@@ -390,7 +390,11 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 case 5: //mutant scythe 8way (p2 also shoots flaming scythes)
                     if (!AliveCheck(player) || Phase2Check())
                         break;
-                    targetPos = player.Center + player.DirectionTo(npc.Center) * 400;
+                    targetPos = player.Center;
+                    if (npc.localAI[3] > 1)
+                        targetPos += player.DirectionTo(npc.Center) * 400;
+                    else
+                        targetPos.X += 500 * (npc.Center.X < targetPos.X ? -1 : 1);
                     if (npc.Distance(targetPos) > 50)
                     {
                         Movement(targetPos, 0.5f);
@@ -519,7 +523,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                                 Projectile.NewProjectile(npc.Center, -vel, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 30f);
 
                                 Vector2 speed = npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
-                                speed *= 5f;
+                                speed *= npc.localAI[3] > 1 ? 5 : 8;
                                 Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomRocket"), npc.damage / 4, 0f, Main.myPlayer, npc.target, 60f);
                             }
                         }
@@ -548,11 +552,14 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     if (!AliveCheck(player) || Phase2Check())
                         break;
                     npc.velocity *= 0.9f;
-                    if (++npc.ai[1] > 90)
+                    npc.localAI[2] = 0;
+                    if (++npc.ai[1] > 120)
                     {
                         Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         npc.netUpdate = true;
                         npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
                         npc.TargetClosest();
                         if (npc.localAI[3] > 1) //if in p2
                         {
@@ -576,17 +583,18 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
                 case 9: //beginning of scythe rows and deathray rain
                     npc.velocity = Vector2.Zero;
+                    npc.localAI[2] = 0;
                     if (++npc.ai[1] == 1)
                     {
                         npc.ai[3] = npc.DirectionTo(player.Center).ToRotation();
                         if (Main.netMode != 1)
                             Projectile.NewProjectile(npc.Center, npc.ai[3].ToRotationVector2(), mod.ProjectileType("AbomDeathraySmall"), 0, 0f, Main.myPlayer);
                     }
-                    else if (npc.ai[1] == 31)
+                    else if (npc.ai[1] == 61)
                     {
                         if (Main.netMode != 1)
                         {
-                            const int max = 15;
+                            const int max = 12;
                             const float gap = 1200 / max;
                             for (int i = 1; i <= max; i++)
                             {
@@ -596,8 +604,10 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             }
                         }
                     }
-                    else if (npc.ai[1] > 31 + 300)
+                    else if (npc.ai[1] > 61 + 330)
                     {
+                        if (!AliveCheck(player))
+                            break;
                         npc.netUpdate = true;
                         npc.ai[0]++;
                         npc.ai[1] = 0;
@@ -612,19 +622,22 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         Main.dust[d].noGravity = true;
                         Main.dust[d].velocity *= 4f;
                     }
-                    if (npc.ai[2] == 0 && npc.ai[3] == 0) //target one corner of arena
+                    if (npc.ai[2] == 0 && npc.ai[3] == 0) //target one side of arena
                     {
-                        npc.ai[2] = npc.Center.X + (player.Center.X < npc.Center.X ? -1200 : 1200);
-                        npc.ai[3] = npc.Center.Y - 1200;
+                        npc.ai[2] = npc.Center.X + (player.Center.X < npc.Center.X ? -1400 : 1400);
                     }
                     if (npc.localAI[2] == 0) //direction to dash in next
                     {
                         npc.localAI[2] = npc.ai[2] > npc.Center.X ? -1 : 1;
                     }
+                    npc.ai[3] = player.Center.Y - 300;
                     targetPos = new Vector2(npc.ai[2], npc.ai[3]);
                     Movement(targetPos, 0.7f);
                     if (++npc.ai[1] > 120)
                     {
+                        if (!AliveCheck(player))
+                            break;
+                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         npc.netUpdate = true;
                         npc.ai[0]++;
                         npc.ai[1] = 0;
@@ -635,16 +648,22 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
                 case 11: //dash and make deathrays
                     npc.localAI[2] = 0;
-                    npc.velocity = Vector2.UnitX * npc.ai[2] * 25f;
-                    if (++npc.ai[3] > 3)
+                    npc.velocity.X = npc.ai[2] * 17f;
+                    MovementY(player.Center.Y - 300, 0.7f);
+                    if (++npc.ai[3] > 5)
                     {
                         npc.ai[3] = 0;
                         Main.PlaySound(SoundID.Item12, npc.Center);
                         if (Main.netMode != 1)
-                            Projectile.NewProjectile(npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height)), Vector2.UnitY.RotatedBy(MathHelper.ToRadians(5) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitY.RotatedBy(MathHelper.ToRadians(10) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(10) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
+                        }
                     }
-                    if (++npc.ai[1] > 1100 / 25)
+                    if (++npc.ai[1] > 2400 / 17f)
                     {
+                        if (!AliveCheck(player))
+                            break;
                         npc.ai[0]++;
                         npc.ai[1] = 0;
                         //npc.ai[2] = 0; //will be reused shortly
@@ -653,6 +672,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 12: //prepare for next deathrain
+                    npc.velocity.Y = 0f;
                     for (int i = 0; i < 5; i++) //make warning dust
                     {
                         int d = Dust.NewDust(npc.position, npc.width, npc.height, 87, 0f, 0f, 0, default(Color), 1.5f);
@@ -661,9 +681,11 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     }
                     npc.velocity *= 0.95f;
                     npc.ai[3] += npc.velocity.Length();
-                    if (++npc.ai[1] > 120)
+                    if (++npc.ai[1] > 180)
                     {
-                        Main.NewText(npc.ai[3]); //debug to check how far this goes, should be 100
+                        if (!AliveCheck(player))
+                            break;
+                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         npc.netUpdate = true;
                         npc.ai[0]++;
                         npc.ai[1] = 0;
@@ -672,16 +694,22 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 13: //second deathray dash
-                    npc.velocity = Vector2.UnitX * npc.ai[2] * -25f;
-                    if (++npc.ai[3] > 3)
+                    npc.velocity.X = npc.ai[2] * -17f;
+                    MovementY(player.Center.Y - 300, 0.7f);
+                    if (++npc.ai[3] > 5)
                     {
                         npc.ai[3] = 0;
                         Main.PlaySound(SoundID.Item12, npc.Center);
                         if (Main.netMode != 1)
-                            Projectile.NewProjectile(npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height)), Vector2.UnitY.RotatedBy(MathHelper.ToRadians(5) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitY.RotatedBy(MathHelper.ToRadians(10) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(10) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
+                        }
                     }
-                    if (++npc.ai[1] > 1100 / 25)
+                    if (++npc.ai[1] > 2400 / 17f)
                     {
+                        if (!AliveCheck(player))
+                            break;
                         npc.ai[0]++;
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
@@ -690,6 +718,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 14: //pause before looping back to first attack
+                    if (!AliveCheck(player))
+                        break;
                     npc.velocity *= 0.9f;
                     if (++npc.ai[1] > 120)
                     {
@@ -827,6 +857,24 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             }
             if (Math.Abs(npc.velocity.X) > 24)
                 npc.velocity.X = 24 * Math.Sign(npc.velocity.X);
+            if (Math.Abs(npc.velocity.Y) > 24)
+                npc.velocity.Y = 24 * Math.Sign(npc.velocity.Y);
+        }
+
+        private void MovementY(float targetY, float speedModifier)
+        {
+            if (npc.Center.Y < targetY)
+            {
+                npc.velocity.Y += speedModifier;
+                if (npc.velocity.Y < 0)
+                    npc.velocity.Y += speedModifier * 2;
+            }
+            else
+            {
+                npc.velocity.Y -= speedModifier;
+                if (npc.velocity.Y > 0)
+                    npc.velocity.Y -= speedModifier * 2;
+            }
             if (Math.Abs(npc.velocity.Y) > 24)
                 npc.velocity.Y = 24 * Math.Sign(npc.velocity.Y);
         }

@@ -59,14 +59,14 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             {
                 Main.PlaySound(29, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
             }
-            float num801 = 1.5f;
+            float num801 = 5f;
             projectile.localAI[0] += 1f;
             if (projectile.localAI[0] >= maxTime)
             {
                 projectile.Kill();
                 return;
             }
-            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 0.6f * num801;
+            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * num801 * 6f;
             if (projectile.scale > num801)
             {
                 projectile.scale = num801;
@@ -136,7 +136,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             Texture2D texture2D20 = mod.GetTexture("Projectiles/Masomode/PhantasmalDeathray2");
             Texture2D texture2D21 = mod.GetTexture("Projectiles/Masomode/PhantasmalDeathray3");
             float num223 = projectile.localAI[1];
-            Microsoft.Xna.Framework.Color color44 = new Microsoft.Xna.Framework.Color(255, 255, 255, 0) * 0.45f;
+            Microsoft.Xna.Framework.Color color44 = new Microsoft.Xna.Framework.Color(255, 255, 255, 0);
             SpriteBatch arg_ABD8_0 = Main.spriteBatch;
             Texture2D arg_ABD8_1 = texture2D19;
             Vector2 arg_ABD8_2 = projectile.Center - Main.screenPosition;

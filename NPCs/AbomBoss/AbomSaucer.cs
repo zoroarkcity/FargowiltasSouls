@@ -50,7 +50,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
         public override void AI()
         {
             if (npc.ai[0] < 0 || npc.ai[0] >= Main.maxNPCs || !Main.npc[(int)npc.ai[0]].active ||
-                Main.npc[(int)npc.ai[0]].type != mod.NPCType("AbomBoss") || Main.npc[(int)npc.ai[0]].ai[0] != 0)
+                Main.npc[(int)npc.ai[0]].type != mod.NPCType("AbomBoss") ||
+                !(Main.npc[(int)npc.ai[0]].ai[0] == 0 || (Main.npc[(int)npc.ai[0]].ai[0] == 1 && Main.npc[(int)npc.ai[0]].ai[1] < 120)))
             {
                 npc.StrikeNPCNoInteraction(999999, 0f, 0);
                 return;
@@ -73,7 +74,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     {
                         for (int i = 0; i < 5; i++)
                         {
-                            Vector2 speed = 16f * npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 4.0);
+                            Vector2 speed = 16f * npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 8.0);
                             speed *= Main.rand.NextFloat(0.8f, 1.2f);
                             Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomLaser"), abom.damage / 4, 0f, Main.myPlayer);
                         }
