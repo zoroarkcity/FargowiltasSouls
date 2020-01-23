@@ -27,6 +27,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             projectile.aiStyle = -1;
             projectile.hostile = true;
             projectile.penetrate = -1;
+            projectile.tileCollide = false;
             cooldownSlot = 1;
         }
 

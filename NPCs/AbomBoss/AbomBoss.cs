@@ -48,7 +48,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.buffImmune[mod.BuffType("OceanicMaul")] = true;
             npc.timeLeft = NPC.activeTime * 30;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/SteelRed");
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma");
             musicPriority = (MusicPriority)11;
         }
 
