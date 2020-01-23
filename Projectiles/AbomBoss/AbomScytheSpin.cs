@@ -82,7 +82,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 {
                     Vector2 speed = projectile.DirectionTo(Main.player[p].Center);
                     Projectile.NewProjectile(projectile.Center, speed, mod.ProjectileType("AbomSickle"), projectile.damage, projectile.knockBack, projectile.owner);
-                    Projectile.NewProjectile(projectile.Center, speed, mod.ProjectileType("AbomDeathraySmall"), projectile.damage, projectile.knockBack, projectile.owner);
+                    if (projectile.ai[1] > 0)
+                        Projectile.NewProjectile(projectile.Center, speed, mod.ProjectileType("AbomDeathraySmall"), projectile.damage, projectile.knockBack, projectile.owner);
                 }
             }
         }

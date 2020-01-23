@@ -50,9 +50,9 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             {
                 if (projectile.ai[1] == 0)
                 {
-                    for (int i = 0; i < 6; i++)
+                    for (int i = 0; i < 4; i++)
                     {
-                        Vector2 vel = Vector2.Normalize(projectile.velocity).RotatedBy(Math.PI / 3 * i);
+                        Vector2 vel = Vector2.Normalize(projectile.velocity).RotatedBy(Math.PI / 2 * i);
                         Projectile.NewProjectile(projectile.Center, vel, mod.ProjectileType("AbomSickle"), projectile.damage, projectile.knockBack, projectile.owner);
                         Projectile.NewProjectile(projectile.Center, vel, mod.ProjectileType("AbomDeathraySmall"), projectile.damage, 0f, projectile.owner);
                     }
@@ -63,10 +63,10 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                     if (p != -1)
                     {
                         Vector2 speed = projectile.DirectionTo(Main.player[p].Center);
-                        for (int i = 0; i < 8; i++)
+                        for (int i = 0; i < 6; i++)
                         {
-                            Projectile.NewProjectile(projectile.Center, speed.RotatedBy(Math.PI / 4 * i), mod.ProjectileType("AbomSickle"), projectile.damage, projectile.knockBack, projectile.owner);
-                            Projectile.NewProjectile(projectile.Center, speed.RotatedBy(Math.PI / 4 * i), mod.ProjectileType("AbomDeathraySmall"), projectile.damage, 0f, projectile.owner);
+                            Projectile.NewProjectile(projectile.Center, speed.RotatedBy(Math.PI / 3 * i), mod.ProjectileType("AbomSickle"), projectile.damage, projectile.knockBack, projectile.owner);
+                            Projectile.NewProjectile(projectile.Center, speed.RotatedBy(Math.PI / 3 * i), mod.ProjectileType("AbomDeathraySmall"), projectile.damage, 0f, projectile.owner);
                         }
                     }
                 }
