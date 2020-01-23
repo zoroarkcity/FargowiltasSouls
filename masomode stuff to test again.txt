@@ -83,6 +83,7 @@ spazmatism no longer breathes when you're dead in p3
 removed enraged mutant from calamity
 destroyer no longer coil enrages at you when dead
 added recipe for deviantt's jungle chest
+adjusted mutant targeting to be seamless if the original target dies in mp(?)
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

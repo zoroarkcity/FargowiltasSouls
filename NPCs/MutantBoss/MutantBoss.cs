@@ -1648,6 +1648,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             if ((!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 5000f) && npc.localAI[3] > 0)
             {
                 npc.TargetClosest();
+                player = Main.player[npc.target];
                 if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 5000f)
                 {
                     if (npc.timeLeft > 30)
