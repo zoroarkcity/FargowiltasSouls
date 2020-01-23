@@ -74,8 +74,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     {
                         for (int i = 0; i < 5; i++)
                         {
-                            Vector2 speed = 16f * npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 8.0);
-                            speed *= Main.rand.NextFloat(0.8f, 1.2f);
+                            Vector2 speed = 16f * npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 12.0);
+                            speed *= Main.rand.NextFloat(0.9f, 1.1f);
                             Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomLaser"), abom.damage / 4, 0f, Main.myPlayer);
                         }
                     }
