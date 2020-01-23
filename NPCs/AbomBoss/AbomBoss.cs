@@ -656,8 +656,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         Main.PlaySound(SoundID.Item12, npc.Center);
                         if (Main.netMode != 1)
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.UnitY.RotatedBy(MathHelper.ToRadians(10) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
-                            Projectile.NewProjectile(npc.Center, -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(10) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitY.RotatedBy(MathHelper.ToRadians(15) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(15) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
                     if (++npc.ai[1] > 2400 / 17f)
@@ -702,8 +702,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         Main.PlaySound(SoundID.Item12, npc.Center);
                         if (Main.netMode != 1)
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.UnitY.RotatedBy(MathHelper.ToRadians(10) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
-                            Projectile.NewProjectile(npc.Center, -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(10) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitY.RotatedBy(MathHelper.ToRadians(15) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(15) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
                     if (++npc.ai[1] > 2400 / 17f)
