@@ -648,7 +648,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
                 case 11: //dash and make deathrays
                     npc.localAI[2] = 0;
-                    npc.velocity.X = npc.ai[2] * 17f;
+                    npc.velocity.X = npc.ai[2] * 18f;
                     MovementY(player.Center.Y - 300, 0.7f);
                     if (++npc.ai[3] > 5)
                     {
@@ -660,7 +660,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             Projectile.NewProjectile(npc.Center, -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(15) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage * 3 / 8, 0f, Main.myPlayer);
                         }
                     }
-                    if (++npc.ai[1] > 2400 / 17f)
+                    if (++npc.ai[1] > 2400 / 18f)
                     {
                         if (!AliveCheck(player))
                             break;
@@ -679,7 +679,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         Main.dust[d].noGravity = true;
                         Main.dust[d].velocity *= 4f;
                     }
-                    npc.velocity *= 0.95f;
+                    npc.velocity *= 0.947f;
                     npc.ai[3] += npc.velocity.Length();
                     if (++npc.ai[1] > 180)
                     {
@@ -694,7 +694,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 13: //second deathray dash
-                    npc.velocity.X = npc.ai[2] * -17f;
+                    npc.velocity.X = npc.ai[2] * -18f;
                     MovementY(player.Center.Y - 300, 0.7f);
                     if (++npc.ai[3] > 5)
                     {
@@ -706,7 +706,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             Projectile.NewProjectile(npc.Center, -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(15) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage * 3 / 8, 0f, Main.myPlayer);
                         }
                     }
-                    if (++npc.ai[1] > 2400 / 17f)
+                    if (++npc.ai[1] > 2400 / 18f)
                     {
                         if (!AliveCheck(player))
                             break;
