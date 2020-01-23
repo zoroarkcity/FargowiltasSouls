@@ -814,7 +814,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.ai[1] = 0;
                         if (++npc.ai[2] > 2)
                         {
-                            npc.ai[0]++; //go to next attack after dashes
+                            npc.ai[0] = 0; //reset after dashes
                             npc.ai[2] = 0;
                         }
                         else
