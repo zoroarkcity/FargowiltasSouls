@@ -1620,6 +1620,8 @@ namespace FargowiltasSouls
 
                 if (player.lifeRegenCount > 0)
                     player.lifeRegenCount = 0;
+
+                player.lifeRegenCount -= 70;
             }
 
             if (MutantNibble)
