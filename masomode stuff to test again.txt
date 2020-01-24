@@ -86,6 +86,7 @@ added recipe for deviantt's jungle chest
 adjusted mutant targeting to be seamless if the original target dies in mp(?)
 fixed flocko wave sheeting
 improved boc confusion telegraph
+updated gutted/pure heart tooltip
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
