@@ -57,8 +57,8 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             }
 
             float rotation = MathHelper.ToRadians(30) * (float)Math.Sin(counter * Math.PI / factor);
-            Projectile.NewProjectile(position, speed.RotatedBy(rotation), item.shoot, damage, knockBack, player.whoAmI);
-            Projectile.NewProjectile(position, speed.RotatedBy(-rotation), item.shoot, damage, knockBack, player.whoAmI);
+            Projectile.NewProjectile(position, speed.RotatedBy(rotation), type, damage, knockBack, player.whoAmI);
+            Projectile.NewProjectile(position, speed.RotatedBy(-rotation), type, damage, knockBack, player.whoAmI);
 
             if (++counter >= factor) //reset
             {
