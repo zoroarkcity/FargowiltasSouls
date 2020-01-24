@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.useStyle = 1;
             item.knockBack = 6;
             item.value = 50000;
-            item.rare = 5;
+            item.rare = 11;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("SlimeBall");
@@ -58,8 +58,10 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 ModRecipe recipe = new ModRecipe(mod);
                 recipe.AddIngredient(null, "SlimeKingsSlasher");
                 recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerSlime"));
-                recipe.AddIngredient(null, "MutatingEnergy", 10);
-                recipe.AddTile(TileID.MythrilAnvil);
+                recipe.AddIngredient(ItemID.LunarBar, 10);
+                recipe.AddIngredient(null, "LunarCrystal", 5);
+
+                recipe.AddTile(mod, "CrucibleCosmosSheet");
                 recipe.SetResult(this);
                 recipe.AddRecipe();
             }

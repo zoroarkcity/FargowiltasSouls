@@ -28,7 +28,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.noMelee = true;
             item.knockBack = 1.5f;
             item.value = 50000;
-            item.rare = 5;
+            item.rare = 11;
             item.autoReuse = true;
             item.shoot = ProjectileID.HornetStinger;
             //item.useAmmo = ItemID.Stinger;
@@ -85,8 +85,10 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 ModRecipe recipe = new ModRecipe(mod);
                 recipe.AddIngredient(null, "HiveStaff");
                 recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerBee"));
-                recipe.AddIngredient(null, "MutatingEnergy", 10);
-                recipe.AddTile(TileID.MythrilAnvil);
+                recipe.AddIngredient(ItemID.LunarBar, 10);
+                recipe.AddIngredient(null, "LunarCrystal", 5);
+
+                recipe.AddTile(mod, "CrucibleCosmosSheet");
                 recipe.SetResult(this);
                 recipe.AddRecipe();
             }

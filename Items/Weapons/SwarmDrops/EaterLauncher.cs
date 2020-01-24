@@ -31,7 +31,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.UseSound = new LegacySoundStyle(2, 62); 
             item.useAmmo = AmmoID.Rocket;
             item.value = Item.sellPrice(0, 10); 
-            item.rare = 4; 
+            item.rare = 11; 
             item.autoReuse = true; 
             item.shoot = mod.ProjectileType("EaterRocket");
             item.shootSpeed = 16f; 
@@ -58,9 +58,10 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
                 recipe.AddIngredient(mod.ItemType("EaterStaff"));
                 recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerWorm"));
-                recipe.AddIngredient(null, "MutatingEnergy", 10);
+                recipe.AddIngredient(ItemID.LunarBar, 10);
+                recipe.AddIngredient(null, "LunarCrystal", 5);
 
-                recipe.AddTile(TileID.MythrilAnvil);
+                recipe.AddTile(mod, "CrucibleCosmosSheet");
                 recipe.SetResult(this);
                 recipe.AddRecipe();
             }
