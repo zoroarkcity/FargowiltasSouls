@@ -121,10 +121,10 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
             //Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
 
-            if (++counter > 5)
+            if (Main.npc[(int)projectile.ai[1]].velocity != Vector2.Zero && --counter < 0)
             {
-                counter = 0;
-                if (Main.netMode != 1 && Main.npc[(int)projectile.ai[1]].velocity != Vector2.Zero) //spawn bonus projs
+                counter = 5;
+                if (Main.netMode != 1) //spawn bonus projs
                 {
                     Vector2 spawnPos = projectile.Center;
                     Vector2 vel = projectile.velocity.RotatedBy(Math.PI / 2 * Math.Sign(projectile.ai[0]));
