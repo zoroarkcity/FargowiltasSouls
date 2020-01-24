@@ -86,7 +86,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                         Projectile.NewProjectile(projectile.Center + speed * 4f, speed, mod.ProjectileType("AbomFrostShard"), projectile.damage, projectile.knockBack, projectile.owner);
                         Projectile.NewProjectile(projectile.Center + Vector2.UnitY * 8f, Vector2.UnitY * 8f, mod.ProjectileType("AbomFrostShard"), projectile.damage, projectile.knockBack, projectile.owner);
                     }
-                    /*if (Main.player[npc.target].active && !Main.player[npc.target].dead && Main.player[npc.target].Center.Y < projectile.Center.Y)
+                    if (Main.player[npc.target].active && !Main.player[npc.target].dead && Main.player[npc.target].Center.Y < projectile.Center.Y)
                     {
                         Main.PlaySound(SoundID.Item120, projectile.position);
                         if (Main.netMode != 1)
@@ -94,7 +94,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                             Vector2 vel = projectile.DirectionTo(Main.player[npc.target].Center + new Vector2(Main.rand.Next(-200, 201), Main.rand.Next(-200, 201))) * 12f;
                             Projectile.NewProjectile(projectile.Center, vel, mod.ProjectileType("AbomFrostWave"), projectile.damage, projectile.knockBack, projectile.owner);
                         }
-                    }*/
+                    }
                 }
             }
             
