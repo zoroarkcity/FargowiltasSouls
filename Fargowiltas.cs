@@ -122,6 +122,7 @@ namespace FargowiltasSouls
             AddToggle("NecroConfig", "Necro Guardian", "NecroEnchant", "565643");
             AddToggle("ShadowConfig", "Shadow Darkness", "ShadowEnchant", "42356f");
             AddToggle("AncientShadowConfig", "Ancient Shadow Orbs", "AncientShadowEnchant", "42356f");
+            AddToggle("MonkConfig", "Monk Dash", "MonkEnchant", "ffffff");
             AddToggle("ShinobiConfig", "Shinobi Through Walls", "ShinobiEnchant", "935b18");
             AddToggle("ShinobiTabiConfig", "Tabi Dash", "ShinobiEnchant", "935b18");
             AddToggle("ShinobiClimbingConfig", "Tiger Climbing Gear", "ShinobiEnchant", "935b18");
@@ -591,6 +592,17 @@ namespace FargowiltasSouls
         public override void AddRecipes()
         {
             ThoriumCompatibility?.TryAddRecipes();
+
+            if (FargowiltasLoaded)
+            {
+                ModRecipe recipe = new ModRecipe(this);
+                recipe.AddIngredient(ItemID.SoulofLight, 7);
+                recipe.AddIngredient(ItemID.SoulofNight, 7);
+                recipe.AddIngredient(ItemType("VolatileEnergy"));
+                recipe.AddTile(TileID.MythrilAnvil);
+                recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("JungleChest"));
+                recipe.AddRecipe();
+            }
         }
 
         public override void AddRecipeGroups()

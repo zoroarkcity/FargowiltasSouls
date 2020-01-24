@@ -73,11 +73,14 @@ Summons several pets";
             modPlayer.ShadowEffect(hideVisual);
             //ninja gear
             player.blackBelt = true;
-            player.spikedBoots = 2;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShinobiClimbing))
+                player.spikedBoots = 2;
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShinobiTabi, false))
                 player.dash = 1;
             //tele thru walls, pet
             modPlayer.ShinobiEffect(hideVisual);
+            //monk dash mayhem
+            modPlayer.MonkEffect();
             //smoke bomb nonsense, pet
             modPlayer.NinjaEffect(hideVisual);
             //scythe doom, pets

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.AbomBoss
@@ -12,23 +13,20 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         private const float PI = (float)Math.PI;
         private const float rotationPerTick = PI / 57f;
-        private const float threshold = 350;
+        private const float threshold = 150;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Abominationn Seal");
-            Main.projFrames[projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 46;
-            projectile.height = 46;
-            projectile.scale *= 2f;
+            projectile.width = 42;
+            projectile.height = 42;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.alpha = 255;
-            projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
         }
 
         public override void AI()
@@ -40,6 +38,20 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 projectile.alpha -= 2;
                 if (projectile.alpha < 0)
                     projectile.alpha = 0;
+
+                float distance = threshold * projectile.scale / 2f;
+                for (int i = 0; i < 30; i++)
+                {
+                    Vector2 offset = new Vector2();
+                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                    offset.X += (float)(Math.Sin(angle) * distance);
+                    offset.Y += (float)(Math.Cos(angle) * distance);
+                    Dust dust = Main.dust[Dust.NewDust(
+                        Main.npc[ai1].Center + offset - new Vector2(4, 4), 0, 0,
+                        DustID.Shadowflame, 0, 0, 100, Color.White, 1f)];
+                    dust.velocity = Main.npc[ai1].velocity;
+                    dust.noGravity = true;
+                }
             }
             else
             {
@@ -55,7 +67,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             projectile.Center = Main.npc[ai1].Center;
 
             projectile.timeLeft = 2;
-            projectile.scale = (1f - projectile.alpha / 255f) * 0.5f;
+            projectile.scale = 1f - projectile.alpha / 255f;
             projectile.ai[0] += rotationPerTick;
             if (projectile.ai[0] > PI)
             {
@@ -63,14 +75,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 projectile.netUpdate = true;
             }
 
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 6)
-            {
-                projectile.frameCounter = 0;
-                projectile.frame++;
-                if (projectile.frame > 1)
-                    projectile.frame = 0;
-            }
+            projectile.rotation += 0.5f;
         }
 
         public override bool CanDamage()
@@ -88,27 +93,18 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
             Color color26 = projectile.GetAlpha(lightColor);
 
-            for (int x = 0; x < 7; x++)
+            for (int x = 0; x < 6; x++)
             {
                 Vector2 drawOffset = new Vector2(threshold * projectile.scale / 2f, 0f).RotatedBy(projectile.ai[0]);
-                drawOffset = drawOffset.RotatedBy(2f * PI / 7f * x);
-                const int max = 4;
-                for (int i = 0; i < max; i++)
-                {
-                    Color color27 = color26;
-                    color27 *= (float)(max - i) / max;
-                    Vector2 value4 = projectile.Center + drawOffset.RotatedBy(rotationPerTick * -i);
-                    float num165 = projectile.rotation;
-                    Main.spriteBatch.Draw(texture2D13, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
-                }
-                Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+                drawOffset = drawOffset.RotatedBy(2f * PI / 6f * x);
+                Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, x % 2 == 0 ? projectile.rotation : -projectile.rotation, origin2, projectile.scale, x % 2 == 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             }
             return false;
         }
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * projectile.Opacity * .3f;
+            return Color.White * projectile.Opacity;
         }
     }
 }

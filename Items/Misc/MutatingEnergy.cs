@@ -4,13 +4,13 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Misc
 {
-	public class MutantScale : ModItem
+	public class MutatingEnergy: ModItem
 	{
         public override string Texture => "FargowiltasSouls/Items/Placeholder";
 
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Abominable Scale");
+			DisplayName.SetDefault("Mutating Energy");
         }
 
 		public override void SetDefaults()

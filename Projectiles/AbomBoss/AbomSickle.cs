@@ -4,28 +4,28 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Projectiles.MutantBoss
+namespace FargowiltasSouls.Projectiles.AbomBoss
 {
-    public class MutantScythe2 : ModProjectile
+    public class AbomSickle : ModProjectile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mutant Sickle");
+            DisplayName.SetDefault("Abominationn Sickle");
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 48;
-            projectile.height = 48;
+            projectile.width = 40;
+            projectile.height = 40;
             projectile.alpha = 100;
-            projectile.light = 0.2f;
             projectile.hostile = true;
-            projectile.timeLeft = 240;
+            projectile.timeLeft = 300;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.aiStyle = -1;
+            projectile.penetrate = -1;
             cooldownSlot = 1;
         }
 
@@ -51,15 +51,6 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             return Color.White;
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
-        {
-            if (NPCs.FargoSoulsGlobalNPC.BossIsAlive(ref NPCs.FargoSoulsGlobalNPC.mutantBoss, mod.NPCType("MutantBoss")))
-                target.AddBuff(mod.BuffType("MutantFang"), 180);
-            target.AddBuff(mod.BuffType("AbomFang"), 300);
-            target.AddBuff(mod.BuffType("Shadowflame"), 300);
-            target.AddBuff(BuffID.Bleeding, 600);
-        }
-
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture2D13 = Main.projectileTexture[projectile.type];
@@ -82,6 +73,14 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
             return false;
+        }
+
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            target.AddBuff(mod.BuffType("AbomFang"), 300);
+            target.AddBuff(mod.BuffType("Berserked"), 120);
+            target.AddBuff(BuffID.Bleeding, 600);
+            target.AddBuff(BuffID.Cursed, 120);
         }
     }
 }

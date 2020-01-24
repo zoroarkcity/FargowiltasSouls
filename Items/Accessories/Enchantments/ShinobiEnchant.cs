@@ -63,7 +63,8 @@ Summons a pet Gato and Black Cat";
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             //ninja gear
             player.blackBelt = true;
-            player.spikedBoots = 2;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShinobiClimbing))
+                player.spikedBoots = 2;
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShinobiTabi, false))
                 player.dash = 1;
             //tele thru wall

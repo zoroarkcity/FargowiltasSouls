@@ -57,6 +57,33 @@ removed ML's lightning portal spam attack
 ML now shoots lightning bolts from sockets instead
 adjusted spread on ML's nebula laser attack
 halved phantasmal eye horiz speed
+nerfed oceanic maul effect to -15 def, -15% DR
+reduced fish EX health by x2.5
+
+ALL pillar enemies dont count towards shield if you kill them while out of range
+fixed monk dash not being in shadow force
+climbing toggle works
+oceanic maul no longer inflicts -60 defense, -ALL DR
+increased fishron ex arena radius
+fixed(?) stardust ench working on phantasm-like projectiles
+adjusted eoc's x distance after teleport slightly
+destroyer coil now has an arena effect and warning dust
+goblin warriors are kb immune
+fixed dark star cannon's stars not counting as ranged
+adjusted goblins forcing meteor condition
+added monk dash toggle
+flight mastery soul is infinite flight
+halved fish EX and sharkron EX defense
+quartered sharkron EX life
+fishron EX spawns sharknados in p3 slower
+nerfed biome mimic enrage bullet speed and damage
+brain scrambler has 1% chance to drop brain scrambler
+abom doll is now acquired by crafting
+spazmatism no longer breathes when you're dead in p3
+removed enraged mutant from calamity
+destroyer no longer coil enrages at you when dead
+added recipe for deviantt's jungle chest
+adjusted mutant targeting to be seamless if the original target dies in mp(?)
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

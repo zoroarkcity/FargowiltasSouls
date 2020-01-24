@@ -48,6 +48,7 @@ namespace FargowiltasSouls.Projectiles
         private bool squeakyToy = false;
         public int TimeFrozen = 0;
         public bool TimeFreezeImmune;
+        public bool TimeFreezeCheck;
 
         
 
@@ -155,8 +156,6 @@ namespace FargowiltasSouls.Projectiles
             {
                 if (firstTick)
                 {
-                    firstTick = false;
-
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];
@@ -454,7 +453,7 @@ namespace FargowiltasSouls.Projectiles
                 retVal = false;
             }
 
-            if (TimeFrozen > 0)
+            if (TimeFrozen > 0 && !firstTick && !TimeFreezeImmune)
             {
                 projectile.position = projectile.oldPosition;
                 projectile.frameCounter--;
@@ -482,6 +481,9 @@ namespace FargowiltasSouls.Projectiles
                 if (counter >= deathTimer)
                     projectile.Kill();
             }
+
+            if (firstTick)
+                firstTick = false;
 
             return retVal;
         }
@@ -818,10 +820,6 @@ namespace FargowiltasSouls.Projectiles
                     }
                     break;
 
-                case ProjectileID.PhantasmalEye:
-                    projectile.position.X -= projectile.velocity.X / 2;
-                    break;
-
                 #region maso boss scaling (CHECK THAT YOU'RE NOT DOUBLE DIPPING)
 
                 case ProjectileID.CursedFlameHostile: //spaz p3 balls are already scaled
@@ -954,13 +952,14 @@ namespace FargowiltasSouls.Projectiles
                         projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.MoonlordCount * .0125));
                     }
                     break;
-                case ProjectileID.PhantasmalEye: //also spawned w/ scaling by cultist
+                case ProjectileID.PhantasmalEye:
                     if (FargoSoulsWorld.MasochistMode && !masobool)
                     {
                         masobool = true;
                         if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.moonBoss, NPCID.MoonLordCore))
                             projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.MoonlordCount * .0125));
                     }
+                    projectile.position.X -= projectile.velocity.X / 2;
                     break;
 
                 #endregion
@@ -1111,6 +1110,13 @@ namespace FargowiltasSouls.Projectiles
 
         public override void PostAI(Projectile projectile)
         {
+            if (!TimeFreezeCheck)
+            {
+                TimeFreezeCheck = true;
+                if (projectile.whoAmI == Main.player[projectile.owner].heldProj)
+                    TimeFreezeImmune = true;
+            }
+
             if (projectile.hostile && projectile.damage > 0 && Main.LocalPlayer.active && !Main.LocalPlayer.dead) //graze
             {
                 FargoPlayer fargoPlayer = Main.LocalPlayer.GetModPlayer<FargoPlayer>();

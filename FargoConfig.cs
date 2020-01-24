@@ -236,6 +236,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool ShadowDarkness;
 
+        [Label("$Mods.FargowiltasSouls.MonkConfig")]
+        [DefaultValue(true)]
+        public bool MonkDash;
+
         [Label("$Mods.FargowiltasSouls.ShinobiConfig")]
         [DefaultValue(true)]
         public bool ShinobiWalls;

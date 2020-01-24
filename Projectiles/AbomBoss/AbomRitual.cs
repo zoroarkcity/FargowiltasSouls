@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
@@ -13,7 +14,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         private const float PI = (float)Math.PI;
         private const float rotationPerTick = PI / 140f;
-        private const float threshold = 1200f;
+        private const float threshold = 1400f;
 
         public override void SetStaticDefaults()
         {
@@ -22,11 +23,12 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         public override void SetDefaults()
         {
-            projectile.width = 46;
-            projectile.height = 46;
+            projectile.width = 42;
+            projectile.height = 42;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.alpha = 255;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
         }
 
         public override void AI()
@@ -39,8 +41,16 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 if (projectile.alpha < 0)
                     projectile.alpha = 0;
 
-                projectile.velocity = Main.npc[ai1].Center - projectile.Center;
-                projectile.velocity /= 60f;
+                if (Main.npc[ai1].ai[0] < 9)
+                {
+                    projectile.velocity = Main.npc[ai1].Center - projectile.Center;
+                    if (Main.npc[ai1].ai[0] != 8) //snaps directly to abom when preparing for p2 attack
+                        projectile.velocity /= 40f;
+                }
+                else //remains still in higher AIs
+                {
+                    projectile.velocity = Vector2.Zero;
+                }
 
                 Player player = Main.player[Main.myPlayer];
                 if (player.active && !player.dead)
@@ -51,8 +61,10 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                         int hitDirection = projectile.Center.X > player.Center.X ? 1 : -1;
                         player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, projectile.whoAmI),
                             projectile.damage, hitDirection, false, false, false, 0);
-                        player.AddBuff(mod.BuffType("CurseoftheMoon"), 600);
-                        player.AddBuff(mod.BuffType("MutantFang"), 180);
+                        player.AddBuff(mod.BuffType("AbomFang"), 300);
+                        player.AddBuff(mod.BuffType("Unstable"), 240);
+                        player.AddBuff(mod.BuffType("Berserked"), 120);
+                        player.AddBuff(BuffID.Bleeding, 600);
                     }
                     if (distance > threshold && distance < threshold * 5f)
                     {
@@ -75,9 +87,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
                         for (int i = 0; i < 20; i++)
                         {
-                            int d = Dust.NewDust(player.position, player.width, player.height, 87, 0f, 0f, 0, default(Color), 2.5f);
+                            int d = Dust.NewDust(player.position, player.width, player.height, 87, 0f, 0f, 0, default(Color), 2f);
                             Main.dust[d].noGravity = true;
-                            Main.dust[d].noLight = true;
                             Main.dust[d].velocity *= 5f;
                         }
                     }
@@ -103,14 +114,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 projectile.netUpdate = true;
             }
 
-            projectile.frameCounter++;
-            if (projectile.frameCounter >= 6)
-            {
-                projectile.frameCounter = 0;
-                projectile.frame++;
-                if (projectile.frame > 1)
-                    projectile.frame = 0;
-            }
+            projectile.rotation += 0.5f;
         }
 
         public override bool CanDamage()

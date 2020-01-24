@@ -239,9 +239,7 @@ namespace FargowiltasSouls
                 case TileID.ShadowOrbs:
                     if (FargoSoulsWorld.MasochistMode)
                     {
-                        if (!WorldGen.shadowOrbSmashed && !NPC.downedGoblins)
-                            FargoSoulsWorld.forceMeteor = true;
-
+                        //if (!WorldGen.shadowOrbSmashed && !NPC.downedGoblins) FargoSoulsWorld.forceMeteor = true;
                         if (Main.invasionType == 0 && !NPC.downedGoblins && WorldGen.shadowOrbSmashed) //force goblins
                         {
                             int p = Player.FindClosest(new Vector2(i * 16, j * 16), 0, 0);
