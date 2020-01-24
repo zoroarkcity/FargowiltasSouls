@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 45;
+            item.damage = 100;
             item.width = 30;
             item.height = 10;
             item.value = Item.sellPrice(0, 10);
@@ -30,7 +30,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.knockBack = 6f;
             item.noUseGraphic = true;
             item.shoot = mod.ProjectileType("MechFlail");
-            item.shootSpeed = 25f;
+            item.shootSpeed = 50f;
             item.UseSound = SoundID.Item1;
             item.melee = true;
         }
@@ -42,6 +42,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 ModRecipe recipe = new ModRecipe(mod);
                 recipe.AddIngredient(null, "EyeFlail");
                 recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerEye"));
+                recipe.AddIngredient(null, "MutatingEnergy", 10);
                 recipe.AddTile(TileID.MythrilAnvil);
                 recipe.SetResult(this);
                 recipe.AddRecipe();

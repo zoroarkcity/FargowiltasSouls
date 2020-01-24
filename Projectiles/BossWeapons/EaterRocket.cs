@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Player owner = Main.player[projectile.owner];
             float dist = Vector2.Distance(target.Center, owner.Center);
 
-            if (dist > 300 && dist < 400)
+            if (dist > 300 && dist < 500)
             {
                 damage *= 2;
                 crit = true;

@@ -18,12 +18,12 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 48;
+            item.damage = 54;
             item.ranged = true;
             item.width = 24;
             item.height = 24;
-            item.useTime = 8;
-            item.useAnimation = 8;
+            item.useTime = 6;
+            item.useAnimation = 6;
             item.useStyle = 5;
             item.noMelee = true;
             item.knockBack = 1.5f;
@@ -85,6 +85,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 ModRecipe recipe = new ModRecipe(mod);
                 recipe.AddIngredient(null, "HiveStaff");
                 recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerBee"));
+                recipe.AddIngredient(null, "MutatingEnergy", 10);
                 recipe.AddTile(TileID.MythrilAnvil);
                 recipe.SetResult(this);
                 recipe.AddRecipe();
