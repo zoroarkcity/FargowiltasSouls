@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.knockBack = 3;
             item.rare = 11;
             item.UseSound = SoundID.Item44;
-            item.shoot = mod.ProjectileType("BigBrain");
+            item.shoot = mod.ProjectileType("BigBrainProj");
             item.shootSpeed = 10f;
             item.buffType = mod.BuffType("BigBrainMinion");
             item.autoReuse = true;
