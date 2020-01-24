@@ -11,6 +11,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
     public class AbomDeathray : ModProjectile
     {
         private const float maxTime = 120;
+        private Vector2 spawnPos;
 
         public override void SetStaticDefaults()
 		{
@@ -58,7 +59,13 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             if (projectile.localAI[0] == 0f)
             {
                 Main.PlaySound(29, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
+                spawnPos = projectile.Center;
             }
+            else //vibrate beam
+            {
+                projectile.Center = spawnPos + Main.rand.NextVector2Circular(5, 5);
+            }
+
             float num801 = 5f;
             projectile.localAI[0] += 1f;
             if (projectile.localAI[0] >= maxTime)
