@@ -1,5 +1,6 @@
 NEW UPDATE - v 1.1.2
 -eater of worlds has a limit to eaters spawned
+-added sprites for mutant antibodies, reinforced plating, and bionmic cluster
 
 
 -See the full changelog on the wiki
