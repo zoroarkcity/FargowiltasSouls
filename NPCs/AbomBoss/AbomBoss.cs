@@ -499,10 +499,10 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                                 if (npc.localAI[3] > 1) //p2 shoots to either side of you
                                 {
                                     Vector2 speed = 16f * npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
-                                    Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(30)), mod.ProjectileType("AbomLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(25)), mod.ProjectileType("AbomLaser"), npc.damage / 4, 0f, Main.myPlayer);
 
                                     speed = 16f * npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
-                                    Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(-30)), mod.ProjectileType("AbomLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(-25)), mod.ProjectileType("AbomLaser"), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                                 else //p1 shoots directly
                                 {
