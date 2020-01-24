@@ -9,12 +9,11 @@ namespace FargowiltasSouls.NPCs
 {
     public class CreeperGutted : ModNPC
     {
-        public override string Texture => "Terraria/NPC_267";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Creeper");
             DisplayName.AddTranslation(GameCulture.Chinese, "爬行者");
+            Main.npcFrameCount[npc.type] = 3;
         }
 
         public override void SetDefaults()
@@ -92,6 +91,16 @@ namespace FargowiltasSouls.NPCs
             }
 
             npc.position += player.position - player.oldPosition;
+        }
+
+        public override void FindFrame(int frameHeight)
+        {
+            if (npc.ai[2] <= 1)
+                npc.frame.Y = 0;
+            else if (npc.ai[2] <= 2)
+                npc.frame.Y = frameHeight;
+            else
+                npc.frame.Y = frameHeight * 2;
         }
 
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

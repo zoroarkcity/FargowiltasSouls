@@ -183,6 +183,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool ChlorophyteCrystals;
 
+        [Label("$Mods.FargowiltasSouls.ChlorophyteFlowerConfig")]
+        [DefaultValue(true)]
+        public bool ChlorophyteFlowerBoots;
+
         [Label("$Mods.FargowiltasSouls.CrimsonConfig")]
         [DefaultValue(true)]
         public bool CrimsonRegen;
@@ -198,6 +202,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.MoltenConfig")]
         [DefaultValue(true)]
         public bool MoltenInferno;
+
+        [Label("$Mods.FargowiltasSouls.MoltenEConfig")]
+        [DefaultValue(true)]
+        public bool MoltenExplosion;
 
         [Label("$Mods.FargowiltasSouls.RainConfig")]
         [DefaultValue(true)]

@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Projectiles
             projectile.friendly = true;
             projectile.thrown = true;
             projectile.penetrate = -1;
-            projectile.timeLeft = 10;
+            projectile.timeLeft = 2;
             projectile.tileCollide = false;
             projectile.light = 0.75f;
             projectile.ignoreWater = true;
