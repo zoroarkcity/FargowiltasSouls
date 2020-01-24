@@ -3107,53 +3107,56 @@ namespace FargowiltasSouls
         {
             bool retVal = true;
 
-            if (MutantSetBonus && player.whoAmI == Main.myPlayer && retVal && player.FindBuffIndex(mod.BuffType("MutantRebirth")) == -1)
+            if (player.statLife <= 0) //revives
             {
-                player.statLife = player.statLifeMax2;
-                player.HealEffect(player.statLifeMax2);
-                player.immune = true;
-                player.immuneTime = player.longInvince ? 180 : 120;
-                Main.NewText("You've been revived!", Color.LimeGreen);
-                player.ClearBuff(mod.BuffType("MutantFang"));
-                player.buffImmune[mod.BuffType("MutantFang")] = true;
-                player.AddBuff(mod.BuffType("MutantRebirth"), 7200);
-                Projectile.NewProjectile(player.Center, -Vector2.UnitY, mod.ProjectileType("GiantDeathray"), (int)(7000 * player.minionDamage), 10f, player.whoAmI);
-                retVal = false;
-            }
-
-            if (player.whoAmI == Main.myPlayer && retVal && player.FindBuffIndex(mod.BuffType("Revived")) == -1)
-            {
-                if(Eternity)
+                if (MutantSetBonus && player.whoAmI == Main.myPlayer && retVal && player.FindBuffIndex(mod.BuffType("MutantRebirth")) == -1)
                 {
                     player.statLife = player.statLifeMax2;
                     player.HealEffect(player.statLifeMax2);
                     player.immune = true;
                     player.immuneTime = player.longInvince ? 180 : 120;
-                    Main.NewText("You've been revived!", 175, 75);
-                    player.AddBuff(mod.BuffType("Revived"), 7200);
+                    Main.NewText("You've been revived!", Color.LimeGreen);
+                    player.ClearBuff(mod.BuffType("MutantFang"));
+                    player.buffImmune[mod.BuffType("MutantFang")] = true;
+                    player.AddBuff(mod.BuffType("MutantRebirth"), 7200);
+                    Projectile.NewProjectile(player.Center, -Vector2.UnitY, mod.ProjectileType("GiantDeathray"), (int)(7000 * player.minionDamage), 10f, player.whoAmI);
                     retVal = false;
                 }
-                else if (TerrariaSoul)
+
+                if (player.whoAmI == Main.myPlayer && retVal && player.FindBuffIndex(mod.BuffType("Revived")) == -1)
                 {
-                    player.statLife = 200;
-                    player.HealEffect(200);
-                    player.immune = true;
-                    player.immuneTime = player.longInvince ? 180 : 120;
-                    Main.NewText("You've been revived!", 175, 75);
-                    player.AddBuff(mod.BuffType("Revived"), 14400);
-                    retVal = false;
-                }
-                else if (FossilEnchant)
-                {
-                    int heal = SpiritForce ? 100 : 20;
-                    player.statLife = heal;
-                    player.HealEffect(heal);
-                    player.immune = true;
-                    player.immuneTime = player.longInvince ? 300 : 200;
-                    FossilBones = true;
-                    Main.NewText("You've been revived!", 175, 75);
-                    player.AddBuff(mod.BuffType("Revived"), 18000);
-                    retVal = false;
+                    if (Eternity)
+                    {
+                        player.statLife = player.statLifeMax2;
+                        player.HealEffect(player.statLifeMax2);
+                        player.immune = true;
+                        player.immuneTime = player.longInvince ? 180 : 120;
+                        Main.NewText("You've been revived!", 175, 75);
+                        player.AddBuff(mod.BuffType("Revived"), 7200);
+                        retVal = false;
+                    }
+                    else if (TerrariaSoul)
+                    {
+                        player.statLife = 200;
+                        player.HealEffect(200);
+                        player.immune = true;
+                        player.immuneTime = player.longInvince ? 180 : 120;
+                        Main.NewText("You've been revived!", 175, 75);
+                        player.AddBuff(mod.BuffType("Revived"), 14400);
+                        retVal = false;
+                    }
+                    else if (FossilEnchant)
+                    {
+                        int heal = SpiritForce ? 100 : 20;
+                        player.statLife = heal;
+                        player.HealEffect(heal);
+                        player.immune = true;
+                        player.immuneTime = player.longInvince ? 300 : 200;
+                        FossilBones = true;
+                        Main.NewText("You've been revived!", 175, 75);
+                        player.AddBuff(mod.BuffType("Revived"), 18000);
+                        retVal = false;
+                    }
                 }
             }
             
