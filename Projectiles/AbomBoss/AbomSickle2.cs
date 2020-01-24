@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             projectile.height = 40;
             projectile.alpha = 100;
             projectile.hostile = true;
-            projectile.timeLeft = 360;
+            projectile.timeLeft = 240;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.aiStyle = -1;
