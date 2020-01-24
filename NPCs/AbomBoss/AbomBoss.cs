@@ -582,6 +582,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 9: //beginning of scythe rows and deathray rain
+                    if (!AliveCheck(player))
+                        break;
                     npc.velocity = Vector2.Zero;
                     npc.localAI[2] = 0;
                     if (++npc.ai[1] == 1)
@@ -606,8 +608,6 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     }
                     else if (npc.ai[1] > 61 + 330)
                     {
-                        if (!AliveCheck(player))
-                            break;
                         npc.netUpdate = true;
                         npc.ai[0]++;
                         npc.ai[1] = 0;
@@ -662,8 +662,6 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     }
                     if (++npc.ai[1] > 2400 / 20f)
                     {
-                        if (!AliveCheck(player))
-                            break;
                         npc.netUpdate = true;
                         npc.velocity.X = npc.ai[2] * 18f;
                         npc.ai[0]++;
@@ -674,6 +672,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 12: //prepare for next deathrain
+                    if (!AliveCheck(player))
+                        break;
                     npc.velocity.Y = 0f;
                     for (int i = 0; i < 5; i++) //make warning dust
                     {
@@ -685,8 +685,6 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     npc.ai[3] += npc.velocity.Length();
                     if (++npc.ai[1] > 180)
                     {
-                        if (!AliveCheck(player))
-                            break;
                         Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         npc.netUpdate = true;
                         npc.ai[0]++;
@@ -710,8 +708,6 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     }
                     if (++npc.ai[1] > 2400 / 20f)
                     {
-                        if (!AliveCheck(player))
-                            break;
                         npc.netUpdate = true;
                         npc.velocity.X = npc.ai[2] * -18f;
                         npc.ai[0]++;
