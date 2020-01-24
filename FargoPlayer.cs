@@ -1505,8 +1505,8 @@ namespace FargowiltasSouls
 
                     Vector2 offset2 = new Vector2();
                     double angle2 = Main.rand.NextDouble() * 2d * Math.PI;
-                    offset2.X += (float)(Math.Sin(angle2) * 400);
-                    offset2.Y += (float)(Math.Cos(angle2) * 400);
+                    offset2.X += (float)(Math.Sin(angle2) * 500);
+                    offset2.Y += (float)(Math.Cos(angle2) * 500);
                     Dust dust2 = Main.dust[Dust.NewDust(
                         player.Center + offset2 - new Vector2(4, 4), 0, 0,
                         DustID.PurpleCrystalShard, 0, 0, 100, Color.White, 1f

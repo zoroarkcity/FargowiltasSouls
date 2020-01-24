@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 40; //
+            item.damage = 68; //
             item.ranged = true;
             item.width = 24; 
             item.height = 24; 
@@ -58,6 +58,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
                 recipe.AddIngredient(mod.ItemType("EaterStaff"));
                 recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerWorm"));
+                recipe.AddIngredient(null, "MutatingEnergy", 10);
 
                 recipe.AddTile(TileID.MythrilAnvil);
                 recipe.SetResult(this);

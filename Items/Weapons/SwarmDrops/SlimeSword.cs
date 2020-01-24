@@ -18,12 +18,12 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 30;
+            item.damage = 84;
             item.melee = true;
             item.width = 40;
             item.height = 40;
-            item.useTime = 15;
-            item.useAnimation = 15;
+            item.useTime = 12;
+            item.useAnimation = 12;
             item.useStyle = 1;
             item.knockBack = 6;
             item.value = 50000;
@@ -36,10 +36,10 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockback)
         {
-            int numberProjectiles = 2 + Main.rand.Next(5); // 2 to 6 shots
+            int numberProjectiles = 5 + Main.rand.Next(6); // 5 to 10 shots
             for (int i = 0; i < numberProjectiles; i++)
             {
-                Vector2 velocity = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(45)); // 45 degree spread.
+                Vector2 velocity = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(20)); // 20 degree spread.
                 Projectile.NewProjectile(position.X, position.Y, velocity.X, velocity.Y, type, damage / 2, knockback, player.whoAmI);
             }
 
@@ -58,6 +58,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 ModRecipe recipe = new ModRecipe(mod);
                 recipe.AddIngredient(null, "SlimeKingsSlasher");
                 recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerSlime"));
+                recipe.AddIngredient(null, "MutatingEnergy", 10);
                 recipe.AddTile(TileID.MythrilAnvil);
                 recipe.SetResult(this);
                 recipe.AddRecipe();

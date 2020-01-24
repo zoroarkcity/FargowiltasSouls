@@ -14,6 +14,48 @@ namespace FargowiltasSouls
         public override ConfigScope Mode => ConfigScope.ClientSide;
         public static SoulConfig Instance;
 
+        /*//[Header("$Mods.FargowiltasSouls.WoodHeader")]
+        [Label("Toggle All On")]
+        public bool PresetA
+        {
+            get => false;
+            set
+            {
+                if (value)
+                {
+                    BorealSnowballs = true;
+                    EbonwoodAura = true;
+                    ShadewoodEffect = true;
+                    MahoganyHook = true;
+                    PalmwoodSentry = true;
+                    PearlwoodStars = true;
+                }
+            }
+        }
+
+        [Label("Toggle All Off")]
+        public bool PresetB
+        {
+            get => false;
+            set
+            {
+                if (value)
+                {
+                    BorealSnowballs = false;
+                    EbonwoodAura = false;
+                    ShadewoodEffect = false;
+                    MahoganyHook = false;
+                    PalmwoodSentry = false;
+                    PearlwoodStars = false;
+                }
+            }
+        }*/
+
+
+
+
+
+
         [Header("$Mods.FargowiltasSouls.WoodHeader")]
         [Label("$Mods.FargowiltasSouls.BorealConfig")]
         [DefaultValue(true)]
