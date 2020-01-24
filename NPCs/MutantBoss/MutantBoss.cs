@@ -46,10 +46,10 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             npc.buffImmune[mod.BuffType("OceanicMaul")] = true;
             npc.buffImmune[mod.BuffType("TimeFrozen")] = true;
             npc.timeLeft = NPC.activeTime * 30;
-            if (FargoSoulsWorld.AngryMutant)
+            if (FargoSoulsWorld.AngryMutant || Fargowiltas.Instance.CalamityLoaded)
             {
                 npc.lifeMax = 377000000;
-                npc.damage *= 2;
+                npc.damage = (int)(npc.damage * 1.5);
                 npc.defense *= 10;
                 if (Fargowiltas.Instance.CalamityLoaded)
                 {
