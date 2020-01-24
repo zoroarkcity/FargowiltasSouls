@@ -31,6 +31,7 @@ namespace FargowiltasSouls
         //minions
         public bool BrainMinion;
         public bool EaterMinion;
+        public bool BigBrainMinion;
 
         //pet
         public bool RoombaPet;
@@ -471,6 +472,7 @@ namespace FargowiltasSouls
 
             BrainMinion = false;
             EaterMinion = false;
+            BigBrainMinion = false;
 
             RoombaPet = false;
 

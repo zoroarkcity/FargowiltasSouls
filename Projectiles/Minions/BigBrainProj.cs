@@ -5,11 +5,11 @@ using Terraria.ID;
 
 namespace FargowiltasSouls.Projectiles.Minions
 {
-    public class BrainProj : HoverShooter
+    public class BigBrainProj : HoverShooter
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Brain Proj");
+            DisplayName.SetDefault("Big Brain Proj");
         }
 
         public override void SetDefaults()
@@ -30,16 +30,52 @@ namespace FargowiltasSouls.Projectiles.Minions
             ProjectileID.Sets.Homing[projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[base.projectile.type] = true;
             Inertia = 20f;
-            Shoot = mod.ProjectileType("CreeperProj");
+            Shoot = mod.ProjectileType("CreeperProj2");
             ShootSpeed = 12f; // 
+
+            projectile.scale = 1.5f;
+            ChaseAccel = 9f;
+            ViewDist = 1000;
+        }
+
+        public override void AI()
+        {
+            base.AI();
+            if (projectile.ai[1] == (int)ShootCool / 2 && Main.myPlayer == projectile.owner)
+            {
+                float maxDistance = ViewDist;
+                int possibleTarget = -1;
+                for (int i = 0; i < 200; i++)
+                {
+                    NPC npc = Main.npc[i];
+                    if (npc.CanBeChasedBy(projectile))// && Collision.CanHitLine(projectile.Center, 0, 0, npc.Center, 0, 0))
+                    {
+                        float npcDistance = projectile.Distance(npc.Center);
+                        if (npcDistance < maxDistance)
+                        {
+                            maxDistance = npcDistance;
+                            possibleTarget = i;
+                        }
+                    }
+                }
+
+                NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
+                if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile))
+                    possibleTarget = minionAttackTargetNpc.whoAmI;
+
+                if (possibleTarget != 1) //got a target
+                {
+                    Projectile.NewProjectile(projectile.Center, projectile.DirectionTo(Main.npc[possibleTarget].Center) * 18, mod.ProjectileType("BigBrainIllusion"), projectile.damage, projectile.knockBack, projectile.owner, 0, -1);
+                }
+            }
         }
 
         public override void CheckActive()
         {
             Player player = Main.player[projectile.owner];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            if (player.dead) modPlayer.BrainMinion = false;
-            if (modPlayer.BrainMinion) projectile.timeLeft = 2;
+            if (player.dead) modPlayer.BigBrainMinion = false;
+            if (modPlayer.BigBrainMinion) projectile.timeLeft = 2;
         }
 
         public override void CreateDust()
