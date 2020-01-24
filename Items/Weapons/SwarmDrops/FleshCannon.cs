@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.value = Item.sellPrice(0, 10);
             item.rare = 11;
             item.autoReuse = true;
-            item.shoot = ProjectileID.PurpleLaser;
+            item.shoot = mod.ProjectileType("FleshLaser");
             item.shootSpeed = 18f;
         }   
 
