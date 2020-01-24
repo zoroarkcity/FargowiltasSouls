@@ -648,8 +648,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
                 case 11: //dash and make deathrays
                     npc.localAI[2] = 0;
-                    npc.velocity.X = npc.ai[2] * 20f;
-                    MovementY(player.Center.Y - 200, 0.7f);
+                    npc.velocity.X = npc.ai[2] * 21f;
+                    MovementY(player.Center.Y - 250, 0.7f);
                     if (++npc.ai[3] > 5)
                     {
                         npc.ai[3] = 0;
@@ -660,7 +660,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             Projectile.NewProjectile(npc.Center, -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(20) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage * 3 / 8, 0f, Main.myPlayer);
                         }
                     }
-                    if (++npc.ai[1] > 2400 / 20f)
+                    if (++npc.ai[1] > 2400 / 21f)
                     {
                         npc.netUpdate = true;
                         npc.velocity.X = npc.ai[2] * 18f;
@@ -694,8 +694,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 13: //second deathray dash
-                    npc.velocity.X = npc.ai[2] * -20f;
-                    MovementY(player.Center.Y - 200, 0.7f);
+                    npc.velocity.X = npc.ai[2] * -21f;
+                    MovementY(player.Center.Y - 250, 0.7f);
                     if (++npc.ai[3] > 5)
                     {
                         npc.ai[3] = 0;
@@ -706,7 +706,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             Projectile.NewProjectile(npc.Center, -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(20) * (Main.rand.NextDouble() - 0.5)), mod.ProjectileType("AbomDeathrayMark"), npc.damage * 3 / 8, 0f, Main.myPlayer);
                         }
                     }
-                    if (++npc.ai[1] > 2400 / 20f)
+                    if (++npc.ai[1] > 2400 / 21f)
                     {
                         npc.netUpdate = true;
                         npc.velocity.X = npc.ai[2] * -18f;
