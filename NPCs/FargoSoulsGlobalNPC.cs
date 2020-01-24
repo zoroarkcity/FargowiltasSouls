@@ -1225,7 +1225,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.FaceMonster:
-                        Aura(npc, 300, BuffID.Obstructed, false, 199);
+                        Aura(npc, 200, BuffID.Obstructed, false, 199);
                         break;
 
                     case NPCID.IlluminantBat:
