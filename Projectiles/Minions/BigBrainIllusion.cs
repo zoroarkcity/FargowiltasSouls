@@ -8,6 +8,8 @@ namespace FargowiltasSouls.Projectiles.Minions
 {
     public class BigBrainIllusion : ModProjectile
     {
+        public override string Texture => "FargowiltasSouls/Projectiles/Minions/BigBrainIllusion";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Big Brain");
