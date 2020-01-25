@@ -4113,7 +4113,7 @@ namespace FargowiltasSouls
 
         public void NebulaEffect()
         {
-            if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.NebulaBoost)) return;
+            if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.NebulaBoost, false)) return;
 
             if (player.nebulaCD > 0)
                 player.nebulaCD--;

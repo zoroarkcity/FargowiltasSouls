@@ -28,7 +28,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.height = 120;
             npc.damage = 300;
             npc.defense = 60;
-            npc.lifeMax = 1400000;
+            npc.lifeMax = 2000000;
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -158,9 +158,9 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     npc.velocity *= 0.9f;
                     for (int i = 0; i < 5; i++)
                     {
-                        int d = Dust.NewDust(npc.position, npc.width, npc.height, 87, 0f, 0f, 0, default(Color), 1.5f);
+                        int d = Dust.NewDust(npc.position, npc.width, npc.height, 87, 0f, 0f, 0, default(Color), 2.5f);
                         Main.dust[d].noGravity = true;
-                        Main.dust[d].velocity *= 4f;
+                        Main.dust[d].velocity *= 12f;
                     }
                     if (++npc.ai[1] > 180)
                     {
@@ -192,10 +192,10 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         Main.dust[d].noGravity = true;
                         Main.dust[d].velocity *= 4f;
                     }
-                    if (++npc.ai[1] > 180)
+                    if (++npc.ai[1] > 120)
                     {
                         npc.netUpdate = true;
-                        npc.ai[0] = 9;
+                        npc.ai[0] = 15;
                         npc.ai[1] = 0;
                     }
                     break;
@@ -809,7 +809,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     targetPos = player.Center + player.DirectionTo(npc.Center) * 500;
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.7f);
-                    if (++npc.ai[1] > 120)
+                    if (++npc.ai[1] > 120 || (npc.dontTakeDamage && npc.ai[1] > 30))
                     {
                         npc.netUpdate = true;
                         npc.ai[0] -= 2;
@@ -845,7 +845,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     }
                     targetPos = new Vector2(npc.ai[2], npc.ai[3]);
                     Movement(targetPos, 0.7f);
-                    if (++npc.ai[1] > 210)
+                    if (++npc.ai[1] > 210 || (npc.dontTakeDamage && npc.ai[1] > 150))
                     {
                         if (Main.netMode != 1)
                             Projectile.NewProjectile(npc.Center, Vector2.UnitX * npc.localAI[2], mod.ProjectileType("AbomSword"), npc.damage * 3 / 8, 0f, Main.myPlayer, npc.localAI[2] * 0.0001f, npc.whoAmI);
@@ -858,7 +858,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.ai[3] = 0;
                         npc.localAI[2] = 0;
                     }
-                    else if (npc.ai[1] == 180)
+                    else if (npc.ai[1] == 180 || (npc.dontTakeDamage && npc.ai[1] == 120))
                     {
                         Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         if (Main.netMode != 1)
@@ -890,6 +890,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 21: //wait for scythes to clear
+                    if (!AliveCheck(player))
+                        break;
                     targetPos = player.Center;
                     targetPos.X += 500 * (npc.Center.X < targetPos.X ? -1 : 1);
                     if (npc.Distance(targetPos) > 50)
@@ -1104,7 +1106,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             }
             if (Main.netMode != 1 && npc.ai[0] > -2)
             {
-                npc.ai[0] = -2;
+                npc.ai[0] = -3;
                 npc.ai[1] = 0;
                 npc.ai[2] = 0;
                 npc.ai[3] = 0;
