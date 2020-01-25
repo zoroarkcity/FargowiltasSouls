@@ -153,6 +153,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             switch ((int)npc.ai[0])
             {
                 case -3: //ACTUALLY dead
+                    if (!AliveCheck(player))
+                        break;
                     npc.velocity *= 0.9f;
                     for (int i = 0; i < 5; i++)
                     {
@@ -181,6 +183,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case -2: //dead, begin last stand
+                    if (!AliveCheck(player))
+                        break;
                     npc.velocity *= 0.9f;
                     for (int i = 0; i < 5; i++)
                     {
