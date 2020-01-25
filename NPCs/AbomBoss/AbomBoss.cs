@@ -595,12 +595,12 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             if (npc.localAI[1] == 0)
                             {
                                 npc.localAI[1] = 1;
-                                npc.ai[0]++;
+                                npc.ai[0] = 15;
                             }
                             else
                             {
                                 npc.localAI[1] = 0;
-                                npc.ai[0] = 15;
+                                npc.ai[0]++;
                             }
                         }
                         else //still in p1
