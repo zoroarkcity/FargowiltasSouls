@@ -47,27 +47,16 @@ namespace FargowiltasSouls.Projectiles.Minions
                 NPC npc = Main.npc[(int)projectile.ai[0]];
                 if (npc.CanBeChasedBy(projectile))
                 {
-                    Vector2 targetPos = npc.Center + projectile.DirectionFrom(npc.Center) * 300;
-                    Vector2 direction = targetPos - projectile.Center;
-
-                    float Inertia = 40;
-                    float ChaseAccel = 60;
-
-                    if (direction.Length() > 200)
+                    if (projectile.Distance(npc.Center) > 300)
                     {
-                        direction.Normalize();
-                        projectile.velocity = (projectile.velocity * Inertia + direction * ChaseAccel) / (Inertia + 1);
-                    }
-                    else
-                    {
-                        projectile.velocity *= (float)Math.Pow(0.97, 40.0 / Inertia);
+                        Movement(npc.Center, 0.5f);
                     }
 
                     if (++projectile.localAI[0] > 100)
                     {
                         projectile.localAI[0] = 0;
                         if (projectile.owner == Main.myPlayer)
-                            Projectile.NewProjectile(projectile.Center, projectile.DirectionTo(npc.Center) * 12, mod.ProjectileType("CreeperProj2"), projectile.damage, projectile.knockBack, projectile.owner, 0, projectile.ai[0]);
+                            Projectile.NewProjectile(projectile.Center, projectile.DirectionTo(npc.Center) * 16, mod.ProjectileType("CreeperProj2"), projectile.damage, projectile.knockBack, projectile.owner, 0, projectile.ai[0]);
                     }
 
                     if (++projectile.localAI[1] > 35)

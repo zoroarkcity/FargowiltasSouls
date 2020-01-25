@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 84;
+            item.damage = 120;
             item.melee = true;
             item.width = 40;
             item.height = 40;
@@ -31,7 +31,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("SlimeBall");
-            item.shootSpeed = 10f;
+            item.shootSpeed = 12f;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockback)
@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             int numberProjectiles = 5 + Main.rand.Next(6); // 5 to 10 shots
             for (int i = 0; i < numberProjectiles; i++)
             {
-                Vector2 velocity = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(20)); // 20 degree spread.
+                Vector2 velocity = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(15)); // 15 degree spread.
                 Projectile.NewProjectile(position.X, position.Y, velocity.X, velocity.Y, type, damage / 2, knockback, player.whoAmI);
             }
 

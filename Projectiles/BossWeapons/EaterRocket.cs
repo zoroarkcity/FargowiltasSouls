@@ -20,6 +20,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.penetrate = 99;
             projectile.timeLeft = 600;
             aiType = ProjectileID.Bullet;
+            projectile.extraUpdates = 1;
         }
 
         public override void AI()
@@ -45,10 +46,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 damage *= 2;
                 crit = true;
-            }
-            else
-            {
-                crit = false;
             }
         }
 

@@ -21,13 +21,13 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 300;
+            item.damage = 310;
             item.magic = true;
             item.mana = 6;
             item.width = 24;
             item.height = 24;
-            item.useTime = 6;
-            item.useAnimation = 6;
+            item.useTime = 8;
+            item.useAnimation = 8;
             item.useStyle = 5;
             item.noMelee = true;
             item.knockBack = 2f;
@@ -43,7 +43,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             Vector2 speed = new Vector2(speedX, speedY);
 
-            const int factor = 5;
+            const int factor = 7;
 
             if (counter == 0) //burp hungy
             {
