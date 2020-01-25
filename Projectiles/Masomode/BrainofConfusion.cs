@@ -13,19 +13,20 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Brain of Confusion"); 
+            DisplayName.SetDefault("Brain of Confusion");
+            Main.projFrames[projectile.type] = 4;
         }
 
         public override void SetDefaults()
         {
             projectile.CloneDefaults(ProjectileID.BrainOfConfusion);
-            projectile.scale = 6f;
+            projectile.scale = 5f;
             aiType = ProjectileID.BrainOfConfusion;
         }
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * 0.5f;
+            return Color.White * 0.7f;
         }
     }
 }

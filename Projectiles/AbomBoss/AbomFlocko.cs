@@ -78,7 +78,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 projectile.localAI[1] = 0f;
                 if (Main.netMode != 1)
                 {
-                    if (Math.Abs(npc.Center.X - projectile.Center.X) > (npc.localAI[3] > 1 ? 300 : 600))
+                    if (Math.Abs(npc.Center.X - projectile.Center.X) > (npc.localAI[3] > 1 ? 300 : 450))
                     {
                         Vector2 speed = new Vector2(Main.rand.Next(-1000, 1001), Main.rand.Next(-1000, 1001));
                         speed.Normalize();

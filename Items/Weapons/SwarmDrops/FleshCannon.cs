@@ -21,33 +21,33 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 100;
+            item.damage = 300;
             item.magic = true;
-            item.mana = 10;
+            item.mana = 6;
             item.width = 24;
             item.height = 24;
-            item.useTime = 8;
-            item.useAnimation = 8;
+            item.useTime = 6;
+            item.useAnimation = 6;
             item.useStyle = 5;
             item.noMelee = true;
             item.knockBack = 2f;
-            item.UseSound = SoundID.Item27;
+            item.UseSound = SoundID.Item12;
             item.value = Item.sellPrice(0, 10);
             item.rare = 11;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("FleshLaser");
-            item.shootSpeed = 18f;
+            item.shoot = ProjectileID.PurpleLaser;
+            item.shootSpeed = 10f;
         }   
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             Vector2 speed = new Vector2(speedX, speedY);
 
-            const int factor = 10;
+            const int factor = 5;
 
             if (counter == 0) //burp hungy
             {
-                int p = Projectile.NewProjectile(position, speed, mod.ProjectileType("Hungry"), damage, knockBack, player.whoAmI);
+                int p = Projectile.NewProjectile(position, speed * 2f, mod.ProjectileType("Hungry"), damage, knockBack, player.whoAmI);
                 if (p != Main.maxProjectiles)
                 {
                     Main.projectile[p].minion = false;
@@ -56,7 +56,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 Main.PlaySound(new LegacySoundStyle(4, 13), position);
             }
 
-            float rotation = MathHelper.ToRadians(30) * (float)Math.Sin(counter * Math.PI / factor);
+            float rotation = MathHelper.ToRadians(10) * (float)Math.Sin((counter + 0.25) * Math.PI / factor);
             Projectile.NewProjectile(position, speed.RotatedBy(rotation), type, damage, knockBack, player.whoAmI);
             Projectile.NewProjectile(position, speed.RotatedBy(-rotation), type, damage, knockBack, player.whoAmI);
 

@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,7 +16,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 35;
+            item.damage = 290;
             item.summon = true;
             item.mana = 10;
             item.width = 26;
@@ -30,13 +31,17 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.shoot = mod.ProjectileType("BigBrainProj");
             item.shootSpeed = 10f;
             item.buffType = mod.BuffType("BigBrainMinion");
+            item.buffTime = 3600;
             item.autoReuse = true;
             item.value = Item.sellPrice(0, 10);
         }
 
-        public override bool CanUseItem(Player player)
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            return player.maxMinions >= 2;
+            player.AddBuff(item.buffType, 2);
+            Vector2 spawnPos = Main.MouseWorld;
+            Projectile.NewProjectile(spawnPos, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, -1);
+            return false;
         }
 
         public override void AddRecipes()

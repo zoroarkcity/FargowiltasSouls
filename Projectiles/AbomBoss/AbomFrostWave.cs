@@ -13,7 +13,6 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frost Wave");
-            Main.projFrames[projectile.type] = 2;
         }
 
         public override void SetDefaults()
@@ -28,18 +27,6 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             projectile.timeLeft = 600;
             projectile.penetrate = -1;
             cooldownSlot = 1;
-        }
-
-        public override void AI()
-        {
-            projectile.frameCounter++;
-            if (projectile.frameCounter > 1)
-            {
-                projectile.frameCounter = 0;
-                projectile.frame++;
-                if (projectile.frame > 1)
-                    projectile.frame = 0;
-            }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

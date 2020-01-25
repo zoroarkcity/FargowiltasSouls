@@ -13,7 +13,6 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frost Wave");
-            Main.projFrames[projectile.type] = 2;
         }
 
         public override void SetDefaults()
@@ -31,18 +30,6 @@ namespace FargowiltasSouls.Projectiles.Minions
 
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 10;
-        }
-
-        public override void AI()
-        {
-            projectile.frameCounter++;
-            if (projectile.frameCounter > 1)
-            {
-                projectile.frameCounter = 0;
-                projectile.frame++;
-                if (projectile.frame > 1)
-                    projectile.frame = 0;
-            }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

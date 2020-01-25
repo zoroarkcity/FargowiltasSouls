@@ -8,11 +8,12 @@ namespace FargowiltasSouls.Projectiles.Minions
 {
     public class BigBrainIllusion : ModProjectile
     {
-        public override string Texture => "FargowiltasSouls/Projectiles/Minions/BigBrainIllusion";
+        public override string Texture => "FargowiltasSouls/Projectiles/Minions/BigBrainProj";
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Big Brain");
+            Main.projFrames[projectile.type] = 11;
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
@@ -21,7 +22,6 @@ namespace FargowiltasSouls.Projectiles.Minions
         {
             projectile.width = 74;
             projectile.height = 70;
-            Main.projFrames[projectile.type] = 11;
             projectile.friendly = true;
             projectile.minion = true;
             projectile.penetrate = -1;
@@ -32,6 +32,7 @@ namespace FargowiltasSouls.Projectiles.Minions
 
             projectile.scale = 1.5f;
             projectile.extraUpdates = 1;
+            projectile.alpha = 125;
         }
 
         public override void AI()
@@ -42,14 +43,17 @@ namespace FargowiltasSouls.Projectiles.Minions
                 Main.PlaySound(SoundID.Item8, projectile.Center);
             }
 
-            Lighting.AddLight((int)(projectile.Center.X / 16f), (int)(projectile.Center.Y / 16f), 0.6f, 0.9f, 0.3f);
-
             projectile.frameCounter++;
             if (projectile.frameCounter >= 8)
             {
                 projectile.frameCounter = 0;
                 projectile.frame = (projectile.frame + 1) % 11;
             }
+        }
+
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White * projectile.Opacity;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

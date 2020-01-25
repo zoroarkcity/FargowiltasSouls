@@ -1,15 +1,18 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.Minions
 {
-    public class BigBrainProj : HoverShooter
+    public class BigBrainProj : ModProjectile
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Big Brain Proj");
+            Main.projFrames[projectile.type] = 11;
         }
 
         public override void SetDefaults()
@@ -17,80 +20,152 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.netImportant = true;
             projectile.width = 74;
             projectile.height = 70;
-            Main.projFrames[projectile.type] = 11;
             projectile.friendly = true;
-            Main.projPet[projectile.type] = true;
             projectile.minion = true;
             projectile.minionSlots = 2;
             projectile.penetrate = -1;
-            projectile.timeLeft = 18000;
+            projectile.timeLeft = 60;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
-            ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-            ProjectileID.Sets.Homing[projectile.type] = true;
-            ProjectileID.Sets.MinionTargettingFeature[base.projectile.type] = true;
-            Inertia = 20f;
-            Shoot = mod.ProjectileType("CreeperProj2");
-            ShootSpeed = 12f; // 
 
             projectile.scale = 1.5f;
-            ChaseAccel = 9f;
-            ViewDist = 1000;
         }
 
         public override void AI()
         {
-            base.AI();
-            if (projectile.ai[1] == (int)ShootCool / 2 && Main.myPlayer == projectile.owner)
-            {
-                float maxDistance = ViewDist;
-                int possibleTarget = -1;
-                for (int i = 0; i < 200; i++)
-                {
-                    NPC npc = Main.npc[i];
-                    if (npc.CanBeChasedBy(projectile))// && Collision.CanHitLine(projectile.Center, 0, 0, npc.Center, 0, 0))
-                    {
-                        float npcDistance = projectile.Distance(npc.Center);
-                        if (npcDistance < maxDistance)
-                        {
-                            maxDistance = npcDistance;
-                            possibleTarget = i;
-                        }
-                    }
-                }
-
-                NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
-                if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile))
-                    possibleTarget = minionAttackTargetNpc.whoAmI;
-
-                if (possibleTarget != 1) //got a target
-                {
-                    Projectile.NewProjectile(projectile.Center, projectile.DirectionTo(Main.npc[possibleTarget].Center) * 18, mod.ProjectileType("BigBrainIllusion"), projectile.damage, projectile.knockBack, projectile.owner, 0, -1);
-                }
-            }
-        }
-
-        public override void CheckActive()
-        {
             Player player = Main.player[projectile.owner];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            if (player.dead) modPlayer.BigBrainMinion = false;
-            if (modPlayer.BigBrainMinion) projectile.timeLeft = 2;
-        }
+            if (player.active && !player.dead && player.GetModPlayer<FargoPlayer>().BigBrainMinion)
+                projectile.timeLeft = 2;
 
-        public override void CreateDust()
-        {
-            Lighting.AddLight((int) (projectile.Center.X / 16f), (int) (projectile.Center.Y / 16f), 0.6f, 0.9f, 0.3f);
-        }
+            if (projectile.ai[0] >= 0 && projectile.ai[0] < 200) //has target
+            {
+                NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
+                if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile))
+                    projectile.ai[0] = minionAttackTargetNpc.whoAmI;
 
-        public override void SelectFrame()
-        {
+                NPC npc = Main.npc[(int)projectile.ai[0]];
+                if (npc.CanBeChasedBy(projectile))
+                {
+                    Vector2 targetPos = npc.Center + projectile.DirectionFrom(npc.Center) * 300;
+                    Vector2 direction = targetPos - projectile.Center;
+
+                    float Inertia = 40;
+                    float ChaseAccel = 60;
+
+                    if (direction.Length() > 200)
+                    {
+                        direction.Normalize();
+                        projectile.velocity = (projectile.velocity * Inertia + direction * ChaseAccel) / (Inertia + 1);
+                    }
+                    else
+                    {
+                        projectile.velocity *= (float)Math.Pow(0.97, 40.0 / Inertia);
+                    }
+
+                    if (++projectile.localAI[0] > 100)
+                    {
+                        projectile.localAI[0] = 0;
+                        if (projectile.owner == Main.myPlayer)
+                            Projectile.NewProjectile(projectile.Center, projectile.DirectionTo(npc.Center) * 12, mod.ProjectileType("CreeperProj2"), projectile.damage, projectile.knockBack, projectile.owner, 0, projectile.ai[0]);
+                    }
+
+                    if (++projectile.localAI[1] > 35)
+                    {
+                        projectile.localAI[1] = 0;
+                        if (projectile.owner == Main.myPlayer)
+                            Projectile.NewProjectile(projectile.Center, projectile.DirectionTo(npc.Center) * 16, mod.ProjectileType("BigBrainIllusion"), projectile.damage, projectile.knockBack, projectile.owner);
+                    }
+                }
+                else //forget target
+                {
+                    projectile.ai[0] = HomeOnTarget();
+                    projectile.netUpdate = true;
+                }
+            }
+            else //no target
+            {
+                Vector2 targetPos = player.Center;
+                if (projectile.Distance(targetPos) > 3000)
+                    projectile.Center = player.Center;
+                else if (projectile.Distance(targetPos) > 300)
+                    Movement(targetPos, 0.5f);
+
+                if (++projectile.localAI[1] > 6)
+                {
+                    projectile.localAI[1] = 0;
+                    projectile.ai[0] = HomeOnTarget();
+                    if (projectile.ai[0] != -1)
+                        projectile.netUpdate = true;
+                }
+            }
+
+            projectile.rotation = projectile.velocity.X * 0.02f;
+
             projectile.frameCounter++;
             if (projectile.frameCounter >= 8)
             {
                 projectile.frameCounter = 0;
                 projectile.frame = (projectile.frame + 1) % 11;
             }
+        }
+
+        private void Movement(Vector2 targetPos, float speedModifier)
+        {
+            if (projectile.Center.X < targetPos.X)
+            {
+                projectile.velocity.X += speedModifier;
+                if (projectile.velocity.X < 0)
+                    projectile.velocity.X += speedModifier * 2;
+            }
+            else
+            {
+                projectile.velocity.X -= speedModifier;
+                if (projectile.velocity.X > 0)
+                    projectile.velocity.X -= speedModifier * 2;
+            }
+            if (projectile.Center.Y < targetPos.Y)
+            {
+                projectile.velocity.Y += speedModifier;
+                if (projectile.velocity.Y < 0)
+                    projectile.velocity.Y += speedModifier * 2;
+            }
+            else
+            {
+                projectile.velocity.Y -= speedModifier;
+                if (projectile.velocity.Y > 0)
+                    projectile.velocity.Y -= speedModifier * 2;
+            }
+            if (Math.Abs(projectile.velocity.X) > 24)
+                projectile.velocity.X = 24 * Math.Sign(projectile.velocity.X);
+            if (Math.Abs(projectile.velocity.Y) > 24)
+                projectile.velocity.Y = 24 * Math.Sign(projectile.velocity.Y);
+        }
+
+        private int HomeOnTarget()
+        {
+            NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
+            if (minionAttackTargetNpc != null && minionAttackTargetNpc.CanBeChasedBy(projectile))
+                return minionAttackTargetNpc.whoAmI;
+
+            const float homingMaximumRangeInPixels = 2000;
+            int selectedTarget = -1;
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC n = Main.npc[i];
+                if (n.CanBeChasedBy(projectile))
+                {
+                    float distance = projectile.Distance(n.Center);
+                    if (distance <= homingMaximumRangeInPixels &&
+                        (
+                            selectedTarget == -1 || //there is no selected target
+                            projectile.Distance(Main.npc[selectedTarget].Center) > distance) //or we are closer to this target than the already selected target
+                    )
+                        selectedTarget = i;
+                }
+            }
+
+            return selectedTarget;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

@@ -16,13 +16,13 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.penetrate = 1;
             projectile.friendly = true;
             projectile.ignoreWater = true;
-            ProjectileID.Sets.Homing[projectile.type] = true;
-            ProjectileID.Sets.MinionShot[projectile.type] = true;
+            //ProjectileID.Sets.Homing[projectile.type] = true;
+            //ProjectileID.Sets.MinionShot[projectile.type] = true;
 
             projectile.minion = true;
+            projectile.timeLeft = 360;
+            projectile.penetrate = 6;
             projectile.extraUpdates = 1;
-            projectile.timeLeft = 600;
-            projectile.penetrate = 3;
         }
 
         public override void AI()
@@ -49,10 +49,10 @@ namespace FargowiltasSouls.Projectiles.Minions
             Main.dust[dust].position.Y = projectile.Center.Y + Main.rand.Next(-2, 3);*/
             Main.dust[dust].noGravity = true;
 
-            if (++projectile.ai[0] > 60)
+            if (--projectile.ai[0] < 0)
             {
                 projectile.netUpdate = true;
-                projectile.ai[0] = 0;
+                projectile.ai[0] = 60;
 
                 float maxDistance = 1500;
                 int possibleTarget = -1;
