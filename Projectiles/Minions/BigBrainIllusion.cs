@@ -51,6 +51,12 @@ namespace FargowiltasSouls.Projectiles.Minions
             }
         }
 
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (!Main.player[projectile.owner].HeldItem.summon)
+                damage /= 4;
+        }
+
         public override Color? GetAlpha(Color lightColor)
         {
             return Color.White * projectile.Opacity;

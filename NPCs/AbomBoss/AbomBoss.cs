@@ -1046,6 +1046,12 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             return true;
         }
 
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (projectile.ranged && projectile.type == ProjectileID.DD2BetsyArrow)
+                damage /= 2;
+        }
+
         public override bool CheckDead()
         {
             npc.life = 1;
