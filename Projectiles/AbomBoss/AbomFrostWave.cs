@@ -29,18 +29,6 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             cooldownSlot = 1;
         }
 
-        public override void AI()
-        {
-            projectile.frameCounter++;
-            if (projectile.frameCounter > 1)
-            {
-                projectile.frameCounter = 0;
-                projectile.frame++;
-                if (projectile.frame > 1)
-                    projectile.frame = 0;
-            }
-        }
-
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(mod.BuffType("AbomFang"), 300);

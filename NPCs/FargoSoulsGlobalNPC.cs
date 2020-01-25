@@ -1225,7 +1225,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.FaceMonster:
-                        Aura(npc, 300, BuffID.Obstructed, false, 199);
+                        Aura(npc, 200, BuffID.Obstructed, false, 199);
                         break;
 
                     case NPCID.IlluminantBat:
@@ -5562,11 +5562,23 @@ namespace FargowiltasSouls.NPCs
                                         NetMessage.SendData(23, -1, -1, null, n);
                                 }
                             }
-                            if (--Counter < 0) //confuse player
+                            if (--Counter < 0) //confusion timer
                             {
                                 Counter = 600;
                                 Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
-                                Projectile.NewProjectile(npc.Center, new Vector2(-5, 0), ProjectileID.BrainOfConfusion, 0, 0, Main.myPlayer);
+                                for (int i = 0; i < 36; i++) //dust ring
+                                {
+                                    Vector2 vector6 = Vector2.UnitY * 12f;
+                                    vector6 = vector6.RotatedBy((i - (36 / 2 - 1)) * 6.28318548f / 36) + npc.Center;
+                                    Vector2 vector7 = vector6 - npc.Center;
+                                    int d = Dust.NewDust(vector6 + vector7, 0, 0, 90, 0f, 0f, 0, default(Color), 3f);
+                                    Main.dust[d].noGravity = true;
+                                    Main.dust[d].velocity = vector7;
+                                }
+                            }
+                            else if (Counter == 540) //inflict confusion after telegraph
+                            {
+                                Projectile.NewProjectile(npc.Center, new Vector2(-10, 0), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
                                 if (npc.Distance(Main.player[Main.myPlayer].Center) < 3000)
                                     Main.player[Main.myPlayer].AddBuff(BuffID.Confused, Main.expertMode && Main.expertDebuffTime > 1 ? 150 : 300);
                             }

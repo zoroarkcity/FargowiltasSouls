@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 84;
+            item.damage = 120;
             item.melee = true;
             item.width = 40;
             item.height = 40;
@@ -27,11 +27,11 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.useStyle = 1;
             item.knockBack = 6;
             item.value = 50000;
-            item.rare = 5;
+            item.rare = 11;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("SlimeBall");
-            item.shootSpeed = 10f;
+            item.shootSpeed = 12f;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockback)
@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             int numberProjectiles = 5 + Main.rand.Next(6); // 5 to 10 shots
             for (int i = 0; i < numberProjectiles; i++)
             {
-                Vector2 velocity = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(20)); // 20 degree spread.
+                Vector2 velocity = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(15)); // 15 degree spread.
                 Projectile.NewProjectile(position.X, position.Y, velocity.X, velocity.Y, type, damage / 2, knockback, player.whoAmI);
             }
 
@@ -58,8 +58,10 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 ModRecipe recipe = new ModRecipe(mod);
                 recipe.AddIngredient(null, "SlimeKingsSlasher");
                 recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerSlime"));
-                recipe.AddIngredient(null, "MutatingEnergy", 10);
-                recipe.AddTile(TileID.MythrilAnvil);
+                recipe.AddIngredient(ItemID.LunarBar, 10);
+                recipe.AddIngredient(null, "LunarCrystal", 5);
+
+                recipe.AddTile(mod, "CrucibleCosmosSheet");
                 recipe.SetResult(this);
                 recipe.AddRecipe();
             }

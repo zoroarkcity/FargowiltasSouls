@@ -32,14 +32,8 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.shoot = mod.ProjectileType("BrainProj");
             item.shootSpeed = 10f;
             item.buffType = mod.BuffType("BrainMinion");
-            item.buffTime = 3600;
             item.autoReuse = true;
             item.value = Item.sellPrice(0, 2);
-        }
-
-        public override bool CanUseItem(Player player)
-        {
-            return player.maxMinions >= 2;
         }
     }
 }

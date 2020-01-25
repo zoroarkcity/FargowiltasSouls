@@ -42,7 +42,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             NPC npc = Main.npc[(int)projectile.ai[0]];
 
             Vector2 target = npc.Center;
-            target.X += 1000 * (float)Math.Sin(2 * Math.PI / 720 * projectile.ai[1]++);
+            target.X += (npc.localAI[3] > 1 ? 1200 : 2000) * (float)Math.Sin(2 * Math.PI / 720 * projectile.ai[1]++);
             target.Y -= 1100;
 
             Vector2 distance = target - projectile.Center;
@@ -72,13 +72,13 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 }
             }*/
             
-            if (++projectile.localAI[0] > 90 && ++projectile.localAI[1] > 6) //spray shards
+            if (++projectile.localAI[0] > 90 && ++projectile.localAI[1] > 5) //spray shards
             {
                 Main.PlaySound(SoundID.Item27, projectile.position);
                 projectile.localAI[1] = 0f;
                 if (Main.netMode != 1)
                 {
-                    if (Math.Abs(npc.Center.X - projectile.Center.X) > 300)
+                    if (Math.Abs(npc.Center.X - projectile.Center.X) > (npc.localAI[3] > 1 ? 300 : 450))
                     {
                         Vector2 speed = new Vector2(Main.rand.Next(-1000, 1001), Main.rand.Next(-1000, 1001));
                         speed.Normalize();

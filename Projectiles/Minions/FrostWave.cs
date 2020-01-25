@@ -32,18 +32,6 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.localNPCHitCooldown = 10;
         }
 
-        public override void AI()
-        {
-            projectile.frameCounter++;
-            if (projectile.frameCounter > 1)
-            {
-                projectile.frameCounter = 0;
-                projectile.frame++;
-                if (projectile.frame > 1)
-                    projectile.frame = 0;
-            }
-        }
-
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffID.Frostburn, 360);

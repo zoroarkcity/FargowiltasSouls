@@ -19,6 +19,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Abominationn Seal");
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 4;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
@@ -142,7 +144,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                     Color color27 = color26;
                     color27 *= (float)(max - i) / max;
                     Vector2 value4 = projectile.Center + drawOffset.RotatedBy(rotationPerTick * i);
-                    float num165 = projectile.rotation;
+                    float num165 = projectile.oldRot[i];
                     Main.spriteBatch.Draw(texture2D13, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
                 }
                 Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);

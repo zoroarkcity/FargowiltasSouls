@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             projectile.height = 40;
             projectile.alpha = 100;
             projectile.hostile = true;
-            projectile.timeLeft = 360;
+            projectile.timeLeft = 240;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.aiStyle = -1;
@@ -37,8 +37,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 Main.PlaySound(SoundID.Item8, projectile.Center);
             }
             projectile.rotation += 0.8f;
-            if (++projectile.localAI[1] > 60 && projectile.localAI[1] < 180)
-                projectile.velocity *= 1.03f;
+            if (++projectile.localAI[1] > 30 && projectile.localAI[1] < 100)
+                projectile.velocity *= 1.06f;
             for (int i = 0; i < 2; i++)
             {
                 int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 27, 0f, 0f, 100);

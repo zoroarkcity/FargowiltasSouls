@@ -13,7 +13,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 Grants immunity to Bloodthirsty
 10% increased max life
 Creepers hover around you blocking some damage
-A new Creeper appears every 15 seconds, and 5 can exist at once");
+A new Creeper appears every 15 seconds, and 5 can exist at once
+Creeper respawn speed increases when not moving");
             DisplayName.AddTranslation(GameCulture.Chinese, "破碎的心");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'曾经还在敌人的脑中跳动着'
 免疫嗜血

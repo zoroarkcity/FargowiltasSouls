@@ -125,6 +125,11 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             }
         }
 
+        public override Color? GetAlpha(Color drawColor)
+        {
+            return Color.White;
+        }
+
         public override bool CheckActive()
         {
             return false;

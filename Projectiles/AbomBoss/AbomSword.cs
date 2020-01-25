@@ -44,23 +44,9 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            if (Main.npc[(int)projectile.ai[1]].active && Main.npc[(int)projectile.ai[1]].type == mod.NPCType("MutantBoss"))
+            if (Main.npc[(int)projectile.ai[1]].active && Main.npc[(int)projectile.ai[1]].type == mod.NPCType("AbomBoss"))
             {
                 projectile.Center = Main.npc[(int)projectile.ai[1]].Center;
-                if (++counter > 5)
-                {
-                    counter = 0;
-                    if (Main.netMode != 1 && Main.npc[(int)projectile.ai[1]].velocity != Vector2.Zero) //spawn bonus projs
-                    {
-                        Vector2 spawnPos = projectile.Center;
-                        const int max = 30;
-                        for (int i = 1; i <= max; i++)
-                        {
-                            spawnPos += projectile.velocity * 3000f / max;
-                            Projectile.NewProjectile(spawnPos, projectile.velocity.RotatedBy(Math.PI / 2 * Math.Sign(projectile.ai[0])), mod.ProjectileType("AbomSickle"), projectile.damage, 0f, projectile.owner);
-                        }
-                    }
-                }
             }
             else
             {
@@ -88,7 +74,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 projectile.scale = num801;
             }
             float num804 = projectile.velocity.ToRotation();
-            num804 += projectile.ai[0];
+            if (Main.npc[(int)projectile.ai[1]].velocity != Vector2.Zero)
+                num804 += projectile.ai[0];
             projectile.rotation = num804 - 1.57079637f;
             projectile.velocity = num804.ToRotationVector2();
             float num805 = 3f;
@@ -133,6 +120,22 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             }
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
             //Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
+
+            if (Main.npc[(int)projectile.ai[1]].velocity != Vector2.Zero && --counter < 0)
+            {
+                counter = 5;
+                if (Main.netMode != 1) //spawn bonus projs
+                {
+                    Vector2 spawnPos = projectile.Center;
+                    Vector2 vel = projectile.velocity.RotatedBy(Math.PI / 2 * Math.Sign(projectile.ai[0]));
+                    const int max = 15;
+                    for (int i = 1; i <= max; i++)
+                    {
+                        spawnPos += projectile.velocity * 3000f / max;
+                        Projectile.NewProjectile(spawnPos, vel, mod.ProjectileType("AbomSickle2"), projectile.damage, 0f, projectile.owner);
+                    }
+                }
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -205,6 +208,11 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
+            target.velocity.X = target.Center.X < Main.npc[(int)projectile.ai[1]].Center.X ? -15f : 15f;
+            target.velocity.Y = -10f;
+
+            Projectile.NewProjectile(target.Center + Main.rand.NextVector2Circular(100, 100), Vector2.Zero, mod.ProjectileType("AbomBlast"), 0, 0f, projectile.owner);
+
             target.AddBuff(mod.BuffType("AbomFang"), 300);
             target.AddBuff(BuffID.WitheredArmor, 600);
             target.AddBuff(BuffID.WitheredWeapon, 600);
