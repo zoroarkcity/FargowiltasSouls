@@ -1094,7 +1094,14 @@ namespace FargowiltasSouls.NPCs.AbomBoss
         {
             npc.life = 1;
             npc.active = true;
-            npc.localAI[3] = 2;
+            if (npc.localAI[3] < 2)
+            {
+                npc.localAI[3] = 2;
+                if (Main.netMode != 1)
+                {
+                    Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("AbomRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                }
+            }
             if (Main.netMode != 1 && npc.ai[0] > -2)
             {
                 npc.ai[0] = -2;
