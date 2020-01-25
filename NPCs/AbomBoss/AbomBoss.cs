@@ -28,7 +28,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.height = 120;
             npc.damage = 300;
             npc.defense = 60;
-            npc.lifeMax = 1000000;
+            npc.lifeMax = 1300000;
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -1066,7 +1066,10 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 npc.dontTakeDamage = true;
                 npc.netUpdate = true;
                 for (int i = 0; i < 1000; i++)
-                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && (Main.projectile[i].hostile || Main.projectile[i].friendly))
+                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && Main.projectile[i].hostile)
+                        Main.projectile[i].Kill();
+                for (int i = 0; i < 1000; i++)
+                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && Main.projectile[i].hostile)
                         Main.projectile[i].Kill();
             }
             return false;
