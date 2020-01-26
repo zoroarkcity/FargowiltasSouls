@@ -141,11 +141,6 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 Main.player[Main.myPlayer].AddBuff(mod.BuffType("AbomPresence"), 2);
             }
 
-            if (npc.localAI[3] <= 1) //p1
-                npc.defense = 0;
-            else
-                npc.defense = npc.defDefense;
-
             Player player = Main.player[npc.target];
             npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
             Vector2 targetPos;
@@ -1081,8 +1076,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (npc.localAI[3] > 1) //p2
-                damage *= 0.8;
+            damage *= 0.8;
             return true;
         }
 
