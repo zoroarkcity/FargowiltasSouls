@@ -10591,13 +10591,16 @@ namespace FargowiltasSouls.NPCs
                             }
                         }
 
-                        for (int i = 0; i < 200; i++)
+                        if (!Fargowiltas.Instance.FargowiltasLoaded && !(bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive"))
                         {
-                            if (Main.npc[i].active && i != npc.whoAmI && (Main.npc[i].type == 13 || Main.npc[i].type == 14 || Main.npc[i].type == 15))
+                            for (int i = 0; i < 200; i++)
                             {
-                                Main.PlaySound(npc.DeathSound, npc.Center);
-                                npc.active = false;
-                                return false;
+                                if (Main.npc[i].active && i != npc.whoAmI && (Main.npc[i].type == 13 || Main.npc[i].type == 14 || Main.npc[i].type == 15))
+                                {
+                                    Main.PlaySound(npc.DeathSound, npc.Center);
+                                    npc.active = false;
+                                    return false;
+                                }
                             }
                         }
 
