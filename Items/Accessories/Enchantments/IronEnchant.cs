@@ -70,7 +70,7 @@ You attract items from a larger range";
                 modPlayer.IronEffect();
             }
             //magnet
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.IronMagnet))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.IronMagnet, false))
             {
                 modPlayer.IronEnchant = true;
             }

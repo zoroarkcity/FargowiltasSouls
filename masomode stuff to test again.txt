@@ -86,6 +86,9 @@ adjusted mutant targeting to be seamless if the original target dies in mp(?)
 fixed flocko wave sheeting
 improved boc confusion telegraph
 updated gutted/pure heart tooltip
+increased mutant DR to 25% but nebula boosters work during the fight
+iron magnet ignores mutant presence
+maso soul increases graze range slightly
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

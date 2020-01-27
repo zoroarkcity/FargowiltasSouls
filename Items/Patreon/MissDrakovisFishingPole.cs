@@ -63,7 +63,7 @@ namespace FargowiltasSouls.Items.Patreon
                     break;
                 //range
                 case 2:
-                    int num129 = Main.rand.Next(4, 6);
+                    int num129 = 4;
                     for (int num130 = 0; num130 < num129; num130++)
                     {
                         float num131 = (float)Main.mouseX + Main.screenPosition.X - position.X;
@@ -122,8 +122,8 @@ namespace FargowiltasSouls.Items.Patreon
 
                     item.knockBack = 6.5f;
                     item.useStyle = 5;
-                    item.useAnimation = 45;
-                    item.useTime = 45;
+                    item.useAnimation = 60;
+                    item.useTime = 60;
                     item.useAmmo = AmmoID.Bullet;
                     item.UseSound = SoundID.Item36;
                     item.shootSpeed = 7f;

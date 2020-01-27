@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
@@ -61,6 +62,26 @@ namespace FargowiltasSouls.Items.Misc
                 {
                     line2.overrideColor = Main.DiscoColor;
                 }
+            }
+        }
+
+        public override void AddRecipes()
+        {
+            if (Fargowiltas.Instance.FargowiltasLoaded)
+            {
+                ModRecipe recipe = new ModRecipe(mod);
+                recipe.AddIngredient(ItemID.GoblinBattleStandard);
+                recipe.AddIngredient(ItemID.PirateMap);
+                recipe.AddIngredient(ItemID.PumpkinMoonMedallion);
+                recipe.AddIngredient(ItemID.NaughtyPresent);
+                recipe.AddIngredient(ItemID.SnowGlobe);
+                recipe.AddIngredient(ItemID.DD2ElderCrystal);
+                recipe.AddIngredient(ItemID.LunarBar, 10);
+                recipe.AddIngredient(null, "LunarCrystal", 5);
+
+                recipe.AddTile(mod, "CrucibleCosmosSheet");
+                recipe.SetResult(this);
+                recipe.AddRecipe();
             }
         }
     }

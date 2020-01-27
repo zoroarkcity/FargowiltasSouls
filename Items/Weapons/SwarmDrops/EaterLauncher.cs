@@ -12,14 +12,14 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rockeater Launcher");
-            Tooltip.SetDefault("'The reward for slaughtering many..'");
+            Tooltip.SetDefault("'The reward for slaughtering many..'\n50% chance to not consume ammo");
             DisplayName.AddTranslation(GameCulture.Chinese, "吞噬者发射器");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励..'");
         }
 
         public override void SetDefaults()
         {
-            item.damage = 200; //
+            item.damage = 210; //
             item.ranged = true;
             item.width = 24; 
             item.height = 24; 
@@ -48,6 +48,11 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             type = mod.ProjectileType("EaterRocket");
             return true;
+        }
+
+        public override bool ConsumeAmmo(Player player)
+        {
+            return Main.rand.Next(2) == 0;
         }
 
         public override void AddRecipes()

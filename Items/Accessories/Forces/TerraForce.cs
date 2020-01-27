@@ -93,7 +93,7 @@ While standing in lava, you gain 20 armor penetration, 15% attack speed, and you
                 modPlayer.IronEffect();
             }
             //magnet
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.IronMagnet))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.IronMagnet, false))
             {
                 modPlayer.IronEnchant = true;
             }
