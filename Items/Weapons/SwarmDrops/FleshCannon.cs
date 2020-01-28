@@ -43,9 +43,9 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             Vector2 speed = new Vector2(speedX, speedY);
 
-            const int factor = 7;
+            const int factor = 14; //make sure this is even number btw
 
-            if (counter == 0) //burp hungy
+            if (counter == 0 || counter == factor / 2) //burp hungy
             {
                 int p = Projectile.NewProjectile(position, speed * 2f, mod.ProjectileType("Hungry"), damage, knockBack, player.whoAmI);
                 if (p != Main.maxProjectiles)
@@ -56,9 +56,9 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 Main.PlaySound(new LegacySoundStyle(4, 13), position);
             }
 
-            float rotation = MathHelper.ToRadians(10) * (float)Math.Sin((counter + 0.25) * Math.PI / factor);
+            float rotation = MathHelper.ToRadians(10) * (float)Math.Sin((counter + 0.25) * Math.PI / (factor / 2));
             Projectile.NewProjectile(position, speed.RotatedBy(rotation), type, damage, knockBack, player.whoAmI);
-            Projectile.NewProjectile(position, speed.RotatedBy(-rotation), type, damage, knockBack, player.whoAmI);
+            Projectile.NewProjectile(position, speed.RotatedBy(-rotation) * 5 / 3, ProjectileID.GreenLaser, damage, knockBack, player.whoAmI);
 
             if (++counter >= factor) //reset
             {
