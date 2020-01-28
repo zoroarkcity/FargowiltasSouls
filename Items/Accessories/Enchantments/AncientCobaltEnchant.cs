@@ -43,7 +43,7 @@ This can only happen once every second");
             recipe.AddIngredient(ItemID.AncientIronHelmet);
             recipe.AddIngredient(ItemID.Blowpipe);
             recipe.AddIngredient(ItemID.PoisonDart, 300);
-            recipe.AddIngredient(ItemID.PoisonedKnife, 50);
+            recipe.AddIngredient(ItemID.PoisonedKnife, 300);
             
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

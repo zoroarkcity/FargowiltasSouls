@@ -62,7 +62,8 @@ All fishing rods will have 4 extra lures");
             recipe.AddIngredient(ItemID.Rockfish);
             recipe.AddIngredient(ItemID.SawtoothShark);
             recipe.AddIngredient(ItemID.FrostDaggerfish, 200);
-            recipe.AddIngredient(ItemID.OldShoe, 5);
+            recipe.AddRecipeGroup("FargowiltasSouls:AnyFishingTrash", 5);
+
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();
