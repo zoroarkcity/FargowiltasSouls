@@ -89,6 +89,7 @@ updated gutted/pure heart tooltip
 increased mutant DR to 25% but nebula boosters work during the fight
 iron magnet ignores mutant presence
 maso soul increases graze range slightly
+nerfed betsy dash cooldown (now 3sec, from 2sec)
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
