@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 
-namespace FargowiltasSouls.Items.Misc
+namespace FargowiltasSouls.Tiles
 {
     public class MutantMusicBoxSheet : ModTile
     {
