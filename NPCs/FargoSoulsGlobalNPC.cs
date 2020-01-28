@@ -5229,9 +5229,15 @@ namespace FargowiltasSouls.NPCs
                                     distance *= Main.rand.NextFloat(20f, 30f);
 
                                     int type = mod.ProjectileType("DarkStar");
-                                    Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 3, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(npc.Center, distance, type, npc.damage / 3, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 3, 0f, Main.myPlayer);
+                                    int p = Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 3, 0f, Main.myPlayer);
+                                    if (p != Main.maxProjectiles)
+                                        Main.projectile[p].timeLeft = 60;
+                                    p = Projectile.NewProjectile(npc.Center, distance, type, npc.damage / 3, 0f, Main.myPlayer);
+                                    if (p != Main.maxProjectiles)
+                                        Main.projectile[p].timeLeft = 60;
+                                    p = Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 3, 0f, Main.myPlayer);
+                                    if (p != Main.maxProjectiles)
+                                        Main.projectile[p].timeLeft = 60;
                                 }
                             }
 
@@ -5246,6 +5252,8 @@ namespace FargowiltasSouls.NPCs
                             {
                                 npc.localAI[0] = 0f;
                                 int cap = Main.npc[npc.realLife].lifeMax / Main.npc[npc.realLife].life;
+                                if (cap > 70) //prevent meme scaling at super low life
+                                    cap = 70;
                                 Counter += Main.rand.Next(2 + cap) + 1;
                                 if (Counter >= Main.rand.Next(1400, 26000))
                                 {
