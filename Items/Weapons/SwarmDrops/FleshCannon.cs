@@ -35,19 +35,19 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.value = Item.sellPrice(0, 10);
             item.rare = 11;
             item.autoReuse = true;
-            item.shoot = ProjectileID.PurpleLaser;
-            item.shootSpeed = 10f;
+            item.shoot = mod.ProjectileType("Hungry");
+            item.shootSpeed = 20f;
         }   
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             Vector2 speed = new Vector2(speedX, speedY);
 
-            const int factor = 7;
+            const int factor = 14; //make sure this is even number btw
 
-            if (counter == 0) //burp hungy
+            if (counter == 0 || counter == factor / 2) //burp hungy
             {
-                int p = Projectile.NewProjectile(position, speed * 2f, mod.ProjectileType("Hungry"), damage, knockBack, player.whoAmI);
+                int p = Projectile.NewProjectile(position, speed * 2f, type, damage, knockBack, player.whoAmI);
                 if (p != Main.maxProjectiles)
                 {
                     Main.projectile[p].minion = false;
@@ -56,9 +56,9 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 Main.PlaySound(new LegacySoundStyle(4, 13), position);
             }
 
-            float rotation = MathHelper.ToRadians(10) * (float)Math.Sin((counter + 0.25) * Math.PI / factor);
-            Projectile.NewProjectile(position, speed.RotatedBy(rotation), type, damage, knockBack, player.whoAmI);
-            Projectile.NewProjectile(position, speed.RotatedBy(-rotation), type, damage, knockBack, player.whoAmI);
+            float rotation = MathHelper.ToRadians(10) * (float)Math.Sin((counter + 0.2) * Math.PI / (factor / 2));
+            Projectile.NewProjectile(position, speed.RotatedBy(rotation) * 0.4f, ProjectileID.PurpleLaser, damage, knockBack, player.whoAmI);
+            Projectile.NewProjectile(position, speed.RotatedBy(-rotation) * 0.4f, mod.ProjectileType("FleshLaser"), damage, knockBack, player.whoAmI);
 
             if (++counter >= factor) //reset
             {

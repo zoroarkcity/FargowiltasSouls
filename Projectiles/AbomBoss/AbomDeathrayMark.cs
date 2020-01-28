@@ -138,8 +138,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 return false;
             }
             Texture2D texture2D19 = Main.projectileTexture[projectile.type];
-            Texture2D texture2D20 = mod.GetTexture("Projectiles/Masomode/PhantasmalDeathray2");
-            Texture2D texture2D21 = mod.GetTexture("Projectiles/Masomode/PhantasmalDeathray3");
+            Texture2D texture2D20 = mod.GetTexture("Projectiles/AbomBoss/AbomDeathray2");
+            Texture2D texture2D21 = mod.GetTexture("Projectiles/AbomBoss/AbomDeathray3");
             float num223 = projectile.localAI[1];
             Microsoft.Xna.Framework.Color color44 = new Microsoft.Xna.Framework.Color(255, 255, 255, 0) * 0.45f;
             SpriteBatch arg_ABD8_0 = Main.spriteBatch;

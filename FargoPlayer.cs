@@ -427,7 +427,7 @@ namespace FargowiltasSouls
 
             if (Fargowiltas.BetsyDashKey.JustPressed && BetsysHeart && BetsyDashCD <= 0)
             {
-                BetsyDashCD = 120;
+                BetsyDashCD = 180;
                 if (player.whoAmI == Main.myPlayer)
                 {
                     player.controlLeft = false;
