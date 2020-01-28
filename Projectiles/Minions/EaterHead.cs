@@ -28,6 +28,9 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.alpha = 255;
             projectile.netImportant = true;
             ProjectileID.Sets.MinionTargettingFeature[base.projectile.type] = true;
+
+            projectile.usesIDStaticNPCImmunity = true;
+            projectile.idStaticNPCHitCooldown = 20;
         }
 
         public override void SendExtraAI(BinaryWriter writer)

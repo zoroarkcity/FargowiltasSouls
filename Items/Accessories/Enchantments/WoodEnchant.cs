@@ -60,7 +60,7 @@ When critters die, they release their souls to aid you");
             recipe.AddIngredient(ItemID.WoodGreaves);
             recipe.AddIngredient(ItemID.LivingWoodWand);
             recipe.AddIngredient(ItemID.Bunny);
-            recipe.AddIngredient(ItemID.Squirrel);
+            recipe.AddRecipeGroup("FargowiltasSouls:AnySquirrel");
             recipe.AddIngredient(ItemID.Bird);        
 
             recipe.AddTile(TileID.DemonAltar);

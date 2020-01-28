@@ -21,12 +21,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.aiStyle = 1;
             projectile.friendly = true;
             projectile.minion = true;
-            projectile.penetrate = 4;
+            projectile.penetrate = 1;
             projectile.timeLeft = 300;
             aiType = ProjectileID.Bullet;
-
-           // projectile.usesIDStaticNPCImmunity = true;
-            //projectile.idStaticNPCHitCooldown = 10;
         }
 
         public override void AI()

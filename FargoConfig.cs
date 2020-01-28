@@ -359,6 +359,11 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool DragonFang;
 
+        [Label("$Mods.FargowiltasSouls.TribalCharmConfig")]
+        [DefaultValue(true)]
+        public bool TribalCharm;
+
+
         [Label("$Mods.FargowiltasSouls.WalletHeader")]
         public WalletToggles walletToggles = new WalletToggles();
 
@@ -1130,6 +1135,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.CalamityDivingSuitConfig")]
         [DefaultValue(true)]
         public bool DivingSuit;
+
+        [Label("$Mods.FargowiltasSouls.CalamityReaperToothNecklaceConfig")]
+        [DefaultValue(true)]
+        public bool ReaperToothNecklace;
 
         [Label("$Mods.FargowiltasSouls.CalamitySirenConfig")]
         [DefaultValue(true)]
