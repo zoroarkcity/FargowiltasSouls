@@ -61,11 +61,12 @@ namespace FargowiltasSouls
             }
             
             AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SteelRed"), ItemType("MutantMusicBox"), TileType("MutantMusicBoxSheet"));
+            AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma"), ItemType("AbomMusicBox"), TileType("AbomMusicBoxSheet"));
 
             #region Toggles
 
             #region enchants
-            
+
             AddToggle("WoodHeader", "Force of Timber", "TimberForce", "ffffff");
             AddToggle("BorealConfig", "Boreal Snowballs", "BorealWoodEnchant", "8B7464");
             AddToggle("MahoganyConfig", "Mahogany Hook Speed", "RichMahoganyEnchant", "b56c64");
