@@ -17,12 +17,6 @@ namespace FargowiltasSouls.Buffs.Minions
             Description.AddTranslation(GameCulture.Chinese, "骷髅王之手将会保护你");
         }
 
-        public override bool Autoload(ref string name, ref string texture)
-        {
-            texture = "FargowiltasSouls/Buffs/PlaceholderBuff";
-            return true;
-        }
-
         public override void Update(Player player, ref int buffIndex)
         {
             player.GetModPlayer<FargoPlayer>().SkeletronArms = true;

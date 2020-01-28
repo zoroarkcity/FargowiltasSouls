@@ -6,8 +6,6 @@ namespace FargowiltasSouls.Items.Misc
 {
 	public class MutatingEnergy: ModItem
 	{
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Mutating Energy");

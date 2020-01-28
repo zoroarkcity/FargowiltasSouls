@@ -8,8 +8,6 @@ namespace FargowiltasSouls.Items.Misc
 {
 	public class MutantsDiscountCard : ModItem
 	{
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Mutant's Discount Card");
