@@ -82,6 +82,7 @@ Summons several pets";
             modPlayer.JungleEffect();
             //crystal and pet
             modPlayer.ChloroEffect(hideVisual, 100);
+            modPlayer.ChloroEnchant = true;
             modPlayer.FlowerBoots();
             //stealth, crits, pet
             modPlayer.ShroomiteEffect(hideVisual);

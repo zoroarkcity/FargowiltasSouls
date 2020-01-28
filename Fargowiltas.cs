@@ -168,6 +168,7 @@ namespace FargowiltasSouls
             AddToggle("MasoSqueakConfig", "Squeaky Toy On Hit", "SqueakyToy", "ffffff");
             AddToggle("MasoPouchConfig", "Tentacles On Hit", "WretchedPouch", "ffffff");
             AddToggle("MasoClippedConfig", "Inflict Clipped Wings", "DragonFang", "ffffff");
+            AddToggle("TribalCharmConfig", "Tribal Charm Auto Swing", "TribalCharm", "ffffff");
             AddToggle("WalletHeader", "Security Wallet", "SecurityWallet", "ffffff");
 
             //dubious 
@@ -406,6 +407,7 @@ namespace FargowiltasSouls
                 AddToggle("CalamityFoxConfig", "Fox Pet", "SilvaEnchant", "ffffff");
                 AddToggle("CalamityOmegaTentaclesConfig", "Omega Blue Tentacles", "OmegaBlueEnchant", "ffffff");
                 AddToggle("CalamityDivingSuitConfig", "Abyssal Diving Suit", "OmegaBlueEnchant", "ffffff");
+                AddToggle("CalamityReaperToothNecklaceConfig", "Reaper Tooth Necklace", "OmegaBlueEnchant", "ffffff");
                 AddToggle("CalamitySirenConfig", "Siren Pet", "OmegaBlueEnchant", "ffffff");
                 AddToggle("CalamityGodSlayerEffectsConfig", "God Slayer Effects", "GodSlayerEnchant", "ffffff");
                 AddToggle("CalamityMechwormMinionConfig", "Mechworm Minion", "GodSlayerEnchant", "ffffff");
@@ -739,8 +741,13 @@ namespace FargowiltasSouls
             group = new RecipeGroup(() => Lang.misc[37] + " Squirrel", ItemID.Squirrel, ItemID.SquirrelRed);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnySquirrel", group);
 
+            //gold pick
             group = new RecipeGroup(() => Lang.misc[37] + " Gold Pickaxe", ItemID.GoldPickaxe, ItemID.PlatinumPickaxe);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyGoldPickaxe", group);
+
+            //fish trash
+            group = new RecipeGroup(() => Lang.misc[37] + " Fishing Trash", ItemID.OldShoe, ItemID.TinCan, ItemID.FishingSeaweed);
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyFishingTrash", group);
 
             if (ThoriumLoaded)
             {

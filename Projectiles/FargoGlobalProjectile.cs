@@ -1155,6 +1155,11 @@ namespace FargowiltasSouls.Projectiles
 
         public override bool TileCollideStyle(Projectile projectile, ref int width, ref int height, ref bool fallThrough)
         {
+            if (projectile.type == ProjectileID.SmokeBomb)
+            {
+                fallThrough = false;
+            }
+
             if (tungstenProjectile)
             {
                 width /= 2;

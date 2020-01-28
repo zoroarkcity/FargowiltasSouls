@@ -102,8 +102,13 @@ Summons a Siren pet");
 
             //lumenous amulet
             calamity.GetItem("LumenousAmulet").UpdateAccessory(player, hideVisual);
+
             //reaper tooth necklace
-            calamity.GetItem("ReaperToothNecklace").UpdateAccessory(player, hideVisual);
+            if (SoulConfig.Instance.calamityToggles.ReaperToothNecklace)
+            {
+                calamity.GetItem("ReaperToothNecklace").UpdateAccessory(player, hideVisual);
+            }
+
             //aquatic emblem
             calamity.GetItem("AquaticEmblem").UpdateAccessory(player, hideVisual);
 

@@ -1225,7 +1225,7 @@ namespace FargowiltasSouls
                 {
                     NPC npc = Main.npc[i];
 
-                    if (!npc.friendly && Vector2.Distance(player.Center, npc.Center) <= 50)
+                    if (!npc.friendly && npc.type != NPCID.TargetDummy && Vector2.Distance(player.Center, npc.Center) <= 50)
                     {
                         shadeCD = 300;
                         player.Hurt(PlayerDeathReason.ByNPC(npc.type), 0, 0);
@@ -4807,7 +4807,7 @@ namespace FargowiltasSouls
 
         public override bool PreItemCheck()
         {
-            if (TribalCharm)
+            if (TribalCharm && SoulConfig.Instance.TribalCharm)
             {
                 TribalAutoFire = player.HeldItem.autoReuse;
                 player.HeldItem.autoReuse = true;
