@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
     {
         public override Color? GetAlpha(Color lightColor)
         {
-            return new Color(255, 0, 0, 127);
+            return new Color(255, 50, 50, 127);
         }
     }
 }

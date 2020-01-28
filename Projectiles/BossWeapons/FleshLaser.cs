@@ -7,11 +7,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 {
     public class FleshLaser : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_88";
+        public override string Texture => "Terraria/Projectile_100";
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blue Laser");
+            DisplayName.SetDefault("Red Laser");
         }
 
         public override void SetDefaults()
@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.Cyan;
+            return Color.White * projectile.Opacity;
         }
     }
 }
