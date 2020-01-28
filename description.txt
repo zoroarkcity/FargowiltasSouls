@@ -1,22 +1,7 @@
 NEW UPDATE - v 1.1.2
--eater of worlds has a limit to eaters spawned
--added sprites for mutant antibodies, reinforced plating, and bionmic cluster
--new Soul of Two Realms sprite
 
--Eater of Worlds Staff now uses local immunity frames so it does not disrupt other weapons
--Nerfed Eater of Worlds staff damage very slightly
--Updated Ancient Cobalt Enchantment sprite
--Added Eurus Socks equipped sprite
--Updated Palm tree sentry sprite
--added force of foundations
--Ancient Shadow Balls no longer pierce
--Ancient Cobalt Enchantment , increased Poisoned Knives in recipe to 300
--Updated The Guardian recipe to include Extra Boney Energizer instead of 100 Bone Keys
--Shadewood Enchantment effect no longer procs on Target Dummies
--Added toggle for Reaper Tooth Necklace and Tribal Charm
--Smoke Bombs dont travel through platforms now (helps Ninja Echantment) 
--Fixed Chlorophyte Crystals not showing up in Force of Nature
--Wood Enchantment now takes Any Squirrel
--Angler Enchant now takes any fishing trash
+-Updated Ancient Cobalt Enchantment sprite - do this
+-Added Eurus Socks equipped sprite - do this
+-Updated Palm tree sentry sprite - do this
 
 -See the full changelog on the wiki
