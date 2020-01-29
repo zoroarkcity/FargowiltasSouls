@@ -1,7 +1,6 @@
-NEW UPDATE - v 1.1.2
-
--Updated Ancient Cobalt Enchantment sprite - do this
--Added Eurus Socks equipped sprite - do this
--Updated Palm tree sentry sprite - do this
+NEW UPDATE - v 1.2
+-Added Abominationn Boss
+-Added and rebalanced several weapons to be post Moon Lord tier
+-Various balance changes and bug fixes to accessories and Masochist Mode
 
 -See the full changelog on the wiki
