@@ -10599,7 +10599,7 @@ namespace FargowiltasSouls.NPCs
                             }
                         }
 
-                        if (!Fargowiltas.Instance.FargowiltasLoaded && !(bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive"))
+                        if (!(Fargowiltas.Instance.FargowiltasLoaded && (bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive")))
                         {
                             for (int i = 0; i < 200; i++)
                             {
@@ -10611,9 +10611,11 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
                         }
-
-                        if (FargoSoulsWorld.EaterCount < FargoSoulsWorld.MaxCountPreHM)
-                            FargoSoulsWorld.EaterCount++;
+                        else
+                        {
+                            if (FargoSoulsWorld.EaterCount < FargoSoulsWorld.MaxCountPreHM)
+                                FargoSoulsWorld.EaterCount++;
+                        }
                         break;
 
                     case NPCID.BrainofCthulhu:
