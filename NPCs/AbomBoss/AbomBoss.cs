@@ -801,6 +801,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 17: //wait for scythes to clear
+                    if (!AliveCheck(player))
+                        break;
                     targetPos = player.Center + player.DirectionTo(npc.Center) * 500;
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.7f);
