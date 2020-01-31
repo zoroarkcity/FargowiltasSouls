@@ -68,7 +68,7 @@ namespace FargowiltasSouls.NPCs
         public int Counter2 = 0;
         public int Timer = 600;
         public byte SharkCount = 0;
-        private bool debuffOnCD = false;
+        private bool applyDebuff;
 
         public static int boss = -1;
         public static int slimeBoss = -1;
@@ -7526,15 +7526,8 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.KingSlime:
                         target.AddBuff(BuffID.Slimed, 120);
-                        if (npc.velocity.Length() > 0 && !target.HasBuff(mod.BuffType("Stunned")) && !debuffOnCD)
-                        {
-                            target.AddBuff(mod.BuffType("Stunned"), 60);
-                            debuffOnCD = true;
-                        }
-                        else if(debuffOnCD)
-                        {
-                            debuffOnCD = false;
-                        }
+                        if (npc.velocity.Length() > 0)
+                            AddBuffNoStack(target, mod.BuffType("Stunned"));
                         break;
                         
                     case NPCID.ToxicSludge:
@@ -7668,15 +7661,8 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.IceBat:
                         target.AddBuff(BuffID.Rabies, 3600);
-                        if (target.HasBuff(BuffID.Chilled) && !target.HasBuff(BuffID.Frozen) && !debuffOnCD)
-                        {
-                            target.AddBuff(BuffID.Frozen, 60);
-                            debuffOnCD = true;
-                        }
-                        else if (debuffOnCD)
-                        {
-                            debuffOnCD = false;
-                        }
+                        if (target.HasBuff(BuffID.Chilled))
+                            AddBuffNoStack(target, BuffID.Frozen);
                         break;
 
                     case NPCID.Lavabat:
@@ -7717,15 +7703,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.Medusa:
                         target.AddBuff(mod.BuffType("Flipped"), 120);
-                        if (!target.HasBuff(BuffID.Stoned) && !debuffOnCD)
-                        {
-                            target.AddBuff(BuffID.Stoned, 60);
-                            debuffOnCD = true;
-                        }
-                        else if (debuffOnCD)
-                        {
-                            debuffOnCD = false;
-                        }
+                        AddBuffNoStack(target, BuffID.Stoned);
                         break;
 
                     case NPCID.SpikeBall:
@@ -7751,15 +7729,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.GraniteFlyer:
                     case NPCID.GraniteGolem:
-                        if (!target.HasBuff(BuffID.Stoned) && Main.rand.Next(2) == 0 && !debuffOnCD)
-                        {
-                            target.AddBuff(BuffID.Stoned, 60);
-                            debuffOnCD = true;
-                        }
-                        else if (debuffOnCD)
-                        {
-                            debuffOnCD = false;
-                        }
+                        AddBuffNoStack(target, BuffID.Stoned);
                         break;
 
                     case NPCID.LeechHead:
@@ -8125,15 +8095,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.Mummy:
                     case NPCID.LightMummy:
                     case NPCID.DarkMummy:
-                        if (!target.HasBuff(BuffID.Webbed) && !debuffOnCD)
-                        {
-                            target.AddBuff(BuffID.Webbed, 60);
-                            debuffOnCD = true;
-                        }
-                        else if (debuffOnCD)
-                        {
-                            debuffOnCD = false;
-                        }
+                        AddBuffNoStack(target, BuffID.Webbed);
                         break;
 
                     case NPCID.Derpling:
@@ -8156,30 +8118,12 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.PrimeVice:
-                        if (!target.HasBuff(mod.BuffType("Stunned")) && !debuffOnCD)
-                        {
-                            target.AddBuff(mod.BuffType("Stunned"), 60);
-                            if (target.mount.Active)
-                                target.mount.Dismount(target);
-                            debuffOnCD = true;
-                        }
-                        else if (debuffOnCD)
-                        {
-                            debuffOnCD = false;
-                        }
+                        AddBuffNoStack(target, mod.BuffType("Stunned"));
                         break;
 
                     case NPCID.DesertBeast:
                         target.AddBuff(mod.BuffType("Infested"), 600);
-                        if (!target.HasBuff(BuffID.Stoned) && Main.rand.Next(2) == 0 && !debuffOnCD)
-                        {
-                            target.AddBuff(BuffID.Stoned, 60);
-                            debuffOnCD = true;
-                        }
-                        else if (debuffOnCD)
-                        {
-                            debuffOnCD = false;
-                        }
+                        AddBuffNoStack(target, BuffID.Stoned);
                         break;
 
                     case NPCID.FlyingSnake:
@@ -8240,15 +8184,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.IceQueen:
                         target.AddBuff(BuffID.Chilled, 180);
                         target.AddBuff(BuffID.Frostburn, 180);
-                        if (!target.HasBuff(BuffID.Frozen) && Main.rand.Next(2) == 0 && !debuffOnCD)
-                        {
-                            target.AddBuff(BuffID.Frozen, 60);
-                            debuffOnCD = true;
-                        }
-                        else if (debuffOnCD)
-                        {
-                            debuffOnCD = false;
-                        }
+                        AddBuffNoStack(target, BuffID.Frozen);
                         break;
 
                     case NPCID.VortexLarva:
@@ -8371,15 +8307,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.DD2LightningBugT3:
                         target.AddBuff(BuffID.Electrified, 300);
-                        if (!target.HasBuff(BuffID.Webbed) && !debuffOnCD)
-                        {
-                            target.AddBuff(BuffID.Webbed, 60);
-                            debuffOnCD = true;
-                        }
-                        else if (debuffOnCD)
-                        {
-                            debuffOnCD = false;
-                        }
+                        AddBuffNoStack(target, BuffID.Webbed);
                         break;
 
                     case NPCID.DD2SkeletonT1:
@@ -8517,15 +8445,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.WalkingAntlion:
-                        if (!target.HasBuff(BuffID.Dazed) && !debuffOnCD)
-                        {
-                            target.AddBuff(BuffID.Dazed, 60);
-                            debuffOnCD = true;
-                        }
-                        else if (debuffOnCD)
-                        {
-                            debuffOnCD = false;
-                        }
+                        AddBuffNoStack(target, BuffID.Dazed);
                         break;
 
                     case NPCID.AnglerFish:
@@ -8602,17 +8522,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.Mothron:
                         target.AddBuff(BuffID.Rabies, 3600);
-
-                        if (!target.HasBuff(mod.BuffType("Stunned")) && !debuffOnCD)
-                        {
-                            target.AddBuff(mod.BuffType("Stunned"), 60);
-                            debuffOnCD = true;
-                        }
-                        else if (debuffOnCD)
-                        {
-                            debuffOnCD = false;
-                        }
-
+                        AddBuffNoStack(target, mod.BuffType("Stunned"));
                         break;
 
                     case NPCID.MothronSpawn:
@@ -8631,15 +8541,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Yeti:
-                        if (!target.HasBuff(BuffID.Frozen) && !debuffOnCD)
-                        {
-                            target.AddBuff(BuffID.Frozen, 60);
-                            debuffOnCD = true;
-                        }
-                        else if (debuffOnCD)
-                        {
-                            debuffOnCD = false;
-                        }
+                        AddBuffNoStack(target, BuffID.Frozen);
                         break;
 
                     default:
@@ -12474,6 +12376,16 @@ namespace FargowiltasSouls.NPCs
                     default:
                         break;
                 }
+            }
+        }
+
+        public void AddBuffNoStack(Player player, int buff, int duration = 60)
+        {
+            if (!player.HasBuff(buff))
+            {
+                applyDebuff = !applyDebuff;
+                if (applyDebuff)
+                    player.AddBuff(buff, duration);
             }
         }
     }

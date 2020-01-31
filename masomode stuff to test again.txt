@@ -95,6 +95,10 @@ fixed eow scaling per segment killed!!!!
 adjusted abom despawn during sword attacks
 cultist always drops seal in mp, fuck it
 
+changed how some debuffs are applied (stoned, frozen, stunned, etc):
+	enemies can always apply debuff on first hit if you dont already have it
+	after applying it, they must hit you once while you dont have the debuff and THEN the next hit can debuff you again
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)
