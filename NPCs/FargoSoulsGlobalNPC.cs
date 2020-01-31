@@ -10189,7 +10189,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.CultistBoss:
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CelestialRune"));
-                        if (Main.player[Main.myPlayer].extraAccessorySlots == 1)
+                        if (Main.player[Main.myPlayer].extraAccessorySlots == 1 || Main.netMode != 0)
                             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CelestialSeal"));
                         break;
 
