@@ -24,6 +24,7 @@ namespace FargowiltasSouls.Items.Misc
             item.useAnimation = 30;
             item.useTime = 30;
             item.useStyle = 4;
+            item.stack = 999;
             item.value = Item.sellPrice(0, 1);
         }
 
