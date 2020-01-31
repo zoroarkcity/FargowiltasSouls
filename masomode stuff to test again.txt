@@ -91,6 +91,13 @@ iron magnet ignores mutant presence
 maso soul increases graze range slightly
 nerfed betsy dash cooldown (now 3sec, from 2sec)
 
+
+
+
+
+
+
+
 fixed eow scaling per segment killed!!!!
 adjusted abom despawn during sword attacks
 

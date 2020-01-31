@@ -1,6 +1,6 @@
-NEW UPDATE - v 1.2
--Added Abominationn Boss
--Added and rebalanced several weapons to be post Moon Lord tier
--Various balance changes and bug fixes to accessories and Masochist Mode
-
--See the full changelog on the wiki
+NEW UPDATE - v 1.2.0.1
+-Adjusted Abominationn despawn during sword attacks
+-Updated a few sprites including the Soul of the Masochist
+-Fixed Eater of Worlds scaling per segment killed in Masochist Mode
+-Fixed modded toggles starting toggled off
+-Fixed Angler Enchantment giving too many lures
