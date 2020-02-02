@@ -516,7 +516,7 @@ namespace FargowiltasSouls.Projectiles
                     {
                         split.friendly = true;
                         split.GetGlobalProjectile<FargoGlobalProjectile>().numSplits = projectile.GetGlobalProjectile<FargoGlobalProjectile>().numSplits;
-                        split.GetGlobalProjectile<FargoGlobalProjectile>().firstTick = projectile.GetGlobalProjectile<FargoGlobalProjectile>().firstTick;
+                        split.GetGlobalProjectile<FargoGlobalProjectile>().firstTick = false;
                         split.GetGlobalProjectile<FargoGlobalProjectile>().tungstenProjectile = projectile.GetGlobalProjectile<FargoGlobalProjectile>().tungstenProjectile;
                     }
                 }

@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Accessories
 {
+    [AutoloadEquip(EquipType.Shoes)]
     public class EurusSock : ModItem
     {
         public override void SetStaticDefaults()
