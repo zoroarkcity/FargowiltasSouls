@@ -499,7 +499,6 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.MoonLordCore:
                         isMasoML = true;
                         masoStateML = 0;
-                        npc.defense = 0;
                         npc.value += Item.buyPrice(0, 20);
                         break;
                     case NPCID.MoonLordHand:
@@ -1113,8 +1112,8 @@ namespace FargowiltasSouls.NPCs
                 switch (npc.type)
                 {
                     case NPCID.DD2EterniaCrystal:
-                        if (DD2Event.Ongoing && DD2Event.TimeLeftBetweenWaves > 30)
-                            DD2Event.TimeLeftBetweenWaves = 30;
+                        if (DD2Event.Ongoing && DD2Event.TimeLeftBetweenWaves > 300)
+                            DD2Event.TimeLeftBetweenWaves = 300;
                         break;
 
                     case NPCID.DesertBeast:
@@ -3341,6 +3340,14 @@ namespace FargowiltasSouls.NPCs
                                             npc.velocity = 20 * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(-Math.PI / 2);
                                             NetUpdateMaso(npc.whoAmI);
                                             Main.PlaySound(15, (int)Main.player[npc.target].position.X, (int)Main.player[npc.target].position.Y, 0);
+                                            if (Main.netMode != 1)
+                                            {
+                                                for (int i = 0; i < Main.maxProjectiles; i++)
+                                                {
+                                                    if (Main.projectile[i].active && Main.projectile[i].type == mod.ProjectileType("DarkStar"))
+                                                        Main.projectile[i].Kill();
+                                                }
+                                            }
                                         }
                                     }
                                     else
@@ -3810,6 +3817,8 @@ namespace FargowiltasSouls.NPCs
 
                                 case 9: //phase 3 transition
                                     npc.dontTakeDamage = true;
+                                    npc.defDefense = 0;
+                                    npc.defense = 0;
                                     masoBool[1] = false;
                                     if (npc.ai[2] == 120)
                                     {
@@ -3862,7 +3871,7 @@ namespace FargowiltasSouls.NPCs
                                 case 12: //p3 *teleports behind you*
                                     if (npc.ai[2] == 15f)
                                     {
-                                        SpawnRazorbladeRing(npc, 6, 9f, npc.damage / 4, -0.75f);
+                                        SpawnRazorbladeRing(npc, 6, 8f, npc.damage / 4, -0.75f);
                                     }
                                     /*else if (npc.ai[2] == 16f)
                                     {
@@ -3886,6 +3895,8 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.MoonLordCore:
                         moonBoss = npc.whoAmI;
+                        RegenTimer = 2;
+                        npc.defense = masoStateML >= 0 && masoStateML <= 3 ? 0 : npc.defDefense;
 
                         if (!masoBool[3])
                         {
@@ -3897,9 +3908,6 @@ namespace FargowiltasSouls.NPCs
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("FragmentRitual"), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
                             }
                         }
-
-                        if (masoStateML == 3 && RegenTimer < 2) //no regen during stardust
-                            RegenTimer = 2;
 
                         if (!npc.dontTakeDamage)
                             Counter++; //phases transition twice as fast when core is exposed
@@ -4053,7 +4061,24 @@ namespace FargowiltasSouls.NPCs
                                                 }
                                             }
                                             break;
-                                        default:
+                                        default: //phantasmal eye rings
+                                            if (Main.netMode != 1)
+                                            {
+                                                const int max = 6;
+                                                const int speed = 9;
+                                                const float rotationModifier = 0.5f;
+                                                int damage = (int)(40 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
+                                                float rotation = 2f * (float)Math.PI / max;
+                                                Vector2 vel = Vector2.UnitY * speed;
+                                                int type = mod.ProjectileType("MutantSphereRing");
+                                                for (int i = 0; i < max; i++)
+                                                {
+                                                    vel = vel.RotatedBy(rotation);
+                                                    Projectile.NewProjectile(npc.Center, vel, type, damage, 0f, Main.myPlayer, rotationModifier, speed);
+                                                    Projectile.NewProjectile(npc.Center, vel, type, damage, 0f, Main.myPlayer, -rotationModifier, speed);
+                                                }
+                                                Main.PlaySound(SoundID.Item84, npc.Center);
+                                            }
                                             break;
                                     }
                                 }
@@ -4117,6 +4142,7 @@ namespace FargowiltasSouls.NPCs
                             }
                             Counter = 0;
                             Counter2 = 600;
+                            Timer = 0;
                         }
                         else //moon lord isn't dead
                         {
@@ -4125,7 +4151,7 @@ namespace FargowiltasSouls.NPCs
                                 Counter = 0;
                                 if (Main.netMode != 1)
                                 {
-                                    if (++masoStateML > 3)
+                                    if (++masoStateML > 4)
                                         masoStateML = 0;
                                     if (Main.netMode == 2) //sync damage phase with clients
                                     {
@@ -4146,25 +4172,8 @@ namespace FargowiltasSouls.NPCs
                             case 1: Main.monolithType = 0; break;
                             case 2: Main.monolithType = 1; break;
                             case 3: Main.monolithType = 2; break;
+                            default: break;
                         }
-
-                        /*int dustType = 87;
-                        switch (masoStateML)
-                        {
-                            case 0: Main.monolithType = 3; break;
-                            case 1: Main.monolithType = 0; dustType = 89; break;
-                            case 2: Main.monolithType = 1; dustType = 86; break;
-                            case 3: Main.monolithType = 2; dustType = 88; break;
-                            case 4: dustType = 91; break;
-                        }
-
-                        double MLoffset = MathHelper.ToRadians(360 * Counter / 600);
-                        for (int i = 0; i < 4; i++)
-                        {
-                            int MLdust = Dust.NewDust(npc.Center + new Vector2(120f, 0f).RotatedBy(Math.PI * 2 / 4 * i + MLoffset), 0, 0, dustType, npc.velocity.X * 0.5f, npc.velocity.Y * 0.5f, 0, default(Color), 2f);
-                            Main.dust[MLdust].noGravity = true;
-                            Main.dust[MLdust].velocity.Y -= 3.5f;
-                        }*/
                         break;
 
                     case NPCID.Splinterling:
@@ -5956,6 +5965,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.MoonLordHand:
                     case NPCID.MoonLordHead:
                         RegenTimer = 2;
+                        npc.defense = masoStateML >= 0 && masoStateML <= 3 ? 0 : npc.defDefense;
+
                         if (npc.ai[0] == -2f) //eye socket is empty
                         {
                             if (npc.ai[1] == 0f //happens every 32 ticks
@@ -7900,7 +7911,7 @@ namespace FargowiltasSouls.NPCs
                         target.AddBuff(mod.BuffType("MutantNibble"), 600);
                         target.AddBuff(mod.BuffType("Defenseless"), 600);
                         target.AddBuff(BuffID.Rabies, 3600);
-                        target.GetModPlayer<FargoPlayer>().MaxLifeReduction += (npc.whoAmI == fishBossEX) ? 150 : 100;
+                        target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
                         target.AddBuff(mod.BuffType("OceanicMaul"), 3600);
                         break;
 
@@ -7908,10 +7919,10 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.Sharkron2:
                         target.AddBuff(mod.BuffType("Defenseless"), 600);
                         target.AddBuff(mod.BuffType("MutantNibble"), 300);
-                        target.AddBuff(BuffID.Rabies, 3600);
+                        //target.AddBuff(BuffID.Rabies, 3600);
                         if (BossIsAlive(ref fishBossEX, NPCID.DukeFishron))
                         {
-                            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
+                            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 50;
                             target.AddBuff(mod.BuffType("OceanicMaul"), 1800);
                         }
                         break;

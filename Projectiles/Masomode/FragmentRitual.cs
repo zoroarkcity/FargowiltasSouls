@@ -66,6 +66,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
             projectile.rotation = projectile.ai[0];
 
+            projectile.hide = NPCs.FargoSoulsGlobalNPC.masoStateML == 4;
+
             switch (NPCs.FargoSoulsGlobalNPC.masoStateML) //match ML vulnerability to fragment
             {
                 case 0: projectile.frame = 1; break;
@@ -121,7 +123,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * projectile.Opacity * .5f;
+            return Color.White * projectile.Opacity * .75f;
         }
     }
 }

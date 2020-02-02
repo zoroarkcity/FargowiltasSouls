@@ -91,13 +91,6 @@ iron magnet ignores mutant presence
 maso soul increases graze range slightly
 nerfed betsy dash cooldown (now 3sec, from 2sec)
 
-
-
-
-
-
-
-
 fixed eow scaling per segment killed!!!!
 adjusted abom despawn during sword attacks
 cultist always drops seal in mp, fuck it
@@ -105,6 +98,17 @@ cultist always drops seal in mp, fuck it
 changed how some debuffs are applied (stoned, frozen, stunned, etc):
 	enemies can always apply debuff on first hit if you dont already have it
 	after applying it, they must hit you once while you dont have the debuff and THEN the next hit can debuff you again
+
+sharkrons no longer inflict feral bite
+nerfed oceanic maul life reduction per hit on fishron EX
+reduced velocity of fishron p3 razor rings slightly
+fishron defense becomes 0 in p3
+OOA wave delay is now 5 seconds
+moon lord core regen disabled entirely
+moon lord has a 5th vulnerability stage vulnerable to all damage, but regains his defense during this
+	this phase uses phantasmal sphere rings as final phase attack
+increased visibility of moon lord's fragment ring
+destroyer clears dark stars when initiating a spin
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
