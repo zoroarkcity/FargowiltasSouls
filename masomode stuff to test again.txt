@@ -110,6 +110,9 @@ moon lord has a 5th vulnerability stage vulnerable to all damage, but regains hi
 increased visibility of moon lord's fragment ring
 destroyer clears dark stars when initiating a spin
 
+nerfed twins revive life to 25%
+skeletron has bee resist
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)

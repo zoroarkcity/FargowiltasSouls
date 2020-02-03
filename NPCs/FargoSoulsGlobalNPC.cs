@@ -1963,7 +1963,7 @@ namespace FargowiltasSouls.NPCs
                                     int spawn = NPC.NewNPC((int)npc.position.X + Main.rand.Next(-1000, 1000), (int)npc.position.Y + Main.rand.Next(-400, -100), NPCID.Spazmatism);
                                     if (spawn != 200)
                                     {
-                                        Main.npc[spawn].life = Main.npc[spawn].lifeMax / 2;
+                                        Main.npc[spawn].life = Main.npc[spawn].lifeMax / 4;
                                         if (Main.netMode == 2)
                                         {
                                             NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Spazmatism has been revived!"), new Color(175, 75, 255));
@@ -2104,7 +2104,7 @@ namespace FargowiltasSouls.NPCs
                                     int spawn = NPC.NewNPC((int)npc.position.X + Main.rand.Next(-1000, 1000), (int)npc.position.Y + Main.rand.Next(-400, -100), NPCID.Retinazer);
                                     if (spawn != 200)
                                     {
-                                        Main.npc[spawn].life = Main.npc[spawn].lifeMax / 2;
+                                        Main.npc[spawn].life = Main.npc[spawn].lifeMax / 4;
                                         if (Main.netMode == 2)
                                         {
                                             NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Retinazer has been revived!"), new Color(175, 75, 255));
@@ -11627,6 +11627,12 @@ namespace FargowiltasSouls.NPCs
                         if (reduction < 0.5f)
                             reduction = 0.5f;
                         damage = (int)(damage * reduction);
+                        break;
+
+                    case NPCID.SkeletronHead:
+                    case NPCID.SkeletronHand:
+                        if (projectile.type == ProjectileID.Bee || projectile.type == ProjectileID.GiantBee)
+                            damage /= 2;
                         break;
 
                     case NPCID.WallofFlesh:
