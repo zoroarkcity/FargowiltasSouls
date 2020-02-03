@@ -121,6 +121,7 @@ moon lord nullicurse disappears during 5th vulnerability phase
 updated sprites:
 	qb gores
 	abom fang
+	mutant fang
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
