@@ -117,6 +117,7 @@ skeletron hands and bones inflict lethargic
 nerfed skeletron hand respawn rate to 1 minute
 text description for when skeletron/prime go DG
 stardust cell minion's shot is classed as minion in maso so it can fucking hurt maso ML (it's classless by default, thanks red)
+moon lord nullicurse disappears during 5th vulnerability phase
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

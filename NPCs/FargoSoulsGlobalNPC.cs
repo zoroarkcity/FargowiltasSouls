@@ -3912,7 +3912,7 @@ namespace FargowiltasSouls.NPCs
                         if (!npc.dontTakeDamage)
                             Counter++; //phases transition twice as fast when core is exposed
 
-                        if (Main.player[Main.myPlayer].active && !Main.player[Main.myPlayer].dead)
+                        if (Main.player[Main.myPlayer].active && !Main.player[Main.myPlayer].dead && masoStateML >= 0 && masoStateML <= 3)
                             Main.player[Main.myPlayer].AddBuff(mod.BuffType("NullificationCurse"), 2);
 
                         if (!masoBool[0])
