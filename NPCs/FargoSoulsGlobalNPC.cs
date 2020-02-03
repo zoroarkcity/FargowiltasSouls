@@ -2827,7 +2827,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             Timer++;
 
-                            if (Timer >= 1800)
+                            if (Timer >= 3600)
                             {
                                 Timer = 0;
 
@@ -7647,10 +7647,12 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.SkeletronHead:
+                        target.AddBuff(mod.BuffType("Defenseless"), 300);
                         target.AddBuff(mod.BuffType("Lethargic"), 300);
                         break;
 
                     case NPCID.SkeletronHand:
+                        target.AddBuff(mod.BuffType("Lethargic"), 300);
                         if (Main.rand.Next(2) == 0)
                             target.AddBuff(BuffID.Dazed, 60);
                         break;

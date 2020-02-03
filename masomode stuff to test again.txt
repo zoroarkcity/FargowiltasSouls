@@ -112,6 +112,9 @@ destroyer clears dark stars when initiating a spin
 
 nerfed twins revive life to 25%
 skeletron has bee resist
+skeletron head inflicts defenseless
+skeletron hands and bones inflict lethargic
+nerfed skeletron hand respawn rate to 1 minute
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
