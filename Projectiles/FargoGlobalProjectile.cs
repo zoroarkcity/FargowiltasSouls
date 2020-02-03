@@ -62,6 +62,10 @@ namespace FargowiltasSouls.Projectiles
             {
                 switch (projectile.type)
                 {
+                    case ProjectileID.StardustCellMinionShot:
+                        projectile.minion = true; //allows it to hurt maso ML
+                        break;
+
                     case ProjectileID.StardustGuardian:
                     case ProjectileID.StardustGuardianExplosion:
                         TimeFreezeImmune = true;
