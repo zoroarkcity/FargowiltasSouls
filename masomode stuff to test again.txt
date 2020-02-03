@@ -115,6 +115,7 @@ skeletron has bee resist
 skeletron head inflicts defenseless
 skeletron hands and bones inflict lethargic
 nerfed skeletron hand respawn rate to 1 minute
+text description for when skeletron/prime go DG
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

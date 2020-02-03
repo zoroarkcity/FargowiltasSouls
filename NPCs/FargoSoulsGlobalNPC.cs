@@ -10561,6 +10561,10 @@ namespace FargowiltasSouls.NPCs
                             npc.damage = npc.defDamage * 15;
                             npc.ai[1] = 2f;
                             npc.netUpdate = true;
+                            if (Main.netMode == 2)
+                                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Skeletron has entered Dungeon Guardian form!"), new Color(175, 75, 255));
+                            else if (Main.netMode == 0)
+                                Main.NewText("Skeletron has entered Dungeon Guardian form!", 175, 75, 255);
                             return false;
                         }
                         else if (FargoSoulsWorld.SkeletronCount < FargoSoulsWorld.MaxCountPreHM)
@@ -10592,6 +10596,10 @@ namespace FargowiltasSouls.NPCs
                             npc.damage *= 13;
                             npc.ai[1] = 2f;
                             npc.netUpdate = true;
+                            if (Main.netMode == 2)
+                                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Skeletron Prime has entered Dungeon Guardian form!"), new Color(175, 75, 255));
+                            else if (Main.netMode == 0)
+                                Main.NewText("Skeletron Prime has entered Dungeon Guardian form!", 175, 75, 255);
                             return false;
                         }
                         else if (FargoSoulsWorld.PrimeCount < FargoSoulsWorld.MaxCountHM)
