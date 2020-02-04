@@ -14,7 +14,335 @@ namespace FargowiltasSouls
         public override ConfigScope Mode => ConfigScope.ClientSide;
         public static SoulConfig Instance;
 
-        /*//[Header("$Mods.FargowiltasSouls.WoodHeader")]
+        private void SetAll(bool val)
+        {
+            //wood force
+            BorealSnowballs = val;
+            EbonwoodAura = val;
+            ShadewoodEffect = val;
+            MahoganyHook = val;
+            PalmwoodSentry = val;
+            PearlwoodStars = val;
+
+            //force of earth
+            AdamantiteSplit = val;
+            CobaltShards = val;
+            CobaltStingers = val;
+            MythrilSpeed = val;
+            OrichalcumFire = val;
+            PalladiumHeal = val;
+            TitaniumDodge = val;
+
+            //terra force
+            CopperLightning = val;
+            IronMagnet = val;
+            IronShield = val;
+            CthulhuShield = val;
+            TinCrit = val;
+            TungstenSize = val;
+
+            //force of will
+            GladiatorJavelins = val;
+            LuckyCoin = val;
+            HuntressAbility = val;
+            ValhallaEffect = val;
+            SquireKB = val;
+
+            //force of life
+            BeetleEffect = val;
+            CactusNeedles = val;
+            PumpkinFire = val;
+            SpiderCrits = val;
+            TurtleShell = val;
+
+            //force of nature
+            ChlorophyteCrystals = val;
+            ChlorophyteFlowerBoots = val;
+            CrimsonRegen = val;
+            RainCloud = val;
+            FrostIcicles = val;
+            JungleSpores = val;
+            MoltenInferno = val;
+            MoltenExplosion = val;
+            ShroomiteStealth = val;
+
+            //shadow force
+            DarkArtistMinion = val;
+            ApprenticeEffect = val;
+            NecroGuardian = val;
+            ShadowDarkness = val;
+            MonkDash = val;
+            ShinobiWalls = val;
+            ShinobiTabi = val;
+            ShinobiClimbing = val;
+            SpookyScythes = val;
+
+            //force of spirit
+            ForbiddenStorm = val;
+            HallowShield = val;
+            HallowSword = val;
+            SilverSword = val;
+            SpectreOrbs = val;
+            TikiMinions = val;
+
+            //force of cosmos
+            MeteorShower = val;
+            NebulaBoost = val;
+            SolarShield = val;
+            StardustGuardian = val;
+            VortexStealth = val;
+            VortexVoid = val;
+
+            //maso
+            SinisterIcon = val;
+
+            //supreme deathbringer fairy
+            SlimyShield = val;
+            AgitatedLens = val;
+            NecromanticBrew = val;
+
+            //bionomic cluster
+            TimsConcoction = val;
+            RainbowSlime = val;
+            FrigidGemstone = val;
+            NymphPerfume = val;
+            SqueakyToy = val;
+            WretchedPouch = val;
+            DragonFang = val;
+            TribalCharm = val;
+
+            //wallet
+            walletToggles.Deadly = val;
+            walletToggles.Demonic = val;
+            walletToggles.Godly = val;
+            walletToggles.Legendary = val;
+            walletToggles.Light = val;
+            walletToggles.Lucky = val;
+            walletToggles.Menacing = val;
+            walletToggles.Mythical = val;
+            walletToggles.Quick = val;
+            walletToggles.Rapid = val;
+            walletToggles.Ruthless = val;
+            walletToggles.Unreal = val;
+            walletToggles.Violent = val;
+            walletToggles.Warding = val;
+
+            //dubious circuitry
+            LightningRod = val;
+            ProbeMinion = val;
+
+            //pure heart
+            CorruptHeart = val;
+            GuttedHeart = val;
+
+            //lump of flesh
+            PungentEye = val;
+
+            //chalice
+            CultistMinion = val;
+            PlanteraMinion = val;
+            LihzahrdBoxGeysers = val;
+            LihzahrdBoxSpikyBalls = val;
+            CelestialRune = val;
+            AncientVisions = val;
+
+            //heart of the masochist
+            PumpkingCape = val;
+            FlockoMinion = val;
+            UFOMinion = val;
+            GravityControl = val;
+            StabilizedGravity = val;
+            TrueEyes = val;
+
+            //cyclonic fin
+            FishronMinion = val;
+
+            //mutant armor
+            AbomMinion = val;
+            RingMinion = val;
+
+            //soul toggles
+            BerserkerAttackSpeed = val;
+            SniperScope = val;
+            UniverseAttackSpeed = val;
+            MinerHunter = val;
+            MinerDanger = val;
+            MinerSpelunker = val;
+            MinerShine = val;
+            BuilderMode = val;
+            SporeSac = val;
+            StarCloak = val;
+            BeesOnHit = val;
+            SupersonicSpeed = val;
+            EternityStacking = val;
+
+            //pets
+            BlackCatPet = val;
+            CompanionCubePet = val;
+            CursedSaplingPet = val;
+            DinoPet = val;
+            DragonPet = val;
+            EaterPet = val;
+            EyeSpringPet = val;
+            FaceMonsterPet = val;
+            GatoPet = val;
+            HornetPet = val;
+            LizardPet = val;
+            MinotaurPet = val;
+            ParrotPet = val;
+            PenguinPet = val;
+            PuppyPet = val;
+            SeedlingPet = val;
+            DGPet = val;
+            SnowmanPet = val;
+            SpiderPet = val;
+            SquashlingPet = val;
+            TikiPet = val;
+            TrufflePet = val;
+            TurtlePet = val;
+            ZephyrFishPet = val;
+            CrimsonHeartPet = val;
+            FairyPet = val;
+            FlickerwickPet = val;
+            MagicLanternPet = val;
+            ShadowOrbPet = val;
+            SuspiciousEyePet = val;
+            WispPet = val;
+
+            //remember to add your toggles here alphabetically!
+            #region thorium
+
+            thoriumToggles.AirWalkers = val;
+            thoriumToggles.AscensionStatue = val;
+            thoriumToggles.AssassinDamage = val;
+            thoriumToggles.BeeBooties = val;
+            thoriumToggles.BeholderEye = val;
+            thoriumToggles.BerserkerEffect = val;
+            thoriumToggles.BioFeederPet = val;
+            thoriumToggles.BiotechProbe = val;
+            thoriumToggles.BlisterPet = val;
+            thoriumToggles.BoxPet = val;
+            thoriumToggles.BronzeLightning = val;
+            thoriumToggles.CelestialAura = val;
+            thoriumToggles.CherubMinion = val;
+            thoriumToggles.CoinPet = val;
+            thoriumToggles.ConduitShield = val;
+            thoriumToggles.Crietz = val;
+            thoriumToggles.CryoDamage = val;
+            thoriumToggles.CrystalScorpion = val;
+            thoriumToggles.CyberStates = val;
+            thoriumToggles.DemonBloodEffect = val;
+            thoriumToggles.DevilMinion = val;
+            thoriumToggles.DragonFlames = val;
+            thoriumToggles.DreadSpeed = val;
+            thoriumToggles.EyeoftheStorm = val;
+            thoriumToggles.FleshDrops = val;
+            thoriumToggles.FolvAura = val;
+            thoriumToggles.FolvBolts = val;
+            thoriumToggles.GlitterPet = val;
+            thoriumToggles.GoatPet = val;
+            thoriumToggles.GreedyMagnet = val;
+            thoriumToggles.HarbingerOvercharge = val;
+            thoriumToggles.HeadMirror = val;
+            thoriumToggles.IcyBarrier = val;
+            thoriumToggles.IFOPet = val;
+            thoriumToggles.IllumiteMissile = val;
+            thoriumToggles.IncandescentSpark = val;
+            thoriumToggles.JellyfishPet = val;
+            thoriumToggles.JesterBell = val;
+            thoriumToggles.LanternPet = val;
+            thoriumToggles.LodestoneResist = val;
+            thoriumToggles.MaidPet = val;
+            thoriumToggles.ManaBoots = val;
+            thoriumToggles.MarchingBand = val;
+            thoriumToggles.Metronome = val;
+            thoriumToggles.MixTape = val;
+            thoriumToggles.MooglePet = val;
+            thoriumToggles.OmegaPet = val;
+            thoriumToggles.OwlPet = val;
+            thoriumToggles.PlagueFlask = val;
+            thoriumToggles.PyromancerBursts = val;
+            thoriumToggles.SaplingMinion = val;
+            thoriumToggles.SlagStompers = val;
+            thoriumToggles.SlimePet = val;
+            thoriumToggles.SpiritPet = val;
+            thoriumToggles.SpiritTrapperWisps = val;
+            thoriumToggles.SpringSteps = val;
+            thoriumToggles.TerrariumSpirits = val;
+            thoriumToggles.ThoriumDivers = val;
+            thoriumToggles.TideDaggers = val;
+            thoriumToggles.TideFoam = val;
+            thoriumToggles.TideGlobules = val;
+            thoriumToggles.VampireGland = val;
+            thoriumToggles.WarlockWisps = val;
+            thoriumToggles.WhisperingTentacles = val;
+            thoriumToggles.WhiteDwarf = val;
+            thoriumToggles.WyvernPet = val;
+            thoriumToggles.YewCrits = val;
+            thoriumToggles.YumasPendant = val;
+
+            #endregion
+
+            //remember to add your toggles here alphabetically!
+            #region calamity
+
+            calamityToggles.AkatoPet = val;
+            calamityToggles.AmidiasPendant = val;
+            calamityToggles.AstralStars = val;
+            calamityToggles.AtaxiaEffects = val;
+            calamityToggles.AuricEffects = val;
+            calamityToggles.BearPet = val;
+            calamityToggles.BloodflareEffects = val;
+            calamityToggles.BrimlingPet = val;
+            calamityToggles.ChaosMinion = val;
+            calamityToggles.ChibiiPet = val;
+            calamityToggles.DaedalusEffects = val;
+            calamityToggles.DaedalusMinion = val;
+            calamityToggles.DannyPet = val;
+            calamityToggles.DivingSuit = val;
+            calamityToggles.ElementalQuiver = val;
+            calamityToggles.FabledTurtleShell = val;
+            calamityToggles.FoxPet = val;
+            calamityToggles.FungalMinion = val;
+            calamityToggles.GiantPearl = val;
+            calamityToggles.GladiatorLocket = val;
+            calamityToggles.GodlySoulArtifact = val;
+            calamityToggles.GodSlayerEffects = val;
+            calamityToggles.KendraPet = val;
+            calamityToggles.LeviPet = val;
+            calamityToggles.LuxorGift = val;
+            calamityToggles.MechwormMinion = val;
+            calamityToggles.NebulousCore = val;
+            calamityToggles.OmegaTentacles = val;
+            calamityToggles.PerforatorPet = val;
+            calamityToggles.PermafrostPotion = val;
+            calamityToggles.PlagueHive = val;
+            calamityToggles.PoisonSeawater = val;
+            calamityToggles.PolterMines = val;
+            calamityToggles.ProfanedSoulArtifact = val;
+            calamityToggles.ReaperToothNecklace = val;
+            calamityToggles.ReaverEffects = val;
+            calamityToggles.ReaverMinion = val;
+            calamityToggles.RedDevilMinion = val;
+            calamityToggles.Regenerator = val;
+            calamityToggles.ShellfishMinion = val;
+            calamityToggles.SilvaEffects = val;
+            calamityToggles.SilvaMinion = val;
+            calamityToggles.SirenPet = val;
+            calamityToggles.SlimeMinion = val;
+            calamityToggles.TarragonEffects = val;
+            calamityToggles.ThirdSagePet = val;
+            calamityToggles.UnstablePrism = val;
+            calamityToggles.UrchinMinion = val;
+            calamityToggles.ValkyrieMinion = val;
+            calamityToggles.WaifuMinions = val;
+            calamityToggles.XerocEffects = val;
+            calamityToggles.YharimGift = val;
+
+            #endregion
+        }
+
+        //[Header("$Mods.FargowiltasSouls.WoodHeader")]
         [Label("Toggle All On")]
         public bool PresetA
         {
@@ -23,12 +351,7 @@ namespace FargowiltasSouls
             {
                 if (value)
                 {
-                    BorealSnowballs = true;
-                    EbonwoodAura = true;
-                    ShadewoodEffect = true;
-                    MahoganyHook = true;
-                    PalmwoodSentry = true;
-                    PearlwoodStars = true;
+                    SetAll(true);
                 }
             }
         }
@@ -41,19 +364,10 @@ namespace FargowiltasSouls
             {
                 if (value)
                 {
-                    BorealSnowballs = false;
-                    EbonwoodAura = false;
-                    ShadewoodEffect = false;
-                    MahoganyHook = false;
-                    PalmwoodSentry = false;
-                    PearlwoodStars = false;
+                    SetAll(false);
                 }
             }
-        }*/
-
-
-
-
+        }
 
 
         [Header("$Mods.FargowiltasSouls.WoodHeader")]
@@ -265,7 +579,7 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool HallowSword;
 
-        [Label("$Mods.FargowiltasSouls.HalllowSConfig")]
+        [Label("$Mods.FargowiltasSouls.HallowSConfig")]
         [DefaultValue(true)]
         public bool HallowShield;
 

@@ -127,6 +127,8 @@ boosted range of destroyer's enrage coil stars
 destroyer shoots inward accelerating lasers during the coil
 adjusted abom curse recipe
 
+ADDED TOGGLE ON/OFF BUTTONS TO MODCONFIG POGOOOOOOOO
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)
