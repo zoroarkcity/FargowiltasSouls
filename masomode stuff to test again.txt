@@ -128,6 +128,7 @@ destroyer shoots inward accelerating lasers during the coil
 adjusted abom curse recipe
 
 ADDED TOGGLE ON/OFF BUTTONS TO MODCONFIG POGOOOOOOOO
+fixed an internal typo with a hallow toggle, make sure these work
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
