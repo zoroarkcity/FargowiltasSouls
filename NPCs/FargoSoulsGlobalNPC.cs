@@ -3241,7 +3241,7 @@ namespace FargowiltasSouls.NPCs
                             if (npc.life < (int)(npc.lifeMax * .75))
                             {
                                 masoBool[0] = true;
-                                Counter = 720;
+                                Counter = 900;
                                 npc.netUpdate = true;
                                 if (npc.HasPlayerTarget)
                                     Main.PlaySound(15, (int)Main.player[npc.target].position.X, (int)Main.player[npc.target].position.Y, 0);
@@ -3276,6 +3276,21 @@ namespace FargowiltasSouls.NPCs
 
                                     Vector2 pivot = npc.Center;
                                     pivot += Vector2.Normalize(npc.velocity.RotatedBy(Math.PI / 2)) * 600;
+
+                                    if (++Timer > 100)
+                                    {
+                                        Timer = 0;
+                                        if (Main.netMode != 1)
+                                        {
+                                            const int max = 7;
+                                            for (int i = 0; i < max; i++)
+                                            {
+                                                Vector2 speed = npc.DirectionTo(pivot).RotatedBy(2 * Math.PI / max * i);
+                                                Vector2 spawnPos = pivot - speed * 600;
+                                                Projectile.NewProjectile(spawnPos, speed, mod.ProjectileType("DestroyerLaser"), npc.damage / 5, 0f, Main.myPlayer);
+                                            }
+                                        }
+                                    }
 
                                     for (int i = 0; i < 20; i++) //arena dust
                                     {
@@ -3352,7 +3367,7 @@ namespace FargowiltasSouls.NPCs
                                     }
                                     else
                                     {
-                                        if (++Counter > 720) //change state
+                                        if (++Counter > 900) //change state
                                         {
                                             Counter = 0;
                                             masoBool[2] = true;

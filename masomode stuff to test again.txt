@@ -124,6 +124,8 @@ updated sprites:
 	mutant fang
 nerfed pillar hp to 40k (was 60k)
 boosted range of destroyer's enrage coil stars
+destroyer shoots inward accelerating lasers during the coil
+adjusted abom curse recipe
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
