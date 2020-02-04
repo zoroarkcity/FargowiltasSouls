@@ -329,7 +329,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.LunarTowerNebula:
                     case NPCID.LunarTowerStardust:
                     case NPCID.LunarTowerVortex:
-                        npc.lifeMax *= 3;
+                        npc.lifeMax *= 2;
                         npc.buffImmune[mod.BuffType("ClippedWings")] = true;
                         break;
 
@@ -5240,13 +5240,13 @@ namespace FargowiltasSouls.NPCs
                                     int type = mod.ProjectileType("DarkStar");
                                     int p = Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 3, 0f, Main.myPlayer);
                                     if (p != Main.maxProjectiles)
-                                        Main.projectile[p].timeLeft = 60;
+                                        Main.projectile[p].timeLeft = 150;
                                     p = Projectile.NewProjectile(npc.Center, distance, type, npc.damage / 3, 0f, Main.myPlayer);
                                     if (p != Main.maxProjectiles)
-                                        Main.projectile[p].timeLeft = 60;
+                                        Main.projectile[p].timeLeft = 150;
                                     p = Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 3, 0f, Main.myPlayer);
                                     if (p != Main.maxProjectiles)
-                                        Main.projectile[p].timeLeft = 60;
+                                        Main.projectile[p].timeLeft = 150;
                                 }
                             }
 

@@ -122,6 +122,8 @@ updated sprites:
 	qb gores
 	abom fang
 	mutant fang
+nerfed pillar hp to 40k (was 60k)
+boosted range of destroyer's enrage coil stars
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
