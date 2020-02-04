@@ -42,7 +42,6 @@ namespace FargowiltasSouls
             }
         }
 
-        //[Header("$Mods.FargowiltasSouls.WoodHeader")]
         [Label("Toggle All On")]
         public bool PresetA
         {
@@ -84,7 +83,6 @@ namespace FargowiltasSouls
         public bool ShadewoodEffect;
 
         [Label("$Mods.FargowiltasSouls.MahoganyConfig")]
-        //[BackgroundColor(181, 108, 100)]
         [DefaultValue(true)]
         public bool MahoganyHook;
 
@@ -683,10 +681,7 @@ namespace FargowiltasSouls
 
         public bool GetValue(bool toggle, bool checkForMutantPresence = true)
         {
-            if (checkForMutantPresence && Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantPresence)
-                return false;
-
-            return toggle;
+            return checkForMutantPresence && Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantPresence ? false : toggle;
         }
     }
 
