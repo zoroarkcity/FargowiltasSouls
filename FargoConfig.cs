@@ -1,11 +1,8 @@
-﻿
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
 namespace FargowiltasSouls
