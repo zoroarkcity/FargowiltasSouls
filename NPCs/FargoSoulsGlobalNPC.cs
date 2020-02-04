@@ -3282,7 +3282,7 @@ namespace FargowiltasSouls.NPCs
                                         Timer = 0;
                                         if (Main.netMode != 1)
                                         {
-                                            const int max = 7;
+                                            const int max = 6;
                                             for (int i = 0; i < max; i++)
                                             {
                                                 Vector2 speed = npc.DirectionTo(pivot).RotatedBy(2 * Math.PI / max * i);
@@ -3347,7 +3347,11 @@ namespace FargowiltasSouls.NPCs
                                         num16 = 0.5f;
 
                                         target += Main.player[npc.target].DirectionTo(npc.Center) * 600;
-                                        if (++Counter > 300 || npc.Distance(target) < 50)
+
+                                        if (++Counter > 300) //move way faster if still not in range
+                                            num14 *= 2f;
+
+                                        if (npc.Distance(target) < 50)
                                         {
                                             Counter = 0;
                                             Counter2 = (int)npc.Distance(Main.player[npc.target].Center);
