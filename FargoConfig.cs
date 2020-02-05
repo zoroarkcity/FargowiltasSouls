@@ -14,11 +14,13 @@ namespace FargowiltasSouls
 
         private void SetAll(bool val)
         {
+            bool recolorsValue = BossRecolors;
             IEnumerable<FieldInfo> configs = typeof(SoulConfig).GetFields(BindingFlags.Public | BindingFlags.Instance).Where(i => i.FieldType == true.GetType());
             foreach (FieldInfo config in configs)
             {
                 config.SetValue(this, val);
             }
+            BossRecolors = recolorsValue;
 
             IEnumerable<FieldInfo> walletConfigs = typeof(WalletToggles).GetFields(BindingFlags.Public | BindingFlags.Instance).Where(i => i.FieldType == true.GetType());
             foreach (FieldInfo walletConfig in walletConfigs)
