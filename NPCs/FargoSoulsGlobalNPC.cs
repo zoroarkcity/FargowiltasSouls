@@ -763,8 +763,7 @@ namespace FargowiltasSouls.NPCs
                         break;
                 }
 
-                if (npc.boss)
-                    npc.npcSlots += 100;
+                //if (npc.boss) npc.npcSlots += 100;
             }
         }
 
@@ -8826,6 +8825,11 @@ namespace FargowiltasSouls.NPCs
             {
                 spawnRate = (int)(spawnRate * 0.8);
                 maxSpawns = (int)(maxSpawns * 1.5f);
+
+                if (AnyBossAlive())
+                {
+                    maxSpawns = 0;
+                }
             }
 
             if (modPlayer.Bloodthirsty)
