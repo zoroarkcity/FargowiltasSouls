@@ -2017,7 +2017,7 @@ namespace FargowiltasSouls.NPCs
 
                             if (npc.ai[1] == 0f) //not dashing
                             {
-                                if (retiAlive && Main.npc[retiBoss].ai[0] >= 4f && Main.npc[retiBoss].GetGlobalNPC<FargoSoulsGlobalNPC>().Counter == 0) //reti is in normal AI
+                                if (retiAlive && (Main.npc[retiBoss].ai[0] < 4f || Main.npc[retiBoss].GetGlobalNPC<FargoSoulsGlobalNPC>().Counter == 0)) //reti is in normal AI
                                 {
                                     npc.ai[1] = 1; //switch to dashing
                                     npc.ai[2] = 0;
