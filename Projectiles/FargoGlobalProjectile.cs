@@ -85,6 +85,7 @@ namespace FargowiltasSouls.Projectiles
                         {
                             projectile.tileCollide = false;
                             projectile.timeLeft = 120;
+                            projectile.extraUpdates = 1;
                         }
                         break;
 

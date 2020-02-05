@@ -134,6 +134,7 @@ nerfed eow minion's detection range and speed
 added optic staff ex sprite
 fixed golem crashing on reload
 spaz dashes constantly in p3 even if reti is still in p2(?)
+wof cursed flame wall fireballs move faster
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
