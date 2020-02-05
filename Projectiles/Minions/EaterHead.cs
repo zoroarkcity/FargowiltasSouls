@@ -79,8 +79,8 @@ namespace FargowiltasSouls.Projectiles.Minions
             num1038 = 30;
 
             Vector2 center = player.Center;
-            float num1040 = 350f;
-            float num1041 = 500f;
+            float num1040 = 250f;
+            float num1041 = 300f;
             int num1042 = -1;
             if (projectile.Distance(center) > 2000f)
             {
