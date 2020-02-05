@@ -400,9 +400,6 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.WallofFleshEye:
                         npc.buffImmune[mod.BuffType("ClippedWings")] = true;
                         break;
-                    case NPCID.TheHungry:
-                        npc.knockBackResist = 0f;
-                        break;
                     case NPCID.TheHungryII:
                         npc.noTileCollide = true;
                         break;
