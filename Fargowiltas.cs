@@ -465,6 +465,13 @@ namespace FargowiltasSouls
         {
             if (DebuffIDs != null)
                 DebuffIDs.Clear();
+
+            //game will reload golem textures, this helps prevent the crash on reload
+            Main.NPCLoaded[NPCID.Golem] = false;
+            Main.NPCLoaded[NPCID.GolemFistLeft] = false;
+            Main.NPCLoaded[NPCID.GolemFistRight] = false;
+            Main.NPCLoaded[NPCID.GolemHead] = false;
+            Main.NPCLoaded[NPCID.GolemHeadFree] = false;
         }
 
         public override object Call(params object[] args)

@@ -8,8 +8,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
     public class OpticStaffEX : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Optic Staff EX");
