@@ -3099,7 +3099,7 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     masoBool[3] = true;
                                     if (Main.netMode != 1 && !Main.hardMode && Fargowiltas.Instance.FargowiltasLoaded)
-                                        Item.NewItem(npc.Hitbox, ModLoader.GetMod("Fargowiltas").ItemType("FleshyDoll"));
+                                        Item.NewItem(npc.Hitbox, mod.ItemType("FleshierDoll"));
                                 }
                             }
                             else if (Math.Abs(npc.velocity.X) > 8f)
