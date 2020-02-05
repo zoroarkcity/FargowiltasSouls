@@ -136,6 +136,7 @@ fixed golem crashing on reload
 spaz dashes constantly in p3 even if reti is still in p2(?)
 wof cursed flame wall fireballs move faster
 hungries no longer KB immune
+maso wof will drop a fleshy doll if it kills you and you havent beat wof yet
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

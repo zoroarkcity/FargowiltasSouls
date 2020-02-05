@@ -3093,9 +3093,19 @@ namespace FargowiltasSouls.NPCs
                         {
                             npc.TargetClosest(true);
                             if (Main.player[npc.target].dead || Vector2.Distance(npc.Center, Main.player[npc.target].Center) > 3000)
-                                npc.position.X += 20 * Math.Sign(npc.velocity.X);
+                            {
+                                npc.position.X += 20 * Math.Sign(npc.velocity.X); //move faster to despawn
+                                if (!masoBool[3]) //drop a resummon
+                                {
+                                    masoBool[3] = true;
+                                    if (Main.netMode != 1 && !Main.hardMode && Fargowiltas.Instance.FargowiltasLoaded)
+                                        Item.NewItem(npc.Hitbox, ModLoader.GetMod("Fargowiltas").ItemType("FleshyDoll"));
+                                }
+                            }
                             else if (Math.Abs(npc.velocity.X) > 8f)
+                            {
                                 npc.position.X -= (Math.Abs(npc.velocity.X) - 8f) * Math.Sign(npc.velocity.X);
+                            }
                         }
                         else if (Math.Abs(npc.velocity.X) > 8f)
                             npc.position.X -= (Math.Abs(npc.velocity.X) - 8f) * Math.Sign(npc.velocity.X);
