@@ -130,6 +130,7 @@ adjusted abom curse recipe
 ADDED TOGGLE ON/OFF BUTTONS TO MODCONFIG POGOOOOOOOO
 fixed an internal typo with a hallow toggle, make sure these work
 fixed destroyer freaking the hell out if you were out of range when it began coil
+nerfed eow minion's detection range and speed
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
