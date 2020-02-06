@@ -1,20 +1,46 @@
-﻿
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
 namespace FargowiltasSouls
 {
     class SoulConfig : ModConfig
     {
-
         public override ConfigScope Mode => ConfigScope.ClientSide;
         public static SoulConfig Instance;
 
-        /*//[Header("$Mods.FargowiltasSouls.WoodHeader")]
+        private void SetAll(bool val)
+        {
+            bool recolorsValue = BossRecolors;
+            IEnumerable<FieldInfo> configs = typeof(SoulConfig).GetFields(BindingFlags.Public | BindingFlags.Instance).Where(i => i.FieldType == true.GetType());
+            foreach (FieldInfo config in configs)
+            {
+                config.SetValue(this, val);
+            }
+            BossRecolors = recolorsValue;
+
+            IEnumerable<FieldInfo> walletConfigs = typeof(WalletToggles).GetFields(BindingFlags.Public | BindingFlags.Instance).Where(i => i.FieldType == true.GetType());
+            foreach (FieldInfo walletConfig in walletConfigs)
+            {
+                walletConfig.SetValue(walletToggles, val);
+            }
+
+            IEnumerable<FieldInfo> thoriumConfigs = typeof(ThoriumToggles).GetFields(BindingFlags.Public | BindingFlags.Instance).Where(i => i.FieldType == true.GetType());
+            foreach (FieldInfo thoriumConfig in thoriumConfigs)
+            {
+                thoriumConfig.SetValue(thoriumToggles, val);
+            }
+
+            IEnumerable<FieldInfo> calamityConfigs = typeof(CalamityToggles).GetFields(BindingFlags.Public | BindingFlags.Instance).Where(i => i.FieldType == true.GetType());
+            foreach (FieldInfo calamityConfig in calamityConfigs)
+            {
+                calamityConfig.SetValue(calamityToggles, val);
+            }
+        }
+
         [Label("Toggle All On")]
         public bool PresetA
         {
@@ -23,12 +49,7 @@ namespace FargowiltasSouls
             {
                 if (value)
                 {
-                    BorealSnowballs = true;
-                    EbonwoodAura = true;
-                    ShadewoodEffect = true;
-                    MahoganyHook = true;
-                    PalmwoodSentry = true;
-                    PearlwoodStars = true;
+                    SetAll(true);
                 }
             }
         }
@@ -41,19 +62,10 @@ namespace FargowiltasSouls
             {
                 if (value)
                 {
-                    BorealSnowballs = false;
-                    EbonwoodAura = false;
-                    ShadewoodEffect = false;
-                    MahoganyHook = false;
-                    PalmwoodSentry = false;
-                    PearlwoodStars = false;
+                    SetAll(false);
                 }
             }
-        }*/
-
-
-
-
+        }
 
 
         [Header("$Mods.FargowiltasSouls.WoodHeader")]
@@ -70,7 +82,6 @@ namespace FargowiltasSouls
         public bool ShadewoodEffect;
 
         [Label("$Mods.FargowiltasSouls.MahoganyConfig")]
-        //[BackgroundColor(181, 108, 100)]
         [DefaultValue(true)]
         public bool MahoganyHook;
 
@@ -265,7 +276,7 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool HallowSword;
 
-        [Label("$Mods.FargowiltasSouls.HalllowSConfig")]
+        [Label("$Mods.FargowiltasSouls.HallowSConfig")]
         [DefaultValue(true)]
         public bool HallowShield;
 
@@ -669,10 +680,7 @@ namespace FargowiltasSouls
 
         public bool GetValue(bool toggle, bool checkForMutantPresence = true)
         {
-            if (checkForMutantPresence && Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantPresence)
-                return false;
-
-            return toggle;
+            return checkForMutantPresence && Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantPresence ? false : toggle;
         }
     }
 

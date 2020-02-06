@@ -65,7 +65,7 @@ namespace FargowiltasSouls.Items.Misc
             }
         }
 
-        public override void AddRecipes()
+        public override void AddRecipes() //make this harder again when changed to abom's gift
         {
             if (Fargowiltas.Instance.FargowiltasLoaded)
             {
@@ -76,11 +76,11 @@ namespace FargowiltasSouls.Items.Misc
                 recipe.AddIngredient(ItemID.NaughtyPresent);
                 recipe.AddIngredient(ItemID.SnowGlobe);
                 recipe.AddIngredient(ItemID.DD2ElderCrystal);
-                recipe.AddIngredient(ItemID.LunarBar, 10);
-                recipe.AddIngredient(null, "LunarCrystal", 5);
+                recipe.AddIngredient(ItemID.LunarBar, 5);
+                recipe.AddIngredient(null, "LunarCrystal");
 
                 recipe.AddTile(mod, "CrucibleCosmosSheet");
-                recipe.SetResult(this);
+                recipe.SetResult(this, 5);
                 recipe.AddRecipe();
             }
         }

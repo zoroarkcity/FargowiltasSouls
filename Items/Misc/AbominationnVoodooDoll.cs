@@ -24,6 +24,7 @@ namespace FargowiltasSouls.Items.Misc
             item.useAnimation = 30;
             item.useTime = 30;
             item.useStyle = 4;
+            item.maxStack = 20;
             item.value = Item.sellPrice(0, 1);
         }
 
@@ -45,7 +46,6 @@ namespace FargowiltasSouls.Items.Misc
         {
             if (item.lavaWet)
             {
-                item.active = false;
                 if (Fargowiltas.Instance.FargowiltasLoaded)
                 {
                     if (Main.netMode != 1)
@@ -70,6 +70,7 @@ namespace FargowiltasSouls.Items.Misc
                 {
                     NPC.SpawnOnPlayer(Player.FindClosest(item.position, 0, 0), mod.NPCType("MutantBoss"));
                 }
+                item.TurnToAir();
             }
         }
 

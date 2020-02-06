@@ -132,7 +132,7 @@ namespace FargowiltasSouls
             AddToggle("SpiritHeader", "Force of Spirit", "SpiritForce", "ffffff");
             AddToggle("ForbiddenConfig", "Forbidden Storm", "ForbiddenEnchant", "e7b21c");
             AddToggle("HallowedConfig", "Hallowed Enchanted Sword Familiar", "HallowEnchant", "968564");
-            AddToggle("HalllowSConfig", "Hallowed Shield", "HallowEnchant", "968564");
+            AddToggle("HallowSConfig", "Hallowed Shield", "HallowEnchant", "968564");
             AddToggle("SilverConfig", "Silver Sword Familiar", "SilverEnchant", "b4b4cc");
             AddToggle("SpectreConfig", "Spectre Orbs", "SpectreEnchant", "accdfc");
             AddToggle("TikiConfig", "Tiki Minions", "TikiEnchant", "56A52B");
@@ -465,6 +465,13 @@ namespace FargowiltasSouls
         {
             if (DebuffIDs != null)
                 DebuffIDs.Clear();
+
+            //game will reload golem textures, this helps prevent the crash on reload
+            Main.NPCLoaded[NPCID.Golem] = false;
+            Main.NPCLoaded[NPCID.GolemFistLeft] = false;
+            Main.NPCLoaded[NPCID.GolemFistRight] = false;
+            Main.NPCLoaded[NPCID.GolemHead] = false;
+            Main.NPCLoaded[NPCID.GolemHeadFree] = false;
         }
 
         public override object Call(params object[] args)

@@ -36,6 +36,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 target.immuneTime = 0;
                 target.hurtCooldowns[1] = 0;
             }
+            target.AddBuff(mod.BuffType("Lethargic"), 300);
         }
     }
 }

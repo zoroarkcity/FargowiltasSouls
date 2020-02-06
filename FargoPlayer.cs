@@ -386,7 +386,7 @@ namespace FargowiltasSouls
                         netMessage.Write((byte)1);
                         netMessage.Write((byte)i);
                         netMessage.Send();
-                        Main.npc[i].lifeMax *= 3;
+                        Main.npc[i].lifeMax *= 2;
                     }
                     else
                     {

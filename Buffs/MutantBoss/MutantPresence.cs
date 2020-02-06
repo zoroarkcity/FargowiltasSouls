@@ -19,12 +19,6 @@ namespace FargowiltasSouls.Buffs.MutantBoss
             canBeCleared = false;
         }
 
-        public override bool Autoload(ref string name, ref string texture)
-        {
-            texture = "FargowiltasSouls/Buffs/PlaceholderDebuff";
-            return true;
-        }
-
         public override void Update(Player player, ref int buffIndex)
         {
             //also halves defense, DR, and cripples life regen

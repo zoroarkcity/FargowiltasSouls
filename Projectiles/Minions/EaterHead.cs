@@ -79,8 +79,8 @@ namespace FargowiltasSouls.Projectiles.Minions
             num1038 = 30;
 
             Vector2 center = player.Center;
-            float num1040 = 700f;
-            float num1041 = 1000f;
+            float num1040 = 300f;
+            float num1041 = 400f;
             int num1042 = -1;
             if (projectile.Distance(center) > 2000f)
             {
@@ -181,6 +181,8 @@ namespace FargowiltasSouls.Projectiles.Minions
                     projectile.alpha = 0;
                 }
             }
+
+            projectile.position -= projectile.velocity / 2;
         }
     }
 }

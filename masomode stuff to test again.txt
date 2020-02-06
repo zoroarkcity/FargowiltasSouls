@@ -91,15 +91,52 @@ iron magnet ignores mutant presence
 maso soul increases graze range slightly
 nerfed betsy dash cooldown (now 3sec, from 2sec)
 
-
-
-
-
-
-
-
 fixed eow scaling per segment killed!!!!
 adjusted abom despawn during sword attacks
+cultist always drops seal in mp, fuck it
+
+changed how some debuffs are applied (stoned, frozen, stunned, etc):
+	enemies can always apply debuff on first hit if you dont already have it
+	after applying it, they must hit you once while you dont have the debuff and THEN the next hit can debuff you again
+
+sharkrons no longer inflict feral bite
+nerfed oceanic maul life reduction per hit on fishron EX
+reduced velocity of fishron p3 razor rings slightly
+fishron defense becomes 0 in p3
+OOA wave delay is now 5 seconds
+moon lord core regen disabled entirely
+moon lord has a 5th vulnerability stage vulnerable to all damage, but regains his defense during this
+	this phase uses phantasmal sphere rings as final phase attack
+increased visibility of moon lord's fragment ring
+destroyer clears dark stars when initiating a spin
+
+nerfed twins revive life to 25%
+skeletron has bee resist
+skeletron head inflicts defenseless
+skeletron hands and bones inflict lethargic
+nerfed skeletron hand respawn rate to 1 minute
+text description for when skeletron/prime go DG
+stardust cell minion's shot is classed as minion in maso so it can fucking hurt maso ML (it's classless by default, thanks red)
+moon lord nullicurse disappears during 5th vulnerability phase
+updated sprites:
+	qb gores
+	abom fang
+	mutant fang
+nerfed pillar hp to 40k (was 60k)
+boosted range of destroyer's enrage coil stars
+destroyer shoots inward accelerating lasers during the coil
+adjusted abom curse recipe
+
+ADDED TOGGLE ON/OFF BUTTONS TO MODCONFIG POGOOOOOOOO
+fixed an internal typo with a hallow toggle, make sure these work
+fixed destroyer freaking the hell out if you were out of range when it began coil
+nerfed eow minion's detection range and speed
+added optic staff ex sprite
+fixed golem crashing on reload
+spaz dashes constantly in p3 even if reti is still in p2(?)
+wof cursed flame wall fireballs move faster
+hungries no longer KB immune
+maso wof will drop a fleshier doll if it kills you and you havent beat wof yet
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
