@@ -1116,6 +1116,12 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.DD2EterniaCrystal:
                         if (DD2Event.Ongoing && DD2Event.TimeLeftBetweenWaves > 600)
                             DD2Event.TimeLeftBetweenWaves = 600;
+
+                        if (BossIsAlive(ref betsyBoss, NPCID.DD2Betsy) && Main.npc[betsyBoss].HasValidTarget
+                            && npc.Distance(Main.player[Main.npc[betsyBoss].target].Center) < 1000)
+                            npc.defense = 99999;
+                        else
+                            npc.defense = npc.defDefense;
                         break;
 
                     case NPCID.DesertBeast:
