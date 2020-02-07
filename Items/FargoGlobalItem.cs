@@ -81,7 +81,7 @@ namespace FargowiltasSouls.Items
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (item.type == ItemID.PumpkinPie && player.statLife != player.statLifeMax2 && player.HasBuff(BuffID.PotionSickness)) return false;
+            if (item.type == ItemID.PumpkinPie && player.statLife != player.statLifeMax2 && player.potionDelay > 0) return false;
 
             if (item.magic && player.GetModPlayer<FargoPlayer>().ReverseManaFlow)
             {
@@ -303,6 +303,17 @@ namespace FargowiltasSouls.Items
                     default: break;
                 }
             }
+            return true;
+        }
+
+        public override bool Shoot(Item item, Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {
+            if (FargoSoulsWorld.MasochistMode && !NPC.downedBoss3 && item.type == ItemID.WaterBolt)
+            {
+                type = ProjectileID.WaterGun;
+                damage = 0;
+            }
+
             return true;
         }
     }

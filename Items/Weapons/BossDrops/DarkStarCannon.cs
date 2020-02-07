@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dark Star Cannon");
-            Tooltip.SetDefault("'Modified from the arm of a defeated foe..'");
+            Tooltip.SetDefault("'Modified from the arm of a defeated foe..'\n90% chance to not consume ammo");
             DisplayName.AddTranslation(GameCulture.Chinese, "暗星炮");
             Tooltip.AddTranslation(GameCulture.Chinese, "'由一个被击败的敌人的武器改装而来..'");
         }
@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override void SetDefaults()
         {
             item.CloneDefaults(ItemID.StarCannon);
-            item.damage = 70;
+            item.damage = 36;
             item.useTime = 8;
             item.useAnimation = 8;
             item.shootSpeed = 15f;
@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 
         public override bool ConsumeAmmo(Player player)
         {
-            return Main.rand.Next(2) == 0;
+            return Main.rand.Next(10) == 0;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

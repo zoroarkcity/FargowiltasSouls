@@ -20,11 +20,7 @@ namespace FargowiltasSouls.Buffs.Masomode
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.gravControl = true;
-            player.controlUp = false;
-            player.gravDir = -1f;
-            //player.fallStart = (int)(player.position.Y / 16f);
-            //player.jump = 0;
+            player.GetModPlayer<FargoPlayer>().Flipped = true;
         }
     }
 }

@@ -138,6 +138,13 @@ wof cursed flame wall fireballs move faster
 hungries no longer KB immune
 maso wof will drop a fleshier doll if it kills you and you havent beat wof yet
 
+nerf dark star cannon to 36 base damage but gains 90% chance to not consume ammo
+flipped is now blocked by gravitation potion
+pumpkin pie no longer usable during mutant nibble
+friendly creepers can't be hurt by rotten eggs
+water bolt shoots harmless water pre-skeletron
+mutant nibble no longer causes random debuffs
+
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
 //if (npc.ai[2] > 0f)

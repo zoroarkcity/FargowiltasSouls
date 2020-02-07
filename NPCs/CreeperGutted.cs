@@ -108,6 +108,13 @@ namespace FargowiltasSouls.NPCs
             damage *= 10;
         }
 
+        public override bool? CanBeHitByProjectile(Projectile projectile)
+        {
+            if (projectile.type == ProjectileID.RottenEgg)
+                return false;
+            return null;
+        }
+
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
             damage /= 2;

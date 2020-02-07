@@ -29,7 +29,7 @@ namespace FargowiltasSouls.Buffs.Masomode
 
             //feral bite stuff
             player.rabid = true;
-            if (Main.rand.Next(1200) == 0)
+            /*if (Main.rand.Next(1200) == 0)
             {
                 switch (Main.rand.Next(10))
                 {
@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Buffs.Masomode
                     case 9: player.AddBuff(mod.BuffType("Berserked"), Main.rand.Next(180)); break;
                     default: player.AddBuff(BuffID.Rabies, Main.rand.Next(300)); break;
                 }
-            }
+            }*/
 
             player.meleeDamage = player.meleeDamage + 0.2f;
             player.magicDamage = player.magicDamage + 0.2f;
