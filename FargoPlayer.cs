@@ -4828,7 +4828,7 @@ namespace FargowiltasSouls
 
         public override void PostItemCheck()
         {
-            if (TribalCharm)
+            if (TribalCharm && SoulConfig.Instance.TribalCharm)
             {
                 player.HeldItem.autoReuse = TribalAutoFire;
             }

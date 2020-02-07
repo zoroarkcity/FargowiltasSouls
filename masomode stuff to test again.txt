@@ -152,6 +152,7 @@ OOA wave timer is now 10 seconds
 made king slime look more transparent
 buffed rainbow slime minion's debuff duration and it now shoots spikes
 eternia crystal gains massive defense during the betsy fight if you're nearby
+fixed tribal charm fucking autofire when toggle is off i think
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
