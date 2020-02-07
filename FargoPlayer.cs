@@ -699,6 +699,7 @@ namespace FargowiltasSouls
             MutantPresence = false;
             Swarming = false;
             LowGround = false;
+            Flipped = false;
         }
 
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
