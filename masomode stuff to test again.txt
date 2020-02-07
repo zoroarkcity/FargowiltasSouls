@@ -148,6 +148,7 @@ added recipe for deviantt's rune orb
 eaters of souls have reduced life during eow fight
 boc and creepers have 25% more life
 buffed boc to shoot laser rings while confusing you
+OOA wave timer is now 10 seconds
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

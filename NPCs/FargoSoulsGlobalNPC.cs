@@ -1114,8 +1114,8 @@ namespace FargowiltasSouls.NPCs
                 switch (npc.type)
                 {
                     case NPCID.DD2EterniaCrystal:
-                        if (DD2Event.Ongoing && DD2Event.TimeLeftBetweenWaves > 300)
-                            DD2Event.TimeLeftBetweenWaves = 300;
+                        if (DD2Event.Ongoing && DD2Event.TimeLeftBetweenWaves > 600)
+                            DD2Event.TimeLeftBetweenWaves = 600;
                         break;
 
                     case NPCID.DesertBeast:
