@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override void SetDefaults()
         {
             item.CloneDefaults(ItemID.StarCannon);
-            item.damage = 36;
+            item.damage = 40;
             item.useTime = 8;
             item.useAnimation = 8;
             item.shootSpeed = 15f;

@@ -1117,11 +1117,22 @@ namespace FargowiltasSouls.NPCs
                         if (DD2Event.Ongoing && DD2Event.TimeLeftBetweenWaves > 600)
                             DD2Event.TimeLeftBetweenWaves = 600;
 
-                        if (BossIsAlive(ref betsyBoss, NPCID.DD2Betsy) && Main.npc[betsyBoss].HasValidTarget
-                            && npc.Distance(Main.player[Main.npc[betsyBoss].target].Center) < 1000)
+                        //cant use HasValidTarget for this because that returns true even if betsy is targeting the crystal (npc.target seems to become -1)
+                        if (BossIsAlive(ref betsyBoss, NPCID.DD2Betsy) && Main.npc[betsyBoss].HasPlayerTarget
+                            && Main.player[Main.npc[betsyBoss].target].active && !Main.player[Main.npc[betsyBoss].target].dead && !Main.player[Main.npc[betsyBoss].target].ghost)
+                        {
+                            Counter = 180; //even if betsy targets crystal, wait 3 seconds before becoming fully vulnerable
+                        }
+
+                        if (Counter > 0)
+                        {
+                            Counter--;
                             npc.defense = 99999;
+                        }
                         else
+                        {
                             npc.defense = npc.defDefense;
+                        }
                         break;
 
                     case NPCID.DesertBeast:
