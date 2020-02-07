@@ -3102,13 +3102,13 @@ namespace FargowiltasSouls.NPCs
                                         Item.NewItem(npc.Hitbox, mod.ItemType("FleshierDoll"));
                                 }
                             }
-                            else if (Math.Abs(npc.velocity.X) > 8f)
+                            else if (Math.Abs(npc.velocity.X) > 7f)
                             {
-                                npc.position.X -= (Math.Abs(npc.velocity.X) - 8f) * Math.Sign(npc.velocity.X);
+                                npc.position.X -= (Math.Abs(npc.velocity.X) - 7f) * Math.Sign(npc.velocity.X);
                             }
                         }
-                        else if (Math.Abs(npc.velocity.X) > 8f)
-                            npc.position.X -= (Math.Abs(npc.velocity.X) - 8f) * Math.Sign(npc.velocity.X);
+                        else if (Math.Abs(npc.velocity.X) > 7f)
+                            npc.position.X -= (Math.Abs(npc.velocity.X) - 7f) * Math.Sign(npc.velocity.X);
 
                         if (Main.player[Main.myPlayer].active & !Main.player[Main.myPlayer].dead && Main.player[Main.myPlayer].ZoneUnderworldHeight)
                         {
