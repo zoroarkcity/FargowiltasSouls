@@ -613,6 +613,13 @@ namespace FargowiltasSouls
                 recipe.AddTile(TileID.MythrilAnvil);
                 recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("JungleChest"));
                 recipe.AddRecipe();
+
+                recipe = new ModRecipe(this);
+                recipe.AddIngredient(ItemID.WizardHat);
+                recipe.AddIngredient(ItemType("VolatileEnergy"), 5);
+                recipe.AddTile(TileID.MythrilAnvil);
+                recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("RuneOrb"));
+                recipe.AddRecipe();
             }
         }
 

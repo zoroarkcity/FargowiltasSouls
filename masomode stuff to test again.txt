@@ -144,6 +144,7 @@ pumpkin pie no longer usable during mutant nibble
 friendly creepers can't be hurt by rotten eggs
 water bolt shoots harmless water pre-skeletron
 mutant nibble no longer causes random debuffs
+added recipe for deviantt's rune orb
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
