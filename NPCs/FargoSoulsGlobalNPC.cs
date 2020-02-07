@@ -2519,7 +2519,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.KingSlime:
                         slimeBoss = npc.whoAmI;
-                        npc.color = Main.DiscoColor * 0.4f;
+                        npc.color = Main.DiscoColor * 0.3f;
                         if (masoBool[1])
                         {
                             if (npc.velocity.Y == 0f) //start attack

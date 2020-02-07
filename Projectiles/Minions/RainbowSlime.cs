@@ -10,6 +10,8 @@ namespace FargowiltasSouls.Projectiles.Minions
     {
         public override string Texture => "Terraria/Projectile_266";
 
+        public int counter;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rainbow Slime");
@@ -49,6 +51,25 @@ namespace FargowiltasSouls.Projectiles.Minions
                     projectile.damage *= 2;
             }
 
+            if (++counter > 150) //periodically do bonus attack
+            {
+                counter = 0;
+                if (projectile.owner == Main.myPlayer)
+                {
+                    for (int i = 0; i < Main.maxNPCs; i++) //look for nearby valid target npc
+                    {
+                        if (Main.npc[i].CanBeChasedBy() && Main.npc[i].Distance(projectile.Center) < 600 && Collision.CanHitLine(Main.npc[i].Center, 0, 0, projectile.Center, 0, 0))
+                        {
+                            for (int j = 0; j < 15; j++) //spray spikes
+                            {
+                                Projectile.NewProjectile(projectile.Center, new Vector2(Main.rand.NextFloat(-6, 6), Main.rand.NextFloat(-8, -5)), mod.ProjectileType("RainbowSlimeSpikeFriendly"), projectile.damage / 10, projectile.knockBack, Main.myPlayer);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
             //Main.NewText(projectile.ai[0].ToString() + " " + projectile.ai[1].ToString() + " " + projectile.localAI[0].ToString() + " " + projectile.localAI[1].ToString());
         }
 
@@ -65,7 +86,7 @@ namespace FargowiltasSouls.Projectiles.Minions
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(mod.BuffType("FlamesoftheUniverse"), 120);
+            target.AddBuff(mod.BuffType("FlamesoftheUniverse"), 180);
         }
 
         public override Color? GetAlpha(Color lightColor)
