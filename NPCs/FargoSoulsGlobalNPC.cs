@@ -385,10 +385,12 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.BrainofCthulhu:
+                        npc.lifeMax = (int)(npc.lifeMax * 1.25);
                         npc.scale += 0.25f;
                         break;
 
                     case NPCID.Creeper:
+                        npc.lifeMax = (int)(npc.lifeMax * 1.25);
                         Timer = Main.rand.Next(600);
                         break;
 
@@ -552,6 +554,10 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.VileSpit:
                         if (BossIsAlive(ref eaterBoss, NPCID.EaterofWorldsHead))
                             npc.damage = (int)(npc.damage * (1 + FargoSoulsWorld.EaterCount * .0125));
+                        break;
+                    case NPCID.EaterofSouls:
+                        if (BossIsAlive(ref eaterBoss, NPCID.EaterofWorldsHead))
+                            npc.lifeMax /= 2;
                         break;
 
                     case NPCID.BrainofCthulhu:
@@ -5623,6 +5629,13 @@ namespace FargowiltasSouls.NPCs
                                 Projectile.NewProjectile(npc.Center, new Vector2(-10, 0), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
                                 if (npc.Distance(Main.player[Main.myPlayer].Center) < 3000)
                                     Main.player[Main.myPlayer].AddBuff(BuffID.Confused, Main.expertMode && Main.expertDebuffTime > 1 ? 150 : 300);
+
+                                if (npc.HasValidTarget && Main.netMode != 1) //laser ring
+                                {
+                                    Vector2 speed = npc.DirectionTo(Main.player[npc.target].Center);
+                                    for (int i = 0; i < 8; i++)
+                                        Projectile.NewProjectile(npc.Center, speed.RotatedBy(2 * Math.PI / 8 * i), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                }
                             }
                         }
                         break;

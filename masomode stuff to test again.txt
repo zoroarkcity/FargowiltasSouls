@@ -145,6 +145,9 @@ friendly creepers can't be hurt by rotten eggs
 water bolt shoots harmless water pre-skeletron
 mutant nibble no longer causes random debuffs
 added recipe for deviantt's rune orb
+eaters of souls have reduced life during eow fight
+boc and creepers have 25% more life
+buffed boc to shoot laser rings while confusing you
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
