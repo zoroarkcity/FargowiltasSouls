@@ -11713,13 +11713,9 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.MoonLordCore:
                         damage = damage * 2 / 3;
-                        goto case NPCID.MoonLordHand;
+                        break;
                     case NPCID.MoonLordHead:
                         damage = damage * 2;
-                        goto case NPCID.MoonLordHand;
-                    case NPCID.MoonLordHand:
-                        if (projectile.type == ProjectileID.DD2BetsyArrow || projectile.type == ProjectileID.PhantasmArrow)
-                            damage /= 3;
                         break;
 
                     case NPCID.CultistDragonBody1:
@@ -11729,15 +11725,11 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.CultistDragonTail:
                         if (projectile.maxPenetrate > 1)
                             damage /= projectile.maxPenetrate;
-                        else if (projectile.maxPenetrate < 0 || projectile.type == ProjectileID.DD2BetsyArrow)
+                        else if (projectile.maxPenetrate < 0)
                             damage /= 4;
                         break;
 
                     case NPCID.DukeFishron:
-                        if (projectile.type == ProjectileID.PineNeedleFriendly)
-                            damage /= 2;
-                        else if (projectile.type == ProjectileID.PhantasmArrow || projectile.type == ProjectileID.DD2BetsyArrow)
-                            damage /= 3;
                         if (masoBool[2])
                             damage = 0;
                         break;

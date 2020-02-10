@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     pos.Y += Main.rand.Next(-150, 150);
                     Vector2 velocity = Vector2.Normalize(target.Center - pos) * 15;
 
-                    int p = Projectile.NewProjectile(pos, velocity, mod.ProjectileType("DarkStarFriendly"), projectile.damage / 2, projectile.knockBack, projectile.owner);
+                    int p = Projectile.NewProjectile(pos, velocity, mod.ProjectileType("DarkStarFriendly"), projectile.damage, projectile.knockBack, projectile.owner);
 
                     
                     Main.projectile[p].ai[0] = 1;
