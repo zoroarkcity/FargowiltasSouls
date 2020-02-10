@@ -162,14 +162,17 @@ all the following items have a 33% damage nerf in maso:
 	megashark
 	chloro shotbow
 	razorpine
+	tsunami
 the following items have a 50% damage nerf in maso:
 	aerial bane
 	phantasm
 removed specific resistances to:
+	holy stars
 	aerial bane
 	phantasm
 	razorpine
 plantera leaves a trail of dicer mines in p2
+holy stars only do 50% damage in maso
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

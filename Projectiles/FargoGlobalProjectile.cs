@@ -700,6 +700,14 @@ namespace FargowiltasSouls.Projectiles
                         projectile.position += projectile.velocity * .25f;
                     break;
 
+                case ProjectileID.HallowStar:
+                    if (FargoSoulsWorld.MasochistMode && !masobool)
+                    {
+                        masobool = true;
+                        projectile.damage /= 2;
+                    }
+                    break;
+
                 case ProjectileID.CultistRitual:
                     if (FargoSoulsWorld.MasochistMode)
                     {

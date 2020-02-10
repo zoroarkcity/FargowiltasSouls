@@ -25,6 +25,7 @@ namespace FargowiltasSouls.Items
                     case ItemID.Megashark:
                     case ItemID.ChlorophyteShotbow:
                     case ItemID.Razorpine:
+                    case ItemID.Tsunami:
                         item.damage = (int)(item.damage * 2.0 / 3.0);
                         break;
 
