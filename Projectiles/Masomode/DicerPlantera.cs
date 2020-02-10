@@ -56,6 +56,12 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
         }
 
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            target.AddBuff(mod.BuffType("Infested"), 180);
+            target.AddBuff(mod.BuffType("IvyVenom"), 180);
+        }
+
         public override void Kill(int timeLeft)
         {
             if (Main.netMode != 1)
