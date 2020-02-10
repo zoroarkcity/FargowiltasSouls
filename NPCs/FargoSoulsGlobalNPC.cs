@@ -4807,6 +4807,13 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
 
+                            if (++Timer > 90)
+                            {
+                                Timer = 0;
+                                if (Main.netMode != 1)
+                                    Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DicerPlantera"), npc.damage / 5, 0f, Main.myPlayer, 120, 300);
+                            }
+
                             /*Timer++;
                             if (Timer >= 300)
                             {

@@ -169,6 +169,7 @@ removed specific resistances to:
 	aerial bane
 	phantasm
 	razorpine
+plantera leaves a trail of dicer mines in p2
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
