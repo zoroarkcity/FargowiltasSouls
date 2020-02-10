@@ -64,6 +64,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void Kill(int timeLeft)
         {
+            Main.PlaySound(2, projectile.Center, 14);
+
             if (Main.netMode != 1)
             {
                 const int time = 30;
