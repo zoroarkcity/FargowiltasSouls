@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
     {
         public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/DicerProj2";
 
-        private const int range = 300;
+        private const int range = 275;
 
         public override void SetDefaults()
         {
@@ -36,7 +36,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 if (--projectile.ai[1] > 0) //waiting to explode
                 {
                     int p = Player.FindClosest(projectile.Center, 0, 0);
-                    if (p != -1 && Main.player[p].active && Main.player[p].Distance(projectile.Center) < range / 2)
+                    if (p != -1 && Main.player[p].active && Main.player[p].Distance(projectile.Center) < range)
                     {
                         projectile.ai[1] = 0; //player nearby, immediately begin exploding
                         projectile.netUpdate = true;
@@ -44,11 +44,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 }
                 else //prepare to explode
                 {
-                    projectile.position = projectile.Center;
-                    projectile.scale += 0.025f;
-                    projectile.Center = projectile.position;
-
-                    projectile.rotation += 0.2f * projectile.localAI[0];
+                    projectile.scale += 0.06f;
+                    projectile.rotation += 0.3f * projectile.localAI[0];
 
                     if (projectile.ai[1] < -60) //explode
                         projectile.timeLeft = 0;
@@ -68,7 +65,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
             if (Main.netMode != 1)
             {
-                const int time = 30;
+                const int time = 20;
                 const int max = 16;
                 for (int i = 0; i < max; i++)
                 {
