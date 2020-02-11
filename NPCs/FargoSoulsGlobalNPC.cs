@@ -5656,11 +5656,33 @@ namespace FargowiltasSouls.NPCs
                                 if (npc.Distance(Main.player[Main.myPlayer].Center) < 3000)
                                     Main.player[Main.myPlayer].AddBuff(BuffID.Confused, Main.expertMode && Main.expertDebuffTime > 1 ? 150 : 300);
 
-                                if (npc.HasValidTarget && Main.netMode != 1) //laser ring
+                                if (npc.HasValidTarget && Main.netMode != 1) //laser spreads from each illusion
                                 {
-                                    Vector2 speed = npc.DirectionTo(Main.player[npc.target].Center);
-                                    for (int i = 0; i < 8; i++)
-                                        Projectile.NewProjectile(npc.Center, speed.RotatedBy(2 * Math.PI / 8 * i), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                    Vector2 offset = npc.Center - Main.player[npc.target].Center;
+
+                                    Vector2 spawnPos = Main.player[npc.target].Center;
+                                    spawnPos.X += offset.X;
+                                    spawnPos.Y += offset.Y;
+                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(5)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(-5)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
+
+                                    spawnPos = Main.player[npc.target].Center;
+                                    spawnPos.X += offset.X;
+                                    spawnPos.Y -= offset.Y;
+                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(5)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(-5)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
+
+                                    spawnPos = Main.player[npc.target].Center;
+                                    spawnPos.X -= offset.X;
+                                    spawnPos.Y += offset.Y;
+                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(5)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(-5)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
+
+                                    spawnPos = Main.player[npc.target].Center;
+                                    spawnPos.X -= offset.X;
+                                    spawnPos.Y -= offset.Y;
+                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(5)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(-5)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
                         }

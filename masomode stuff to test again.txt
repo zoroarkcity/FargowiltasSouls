@@ -187,6 +187,7 @@ prime rockets:
 	have no randomness in p2
 	have tighter spread in p2
 	adjusted velocities in both phases, faster in p2
+changed boc lasers to shoot from all of its illusions
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
