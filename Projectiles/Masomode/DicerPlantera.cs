@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
     {
         public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/DicerProj2";
 
-        private const int range = 275;
+        private const int range = 250;
 
         public override void SetDefaults()
         {
@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     projectile.scale += 0.06f;
                     projectile.rotation += 0.3f * projectile.localAI[0];
 
-                    if (projectile.ai[1] < -60) //explode
+                    if (projectile.ai[1] < -90) //explode
                         projectile.timeLeft = 0;
                 }
             }

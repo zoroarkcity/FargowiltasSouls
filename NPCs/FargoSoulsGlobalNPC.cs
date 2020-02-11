@@ -4727,7 +4727,7 @@ namespace FargowiltasSouls.NPCs
                             masoBool[0] = true;
                             if (Main.netMode != 1)
                             {
-                                const int max = 4;
+                                const int max = 5;
                                 const float distance = 125f;
                                 float rotation = 2f * (float)Math.PI / max;
                                 for (int i = 0; i < max; i++)
