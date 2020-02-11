@@ -179,6 +179,7 @@ adjusted computation orb
 	your damage is affected by mana sickness
 	no longer buffs minions for obvious reasons
 big brain buster, optic staff EX can't be used without the necessary slots
+you must be closer to pillar to actually hurt them (4500 -> 3000 units)
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

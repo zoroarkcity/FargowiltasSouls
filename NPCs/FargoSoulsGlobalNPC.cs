@@ -11566,7 +11566,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.LunarTowerSolar:
                     case NPCID.LunarTowerStardust:
                     case NPCID.LunarTowerVortex:
-                        if (npc.Distance(Main.player[projectile.owner].Center) > 4500)
+                        if (npc.Distance(Main.player[projectile.owner].Center) > 3000)
                             damage = 0;
                         break;
 
