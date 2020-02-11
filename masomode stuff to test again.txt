@@ -172,7 +172,8 @@ removed specific resistances to:
 	phantasm
 	razorpine
 plantera leaves a trail of dicer mines in p2
-holy stars only do 50% damage in maso
+
+ALL ammos contribute only 25% of their original damage in maso
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

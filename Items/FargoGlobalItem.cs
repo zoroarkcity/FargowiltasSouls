@@ -62,11 +62,20 @@ namespace FargowiltasSouls.Items
                 item.type != 184 && item.type != ItemID.CandyCane && item.type != ItemID.SugarPlum) grabRange += p.TerraForce ? 1000 : 250;
         }
 
-        public override void PickAmmo(Item item, Player player, ref int type, ref float speed, ref int damage, ref float knockback)
+        public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref int damage, ref float knockback)
         {
-            FargoPlayer modPlayer = (FargoPlayer) player.GetModPlayer(mod, "FargoPlayer");
+            FargoPlayer modPlayer = (FargoPlayer)player.GetModPlayer(mod, "FargoPlayer");
 
             if (modPlayer.Jammed) type = ProjectileID.ConfettiGun;
+
+            if (FargoSoulsWorld.MasochistMode) //ammo nerf
+            {
+                Main.NewText("weapon damage: " + weapon.damage.ToString()); //debug text
+                Main.NewText("ammo damage: " + ammo.damage.ToString());
+                Main.NewText("damage: " + damage.ToString());
+                Main.NewText("modifier: " + player.rangedDamage.ToString());
+                damage -= (int)(ammo.damage * .75);
+            }
         }
 
         public override bool ConsumeItem(Item item, Player player)
