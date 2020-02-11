@@ -178,6 +178,7 @@ adjusted computation orb
 	mana is now consumed when your weapon is used, your weapon can't be used without mana
 	your damage is affected by mana sickness
 	no longer buffs minions for obvious reasons
+big brain buster, optic staff EX can't be used without the necessary slots
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends

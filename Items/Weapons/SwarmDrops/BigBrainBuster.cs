@@ -12,6 +12,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             DisplayName.SetDefault("Big Brain Buster");
             Tooltip.SetDefault("'An old foe beaten into submission..'\nNeeds 2 minion slots\nMinions do reduced damage when not holding a summon weapon");
+            ItemID.Sets.StaffMinionSlotsRequired[item.type] = 2;
         }
 
         public override void SetDefaults()
