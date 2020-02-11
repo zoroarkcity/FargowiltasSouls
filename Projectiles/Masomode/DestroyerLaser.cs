@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.hostile = true;
             projectile.alpha = 255;
             projectile.scale = 1.8f;
-            projectile.timeLeft = 240;
+            projectile.timeLeft = 180;
             projectile.tileCollide = false;
         }
 
@@ -33,10 +33,10 @@ namespace FargowiltasSouls.Projectiles.Masomode
             if (projectile.localAI[0] == 0)
             {
                 projectile.localAI[0] = 1;
-                Main.PlaySound(SoundID.Item27, projectile.Center);
+                Main.PlaySound(SoundID.Item12, projectile.Center);
             }
             projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2;
-            if (++projectile.localAI[1] > 30 && projectile.localAI[1] < 100)
+            if (++projectile.localAI[1] > 20 && projectile.localAI[1] < 90)
                 projectile.velocity *= 1.06f;
             if (projectile.alpha > 0)
             {

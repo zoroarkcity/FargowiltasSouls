@@ -5660,31 +5660,31 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     Vector2 offset = npc.Center - Main.player[npc.target].Center;
 
-                                    const int degree = 3;
+                                    const int degree = 10;
 
                                     Vector2 spawnPos = Main.player[npc.target].Center;
                                     spawnPos.X += offset.X;
                                     spawnPos.Y += offset.Y;
-                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(-degree)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                    for (int i = -1; i <= 1; i++)
+                                        Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
 
                                     spawnPos = Main.player[npc.target].Center;
                                     spawnPos.X += offset.X;
                                     spawnPos.Y -= offset.Y;
-                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(-degree)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                    for (int i = -1; i <= 1; i++)
+                                        Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
 
                                     spawnPos = Main.player[npc.target].Center;
                                     spawnPos.X -= offset.X;
                                     spawnPos.Y += offset.Y;
-                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(-degree)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                    for (int i = -1; i <= 1; i++)
+                                        Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
 
                                     spawnPos = Main.player[npc.target].Center;
                                     spawnPos.X -= offset.X;
                                     spawnPos.Y -= offset.Y;
-                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(-degree)), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
+                                    for (int i = -1; i <= 1; i++)
+                                        Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
                         }

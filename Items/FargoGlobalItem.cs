@@ -70,13 +70,7 @@ namespace FargowiltasSouls.Items
                 type = ProjectileID.ConfettiGun;
 
             if (FargoSoulsWorld.MasochistMode) //ammo nerf
-            {
-                Main.NewText("weapon damage: " + weapon.damage.ToString()); //debug text
-                Main.NewText("ammo damage: " + ammo.damage.ToString());
-                Main.NewText("damage: " + damage.ToString());
-                Main.NewText("modifier: " + player.rangedDamage.ToString());
-                damage -= (int)Math.Round(ammo.damage * .75, MidpointRounding.AwayFromZero); //always round up
-            }
+                damage -= (int)Math.Round(ammo.damage * player.rangedDamage, MidpointRounding.AwayFromZero); //always round up
         }
 
         public override bool ConsumeItem(Item item, Player player)
