@@ -5007,7 +5007,7 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
 
-                            if (++Timer >= 300)
+                            if (++Timer >= 360)
                             {
                                 Timer = 0;
 
@@ -5022,7 +5022,7 @@ namespace FargowiltasSouls.NPCs
 
                                     if (Main.netMode != 1)
                                     {
-                                        Projectile.NewProjectile(npc.Center, 4f * speed, ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.Center, 3f * speed, ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
                                         Projectile.NewProjectile(npc.Center, 3f * speed.RotatedBy(MathHelper.ToRadians(5f)), ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
                                         Projectile.NewProjectile(npc.Center, 3f * speed.RotatedBy(MathHelper.ToRadians(-5f)), ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
                                     }
@@ -5035,35 +5035,37 @@ namespace FargowiltasSouls.NPCs
                         {
                             npc.dontTakeDamage = false;
 
+                            int timeToShoot = 300;
+
                             if (npc.ai[1] == 1f && npc.ai[2] > 2f) //spinning
                             {
+                                timeToShoot = 60;
                                 if (npc.HasValidTarget)
                                     npc.position += npc.DirectionTo(Main.player[npc.target].Center) * 5;
                             }
                             else if (npc.ai[1] != 2f) //not spinning
                             {
                                 npc.position += npc.velocity / 3f;
-                                if (++Timer >= 240)
+                            }
+
+                            if (++Timer >= timeToShoot)
+                            {
+                                Timer = 0;
+                                if (npc.HasPlayerTarget) //skeleton commando rockets LUL
                                 {
-                                    Timer = 0;
-                                    if (npc.HasPlayerTarget) //skeleton commando rockets LUL
+                                    Vector2 speed = Main.player[npc.target].Center - npc.Center;
+                                    speed.Normalize();
+
+                                    int damage = npc.defDamage * 2 / 7;
+
+                                    if (Main.netMode != 1)
                                     {
-                                        Vector2 speed = Main.player[npc.target].Center - npc.Center;
-                                        speed.X += Main.rand.Next(-20, 21);
-                                        speed.Y += Main.rand.Next(-20, 21);
-                                        speed.Normalize();
-
-                                        int damage = npc.damage * 2 / 7;
-
-                                        if (Main.netMode != 1)
-                                        {
-                                            Projectile.NewProjectile(npc.Center, 4f * speed, ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
-                                            Projectile.NewProjectile(npc.Center, 3f * speed.RotatedBy(MathHelper.ToRadians(5f)), ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
-                                            Projectile.NewProjectile(npc.Center, 3f * speed.RotatedBy(MathHelper.ToRadians(-5f)), ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
-                                        }
-
-                                        Main.PlaySound(SoundID.Item11, npc.Center);
+                                        Projectile.NewProjectile(npc.Center, 4f * speed, ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.Center, 4f * speed.RotatedBy(MathHelper.ToRadians(3f)), ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.Center, 4f * speed.RotatedBy(MathHelper.ToRadians(-3f)), ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
                                     }
+
+                                    Main.PlaySound(SoundID.Item11, npc.Center);
                                 }
                             }
 

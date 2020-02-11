@@ -180,6 +180,13 @@ adjusted computation orb
 	no longer buffs minions for obvious reasons
 big brain buster, optic staff EX can't be used without the necessary slots
 you must be closer to pillar to actually hurt them (4500 -> 3000 units)
+prime rockets:
+	now on 6sec timer in p1
+	fires much faster when spinning in p2
+	now on 5sec timer in p2 otherwise
+	have no randomness in p2
+	have tighter spread in p2
+	adjusted velocities in both phases, faster in p2
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
