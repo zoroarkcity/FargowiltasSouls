@@ -66,7 +66,8 @@ namespace FargowiltasSouls.Items
         {
             FargoPlayer modPlayer = (FargoPlayer)player.GetModPlayer(mod, "FargoPlayer");
 
-            if (modPlayer.Jammed) type = ProjectileID.ConfettiGun;
+            if (modPlayer.Jammed)
+                type = ProjectileID.ConfettiGun;
 
             if (FargoSoulsWorld.MasochistMode) //ammo nerf
             {
@@ -74,7 +75,7 @@ namespace FargowiltasSouls.Items
                 Main.NewText("ammo damage: " + ammo.damage.ToString());
                 Main.NewText("damage: " + damage.ToString());
                 Main.NewText("modifier: " + player.rangedDamage.ToString());
-                damage -= (int)(ammo.damage * .75);
+                damage -= (int)Math.Round(ammo.damage * .75, MidpointRounding.AwayFromZero); //always round up
             }
         }
 
