@@ -162,8 +162,8 @@ all the following items have a 33% damage nerf in maso:
 	megashark
 	chloro shotbow
 	razorpine
-	tsunami
 the following items have a 50% damage nerf in maso:
+	tsunami
 	aerial bane
 	phantasm
 removed specific resistances to:
