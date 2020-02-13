@@ -28,6 +28,7 @@ namespace FargowiltasSouls.Items
                         item.damage = (int)(item.damage * 2.0 / 3.0);
                         break;
 
+                    case ItemID.StarCannon:
                     case ItemID.Tsunami:
                     case ItemID.Phantasm:
                     case ItemID.DD2BetsyBow:

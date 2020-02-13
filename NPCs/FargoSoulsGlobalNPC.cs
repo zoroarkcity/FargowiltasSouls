@@ -4922,7 +4922,7 @@ namespace FargowiltasSouls.NPCs
 
                         if (npc.ai[0] != 2f) //in phase 1
                         {
-                            if (npc.life < npc.lifeMax / 2) //enter phase 2
+                            if (npc.life < npc.lifeMax * .75) //enter phase 2
                             {
                                 npc.ai[0] = 2f;
                                 npc.ai[3] = 0f;
