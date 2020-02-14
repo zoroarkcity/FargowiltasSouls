@@ -31,9 +31,16 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.OnFire, 600);
-            target.AddBuff(mod.BuffType("Defenseless"), 600);
-            target.AddBuff(BuffID.WitheredArmor, 600);
+            if (NPC.golemBoss != -1 && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem) //during golem fight
+            {
+                target.AddBuff(BuffID.OnFire, 600);
+                target.AddBuff(BuffID.BrokenArmor, 600);
+                target.AddBuff(mod.BuffType("Defenseless"), 600);
+                target.AddBuff(BuffID.WitheredArmor, 600);
+
+                if (Framing.GetTileSafely(Main.npc[NPC.golemBoss].Center).wall != WallID.LihzahrdBrickUnsafe) //outside temple
+                    target.AddBuff(BuffID.Burning, 120);
+            }
         }
 
         public override void Kill(int timeLeft)

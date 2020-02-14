@@ -79,6 +79,8 @@ prime rockets:
 changed boc lasers to shoot from all of its illusions
 
 prime p2 triggers at 75%
+golem attacks additionally inflict broken armor
+golem head sprays a fan of lasers after deathray dash again, denser/faster outside temple
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
