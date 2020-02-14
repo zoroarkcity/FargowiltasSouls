@@ -4093,7 +4093,7 @@ namespace FargowiltasSouls
                     for (int i = 0; i < 200; i++)
                     {
                         NPC npc = Main.npc[i];
-                        if (npc.active && !npc.friendly && npc.damage > 0 && !npc.dontTakeDamage && !npc.buffImmune[buff])
+                        if (npc.active && !npc.friendly && npc.damage > 0 && !npc.dontTakeDamage)
                         {
                             if (Vector2.Distance(player.Center, npc.Center) <= distance)
                             {

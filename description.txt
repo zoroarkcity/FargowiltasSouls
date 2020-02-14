@@ -1,6 +1,8 @@
-NEW UPDATE - v 1.2.0.1
--Adjusted Abominationn despawn during sword attacks
--Updated a few sprites including the Soul of the Masochist
--Fixed Eater of Worlds scaling per segment killed in Masochist Mode
--Fixed modded toggles starting toggled off
--Fixed Angler Enchantment giving too many lures
+NEW UPDATE - v 1.2.0.2
+-Added Toggle all On/Off button to ModConfig
+-Added Optic Staff EX sprite
+-Nerfed Eater of Worlds Staff detection range and speed
+-Fixed recolored Golem (SANS) crashing on reload
+-Several other Masochist Mode balances changes and fixes
+
+-See the wiki for full details
