@@ -93,6 +93,10 @@ nerfed betsy dash cooldown (now 3sec, from 2sec)
 
 fixed eow scaling per segment killed!!!!
 adjusted abom despawn during sword attacks
+
+
+
+
 cultist always drops seal in mp, fuck it
 
 changed how some debuffs are applied (stoned, frozen, stunned, etc):
@@ -137,6 +141,12 @@ spaz dashes constantly in p3 even if reti is still in p2(?)
 wof cursed flame wall fireballs move faster
 hungries no longer KB immune
 maso wof will drop a fleshier doll if it kills you and you havent beat wof yet
+
+
+-----------------------------above released
+
+
+
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
