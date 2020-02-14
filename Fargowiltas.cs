@@ -549,9 +549,51 @@ namespace FargowiltasSouls
                 Mod bossChecklist = ModLoader.GetMod("BossChecklist");
                 if (bossChecklist != null)
                 {
-                    bossChecklist.Call("AddBossWithInfo", "Abominationn", 14.01f, (Func<bool>)(() => FargoSoulsWorld.downedAbom), "Spawn by using [i:" + ItemType("AbomsCurse") + "]");
-                    bossChecklist.Call("AddBossWithInfo", "Duke Fishron EX", 14.02f, (Func<bool>)(() => FargoSoulsWorld.downedFishronEX), "Fish using a [i:" + ItemType("TruffleWormEX") + "]");
-                    bossChecklist.Call("AddBossWithInfo", "Mutant", 14.03f, (Func<bool>)(() => FargoSoulsWorld.downedMutant), "Spawn by throwing [i:" + ItemType("AbominationnVoodooDoll") + "] in lava in Mutant's presence while Abominationn is alive");
+                    bossChecklist.Call(
+                        "AddBoss",
+                        40.0f,
+                        ModContent.NPCType<NPCs.AbomBoss.AbomBoss>(),
+                        this,
+                        "Abominationn",
+                        (Func<bool>)(() => FargoSoulsWorld.downedAbom),
+                        ModContent.ItemType<Items.Misc.AbomsCurse>(),
+                        new List<int> { ModContent.ItemType<Items.Misc.AbomTrophy>(), ModContent.ItemType<Items.Misc.AbomMusicBox>() },
+                        new List<int> { ModContent.ItemType<Items.Misc.MutatingEnergy>(), ModContent.ItemType<Items.Misc.MutantScale>() },
+                        "Spawn by using the Abominationn's Curse.",
+                        "The Abominationn has destroyed everyone.",
+                        "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Still",
+                        "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Head_Boss"
+                    );
+                    /*bossChecklist.Call(                  this code crashes the game when you scroll down to the boss in the checklist
+                        "AddBoss",                         probably has something to do with the NPC line...
+                        14.6f,
+                        NPCID.DukeFishron,                 ...because fish.
+                        this,
+                        "Duke Fishron EX",
+                        (Func<bool>)(() => FargoSoulsWorld.downedFishronEX),
+                        ModContent.ItemType<Items.Misc.TruffleWormEX>(),
+                        ModContent.ItemType<Items.Misc.AbomMusicBox>(),
+                        ModContent.ItemType<Items.Misc.MutatingEnergy>(),
+                        "Fish using the Truffle Worm EX.",
+                        "The Duke returns to the depths victoriously...",
+                        "FargowiltasSouls/NPCs/Vanilla/NPC_370",
+                        "FargowiltasSouls/NPCs/Vanilla/NPC_Head_Boss_4"
+                    );*/
+                    bossChecklist.Call(
+                        "AddBoss",
+                        99.0f,
+                        ModContent.NPCType<NPCs.MutantBoss.MutantBoss>(),
+                        this,
+                        "Mutant",
+                        (Func<bool>)(() => FargoSoulsWorld.downedMutant),
+                        ModContent.ItemType<Items.Misc.AbominationnVoodooDoll>(),
+                        new List<int> { ModContent.ItemType<Items.Misc.MutantTrophy>(), ModContent.ItemType<Items.Misc.MutantMusicBox>() },
+                        ModContent.ItemType<Items.Misc.Sadism>(),
+                        "Throw the Abominationn's Voodoo Doll into a pool of lava while the Abominationn is alive, in the Mutant's presence.",
+                        "The Mutant has won, of course.",
+                        "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
+                        "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
+                    );
                 }
 
                 if (ThoriumLoaded)
