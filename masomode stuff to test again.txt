@@ -1,3 +1,4 @@
+
 nerfed twins revive life to 25%
 skeletron has bee resist
 skeletron head inflicts defenseless
@@ -25,6 +26,9 @@ spaz dashes constantly in p3 even if reti is still in p2(?)
 wof cursed flame wall fireballs move faster
 hungries no longer KB immune
 maso wof will drop a fleshier doll if it kills you and you havent beat wof yet
+
+
+-----------------------------above released
 
 nerf dark star cannon to 40 base damage but gains 90% chance to not consume ammo
 flipped is now blocked by gravitation potion
@@ -81,6 +85,11 @@ changed boc lasers to shoot from all of its illusions
 prime p2 triggers at 75%
 golem attacks additionally inflict broken armor
 golem head sprays a fan of lasers after deathray dash again, denser/faster outside temple
+
+
+
+
+
 
 -------------------------------------------------------------------------------------------------------------------
 ai notes: skeleton archer and friends
