@@ -14,13 +14,32 @@ namespace FargowiltasSouls.Items
     {
         private static Mod thorium = ModLoader.GetMod("ThoriumMod");
 
-        /*public override void SetDefaults(Item item)
+        public override void SetDefaults(Item item)
         {
-            if (item.type == ItemID.Stinger)
+            if (FargoSoulsWorld.MasochistMode) //maso item nerfs
             {
-                item.ammo = item.type;
+                switch (item.type)
+                {
+                    case ItemID.Uzi:
+                    case ItemID.DaedalusStormbow:
+                    case ItemID.Megashark:
+                    case ItemID.ChlorophyteShotbow:
+                    case ItemID.Razorpine:
+                        item.damage = (int)(item.damage * 2.0 / 3.0);
+                        break;
+
+                    case ItemID.StarCannon:
+                    case ItemID.Tsunami:
+                    case ItemID.Phantasm:
+                    case ItemID.DD2BetsyBow:
+                        item.damage /= 2;
+                        break;
+
+                    default:
+                        break;
+                }
             }
-        }*/
+        }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
@@ -44,11 +63,15 @@ namespace FargowiltasSouls.Items
                 item.type != 184 && item.type != ItemID.CandyCane && item.type != ItemID.SugarPlum) grabRange += p.TerraForce ? 1000 : 250;
         }
 
-        public override void PickAmmo(Item item, Player player, ref int type, ref float speed, ref int damage, ref float knockback)
+        public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref int damage, ref float knockback)
         {
-            FargoPlayer modPlayer = (FargoPlayer) player.GetModPlayer(mod, "FargoPlayer");
+            FargoPlayer modPlayer = (FargoPlayer)player.GetModPlayer(mod, "FargoPlayer");
 
-            if (modPlayer.Jammed) type = ProjectileID.ConfettiGun;
+            if (modPlayer.Jammed)
+                type = ProjectileID.ConfettiGun;
+
+            if (FargoSoulsWorld.MasochistMode) //ammo nerf
+                damage -= (int)Math.Round(ammo.damage * player.rangedDamage * .8, MidpointRounding.AwayFromZero); //always round up
         }
 
         public override bool ConsumeItem(Item item, Player player)
@@ -81,7 +104,7 @@ namespace FargowiltasSouls.Items
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (item.type == ItemID.PumpkinPie && player.statLife != player.statLifeMax2 && player.HasBuff(BuffID.PotionSickness)) return false;
+            if (item.type == ItemID.PumpkinPie && player.statLife != player.statLifeMax2 && player.potionDelay > 0) return false;
 
             if (item.magic && player.GetModPlayer<FargoPlayer>().ReverseManaFlow)
             {
@@ -303,6 +326,17 @@ namespace FargowiltasSouls.Items
                     default: break;
                 }
             }
+            return true;
+        }
+
+        public override bool Shoot(Item item, Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {
+            if (FargoSoulsWorld.MasochistMode && !NPC.downedBoss3 && item.type == ItemID.WaterBolt)
+            {
+                type = ProjectileID.WaterGun;
+                damage = 0;
+            }
+
             return true;
         }
     }

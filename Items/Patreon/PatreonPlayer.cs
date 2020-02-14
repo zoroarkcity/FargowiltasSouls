@@ -76,11 +76,12 @@ namespace FargowiltasSouls
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
         {
-            if (CompOrb && !item.magic && player.statMana >= 10)
+            if (CompOrb && !item.magic && !item.summon)
             {
-                player.statMana -= 10;
-                player.manaRegenDelay = 300;
                 damage = (int)(damage * 1.25f);
+
+                if (player.manaSick)
+                    damage = (int)(damage * player.manaSickReduction);
 
                 for (int num468 = 0; num468 < 20; num468++)
                 {
@@ -97,11 +98,12 @@ namespace FargowiltasSouls
 
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (CompOrb && !proj.magic && player.statMana >= 10)
+            if (CompOrb && !proj.magic && !proj.minion)
             {
-                player.statMana -= 10;
-                player.manaRegenDelay = 300;
                 damage = (int)(damage * 1.25f);
+                
+                if (player.manaSick)
+                    damage = (int)(damage * player.manaSickReduction);
 
                 for (int num468 = 0; num468 < 20; num468++)
                 {

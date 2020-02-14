@@ -330,6 +330,7 @@ namespace FargowiltasSouls
         public bool MutantPresence;
         public bool Swarming;
         public bool LowGround;
+        public bool Flipped;
 
         public int MasomodeCrystalTimer = 0;
         public int MasomodeFreezeTimer = 0;
@@ -698,6 +699,7 @@ namespace FargowiltasSouls
             MutantPresence = false;
             Swarming = false;
             LowGround = false;
+            Flipped = false;
         }
 
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
@@ -1156,6 +1158,15 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (Flipped && !player.gravControl)
+            {
+                player.gravControl = true;
+                player.controlUp = false;
+                player.gravDir = -1f;
+                //player.fallStart = (int)(player.position.Y / 16f);
+                //player.jump = 0;
+            }
+
             if (Graze && ++GrazeCounter > 60) //decrease graze bonus over time
             {
                 GrazeCounter = 0;
@@ -4817,7 +4828,7 @@ namespace FargowiltasSouls
 
         public override void PostItemCheck()
         {
-            if (TribalCharm)
+            if (TribalCharm && SoulConfig.Instance.TribalCharm)
             {
                 player.HeldItem.autoReuse = TribalAutoFire;
             }
