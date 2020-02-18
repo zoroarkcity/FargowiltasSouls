@@ -4607,7 +4607,7 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     int p = Projectile.NewProjectile(npc.Center, speed * Vector2.UnitY.RotatedBy(Math.PI / 2 / max * i), ProjectileID.EyeBeam, npc.damage / 5, 0f, Main.myPlayer);
                                     if (p != Main.maxProjectiles)
-                                        Main.projectile[p].timeLeft = 600;
+                                        Main.projectile[p].timeLeft = 1200;
                                 }
                             }
 
