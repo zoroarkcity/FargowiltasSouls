@@ -52,6 +52,7 @@ changed boc lasers to shoot from all of its illusions
 prime p2 triggers at 75%
 golem attacks additionally inflict broken armor
 golem head sprays a fan of lasers after deathray dash again, denser/faster outside temple
+reverted mutant boss to hovering above before nuke instead of to one side (increases dodging space behind you)
 
 
 
