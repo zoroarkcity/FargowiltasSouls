@@ -551,7 +551,7 @@ namespace FargowiltasSouls
                 {
                     bossChecklist.Call(
                         "AddBoss",
-                        40.0f,
+                        14.01f,
                         ModContent.NPCType<NPCs.AbomBoss.AbomBoss>(),
                         this,
                         "Abominationn",
@@ -579,9 +579,10 @@ namespace FargowiltasSouls
                         "FargowiltasSouls/NPCs/Vanilla/NPC_370",
                         "FargowiltasSouls/NPCs/Vanilla/NPC_Head_Boss_4"
                     );*/
+                    bossChecklist.Call("AddBossWithInfo", "Duke Fishron EX", 14.02f, (Func<bool>)(() => FargoSoulsWorld.downedFishronEX), "Fish using a [i:" + ItemType("TruffleWormEX") + "]");
                     bossChecklist.Call(
                         "AddBoss",
-                        99.0f,
+                        14.03f,
                         ModContent.NPCType<NPCs.MutantBoss.MutantBoss>(),
                         this,
                         "Mutant",
@@ -622,7 +623,12 @@ namespace FargowiltasSouls
                 if (CalamityLoaded)
                 {
                     Mod calamity = ModLoader.GetMod("CalamityMod");
-                    ModProjDict.Add(calamity.ProjectileType("KendraPet"), 101);
+
+                    String[] calamityPets = { "KendraPet" , "PerforaMini", "ThirdSage", "Bear", "BrimlingPet", "DannyDevitoPet",
+                    "SirenYoung", "ChibiiDoggo", "ChibiiDoggoFly", "Akato", "Fox", "Levi" };
+                    int calamityIndex = 101;
+
+                    /*ModProjDict.Add(calamity.ProjectileType("KendraPet"), 101);
                     ModProjDict.Add(calamity.ProjectileType("PerforaMini"), 102);
                     ModProjDict.Add(calamity.ProjectileType("ThirdSage"), 103);
                     ModProjDict.Add(calamity.ProjectileType("Bear"), 104);
@@ -634,6 +640,18 @@ namespace FargowiltasSouls
                     ModProjDict.Add(calamity.ProjectileType("Akato"), 110);
                     ModProjDict.Add(calamity.ProjectileType("Fox"), 111);
                     ModProjDict.Add(calamity.ProjectileType("Levi"), 112);
+                    //ModProjDict.ContainsKey*/
+
+                    for (int i = 0; i < calamityPets.Length; i++)
+                    {
+                        if (!ModProjDict.ContainsKey(calamity.ProjectileType(calamityPets[i])))
+                        {
+                            ModProjDict.Add(calamity.ProjectileType(calamityPets[i]), calamityIndex++);
+                        }
+                    }
+
+                    
+
                 }
             }
             catch (Exception e)
