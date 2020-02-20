@@ -183,6 +183,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(BuffID.Burning, 300);
+            target.AddBuff(BuffID.BrokenArmor, 600);
             target.AddBuff(mod.BuffType("Defenseless"), 600);
             target.AddBuff(BuffID.WitheredArmor, 600);
         }

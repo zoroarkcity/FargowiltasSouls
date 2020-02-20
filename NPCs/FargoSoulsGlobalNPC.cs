@@ -4598,12 +4598,18 @@ namespace FargowiltasSouls.NPCs
                                 masoBool[0] = false;
                             }
 
-                            /*if (!masoBool[0] && Main.netMode != 1) //spray overhead lasers after dash
+                            if (!masoBool[0] && Main.netMode != 1) //spray overhead lasers after dash
                             {
-                                const int max = 10;
+                                bool inTemple = Framing.GetTileSafely(npc.Center).wall == WallID.LihzahrdBrickUnsafe;
+                                int max = inTemple ? 6 : 10;
+                                int speed = inTemple ? -6 : -11;
                                 for (int i = -max; i <= max; i++)
-                                    Projectile.NewProjectile(npc.Center, -11 * Vector2.UnitY.RotatedBy(Math.PI / 2 / max * i), ProjectileID.EyeBeam, npc.damage / 5, 0f, Main.myPlayer);
-                            }*/
+                                {
+                                    int p = Projectile.NewProjectile(npc.Center, speed * Vector2.UnitY.RotatedBy(Math.PI / 2 / max * i), ProjectileID.EyeBeam, npc.damage / 5, 0f, Main.myPlayer);
+                                    if (p != Main.maxProjectiles)
+                                        Main.projectile[p].timeLeft = 1200;
+                                }
+                            }
 
                             if (npc.netUpdate)
                             {
@@ -8371,6 +8377,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.GolemHeadFree:
                     case NPCID.GolemFistLeft:
                     case NPCID.GolemFistRight:
+                        target.AddBuff(BuffID.BrokenArmor, 600);
                         target.AddBuff(mod.BuffType("Defenseless"), 600);
                         target.AddBuff(BuffID.WitheredArmor, 600);
                         break;

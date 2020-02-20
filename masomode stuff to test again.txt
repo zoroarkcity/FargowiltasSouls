@@ -1,36 +1,4 @@
-
-nerfed twins revive life to 25%
-skeletron has bee resist
-skeletron head inflicts defenseless
-skeletron hands and bones inflict lethargic
-nerfed skeletron hand respawn rate to 1 minute
-text description for when skeletron/prime go DG
-stardust cell minion's shot is classed as minion in maso so it can fucking hurt maso ML (it's classless by default, thanks red)
-moon lord nullicurse disappears during 5th vulnerability phase
-updated sprites:
-	qb gores
-	abom fang
-	mutant fang
-nerfed pillar hp to 40k (was 60k)
-boosted range of destroyer's enrage coil stars
-destroyer shoots inward accelerating lasers during the coil
-adjusted abom curse recipe
-
-ADDED TOGGLE ON/OFF BUTTONS TO MODCONFIG POGOOOOOOOO
-fixed an internal typo with a hallow toggle, make sure these work
-fixed destroyer freaking the hell out if you were out of range when it began coil
-nerfed eow minion's detection range and speed
-added optic staff ex sprite
-fixed golem crashing on reload
-spaz dashes constantly in p3 even if reti is still in p2(?)
-wof cursed flame wall fireballs move faster
-hungries no longer KB immune
-maso wof will drop a fleshier doll if it kills you and you havent beat wof yet
-
-
------------------------------above released
-
-nerf dark star cannon to 40 base damage but gains 90% chance to not consume ammo
+nerf dark star cannon to 30 base damage but gains 95% chance to not consume ammo
 flipped is now blocked by gravitation potion
 pumpkin pie no longer usable during mutant nibble
 friendly creepers can't be hurt by rotten eggs
@@ -47,7 +15,6 @@ eternia crystal gains massive defense during the betsy fight if you're nearby
 fixed tribal charm fucking autofire when toggle is off i think
 
 increased crystal bullet shard cooldown from 15 ticks to 30
-reduced dark star cannon damage to 30, but increased ammo reservation chance to 95%
 all the following items have a 33% damage nerf in maso:
 	uzi
 	stormbow
@@ -83,6 +50,9 @@ prime rockets:
 changed boc lasers to shoot from all of its illusions
 
 prime p2 triggers at 75%
+golem attacks additionally inflict broken armor
+golem head sprays a fan of lasers after deathray dash again, denser/faster outside temple
+reverted mutant boss to hovering above before nuke instead of to one side (increases dodging space behind you)
 
 
 

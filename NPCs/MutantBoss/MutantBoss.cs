@@ -1284,11 +1284,11 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     break;
 
-                case 31: //maneuver nearby for dive
+                case 31: //maneuver above for dive
                     if (!AliveCheck(player))
                         break;
                     targetPos = player.Center;
-                    targetPos.X += 700 * (npc.Center.X < targetPos.X ? -1 : 1);
+                    //targetPos.X += 700 * (npc.Center.X < targetPos.X ? -1 : 1);
                     targetPos.Y += 400;
                     Movement(targetPos, 1f);
                     if (++npc.ai[1] > 90) //dive here
