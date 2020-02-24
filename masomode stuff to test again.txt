@@ -7,3 +7,6 @@ dicer changes:
 tweaked how maso item nerfs work internally
 destroyer is IMMUNE to holy stars, fuck it
 nerfed stormbow to only 25% damage in maso
+added boss count disable (debug item)
+sinister icon prevents pumpkin/frost moon minibosses and clowns from spawning too
+changed ammo nerfs: -75% on arrows/bullets, -25% otherwise

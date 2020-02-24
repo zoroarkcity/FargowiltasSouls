@@ -43,6 +43,8 @@ namespace FargowiltasSouls
         public static bool forceMeteor;
         public static int skipMutantP1;
 
+        public static bool NoMasoBossScaling;
+
         public override void Initialize()
         {
             downedBetsy = false;
@@ -74,6 +76,8 @@ namespace FargowiltasSouls
 
             forceMeteor = true;
             skipMutantP1 = 0;
+
+            NoMasoBossScaling = false;
         }
 
         public override TagCompound Save()
@@ -107,6 +111,7 @@ namespace FargowiltasSouls
             if (AngryMutant) downed.Add("AngryMutant");
             if (downedMM) downed.Add("downedMadhouse");
             if (forceMeteor) downed.Add("forceMeteor");
+            if (NoMasoBossScaling) downed.Add("NoMasoBossScaling");
 
             return new TagCompound
             {
@@ -146,6 +151,7 @@ namespace FargowiltasSouls
             AngryMutant = downed.Contains("AngryMutant");
             downedMM = downed.Contains("downedMadhouse");
             forceMeteor = downed.Contains("forceMeteor");
+            NoMasoBossScaling = downed.Contains("NoMasoBossScaling");
 
             if (tag.ContainsKey("mutantP1"))
                 skipMutantP1 = tag.GetAsInt("mutantP1");
@@ -180,6 +186,7 @@ namespace FargowiltasSouls
             AngryMutant = flags[6];
             downedMM = flags[7];
             forceMeteor = flags[8];
+            NoMasoBossScaling = flags[9];
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -211,7 +218,8 @@ namespace FargowiltasSouls
                 [5] = downedMutant,
                 [6] = AngryMutant,
                 [7] = downedMM,
-                [8] = forceMeteor
+                [8] = forceMeteor,
+                [9] = NoMasoBossScaling
             };
 
             writer.Write(flags);

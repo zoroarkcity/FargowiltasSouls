@@ -9154,7 +9154,7 @@ namespace FargowiltasSouls.NPCs
                             }
                             else //not blood moon
                             {
-                                if (noInvasion && !oldOnesArmy)
+                                if (noInvasion && !oldOnesArmy && !sinisterIcon)
                                     pool[NPCID.Clown] = 0.01f;
 
                                 if (normalSpawn)
@@ -9222,7 +9222,7 @@ namespace FargowiltasSouls.NPCs
                                     pool[NPCID.Scarecrow9] = .01f;
                                     pool[NPCID.Scarecrow10] = .01f;
 
-                                    if (NPC.downedHalloweenKing)
+                                    if (NPC.downedHalloweenKing && !sinisterIcon)
                                     {
                                         //pool[NPCID.HeadlessHorseman] = .01f;
                                         pool[NPCID.Pumpking] = .0025f;
@@ -9238,7 +9238,7 @@ namespace FargowiltasSouls.NPCs
                                     {
                                         pool[NPCID.Splinterling] = .05f;
 
-                                        if (NPC.downedHalloweenTree)
+                                        if (NPC.downedHalloweenTree && !sinisterIcon)
                                         {
                                             pool[NPCID.MourningWood] = .0025f;
                                         }
@@ -9254,12 +9254,12 @@ namespace FargowiltasSouls.NPCs
                                         pool[NPCID.ElfArcher] = .05f;
                                         pool[NPCID.ElfCopter] = .01f;
 
-                                        if (NPC.downedChristmasTree)
+                                        if (NPC.downedChristmasTree && !sinisterIcon)
                                         {
                                             pool[NPCID.Everscream] = .0025f;
                                         }
 
-                                        if (NPC.downedChristmasSantank)
+                                        if (NPC.downedChristmasSantank && !sinisterIcon)
                                         {
                                             pool[NPCID.SantaNK1] = .0025f;
                                         }
@@ -9335,7 +9335,7 @@ namespace FargowiltasSouls.NPCs
                                 if (cavern)
                                 {
                                     pool[NPCID.Krampus] = .025f;
-                                    if (NPC.downedChristmasIceQueen)
+                                    if (NPC.downedChristmasIceQueen && !sinisterIcon)
                                         pool[NPCID.IceQueen] = .0025f;
                                 }
                             }
@@ -10572,12 +10572,12 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.EyeofCthulhu:
-                        if (FargoSoulsWorld.EyeCount < FargoSoulsWorld.MaxCountPreHM)
+                        if (FargoSoulsWorld.EyeCount < FargoSoulsWorld.MaxCountPreHM && !FargoSoulsWorld.NoMasoBossScaling)
                             FargoSoulsWorld.EyeCount++;
                         break;
 
                     case NPCID.KingSlime:
-                        if (FargoSoulsWorld.SlimeCount < FargoSoulsWorld.MaxCountPreHM)
+                        if (FargoSoulsWorld.SlimeCount < FargoSoulsWorld.MaxCountPreHM && !FargoSoulsWorld.NoMasoBossScaling)
                             FargoSoulsWorld.SlimeCount++;
                         break;
 
@@ -10630,13 +10630,13 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
 
-                            if (FargoSoulsWorld.EaterCount < FargoSoulsWorld.MaxCountPreHM)
+                            if (FargoSoulsWorld.EaterCount < FargoSoulsWorld.MaxCountPreHM && !FargoSoulsWorld.NoMasoBossScaling)
                                 FargoSoulsWorld.EaterCount++;
                         }
                         break;
 
                     case NPCID.BrainofCthulhu:
-                        if (FargoSoulsWorld.BrainCount < FargoSoulsWorld.MaxCountPreHM)
+                        if (FargoSoulsWorld.BrainCount < FargoSoulsWorld.MaxCountPreHM && !FargoSoulsWorld.NoMasoBossScaling)
                             FargoSoulsWorld.BrainCount++;
                         break;
 
@@ -10646,7 +10646,7 @@ namespace FargowiltasSouls.NPCs
                         return false;
 
                     case NPCID.QueenBee:
-                        if (FargoSoulsWorld.BeeCount < FargoSoulsWorld.MaxCountPreHM)
+                        if (FargoSoulsWorld.BeeCount < FargoSoulsWorld.MaxCountPreHM && !FargoSoulsWorld.NoMasoBossScaling)
                             FargoSoulsWorld.BeeCount++;
                         break;
 
@@ -10667,19 +10667,19 @@ namespace FargowiltasSouls.NPCs
                                 Main.NewText("Skeletron has entered Dungeon Guardian form!", 175, 75, 255);
                             return false;
                         }
-                        else if (FargoSoulsWorld.SkeletronCount < FargoSoulsWorld.MaxCountPreHM)
+                        else if (FargoSoulsWorld.SkeletronCount < FargoSoulsWorld.MaxCountPreHM && !FargoSoulsWorld.NoMasoBossScaling)
                         {
                             FargoSoulsWorld.SkeletronCount++;
                         }
                         break;
 
                     case NPCID.WallofFlesh:
-                        if (FargoSoulsWorld.WallCount < FargoSoulsWorld.MaxCountPreHM)
+                        if (FargoSoulsWorld.WallCount < FargoSoulsWorld.MaxCountPreHM && !FargoSoulsWorld.NoMasoBossScaling)
                             FargoSoulsWorld.WallCount++;
                         break;
 
                     case NPCID.TheDestroyer:
-                        if (FargoSoulsWorld.DestroyerCount < FargoSoulsWorld.MaxCountHM)
+                        if (FargoSoulsWorld.DestroyerCount < FargoSoulsWorld.MaxCountHM && !FargoSoulsWorld.NoMasoBossScaling)
                             FargoSoulsWorld.DestroyerCount++;
                         break;
 
@@ -10702,29 +10702,29 @@ namespace FargowiltasSouls.NPCs
                                 Main.NewText("Skeletron Prime has entered Dungeon Guardian form!", 175, 75, 255);
                             return false;
                         }
-                        else if (FargoSoulsWorld.PrimeCount < FargoSoulsWorld.MaxCountHM)
+                        else if (FargoSoulsWorld.PrimeCount < FargoSoulsWorld.MaxCountHM && !FargoSoulsWorld.NoMasoBossScaling)
                         {
                             FargoSoulsWorld.PrimeCount++;
                         }
                         break;
 
                     case NPCID.Retinazer:
-                        if (FargoSoulsWorld.TwinsCount < FargoSoulsWorld.MaxCountHM && !NPC.AnyNPCs(NPCID.Spazmatism))
+                        if (FargoSoulsWorld.TwinsCount < FargoSoulsWorld.MaxCountHM && !FargoSoulsWorld.NoMasoBossScaling && !NPC.AnyNPCs(NPCID.Spazmatism))
                             FargoSoulsWorld.TwinsCount++;
                         break;
 
                     case NPCID.Spazmatism:
-                        if (FargoSoulsWorld.TwinsCount < FargoSoulsWorld.MaxCountHM && !NPC.AnyNPCs(NPCID.Retinazer))
+                        if (FargoSoulsWorld.TwinsCount < FargoSoulsWorld.MaxCountHM && !FargoSoulsWorld.NoMasoBossScaling && !NPC.AnyNPCs(NPCID.Retinazer))
                             FargoSoulsWorld.TwinsCount++;
                         break;
 
                     case NPCID.Plantera:
-                        if (FargoSoulsWorld.PlanteraCount < FargoSoulsWorld.MaxCountHM)
+                        if (FargoSoulsWorld.PlanteraCount < FargoSoulsWorld.MaxCountHM && !FargoSoulsWorld.NoMasoBossScaling)
                             FargoSoulsWorld.PlanteraCount++;
                         break;
 
                     case NPCID.Golem:
-                        if (FargoSoulsWorld.GolemCount < FargoSoulsWorld.MaxCountHM)
+                        if (FargoSoulsWorld.GolemCount < FargoSoulsWorld.MaxCountHM && !FargoSoulsWorld.NoMasoBossScaling)
                             FargoSoulsWorld.GolemCount++;
                         break;
 
@@ -10793,7 +10793,7 @@ namespace FargowiltasSouls.NPCs
                         }
                         else
                         {
-                            if (FargoSoulsWorld.FishronCount < FargoSoulsWorld.MaxCountHM)
+                            if (FargoSoulsWorld.FishronCount < FargoSoulsWorld.MaxCountHM && !FargoSoulsWorld.NoMasoBossScaling)
                                 FargoSoulsWorld.FishronCount++;
 
                             if (fishBossEX == npc.whoAmI) //drop loot here (avoids the vanilla "fishron defeated" message)
@@ -10830,12 +10830,12 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.CultistBoss:
-                        if (FargoSoulsWorld.CultistCount < FargoSoulsWorld.MaxCountHM)
+                        if (FargoSoulsWorld.CultistCount < FargoSoulsWorld.MaxCountHM && !FargoSoulsWorld.NoMasoBossScaling)
                             FargoSoulsWorld.CultistCount++;
                         break;
 
                     case NPCID.MoonLordCore:
-                        if (FargoSoulsWorld.MoonlordCount < FargoSoulsWorld.MaxCountHM)
+                        if (FargoSoulsWorld.MoonlordCount < FargoSoulsWorld.MaxCountHM && !FargoSoulsWorld.NoMasoBossScaling)
                             FargoSoulsWorld.MoonlordCount++;
                         break;
 
