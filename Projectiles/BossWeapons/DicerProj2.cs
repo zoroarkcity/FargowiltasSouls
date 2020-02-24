@@ -32,16 +32,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void Kill(int timeLeft)
         {
-            int proj2 = 484; //374;
+            int proj2 = mod.ProjectileType("DicerSpray"); //374;
 
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 5f, proj2, (int) (projectile.damage * 0.5f), 2 /*kb*/, Main.myPlayer);
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 5f, 0f, proj2, (int) (projectile.damage * 0.5f), 2, Main.myPlayer);
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, -5f, proj2, (int) (projectile.damage * 0.5f), 2, Main.myPlayer);
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -5f, 0f, proj2, (int) (projectile.damage * 0.5f), 2, Main.myPlayer);
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4f, 4f, proj2, (int) (projectile.damage * 0.5f), 2, Main.myPlayer);
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4f, -4f, proj2, (int) (projectile.damage * 0.5f), 2, Main.myPlayer);
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4f, -4f, proj2, (int) (projectile.damage * 0.5f), 2, Main.myPlayer);
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4f, 4f, proj2, (int) (projectile.damage * 0.5f), 2, Main.myPlayer);
+            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 5f, proj2, projectile.damage, 2 /*kb*/, Main.myPlayer);
+            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 5f, 0f, proj2, projectile.damage, 2, Main.myPlayer);
+            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, -5f, proj2, projectile.damage, 2, Main.myPlayer);
+            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -5f, 0f, proj2, projectile.damage, 2, Main.myPlayer);
+            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4f, 4f, proj2, projectile.damage, 2, Main.myPlayer);
+            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4f, -4f, proj2, projectile.damage, 2, Main.myPlayer);
+            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4f, -4f, proj2, projectile.damage, 2, Main.myPlayer);
+            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4f, 4f, proj2, projectile.damage, 2, Main.myPlayer);
         }
     }
 }

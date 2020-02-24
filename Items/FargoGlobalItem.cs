@@ -14,33 +14,6 @@ namespace FargowiltasSouls.Items
     {
         private static Mod thorium = ModLoader.GetMod("ThoriumMod");
 
-        public override void SetDefaults(Item item)
-        {
-            if (FargoSoulsWorld.MasochistMode) //maso item nerfs
-            {
-                switch (item.type)
-                {
-                    case ItemID.Uzi:
-                    case ItemID.DaedalusStormbow:
-                    case ItemID.Megashark:
-                    case ItemID.ChlorophyteShotbow:
-                    case ItemID.Razorpine:
-                        item.damage = (int)(item.damage * 2.0 / 3.0);
-                        break;
-
-                    case ItemID.StarCannon:
-                    case ItemID.Tsunami:
-                    case ItemID.Phantasm:
-                    case ItemID.DD2BetsyBow:
-                        item.damage /= 2;
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        }
-
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             if (item.type == ItemID.DogWhistle)

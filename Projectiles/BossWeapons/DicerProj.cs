@@ -30,18 +30,19 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.penetrate = -1;
             projectile.melee = true;
             projectile.scale = 1f;
+
+            projectile.extraUpdates = 1;
         }
 
         public override void AI()
         {
-            if (Counter % 30 == 0)
+            if (++Counter >= 60)
             {
+                Counter = 0;
                 int proj2 = mod.ProjectileType("DicerProj2"); 
 
                 Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, proj2, projectile.damage, 0, Main.myPlayer);
             }
-
-            Counter++;
         }
 
         public override void PostAI()

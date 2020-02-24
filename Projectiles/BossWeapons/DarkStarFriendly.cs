@@ -27,6 +27,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.timeLeft = 900;
             projectile.friendly = true;
             projectile.ranged = true;
+            projectile.penetrate = 2;
         }
 
         public override void AI()
@@ -36,6 +37,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            projectile.timeLeft = 0;
             if (projectile.ai[0] == 0)
             {
                 for (int i = 0; i < 2; i++)
