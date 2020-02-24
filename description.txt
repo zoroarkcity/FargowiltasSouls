@@ -1,8 +1,4 @@
-NEW UPDATE - v 1.2.0.2
--Added Toggle all On/Off button to ModConfig
--Added Optic Staff EX sprite
--Nerfed Eater of Worlds Staff detection range and speed
--Fixed recolored Golem (SANS) crashing on reload
--Several other Masochist Mode balances changes and fixes
+NEW UPDATE - v 1.2.0.3
+-molten enchant applies damage to all enemies not jut those that arne timmune to on fire
 
 -See the wiki for full details
