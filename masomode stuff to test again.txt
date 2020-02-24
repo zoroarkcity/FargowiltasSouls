@@ -5,7 +5,7 @@ dicer changes:
 	buffed base damage to 100
 	buffed damage of projectile spray
 tweaked how maso item nerfs work internally
-destroyer is IMMUNE to holy stars, fuck it
+destroyer only takes 25% damage from hallow stars
 nerfed stormbow to only 25% damage in maso
 added boss count disable (debug item)
 sinister icon prevents pumpkin/frost moon minibosses and clowns from spawning too

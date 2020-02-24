@@ -11680,7 +11680,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.TheDestroyerBody:
                     case NPCID.TheDestroyerTail:
                         if (projectile.type == ProjectileID.HallowStar)
-                            damage = 0;
+                            damage /= 4;
                         if (projectile.numHits > 0 && !projectile.minion)
                             damage = (int)(damage * (0.5 + 0.5 * 1 / projectile.numHits));
                         break;
