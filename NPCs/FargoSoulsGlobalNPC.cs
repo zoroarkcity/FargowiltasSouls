@@ -1940,9 +1940,9 @@ namespace FargowiltasSouls.NPCs
                             //    npc.netUpdate = true;
                             //}
 
-                            /*if (Counter2++ > 240)
+                            if (masoBool[3] && --Counter2 < 0) //when brought to 1hp, begin shooting dark stars
                             {
-                                Counter2 = 0;
+                                Counter2 = 180;
                                 if (Main.netMode != 1 && npc.HasPlayerTarget)
                                 {
                                     Vector2 distance = Main.player[npc.target].Center - npc.Center;
@@ -1952,7 +1952,7 @@ namespace FargowiltasSouls.NPCs
                                         Projectile.NewProjectile(npc.Center, distance.RotatedBy(2 * Math.PI / 12 * i),
                                             mod.ProjectileType("DarkStar"), npc.damage / 5, 0f, Main.myPlayer);
                                 }
-                            }*/
+                            }
 
                             //dust code
                             if (Main.rand.Next(4) < 3)
@@ -1970,7 +1970,11 @@ namespace FargowiltasSouls.NPCs
                             SharkCount = 253;
                         }
 
-                        if (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) && targetAlive)
+                        //become vulnerable again when both twins at 1hp
+                        if (npc.dontTakeDamage && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
+                            npc.dontTakeDamage = false;
+
+                        /*if (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) && targetAlive)
                         {
                             Timer--;
 
@@ -1995,7 +1999,7 @@ namespace FargowiltasSouls.NPCs
                                     }
                                 }
                             }
-                        }
+                        }*/
                         break;
 
                     case NPCID.Spazmatism:
@@ -2080,10 +2084,10 @@ namespace FargowiltasSouls.NPCs
                                     Projectile.NewProjectile(npc.Center, npc.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-6f, 6f))) * 0.5f, ProjectileID.EyeFire, npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
-                            
-                            /*if (Counter2++ > 180)
+
+                            if (masoBool[3] && --Counter2 < 0) //when brought to 1hp, begin shooting dark stars
                             {
-                                Counter2 = 0;
+                                Counter2 = 120;
                                 if (Main.netMode != 1 && npc.HasPlayerTarget)
                                 {
                                     Vector2 distance = Main.player[npc.target].Center - npc.Center;
@@ -2093,7 +2097,7 @@ namespace FargowiltasSouls.NPCs
                                         Projectile.NewProjectile(npc.Center, distance.RotatedBy(2 * Math.PI / 8 * i),
                                             mod.ProjectileType("DarkStar"), npc.damage / 5, 0f, Main.myPlayer);
                                 }
-                            }*/
+                            }
 
                             //dust code
                             if (Main.rand.Next(4) < 3)
@@ -2111,7 +2115,11 @@ namespace FargowiltasSouls.NPCs
                             SharkCount = 254;
                         }
 
-                        if (!retiAlive && npc.HasPlayerTarget && Main.player[npc.target].active)
+                        //become vulnerable again when both twins at 1hp
+                        if (npc.dontTakeDamage && (!BossIsAlive(ref retiBoss, NPCID.Retinazer) || Main.npc[retiBoss].life == 1))
+                            npc.dontTakeDamage = false;
+
+                        /*if (!retiAlive && npc.HasPlayerTarget && Main.player[npc.target].active)
                         {
                             Timer--;
 
@@ -2136,7 +2144,7 @@ namespace FargowiltasSouls.NPCs
                                     }
                                 }
                             }
-                        }
+                        }*/
                         break;
 
                     case NPCID.LunarTowerNebula:
@@ -6380,8 +6388,21 @@ namespace FargowiltasSouls.NPCs
                         Aura(npc, 80, BuffID.Obstructed, false, 199);
                         break;
 
-                    case NPCID.MartianSaucer:
+                    case NPCID.MartianSaucerCore:
                         Aura(npc, 250, BuffID.VortexDebuff, false, DustID.Vortex);
+                        if (!npc.dontTakeDamage && npc.HasPlayerTarget && ++Counter > 240)
+                        {
+                            if (++Counter2 > 1)
+                            {
+                                Counter2 = 0;
+                                Vector2 speed = 16f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
+                                if (Main.netMode != 1)
+                                    Projectile.NewProjectile(npc.Center, speed, ProjectileID.SaucerLaser, 15, 0f, Main.myPlayer);
+                            }
+
+                            if (Counter > 480)
+                                Counter = 0;
+                        }
                         break;
 
                     case NPCID.ToxicSludge:
@@ -10709,11 +10730,39 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Retinazer:
+                        if (BossIsAlive(ref spazBoss, NPCID.Spazmatism) && Main.npc[spazBoss].life > 1) //spaz still active
+                        {
+                            npc.life = 1;
+                            npc.active = true;
+                            if (Main.netMode != 1)
+                            {
+                                npc.netUpdate = true;
+                                npc.dontTakeDamage = true;
+                                masoBool[3] = true;
+                                NetUpdateMaso(npc.whoAmI);
+                            }
+                            return false;
+                        }
+
                         if (FargoSoulsWorld.TwinsCount < FargoSoulsWorld.MaxCountHM && !FargoSoulsWorld.NoMasoBossScaling && !NPC.AnyNPCs(NPCID.Spazmatism))
                             FargoSoulsWorld.TwinsCount++;
                         break;
 
                     case NPCID.Spazmatism:
+                        if (BossIsAlive(ref retiBoss, NPCID.Retinazer) && Main.npc[retiBoss].life > 1) //reti still active
+                        {
+                            npc.life = 1;
+                            npc.active = true;
+                            if (Main.netMode != 1)
+                            {
+                                npc.netUpdate = true;
+                                npc.dontTakeDamage = true;
+                                masoBool[3] = true;
+                                NetUpdateMaso(npc.whoAmI);
+                            }
+                            return false;
+                        }
+
                         if (FargoSoulsWorld.TwinsCount < FargoSoulsWorld.MaxCountHM && !FargoSoulsWorld.NoMasoBossScaling && !NPC.AnyNPCs(NPCID.Retinazer))
                             FargoSoulsWorld.TwinsCount++;
                         break;

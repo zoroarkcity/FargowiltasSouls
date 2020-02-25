@@ -10,3 +10,10 @@ nerfed stormbow to only 25% damage in maso
 added boss count disable (debug item)
 sinister icon prevents pumpkin/frost moon minibosses and clowns from spawning too
 changed ammo nerfs: -80% on arrows/bullets/darts, -20% otherwise
+
+martian saucer periodically sprays lasers when vulnerable
+twins:
+	no longer revive each other
+	the first twin defeated will endure at 1hp
+	twins begin shooting dark stars when brought to 1hp
+	twins become vulnerable again when both are at 1hp
