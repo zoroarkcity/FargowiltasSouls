@@ -43,12 +43,10 @@ namespace FargowiltasSouls.Items
             if (modPlayer.Jammed)
                 type = ProjectileID.ConfettiGun;
 
-            if (FargoSoulsWorld.MasochistMode) //ammo nerf
+            if (FargoSoulsWorld.MasochistMode) //ammo nerf, strongest on arrow/bullet/dart
             {
-                if (ammo.ammo == AmmoID.Arrow || ammo.ammo == AmmoID.Bullet)
-                    damage -= (int)Math.Round(ammo.damage * player.rangedDamage * .75, MidpointRounding.AwayFromZero); //always round up
-                else
-                    damage -= (int)Math.Round(ammo.damage * player.rangedDamage * .25, MidpointRounding.AwayFromZero); //always round up
+                double modifier = ammo.ammo == AmmoID.Arrow || ammo.ammo == AmmoID.Bullet || ammo.ammo == AmmoID.Dart ? .75 : .25;
+                damage -= (int)Math.Round(ammo.damage * player.rangedDamage * modifier, MidpointRounding.AwayFromZero); //always round up
             }
         }
 
