@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Items
 
             if (FargoSoulsWorld.MasochistMode) //ammo nerf, strongest on arrow/bullet/dart
             {
-                double modifier = ammo.ammo == AmmoID.Arrow || ammo.ammo == AmmoID.Bullet || ammo.ammo == AmmoID.Dart ? .75 : .25;
+                double modifier = ammo.ammo == AmmoID.Arrow || ammo.ammo == AmmoID.Bullet || ammo.ammo == AmmoID.Dart ? .80 : .20;
                 damage -= (int)Math.Round(ammo.damage * player.rangedDamage * modifier, MidpointRounding.AwayFromZero); //always round up
             }
         }
