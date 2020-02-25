@@ -4855,17 +4855,20 @@ namespace FargowiltasSouls
                 case ItemID.DaedalusStormbow:
                     return 0.25;
 
+                case ItemID.StarCannon:
+                case ItemID.Tsunami:
+                case ItemID.Phantasm:
+                case ItemID.DD2BetsyBow:
+                    return 0.5;
+
                 case ItemID.Uzi:
                 case ItemID.Megashark:
                 case ItemID.ChlorophyteShotbow:
                 case ItemID.Razorpine:
                     return 2.0 / 3.0;
 
-                case ItemID.StarCannon:
-                case ItemID.Tsunami:
-                case ItemID.Phantasm:
-                case ItemID.DD2BetsyBow:
-                    return 0.5;
+                case ItemID.LastPrism:
+                    return 0.75;
 
                 default:
                     return 1.0;

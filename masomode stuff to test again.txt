@@ -5,7 +5,6 @@ dicer changes:
 	buffed base damage to 100
 	buffed damage of projectile spray
 tweaked how maso item nerfs work internally
-destroyer only takes 25% damage from hallow stars
 nerfed stormbow to only 25% damage in maso
 added boss count disable (debug item)
 sinister icon prevents pumpkin/frost moon minibosses and clowns from spawning too
@@ -17,3 +16,4 @@ twins:
 	the first twin defeated will endure at 1hp
 	twins begin shooting dark stars when brought to 1hp
 	twins become vulnerable again when both are at 1hp
+nerfed last prism to 75% damage
