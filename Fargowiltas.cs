@@ -559,7 +559,7 @@ namespace FargowiltasSouls
                         ModContent.ItemType<Items.Misc.AbomsCurse>(),
                         new List<int> { ModContent.ItemType<Items.Misc.AbomTrophy>(), ModContent.ItemType<Items.Misc.AbomMusicBox>() },
                         new List<int> { ModContent.ItemType<Items.Misc.MutatingEnergy>(), ModContent.ItemType<Items.Misc.MutantScale>() },
-                        "Spawn by using the Abominationn's Curse.",
+                        "Spawn by using the [i:" + ModContent.ItemType<Items.Misc.AbomsCurse>() + "].",
                         "The Abominationn has destroyed everyone.",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Still",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Head_Boss"
@@ -582,7 +582,7 @@ namespace FargowiltasSouls
                     bossChecklist.Call("AddBossWithInfo", "Duke Fishron EX", 14.02f, (Func<bool>)(() => FargoSoulsWorld.downedFishronEX), "Fish using a [i:" + ItemType("TruffleWormEX") + "]");
                     bossChecklist.Call(
                         "AddBoss",
-                        14.03f,
+                        float.MaxValue,
                         ModContent.NPCType<NPCs.MutantBoss.MutantBoss>(),
                         this,
                         "Mutant",
@@ -590,7 +590,7 @@ namespace FargowiltasSouls
                         ModContent.ItemType<Items.Misc.AbominationnVoodooDoll>(),
                         new List<int> { ModContent.ItemType<Items.Misc.MutantTrophy>(), ModContent.ItemType<Items.Misc.MutantMusicBox>() },
                         ModContent.ItemType<Items.Misc.Sadism>(),
-                        "Throw the Abominationn's Voodoo Doll into a pool of lava while the Abominationn is alive, in the Mutant's presence.",
+                        "Throw the [i:" + ModContent.ItemType<Items.Misc.AbominationnVoodooDoll>() + "] into a pool of lava while the Abominationn is alive, in the Mutant's presence.",
                         "The Mutant has won, of course.",
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
