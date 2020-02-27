@@ -1786,6 +1786,39 @@ namespace FargowiltasSouls.NPCs
                                 Main.dust[d].scale++;
                             }
 
+                            if (masoBool[3] && --Counter2 < 0) //when brought to 1hp, begin shooting dark stars
+                            {
+                                Counter2 = 240;
+                                if (Main.netMode != 1 && npc.HasPlayerTarget)
+                                {
+                                    Vector2 distance = Main.player[npc.target].Center - npc.Center;
+                                    distance.Normalize();
+                                    distance *= 10f;
+                                    for (int i = 0; i < 12; i++)
+                                        Projectile.NewProjectile(npc.Center, distance.RotatedBy(2 * Math.PI / 12 * i),
+                                            mod.ProjectileType("DarkStar"), npc.damage / 5, 0f, Main.myPlayer);
+                                }
+                            }
+
+                            //dust code
+                            if (Main.rand.Next(4) < 3)
+                            {
+                                int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 90, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 3.5f);
+                                Main.dust[dust].noGravity = true;
+                                Main.dust[dust].velocity *= 1.8f;
+                                Main.dust[dust].velocity.Y -= 0.5f;
+                                if (Main.rand.Next(4) == 0)
+                                {
+                                    Main.dust[dust].noGravity = false;
+                                    Main.dust[dust].scale *= 0.5f;
+                                }
+                            }
+                            SharkCount = 253;
+
+                            //become vulnerable again when both twins at 1hp
+                            if (npc.dontTakeDamage && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
+                                npc.dontTakeDamage = false;
+
                             //2*pi * (# of full circles) / (seconds to finish rotation) / (ticks per sec)
                             const float rotationInterval = 2f * (float)Math.PI * 1f / 4f / 60f;
 
@@ -1939,35 +1972,6 @@ namespace FargowiltasSouls.NPCs
                             //    Projectile.NewProjectile(npc.Center, vector200, mod.ProjectileType("PhantasmalDeathray"), npc.damage / 2, 0f, Main.myPlayer, num1225 * 0.0104719755f, npc.whoAmI);
                             //    npc.netUpdate = true;
                             //}
-
-                            if (masoBool[3] && --Counter2 < 0) //when brought to 1hp, begin shooting dark stars
-                            {
-                                Counter2 = 180;
-                                if (Main.netMode != 1 && npc.HasPlayerTarget)
-                                {
-                                    Vector2 distance = Main.player[npc.target].Center - npc.Center;
-                                    distance.Normalize();
-                                    distance *= 10f;
-                                    for (int i = 0; i < 12; i++)
-                                        Projectile.NewProjectile(npc.Center, distance.RotatedBy(2 * Math.PI / 12 * i),
-                                            mod.ProjectileType("DarkStar"), npc.damage / 5, 0f, Main.myPlayer);
-                                }
-                            }
-
-                            //dust code
-                            if (Main.rand.Next(4) < 3)
-                            {
-                                int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 90, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 3.5f);
-                                Main.dust[dust].noGravity = true;
-                                Main.dust[dust].velocity *= 1.8f;
-                                Main.dust[dust].velocity.Y -= 0.5f;
-                                if (Main.rand.Next(4) == 0)
-                                {
-                                    Main.dust[dust].noGravity = false;
-                                    Main.dust[dust].scale *= 0.5f;
-                                }
-                            }
-                            SharkCount = 253;
                         }
 
                         //become vulnerable again when both twins at 1hp
@@ -6392,7 +6396,7 @@ namespace FargowiltasSouls.NPCs
                         Aura(npc, 250, BuffID.VortexDebuff, false, DustID.Vortex);
                         if (!npc.dontTakeDamage && npc.HasPlayerTarget && ++Counter > 240)
                         {
-                            if (++Counter2 > 1)
+                            if (++Counter2 > 2)
                             {
                                 Counter2 = 0;
                                 Vector2 speed = 16f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
@@ -6400,7 +6404,7 @@ namespace FargowiltasSouls.NPCs
                                     Projectile.NewProjectile(npc.Center, speed, ProjectileID.SaucerLaser, 15, 0f, Main.myPlayer);
                             }
 
-                            if (Counter > 480)
+                            if (Counter > 360)
                                 Counter = 0;
                         }
                         break;
