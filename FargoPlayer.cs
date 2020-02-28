@@ -4870,6 +4870,7 @@ namespace FargowiltasSouls
 
                 case ItemID.LastPrism:
                 case ItemID.ElectrosphereLauncher:
+                case ItemID.ChainGun:
                     return 0.75;
 
                 default:

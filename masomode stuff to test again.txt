@@ -18,6 +18,6 @@ twins:
 	twins become vulnerable again when both are at 1hp
 nerfed last prism to 75% damage
 
-nerfed snowman cannon to 66%, electrosphere launcher to 75%
+nerfed snowman cannon to 66%, electrosphere launcher to 75%, chain gun to 75%
 golem body has 25% DR
 reduced landslide damage and fire rate
