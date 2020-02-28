@@ -4865,9 +4865,11 @@ namespace FargowiltasSouls
                 case ItemID.Megashark:
                 case ItemID.ChlorophyteShotbow:
                 case ItemID.Razorpine:
+                case ItemID.SnowmanCannon:
                     return 2.0 / 3.0;
 
                 case ItemID.LastPrism:
+                case ItemID.ElectrosphereLauncher:
                     return 0.75;
 
                 default:

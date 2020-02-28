@@ -11517,6 +11517,10 @@ namespace FargowiltasSouls.NPCs
                         }
                         break;
 
+                    case NPCID.Golem:
+                        damage = (int)(damage * 0.75);
+                        break;
+
                     case NPCID.IceTortoise:
                         float reduction = (float)npc.life / npc.lifeMax;
                         if (reduction < 0.5f)
@@ -11524,8 +11528,11 @@ namespace FargowiltasSouls.NPCs
                         damage = (int)(damage * reduction);
                         break;
 
+                    case NPCID.MoonLordCore:
+                        damage = damage * 2 / 3;
+                        break;
                     case NPCID.MoonLordHead:
-                        damage *= 2;
+                        damage = damage * 2;
                         break;
 
                     case NPCID.GiantTortoise:
@@ -11735,6 +11742,10 @@ namespace FargowiltasSouls.NPCs
                         //if (projectile.type == ProjectileID.HallowStar) damage /= 4;
                         if (projectile.numHits > 0 && !projectile.minion)
                             damage = (int)(damage * (0.5 + 0.5 * 1 / projectile.numHits));
+                        break;
+
+                    case NPCID.Golem:
+                        damage = (int)(damage * 0.75);
                         break;
 
                     case NPCID.GolemFistLeft:

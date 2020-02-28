@@ -17,3 +17,6 @@ twins:
 	twins begin shooting dark stars when brought to 1hp
 	twins become vulnerable again when both are at 1hp
 nerfed last prism to 75% damage
+
+nerfed snowman cannon to 66%, electrosphere launcher to 75%
+golem body has 25% DR
