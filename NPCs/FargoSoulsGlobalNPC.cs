@@ -4478,14 +4478,14 @@ namespace FargowiltasSouls.NPCs
 
                         if (!npc.dontTakeDamage)
                         {
-                            npc.life += 5; //healing stuff
+                            npc.life += 4; //healing stuff
                             if (npc.life > npc.lifeMax)
                                 npc.life = npc.lifeMax;
                             Timer++;
                             if (Timer >= 75)
                             {
                                 Timer = Main.rand.Next(30);
-                                CombatText.NewText(npc.Hitbox, CombatText.HealLife, 300);
+                                CombatText.NewText(npc.Hitbox, CombatText.HealLife, 240);
                             }
                         }
                         break;
@@ -4635,7 +4635,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.GolemHead:
                         npc.dontTakeDamage = false;
-                        npc.life += 5;
+                        npc.life += 4;
                         if (npc.life > npc.lifeMax)
                             npc.life = npc.lifeMax;
 
@@ -4643,7 +4643,7 @@ namespace FargowiltasSouls.NPCs
                         if (Timer >= 75)
                         {
                             Timer = Main.rand.Next(30);
-                            CombatText.NewText(npc.Hitbox, CombatText.HealLife, 300);
+                            CombatText.NewText(npc.Hitbox, CombatText.HealLife, 240);
                         }
                         break;
 
@@ -11518,7 +11518,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Golem:
-                        damage = (int)(damage * 0.75);
+                        damage = (int)(damage * 0.8);
                         break;
 
                     case NPCID.IceTortoise:
@@ -11745,7 +11745,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Golem:
-                        damage = (int)(damage * 0.75);
+                        damage = (int)(damage * 0.8);
                         break;
 
                     case NPCID.GolemFistLeft:
