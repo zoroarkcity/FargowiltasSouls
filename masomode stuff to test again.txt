@@ -26,3 +26,5 @@ nerfed dicer
 nerfed dicer again
 golem's body health modifier is now x3 (was x2)
 buffed destroyer gun damage slightly
+updated fused lens sprite
+added recovering icon
