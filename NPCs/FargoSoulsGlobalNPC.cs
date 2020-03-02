@@ -420,7 +420,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Golem:
-                        npc.lifeMax *= 2;
+                        npc.lifeMax *= 3;
                         npc.trapImmune = true;
                         break;
                     case NPCID.GolemHead:

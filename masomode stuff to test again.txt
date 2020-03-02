@@ -22,3 +22,6 @@ nerfed snowman cannon to 66%, electrosphere launcher to 75%, chain gun to 75%
 golem body has 20% DR, reduced regen to 240 to compensate
 reduced landslide damage and fire rate
 nerfed dicer
+
+nerfed dicer again
+golem's body health modifier is now x3 (was x2)
