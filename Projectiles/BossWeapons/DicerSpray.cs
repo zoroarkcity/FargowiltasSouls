@@ -11,7 +11,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetDefaults()
         {
             projectile.CloneDefaults(ProjectileID.SeedlerThorn);
-            projectile.penetrate = 2;
+            aiType = ProjectileID.SeedlerThorn;
+            projectile.penetrate = -1;
         }
     }
 }
