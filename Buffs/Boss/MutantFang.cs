@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using FargowiltasSouls.NPCs;
 
-namespace FargowiltasSouls.Buffs.MutantBoss
+namespace FargowiltasSouls.Buffs.Boss
 {
     public class MutantFang : ModBuff
     {

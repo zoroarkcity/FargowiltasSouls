@@ -26,5 +26,10 @@ nerfed dicer
 nerfed dicer again
 golem's body health modifier is now x3 (was x2)
 buffed destroyer gun damage slightly
-updated fused lens sprite
+updated sprites:
+	fused lens
+	sinister icon
+	slimy shield
+	supreme deathbringer fairy
 added recovering icon
+rearranged internal order of various buffs

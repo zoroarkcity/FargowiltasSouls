@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
-namespace FargowiltasSouls.Buffs
+namespace FargowiltasSouls.Buffs.Minions
 {
     public class PlanterasChild : ModBuff
     {

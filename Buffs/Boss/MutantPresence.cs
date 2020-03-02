@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
-namespace FargowiltasSouls.Buffs.MutantBoss
+namespace FargowiltasSouls.Buffs.Boss
 {
     public class MutantPresence : ModBuff
     {
