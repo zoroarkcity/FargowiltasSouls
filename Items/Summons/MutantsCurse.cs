@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
-namespace FargowiltasSouls.Items.Misc
+namespace FargowiltasSouls.Items.Summons
 {
 	public class MutantsCurse : ModItem
 	{

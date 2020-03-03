@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Localization;
 
-namespace FargowiltasSouls.Items.Misc
+namespace FargowiltasSouls.Items.Tiles
 {
     public class FMMBanner : ModTile
     {

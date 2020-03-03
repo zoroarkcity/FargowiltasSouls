@@ -31,5 +31,7 @@ updated sprites:
 	sinister icon
 	slimy shield
 	supreme deathbringer fairy
+	mutant's pact
 added recovering icon
 rearranged internal order of various buffs
+rearranged internal order of various items

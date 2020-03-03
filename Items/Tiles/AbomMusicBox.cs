@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Items.Misc
+namespace FargowiltasSouls.Items.Tiles
 {
-    public class MutantMusicBox : ModItem
+    public class AbomMusicBox : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Music Box (Mutant)");
+            DisplayName.SetDefault("Music Box (Abominationn)");
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)
@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Items.Misc
             {
                 if (line2.mod == "Terraria" && line2.Name == "ItemName")
                 {
-                    line2.overrideColor = new Color(Main.DiscoR, 51, 255 - (int)((double)Main.DiscoR * 0.4));
+                    line2.overrideColor = Main.DiscoColor;
                 }
             }
         }
@@ -31,7 +31,7 @@ namespace FargowiltasSouls.Items.Misc
             item.useTime = 10;
             item.autoReuse = true;
             item.consumable = true;
-            item.createTile = mod.TileType("MutantMusicBoxSheet");
+            item.createTile = mod.TileType("AbomMusicBoxSheet");
             item.width = 32;
             item.height = 32;
             item.rare = 11;

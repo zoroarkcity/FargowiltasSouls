@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace FargowiltasSouls.Items.Misc
+namespace FargowiltasSouls.Items.Tiles
 {
     public class ScremPaintingSheet : ModTile
     {

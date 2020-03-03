@@ -5,7 +5,7 @@ using Terraria.Localization;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Items.Misc
+namespace FargowiltasSouls.Items.Summons
 {
     public class TruffleWormEX : ModItem
     {

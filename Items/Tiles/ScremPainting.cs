@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 
-namespace FargowiltasSouls.Items.Misc
+namespace FargowiltasSouls.Items.Tiles
 {
     public class ScremPainting : ModItem
     {

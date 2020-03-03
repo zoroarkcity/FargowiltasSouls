@@ -1,7 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Items.Misc
+namespace FargowiltasSouls.Items.Tiles
 {
     public class TophatSquirrelBanner : ModItem
     {

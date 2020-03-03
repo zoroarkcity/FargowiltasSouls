@@ -1,12 +1,12 @@
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Items.Misc
+namespace FargowiltasSouls.Items.Tiles
 {
-    public class MutantStatue : ModItem
+    public class MutantStatueGift : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mutant Statue");
+            DisplayName.SetDefault("Mutant Statue (Gift)");
         }
 
         public override void SetDefaults()
@@ -21,17 +21,16 @@ namespace FargowiltasSouls.Items.Misc
             item.useTime = 15;
             item.useStyle = 1;
             item.consumable = true;
-            item.createTile = mod.TileType("MutantStatue");
+            item.createTile = mod.TileType("MutantStatueGift");
         }
 
-        /*public override void AddRecipes()
+        public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyButterfly");
-            recipe.AddIngredient(ItemID.GoldDust, 500);
-            recipe.AddTile(mod.TileType("GoldenDippingVatSheet"));
-            recipe.SetResult(ItemID.GoldButterfly);
+            recipe.AddIngredient(mod.ItemType("MutantStatue"));
+            recipe.AddIngredient(mod.ItemType("Masochist"));
+            recipe.SetResult(this);
             recipe.AddRecipe();
-        }*/
+        }
     }
 }

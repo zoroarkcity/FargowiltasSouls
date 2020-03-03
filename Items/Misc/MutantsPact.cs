@@ -7,8 +7,6 @@ namespace FargowiltasSouls.Items.Misc
 {
 	public class MutantsPact : ModItem
 	{
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Mutant's Pact");
