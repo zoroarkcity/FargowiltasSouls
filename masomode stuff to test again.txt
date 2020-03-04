@@ -35,6 +35,7 @@ updated sprites:
 	betsy's heart
 	lump of flesh
 	pumpking's cape
+	ice queen's crown
 	pungent eyeball
 	fishron
 added recovering icon
