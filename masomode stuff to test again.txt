@@ -33,6 +33,10 @@ updated sprites:
 	supreme deathbringer fairy
 	mutant's pact
 	betsy's heart
+	lump of flesh
+	pumpking's cape
+	pungent eyeball
+	fishron
 added recovering icon
 rearranged internal order of various buffs
 rearranged internal order of various items
