@@ -288,6 +288,8 @@ namespace FargowiltasSouls
         public int GrazeCounter;
         public double GrazeBonus;
 
+        public int PreNerfDamage;
+
         //debuffs
         public bool Hexed;
         public bool Unstable;
@@ -4823,6 +4825,13 @@ namespace FargowiltasSouls
                 TribalAutoFire = player.HeldItem.autoReuse;
                 player.HeldItem.autoReuse = true;
             }
+
+            if (FargoSoulsWorld.MasochistMode) //maso item nerfs
+            {
+                PreNerfDamage = player.HeldItem.damage;
+                player.HeldItem.damage = (int)(player.HeldItem.damage * MasoItemNerfs(player.HeldItem.type));
+            }
+
             return true;
         }
 
@@ -4831,6 +4840,41 @@ namespace FargowiltasSouls
             if (TribalCharm && SoulConfig.Instance.TribalCharm)
             {
                 player.HeldItem.autoReuse = TribalAutoFire;
+            }
+
+            if (FargoSoulsWorld.MasochistMode) //revert maso item nerfs
+            {
+                player.HeldItem.damage = PreNerfDamage;
+            }
+        }
+
+        private static double MasoItemNerfs(int type)
+        {
+            switch (type)
+            {
+                case ItemID.DaedalusStormbow:
+                    return 0.25;
+
+                case ItemID.StarCannon:
+                case ItemID.Tsunami:
+                case ItemID.Phantasm:
+                case ItemID.DD2BetsyBow:
+                    return 0.5;
+
+                case ItemID.Uzi:
+                case ItemID.Megashark:
+                case ItemID.ChlorophyteShotbow:
+                case ItemID.Razorpine:
+                case ItemID.SnowmanCannon:
+                    return 2.0 / 3.0;
+
+                case ItemID.LastPrism:
+                case ItemID.ElectrosphereLauncher:
+                case ItemID.ChainGun:
+                    return 0.75;
+
+                default:
+                    return 1.0;
             }
         }
 

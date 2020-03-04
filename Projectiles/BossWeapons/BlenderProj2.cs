@@ -23,7 +23,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetDefaults()
         {
             projectile.CloneDefaults(ProjectileID.Kraken);
-            projectile.extraUpdates = 0;
             projectile.width = 30;
             projectile.height = 30;
             //yoyo ai
@@ -32,11 +31,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.penetrate = -1;
             projectile.melee = true;
             projectile.scale = 1f;
+
+            projectile.extraUpdates = 1;
         }
 
         public override void AI()
         {
-            if (++Counter > 30)
+            if (++Counter > 60)
             {
                 Counter = 0;
                 int proj2 = mod.ProjectileType("BlenderProj3");

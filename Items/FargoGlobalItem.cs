@@ -14,33 +14,6 @@ namespace FargowiltasSouls.Items
     {
         private static Mod thorium = ModLoader.GetMod("ThoriumMod");
 
-        public override void SetDefaults(Item item)
-        {
-            if (FargoSoulsWorld.MasochistMode) //maso item nerfs
-            {
-                switch (item.type)
-                {
-                    case ItemID.Uzi:
-                    case ItemID.DaedalusStormbow:
-                    case ItemID.Megashark:
-                    case ItemID.ChlorophyteShotbow:
-                    case ItemID.Razorpine:
-                        item.damage = (int)(item.damage * 2.0 / 3.0);
-                        break;
-
-                    case ItemID.StarCannon:
-                    case ItemID.Tsunami:
-                    case ItemID.Phantasm:
-                    case ItemID.DD2BetsyBow:
-                        item.damage /= 2;
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        }
-
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             if (item.type == ItemID.DogWhistle)
@@ -70,8 +43,11 @@ namespace FargowiltasSouls.Items
             if (modPlayer.Jammed)
                 type = ProjectileID.ConfettiGun;
 
-            if (FargoSoulsWorld.MasochistMode) //ammo nerf
-                damage -= (int)Math.Round(ammo.damage * player.rangedDamage * .8, MidpointRounding.AwayFromZero); //always round up
+            if (FargoSoulsWorld.MasochistMode) //ammo nerf, strongest on arrow/bullet/dart
+            {
+                double modifier = ammo.ammo == AmmoID.Arrow || ammo.ammo == AmmoID.Bullet || ammo.ammo == AmmoID.Dart ? .80 : .20;
+                damage -= (int)Math.Round(ammo.damage * player.rangedDamage * modifier, MidpointRounding.AwayFromZero); //always round up
+            }
         }
 
         public override bool ConsumeItem(Item item, Player player)
