@@ -32,6 +32,7 @@ updated sprites:
 	slimy shield
 	supreme deathbringer fairy
 	mutant's pact
+	betsy's heart
 added recovering icon
 rearranged internal order of various buffs
 rearranged internal order of various items
