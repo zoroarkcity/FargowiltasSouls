@@ -288,7 +288,7 @@ namespace FargowiltasSouls
         public int GrazeCounter;
         public double GrazeBonus;
 
-        public int PreNerfDamage;
+        //public int PreNerfDamage;
 
         //debuffs
         public bool Hexed;
@@ -4826,11 +4826,11 @@ namespace FargowiltasSouls
                 player.HeldItem.autoReuse = true;
             }
 
-            if (FargoSoulsWorld.MasochistMode) //maso item nerfs
+            /*if (FargoSoulsWorld.MasochistMode) //maso item nerfs
             {
                 PreNerfDamage = player.HeldItem.damage;
                 player.HeldItem.damage = (int)(player.HeldItem.damage * MasoItemNerfs(player.HeldItem.type));
-            }
+            }*/
 
             return true;
         }
@@ -4842,10 +4842,10 @@ namespace FargowiltasSouls
                 player.HeldItem.autoReuse = TribalAutoFire;
             }
 
-            if (FargoSoulsWorld.MasochistMode) //revert maso item nerfs
+            /*if (FargoSoulsWorld.MasochistMode) //revert maso item nerfs
             {
                 player.HeldItem.damage = PreNerfDamage;
-            }
+            }*/
         }
 
         public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat)
