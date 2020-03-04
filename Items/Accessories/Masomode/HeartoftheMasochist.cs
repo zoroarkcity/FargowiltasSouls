@@ -20,7 +20,6 @@ You may periodically fire additional attacks depending on weapon type
 Your critical strikes inflict Rotting and Betsy's Curse
 Press the Fireball Dash key to perform a short invincible dash
 Grants effects of Wet debuff while riding Cute Fishron and gravity control
-You catch fish almost instantly
 Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu");
             DisplayName.AddTranslation(GameCulture.Chinese, "受虐者之心");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'大多数情况下已经不用受苦了'

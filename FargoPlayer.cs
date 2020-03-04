@@ -4848,33 +4848,42 @@ namespace FargowiltasSouls
             }
         }
 
-        private static double MasoItemNerfs(int type)
+        public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat)
+        {
+            if (FargoSoulsWorld.MasochistMode)
+                mult *= MasoItemNerfs(item.type);
+        }
+
+        private static float MasoItemNerfs(int type)
         {
             switch (type)
             {
                 case ItemID.DaedalusStormbow:
-                    return 0.25;
+                    return 0.25f;
 
                 case ItemID.StarCannon:
                 case ItemID.Tsunami:
                 case ItemID.Phantasm:
                 case ItemID.DD2BetsyBow:
-                    return 0.5;
+                    return 0.5f;
 
                 case ItemID.Uzi:
                 case ItemID.Megashark:
                 case ItemID.ChlorophyteShotbow:
                 case ItemID.Razorpine:
                 case ItemID.SnowmanCannon:
-                    return 2.0 / 3.0;
+                    return 2f / 3f;
 
                 case ItemID.LastPrism:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.ChainGun:
-                    return 0.75;
+                    return 0.75f;
+
+                case ItemID.SpaceGun:
+                    return NPC.downedBoss2 ? 1f : 2f / 3f;
 
                 default:
-                    return 1.0;
+                    return 1f;
             }
         }
 

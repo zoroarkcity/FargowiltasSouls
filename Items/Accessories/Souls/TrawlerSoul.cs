@@ -67,6 +67,8 @@ Permanent Sonar and Crate Buffs";
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            //instacatch
+            modPlayer.FishSoul1 = true;
             //extra lures
             modPlayer.FishSoul2 = true;
             modPlayer.AddPet(SoulConfig.Instance.ZephyrFishPet, hideVisual, BuffID.ZephyrFish, ProjectileID.ZephyrFish);

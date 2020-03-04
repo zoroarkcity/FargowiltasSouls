@@ -226,6 +226,8 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
             player.wingTime = player.wingTimeMax;
 
             //TRAWLER
+            //instacatch
+            modPlayer.FishSoul1 = true;
             //extra lures
             modPlayer.FishSoul2 = true;
             //modPlayer.AddPet("Zephyr Fish Pet", hideVisual, BuffID.ZephyrFish, ProjectileID.ZephyrFish);

@@ -24,7 +24,7 @@ Grants autofire to all weapons, modifier protection, and you automatically use m
 Empowers Cute Fishron and makes armed and magic skeletons less hostile outside the Dungeon
 Your attacks create additional attacks, hearts, and inflict a cocktail of Masochist Mode debuffs
 Press the Fireball Dash key to perform a short invincible dash
-Certain enemies will drop potions when defeated you catch fish almost instantly
+Certain enemies will drop potions when defeated
 You respawn twice as fast, have Honey buff, improved night vision, and erupt into various attacks when injured
 Prevents boss spawns, increases spawn rate, and attacks may squeak and deal 1 damage to you
 Graze projectiles to gain increased crit damage
