@@ -39,3 +39,4 @@ rearranged internal order of various items
 changed implementation of maso item nerfs so frozen doesnt break it
 removed instacatch from mutant antibodies and upgrades
 replaced angler ench's lure split with instacatch, also extends to upgrades
+space gun is now nerfed to 66% damage pre-eow/boc
