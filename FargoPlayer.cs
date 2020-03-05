@@ -2745,7 +2745,7 @@ namespace FargowiltasSouls
                     target.AddBuff(BuffID.OnFire, 600);
 
                 if (LeadEnchant && Main.rand.Next(5) == 0)
-                    target.AddBuff(mod.BuffType("LeadPoison"), 120);
+                    target.AddBuff(mod.BuffType("LeadPoison"), 30);
             }
 
             if (GroundStick && Main.rand.Next(10) == 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.LightningRod))
@@ -4859,7 +4859,7 @@ namespace FargowiltasSouls
             switch (type)
             {
                 case ItemID.DaedalusStormbow:
-                    return 0.25f;
+                    return 1f / 3f;
 
                 case ItemID.StarCannon:
                 case ItemID.Tsunami:

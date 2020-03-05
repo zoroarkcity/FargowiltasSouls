@@ -5654,23 +5654,50 @@ namespace FargowiltasSouls.NPCs
                                         NetMessage.SendData(23, -1, -1, null, n);
                                 }
                             }
+
+                            void MakeDust(Vector2 spawn)
+                            {
+                                for (int i = 0; i < 24; i++) //dust ring
+                                {
+                                    Vector2 vector6 = Vector2.UnitY * 12f;
+                                    vector6 = vector6.RotatedBy((i - (24 / 2 - 1)) * 6.28318548f / 36) + spawn;
+                                    Vector2 vector7 = vector6 - spawn;
+                                    int d = Dust.NewDust(vector6 + vector7, 0, 0, 90, 0f, 0f, 0, default(Color), 3f);
+                                    Main.dust[d].scale = 3f;
+                                    Main.dust[d].noGravity = true;
+                                    Main.dust[d].velocity = vector7;
+                                }
+                            };
+
                             if (--Counter < 0) //confusion timer
                             {
                                 Counter = 600;
                                 Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
-                                for (int i = 0; i < 36; i++) //dust ring
-                                {
-                                    Vector2 vector6 = Vector2.UnitY * 12f;
-                                    vector6 = vector6.RotatedBy((i - (36 / 2 - 1)) * 6.28318548f / 36) + npc.Center;
-                                    Vector2 vector7 = vector6 - npc.Center;
-                                    int d = Dust.NewDust(vector6 + vector7, 0, 0, 90, 0f, 0f, 0, default(Color), 3f);
-                                    Main.dust[d].noGravity = true;
-                                    Main.dust[d].velocity = vector7;
-                                }
+
+                                Vector2 offset = npc.Center - Main.player[npc.target].Center;
+
+                                Vector2 spawnPos = Main.player[npc.target].Center;
+                                spawnPos.X += offset.X;
+                                spawnPos.Y += offset.Y;
+                                MakeDust(spawnPos);
+
+                                spawnPos = Main.player[npc.target].Center;
+                                spawnPos.X += offset.X;
+                                spawnPos.Y -= offset.Y;
+                                MakeDust(spawnPos);
+
+                                spawnPos = Main.player[npc.target].Center;
+                                spawnPos.X -= offset.X;
+                                spawnPos.Y += offset.Y;
+                                MakeDust(spawnPos);
+
+                                spawnPos = Main.player[npc.target].Center;
+                                spawnPos.X -= offset.X;
+                                spawnPos.Y -= offset.Y;
+                                MakeDust(spawnPos);
                             }
                             else if (Counter == 540) //inflict confusion after telegraph
                             {
-                                Projectile.NewProjectile(npc.Center, new Vector2(-10, 0), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
                                 if (npc.Distance(Main.player[Main.myPlayer].Center) < 3000)
                                     Main.player[Main.myPlayer].AddBuff(BuffID.Confused, Main.expertMode && Main.expertDebuffTime > 1 ? 150 : 300);
 
@@ -5678,32 +5705,43 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     Vector2 offset = npc.Center - Main.player[npc.target].Center;
 
-                                    const int degree = 10;
+                                    const int degree = 8;
 
                                     Vector2 spawnPos = Main.player[npc.target].Center;
                                     spawnPos.X += offset.X;
                                     spawnPos.Y += offset.Y;
+                                    Projectile.NewProjectile(spawnPos, new Vector2(0, -10), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
                                     for (int i = -1; i <= 1; i++)
                                         Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
 
                                     spawnPos = Main.player[npc.target].Center;
                                     spawnPos.X += offset.X;
                                     spawnPos.Y -= offset.Y;
+                                    Projectile.NewProjectile(spawnPos, new Vector2(0, -10), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
                                     for (int i = -1; i <= 1; i++)
                                         Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
 
                                     spawnPos = Main.player[npc.target].Center;
                                     spawnPos.X -= offset.X;
                                     spawnPos.Y += offset.Y;
+                                    Projectile.NewProjectile(spawnPos, new Vector2(0, -10), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
                                     for (int i = -1; i <= 1; i++)
                                         Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
 
                                     spawnPos = Main.player[npc.target].Center;
                                     spawnPos.X -= offset.X;
                                     spawnPos.Y -= offset.Y;
+                                    Projectile.NewProjectile(spawnPos, new Vector2(0, -10), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
                                     for (int i = -1; i <= 1; i++)
                                         Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
                                 }
+                            }
+
+                            int b = Main.LocalPlayer.FindBuffIndex(BuffID.Confused);
+                            if (b != -1 && Main.LocalPlayer.buffTime[b] == 60)
+                            {
+                                Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f);
+                                MakeDust(Main.LocalPlayer.Center);
                             }
                         }
                         break;
@@ -8762,17 +8800,7 @@ namespace FargowiltasSouls.NPCs
                     npc.lifeRegen = 0;
                 }
 
-                npc.lifeRegen -= 10;
-
-                for (int i = 0; i < 200; i++)
-                {
-                    NPC spread = Main.npc[i];
-
-                    if (spread.active && !spread.townNPC && !spread.friendly && spread.lifeMax > 5 && !spread.HasBuff(mod.BuffType("LeadPoison")) && Vector2.Distance(npc.Center, spread.Center) < 50 && Collision.CanHitLine(npc.Center, 0, 0, spread.Center, 0, 0))
-                    {
-                        spread.AddBuff(mod.BuffType("LeadPoison"), 120);
-                    }
-                }
+                npc.lifeRegen -= npc.type == NPCID.EaterofWorldsBody ? 2 : 10;
             }
 
             //50 dps
