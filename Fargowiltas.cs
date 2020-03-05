@@ -29,8 +29,6 @@ namespace FargowiltasSouls
 
         internal static readonly Dictionary<int, int> ModProjDict = new Dictionary<int, int>();
 
-        internal bool FargowiltasLoaded;
-
         public Fargowiltas()
         {
             Properties = new ModProperties
@@ -489,8 +487,6 @@ namespace FargowiltasSouls
         {
             try
             {
-                FargowiltasLoaded = ModLoader.GetMod("Fargowiltas") != null;
-
                 CalamityCompatibility = new CalamityCompatibility(this).TryLoad() as CalamityCompatibility;
                 ThoriumCompatibility = new ThoriumCompatibility(this).TryLoad() as ThoriumCompatibility;
                 SoACompatibility = new SoACompatibility(this).TryLoad() as SoACompatibility;
@@ -664,23 +660,20 @@ namespace FargowiltasSouls
         {
             ThoriumCompatibility?.TryAddRecipes();
 
-            if (FargowiltasLoaded)
-            {
-                ModRecipe recipe = new ModRecipe(this);
-                recipe.AddIngredient(ItemID.SoulofLight, 7);
-                recipe.AddIngredient(ItemID.SoulofNight, 7);
-                recipe.AddIngredient(ItemType("VolatileEnergy"));
-                recipe.AddTile(TileID.MythrilAnvil);
-                recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("JungleChest"));
-                recipe.AddRecipe();
+            ModRecipe recipe = new ModRecipe(this);
+            recipe.AddIngredient(ItemID.SoulofLight, 7);
+            recipe.AddIngredient(ItemID.SoulofNight, 7);
+            recipe.AddIngredient(ItemType("VolatileEnergy"));
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("JungleChest"));
+            recipe.AddRecipe();
 
-                recipe = new ModRecipe(this);
-                recipe.AddIngredient(ItemID.WizardHat);
-                recipe.AddIngredient(ItemType("VolatileEnergy"), 5);
-                recipe.AddTile(TileID.MythrilAnvil);
-                recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("RuneOrb"));
-                recipe.AddRecipe();
-            }
+            recipe = new ModRecipe(this);
+            recipe.AddIngredient(ItemID.WizardHat);
+            recipe.AddIngredient(ItemType("VolatileEnergy"), 5);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("RuneOrb"));
+            recipe.AddRecipe();
         }
 
         public override void AddRecipeGroups()
@@ -1145,10 +1138,6 @@ namespace FargowiltasSouls
 
         internal SoACompatibility SoACompatibility { get; private set; }
         internal bool SoALoaded => SoACompatibility != null;
-
-
-        //internal FargowiltasCompatibility FargowiltasCompatibility { get; private set; }
-        //internal bool FargowiltasLoaded => FargowiltasCompatibility != null;
 
         internal MasomodeEXCompatibility MasomodeEXCompatibility { get; private set; }
         internal bool MasomodeEXLoaded => MasomodeEXCompatibility != null;
