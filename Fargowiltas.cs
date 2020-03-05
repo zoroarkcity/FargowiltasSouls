@@ -509,6 +509,14 @@ namespace FargowiltasSouls
 
                         
                         break;
+                    case "DownedMutant":
+                        return FargoSoulsWorld.downedMutant;
+                    case "MutantDiscountCard":
+                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().MutantsDiscountCard;
+                    case "MutantPact":
+                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().MutantsPact;
+                    case "Masomode":
+                        return FargoSoulsWorld.MasochistMode;
                 }
 
             }
@@ -624,7 +632,7 @@ namespace FargowiltasSouls
                         ModContent.ItemType<Items.Summons.AbomsCurse>(),
                         new List<int> { ModContent.ItemType<Items.Tiles.AbomTrophy>(), ModContent.ItemType<Items.Tiles.AbomMusicBox>() },
                         new List<int> { ModContent.ItemType<Items.Misc.MutatingEnergy>(), ModContent.ItemType<Items.Misc.MutantScale>() },
-                        "Spawn by using the [i:" + ModContent.ItemType<Items.Misc.AbomsCurse>() + "].",
+                        "Spawn by using the [i:" + ModContent.ItemType<Items.Summons.AbomsCurse>() + "].",
                         "The Abominationn has destroyed everyone.",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Still",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Head_Boss"
@@ -655,7 +663,7 @@ namespace FargowiltasSouls
                         ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
                         new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), ModContent.ItemType<Items.Tiles.MutantMusicBox>() },
                         ModContent.ItemType<Items.Misc.Sadism>(),
-                        "Throw the [i:" + ModContent.ItemType<Items.Misc.AbominationnVoodooDoll>() + "] into a pool of lava while the Abominationn is alive, in the Mutant's presence.",
+                        "Throw the [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while the Abominationn is alive, in the Mutant's presence.",
                         "The Mutant has won, of course.",
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"

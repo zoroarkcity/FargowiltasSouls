@@ -63,3 +63,5 @@ deviantt gift:
 	now has 15 wormhole potions in mp
 	removed crafting interface
 	nerfed terra storage to one per world
+
+added top hat squirrel cage

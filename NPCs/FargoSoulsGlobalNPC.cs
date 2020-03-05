@@ -5662,7 +5662,7 @@ namespace FargowiltasSouls.NPCs
                                 for (int i = 0; i < 24; i++) //dust ring
                                 {
                                     Vector2 vector6 = Vector2.UnitY * 12f;
-                                    vector6 = vector6.RotatedBy((i - (24 / 2 - 1)) * 6.28318548f / 36) + spawn;
+                                    vector6 = vector6.RotatedBy((i - (24 / 2 - 1)) * 6.28318548f / 24) + spawn;
                                     Vector2 vector7 = vector6 - spawn;
                                     int d = Dust.NewDust(vector6 + vector7, 0, 0, 90, 0f, 0f, 0, default(Color), 3f);
                                     Main.dust[d].scale = 3f;
@@ -5712,35 +5712,35 @@ namespace FargowiltasSouls.NPCs
                                     Vector2 spawnPos = Main.player[npc.target].Center;
                                     spawnPos.X += offset.X;
                                     spawnPos.Y += offset.Y;
-                                    Projectile.NewProjectile(spawnPos, new Vector2(0, -10), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
+                                    Projectile.NewProjectile(spawnPos, new Vector2(0, -4), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
                                     for (int i = -1; i <= 1; i++)
                                         Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
 
                                     spawnPos = Main.player[npc.target].Center;
                                     spawnPos.X += offset.X;
                                     spawnPos.Y -= offset.Y;
-                                    Projectile.NewProjectile(spawnPos, new Vector2(0, -10), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
+                                    Projectile.NewProjectile(spawnPos, new Vector2(0, -4), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
                                     for (int i = -1; i <= 1; i++)
                                         Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
 
                                     spawnPos = Main.player[npc.target].Center;
                                     spawnPos.X -= offset.X;
                                     spawnPos.Y += offset.Y;
-                                    Projectile.NewProjectile(spawnPos, new Vector2(0, -10), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
+                                    Projectile.NewProjectile(spawnPos, new Vector2(0, -4), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
                                     for (int i = -1; i <= 1; i++)
                                         Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
 
                                     spawnPos = Main.player[npc.target].Center;
                                     spawnPos.X -= offset.X;
                                     spawnPos.Y -= offset.Y;
-                                    Projectile.NewProjectile(spawnPos, new Vector2(0, -10), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
+                                    Projectile.NewProjectile(spawnPos, new Vector2(0, -4), mod.ProjectileType("BrainofConfusion"), 0, 0, Main.myPlayer);
                                     for (int i = -1; i <= 1; i++)
                                         Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), mod.ProjectileType("DestroyerLaser"), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
 
                             int b = Main.LocalPlayer.FindBuffIndex(BuffID.Confused);
-                            if (b != -1 && Main.LocalPlayer.buffTime[b] == 60)
+                            if (b != -1 && Main.LocalPlayer.buffTime[b] == 90)
                             {
                                 Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f);
                                 MakeDust(Main.LocalPlayer.Center);
