@@ -57,3 +57,9 @@ changed lead ench mechanics:
 boc's dust ring and brain of confusion come from all illusions
 if you're confused at 1sec and boc is alive, berserk scream and dust ring happens
 brain of confusion is smaller and more transparent
+
+deviantt gift:
+	now has 15 recall potions
+	now has 15 wormhole potions in mp
+	removed crafting interface
+	nerfed terra storage to one per world

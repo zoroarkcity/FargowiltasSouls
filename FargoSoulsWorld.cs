@@ -44,6 +44,7 @@ namespace FargowiltasSouls
         public static int skipMutantP1;
 
         public static bool NoMasoBossScaling;
+        public static bool ReceivedTerraStorage;
 
         public override void Initialize()
         {
@@ -78,6 +79,7 @@ namespace FargowiltasSouls
             skipMutantP1 = 0;
 
             NoMasoBossScaling = false;
+            ReceivedTerraStorage = false;
         }
 
         public override TagCompound Save()
@@ -112,6 +114,7 @@ namespace FargowiltasSouls
             if (downedMM) downed.Add("downedMadhouse");
             if (forceMeteor) downed.Add("forceMeteor");
             if (NoMasoBossScaling) downed.Add("NoMasoBossScaling");
+            if (ReceivedTerraStorage) downed.Add("ReceivedTerraStorage");
 
             return new TagCompound
             {
@@ -152,6 +155,7 @@ namespace FargowiltasSouls
             downedMM = downed.Contains("downedMadhouse");
             forceMeteor = downed.Contains("forceMeteor");
             NoMasoBossScaling = downed.Contains("NoMasoBossScaling");
+            ReceivedTerraStorage = downed.Contains("ReceivedTerraStorage");
 
             if (tag.ContainsKey("mutantP1"))
                 skipMutantP1 = tag.GetAsInt("mutantP1");
@@ -187,6 +191,7 @@ namespace FargowiltasSouls
             downedMM = flags[7];
             forceMeteor = flags[8];
             NoMasoBossScaling = flags[9];
+            ReceivedTerraStorage = flags[10];
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -219,7 +224,8 @@ namespace FargowiltasSouls
                 [6] = AngryMutant,
                 [7] = downedMM,
                 [8] = forceMeteor,
-                [9] = NoMasoBossScaling
+                [9] = NoMasoBossScaling,
+                [10] = ReceivedTerraStorage
             };
 
             writer.Write(flags);
