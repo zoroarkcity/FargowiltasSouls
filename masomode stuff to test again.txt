@@ -47,6 +47,7 @@ replaced angler ench's lure split with instacatch, also extends to upgrades
 space gun is now nerfed to 66% damage pre-eow/boc
 
 nerfed stormbow to only 33% damage in maso
+nerfed onyx blaster to only 75% damage in maso
 changed lead ench mechanics:
 	now only applies for half a second
 	right before it wears off, it spreads to nearby enemies

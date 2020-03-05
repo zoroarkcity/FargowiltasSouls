@@ -4874,6 +4874,7 @@ namespace FargowiltasSouls
                 case ItemID.SnowmanCannon:
                     return 2f / 3f;
 
+                case ItemID.OnyxBlaster:
                 case ItemID.LastPrism:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.ChainGun:
