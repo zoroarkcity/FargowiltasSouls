@@ -1,4 +1,7 @@
 NEW UPDATE - v 1.2.0.3
 -Several Masochist Mode balance changes, most notably the ranger class being nerfed.
 
+(bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive")
+make sure devi gifts still work
+
 -See the wiki for full details

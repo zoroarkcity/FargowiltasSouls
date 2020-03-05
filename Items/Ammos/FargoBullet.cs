@@ -43,8 +43,6 @@ namespace FargowiltasSouls.Items.Ammos
 
         public override void AddRecipes()
         {
-            if (!Fargowiltas.Instance.FargowiltasLoaded) return;
-            
             ModRecipe recipe = new ModRecipe(mod);
             //recipe.AddIngredient(ItemID.EndlessMusketPouch);
             recipe.AddIngredient(fargos, "SilverPouch");

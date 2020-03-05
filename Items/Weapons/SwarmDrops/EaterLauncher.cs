@@ -57,9 +57,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void AddRecipes()
         {
-            if (Fargowiltas.Instance.FargowiltasLoaded)
-            {
-                ModRecipe recipe = new ModRecipe(mod);
+            ModRecipe recipe = new ModRecipe(mod);
 
                 recipe.AddIngredient(mod.ItemType("EaterStaff"));
                 recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerWorm"));
@@ -69,7 +67,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 recipe.AddTile(mod, "CrucibleCosmosSheet");
                 recipe.SetResult(this);
                 recipe.AddRecipe();
-            }
         }
     }
 }

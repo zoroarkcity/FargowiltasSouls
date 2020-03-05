@@ -51,16 +51,13 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void AddRecipes()
         {
-            if (Fargowiltas.Instance.FargowiltasLoaded)
-            {
-                ModRecipe recipe = new ModRecipe(mod);
+            ModRecipe recipe = new ModRecipe(mod);
 
                 recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerDG"));
                 recipe.AddIngredient(mod.ItemType("Sadism"), 15);
                 recipe.AddTile(mod, "CrucibleCosmosSheet");
                 recipe.SetResult(this);
                 recipe.AddRecipe();
-            }
         }
     }
 }

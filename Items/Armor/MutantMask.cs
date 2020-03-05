@@ -91,16 +91,13 @@ You can survive fatal damage and recover with 100% life every two minutes
 
         public override void AddRecipes()
         {
-            if (Fargowiltas.Instance.FargowiltasLoaded)
-            {
-                ModRecipe recipe = new ModRecipe(mod);
+            ModRecipe recipe = new ModRecipe(mod);
                 recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("MutantMask"));
                 recipe.AddIngredient(null, "MutantScale", 10);
                 recipe.AddIngredient(null, "Sadism", 10);
                 recipe.AddTile(mod, "CrucibleCosmosSheet");
                 recipe.SetResult(this);
                 recipe.AddRecipe();
-            }
         }
     }
 }

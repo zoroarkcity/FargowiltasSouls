@@ -3133,7 +3133,7 @@ namespace FargowiltasSouls.NPCs
                                 if (!masoBool[3]) //drop a resummon
                                 {
                                     masoBool[3] = true;
-                                    if (Main.netMode != 1 && !Main.hardMode && Fargowiltas.Instance.FargowiltasLoaded)
+                                    if (Main.netMode != 1 && !Main.hardMode)
                                         Item.NewItem(npc.Hitbox, mod.ItemType("FleshierDoll"));
                                 }
                             }
@@ -9747,7 +9747,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             FargoSoulsWorld.forceMeteor = false;
                             WorldGen.dropMeteor();
-                            if (Fargowiltas.Instance.FargowiltasLoaded && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn")))
+                            if (!NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn")))
                             {
                                 int p = Player.FindClosest(npc.Center, 0, 0);
                                 if (p != -1)
@@ -10098,7 +10098,7 @@ namespace FargowiltasSouls.NPCs
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.HerbBag, Main.rand.Next(5) + 1);
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.WoodenCrate, 5);
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("SlimyShield"));
-                        if (Main.netMode != 1 && !BossIsAlive(ref mutantBoss, mod.NPCType("MutantBoss")) && Fargowiltas.Instance.FargowiltasLoaded && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Mutant")))
+                        if (Main.netMode != 1 && !BossIsAlive(ref mutantBoss, mod.NPCType("MutantBoss")) && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Mutant")))
                         {
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
                             if (n < 200 && Main.netMode == 2)
@@ -10157,12 +10157,9 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.WallofFlesh:
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("PungentEyeball"));
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.HallowedFishingCrate, 5);
-                        if (Fargowiltas.Instance.FargowiltasLoaded)
-                        {
-                            npc.DropItemInstanced(npc.position, npc.Size, ModLoader.GetMod("Fargowiltas").ItemType("ShadowCrate"), 5);
+                        npc.DropItemInstanced(npc.position, npc.Size, ModLoader.GetMod("Fargowiltas").ItemType("ShadowCrate"), 5);
                             if (!Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantsDiscountCard)
                                 npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantsDiscountCard"));
-                        }
                         break;
 
                     case NPCID.Retinazer:
@@ -10224,7 +10221,7 @@ namespace FargowiltasSouls.NPCs
                         npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantAntibodies"));
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.Bacon, Main.rand.Next(10) + 1);
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.GoldenCrate, 5);
-                        if (Fargowiltas.Instance.FargowiltasLoaded && !Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantsPact)
+                        if (!Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantsPact)
                             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantsPact"));
                         //}
                         break;
@@ -10641,7 +10638,7 @@ namespace FargowiltasSouls.NPCs
                             }
                         }
 
-                        if (Fargowiltas.Instance.FargowiltasLoaded && (bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive"))
+                        if ((bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive"))
                         {
                             break;
                         }

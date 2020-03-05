@@ -495,7 +495,7 @@ namespace FargowiltasSouls.Projectiles
 
         public static void SplitProj(Projectile projectile, int number)
         {
-            if (Fargowiltas.Instance.FargowiltasLoaded && projectile.type == ModLoader.GetMod("Fargowiltas").ProjectileType("SpawnProj"))
+            if (projectile.type == ModLoader.GetMod("Fargowiltas").ProjectileType("SpawnProj"))
             {
                 return;
             }

@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Projectiles.Minions
 {
     public class PhantasmalDeathrayPungent : ModProjectile
     {
-        public override string Texture => "FargowiltasSouls/Projectiles/Masomode/PhantasmalDeathrayWOF";
+        public override string Texture => "FargowiltasSouls/Projectiles/Deathrays/PhantasmalDeathrayWOF";
 
         private const float maxTime = 120;
 

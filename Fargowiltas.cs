@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using FargowiltasSouls.Items.Accessories;
 
 namespace FargowiltasSouls
 {
@@ -474,12 +475,67 @@ namespace FargowiltasSouls
 
         public override object Call(params object[] args)
         {
-            if ((string)args[0] == "FargoSoulsAI")
+            try
             {
-                /*int n = (int)args[1];
-                Main.npc[n].GetGlobalNPC<FargoSoulsGlobalNPC>().AI(Main.npc[n]);*/
+                string code = args[0].ToString();
+
+                switch (code)
+                {
+                    case "DevianttGifts":
+
+                        Player player = Main.LocalPlayer;
+                        FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
+
+                        if (!fargoPlayer.ReceivedMasoGift)
+                        {
+                            fargoPlayer.ReceivedMasoGift = true;
+                            if (Main.netMode == NetmodeID.SinglePlayer)
+                            {
+                                DropDevianttsGift(player);
+                            }
+                            else if (Main.netMode == NetmodeID.MultiplayerClient)
+                            {
+                                var netMessage = GetPacket(); // Broadcast item request to server
+                                netMessage.Write((byte)14);
+                                netMessage.Write((byte)player.whoAmI);
+                                netMessage.Send();
+                            }
+
+                            Main.npcChatText = "This world looks tougher than usual, so you can have these on the house just this once! Talk to me if you need any tips, yeah?";
+                        }
+
+                        break;
+                    case "AddSummon":
+
+                        
+                        break;
+                }
+
             }
+            catch (Exception e)
+            {
+                Logger.Error("Call Error: " + e.StackTrace + e.Message);
+            }
+
             return base.Call(args);
+        }
+
+        public static void DropDevianttsGift(Player player)
+        {
+            Item.NewItem(player.Center, ItemID.SilverPickaxe);
+            Item.NewItem(player.Center, ItemID.SilverAxe);
+            Item.NewItem(player.Center, ItemID.BugNet);
+            Item.NewItem(player.Center, ItemID.LifeCrystal, 4);
+            Item.NewItem(player.Center, ModLoader.GetMod("Fargowiltas").ItemType("DevianttsSundial"));
+            Item.NewItem(player.Center, ModLoader.GetMod("Fargowiltas").ItemType("AutoHouse"), 3);
+            Item.NewItem(player.Center, ModContent.ItemType<EurusSock>());
+
+            if (ModLoader.GetMod("MagicStorage") != null)
+            {
+                Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("StorageHeart"));
+                Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("CraftingAccess"));
+                Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("StorageUnitTerra"));
+            }
         }
 
         //bool sheet
@@ -1001,6 +1057,14 @@ namespace FargowiltasSouls
                         FargoSoulsGlobalNPC limb = Main.npc[n].GetGlobalNPC<FargoSoulsGlobalNPC>();
                         limb.Counter = reader.ReadInt32();
                         limb.Counter2 = reader.ReadInt32();
+                    }
+                    break;
+                    
+                case 14: //devi gifts
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        Player player = Main.player[reader.ReadByte()];
+                        DropDevianttsGift(player);
                     }
                     break;
 
