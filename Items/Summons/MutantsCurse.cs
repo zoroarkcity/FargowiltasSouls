@@ -33,9 +33,7 @@ namespace FargowiltasSouls.Items.Summons
 
         public override bool UseItem(Player player)
         {
-            if (Fargowiltas.Instance.FargowiltasLoaded)
-            {
-                int mutant = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
+            int mutant = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
                 if (mutant > -1 && Main.npc[mutant].active)
                 {
                     Main.npc[mutant].Transform(mod.NPCType("MutantBoss"));
@@ -48,11 +46,6 @@ namespace FargowiltasSouls.Items.Summons
                 {
                     NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("MutantBoss"));
                 }
-            }
-            else
-            {
-                NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("MutantBoss"));
-            }
             return true;
         }
 

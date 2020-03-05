@@ -180,7 +180,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.NPCLoot();
                         npc.life = 0;
                         npc.active = false;
-                        if (Main.netMode != 1 && Fargowiltas.Instance.FargowiltasLoaded && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Mutant")))
+                        if (Main.netMode != 1 && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Mutant")))
                         {
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
                             if (n != 200 && Main.netMode == 2)
@@ -1654,7 +1654,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (npc.timeLeft > 30)
                         npc.timeLeft = 30;
                     npc.velocity.Y -= 1f;
-                    if (npc.timeLeft == 1 && Fargowiltas.Instance.FargowiltasLoaded)
+                    if (npc.timeLeft == 1)
                     {
                         if (npc.position.Y < 0)
                             npc.position.Y = 0;

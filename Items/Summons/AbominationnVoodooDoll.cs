@@ -30,15 +30,12 @@ namespace FargowiltasSouls.Items.Summons
 
         public override bool CanUseItem(Player player)
         {
-            return Fargowiltas.Instance.FargowiltasLoaded && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
+            return !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
         }
 
         public override bool UseItem(Player player)
         {
-            if (Fargowiltas.Instance.FargowiltasLoaded)
-            {
-                NPC.SpawnOnPlayer(player.whoAmI, ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
-            }
+            NPC.SpawnOnPlayer(player.whoAmI, ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
             return true;
         }
 
@@ -46,9 +43,7 @@ namespace FargowiltasSouls.Items.Summons
         {
             if (item.lavaWet)
             {
-                if (Fargowiltas.Instance.FargowiltasLoaded)
-                {
-                    if (Main.netMode != 1)
+                if (Main.netMode != 1)
                     {
                         int abominationn = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
                         int mutant = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
@@ -65,11 +60,6 @@ namespace FargowiltasSouls.Items.Summons
                             }
                         }
                     }
-                }
-                else
-                {
-                    NPC.SpawnOnPlayer(Player.FindClosest(item.position, 0, 0), mod.NPCType("MutantBoss"));
-                }
                 item.TurnToAir();
             }
         }

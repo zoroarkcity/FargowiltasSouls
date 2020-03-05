@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using FargowiltasSouls.Items.Accessories;
 
 namespace FargowiltasSouls
 {
@@ -28,8 +29,6 @@ namespace FargowiltasSouls
         public UserInterface CustomResources;
 
         internal static readonly Dictionary<int, int> ModProjDict = new Dictionary<int, int>();
-
-        internal bool FargowiltasLoaded;
 
         public Fargowiltas()
         {
@@ -476,12 +475,67 @@ namespace FargowiltasSouls
 
         public override object Call(params object[] args)
         {
-            if ((string)args[0] == "FargoSoulsAI")
+            try
             {
-                /*int n = (int)args[1];
-                Main.npc[n].GetGlobalNPC<FargoSoulsGlobalNPC>().AI(Main.npc[n]);*/
+                string code = args[0].ToString();
+
+                switch (code)
+                {
+                    case "DevianttGifts":
+
+                        Player player = Main.LocalPlayer;
+                        FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
+
+                        if (!fargoPlayer.ReceivedMasoGift)
+                        {
+                            fargoPlayer.ReceivedMasoGift = true;
+                            if (Main.netMode == NetmodeID.SinglePlayer)
+                            {
+                                DropDevianttsGift(player);
+                            }
+                            else if (Main.netMode == NetmodeID.MultiplayerClient)
+                            {
+                                var netMessage = GetPacket(); // Broadcast item request to server
+                                netMessage.Write((byte)14);
+                                netMessage.Write((byte)player.whoAmI);
+                                netMessage.Send();
+                            }
+
+                            Main.npcChatText = "This world looks tougher than usual, so you can have these on the house just this once! Talk to me if you need any tips, yeah?";
+                        }
+
+                        break;
+                    case "AddSummon":
+
+                        
+                        break;
+                }
+
             }
+            catch (Exception e)
+            {
+                Logger.Error("Call Error: " + e.StackTrace + e.Message);
+            }
+
             return base.Call(args);
+        }
+
+        public static void DropDevianttsGift(Player player)
+        {
+            Item.NewItem(player.Center, ItemID.SilverPickaxe);
+            Item.NewItem(player.Center, ItemID.SilverAxe);
+            Item.NewItem(player.Center, ItemID.BugNet);
+            Item.NewItem(player.Center, ItemID.LifeCrystal, 4);
+            Item.NewItem(player.Center, ModLoader.GetMod("Fargowiltas").ItemType("DevianttsSundial"));
+            Item.NewItem(player.Center, ModLoader.GetMod("Fargowiltas").ItemType("AutoHouse"), 3);
+            Item.NewItem(player.Center, ModContent.ItemType<EurusSock>());
+
+            if (ModLoader.GetMod("MagicStorage") != null)
+            {
+                Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("StorageHeart"));
+                Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("CraftingAccess"));
+                Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("StorageUnitTerra"));
+            }
         }
 
         //bool sheet
@@ -489,8 +543,6 @@ namespace FargowiltasSouls
         {
             try
             {
-                FargowiltasLoaded = ModLoader.GetMod("Fargowiltas") != null;
-
                 CalamityCompatibility = new CalamityCompatibility(this).TryLoad() as CalamityCompatibility;
                 ThoriumCompatibility = new ThoriumCompatibility(this).TryLoad() as ThoriumCompatibility;
                 SoACompatibility = new SoACompatibility(this).TryLoad() as SoACompatibility;
@@ -559,7 +611,7 @@ namespace FargowiltasSouls
                         ModContent.ItemType<Items.Summons.AbomsCurse>(),
                         new List<int> { ModContent.ItemType<Items.Tiles.AbomTrophy>(), ModContent.ItemType<Items.Tiles.AbomMusicBox>() },
                         new List<int> { ModContent.ItemType<Items.Misc.MutatingEnergy>(), ModContent.ItemType<Items.Misc.MutantScale>() },
-                        "Spawn by using the Abominationn's Curse.",
+                        "Spawn by using the [i:" + ModContent.ItemType<Items.Misc.AbomsCurse>() + "].",
                         "The Abominationn has destroyed everyone.",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Still",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Head_Boss"
@@ -582,7 +634,7 @@ namespace FargowiltasSouls
                     bossChecklist.Call("AddBossWithInfo", "Duke Fishron EX", 14.02f, (Func<bool>)(() => FargoSoulsWorld.downedFishronEX), "Fish using a [i:" + ItemType("TruffleWormEX") + "]");
                     bossChecklist.Call(
                         "AddBoss",
-                        14.03f,
+                        float.MaxValue,
                         ModContent.NPCType<NPCs.MutantBoss.MutantBoss>(),
                         this,
                         "Mutant",
@@ -590,7 +642,7 @@ namespace FargowiltasSouls
                         ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
                         new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), ModContent.ItemType<Items.Tiles.MutantMusicBox>() },
                         ModContent.ItemType<Items.Misc.Sadism>(),
-                        "Throw the Abominationn's Voodoo Doll into a pool of lava while the Abominationn is alive, in the Mutant's presence.",
+                        "Throw the [i:" + ModContent.ItemType<Items.Misc.AbominationnVoodooDoll>() + "] into a pool of lava while the Abominationn is alive, in the Mutant's presence.",
                         "The Mutant has won, of course.",
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
@@ -664,23 +716,20 @@ namespace FargowiltasSouls
         {
             ThoriumCompatibility?.TryAddRecipes();
 
-            if (FargowiltasLoaded)
-            {
-                ModRecipe recipe = new ModRecipe(this);
-                recipe.AddIngredient(ItemID.SoulofLight, 7);
-                recipe.AddIngredient(ItemID.SoulofNight, 7);
-                recipe.AddIngredient(ItemType("VolatileEnergy"));
-                recipe.AddTile(TileID.MythrilAnvil);
-                recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("JungleChest"));
-                recipe.AddRecipe();
+            ModRecipe recipe = new ModRecipe(this);
+            recipe.AddIngredient(ItemID.SoulofLight, 7);
+            recipe.AddIngredient(ItemID.SoulofNight, 7);
+            recipe.AddIngredient(ItemType("VolatileEnergy"));
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("JungleChest"));
+            recipe.AddRecipe();
 
-                recipe = new ModRecipe(this);
-                recipe.AddIngredient(ItemID.WizardHat);
-                recipe.AddIngredient(ItemType("VolatileEnergy"), 5);
-                recipe.AddTile(TileID.MythrilAnvil);
-                recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("RuneOrb"));
-                recipe.AddRecipe();
-            }
+            recipe = new ModRecipe(this);
+            recipe.AddIngredient(ItemID.WizardHat);
+            recipe.AddIngredient(ItemType("VolatileEnergy"), 5);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("RuneOrb"));
+            recipe.AddRecipe();
         }
 
         public override void AddRecipeGroups()
@@ -1010,6 +1059,14 @@ namespace FargowiltasSouls
                         limb.Counter2 = reader.ReadInt32();
                     }
                     break;
+                    
+                case 14: //devi gifts
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        Player player = Main.player[reader.ReadByte()];
+                        DropDevianttsGift(player);
+                    }
+                    break;
 
                 case 77: //server side spawning fishron EX
                     if (Main.netMode == 2)
@@ -1145,10 +1202,6 @@ namespace FargowiltasSouls
 
         internal SoACompatibility SoACompatibility { get; private set; }
         internal bool SoALoaded => SoACompatibility != null;
-
-
-        //internal FargowiltasCompatibility FargowiltasCompatibility { get; private set; }
-        //internal bool FargowiltasLoaded => FargowiltasCompatibility != null;
 
         internal MasomodeEXCompatibility MasomodeEXCompatibility { get; private set; }
         internal bool MasomodeEXLoaded => MasomodeEXCompatibility != null;

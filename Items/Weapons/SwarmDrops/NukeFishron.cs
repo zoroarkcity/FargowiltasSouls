@@ -64,9 +64,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void AddRecipes()
         {
-            if (Fargowiltas.Instance.FargowiltasLoaded)
-            {
-                ModRecipe recipe = new ModRecipe(mod);
+            ModRecipe recipe = new ModRecipe(mod);
 
                 recipe.AddIngredient(mod.ItemType("FishStick"), 10);
                 recipe.AddIngredient(mod.ItemType("CyclonicFin"), 5);
@@ -77,7 +75,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 recipe.AddTile(mod, "CrucibleCosmosSheet");
                 recipe.SetResult(this);
                 recipe.AddRecipe();
-            }
         }
     }
 }

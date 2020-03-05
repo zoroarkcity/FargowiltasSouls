@@ -31,9 +31,7 @@ namespace FargowiltasSouls.Items.Summons
 
         public override bool UseItem(Player player)
         {
-            if (Fargowiltas.Instance.FargowiltasLoaded)
-            {
-                int mutant = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
+            int mutant = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
                 if (mutant > -1 && Main.npc[mutant].active)
                 {
                     Main.npc[mutant].Transform(mod.NPCType("AbomBoss"));
@@ -46,11 +44,6 @@ namespace FargowiltasSouls.Items.Summons
                 {
                     NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("AbomBoss"));
                 }
-            }
-            else
-            {
-                NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("AbomBoss"));
-            }
             return true;
         }
 
@@ -67,9 +60,7 @@ namespace FargowiltasSouls.Items.Summons
 
         public override void AddRecipes() //make this harder again when changed to abom's gift
         {
-            if (Fargowiltas.Instance.FargowiltasLoaded)
-            {
-                ModRecipe recipe = new ModRecipe(mod);
+            ModRecipe recipe = new ModRecipe(mod);
                 recipe.AddIngredient(ItemID.GoblinBattleStandard);
                 recipe.AddIngredient(ItemID.PirateMap);
                 recipe.AddIngredient(ItemID.PumpkinMoonMedallion);
@@ -82,7 +73,6 @@ namespace FargowiltasSouls.Items.Summons
                 recipe.AddTile(mod, "CrucibleCosmosSheet");
                 recipe.SetResult(this, 5);
                 recipe.AddRecipe();
-            }
         }
     }
 }

@@ -55,7 +55,7 @@ namespace FargowiltasSouls.Items
                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), new Color(175, 75, 255));
                     NetMessage.SendData(7); //sync world
                 }
-                if (FargoSoulsWorld.MasochistMode && Fargowiltas.Instance.FargowiltasLoaded && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Deviantt")))
+                if (FargoSoulsWorld.MasochistMode && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Deviantt")))
                     NPC.SpawnOnPlayer(player.whoAmI, ModLoader.GetMod("Fargowiltas").NPCType("Deviantt"));
                 Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
             }

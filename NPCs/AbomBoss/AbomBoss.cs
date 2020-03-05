@@ -164,7 +164,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             for (int i = 0; i < 30; i++)
                                 Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * Math.PI) * Main.rand.NextFloat(30f), mod.ProjectileType("AbomDeathScythe"), 0, 0f, Main.myPlayer);
 
-                            if (Fargowiltas.Instance.FargowiltasLoaded && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn")))
+                            if (!NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn")))
                             {
                                 int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
                                 if (n != 200 && Main.netMode == 2)
@@ -956,7 +956,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     if (npc.timeLeft > 30)
                         npc.timeLeft = 30;
                     npc.velocity.Y -= 1f;
-                    if (npc.timeLeft == 1 && Fargowiltas.Instance.FargowiltasLoaded)
+                    if (npc.timeLeft == 1)
                     {
                         if (npc.position.Y < 0)
                             npc.position.Y = 0;
