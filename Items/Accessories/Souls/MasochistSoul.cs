@@ -8,7 +8,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
-    [AutoloadEquip(EquipType.Shield)]
+    [AutoloadEquip(EquipType.Head, EquipType.Back, EquipType.Shield)]
     public class MasochistSoul : ModItem
     {
         public override void SetStaticDefaults()

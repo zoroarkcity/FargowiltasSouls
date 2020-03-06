@@ -71,6 +71,8 @@ added top hat squirrel cage
 added sprites:
 	low ground
 	twins EX buff
+	pumpking's cape on player (also to heart of maso, maso soul)
+	ice queen's crown on player (also to heart of maso, maso soul)
 wof's cursed wall attack:
 	no longer has fireballs
 	has stupidly disjointed flamethrower hitboxes so you ABSOLUTELY MOST DEFINITELY CANNOT RUN THROUGH IT
