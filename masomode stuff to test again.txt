@@ -65,3 +65,12 @@ deviantt gift:
 	nerfed terra storage to one per world
 
 added top hat squirrel cage
+
+-------------------------NEXT UPDATE-------------------------
+
+added sprites:
+	low ground
+	twins EX buff
+wof's cursed wall attack:
+	no longer has fireballs
+	has stupidly disjointed flamethrower hitboxes so you ABSOLUTELY MOST DEFINITELY CANNOT RUN THROUGH IT

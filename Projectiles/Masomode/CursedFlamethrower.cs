@@ -19,6 +19,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             aiType = ProjectileID.EyeFire;
             projectile.magic = false;
             projectile.tileCollide = false;
+            projectile.height = 150;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
