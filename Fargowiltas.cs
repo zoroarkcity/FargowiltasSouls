@@ -10,6 +10,8 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using FargowiltasSouls.Items.Accessories;
+using FargowiltasSouls.NPCs.AbomBoss;
+using FargowiltasSouls.NPCs.MutantBoss;
 
 namespace FargowiltasSouls
 {
@@ -481,6 +483,40 @@ namespace FargowiltasSouls
 
                 switch (code)
                 {
+                    case "Masomode":
+                        return FargoSoulsWorld.MasochistMode;
+
+                    case "DownedMutant":
+                        return FargoSoulsWorld.downedMutant;
+
+                    case "DownedAbom":
+                        return FargoSoulsWorld.downedAbom;
+
+                    case "DownedFishronEX":
+                        return FargoSoulsWorld.downedFishronEX;
+
+                    case "PureHeart":
+                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().PureHeart;
+
+                    case "MutantAntibodies":
+                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().MutantAntibodies;
+
+                    case "SinisterIcon":
+                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().SinisterIcon;
+
+                    case "AbomAlive":
+                        return FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.abomBoss, ModContent.NPCType<AbomBoss>());
+
+                    case "MutantAlive":
+                        return FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>());
+
+                    case "MutantPact":
+                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().MutantsPact;
+
+                    case "MutantDiscountCard":
+                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().MutantsDiscountCard;
+
+
                     case "DevianttGifts":
 
                         Player player = Main.LocalPlayer;
