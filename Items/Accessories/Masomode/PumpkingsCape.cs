@@ -4,7 +4,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    [AutoloadEquip(EquipType.Back)]
+    [AutoloadEquip(EquipType.Front, EquipType.Back)]
     public class PumpkingsCape : ModItem
     {
         public override void SetStaticDefaults()
