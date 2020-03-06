@@ -515,7 +515,12 @@ namespace FargowiltasSouls.NPCs
                     default:
                         break;
                 }
-                
+
+                /*if (npc.type == ModLoader.GetMod("Fargowiltas").NPCType("Destroyer"))
+                {
+
+                }*/
+
                 // +2.5% hp each kill 
                 // +1.25% damage each kill
                 // max of 4x hp and 2.5x damage
