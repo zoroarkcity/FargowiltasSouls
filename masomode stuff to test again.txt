@@ -77,3 +77,5 @@ wof's cursed wall attack:
 	no longer has fireballs
 	has stupidly disjointed flamethrower hitboxes so you ABSOLUTELY MOST DEFINITELY CANNOT RUN THROUGH IT
 deviantt won't give excessive storage hearts either
+deviantt gives 16 base storages instead of a terra
+deviantt gives crafting interface again

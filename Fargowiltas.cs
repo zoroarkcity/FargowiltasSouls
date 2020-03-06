@@ -547,8 +547,8 @@ namespace FargowiltasSouls
             if (ModLoader.GetMod("MagicStorage") != null && !FargoSoulsWorld.ReceivedTerraStorage)
             {
                 Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("StorageHeart"));
-                //Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("CraftingAccess"));
-                Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("StorageUnitTerra"));
+                Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("CraftingAccess"));
+                Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("StorageUnit"), 16);
 
                 FargoSoulsWorld.ReceivedTerraStorage = true;
                 if (Main.netMode != 0)
