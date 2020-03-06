@@ -3145,9 +3145,8 @@ namespace FargowiltasSouls.NPCs
                         else if (Math.Abs(npc.velocity.X) > 7f)
                             npc.position.X -= (Math.Abs(npc.velocity.X) - 7f) * Math.Sign(npc.velocity.X);
 
-
-                        //dont do with swarm active
-                        if (Main.player[Main.myPlayer].active & !Main.player[Main.myPlayer].dead && Main.player[Main.myPlayer].ZoneUnderworldHeight)
+                        //dont do aura with swarm active
+                        if (Main.player[Main.myPlayer].active & !Main.player[Main.myPlayer].dead && Main.player[Main.myPlayer].ZoneUnderworldHeight && !(bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive"))
                         {
                             float velX = npc.velocity.X;
                             if (velX > 5f)
