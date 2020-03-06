@@ -15,7 +15,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             Tooltip.SetDefault(
 @"'As long as they aren't all shoes, you can go home happily'
 Increases fishing skill
-All fishing rods will have 4 extra lures");
+You catch fish almost instantly");
             DisplayName.AddTranslation(GameCulture.Chinese, "渔夫魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'只要不全是鞋子, 你可以高高兴兴地回家'

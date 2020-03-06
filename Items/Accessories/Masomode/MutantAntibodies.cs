@@ -14,8 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 Grants immunity to Wet, Feral Bite, and Mutant Nibble
 Grants immunity to most debuffs caused by entering water
 Grants effects of Wet debuff while riding Cute Fishron
-Increases damage by 20%
-You catch fish almost instantly");
+Increases damage by 20%");
             DisplayName.AddTranslation(GameCulture.Chinese, "突变抗体");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'推荐健康药物指数: 0/10'
 免疫潮湿,野性咬噬和突变啃啄

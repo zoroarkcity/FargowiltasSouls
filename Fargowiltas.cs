@@ -545,6 +545,14 @@ namespace FargowiltasSouls
 
                         
                         break;
+                    case "DownedMutant":
+                        return FargoSoulsWorld.downedMutant;
+                    case "MutantDiscountCard":
+                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().MutantsDiscountCard;
+                    case "MutantPact":
+                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().MutantsPact;
+                    case "Masomode":
+                        return FargoSoulsWorld.MasochistMode;
                 }
 
             }
@@ -562,6 +570,11 @@ namespace FargowiltasSouls
             Item.NewItem(player.Center, ItemID.SilverAxe);
             Item.NewItem(player.Center, ItemID.BugNet);
             Item.NewItem(player.Center, ItemID.LifeCrystal, 4);
+            Item.NewItem(player.Center, ItemID.RecallPotion, 15);
+            if (Main.netMode != 0)
+            {
+                Item.NewItem(player.Center, ItemID.WormholePotion, 15);
+            }
             Item.NewItem(player.Center, ModLoader.GetMod("Fargowiltas").ItemType("DevianttsSundial"));
             Item.NewItem(player.Center, ModLoader.GetMod("Fargowiltas").ItemType("AutoHouse"), 3);
             Item.NewItem(player.Center, ModContent.ItemType<EurusSock>());
@@ -569,8 +582,16 @@ namespace FargowiltasSouls
             if (ModLoader.GetMod("MagicStorage") != null)
             {
                 Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("StorageHeart"));
-                Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("CraftingAccess"));
-                Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("StorageUnitTerra"));
+                //Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("CraftingAccess"));
+
+                if (!FargoSoulsWorld.ReceivedTerraStorage) //only give one terra storage per world
+                {
+                    Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("StorageUnitTerra"));
+                    FargoSoulsWorld.ReceivedTerraStorage = true;
+
+                    if (Main.netMode != 0)
+                        NetMessage.SendData(7); //sync world in mp
+                }
             }
         }
 
@@ -647,7 +668,7 @@ namespace FargowiltasSouls
                         ModContent.ItemType<Items.Summons.AbomsCurse>(),
                         new List<int> { ModContent.ItemType<Items.Tiles.AbomTrophy>(), ModContent.ItemType<Items.Tiles.AbomMusicBox>() },
                         new List<int> { ModContent.ItemType<Items.Misc.MutatingEnergy>(), ModContent.ItemType<Items.Misc.MutantScale>() },
-                        "Spawn by using the [i:" + ModContent.ItemType<Items.Misc.AbomsCurse>() + "].",
+                        "Spawn by using the [i:" + ModContent.ItemType<Items.Summons.AbomsCurse>() + "].",
                         "The Abominationn has destroyed everyone.",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Still",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Head_Boss"
@@ -678,7 +699,7 @@ namespace FargowiltasSouls
                         ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
                         new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), ModContent.ItemType<Items.Tiles.MutantMusicBox>() },
                         ModContent.ItemType<Items.Misc.Sadism>(),
-                        "Throw the [i:" + ModContent.ItemType<Items.Misc.AbominationnVoodooDoll>() + "] into a pool of lava while the Abominationn is alive, in the Mutant's presence.",
+                        "Throw the [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while the Abominationn is alive, in the Mutant's presence.",
                         "The Mutant has won, of course.",
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"

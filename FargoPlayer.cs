@@ -288,7 +288,7 @@ namespace FargowiltasSouls
         public int GrazeCounter;
         public double GrazeBonus;
 
-        public int PreNerfDamage;
+        //public int PreNerfDamage;
 
         //debuffs
         public bool Hexed;
@@ -2745,7 +2745,7 @@ namespace FargowiltasSouls
                     target.AddBuff(BuffID.OnFire, 600);
 
                 if (LeadEnchant && Main.rand.Next(5) == 0)
-                    target.AddBuff(mod.BuffType("LeadPoison"), 120);
+                    target.AddBuff(mod.BuffType("LeadPoison"), 30);
             }
 
             if (GroundStick && Main.rand.Next(10) == 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.LightningRod))
@@ -4826,11 +4826,11 @@ namespace FargowiltasSouls
                 player.HeldItem.autoReuse = true;
             }
 
-            if (FargoSoulsWorld.MasochistMode) //maso item nerfs
+            /*if (FargoSoulsWorld.MasochistMode) //maso item nerfs
             {
                 PreNerfDamage = player.HeldItem.damage;
                 player.HeldItem.damage = (int)(player.HeldItem.damage * MasoItemNerfs(player.HeldItem.type));
-            }
+            }*/
 
             return true;
         }
@@ -4842,39 +4842,49 @@ namespace FargowiltasSouls
                 player.HeldItem.autoReuse = TribalAutoFire;
             }
 
-            if (FargoSoulsWorld.MasochistMode) //revert maso item nerfs
+            /*if (FargoSoulsWorld.MasochistMode) //revert maso item nerfs
             {
                 player.HeldItem.damage = PreNerfDamage;
-            }
+            }*/
         }
 
-        private static double MasoItemNerfs(int type)
+        public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat)
+        {
+            if (FargoSoulsWorld.MasochistMode)
+                mult *= MasoItemNerfs(item.type);
+        }
+
+        private static float MasoItemNerfs(int type)
         {
             switch (type)
             {
                 case ItemID.DaedalusStormbow:
-                    return 0.25;
+                    return 1f / 3f;
 
                 case ItemID.StarCannon:
                 case ItemID.Tsunami:
                 case ItemID.Phantasm:
                 case ItemID.DD2BetsyBow:
-                    return 0.5;
+                    return 0.5f;
 
                 case ItemID.Uzi:
                 case ItemID.Megashark:
                 case ItemID.ChlorophyteShotbow:
                 case ItemID.Razorpine:
                 case ItemID.SnowmanCannon:
-                    return 2.0 / 3.0;
+                    return 2f / 3f;
 
+                case ItemID.OnyxBlaster:
                 case ItemID.LastPrism:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.ChainGun:
-                    return 0.75;
+                    return 0.75f;
+
+                case ItemID.SpaceGun:
+                    return NPC.downedBoss2 ? 1f : 2f / 3f;
 
                 default:
-                    return 1.0;
+                    return 1f;
             }
         }
 

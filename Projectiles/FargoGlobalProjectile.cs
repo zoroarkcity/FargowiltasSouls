@@ -237,10 +237,10 @@ namespace FargowiltasSouls.Projectiles
 
                     if (projectile.bobber)
                     {
-                        if (modPlayer.FishSoul1)
+                        /*if (modPlayer.FishSoul1)
                         {
                             SplitProj(projectile, 5);
-                        }
+                        }*/
                         if (modPlayer.FishSoul2)
                         {
                             SplitProj(projectile, 11);
@@ -1106,7 +1106,7 @@ namespace FargowiltasSouls.Projectiles
                 Main.dust[dustId].noGravity = true;
             }
 
-            if (projectile.bobber && modPlayer.MutantAntibodies)
+            if (projectile.bobber && modPlayer.FishSoul1)
             {
                 if (projectile.wet && projectile.ai[0] == 0 && projectile.localAI[1] < 655) //ai0 = in water, localai1 = counter up to catching an item
                     projectile.localAI[1] = 655; //quick catch. not 660 and up (that breaks fishron summoning)

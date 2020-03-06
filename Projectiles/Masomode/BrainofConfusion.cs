@@ -20,13 +20,13 @@ namespace FargowiltasSouls.Projectiles.Masomode
         public override void SetDefaults()
         {
             projectile.CloneDefaults(ProjectileID.BrainOfConfusion);
-            projectile.scale = 5f;
+            projectile.scale = 4f;
             aiType = ProjectileID.BrainOfConfusion;
         }
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * 0.7f;
+            return Color.White * 0.5f;
         }
     }
 }
