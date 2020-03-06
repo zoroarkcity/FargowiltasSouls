@@ -543,19 +543,16 @@ namespace FargowiltasSouls
             Item.NewItem(player.Center, ModLoader.GetMod("Fargowiltas").ItemType("AutoHouse"), 3);
             Item.NewItem(player.Center, ModContent.ItemType<EurusSock>());
 
-            if (ModLoader.GetMod("MagicStorage") != null)
+            //only give once per world
+            if (ModLoader.GetMod("MagicStorage") != null && !FargoSoulsWorld.ReceivedTerraStorage)
             {
                 Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("StorageHeart"));
                 //Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("CraftingAccess"));
+                Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("StorageUnitTerra"));
 
-                if (!FargoSoulsWorld.ReceivedTerraStorage) //only give one terra storage per world
-                {
-                    Item.NewItem(player.Center, ModLoader.GetMod("MagicStorage").ItemType("StorageUnitTerra"));
-                    FargoSoulsWorld.ReceivedTerraStorage = true;
-
-                    if (Main.netMode != 0)
-                        NetMessage.SendData(7); //sync world in mp
-                }
+                FargoSoulsWorld.ReceivedTerraStorage = true;
+                if (Main.netMode != 0)
+                    NetMessage.SendData(7); //sync world in mp
             }
         }
 
