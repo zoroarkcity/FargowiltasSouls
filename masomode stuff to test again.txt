@@ -78,3 +78,4 @@ wof's cursed wall attack:
 deviantt won't give excessive storage hearts either
 deviantt gives 16 base storages instead of a terra
 deviantt gives crafting interface again
+fixed mutant deathray broken
