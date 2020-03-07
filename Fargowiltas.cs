@@ -10,6 +10,8 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using FargowiltasSouls.Items.Accessories;
+using FargowiltasSouls.NPCs.AbomBoss;
+using FargowiltasSouls.NPCs.MutantBoss;
 
 namespace FargowiltasSouls
 {
@@ -481,6 +483,40 @@ namespace FargowiltasSouls
 
                 switch (code)
                 {
+                    case "Masomode":
+                        return FargoSoulsWorld.MasochistMode;
+
+                    case "DownedMutant":
+                        return FargoSoulsWorld.downedMutant;
+
+                    case "DownedAbom":
+                        return FargoSoulsWorld.downedAbom;
+
+                    case "DownedFishronEX":
+                        return FargoSoulsWorld.downedFishronEX;
+
+                    case "PureHeart":
+                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().PureHeart;
+
+                    case "MutantAntibodies":
+                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().MutantAntibodies;
+
+                    case "SinisterIcon":
+                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().SinisterIcon;
+
+                    case "AbomAlive":
+                        return FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.abomBoss, ModContent.NPCType<AbomBoss>());
+
+                    case "MutantAlive":
+                        return FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>());
+
+                    case "MutantPact":
+                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().MutantsPact;
+
+                    case "MutantDiscountCard":
+                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().MutantsDiscountCard;
+
+
                     case "DevianttGifts":
 
                         Player player = Main.LocalPlayer;
@@ -505,18 +541,7 @@ namespace FargowiltasSouls
                         }
 
                         break;
-                    case "AddSummon":
 
-                        
-                        break;
-                    case "DownedMutant":
-                        return FargoSoulsWorld.downedMutant;
-                    case "MutantDiscountCard":
-                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().MutantsDiscountCard;
-                    case "MutantPact":
-                        return Main.LocalPlayer.GetModPlayer<FargoPlayer>().MutantsPact;
-                    case "Masomode":
-                        return FargoSoulsWorld.MasochistMode;
                 }
 
             }
@@ -652,7 +677,7 @@ namespace FargowiltasSouls
                     bossChecklist.Call("AddBossWithInfo", "Duke Fishron EX", 14.02f, (Func<bool>)(() => FargoSoulsWorld.downedFishronEX), "Fish using a [i:" + ItemType("TruffleWormEX") + "]");
                     bossChecklist.Call(
                         "AddBoss",
-                        float.MaxValue,
+                        14.03f,
                         ModContent.NPCType<NPCs.MutantBoss.MutantBoss>(),
                         this,
                         "Mutant",
@@ -666,6 +691,11 @@ namespace FargowiltasSouls
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
                     );
                 }
+                //mutant shop
+                Mod fargos = ModLoader.GetMod("Fargowiltas");
+                fargos.Call("AddSummon", 14.01f, "FargowiltasSouls", "AbomsCurse", (Func<bool>)(() => FargoSoulsWorld.downedAbom), 10000000);
+                fargos.Call("AddSummon", 14.02f, "FargowiltasSouls", "TruffleWormEX", (Func<bool>)(() => FargoSoulsWorld.downedFishronEX), 10000000);
+                fargos.Call("AddSummon", 14.03f, "FargowiltasSouls", "MutantsCurse", (Func<bool>)(() => FargoSoulsWorld.downedMutant), 20000000);
 
                 if (ThoriumLoaded)
                 {

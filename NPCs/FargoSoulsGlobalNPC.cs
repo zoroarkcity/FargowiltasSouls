@@ -515,7 +515,12 @@ namespace FargowiltasSouls.NPCs
                     default:
                         break;
                 }
-                
+
+                /*if (npc.type == ModLoader.GetMod("Fargowiltas").NPCType("Destroyer"))
+                {
+
+                }*/
+
                 // +2.5% hp each kill 
                 // +1.25% damage each kill
                 // max of 4x hp and 2.5x damage
@@ -3145,9 +3150,8 @@ namespace FargowiltasSouls.NPCs
                         else if (Math.Abs(npc.velocity.X) > 7f)
                             npc.position.X -= (Math.Abs(npc.velocity.X) - 7f) * Math.Sign(npc.velocity.X);
 
-
-                        //dont do with swarm active
-                        if (Main.player[Main.myPlayer].active & !Main.player[Main.myPlayer].dead && Main.player[Main.myPlayer].ZoneUnderworldHeight)
+                        //dont do aura with swarm active
+                        if (Main.player[Main.myPlayer].active & !Main.player[Main.myPlayer].dead && Main.player[Main.myPlayer].ZoneUnderworldHeight && !(bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive"))
                         {
                             float velX = npc.velocity.X;
                             if (velX > 5f)
