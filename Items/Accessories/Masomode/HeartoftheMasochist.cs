@@ -5,6 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
+    [AutoloadEquip(/*EquipType.Head, */EquipType.Front, EquipType.Back)]
     public class HeartoftheMasochist : ModItem
     {
         public override void SetStaticDefaults()

@@ -81,12 +81,12 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.CursedFlameHostile:
-                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.wallBoss, NPCID.WallofFlesh))
+                        /*if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.wallBoss, NPCID.WallofFlesh))
                         {
                             projectile.tileCollide = false;
                             projectile.timeLeft = 120;
                             projectile.extraUpdates = 1;
-                        }
+                        }*/
                         break;
 
                     case ProjectileID.SharknadoBolt:
