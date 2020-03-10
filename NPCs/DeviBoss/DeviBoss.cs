@@ -11,6 +11,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
     [AutoloadBossHead]
     public class DeviBoss : ModNPC
     {
+        public int[] attackQueue = new int[4];
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Deviantt");
@@ -144,7 +146,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             Player player = Main.player[npc.target];
             npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
             Vector2 targetPos;
-            float speedModifier;
             switch ((int)npc.ai[0])
             {
                 case -2: //ACTUALLY dead
@@ -186,19 +187,19 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     {
                         for (int i = 0; i < 5; i++)
                         {
-                            int d = Dust.NewDust(npc.position, npc.width, npc.height, 87, 0f, 0f, 0, default(Color), 1.5f);
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, 86, 0f, 0f, 0, default(Color), 1.5f);
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity *= 4f;
                         }
                         npc.localAI[3] = 2; //this marks p2
-                        if (++npc.ai[2] > 15)
+                        /*if (++npc.ai[2] > 15)
                         {
                             int heal = (int)(npc.lifeMax / 2 / 60 * Main.rand.NextFloat(1.5f, 2f));
                             npc.life += heal;
                             if (npc.life > npc.lifeMax)
                                 npc.life = npc.lifeMax;
                             CombatText.NewText(npc.Hitbox, CombatText.HealLife, heal);
-                        }
+                        }*/
                         if (npc.ai[1] > 210)
                         {
                             npc.ai[0]++;
@@ -210,7 +211,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     }
                     else if (npc.ai[1] == 120)
                     {
-                        for (int i = 0; i < Main.maxProjectiles; i++)
+                        /*for (int i = 0; i < Main.maxProjectiles; i++)
                             if (Main.projectile[i].active && Main.projectile[i].friendly && !Main.projectile[i].minion && Main.projectile[i].damage > 0)
                                 Main.projectile[i].Kill();
                         for (int i = 0; i < Main.maxProjectiles; i++)
@@ -219,7 +220,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         if (Main.netMode != 1)
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("AbomRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                        }
+                        }*/
                         Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
                     }
                     break;
@@ -227,48 +228,431 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 case 0: //track player, decide which attacks to use
                     if (!AliveCheck(player) || Phase2Check())
                         break;
+
                     npc.dontTakeDamage = false;
+
                     targetPos = player.Center;
                     targetPos.X += 500 * (npc.Center.X < targetPos.X ? -1 : 1);
-                    if (npc.Distance(targetPos) > 50)
-                    {
-                        speedModifier = npc.localAI[3] > 0 ? 0.1f : 2f;
-                        if (npc.Center.X < targetPos.X)
-                        {
-                            npc.velocity.X += speedModifier;
-                            if (npc.velocity.X < 0)
-                                npc.velocity.X += speedModifier * 2;
-                        }
-                        else
-                        {
-                            npc.velocity.X -= speedModifier;
-                            if (npc.velocity.X > 0)
-                                npc.velocity.X -= speedModifier * 2;
-                        }
-                        if (npc.Center.Y < targetPos.Y)
-                        {
-                            npc.velocity.Y += speedModifier;
-                            if (npc.velocity.Y < 0)
-                                npc.velocity.Y += speedModifier * 2;
-                        }
-                        else
-                        {
-                            npc.velocity.Y -= speedModifier;
-                            if (npc.velocity.Y > 0)
-                                npc.velocity.Y -= speedModifier * 2;
-                        }
-                        if (npc.localAI[3] > 0)
-                        {
-                            if (Math.Abs(npc.velocity.X) > 12)
-                                npc.velocity.X = 12 * Math.Sign(npc.velocity.X);
-                            if (Math.Abs(npc.velocity.Y) > 12)
-                                npc.velocity.Y = 12 * Math.Sign(npc.velocity.Y);
-                        }
-                    }
+                    if (npc.Distance(targetPos) > 25)
+                        Movement(targetPos, npc.localAI[3] > 0 ? 0.15f : 2f);
+
                     if (npc.localAI[3] > 0) //in range, fight has begun, choose attacks
                     {
-                        
+                        npc.netUpdate = true;
+                        npc.ai[0]++;
                     }
+                    break;
+
+                case 1: //teleport marx hammers
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+
+                    npc.velocity = Vector2.Zero;
+                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 15 : 30) && npc.ai[2] < (npc.localAI[3] > 1 ? 5 : 3))
+                    {
+                        npc.ai[1] = 0;
+                        npc.ai[2]++;
+
+                        TeleportDust();
+                        if (Main.netMode != 1)
+                        {
+                            bool wasOnLeft = npc.Center.X < player.Center.X;
+                            npc.Center = player.Center + 300 * Vector2.UnitX.RotatedBy(Main.rand.NextFloat(0, 2 * (float)Math.PI));
+                            if (wasOnLeft && npc.Center.X < player.Center.X)
+                            {
+                                float x = player.Center.X - npc.Center.X;
+                                npc.position.X += x * 2;
+                            }
+                            npc.netUpdate = true;
+                        }
+                        TeleportDust();
+                        Main.PlaySound(SoundID.Item84, npc.Center);
+                    }
+
+                    if (npc.ai[1] == 45) //finished all the prior teleports, now attack
+                    {
+                        if (Main.netMode != 1)
+                        {
+                            Main.NewText("marx hammer attack");
+                        }
+                    }
+                    else if (npc.ai[1] > 90)
+                    {
+                        npc.netUpdate = true;
+                        if (npc.localAI[3] > 1 && ++npc.localAI[0] < 3)
+                        {
+                            npc.ai[2] = 0; //reset tp counter and attack again
+                        }
+                        else
+                        {
+                            GetNextAttack();
+                        }
+                    }
+                    break;
+
+                case 2: //circling with heart barrages
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+
+                    targetPos = player.Center + player.DirectionTo(npc.Center) * 400;
+                    if (npc.Distance(targetPos) > 25)
+                        Movement(targetPos, 0.15f);
+
+                    if (++npc.ai[1] > 60)
+                    {
+                        npc.netUpdate = true;
+                        npc.ai[1] = 0;
+                        if (++npc.ai[2] > 3)
+                        {
+                            GetNextAttack();
+                        }
+                        else
+                        {
+                            if (Main.netMode != 1)
+                            {
+                                Main.NewText("heart spread");
+                            }
+                        }
+                        break;
+                    }
+                    break;
+
+                case 3: //slow while shooting wyvern orb spirals
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+
+                    npc.velocity = npc.DirectionTo(player.Center) * 2f;
+                    if (++npc.ai[1] > 60)
+                    {
+                        npc.netUpdate = true;
+                        npc.ai[1] = 0;
+
+                        if (++npc.ai[2] > 3)
+                        {
+                            GetNextAttack();
+                        }
+                        else
+                        {
+                            if (Main.netMode != 1)
+                            {
+                                Main.NewText("wyvern orb spirals");
+                            }
+                        }
+                    }
+                    break;
+
+                case 4: //mimics
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+
+                    targetPos = player.Center;
+                    targetPos.X += 300 * (npc.Center.X < targetPos.X ? -1 : 1);
+                    targetPos.Y -= 200;
+                    if (npc.Distance(targetPos) > 25)
+                        Movement(targetPos, 0.15f);
+
+                    if (++npc.ai[1] > 30 && npc.ai[1] < 120) //rapid mimic spam
+                    {
+                        if (++npc.ai[2] > 20)
+                        {
+                            npc.netUpdate = true;
+                            npc.ai[2] = 0;
+                            if (Main.netMode != 1)
+                            {
+                                Main.NewText("throw a mimic");
+                            }
+                        }
+                    }
+                    else if (npc.ai[1] == 240) //big wave of mimics, aimed ahead of you
+                    {
+                        if (Main.netMode != 1)
+                            Main.NewText("wall of mimics");
+                    }
+                    else if (npc.ai[1] > 360)
+                    {
+                        GetNextAttack();
+                    }
+                    break;
+
+                case 5: //frostballs and nados
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+
+                    targetPos = player.Center + player.DirectionTo(npc.Center) * 500;
+                    if (npc.Distance(targetPos) > 25)
+                        Movement(targetPos, 0.15f);
+
+                    if (++npc.ai[1] > 360)
+                    {
+                        GetNextAttack();
+                    }
+                    if (++npc.ai[2] > (npc.localAI[3] > 1 ? 60 : 40))
+                    {
+                        npc.netUpdate = true;
+                        npc.ai[2] = 0;
+                        if (Main.netMode != 1)
+                        {
+                            Main.NewText("frostfireball behind self");
+                        }
+                    }
+                    if (npc.localAI[3] > 1 && --npc.ai[3] < 0)
+                    {
+                        npc.netUpdate = true;
+                        npc.ai[3] = 90;
+                        if (Main.netMode != 1)
+                        {
+                            Main.NewText("make sandstorm tornado");
+                        }
+                    }
+                    break;
+
+                case 6: //rune wizard
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+
+                    npc.velocity = Vector2.Zero;
+                    if (++npc.ai[1] == 1)
+                    {
+                        TeleportDust();
+                        if (Main.netMode != 1)
+                        {
+                            bool wasOnLeft = npc.Center.X < player.Center.X;
+                            npc.Center = player.Center + 300 * Vector2.UnitX.RotatedBy(Main.rand.NextFloat(0, 2 * (float)Math.PI));
+                            if (wasOnLeft && npc.Center.X < player.Center.X)
+                            {
+                                float x = player.Center.X - npc.Center.X;
+                                npc.position.X += x * 2;
+                            }
+                            npc.netUpdate = true;
+                        }
+                        TeleportDust();
+                        Main.PlaySound(SoundID.Item84, npc.Center);
+                    }
+                    else if (npc.ai[1] == 60)
+                    {
+                        if (Main.netMode != 1)
+                        {
+                            Main.NewText("rune wizard bolts");
+                            if (npc.localAI[3] > 1)
+                            {
+                                Main.NewText("rune wizard ring");
+                            }
+                        }
+                    }
+                    else if (npc.ai[1] > 90)
+                    {
+                        if (++npc.ai[2] > 3)
+                        {
+                            GetNextAttack();
+                        }
+                        else
+                        {
+                            npc.netUpdate = true;
+                            npc.ai[1] = 0;
+                        }
+                    }
+                    break;
+
+                case 7: //moth dust charges
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+
+                    if (npc.localAI[0] == 0) //teleport behind you
+                    {
+                        npc.localAI[0] = 1;
+                        npc.ai[1] = -30;
+
+                        TeleportDust();
+                        if (Main.netMode != 1)
+                        {
+                            bool wasOnLeft = npc.Center.X < player.Center.X;
+                            npc.Center = player.Center;
+                            npc.position.X += wasOnLeft ? 300 : -300;
+                            npc.netUpdate = true;
+                        }
+                        TeleportDust();
+
+                        Main.PlaySound(SoundID.Item84, npc.Center);
+                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                    }
+
+                    if (++npc.ai[3] > 5)
+                    {
+                        npc.ai[3] = 0;
+                        if (Main.netMode != 1)
+                        {
+                            Main.NewText("make moth dust");
+                        }
+                    }
+
+                    npc.velocity *= 0.9f;
+                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 30 : 60))
+                    {
+                        npc.netUpdate = true;
+                        if (++npc.ai[2] > 5)
+                        {
+                            GetNextAttack();
+                        }
+                        else
+                        {
+                            npc.ai[0]++;
+                            npc.ai[1] = 0;
+                            npc.velocity = npc.DirectionTo(player.Center + player.velocity) * 20f;
+                        }
+                    }
+                    break;
+
+                case 8: //while dashing
+                    if (Phase2Check())
+                        break;
+                    if (++npc.ai[3] > 5)
+                    {
+                        npc.ai[3] = 0;
+                        if (Main.netMode != 1)
+                        {
+                            Main.NewText("make moth dust");
+                        }
+                    }
+                    if (++npc.ai[1] > 30)
+                    {
+                        npc.netUpdate = true;
+                        npc.ai[0]--;
+                        npc.ai[1] = 0;
+                    }
+                    break;
+
+                case 9: //mage skeleton attacks
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+
+                    npc.velocity = npc.DirectionTo(player.Center) * 6f;
+
+                    if (++npc.ai[1] == 1)
+                    {
+                        for (int i = 0; i < 40; i++) //warning dust ring
+                        {
+                            Vector2 vector6 = Vector2.UnitY * 40f;
+                            vector6 = vector6.RotatedBy((i - (40 / 2 - 1)) * 6.28318548f / 40) + npc.Center;
+                            Vector2 vector7 = vector6 - npc.Center;
+                            int d = Dust.NewDust(vector6 + vector7, 0, 0, DustID.Shadowflame, 0f, 0f, 0, default(Color), 2f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity = vector7;
+                        }
+                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                    }
+                    else if (npc.ai[1] < 120) //spam shadowbeams after delay
+                    {
+                        if (++npc.ai[2] > 60)
+                        {
+                            if (++npc.ai[3] == 1) //store rotation briefly before shooting
+                            {
+                                npc.localAI[0] = npc.DirectionTo(player.Center).ToRotation();
+                            }
+                            else if (npc.ai[3] > 15)
+                            {
+                                npc.ai[3] = 0;
+                                if (Main.netMode != 1)
+                                {
+                                    Main.NewText("shadowbeam using ai0");
+                                }
+                            }
+                        }
+                    }
+                    else if (npc.ai[1] < 240)
+                    {
+                        npc.ai[3] = 0;
+                        npc.localAI[0] = 0;
+
+                        if (++npc.ai[2] > 40)
+                        {
+                            npc.ai[2] = 0;
+                            if (Main.netMode != 1)
+                            {
+                                Main.NewText("diabolist blast");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        npc.velocity /= 2;
+
+                        if (npc.ai[1] == 360 && Main.netMode != 1)
+                        {
+                            Main.NewText("explode into ragged caster balls");
+                        }
+
+                        if (npc.ai[1] > 480)
+                        {
+                            GetNextAttack();
+                        }
+                    }
+                    break;
+
+                case 10: //baby guardians
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+
+                    if (++npc.ai[1] < 180)
+                    {
+                        targetPos = player.Center;
+                        targetPos.Y -= 200;
+                        if (npc.Distance(targetPos) > 25)
+                            Movement(targetPos, 0.15f);
+
+                        //warning dust
+                        for (int i = 0; i < 3; i++)
+                        {
+                            int d = Dust.NewDust(npc.Center, 0, 0, DustID.Fire, 0f, 0f, 0, default(Color), 3f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].noLight = true;
+                            Main.dust[d].velocity *= 12f;
+                        }
+                    }
+                    else if (npc.ai[1] == 180)
+                    {
+                        npc.netUpdate = true;
+                        npc.velocity = Vector2.Normalize(npc.velocity) * 3f;
+
+                        Main.NewText("baby guardians");
+
+                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                    }
+                    else
+                    {
+                        if (npc.ai[1] > (npc.localAI[3] > 1 ? 420 : 300)) //delay if in p2
+                        {
+                            GetNextAttack();
+                        }
+
+                        if (npc.localAI[3] > 1 && npc.ai[1] == 300) //surprise!
+                        {
+                            Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f); //eoc roar
+
+                            if (Main.netMode != 1)
+                            {
+                                Main.NewText("surprise bonus skeletons");
+                            }
+                        }
+                    }
+                    break;
+
+                case 11: //noah/irisu geyser rain
+                    Main.NewText("reached end of ai for now");
+                    npc.netUpdate = true;
+                    npc.ai[0] = 0;
+                    goto case 0;
+                    //break;
+
+                case 12: //lilith cross ray hearts
+                    break;
+
+                case 13: //that one boss that was a bunch of gems burst rain but with butterflies
+                    break;
+
+                case 14: //medusa ray
+                    break;
+
+                case 15: //sparkling love
                     break;
 
                 default:
@@ -277,6 +661,18 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     npc.ai[0] = 0;
                     goto case 0;
             }
+        }
+
+        private void GetNextAttack()
+        {
+            npc.TargetClosest();
+            npc.netUpdate = true;
+            npc.ai[0]++;//= 0;
+            npc.ai[1] = 0;
+            npc.ai[2] = 0;
+            npc.ai[3] = 0;
+            npc.localAI[0] = 0;
+            npc.localAI[1] = 0;
         }
 
         /*private void Aura(float distance, int buff, bool reverse = false, int dustid = DustID.GoldFlame, bool checkDuration = false)
@@ -344,7 +740,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             if (npc.localAI[3] > 1)
                 return false;
 
-            if (npc.life < npc.lifeMax / 2)
+            if (npc.life < npc.lifeMax * 0.66)
             {
                 if (Main.netMode != 1)
                 {
@@ -397,6 +793,21 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 npc.velocity.Y = 12 * Math.Sign(npc.velocity.Y);
         }
 
+        private void TeleportDust()
+        {
+            for (int index1 = 0; index1 < 25; ++index1)
+            {
+                int index2 = Dust.NewDust(npc.position, npc.width, npc.height, 272, 0f, 0f, 100, new Color(), 2f);
+                Main.dust[index2].noGravity = true;
+                Main.dust[index2].velocity *= 7f;
+                Main.dust[index2].noLight = true;
+                int index3 = Dust.NewDust(npc.position, npc.width, npc.height, 272, 0f, 0f, 100, new Color(), 1f);
+                Main.dust[index3].velocity *= 4f;
+                Main.dust[index3].noGravity = true;
+                Main.dust[index3].noLight = true;
+            }
+        }
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(mod.BuffType("Lovestruck"), 300);
@@ -414,7 +825,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            damage *= 0.8;
+            if (Main.LocalPlayer.loveStruck)
+                damage = 0;
             return true;
         }
 
@@ -438,7 +850,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 npc.ai[3] = 0;
                 npc.localAI[0] = 0;
                 npc.localAI[1] = 0;
-                npc.localAI[2] = 0;
                 npc.dontTakeDamage = true;
                 npc.netUpdate = true;
                 for (int i = 0; i < 1000; i++)
