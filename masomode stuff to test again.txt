@@ -96,3 +96,7 @@ sinister icon
 updated sprites
 	-lihzahrd treasure box
 	-abominable scale
+
+increased mutant boss hitbox size
+nerfed landslide EX damage
+changed colors (i.e. minion shade, aura trail) of abom/mutant boss

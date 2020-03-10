@@ -20,8 +20,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override void SetDefaults()
         {
-            npc.width = 34;
-            npc.height = 50;
+            npc.width = 120;//34;
+            npc.height = 120;//50;
             npc.damage = 360;
             npc.defense = 360;
             npc.lifeMax = 7700000;
@@ -140,6 +140,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantBoss"), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
                             }
+
+                            if (Main.netMode != 1)
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantRitual5"), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                     }
                 }
@@ -798,7 +801,6 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (Main.netMode != 1)
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantRitual5"), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                         Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         for (int i = 0; i < 50; i++)
