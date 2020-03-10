@@ -79,3 +79,17 @@ deviantt won't give excessive storage hearts either
 deviantt gives 16 base storages instead of a terra
 deviantt gives crafting interface again
 fixed mutant deathray broken
+
+goblins fall through ground much more aggressively when you die
+goblins always drop 10 spiky balls (the item) when killed during the first invasion
+fixed devi help chat never appearing
+reworked hallowed ench
+	-changed hit detection to be much more reliable
+	-reflection has a cooldown
+pandora's box
+	-cannot spawn betsy or martian probe pre-golem
+	-cannot spawn pillars pre-cultist
+sinister icon
+	-removed graze (still in maso soul)
+	-all enemies with 1000hp or less will drop double loot
+	-affected enemies only drop coins if you have maso soul

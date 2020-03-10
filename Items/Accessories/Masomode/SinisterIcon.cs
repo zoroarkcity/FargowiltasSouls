@@ -12,8 +12,9 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             Tooltip.SetDefault(@"'Most definitely not alive'
 Prevents Masochist Mode-induced natural boss spawns
 Increases spawn rate
-Graze projectiles to gain up to 30% increased crit damage
-Crit damage bonus decreases over time and is fully lost on hit");
+Enemies with 1000 or less max life will drop doubled loot but zero coins");
+/*Graze projectiles to gain up to 30% increased crit damage
+Crit damage bonus decreases over time and is fully lost on hit");*/
             DisplayName.AddTranslation(GameCulture.Chinese, "邪恶画像");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'肯定不是活着的'
 阻止受虐模式导致的Boss自然生成
@@ -34,7 +35,10 @@ Crit damage bonus decreases over time and is fully lost on hit");
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SinisterIcon))
                 player.GetModPlayer<FargoPlayer>().SinisterIcon = true;
 
-            player.GetModPlayer<FargoPlayer>().Graze = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SinisterIconDrops))
+                player.GetModPlayer<FargoPlayer>().SinisterIconDrops = true;
+
+            //player.GetModPlayer<FargoPlayer>().Graze = true;
         }
     }
 }

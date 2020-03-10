@@ -328,6 +328,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool SinisterIcon;
 
+        [Label("$Mods.FargowiltasSouls.MasoIconDropsConfig")]
+        [DefaultValue(true)]
+        public bool SinisterIconDrops;
+
         [Header("$Mods.FargowiltasSouls.SupremeFairyHeader")]
         [Label("$Mods.FargowiltasSouls.MasoSlimeConfig")]
         [DefaultValue(true)]

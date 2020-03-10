@@ -302,6 +302,7 @@ namespace FargowiltasSouls
         public bool noSupersonic;
         public bool Bloodthirsty;
         public bool SinisterIcon;
+        public bool SinisterIconDrops;
 
         public bool GodEater;               //defense removed, endurance removed, colossal DOT
         public bool FlamesoftheUniverse;    //activates various vanilla debuffs
@@ -680,6 +681,7 @@ namespace FargowiltasSouls
             noSupersonic = false;
             Bloodthirsty = false;
             SinisterIcon = false;
+            SinisterIconDrops = false;
 
             GodEater = false;
             FlamesoftheUniverse = false;
@@ -763,6 +765,7 @@ namespace FargowiltasSouls
             SuperBleed = false;
             Bloodthirsty = false;
             SinisterIcon = false;
+            SinisterIconDrops = false;
             Graze = false;
             GrazeBonus = 0;
 
@@ -3862,32 +3865,28 @@ namespace FargowiltasSouls
             AddMinion(SoulConfig.Instance.HallowSword, mod.ProjectileType("HallowSword"), (int)(dmg * player.minionDamage), 0f);
 
             //reflect proj
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.HallowShield) && !noDodge)
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.HallowShield) && !noDodge && !player.HasBuff(mod.BuffType("HallowCooldown")))
             {
                 const int focusRadius = 50;
 
-                if (Math.Abs(player.velocity.X) < .5f && Math.Abs(player.velocity.Y) < .5f)
+                //if (Math.Abs(player.velocity.X) < .5f && Math.Abs(player.velocity.Y) < .5f)
+                for (int i = 0; i < 20; i++)
                 {
-                    for (int i = 0; i < 25; i++)
-                    {
-                        Vector2 offset = new Vector2();
-                        double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                        offset.X += (float)(Math.Sin(angle) * focusRadius);
-                        offset.Y += (float)(Math.Cos(angle) * focusRadius);
-                        Dust dust = Main.dust[Dust.NewDust(
-                            player.Center + offset - new Vector2(4, 4), 0, 0,
-                            DustID.GoldFlame, 0, 0, 100, Color.White, 1f
-                            )];
-                        dust.velocity = player.velocity;
-                        dust.noGravity = true;
-                    }
+                    Vector2 offset = new Vector2();
+                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                    offset.X += (float)(Math.Sin(angle) * focusRadius);
+                    offset.Y += (float)(Math.Cos(angle) * focusRadius);
+                    Dust dust = Main.dust[Dust.NewDust(
+                        player.Center + offset - new Vector2(4, 4), 0, 0,
+                        DustID.GoldFlame, 0, 0, 100, Color.White, 0.5f
+                        )];
+                    dust.velocity = player.velocity;
+                    dust.noGravity = true;
                 }
-
-                float distance = 5f * 16;
 
                 Main.projectile.Where(x => x.active && x.hostile).ToList().ForEach(x =>
                 {
-                    if ((Eternity || Main.rand.Next(5) == 0) && Vector2.Distance(x.Center, player.Center) <= distance)
+                    if (Vector2.Distance(x.Center, player.Center) <= focusRadius + Math.Min(x.width, x.height) / 2)
                     {
                         for (int i = 0; i < 5; i++)
                         {
@@ -3904,7 +3903,7 @@ namespace FargowiltasSouls
                         x.velocity *= -1f;
 
                         // Flip sprite
-                        if (x.Center.X > player.Center.X * 0.5f)
+                        if (x.Center.X > player.Center.X)
                         {
                             x.direction = 1;
                             x.spriteDirection = 1;
@@ -3917,6 +3916,8 @@ namespace FargowiltasSouls
 
                         // Don't know if this will help but here it is
                         x.netUpdate = true;
+
+                        player.AddBuff(mod.BuffType("HallowCooldown"), 600);
                     }
                 });
             }

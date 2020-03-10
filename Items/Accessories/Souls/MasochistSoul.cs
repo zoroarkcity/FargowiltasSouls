@@ -26,7 +26,7 @@ Your attacks create additional attacks, hearts, and inflict a cocktail of Masoch
 Press the Fireball Dash key to perform a short invincible dash
 Certain enemies will drop potions when defeated
 You respawn twice as fast, have Honey buff, improved night vision, and erupt into various attacks when injured
-Prevents boss spawns, increases spawn rate, and attacks may squeak and deal 1 damage to you
+Prevents boss spawns, increases spawn rate, increases loot, and attacks may squeak and deal 1 damage to you
 Graze projectiles to gain increased crit damage
 Summons the aid of all Masochist Mode bosses to your side");
 
@@ -164,6 +164,10 @@ Summons the aid of all Masochist Mode bosses to your side");
             //sinister icon
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SinisterIcon))
                 fargoPlayer.SinisterIcon = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SinisterIconDrops))
+                fargoPlayer.SinisterIconDrops = true;
+
+            //graze
             fargoPlayer.Graze = true;
 
             //dragon fang

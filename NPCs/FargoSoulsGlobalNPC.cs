@@ -6835,10 +6835,15 @@ namespace FargowiltasSouls.NPCs
                         {
                             npc.TargetClosest();
                             if (npc.HasPlayerTarget && (!Main.player[npc.target].active || Main.player[npc.target].dead))
+                            {
                                 npc.noTileCollide = true;
+                            }
                         }
-                        if (npc.noTileCollide)
+                        if (npc.noTileCollide) //fall through the floor
+                        {
+                            npc.position.Y++;
                             npc.velocity.Y++;
+                        }
                         break;
 
                     case NPCID.GoblinSorcerer:
@@ -9583,10 +9588,32 @@ namespace FargowiltasSouls.NPCs
         }
 
         private bool firstLoot = true;
+        private bool firstIconLoot = true;
+
+        public override bool PreNPCLoot(NPC npc)
+        {
+            Player player = Main.player[npc.lastInteraction];
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+
+            if (firstIconLoot)
+            {
+                firstIconLoot = false;
+
+                if (npc.life <= 1000 && !npc.boss && modPlayer.SinisterIconDrops)
+                {
+                    if (!modPlayer.MasochistSoul)
+                        npc.value = 0;
+
+                    npc.NPCLoot();
+                }
+            }
+
+            return true;
+        }
 
         public override void NPCLoot(NPC npc)
         {
-            Player player = Main.player[Main.myPlayer];
+            Player player = Main.player[npc.lastInteraction];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
             if (modPlayer.PlatinumEnchant && !npc.boss && firstLoot)
@@ -9775,16 +9802,23 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.GoblinSorcerer:
                     case NPCID.GoblinThief:
                     case NPCID.GoblinWarrior:
-                        if (NPC.downedGoblins && FargoSoulsWorld.forceMeteor)
+                        if (NPC.downedGoblins)
                         {
-                            FargoSoulsWorld.forceMeteor = false;
-                            WorldGen.dropMeteor();
-                            if (!NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn")))
+                            if (FargoSoulsWorld.forceMeteor)
                             {
-                                int p = Player.FindClosest(npc.Center, 0, 0);
-                                if (p != -1)
-                                    NPC.SpawnOnPlayer(p, ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
+                                FargoSoulsWorld.forceMeteor = false;
+                                WorldGen.dropMeteor();
+                                if (!NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn")))
+                                {
+                                    int p = Player.FindClosest(npc.Center, 0, 0);
+                                    if (p != -1)
+                                        NPC.SpawnOnPlayer(p, ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
+                                }
                             }
+                        }
+                        else
+                        {
+                            Item.NewItem(npc.Hitbox, ItemID.SpikyBall, 10);
                         }
                         break;
 

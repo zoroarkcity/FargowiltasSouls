@@ -154,6 +154,7 @@ namespace FargowiltasSouls
             AddToggle("MasoHeader", "Masochist Mode", "MutantStatue", "ffffff");
             AddToggle("MasoBossRecolors", "Boss Recolors (Restart to use)", "Masochist", "ffffff");
             AddToggle("MasoIconConfig", "Sinister Icon", "SinisterIcon", "ffffff");
+            AddToggle("MasoIconDropsConfig", "Sinister Icon Drops", "SinisterIcon", "ffffff");
 
             //supreme death fairy header
             AddToggle("SupremeFairyHeader", "Supreme Deathbringer Fairy", "SupremeDeathbringerFairy", "ffffff");
@@ -537,10 +538,10 @@ namespace FargowiltasSouls
                                 netMessage.Send();
                             }
 
-                            Main.npcChatText = "This world looks tougher than usual, so you can have these on the house just this once! Talk to me if you need any tips, yeah?";
+                            return true;
                         }
 
-                        break;
+                        return false;
 
                 }
 
