@@ -92,12 +92,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 if (npc.timeLeft < 30)
                     npc.timeLeft = 30;
 
-                RefreshAttackQueue();
-
                 if (npc.Distance(Main.player[npc.target].Center) < 2000)
                 {
                     npc.localAI[3] = 1;
                     Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                    RefreshAttackQueue();
                     if (Main.netMode != 1)
                     {
                         int number = 0;
@@ -205,11 +204,10 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         }*/
                         if (npc.ai[1] > 210)
                         {
-                            npc.ai[0]++;
-                            npc.ai[1] = 0;
-                            npc.ai[2] = 0;
-                            npc.ai[3] = 0;
-                            npc.netUpdate = true;
+                            RefreshAttackQueue();
+                            npc.localAI[2] = 0;
+                            GetNextAttack();
+                            npc.dontTakeDamage = false;
                         }
                     }
                     else if (npc.ai[1] == 120)
@@ -237,12 +235,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     targetPos = player.Center;
                     targetPos.X += 500 * (npc.Center.X < targetPos.X ? -1 : 1);
                     if (npc.Distance(targetPos) > 25)
-                        Movement(targetPos, npc.localAI[3] > 0 ? 0.15f : 2f);
+                        Movement(targetPos, npc.localAI[3] > 0 ? 0.15f : 2f, npc.localAI[3] > 0 ? 12f : 1200f);
 
                     if (npc.localAI[3] > 0) //in range, fight has begun, choose attacks
                     {
                         npc.netUpdate = true;
-                        npc.ai[0]++;
+                        GetNextAttack();
                     }
                     break;
 
@@ -260,8 +258,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         if (Main.netMode != 1)
                         {
                             bool wasOnLeft = npc.Center.X < player.Center.X;
-                            npc.Center = player.Center + 300 * Vector2.UnitX.RotatedBy(Main.rand.NextFloat(0, 2 * (float)Math.PI));
-                            if (wasOnLeft && npc.Center.X < player.Center.X)
+                            npc.Center = player.Center + 150 * Vector2.UnitX.RotatedBy(Main.rand.NextFloat(0, 2 * (float)Math.PI));
+                            if (wasOnLeft ? npc.Center.X < player.Center.X : npc.Center.X > player.Center.X)
                             {
                                 float x = player.Center.X - npc.Center.X;
                                 npc.position.X += x * 2;
@@ -272,7 +270,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         Main.PlaySound(SoundID.Item84, npc.Center);
                     }
 
-                    if (npc.ai[1] == 45) //finished all the prior teleports, now attack
+                    if (npc.ai[1] == 60) //finished all the prior teleports, now attack
                     {
                         if (Main.netMode != 1)
                         {
@@ -301,7 +299,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (npc.Distance(targetPos) > 25)
                         Movement(targetPos, 0.15f);
 
-                    if (++npc.ai[1] > 60)
+                    if (++npc.ai[1] > 90)
                     {
                         npc.netUpdate = true;
                         npc.ai[1] = 0;
@@ -325,10 +323,10 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         break;
 
                     npc.velocity = npc.DirectionTo(player.Center) * 2f;
-                    if (++npc.ai[1] > 60)
+                    if (--npc.ai[1] < 0)
                     {
                         npc.netUpdate = true;
-                        npc.ai[1] = 0;
+                        npc.ai[1] = 120;
 
                         if (++npc.ai[2] > 3)
                         {
@@ -354,11 +352,10 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (npc.Distance(targetPos) > 25)
                         Movement(targetPos, 0.15f);
 
-                    if (++npc.ai[1] > 30 && npc.ai[1] < 120) //rapid mimic spam
+                    if (++npc.ai[1] < 120)
                     {
                         if (++npc.ai[2] > 20)
                         {
-                            npc.netUpdate = true;
                             npc.ai[2] = 0;
                             if (Main.netMode != 1)
                             {
@@ -366,12 +363,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             }
                         }
                     }
-                    else if (npc.ai[1] == 240) //big wave of mimics, aimed ahead of you
+                    else if (npc.ai[1] == 180) //big wave of mimics, aimed ahead of you
                     {
                         if (Main.netMode != 1)
                             Main.NewText("wall of mimics");
                     }
-                    else if (npc.ai[1] > 360)
+                    else if (npc.ai[1] > 240)
                     {
                         GetNextAttack();
                     }
@@ -381,7 +378,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (!AliveCheck(player) || Phase2Check())
                         break;
 
-                    targetPos = player.Center + player.DirectionTo(npc.Center) * 500;
+                    targetPos = player.Center + player.DirectionTo(npc.Center) * 300;
                     if (npc.Distance(targetPos) > 25)
                         Movement(targetPos, 0.15f);
 
@@ -401,7 +398,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (npc.localAI[3] > 1 && --npc.ai[3] < 0)
                     {
                         npc.netUpdate = true;
-                        npc.ai[3] = 90;
+                        npc.ai[3] = 110;
                         if (Main.netMode != 1)
                         {
                             Main.NewText("make sandstorm tornado");
@@ -420,8 +417,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         if (Main.netMode != 1)
                         {
                             bool wasOnLeft = npc.Center.X < player.Center.X;
-                            npc.Center = player.Center + 300 * Vector2.UnitX.RotatedBy(Main.rand.NextFloat(0, 2 * (float)Math.PI));
-                            if (wasOnLeft && npc.Center.X < player.Center.X)
+                            npc.Center = player.Center + 400 * Vector2.UnitX.RotatedBy(Main.rand.NextFloat(0, 2 * (float)Math.PI));
+                            if (wasOnLeft ? npc.Center.X < player.Center.X : npc.Center.X > player.Center.X)
                             {
                                 float x = player.Center.X - npc.Center.X;
                                 npc.position.X += x * 2;
@@ -463,14 +460,14 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (npc.localAI[0] == 0) //teleport behind you
                     {
                         npc.localAI[0] = 1;
-                        npc.ai[1] = -30;
+                        npc.ai[1] = -45;
 
                         TeleportDust();
                         if (Main.netMode != 1)
                         {
                             bool wasOnLeft = npc.Center.X < player.Center.X;
                             npc.Center = player.Center;
-                            npc.position.X += wasOnLeft ? 300 : -300;
+                            npc.position.X += wasOnLeft ? 400 : -400;
                             npc.netUpdate = true;
                         }
                         TeleportDust();
@@ -489,7 +486,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     }
 
                     npc.velocity *= 0.9f;
-                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 30 : 60))
+                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 20 : 40))
                     {
                         npc.netUpdate = true;
                         if (++npc.ai[2] > 5)
@@ -528,7 +525,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (!AliveCheck(player) || Phase2Check())
                         break;
 
-                    npc.velocity = npc.DirectionTo(player.Center) * 6f;
+                    npc.velocity = npc.DirectionTo(player.Center) * 3f;
 
                     if (++npc.ai[1] == 1)
                     {
@@ -545,13 +542,13 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     }
                     else if (npc.ai[1] < 120) //spam shadowbeams after delay
                     {
-                        if (++npc.ai[2] > 60)
+                        if (++npc.ai[2] > 90)
                         {
                             if (++npc.ai[3] == 1) //store rotation briefly before shooting
                             {
                                 npc.localAI[0] = npc.DirectionTo(player.Center).ToRotation();
                             }
-                            else if (npc.ai[3] > 15)
+                            else if (npc.ai[3] > 4)
                             {
                                 npc.ai[3] = 0;
                                 if (Main.netMode != 1)
@@ -579,12 +576,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     {
                         npc.velocity /= 2;
 
-                        if (npc.ai[1] == 360 && Main.netMode != 1)
+                        if (npc.ai[1] == 300 && Main.netMode != 1)
                         {
                             Main.NewText("explode into ragged caster balls");
                         }
 
-                        if (npc.ai[1] > 480)
+                        if (npc.ai[1] > 360)
                         {
                             GetNextAttack();
                         }
@@ -600,7 +597,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         targetPos = player.Center;
                         targetPos.Y -= 200;
                         if (npc.Distance(targetPos) > 25)
-                            Movement(targetPos, 0.15f);
+                            Movement(targetPos, 0.3f);
 
                         //warning dust
                         for (int i = 0; i < 3; i++)
@@ -614,7 +611,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     else if (npc.ai[1] == 180)
                     {
                         npc.netUpdate = true;
-                        npc.velocity = Vector2.Normalize(npc.velocity) * 3f;
 
                         Main.NewText("baby guardians");
 
@@ -626,6 +622,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         {
                             GetNextAttack();
                         }
+
+                        npc.velocity *= 0.9f;
 
                         if (npc.localAI[3] > 1 && npc.ai[1] == 300) //surprise!
                         {
@@ -644,24 +642,32 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     npc.netUpdate = true;
                     npc.ai[0] = 0;
                     goto case 0;
-                    //break;
 
                 case 12: //lilith cross ray hearts
-                    break;
+                    goto case 11;
 
                 case 13: //that one boss that was a bunch of gems burst rain but with butterflies
-                    break;
+                    goto case 11;
 
                 case 14: //medusa ray
-                    break;
+                    goto case 11;
 
                 case 15: //sparkling love
-                    break;
+                    goto case 11;
 
                 case 16: //pause between attacks
-                    if (++npc.ai[1] > 60)
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+
+                    targetPos = player.Center + player.DirectionTo(npc.Center) * 350;
+                    if (npc.Distance(targetPos) > 25)
+                        Movement(targetPos, 0.15f);
+
+                    if (++npc.ai[1] > 90)
                     {
+                        npc.netUpdate = true;
                         npc.ai[0] = attackQueue[(int)npc.localAI[2]];
+                        npc.ai[1] = 0;
                         if (++npc.localAI[2] >= attackQueue.Length)
                         {
                             npc.localAI[2] = 0;
@@ -702,8 +708,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 bool repeat = false;
                 if (newQueue[i] == 8) //this is the middle of an attack pattern, dont pick it
                     repeat = true;
-                for (int j = 0; j < 3; j++) //cant pick attack that's already queued
+                for (int j = 0; j < 3; j++) //cant pick attack that's queued in the previous set
                     if (newQueue[i] == attackQueue[j])
+                        repeat = true;
+                for (int j = i; j >= 0; j--) //can't pick attack that's already queued in this set
+                    if (i != j && newQueue[i] == newQueue[j])
                         repeat = true;
 
                 if (repeat) //retry this one if needed
@@ -717,6 +726,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             while (newQueue[3] == attackQueue[3]);
 
             attackQueue = newQueue;
+
+            Main.NewText("queue: "
+                + attackQueue[0].ToString() + " "
+                + attackQueue[1].ToString() + " "
+                + attackQueue[2].ToString() + " "
+                + attackQueue[3].ToString());
         }
 
         /*private void Aura(float distance, int buff, bool reverse = false, int dustid = DustID.GoldFlame, bool checkDuration = false)
@@ -805,19 +820,19 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             return false;
         }
 
-        private void Movement(Vector2 targetPos, float speedModifier, bool fastX = true)
+        private void Movement(Vector2 targetPos, float speedModifier, float cap = 12f)
         {
             if (npc.Center.X < targetPos.X)
             {
                 npc.velocity.X += speedModifier;
                 if (npc.velocity.X < 0)
-                    npc.velocity.X += speedModifier * (fastX ? 2 : 1);
+                    npc.velocity.X += speedModifier * 2;
             }
             else
             {
                 npc.velocity.X -= speedModifier;
                 if (npc.velocity.X > 0)
-                    npc.velocity.X -= speedModifier * (fastX ? 2 : 1);
+                    npc.velocity.X -= speedModifier * 2;
             }
             if (npc.Center.Y < targetPos.Y)
             {
@@ -831,10 +846,10 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 if (npc.velocity.Y > 0)
                     npc.velocity.Y -= speedModifier * 2;
             }
-            if (Math.Abs(npc.velocity.X) > 12)
-                npc.velocity.X = 12 * Math.Sign(npc.velocity.X);
-            if (Math.Abs(npc.velocity.Y) > 12)
-                npc.velocity.Y = 12 * Math.Sign(npc.velocity.Y);
+            if (Math.Abs(npc.velocity.X) > cap)
+                npc.velocity.X = cap * Math.Sign(npc.velocity.X);
+            if (Math.Abs(npc.velocity.Y) > cap)
+                npc.velocity.Y = cap * Math.Sign(npc.velocity.Y);
         }
 
         private void TeleportDust()

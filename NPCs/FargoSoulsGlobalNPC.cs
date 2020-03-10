@@ -9666,11 +9666,6 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, ItemID.BrainScrambler);
                         break;
 
-                    case NPCID.BlueSlime:
-                        if (npc.netID == NPCID.Pinky && Main.rand.Next(5) == 0)
-                            Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
-                        break;
-
                     case NPCID.JungleBat:
                     case NPCID.IceBat:
                     case NPCID.Vampire:
@@ -9861,8 +9856,6 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.DoctorBones:
-                    case NPCID.UndeadMiner:
-                    case NPCID.Tim:
                     case NPCID.DungeonSlime:
                         if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
@@ -9926,6 +9919,8 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, mod.ItemType("TimsConcoction"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.ManaRegenerationPotion, Main.rand.Next(2, 5) + 1);
+                        if (Main.rand.Next(5) == 0)
+                            Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
                         break;
 
                     case NPCID.RuneWizard:
@@ -10012,6 +10007,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.BlueSlime:
                         if (npc.netID == NPCID.YellowSlime && Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.RecallPotion, Main.rand.Next(0, 2) + 1);
+                        if (npc.netID == NPCID.Pinky && Main.rand.Next(5) == 0)
+                            Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
                         break;
 
                     case NPCID.GoblinArcher:
@@ -10071,6 +10068,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.UndeadMiner:
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.MiningPotion, Main.rand.Next(2, 5) + 1);
+                        if (Main.rand.Next(5) == 0)
+                            Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
                         break;
 
                     case NPCID.Raven:

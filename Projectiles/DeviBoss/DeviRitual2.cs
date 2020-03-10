@@ -91,11 +91,12 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
             Color color26 = projectile.GetAlpha(lightColor);
 
-            for (int x = 0; x < 6; x++)
+            for (int x = 0; x < 9; x++)
             {
                 Vector2 drawOffset = new Vector2(threshold * projectile.scale / 2f, 0f).RotatedBy(projectile.ai[0]);
-                drawOffset = drawOffset.RotatedBy(2f * PI / 6f * x);
-                Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, x % 2 == 0 ? projectile.rotation : -projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+                float rotation = 2f * PI / 9f * x;
+                drawOffset = drawOffset.RotatedBy(rotation);
+                Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, rotation + projectile.ai[0] + (float)Math.PI / 2, origin2, projectile.scale, SpriteEffects.None, 0f);
             }
             return false;
         }
