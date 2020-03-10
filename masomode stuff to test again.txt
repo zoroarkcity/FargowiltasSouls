@@ -108,3 +108,7 @@ reworked optic staff EX
 	-now functions as an alternative to destroyer gun EX for "pure" summoner
 	-SHOULD NOT BE STACKED WITH OTHER WEAPONS
 added cracked gem drop to certain enemies
+chaos state:
+	-removed immune from galactic globe and upgrades
+	-removed effect from abominable/mutant presence
+	-net effect is you can use rod on abom/mutant

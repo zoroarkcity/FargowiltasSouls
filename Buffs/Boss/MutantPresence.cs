@@ -26,7 +26,6 @@ namespace FargowiltasSouls.Buffs.Boss
             player.GetModPlayer<FargoPlayer>().noSupersonic = true;
             player.GetModPlayer<FargoPlayer>().MutantPresence = true;
             player.moonLeech = true;
-            player.chaosState = true;
         }
     }
 }

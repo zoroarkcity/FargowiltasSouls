@@ -260,7 +260,7 @@ Summons the aid of all Masochist Mode bosses to your side");
 
             //galactic globe
             player.buffImmune[BuffID.VortexDebuff] = true;
-            player.buffImmune[BuffID.ChaosState] = true;
+            //player.buffImmune[BuffID.ChaosState] = true;
             fargoPlayer.GravityGlobeEX = true;
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.GravityControl))
                 player.gravControl = true;

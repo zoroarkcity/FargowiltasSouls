@@ -22,7 +22,6 @@ namespace FargowiltasSouls.Buffs.Boss
             player.GetModPlayer<FargoPlayer>().noDodge = true;
             player.GetModPlayer<FargoPlayer>().noSupersonic = true;
             player.moonLeech = true;
-            player.chaosState = true;
             player.bleed = true;
 
             player.statDefense -= 15;
