@@ -93,3 +93,6 @@ sinister icon
 	-removed graze (still in maso soul)
 	-all enemies with 1000hp or less will drop double loot
 	-affected enemies only drop coins if you have maso soul
+updated sprites
+	-lihzahrd treasure box
+	-abominable scale
