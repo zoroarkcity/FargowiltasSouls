@@ -134,8 +134,8 @@ namespace FargowiltasSouls.Projectiles.Minions
                 return false;
             }
             Texture2D texture2D19 = Main.projectileTexture[projectile.type];
-            Texture2D texture2D20 = mod.GetTexture("Projectiles/Masomode/PhantasmalDeathrayWOF2");
-            Texture2D texture2D21 = mod.GetTexture("Projectiles/Masomode/PhantasmalDeathrayWOF3");
+            Texture2D texture2D20 = mod.GetTexture("Projectiles/Deathrays/PhantasmalDeathrayWOF2");
+            Texture2D texture2D21 = mod.GetTexture("Projectiles/Deathrays/PhantasmalDeathrayWOF3");
             float num223 = projectile.localAI[1];
             Microsoft.Xna.Framework.Color color44 = new Microsoft.Xna.Framework.Color(255, 255, 255, 0) * 0.9f;
             SpriteBatch arg_ABD8_0 = Main.spriteBatch;
