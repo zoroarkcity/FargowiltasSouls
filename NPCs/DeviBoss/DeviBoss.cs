@@ -659,7 +659,15 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     break;
 
                 case 16: //pause between attacks
-
+                    if (++npc.ai[1] > 60)
+                    {
+                        npc.ai[0] = attackQueue[(int)npc.localAI[2]];
+                        if (++npc.localAI[2] >= attackQueue.Length)
+                        {
+                            npc.localAI[2] = 0;
+                            RefreshAttackQueue();
+                        }
+                    }
                     break;
 
                 default:
@@ -674,18 +682,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
         {
             npc.TargetClosest();
             npc.netUpdate = true;
-            npc.ai[0] = attackQueue[(int)npc.localAI[2]];
+            npc.ai[0] = 16;// attackQueue[(int)npc.localAI[2]];
             npc.ai[1] = 0;
             npc.ai[2] = 0;
             npc.ai[3] = 0;
             npc.localAI[0] = 0;
             npc.localAI[1] = 0;
-
-            if (++npc.localAI[2] >= attackQueue.Length)
-            {
-                npc.localAI[2] = 0;
-                RefreshAttackQueue();
-            }
         }
 
         private void RefreshAttackQueue()
