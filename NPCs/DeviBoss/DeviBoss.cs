@@ -91,6 +91,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 npc.TargetClosest();
                 if (npc.timeLeft < 30)
                     npc.timeLeft = 30;
+
+                RefreshAttackQueue();
+
                 if (npc.Distance(Main.player[npc.target].Center) < 2000)
                 {
                     npc.localAI[3] = 1;
@@ -655,6 +658,10 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 case 15: //sparkling love
                     break;
 
+                case 16: //pause between attacks
+
+                    break;
+
                 default:
                     Main.NewText("UH OH, STINKY");
                     npc.netUpdate = true;
@@ -667,12 +674,47 @@ namespace FargowiltasSouls.NPCs.DeviBoss
         {
             npc.TargetClosest();
             npc.netUpdate = true;
-            npc.ai[0]++;//= 0;
+            npc.ai[0] = attackQueue[(int)npc.localAI[2]];
             npc.ai[1] = 0;
             npc.ai[2] = 0;
             npc.ai[3] = 0;
             npc.localAI[0] = 0;
             npc.localAI[1] = 0;
+
+            if (++npc.localAI[2] >= attackQueue.Length)
+            {
+                npc.localAI[2] = 0;
+                RefreshAttackQueue();
+            }
+        }
+
+        private void RefreshAttackQueue()
+        {
+            npc.netUpdate = true;
+
+            int[] newQueue = new int[4];
+            for (int i = 0; i < 3; i++)
+            {
+                newQueue[i] = Main.rand.Next(1, 11);
+
+                bool repeat = false;
+                if (newQueue[i] == 8) //this is the middle of an attack pattern, dont pick it
+                    repeat = true;
+                for (int j = 0; j < 3; j++) //cant pick attack that's already queued
+                    if (newQueue[i] == attackQueue[j])
+                        repeat = true;
+
+                if (repeat) //retry this one if needed
+                    i--;
+            }
+
+            do
+            {
+                newQueue[3] = Main.rand.Next(11, 16);
+            }
+            while (newQueue[3] == attackQueue[3]);
+
+            attackQueue = newQueue;
         }
 
         /*private void Aura(float distance, int buff, bool reverse = false, int dustid = DustID.GoldFlame, bool checkDuration = false)
