@@ -89,6 +89,7 @@ namespace FargowiltasSouls.NPCs
         public static int guardBoss = -1;
         public static int fishBossEX = -1;
         public static bool spawnFishronEX;
+        public static int deviBoss = -1;
         public static int abomBoss = -1;
         public static int mutantBoss = -1;
 
@@ -9665,6 +9666,11 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, ItemID.BrainScrambler);
                         break;
 
+                    case NPCID.BlueSlime:
+                        if (npc.netID == NPCID.Pinky && Main.rand.Next(5) == 0)
+                            Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
+                        break;
+
                     case NPCID.JungleBat:
                     case NPCID.IceBat:
                     case NPCID.Vampire:
@@ -9850,6 +9856,16 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, mod.ItemType("NymphsPerfume"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.LovePotion, Main.rand.Next(2, 5) + 1);
+                        if (Main.rand.Next(5) == 0)
+                            Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
+                        break;
+
+                    case NPCID.DoctorBones:
+                    case NPCID.UndeadMiner:
+                    case NPCID.Tim:
+                    case NPCID.DungeonSlime:
+                        if (Main.rand.Next(5) == 0)
+                            Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
                         break;
 
                     case NPCID.MourningWood:

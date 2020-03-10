@@ -107,3 +107,4 @@ reworked optic staff EX
 	-adjusted damage and iframes to match destroyer gun EX
 	-now functions as an alternative to destroyer gun EX for "pure" summoner
 	-SHOULD NOT BE STACKED WITH OTHER WEAPONS
+added cracked gem drop to certain enemies
