@@ -100,3 +100,10 @@ updated sprites
 increased mutant boss hitbox size
 nerfed landslide EX damage
 changed colors (i.e. minion shade, aura trail) of abom/mutant boss
+tweaked iframes on mutant revive, should always be as long as its deathray now
+made mutant armor set ring deathray idstatic iframes longer, slight damage buff to compensate
+reworked optic staff EX
+	-no longer uses id static iframes (prevents making other piercing too strong)
+	-adjusted damage and iframes to match destroyer gun EX
+	-now functions as an alternative to destroyer gun EX for "pure" summoner
+	-SHOULD NOT BE STACKED WITH OTHER WEAPONS

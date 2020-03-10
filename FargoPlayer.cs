@@ -3132,11 +3132,11 @@ namespace FargowiltasSouls
                     player.statLife = player.statLifeMax2;
                     player.HealEffect(player.statLifeMax2);
                     player.immune = true;
-                    player.immuneTime = player.longInvince ? 180 : 120;
+                    player.immuneTime = 180;
+                    player.hurtCooldowns[0] = 180;
+                    player.hurtCooldowns[1] = 180;
                     Main.NewText("You've been revived!", Color.LimeGreen);
-                    player.ClearBuff(mod.BuffType("MutantFang"));
-                    player.buffImmune[mod.BuffType("MutantFang")] = true;
-                    player.AddBuff(mod.BuffType("MutantRebirth"), 7200);
+                    player.AddBuff(mod.BuffType("MutantRebirth"), 10800);
                     Projectile.NewProjectile(player.Center, -Vector2.UnitY, mod.ProjectileType("GiantDeathray"), (int)(7000 * player.minionDamage), 10f, player.whoAmI);
                     retVal = false;
                 }

@@ -27,12 +27,13 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.ignoreWater = true;
             projectile.timeLeft = 120 * (projectile.extraUpdates + 1);
 
-            projectile.usesIDStaticNPCImmunity = true;
-            projectile.idStaticNPCHitCooldown = 10;
+            /*projectile.usesIDStaticNPCImmunity = true;
+            projectile.idStaticNPCHitCooldown = 10;*/
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            target.immune[projectile.owner] = 6;
             target.AddBuff(BuffID.Ichor, 600);
         }
 
