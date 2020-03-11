@@ -13,6 +13,8 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
         {
             DisplayName.SetDefault("Biome Mimic");
             Main.projFrames[projectile.type] = 8;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()

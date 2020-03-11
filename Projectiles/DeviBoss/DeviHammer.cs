@@ -22,6 +22,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
         {
             projectile.width = 30;
             projectile.height = 30;
+            projectile.scale = 2f;
             projectile.penetrate = -1;
             projectile.hostile = true;
             projectile.tileCollide = false;
@@ -46,8 +47,23 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
             projectile.rotation += 1f * Math.Sign(projectile.ai[0]);
 
-            int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 246, projectile.velocity.X * 0.5f, projectile.velocity.Y * 0.5f, 0, new Color());
+            int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 246, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, new Color());
             Main.dust[d].noLight = true;
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            for (int index1 = 0; index1 < 10; ++index1)
+            {
+                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 246, 0f, 0f, 100, new Color(), 1.5f);
+                Main.dust[index2].noGravity = true;
+                Main.dust[index2].velocity *= 3.5f;
+                Main.dust[index2].noLight = true;
+                int index3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 246, 0f, 0f, 100, new Color(), 1f);
+                Main.dust[index3].velocity *= 2f;
+                Main.dust[index3].noGravity = true;
+                Main.dust[index3].noLight = true;
+            }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

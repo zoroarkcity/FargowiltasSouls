@@ -675,7 +675,7 @@ namespace FargowiltasSouls
                         "FargowiltasSouls/NPCs/Vanilla/NPC_370",
                         "FargowiltasSouls/NPCs/Vanilla/NPC_Head_Boss_4"
                     );*/
-                    bossChecklist.Call("AddBossWithInfo", "Duke Fishron EX", 14.02f, (Func<bool>)(() => FargoSoulsWorld.downedFishronEX), "Fish using a [i:" + ItemType("TruffleWormEX") + "]");
+                    //bossChecklist.Call("AddBossWithInfo", "Duke Fishron EX", 14.02f, (Func<bool>)(() => FargoSoulsWorld.downedFishronEX), "Fish using a [i:" + ItemType("TruffleWormEX") + "]");
                     bossChecklist.Call(
                         "AddBoss",
                         14.03f,

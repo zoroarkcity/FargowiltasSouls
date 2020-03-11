@@ -119,3 +119,9 @@ buffed daedalus stormbow back to 50% from 33% since holy arrow is dead
 added sprite:
 	regurgitator
 abom/mutant map icons turn when they turn
+
+removed truffle worm EX recipe
+remove duke fishron EX from boss checklist
+abom drops cyclonic fin for now
+abom always drops abominable energy
+all maso acc combos require deviating energy

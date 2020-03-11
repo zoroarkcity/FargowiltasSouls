@@ -142,8 +142,9 @@ Summons a friendly rainbow slime");
             recipe.AddIngredient(mod.ItemType("WretchedPouch"));
             recipe.AddIngredient(mod.ItemType("NymphsPerfume"));
             recipe.AddIngredient(mod.ItemType("TimsConcoction"));
-            recipe.AddIngredient(ItemID.SoulofLight, 20);
-            recipe.AddIngredient(ItemID.SoulofNight, 20);
+            //recipe.AddIngredient(ItemID.SoulofLight, 20);
+            //recipe.AddIngredient(ItemID.SoulofNight, 20);
+            recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 10);
 
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);

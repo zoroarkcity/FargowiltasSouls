@@ -39,6 +39,8 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
                 projectile.hide = false;
             }
 
+            projectile.spriteDirection = projectile.direction = Math.Sign(projectile.velocity.X);
+
             if (--projectile.ai[1] < 0)
             {
                 projectile.velocity.X = 0;
@@ -60,6 +62,13 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             
+        }
+
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        {
+            fallThrough = false;
+
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
         }
 
         public override void Kill(int timeLeft)
@@ -105,7 +114,9 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
 
-            /*Color color26 = lightColor;
+            SpriteEffects spriteEffects = projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Color color26 = lightColor;
             color26 = projectile.GetAlpha(color26);
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i += 2)
@@ -114,10 +125,10 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 Vector2 value4 = projectile.oldPos[i];
                 float num165 = projectile.oldRot[i];
-                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
-            }*/
-            
-            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, spriteEffects, 0f);
+            }
+
+            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, spriteEffects, 0f);
             return false;
         }
     }

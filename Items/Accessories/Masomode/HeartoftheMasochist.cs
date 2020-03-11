@@ -113,6 +113,7 @@ Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu");
             recipe.AddIngredient(mod.ItemType("GalacticGlobe"));
             recipe.AddIngredient(mod.ItemType("LunarCrystal"), 30);
             recipe.AddIngredient(ItemID.LunarBar, 15);
+            recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 10);
 
             recipe.AddTile(mod, "CrucibleCosmosSheet");
             recipe.SetResult(this);

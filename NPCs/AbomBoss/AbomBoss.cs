@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -1129,13 +1130,12 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             for (int i = 0; i < 1000; i++)
                 if (Main.projectile[i].active && Main.projectile[i].hostile)
                     Main.projectile[i].Kill();
+            
+            int maxEnergy = Main.rand.Next(10) + 10;
+            for (int i = 0; i < maxEnergy; i++)
+                npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"));
 
-            if (FargoSoulsWorld.downedFishronEX)
-            {
-                int maxEnergy = Main.rand.Next(10) + 10;
-                for (int i = 0; i < maxEnergy; i++)
-                    npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"));
-            }
+            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CyclonicFin"));
         }
 
         public override void BossLoot(ref string name, ref int potionType)
