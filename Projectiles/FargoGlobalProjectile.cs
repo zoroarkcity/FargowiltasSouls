@@ -1714,24 +1714,45 @@ namespace FargowiltasSouls.Projectiles
 
         public override bool PreKill(Projectile projectile, int timeLeft)
         {
-            if (FargoSoulsWorld.MasochistMode && projectile.type == ProjectileID.CrystalBullet && projectile.owner == Main.myPlayer)
+            if (FargoSoulsWorld.MasochistMode && projectile.owner == Main.myPlayer &&
+                (projectile.type == ProjectileID.CrystalBullet
+                || projectile.type == ProjectileID.HolyArrow
+                || projectile.type == ProjectileID.HallowStar))
             {
                 if (Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer <= 0)
                 {
-                    Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer = 30;
+                    Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer = 20;
                     return true;
                 }
                 else
                 {
-                    Main.PlaySound(0, (int)projectile.position.X, (int)projectile.position.Y, 1, 1f, 0.0f);
-                    for (int index1 = 0; index1 < 5; ++index1) //vanilla dusts
+                    if (projectile.type == ProjectileID.CrystalBullet)
                     {
-                        int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 68, 0.0f, 0.0f, 0, new Color(), 1f);
-                        Main.dust[index2].noGravity = true;
-                        Dust dust1 = Main.dust[index2];
-                        dust1.velocity = dust1.velocity * 1.5f;
-                        Dust dust2 = Main.dust[index2];
-                        dust2.scale = dust2.scale * 0.9f;
+                        Main.PlaySound(0, (int)projectile.position.X, (int)projectile.position.Y, 1, 1f, 0.0f);
+                        for (int index1 = 0; index1 < 5; ++index1) //vanilla dusts
+                        {
+                            int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 68, 0.0f, 0.0f, 0, new Color(), 1f);
+                            Main.dust[index2].noGravity = true;
+                            Dust dust1 = Main.dust[index2];
+                            dust1.velocity = dust1.velocity * 1.5f;
+                            Dust dust2 = Main.dust[index2];
+                            dust2.scale = dust2.scale * 0.9f;
+                        }
+                    }
+                    else if (projectile.type == ProjectileID.HolyArrow || projectile.type == ProjectileID.HallowStar)
+                    {
+                        Main.PlaySound(SoundID.Item10, projectile.position);
+                        for (int index = 0; index < 10; ++index)
+                            Dust.NewDust(projectile.position, projectile.width, projectile.height, 58, projectile.velocity.X * 0.1f, projectile.velocity.Y * 0.1f, 150, new Color(), 1.2f);
+                        for (int index = 0; index < 3; ++index)
+                            Gore.NewGore(projectile.position, new Vector2(projectile.velocity.X * 0.05f, projectile.velocity.Y * 0.05f), Main.rand.Next(16, 18), 1f);
+                        if (projectile.type == 12 && projectile.damage < 500)
+                        {
+                            for (int index = 0; index < 10; ++index)
+                                Dust.NewDust(projectile.position, projectile.width, projectile.height, 57, projectile.velocity.X * 0.1f, projectile.velocity.Y * 0.1f, 150, new Color(), 1.2f);
+                            for (int index = 0; index < 3; ++index)
+                                Gore.NewGore(projectile.position, new Vector2(projectile.velocity.X * 0.05f, projectile.velocity.Y * 0.05f), Main.rand.Next(16, 18), 1f);
+                        }
                     }
                     return false;
                 }

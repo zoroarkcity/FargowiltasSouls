@@ -4860,8 +4860,6 @@ namespace FargowiltasSouls
             switch (type)
             {
                 case ItemID.DaedalusStormbow:
-                    return 1f / 3f;
-
                 case ItemID.StarCannon:
                 case ItemID.Tsunami:
                 case ItemID.Phantasm:
