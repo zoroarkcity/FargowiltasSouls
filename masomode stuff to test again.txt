@@ -116,3 +116,5 @@ chaos state:
 reduced crystal bullet shatter cap to 20 ticks (this is a buff)
 holy arrows and stars share the crystal bullet cooldown too (this is a fat nerf)
 buffed daedalus stormbow back to 50% from 33% since holy arrow is dead
+added sprite:
+	regurgitator

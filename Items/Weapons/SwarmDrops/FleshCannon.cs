@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
     public class FleshCannon : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public int counter;
 
         public override void SetStaticDefaults()
