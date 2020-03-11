@@ -25,7 +25,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             npc.height = 120;//50;
             npc.damage = 360;
             npc.defense = 360;
-            npc.lifeMax = 7700000;
+            npc.lifeMax = 7000000;
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -1773,7 +1773,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            damage *= 0.8;
+            //damage *= 0.8;
             return true;
         }
 

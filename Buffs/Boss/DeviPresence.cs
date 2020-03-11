@@ -9,7 +9,7 @@ namespace FargowiltasSouls.Buffs.Boss
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Deviant Presence");
-            Description.SetDefault("Friendly NPCs take massively increased damage");
+            Description.SetDefault("Reduced defense and friendly NPCs take massively increased damage");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             longerExpertDebuff = false;
@@ -20,6 +20,11 @@ namespace FargowiltasSouls.Buffs.Boss
         {
             texture = "FargowiltasSouls/Buffs/PlaceholderDebuff";
             return true;
+        }
+
+        public override void Update(Player player, ref int buffIndex)
+        {
+            player.GetModPlayer<FargoPlayer>().DevianttPresence = true;
         }
     }
 }

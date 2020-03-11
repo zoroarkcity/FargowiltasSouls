@@ -61,7 +61,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            
+            target.AddBuff(mod.BuffType("Purified"), 300);
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)

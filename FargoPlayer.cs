@@ -331,6 +331,7 @@ namespace FargowiltasSouls
         public int MaxLifeReduction;
         public bool Midas;
         public bool MutantPresence;
+        public bool DevianttPresence;
         public bool Swarming;
         public bool LowGround;
         public bool Flipped;
@@ -701,6 +702,7 @@ namespace FargowiltasSouls
             DeathMarked = false;
             Midas = false;
             MutantPresence = false;
+            DevianttPresence = false;
             Swarming = false;
             LowGround = false;
             Flipped = false;
@@ -1536,7 +1538,7 @@ namespace FargowiltasSouls
 
             if (Fargowiltas.Instance.ThoriumLoaded) ThoriumPostUpdate();
             
-            if (MutantPresence)
+            if (MutantPresence || DevianttPresence)
             {
                 player.statDefense /= 2;
                 player.endurance /= 2;

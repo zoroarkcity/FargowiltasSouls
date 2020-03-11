@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
+using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.Masomode
 {
@@ -36,10 +37,28 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            for (int i = 0; i < 5; i++)
+            if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
             {
-                int d = Main.rand.Next(Fargowiltas.DebuffIDs.Count);
-                target.AddBuff(Fargowiltas.DebuffIDs[d], 240);
+                if (Main.rand.Next(6) == 0)
+                    target.AddBuff(mod.BuffType("Berserked"), 240);
+                if (Main.rand.Next(6) == 0)
+                    target.AddBuff(mod.BuffType("Defenseless"), 240);
+                if (Main.rand.Next(6) == 0)
+                    target.AddBuff(mod.BuffType("Guilty"), 240);
+                if (Main.rand.Next(6) == 0)
+                    target.AddBuff(mod.BuffType("Lovestruck"), 240);
+                if (Main.rand.Next(6) == 0)
+                    target.AddBuff(mod.BuffType("MutantNibble"), 240);
+                if (Main.rand.Next(6) == 0)
+                    target.AddBuff(mod.BuffType("Rotting"), 240);
+            }
+            else
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    int d = Main.rand.Next(Fargowiltas.DebuffIDs.Count);
+                    target.AddBuff(Fargowiltas.DebuffIDs[d], 240);
+                }
             }
         }
 

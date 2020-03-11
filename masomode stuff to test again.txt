@@ -127,3 +127,4 @@ abom always drops abominable energy
 all maso acc combos require deviating energy
 
 phoenix blaster -25% damage
+removed mutant DR and reduced life to 7M

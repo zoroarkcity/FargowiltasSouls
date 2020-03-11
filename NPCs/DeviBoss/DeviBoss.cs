@@ -32,7 +32,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             npc.height = 120;
             npc.damage = 64;
             npc.defense = 10;
-            npc.lifeMax = 12000;
+            npc.lifeMax = 17000;
             npc.HitSound = SoundID.NPCHit9;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -347,7 +347,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 Vector2 spawnVel = npc.DirectionFrom(Main.player[npc.target].Center) * 10f;
                                 int damage = (int)(npc.damage * 0.078125f);
                                 for (int i = -3; i < 3; i++)
-                                    Projectile.NewProjectile(npc.Center, spawnVel.RotatedBy(Math.PI / 7 * i), mod.ProjectileType("FakeHeart2"), damage, 0f, Main.myPlayer, 20, 40);
+                                    Projectile.NewProjectile(npc.Center, spawnVel.RotatedBy(Math.PI / 7 * i), mod.ProjectileType("FakeHeart2"), damage * 4, 0f, Main.myPlayer, 20, 40);
                             }
                         }
                         break;
@@ -785,11 +785,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (!AliveCheck(player) || Phase2Check())
                         break;
 
-                    targetPos = player.Center + player.DirectionTo(npc.Center) * 350;
+                    targetPos = player.Center + player.DirectionTo(npc.Center) * 300;
                     if (npc.Distance(targetPos) > 25)
                         Movement(targetPos, 0.15f);
 
-                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 60 : 90))
+                    if (++npc.ai[1] > 90)
                     {
                         npc.netUpdate = true;
                         npc.ai[0] = attackQueue[(int)npc.localAI[2]];
@@ -995,7 +995,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("Lovestruck"), 300);
+            target.AddBuff(mod.BuffType("Lovestruck"), 240);
         }
 
         public override void HitEffect(int hitDirection, double damage)
