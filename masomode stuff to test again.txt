@@ -118,3 +118,4 @@ holy arrows and stars share the crystal bullet cooldown too (this is a fat nerf)
 buffed daedalus stormbow back to 50% from 33% since holy arrow is dead
 added sprite:
 	regurgitator
+abom/mutant map icons turn when they turn

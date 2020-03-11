@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using System.IO;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace FargowiltasSouls.NPCs.AbomBoss
 {
@@ -1151,6 +1152,11 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 if (npc.frame.Y >= 4 * frameHeight)
                     npc.frame.Y = 0;
             }
+        }
+
+        public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
+        {
+            spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         }
     }
 }
