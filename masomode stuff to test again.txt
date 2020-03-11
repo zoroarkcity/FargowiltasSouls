@@ -125,3 +125,5 @@ remove duke fishron EX from boss checklist
 abom drops cyclonic fin for now
 abom always drops abominable energy
 all maso acc combos require deviating energy
+
+phoenix blaster -25% damage
