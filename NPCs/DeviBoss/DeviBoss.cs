@@ -1,10 +1,11 @@
 using Microsoft.Xna.Framework;
 using System;
+using System.IO;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using System.IO;
 
 namespace FargowiltasSouls.NPCs.DeviBoss
 {
@@ -145,6 +146,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 Main.player[Main.myPlayer].AddBuff(mod.BuffType("AbomPresence"), 2);
             }*/
 
+            int projectileDamage = npc.damage / (npc.localAI[3] > 1 ? 5 : 6);
+
             Player player = Main.player[npc.target];
             npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
             Vector2 targetPos;
@@ -272,9 +275,37 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                     if (npc.ai[1] == 60) //finished all the prior teleports, now attack
                     {
-                        if (Main.netMode != 1)
+                        for (int i = 0; i < 36; i++) //dust ring
                         {
-                            Main.NewText("marx hammer attack");
+                            Vector2 vector6 = Vector2.UnitY * 9f;
+                            vector6 = vector6.RotatedBy((i - (36 / 2 - 1)) * 6.28318548f / 36) + npc.Center;
+                            Vector2 vector7 = vector6 - npc.Center;
+                            int d = Dust.NewDust(vector6 + vector7, 0, 0, 246, 0f, 0f, 0, default(Color), 3f);
+                            Main.dust[d].noLight = true;
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity = vector7;
+                        }
+
+                        Main.PlaySound(SoundID.Item92, npc.Center);
+
+                        if (Main.netMode != 1) //hammers
+                        {
+                            const float retiRad = 200;
+                            const float spazRad = 125;
+                            const int retiTime = 60;
+                            const int spazTime = 60;
+
+                            float retiSpeed = 2 * (float)Math.PI * retiRad / retiTime;
+                            float spazSpeed = 2 * (float)Math.PI * spazRad / spazTime;
+                            float retiAcc = retiSpeed * retiSpeed / retiRad * npc.direction;
+                            float spazAcc = spazSpeed * spazSpeed / spazRad * -npc.direction;
+
+                            for (int i = 0; i < 4; i++)
+                            {
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i) * retiSpeed, mod.ProjectileType("DeviHammer"), projectileDamage, 0f, Main.myPlayer, retiAcc, retiTime);
+                                if (npc.localAI[3] > 1) //p2 throw another set of hammers
+                                    Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i + Math.PI / 4) * spazSpeed, mod.ProjectileType("DeviHammer"), projectileDamage, 0f, Main.myPlayer, spazAcc, spazTime);
+                            }
                         }
                     }
                     else if (npc.ai[1] > 90)
@@ -291,11 +322,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     }
                     break;
 
-                case 2: //circling with heart barrages
+                case 2: //heart barrages
                     if (!AliveCheck(player) || Phase2Check())
                         break;
 
-                    targetPos = player.Center + player.DirectionTo(npc.Center) * 400;
+                    targetPos = player.Center;
+                    targetPos.X += 400 * (npc.Center.X < targetPos.X ? -1 : 1);
                     if (npc.Distance(targetPos) > 25)
                         Movement(targetPos, 0.15f);
 
@@ -311,7 +343,10 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         {
                             if (Main.netMode != 1)
                             {
-                                Main.NewText("heart spread");
+                                Vector2 spawnVel = npc.DirectionFrom(Main.player[npc.target].Center) * 10f;
+                                int damage = (int)(npc.damage * 0.078125f);
+                                for (int i = -3; i < 3; i++)
+                                    Projectile.NewProjectile(npc.Center, spawnVel.RotatedBy(Math.PI / 7 * i), mod.ProjectileType("FakeHeart2"), damage, 0f, Main.myPlayer, 30, 90);
                             }
                         }
                         break;
@@ -322,7 +357,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (!AliveCheck(player) || Phase2Check())
                         break;
 
-                    npc.velocity = npc.DirectionTo(player.Center) * 2f;
+                    //npc.velocity = npc.DirectionTo(player.Center) * 2f;
+
+                    targetPos = player.Center + player.DirectionTo(npc.Center) * 375;
+                    if (npc.Distance(targetPos) > 25)
+                        Movement(targetPos, 0.15f);
+
                     if (--npc.ai[1] < 0)
                     {
                         npc.netUpdate = true;
@@ -336,7 +376,14 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         {
                             if (Main.netMode != 1)
                             {
-                                Main.NewText("wyvern orb spirals");
+                                int max = npc.localAI[3] > 1 ? 8 : 12;
+                                Vector2 vel = Vector2.Normalize(npc.velocity) * 2f;
+                                for (int i = 0; i < max; i++)
+                                {
+                                    Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("LightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .012f * npc.direction);
+                                    if (npc.localAI[3] > 1)
+                                        Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("LightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .012f * -npc.direction);
+                                }
                             }
                         }
                     }
@@ -357,16 +404,58 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         if (++npc.ai[2] > 20)
                         {
                             npc.ai[2] = 0;
+
+                            Main.PlaySound(SoundID.Item84, npc.Center);
+
+                            const int delay = 45;
+                            Vector2 target = player.Center;
+                            target.Y -= 400;
+                            Vector2 speed = (target - npc.Center) / delay;
+
+                            for (int i = 0; i < 20; i++) //dust spray
+                                Dust.NewDust(npc.Center, 0, 0, Main.rand.Next(2) == 0 ? DustID.GoldCoin : DustID.SilverCoin, speed.X * 5, speed.Y * 5, 0, default(Color), 2f);
+
                             if (Main.netMode != 1)
                             {
-                                Main.NewText("throw a mimic");
+                                int type = mod.ProjectileType("DeviMimic");
+                                if (npc.localAI[3] > 1)
+                                    type = mod.ProjectileType("DeviBigMimic");
+                                Projectile.NewProjectile(npc.Center, speed, type, projectileDamage, 0f, Main.myPlayer, player.position.Y, delay);
                             }
                         }
                     }
                     else if (npc.ai[1] == 180) //big wave of mimics, aimed ahead of you
                     {
-                        if (Main.netMode != 1)
-                            Main.NewText("wall of mimics");
+                        Main.PlaySound(SoundID.Item84, npc.Center);
+
+                        int modifier = 150;
+                        if (player.velocity.X != 0)
+                            modifier *= Math.Sign(player.velocity.X);
+                        else
+                            modifier *= Math.Sign(player.Center.X - npc.Center.X);
+
+                        Vector2 target = player.Center;
+                        target.X -= modifier;
+                        target.Y -= 400;
+
+                        for (int j = 0; j < 7; j++)
+                        {
+                            const int delay = 30;
+                            Vector2 speed = (target - npc.Center) / delay;
+
+                            for (int i = 0; i < 20; i++) //dust spray
+                                Dust.NewDust(npc.Center, 0, 0, Main.rand.Next(2) == 0 ? DustID.GoldCoin : DustID.SilverCoin, speed.X * 5, speed.Y * 5, 0, default(Color), 2f);
+
+                            if (Main.netMode != 1)
+                            {
+                                int type = mod.ProjectileType("DeviMimic");
+                                if (npc.localAI[3] > 1)
+                                    type = mod.ProjectileType("DeviBigMimic");
+                                Projectile.NewProjectile(npc.Center, speed, type, projectileDamage, 0f, Main.myPlayer, player.position.Y, delay);
+                            }
+
+                            target.X += modifier;
+                        }
                     }
                     else if (npc.ai[1] > 240)
                     {
@@ -392,16 +481,26 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         npc.ai[2] = 0;
                         if (Main.netMode != 1)
                         {
-                            Main.NewText("frostfireball behind self");
+                            float rotation = npc.DirectionFrom(player.Center).ToRotation() + Main.rand.NextFloat(-(float)Math.PI / 2, (float)Math.PI / 2);
+                            Projectile.NewProjectile(npc.Center, new Vector2(6f, 0f).RotatedBy(rotation), mod.ProjectileType("FrostfireballHostile"), projectileDamage, 0f, Main.myPlayer, npc.target, 30f);
                         }
                     }
-                    if (npc.localAI[3] > 1 && --npc.ai[3] < 0)
+                    if (npc.localAI[3] > 1 && --npc.ai[3] < 0) //spawn sandnado
                     {
                         npc.netUpdate = true;
                         npc.ai[3] = 110;
-                        if (Main.netMode != 1)
+
+                        Vector2 target = player.Center;
+                        target.Y -= 150;
+                        Projectile.NewProjectile(target, Vector2.Zero, ProjectileID.SandnadoHostileMark, 0, 0f, Main.myPlayer);
+
+                        int length = (int)npc.Distance(target) / 10;
+                        Vector2 offset = npc.DirectionTo(target) * 10f;
+                        for (int i = 0; i < length; i++) //dust warning line for sandnado
                         {
-                            Main.NewText("make sandstorm tornado");
+                            int d = Dust.NewDust(npc.Center + offset * i, 0, 0, 269, 0f, 0f, 0, new Color());
+                            Main.dust[d].noLight = true;
+                            Main.dust[d].scale = 1.25f;
                         }
                     }
                     break;
@@ -432,10 +531,21 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     {
                         if (Main.netMode != 1)
                         {
-                            Main.NewText("rune wizard bolts");
-                            if (npc.localAI[3] > 1)
+                            for (int i = -1; i <= 1; i++) //rune blast spread
+                                Projectile.NewProjectile(npc.Center,
+                                    8f * npc.DirectionTo(player.Center).RotatedBy(MathHelper.ToRadians(5) * i),
+                                    ProjectileID.RuneBlast, projectileDamage, 0f, Main.myPlayer);
+
+                            if (npc.localAI[3] > 1) //rune blast ring
                             {
-                                Main.NewText("rune wizard ring");
+                                Vector2 vel = npc.DirectionFrom(Main.player[npc.target].Center) * 8;
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    int p = Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / 5 * i),
+                                        ProjectileID.RuneBlast, projectileDamage, 0f, Main.myPlayer, 1);
+                                    if (p != 1000)
+                                        Main.projectile[p].timeLeft = 300;
+                                }
                             }
                         }
                     }
@@ -479,10 +589,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (++npc.ai[3] > 5)
                     {
                         npc.ai[3] = 0;
-                        if (Main.netMode != 1)
-                        {
-                            Main.NewText("make moth dust");
-                        }
+
+                        if (Main.netMode != 1) //make moth dust trail
+                            Projectile.NewProjectile(npc.Center, Main.rand.NextVector2Unit() * 2f, mod.ProjectileType("MothDust"), projectileDamage, 0f, Main.myPlayer);
                     }
 
                     npc.velocity *= 0.9f;
@@ -505,14 +614,15 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 case 8: //while dashing
                     if (Phase2Check())
                         break;
+
                     if (++npc.ai[3] > 5)
                     {
                         npc.ai[3] = 0;
-                        if (Main.netMode != 1)
-                        {
-                            Main.NewText("make moth dust");
-                        }
+
+                        if (Main.netMode != 1) //make moth dust trail
+                            Projectile.NewProjectile(npc.Center, Main.rand.NextVector2Unit() * 2f, mod.ProjectileType("MothDust"), projectileDamage, 0f, Main.myPlayer);
                     }
+
                     if (++npc.ai[1] > 30)
                     {
                         npc.netUpdate = true;
@@ -529,13 +639,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                     if (++npc.ai[1] == 1)
                     {
-                        for (int i = 0; i < 40; i++) //warning dust ring
+                        for (int i = 0; i < 60; i++) //warning dust ring
                         {
                             Vector2 vector6 = Vector2.UnitY * 40f;
-                            vector6 = vector6.RotatedBy((i - (40 / 2 - 1)) * 6.28318548f / 40) + npc.Center;
+                            vector6 = vector6.RotatedBy((i - (60 / 2 - 1)) * 6.28318548f / 60) + npc.Center;
                             Vector2 vector7 = vector6 - npc.Center;
                             int d = Dust.NewDust(vector6 + vector7, 0, 0, DustID.Shadowflame, 0f, 0f, 0, default(Color), 2f);
-                            Main.dust[d].noGravity = true;
                             Main.dust[d].velocity = vector7;
                         }
                         Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
@@ -548,12 +657,15 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             {
                                 npc.localAI[0] = npc.DirectionTo(player.Center).ToRotation();
                             }
-                            else if (npc.ai[3] > 4)
+                            else if (npc.ai[3] > 7)
                             {
                                 npc.ai[3] = 0;
-                                if (Main.netMode != 1)
+
+                                if (Main.netMode != 1) //shoot a shadowbeam
                                 {
-                                    Main.NewText("shadowbeam using ai0");
+                                    int p = Projectile.NewProjectile(npc.Center, 6f * Vector2.UnitX.RotatedBy(npc.localAI[0]), ProjectileID.ShadowBeamHostile, projectileDamage, 0f, Main.myPlayer);
+                                    if (p != Main.maxProjectiles)
+                                        Main.projectile[p].timeLeft = 300;
                                 }
                             }
                         }
@@ -563,12 +675,14 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         npc.ai[3] = 0;
                         npc.localAI[0] = 0;
 
-                        if (++npc.ai[2] > 40)
+                        if (++npc.ai[2] > 40) //shoot diabolist bolts
                         {
                             npc.ai[2] = 0;
                             if (Main.netMode != 1)
                             {
-                                Main.NewText("diabolist blast");
+                                int p = Projectile.NewProjectile(npc.Center, 8f * npc.DirectionTo(player.Center), ProjectileID.InfernoHostileBolt, projectileDamage, 0f, Main.myPlayer, player.Center.X, player.Center.Y);
+                                if (p != Main.maxProjectiles)
+                                    Main.projectile[p].timeLeft = 300;
                             }
                         }
                     }
@@ -576,9 +690,19 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     {
                         npc.velocity /= 2;
 
-                        if (npc.ai[1] == 300 && Main.netMode != 1)
+                        if (npc.ai[1] == 300) //spray ragged caster bolts
                         {
-                            Main.NewText("explode into ragged caster balls");
+                            Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f); //eoc roar
+
+                            if (Main.netMode != 1)
+                            {
+                                for (int i = 0; i < 30; i++)
+                                {
+                                    int p = Projectile.NewProjectile(npc.Center, 4f * Vector2.UnitX.RotatedBy(Main.rand.NextFloat((float)Math.PI * 2)), ProjectileID.LostSoulHostile, projectileDamage, 0f, Main.myPlayer);
+                                    if (p != Main.maxProjectiles)
+                                        Main.projectile[p].timeLeft = 300;
+                                }
+                            }
                         }
 
                         if (npc.ai[1] > 360)
