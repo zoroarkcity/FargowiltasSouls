@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using FargowiltasSouls.Items.Accessories;
 using FargowiltasSouls.NPCs.AbomBoss;
+using FargowiltasSouls.NPCs.DeviBoss;
 using FargowiltasSouls.NPCs.MutantBoss;
 
 namespace FargowiltasSouls
@@ -510,6 +511,9 @@ namespace FargowiltasSouls
 
                     case "MutantAlive":
                         return FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>());
+
+                    case "DevianttAlive":
+                        return FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, ModContent.NPCType<DeviBoss>());
 
                     case "MutantPact":
                         return Main.LocalPlayer.GetModPlayer<FargoPlayer>().MutantsPact;

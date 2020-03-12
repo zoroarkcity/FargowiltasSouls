@@ -24,17 +24,13 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             projectile.height = 42;
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
-        {
-            
-        }
-
         public override void Kill(int timeLeft)
         {
-            base.Kill(timeLeft);
+            projectile.position = projectile.Center;
+            projectile.width = projectile.height = 200;
+            projectile.Center = projectile.position;
 
-            if (Main.netMode != 1)
-                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.DD2OgreSmash, projectile.damage, 4, Main.myPlayer);
+            base.Kill(timeLeft);
         }
     }
 }

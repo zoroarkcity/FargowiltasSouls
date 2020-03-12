@@ -29,7 +29,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             int ai1 = (int)projectile.ai[1];
             if (Main.npc[ai1].active && Main.npc[ai1].type == mod.NPCType("DeviBoss"))
             {
-                projectile.Center = Main.npc[ai1].Center;
+                projectile.Center = Main.npc[(int)projectile.ai[1]].Center + projectile.velocity * 250 + Main.rand.NextVector2Circular(5, 5);
             }
             else
             {
@@ -44,7 +44,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             {
                 Main.PlaySound(29, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
             }
-            float num801 = 7f;
+            float num801 = 15f;
             projectile.localAI[0] += 1f;
             if (projectile.localAI[0] >= maxTime)
             {
@@ -100,6 +100,13 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             }
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
             //Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
+
+            for (int i = 0; i < 5; i++)
+            {
+                int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 86, projectile.velocity.X * 5, projectile.velocity.Y * 5, 0, default(Color), 2.5f);
+                Main.dust[d].noGravity = true;
+                Main.dust[d].velocity *= 12f;
+            }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

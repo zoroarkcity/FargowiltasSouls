@@ -10,8 +10,6 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 {
     public class DeviRitual : ModProjectile
     {
-        public override string Texture => "FargowiltasSouls/Projectiles/DeviBoss/DeviRitual2";
-
         private const float PI = (float)Math.PI;
         private const float rotationPerTick = PI / 140f;
         private const float threshold = 1000f;
@@ -40,7 +38,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
                 Main.npc[ai1].active && Main.npc[ai1].type == mod.NPCType("DeviBoss") &&
                 Main.npc[ai1].ai[0] > 10)
             {
-                projectile.alpha -= 7;
+                projectile.alpha -= 3;
                 if (projectile.alpha < 0)
                     projectile.alpha = 0;
 
@@ -91,7 +89,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             else
             {
                 projectile.velocity = Vector2.Zero;
-                projectile.alpha += 7;
+                projectile.alpha += 5;
                 if (projectile.alpha > 255)
                 {
                     projectile.Kill();
@@ -100,7 +98,8 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             }
 
             projectile.timeLeft = 2;
-            projectile.scale = (1f - projectile.alpha / 255f) * 2f;
+            projectile.scale = 1f - projectile.alpha / 255f;
+            projectile.scale *= 2;
             projectile.ai[0] -= rotationPerTick;
             if (projectile.ai[0] < -PI)
             {
@@ -128,16 +127,19 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             {
                 Vector2 drawOffset = new Vector2(threshold * projectile.scale / 2f, 0f).RotatedBy(projectile.ai[0]);
                 drawOffset = drawOffset.RotatedBy(2f * PI / 32f * x);
+
+                float rotation = 2f * PI / 32 * x;
+                float rot = rotation + projectile.ai[0] + (float) Math.PI;
+
                 const int max = 4;
                 for (int i = 0; i < max; i++)
                 {
                     Color color27 = color26;
                     color27 *= (float)(max - i) / max;
                     Vector2 value4 = projectile.Center + drawOffset.RotatedBy(rotationPerTick * i);
-                    float num165 = projectile.oldRot[i];
-                    Main.spriteBatch.Draw(texture2D13, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture2D13, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, rot, origin2, projectile.scale, SpriteEffects.None, 0f);
                 }
-                Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, rot, origin2, projectile.scale, SpriteEffects.None, 0f);
             }
             return false;
         }
