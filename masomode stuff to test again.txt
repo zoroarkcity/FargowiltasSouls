@@ -129,3 +129,6 @@ phoenix blaster -25% damage
 removed mutant DR and reduced life to 7M
 tweaked abom to always inflict abom presence
 abom/mutant don't(?) turn to face you during attacks like dashing/swords if you cross them up
+
+added yharim boss
+added yrimir boss

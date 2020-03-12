@@ -38,9 +38,9 @@ namespace FargowiltasSouls.Items.Summons
                 {
                     Main.npc[mutant].Transform(mod.NPCType("MutantBoss"));
                     if (Main.netMode == 0)
-                        Main.NewText("Mutant has awoken!", 175, 75, 255);
+                        Main.NewText("Yharim has awoken!", 175, 75, 255);
                     else if (Main.netMode == 2)
-                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Mutant has awoken!"), new Color(175, 75, 255));
+                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Yharim has awoken!"), new Color(175, 75, 255));
                 }
                 else
                 {

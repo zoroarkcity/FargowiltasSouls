@@ -36,9 +36,9 @@ namespace FargowiltasSouls.Items.Summons
                 {
                     Main.npc[mutant].Transform(mod.NPCType("AbomBoss"));
                     if (Main.netMode == 0)
-                        Main.NewText("Abominationn has awoken!", 175, 75, 255);
+                        Main.NewText("Yrimir has awoken!", 175, 75, 255);
                     else if (Main.netMode == 2)
-                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Abominationn has awoken!"), new Color(175, 75, 255));
+                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Yrimir has awoken!"), new Color(175, 75, 255));
                 }
                 else
                 {
