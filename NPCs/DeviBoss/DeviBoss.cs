@@ -865,7 +865,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     {
                         npc.ai[2] = 0;
 
-                        int threshold = npc.localAI[3] > 1 ? 7 : 6;
+                        int threshold = 7;// npc.localAI[3] > 1 ? 7 : 6;
 
                         //only make rings in p2 and before firing ray
                         if (npc.localAI[3] > 1 && npc.ai[3] < threshold)
@@ -878,26 +878,63 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         if (++npc.ai[3] < threshold - 3) //medusa warning
                         {
-                            Main.NewText("medusa warning");
+                            Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f); //eoc roar
+
+                            for (int i = 0; i < 60; i++) //warning dust ring
+                            {
+                                Vector2 vector6 = Vector2.UnitY * 20f;
+                                vector6 = vector6.RotatedBy((i - (60 / 2 - 1)) * 6.28318548f / 60) + npc.Center;
+                                Vector2 vector7 = vector6 - npc.Center;
+                                int d = Dust.NewDust(vector6 + vector7, 0, 0, DustID.PinkFlame, 0f, 0f, 0, default(Color), 2f);
+                                Main.dust[d].velocity = vector7;
+                            }
                         }
                         else if (npc.ai[3] == threshold - 3) //petrify
                         {
-                            Main.NewText("petrify");
+                            Main.PlaySound(4, npc.Center, 17);
+
+                            if (npc.Distance(Main.LocalPlayer.Center) < 3000 && Collision.CanHitLine(npc.Center, 0, 0, Main.LocalPlayer.Center, 0, 0))
+                            {
+                                Main.LocalPlayer.AddBuff(BuffID.Stoned, 300);
+
+                                Vector2 target = Main.LocalPlayer.Center;
+                                int length = (int)npc.Distance(target) / 10;
+                                Vector2 offset = npc.DirectionTo(target) * 10f;
+                                for (int i = 0; i < length; i++) //dust indicator
+                                {
+                                    int d = Dust.NewDust(npc.Center + offset * i, 0, 0, DustID.GoldFlame, 0f, 0f, 0, new Color());
+                                    Main.dust[d].noLight = true;
+                                    Main.dust[d].scale = 1f;
+                                }
+                            }
                         }
                         else if (npc.ai[3] < threshold) //ray warning
                         {
-                            Main.NewText("ray warning");
+                            npc.netUpdate = true;
+
+                            for (int i = 0; i < 80; i++) //warning dust ring
+                            {
+                                Vector2 vector6 = Vector2.UnitY * 30f;
+                                vector6 = vector6.RotatedBy((i - (80 / 2 - 1)) * 6.28318548f / 80) + npc.Center;
+                                Vector2 vector7 = vector6 - npc.Center;
+                                int d = Dust.NewDust(vector6 + vector7, 0, 0, 86, 0f, 0f, 0, default(Color), 2.5f);
+                                Main.dust[d].velocity = vector7;
+                            }
+                            
+                            npc.localAI[1] = npc.DirectionTo(player.Center).ToRotation(); //store for aiming ray
                         }
                         else if (npc.ai[3] == threshold) //fire deathray
                         {
+                            Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+
                             if (Main.netMode != 1)
                             {
-                                Main.NewText("fire deathray");
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[1]), mod.ProjectileType("DeviBigDeathray"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                             }
                         }
                     }
 
-                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 540 : 600))
+                    if (++npc.ai[1] > 600)//(npc.localAI[3] > 1 ? 540 : 600))
                     {
                         GetNextAttack();
                     }
