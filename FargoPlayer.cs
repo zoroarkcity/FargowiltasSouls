@@ -1538,10 +1538,16 @@ namespace FargowiltasSouls
 
             if (Fargowiltas.Instance.ThoriumLoaded) ThoriumPostUpdate();
             
-            if (MutantPresence || DevianttPresence)
+            if (MutantPresence)
             {
                 player.statDefense /= 2;
                 player.endurance /= 2;
+            }
+
+            if (DevianttPresence)
+            {
+                player.statDefense /= 3;
+                player.endurance /= 3;
             }
         }
 

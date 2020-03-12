@@ -40,7 +40,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
             {
                 target.AddBuff(mod.BuffType("Berserked"), 240);
-                target.AddBuff(mod.BuffType("Defenseless"), 240);
+                target.AddBuff(mod.BuffType("MutantNibble"), 240);
                 target.AddBuff(mod.BuffType("Guilty"), 240);
                 target.AddBuff(mod.BuffType("Lovestruck"), 240);
                 target.AddBuff(mod.BuffType("Rotting"), 240);

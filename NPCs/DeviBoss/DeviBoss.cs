@@ -784,11 +784,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (!AliveCheck(player) || Phase2Check())
                         break;
 
-                    targetPos = player.Center + player.DirectionTo(npc.Center) * 300;
+                    targetPos = player.Center + player.DirectionTo(npc.Center) * 250;
                     if (npc.Distance(targetPos) > 25)
-                        Movement(targetPos, 0.15f);
+                        Movement(targetPos, 0.1f);
 
-                    if (++npc.ai[1] > 90)
+                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 90 : 120))
                     {
                         npc.netUpdate = true;
                         npc.ai[0] = attackQueue[(int)npc.localAI[2]];

@@ -445,7 +445,8 @@ namespace FargowiltasSouls.NPCs
                         {
                             masoBool[3] = true;
                             npc.GivenName = "Duke Fishron EX";
-                            npc.damage = (int)(npc.damage * 1.5);
+                            npc.damage = (int)(npc.damage * 3);// 1.5);
+                            npc.defense *= 30;
                             npc.buffImmune[mod.BuffType("FlamesoftheUniverse")] = true;
                             npc.buffImmune[mod.BuffType("LightningRod")] = true;
                         }
@@ -462,7 +463,7 @@ namespace FargowiltasSouls.NPCs
                         npc.buffImmune[mod.BuffType("ClippedWings")] = true;
                         if (BossIsAlive(ref fishBossEX, NPCID.DukeFishron))
                         {
-                            npc.lifeMax *= 2;
+                            npc.lifeMax *= 20;//2;
                             npc.buffImmune[mod.BuffType("FlamesoftheUniverse")] = true;
                             npc.buffImmune[mod.BuffType("LightningRod")] = true;
                             SpecialEnchantImmune = true;
@@ -3751,13 +3752,13 @@ namespace FargowiltasSouls.NPCs
                                     {
                                         if (Main.netMode != 1)
                                         {
-                                            /*Vector2 spawnPos = Vector2.UnitX * npc.direction;
+                                            Vector2 spawnPos = Vector2.UnitX * npc.direction; //GODLUL
                                             spawnPos = spawnPos.RotatedBy(npc.rotation);
                                             spawnPos *= npc.width + 20f;
                                             spawnPos /= 2f;
                                             spawnPos += npc.Center;
                                             Projectile.NewProjectile(spawnPos.X, spawnPos.Y, npc.direction * 2f, 8f, ProjectileID.SharknadoBolt, 0, 0f, Main.myPlayer);
-                                            Projectile.NewProjectile(spawnPos.X, spawnPos.Y, npc.direction * -2f, 8f, ProjectileID.SharknadoBolt, 0, 0f, Main.myPlayer);*/
+                                            Projectile.NewProjectile(spawnPos.X, spawnPos.Y, npc.direction * -2f, 8f, ProjectileID.SharknadoBolt, 0, 0f, Main.myPlayer);
 
                                             const int max = 24;
                                             float rotation = 2f * (float)Math.PI / max;
@@ -8090,21 +8091,13 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.Sharkron2:
                         target.AddBuff(mod.BuffType("Defenseless"), 600);
                         target.AddBuff(mod.BuffType("MutantNibble"), 300);
-                        //target.AddBuff(BuffID.Rabies, 3600);
-                        if (BossIsAlive(ref fishBossEX, NPCID.DukeFishron))
-                        {
-                            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 50;
-                            target.AddBuff(mod.BuffType("OceanicMaul"), 1800);
-                        }
+                        target.AddBuff(mod.BuffType("OceanicMaul"), 1800);
+                        target.GetModPlayer<FargoPlayer>().MaxLifeReduction += BossIsAlive(ref fishBossEX, NPCID.DukeFishron) ? 100 : 10;
                         break;
 
                     case NPCID.DetonatingBubble:
-                        if (BossIsAlive(ref fishBossEX, NPCID.DukeFishron))
-                        {
-                            target.AddBuff(mod.BuffType("Defenseless"), 600);
-                            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 50;
-                            target.AddBuff(mod.BuffType("OceanicMaul"), 1800);
-                        }
+                        target.AddBuff(mod.BuffType("OceanicMaul"), 1800);
+                        target.GetModPlayer<FargoPlayer>().MaxLifeReduction += BossIsAlive(ref fishBossEX, NPCID.DukeFishron) ? 100 : 10;
                         break;
 
                     case NPCID.Hellhound:

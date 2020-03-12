@@ -1631,11 +1631,8 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.Sharknado:
                         target.AddBuff(mod.BuffType("Defenseless"), 600);
-                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.fishBossEX, NPCID.DukeFishron))
-                        {
-                            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
-                            target.AddBuff(mod.BuffType("OceanicMaul"), 1800);
-                        }
+                        target.AddBuff(mod.BuffType("OceanicMaul"), 1800);
+                        target.GetModPlayer<FargoPlayer>().MaxLifeReduction += FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.fishBossEX, NPCID.DukeFishron) ? 100 : 10;
                         break;
 
                     case ProjectileID.FlamingScythe:
