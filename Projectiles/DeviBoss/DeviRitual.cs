@@ -44,16 +44,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
                 if (projectile.alpha < 0)
                     projectile.alpha = 0;
 
-                if (Main.npc[ai1].ai[0] < 9)
-                {
-                    projectile.velocity = Main.npc[ai1].Center - projectile.Center;
-                    if (Main.npc[ai1].ai[0] != 8) //snaps directly to abom when preparing for p2 attack
-                        projectile.velocity /= 40f;
-                }
-                else //remains still in higher AIs
-                {
-                    projectile.velocity = Vector2.Zero;
-                }
+                projectile.velocity = Vector2.Zero;
 
                 Player player = Main.player[Main.myPlayer];
                 if (player.active && !player.dead)
@@ -90,7 +81,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
                         for (int i = 0; i < 20; i++)
                         {
-                            int d = Dust.NewDust(player.position, player.width, player.height, 87, 0f, 0f, 0, default(Color), 2f);
+                            int d = Dust.NewDust(player.position, player.width, player.height, 86, 0f, 0f, 0, default(Color), 2f);
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity *= 5f;
                         }

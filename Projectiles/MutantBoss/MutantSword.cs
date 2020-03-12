@@ -33,7 +33,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         {
             //the important part
             int ai0 = (int)projectile.ai[0];
-            if (ai0 > -1 && ai0 < 200 && Main.npc[ai0].active && Main.npc[ai0].type == mod.NPCType("MutantBoss"))
+            if (ai0 > -1 && ai0 < 200 && Main.npc[ai0].active /*&& Main.npc[ai0].type == mod.NPCType("MutantBoss")*/)
             {
                 if (projectile.localAI[0] == 0)
                 {

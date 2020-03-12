@@ -613,6 +613,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     break;
 
                 case 6: //while dashing
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.velocity.X);
                     if (++npc.ai[1] > 30)
                     {
                         npc.netUpdate = true;
@@ -731,12 +732,17 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 npc.ai[1] = 0;
                                 npc.netUpdate = true;
                             }
+
+                            npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
                             break;
 
                         case 2: //swinging sword dash
                             if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
                                 Main.player[Main.myPlayer].AddBuff(mod.BuffType("MutantPresence"), 2);
+
                             npc.ai[3] += npc.ai[2];
+                            npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
+
                             if (++npc.ai[1] > 35)
                             {
                                 npc.ai[0] = 0;
@@ -922,6 +928,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     break;
 
                 case 15: //while dashing
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.velocity.X);
                     if (++npc.ai[1] > 30)
                     {
                         npc.netUpdate = true;

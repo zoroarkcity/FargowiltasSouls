@@ -381,6 +381,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 case 3: //while dashing (p2 makes side scythes)
                     if (Phase2Check())
                         break;
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.velocity.X);
                     if (++npc.ai[3] > 5)
                     {
                         npc.ai[3] = 0;
@@ -676,6 +677,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 case 11: //dash and make deathrays
                     npc.localAI[2] = 0;
                     npc.velocity.X = npc.ai[2] * 21f;
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.velocity.X);
                     MovementY(player.Center.Y - 250, 0.7f);
                     if (++npc.ai[3] > 5)
                     {
@@ -723,6 +725,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 case 13: //second deathray dash
                     npc.velocity.X = npc.ai[2] * -21f;
                     MovementY(player.Center.Y - 250, 0.7f);
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.velocity.X);
                     if (++npc.ai[3] > 5)
                     {
                         npc.ai[3] = 0;
@@ -795,6 +798,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 16: //while dashing
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.velocity.X);
                     if (++npc.ai[1] > 120)
                     {
                         npc.netUpdate = true;
@@ -856,7 +860,6 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
-                        npc.localAI[2] = 0;
                     }
                     else if (npc.ai[1] == 180 || (npc.dontTakeDamage && npc.ai[1] == 120))
                     {
@@ -867,7 +870,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 19: //prepare to dash
-                    npc.localAI[2] = 0;
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.localAI[2]);
                     if (++npc.ai[1] > 60)
                     {
                         npc.netUpdate = true;
@@ -881,6 +884,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 case 20: //while dashing down
                     npc.velocity.Y *= 0.97f;
                     npc.position += npc.velocity;
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.localAI[2]);
                     if (++npc.ai[1] > 90)
                     {
                         npc.netUpdate = true;
@@ -892,6 +896,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 case 21: //wait for scythes to clear
                     if (!AliveCheck(player))
                         break;
+                    npc.localAI[2] = 0;
                     targetPos = player.Center;
                     targetPos.X += 500 * (npc.Center.X < targetPos.X ? -1 : 1);
                     if (npc.Distance(targetPos) > 50)

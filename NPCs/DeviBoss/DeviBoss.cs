@@ -763,22 +763,202 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     break;
 
                 case 11: //noah/irisu geyser rain
-                    Main.NewText("reached end of ai for now");
-                    npc.netUpdate = true;
-                    npc.ai[0] = 0;
-                    goto case 0;
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+
+                    targetPos = player.Center;
+                    targetPos.Y -= 350;
+                    if (npc.Distance(targetPos) > 25)
+                        Movement(targetPos, 0.15f);
+
+                    if (++npc.ai[1] < 120)
+                    {
+                        if (++npc.ai[2] > 2)
+                        {
+                            npc.ai[2] = 0;
+                            if (Main.netMode != 1)
+                            {
+                                Main.NewText("spew hearts upwards, beginning noah/irisu rain");
+                            }
+                        }
+                    }
+                    else if (npc.ai[1] < 360)
+                    {
+                        if (++npc.ai[3] > 90)
+                        {
+                            npc.netUpdate = true;
+                            npc.ai[3] = 0;
+
+                            if (Main.netMode != 1)
+                            {
+                                Main.NewText("rain down geyser hearts");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        GetNextAttack();
+                    }
+                    break;
 
                 case 12: //lilith cross ray hearts
-                    goto case 11;
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+
+                    targetPos = player.Center + player.DirectionTo(npc.Center) * 400;
+                    if (npc.Distance(targetPos) > 50)
+                        Movement(targetPos, 0.3f);
+
+                    if (++npc.ai[2] > 60)
+                    {
+                        if (++npc.ai[3] > 3)
+                        {
+                            npc.ai[3] = 0;
+                            if (Main.netMode != 1)
+                            {
+                                Main.NewText("spray lilith cross ray heart near you");
+                            }
+                        }
+
+                        if (npc.ai[2] > 90)
+                        {
+                            npc.netUpdate = true;
+                            npc.ai[2] = 0;
+                        }
+                    }
+
+                    if (++npc.ai[1] > 360)
+                    {
+                        GetNextAttack();
+                    }
+                    break;
 
                 case 13: //that one boss that was a bunch of gems burst rain but with butterflies
-                    goto case 11;
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+
+                    npc.velocity *= 0.99f;
+
+                    if (npc.ai[2] == 0)
+                    {
+                        npc.ai[2] = 1;
+
+                        if (Main.netMode != 1)
+                        {
+                            Main.NewText("spawn the butterflies");
+                        }
+                    }
+
+                    if (++npc.ai[1] > 120)
+                    {
+                        GetNextAttack();
+                    }
+                    break;
 
                 case 14: //medusa ray
-                    goto case 11;
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+
+                    npc.velocity = Vector2.Zero;
+
+                    if (++npc.ai[2] > 60)
+                    {
+                        npc.ai[2] = 0;
+
+                        int threshold = npc.localAI[3] > 1 ? 7 : 6;
+
+                        //only make rings in p2 and before firing ray
+                        if (npc.localAI[3] > 1 && npc.ai[3] < threshold)
+                        {
+                            if (Main.netMode != 1)
+                            {
+                                Main.NewText("ring of hearts");
+                            }
+                        }
+
+                        if (++npc.ai[3] < threshold - 3) //medusa warning
+                        {
+                            Main.NewText("medusa warning");
+                        }
+                        else if (npc.ai[3] == threshold - 3) //petrify
+                        {
+                            Main.NewText("petrify");
+                        }
+                        else if (npc.ai[3] < threshold) //ray warning
+                        {
+                            Main.NewText("ray warning");
+                        }
+                        else if (npc.ai[3] == threshold) //fire deathray
+                        {
+                            if (Main.netMode != 1)
+                            {
+                                Main.NewText("fire deathray");
+                            }
+                        }
+                    }
+
+                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 540 : 600))
+                    {
+                        GetNextAttack();
+                    }
+                    break;
 
                 case 15: //sparkling love
-                    goto case 11;
+                    if (!AliveCheck(player) || Phase2Check())
+                        break;
+                    
+                    if (++npc.ai[1] < 120)
+                    {
+                        npc.velocity = Vector2.Zero;
+
+                        if (npc.ai[2] == 0) //spawn weapon
+                        {
+                            npc.netUpdate = true;
+
+                            double angle = npc.position.X < player.position.X ? -Math.PI / 4 : Math.PI / 4;
+                            npc.ai[2] = (float)angle * -4f / 30;
+
+                            const int spacing = 80;
+                            Vector2 offset = Vector2.UnitY.RotatedBy(angle) * -spacing;
+
+                            if (Main.netMode != 1)
+                            {
+                                for (int i = 0; i < 12; i++)
+                                    Projectile.NewProjectile(npc.Center + offset * i, Vector2.Zero, mod.ProjectileType("MutantSword"), npc.damage / 3, 0f, Main.myPlayer, npc.whoAmI, spacing * i);
+                                Projectile.NewProjectile(npc.Center + offset.RotatedBy(MathHelper.ToRadians(20)) * 7, Vector2.Zero, mod.ProjectileType("MutantSword"), npc.damage / 3, 0f, Main.myPlayer, npc.whoAmI, 60 * 4);
+                                Projectile.NewProjectile(npc.Center + offset.RotatedBy(MathHelper.ToRadians(-20)) * 7, Vector2.Zero, mod.ProjectileType("MutantSword"), npc.damage / 3, 0f, Main.myPlayer, npc.whoAmI, 60 * 4);
+                                Projectile.NewProjectile(npc.Center + offset.RotatedBy(MathHelper.ToRadians(40)) * 28, Vector2.Zero, mod.ProjectileType("MutantSword"), npc.damage / 3, 0f, Main.myPlayer, npc.whoAmI, 60 * 4);
+                                Projectile.NewProjectile(npc.Center + offset.RotatedBy(MathHelper.ToRadians(-40)) * 28, Vector2.Zero, mod.ProjectileType("MutantSword"), npc.damage / 3, 0f, Main.myPlayer, npc.whoAmI, 60 * 4);
+                            }
+                        }
+
+                        npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
+                    }
+                    else if (npc.ai[1] == 120) //start swinging
+                    {
+                        targetPos = player.Center;
+                        targetPos.X += 200 * (npc.Center.X < targetPos.X ? -1 : 1);
+                        npc.velocity = (targetPos - npc.Center) / 30;
+                        npc.netUpdate = true;
+
+                        npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
+                    }
+                    else if (npc.ai[1] < 150)
+                    {
+                        npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
+                    }
+                    else
+                    {
+                        targetPos = player.Center + player.DirectionTo(npc.Center) * 400;
+                        if (npc.Distance(targetPos) > 25)
+                            Movement(targetPos, 0.2f);
+
+                        if (npc.ai[1] > 240)
+                        {
+                            GetNextAttack();
+                        }
+                    }
+                    break;
 
                 case 16: //pause between attacks
                     if (!AliveCheck(player) || Phase2Check())
@@ -797,6 +977,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         {
                             npc.localAI[2] = 0;
                             RefreshAttackQueue();
+
+                            if (Main.netMode != 1) //spawn ritual for strong attacks
+                            {
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual"), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            }
                         }
                     }
                     break;
