@@ -12036,8 +12036,8 @@ namespace FargowiltasSouls.NPCs
             Player player = Main.player[Main.myPlayer];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (npc.friendly && BossIsAlive(ref deviBoss, mod.NPCType("DeviBoss")))
-                damage *= 40;
+            if (npc.friendly && BossIsAlive(ref deviBoss, mod.NPCType("DeviBoss")) && npc.Distance(Main.npc[deviBoss].Center) < 2000)
+                damage *= 8;
 
             if (FargoSoulsWorld.MasochistMode)
             {
