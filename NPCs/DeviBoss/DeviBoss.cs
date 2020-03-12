@@ -54,6 +54,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
             music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma");
             musicPriority = (MusicPriority)10;
+
+            npc.value = Item.buyPrice(0, 5);
         }
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -168,9 +170,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     {
                         if (Main.netMode != 1)
                         {
-                            for (int i = 0; i < 30; i++)
-                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * Math.PI) * Main.rand.NextFloat(30f), mod.ProjectileType("DeviDeathHeart"), 0, 0f, Main.myPlayer);
-
                             if (!NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Deviantt")))
                             {
                                 int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Deviantt"));
@@ -198,14 +197,14 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             Main.dust[d].velocity *= 4f;
                         }
                         npc.localAI[3] = 2; //this marks p2
-                        /*if (++npc.ai[2] > 15)
+                        if (++npc.ai[2] > 15)
                         {
                             int heal = (int)(npc.lifeMax / 2 / 60 * Main.rand.NextFloat(1.5f, 2f));
                             npc.life += heal;
                             if (npc.life > npc.lifeMax)
                                 npc.life = npc.lifeMax;
                             CombatText.NewText(npc.Hitbox, CombatText.HealLife, heal);
-                        }*/
+                        }
                         if (npc.ai[1] > 210)
                         {
                             RefreshAttackQueue();
@@ -330,7 +329,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     targetPos = player.Center;
                     targetPos.X += 400 * (npc.Center.X < targetPos.X ? -1 : 1);
                     if (npc.Distance(targetPos) > 25)
-                        Movement(targetPos, 0.15f);
+                        Movement(targetPos, 0.2f);
 
                     if (--npc.ai[1] < 0)
                     {
@@ -357,9 +356,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 case 3: //slow while shooting wyvern orb spirals
                     if (!AliveCheck(player) || Phase2Check())
                         break;
-
-                    //npc.velocity = npc.DirectionTo(player.Center) * 2f;
-
+                    
                     targetPos = player.Center + player.DirectionTo(npc.Center) * 375;
                     if (npc.Distance(targetPos) > 25)
                         Movement(targetPos, 0.15f);
@@ -381,9 +378,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 Vector2 vel = Vector2.Normalize(npc.velocity);
                                 for (int i = 0; i < max; i++)
                                 {
-                                    Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("LightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .012f * npc.direction);
+                                    Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("DeviLightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .012f * npc.direction);
                                     if (npc.localAI[3] > 1)
-                                        Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("LightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .012f * -npc.direction);
+                                        Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("DeviLightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .012f * -npc.direction);
                                 }
                             }
                         }
@@ -481,8 +478,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         npc.ai[2] = 0;
                         if (Main.netMode != 1)
                         {
-                            float rotation = npc.DirectionFrom(player.Center).ToRotation() + Main.rand.NextFloat(-(float)Math.PI / 2, (float)Math.PI / 2);
-                            Projectile.NewProjectile(npc.Center, new Vector2(3f, 0f).RotatedBy(rotation), mod.ProjectileType("FrostfireballHostile"), projectileDamage, 0f, Main.myPlayer, npc.target, 15f);
+                            Projectile.NewProjectile(npc.Center, new Vector2(3f, 0f).RotatedBy(Main.rand.NextDouble() * Math.PI * 2),
+                                mod.ProjectileType("FrostfireballHostile"), projectileDamage, 0f, Main.myPlayer, npc.target, 15f);
                         }
                     }
                     if (npc.localAI[3] > 1 && --npc.ai[3] < 0) //spawn sandnado
@@ -491,6 +488,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         npc.ai[3] = 110;
 
                         Vector2 target = player.Center;
+                        target.X += player.velocity.X * 120;
                         target.Y -= 150;
                         Projectile.NewProjectile(target, Vector2.Zero, ProjectileID.SandnadoHostileMark, 0, 0f, Main.myPlayer);
 
@@ -681,7 +679,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             if (Main.netMode != 1)
                             {
                                 float speed = npc.localAI[3] > 1 ? 16 : 8;
-                                int p = Projectile.NewProjectile(npc.Center, speed * npc.DirectionTo(player.Center), ProjectileID.InfernoHostileBolt, projectileDamage, 0f, Main.myPlayer, player.Center.X, player.Center.Y);
+                                Vector2 blastPos = npc.Center + 2 * npc.Distance(player.Center) * npc.DirectionTo(player.Center);
+                                int p = Projectile.NewProjectile(npc.Center, speed * npc.DirectionTo(player.Center), ProjectileID.InfernoHostileBolt, projectileDamage, 0f, Main.myPlayer, blastPos.X, blastPos.Y);
                                 if (p != Main.maxProjectiles)
                                     Main.projectile[p].timeLeft = 300;
                             }
@@ -700,7 +699,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 int max = npc.localAI[3] > 1 ? 50 : 25;
                                 for (int i = 0; i < max; i++)
                                 {
-                                    int p = Projectile.NewProjectile(npc.Center, 4f * Vector2.UnitX.RotatedBy(Main.rand.NextFloat((float)Math.PI * 2)), ProjectileID.LostSoulHostile, projectileDamage, 0f, Main.myPlayer);
+                                    int p = Projectile.NewProjectile(npc.Center, 4f * Vector2.UnitX.RotatedBy(Main.rand.NextFloat((float)Math.PI * 2)), mod.ProjectileType("DeviLostSoul"), projectileDamage, 0f, Main.myPlayer);
                                     if (p != Main.maxProjectiles)
                                         Main.projectile[p].timeLeft = 300;
                                 }
@@ -925,7 +924,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             if (npc.localAI[3] > 1)
                 return false;
 
-            if (npc.life < npc.lifeMax * 0.66)
+            if (npc.life < npc.lifeMax * 0.5)
             {
                 if (Main.netMode != 1)
                 {
@@ -933,6 +932,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     npc.ai[1] = 0;
                     npc.ai[2] = 0;
                     npc.ai[3] = 0;
+                    npc.localAI[0] = 0;
+                    npc.localAI[1] = 0;
                     npc.netUpdate = true;
                     for (int i = 0; i < 1000; i++)
                         if (Main.projectile[i].active && Main.projectile[i].hostile)
@@ -1056,9 +1057,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             if (Main.rand.Next(10) == 0)
                 Item.NewItem(npc.Hitbox, mod.ItemType("DeviTrophy"));
             
-            int maxEnergy = Main.rand.Next(10) + 10;
-            for (int i = 0; i < maxEnergy; i++)
-                npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("DeviatingEnergy"));
+            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("DeviatingEnergy"), Main.rand.Next(11) + 10);
         }
 
         public override void BossLoot(ref string name, ref int potionType)

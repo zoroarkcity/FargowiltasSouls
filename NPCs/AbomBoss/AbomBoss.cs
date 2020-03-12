@@ -138,7 +138,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             {
                 Aura(2000f, mod.BuffType("GodEater"), true, 86);
             }
-            else if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
+
+            if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
             {
                 Main.player[Main.myPlayer].AddBuff(mod.BuffType("AbomPresence"), 2);
             }
@@ -1120,22 +1121,15 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             FargoSoulsWorld.downedAbom = true;
             if (Main.netMode == 2)
                 NetMessage.SendData(7); //sync world
+
             //npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbomBag"));
-            int maxEX = Main.rand.Next(10) + 10;
-            for (int i = 0; i < maxEX; i++)
-                npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantScale"));
+
+            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantScale"), Main.rand.Next(11) + 10);
+            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"), Main.rand.Next(11) + 10);
+            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CyclonicFin"));
+
             if (Main.rand.Next(10) == 0)
                 Item.NewItem(npc.Hitbox, mod.ItemType("AbomTrophy"));
-
-            for (int i = 0; i < 1000; i++)
-                if (Main.projectile[i].active && Main.projectile[i].hostile)
-                    Main.projectile[i].Kill();
-            
-            int maxEnergy = Main.rand.Next(10) + 10;
-            for (int i = 0; i < maxEnergy; i++)
-                npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"));
-
-            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CyclonicFin"));
         }
 
         public override void BossLoot(ref string name, ref int potionType)

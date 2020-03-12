@@ -1810,6 +1810,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             FargoSoulsWorld.skipMutantP1 = 0;
             if (Main.netMode == 2)
                 NetMessage.SendData(7); //sync world
+
             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantBag"));
             if (Main.rand.Next(10) == 0)
                 Item.NewItem(npc.Hitbox, mod.ItemType("MutantTrophy"));

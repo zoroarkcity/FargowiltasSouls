@@ -98,7 +98,6 @@ updated sprites
 	-abominable scale
 
 increased mutant boss hitbox size
-nerfed landslide EX damage
 changed colors (i.e. minion shade, aura trail) of abom/mutant boss
 tweaked iframes on mutant revive, should always be as long as its deathray now
 made mutant armor set ring deathray idstatic iframes longer, slight damage buff to compensate
@@ -128,3 +127,4 @@ all maso acc combos require deviating energy
 
 phoenix blaster -25% damage
 removed mutant DR and reduced life to 7M
+tweaked abom to always inflict abom presence
