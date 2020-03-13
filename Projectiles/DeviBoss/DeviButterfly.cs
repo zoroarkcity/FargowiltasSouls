@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             target.X = npc.Center.X;
             target.Y = Main.player[npc.target].Center.Y;
 
-            target.X += 1100 * (float)Math.Sin(2 * Math.PI / 780 * projectile.ai[1]++);
+            target.X += 1100 * (float)Math.Sin(2 * Math.PI / 600 * projectile.ai[1]++);
             target.Y -= 400;
 
             Vector2 distance = target - projectile.Center;

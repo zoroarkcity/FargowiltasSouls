@@ -32,7 +32,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             npc.height = 120;
             npc.damage = 64;
             npc.defense = 10;
-            npc.lifeMax = 12000;
+            npc.lifeMax = 14000;
             npc.HitSound = SoundID.NPCHit9;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -52,7 +52,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             //npc.buffImmune[mod.BuffType("OceanicMaul")] = true;
             npc.timeLeft = NPC.activeTime * 30;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma");
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/LexusCyanixs");
             musicPriority = (MusicPriority)10;
 
             npc.value = Item.buyPrice(0, 5);
@@ -149,7 +149,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 Main.player[Main.myPlayer].AddBuff(mod.BuffType("DeviPresence"), 2);
             }
 
-            int projectileDamage = npc.damage / (npc.localAI[3] > 1 ? 5 : 6);
+            int projectileDamage = npc.damage / (npc.localAI[3] > 1 ? 4 : 5);
 
             Player player = Main.player[npc.target];
             npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
@@ -456,7 +456,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         for (int j = 0; j < 7; j++)
                         {
-                            int delay = npc.localAI[3] > 1 ? 30 : 45;
+                            int delay = npc.localAI[3] > 1 ? 45 : 60;
                             Vector2 speed = (target - npc.Center) / delay;
 
                             for (int i = 0; i < 20; i++) //dust spray
@@ -1166,7 +1166,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         npc.ai[1] = 0;
                         if (++npc.localAI[2] >= attackQueue.Length)
                         {
-                            npc.localAI[2] = 0;
+                            npc.localAI[2] = npc.localAI[3] > 1 ? 1 : 0;
                             RefreshAttackQueue();
 
                             if (Main.netMode != 1) //spawn ritual for strong attacks

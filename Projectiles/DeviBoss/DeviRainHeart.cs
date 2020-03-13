@@ -51,7 +51,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
                 projectile.tileCollide = true;
                 projectile.ignoreWater = false;
 
-                if (++projectile.ai[0] > 31 && projectile.ai[0] < 101)
+                if (++projectile.ai[0] < 71)
                 {
                     projectile.velocity *= 1.06f;
                 }

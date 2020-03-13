@@ -1468,8 +1468,11 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.RuneBlast:
                         target.AddBuff(mod.BuffType("FlamesoftheUniverse"), 120);
-                        target.AddBuff(mod.BuffType("Hexed"), 240);
-                        target.AddBuff(BuffID.Suffocation, 240);
+                        if (!FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                        {
+                            target.AddBuff(mod.BuffType("Hexed"), 240);
+                            target.AddBuff(BuffID.Suffocation, 240);
+                        }
                         break;
 
                     case ProjectileID.ThornBall:
@@ -1537,20 +1540,26 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.LostSoulHostile:
-                        target.AddBuff(mod.BuffType("Hexed"), 240);
+                        if (!FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                            target.AddBuff(mod.BuffType("Hexed"), 240);
+
                         target.AddBuff(mod.BuffType("ReverseManaFlow"), 600);
                         break;
 
                     case ProjectileID.InfernoHostileBlast:
                     case ProjectileID.InfernoHostileBolt:
-                        if (Main.rand.Next(5) == 0)
+                        if (!FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")) && Main.rand.Next(5) == 0)
                             target.AddBuff(mod.BuffType("Fused"), 1800);
+
                         target.AddBuff(mod.BuffType("Jammed"), 600);
                         break;
 
                     case ProjectileID.ShadowBeamHostile:
-                        target.AddBuff(mod.BuffType("Rotting"), 1800);
-                        target.AddBuff(mod.BuffType("Shadowflame"), 300);
+                        if (!FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                        {
+                            target.AddBuff(mod.BuffType("Rotting"), 1800);
+                            target.AddBuff(mod.BuffType("Shadowflame"), 300);
+                        }
                         target.AddBuff(mod.BuffType("Atrophied"), 600);
                         break;
 
