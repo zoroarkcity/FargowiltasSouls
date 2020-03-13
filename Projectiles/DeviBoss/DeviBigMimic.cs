@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.DeviBoss
 {
@@ -22,6 +23,17 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             base.SetDefaults();
             projectile.width = 48;
             projectile.height = 42;
+        }
+
+        public override void AI()
+        {
+            base.AI();
+
+            if (projectile.ai[0] >= 0 && projectile.ai[0] < 255)
+            {
+                Player player = Main.player[(int)projectile.ai[0]];
+                projectile.tileCollide = projectile.position.Y + projectile.height >= player.position.Y + player.height - 16;
+            }
         }
 
         public override void Kill(int timeLeft)

@@ -112,7 +112,6 @@ chaos state:
 	-removed effect from abominable/mutant presence
 	-net effect is you can use rod on abom/mutant
 
-reduced crystal bullet shatter cap to 20 ticks (this is a buff)
 holy arrows and stars share the crystal bullet cooldown too (this is a fat nerf)
 buffed daedalus stormbow back to 50% from 33% since holy arrow is dead
 added sprite:
@@ -132,3 +131,7 @@ abom/mutant don't(?) turn to face you during attacks like dashing/swords if you 
 
 added yharim boss
 added yrimir boss
+
+rebalanced mutant tier again
+reduced crystal bullet shatter cap to 15 ticks (this is a buff)
+bone zone is now subject to the shatter cap

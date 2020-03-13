@@ -1546,8 +1546,8 @@ namespace FargowiltasSouls
 
             if (DevianttPresence)
             {
-                player.statDefense /= 3;
-                player.endurance /= 3;
+                player.statDefense /= 2;
+                player.endurance /= 2;
             }
         }
 

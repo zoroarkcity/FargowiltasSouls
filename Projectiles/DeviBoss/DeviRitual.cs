@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Abominationn Seal");
+            DisplayName.SetDefault("Deviantt Seal");
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
@@ -48,16 +48,13 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
                 if (player.active && !player.dead)
                 {
                     float distance = player.Distance(projectile.Center);
-                    /*if (Math.Abs(distance - threshold) < 46f && player.hurtCooldowns[0] == 0 && projectile.alpha == 0 && player.whoAmI == Main.npc[ai1].target)
+                    if (Math.Abs(distance - threshold) < 46f && player.hurtCooldowns[0] == 0 && projectile.alpha == 0 && player.whoAmI == Main.npc[ai1].target)
                     {
                         int hitDirection = projectile.Center.X > player.Center.X ? 1 : -1;
                         player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, projectile.whoAmI),
                             projectile.damage, hitDirection, false, false, false, 0);
-                        player.AddBuff(mod.BuffType("AbomFang"), 300);
-                        player.AddBuff(mod.BuffType("Unstable"), 240);
-                        player.AddBuff(mod.BuffType("Berserked"), 120);
-                        player.AddBuff(BuffID.Bleeding, 600);
-                    }*/
+                        player.AddBuff(mod.BuffType("Lovestruck"), 240);
+                    }
                     if (distance > threshold && distance < threshold * 5f)
                     {
                         if (distance > threshold * 2f)

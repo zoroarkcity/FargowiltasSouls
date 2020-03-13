@@ -49,7 +49,7 @@ namespace FargowiltasSouls.Projectiles
         public int TimeFrozen = 0;
         public bool TimeFreezeImmune;
         public bool TimeFreezeCheck;
-
+        public bool HasKillCooldown;
         
 
         public bool masobool;
@@ -62,6 +62,12 @@ namespace FargowiltasSouls.Projectiles
             {
                 switch (projectile.type)
                 {
+                    case ProjectileID.CrystalBullet:
+                    case ProjectileID.HolyArrow:
+                    case ProjectileID.HallowStar:
+                        HasKillCooldown = true;
+                        break;
+
                     case ProjectileID.StardustCellMinionShot:
                         projectile.minion = true; //allows it to hurt maso ML
                         break;
@@ -1711,19 +1717,16 @@ namespace FargowiltasSouls.Projectiles
 
         public override bool PreKill(Projectile projectile, int timeLeft)
         {
-            if (FargoSoulsWorld.MasochistMode && projectile.owner == Main.myPlayer &&
-                (projectile.type == ProjectileID.CrystalBullet
-                || projectile.type == ProjectileID.HolyArrow
-                || projectile.type == ProjectileID.HallowStar))
+            if (FargoSoulsWorld.MasochistMode && projectile.owner == Main.myPlayer && HasKillCooldown)
             {
                 if (Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer <= 0)
                 {
-                    Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer = 20;
+                    Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer = 15;
                     return true;
                 }
                 else
                 {
-                    if (projectile.type == ProjectileID.CrystalBullet)
+                    /*if (projectile.type == ProjectileID.CrystalBullet)
                     {
                         Main.PlaySound(0, (int)projectile.position.X, (int)projectile.position.Y, 1, 1f, 0.0f);
                         for (int index1 = 0; index1 < 5; ++index1) //vanilla dusts
@@ -1750,7 +1753,7 @@ namespace FargowiltasSouls.Projectiles
                             for (int index = 0; index < 3; ++index)
                                 Gore.NewGore(projectile.position, new Vector2(projectile.velocity.X * 0.05f, projectile.velocity.Y * 0.05f), Main.rand.Next(16, 18), 1f);
                         }
-                    }
+                    }*/
                     return false;
                 }
             }
