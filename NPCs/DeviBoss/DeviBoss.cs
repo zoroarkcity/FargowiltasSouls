@@ -1015,7 +1015,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 const int max = 12;
                                 for (int i = 0; i < max; i++)
                                 {
-                                    Projectile.NewProjectile(npc.Center, 8f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i),
+                                    Projectile.NewProjectile(npc.Center, 6f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i),
                                         mod.ProjectileType("DeviHeart"), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
