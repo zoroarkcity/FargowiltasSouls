@@ -38,6 +38,13 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
         public override void Kill(int timeLeft)
         {
+            if (Main.netMode != 1)
+            {
+                for (int i = 0; i < 5; i++)
+                    Projectile.NewProjectile(projectile.position.X + Main.rand.Next(projectile.width), projectile.position.Y + Main.rand.Next(projectile.height),
+                        Main.rand.Next(-30, 31) * .1f, Main.rand.Next(-40, -15) * .1f, mod.ProjectileType("FakeHeart"), 20, 0f, Main.myPlayer);
+            }
+
             projectile.position = projectile.Center;
             projectile.width = projectile.height = 200;
             projectile.Center = projectile.position;

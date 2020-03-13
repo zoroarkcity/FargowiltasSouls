@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.Masomode
 {
@@ -89,6 +90,12 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 projectile.timeLeft = 0;
             }
             return false;
+        }
+
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                target.AddBuff(mod.BuffType("Lovestruck"), 240);
         }
 
         public override Color? GetAlpha(Color lightColor)

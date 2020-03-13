@@ -890,7 +890,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             npc.ai[2] = 0;
                             if (Main.netMode != 1)
                             {
-                                Main.NewText("spew hearts upwards, beginning noah/irisu rain");
+                                Projectile.NewProjectile(npc.Center, -24 * Vector2.UnitY.RotatedBy((Main.rand.NextDouble() - 0.5) * Math.PI),
+                                    mod.ProjectileType("DeviVisualHeart"), 0, 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -903,7 +904,15 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                             if (Main.netMode != 1)
                             {
-                                Main.NewText("rain down hearts");
+                                Vector2 speed = 24 * Vector2.UnitY.RotatedBy((Main.rand.NextDouble() - 0.25) * Math.PI);
+                                int type = npc.localAI[3] > 1 ? mod.ProjectileType("DeviRainHeart2") : mod.ProjectileType("DeviRainHeart");
+                                for (int i = -8; i <= 8; i++)
+                                {
+                                    Vector2 spawnPos = npc.Center;
+                                    spawnPos.X += 150 * i;
+                                    spawnPos.Y -= 600;
+                                    Projectile.NewProjectile(spawnPos, speed, type, npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                }
                             }
                         }
                     }
@@ -928,11 +937,19 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             npc.ai[3] = 0;
                             if (Main.netMode != 1)
                             {
-                                Main.NewText("spray lilith cross ray heart near you");
+                                Vector2 target = player.Center - npc.Center;
+                                target.X += Main.rand.Next(-200, 201);
+                                target.Y += Main.rand.Next(-200, 201);
+
+                                Vector2 speed = 2 * target / 90;
+                                float acceleration = -speed.Length() / 90;
+
+                                Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("DeviEnergyHeart"),
+                                    npc.damage / 4, 0f, Main.myPlayer, 0f, acceleration);
                             }
                         }
 
-                        if (npc.ai[2] > 90)
+                        if (npc.ai[2] > (npc.localAI[3] > 1 ? 120 : 90))
                         {
                             npc.netUpdate = true;
                             npc.ai[2] = 0;
@@ -949,19 +966,26 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (!AliveCheck(player) || Phase2Check())
                         break;
 
-                    npc.velocity *= 0.95f;
+                    targetPos = player.Center + player.DirectionTo(npc.Center) * 500;
+                    if (npc.Distance(targetPos) > 50)
+                        Movement(targetPos, 0.3f);
 
                     if (npc.ai[2] == 0)
                     {
                         npc.ai[2] = 1;
-
+                        
                         if (Main.netMode != 1)
                         {
-                            Main.NewText("spawn the butterflies");
+                            for (int i = -3; i <= 3; i++) //make butterflies
+                            {
+                                Vector2 speed = new Vector2(Main.rand.NextFloat(40f), Main.rand.NextFloat(-20f, 20f));
+                                Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("DeviButterfly"),
+                                   npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 360 / 3 * i);
+                            }
                         }
                     }
 
-                    if (++npc.ai[1] > 120)
+                    if (++npc.ai[1] > 480)
                     {
                         GetNextAttack();
                     }
@@ -988,8 +1012,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         {
                             if (Main.netMode != 1)
                             {
-                                SpawnSphereRing(6, 6f, projectileDamage, 0.5f);
-                                SpawnSphereRing(6, 6f, projectileDamage, -.5f);
+                                SpawnSphereRing(6, 6f, npc.damage / 4, 0.5f);
+                                SpawnSphereRing(6, 6f, npc.damage / 4, -.5f);
                             }
                         }
 
