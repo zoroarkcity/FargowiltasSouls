@@ -28,7 +28,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             projectile.penetrate = -1;
             projectile.tileCollide = false;
 
-            projectile.scale = 3f;
+            projectile.scale = 2f;
             projectile.hide = true;
         }
 
@@ -49,13 +49,16 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
             NPC npc = Main.npc[(int)projectile.ai[0]];
 
-            Vector2 target = npc.Center;
-            target.X += 1100 * (float)Math.Sin(2 * Math.PI / 720 * projectile.ai[1]++);
-            target.Y -= 900;
+            Vector2 target;
+            target.X = npc.Center.X;
+            target.Y = Main.player[npc.target].Center.Y;
+
+            target.X += 1100 * (float)Math.Sin(2 * Math.PI / 780 * projectile.ai[1]++);
+            target.Y -= 400;
 
             Vector2 distance = target - projectile.Center;
             float length = distance.Length();
-            if (length > 100f)
+            if (length > 25f)
             {
                 distance /= 8f;
                 projectile.velocity = (projectile.velocity * 23f + distance) / 24f;
@@ -65,35 +68,21 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
                 if (projectile.velocity.Length() < 12f)
                     projectile.velocity *= 1.05f;
             }
-
-            /*projectile.localAI[0]++;
-            if (projectile.localAI[0] > 45)
-            {
-                projectile.localAI[0] = 0f;
-                if (projectile.owner == Main.myPlayer)
-                {
-                    Vector2 vel = distance;
-                    vel.Normalize();
-                    vel *= 9f;
-                    Projectile.NewProjectile(projectile.Center, vel, mod.ProjectileType("FrostWave"),
-                        projectile.damage, projectile.knockBack, projectile.owner);
-                }
-            }*/
             
-            if (++projectile.localAI[0] > 60) //spray shards
+            if (++projectile.localAI[0] > 90) //spray shards
             {
-                if (projectile.localAI[0] > (npc.localAI[3] > 1 ? 120 : 90))
+                if (projectile.localAI[0] > (npc.localAI[3] > 1 ? 120 : 105))
                 {
-                    projectile.localAI[0] = 0;
+                    projectile.localAI[0] = 30;
                 }
 
-                if (++projectile.localAI[1] > 5)
+                if (++projectile.localAI[1] > 3)
                 {
                     projectile.localAI[1] = 0;
 
                     if (Main.netMode != 1)
                     {
-                        Projectile.NewProjectile(projectile.Center, Vector2.UnitY * 5, mod.ProjectileType("DeviLightBall2"),
+                        Projectile.NewProjectile(projectile.Center, Vector2.UnitY * 3, mod.ProjectileType("DeviLightBall2"),
                             projectile.damage, projectile.knockBack, projectile.owner);
                     }
                 }
@@ -121,6 +110,8 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
                     }
                 }*/
             }
+
+            projectile.direction = projectile.spriteDirection = Math.Sign(projectile.velocity.X);
 
             if (projectile.frame < drawBase)
                 projectile.frame = drawBase;
@@ -156,7 +147,8 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
-            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+            SpriteEffects effects = projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, effects, 0f);
             return false;
         }
     }

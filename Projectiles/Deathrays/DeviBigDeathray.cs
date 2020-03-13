@@ -44,7 +44,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             {
                 Main.PlaySound(29, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
             }
-            float num801 = 15f;
+            float num801 = 17f;
             projectile.localAI[0] += 1f;
             if (projectile.localAI[0] >= maxTime)
             {

@@ -10,9 +10,9 @@ namespace FargowiltasSouls.Projectiles.Deathrays
 {
     public class DeviDeathray : BaseDeathray
     {
-        public DeviDeathray() : base(90, "DeviDeathray") { }
+        public DeviDeathray() : base(60, "DeviDeathray") { }
 
-        private const float maxTime = 90;
+        private const float maxTime = 60;
 
         public override void SetStaticDefaults()
 		{
@@ -102,12 +102,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
             //Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
 
-            for (int i = 0; i < 5; i++)
-            {
-                int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 86, projectile.velocity.X * 5, projectile.velocity.Y * 5, 0, default(Color), 2.5f);
-                Main.dust[d].noGravity = true;
-                Main.dust[d].velocity *= 12f;
-            }
+            projectile.position -= projectile.velocity;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

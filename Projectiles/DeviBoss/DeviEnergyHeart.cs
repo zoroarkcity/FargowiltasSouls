@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             projectile.rotation = projectile.ai[0];
 
             float speed = projectile.velocity.Length();
-            speed -= projectile.ai[1];
+            speed += projectile.ai[1];
             projectile.velocity = Vector2.Normalize(projectile.velocity) * speed;
         }
 
@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
         {
             for (int i = 0; i < 10; i++)
             {
-                int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 86, 0f, 0f, 0, default(Color), 2.5f);
+                int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 86, 0f, 0f, 0, default(Color), 2f);
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity *= 8f;
             }

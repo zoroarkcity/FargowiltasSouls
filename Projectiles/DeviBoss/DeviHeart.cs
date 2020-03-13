@@ -8,7 +8,7 @@ using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.DeviBoss
 {
-    public class DeviVisualHeart : ModProjectile
+    public class DeviHeart : ModProjectile
     {
         public override string Texture => "FargowiltasSouls/Projectiles/Masomode/FakeHeart";
 
@@ -26,12 +26,8 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             projectile.hostile = true;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
-            projectile.timeLeft = 180;
-        }
-
-        public override bool CanDamage()
-        {
-            return false;
+            projectile.timeLeft = 600;
+            cooldownSlot = 1;
         }
 
         public override void AI()
@@ -42,6 +38,18 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
         public override Color? GetAlpha(Color lightColor)
         {
             return Color.White * projectile.Opacity;
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            Main.PlaySound(2, projectile.Center, 14);
+
+            for (int i = 0; i < 10; i++)
+            {
+                int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 86, 0f, 0f, 0, default(Color), 2.5f);
+                Main.dust[d].noGravity = true;
+                Main.dust[d].velocity *= 8f;
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -57,7 +65,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
             {
-                Color color27 = color26 * 0.5f;
+                Color color27 = color26;
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 Vector2 value4 = projectile.oldPos[i];
                 float num165 = projectile.oldRot[i];
