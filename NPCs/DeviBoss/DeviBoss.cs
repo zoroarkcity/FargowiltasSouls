@@ -1012,7 +1012,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         {
                             if (Main.netMode != 1)
                             {
-                                const int max = 16;
+                                const int max = 12;
                                 for (int i = 0; i < max; i++)
                                 {
                                     Projectile.NewProjectile(npc.Center, 8f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i),
