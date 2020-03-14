@@ -934,7 +934,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             }
                         }
                     }
-                    else if (npc.ai[1] > 480)
+                    else if (npc.ai[1] > 510)
                     {
                         GetNextAttack();
                     }
@@ -967,14 +967,14 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             }
                         }
 
-                        if (npc.ai[2] > (npc.localAI[3] > 1 ? 130 : 130))
+                        if (npc.ai[2] > 130)
                         {
                             npc.netUpdate = true;
                             npc.ai[2] = 0;
                         }
                     }
 
-                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 360 : 480))
+                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 450 : 480))
                     {
                         GetNextAttack();
                     }
@@ -1405,6 +1405,20 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity *= 3f;
             }
+        }
+
+        public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (item.melee)
+                damage = (int)(damage * 1.3);
+        }
+
+        public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (projectile.melee || projectile.minion)
+                damage = (int)(damage * 1.3);
+            if (projectile.type == ProjectileID.Bee || projectile.type == ProjectileID.GiantBee)
+                damage = (int)(damage * 0.75);
         }
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)

@@ -135,3 +135,11 @@ added yrimir boss
 rebalanced mutant tier again
 reduced crystal bullet shatter cap to 15 ticks (this is a buff)
 bone zone is now subject to the shatter cap
+
+reduced devi debuffs (no more suffocation on rune blast, only class/vanilla debuffs on mage skeleton attacks)
+devi takes x1.3 damage from melee and minion and x0.75 from bee
+devi waits slightly longer after heart rain so you dont get memed by shadowbeam
+nerfed bone zone damage/speed
+buffed blender slightly
+fixed yharim name
+fixed yrimir name
