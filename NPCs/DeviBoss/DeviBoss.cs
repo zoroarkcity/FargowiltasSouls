@@ -976,11 +976,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         
                         if (Main.netMode != 1)
                         {
+                            float offset = Main.rand.NextFloat(360);
                             for (int i = -3; i <= 3; i++) //make butterflies
                             {
                                 Vector2 speed = new Vector2(Main.rand.NextFloat(40f), Main.rand.NextFloat(-20f, 20f));
                                 Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("DeviButterfly"),
-                                   npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 360 / 3 * i);
+                                   npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, offset / 3 * i);
                             }
                         }
                     }
