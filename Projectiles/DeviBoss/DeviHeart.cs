@@ -35,6 +35,11 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             projectile.rotation = projectile.velocity.ToRotation() - (float)Math.PI / 2;
         }
 
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            target.AddBuff(mod.BuffType("Lovestruck"), 240);
+        }
+
         public override Color? GetAlpha(Color lightColor)
         {
             return Color.White * projectile.Opacity;

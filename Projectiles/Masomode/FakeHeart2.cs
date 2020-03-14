@@ -88,14 +88,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 target.statDefense = defense;
                 target.endurance = endurance;
                 projectile.timeLeft = 0;
+
+                if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                    target.AddBuff(mod.BuffType("Lovestruck"), 240);
             }
             return false;
-        }
-
-        public override void OnHitPlayer(Player target, int damage, bool crit)
-        {
-            if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
-                target.AddBuff(mod.BuffType("Lovestruck"), 240);
         }
 
         public override Color? GetAlpha(Color lightColor)

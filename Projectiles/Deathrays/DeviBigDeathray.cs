@@ -116,7 +116,13 @@ namespace FargowiltasSouls.Projectiles.Deathrays
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("MarkedforDeath"), 120);
+            target.AddBuff(BuffID.Weak, 60); //lots of defense down
+            target.AddBuff(BuffID.Ichor, 60);
+            target.AddBuff(BuffID.BrokenArmor, 60);
+            target.AddBuff(BuffID.WitheredArmor, 120);
+            target.AddBuff(mod.BuffType("Rotting"), 120);
+            target.AddBuff(mod.BuffType("CurseoftheMoon"), 120);
+            target.AddBuff(mod.BuffType("Defenseless"), 120);
             target.AddBuff(mod.BuffType("Lovestruck"), 240);
         }
     }
