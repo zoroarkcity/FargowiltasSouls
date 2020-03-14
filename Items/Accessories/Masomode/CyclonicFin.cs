@@ -17,8 +17,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 Grants immunity to Curse of the Moon and Oceanic Maul
 Your attacks inflict Curse of the Moon and Oceanic Maul
 Spectral Fishron periodically manifests to support your critical hits
-Spectral Fishron also inflicts Mutant Nibble, disabling enemy healing
-Upgrades Cute Fishron to Cute Fishron EX");
+Spectral Fishron also inflicts Mutant Nibble, disabling enemy healing");
+//Upgrades Cute Fishron to Cute Fishron EX");
             DisplayName.AddTranslation(GameCulture.Chinese, "飓风鳍");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'风在咆哮'
 免疫月之诅咒和海洋重击
@@ -55,7 +55,7 @@ Upgrades Cute Fishron to Cute Fishron EX");
             player.GetModPlayer<FargoPlayer>().CyclonicFin = true;
             if (player.GetModPlayer<FargoPlayer>().CyclonicFinCD > 0)
                 player.GetModPlayer<FargoPlayer>().CyclonicFinCD--;
-            if (player.mount.Active && player.mount.Type == MountID.CuteFishron)
+            /*if (player.mount.Active && player.mount.Type == MountID.CuteFishron)
             {
                 if (player.ownedProjectileCounts[mod.ProjectileType("CuteFishronRitual")] < 1 && player.whoAmI == Main.myPlayer)
                     Projectile.NewProjectile(player.MountedCenter, Vector2.Zero, mod.ProjectileType("CuteFishronRitual"), 0, 0f, Main.myPlayer);
@@ -115,7 +115,7 @@ Upgrades Cute Fishron to Cute Fishron EX");
                     if (player.velocity.Y > 16f)
                         player.velocity.Y = 16f;
                 }
-            }
+            }*/
         }
     }
 }

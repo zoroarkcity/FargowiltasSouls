@@ -21,7 +21,7 @@ Increases max life by 100%, damage by 50%, and damage reduction by 10%
 Increases life regen drastically, increases max number of minions and sentries by 10
 Grants gravity control, fastfall, and immunity to knockback, almost all Masochist Mode debuffs, and more
 Grants autofire to all weapons, modifier protection, and you automatically use mana potions when needed
-Empowers Cute Fishron and makes armed and magic skeletons less hostile outside the Dungeon
+Makes armed and magic skeletons less hostile outside the Dungeon
 Your attacks create additional attacks, hearts, and inflict a cocktail of Masochist Mode debuffs
 Press the Fireball Dash key to perform a short invincible dash
 Certain enemies will drop potions when defeated
@@ -273,7 +273,7 @@ Summons the aid of all Masochist Mode bosses to your side");
             fargoPlayer.CyclonicFin = true;
             if (fargoPlayer.CyclonicFinCD > 0)
                 fargoPlayer.CyclonicFinCD -= 2;
-            if (player.mount.Active && player.mount.Type == MountID.CuteFishron)
+            /*if (player.mount.Active && player.mount.Type == MountID.CuteFishron)
             {
                 if (player.ownedProjectileCounts[mod.ProjectileType("CuteFishronRitual")] < 1 && player.whoAmI == Main.myPlayer)
                     Projectile.NewProjectile(player.MountedCenter, Vector2.Zero, mod.ProjectileType("CuteFishronRitual"), 0, 0f, Main.myPlayer);
@@ -333,7 +333,7 @@ Summons the aid of all Masochist Mode bosses to your side");
                     if (player.velocity.Y > 16f)
                         player.velocity.Y = 16f;
                 }
-            }
+            }*/
 
             //sadism
             player.buffImmune[mod.BuffType("Antisocial")] = true;
