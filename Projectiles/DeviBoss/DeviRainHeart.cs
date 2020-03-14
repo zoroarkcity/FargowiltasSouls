@@ -51,7 +51,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
                 projectile.tileCollide = true;
                 projectile.ignoreWater = false;
 
-                if (++projectile.ai[0] < 71)
+                if (++projectile.ai[0] < 61)
                 {
                     projectile.velocity *= 1.06f;
                 }
@@ -63,6 +63,18 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
         public override Color? GetAlpha(Color lightColor)
         {
             return Color.White * projectile.Opacity;
+        }
+
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        {
+            int ai1 = (int)projectile.ai[1];
+            if (projectile.ai[1] >= 0f && projectile.ai[1] < 200f &&
+                Main.npc[ai1].active && Main.npc[ai1].type == mod.NPCType("DeviBoss"))
+            {
+                fallThrough = projectile.Center.Y < Main.player[Main.npc[ai1].target].Center.Y + 160;
+            }
+
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
         }
 
         public override void Kill(int timeLeft)

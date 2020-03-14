@@ -100,7 +100,13 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 {
                     npc.localAI[3] = 1;
                     Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+
                     RefreshAttackQueue();
+                    attackQueue[0] = 1; //always start with marx hammer, make sure it's never done consecutive
+                    for (int i = 1; i < attackQueue.Length; i++)
+                        if (attackQueue[i] == 1)
+                            attackQueue[i] = i + 1;
+
                     if (Main.netMode != 1)
                     {
                         int number = 0;
@@ -252,9 +258,16 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (!AliveCheck(player) || Phase2Check())
                         break;
 
-                    npc.velocity = Vector2.Zero;
-                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 10 : 20) && npc.ai[2] < (npc.localAI[3] > 1 ? 5 : 3))
+                    if (npc.localAI[1] == 0) //pick random number of teleports to do
                     {
+                        npc.localAI[1] = npc.localAI[3] > 1 ? Main.rand.Next(3, 10) : Main.rand.Next(3, 6);
+                        npc.netUpdate = true;
+                    }
+
+                    npc.velocity = Vector2.Zero;
+                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 10 : 20) && npc.ai[2] < npc.localAI[1])
+                    {
+                        npc.localAI[1] = 0;
                         npc.ai[1] = 0;
                         npc.ai[2]++;
 
@@ -276,6 +289,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                     if (npc.ai[1] == 60) //finished all the prior teleports, now attack
                     {
+                        npc.netUpdate = true;
+
                         for (int i = 0; i < 36; i++) //dust ring
                         {
                             Vector2 vector6 = Vector2.UnitY * 9f;
@@ -315,6 +330,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         if (npc.localAI[3] > 1 && ++npc.localAI[0] < 3)
                         {
                             npc.ai[2] = 0; //reset tp counter and attack again
+                            npc.localAI[1] = 0;
                         }
                         else
                         {
@@ -374,10 +390,10 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.15f);
 
-                    if (++npc.ai[1] > 120)
+                    if (--npc.ai[1] < 0)
                     {
                         npc.netUpdate = true;
-                        npc.ai[1] = 0;
+                        npc.ai[1] = 120;
 
                         if (++npc.ai[2] > 3)
                         {
@@ -711,7 +727,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     }
                     else if (npc.ai[1] < 120) //spam shadowbeams after delay
                     {
-                        if (++npc.ai[2] > (npc.localAI[3] > 1 ? 60 : 90))
+                        if (++npc.ai[2] > (npc.localAI[3] > 1 ? 75 : 90))
                         {
                             if (++npc.ai[3] == 1) //store rotation briefly before shooting
                             {
@@ -758,7 +774,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                             if (Main.netMode != 1)
                             {
-                                int max = npc.localAI[3] > 1 ? 50 : 25;
+                                int max = npc.localAI[3] > 1 ? 30 : 20;
                                 for (int i = 0; i < max; i++)
                                 {
                                     int p = Projectile.NewProjectile(npc.Center, 4f * Vector2.UnitX.RotatedBy(Main.rand.NextFloat((float)Math.PI * 2)), mod.ProjectileType("DeviLostSoul"), projectileDamage, 0f, Main.myPlayer);
@@ -906,7 +922,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                             if (Main.netMode != 1)
                             {
-                                Vector2 speed = 24 * Vector2.UnitY.RotatedBy(MathHelper.ToRadians(15) * npc.ai[2]);
+                                Vector2 speed = 24 * Vector2.UnitY.RotatedBy(MathHelper.ToRadians(10) * npc.ai[2]);
                                 int type = npc.localAI[3] > 1 ? mod.ProjectileType("DeviRainHeart2") : mod.ProjectileType("DeviRainHeart");
                                 for (int i = -8; i <= 8; i++)
                                 {
@@ -918,7 +934,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             }
                         }
                     }
-                    else
+                    else if (npc.ai[1] > 480)
                     {
                         GetNextAttack();
                     }
@@ -973,15 +989,16 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (npc.ai[2] == 0)
                     {
                         npc.ai[2] = 1;
-                        
+                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+
                         if (Main.netMode != 1)
                         {
                             float offset = Main.rand.NextFloat(360);
-                            for (int i = -3; i <= 3; i++) //make butterflies
+                            for (int i = 0; i < 6; i++) //make butterflies
                             {
                                 Vector2 speed = new Vector2(Main.rand.NextFloat(40f), Main.rand.NextFloat(-20f, 20f));
                                 Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("DeviButterfly"),
-                                   npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, offset / 3 * i);
+                                   npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 360 / 3 * i + offset);
                             }
                         }
                     }
@@ -1165,6 +1182,10 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         npc.netUpdate = true;
                         npc.ai[0] = attackQueue[(int)npc.localAI[2]];
                         npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.localAI[0] = 0;
+                        npc.localAI[1] = 0;
                         if (++npc.localAI[2] >= attackQueue.Length)
                         {
                             npc.localAI[2] = npc.localAI[3] > 1 ? 1 : 0;
@@ -1216,8 +1237,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 for (int j = i; j >= 0; j--) //can't pick attack that's already queued in this set
                     if (i != j && newQueue[i] == newQueue[j])
                         repeat = true;
-                if (newQueue[i] == 15 && npc.localAI[3] <= 1) //don't use sparkling love in p1
-                    repeat = true;
 
                 if (repeat) //retry this one if needed
                     i--;
@@ -1227,15 +1246,15 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             {
                 newQueue[3] = Main.rand.Next(11, 16);
             }
-            while (newQueue[3] == attackQueue[3]);
+            while (newQueue[3] == attackQueue[3] || (newQueue[3] == 15 && npc.localAI[3] <= 1)); //don't do sparkling love in p1
 
             attackQueue = newQueue;
 
-            Main.NewText("queue: "
+            /*Main.NewText("queue: "
                 + attackQueue[0].ToString() + " "
                 + attackQueue[1].ToString() + " "
                 + attackQueue[2].ToString() + " "
-                + attackQueue[3].ToString());
+                + attackQueue[3].ToString());*/
         }
 
         private void Aura(float distance, int buff, bool reverse = false, int dustid = DustID.GoldFlame, bool checkDuration = false)
