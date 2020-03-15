@@ -64,6 +64,7 @@ namespace FargowiltasSouls
             
             AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SteelRed"), ItemType("MutantMusicBox"), TileType("MutantMusicBoxSheet"));
             AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma"), ItemType("AbomMusicBox"), TileType("AbomMusicBoxSheet"));
+            AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/LexusCyanixs"), ItemType("DeviMusicBox"), TileType("DeviMusicBoxSheet"));
 
             #region Toggles
 

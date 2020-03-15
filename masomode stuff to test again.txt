@@ -143,3 +143,5 @@ nerfed bone zone damage/speed
 buffed blender slightly
 fixed yharim name
 fixed yrimir name
+added devi music box
+updated music box tooltips

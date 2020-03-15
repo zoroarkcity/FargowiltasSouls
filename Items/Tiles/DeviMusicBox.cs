@@ -5,12 +5,12 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Tiles
 {
-    public class AbomMusicBox : ModItem
+    public class DeviMusicBox : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Music Box (Abominationn)");
-            Tooltip.SetDefault("Sakuzyo 'Stigma'");
+            DisplayName.SetDefault("Music Box (Deviantt)");
+            Tooltip.SetDefault("Sakuzyo 'Lexus Cyanixs'");
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)
@@ -32,11 +32,11 @@ namespace FargowiltasSouls.Items.Tiles
             item.useTime = 10;
             item.autoReuse = true;
             item.consumable = true;
-            item.createTile = mod.TileType("AbomMusicBoxSheet");
+            item.createTile = mod.TileType("DeviMusicBoxSheet");
             item.width = 32;
             item.height = 32;
-            item.rare = 11;
-            item.value = Item.sellPrice(0, 7, 0, 0);
+            item.rare = 3;
+            item.value = Item.sellPrice(0, 1, 0, 0);
             item.accessory = true;
         }
     }

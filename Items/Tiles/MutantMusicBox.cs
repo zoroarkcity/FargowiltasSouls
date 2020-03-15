@@ -10,6 +10,7 @@ namespace FargowiltasSouls.Items.Tiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Music Box (Mutant)");
+            Tooltip.SetDefault("Sakuzyo 'Steel Red'");
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)
