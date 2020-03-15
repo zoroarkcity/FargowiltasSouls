@@ -160,6 +160,10 @@ deviantt:
 	added petrify indicator
 	adjusted devi shadowbeams
 
-nerfed bonezone to 14 again but restored fire rate
 nerfed phoenix blaster by -33%
 nerfed handgun by -25% to match above
+nerfed bonezone to 14 again
+
+deviantt:
+	fixed her doing 3 weak attacks when she first entered p2
+	IMPLEMENTED SPARKLING LOVE

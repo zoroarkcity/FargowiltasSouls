@@ -215,7 +215,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         {
                             RefreshAttackQueue();
                             attackQueue[3] = 15; //always do sparkling love
-                            npc.localAI[2] = 0;
+                            npc.localAI[2] = npc.localAI[3] > 1 ? 1 : 0;
                             GetNextAttack();
                             npc.dontTakeDamage = false;
                         }
@@ -1124,7 +1124,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     break;
 
                 case 15: //sparkling love
-                    if (!AliveCheck(player) || Phase2Check())
+                    if (npc.ai[1] > 150 && (!AliveCheck(player) || Phase2Check()))
                         break;
                     
                     if (++npc.ai[1] < 120)
@@ -1138,17 +1138,20 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             double angle = npc.position.X < player.position.X ? -Math.PI / 4 : Math.PI / 4;
                             npc.ai[2] = (float)angle * -4f / 30;
 
-                            const int spacing = 80;
-                            Vector2 offset = Vector2.UnitY.RotatedBy(angle) * -spacing;
-
+                            //spawn axe
+                            const int loveOffset = 300;
                             if (Main.netMode != 1)
                             {
-                                for (int i = 0; i < 12; i++)
-                                    Projectile.NewProjectile(npc.Center + offset * i, Vector2.Zero, mod.ProjectileType("MutantSword"), npc.damage / 3, 0f, Main.myPlayer, npc.whoAmI, spacing * i);
-                                Projectile.NewProjectile(npc.Center + offset.RotatedBy(MathHelper.ToRadians(20)) * 7, Vector2.Zero, mod.ProjectileType("MutantSword"), npc.damage / 3, 0f, Main.myPlayer, npc.whoAmI, 60 * 4);
-                                Projectile.NewProjectile(npc.Center + offset.RotatedBy(MathHelper.ToRadians(-20)) * 7, Vector2.Zero, mod.ProjectileType("MutantSword"), npc.damage / 3, 0f, Main.myPlayer, npc.whoAmI, 60 * 4);
-                                Projectile.NewProjectile(npc.Center + offset.RotatedBy(MathHelper.ToRadians(40)) * 28, Vector2.Zero, mod.ProjectileType("MutantSword"), npc.damage / 3, 0f, Main.myPlayer, npc.whoAmI, 60 * 4);
-                                Projectile.NewProjectile(npc.Center + offset.RotatedBy(MathHelper.ToRadians(-40)) * 28, Vector2.Zero, mod.ProjectileType("MutantSword"), npc.damage / 3, 0f, Main.myPlayer, npc.whoAmI, 60 * 4);
+                                Projectile.NewProjectile(npc.Center + -Vector2.UnitY.RotatedBy(angle) * loveOffset, Vector2.Zero, mod.ProjectileType("DeviSparklingLove"), npc.damage / 2, 0f, Main.myPlayer, npc.whoAmI, loveOffset);
+                            }
+
+                            //spawn hitboxes
+                            const int spacing = 80;
+                            Vector2 offset = -Vector2.UnitY.RotatedBy(angle) * spacing;
+                            if (Main.netMode != 1)
+                            {
+                                for (int i = 0; i < 7; i++)
+                                    Projectile.NewProjectile(npc.Center + offset * i, Vector2.Zero, mod.ProjectileType("DeviAxe"), npc.damage / 2, 0f, Main.myPlayer, npc.whoAmI, spacing * i);
                             }
                         }
 

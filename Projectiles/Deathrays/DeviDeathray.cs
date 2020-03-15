@@ -57,7 +57,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
                 projectile.Kill();
                 return;
             }
-            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 5f * num801;
+            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 3f * num801;
             if (projectile.scale > num801)
                 projectile.scale = num801;
             float num804 = projectile.velocity.ToRotation();
