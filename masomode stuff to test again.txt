@@ -150,4 +150,4 @@ bonezone has its regular damage
 tweaked how atrophied works
 removed devi and wof bee resist
 reduced skelly bee resist to -25%
-bees knees and hellwing bow take -25% damage
+bees knees, beenades, hellwing bow take -25% damage
