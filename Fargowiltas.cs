@@ -659,7 +659,7 @@ namespace FargowiltasSouls
                         (Func<bool>)(() => FargoSoulsWorld.downedAbom),
                         ModContent.ItemType<Items.Summons.AbomsCurse>(),
                         new List<int> { ModContent.ItemType<Items.Tiles.AbomTrophy>(), ModContent.ItemType<Items.Tiles.AbomMusicBox>() },
-                        new List<int> { ModContent.ItemType<Items.Misc.MutatingEnergy>(), ModContent.ItemType<Items.Misc.MutantScale>() },
+                        new List<int> { ModContent.ItemType<Items.Misc.MutantScale>() },
                         "Spawn by using the [i:" + ModContent.ItemType<Items.Summons.AbomsCurse>() + "].",
                         "The Abominationn has destroyed everyone.",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Still",

@@ -148,6 +148,12 @@ added devi music box
 updated music box tooltips
 bonezone has its regular damage
 tweaked how atrophied works
-removed devi and wof bee resist
+removed devi bee resist
+removed wof bee resist
 reduced skelly bee resist to -25%
-bees knees, beenades, hellwing bow take -25% damage
+bees knees takes -33% damage
+beenades, hellwing bow take -25% damage
+buffed blender damage slightly
+removed mutating energy from recipes (all replaced with abominable scale)
+removed cyclonic fin
+changed abom doll recipe

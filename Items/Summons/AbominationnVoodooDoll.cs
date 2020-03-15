@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
@@ -79,7 +80,7 @@ namespace FargowiltasSouls.Items.Summons
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(null, "MutantScale", 5);
-            recipe.AddIngredient(null, "MutatingEnergy", 3);
+            recipe.AddIngredient(ItemID.GuideVoodooDoll);
             recipe.AddTile(mod, "CrucibleCosmosSheet");
             recipe.SetResult(this, 5);
             recipe.AddRecipe();

@@ -386,9 +386,9 @@ Summons the aid of all Masochist Mode bosses to your side");
             recipe.AddIngredient(mod.ItemType("LumpOfFlesh"));
             recipe.AddIngredient(mod.ItemType("ChaliceoftheMoon"));
             recipe.AddIngredient(mod.ItemType("HeartoftheMasochist"));
-            recipe.AddIngredient(mod.ItemType("CyclonicFin"));
+            //recipe.AddIngredient(mod.ItemType("CyclonicFin"));
             //recipe.AddIngredient(mod.ItemType("Sadism"), 30);
-            recipe.AddIngredient(mod.ItemType("MutatingEnergy"), 15);
+            recipe.AddIngredient(mod.ItemType("MutantScale"), 15);
             recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 15);
 
             recipe.AddTile(mod, "CrucibleCosmosSheet");

@@ -1131,7 +1131,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             //npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbomBag"));
 
             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantScale"), Main.rand.Next(11) + 10);
-            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"), Main.rand.Next(11) + 10);
+            //npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"), Main.rand.Next(11) + 10);
             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CyclonicFin"));
 
             if (Main.rand.Next(10) == 0)
