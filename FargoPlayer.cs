@@ -1259,7 +1259,7 @@ namespace FargowiltasSouls
 
             if (Atrophied)
             {
-                player.meleeSpeed = 0f; //melee silence
+                player.meleeSpeed = 0.01f; //melee silence
                 player.thrownVelocity = 0f;
                 //just in case
                 player.meleeDamage = 0.01f;
@@ -1889,6 +1889,13 @@ namespace FargowiltasSouls
                 crit = false;
             }
 
+            if ((proj.melee || proj.thrown) && Atrophied)
+            {
+                damage = 0;
+                knockback = 0;
+                crit = false;
+            }
+
             if (Fargowiltas.Instance.ThoriumLoaded) ThoriumModifyProj(proj, target, damage, crit);
         }
 
@@ -2090,6 +2097,13 @@ namespace FargowiltasSouls
                 crit = true;
                 damage = (int)(damage * 1.5f);
                 player.ClearBuff(mod.BuffType("FirstStrike"));
+            }
+
+            if (Atrophied)
+            {
+                damage = 0;
+                knockback = 0;
+                crit = false;
             }
 
             if (Fargowiltas.Instance.ThoriumLoaded) ThoriumModifyNPC(target, item, damage, crit);
