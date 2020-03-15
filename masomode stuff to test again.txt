@@ -145,7 +145,6 @@ fixed yharim name
 fixed yrimir name
 
 updated music box tooltips
-bonezone has its regular damage
 tweaked how atrophied works
 removed wof bee resist
 reduced skelly bee resist to -25%
@@ -160,3 +159,7 @@ deviantt:
 	removed devi bee resist
 	added petrify indicator
 	adjusted devi shadowbeams
+
+nerfed bonezone to 14 again but restored fire rate
+nerfed phoenix blaster by -33%
+nerfed handgun by -25% to match above

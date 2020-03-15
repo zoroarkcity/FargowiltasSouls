@@ -711,7 +711,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (!AliveCheck(player) || Phase2Check())
                         break;
 
-                    npc.velocity = npc.DirectionTo(player.Center) * 3f;
+                    npc.velocity = npc.DirectionTo(player.Center);
 
                     if (++npc.ai[1] == 1)
                     {
@@ -1023,11 +1023,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (++npc.ai[2] > 60)
                     {
                         npc.ai[2] = 0;
-
-                        int threshold = 7;// npc.localAI[3] > 1 ? 7 : 6;
-
                         //only make rings in p2 and before firing ray
-                        if (npc.localAI[3] > 1 && npc.ai[3] < threshold)
+                        if (npc.localAI[3] > 1 && npc.ai[3] < 7)
                         {
                             if (Main.netMode != 1)
                             {
@@ -1040,7 +1037,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             }
                         }
 
-                        if (++npc.ai[3] < threshold - 3) //medusa warning
+                        if (++npc.ai[3] < 4) //medusa warning
                         {
                             npc.netUpdate = true;
                             Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f); //eoc roar
@@ -1055,7 +1052,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 Main.dust[d].velocity = vector7;
                             }
                         }
-                        else if (npc.ai[3] == threshold - 3) //petrify
+                        else if (npc.ai[3] == 4) //petrify
                         {
                             Main.PlaySound(4, npc.Center, 17);
 
@@ -1078,7 +1075,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 }
                             }
                         }
-                        else if (npc.ai[3] < threshold) //ray warning
+                        else if (npc.ai[3] < 7) //ray warning
                         {
                             npc.netUpdate = true;
 
@@ -1094,7 +1091,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             
                             npc.localAI[1] = npc.DirectionTo(player.Center).ToRotation(); //store for aiming ray
                         }
-                        else if (npc.ai[3] == threshold) //fire deathray
+                        else if (npc.ai[3] == 7) //fire deathray
                         {
                             Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
 
@@ -1104,6 +1101,16 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[1]), mod.ProjectileType("DeviBigDeathray"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                             }
+                        }
+                    }
+
+                    if (npc.ai[3] >= 7)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, 86, -npc.velocity.X, -npc.velocity.Y, 0, default(Color), 2.5f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity *= 12f;
                         }
                     }
 
