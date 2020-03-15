@@ -1544,11 +1544,11 @@ namespace FargowiltasSouls
                 player.endurance /= 2;
             }
 
-            if (DevianttPresence)
+            /*if (DevianttPresence)
             {
                 player.statDefense /= 2;
                 player.endurance /= 2;
-            }
+            }*/
         }
 
         private void ThoriumPostUpdate()

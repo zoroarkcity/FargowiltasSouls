@@ -9,7 +9,7 @@ namespace FargowiltasSouls.Buffs.Boss
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Deviant Presence");
-            Description.SetDefault("Reduced defense and friendly NPCs take massively increased damage");
+            Description.SetDefault("Friendly NPCs take massively increased damage");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             longerExpertDebuff = false;
