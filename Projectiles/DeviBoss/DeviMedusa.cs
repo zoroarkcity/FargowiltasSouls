@@ -5,23 +5,28 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Projectiles.Masomode
+namespace FargowiltasSouls.Projectiles.DeviBoss
 {
-    public class BrainofConfusion : ModProjectile
+    public class DeviMedusa : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_565";
+        public override string Texture => "Terraria/Item_3269";
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Brain of Confusion");
-            Main.projFrames[projectile.type] = 4;
+            DisplayName.SetDefault("Medusa Head");
         }
 
         public override void SetDefaults()
         {
             projectile.CloneDefaults(ProjectileID.BrainOfConfusion);
-            projectile.scale = 4f;
+            projectile.scale = 5f;
             aiType = ProjectileID.BrainOfConfusion;
+        }
+
+        public override void AI()
+        {
+            projectile.frame = 0;
+            projectile.frameCounter = 0;
         }
 
         public override Color? GetAlpha(Color lightColor)

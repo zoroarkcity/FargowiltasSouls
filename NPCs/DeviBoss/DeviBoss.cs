@@ -727,13 +727,14 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     }
                     else if (npc.ai[1] < 120) //spam shadowbeams after delay
                     {
-                        if (++npc.ai[2] > (npc.localAI[3] > 1 ? 75 : 90))
+                        if (++npc.ai[2] > 90)
                         {
-                            if (++npc.ai[3] == 1) //store rotation briefly before shooting
+                            if (npc.ai[3] == 0) //store rotation briefly before shooting
                             {
                                 npc.localAI[0] = npc.DirectionTo(player.Center).ToRotation();
                             }
-                            else if (npc.ai[3] > 6)
+
+                            if (++npc.ai[3] > (npc.localAI[3] > 1 ? 5 : 8))
                             {
                                 npc.ai[3] = 0;
 
@@ -1057,6 +1058,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         else if (npc.ai[3] == threshold - 3) //petrify
                         {
                             Main.PlaySound(4, npc.Center, 17);
+
+                            if (Main.netMode != 1)
+                                Projectile.NewProjectile(npc.Center, new Vector2(0, -4), mod.ProjectileType("DeviMedusa"), 0, 0, Main.myPlayer);
 
                             if (npc.Distance(Main.LocalPlayer.Center) < 3000 && Collision.CanHitLine(npc.Center, 0, 0, Main.LocalPlayer.Center, 0, 0))
                             {
