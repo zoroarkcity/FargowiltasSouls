@@ -137,7 +137,7 @@ reduced crystal bullet shatter cap to 15 ticks (this is a buff)
 bone zone is now subject to the shatter cap
 
 reduced devi debuffs (no more suffocation on rune blast, only class/vanilla debuffs on mage skeleton attacks)
-devi takes x1.3 damage from melee and minion and x0.75 from bee
+devi takes x1.3 damage from melee and minion
 devi waits slightly longer after heart rain so you dont get memed by shadowbeam
 nerfed bone zone speed
 buffed blender slightly
@@ -148,3 +148,5 @@ added devi music box
 updated music box tooltips
 bonezone has its regular damage
 tweaked how atrophied works
+removed devi and wof bee resist, beating bees knees to death (only 66% now)
+reduced skelly bee resist to -25%

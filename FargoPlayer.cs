@@ -4893,6 +4893,7 @@ namespace FargowiltasSouls
                 case ItemID.ChlorophyteShotbow:
                 case ItemID.Razorpine:
                 case ItemID.SnowmanCannon:
+                case ItemID.BeesKnees:
                     return 2f / 3f;
 
                 case ItemID.PhoenixBlaster:

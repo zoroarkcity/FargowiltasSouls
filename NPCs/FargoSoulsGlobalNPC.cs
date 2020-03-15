@@ -11868,14 +11868,14 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.SkeletronHead:
                     case NPCID.SkeletronHand:
                         if (projectile.type == ProjectileID.Bee || projectile.type == ProjectileID.GiantBee)
-                            damage /= 2;
+                            damage = (int)(damage * .75);
                         break;
 
-                    case NPCID.WallofFlesh:
+                    /*case NPCID.WallofFlesh:
                     case NPCID.WallofFleshEye:
                         if (projectile.type == ProjectileID.Bee || projectile.type == ProjectileID.GiantBee)
                             damage /= 2;
-                        break;
+                        break;*/
 
                     case NPCID.MoonLordCore:
                         damage = damage * 2 / 3;

@@ -1417,8 +1417,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
         {
             if (projectile.melee || projectile.minion)
                 damage = (int)(damage * 1.3);
-            if (projectile.type == ProjectileID.Bee || projectile.type == ProjectileID.GiantBee)
-                damage = (int)(damage * 0.75);
         }
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
