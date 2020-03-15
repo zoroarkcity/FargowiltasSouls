@@ -34,7 +34,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             int ai1 = (int)projectile.ai[1];
             if (Main.npc[ai1].active && Main.npc[ai1].type == mod.NPCType("DeviBoss"))
             {
-                projectile.Center = Main.npc[(int)projectile.ai[1]].Center + projectile.velocity * 250 + Main.rand.NextVector2Circular(5, 5);
+                projectile.Center = Main.npc[(int)projectile.ai[1]].Center + projectile.velocity * 250 + Main.rand.NextVector2Circular(15, 15);
             }
             else
             {
