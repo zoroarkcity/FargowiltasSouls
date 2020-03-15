@@ -4893,7 +4893,6 @@ namespace FargowiltasSouls
                 case ItemID.ChlorophyteShotbow:
                 case ItemID.Razorpine:
                 case ItemID.SnowmanCannon:
-                case ItemID.BeesKnees:
                     return 2f / 3f;
 
                 case ItemID.PhoenixBlaster:
@@ -4901,6 +4900,8 @@ namespace FargowiltasSouls
                 case ItemID.LastPrism:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.ChainGun:
+                case ItemID.BeesKnees:
+                case ItemID.HellwingBow:
                     return 0.75f;
 
                 case ItemID.SpaceGun:
