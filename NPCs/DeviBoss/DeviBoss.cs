@@ -925,12 +925,13 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             {
                                 Vector2 speed = 24 * Vector2.UnitY.RotatedBy(MathHelper.ToRadians(10) * npc.ai[2]);
                                 int type = npc.localAI[3] > 1 ? mod.ProjectileType("DeviRainHeart2") : mod.ProjectileType("DeviRainHeart");
+                                int damage = npc.localAI[3] > 1 ? npc.damage / 3 : npc.damage / 4;
                                 for (int i = -8; i <= 8; i++)
                                 {
                                     Vector2 spawnPos = new Vector2(npc.localAI[0], npc.localAI[1]);
                                     spawnPos.X += 150 * i;
                                     spawnPos.Y -= 1200;
-                                    Projectile.NewProjectile(spawnPos, speed, type, npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                    Projectile.NewProjectile(spawnPos, speed, type, damage, 0f, Main.myPlayer, 0f, npc.whoAmI);
                                 }
                             }
                         }
@@ -963,8 +964,10 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 Vector2 speed = 2 * target / 90;
                                 float acceleration = -speed.Length() / 90;
 
+                                int damage = npc.localAI[3] > 1 ? npc.damage / 3 : npc.damage / 4;
+
                                 Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("DeviEnergyHeart"),
-                                    npc.damage / 4, 0f, Main.myPlayer, 0f, acceleration);
+                                    damage, 0f, Main.myPlayer, 0f, acceleration);
                             }
                         }
 
@@ -995,11 +998,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         if (Main.netMode != 1)
                         {
                             float offset = Main.rand.NextFloat(600);
+                            int damage = npc.localAI[3] > 1 ? npc.damage / 3 : npc.damage / 4;
                             for (int i = 0; i < 8; i++) //make butterflies
                             {
                                 Vector2 speed = new Vector2(Main.rand.NextFloat(40f), Main.rand.NextFloat(-20f, 20f));
                                 Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("DeviButterfly"),
-                                   npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 300 / 4 * i + offset);
+                                   damage, 0f, Main.myPlayer, npc.whoAmI, 300 / 4 * i + offset);
                             }
                         }
                     }
@@ -1029,10 +1033,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             if (Main.netMode != 1)
                             {
                                 const int max = 12;
+                                int damage = npc.localAI[3] > 1 ? npc.damage / 3 : npc.damage / 4;
                                 for (int i = 0; i < max; i++)
                                 {
                                     Projectile.NewProjectile(npc.Center, 6f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i),
-                                        mod.ProjectileType("DeviHeart"), npc.damage / 4, 0f, Main.myPlayer);
+                                        mod.ProjectileType("DeviHeart"), damage, 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -1099,7 +1104,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                             if (Main.netMode != 1)
                             {
-                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[1]), mod.ProjectileType("DeviBigDeathray"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[1]), mod.ProjectileType("DeviBigDeathray"),
+                                    npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                             }
                         }
                     }

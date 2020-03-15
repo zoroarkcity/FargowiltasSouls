@@ -146,7 +146,8 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
                     Vector2 speed = 2 * target / 90;
                     float acceleration = -speed.Length() / 90;
                     float rotation = speed.ToRotation() + (float)Math.PI / 2;
-                    Projectile.NewProjectile(projectile.Center, speed, mod.ProjectileType("DeviEnergyHeart"), projectile.damage, 0f, Main.myPlayer, rotation, acceleration);
+                    Projectile.NewProjectile(projectile.Center, speed, mod.ProjectileType("DeviEnergyHeart"),
+                        (int)(projectile.damage * 0.75), 0f, Main.myPlayer, rotation, acceleration);
                 }
             }
         }
