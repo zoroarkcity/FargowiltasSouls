@@ -399,11 +399,11 @@ namespace FargowiltasSouls.NPCs
                         npc.defense *= 10;
                         Timer = 0;
                         Counter = 600;
-                        npc.lifeMax *= 2;
+                        npc.lifeMax = (int)(npc.lifeMax * 1.5);
                         break;
                     case NPCID.WallofFleshEye:
                         npc.buffImmune[mod.BuffType("ClippedWings")] = true;
-                        npc.lifeMax *= 2;
+                        npc.lifeMax = (int)(npc.lifeMax * 1.5);
                         break;
                     case NPCID.TheHungryII:
                         npc.noTileCollide = true;
