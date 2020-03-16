@@ -6494,10 +6494,55 @@ namespace FargowiltasSouls.NPCs
                             CustomReflect(npc, DustID.Granite, 2);
                         break;
 
+                    case NPCID.BigMimicJungle:
+                        if (masoBool[2])
+                        {
+                            if (npc.velocity.Y == 0f) //landed from ANY jump
+                            {
+                                masoBool[2] = false;
+
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    Projectile.NewProjectile(npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
+                                          Main.rand.Next(-30, 31) * .1f, Main.rand.Next(-40, -15) * .1f, mod.ProjectileType("FakeHeart"), 20, 0f, Main.myPlayer);
+                                }
+
+                                Main.PlaySound(2, (int)npc.position.X, (int)npc.position.Y, 14);
+
+                                for (int i = 0; i < 30; i++)
+                                {
+                                    int dust = Dust.NewDust(npc.position, npc.width, npc.height, 31, 0f, 0f, 100, default(Color), 3f);
+                                    Main.dust[dust].velocity *= 1.4f;
+                                }
+
+                                for (int i = 0; i < 20; i++)
+                                {
+                                    int dust = Dust.NewDust(npc.position, npc.width, npc.height, 6, 0f, 0f, 100, default(Color), 3.5f);
+                                    Main.dust[dust].noGravity = true;
+                                    Main.dust[dust].velocity *= 7f;
+                                    dust = Dust.NewDust(npc.position, npc.width, npc.height, 6, 0f, 0f, 100, default(Color), 1.5f);
+                                    Main.dust[dust].velocity *= 3f;
+                                }
+
+                                float scaleFactor9 = 0.5f;
+                                for (int j = 0; j < 4; j++)
+                                {
+                                    int gore = Gore.NewGore(npc.Center, default(Vector2), Main.rand.Next(61, 64));
+                                    Main.gore[gore].velocity *= scaleFactor9;
+                                    Main.gore[gore].velocity.X += 1f;
+                                    Main.gore[gore].velocity.Y += 1f;
+                                }
+                            }
+                        }
+                        else if (npc.velocity.Y > 0)
+                        {
+                            masoBool[2] = true;
+                        }
+                        goto case NPCID.BigMimicHallow;
+
                     case NPCID.BigMimicCorruption:
                     case NPCID.BigMimicCrimson:
                     case NPCID.BigMimicHallow:
-                    case NPCID.BigMimicJungle:
                         if (masoBool[0])
                         {
                             if (npc.velocity.Y == 0f) //spawn smash
@@ -6529,6 +6574,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             masoBool[0] = true;
                         }
+
                         if (npc.position.Y < Main.worldSurface * 16)
                         {
                             if (++Counter > 300)
@@ -7110,6 +7156,25 @@ namespace FargowiltasSouls.NPCs
                                 int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.DuneSplicerHead, npc.whoAmI, 0f, 0f, 0f, 0f, npc.target);
                                 if (n != 200 && Main.netMode == 2)
                                     NetMessage.SendData(23, -1, -1, null, n);
+                            }
+                        }
+                        if (++Counter2 > 240)
+                        {
+                            Counter2 = 0;
+                            if (npc.HasValidTarget && Main.netMode != 1)
+                            {
+                                Vector2 target = Main.player[npc.target].Center;
+                                target.Y -= 150;
+                                Projectile.NewProjectile(target, Vector2.Zero, ProjectileID.SandnadoHostileMark, 0, 0f, Main.myPlayer);
+
+                                int length = (int)npc.Distance(target) / 10;
+                                Vector2 offset = npc.DirectionTo(target) * 10f;
+                                for (int i = 0; i < length; i++) //dust warning line for sandnado
+                                {
+                                    int d = Dust.NewDust(npc.Center + offset * i, 0, 0, 269, 0f, 0f, 0, new Color());
+                                    Main.dust[d].noLight = true;
+                                    Main.dust[d].scale = 1.25f;
+                                }
                             }
                         }
                         break;
@@ -9692,7 +9757,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.CorruptBunny:
                     case NPCID.CrimsonBunny:
-                        if (Main.rand.Next(50) == 0)
+                        if (Main.rand.Next(25) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("SqueakyToy"));
                         goto case NPCID.Bunny;
 
@@ -9700,7 +9765,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.CrimsonGoldfish:
                     case NPCID.CorruptPenguin:
                     case NPCID.CrimsonPenguin:
-                        if (Main.rand.Next(50) == 0)
+                        if (Main.rand.Next(25) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("SqueakyToy"));
                         break;
 
@@ -9750,17 +9815,17 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.RaggedCaster:
                     case NPCID.RaggedCasterOpenCoat:
                         Item.NewItem(npc.Hitbox, ItemID.Bone);
-                        if (Main.rand.Next(100) == 0)
+                        if (Main.rand.Next(50) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("SkullCharm"));
                         break;
 
                     case NPCID.BigMimicJungle:
-                        if (Main.rand.Next(10) == 0)
+                        if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("TribalCharm"));
                         goto case NPCID.BigMimicCrimson;
 
                     case NPCID.IceGolem:
-                        if (Main.rand.Next(10) == 0)
+                        if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("FrigidGemstone"));
                         if (Main.rand.Next(20) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.BlizzardinaBottle);
@@ -9770,7 +9835,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.WyvernHead:
                         Item.NewItem(npc.Hitbox, ItemID.FloatingIslandFishingCrate);
-                        if (Main.rand.Next(10) == 0)
+                        if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("DragonFang"));
                         if (Main.rand.Next(20) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.CloudinaBottle);
@@ -9779,14 +9844,14 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.RainbowSlime:
-                        if (masoBool[0] && Main.rand.Next(20) == 0)
+                        if (masoBool[0] && Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("ConcentratedRainbowMatter"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.RegenerationPotion, Main.rand.Next(2, 5) + 1);
                         break;
 
                     case NPCID.SandElemental:
-                        if (Main.rand.Next(10) == 0)
+                        if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("SandsofTime"));
                         if (Main.rand.Next(20) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.SandstorminaBottle);
@@ -9819,7 +9884,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.GoblinSummoner:
-                        if (Main.rand.Next(10) == 0)
+                        if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("WretchedPouch"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.SummoningPotion, Main.rand.Next(2, 5) + 1);
@@ -9833,7 +9898,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.PirateShip:
-                        if (Main.rand.Next(10) == 0)
+                        if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("SecurityWallet"));
                         if (Main.rand.Next(100) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.CoinGun);
@@ -9842,7 +9907,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Nymph:
-                        if (Main.rand.Next(10) == 0)
+                        if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("NymphsPerfume"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.LovePotion, Main.rand.Next(2, 5) + 1);
@@ -9866,7 +9931,7 @@ namespace FargowiltasSouls.NPCs
                         Item.NewItem(npc.Hitbox, ItemID.GoodieBag, Main.rand.Next(5) + 1);
                         if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.BladedGlove);
-                        if (Main.pumpkinMoon && Main.rand.Next(10) == 0)
+                        if (Main.pumpkinMoon && Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("PumpkingsCape"));
                         break;
 
@@ -9877,12 +9942,12 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.IceQueen:
                         Item.NewItem(npc.Hitbox, ItemID.Present, Main.rand.Next(5) + 1);
-                        if (Main.snowMoon && Main.rand.Next(10) == 0)
+                        if (Main.snowMoon && Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("IceQueensCrown"));
                         break;
 
                     case NPCID.MartianSaucerCore:
-                        if (Main.rand.Next(10) == 0)
+                        if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("SaucerControlConsole"));
                         break;
 
@@ -9910,7 +9975,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Tim:
-                        if (Main.rand.Next(10) == 0)
+                        if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("TimsConcoction"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.ManaRegenerationPotion, Main.rand.Next(2, 5) + 1);
@@ -9919,7 +9984,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.RuneWizard:
-                        if (Main.rand.Next(10) == 0)
+                        if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("MysticSkull"));
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.MagicPowerPotion, Main.rand.Next(2, 5) + 1);
@@ -9928,7 +9993,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.SnowBalla:
                     case NPCID.SnowmanGangsta:
                     case NPCID.MisterStabby:
-                        if (Main.rand.Next(100) == 0)
+                        if (Main.rand.Next(50) == 0)
                             Item.NewItem(npc.Hitbox, mod.ItemType("OrdinaryCarrot"));
                         break;
 
@@ -11435,7 +11500,7 @@ namespace FargowiltasSouls.NPCs
         {
             for (int index1 = 0; index1 < 100; ++index1)
             {
-                int index2 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 31, 0.0f, 0.0f, 100, new Color(), 2f);
+                int index2 = Dust.NewDust(npc.position, npc.width, npc.height, 31, 0.0f, 0.0f, 100, new Color(), 2f);
                 Main.dust[index2].position.X += Main.rand.Next(-20, 21);
                 Main.dust[index2].position.Y += Main.rand.Next(-20, 21);
                 Dust dust = Main.dust[index2];

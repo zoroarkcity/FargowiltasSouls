@@ -170,3 +170,6 @@ restored mutant's 7.7M life and only 10% DR
 
 added aeolus boots
 wof has x1.5 life in maso
+doubled the drop rate of skull charm and all biocluster materials
+sand ele summons bonus predictive sandnados
+jungle mimic stomp produces fake hearts
