@@ -109,11 +109,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     npc.localAI[3] = 1;
                     Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
 
-                    RefreshAttackQueue();
-                    attackQueue[0] = 1; //always start with marx hammer, make sure it's never done consecutive
-                    for (int i = 1; i < attackQueue.Length; i++)
-                        if (attackQueue[i] == 1)
-                            attackQueue[i] = i + 1;
+                    do
+                    {
+                        RefreshAttackQueue();
+                    } while (attackQueue[0] == 3 || attackQueue[0] == 5 || attackQueue[0] == 9);
+                    //don't start with wyvern, mage spam, or frostballs
 
                     if (Main.netMode != 1)
                     {
