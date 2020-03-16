@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.DeviBoss
 {
@@ -58,12 +59,15 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
                 Main.dust[d].velocity *= 8f;
             }
 
-            if (Main.netMode != 1)
+            if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
             {
-                for (int i = 0; i < 4; i++)
+                if (Main.netMode != 1)
                 {
-                    Projectile.NewProjectile(projectile.Center, Vector2.UnitX.RotatedBy(projectile.rotation + (float)Math.PI / 2 * i),
-                        mod.ProjectileType("DeviDeathray"), projectile.damage, projectile.knockBack, projectile.owner);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        Projectile.NewProjectile(projectile.Center, Vector2.UnitX.RotatedBy(projectile.rotation + (float)Math.PI / 2 * i),
+                            mod.ProjectileType("DeviDeathray"), projectile.damage, projectile.knockBack, projectile.owner);
+                    }
                 }
             }
         }
