@@ -915,6 +915,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             npc.velocity.Y *= -0.5f;
 
                         npc.netUpdate = true;
+
+                        if (Main.netMode != 1) //spawn ritual for strong attacks
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                        }
                     }
 
                     targetPos = player.Center;
@@ -974,6 +979,16 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.3f);
 
+                    if (npc.localAI[0] == 0)
+                    {
+                        npc.localAI[1] = 1;
+
+                        if (Main.netMode != 1) //spawn ritual for strong attacks
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                        }
+                    }
+
                     if (++npc.ai[2] > (npc.localAI[3] > 1 ? 75 : 100))
                     {
                         if (++npc.ai[3] > 5)
@@ -1030,6 +1045,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                    damage, 0f, Main.myPlayer, npc.whoAmI, 300 / 4 * i + offset);
                             }
                         }
+
+                        if (Main.netMode != 1) //spawn ritual for strong attacks
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                        }
                     }
 
                     if (++npc.ai[1] > 480)
@@ -1046,6 +1066,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     {
                         npc.localAI[0] = 1;
                         npc.velocity = Vector2.Zero;
+
+                        if (Main.netMode != 1) //spawn ritual for strong attacks
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                        }
                     }
 
                     if (++npc.ai[2] > 60)
@@ -1156,6 +1181,15 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 case 15: //sparkling love
                     if (npc.ai[1] > 150 && (!AliveCheck(player) || Phase2Check()))
                         break;
+
+                    if (npc.localAI[0] == 0)
+                    {
+                        npc.localAI[0] = 1;
+                        if (Main.netMode != 1) //spawn ritual for strong attacks
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                        }
+                    }
                     
                     if (++npc.ai[1] < 120)
                     {
@@ -1163,16 +1197,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         if (npc.ai[2] == 0) //spawn weapon, teleport
                         {
-                            TeleportDust();
-                            if (Main.netMode != 1)
-                            {
-                                bool wasOnLeft = npc.Center.X < player.Center.X;
-                                npc.Center = player.Center;
-                                npc.position.X += wasOnLeft ? 350 : -350;
-                                npc.netUpdate = true;
-                            }
-                            TeleportDust();
-
                             double angle = npc.position.X < player.position.X ? -Math.PI / 4 : Math.PI / 4;
                             npc.ai[2] = (float)angle * -4f / 30;
 
@@ -1242,11 +1266,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         {
                             npc.localAI[2] = npc.localAI[3] > 1 ? 1 : 0;
                             RefreshAttackQueue();
-
-                            if (Main.netMode != 1) //spawn ritual for strong attacks
-                            {
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                            }
                         }
                     }
                     break;
