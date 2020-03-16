@@ -1649,7 +1649,7 @@ namespace FargowiltasSouls.NPCs
                                 if (npc.ai[2] < 2)
                                 {
                                     npc.ai[2]--;
-                                    npc.alpha += 6;
+                                    npc.alpha += 4;
                                     for (int i = 0; i < 3; i++)
                                     {
                                         int d = Dust.NewDust(npc.position, npc.width, npc.height, 229, 0f, 0f, 0, default(Color), 1.5f);
@@ -1681,7 +1681,7 @@ namespace FargowiltasSouls.NPCs
                                 }
                                 else
                                 {
-                                    npc.alpha -= 6;
+                                    npc.alpha -= 4;
                                     if (npc.alpha < 0)
                                     {
                                         npc.alpha = 0;
