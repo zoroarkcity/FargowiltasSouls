@@ -1134,7 +1134,7 @@ namespace FargowiltasSouls.Projectiles
                 FargoPlayer fargoPlayer = Main.LocalPlayer.GetModPlayer<FargoPlayer>();
                 if (fargoPlayer.Graze && --GrazeCD < 0 && !Main.LocalPlayer.immune && Main.LocalPlayer.hurtCooldowns[0] <= 0 && Main.LocalPlayer.hurtCooldowns[1] <= 0)
                 {
-                    if (projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + (fargoPlayer.MasochistSoul ? 100 : 75) && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0))
+                    if (projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + 100 && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0))
                     {
                         GrazeCD = 60;
                         fargoPlayer.GrazeBonus += 0.02;
