@@ -1185,6 +1185,17 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (npc.localAI[0] == 0)
                     {
                         npc.localAI[0] = 1;
+
+                        TeleportDust();
+                        if (Main.netMode != 1)
+                        {
+                            bool wasOnLeft = npc.Center.X < player.Center.X;
+                            npc.Center = player.Center;
+                            npc.position.X += wasOnLeft ? 400 : -400;
+                            npc.netUpdate = true;
+                        }
+                        TeleportDust();
+
                         if (Main.netMode != 1) //spawn ritual for strong attacks
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
