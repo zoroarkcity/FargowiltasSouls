@@ -817,6 +817,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             npc.velocity.X *= 0.5f;
                             if (npc.velocity.Y > 0)
                                 npc.velocity.Y *= -0.5f;
+
                             npc.netUpdate = true;
                         }
 
@@ -912,6 +913,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         npc.velocity.X *= 0.5f;
                         if (npc.velocity.Y > 0)
                             npc.velocity.Y *= -0.5f;
+
                         npc.netUpdate = true;
                     }
 
