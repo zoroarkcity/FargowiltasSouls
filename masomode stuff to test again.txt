@@ -167,3 +167,5 @@ deviantt:
 	fixed her doing 3 weak attacks when she first entered p2
 	IMPLEMENTED SPARKLING LOVE
 restored mutant's 7.7M life and only 10% DR
+
+added aeolus boots
