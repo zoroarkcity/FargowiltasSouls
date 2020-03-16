@@ -1146,9 +1146,17 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     {
                         npc.velocity = Vector2.Zero;
 
-                        if (npc.ai[2] == 0) //spawn weapon
+                        if (npc.ai[2] == 0) //spawn weapon, teleport
                         {
-                            npc.netUpdate = true;
+                            TeleportDust();
+                            if (Main.netMode != 1)
+                            {
+                                bool wasOnLeft = npc.Center.X < player.Center.X;
+                                npc.Center = player.Center;
+                                npc.position.X += wasOnLeft ? 350 : -350;
+                                npc.netUpdate = true;
+                            }
+                            TeleportDust();
 
                             double angle = npc.position.X < player.position.X ? -Math.PI / 4 : Math.PI / 4;
                             npc.ai[2] = (float)angle * -4f / 30;
