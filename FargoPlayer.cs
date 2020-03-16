@@ -287,6 +287,8 @@ namespace FargowiltasSouls
         public bool Graze;
         public int GrazeCounter;
         public double GrazeBonus;
+        public bool DevianttHearts;
+        public int DevianttHeartsCD;
 
         //public int PreNerfDamage;
 
@@ -670,6 +672,7 @@ namespace FargowiltasSouls
             TwinsEX = false;
             TimsConcoction = false;
             Graze = false;
+            DevianttHearts = false;
 
             //debuffs
             Hexed = false;
@@ -770,6 +773,7 @@ namespace FargowiltasSouls
             SinisterIconDrops = false;
             Graze = false;
             GrazeBonus = 0;
+            DevianttHearts = false;
 
             MaxLifeReduction = 0;
         }
@@ -1172,6 +1176,12 @@ namespace FargowiltasSouls
                 player.gravDir = -1f;
                 //player.fallStart = (int)(player.position.Y / 16f);
                 //player.jump = 0;
+            }
+
+            if (DevianttHearts)
+            {
+                if (DevianttHeartsCD > 0)
+                    DevianttHeartsCD--;
             }
 
             if (Graze && ++GrazeCounter > 60) //decrease graze bonus over time
@@ -2331,7 +2341,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (CyclonicFin)
+            /*if (CyclonicFin)
             {
                 target.AddBuff(mod.BuffType("OceanicMaul"), 900);
                 //target.AddBuff(mod.BuffType("CurseoftheMoon"), 900);
@@ -2382,7 +2392,7 @@ namespace FargowiltasSouls
                     }
                     Projectile.NewProjectile(spawn, vel, mod.ProjectileType("SpectralFishron"), dam, 10f, proj.owner, target.whoAmI, damageType);
                 }
-            }
+            }*/
 
             if (CorruptHeart && CorruptHeartCD <= 0)
             {
@@ -2568,6 +2578,34 @@ namespace FargowiltasSouls
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.CopperLightning) && CopperEnchant && copperCD == 0)
             {
                 CopperEffect(target);
+            }
+
+            if (DevianttHearts && DevianttHeartsCD <= 0)
+            {
+                DevianttHeartsCD = 600;
+
+                if (Main.myPlayer == player.whoAmI)
+                {
+                    Vector2 offset = 300 * player.DirectionFrom(Main.MouseWorld);
+                    for (int i = -3; i <= 3; i++)
+                    {
+                        Vector2 spawnPos = player.Center + offset.RotatedBy(Math.PI / 7 * i);
+                        Vector2 speed = 20 * Vector2.Normalize(Main.MouseWorld - spawnPos);
+                        int heartDamage = (int)(17 * player.minionDamage);
+                        float ai1 = (Main.MouseWorld - spawnPos).Length() / 20 + 10;
+                        Projectile.NewProjectile(spawnPos, speed, mod.ProjectileType("FriendHeart"), heartDamage, 3f, player.whoAmI, -1, ai1);
+
+                        for (int j = 0; j < 20; j++)
+                        {
+                            Vector2 vector6 = Vector2.UnitY * 7f;
+                            vector6 = vector6.RotatedBy((j - (20 / 2 - 1)) * 6.28318548f / 20) + spawnPos;
+                            Vector2 vector7 = vector6 - spawnPos;
+                            int d = Dust.NewDust(vector6 + vector7, 0, 0, 86, 0f, 0f, 0, default(Color), 2f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity = vector7;
+                        }
+                    }
+                }
             }
 
             if (GodEaterImbue)
@@ -2813,7 +2851,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (CyclonicFin)
+            /* if (CyclonicFin)
             {
                 target.AddBuff(mod.BuffType("OceanicMaul"), 900);
                 //target.AddBuff(mod.BuffType("CurseoftheMoon"), 900);
@@ -2835,7 +2873,7 @@ namespace FargowiltasSouls
                     int damageType = 1;
                     Projectile.NewProjectile(spawn, vel, mod.ProjectileType("SpectralFishron"), dam, 10f, player.whoAmI, target.whoAmI, damageType);
                 }
-            }
+            }*/
 
             if (CorruptHeart && CorruptHeartCD <= 0)
             {

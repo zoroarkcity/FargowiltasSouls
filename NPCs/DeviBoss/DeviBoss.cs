@@ -76,6 +76,10 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             writer.Write(npc.localAI[1]);
             writer.Write(npc.localAI[2]);
             writer.Write(npc.localAI[3]);
+            writer.Write(attackQueue[0]);
+            writer.Write(attackQueue[1]);
+            writer.Write(attackQueue[2]);
+            writer.Write(attackQueue[3]);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -84,6 +88,10 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             npc.localAI[1] = reader.ReadSingle();
             npc.localAI[2] = reader.ReadSingle();
             npc.localAI[3] = reader.ReadSingle();
+            attackQueue[0] = reader.ReadInt32();
+            attackQueue[1] = reader.ReadInt32();
+            attackQueue[2] = reader.ReadInt32();
+            attackQueue[3] = reader.ReadInt32();
         }
 
         public override void AI()
@@ -1486,7 +1494,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             
             if (Main.rand.Next(10) == 0)
                 Item.NewItem(npc.Hitbox, mod.ItemType("DeviTrophy"));
-            
+
+            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("SparklingAdoration"));
             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("DeviatingEnergy"), Main.rand.Next(11) + 10);
         }
 

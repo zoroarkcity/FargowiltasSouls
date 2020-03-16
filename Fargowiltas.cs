@@ -157,6 +157,8 @@ namespace FargowiltasSouls
             AddToggle("MasoBossRecolors", "Boss Recolors (Restart to use)", "Masochist", "ffffff");
             AddToggle("MasoIconConfig", "Sinister Icon", "SinisterIcon", "ffffff");
             AddToggle("MasoIconDropsConfig", "Sinister Icon Drops", "SinisterIcon", "ffffff");
+            AddToggle("MasoGrazeConfig", "Graze", "SparklingAdoration", "ffffff");
+            AddToggle("MasoDevianttHeartsConfig", "Attacks Spawn Homing Hearts", "SparklingAdoration", "ffffff");
 
             //supreme death fairy header
             AddToggle("SupremeFairyHeader", "Supreme Deathbringer Fairy", "SupremeDeathbringerFairy", "ffffff");
@@ -209,8 +211,8 @@ namespace FargowiltasSouls
             AddToggle("MasoTrueEyeConfig", "True Eyes Minion", "GalacticGlobe", "ffffff");
 
             //cyclonic fin
-            AddToggle("CyclonicHeader", "Cyclonic Fin", "CyclonicFin", "ffffff");
-            AddToggle("MasoFishronConfig", "Spectral Fishron", "CyclonicFin", "ffffff");
+            /*AddToggle("CyclonicHeader", "Cyclonic Fin", "CyclonicFin", "ffffff");
+            AddToggle("MasoFishronConfig", "Spectral Fishron", "CyclonicFin", "ffffff");*/
 
             //mutant armor
             AddToggle("MutantArmorHeader", "True Mutant Armor", "HeartoftheMasochist", "ffffff");
