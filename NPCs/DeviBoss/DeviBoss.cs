@@ -1191,7 +1191,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         {
                             bool wasOnLeft = npc.Center.X < player.Center.X;
                             npc.Center = player.Center;
-                            npc.position.X += wasOnLeft ? 400 : -400;
+                            npc.position.X += wasOnLeft ? 350 : -350;
                             npc.netUpdate = true;
                         }
                         TeleportDust();
@@ -1202,7 +1202,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         }
                     }
                     
-                    if (++npc.ai[1] < 120)
+                    if (++npc.ai[1] < 150)
                     {
                         npc.velocity = Vector2.Zero;
 
@@ -1230,7 +1230,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
                     }
-                    else if (npc.ai[1] == 120) //start swinging
+                    else if (npc.ai[1] == 150) //start swinging
                     {
                         targetPos = player.Center;
                         targetPos.X += 200 * (npc.Center.X < targetPos.X ? -1 : 1);
@@ -1239,7 +1239,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
                     }
-                    else if (npc.ai[1] < 150)
+                    else if (npc.ai[1] < 180)
                     {
                         npc.ai[3] += npc.ai[2];
                         npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
@@ -1250,7 +1250,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.2f);
 
-                        if (npc.ai[1] > 240)
+                        if (npc.ai[1] > 270)
                         {
                             GetNextAttack();
                         }
