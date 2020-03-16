@@ -789,8 +789,13 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case ProjectileID.SandnadoHostile:
-                    if (FargoSoulsWorld.MasochistMode && projectile.timeLeft == 1199 && Main.netMode != 1
-                        && !FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                    if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                    {
+                        projectile.damage = Main.npc[FargoSoulsGlobalNPC.deviBoss].damage / 4;
+                        if (Main.npc[FargoSoulsGlobalNPC.deviBoss].ai[0] != 5 && projectile.timeLeft > 90)
+                            projectile.timeLeft = 90;
+                    }
+                    else if (FargoSoulsWorld.MasochistMode && projectile.timeLeft == 1199 && Main.netMode != 1)
                     {
                         int n = NPC.NewNPC((int)projectile.Center.X, (int)projectile.Center.Y, NPCID.SandShark);
                         if (n < 200)

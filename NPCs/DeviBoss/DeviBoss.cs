@@ -1191,7 +1191,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         {
                             bool wasOnLeft = npc.Center.X < player.Center.X;
                             npc.Center = player.Center;
-                            npc.position.X += wasOnLeft ? 300 : -300;
+                            npc.position.X += wasOnLeft ? -300 : 300;
+                            npc.position.Y -= 150;
                             npc.netUpdate = true;
                         }
                         TeleportDust();
