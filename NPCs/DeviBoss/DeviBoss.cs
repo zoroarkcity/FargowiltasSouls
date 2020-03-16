@@ -113,8 +113,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     do
                     {
                         RefreshAttackQueue();
-                    } while (attackQueue[0] == 3 || attackQueue[0] == 5 || attackQueue[0] == 9);
-                    //don't start with wyvern, mage spam, or frostballs
+                    } while (attackQueue[0] == 3 || attackQueue[0] == 5 || attackQueue[0] == 9 || attackQueue[0] == 10);
+                    //don't start with wyvern, mage spam, frostballs, baby guardian
                     
                     if (Main.netMode != 1)
                     {
@@ -981,7 +981,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                     if (npc.localAI[0] == 0)
                     {
-                        npc.localAI[1] = 1;
+                        npc.localAI[0] = 1;
 
                         if (Main.netMode != 1) //spawn ritual for strong attacks
                         {
