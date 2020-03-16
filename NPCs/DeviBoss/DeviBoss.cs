@@ -14,6 +14,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
     public class DeviBoss : ModNPC
     {
         public int[] attackQueue = new int[4];
+        public int lastStrongAttack;
 
         public override void SetStaticDefaults()
         {
@@ -114,7 +115,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         RefreshAttackQueue();
                     } while (attackQueue[0] == 3 || attackQueue[0] == 5 || attackQueue[0] == 9);
                     //don't start with wyvern, mage spam, or frostballs
-
+                    
                     if (Main.netMode != 1)
                     {
                         int number = 0;
@@ -1274,8 +1275,10 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             {
                 newQueue[3] = Main.rand.Next(11, 16);
             }
-            while (newQueue[3] == attackQueue[3] || (newQueue[3] == 15 && npc.localAI[3] <= 1)); //don't do sparkling love in p1
+            while (newQueue[3] == attackQueue[3] || newQueue[3] == lastStrongAttack || (newQueue[3] == 15 && npc.localAI[3] <= 1));
+            //don't do sparkling love in p1
 
+            lastStrongAttack = attackQueue[3]; //a strong attack can't be used again for the next 2 checks
             attackQueue = newQueue;
 
             /*Main.NewText("queue: "
