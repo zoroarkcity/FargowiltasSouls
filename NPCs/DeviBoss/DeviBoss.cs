@@ -1077,7 +1077,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     {
                         npc.ai[2] = 0;
                         //only make rings in p2 and before firing ray
-                        if (npc.localAI[3] > 1 && npc.ai[3] < 7)
+                        if (npc.localAI[3] > 1 && npc.ai[3] < 7 && !Main.player[npc.target].stoned)
                         {
                             if (Main.netMode != 1)
                             {
