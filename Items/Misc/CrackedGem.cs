@@ -7,8 +7,6 @@ namespace FargowiltasSouls.Items.Misc
 {
 	public class CrackedGem : ModItem
 	{
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Cracked Gem");
