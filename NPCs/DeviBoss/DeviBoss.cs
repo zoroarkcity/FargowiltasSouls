@@ -812,6 +812,14 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                     if (++npc.ai[1] < 180)
                     {
+                        if (npc.ai[1] == 1)
+                        {
+                            npc.velocity.X *= 0.5f;
+                            if (npc.velocity.Y > 0)
+                                npc.velocity.Y *= -0.5f;
+                            npc.netUpdate = true;
+                        }
+
                         //warning dust
                         for (int i = 0; i < 3; i++)
                         {
@@ -900,6 +908,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     {
                         npc.localAI[0] = npc.Center.X;
                         npc.localAI[1] = npc.Center.Y;
+
+                        npc.velocity.X *= 0.5f;
+                        if (npc.velocity.Y > 0)
+                            npc.velocity.Y *= -0.5f;
+                        npc.netUpdate = true;
                     }
 
                     targetPos = player.Center;
