@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.HealerItems;
+using ThoriumMod.Items.Misc;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -62,16 +64,6 @@ Effects of Wynebgwrthucher and Rebirth Statuette");
                 }
             }
         }
-        
-        private readonly string[] items =
-        {
-            "Wynebgwrthucher",
-            "RebirthStatuette",
-            "TwilightStaff",
-            "HolyHammer",
-            "SpiritFireWand",
-            "PillPopper"
-        };
 
         public override void AddRecipes()
         {
@@ -79,12 +71,16 @@ Effects of Wynebgwrthucher and Rebirth Statuette");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("FallenPaladinFacegaurd"));
-            recipe.AddIngredient(thorium.ItemType("FallenPaladinCuirass"));
-            recipe.AddIngredient(thorium.ItemType("FallenPaladinGreaves"));
-            recipe.AddIngredient(null, "TemplarEnchant");
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+            recipe.AddIngredient(ModContent.ItemType<FallenPaladinFacegaurd>());
+            recipe.AddIngredient(ModContent.ItemType<FallenPaladinCuirass>());
+            recipe.AddIngredient(ModContent.ItemType<FallenPaladinGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<TemplarEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<Wynebgwrthucher>());
+            recipe.AddIngredient(ModContent.ItemType<RebirthStatuette>());
+            recipe.AddIngredient(ModContent.ItemType<TwilightStaff>());
+            recipe.AddIngredient(ModContent.ItemType<BulwarkStaff>());
+            recipe.AddIngredient(ModContent.ItemType<LightBringerWarhammer>());
+            recipe.AddIngredient(ModContent.ItemType<GoldDuck>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

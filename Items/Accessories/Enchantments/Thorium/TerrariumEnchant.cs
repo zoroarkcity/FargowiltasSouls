@@ -5,6 +5,9 @@ using ThoriumMod;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria.Localization;
+using ThoriumMod.Items.Terrarium;
+using ThoriumMod.Items.BardItems;
+using ThoriumMod.Items.NPCItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -92,16 +95,6 @@ Effects of Terrarium Surround Sound and Fan Letter");
             //fan letter
             thoriumPlayer.bardResourceMax2 += 2;
         }
-        
-        private readonly string[] items =
-        {
-            "TerrariumSubwoofer",
-            "EssenceofFlame",
-            "TerrariumSaber",
-            "SickThrow",
-            "TerrariumBomber",
-            "TerrariumKnife"
-        };
 
         public override void AddRecipes()
         {
@@ -109,12 +102,16 @@ Effects of Terrarium Surround Sound and Fan Letter");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("TerrariumHelmet"));
-            recipe.AddIngredient(thorium.ItemType("TerrariumBreastPlate"));
-            recipe.AddIngredient(thorium.ItemType("TerrariumGreaves"));
-            recipe.AddIngredient(null, "ThoriumEnchant");
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+            recipe.AddIngredient(ModContent.ItemType<TerrariumHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<TerrariumBreastPlate>());
+            recipe.AddIngredient(ModContent.ItemType<TerrariumGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<ThoriumEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<TerrariumSubwoofer>());
+            recipe.AddIngredient(ModContent.ItemType<TerrariumSaber>());
+            recipe.AddIngredient(ModContent.ItemType<TerrariumAutoharp>());
+            recipe.AddIngredient(ModContent.ItemType<TerrariumBomber>());
+            recipe.AddIngredient(ModContent.ItemType<TerrariumKnife>());
+            recipe.AddIngredient(ModContent.ItemType<ThoriumCube>());
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

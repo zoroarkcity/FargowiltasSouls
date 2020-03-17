@@ -164,7 +164,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 projectile.velocity.Y = 16f;
             if (projectile.velocity.Y < -16f)
                 projectile.velocity.Y = -16f;
-            
+
             projectile.rotation = (float)Math.Sin(2 * Math.PI * rotation++ / 90) * (float)Math.PI / 8f;
             if (rotation > 180)
                 rotation = 0;

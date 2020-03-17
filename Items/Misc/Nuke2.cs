@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Misc
 {
@@ -37,7 +38,7 @@ namespace FargowiltasSouls.Items.Misc
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(null, "Nuke", 999);
-            recipe.AddTile(null, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

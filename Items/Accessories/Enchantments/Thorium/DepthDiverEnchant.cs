@@ -4,6 +4,10 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using ThoriumMod.Items.Depths;
+using ThoriumMod.Items.QueenJelly;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.Painting;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -77,16 +81,6 @@ Summons a pet Jellyfish");
             modPlayer.DepthEnchant = true;
             modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.JellyfishPet, hideVisual, thorium.BuffType("JellyPet"), thorium.ProjectileType("JellyfishPet"));
         }
-        
-        private readonly string[] items =
-        {
-            "MagicConch",
-            "GeyserStaff",
-            "ScubaCurva",
-            "AnglerBulb",
-            "QueensGlowstick",
-            "JellyFishIdol"
-        };
 
         public override void AddRecipes()
         {
@@ -94,12 +88,16 @@ Summons a pet Jellyfish");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("DepthDiverHelmet"));
-            recipe.AddIngredient(thorium.ItemType("DepthDiverChestplate"));
-            recipe.AddIngredient(thorium.ItemType("DepthDiverGreaves"));
-            recipe.AddIngredient(null, "OceanEnchant");
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+            recipe.AddIngredient(ModContent.ItemType<DepthDiverHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<DepthDiverChestplate>());
+            recipe.AddIngredient(ModContent.ItemType<DepthDiverGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<OceanEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<MagicConch>());
+            recipe.AddIngredient(ModContent.ItemType<GeyserStaff>());
+            recipe.AddIngredient(ModContent.ItemType<AnglerBulb>());
+            recipe.AddIngredient(ModContent.ItemType<QueensGlowstick>());
+            recipe.AddIngredient(ModContent.ItemType<JellyFishIdol>());
+            recipe.AddIngredient(ModContent.ItemType<AquaticParadisePaint>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

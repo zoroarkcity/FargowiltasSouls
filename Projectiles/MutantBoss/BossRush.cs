@@ -34,7 +34,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 projectile.Kill();
                 return;
             }
-            
+
             NPC npc = Main.npc[ai0];
             projectile.Center = npc.Center;
             projectile.timeLeft = 2;
@@ -43,7 +43,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             {
                 projectile.ai[1] = 180;
                 projectile.netUpdate = true;
-                switch((int)projectile.localAI[0]++)
+                switch ((int)projectile.localAI[0]++)
                 {
                     case 0:
                         NPC.SpawnOnPlayer(npc.target, NPCID.EyeofCthulhu);

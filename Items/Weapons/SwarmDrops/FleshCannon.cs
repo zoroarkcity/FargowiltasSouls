@@ -1,3 +1,4 @@
+using Fargowiltas.Items.Tiles;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -37,7 +38,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("Hungry");
             item.shootSpeed = 20f;
-        }   
+        }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
@@ -71,14 +72,14 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-                recipe.AddIngredient(null, "FleshHand");
-                recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerWall"));
-                recipe.AddIngredient(ItemID.LunarBar, 10);
-                recipe.AddIngredient(null, "LunarCrystal", 5);
+            recipe.AddIngredient(null, "FleshHand");
+            recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerWall"));
+            recipe.AddIngredient(ItemID.LunarBar, 10);
+            recipe.AddIngredient(null, "LunarCrystal", 5);
 
-                recipe.AddTile(mod, "CrucibleCosmosSheet");
-                recipe.SetResult(this);
-                recipe.AddRecipe();
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

@@ -64,24 +64,10 @@ Getting hit drops your crit back down";
             recipe.AddIngredient(ItemID.TinHelmet);
             recipe.AddIngredient(ItemID.TinChainmail);
             recipe.AddIngredient(ItemID.TinGreaves);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("TinBuckler"));
-                recipe.AddIngredient(ItemID.TinShortsword);
-                recipe.AddIngredient(ItemID.TinBroadsword);
-                recipe.AddIngredient(ItemID.TinBow);
-                recipe.AddIngredient(ItemID.TopazStaff);
-                recipe.AddIngredient(ItemID.YellowPhaseblade);
-                recipe.AddIngredient(ItemID.Daylight);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.TinBow);
-                recipe.AddIngredient(ItemID.TopazStaff);
-                recipe.AddIngredient(ItemID.YellowPhaseblade);
-                recipe.AddIngredient(ItemID.Daylight);
-            }
+            recipe.AddIngredient(ItemID.TinBow);
+            recipe.AddIngredient(ItemID.TopazStaff);
+            recipe.AddIngredient(ItemID.YellowPhaseblade);
+            recipe.AddIngredient(ItemID.Daylight);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

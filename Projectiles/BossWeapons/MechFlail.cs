@@ -48,11 +48,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Vector2 vector14 = new Vector2(projectile.position.X + projectile.width * 0.5f, projectile.position.Y + projectile.height * 0.5f);
             float num166 = Main.player[projectile.owner].position.X + Main.player[projectile.owner].width / 2 - vector14.X;
             float num167 = Main.player[projectile.owner].position.Y + Main.player[projectile.owner].height / 2 - vector14.Y;
-            float distance = (float) Math.Sqrt(num166 * num166 + num167 * num167);
+            float distance = (float)Math.Sqrt(num166 * num166 + num167 * num167);
             if (projectile.ai[0] == 0f)
             {
                 if (distance > 400f) projectile.ai[0] = 1f;
-                projectile.rotation = (float) Math.Atan2(projectile.velocity.Y, projectile.velocity.X) + 1.57f;
+                projectile.rotation = (float)Math.Atan2(projectile.velocity.Y, projectile.velocity.X) + 1.57f;
                 projectile.ai[1] += 1f;
                 if (projectile.ai[1] > 8f) projectile.ai[1] = 8f;
                 if (projectile.velocity.X < 0f)
@@ -64,7 +64,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             else if (projectile.ai[0] == 1f)
             {
                 projectile.tileCollide = false;
-                projectile.rotation = (float) Math.Atan2(num167, num166) - 1.57f;
+                projectile.rotation = (float)Math.Atan2(num167, num166) - 1.57f;
                 float num169 = 30f;
 
                 if (distance < 50f) projectile.Kill();
@@ -129,7 +129,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
             float num1 = texture.Height;
             Vector2 vector24 = mountedCenter - position;
-            float rotation = (float) Math.Atan2(vector24.Y, vector24.X) - 1.57f;
+            float rotation = (float)Math.Atan2(vector24.Y, vector24.X) - 1.57f;
             bool flag = true;
             if (float.IsNaN(position.X) && float.IsNaN(position.Y))
                 flag = false;
@@ -146,7 +146,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     vector21.Normalize();
                     position += vector21 * num1;
                     vector24 = mountedCenter - position;
-                    Color color2 = Lighting.GetColor((int) position.X / 16, (int) (position.Y / 16.0));
+                    Color color2 = Lighting.GetColor((int)position.X / 16, (int)(position.Y / 16.0));
                     color2 = projectile.GetAlpha(color2);
                     Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0.0f);
                 }

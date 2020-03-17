@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.HealerItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -53,28 +54,23 @@ Heals ally life equal to your bonus healing");
                 }
             }
         }
-        
-        private readonly string[] items =
-        {
-            "LifeWeaverHood",
-            "LifeWeaverGarment",
-            "LifeWeaverLeggings",
-            "LustrousBaton",
-            "NullZoneStaff",
-            "VoidPlanter",
-            "LifeEssenceApparatus",
-            "PocketGaurdian", //....
-            "LifePulseStaff",
-            "BarrierGenerator"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<LifeWeaverHood>());
+            recipe.AddIngredient(ModContent.ItemType<LifeWeaverGarment>());
+            recipe.AddIngredient(ModContent.ItemType<LifeWeaverLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<LustrousBaton>());
+            recipe.AddIngredient(ModContent.ItemType<NullZoneStaff>());
+            recipe.AddIngredient(ModContent.ItemType<LifeEssenceApparatus>());
+            recipe.AddIngredient(ModContent.ItemType<PocketGaurdian>());
+            recipe.AddIngredient(ModContent.ItemType<LifePulseStaff>());
+            recipe.AddIngredient(ModContent.ItemType<BarrierGenerator>());
+            recipe.AddIngredient(ModContent.ItemType<LifeSurgeStaff>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

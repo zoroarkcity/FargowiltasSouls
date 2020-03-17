@@ -3,6 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.DemonBlood;
+using ThoriumMod.Items.BasicAccessories;
+using ThoriumMod.Items.HealerItems;
+using ThoriumMod.Items.ThrownItems;
+using ThoriumMod.Items.Consumable;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -66,15 +71,6 @@ Summons a pet Flying Blister");
             modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.BlisterPet, hideVisual, thorium.BuffType("BlisterBuff"), thorium.ProjectileType("BlisterPet"));
             modPlayer.FleshEnchant = true;
         }
-        
-        private readonly string[] items =
-        {
-            "DemonRageBadge",
-            "VileCore",
-            "DemonBloodSword",
-            "DemonBloodRipper",
-            "DarkContagionBook"
-        };
 
         public override void AddRecipes()
         {
@@ -82,15 +78,17 @@ Summons a pet Flying Blister");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("DemonBloodHelmet"));
-            recipe.AddIngredient(thorium.ItemType("DemonBloodBreastPlate"));
-            recipe.AddIngredient(thorium.ItemType("DemonBloodGreaves"));
-            recipe.AddIngredient(null, "FleshEnchant");
+            recipe.AddIngredient(ModContent.ItemType<DemonBloodHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<DemonBloodBreastPlate>());
+            recipe.AddIngredient(ModContent.ItemType<DemonBloodGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<FleshEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<DemonRageBadge>());
+            recipe.AddIngredient(ModContent.ItemType<VileCore>());
+            recipe.AddIngredient(ModContent.ItemType<DemonBloodRipper>());
+            recipe.AddIngredient(ModContent.ItemType<DarkContagionBook>());
+            recipe.AddIngredient(ModContent.ItemType<FesteringBalloon>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<BloodRootGoop>(), 5);
 
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
-
-            recipe.AddIngredient(thorium.ItemType("FesteringBalloon"), 300);
-            
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

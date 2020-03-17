@@ -11,8 +11,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         // Also showcased in ExampleJavelinProjectile.cs
         public float MovementFactor // Change this value to alter how fast the spear moves
         {
-            get { return projectile.ai[0]; }
-            set { projectile.ai[0] = value; }
+            get
+            {
+                return projectile.ai[0];
+            }
+            set
+            {
+                projectile.ai[0] = value;
+            }
         }
 
         public override void SetStaticDefaults()
@@ -94,7 +100,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             if (projOwner.itemAnimation == 0) projectile.Kill();
             // Apply proper rotation, with an offset of 135 degrees due to the sprite's rotation, notice the usage of MathHelper, use this class!
             // MathHelper.ToRadians(xx degrees here)
-            projectile.rotation = (float) Math.Atan2(projectile.velocity.Y, projectile.velocity.X) + MathHelper.ToRadians(135f);
+            projectile.rotation = (float)Math.Atan2(projectile.velocity.Y, projectile.velocity.X) + MathHelper.ToRadians(135f);
             // Offset by 90 degrees here
             if (projectile.spriteDirection == -1) projectile.rotation -= MathHelper.ToRadians(90f);
         }

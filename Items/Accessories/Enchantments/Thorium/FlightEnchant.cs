@@ -2,6 +2,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using ThoriumMod.Items.ArcaneArmor;
+using ThoriumMod.Items.Hero;
+using ThoriumMod.Items.BardItems;
+using ThoriumMod.Items.ThrownItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -43,17 +47,6 @@ Increases flight time by 100%");
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             modPlayer.wingTimeModifier += 1f;
         }
-        
-        private readonly string[] items =
-        {
-            "FlightMask",
-            "FlightMail",
-            "FlightBoots",
-            "ChampionWing",
-            "FabergeEgg",
-            "HarpyTalon",
-            "Aerial"
-        };
 
         public override void AddRecipes()
         {
@@ -61,11 +54,16 @@ Increases flight time by 100%");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
-
-            recipe.AddIngredient(thorium.ItemType("HarpiesBarrage"), 300);
-            recipe.AddIngredient(thorium.ItemType("Bolas"), 300);
-            recipe.AddIngredient(thorium.ItemType("WackWrench"), 300);
+            recipe.AddIngredient(ModContent.ItemType<FlightMask>());
+            recipe.AddIngredient(ModContent.ItemType<FlightMail>());
+            recipe.AddIngredient(ModContent.ItemType<FlightBoots>());
+            recipe.AddIngredient(ModContent.ItemType<ChampionWing>());
+            recipe.AddIngredient(ModContent.ItemType<FabergeEgg>());
+            recipe.AddIngredient(ModContent.ItemType<HarpyTalon>());
+            recipe.AddIngredient(ModContent.ItemType<Aerial>());
+            recipe.AddIngredient(ModContent.ItemType<RodFlocking>());
+            recipe.AddIngredient(ModContent.ItemType<HarpiesBarrage>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<Bolas>(), 300);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

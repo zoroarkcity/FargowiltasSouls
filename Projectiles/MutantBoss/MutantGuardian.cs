@@ -15,16 +15,16 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             Main.projFrames[projectile.type] = 3;
         }
 
-		public override void SetDefaults()
-		{
-			projectile.width = 40;
-			projectile.height = 50;
-			projectile.aiStyle = 0;
-			aiType = ProjectileID.Bullet;
+        public override void SetDefaults()
+        {
+            projectile.width = 40;
+            projectile.height = 50;
+            projectile.aiStyle = 0;
+            aiType = ProjectileID.Bullet;
             projectile.hostile = true;
-			projectile.penetrate = -1;
-			projectile.tileCollide = false;
-			projectile.timeLeft = 300;
+            projectile.penetrate = -1;
+            projectile.tileCollide = false;
+            projectile.timeLeft = 300;
             cooldownSlot = 1;
         }
 

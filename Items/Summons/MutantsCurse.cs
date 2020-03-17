@@ -6,20 +6,20 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Summons
 {
-	public class MutantsCurse : ModItem
-	{
+    public class MutantsCurse : ModItem
+    {
         public override string Texture => "FargowiltasSouls/Items/Placeholder";
 
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Mutant's Curse");
+        {
+            DisplayName.SetDefault("Mutant's Curse");
             Tooltip.SetDefault("'At least this way, you don't need that doll'");
             DisplayName.AddTranslation(GameCulture.Chinese, "突变体的诅咒");
             Tooltip.AddTranslation(GameCulture.Chinese, "'至少不需要用娃娃了'");
-		}
+        }
 
-		public override void SetDefaults()
-		{
+        public override void SetDefaults()
+        {
             item.width = 20;
             item.height = 20;
             item.rare = 11;
@@ -34,18 +34,18 @@ namespace FargowiltasSouls.Items.Summons
         public override bool UseItem(Player player)
         {
             int mutant = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
-                if (mutant > -1 && Main.npc[mutant].active)
-                {
-                    Main.npc[mutant].Transform(mod.NPCType("MutantBoss"));
-                    if (Main.netMode == 0)
-                        Main.NewText("Mutant has awoken!", 175, 75, 255);
-                    else if (Main.netMode == 2)
-                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Mutant has awoken!"), new Color(175, 75, 255));
-                }
-                else
-                {
-                    NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("MutantBoss"));
-                }
+            if (mutant > -1 && Main.npc[mutant].active)
+            {
+                Main.npc[mutant].Transform(mod.NPCType("MutantBoss"));
+                if (Main.netMode == 0)
+                    Main.NewText("Mutant has awoken!", 175, 75, 255);
+                else if (Main.netMode == 2)
+                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Mutant has awoken!"), new Color(175, 75, 255));
+            }
+            else
+            {
+                NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("MutantBoss"));
+            }
             return true;
         }
 

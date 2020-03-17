@@ -748,10 +748,6 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.ThoriumCrystalScorpionConfig")]
         public bool CrystalScorpion = true;
 
-        [Label("$Mods.FargowiltasSouls.ThoriumYumasPendantConfig")]
-        [DefaultValue(true)]
-        public bool YumasPendant = true;
-
         [Label("$Mods.FargowiltasSouls.ThoriumHeadMirrorConfig")]
         [DefaultValue(true)]
         public bool HeadMirror = true;
@@ -767,14 +763,6 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.ThoriumCoinPetConfig")]
         [DefaultValue(true)]
         public bool CoinPet = true;
-
-        [Label("$Mods.FargowiltasSouls.ThoriumBioFeederPetConfig")]
-        [DefaultValue(true)]
-        public bool BioFeederPet = true;
-
-        [Label("$Mods.FargowiltasSouls.ThoriumLanternPetConfig")]
-        [DefaultValue(true)]
-        public bool LanternPet = true;
 
         [Label("$Mods.FargowiltasSouls.ThoriumBoxPetConfig")]
         [DefaultValue(true)]
@@ -818,11 +806,6 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool WhisperingTentacles = true;
 
-        [Header("$Mods.FargowiltasSouls.AlfheimForce")]
-        [Label("$Mods.FargowiltasSouls.ThoriumCherubMinionConfig")]
-        [DefaultValue(true)]
-        public bool CherubMinion = true;
-
         [Label("$Mods.FargowiltasSouls.ThoriumSpiritPetConfig")]
         [DefaultValue(true)]
         public bool SpiritPet = true;
@@ -831,17 +814,9 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool WarlockWisps = true;
 
-        [Label("$Mods.FargowiltasSouls.ThoriumDevilMinionConfig")]
-        [DefaultValue(true)]
-        public bool DevilMinion = true;
-
         [Label("$Mods.FargowiltasSouls.ThoriumBiotechProbeConfig")]
         [DefaultValue(true)]
         public bool BiotechProbe = true;
-
-        [Label("$Mods.FargowiltasSouls.ThoriumGoatPetConfig")]
-        [DefaultValue(true)]
-        public bool GoatPet = true;
 
         [Header("$Mods.FargowiltasSouls.NiflheimForce")]
         [Label("$Mods.FargowiltasSouls.ThoriumMixTapeConfig")]
@@ -869,13 +844,7 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool BronzeLightning = true;
 
-        [Label("$Mods.FargowiltasSouls.ThoriumIncandescentSparkConfig")]
-        [DefaultValue(true)]
-        public bool IncandescentSpark = true;
-
-        [Label("$Mods.FargowiltasSouls.ThoriumGreedyMagnetConfig")]
-        [DefaultValue(true)]
-        public bool GreedyMagnet = true;
+       
 
         [Label("$Mods.FargowiltasSouls.ThoriumConduitShieldConfig")]
         [DefaultValue(true)]
@@ -902,10 +871,6 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool IllumiteMissile = true;
 
-        [Label("$Mods.FargowiltasSouls.ThoriumSlimePetConfig")]
-        [DefaultValue(true)]
-        public bool SlimePet = true;
-
         [Label("$Mods.FargowiltasSouls.ThoriumTerrariumSpiritsConfig")]
         [DefaultValue(true)]
         public bool TerrariumSpirits = true;
@@ -922,14 +887,6 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool JesterBell = true;
 
-        [Header("$Mods.FargowiltasSouls.VanaheimForce")]
-        [Label("$Mods.FargowiltasSouls.ThoriumFolvAuraConfig")]
-        [DefaultValue(true)]
-        public bool FolvAura = true;
-
-        [Label("$Mods.FargowiltasSouls.ThoriumFolvBoltsConfig")]
-        [DefaultValue(true)]
-        public bool FolvBolts = true;
 
         [Label("$Mods.FargowiltasSouls.ThoriumManaBootsConfig")]
         [DefaultValue(true)]
@@ -996,14 +953,6 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool HarbingerOvercharge = true;
 
-        [Label("$Mods.FargowiltasSouls.ThoriumMooglePetConfig")]
-        [DefaultValue(true)]
-        public bool MooglePet = true;
-
-        [Label("$Mods.FargowiltasSouls.ThoriumPlagueFlaskConfig")]
-        [DefaultValue(true)]
-        public bool PlagueFlask = true;
-
         [Header("$Mods.FargowiltasSouls.AsgardForce")]
         [Label("$Mods.FargowiltasSouls.ThoriumTideGlobulesConfig")]
         [DefaultValue(true)]
@@ -1022,9 +971,6 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool PyromancerBursts = true;
 
-        [Label("$Mods.FargowiltasSouls.ThoriumMaidPetConfig")]
-        [DefaultValue(true)]
-        public bool MaidPet = true;
     }
 
     public class CalamityToggles

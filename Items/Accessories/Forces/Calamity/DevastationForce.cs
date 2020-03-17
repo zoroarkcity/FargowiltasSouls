@@ -2,6 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.Calamity
 {
@@ -80,7 +81,7 @@ Summons several pets");
             recipe.AddIngredient(null, "TarragonEnchant");
             recipe.AddIngredient(null, "DemonShadeEnchant");
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

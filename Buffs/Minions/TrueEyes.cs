@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Buffs.Minions
             DisplayName.AddTranslation(GameCulture.Chinese, "真·克苏鲁之眼");
             Description.AddTranslation(GameCulture.Chinese, "克苏鲁之眼将会保护你");
         }
-        
+
         public override void Update(Player player, ref int buffIndex)
         {
             player.GetModPlayer<FargoPlayer>().TrueEyes = true;

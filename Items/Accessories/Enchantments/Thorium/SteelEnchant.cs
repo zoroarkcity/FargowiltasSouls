@@ -3,6 +3,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Steel;
+using ThoriumMod.Items.Thorium;
+using ThoriumMod.Items.BasicAccessories;
+using ThoriumMod.Items.HealerItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -61,17 +65,17 @@ Effects of Spiked Bracers");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("SteelHelmet"));
-            recipe.AddIngredient(thorium.ItemType("SteelChestplate"));
-            recipe.AddIngredient(thorium.ItemType("SteelGreaves"));
-            recipe.AddIngredient(thorium.ItemType("SpikedBracer"));
+            recipe.AddIngredient(ModContent.ItemType<SteelHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<SteelChestplate>());
+            recipe.AddIngredient(ModContent.ItemType<SteelGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<ThoriumShield>());
+            recipe.AddIngredient(ModContent.ItemType<SpikedBracer>());
             recipe.AddIngredient(ItemID.Katana);
-            recipe.AddIngredient(thorium.ItemType("SteelAxe"));
-            recipe.AddIngredient(thorium.ItemType("SteelMallet"));
-            recipe.AddIngredient(thorium.ItemType("SteelBlade"));
-            recipe.AddIngredient(thorium.ItemType("WarForger"));
-            recipe.AddIngredient(thorium.ItemType("SuperAnvil"));
-
+            recipe.AddIngredient(ModContent.ItemType<SteelAxe>());
+            recipe.AddIngredient(ModContent.ItemType<SteelMallet>());
+            recipe.AddIngredient(ModContent.ItemType<SteelBlade>());
+            recipe.AddIngredient(ModContent.ItemType<WarForger>());
+           
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();

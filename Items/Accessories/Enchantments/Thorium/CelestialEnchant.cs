@@ -3,6 +3,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.HealerItems;
+using ThoriumMod.Items.Tracker;
+using ThoriumMod.Items.BardItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -50,28 +53,23 @@ Effects of Ascension Statuette");
             //ascension statue
             thoriumPlayer.ascension = true;
         }
-        
-        private readonly string[] items =
-        {
-            "CelestialCrown",
-            "CelestialVestment",
-            "CelestialLeggings",
-            "CelestialTrinity",
-            "AscensionStatuette",
-            "HealingRain",
-            "AncientTome",
-            "BlackScythe",
-            "CelestialNova",
-            "DivineStaff"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<CelestialCrown>());
+            recipe.AddIngredient(ModContent.ItemType<CelestialVestment>());
+            recipe.AddIngredient(ModContent.ItemType<CelestialLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<CelestialTrinity>());
+            recipe.AddIngredient(ModContent.ItemType<AscensionStatuette>());
+            recipe.AddIngredient(ModContent.ItemType<HealingRain>());
+            recipe.AddIngredient(ModContent.ItemType<AncientTome>());
+            recipe.AddIngredient(ModContent.ItemType<Buisine>());
+            recipe.AddIngredient(ModContent.ItemType<BlackScythe>());
+            recipe.AddIngredient(ModContent.ItemType<DivineStaff>());
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

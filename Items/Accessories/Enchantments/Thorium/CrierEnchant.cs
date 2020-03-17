@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.BardItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -55,17 +56,16 @@ Effects of Music Notes");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("BardCap"));
-            recipe.AddIngredient(thorium.ItemType("BardChest"));
-            recipe.AddIngredient(thorium.ItemType("BardLeggings"));
+            recipe.AddIngredient(ModContent.ItemType<BardCap>());
+            recipe.AddIngredient(ModContent.ItemType<BardChest>());
+            recipe.AddIngredient(ModContent.ItemType<BardLeggings>());
             recipe.AddRecipeGroup("FargowiltasSouls:AnyBugleHorn");
-            recipe.AddIngredient(thorium.ItemType("WoodenWhistle"));
-            recipe.AddIngredient(thorium.ItemType("Ukulele"));
-            recipe.AddIngredient(thorium.ItemType("DrumMallet"));
-            recipe.AddIngredient(thorium.ItemType("Harmonica"));
-            recipe.AddIngredient(thorium.ItemType("DynastyGuzheng"));
-            //because bards attract birds?
-            recipe.AddIngredient(ItemID.Cardinal);
+            recipe.AddIngredient(ModContent.ItemType<WoodenWhistle>());
+            recipe.AddIngredient(ModContent.ItemType<Ukulele>());
+            recipe.AddIngredient(ModContent.ItemType<DrumMallet>());
+            recipe.AddIngredient(ModContent.ItemType<Harmonica>());
+            recipe.AddIngredient(ModContent.ItemType<DynastyGuzheng>());
+            recipe.AddIngredient(ModContent.ItemType<Piano>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using ThoriumMod.Items.BardItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -57,28 +58,23 @@ Effects of Concert Tickets");
                 }
             }
         }
-        
-        private readonly string[] items =
-        {
-            "OrnateHat",
-            "OrnateJerkin",
-            "OrnateLeggings",
-            "ConcertTickets",
-            "MythrilMelodica",
-            "GreenTambourine",
-            "VuvuzelaBlue",
-            "VuvuzelaGreen",
-            "VuvuzelaRed",
-            "VuvuzelaYellow"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<OrnateHat>());
+            recipe.AddIngredient(ModContent.ItemType<OrnateJerkin>());
+            recipe.AddIngredient(ModContent.ItemType<OrnateLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<ConcertTickets>());
+            recipe.AddIngredient(ModContent.ItemType<OrichalcumSlideWhistle>());
+            recipe.AddIngredient(ModContent.ItemType<GreenTambourine>());
+            recipe.AddIngredient(ModContent.ItemType<VuvuzelaBlue>());
+            recipe.AddIngredient(ModContent.ItemType<VuvuzelaGreen>());
+            recipe.AddIngredient(ModContent.ItemType<VuvuzelaRed>());
+            recipe.AddIngredient(ModContent.ItemType<VuvuzelaYellow>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

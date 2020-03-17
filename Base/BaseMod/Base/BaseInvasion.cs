@@ -69,10 +69,10 @@ namespace FargowiltasSouls
 				icon = GRealm.GetTexture("HordeIcon");
 				iconHM =  GRealm.GetTexture("HordeIcon2");
 			}
-			zombieNet = new int[] { -45, -44, -37, -36, -35, -34, -33, -32, -31, -30, -29, -28, -27, -26, 3, 132, 186, 187, 188, 189, 200, mod.NPCType("TorchZombie"), mod.NPCType("FitnessZombie"), mod.NPCType("MaggotZombie") };
+			zombieNet = new int[] { -45, -44, -37, -36, -35, -34, -33, -32, -31, -30, -29, -28, -27, -26, 3, 132, 186, 187, 188, 189, 200, ModContent.\1Type<\2>\(\) };
 			skeletonNet = new int[] { -46, -47, -48, -49, -50, -51, -52, -53, 21 };
 			zombieHalloweenNet = new int[] { 319, 320, 321, 316 };
-			zombieHMNet = new int[] { mod.NPCType("Undead1a"), mod.NPCType("Undead2a"), mod.NPCType("Undead3a"), mod.NPCType("Undead4a"), mod.NPCType("Undead1b"), mod.NPCType("Undead2b"), mod.NPCType("Undead3b"), mod.NPCType("Undead4b"), mod.NPCType("Undead1c"), mod.NPCType("Undead2c"), mod.NPCType("Undead3c"), mod.NPCType("Undead4c") }; //undead
+			zombieHMNet = new int[] { ModContent.\1Type<\2>\(\) }; //undead
 			skeletonHMNet = new int[] { 77, 110, 82 };
 			zombieXmasHMNet = new int[] { 338, 339, 340 };
 			zombieExpertNet = new int[] { NPCID.ArmedZombie, NPCID.ArmedZombiePincussion, NPCID.ArmedZombieSlimed, NPCID.ArmedZombieSwamp, NPCID.ArmedZombieTwiggy, NPCID.ArmedZombieCenx };
@@ -126,7 +126,7 @@ namespace FargowiltasSouls
 		public bool IsHardMob(int type)
 		{
 			Mod mod = GRealm.self;
-			if(type == mod.NPCType("Barbarian") || type == mod.NPCType("UndeadipedeHead") || type == mod.NPCType("BumblebirbRider")) return true;
+			if(type == ModContent.\1Type<\2>\(\)) return true;
 			if(zombieInfo.Count > 0)
 			{
 				for(int m = 0; m < zombieInfo.Count; m++)
@@ -140,18 +140,18 @@ namespace FargowiltasSouls
 		public string GetHardMobSpawnText(int type)
 		{
 			Mod mod = GRealm.self;			
-			if(type == mod.NPCType("Barbarian")){ return "A Barbarian roars into battle!"; }
-			if(type == mod.NPCType("UndeadipedeHead")){ return "An Undeadipede hungers for flesh..."; }
-			if(type == mod.NPCType("BumblebirbRider")){ return "A Bumblebirb Rider buzzes along..."; }
+			if(type == ModContent.\1Type<\2>\(\)){ return "A Barbarian roars into battle!"; }
+			if(type == ModContent.\1Type<\2>\(\)){ return "An Undeadipede hungers for flesh..."; }
+			if(type == ModContent.\1Type<\2>\(\)){ return "A Bumblebirb Rider buzzes along..."; }
 			return null; //"You spawned an impossible zombie!";
 		}
 
 		public string GetHardMobDeathText(int type)
 		{
 			Mod mod = GRealm.self;			
-			if(type == mod.NPCType("Barbarian")){ return "A Barbarian has perished!"; }		
-			if(type == mod.NPCType("UndeadipedeHead")){ return "An Undeadipede withers away..."; }
-			if(type == mod.NPCType("BumblebirbRider")){ return "A Bumblebirb Rider has been fried!"; }		
+			if(type == ModContent.\1Type<\2>\(\)){ return "A Barbarian has perished!"; }		
+			if(type == ModContent.\1Type<\2>\(\)){ return "An Undeadipede withers away..."; }
+			if(type == ModContent.\1Type<\2>\(\)){ return "A Bumblebirb Rider has been fried!"; }		
 			return null; //"You killed an impossible zombie!";
 		}
 
@@ -227,7 +227,7 @@ namespace FargowiltasSouls
 					if (ModSupport.calamity != null && ModSupport.downedBoss_calamity != null && (DEV || ModSupport.downedBoss_calamity("Bumblebirb")) && Main.rand.Next(3) != 0) //bumblebirb rider
 					{
 						addedHardMob = true;
-						net.Add(mod.NPCType("BumblebirbRider"));				
+						net.Add(ModContent.\1Type<\2>\(\));				
 					}else
 					if ((DEV || NPC.downedFishron) && Main.rand.Next(3) != 0) //undeadipede
 					{
@@ -237,7 +237,7 @@ namespace FargowiltasSouls
 					if (DEV || NPC.downedGolemBoss) //barbarian
 					{
 						addedHardMob = true;
-						net.Add(mod.NPCType("Barbarian"));
+						net.Add(ModContent.\1Type<\2>\(\));
 					}
 					if(addedHardMob) goto SpawnEnd;
 				}
@@ -249,11 +249,11 @@ namespace FargowiltasSouls
 				}
 				if (Main.rand.Next(4) == 0) //crawler
 				{
-					net.Add(mod.NPCType("Crawler"));
+					net.Add(ModContent.\1Type<\2>\(\));
 				}
 				if (ZONEDEV || player.InZone("Desert")) //hollow husk
 				{
-					net.Add(mod.NPCType("HollowHusk"));
+					net.Add(ModContent.\1Type<\2>\(\));
 				}
 				
 				#region boss specials
@@ -261,53 +261,53 @@ namespace FargowiltasSouls
 				{
 					if(ModSupport.calamity != null && Main.rand.Next(2) == 0)
 					{
-						net.Add(mod.NPCType("BlightedEyemaster"));
+						net.Add(ModContent.\1Type<\2>\(\));
 					}else
 					{
-						net.Add(mod.NPCType("Eyemaster"));
+						net.Add(ModContent.\1Type<\2>\(\));
 					}
-					if(!NPC.downedMoonlord || Main.rand.Next(3) == 0) net.Add(mod.NPCType("Gundead"));
+					if(!NPC.downedMoonlord || Main.rand.Next(3) == 0) net.Add(ModContent.\1Type<\2>\(\));
 				}
 				if ((DEV || NPC.downedBoss2) && Main.rand.Next(rarityHM) == 0) //cursed mage, crystal mage, frozen mage, ichor mage
 				{
 					if (ZONEDEV || player.InZone("Hallow"))
 					{
-						net.Add(mod.NPCType("CrystalMage"));
+						net.Add(ModContent.\1Type<\2>\(\));
 					}
 					if (ZONEDEV || player.InZone("Corruption"))
 					{
-						net.Add(mod.NPCType("CursedMage"));
+						net.Add(ModContent.\1Type<\2>\(\));
 					}
 					if (ZONEDEV || player.InZone("Crimson"))
 					{
-						net.Add(mod.NPCType("IchorMage"));
+						net.Add(ModContent.\1Type<\2>\(\));
 					}
 					if (ZONEDEV || player.InZone("Snow"))
 					{
-						net.Add(mod.NPCType("FrozenMage"));
+						net.Add(ModContent.\1Type<\2>\(\));
 					}
 				}
 				if ((DEV || NPC.downedBoss3) && Main.rand.Next(rarityHM) == 0)//libraramaster, bone knight
 				{
-					net.Add(mod.NPCType("BoneKnight"));
+					net.Add(ModContent.\1Type<\2>\(\));
 				}
 				if ((DEV || NPC.downedQueenBee) && (ZONEDEV || player.InZone("Jungle")) && Main.rand.Next(rarityHM) == 0) //wasp whisperer
 				{
-					net.Add(mod.NPCType("WaspWhisperer"));
+					net.Add(ModContent.\1Type<\2>\(\));
 				}			
 				bool downedMechBossAny = NPC.downedMechBoss1 || NPC.downedMechBoss2 || NPC.downedMechBoss3;
 				if ((DEV || downedMechBossAny) && Main.rand.Next(rarityHM + 1 + (NPC.downedMoonlord ? 2 : 0)) == 0) //zombinator
 				{
-					net.Add(mod.NPCType("Zombinator"));
+					net.Add(ModContent.\1Type<\2>\(\));
 				}
 				if ((DEV || NPC.downedPlantBoss) && (ZONEDEV || player.InZone("Jungle")) && Main.rand.Next(rarityHM + 1) == 0) //gardener
 				{
-					net.Add(mod.NPCType("Gardener"));
+					net.Add(ModContent.\1Type<\2>\(\));
 				}
 				if ((DEV || NPC.downedMoonlord) && Main.rand.Next(rarityHM + 1) == 0) //bone paladin
 				{
-					net.Add(mod.NPCType("BonePaladin"));
-					net.Add(mod.NPCType("BoomBlaster"));
+					net.Add(ModContent.\1Type<\2>\(\));
+					net.Add(ModContent.\1Type<\2>\(\));
 				}
 				#endregion
 				
@@ -335,39 +335,39 @@ namespace FargowiltasSouls
 				if(Main.raining && !Main.slimeRain){ net.Add(NPCID.BigRainZombie); net.Add(NPCID.SmallRainZombie); net.Add(NPCID.ZombieRaincoat); } //raincoat zombie
 				if (ZONEDEV || player.InZone("Desert")) //sandswept zombie
 				{
-					net.Add(mod.NPCType("SandsweptZombie"));
+					net.Add(ModContent.\1Type<\2>\(\));
 				}
 
 				#region boss specials
 				if ((DEV || NPC.downedBoss1) && Main.rand.Next(rarity) == 0) //eyerider, bowman, grenader zombie
 				{
-					net.Add(mod.NPCType("Eyerider"));
-					net.Add(mod.NPCType("BowmanZombie"));
-					net.Add(mod.NPCType("GrenaderZombie"));
+					net.Add(ModContent.\1Type<\2>\(\));
+					net.Add(ModContent.\1Type<\2>\(\));
+					net.Add(ModContent.\1Type<\2>\(\));
 				}
 				if ((DEV || NPC.downedBoss2) && Main.rand.Next(rarity + 1) == 0) //crude caster, corrupt caster, crim caster, cold caster
 				{
-					net.Add(mod.NPCType("CrudeCaster"));
+					net.Add(ModContent.\1Type<\2>\(\));
 					if (ZONEDEV || player.InZone("Corruption"))
 					{
-						net.Add(mod.NPCType("CorruptCaster"));
+						net.Add(ModContent.\1Type<\2>\(\));
 					}
 					if (ZONEDEV || player.InZone("Crimson"))
 					{
-						net.Add(mod.NPCType("CrimCaster"));
+						net.Add(ModContent.\1Type<\2>\(\));
 					}
 					if (ZONEDEV || player.InZone("Snow"))
 					{
-						net.Add(mod.NPCType("ColdCaster"));
+						net.Add(ModContent.\1Type<\2>\(\));
 					}
 				}
 				if ((DEV || NPC.downedBoss3) && Main.rand.Next(rarity) == 0) //librarapprentice, bone warrior
 				{
-					net.Add(mod.NPCType("BoneWarrior"));
+					net.Add(ModContent.\1Type<\2>\(\));
 				}
 				if ((DEV || NPC.downedQueenBee) && (ZONEDEV || player.InZone("Jungle")) && Main.rand.Next(rarity) == 0) //beekeeper (2/5)
 				{
-					net.Add(mod.NPCType("Beekeeper"));
+					net.Add(ModContent.\1Type<\2>\(\));
 				}
 				#endregion
 				if (ZONEDEV || player.InZone("Snow")) //undead viking, zombie eskimo
@@ -378,11 +378,11 @@ namespace FargowiltasSouls
 				}
 				if (ZONEDEV || Fargowiltas.BaseTile.LiquidCount(x, y, 25, 0) > 120) //floaty zombie
 				{
-					net.Add(mod.NPCType("FloatyZombie"));
+					net.Add(ModContent.\1Type<\2>\(\));
 				}
 				if (ZONEDEV || player.ZoneBeach) //scuba zombie
 				{
-					net.Add(mod.NPCType("ScubaZombie"));
+					net.Add(ModContent.\1Type<\2>\(\));
 				}				
 			}
 			if((Main.invasionType > 0 || Main.pumpkinMoon || Main.snowMoon || Main.eclipse) && Main.rand.Next(8) < 5) return startingPool;

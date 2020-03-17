@@ -56,15 +56,7 @@ Summons a pet Face Monster and Crimson Heart");
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.CrimsonHelmet);
             recipe.AddIngredient(ItemID.CrimsonScalemail);
-            recipe.AddIngredient(ItemID.CrimsonGreaves);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(ItemID.BloodLustCluster);
-                recipe.AddIngredient(ItemID.TheRottedFork);
-                recipe.AddIngredient(thorium.ItemType("CrimtaneTomahawk"), 300);
-            }
-            
+            recipe.AddIngredient(ItemID.CrimsonGreaves);            
             recipe.AddIngredient(ItemID.TheUndertaker);
             recipe.AddIngredient(ItemID.TheMeatball);
             recipe.AddIngredient(ItemID.BoneRattle);

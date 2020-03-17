@@ -71,7 +71,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             Player player = Main.player[projectile.owner];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if ((int) Main.time % 120 == 0) projectile.netUpdate = true;
+            if ((int)Main.time % 120 == 0) projectile.netUpdate = true;
             if (!player.active)
             {
                 projectile.active = false;
@@ -107,7 +107,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 projectile.netUpdate = true;
             }
 
-            int byUUID = Projectile.GetByUUID(projectile.owner, (int) projectile.ai[0]);
+            int byUUID = Projectile.GetByUUID(projectile.owner, (int)projectile.ai[0]);
             if (byUUID >= 0 && Main.projectile[byUUID].active)
             {
                 flag67 = true;
@@ -147,7 +147,7 @@ namespace FargowiltasSouls.Projectiles.Minions
 
             projectile.rotation = vector134.ToRotation() + 1.57079637f;
             projectile.position = projectile.Center;
-            projectile.width = projectile.height = (int) (num1038 * projectile.scale);
+            projectile.width = projectile.height = (int)(num1038 * projectile.scale);
             projectile.Center = projectile.position;
             if (vector134 != Vector2.Zero) projectile.Center = value67 - Vector2.Normalize(vector134) * 35;
             projectile.spriteDirection = vector134.X > 0f ? 1 : -1;

@@ -71,7 +71,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     projectile.netUpdate = true;
                 }
             }
-            
+
             if (++projectile.localAI[0] >= 24f)
             {
                 projectile.localAI[0] = 0f;

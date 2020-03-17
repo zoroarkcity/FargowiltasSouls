@@ -13,10 +13,10 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         private const float maxTime = 90;
 
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Blazing Deathray");
-		}
-    	
+        {
+            DisplayName.SetDefault("Blazing Deathray");
+        }
+
         public override void SetDefaults()
         {
             projectile.width = 48;

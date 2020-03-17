@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -134,7 +135,7 @@ Effects of Flower Boots, Master Ninja Gear, Greedy Ring, Celestial Shell, and Sh
             recipe.AddIngredient(null, "CosmoForce");
             recipe.AddIngredient(null, "MutatingEnergy", 10);
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
 
             recipe.SetResult(this);
             recipe.AddRecipe();

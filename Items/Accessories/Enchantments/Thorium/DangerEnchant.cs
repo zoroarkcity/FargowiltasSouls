@@ -3,6 +3,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.ArcaneArmor;
+using ThoriumMod.Items.Tracker;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Buffs.Pet;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -21,7 +25,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             Tooltip.SetDefault(
 @"'Let's get dangerous...'
 You are immune to most damage-inflicting debuffs
-Effects of Night Shade Petal");
+Effects of Night Shade Petal
+Summons a pet Glitter");
             DisplayName.AddTranslation(GameCulture.Chinese, "致危魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'Let's get dangerous...'
@@ -43,6 +48,7 @@ Effects of Night Shade Petal");
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
 
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
             player.buffImmune[BuffID.Frostburn] = true;
             player.buffImmune[BuffID.Poisoned] = true;
@@ -52,30 +58,27 @@ Effects of Night Shade Petal");
 
             //night shade petal
             thoriumPlayer.nightshadeBoost = true;
+
+            //pet
+            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.GlitterPet, hideVisual, thorium.BuffType("ShineDust"), thorium.ProjectileType("ShinyPet"));
         }
-        
-        private readonly string[] items =
-        {
-            "DangerHelmet",
-            "DangerMail",
-            "DangerGreaves",
-            "NightShadePetal",
-            "TrackerBlade",
-            "DangerDaikatana",
-            "DangerDoomerang",
-            "DangerDuelShot" //really diver
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
-            recipe.AddIngredient(thorium.ItemType("DangerDagger"), 300);
+            recipe.AddIngredient(ModContent.ItemType<DangerHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<DangerMail>());
+            recipe.AddIngredient(ModContent.ItemType<DangerGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<NightShadePetal>());
+            recipe.AddIngredient(ModContent.ItemType<TrackerBlade>());
+            recipe.AddIngredient(ModContent.ItemType<DangerDoomerang>());
+            recipe.AddIngredient(ModContent.ItemType<DangerDuelShot>());
+            recipe.AddIngredient(ModContent.ItemType<DangerDagger>(), 300);
             recipe.AddIngredient(ItemID.Rally);
+            recipe.AddIngredient(ModContent.ItemType<ShinyObject>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

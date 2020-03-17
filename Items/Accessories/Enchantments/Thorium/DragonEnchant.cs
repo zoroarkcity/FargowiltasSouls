@@ -3,6 +3,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Dragon;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.ThrownItems;
+using ThoriumMod.Items.BardItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -55,17 +59,6 @@ Summons a pet Wyvern");
             modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.WyvernPet, hideVisual, thorium.BuffType("WyvernPetBuff"), thorium.ProjectileType("WyvernPet"));
             modPlayer.DragonEnchant = true;
         }
-        
-        private readonly string[] items =
-        {
-            "DragonMask",
-            "DragonBreastplate",
-            "DragonGreaves",
-            "DragonTalonNecklace",
-            "DragonsBreath",
-            "EbonyTail",
-            "DragonkinStaff"
-        };
 
         public override void AddRecipes()
         {
@@ -73,11 +66,16 @@ Summons a pet Wyvern");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
-
-            recipe.AddIngredient(thorium.ItemType("CorrupterBalloon"), 300);
+            recipe.AddIngredient(ModContent.ItemType<DragonMask>());
+            recipe.AddIngredient(ModContent.ItemType<DragonBreastplate>());
+            recipe.AddIngredient(ModContent.ItemType<DragonGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<DragonTalonNecklace>());
+            recipe.AddIngredient(ModContent.ItemType<TunePlayerMovementSpeed>());
+            recipe.AddIngredient(ModContent.ItemType<DragonsBreath>());
+            recipe.AddIngredient(ModContent.ItemType<EbonyTail>());
+            recipe.AddIngredient(ModContent.ItemType<CorrupterBalloon>(), 300);
             recipe.AddIngredient(ItemID.ClingerStaff);
-            recipe.AddIngredient(thorium.ItemType("CloudyChewToy"));
+            recipe.AddIngredient(ModContent.ItemType<CloudyChewToy>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

@@ -15,9 +15,9 @@ namespace FargowiltasSouls.Projectiles.Deathrays
         private const float maxTime = 90;
 
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Divine Deathray");
-		}
+        {
+            DisplayName.SetDefault("Divine Deathray");
+        }
 
         public override void AI()
         {
@@ -117,7 +117,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             //Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
         }
 
-        
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(mod.BuffType("Flipped"), 300);

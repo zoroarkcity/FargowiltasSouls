@@ -4,6 +4,9 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria.Localization;
+using ThoriumMod.Items.EndofDays.Omni;
+using ThoriumMod.Items.RangedItems;
+using ThoriumMod.Items.Tracker;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -65,16 +68,16 @@ Attacks have a 5% chance to instantly kill the enemy");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("OmniMarkHead"));
-            recipe.AddIngredient(thorium.ItemType("OmniArablastHood"));
-            recipe.AddIngredient(thorium.ItemType("OmniBody"));
-            recipe.AddIngredient(thorium.ItemType("OmniGreaves"));
-            recipe.AddIngredient(ItemID.ShadowFlameBow);
-            recipe.AddIngredient(thorium.ItemType("DMR"));
-            recipe.AddIngredient(thorium.ItemType("KillCounter"));
-            recipe.AddIngredient(thorium.ItemType("OmniBow"));
-            recipe.AddIngredient(thorium.ItemType("WyrmDecimator"));
-            recipe.AddIngredient(thorium.ItemType("CelestialBow"));
+            recipe.AddIngredient(ModContent.ItemType<OmniMarkHead>());
+            recipe.AddIngredient(ModContent.ItemType<OmniArablastHood>());
+            recipe.AddIngredient(ModContent.ItemType<OmniBody>());
+            recipe.AddIngredient(ModContent.ItemType<OmniGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<DartPouch>());
+            recipe.AddIngredient(ModContent.ItemType<RejectsBlowpipe>());
+            recipe.AddIngredient(ModContent.ItemType<BlackBow>());
+            recipe.AddIngredient(ModContent.ItemType<OmniBow>());
+            recipe.AddIngredient(ModContent.ItemType<WyrmDecimator>());
+            recipe.AddIngredient(ModContent.ItemType<TheJavelin>());
             
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

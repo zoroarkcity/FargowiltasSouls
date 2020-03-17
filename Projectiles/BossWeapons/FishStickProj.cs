@@ -29,7 +29,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             projectile.spriteDirection = -projectile.direction;
 
-            projectile.rotation = (float) Math.Atan2(projectile.velocity.Y, projectile.velocity.X) + MathHelper.ToRadians(135f);
+            projectile.rotation = (float)Math.Atan2(projectile.velocity.Y, projectile.velocity.X) + MathHelper.ToRadians(135f);
 
             if (projectile.spriteDirection == -1) projectile.rotation -= MathHelper.ToRadians(90f);
 

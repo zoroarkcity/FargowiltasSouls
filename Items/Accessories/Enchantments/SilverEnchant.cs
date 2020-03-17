@@ -54,7 +54,7 @@ Summons a sword familiar that scales with minion damage";
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             modPlayer.SilverEnchant = true;
-            modPlayer.AddMinion(SoulConfig.Instance.SilverSword, mod.ProjectileType("SilverSword"), (int) (30 * player.minionDamage), 0f);
+            modPlayer.AddMinion(SoulConfig.Instance.SilverSword, mod.ProjectileType("SilverSword"), (int)(30 * player.minionDamage), 0f);
         }
 
         public override void AddRecipes()
@@ -63,24 +63,10 @@ Summons a sword familiar that scales with minion damage";
             recipe.AddIngredient(ItemID.SilverHelmet);
             recipe.AddIngredient(ItemID.SilverChainmail);
             recipe.AddIngredient(ItemID.SilverGreaves);
-
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("SilverBulwark"));
-                recipe.AddIngredient(ItemID.SilverBroadsword);
-                recipe.AddIngredient(ItemID.SilverBow);
-                recipe.AddIngredient(ItemID.SapphireStaff);
-                recipe.AddIngredient(ItemID.BluePhaseblade);
-                recipe.AddIngredient(ItemID.AquaScepter);
-                recipe.AddIngredient(ItemID.ThroughtheWindow);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.SilverBroadsword);
-                recipe.AddIngredient(ItemID.SapphireStaff);
-                recipe.AddIngredient(ItemID.BluePhaseblade);
-                recipe.AddIngredient(ItemID.AquaScepter);
-            }
+            recipe.AddIngredient(ItemID.SilverBroadsword);
+            recipe.AddIngredient(ItemID.SapphireStaff);
+            recipe.AddIngredient(ItemID.BluePhaseblade);
+            recipe.AddIngredient(ItemID.AquaScepter);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

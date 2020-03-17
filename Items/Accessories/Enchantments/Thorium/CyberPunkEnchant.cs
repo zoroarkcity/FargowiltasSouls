@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using ThoriumMod.Empowerments;
 using ThoriumMod.Items;
+using ThoriumMod.Items.BardItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -143,28 +144,23 @@ Effects of Auto Tuner and Metal Music Player");
             thoriumPlayer.accMusicPlayer = true;
             thoriumPlayer.accMP3Brass = true;
         }
-       
-        private readonly string[] items =
-        {
-            "CyberPunkHeadset",
-            "CyberPunkSuit",
-            "CyberPunkLeggings",
-            "AutoTuner",
-            "TunePlayerDamage",
-            "DissTrack",
-            "Kazoo",
-            "HallowedMegaphone",
-            "BassBooster",
-            "MidnightBassBooster",
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<CyberPunkHeadset>());
+            recipe.AddIngredient(ModContent.ItemType<CyberPunkSuit>());
+            recipe.AddIngredient(ModContent.ItemType<CyberPunkLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<AutoTuner>());
+            recipe.AddIngredient(ModContent.ItemType<TunePlayerDamage>());
+            recipe.AddIngredient(ModContent.ItemType<DissTrack>());
+            recipe.AddIngredient(ModContent.ItemType<Kazoo>());
+            recipe.AddIngredient(ModContent.ItemType<HallowedMegaphone>());
+            recipe.AddIngredient(ModContent.ItemType<MidnightBassBooster>());
+            recipe.AddIngredient(ModContent.ItemType<RiffWeaver>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

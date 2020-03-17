@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -123,11 +124,11 @@ Drastically increased ki regen
             {
                 recipe.AddIngredient(dbzMod.ItemType(i));
             }
-            
-            //recipe.AddIngredient(_dbzmod.ItemType("RadiantKiCrystal"), 250);
-            
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
-                
+
+            //recipe.AddIngredient(_dbzModContent.\1Type<\2>\(\), 250);
+
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

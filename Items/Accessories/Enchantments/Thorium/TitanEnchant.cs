@@ -3,6 +3,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Titan;
+using ThoriumMod.Items.BasicAccessories;
+using ThoriumMod.Items.BardItems;
+using ThoriumMod.Items.Abyssion;
+using ThoriumMod.Items.Lich;
+using ThoriumMod.Items.RangedItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -61,17 +67,17 @@ Effects of Mask of the Crystal Eye, Abyssal Shell, and Rock Music Player");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("TitanHeadgear"));
-            recipe.AddIngredient(thorium.ItemType("TitanHelmet"));
-            recipe.AddIngredient(thorium.ItemType("TitanMask"));
-            recipe.AddIngredient(thorium.ItemType("TitanBreastplate"));
-            recipe.AddIngredient(thorium.ItemType("TitanGreaves"));
-            recipe.AddIngredient(thorium.ItemType("CrystalEyeMask"));
-            recipe.AddIngredient(thorium.ItemType("AbyssalShell"));
-            recipe.AddIngredient(thorium.ItemType("TunePlayerDamageReduction"));
-            recipe.AddIngredient(thorium.ItemType("TitanBoomerang"));
-            recipe.AddIngredient(thorium.ItemType("Executioner"));
-
+            recipe.AddRecipeGroup("FargowiltasSouls:AnyTitanHelmet");
+            recipe.AddIngredient(ModContent.ItemType<TitanBreastplate>());
+            recipe.AddIngredient(ModContent.ItemType<TitanGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<CrystalEyeMask>());
+            recipe.AddIngredient(ModContent.ItemType<AbyssalShell>());
+            recipe.AddIngredient(ModContent.ItemType<SpiritBand>());
+            recipe.AddIngredient(ModContent.ItemType<TunePlayerDamageReduction>());
+            recipe.AddIngredient(ModContent.ItemType<TitanBoomerang>());
+            recipe.AddIngredient(ModContent.ItemType<TranquilizerGun>());
+            recipe.AddIngredient(ModContent.ItemType<TetherDart>(), 300);
+            
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

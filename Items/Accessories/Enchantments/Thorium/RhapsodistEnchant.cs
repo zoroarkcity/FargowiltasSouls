@@ -5,6 +5,9 @@ using ThoriumMod;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using ThoriumMod.Items.EndofDays.Rhapsodist;
+using ThoriumMod.Items.Abyssion;
+using ThoriumMod.Items.BardItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -70,28 +73,23 @@ These effects needs to recharge for 1 minute");
             //hotkey buff self
             thoriumPlayer.setSoloist = true;
         }
-        
-        private readonly string[] items =
-        {
-            "SoloistHat",
-            "RallyHat",
-            "RhapsodistChestWoofer",
-            "RhapsodistBoots",
-            "SirensAllure",
-            "TerrariumAutoharp",
-            "Sousaphone",
-            "Holophonor",
-            "EdgeofImagination",
-            "BlackMIDI"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<SoloistHat>());
+            recipe.AddIngredient(ModContent.ItemType<RallyHat>());
+            recipe.AddIngredient(ModContent.ItemType<RhapsodistChestWoofer>());
+            recipe.AddIngredient(ModContent.ItemType<RhapsodistBoots>());
+            recipe.AddIngredient(ModContent.ItemType<SirensAllure>());
+            recipe.AddIngredient(ModContent.ItemType<JingleBells>());
+            recipe.AddIngredient(ModContent.ItemType<TerrariumAutoharp>());
+            recipe.AddIngredient(ModContent.ItemType<Sousaphone>());
+            recipe.AddIngredient(ModContent.ItemType<Holophonor>());
+            recipe.AddIngredient(ModContent.ItemType<EdgeofImagination>());
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

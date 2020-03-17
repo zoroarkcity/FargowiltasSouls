@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using FargowiltasSouls.Items.Accessories.Enchantments.Thorium;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
 {
@@ -21,7 +22,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
             Tooltip.SetDefault(
 @"'A bitter cold, the power of the Jotuns...'
 All armor bonuses from Depth Diver, Yew Wood, and Tide Hunter
-All armor bonuses from Naga Skin, Icy, Cryo Magus, and Whispering
+All armor bonuses from Naga Skin, Icy, Cryomancer, and Whispering
 Effects of Sea Breeze Pendant and Bubble Magnet
 Effects of Goblin War Shield, Agnor's Bowl, and Ice Bound Strider Hide
 Summons several pets");
@@ -125,11 +126,11 @@ Summons several pets");
 
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(null, "DepthDiverEnchant");
-            recipe.AddIngredient(null, "TideHunterEnchant");
-            recipe.AddIngredient(null, "NagaSkinEnchant");
-            recipe.AddIngredient(null, "CryoMagusEnchant");
-            recipe.AddIngredient(null, "WhisperingEnchant");
+            recipe.AddIngredient(ModContent.ItemType<DepthDiverEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<TideHunterEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<NagaSkinEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<CryomancerEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<WhisperingEnchant>());
 
             recipe.AddTile(TileID.LunarCraftingStation);
 

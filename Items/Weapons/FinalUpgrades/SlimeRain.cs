@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
 {
@@ -77,7 +78,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             recipe.AddIngredient(mod.ItemType("SlimeSword"), 10);
             recipe.AddIngredient(mod.ItemType("Sadism"), 15);
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

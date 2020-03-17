@@ -3,6 +3,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Harbinger;
+using ThoriumMod.Items.MagicItems;
+using ThoriumMod.Items.Tracker;
+using ThoriumMod.Items.HealerItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -63,21 +67,9 @@ Summons a Moogle pet");
             }
             //shade band
             thoriumPlayer.shadeBand = true;
-            //pet
-            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.MooglePet, hideVisual, thorium.BuffType("LilMogBuff"), thorium.ProjectileType("LilMog"));
             //villain damage 
             modPlayer.KnightEnchant = true;
         }
-        
-        private readonly string[] items =
-        {
-            "NightStaff",
-            "BlackholeCannon",
-            "GodKiller",
-            "HarbingerSpear",
-            "HarbingerBow",
-            "HarbingerSurgeWand"
-        };
 
         public override void AddRecipes()
         {
@@ -85,12 +77,16 @@ Summons a Moogle pet");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("HarbingerHelmet"));
-            recipe.AddIngredient(thorium.ItemType("HarbingerChestGuard"));
-            recipe.AddIngredient(thorium.ItemType("HarbingerGreaves"));
-            recipe.AddIngredient(null, "WhiteKnightEnchant");
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+            recipe.AddIngredient(ModContent.ItemType<HarbingerHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<HarbingerChestGuard>());
+            recipe.AddIngredient(ModContent.ItemType<HarbingerGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<WhiteKnightEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<BlackholeCannon>());
+            recipe.AddIngredient(ModContent.ItemType<GodKiller>());
+            recipe.AddIngredient(ModContent.ItemType<HarbingerSpear>());
+            recipe.AddIngredient(ModContent.ItemType<HarbingerBow>());
+            recipe.AddIngredient(ModContent.ItemType<HarbingerSurgeWand>());
+            recipe.AddIngredient(ModContent.ItemType<SpiritStaff>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

@@ -4,6 +4,10 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using ThoriumMod.Items.Berserker;
+using ThoriumMod.Items.MeleeItems;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.FallenBeholder;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -83,15 +87,6 @@ Effects of Spring Steps and Slag Stompers");
             //magma
             mod.GetItem("MagmaEnchant").UpdateAccessory(player, hideVisual);
         }
-        
-        private readonly string[] items =
-        {
-            "BerserkBlade",
-            "DoomFireAxe",
-            "SurtrsSword",
-            "ThermogenicImpaler",
-            "WyvernSlayer"
-        };
 
         public override void AddRecipes()
         {
@@ -99,13 +94,15 @@ Effects of Spring Steps and Slag Stompers");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("BerserkerMask"));
-            recipe.AddIngredient(thorium.ItemType("BerserkerBreastplate"));
-            recipe.AddIngredient(thorium.ItemType("BerserkerGreaves"));
-            recipe.AddIngredient(null, "MagmaEnchant");
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
-
+            recipe.AddIngredient(ModContent.ItemType<BerserkerMask>());
+            recipe.AddIngredient(ModContent.ItemType<BerserkerBreastplate>());
+            recipe.AddIngredient(ModContent.ItemType<BerserkerGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<ExileHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<MagmaEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<BerserkBlade>());
+            recipe.AddIngredient(ModContent.ItemType<DoomFireAxe>());
+            recipe.AddIngredient(ModContent.ItemType<SurtrsSword>());
+            recipe.AddIngredient(ModContent.ItemType<ThermogenicImpaler>());
             recipe.AddIngredient(ItemID.BreakerBlade);
 
             recipe.AddTile(TileID.CrystalBall);

@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
+using FargowiltasSouls.Items.Accessories.Enchantments.Thorium;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
 {
@@ -20,9 +22,9 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
             DisplayName.SetDefault("Force of Vanaheim");
             Tooltip.SetDefault(
 @"'Holds a glimpse of the future...'
-All armor bonuses from Malignant, Folv, and White Dwarf
+All armor bonuses from Lich, Plague Doctor, and White Dwarf
 All armor bonuses from Celestial and Shooting Star
-Effects of Mana-Charged Rocketeers and Ascension Statuette");
+Effects of Lich's Gaze and Ascension Statuette");
             DisplayName.AddTranslation(GameCulture.Chinese, "华纳海姆之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'对未来的一瞥...'
@@ -54,20 +56,12 @@ Effects of Mana-Charged Rocketeers and Ascension Statuette");
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
 
-            //folv
-            modPlayer.MalignantEnchant = true;
-            modPlayer.FolvEnchant = true;
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.FolvAura))
-            {
-                thoriumPlayer.folvSet = true;
-                Lighting.AddLight(player.position, 0.03f, 0.3f, 0.5f);
-                thoriumPlayer.folvBonus2 = true;
-            }
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.ManaBoots))
-            {
-                //mana charge rockets
-                thorium.GetItem("ManaChargedRocketeers").UpdateAccessory(player, hideVisual);
-            }
+            //lich set bonus
+            modPlayer.LichEnchant = true;
+            //lich gaze
+            thoriumPlayer.lichGaze = true;
+            //plague doctor
+            thoriumPlayer.plagueSet = true;
 
             //white dwarf
             modPlayer.WhiteDwarfEnchant = true;
@@ -93,12 +87,12 @@ Effects of Mana-Charged Rocketeers and Ascension Statuette");
 
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(null, "FolvEnchant");
-            recipe.AddIngredient(null, "WhiteDwarfEnchant");
-            recipe.AddIngredient(null, "CelestialEnchant");
-            recipe.AddIngredient(null, "ShootingStarEnchant");
+            recipe.AddIngredient(ModContent.ItemType<LichEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<WhiteDwarfEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<CelestialEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<ShootingStarEnchant>());
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
 
             recipe.SetResult(this);
             recipe.AddRecipe();

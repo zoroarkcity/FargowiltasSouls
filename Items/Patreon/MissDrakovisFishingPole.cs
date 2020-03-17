@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using FargowiltasSouls.Projectiles;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Patreon
 {
@@ -202,7 +203,7 @@ namespace FargowiltasSouls.Items.Patreon
             recipe.AddIngredient(ItemID.ScalyTruffle);
             recipe.AddIngredient(ItemID.ObsidianSwordfish);
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
 
             recipe.SetResult(this);
             recipe.AddRecipe();

@@ -4,6 +4,7 @@ using ThoriumMod;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -118,8 +119,8 @@ Critical strikes caused by brass instrument attacks release a spread of energy")
 
             foreach (string i in _items) recipe.AddIngredient(thorium.ItemType(i));
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
-                
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

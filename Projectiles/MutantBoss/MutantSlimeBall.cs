@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.MutantBoss
-{ 
+{
     public class MutantSlimeBall : ModProjectile
     {
         public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/SlimeBall";

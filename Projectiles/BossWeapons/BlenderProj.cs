@@ -40,7 +40,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             if (Counter < 5)
             {
                 int type = mod.ProjectileType("BlenderProj2");
-                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 5f, type, (int) (projectile.damage * 0.5f), 2 , projectile.owner);
+                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 5f, type, (int)(projectile.damage * 0.5f), 2, projectile.owner);
                 Counter++;
             }
         }

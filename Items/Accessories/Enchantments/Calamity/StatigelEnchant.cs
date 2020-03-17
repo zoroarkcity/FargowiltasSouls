@@ -92,7 +92,7 @@ Effects of Counter Scarf and Fungal Symbiote");
             calamity.GetItem("CounterScarf").UpdateAccessory(player, hideVisual);
 
             /* modPlayer.StatigelEnchant = true;
-             //modPlayer.AddPet("Perforator Pet", hideVisual, calamity.BuffType("BloodBound"), calamity.ProjectileType("PerforaMini"));
+             //ModContent.\1Type<\2>\(\));
 
              if (player.FindBuffIndex(calamity.BuffType("BloodBound")) == -1 && player.ownedProjectileCounts[calamity.ProjectileType("PerforaMini")] < 1)
              {

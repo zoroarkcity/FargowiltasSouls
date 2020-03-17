@@ -3,6 +3,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.BardItems;
+using ThoriumMod.Items.Misc;
+using ThoriumMod.Items.Scouter;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -60,28 +63,23 @@ Effects of Ring of Unity and Mix Tape");
             //noble set bonus
             thoriumPlayer.setNoble = true;
         }
-        
-        private readonly string[] items =
-        {
-            "NoblesHat",
-            "NoblesJerkin",
-            "NoblesLeggings",
-            "RingofUnity",
-            "BrassCap",
-            "WaxyRosin",
-            "JarOMayo",
-            "Microphone",
-            "Bongos",
-            "Nocturne"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<NoblesHat>());
+            recipe.AddIngredient(ModContent.ItemType<NoblesJerkin>());
+            recipe.AddIngredient(ModContent.ItemType<NoblesLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<RingofUnity>());
+            recipe.AddIngredient(ModContent.ItemType<BrassCap>());
+            recipe.AddIngredient(ModContent.ItemType<WaxyRosin>());
+            recipe.AddIngredient(ModContent.ItemType<JarOMayo>());
+            recipe.AddIngredient(ModContent.ItemType<Bongos>());
+            recipe.AddIngredient(ModContent.ItemType<Nocturne>());
+            recipe.AddIngredient(ModContent.ItemType<Roboboe>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

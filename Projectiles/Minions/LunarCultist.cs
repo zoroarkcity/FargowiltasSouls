@@ -281,7 +281,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 projectile.frame = (projectile.frame + 1) % 3;
                 if (projectile.ai[0] > -1f && projectile.ai[0] < 200f)
                 {
-                    switch((int)projectile.ai[1])
+                    switch ((int)projectile.ai[1])
                     {
                         case 1: projectile.frame += 6; break;
                         case 3: projectile.frame += 3; break;
@@ -360,7 +360,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 Vector2 value4 = projectile.oldPos[i];
                 float num165 = projectile.oldRot[i];
-                Main.spriteBatch.Draw(texture2D14, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, projectile.spriteDirection> 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+                Main.spriteBatch.Draw(texture2D14, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             }
 
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);

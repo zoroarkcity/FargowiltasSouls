@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Weapons
 {
@@ -104,7 +105,7 @@ namespace FargowiltasSouls.Items.Weapons
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(null, "PandorasBox");
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
 
             recipe.SetResult(this);
             recipe.AddRecipe();

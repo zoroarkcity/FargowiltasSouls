@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Fargowiltas.Items.Tiles;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
@@ -71,12 +72,12 @@ Hold DOWN and JUMP to hover");
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-                recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("MutantPants"));
-                recipe.AddIngredient(null, "MutantScale", 10);
-                recipe.AddIngredient(null, "Sadism", 10);
-                recipe.AddTile(mod, "CrucibleCosmosSheet");
-                recipe.SetResult(this);
-                recipe.AddRecipe();
+            recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("MutantPants"));
+            recipe.AddIngredient(null, "MutantScale", 10);
+            recipe.AddIngredient(null, "Sadism", 10);
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

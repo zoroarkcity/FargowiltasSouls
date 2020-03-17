@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
                 @"An old foe beaten into submission..
 Summons 4 segments for each minion slot");
             DisplayName.AddTranslation(GameCulture.Chinese, "世界吞噬者法杖");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"一个被迫屈服的老对手..
 每个召唤栏召唤4段身体");
         }
@@ -86,7 +86,7 @@ Summons 4 segments for each minion slot");
             //spawn more body segments
             else
             {
-                int previous = (int) Main.projectile[tailCheck].ai[0];
+                int previous = (int)Main.projectile[tailCheck].ai[0];
                 int current = 0;
 
                 for (int i = 0; i < 4; i++)

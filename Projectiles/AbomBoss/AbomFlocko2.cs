@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 if (projectile.velocity.Length() < 12f)
                     projectile.velocity *= 1.05f;
             }
-            
+
             if (++projectile.localAI[0] > 90 && ++projectile.localAI[1] > 60) //fire frost wave
             {
                 projectile.localAI[1] = 0f;
@@ -51,7 +51,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                         Projectile.NewProjectile(projectile.Center, vel.RotatedBy(MathHelper.ToRadians(10) * i), mod.ProjectileType("AbomFrostWave"), projectile.damage, projectile.knockBack, projectile.owner);
                 }
             }
-            
+
             projectile.rotation += projectile.velocity.Length() / 12f * (projectile.velocity.X > 0 ? -0.2f : 0.2f);
             if (++projectile.frameCounter > 3)
             {

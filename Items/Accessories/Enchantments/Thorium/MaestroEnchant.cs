@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.BardItems;
+using ThoriumMod.Items.Painting;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -60,16 +62,6 @@ Effects of Metronome and Purple Music Player");
                 thoriumPlayer.setMarchingBand = true;
             }
         }
-        
-        private readonly string[] items =
-        {
-            "Metronome",
-            "ConductorsBaton",
-            "Organ",
-            "Clarinet",
-            "FrenchHorn",
-            "Saxophone"
-        };
 
         public override void AddRecipes()
         {
@@ -77,12 +69,16 @@ Effects of Metronome and Purple Music Player");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("MaestroWig"));
-            recipe.AddIngredient(thorium.ItemType("MaestroSuit"));
-            recipe.AddIngredient(thorium.ItemType("MaestroLeggings"));
-            recipe.AddIngredient(null, "MarchingBandEnchant");
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+            recipe.AddIngredient(ModContent.ItemType<MaestroWig>());
+            recipe.AddIngredient(ModContent.ItemType<MaestroSuit>());
+            recipe.AddIngredient(ModContent.ItemType<MaestroLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<MarchingBandEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<Metronome>());
+            recipe.AddIngredient(ModContent.ItemType<ConductorsBaton>());
+            recipe.AddIngredient(ModContent.ItemType<Organ>());
+            recipe.AddIngredient(ModContent.ItemType<Clarinet>());
+            recipe.AddIngredient(ModContent.ItemType<FrenchHorn>());
+            recipe.AddIngredient(ModContent.ItemType<SpectralSymphonyPaint>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

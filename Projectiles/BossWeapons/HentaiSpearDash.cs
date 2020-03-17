@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             player.controlUseTile = false;
             player.controlHook = false;
             player.controlMount = false;
-            
+
 
             if (player.mount.Active)
                 player.mount.Dismount(player);

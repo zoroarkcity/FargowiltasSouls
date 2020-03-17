@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Fargowiltas.Items.Tiles;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -216,7 +217,7 @@ namespace FargowiltasSouls
         
         public override int[] AdjTiles(int type)
         {
-            if (type == mod.TileType("CrucibleCosmosSheet"))
+            if (type == ModContent.TileType<CrucibleCosmosSheet>())
             {
                 Main.LocalPlayer.adjHoney = true;
                 Main.LocalPlayer.adjLava = true;

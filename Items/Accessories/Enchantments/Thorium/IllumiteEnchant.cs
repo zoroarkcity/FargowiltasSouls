@@ -3,6 +3,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Illumite;
+using ThoriumMod.Items.BardItems;
+using ThoriumMod.Items.MiniBoss;
+using ThoriumMod.Items.Misc;
+using ThoriumMod.Items.Depths;
+using ThoriumMod.Items.MeleeItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -21,8 +27,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             Tooltip.SetDefault(
 @"'As if you weren't pink enough'
 Every third attack will unleash an illumite missile
-Effects of Jazz Music Player
-Summons a pet Pink Slime");
+Effects of Jazz Music Player");
             DisplayName.AddTranslation(GameCulture.Chinese, "荧光魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'好像还不够粉'
@@ -51,31 +56,24 @@ Summons a pet Pink Slime");
             //music player
             thoriumPlayer.accMusicPlayer = true;
             thoriumPlayer.accMP3Wind = true;
-            //slime pet
-            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.SlimePet, hideVisual, thorium.BuffType("PinkSlimeBuff"), thorium.ProjectileType("PinkSlime"));
         }
-        
-        private readonly string[] items =
-        {
-            "IllumiteMask",
-            "IllumiteChestplate",
-            "IllumiteGreaves",
-            "TunePlayerLifeRegen",
-            "CupidString",
-            "ShusWrath",
-            "HandCannon",
-            "IllumiteBlaster",
-            "IllumiteBarrage",
-            "PinkSludge"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<IllumiteMask>());
+            recipe.AddIngredient(ModContent.ItemType<IllumiteChestplate>());
+            recipe.AddIngredient(ModContent.ItemType<IllumiteGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<TunePlayerLifeRegen>());
+            recipe.AddIngredient(ModContent.ItemType<PinkPhasesaber>());
+            recipe.AddIngredient(ModContent.ItemType<HandCannon>());
+            recipe.AddIngredient(ModContent.ItemType<IllumiteBlaster>());
+            recipe.AddIngredient(ModContent.ItemType<IllumiteBarrage>());
+            recipe.AddIngredient(ModContent.ItemType<BlobhornCoralStaff>());
+            recipe.AddIngredient(ModContent.ItemType<LargeOpal>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

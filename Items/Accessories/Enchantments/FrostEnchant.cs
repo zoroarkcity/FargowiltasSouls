@@ -66,14 +66,6 @@ Summons a pet Penguin and Snowman";
             recipe.AddIngredient(ItemID.FrostHelmet);
             recipe.AddIngredient(ItemID.FrostBreastplate);
             recipe.AddIngredient(ItemID.FrostLeggings);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(thorium.ItemType("BlizzardsEdge"));
-                recipe.AddIngredient(thorium.ItemType("Glacieor"));
-                recipe.AddIngredient(thorium.ItemType("FreezeRay"));
-            }
-
             recipe.AddIngredient(ItemID.Frostbrand);
             recipe.AddIngredient(ItemID.IceBow);
             recipe.AddIngredient(ItemID.Fish);

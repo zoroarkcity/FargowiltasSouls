@@ -49,7 +49,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
                     int p = Projectile.NewProjectile(pos, velocity, mod.ProjectileType("DarkStarFriendly"), projectile.damage, projectile.knockBack, projectile.owner);
 
-                    
+
                     Main.projectile[p].ai[0] = 1;
 
                     Main.projectile[p].tileCollide = false;

@@ -4,6 +4,10 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using ThoriumMod.Items.Dread;
+using ThoriumMod.Items.BasicAccessories;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.SummonItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -97,17 +101,17 @@ Summons a pet Wyvern");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("DreadSkull"));
-            recipe.AddIngredient(thorium.ItemType("DreadChestPlate"));
-            recipe.AddIngredient(thorium.ItemType("DreadGreaves"));
-            recipe.AddIngredient(null, "DragonEnchant");
-            recipe.AddIngredient(thorium.ItemType("CrashBoots"));
-            recipe.AddIngredient(thorium.ItemType("CursedCore"));
-            recipe.AddIngredient(thorium.ItemType("DreadDrill"));
-            recipe.AddIngredient(thorium.ItemType("DreadFork"));
+            recipe.AddIngredient(ModContent.ItemType<DreadSkull>());
+            recipe.AddIngredient(ModContent.ItemType<DreadChestPlate>());
+            recipe.AddIngredient(ModContent.ItemType<DreadGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<DragonEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<CrashBoots>());
+            recipe.AddIngredient(ModContent.ItemType<CursedCore>());
+            recipe.AddIngredient(ModContent.ItemType<DreadFork>());
             recipe.AddIngredient(ItemID.ChainGuillotines);
-            recipe.AddIngredient(thorium.ItemType("ImpactDrill"));
-
+            recipe.AddIngredient(ModContent.ItemType<VoidLance>());
+            recipe.AddIngredient(ModContent.ItemType<ImpactDrill>());
+            
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

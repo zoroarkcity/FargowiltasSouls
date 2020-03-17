@@ -62,21 +62,8 @@ Summons a magical fairy");
             recipe.AddIngredient(ItemID.HallowedPlateMail);
             recipe.AddIngredient(ItemID.HallowedGreaves);
             recipe.AddIngredient(null, "SilverEnchant");
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("EnchantedShield"));
-                recipe.AddIngredient(ItemID.Excalibur);
-                recipe.AddIngredient(ItemID.LightDisc, 5);
-                recipe.AddIngredient(thorium.ItemType("SteamgunnerController"));
-                recipe.AddIngredient(thorium.ItemType("HolyStaff"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.Excalibur);
-                recipe.AddIngredient(ItemID.LightDisc, 5);
-            }
-                      
+            recipe.AddIngredient(ItemID.Excalibur);
+            recipe.AddIngredient(ItemID.LightDisc, 5);
             recipe.AddIngredient(ItemID.FairyBell);
             
             recipe.AddTile(TileID.CrystalBall);

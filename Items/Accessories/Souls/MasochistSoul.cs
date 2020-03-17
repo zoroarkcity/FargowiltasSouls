@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -203,7 +204,7 @@ Summons the aid of all Masochist Mode bosses to your side");
             //tribal charm
             player.buffImmune[BuffID.Webbed] = true;
             fargoPlayer.TribalCharm = true;
-            
+
             //nymph's perfume
             player.buffImmune[BuffID.Lovestruck] = true;
             player.buffImmune[BuffID.Stinky] = true;
@@ -385,7 +386,7 @@ Summons the aid of all Masochist Mode bosses to your side");
             recipe.AddIngredient(mod.ItemType("CyclonicFin"));
             //recipe.AddIngredient(mod.ItemType("Sadism"), 30);
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
 
             recipe.SetResult(this);
             recipe.AddRecipe();

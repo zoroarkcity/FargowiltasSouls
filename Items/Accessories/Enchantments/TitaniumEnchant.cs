@@ -55,24 +55,10 @@ Briefly become invulnerable after striking an enemy");
             recipe.AddRecipeGroup("FargowiltasSouls:AnyTitaHead");
             recipe.AddIngredient(ItemID.TitaniumBreastplate);
             recipe.AddIngredient(ItemID.TitaniumLeggings);
-
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(ItemID.Cutlass);
-                recipe.AddIngredient(thorium.ItemType("TitaniumStaff"));
-                recipe.AddIngredient(ItemID.SlapHand);
-                recipe.AddIngredient(ItemID.Anchor);
-                recipe.AddIngredient(thorium.ItemType("Saba"));
-                recipe.AddIngredient(thorium.ItemType("IceAxe"));
-                recipe.AddIngredient(ItemID.MonkStaffT1);  
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.Cutlass);
-                recipe.AddIngredient(ItemID.SlapHand);
-                recipe.AddIngredient(ItemID.Anchor);
-                recipe.AddIngredient(ItemID.MonkStaffT1);
-            }
+            recipe.AddIngredient(ItemID.Cutlass);
+            recipe.AddIngredient(ItemID.SlapHand);
+            recipe.AddIngredient(ItemID.Anchor);
+            recipe.AddIngredient(ItemID.MonkStaffT1);
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

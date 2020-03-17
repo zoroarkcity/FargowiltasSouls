@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
@@ -31,7 +32,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.shoot = mod.ProjectileType("HellFlame");
             item.useAmmo = AmmoID.Gel;
             item.UseSound = SoundID.Item34; //
-            
+
             item.noMelee = true;
             item.value = Item.sellPrice(0, 15); //
             item.rare = 11; //
@@ -58,12 +59,12 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-                recipe.AddIngredient(null, "Bonezone");
-                recipe.AddIngredient(null, "MutantScale", 10);
-                recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerSkele"));
-                recipe.AddTile(mod, "CrucibleCosmosSheet");
-                recipe.SetResult(this);
-                recipe.AddRecipe();
+            recipe.AddIngredient(null, "Bonezone");
+            recipe.AddIngredient(null, "MutantScale", 10);
+            recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerSkele"));
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

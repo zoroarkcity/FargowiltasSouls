@@ -66,19 +66,7 @@ Summons a pet Black Cat");
             recipe.AddIngredient(ItemID.NinjaShirt);
             recipe.AddIngredient(ItemID.NinjaPants);
             recipe.AddIngredient(ItemID.Shuriken, 300);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {   
-                recipe.AddIngredient(ItemID.StarAnise, 300);
-                recipe.AddIngredient(ItemID.SpikyBall, 300);
-                recipe.AddIngredient(thorium.ItemType("Scorpain"));
-                recipe.AddIngredient(ItemID.SmokeBomb, 50);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.SmokeBomb, 50);
-            }
-
+            recipe.AddIngredient(ItemID.SmokeBomb, 50);
             recipe.AddIngredient(ItemID.SlimySaddle);
             recipe.AddIngredient(ItemID.UnluckyYarn);
             

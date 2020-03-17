@@ -62,29 +62,13 @@ Summons a pet Wisp";
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(ItemID.SpectreMask);
-                recipe.AddIngredient(ItemID.SpectreHood);
-                recipe.AddIngredient(ItemID.SpectreRobe);
-                recipe.AddIngredient(ItemID.SpectrePants);
-                recipe.AddIngredient(ItemID.MagicalHarp);
-                recipe.AddIngredient(ItemID.BubbleGun);
-                recipe.AddIngredient(ItemID.Keybrand);
-                recipe.AddIngredient(ItemID.SpectreStaff);
-                recipe.AddIngredient(ItemID.UnholyTrident);
-            }
-            else
-            {
-                recipe.AddRecipeGroup("FargowiltasSouls:AnySpectreHead");
-                recipe.AddIngredient(ItemID.SpectreRobe);
-                recipe.AddIngredient(ItemID.SpectrePants);
-                recipe.AddIngredient(ItemID.Keybrand);
-                recipe.AddIngredient(ItemID.SpectreStaff);
-                recipe.AddIngredient(ItemID.UnholyTrident);
-            }
-            
+
+            recipe.AddRecipeGroup("FargowiltasSouls:AnySpectreHead");
+            recipe.AddIngredient(ItemID.SpectreRobe);
+            recipe.AddIngredient(ItemID.SpectrePants);
+            recipe.AddIngredient(ItemID.Keybrand);
+            recipe.AddIngredient(ItemID.SpectreStaff);
+            recipe.AddIngredient(ItemID.UnholyTrident);
             recipe.AddIngredient(ItemID.WispinaBottle);
 
             recipe.AddTile(TileID.CrystalBall);

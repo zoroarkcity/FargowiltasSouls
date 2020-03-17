@@ -62,21 +62,8 @@ Any projectiles shot through your storm gain 50% damage";
             recipe.AddIngredient(ItemID.AncientBattleArmorHat);
             recipe.AddIngredient(ItemID.AncientBattleArmorShirt);
             recipe.AddIngredient(ItemID.AncientBattleArmorPants);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("HerdingStaff"));
-                recipe.AddIngredient(thorium.ItemType("WhisperRa"));
-                recipe.AddIngredient(thorium.ItemType("AxeBlade"), 300);
-                recipe.AddIngredient(ItemID.SpiritFlame);
-                recipe.AddIngredient(ItemID.RainbowRod);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.SpiritFlame);
-                recipe.AddIngredient(ItemID.RainbowRod);
-            }
-
+            recipe.AddIngredient(ItemID.SpiritFlame);
+            recipe.AddIngredient(ItemID.RainbowRod);
             recipe.AddIngredient(ItemID.DjinnsCurse);
             recipe.AddIngredient(ItemID.Scorpion);
             

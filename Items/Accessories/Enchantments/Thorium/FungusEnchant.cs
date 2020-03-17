@@ -3,6 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.ThrownItems;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.MiniBoss;
+using ThoriumMod.Items.MagicItems;
+using ThoriumMod.Items.Consumable;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -52,17 +57,17 @@ Dealing damage to enemies infected with mycelium briefly increases throwing spee
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            recipe.AddIngredient(thorium.ItemType("FungusHat"));
-            recipe.AddIngredient(thorium.ItemType("FungusGuard"));
-            recipe.AddIngredient(thorium.ItemType("FungusLeggings"));
-            recipe.AddIngredient(thorium.ItemType("Chum"), 300);
-            recipe.AddIngredient(thorium.ItemType("VenomKunai"), 300);
-            recipe.AddIngredient(thorium.ItemType("MorelGrenade"), 300);
-            recipe.AddIngredient(thorium.ItemType("MyceliumWhip"));
-            recipe.AddIngredient(thorium.ItemType("SporeBook"));
-            recipe.AddIngredient(thorium.ItemType("LegionOrnament"), 300);
-            recipe.AddIngredient(thorium.ItemType("SwampSpike"));
+
+            recipe.AddIngredient(ModContent.ItemType<FungusHat>());
+            recipe.AddIngredient(ModContent.ItemType<FungusGuard>());
+            recipe.AddIngredient(ModContent.ItemType<FungusLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<Chum>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<MorelGrenade>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<MyceliumWhip>());
+            recipe.AddIngredient(ModContent.ItemType<SporeBook>());
+            recipe.AddIngredient(ModContent.ItemType<LegionOrnament>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<SwampSpike>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<SporeCoatingItem>(), 10);
             
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

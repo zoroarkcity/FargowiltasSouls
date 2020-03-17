@@ -61,28 +61,13 @@ Summons a pet Flickerwick";
             recipe.AddIngredient(ItemID.ApprenticeAltShirt);
             recipe.AddIngredient(ItemID.ApprenticeAltPants);
             recipe.AddIngredient(null, "ApprenticeEnchant");
-
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                
-                recipe.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
-                recipe.AddIngredient(thorium.ItemType("DarkMageStaff"));
-                recipe.AddIngredient(thorium.ItemType("WitherStaff"));
-                recipe.AddIngredient(ItemID.ShadowFlameHexDoll);
-                recipe.AddIngredient(ItemID.InfernoFork);
-                recipe.AddIngredient(thorium.ItemType("ShadowFlareBow"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
-                recipe.AddIngredient(ItemID.ShadowFlameHexDoll);
-                recipe.AddIngredient(ItemID.InfernoFork);
-            }
-
-            //betsy wrath
-            
+            recipe.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
+            //recipe.AddIngredient(ItemID.ShadowFlameHexDoll);
+            recipe.AddIngredient(ItemID.InfernoFork);
             recipe.AddIngredient(ItemID.DD2PetGhost);
-            
+
+            //betsy wrath?
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

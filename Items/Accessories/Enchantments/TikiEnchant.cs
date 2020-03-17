@@ -60,14 +60,6 @@ Summons a pet Tiki Spirit");
             recipe.AddIngredient(ItemID.PygmyNecklace);
             recipe.AddIngredient(ItemID.PygmyStaff);
             recipe.AddIngredient(ItemID.Blowgun);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("HexWand"));
-                recipe.AddIngredient(thorium.ItemType("TheIncubator"));
-                recipe.AddIngredient(ItemID.GoldFrog);
-            }
-            
             recipe.AddIngredient(ItemID.TikiTotem);
             
             recipe.AddTile(TileID.CrystalBall);

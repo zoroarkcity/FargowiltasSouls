@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using ThoriumMod.Items.HealerItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -68,14 +69,13 @@ When casting healing spells, a cross is used instead of mana");
         
         private readonly string[] items =
         {
-            "NoviceClericCowl",
-            "NoviceClericTabard",
-            "NoviceClericPants",
-            "WoodenBaton",
-            "FortifyingWand",
-            "PalmCross",
-            "IceShaver",
-            "Renew"
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
         };
 
         public override void AddRecipes()
@@ -83,10 +83,16 @@ When casting healing spells, a cross is used instead of mana");
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
-            recipe.AddIngredient(thorium.ItemType("PurifiedWater"), 300);
+            recipe.AddIngredient(ModContent.ItemType<NoviceClericCowl>());
+            recipe.AddIngredient(ModContent.ItemType<NoviceClericTabard>());
+            recipe.AddIngredient(ModContent.ItemType<NoviceClericPants>());
+            recipe.AddIngredient(ModContent.ItemType<WoodenBaton>());
+            recipe.AddIngredient(ModContent.ItemType<FortifyingWand>());
+            recipe.AddIngredient(ModContent.ItemType<PalmCross>());
+            recipe.AddIngredient(ModContent.ItemType<Renew>());
+            recipe.AddIngredient(ModContent.ItemType<ThePill>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<PurifiedWater>(), 300);
             recipe.AddIngredient(ItemID.MonarchButterfly);
 
             recipe.AddTile(TileID.DemonAltar);

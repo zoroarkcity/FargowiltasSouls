@@ -61,14 +61,6 @@ Summons a pet Squashling");
             recipe.AddIngredient(ItemID.PumpkinLeggings);
             recipe.AddIngredient(ItemID.MolotovCocktail, 50);
             recipe.AddIngredient(ItemID.Sickle);
-
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("BentZombieArm"));
-                recipe.AddIngredient(ItemID.BladedGlove);
-                recipe.AddIngredient(ItemID.GoodMorning);
-            }
-
             recipe.AddIngredient(ItemID.PumpkinPie);
             recipe.AddIngredient(ItemID.MagicalPumpkinSeed);
             

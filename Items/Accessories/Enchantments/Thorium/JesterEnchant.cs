@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.BardItems;
+using ThoriumMod.Items.QueenJelly;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -61,11 +63,11 @@ Effects of Fan Letter");
             recipe.AddRecipeGroup("FargowiltasSouls:AnyJesterLeggings");
             recipe.AddRecipeGroup("FargowiltasSouls:AnyLetter");
             recipe.AddRecipeGroup("FargowiltasSouls:AnyTambourine");
-            recipe.AddIngredient(thorium.ItemType("Oboe"));
-            recipe.AddIngredient(thorium.ItemType("SkywareLute"));
-            recipe.AddIngredient(thorium.ItemType("Panflute"));
-            recipe.AddIngredient(thorium.ItemType("ConchShell"));
-            recipe.AddIngredient(thorium.ItemType("ViciousMockery"));
+            recipe.AddIngredient(ModContent.ItemType<Oboe>());
+            recipe.AddIngredient(ModContent.ItemType<SkywareLute>());
+            recipe.AddIngredient(ModContent.ItemType<Panflute>());
+            recipe.AddIngredient(ModContent.ItemType<ConchShell>());
+            recipe.AddIngredient(ModContent.ItemType<Alphorn>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

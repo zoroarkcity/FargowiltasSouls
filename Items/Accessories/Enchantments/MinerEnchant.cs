@@ -62,22 +62,9 @@ Summons a pet Magic Lantern");
             recipe.AddIngredient(ItemID.MiningShirt);
             recipe.AddIngredient(ItemID.MiningPants);
             recipe.AddIngredient(ItemID.CopperPickaxe);
-
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("aSandstonePickaxe"));
-                recipe.AddIngredient(ItemID.CnadyCanePickaxe); //gj 
-                recipe.AddRecipeGroup("FargowiltasSouls:AnyGoldPickaxe");
-                recipe.AddIngredient(thorium.ItemType("EnforcedThoriumPax"));
-                recipe.AddIngredient(ItemID.MoltenPickaxe);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.CnadyCanePickaxe);
-                recipe.AddIngredient(ItemID.GoldPickaxe);
-                recipe.AddIngredient(ItemID.MoltenPickaxe);
-            }
-            
+            recipe.AddIngredient(ItemID.CnadyCanePickaxe);
+            recipe.AddIngredient(ItemID.GoldPickaxe);
+            recipe.AddIngredient(ItemID.MoltenPickaxe);
             recipe.AddIngredient(ItemID.MagicLantern);
 
             recipe.AddTile(TileID.DemonAltar);

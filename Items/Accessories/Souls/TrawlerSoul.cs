@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod.Items.Misc;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -116,7 +117,7 @@ Permanent Sonar and Crate Buffs";
             recipe.AddIngredient(ItemID.HardySaddle);
             recipe.AddIngredient(ItemID.ZephyrFish);
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
 
             recipe.SetResult(this);
             recipe.AddRecipe();

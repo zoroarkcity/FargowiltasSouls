@@ -3,6 +3,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Abyssion;
+using ThoriumMod.Items.HealerItems;
+using ThoriumMod.Items.Painting;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -20,7 +23,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
         {
             DisplayName.SetDefault("Whispering Enchantment");
             Tooltip.SetDefault(
-@"''
+@"'Now R'lyeh on the old god's power'
 You occasionally birth a tentacle of abyssal energy that attacks nearby enemies
 You can have up to six tentacles and their damage saps 1 life & mana from the hit enemy");
             DisplayName.AddTranslation(GameCulture.Chinese, "黑暗低语者魔石");
@@ -59,27 +62,22 @@ You can have up to six tentacles and their damage saps 1 life & mana from the hi
             }
         }
 
-        private readonly string[] items =
-        {
-            "WhisperingHood",
-            "WhisperingTabard",
-            "WhisperingLeggings",
-            "RottenCod",
-            "TheStalker",
-            "SamsaraLotus",
-            "WildUmbra",
-            "MindMelter",
-            "WhisperingDagger",
-            "TrenchSpitter",
-        };
-
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
 
             ModRecipe recipe = new ModRecipe(mod);
 
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+            recipe.AddIngredient(ModContent.ItemType<WhisperingHood>());
+            recipe.AddIngredient(ModContent.ItemType<WhisperingTabard>());
+            recipe.AddIngredient(ModContent.ItemType<WhisperingLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<RottenCod>());
+            recipe.AddIngredient(ModContent.ItemType<TheStalker>());
+            recipe.AddIngredient(ModContent.ItemType<SamsaraLotus>());
+            recipe.AddIngredient(ModContent.ItemType<WildUmbra>());
+            recipe.AddIngredient(ModContent.ItemType<MindMelter>());
+            recipe.AddIngredient(ModContent.ItemType<WhisperingDagger>());
+            recipe.AddIngredient(ModContent.ItemType<CuriousSeaLifePaint>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

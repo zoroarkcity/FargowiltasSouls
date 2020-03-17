@@ -12,6 +12,13 @@ using Terraria.UI;
 using FargowiltasSouls.Items.Accessories;
 using FargowiltasSouls.NPCs.AbomBoss;
 using FargowiltasSouls.NPCs.MutantBoss;
+using ThoriumMod.Items.Titan;
+using Fargowiltas.Items.Summons.Deviantt;
+using ThoriumMod.Projectiles.Pets;
+using ThoriumMod.Projectiles.Healer;
+using ThoriumMod.Projectiles.Minions;
+using Fargowiltas.Items.Misc;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls
 {
@@ -564,8 +571,8 @@ namespace FargowiltasSouls
             {
                 Item.NewItem(player.Center, ItemID.WormholePotion, 15);
             }
-            Item.NewItem(player.Center, ModLoader.GetMod("Fargowiltas").ItemType("DevianttsSundial"));
-            Item.NewItem(player.Center, ModLoader.GetMod("Fargowiltas").ItemType("AutoHouse"), 3);
+            Item.NewItem(player.Center, ModContent.ItemType<DevianttsSundial>());
+            Item.NewItem(player.Center, ModContent.ItemType<AutoHouse>(), 3);
             Item.NewItem(player.Center, ModContent.ItemType<EurusSock>());
 
             //only give once per world
@@ -700,24 +707,23 @@ namespace FargowiltasSouls
                 if (ThoriumLoaded)
                 {
                     Mod thorium = ModLoader.GetMod("ThoriumMod");
-                    ModProjDict.Add(thorium.ProjectileType("IFO"), 1);
-                    ModProjDict.Add(thorium.ProjectileType("BioFeederPet"), 2);
-                    ModProjDict.Add(thorium.ProjectileType("BlisterPet"), 3);
-                    ModProjDict.Add(thorium.ProjectileType("WyvernPet"), 4);
-                    ModProjDict.Add(thorium.ProjectileType("SupportLantern"), 5);
-                    ModProjDict.Add(thorium.ProjectileType("LockBoxPet"), 6);
-                    ModProjDict.Add(thorium.ProjectileType("Devil"), 7);
-                    ModProjDict.Add(thorium.ProjectileType("Angel"), 8);
-                    ModProjDict.Add(thorium.ProjectileType("LifeSpirit"), 9);
-                    ModProjDict.Add(thorium.ProjectileType("HolyGoat"), 10);
-                    ModProjDict.Add(thorium.ProjectileType("MinionSapling"), 11);
-                    ModProjDict.Add(thorium.ProjectileType("SnowyOwlPet"), 12);
-                    ModProjDict.Add(thorium.ProjectileType("JellyfishPet"), 13);
-                    ModProjDict.Add(thorium.ProjectileType("LilMog"), 14);
-                    ModProjDict.Add(thorium.ProjectileType("Maid1"), 15);
-                    ModProjDict.Add(thorium.ProjectileType("PinkSlime"), 16);
-                    ModProjDict.Add(thorium.ProjectileType("ShinyPet"), 17);
-                    ModProjDict.Add(thorium.ProjectileType("DrachmaBag"), 18);
+                    ModProjDict.Add(ModContent.ProjectileType<BioFeederPet>(), 2);
+                    ModProjDict.Add(ModContent.ProjectileType<BlisterPet>(), 3);
+                    ModProjDict.Add(ModContent.ProjectileType<WyvernPet>(), 4);
+                    ModProjDict.Add(ModContent.ProjectileType<SupportLantern>(), 5);
+                    ModProjDict.Add(ModContent.ProjectileType<LockBoxPet>(), 6);
+                    ModProjDict.Add(ModContent.ProjectileType<Devil>(), 7);
+                    ModProjDict.Add(ModContent.ProjectileType<Angel>(), 8);
+                    ModProjDict.Add(ModContent.ProjectileType<LifeSpirit>(), 9);
+                    ModProjDict.Add(ModContent.ProjectileType<HolyGoat>(), 10);
+                    ModProjDict.Add(ModContent.ProjectileType<MinionSapling>(), 11);
+                    ModProjDict.Add(ModContent.ProjectileType<SnowyOwlPet>(), 12);
+                    ModProjDict.Add(ModContent.ProjectileType<JellyfishPet>(), 13);
+                    ModProjDict.Add(ModContent.ProjectileType<LilMog>(), 14);
+                    ModProjDict.Add(ModContent.ProjectileType<Maid1>(), 15);
+                    ModProjDict.Add(ModContent.ProjectileType<PinkSlime>(), 16);
+                    ModProjDict.Add(ModContent.ProjectileType<ShinyPet>(), 17);
+                    ModProjDict.Add(ModContent.ProjectileType<DrachmaBag>(), 18);
                 }
 
                 if (CalamityLoaded)
@@ -728,18 +734,18 @@ namespace FargowiltasSouls
                     "SirenYoung", "ChibiiDoggo", "ChibiiDoggoFly", "Akato", "Fox", "Levi" };
                     int calamityIndex = 101;
 
-                    /*ModProjDict.Add(calamity.ProjectileType("KendraPet"), 101);
-                    ModProjDict.Add(calamity.ProjectileType("PerforaMini"), 102);
-                    ModProjDict.Add(calamity.ProjectileType("ThirdSage"), 103);
-                    ModProjDict.Add(calamity.ProjectileType("Bear"), 104);
-                    ModProjDict.Add(calamity.ProjectileType("BrimlingPet"), 105);
-                    ModProjDict.Add(calamity.ProjectileType("DannyDevitoPet"), 106);
-                    ModProjDict.Add(calamity.ProjectileType("SirenYoung"), 107);
-                    ModProjDict.Add(calamity.ProjectileType("ChibiiDoggo"), 108);
-                    ModProjDict.Add(calamity.ProjectileType("ChibiiDoggoFly"), 109);
-                    ModProjDict.Add(calamity.ProjectileType("Akato"), 110);
-                    ModProjDict.Add(calamity.ProjectileType("Fox"), 111);
-                    ModProjDict.Add(calamity.ProjectileType("Levi"), 112);
+                    /*ModContent.rojDict.Add(calamity.ProjectileType<KendraPet>(), 101);
+                    ModContent.rojDict.Add(calamity.ProjectileType<PerforaMini>(), 102);
+                    ModContent.rojDict.Add(calamity.ProjectileType<ThirdSage>(), 103);
+                    ModContent.rojDict.Add(calamity.ProjectileType<Bear>(), 104);
+                    ModContent.rojDict.Add(calamity.ProjectileType<BrimlingPet>(), 105);
+                    ModContent.rojDict.Add(calamity.ProjectileType<DannyDevitoPet>(), 106);
+                    ModContent.rojDict.Add(calamity.ProjectileType<SirenYoung>(), 107);
+                    ModContent.rojDict.Add(calamity.ProjectileType<ChibiiDoggo>(), 108);
+                    ModContent.rojDict.Add(calamity.ProjectileType<ChibiiDoggoFly>(), 109);
+                    ModContent.rojDict.Add(calamity.ProjectileType<Akato>(), 110);
+                    ModContent.rojDict.Add(calamity.ProjectileType<Fox>(), 111);
+                    ModContent.rojDict.Add(calamity.ProjectileType<Levi>(), 112);
                     //ModProjDict.ContainsKey*/
 
                     for (int i = 0; i < calamityPets.Length; i++)
@@ -769,14 +775,14 @@ namespace FargowiltasSouls
             recipe.AddIngredient(ItemID.SoulofNight, 7);
             recipe.AddIngredient(ItemType("VolatileEnergy"));
             recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("JungleChest"));
+            recipe.SetResult(ModContent.ItemType<JungleChest>());
             recipe.AddRecipe();
 
             recipe = new ModRecipe(this);
             recipe.AddIngredient(ItemID.WizardHat);
             recipe.AddIngredient(ItemType("VolatileEnergy"), 5);
             recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("RuneOrb"));
+            recipe.SetResult(ModContent.ItemType<RuneOrb>());
             recipe.AddRecipe();
         }
 
@@ -805,14 +811,6 @@ namespace FargowiltasSouls
             //evil wood
             group = new RecipeGroup(() => Lang.misc[37] + " Evil Wood", ItemID.Ebonwood, ItemID.Shadewood);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyEvilWood", group);
-
-            //anvil HM
-            group = new RecipeGroup(() => Lang.misc[37] + " Mythril Anvil", ItemID.MythrilAnvil, ItemID.OrichalcumAnvil);
-            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyAnvil", group);
-
-            //forge HM
-            group = new RecipeGroup(() => Lang.misc[37] + " Adamantite Forge", ItemID.AdamantiteForge, ItemID.TitaniumForge);
-            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyForge", group);
 
             //any adamantite
             group = new RecipeGroup(() => Lang.misc[37] + " Adamantite Bar", ItemID.AdamantiteBar, ItemID.TitaniumBar);
@@ -857,43 +855,6 @@ namespace FargowiltasSouls
             //spectre head
             group = new RecipeGroup(() => Lang.misc[37] + " Spectre Head Piece", ItemID.SpectreHood, ItemID.SpectreMask);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnySpectreHead", group);
-
-            //book cases
-            group = new RecipeGroup(() => Lang.misc[37] + " Bookcase", new int[]
-            {
-                ItemID.Bookcase,
-                ItemID.BlueDungeonBookcase,
-                ItemID.BoneBookcase,
-                ItemID.BorealWoodBookcase,
-                ItemID.CactusBookcase,
-                ItemID.CrystalBookCase,
-                ItemID.DynastyBookcase,
-                ItemID.EbonwoodBookcase,
-                ItemID.FleshBookcase,
-                ItemID.FrozenBookcase,
-                ItemID.GlassBookcase,
-                ItemID.GoldenBookcase,
-                ItemID.GothicBookcase,
-                ItemID.GraniteBookcase,
-                ItemID.GreenDungeonBookcase,
-                ItemID.HoneyBookcase,
-                ItemID.LivingWoodBookcase,
-                ItemID.MarbleBookcase,
-                ItemID.MeteoriteBookcase,
-                ItemID.MushroomBookcase,
-                ItemID.ObsidianBookcase,
-                ItemID.PalmWoodBookcase,
-                ItemID.PearlwoodBookcase,
-                ItemID.PinkDungeonBookcase,
-                ItemID.PumpkinBookcase,
-                ItemID.RichMahoganyBookcase,
-                ItemID.ShadewoodBookcase,
-                ItemID.SkywareBookcase,
-                ItemID.SlimeBookcase,
-                ItemID.SpookyBookcase,
-                ItemID.SteampunkBookcase
-            });
-            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyBookcase", group);
 
             //beetle body
             group = new RecipeGroup(() => Lang.misc[37] + " Beetle Body", ItemID.BeetleShell, ItemID.BeetleScaleMail);
@@ -944,9 +905,13 @@ namespace FargowiltasSouls
                 group = new RecipeGroup(() => Lang.misc[37] + " Bugle Horn", thorium.ItemType("GoldenBugleHorn"), thorium.ItemType("PlatinumBugle"));
                 RecipeGroup.RegisterGroup("FargowiltasSouls:AnyBugleHorn", group);
 
+                //titan 
+                group = new RecipeGroup(() => Lang.misc[37] + " Titan Headgear", ModContent.ItemType<TitanHelmet>(), ModContent.ItemType<TitanMask>(), ModContent.ItemType<TitanHeadgear>());
+                RecipeGroup.RegisterGroup("FargowiltasSouls:AnyTitanHelmet", group);
+
                 //butterflies
-                group = new RecipeGroup(() => Lang.misc[37] + " Dungeon Butterfly", thorium.ItemType("BlueDungeonButterfly"), thorium.ItemType("GreenDungeonButterfly"), thorium.ItemType("PinkDungeonButterfly"));
-                RecipeGroup.RegisterGroup("FargowiltasSouls:AnyDungeonButterfly", group);
+                //group = new RecipeGroup(() => Lang.misc[37] + " Dungeon Butterfly", thorium.ItemType("BlueDungeonButterfly"), thorium.ItemType("GreenDungeonButterfly"), thorium.ItemType("PinkDungeonButterfly"));
+                //RecipeGroup.RegisterGroup("FargowiltasSouls:AnyDungeonButterfly", group);
             }
         }
 

@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using System.Collections.Generic;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -158,8 +159,8 @@ Nearby allies that die drop a wisp of spirit energy");
 
             foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
-                
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

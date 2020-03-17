@@ -69,13 +69,6 @@ Summons several pets";
             modPlayer.HuntressEffect();
             //immune frame kill, pet
             modPlayer.ValhallaEffect(hideVisual);
-            player.shinyStone = true;
-
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.CoinPet, hideVisual, thorium.BuffType("DrachmaBuff"), thorium.ProjectileType("DrachmaBag"));
-                modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.GlitterPet, hideVisual, thorium.BuffType("ShineDust"), thorium.ProjectileType("ShinyPet"));
-            }
         }
 
         public override void AddRecipes()

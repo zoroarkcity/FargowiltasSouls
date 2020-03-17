@@ -3,6 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Granite;
+using CalamityMod.Items.Accessories;
+using ThoriumMod.Items.EnergyStorm;
+using ThoriumMod.Items.ThrownItems;
+using ThoriumMod.Items.Painting;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -55,15 +60,6 @@ Effects of Eye of the Storm");
             //eye of the storm
             thorium.GetItem("EyeoftheStorm").UpdateAccessory(player, hideVisual);
         }
-        
-        private readonly string[] items =
-        {
-            "EyeoftheStorm",
-            "GraniteSaber",
-            "EnergyProjector",
-            "BoulderProbe",
-            "ShockAbsorber"
-        };
 
         public override void AddRecipes()
         {
@@ -71,14 +67,16 @@ Effects of Eye of the Storm");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("GraniteHelmet"));
-            recipe.AddIngredient(thorium.ItemType("GraniteChestGuard"));
-            recipe.AddIngredient(thorium.ItemType("GraniteGreaves"));
-            recipe.AddIngredient(ItemID.NightVisionHelmet);
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
-
-            recipe.AddIngredient(thorium.ItemType("ObsidianStriker"), 300);
+            recipe.AddIngredient(ModContent.ItemType<GraniteHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<GraniteChestGuard>());
+            recipe.AddIngredient(ModContent.ItemType<GraniteGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<ThoriumMod.Items.EnergyStorm.EyeoftheStorm>()); //calamity same name REEEEEEEEE
+            recipe.AddIngredient(ModContent.ItemType<GraniteSaber>());
+            recipe.AddIngredient(ModContent.ItemType<EnergyProjector>());
+            recipe.AddIngredient(ModContent.ItemType<BoulderProbe>());
+            recipe.AddIngredient(ModContent.ItemType<ShockAbsorber>());
+            recipe.AddIngredient(ModContent.ItemType<ObsidianStriker>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<EarthenEnergyPaint>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

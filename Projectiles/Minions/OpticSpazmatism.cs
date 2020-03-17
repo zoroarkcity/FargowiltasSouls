@@ -48,7 +48,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
                 if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile))
                     projectile.ai[0] = minionAttackTargetNpc.whoAmI;
-                
+
                 NPC npc = Main.npc[(int)projectile.ai[0]];
                 if (npc.CanBeChasedBy(projectile))
                 {

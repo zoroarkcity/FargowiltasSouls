@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using SacredTools;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.SoA
 {
@@ -76,7 +77,7 @@ Effects of Frigid Pendant, Lapis Pendant, and Dreadflame Emblem");
             recipe.AddIngredient(null, "FrosthunterEnchant");
             recipe.AddIngredient(null, "BlightboneEnchant");
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

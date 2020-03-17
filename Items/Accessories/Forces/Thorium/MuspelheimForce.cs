@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Buffs.Pet;
+using FargowiltasSouls.Items.Accessories.Enchantments.Thorium;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
 {
@@ -21,8 +23,9 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
             Tooltip.SetDefault(
 @"'A blazing heat, the mark of Surtr...'
 All armor bonuses from Sandstone, Danger, Flight, and Fungus
-All armor bonuses from Feral Fur, Living Wood, Bulb, and Life Bloom
-Effects of Night Shade Petal, Flawless Chrysalis, and Bee Booties");
+All armor bonuses Living Wood, Bulb, and Life Bloom
+Effects of Night Shade Petal, Flawless Chrysalis, and Bee Booties
+Summons a pet Glitter");
             DisplayName.AddTranslation(GameCulture.Chinese, "穆斯贝尔海姆之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'炽热之火, 史尔特尔的标志...'
@@ -59,7 +62,7 @@ Effects of Night Shade Petal, Flawless Chrysalis, and Bee Booties");
             thoriumPlayer.livingWood = true;
             //free boi
             modPlayer.LivingWoodEnchant = true;
-            modPlayer.AddMinion(SoulConfig.Instance.thoriumToggles.SaplingMinion, thorium.ProjectileType("MinionSapling"), 25, 2f);
+            modPlayer.AddMinion(SoulConfig.Instance.thoriumToggles.SaplingMinion, thorium.ProjectileType("MinionSapling"), 10, 2f);
 
             //bulb set bonus
             modPlayer.BulbEnchant = true;
@@ -76,19 +79,11 @@ Effects of Night Shade Petal, Flawless Chrysalis, and Bee Booties");
             //sandstone
             player.doubleJumpSandstorm = true;
             //danger
-            player.buffImmune[BuffID.Frostburn] = true;
-            player.buffImmune[BuffID.Poisoned] = true;
-            player.buffImmune[BuffID.OnFire] = true;
-            player.buffImmune[BuffID.Bleeding] = true;
-            player.buffImmune[BuffID.Venom] = true;
-            //night shade petal
-            thoriumPlayer.nightshadeBoost = true;
+            mod.GetItem("DangerEnchant").UpdateAccessory(player, hideVisual);
             //flight
             modPlayer.wingTimeModifier += 1f;
             //fungus
             modPlayer.FungusEnchant = true;
-            //feral fur
-            modPlayer.FeralFurEnchant = true;
 
         }
 
@@ -101,7 +96,6 @@ Effects of Night Shade Petal, Flawless Chrysalis, and Bee Booties");
             recipe.AddIngredient(null, "SandstoneEnchant");
             recipe.AddIngredient(null, "DangerEnchant");
             recipe.AddIngredient(null, "FlightEnchant");
-            recipe.AddIngredient(null, "FeralFurEnchant");
             recipe.AddIngredient(null, "FungusEnchant");
             recipe.AddIngredient(null, "LifeBloomEnchant");
 

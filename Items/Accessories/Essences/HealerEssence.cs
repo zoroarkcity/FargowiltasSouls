@@ -75,8 +75,8 @@ namespace FargowiltasSouls.Items.Accessories.Essences
         {
             "ClericEmblem",
             "HeartWand",
-            "ClericsCross",
-            "LifeQuartzClaymore",
+            //"ClericsCross",
+            //"LifeQuartzClaymore",
             "FeatherBarrierRod",
             "TulipStaff",
             "LargePopcorn",

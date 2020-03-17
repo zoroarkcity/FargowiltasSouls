@@ -12,10 +12,10 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
         private const float maxTime = 30;
 
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Deathray");
-		}
-    	
+        {
+            DisplayName.SetDefault("Deathray");
+        }
+
         public override void SetDefaults()
         {
             projectile.width = 48;

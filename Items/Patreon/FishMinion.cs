@@ -29,7 +29,7 @@ namespace FargowiltasSouls.Items.Patreon
             projectile.ignoreWater = true;
             ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
             ProjectileID.Sets.Homing[projectile.type] = true;
-            
+
             Shoot = mod.ProjectileType("WaterStream");
             Inertia = 20f;
             ShootSpeed = 12f; // 

@@ -24,7 +24,7 @@ Lightning Aura can now crit and strikes faster");
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 7;
+            item.rare = 8;
             item.value = 150000;
         }
 
@@ -44,9 +44,6 @@ Lightning Aura can now crit and strikes faster");
             recipe.AddIngredient(ItemID.DD2LightningAuraT2Popper);
             recipe.AddIngredient(ItemID.MonkStaffT2);
             recipe.AddIngredient(ItemID.DaoofPow);
-
-            //Schmelze (with Thorium)
-            //Rocket Fist (with Thorium)
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

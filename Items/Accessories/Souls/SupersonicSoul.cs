@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -282,8 +283,8 @@ Effects of Flying Carpet";
             recipe.AddIngredient(ItemID.ReindeerBells);
             recipe.AddIngredient(ItemID.BrainScrambler);
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
-                
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
