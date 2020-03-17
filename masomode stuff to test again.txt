@@ -163,3 +163,4 @@ doubled the drop rate of skull charm and all biocluster materials
 sand ele summons bonus predictive sandnados
 jungle mimic stomp produces fake hearts
 eoc teleports are slower
+baby guardian has a miniboss health bar with YABHB loaded

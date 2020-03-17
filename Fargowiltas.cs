@@ -649,6 +649,12 @@ namespace FargowiltasSouls
 
                 DebuffIDs.Add(BuffType("TimeFrozen"));
 
+                Mod bossHealthBar = ModLoader.GetMod("FKBossHealthBar");
+                if (bossHealthBar != null)
+                {
+                    bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<BabyGuardian>());
+                }
+
                 Mod bossChecklist = ModLoader.GetMod("BossChecklist");
                 if (bossChecklist != null)
                 {
