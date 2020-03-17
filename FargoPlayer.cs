@@ -1519,7 +1519,6 @@ namespace FargowiltasSouls
 
             if (player.whoAmI == Main.myPlayer && player.controlUseItem && player.HeldItem.type == mod.ItemType("EaterLauncher"))
             {
-
                 for (int i = 0; i < 20; i++)
                 {
                     Vector2 offset = new Vector2();
@@ -1531,6 +1530,8 @@ namespace FargowiltasSouls
                         DustID.PurpleCrystalShard, 0, 0, 100, Color.White, 1f
                         )];
                     dust.velocity = player.velocity;
+                    if (Main.rand.Next(3) == 0)
+                        dust.velocity += Vector2.Normalize(offset) * 5f;
                     dust.noGravity = true;
 
                     Vector2 offset2 = new Vector2();
@@ -1542,6 +1543,8 @@ namespace FargowiltasSouls
                         DustID.PurpleCrystalShard, 0, 0, 100, Color.White, 1f
                         )];
                     dust2.velocity = player.velocity;
+                    if (Main.rand.Next(3) == 0)
+                        dust2.velocity += Vector2.Normalize(offset2) * -5f;
                     dust2.noGravity = true;
                 }
             }

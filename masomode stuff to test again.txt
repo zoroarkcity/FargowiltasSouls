@@ -164,3 +164,4 @@ sand ele summons bonus predictive sandnados
 jungle mimic stomp produces fake hearts
 eoc teleports are slower
 baby guardian has a miniboss health bar with YABHB loaded
+adjusted rockeater launcher dust
