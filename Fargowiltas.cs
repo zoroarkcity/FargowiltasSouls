@@ -734,20 +734,6 @@ namespace FargowiltasSouls
                     "SirenYoung", "ChibiiDoggo", "ChibiiDoggoFly", "Akato", "Fox", "Levi" };
                     int calamityIndex = 101;
 
-                    /*ModContent.rojDict.Add(calamity.ProjectileType<KendraPet>(), 101);
-                    ModContent.rojDict.Add(calamity.ProjectileType<PerforaMini>(), 102);
-                    ModContent.rojDict.Add(calamity.ProjectileType<ThirdSage>(), 103);
-                    ModContent.rojDict.Add(calamity.ProjectileType<Bear>(), 104);
-                    ModContent.rojDict.Add(calamity.ProjectileType<BrimlingPet>(), 105);
-                    ModContent.rojDict.Add(calamity.ProjectileType<DannyDevitoPet>(), 106);
-                    ModContent.rojDict.Add(calamity.ProjectileType<SirenYoung>(), 107);
-                    ModContent.rojDict.Add(calamity.ProjectileType<ChibiiDoggo>(), 108);
-                    ModContent.rojDict.Add(calamity.ProjectileType<ChibiiDoggoFly>(), 109);
-                    ModContent.rojDict.Add(calamity.ProjectileType<Akato>(), 110);
-                    ModContent.rojDict.Add(calamity.ProjectileType<Fox>(), 111);
-                    ModContent.rojDict.Add(calamity.ProjectileType<Levi>(), 112);
-                    //ModProjDict.ContainsKey*/
-
                     for (int i = 0; i < calamityPets.Length; i++)
                     {
                         if (!ModProjDict.ContainsKey(calamity.ProjectileType(calamityPets[i])))
