@@ -1238,7 +1238,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Derpling:
-                        Aura(npc, 600, BuffID.Confused, true, 15, true);
+                        Aura(npc, 1000, BuffID.Confused, false, 15, true);
                         break;
 
                     case NPCID.Crimera:
