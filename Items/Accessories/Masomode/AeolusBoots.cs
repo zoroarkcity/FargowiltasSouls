@@ -48,7 +48,7 @@ Increases jump height and negates fall damage");
             recipe.AddIngredient(mod.ItemType("EurusSock"));
             recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 10);
 
-            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
