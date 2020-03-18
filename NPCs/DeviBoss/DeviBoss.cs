@@ -226,7 +226,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             attackQueue[3] = 15; //always do sparkling love
                             npc.localAI[2] = npc.localAI[3] > 1 ? 1 : 0;
                             GetNextAttack();
-                            npc.dontTakeDamage = false;
                         }
                     }
                     else if (npc.ai[1] == 60)

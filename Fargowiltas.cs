@@ -660,6 +660,21 @@ namespace FargowiltasSouls
                 {
                     bossChecklist.Call(
                         "AddBoss",
+                        5.01f,
+                        ModContent.NPCType<NPCs.DeviBoss.DeviBoss>(),
+                        this,
+                        "Deviantt",
+                        (Func<bool>)(() => FargoSoulsWorld.downedDevi),
+                        ModContent.ItemType<Items.Summons.DevisCurse>(),
+                        new List<int> { /*ModContent.ItemType<Items.Tiles.DeviTrophy>(),*/ ModContent.ItemType<Items.Tiles.DeviMusicBox>() },
+                        new List<int> { ModContent.ItemType<Items.Misc.DeviatingEnergy>() },
+                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.DevisCurse>() + "].",
+                        "Deviantt is satisfied with its show of love.",
+                        "FargowiltasSouls/NPCs/AbomBoss/DeviBoss_Still",
+                        "FargowiltasSouls/NPCs/AbomBoss/DeviBoss_Head_Boss"
+                    );
+                    bossChecklist.Call(
+                        "AddBoss",
                         14.01f,
                         ModContent.NPCType<NPCs.AbomBoss.AbomBoss>(),
                         this,
@@ -668,8 +683,8 @@ namespace FargowiltasSouls
                         ModContent.ItemType<Items.Summons.AbomsCurse>(),
                         new List<int> { ModContent.ItemType<Items.Tiles.AbomTrophy>(), ModContent.ItemType<Items.Tiles.AbomMusicBox>() },
                         new List<int> { ModContent.ItemType<Items.Misc.MutantScale>() },
-                        "Spawn by using the [i:" + ModContent.ItemType<Items.Summons.AbomsCurse>() + "].",
-                        "The Abominationn has destroyed everyone.",
+                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.AbomsCurse>() + "].",
+                        "Abominationn has destroyed everyone.",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Still",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Head_Boss"
                     );
@@ -699,14 +714,15 @@ namespace FargowiltasSouls
                         ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
                         new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), ModContent.ItemType<Items.Tiles.MutantMusicBox>() },
                         ModContent.ItemType<Items.Misc.Sadism>(),
-                        "Throw the [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while the Abominationn is alive, in the Mutant's presence.",
-                        "The Mutant has won, of course.",
+                        "Throw [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while Abominationn is alive, in Mutant's presence.",
+                        "Mutant has eviscerated everyone under its hands.",
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
                     );
                 }
                 //mutant shop
                 Mod fargos = ModLoader.GetMod("Fargowiltas");
+                fargos.Call("AddSummon", 5.01f, "FargowiltasSouls", "DevisCurse", (Func<bool>)(() => FargoSoulsWorld.downedDevi), Item.buyPrice(0, 17, 50));
                 fargos.Call("AddSummon", 14.01f, "FargowiltasSouls", "AbomsCurse", (Func<bool>)(() => FargoSoulsWorld.downedAbom), 10000000);
                 fargos.Call("AddSummon", 14.02f, "FargowiltasSouls", "TruffleWormEX", (Func<bool>)(() => FargoSoulsWorld.downedFishronEX), 10000000);
                 fargos.Call("AddSummon", 14.03f, "FargowiltasSouls", "MutantsCurse", (Func<bool>)(() => FargoSoulsWorld.downedMutant), 20000000);
