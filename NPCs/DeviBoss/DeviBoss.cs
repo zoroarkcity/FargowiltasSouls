@@ -1496,7 +1496,16 @@ namespace FargowiltasSouls.NPCs.DeviBoss
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
             if (Main.LocalPlayer.loveStruck)
+            {
+                npc.life += (int)damage;
+                if (npc.life > npc.lifeMax)
+                    npc.life = npc.lifeMax;
+                CombatText.NewText(npc.Hitbox, CombatText.HealLife, (int)damage);
+                npc.netUpdate = true;
+
                 damage = 0;
+                return false;
+            }
             return true;
         }
 
