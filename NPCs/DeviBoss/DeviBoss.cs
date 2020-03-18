@@ -1249,6 +1249,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (!AliveCheck(player) || Phase2Check())
                         break;
 
+                    npc.dontTakeDamage = false;
+
                     targetPos = player.Center + player.DirectionTo(npc.Center) * 250;
                     Movement(targetPos, 0.1f);
 
