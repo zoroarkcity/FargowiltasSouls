@@ -1483,13 +1483,13 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            if (item.melee)
+            if (item.melee && !Fargowiltas.Instance.SupportedContentModLoaded)
                 damage = (int)(damage * 1.3);
         }
 
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (projectile.melee || projectile.minion)
+            if ((projectile.melee || projectile.minion) && !Fargowiltas.Instance.SupportedContentModLoaded)
                 damage = (int)(damage * 1.3);
         }
 
