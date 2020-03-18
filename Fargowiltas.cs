@@ -1291,8 +1291,6 @@ namespace FargowiltasSouls
         internal ApothTestModCompatibility ApothCompatibility { get; private set; }
         internal bool ApothLoaded => ApothCompatibility != null;
 
-        internal bool SupportedContentModLoaded => CalamityLoaded || ThoriumLoaded || SoALoaded || MasomodeEXLoaded || DBZMODLoaded;
-
         #endregion
     }
 

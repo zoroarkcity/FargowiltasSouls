@@ -16,6 +16,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
         public int[] attackQueue = new int[4];
         public int lastStrongAttack;
 
+        private bool ContentModLoaded => Fargowiltas.Instance.CalamityLoaded || Fargowiltas.Instance.ThoriumLoaded
+            || Fargowiltas.Instance.SoALoaded || Fargowiltas.Instance.MasomodeEXLoaded;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Deviantt");
@@ -1483,13 +1486,13 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
         public override void ModifyHitByItem(Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-            if (item.melee && !Fargowiltas.Instance.SupportedContentModLoaded)
+            if (item.melee && !ContentModLoaded)
                 damage = (int)(damage * 1.3);
         }
 
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if ((projectile.melee || projectile.minion) && !Fargowiltas.Instance.SupportedContentModLoaded)
+            if ((projectile.melee || projectile.minion) && !ContentModLoaded)
                 damage = (int)(damage * 1.3);
         }
 
