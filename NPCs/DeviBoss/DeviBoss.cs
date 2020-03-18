@@ -175,6 +175,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (!AliveCheck(player))
                         break;
                     npc.velocity *= 0.9f;
+                    npc.dontTakeDamage = true;
                     for (int i = 0; i < 5; i++)
                     {
                         int d = Dust.NewDust(npc.position, npc.width, npc.height, 86, 0f, 0f, 0, default(Color), 2.5f);
