@@ -166,3 +166,19 @@ eoc teleports are slower
 baby guardian has a miniboss health bar with YABHB loaded
 adjusted rockeater launcher dust
 change derpling aura: much larger, but is no longer reverse
+
+nerfed destroyer coil star/laser damage EXTREMELY hard (now 93, was 224)
+nerfed illum bat number of max clones and clones cannot clone further (note: clones can still swarm, making real bats)
+headless horseman throws blades much slower and blades only split into 4 (was 6)
+destroyer's coil arena ONLY traps his current target in mp
+removed destroyer's coil star spam enrage
+angry bones only spam bones when they have line of sight to you
+agitating lens:
+	reduced damage as standalone and in SDF
+	removed spread
+	slightly increased delay between scythes
+wof gains a phase 3 below 10%:
+	stops firing regular lasers entirely
+	fires deathrays MUCH more quickly
+	world evil attacks are twice as fast
+also reduced wof's max speed slightly again

@@ -1269,15 +1269,15 @@ namespace FargowiltasSouls.NPCs
                             if (npc.life > npc.lifeMax)
                                 npc.life = npc.lifeMax;
                         }
-                        if (npc.HasPlayerTarget && npc.Distance(Main.player[npc.target].Center) < 1000)
+                        else if (npc.HasPlayerTarget && npc.Distance(Main.player[npc.target].Center) < 1000)
                         {
                             if (++Counter >= 600)
                             {
                                 Counter = 0;
-                                if (Main.netMode != 1 && NPC.CountNPCS(NPCID.IlluminantBat) < 20)
+                                if (Main.netMode != 1 && NPC.CountNPCS(NPCID.IlluminantBat) < 10)
                                 {
                                     int bat = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.IlluminantBat);
-                                    if (bat < 200)
+                                    if (bat < Main.maxNPCs)
                                     {
                                         Main.npc[bat].velocity.X = Main.rand.Next(-5, 6);
                                         Main.npc[bat].velocity.Y = Main.rand.Next(-5, 6);
@@ -3146,13 +3146,13 @@ namespace FargowiltasSouls.NPCs
                                         Item.NewItem(npc.Hitbox, mod.ItemType("FleshierDoll"));
                                 }
                             }
-                            else if (Math.Abs(npc.velocity.X) > 7f)
+                            else if (Math.Abs(npc.velocity.X) > 6f)
                             {
-                                npc.position.X -= (Math.Abs(npc.velocity.X) - 7f) * Math.Sign(npc.velocity.X);
+                                npc.position.X -= (Math.Abs(npc.velocity.X) - 6f) * Math.Sign(npc.velocity.X);
                             }
                         }
-                        else if (Math.Abs(npc.velocity.X) > 7f)
-                            npc.position.X -= (Math.Abs(npc.velocity.X) - 7f) * Math.Sign(npc.velocity.X);
+                        else if (Math.Abs(npc.velocity.X) > 6f)
+                            npc.position.X -= (Math.Abs(npc.velocity.X) - 6f) * Math.Sign(npc.velocity.X);
 
                         //dont do aura with swarm active
                         if (Main.player[Main.myPlayer].active & !Main.player[Main.myPlayer].dead && Main.player[Main.myPlayer].ZoneUnderworldHeight && !(bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive"))
@@ -3185,93 +3185,54 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
                         }
+
+                        if (npc.life < npc.lifeMax / 10)
+                        {
+                            Counter++;
+                            masoBool[3] = true;
+                        }
                         break;
 
                     case NPCID.WallofFleshEye:
-                        if (masoBool[3])
-                            break;
-
-                        if (npc.realLife != -1 && Main.npc[npc.realLife].GetGlobalNPC<FargoSoulsGlobalNPC>().masoBool[0]
-                            && Main.npc[npc.realLife].GetGlobalNPC<FargoSoulsGlobalNPC>().Counter < 240)
-                            npc.localAI[1] = 0; //dont fire during mouth's special attacks
-
-                        const float maxTime = 540f;
-                        if (++npc.ai[1] >= maxTime)
                         {
-                            npc.ai[1] = 0f;
-                            if (npc.ai[2] == 0f)
-                                npc.ai[2] = 1f;
-                            else
-                                npc.ai[2] *= -1f;
+                            if (masoBool[3])
+                                break;
 
-                            if (npc.ai[2] > 0 && Main.netMode != 1) //FIRE LASER
-                            {
-                                Vector2 speed = Vector2.UnitX.RotatedBy(npc.ai[3]);
-                                float ai0 = (npc.realLife != -1 && Main.npc[npc.realLife].velocity.X > 0) ? 1f : 0f;
-                                if (Main.netMode != 1)
-                                    Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("PhantasmalDeathrayWOF"), npc.damage / 4, 0f, Main.myPlayer, ai0, npc.whoAmI);
-                            }
-                            npc.netUpdate = true;
-                        }
+                            if (npc.realLife != -1 && Main.npc[npc.realLife].GetGlobalNPC<FargoSoulsGlobalNPC>().masoBool[0]
+                                && Main.npc[npc.realLife].GetGlobalNPC<FargoSoulsGlobalNPC>().Counter < 240)
+                                npc.localAI[1] = 0; //dont fire during mouth's special attacks
 
-                        if (npc.ai[2] >= 0f)
-                        {
-                            npc.alpha = 175;
-                            npc.dontTakeDamage = true;
-                            if (npc.ai[1] <= 90)
+                            float maxTime = 540f;
+
+                            if (npc.realLife != -1 && Main.npc[npc.realLife].GetGlobalNPC<FargoSoulsGlobalNPC>().masoBool[3])
                             {
-                                masoBool[3] = true;
-                                npc.AI();
-                                masoBool[3] = false;
-                                npc.localAI[1] = 0f;
-                                npc.rotation = npc.ai[3];
-                                return false;
+                                maxTime = 240f;
+                                npc.localAI[1] = 0f; //no more lasers
                             }
-                            else
+
+                            if (++npc.ai[1] >= maxTime)
                             {
-                                npc.ai[2] = 1;
-                            }
-                        }
-                        else
-                        {
-                            npc.alpha = 0;
-                            npc.dontTakeDamage = false;
-                            if (npc.ai[1] > maxTime - 180f)
-                            {
-                                if (Main.rand.Next(4) < 3) //dust telegraphs switch
+                                npc.ai[1] = 0f;
+                                if (npc.ai[2] == 0f)
+                                    npc.ai[2] = 1f;
+                                else
+                                    npc.ai[2] *= -1f;
+
+                                if (npc.ai[2] > 0 && Main.netMode != 1) //FIRE LASER
                                 {
-                                    int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 90, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 114, default(Color), 3.5f);
-                                    Main.dust[dust].noGravity = true;
-                                    Main.dust[dust].velocity *= 1.8f;
-                                    Main.dust[dust].velocity.Y -= 0.5f;
-                                    if (Main.rand.Next(4) == 0)
-                                    {
-                                        Main.dust[dust].noGravity = false;
-                                        Main.dust[dust].scale *= 0.5f;
-                                    }
+                                    Vector2 speed = Vector2.UnitX.RotatedBy(npc.ai[3]);
+                                    float ai0 = (npc.realLife != -1 && Main.npc[npc.realLife].velocity.X > 0) ? 1f : 0f;
+                                    if (Main.netMode != 1)
+                                        Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("PhantasmalDeathrayWOF"), npc.damage / 4, 0f, Main.myPlayer, ai0, npc.whoAmI);
                                 }
+                                npc.netUpdate = true;
+                            }
 
-                                const float stopTime = maxTime - 90f;
-                                if (npc.ai[1] == stopTime) //shoot warning dust in phase 2
-                                {
-                                    int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
-                                    if (t != -1)
-                                    {
-                                        if (npc.Distance(Main.player[t].Center) < 3000)
-                                            Main.PlaySound(15, (int)Main.player[t].position.X, (int)Main.player[t].position.Y, 0);
-                                        npc.ai[2] = -2f;
-                                        npc.ai[3] = (npc.Center - Main.player[t].Center).ToRotation();
-                                        if (npc.realLife != -1 && Main.npc[npc.realLife].velocity.X > 0)
-                                            npc.ai[3] += (float)Math.PI;
-
-                                        float ai0 = (npc.realLife != -1 && Main.npc[npc.realLife].velocity.X > 0) ? 1f : 0f;
-                                        Vector2 speed = Vector2.UnitX.RotatedBy(npc.ai[3]);
-                                        if (Main.netMode != 1)
-                                            Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("PhantasmalDeathrayWOFS"), 0, 0f, Main.myPlayer, ai0, npc.whoAmI);
-                                    }
-                                    npc.netUpdate = true;
-                                }
-                                else if (npc.ai[1] > stopTime)
+                            if (npc.ai[2] >= 0f)
+                            {
+                                npc.alpha = 175;
+                                npc.dontTakeDamage = true;
+                                if (npc.ai[1] <= 90)
                                 {
                                     masoBool[3] = true;
                                     npc.AI();
@@ -3279,6 +3240,60 @@ namespace FargowiltasSouls.NPCs
                                     npc.localAI[1] = 0f;
                                     npc.rotation = npc.ai[3];
                                     return false;
+                                }
+                                else
+                                {
+                                    npc.ai[2] = 1;
+                                }
+                            }
+                            else
+                            {
+                                npc.alpha = 0;
+                                npc.dontTakeDamage = false;
+                                if (npc.ai[1] > maxTime - 180f)
+                                {
+                                    if (Main.rand.Next(4) < 3) //dust telegraphs switch
+                                    {
+                                        int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 90, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 114, default(Color), 3.5f);
+                                        Main.dust[dust].noGravity = true;
+                                        Main.dust[dust].velocity *= 1.8f;
+                                        Main.dust[dust].velocity.Y -= 0.5f;
+                                        if (Main.rand.Next(4) == 0)
+                                        {
+                                            Main.dust[dust].noGravity = false;
+                                            Main.dust[dust].scale *= 0.5f;
+                                        }
+                                    }
+
+                                    float stopTime = maxTime - 90f;
+                                    if (npc.ai[1] == stopTime) //shoot warning dust in phase 2
+                                    {
+                                        int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
+                                        if (t != -1)
+                                        {
+                                            if (npc.Distance(Main.player[t].Center) < 3000)
+                                                Main.PlaySound(15, (int)Main.player[t].position.X, (int)Main.player[t].position.Y, 0);
+                                            npc.ai[2] = -2f;
+                                            npc.ai[3] = (npc.Center - Main.player[t].Center).ToRotation();
+                                            if (npc.realLife != -1 && Main.npc[npc.realLife].velocity.X > 0)
+                                                npc.ai[3] += (float)Math.PI;
+
+                                            float ai0 = (npc.realLife != -1 && Main.npc[npc.realLife].velocity.X > 0) ? 1f : 0f;
+                                            Vector2 speed = Vector2.UnitX.RotatedBy(npc.ai[3]);
+                                            if (Main.netMode != 1)
+                                                Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("PhantasmalDeathrayWOFS"), 0, 0f, Main.myPlayer, ai0, npc.whoAmI);
+                                        }
+                                        npc.netUpdate = true;
+                                    }
+                                    else if (npc.ai[1] > stopTime)
+                                    {
+                                        masoBool[3] = true;
+                                        npc.AI();
+                                        masoBool[3] = false;
+                                        npc.localAI[1] = 0f;
+                                        npc.rotation = npc.ai[3];
+                                        return false;
+                                    }
                                 }
                             }
                         }
@@ -3319,9 +3334,9 @@ namespace FargowiltasSouls.NPCs
                                             distance.Normalize();
                                             distance *= 8f;
                                             int type = mod.ProjectileType("DarkStar");
-                                            Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
-                                            Projectile.NewProjectile(npc.Center, distance, type, npc.damage / 5, 0f, Main.myPlayer);
-                                            Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
+                                            Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 12, 0f, Main.myPlayer);
+                                            Projectile.NewProjectile(npc.Center, distance, type, npc.damage / 12, 0f, Main.myPlayer);
+                                            Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 12, 0f, Main.myPlayer);
                                         }
                                     }
 
@@ -3338,7 +3353,7 @@ namespace FargowiltasSouls.NPCs
                                             {
                                                 Vector2 speed = npc.DirectionTo(pivot).RotatedBy(2 * Math.PI / max * i);
                                                 Vector2 spawnPos = pivot - speed * 600;
-                                                Projectile.NewProjectile(spawnPos, speed, mod.ProjectileType("DestroyerLaser"), npc.damage / 5, 0f, Main.myPlayer);
+                                                Projectile.NewProjectile(spawnPos, speed, mod.ProjectileType("DestroyerLaser"), npc.damage / 12, 0f, Main.myPlayer);
                                             }
                                         }
                                     }
@@ -3356,20 +3371,21 @@ namespace FargowiltasSouls.NPCs
                                         dust.noGravity = true;
                                     }
 
-                                    if (Main.LocalPlayer.active && !Main.LocalPlayer.dead) //arena effect
+                                    Player target = Main.player[npc.target];
+                                    if (target.active && !target.dead) //arena effect
                                     {
-                                        float distance = Main.LocalPlayer.Distance(pivot);
+                                        float distance = target.Distance(pivot);
                                         if (distance > 600 && distance < 3000)
                                         {
-                                            Vector2 movement = pivot - Main.LocalPlayer.Center;
+                                            Vector2 movement = pivot - target.Center;
                                             float difference = movement.Length() - 600;
                                             movement.Normalize();
                                             movement *= difference < 17f ? difference : 17f;
-                                            Main.LocalPlayer.position += movement;
+                                            target.position += movement;
 
                                             for (int i = 0; i < 20; i++)
                                             {
-                                                int d = Dust.NewDust(Main.LocalPlayer.position, Main.LocalPlayer.width, Main.LocalPlayer.height, 112, 0f, 0f, 0, default(Color), 2f);
+                                                int d = Dust.NewDust(target.position, target.width, target.height, 112, 0f, 0f, 0, default(Color), 2f);
                                                 Main.dust[d].noGravity = true;
                                                 Main.dust[d].velocity *= 5f;
                                             }
@@ -5312,7 +5328,7 @@ namespace FargowiltasSouls.NPCs
                                     npc.Center = pivot + npc.DirectionFrom(pivot) * 600;
 
                                 //enrage if player is outside the ring
-                                if (Main.npc[npc.realLife].HasValidTarget && Main.npc[npc.realLife].GetGlobalNPC<FargoSoulsGlobalNPC>().Counter > 30 && Main.player[Main.npc[npc.realLife].target].Distance(pivot) > 600 && Main.netMode != 1 && Main.rand.Next(120) == 0)
+                                /*if (Main.npc[npc.realLife].HasValidTarget && Main.npc[npc.realLife].GetGlobalNPC<FargoSoulsGlobalNPC>().Counter > 30 && Main.player[Main.npc[npc.realLife].target].Distance(pivot) > 600 && Main.netMode != 1 && Main.rand.Next(120) == 0)
                                 {
                                     Vector2 distance = Main.player[npc.target].Center - npc.Center;
                                     distance.X += Main.rand.Next(-200, 201);
@@ -5332,7 +5348,7 @@ namespace FargowiltasSouls.NPCs
                                     p = Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 3, 0f, Main.myPlayer);
                                     if (p != Main.maxProjectiles)
                                         Main.projectile[p].timeLeft = 150;
-                                }
+                                }*/
                             }
 
                             if (Counter2 > 0) //no lasers or stars while or shortly after spinning
@@ -7209,7 +7225,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.AngryBonesBigMuscle:
                         if (++Counter > 180)
                         {
-                            if (++Counter2 > 6)
+                            if (++Counter2 > 6 && npc.HasValidTarget && Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
                             {
                                 Counter2 = 0;
                                 Vector2 speed = new Vector2(Main.rand.Next(-100, 101), Main.rand.Next(-100, 101));
@@ -7318,7 +7334,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.HeadlessHorseman:
-                        if (++Counter > 180)
+                        if (++Counter > 360)
                         {
                             Counter = 0;
                             if (Main.netMode != 1 && npc.HasPlayerTarget)
@@ -7927,7 +7943,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.IlluminantBat:
-                        target.AddBuff(mod.BuffType("MutantNibble"), 1800);
+                        target.AddBuff(mod.BuffType("MutantNibble"), 600);
                         target.AddBuff(BuffID.Rabies, 3600);
                         break;
 

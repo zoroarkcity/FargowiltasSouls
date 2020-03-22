@@ -1316,19 +1316,18 @@ namespace FargowiltasSouls
 
             if (AgitatingLens)
             {
-                if (AgitatingLensCD++ > 10)
+                if (AgitatingLensCD++ > 12)
                 {
                     AgitatingLensCD = 0;
                     if ((Math.Abs(player.velocity.X) >= 5 || Math.Abs(player.velocity.Y) >= 5) && player.whoAmI == Main.myPlayer && SoulConfig.Instance.GetValue(SoulConfig.Instance.AgitatedLens))
                     {
-                        int damage = 20;
+                        int damage = 12;
                         if (SupremeDeathbringerFairy)
-                            damage = 30;
+                            damage = 24;
                         if (MasochistSoul)
                             damage = 60;
                         damage = (int)(damage * player.magicDamage);
-                        int proj = Projectile.NewProjectile(player.Center, player.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.Next(-5, 6))) * 0.1f,
-                            mod.ProjectileType("BloodScytheFriendly"), damage, 5f, player.whoAmI);
+                        int proj = Projectile.NewProjectile(player.Center, player.velocity * 0.1f, mod.ProjectileType("BloodScytheFriendly"), damage, 5f, player.whoAmI);
                     }
                 }
             }
