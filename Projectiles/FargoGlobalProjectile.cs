@@ -1290,6 +1290,12 @@ namespace FargowiltasSouls.Projectiles
                 }
             }
 
+            
+            if (FargoSoulsWorld.MasochistMode && projectile.type == ProjectileID.SnowBallHostile)
+            {
+                projectile.active = false;
+            }
+
             /*if (modPlayer.PearlEnchant && SoulConfig.Instance.GetValue("Pearlwood Rain") && projectile.type != ProjectileID.HallowStar)
             {
                 //holy stars
@@ -1738,6 +1744,11 @@ namespace FargowiltasSouls.Projectiles
                     return false;
                 }
             }
+
+
+            
+
+
             return true;
         }
 

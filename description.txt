@@ -1,90 +1,20 @@
-NEW UPDATE - v 1.2.1.4
--Removed ALL extra items added to vanilla enchants with Thorium enabled
--Templar Enchant lost Chi Lantern, added Bone Trumpet
--Icy Enchant lost Frostburn Pouch, added Ice Shaver
--Darksteel Enchant lost Gray D Painting and Man Hacker, addded Strongest Link and Elephant Gun
--Assassin Enchant lost DMR, Supersonic Bomber, Quasar's Flare, Shadowflame Bow. Added Rejects Blowpipe, Dart Pouch, Black Bow, and The Javelin 
--Berserker Enchant lost Wyvern Slayer, added Exiles Helmet
--Biotech Enchant lost Void Planter, added Life Surge Staff
--Bronze Enchant lost Granite Throwing Axe, added Ancient Drachma and pet
--Bulb Enchant lost Fragrant Corsage, added Cactus Fruit
--Celestial Enchant lost Cosmic Flux Staff, added Buisine
--Conduit Enchant lost Super Plasma Cannon, added Ancient Spark
--Crier Enchant lost Cardinal, added Grand Piano
--Cryomancer Enchant lost Ice Rod, added a painting, updated effect
--Cyber Punk Enchant lost Bass Booster, added Riff Weaver
--Danger Enchant lost Danger Daikatana, added Shiny Object and pet
--Demon Blood Enchant lost Demon Blood Sword, added Blood Root Goop
--Depth Diver Enchant lost Scuba Curva, added painting
--Dragon Enchant lost Draconic Magma Staff, added Disco Music Player
--Dread Enchant lost Dread Drill, added Void Lance
--Dream Weaver lost Simple Broom, added a painting
--Durasteel Enchant lost Incandescent Spark and Greedy Magnet, added Crystal Spear Tip and Ogre Sandals
--Ebon Enchant lost Poison Prickler, added a painting
--Fallen Paladin Enchant lost Pill Popper, Holy Hammer, Friendly Fire Staff, added Bulwark staff, Light bringer Hammer, and Gold Duck
--Removed Feral Fur and Folv's Ancient Enchantment
--Flesh Enchant lost Grim Flayer and Blood Drinker, added Blood Transfusion and Stalker's Snippers
--Flight Enchant lost Wack Wrench, added Rod of Flocking
--Fungus Enchant lost Venom Kunai, added Spore Coating
--Geode Enchant lost Demo's Guidance, added Crystal Phaser
--Granite Enchant lost Night Vision Helemt, added a painting
--Harbinger Enchant lost Night Staff, added Spirit Bender's Staff
--Illumite Enchant lost Shu's Wrath, Pink Sludge, and Cupid's String, added Blob Horn Coral Staff, Pink Phasesaber, and Large Opal
--Iridescent  Enchant lost Aquaite Scythe, added Recuperate
--Jester Enchant lost Vicious Mockery, added Alphorn
--Lich Enchant lost Titan Javelins and Rocket Fist, added Lethal Injection and Plague Doctor Enchant
--Life Binder Enchant lost Rich Leaf, added Bud Bombs
--Life Bloom Enchant lost Mushymen Staff, added Mist Weaver
--Living Wood Enchant lost Blowpipe, added Antlion Staff
--Lodestone Enchant lost Valadium Spear, added Obsidian Scale
--Maestro Enchant lost Geode Saxophone, added a painting
--Magma Enchant lost Magma Flail, added Hot Chocolate
--Malignant Enchant lost Thor's Hammer, added Enchanted Shield
--Marching Band Enchant lost Wind Chimes, added Dragon's Wail
--Naga Skin Enchant lost Naga's Recurve, added a painting
--Noble Enchant lost Microphone, added Roboboe
--Novice Cleric Enchant lost Ice Shaver, added Pills
--Ocean Enchant lost Tuna, added a painting
--Ornate Enchant lost Mythril Melodica, added Orichalcum Slide Whistle
--Plague Doctor Enchant lost Plague Lords Flask, Lich Enchant and Toxic Flask, added Rocket Fist, Gas Container, and Aphrodisiac Vial
--Pyromancer Enchant lost Northern Light, added Ancient Flame
--Rhapsodist Enchant lost Black MIDI, added Jingle Bells
--Sacred Enchant lost Lil Cherub Wand and its minion, added Bone Baton
--Sandstone Enchant lost Ocean Throwing Axe, gained a painting
--Shade Master Enchant lost Corrodling Staff, added Technique Shadow Dance
--Shooting Star Enchant lost Strawberry Heart, added Pungi
--Silk Enchant lost Eight Plague Staff, added Silk Rope Coil
--Spirit Trapper lost Strange Skull, added a painting
--Steel Enchant lost Super Anvil, added Thorium Shield
--Terrarium Enchant lost Essence of Flame, added Thorium Cube
--Thorium Enchant lost Thorium Cube, added a painting
--Tide Hunter Enchant lost Thorium Bow, added a painting
--Tide Turner lost Quake Gauntlet and Terrarians Last Knife, added Tidal Wave and Fish Egg
--Titan Enchant lost Executioner, now takes any helmet, added Spirit Band, Tranquilizer Gun and Tether Dart
--Valadium Enchant lost Lodestone Quick Draw, added Crystal Balloons
--Warlock Enchant lost Lil Devil's Wand and its minion, added Cursed Hammer
--Whispering Enchant lost Trench Spitter, added a painting
--White Dwarf Enchant lost Cosmic Dagger, added White Dwarf Pickaxe
--White Knight lost Snow White and Delectable Nut, added Titanium Staff and Dynasty War Fan
--Yew Wood Enchant lost Sandstone Bow, added Goblin Warpipe
--Force of Asgard lost Bow of Light
--Moved Plague Doctor Enchant to Force of Vanaheim
--Moved Malignant Enchant to Force of Helheim
--Colossus Soul lost Blast Shield, Cape of the Survivor, and Sweet Vengence
--Occultist's Essence lost Rosy Slime Staff and Prehistoric Amber Staff
--Conjurist's Soul lost Yuma's Pendant and Master's Libram, added Mushymen Staff and Black Cane
--Arch Wizard's Soul lost Nuclear Fury and Lightning Staff
--Sniper's Soul lost Launch Jumper and Nova Rifle
--Crusader's Essence lost Life Quartz Claymore and Cleric's Cross
--Berserker's Soul lost Spearmint
-
--Fixed Mind Break not giving its buff
+NEW UPDATE - v 1.2.2
+-Fixed Thorium compatability
+-Removed all extra items added to vanilla enchants with Thorium enabled
+-Removed all donater items from Thorium Enchantments and thus every single ones recipes and some effects are changed
 -Added Mutating Energy to modded souls
--Fixed Valhalla Knight Enchant missing Shiny Stone effect
+-Reworked Supersonic Soul movement, toggled off it is the same as Frostspark Boots, toggled on you have a slider to control your speed, and it now gets rid of almost all momentum
+-Removed Crucible of the Cosmos (to Mutant Mod)
+-Worms continuing to exist after dying in masomode fixed
+-Snow Ballas snowballs do not create blocks anymore in masomode
+-Clowns no longer drop tile destroying bombs, they just drop a bomb that deals a lot of damage to the surrounding area
 -Updated Palm Tree Sentry sprite and it disappears when you unequip
--Fixed Monk Enchant rarity
 -Hallowed Sword, Stardust Guardian and all pets despawn when you die
-
-
+-Replaced Light Discs with Gungnir in Hallowed Enchantment
+-Removed Flameburst Staff from Dark Artist Enchantment
+-Fixed Monk Enchant rarity
+-Fixed Valhalla Knight Enchant missing Shiny Stone effect
+-Fixed Mind Break not giving its buff
+-Arms Dealer no longer sells Rockets early for Rockeater
 
 -See the wiki for full details

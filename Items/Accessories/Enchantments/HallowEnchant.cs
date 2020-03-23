@@ -63,7 +63,7 @@ Summons a magical fairy");
             recipe.AddIngredient(ItemID.HallowedGreaves);
             recipe.AddIngredient(null, "SilverEnchant");
             recipe.AddIngredient(ItemID.Excalibur);
-            recipe.AddIngredient(ItemID.LightDisc, 5);
+            recipe.AddIngredient(ItemID.Gungnir);
             recipe.AddIngredient(ItemID.FairyBell);
             
             recipe.AddTile(TileID.CrystalBall);

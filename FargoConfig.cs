@@ -517,6 +517,13 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool SupersonicSpeed;
 
+        [Label("Supersonic Speed Multiplier")]
+        [Increment(1)]
+        [Range(1, 10)]
+        [DefaultValue(5)]
+        [Slider]
+        public int SupersonicMultiplier;
+
         [Label("$Mods.FargowiltasSouls.EternityConfig")]
         [DefaultValue(true)]
         public bool EternityStacking;

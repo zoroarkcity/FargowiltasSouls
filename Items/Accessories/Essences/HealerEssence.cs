@@ -74,12 +74,12 @@ namespace FargowiltasSouls.Items.Accessories.Essences
         private readonly string[] items =
         {
             "ClericEmblem",
+            "GoodBook",
             "HeartWand",
-            //"ClericsCross",
-            //"LifeQuartzClaymore",
             "FeatherBarrierRod",
             "TulipStaff",
             "LargePopcorn",
+            "DarkMageStaff",
             "BatScythe",
             "DivineLotus",
             "SentinelWand",

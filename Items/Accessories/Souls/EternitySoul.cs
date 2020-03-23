@@ -587,21 +587,22 @@ Additionally grants:");
             }
 
             //SUPERSONIC
-            //frost spark plus super speed
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicSpeed) && !player.GetModPlayer<FargoPlayer>().noSupersonic)
             {
-                player.maxRunSpeed += 15f;
-                player.runAcceleration += .25f;
+                player.runAcceleration += SoulConfig.Instance.SupersonicMultiplier * .1f;
+                player.runSlowdown = 10;
+                player.maxRunSpeed += SoulConfig.Instance.SupersonicMultiplier * 2;
+                //frog legs
                 player.autoJump = true;
                 player.jumpSpeedBoost += 2.4f;
-                player.jumpBoost = true;
                 player.maxFallSpeed += 5f;
+                player.jumpBoost = true;
             }
-            /*else
+            else
             {
-                player.maxRunSpeed += 5f;
-                player.runAcceleration += .1f;
-            }*/
+                //same as frostspark
+                player.accRunSpeed = 6.75f;
+            }
             player.moveSpeed += 0.5f;
             player.accRunSpeed = 12f;
             player.rocketBoots = 3;

@@ -5869,7 +5869,7 @@ namespace FargowiltasSouls.NPCs
                                             Main.projectile[p].timeLeft += Main.rand.Next(180);
                                         }
 
-                                        Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.BouncyBomb, 100, 8f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<ClownBomb>(), 100, 8f, Main.myPlayer);
                                     }
                                 }
 
@@ -8775,7 +8775,7 @@ namespace FargowiltasSouls.NPCs
 
             if (FargoSoulsWorld.MasochistMode)
             {
-                if (!npc.dontTakeDamage && !npc.friendly && RegenTimer <= 0)
+                if (!npc.dontTakeDamage && !npc.friendly && npc.realLife == -1 && RegenTimer <= 0)
                 {
                     npc.lifeRegen += 1 + npc.lifeMax / 25;
                 }
@@ -12199,14 +12199,6 @@ namespace FargowiltasSouls.NPCs
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<RoombaPet>());
                 shop.item[nextSlot].value = 50000;
-                nextSlot++;
-            }
-
-            //for eater rocket
-            if (type == NPCID.ArmsDealer && !NPC.downedPlantBoss)
-            {
-                shop.item[nextSlot].SetDefaults(ItemID.RocketI);
-                shop.item[nextSlot].value = 500;
                 nextSlot++;
             }
         }
