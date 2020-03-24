@@ -8190,7 +8190,7 @@ namespace FargowiltasSouls.NPCs
                         target.AddBuff(ModContent.BuffType<MutantNibble>(), 600);
                         target.AddBuff(ModContent.BuffType<Defenseless>(), 600);
                         target.AddBuff(BuffID.Rabies, 3600);
-                        target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
+                        target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 50;
                         target.AddBuff(ModContent.BuffType<OceanicMaul>(), 3600);
                         break;
 
