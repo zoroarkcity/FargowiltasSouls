@@ -182,3 +182,7 @@ wof gains a phase 3 below 10%:
 	fires deathrays MUCH more quickly
 	world evil attacks are twice as fast
 also reduced wof's max speed slightly again
+
+plantera's hook does no damage
+plantera only shoots in p2 if you're venomed
+ice golem drops ice crate

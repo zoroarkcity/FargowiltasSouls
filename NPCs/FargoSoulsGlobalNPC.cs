@@ -4784,6 +4784,11 @@ namespace FargowiltasSouls.NPCs
                         }
                         break;
 
+                    case NPCID.PlanterasHook:
+                        npc.damage = 0;
+                        npc.defDamage = 0;
+                        break;
+
                     case NPCID.Plantera:
                         if (!masoBool[0]) //spawn protective crystal ring once
                         {
@@ -4832,8 +4837,7 @@ namespace FargowiltasSouls.NPCs
                                     }
                                 }
                             }
-
-                            Counter++;
+                            
                             if (Counter >= 30)
                             {
                                 Counter = 0;
@@ -4912,6 +4916,7 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
 
+                            //dont regen above half, this avoids exiting phase 2 by healing
                             if (RegenTimer <= 2 && npc.life + 1 + npc.lifeMax / 25 >= npc.lifeMax / 2)
                             {
                                 npc.life = npc.lifeMax / 2;
@@ -8250,7 +8255,7 @@ namespace FargowiltasSouls.NPCs
                         target.AddBuff(ModContent.BuffType<IvyVenom>(), 300);
                         break;
 
-                    case NPCID.PlanterasHook:
+                    //case NPCID.PlanterasHook:
                     case NPCID.PlanterasTentacle:
                     case NPCID.Spore:
                         target.AddBuff(ModContent.BuffType<Infested>(), 300);
@@ -9860,6 +9865,7 @@ namespace FargowiltasSouls.NPCs
                         goto case NPCID.BigMimicCrimson;
 
                     case NPCID.IceGolem:
+                        Item.NewItem(npc.Hitbox, ModLoader.GetMod("Fargowiltas").ItemType("IceCrate"));
                         if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<FrigidGemstone>());
                         if (Main.rand.Next(20) == 0)
