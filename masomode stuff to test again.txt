@@ -50,7 +50,6 @@ abom/mutant map icons turn when they turn
 
 removed truffle worm EX recipe
 remove duke fishron EX from boss checklist
-abom drops cyclonic fin for now
 abom always drops abominable energy
 all maso acc combos require deviating energy
 
