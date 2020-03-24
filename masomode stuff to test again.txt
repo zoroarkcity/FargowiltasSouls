@@ -185,4 +185,5 @@ also reduced wof's max speed slightly again
 
 plantera's hook does no damage
 plantera only shoots in p2 if you're venomed
+plantera dicer mines don't deal damage, only their explosion does
 ice golem drops ice crate
