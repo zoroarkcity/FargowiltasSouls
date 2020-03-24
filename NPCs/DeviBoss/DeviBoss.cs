@@ -56,7 +56,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             //npc.buffImmune[mod.BuffType("OceanicMaul")] = true;
             npc.timeLeft = NPC.activeTime * 30;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/LexusCyanixs");
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Deviantt");
             musicPriority = (MusicPriority)10;
 
             npc.value = Item.buyPrice(0, 5);
