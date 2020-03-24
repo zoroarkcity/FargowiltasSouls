@@ -3,6 +3,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Thorium;
+using ThoriumMod.Items.Dev;
+using ThoriumMod.Items.Painting;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -59,29 +62,23 @@ Effects of Crietz, Band of Replenishment, and Fan Letter");
             //fan letter
             thoriumPlayer.bardResourceMax2 += 2;
         }
-        
-        private readonly string[] items =
-        {
-            "ThoriumHelmet",
-            "ThoriumMail",
-            "ThoriumGreaves",
-            "GrandThoriumHelmet",
-            "GrandThoriumBreastPlate",
-            "GrandThoriumGreaves",
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
 
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
-            recipe.AddIngredient(null, "JesterEnchant");
-            recipe.AddIngredient(thorium.ItemType("Crietz"));
-            recipe.AddIngredient(thorium.ItemType("BandofReplenishment"));
-            recipe.AddIngredient(thorium.ItemType("ThoriumCube"));
+            recipe.AddIngredient(ModContent.ItemType<ThoriumHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<ThoriumMail>());
+            recipe.AddIngredient(ModContent.ItemType<ThoriumGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<GrandThoriumHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<GrandThoriumBreastPlate>());
+            recipe.AddIngredient(ModContent.ItemType<GrandThoriumGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<JesterEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<Crietz>());
+            recipe.AddIngredient(ModContent.ItemType<BandofReplenishment>());
+            recipe.AddIngredient(ModContent.ItemType<LastSupperPaint>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

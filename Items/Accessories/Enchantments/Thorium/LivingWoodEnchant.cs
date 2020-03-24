@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.SummonItems;
+using ThoriumMod.Items.Consumable;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -56,15 +58,15 @@ Summons a living wood sapling and its attacks will home in on enemies");
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            recipe.AddIngredient(thorium.ItemType("LivingWoodMask"));
-            recipe.AddIngredient(thorium.ItemType("LivingWoodChestguard"));
-            recipe.AddIngredient(thorium.ItemType("LivingWoodBoots"));
-            recipe.AddIngredient(thorium.ItemType("LivingWoodSprout"));
+
+            recipe.AddIngredient(ModContent.ItemType<LivingWoodMask>());
+            recipe.AddIngredient(ModContent.ItemType<LivingWoodChestguard>());
+            recipe.AddIngredient(ModContent.ItemType<LivingWoodBoots>());
+            recipe.AddIngredient(ModContent.ItemType<LivingWoodSprout>());
             recipe.AddIngredient(ItemID.SlimeStaff);
-            recipe.AddIngredient(ItemID.Blowpipe);
+            recipe.AddIngredient(ModContent.ItemType<AntlionStaff>());
             recipe.AddIngredient(ItemID.LeafWand);
-            recipe.AddIngredient(thorium.ItemType( "ChiTea"), 5);
+            recipe.AddIngredient(ModContent.ItemType<ChiTea>(), 5);
             recipe.AddIngredient(ItemID.TreeNymphButterfly);
             recipe.AddIngredient(ItemID.Grasshopper);
 

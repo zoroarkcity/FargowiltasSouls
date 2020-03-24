@@ -71,7 +71,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                         projectile.damage, projectile.knockBack, projectile.owner);
                 }
             }*/
-            
+
             if (++projectile.localAI[0] > 90 && ++projectile.localAI[1] > 5) //spray shards
             {
                 Main.PlaySound(SoundID.Item27, projectile.position);
@@ -97,7 +97,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                     }
                 }
             }
-            
+
             projectile.rotation += projectile.velocity.Length() / 12f * (projectile.velocity.X > 0 ? -0.2f : 0.2f);
             if (++projectile.frameCounter > 3)
             {

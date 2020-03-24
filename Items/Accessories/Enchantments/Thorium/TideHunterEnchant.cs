@@ -2,6 +2,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using ThoriumMod.Items.Depths;
+using ThoriumMod.Items.QueenJelly;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.Painting;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -54,16 +58,6 @@ Effects of Goblin War Shield and Agnor's Bowl");
             //goblin war shield
             thorium.GetItem("GoblinWarshield").UpdateAccessory(player, hideVisual);
         }
-        
-        private readonly string[] items =
-        {
-            "AnglerBowl",
-            "ThoriumBow",
-            "BlunderBuss",
-            "PearlPike",
-            "HydroCannon",
-            "MarineLauncher"
-        };
 
         public override void AddRecipes()
         {
@@ -71,12 +65,16 @@ Effects of Goblin War Shield and Agnor's Bowl");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("TideHunterCap"));
-            recipe.AddIngredient(thorium.ItemType("TideHunterChestpiece"));
-            recipe.AddIngredient(thorium.ItemType("TideHunterLeggings"));
-            recipe.AddIngredient(null, "YewWoodEnchant");
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+            recipe.AddIngredient(ModContent.ItemType<TideHunterCap>());
+            recipe.AddIngredient(ModContent.ItemType<TideHunterChestpiece>());
+            recipe.AddIngredient(ModContent.ItemType<TideHunterLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<YewWoodEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<AnglerBowl>());
+            recipe.AddIngredient(ModContent.ItemType<BlunderBuss>());
+            recipe.AddIngredient(ModContent.ItemType<PearlPike>());
+            recipe.AddIngredient(ModContent.ItemType<HydroCannon>());
+            recipe.AddIngredient(ModContent.ItemType<MarineLauncher>());
+            recipe.AddIngredient(ModContent.ItemType<JollyRogerPaint>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

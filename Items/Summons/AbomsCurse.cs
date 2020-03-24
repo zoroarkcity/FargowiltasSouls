@@ -4,20 +4,21 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Summons
 {
-	public class AbomsCurse : ModItem
-	{
+    public class AbomsCurse : ModItem
+    {
         public override string Texture => "FargowiltasSouls/Items/Placeholder";
 
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Abominationn's Curse");
-		}
+        {
+            DisplayName.SetDefault("Abominationn's Curse");
+        }
 
-		public override void SetDefaults()
-		{
+        public override void SetDefaults()
+        {
             item.width = 20;
             item.height = 20;
             item.rare = 11;
@@ -44,6 +45,7 @@ namespace FargowiltasSouls.Items.Summons
                 {
                     NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("AbomBoss"));
                 }
+
             return true;
         }
 
@@ -61,18 +63,18 @@ namespace FargowiltasSouls.Items.Summons
         public override void AddRecipes() //make this harder again when changed to abom's gift
         {
             ModRecipe recipe = new ModRecipe(mod);
-                recipe.AddIngredient(ItemID.GoblinBattleStandard);
-                recipe.AddIngredient(ItemID.PirateMap);
-                recipe.AddIngredient(ItemID.PumpkinMoonMedallion);
-                recipe.AddIngredient(ItemID.NaughtyPresent);
-                recipe.AddIngredient(ItemID.SnowGlobe);
-                recipe.AddIngredient(ItemID.DD2ElderCrystal);
-                recipe.AddIngredient(ItemID.LunarBar, 5);
-                recipe.AddIngredient(null, "LunarCrystal");
+            recipe.AddIngredient(ItemID.GoblinBattleStandard);
+            recipe.AddIngredient(ItemID.PirateMap);
+            recipe.AddIngredient(ItemID.PumpkinMoonMedallion);
+            recipe.AddIngredient(ItemID.NaughtyPresent);
+            recipe.AddIngredient(ItemID.SnowGlobe);
+            recipe.AddIngredient(ItemID.DD2ElderCrystal);
+            recipe.AddIngredient(ItemID.LunarBar, 5);
+            recipe.AddIngredient(null, "LunarCrystal");
 
-                recipe.AddTile(mod, "CrucibleCosmosSheet");
-                recipe.SetResult(this, 5);
-                recipe.AddRecipe();
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.SetResult(this, 5);
+            recipe.AddRecipe();
         }
     }
 }

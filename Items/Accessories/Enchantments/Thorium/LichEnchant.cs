@@ -3,6 +3,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Lich;
+using ThoriumMod.Items.ThrownItems;
+using ThoriumMod.Items.Painting;
+using ThoriumMod.Items.HealerItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -22,6 +26,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 @"'Embrace death...'
 Killing an enemy will release a soul fragment
 Touching a soul fragment greatly increases your movement and throwing speed briefly
+Your plague gas will linger in the air twice as long and your plague reactions will deal 20% more damage
 Effects of Lich's Gaze");
             DisplayName.AddTranslation(GameCulture.Chinese, "巫妖魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -47,34 +52,31 @@ Effects of Lich's Gaze");
 
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
+            //plague effect
+            thoriumPlayer.plagueSet = true;
             //lich effect
             modPlayer.LichEnchant = true;
             //lich gaze
             thoriumPlayer.lichGaze = true;
         }
-        
-        private readonly string[] items =
-        {
-            "LichCowl",
-            "LichCarapace",
-            "LichTalon",
-            "LichGaze",
-            "RocketFist",
-            "SoulCleaver"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
-            recipe.AddIngredient(thorium.ItemType("SoulBomb"), 300);
-            recipe.AddIngredient(thorium.ItemType("CadaverCornet"));
-            recipe.AddIngredient(thorium.ItemType("TitanJavelin"), 300);
-            recipe.AddIngredient(thorium.ItemType("PumpkinPaint"));
+            recipe.AddIngredient(ModContent.ItemType<LichCowl>());
+            recipe.AddIngredient(ModContent.ItemType<LichCarapace>());
+            recipe.AddIngredient(ModContent.ItemType<LichTalon>());
+            recipe.AddIngredient(ModContent.ItemType<PlagueDoctorEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<LichGaze>());
+            recipe.AddIngredient(ModContent.ItemType<SoulCleaver>());
+            recipe.AddIngredient(ModContent.ItemType<SoulBomb>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<CadaverCornet>());
+            recipe.AddIngredient(ModContent.ItemType<LethalInjection>());
+            recipe.AddIngredient(ModContent.ItemType<PumpkinPaint>());
+
             
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

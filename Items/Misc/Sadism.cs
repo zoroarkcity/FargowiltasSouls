@@ -7,21 +7,21 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Misc
 {
-	public class Sadism : ModItem
-	{
+    public class Sadism : ModItem
+    {
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Sadism");
+        {
+            DisplayName.SetDefault("Sadism");
             Tooltip.SetDefault(@"'Proof of having embraced suffering'
 Grants immunity to almost all Masochist Mode debuffs");
             DisplayName.AddTranslation(GameCulture.Chinese, "施虐狂");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'受苦的证明'
 免疫几乎所有受虐模式的Debuff");
         }
 
-		public override void SetDefaults()
-		{
+        public override void SetDefaults()
+        {
             item.width = 20;
             item.height = 20;
             item.maxStack = 30;

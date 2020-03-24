@@ -3,6 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.ArcaneArmor;
+using ThoriumMod.Items.BardItems;
+using ThoriumMod.Items.BasicAccessories;
+using ThoriumMod.Items.SummonItems;
+using ThoriumMod.Items.NPCItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -58,28 +63,23 @@ Effects of Bee Booties and Petal Shield");
                 player.maxRunSpeed -= 1f;
             }
         }
-        
-        private readonly string[] items =
-        {
-            "BulbHood",
-            "BulbChestplate",
-            "BulbLeggings",
-            "PetalShield",
-            "KickPetal",
-            "BeeBoots",
-            "FragrantCorsage",
-            "BloomingBlade",
-            "BloomerBell",
-            "CreepingVineStaff"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<BulbHood>());
+            recipe.AddIngredient(ModContent.ItemType<BulbChestplate>());
+            recipe.AddIngredient(ModContent.ItemType<BulbLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<PetalShield>());
+            recipe.AddIngredient(ModContent.ItemType<KickPetal>());
+            recipe.AddIngredient(ModContent.ItemType<BeeBoots>());
+            recipe.AddIngredient(ModContent.ItemType<BloomingBlade>());
+            recipe.AddIngredient(ModContent.ItemType<BloomerBell>());
+            recipe.AddIngredient(ModContent.ItemType<CreepingVineStaff>());
+            recipe.AddIngredient(ModContent.ItemType<CactusFruit>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

@@ -3,6 +3,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Geode;
+using ThoriumMod.Items.Misc;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.Tracker;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -23,7 +27,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 50% increased mining speed
 Shows the location of enemies, traps, and treasures
 Light is emitted from the player
-Summons a pet Magic Lantern, Inspiring Lantern, and Lock Box");
+Summons a pet Magic Lantern and Lock Box");
             DisplayName.AddTranslation(GameCulture.Chinese, "晶体魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'用极尽奢华的材料制成'
@@ -53,21 +57,10 @@ Summons a pet Magic Lantern, Inspiring Lantern, and Lock Box");
             thoriumPlayer.geodeShine = true;
             Lighting.AddLight(player.position, 1.2f, 0.8f, 1.2f);
             //pets
-            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.LanternPet, hideVisual, thorium.BuffType("SupportLanternBuff"), thorium.ProjectileType("SupportLantern"));
             modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.BoxPet, hideVisual, thorium.BuffType("LockBoxBuff"), thorium.ProjectileType("LockBoxPet"));
             //mining speed, spelunker, dangersense, light, hunter, pet
             modPlayer.MinerEffect(hideVisual, .5f);
         }
-        
-        private readonly string[] items =
-        {
-            "CrystalineCharm",
-            "EnchantedPickaxe",
-            "GnomePick",
-            "Lantern",
-            "SupportLanternItem",
-            "JonesLockBox"
-        };
 
         public override void AddRecipes()
         {
@@ -75,12 +68,16 @@ Summons a pet Magic Lantern, Inspiring Lantern, and Lock Box");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("GeodeHelmet"));
-            recipe.AddIngredient(thorium.ItemType("GeodeChestplate"));
-            recipe.AddIngredient(thorium.ItemType("GeodeGreaves"));
-            recipe.AddIngredient(null, "MinerEnchant");
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+            recipe.AddIngredient(ModContent.ItemType<GeodeHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<GeodeChestplate>());
+            recipe.AddIngredient(ModContent.ItemType<GeodeGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<MinerEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<CrystalineCharm>());
+            recipe.AddIngredient(ModContent.ItemType<EnchantedPickaxe>());
+            recipe.AddIngredient(ModContent.ItemType<GnomePick>());
+            recipe.AddIngredient(ModContent.ItemType<CrystalPhaser>());
+            recipe.AddIngredient(ModContent.ItemType<Lantern>());
+            recipe.AddIngredient(ModContent.ItemType<JonesLockBox>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

@@ -68,21 +68,8 @@ Mega Bees ignore most enemy defense, immune frames, and last twice as long
             recipe.AddIngredient(ItemID.BeeBreastplate);
             recipe.AddIngredient(ItemID.BeeGreaves);
             recipe.AddIngredient(ItemID.HiveBackpack);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(ItemID.BeeGun);
-                recipe.AddIngredient(thorium.ItemType("HoneyRecorder"));
-                recipe.AddIngredient(ItemID.WaspGun);
-                recipe.AddIngredient(ItemID.NettleBurst);
-                recipe.AddIngredient(ItemID.VenusMagnum);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.BeeGun);
-                recipe.AddIngredient(ItemID.WaspGun);
-            }
-            
+            recipe.AddIngredient(ItemID.BeeGun);
+            recipe.AddIngredient(ItemID.WaspGun);
             recipe.AddIngredient(ItemID.Nectar);
             
             recipe.AddTile(TileID.CrystalBall);

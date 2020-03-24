@@ -76,7 +76,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     }
                 }
             }
-            
+
             /*int num1 = (300 - projectile.timeLeft) / 60;
             float num2 = projectile.scale * 0.4f;
             float num3 = Main.rand.Next(1, 3);

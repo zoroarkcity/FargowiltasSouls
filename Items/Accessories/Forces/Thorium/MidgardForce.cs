@@ -25,8 +25,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
 All armor bonuses from Lodestone, Valadium, Illumite, and Shade Master
 All armor bonuses from Jester, Thorium, and Terrarium
 Effects of Astro-Beetle Husk and Eye of the Beholder
-Effects of Crietz and Terrarium Surround Sound
-Summons a pet Pink Slime");
+Effects of Crietz and Terrarium Surround Sound");
             DisplayName.AddTranslation(GameCulture.Chinese, "米德加德之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'人类的力量'
@@ -68,10 +67,6 @@ Summons a pet Pink Slime");
                 //eye of beholder
                 thorium.GetItem("EyeofBeholder").UpdateAccessory(player, hideVisual);
             }
-
-            //illumite
-            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.SlimePet, hideVisual, thorium.BuffType("PinkSlimeBuff"), thorium.ProjectileType("PinkSlime"));
-            modPlayer.IllumiteEnchant = true;
 
             //shade
             thoriumPlayer.shadeSet = true;

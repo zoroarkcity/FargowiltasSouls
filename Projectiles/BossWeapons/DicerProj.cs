@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             if (++Counter >= 60)
             {
                 Counter = 0;
-                int proj2 = mod.ProjectileType("DicerProj2"); 
+                int proj2 = mod.ProjectileType("DicerProj2");
 
                 Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, proj2, projectile.damage, 0, Main.myPlayer);
             }

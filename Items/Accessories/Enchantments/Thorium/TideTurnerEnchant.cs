@@ -5,6 +5,10 @@ using ThoriumMod;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using ThoriumMod.Items.EndofDays.Aqua;
+using ThoriumMod.Items.MiniBoss;
+using ThoriumMod.Items.Abyssion;
+using ThoriumMod.Items.Misc;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -101,28 +105,23 @@ Attacks have a 20% chance to unleash aquatic homing daggers all around you");
             //set bonus damage to healing hot key
             thoriumPlayer.tideSet = true;
         }
-        
-        private readonly string[] items =
-        {
-            "TideTurnerHelmet",
-            "TideTurnersGaze",
-            "TideTurnerBreastplate",
-            "TideTurnerGreaves",
-            "PoseidonCharge", 
-            "MantisPunch",
-            "QuakeGauntlet",
-            "OceansJudgment",
-            "Trefork",
-            "TerrariansKnife"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<TideTurnerHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<TideTurnersGaze>());
+            recipe.AddIngredient(ModContent.ItemType<TideTurnerBreastplate>());
+            recipe.AddIngredient(ModContent.ItemType<TideTurnerGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<PoseidonCharge>());
+            recipe.AddIngredient(ModContent.ItemType<MantisPunch>());
+            recipe.AddIngredient(ModContent.ItemType<OceansJudgment>());
+            recipe.AddIngredient(ModContent.ItemType<Trefork>());
+            recipe.AddIngredient(ModContent.ItemType<TidalWave>());
+            recipe.AddIngredient(ModContent.ItemType<FishEgg>());
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

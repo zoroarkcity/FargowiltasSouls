@@ -12,10 +12,10 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         private const float maxTime = 600;
 
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Phantasmal Deathray");
-		}
-    	
+        {
+            DisplayName.SetDefault("Phantasmal Deathray");
+        }
+
         public override void SetDefaults()
         {
             projectile.width = 48;

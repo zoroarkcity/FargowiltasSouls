@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Summons
 {
@@ -74,7 +75,7 @@ namespace FargowiltasSouls.Items.Summons
             recipe.AddIngredient(ItemID.ShrimpyTruffle);
             recipe.AddIngredient(mod.ItemType("LunarCrystal"), 9);
 
-            recipe.AddTile(mod.TileType("CrucibleCosmosSheet"));
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this, 3);
             recipe.AddRecipe();
         }*/

@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using SacredTools;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.SoA
 {
@@ -88,7 +89,7 @@ Effects of Ring of the Fallen, Memento Mori, and Arcanum of the Caster");
             recipe.AddIngredient(null, "ExitumLuxEnchant");
             recipe.AddIngredient(null, "AsthraltiteEnchant");
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

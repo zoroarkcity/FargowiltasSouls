@@ -1,6 +1,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Ammos
 {
@@ -21,7 +22,7 @@ namespace FargowiltasSouls.Items.Ammos
                                "Each impact causes an explosion of crystal shards\n" +
                                "Inflicts several debuffs");
             DisplayName.AddTranslation(GameCulture.Chinese, "混合子弹袋");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
                                "追踪敌人\n" +
                                "弹跳多次\n" +
                                "每次撞击都会造成魔晶碎片爆炸\n" +
@@ -59,7 +60,7 @@ namespace FargowiltasSouls.Items.Ammos
             recipe.AddIngredient(fargos, "NanoPouch");
             recipe.AddIngredient(fargos, "LuminitePouch");
             recipe.AddIngredient(mod.ItemType("Sadism"), 15);
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Fargowiltas.Items.Tiles;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
@@ -70,12 +71,12 @@ Drastically increases life regen");
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-                recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("MutantBody"));
-                recipe.AddIngredient(null, "MutantScale", 15);
-                recipe.AddIngredient(null, "Sadism", 15);
-                recipe.AddTile(mod, "CrucibleCosmosSheet");
-                recipe.SetResult(this);
-                recipe.AddRecipe();
+            recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("MutantBody"));
+            recipe.AddIngredient(null, "MutantScale", 15);
+            recipe.AddIngredient(null, "Sadism", 15);
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

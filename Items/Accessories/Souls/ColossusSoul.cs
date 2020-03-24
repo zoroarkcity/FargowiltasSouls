@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -40,7 +41,7 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell";
 
             if (thorium != null)
             {
-                tooltip += "\nEffects of Ocean's Retaliation and Cape of the Survivor\nEffects of Blast Shield and Terrarium Defender";
+                tooltip += "\nEffects of Ocean's Retaliation and Terrarium Defender";
                 tooltip_ch += "\n拥有海潮之噬和生存者披风的效果\n拥有爆炸盾和界元之庇护的效果";
             }
 
@@ -156,15 +157,6 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell";
                 player.AddBuff(thorium.BuffType("TerrariumDefense"), 10, true);
                 player.statDefense += 20;
             }
-            //blast shield
-            thoriumPlayer.blastHurt = true;
-            //cape of the survivor
-            if (player.FindBuffIndex(thorium.BuffType("Corporeal")) < 0)
-            {
-                thoriumPlayer.spiritBand2 = true;
-            }
-            //sweet vengeance
-            thoriumPlayer.sweetVengeance = true;
             //oceans retaliation
             thoriumPlayer.turtleShield2 = true;
             thoriumPlayer.SpinyShield = true;
@@ -195,38 +187,20 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell";
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddIngredient(ItemID.HandWarmer);
+            recipe.AddIngredient(ItemID.WormScarf);
+            recipe.AddIngredient(ItemID.BrainOfConfusion);
+            recipe.AddIngredient(ItemID.PocketMirror);
+            recipe.AddIngredient(ItemID.CharmofMyths);
+            recipe.AddIngredient(ItemID.BeeCloak);
+            recipe.AddIngredient(ItemID.SweetheartNecklace);
+            recipe.AddIngredient(ItemID.StarVeil);
+            recipe.AddIngredient(ItemID.FleshKnuckles);
+            recipe.AddIngredient(ItemID.SporeSac);
 
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
-                recipe.AddIngredient(ItemID.BrainOfConfusion);
-                recipe.AddIngredient(ItemID.PocketMirror);
-                recipe.AddIngredient(ItemID.CharmofMyths);
-                recipe.AddIngredient(thorium.ItemType("SweetVengeance"));
-                recipe.AddIngredient(ItemID.FleshKnuckles);
                 recipe.AddIngredient(thorium.ItemType("OceanRetaliation"));
-                recipe.AddIngredient(thorium.ItemType("DeathEmbrace")); //cape of the survivor apparentlty
-                recipe.AddIngredient(ItemID.SporeSac);
-                recipe.AddIngredient(thorium.ItemType("BlastShield"));
                 recipe.AddIngredient(thorium.ItemType("TerrariumDefender"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.WormScarf);
-                recipe.AddIngredient(ItemID.BrainOfConfusion);
-                recipe.AddIngredient(ItemID.PocketMirror);
-                recipe.AddIngredient(ItemID.CharmofMyths);
-                recipe.AddIngredient(ItemID.BeeCloak);
-                recipe.AddIngredient(ItemID.SweetheartNecklace);
-                recipe.AddIngredient(ItemID.StarVeil);
-                recipe.AddIngredient(ItemID.FleshKnuckles);
-                recipe.AddIngredient(ItemID.SporeSac);
-
-                if (!Fargowiltas.Instance.CalamityLoaded)
-                {
-                    recipe.AddIngredient(ItemID.FrozenTurtleShell);
-                    recipe.AddIngredient(ItemID.PaladinsShield);
-                    recipe.AddIngredient(ItemID.AnkhShield);
-                }
             }
 
             if (Fargowiltas.Instance.CalamityLoaded)
@@ -235,8 +209,8 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell";
                 recipe.AddIngredient(calamity.ItemType("AsgardianAegis"));
             }
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
-                
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

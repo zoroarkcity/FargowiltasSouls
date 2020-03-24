@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.HealerItems;
+using ThoriumMod.Items.ThrownItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -51,9 +53,6 @@ Summons a pet Holy Goat");
 
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            //goat pet
-            modPlayer.BinderEnchant = true;
-            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.GoatPet, hideVisual, thorium.BuffType("HolyGoatBuff"), thorium.ProjectileType("HolyGoat"));
 
             if (modPlayer.ThoriumSoul) return;
 
@@ -68,16 +67,6 @@ Summons a pet Holy Goat");
             //equalizer 
             thoriumPlayer.equilibrium = true;
         }
-        
-        private readonly string[] items =
-        {
-            "AloeLeaf",
-            "BloomGuard",
-            "SunrayStaff",
-            "MorningDew",
-            "HolyFire",
-            "RichLeaf"
-        };
 
         public override void AddRecipes()
         {
@@ -85,12 +74,16 @@ Summons a pet Holy Goat");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("DewBinderMask"));
-            recipe.AddIngredient(thorium.ItemType("DewBinderBreastplate"));
-            recipe.AddIngredient(thorium.ItemType("DewBinderGreaves"));
-            recipe.AddIngredient(null, "IridescentEnchant");
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+            recipe.AddIngredient(ModContent.ItemType<DewBinderMask>());
+            recipe.AddIngredient(ModContent.ItemType<DewBinderBreastplate>());
+            recipe.AddIngredient(ModContent.ItemType<DewBinderGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<IridescentEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<AloeLeaf>());
+            recipe.AddIngredient(ModContent.ItemType<BloomGuard>());
+            recipe.AddIngredient(ModContent.ItemType<SunrayStaff>());
+            recipe.AddIngredient(ModContent.ItemType<MorningDew>());
+            recipe.AddIngredient(ModContent.ItemType<HolyFire>());
+            recipe.AddIngredient(ModContent.ItemType<BudBomb>(), 300);
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 projectile.netUpdate = true; //for mp sync
                 projectile.velocity = player.DirectionTo(Main.MouseWorld) * projectile.velocity.Length();
-                
+
                 if (player.altFunctionUse != 2) //released right click or switched to left click
                     projectile.Kill();
             }

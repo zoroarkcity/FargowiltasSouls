@@ -15,10 +15,10 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
         public int counter;
 
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Abominable Blade");
-		}
-    	
+        {
+            DisplayName.SetDefault("Abominable Blade");
+        }
+
         public override void SetDefaults()
         {
             projectile.width = 48;

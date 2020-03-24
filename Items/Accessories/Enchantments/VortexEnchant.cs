@@ -59,14 +59,6 @@ Summons a pet Companion Cube");
             recipe.AddIngredient(ItemID.VortexHelmet);
             recipe.AddIngredient(ItemID.VortexBreastplate);
             recipe.AddIngredient(ItemID.VortexLeggings);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(ItemID.WingsVortex);
-                recipe.AddIngredient(thorium.ItemType("VoidLance"));
-                recipe.AddIngredient(thorium.ItemType("BlackBow"));
-            }
-            
             recipe.AddIngredient(ItemID.VortexBeater);
             recipe.AddIngredient(ItemID.Phantasm);
             recipe.AddIngredient(ItemID.SDMG);

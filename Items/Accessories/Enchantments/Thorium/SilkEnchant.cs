@@ -2,6 +2,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using ThoriumMod.Items.EarlyMagic;
+using ThoriumMod.Items.Icy;
+using ThoriumMod.Items.Sandstone;
+using ThoriumMod.Items.HealerItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -49,16 +53,16 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("SilkCap"));
-            recipe.AddIngredient(thorium.ItemType("SilkHat"));
-            recipe.AddIngredient(thorium.ItemType("SilkTabard"));
-            recipe.AddIngredient(thorium.ItemType("SilkLeggings"));
+            recipe.AddIngredient(ModContent.ItemType<SilkCap>());
+            recipe.AddIngredient(ModContent.ItemType<SilkHat>());
+            recipe.AddIngredient(ModContent.ItemType<SilkTabard>());
+            recipe.AddIngredient(ModContent.ItemType<SilkLeggings>());
             recipe.AddIngredient(ItemID.WandofSparking);
-            recipe.AddIngredient(thorium.ItemType("IceCube"));
-            recipe.AddIngredient(thorium.ItemType("EighthPlagueStaff")); //nice diver, dam memer
-            recipe.AddIngredient(thorium.ItemType("WindGust"));
-            recipe.AddIngredient(thorium.ItemType("Cure"));
+            recipe.AddIngredient(ModContent.ItemType<IceCube>());
+            recipe.AddIngredient(ModContent.ItemType<WindGust>());
+            recipe.AddIngredient(ModContent.ItemType<Cure>());
             recipe.AddIngredient(ItemID.UlyssesButterfly);
+            recipe.AddIngredient(ItemID.SilkRopeCoil);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

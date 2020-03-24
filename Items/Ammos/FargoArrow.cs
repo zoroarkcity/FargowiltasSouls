@@ -1,6 +1,7 @@
 ﻿using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Ammos
 {
@@ -20,7 +21,7 @@ namespace FargowiltasSouls.Items.Ammos
                 "Each impact explodes, summons falling stars, and fires laser arrows\n" +
                 "Inflicts several debuffs");
             DisplayName.AddTranslation(GameCulture.Chinese, "混合箭袋");
-            Tooltip.AddTranslation(GameCulture.Chinese, "弹跳多次\n" + 
+            Tooltip.AddTranslation(GameCulture.Chinese, "弹跳多次\n" +
                 "每次撞击都会爆炸,召唤流星,发射激光箭\n" +
                 "造成多种Debuff");
         }
@@ -39,7 +40,7 @@ namespace FargowiltasSouls.Items.Ammos
         }
 
         public override void AddRecipes()
-        {           
+        {
             ModRecipe recipe = new ModRecipe(mod);
             //recipe.AddIngredient(ItemID.EndlessQuiver);
             recipe.AddIngredient(fargos, "FlameQuiver");
@@ -55,7 +56,7 @@ namespace FargowiltasSouls.Items.Ammos
             recipe.AddIngredient(fargos, "ChlorophyteQuiver");
             recipe.AddIngredient(fargos, "LuminiteQuiver");
             recipe.AddIngredient(mod.ItemType("Sadism"), 15);
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

@@ -59,25 +59,11 @@ When you are hurt, you violently explode to damage nearby enemies");
             recipe.AddIngredient(ItemID.MoltenHelmet);
             recipe.AddIngredient(ItemID.MoltenBreastplate);
             recipe.AddIngredient(ItemID.MoltenGreaves);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("MeleeThorHammer"));
-                recipe.AddIngredient(ItemID.MoltenHamaxe);
-                recipe.AddIngredient(ItemID.Sunfury);
-                recipe.AddIngredient(ItemID.DarkLance);
-                recipe.AddIngredient(ItemID.PhoenixBlaster);
-                recipe.AddIngredient(thorium.ItemType("MeteoriteClusterBomb"), 300);
-                recipe.AddIngredient(ItemID.DemonsEye);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.Sunfury);
-                recipe.AddIngredient(ItemID.DarkLance);
-                recipe.AddIngredient(ItemID.PhoenixBlaster);
-                recipe.AddIngredient(ItemID.DemonsEye);
-            }
-            
+            recipe.AddIngredient(ItemID.Sunfury);
+            recipe.AddIngredient(ItemID.DarkLance);
+            recipe.AddIngredient(ItemID.PhoenixBlaster);
+            recipe.AddIngredient(ItemID.DemonsEye);
+
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();

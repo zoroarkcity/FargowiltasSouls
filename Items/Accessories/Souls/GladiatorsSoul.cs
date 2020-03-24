@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using CalamityMod.CalPlayer;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -111,7 +112,6 @@ Increased melee knockback
                 recipe.AddIngredient(thorium.ItemType("PrimesFury"));
                 recipe.AddIngredient(TerraBlade);
                 recipe.AddIngredient(ScourgeoftheCorruptor);
-                recipe.AddIngredient(thorium.ItemType("Spearmint"));
                 recipe.AddIngredient(MonkStaffT3);
             }
             else
@@ -122,14 +122,14 @@ Increased melee knockback
                 recipe.AddIngredient(Kraken);
                 recipe.AddIngredient(Flairon);
                 recipe.AddIngredient(MonkStaffT3);
-                recipe.AddIngredient(TheHorsemansBlade);
             }
 
+            recipe.AddIngredient(TheHorsemansBlade);
             recipe.AddIngredient(NorthPole);
             recipe.AddIngredient(InfluxWaver);
             recipe.AddIngredient(Meowmere);
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
 
             recipe.SetResult(this);
             recipe.AddRecipe();

@@ -44,12 +44,6 @@ Flameburst field of view and range are dramatically increased");
             recipe.AddIngredient(ItemID.BookStaff);
             recipe.AddIngredient(ItemID.ClingerStaff);
 
-            /*
-            Demon Fire Blast-Wand (with Thorium)
-            Wither Staff (with Thorium)
-            Kinetic Knife (with Thorium)
-             */
-
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

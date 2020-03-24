@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FargowiltasSouls.Projectiles;
+using FargowiltasSouls.Projectiles.Masomode;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -121,23 +122,23 @@ namespace FargowiltasSouls.Items
                         for (int i = 0; i < 3; i++)
                         {
                             Projectile.NewProjectile(position, velocity.RotatedByRandom(Math.PI / 6) * Main.rand.NextFloat(6f, 10f),
-                                mod.ProjectileType("CelestialRuneFireball"), (int)(50f * player.meleeDamage), 9f, player.whoAmI);
+                                ModContent.ProjectileType<CelestialRuneFireball>(), (int)(50f * player.meleeDamage), 9f, player.whoAmI);
                         }
                     }
                     if (item.ranged) //lightning
                     {
                         float ai1 = Main.rand.Next(100);
                         Vector2 vel = Vector2.Normalize(velocity.RotatedByRandom(Math.PI / 4)) * 7f;
-                        Projectile.NewProjectile(position, vel, mod.ProjectileType("CelestialRuneLightningArc"),
+                        Projectile.NewProjectile(position, vel, ModContent.ProjectileType<CelestialRuneLightningArc>(),
                             (int)(50f * player.rangedDamage), 1f, player.whoAmI, velocity.ToRotation(), ai1);
                     }
                     if (item.magic) //ice mist
                     {
-                        Projectile.NewProjectile(position, velocity * 4.25f, mod.ProjectileType("CelestialRuneIceMist"), (int)(50f * player.magicDamage), 4f, player.whoAmI);
+                        Projectile.NewProjectile(position, velocity * 4.25f, ModContent.ProjectileType<CelestialRuneIceMist>(), (int)(50f * player.magicDamage), 4f, player.whoAmI);
                     }
                     if (item.thrown) //ancient vision
                     {
-                        Projectile.NewProjectile(position, velocity * 16f, mod.ProjectileType("CelestialRuneAncientVision"), (int)(50f * player.thrownDamage), 0, player.whoAmI);
+                        Projectile.NewProjectile(position, velocity * 16f, ModContent.ProjectileType<CelestialRuneAncientVision>(), (int)(50f * player.thrownDamage), 0, player.whoAmI);
                     }
                 }
 
@@ -203,55 +204,6 @@ namespace FargowiltasSouls.Items
                         thoriumPlayer.rocketsFired = 0;
                         Main.PlaySound(SoundID.Item14, player.position);
                     }
-                }
-            }
-
-            //plague flask
-            if (modPlayer.PlagueAcc && SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.PlagueFlask))
-            {
-                if (item.damage >= 1 && Main.rand.Next(5) == 0)
-                {
-                    Vector2 velocity = Vector2.Normalize(Main.MouseWorld - player.Center) * (item.shootSpeed > 0 ? item.shootSpeed : 10);
-
-                    float num9 = 0.25f;
-                    float num10 = (float)Math.Sqrt((velocity.X * velocity.X + velocity.Y * velocity.Y));
-                    double num11 = Math.Atan2(velocity.X, velocity.Y);
-                    double num12 = num11 + (0.25f * num9);
-                    double num13 = num11 - (0.25f * num9);
-                    float num14 = Utils.NextFloat(Main.rand) * 0.2f + 0.95f;
-                    Projectile.NewProjectile(player.Center, new Vector2(num10 * num14 * (float)Math.Sin(num12), num10 * num14 * (float)Math.Cos(num12)), thorium.ProjectileType("BlightDagger"), item.damage, (int)item.knockBack, player.whoAmI);
-                    Projectile.NewProjectile(player.Center, new Vector2(num10 * num14 * (float)Math.Sin(num13), num10 * num14 * (float)Math.Cos(num13)), thorium.ProjectileType("BlightDagger"), item.damage, (int)item.knockBack, player.whoAmI);
-                }
-            }
-            
-            //folv effect
-            if (modPlayer.FolvEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.FolvBolts))
-            {
-                thoriumPlayer.magicCast++;
-                if (thoriumPlayer.magicCast >= 7)
-                {
-                    Vector2 velocity = Vector2.Normalize(Main.MouseWorld - player.Center) * (item.shootSpeed > 0 ? item.shootSpeed : 10);
-
-                    Vector2 value;
-                    value.X = Main.MouseWorld.X;
-                    value.Y = Main.MouseWorld.Y;
-                    Vector2 value2 = value - player.Center;
-                    float num = 10f;
-                    float num2 = (float)Math.Sqrt((value2.X * value2.X + value2.Y * value2.Y));
-                    if (num2 > num)
-                    {
-                        num2 = num / num2;
-                    }
-                    value2 *= num2;
-                    float num3 = 0.25f;
-                    double num4 = Math.Atan2((double)velocity.X, (double)velocity.Y);
-                    double num5 = num4 + (double)(0.25f * num3);
-                    double num6 = num4 - (double)(0.25f * num3);
-                    Projectile.NewProjectile(player.Center.X, player.Center.Y, num * (float)Math.Sin(num5), num * (float)Math.Cos(num5), thorium.ProjectileType("OGBassBoosterPro2"), (int)(30f * (1f + 0.02f * (float)item.useAnimation)), 2f, player.whoAmI, 0f, 0f);
-                    Projectile.NewProjectile(player.Center.X, player.Center.Y, num * (float)Math.Sin(num6), num * (float)Math.Cos(num6), thorium.ProjectileType("OGBassBoosterPro2"), (int)(30f * (1f + 0.02f * (float)item.useAnimation)), 2f, player.whoAmI, 0f, 0f);
-                    Main.PlaySound(SoundID.Item82, player.position);
-
-                    thoriumPlayer.magicCast = 0;
                 }
             }
         }

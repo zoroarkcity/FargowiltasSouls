@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Fargowiltas.Items.Tiles;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -214,17 +215,6 @@ namespace FargowiltasSouls
                 && tile.slope() == 0 && !tile.inActive();
         }
         
-        public override int[] AdjTiles(int type)
-        {
-            if (type == mod.TileType("CrucibleCosmosSheet"))
-            {
-                Main.LocalPlayer.adjHoney = true;
-                Main.LocalPlayer.adjLava = true;
-            }
-
-            return base.AdjTiles(type);
-        }
-
         public override bool CanExplode(int i, int j, int type)
         {
             if (type == TileID.Meteorite && FargoSoulsWorld.MasochistMode && !NPC.downedBoss3)

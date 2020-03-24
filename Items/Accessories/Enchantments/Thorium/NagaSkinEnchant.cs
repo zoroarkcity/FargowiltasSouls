@@ -3,6 +3,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Depths;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.MiniBoss;
+using ThoriumMod.Items.MagicItems;
+using ThoriumMod.Items.Painting;
+using ThoriumMod.Items.Abyssion;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -58,28 +64,23 @@ Allows quicker movement in water");
                 player.moveSpeed += 0.15f;
             }
         }
-        
-        private readonly string[] items =
-        {
-            "NagaSkinMask",
-            "NagaSkinSuit",
-            "NagaSkinTail",
-            "Eelrod",
-            "CycloneBook",
-            "NagaRecurve",
-            "NagaSpitStaff",
-            "HydromancerCatalyst",
-            "Leviathan",
-            "OldGodGrasp"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<NagaSkinMask>());
+            recipe.AddIngredient(ModContent.ItemType<NagaSkinSuit>());
+            recipe.AddIngredient(ModContent.ItemType<NagaSkinTail>());
+            recipe.AddIngredient(ModContent.ItemType<Eelrod>());
+            recipe.AddIngredient(ModContent.ItemType<CycloneBook>());
+            recipe.AddIngredient(ModContent.ItemType<NagaSpitStaff>());
+            recipe.AddIngredient(ModContent.ItemType<HydromancerCatalyst>());
+            recipe.AddIngredient(ModContent.ItemType<Leviathan>());
+            recipe.AddIngredient(ModContent.ItemType<OldGodGrasp>());
+            recipe.AddIngredient(ModContent.ItemType<UnderseaBountyPaint>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

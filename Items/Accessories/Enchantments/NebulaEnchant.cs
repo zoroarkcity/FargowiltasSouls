@@ -55,19 +55,7 @@ Hurting enemies has a chance to spawn buff boosters");
             recipe.AddIngredient(ItemID.NebulaHelmet);
             recipe.AddIngredient(ItemID.NebulaBreastplate);
             recipe.AddIngredient(ItemID.NebulaLeggings);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(ItemID.WingsNebula);
-                recipe.AddIngredient(thorium.ItemType("BlackStaff"));
-                recipe.AddIngredient(thorium.ItemType("CatsEye"));
-                recipe.AddIngredient(thorium.ItemType("NebulaReflection"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.ShadowbeamStaff);
-            }
-            
+            recipe.AddIngredient(ItemID.ShadowbeamStaff);
             recipe.AddIngredient(ItemID.NebulaArcanum);
             recipe.AddIngredient(ItemID.NebulaBlaze);
             recipe.AddIngredient(ItemID.LunarFlareBook);

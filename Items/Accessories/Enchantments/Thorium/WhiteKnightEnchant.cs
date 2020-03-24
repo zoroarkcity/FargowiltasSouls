@@ -3,6 +3,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.MagicItems;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.Blizzard;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -51,33 +54,24 @@ Summons a Moogle pet");
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
             //shade band
             thoriumPlayer.shadeBand = true;
-            //pet
-            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.MooglePet, hideVisual, thorium.BuffType("LilMogBuff"), thorium.ProjectileType("LilMog"));
-            modPlayer.KnightEnchant = true;
         }
-        
-        private readonly string[] items =
-        {
-            "WhiteKnightMask",
-            "WhiteKnightTabard",
-            "WhiteKnightLeggings",
-            "ShadeBand",
-            "PrismiteStaff",
-            "VileSpitter",
-            "FrostFang"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
+            recipe.AddIngredient(ModContent.ItemType<WhiteKnightMask>());
+            recipe.AddIngredient(ModContent.ItemType<WhiteKnightTabard>());
+            recipe.AddIngredient(ModContent.ItemType<WhiteKnightLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<ShadeBand>());
+            recipe.AddIngredient(ModContent.ItemType<PrismiteStaff>());
+            recipe.AddIngredient(ModContent.ItemType<VileSpitter>());
+            recipe.AddIngredient(ModContent.ItemType<FrostFang>());
+            recipe.AddIngredient(ModContent.ItemType<TitaniumStaff>());
+            recipe.AddIngredient(ModContent.ItemType<DynastyWarFan>());
             recipe.AddIngredient(ItemID.SkyFracture);
-            recipe.AddIngredient(thorium.ItemType("SnowWhite"));
-            recipe.AddIngredient(thorium.ItemType("DelectableNut"));
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

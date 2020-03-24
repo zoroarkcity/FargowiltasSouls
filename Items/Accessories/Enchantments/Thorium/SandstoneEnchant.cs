@@ -3,6 +3,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Sandstone;
+using ThoriumMod.Items.ThrownItems;
+using ThoriumMod.Items.ThunderBird;
+using ThoriumMod.Items.Painting;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -57,15 +61,15 @@ Desert winds will augment your boots, giving you a double jump");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("hSandStoneHelmet"));
-            recipe.AddIngredient(thorium.ItemType("iSandStoneMail"));
-            recipe.AddIngredient(thorium.ItemType("jSandStoneGreaves"));
-            recipe.AddIngredient(thorium.ItemType("Wreath"));
-            recipe.AddIngredient(thorium.ItemType("BaseballBat"));
-            recipe.AddIngredient(thorium.ItemType("StoneThrowingSpear"), 300);
-            recipe.AddIngredient(thorium.ItemType("OceanTomahawk"), 300);
-            recipe.AddIngredient(thorium.ItemType("gSandStoneThrowingKnife"), 300);
-            recipe.AddIngredient(thorium.ItemType("TalonBurst"));
+            recipe.AddIngredient(ModContent.ItemType<hSandStoneHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<iSandStoneMail>());
+            recipe.AddIngredient(ModContent.ItemType<jSandStoneGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<Wreath>());
+            recipe.AddIngredient(ModContent.ItemType<BaseballBat>());
+            recipe.AddIngredient(ModContent.ItemType<StoneThrowingSpear>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<gSandStoneThrowingKnife>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<TalonBurst>());
+            recipe.AddIngredient(ModContent.ItemType<ThunderOverDesertSkiesPaint>());
             recipe.AddIngredient(ItemID.BlackScorpion);
 
             recipe.AddTile(TileID.DemonAltar);

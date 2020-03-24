@@ -18,13 +18,13 @@
   </Target>
   <ItemGroup>
     <Reference Include="CalamityMod">
-      <HintPath>..\..\references\mods\CalamityMod.dll</HintPath>
+      <HintPath>..\folder for wip\CalamityMod.XNA.dll</HintPath>
     </Reference>
-    <Reference Include="SacredTools">
-      <HintPath>..\..\references\mods\SacredTools.dll</HintPath>
+    <Reference Include="Fargowiltas">
+      <HintPath>..\folder for wip\Fargowiltas.XNA.dll</HintPath>
     </Reference>
     <Reference Include="ThoriumMod">
-      <HintPath>..\..\references\mods\ThoriumMod.dll</HintPath>
+      <HintPath>..\folder for wip\ThoriumMod.XNA.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

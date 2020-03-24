@@ -34,8 +34,8 @@ While dashing or running quickly you will create a trail of demon scythes");
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.buffImmune[mod.BuffType("Berserked")] = true;
-            
-            if(player.statLife < player.statLifeMax2 / 2)
+
+            if (player.statLife < player.statLifeMax2 / 2)
                 player.GetModPlayer<FargoPlayer>().AllDamageUp(.10f);
 
             player.GetModPlayer<FargoPlayer>().AgitatingLens = true;

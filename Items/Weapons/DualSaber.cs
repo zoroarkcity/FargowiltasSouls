@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Weapons
-    //We need this to basically indicate the folder where it is to be read from, so you the texture will load correctly
+//We need this to basically indicate the folder where it is to be read from, so you the texture will load correctly
 {
     public class DualSaber : ModItem
     {
@@ -14,13 +14,13 @@ namespace FargowiltasSouls.Items.Weapons
         }
 
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Dual Saber");
-			Tooltip.SetDefault("ye \n and thus fargo never added a proper description for this item");
+        {
+            DisplayName.SetDefault("Dual Saber");
+            Tooltip.SetDefault("ye \n and thus fargo never added a proper description for this item");
             DisplayName.AddTranslation(GameCulture.Chinese, "双刃光剑");
             Tooltip.AddTranslation(GameCulture.Chinese, "ye\nFargo永远不会给这个物品写上合适的描述");
-		}
-		
+        }
+
         public override void SetDefaults()
         {
             item.damage = 59;    //The damage stat for the Weapon.
@@ -36,54 +36,54 @@ namespace FargowiltasSouls.Items.Weapons
             item.shoot = mod.ProjectileType("DualSaberProj");  //This defines what type of projectile this weapon will shoot  
             item.noUseGraphic = true; // this defines if it does not use graphic
         }
-		
-		public override bool AltFunctionUse(Player player)
-		{
-			return true;
-		}
-		
-		public override bool CanUseItem(Player player)
-		{
-			if (player.altFunctionUse == 2)
-			{
-				item.useStyle = 100;
-				item.useTime = 10;
-				item.useAnimation = 10;
-				item.damage = 50; // 
-				item.channel = true;
-				item.shoot = mod.ProjectileType("DualSaberProj");
-			}
-			else
-			{
-				item.useStyle = 1;
-				item.useTime = 25;
-				item.useAnimation = 25;
-				item.damage = 100;
-				item.shoot = mod.ProjectileType("DualSaberProj2");
-				/*for (int i = 0; i < 1000; ++i)
+
+        public override bool AltFunctionUse(Player player)
+        {
+            return true;
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            if (player.altFunctionUse == 2)
+            {
+                item.useStyle = 100;
+                item.useTime = 10;
+                item.useAnimation = 10;
+                item.damage = 50; // 
+                item.channel = true;
+                item.shoot = mod.ProjectileType("DualSaberProj");
+            }
+            else
+            {
+                item.useStyle = 1;
+                item.useTime = 25;
+                item.useAnimation = 25;
+                item.damage = 100;
+                item.shoot = mod.ProjectileType("DualSaberProj2");
+                /*for (int i = 0; i < 1000; ++i)
 				{
 					if (Main.projectile[i].active && Main.projectile[i].owner == Main.myPlayer && Main.projectile[i].type == item.shoot)
 					{
 						return false;
 					}
 				}*/
-			}
-			return base.CanUseItem(player);
-		}
- 
+            }
+            return base.CanUseItem(player);
+        }
+
         public override bool UseItemFrame(Player player)     //this defines what frame the player use when this weapon is used
         {
-			if (player.altFunctionUse == 2)
-			{	
-				player.bodyFrame.Y = 3 * player.bodyFrame.Height;
-				return true;
-			}
-				return false;
+            if (player.altFunctionUse == 2)
+            {
+                player.bodyFrame.Y = 3 * player.bodyFrame.Height;
+                return true;
+            }
+            return false;
         }
-		
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			/*if (player.altFunctionUse == 1)
+
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {
+            /*if (player.altFunctionUse == 1)
 			{
 				float spread = 45f * 0.0174f;
 				float baseSpeed = (float)Math.Sqrt(speedX * speedX + speedY * speedY);
@@ -98,8 +98,8 @@ namespace FargowiltasSouls.Items.Weapons
 				}
 				return false;
 			}*/
-			return true;
-		}
+            return true;
+        }
     }
 }
 

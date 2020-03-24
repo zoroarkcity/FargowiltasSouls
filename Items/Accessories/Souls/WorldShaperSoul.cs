@@ -4,6 +4,7 @@ using static Terraria.ID.ItemID;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -141,7 +142,6 @@ Summons a pet Magic Lantern");
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
 
             //pets
-            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.LanternPet, hideVisual, thorium.BuffType("SupportLanternBuff"), thorium.ProjectileType("SupportLantern"));
             modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.BoxPet, hideVisual, thorium.BuffType("LockBoxBuff"), thorium.ProjectileType("LockBoxPet"));
         }
 
@@ -164,8 +164,8 @@ Summons a pet Magic Lantern");
             recipe.AddIngredient(ShroomiteDiggingClaw);
             recipe.AddIngredient(DrillContainmentUnit);
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
-                
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

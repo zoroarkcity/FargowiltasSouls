@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -64,7 +65,7 @@ Effects of Sniper Scope, Celestial Cuffs and Mana Flower";
             if (thorium != null)
             {
                 tooltip += @"
-Effects of Phylactery, Crystal Scorpion, and Yuma's Pendant
+Effects of Phylactery and Crystal Scorpion
 Effects of Guide to Expert Throwing - Volume III, Mermaid's Canteen, and Deadman's Patch
 Effects of Support Sash, Saving Grace, Soul Guard, Archdemon's Curse, Archangel's Heart, and Medical Bag
 Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
@@ -156,11 +157,6 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.CrystalScorpion))
             {
                 thoriumPlayer.crystalScorpion = true;
-            }
-            //yumas pendant
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.YumasPendant))
-            {
-                thoriumPlayer.yuma = true;
             }
 
             //THROWING
@@ -306,7 +302,7 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
                 recipe.AddIngredient(null, "KiSoul");
             }
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
 
             recipe.SetResult(this);
             recipe.AddRecipe();

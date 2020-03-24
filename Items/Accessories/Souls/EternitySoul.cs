@@ -8,6 +8,7 @@ using CalamityMod.CalPlayer;
 using ThoriumMod.Items.Misc;
 using Terraria.Localization;
 using System.Collections.Generic;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -222,7 +223,6 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             "Effects of Plague Lord's Flask",
             "Effects of Phylactery",
             "Effects of Crystal Scorpion",
-            "Effects of Yuma's Pendant",
             "Effects of Guide to Expert Throwing - Volume III",
             "Effects of Mermaid's Canteen",
             "Effects of Deadman's Patch",
@@ -237,8 +237,6 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             "Effects of Digital Tuner",
             "Effects of Guitar Pick Claw",
             "Effects of Ocean's Retaliation",
-            "Effects of Cape of the Survivor",
-            "Effects of Blast Shield",
             "Effects of Terrarium Defender",
             "Effects of Air Walkers",
             "Effects of Survivalist Boots",
@@ -589,21 +587,22 @@ Additionally grants:");
             }
 
             //SUPERSONIC
-            //frost spark plus super speed
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicSpeed) && !player.GetModPlayer<FargoPlayer>().noSupersonic)
             {
-                player.maxRunSpeed += 15f;
-                player.runAcceleration += .25f;
+                player.runAcceleration += SoulConfig.Instance.SupersonicMultiplier * .1f;
+                player.runSlowdown = 10;
+                player.maxRunSpeed += SoulConfig.Instance.SupersonicMultiplier * 2;
+                //frog legs
                 player.autoJump = true;
                 player.jumpSpeedBoost += 2.4f;
-                player.jumpBoost = true;
                 player.maxFallSpeed += 5f;
+                player.jumpBoost = true;
             }
-            /*else
+            else
             {
-                player.maxRunSpeed += 5f;
-                player.runAcceleration += .1f;
-            }*/
+                //same as frostspark
+                player.accRunSpeed = 6.75f;
+            }
             player.moveSpeed += 0.5f;
             player.accRunSpeed = 12f;
             player.rocketBoots = 3;
@@ -737,11 +736,6 @@ Additionally grants:");
             {
                 thoriumPlayer.crystalScorpion = true;
             }
-            //yumas pendant
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.YumasPendant))
-            {
-                thoriumPlayer.yuma = true;
-            }
 
             //THROWING
             thoriumPlayer.throwGuide2 = true;
@@ -824,15 +818,6 @@ Additionally grants:");
                 player.AddBuff(thorium.BuffType("TerrariumDefense"), 10, true);
                 player.statDefense += 20;
             }
-            //blast shield
-            thoriumPlayer.blastHurt = true;
-            //cape of the survivor
-            if (player.FindBuffIndex(thorium.BuffType("Corporeal")) < 0)
-            {
-                thoriumPlayer.spiritBand2 = true;
-            }
-            //sweet vengeance
-            thoriumPlayer.sweetVengeance = true;
             //oceans retaliation
             thoriumPlayer.turtleShield2 = true;
             thoriumPlayer.SpinyShield = true;
@@ -901,7 +886,6 @@ Additionally grants:");
             }
             //WORLD SHAPER
             //pets
-            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.LanternPet, hideVisual, thorium.BuffType("SupportLanternBuff"), thorium.ProjectileType("SupportLantern"));
             modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.BoxPet, hideVisual, thorium.BuffType("LockBoxBuff"), thorium.ProjectileType("LockBoxPet"));
 
             //THORIUM SOUL
@@ -1022,7 +1006,7 @@ Additionally grants:");
 
             recipe.AddIngredient(null, "Sadism", 30);
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

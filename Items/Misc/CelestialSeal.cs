@@ -63,7 +63,7 @@ Only usable after Demon Heart");
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(mod.ItemType("LunarCrystal"), 15);
+            recipe.AddIngredient(ModContent.\1Type<\2>\(\), 15);
             recipe.AddIngredient(ItemID.LunarBar, 10);
             recipe.AddIngredient(ItemID.FragmentNebula, 25);
             recipe.AddIngredient(ItemID.FragmentSolar, 25);

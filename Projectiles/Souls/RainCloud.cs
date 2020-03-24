@@ -58,7 +58,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                         Projectile.NewProjectile(projectile.Center.X - vector2_3.X, projectile.Center.Y - vector2_3.Y, vector2_3.X, vector2_3.Y,
                             mod.ProjectileType("LightningArc"), projectile.damage * 2, projectile.knockBack, projectile.owner,
                             rotationVector2.ToRotation(), ai_1);
-                        
+
                     }
 
                     proj.active = false;

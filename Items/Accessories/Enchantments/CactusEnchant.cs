@@ -60,19 +60,7 @@ Enemies may explode into needles on death");
             recipe.AddIngredient(ItemID.CactusLeggings);
             recipe.AddIngredient(ItemID.CactusSword);
             recipe.AddIngredient(ItemID.Sandgun);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(thorium.ItemType("CactusNeedle"), 300);
-                recipe.AddIngredient(ItemID.ThornsPotion, 5);
-                recipe.AddIngredient(thorium.ItemType("CactusFruit"), 5);
-                recipe.AddIngredient(thorium.ItemType("PricklyJam"), 5);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.PinkPricklyPear);
-            }
-            
+            recipe.AddIngredient(ItemID.PinkPricklyPear);
             recipe.AddIngredient(ItemID.SecretoftheSands);
             
             recipe.AddTile(TileID.DemonAltar);

@@ -58,21 +58,8 @@ Summons a pet Skeletron Head");
             recipe.AddIngredient(ItemID.NecroBreastplate);
             recipe.AddIngredient(ItemID.NecroGreaves);
             recipe.AddIngredient(ItemID.BoneSword);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("Slugger"));
-                recipe.AddIngredient(ItemID.BoneGlove);
-                recipe.AddIngredient(ItemID.Marrow);
-                recipe.AddIngredient(thorium.ItemType("BoneFlayerTail"));
-                recipe.AddIngredient(ItemID.TheGuardiansGaze);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.Marrow);
-                recipe.AddIngredient(ItemID.TheGuardiansGaze);
-            }
-            
+            recipe.AddIngredient(ItemID.Marrow);
+            recipe.AddIngredient(ItemID.TheGuardiansGaze);
             recipe.AddIngredient(ItemID.BoneKey);
             
             recipe.AddTile(TileID.CrystalBall);

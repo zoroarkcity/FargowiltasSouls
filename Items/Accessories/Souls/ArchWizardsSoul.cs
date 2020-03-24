@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using CalamityMod.CalPlayer;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -103,9 +104,6 @@ Increases your maximum mana by 200
                 recipe.AddIngredient(thorium.ItemType("TerraStaff"));
                 recipe.AddIngredient(RainbowGun);
                 recipe.AddIngredient(thorium.ItemType("SpectrelBlade"));
-                recipe.AddIngredient(thorium.ItemType("LightningStaff"));
-                recipe.AddIngredient(ApprenticeStaffT3);
-                recipe.AddIngredient(thorium.ItemType("NuclearFury"));            
             }
             else
             {
@@ -115,17 +113,17 @@ Increases your maximum mana by 200
                 recipe.AddIngredient(MedusaHead);
                 recipe.AddIngredient(GoldenShower);
                 recipe.AddIngredient(RainbowGun);
-                recipe.AddIngredient(MagnetSphere);
-                recipe.AddIngredient(ApprenticeStaffT3);
-                recipe.AddIngredient(RazorbladeTyphoon);
             }
 
+            recipe.AddIngredient(MagnetSphere);
+            recipe.AddIngredient(ApprenticeStaffT3);
+            recipe.AddIngredient(RazorbladeTyphoon);
             recipe.AddIngredient(BlizzardStaff);
             recipe.AddIngredient(LaserMachinegun);
             recipe.AddIngredient(LastPrism);
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
-                
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

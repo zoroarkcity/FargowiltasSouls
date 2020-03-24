@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
 {
@@ -22,8 +23,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
             Tooltip.SetDefault(
 @"'What's this about Ragnarok?'
 All armor bonuses from Tide Turner, Assassin, and Pyromancer
-All armor bonuses from Dream Weaver and Rhapsodist
-Summons a pet Maid");
+All armor bonuses from Dream Weaver and Rhapsodist");
             DisplayName.AddTranslation(GameCulture.Chinese, "阿斯加德之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'诸神黄昏是怎么回事?'
@@ -69,9 +69,6 @@ Summons a pet Maid");
             //dream weaver
             thoriumPlayer.dreamHoodSet = true;
             thoriumPlayer.dreamSet = true;
-            //maid pet
-            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.MaidPet, hideVisual, thorium.BuffType("MaidBuff"), thorium.ProjectileType("Maid1"));
-            modPlayer.DreamEnchant = true;
 
             if (modPlayer.ThoriumSoul) return;
 
@@ -93,9 +90,8 @@ Summons a pet Maid");
             recipe.AddIngredient(null, "PyromancerEnchant");
             recipe.AddIngredient(null, "DreamWeaverEnchant");
             recipe.AddIngredient(null, "RhapsodistEnchant");
-            recipe.AddIngredient(thorium.ItemType("BowofLight"));
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
 
             recipe.SetResult(this);
             recipe.AddRecipe();

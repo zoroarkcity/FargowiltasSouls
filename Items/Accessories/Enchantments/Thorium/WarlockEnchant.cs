@@ -4,6 +4,8 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
 using ThoriumMod.NPCs;
+using ThoriumMod.Items.HealerItems;
+using ThoriumMod.Items.Tracker;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -23,8 +25,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 @"'Better than a wizard'
 Critical strikes will generate up to 15 shadow wisps
 Pressing the 'Special Ability' key will unleash every stored shadow wisp towards your cursor's position
-Effects of Demon Tongue and Dark Effigy
-Summons a Li'l Devil to attack enemies");
+Effects of Demon Tongue and Dark Effigy");
             DisplayName.AddTranslation(GameCulture.Chinese, "术士魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'比巫师更强'
@@ -52,9 +53,6 @@ Summons a Li'l Devil to attack enemies");
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
             //set bonus
             thoriumPlayer.warlockSet = true;
-            modPlayer.WarlockEnchant = true;
-            //lil devil
-            modPlayer.AddMinion(SoulConfig.Instance.thoriumToggles.DevilMinion, thorium.ProjectileType("Devil"), 20, 2f);
 
             if (modPlayer.ThoriumSoul) return;
 
@@ -79,28 +77,22 @@ Summons a Li'l Devil to attack enemies");
             }
         }
         
-        private readonly string[] items =
-        {
-            "DemonTongue",
-            "Effigy",
-            "Omen",
-            "ShadowStaff",
-            "NecroticStaff",
-            "DevilStaff"
-        };
-
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("WarlockHood"));
-            recipe.AddIngredient(thorium.ItemType("WarlockGarb"));
-            recipe.AddIngredient(thorium.ItemType("WarlockLeggings"));
-            recipe.AddIngredient(null, "EbonEnchant");
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+            recipe.AddIngredient(ModContent.ItemType<WarlockHood>());
+            recipe.AddIngredient(ModContent.ItemType<WarlockGarb>());
+            recipe.AddIngredient(ModContent.ItemType<WarlockLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<EbonEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<DemonTongue>());
+            recipe.AddIngredient(ModContent.ItemType<Effigy>());
+            recipe.AddIngredient(ModContent.ItemType<Omen>());
+            recipe.AddIngredient(ModContent.ItemType<ShadowStaff>());
+            recipe.AddIngredient(ModContent.ItemType<NecroticStaff>());
+            recipe.AddIngredient(ModContent.ItemType<CursedHammer>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

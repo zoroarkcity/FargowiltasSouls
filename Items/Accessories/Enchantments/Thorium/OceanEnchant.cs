@@ -3,6 +3,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Ocean;
+using ThoriumMod.Items.QueenJelly;
+using ThoriumMod.Items.Depths;
+using ThoriumMod.Items.Painting;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -63,29 +67,23 @@ Effects of Sea Breeze Pendant and Bubble Magnet");
             //bubble magnet
             thoriumPlayer.bubbleMagnet = true;
         }
-        
-        private readonly string[] items =
-        {
-            "OceanHelmet",
-            "OceanChestGuard",
-            "OceanGreaves",
-            "SeaBreezePendant",
-            "BubbleMagnet",
-            "OceanSlasher",
-            "OceanPolearm",
-            "StarfishWand"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
+            recipe.AddIngredient(ModContent.ItemType<OceanHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<OceanChestGuard>());
+            recipe.AddIngredient(ModContent.ItemType<OceanGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<SeaBreezePendant>());
+            recipe.AddIngredient(ModContent.ItemType<BubbleMagnet>());
+            recipe.AddIngredient(ModContent.ItemType<OceanSlasher>());
+            recipe.AddIngredient(ModContent.ItemType<OceanPolearm>());
+            recipe.AddIngredient(ModContent.ItemType<StarfishWand>());
             recipe.AddIngredient(ItemID.Swordfish);
-            recipe.AddIngredient(ItemID.Tuna);
+            recipe.AddIngredient(ModContent.ItemType<JellyintheWaterPaint>());          
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

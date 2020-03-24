@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.BardItems;
+using ThoriumMod.Items.Tracker;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -55,29 +57,24 @@ Each unique empowerment you have grants you:
             //move speed, play speed
             thoriumPlayer.accHeadset = true;
         }
-        
-        private readonly string[] items =
-        {
-            "BalladeerHat",
-            "BalladeerShirt",
-            "BalladeerBoots",
-            "BalladeersTurboTuba",
-            "Headset",
-            "Acoustic",
-            "SunflareGuitar",
-            "StrawberryHeart",
-            "BlackOtamatone",
-            "RockstarsDoubleBassBlastGuitar" 
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
+            recipe.AddIngredient(ModContent.ItemType<BalladeerHat>());
+            recipe.AddIngredient(ModContent.ItemType<BalladeerShirt>());
+            recipe.AddIngredient(ModContent.ItemType<BalladeerBoots>());
+            recipe.AddIngredient(ModContent.ItemType<BalladeersTurboTuba>());
+            recipe.AddIngredient(ModContent.ItemType<Headset>());
+            recipe.AddIngredient(ModContent.ItemType<Acoustic>());
+            recipe.AddIngredient(ModContent.ItemType<SunflareGuitar>());
+            recipe.AddIngredient(ModContent.ItemType<BlackOtamatone>());
+            recipe.AddIngredient(ModContent.ItemType<Pungi>());
+            recipe.AddIngredient(ModContent.ItemType<RockstarsDoubleBassBlastGuitar>());
+            
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);
             recipe.AddRecipe();

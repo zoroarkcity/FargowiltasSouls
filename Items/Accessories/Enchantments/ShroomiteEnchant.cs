@@ -63,24 +63,9 @@ Summons a pet Truffle";
             recipe.AddRecipeGroup("FargowiltasSouls:AnyShroomHead");
             recipe.AddIngredient(ItemID.ShroomiteBreastplate);
             recipe.AddIngredient(ItemID.ShroomiteLeggings);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {
-
-                recipe.AddIngredient(ItemID.MushroomSpear);
-                recipe.AddIngredient(thorium.ItemType("MyceliumGattlingPulser"));
-                recipe.AddIngredient(thorium.ItemType("Funggat"));
-                recipe.AddIngredient(ItemID.Uzi);
-                recipe.AddIngredient(ItemID.TacticalShotgun);
-                recipe.AddIngredient(thorium.ItemType("RedFragmentBlaster"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.MushroomSpear);
-                recipe.AddIngredient(ItemID.Uzi);
-                recipe.AddIngredient(ItemID.TacticalShotgun);
-            }
-            
+            recipe.AddIngredient(ItemID.MushroomSpear);
+            recipe.AddIngredient(ItemID.Uzi);
+            recipe.AddIngredient(ItemID.TacticalShotgun);
             recipe.AddIngredient(ItemID.StrangeGlowingMushroom);
             
             recipe.AddTile(TileID.CrystalBall);

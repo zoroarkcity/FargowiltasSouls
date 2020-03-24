@@ -3,6 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Valadium;
+using ThoriumMod.Items.FallenBeholder;
+using ThoriumMod.Items.Blizzard;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.ThrownItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -63,28 +68,23 @@ Effects of Mirror of the Beholder");
                 thorium.GetItem("EyeofBeholder").UpdateAccessory(player, hideVisual);
             }
         }
-        
-        private readonly string[] items =
-        {
-            "ValadiumHelmet",
-            "ValadiumBreastPlate",
-            "ValadiumGreaves",
-            "EyeofBeholder",
-            "GlacialSting",
-            "Obliterator",
-            "ValadiumBow",
-            "ValadiumStaff",
-            "LodeStoneQuickDraw",
-            "TommyGun"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<ValadiumHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<ValadiumBreastPlate>());
+            recipe.AddIngredient(ModContent.ItemType<ValadiumGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<EyeofBeholder>());
+            recipe.AddIngredient(ModContent.ItemType<GlacialSting>());
+            recipe.AddIngredient(ModContent.ItemType<Obliterator>());
+            recipe.AddIngredient(ModContent.ItemType<ValadiumBow>());
+            recipe.AddIngredient(ModContent.ItemType<ValadiumStaff>());
+            recipe.AddIngredient(ModContent.ItemType<TommyGun>());
+            recipe.AddIngredient(ModContent.ItemType<CrystalBalloon>(), 300);
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

@@ -64,19 +64,7 @@ Summons a pet Dragon");
             recipe.AddIngredient(ItemID.SquireAltPants);
             recipe.AddIngredient(null, "SquireEnchant");
             recipe.AddIngredient(ItemID.ShinyStone);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("BlobhornCoralStaff"));
-                recipe.AddIngredient(ItemID.MonkStaffT2);
-                recipe.AddIngredient(ItemID.DD2SquireBetsySword);
-                recipe.AddIngredient(ItemID.DD2BallistraTowerT3Popper);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.DD2SquireBetsySword);
-            }
-            
+            recipe.AddIngredient(ItemID.DD2SquireBetsySword);
             recipe.AddIngredient(ItemID.DD2PetDragon);
             
             recipe.AddTile(TileID.CrystalBall);

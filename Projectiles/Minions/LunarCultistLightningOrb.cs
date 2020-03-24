@@ -142,7 +142,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 if (projectile.frame > 3)
                     projectile.frame = 0;
             }
-            
+
             float num11 = (float)(Main.rand.NextDouble() * 1.0 - 0.5); //vanilla dust :echbegone:
             if ((double)num11 < -0.5)
                 num11 = -0.5f;

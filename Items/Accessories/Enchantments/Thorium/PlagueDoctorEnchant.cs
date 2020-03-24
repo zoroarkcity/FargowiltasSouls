@@ -3,6 +3,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.ThrownItems;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.HealerItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -20,10 +23,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             DisplayName.SetDefault("Plague Doctor Enchantment");
             Tooltip.SetDefault(
 @"'What nasty concoction could you be brewing?'
-Your plague gas will linger in the air twice as long and your plague reactions will deal 20% more damage
-Killing an enemy will release a soul fragment
-Touching a soul fragment greatly increases your movement and throwing speed briefly
-Effects of Lich's Gaze and Plague Lord's Flask");
+Your plague gas will linger in the air twice as long and your plague reactions will deal 20% more damage");
             DisplayName.AddTranslation(GameCulture.Chinese, "瘟疫医生魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'你都能酿出什么恶心的药剂呢?'
@@ -49,13 +49,8 @@ Effects of Lich's Gaze and Plague Lord's Flask");
 
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
+            //plague effect
             thoriumPlayer.plagueSet = true;
-            //plague lords fask
-            modPlayer.PlagueAcc = true;
-            //lich set bonus
-            modPlayer.LichEnchant = true;
-            //lich gaze
-            thoriumPlayer.lichGaze = true;
         }
 
         public override void AddRecipes()
@@ -63,19 +58,20 @@ Effects of Lich's Gaze and Plague Lord's Flask");
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            recipe.AddIngredient(thorium.ItemType("PlagueDoctersMask"));
-            recipe.AddIngredient(thorium.ItemType("PlagueDoctersGarb"));
-            recipe.AddIngredient(thorium.ItemType("PlagueDoctersLeggings"));
-            recipe.AddIngredient(null, "LichEnchant");
-            recipe.AddIngredient(thorium.ItemType("PlagueLordFlask"));
-            recipe.AddIngredient(thorium.ItemType("CombustionFlask"), 300);
-            recipe.AddIngredient(thorium.ItemType("NitrogenVial"), 300);
-            recipe.AddIngredient(thorium.ItemType("CorrosionBeaker"), 300);
-            recipe.AddIngredient(thorium.ItemType("FrostPlagueStaff"));
-            recipe.AddIngredient(ItemID.ToxicFlask);
 
-            recipe.AddTile(TileID.LunarCraftingStation);
+            recipe.AddIngredient(ModContent.ItemType<PlagueDoctersMask>());
+            recipe.AddIngredient(ModContent.ItemType<PlagueDoctersGarb>());
+            recipe.AddIngredient(ModContent.ItemType<PlagueDoctersLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<GasContainer>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<CombustionFlask>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<NitrogenVial>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<CorrosionBeaker>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<AphrodisiacVial>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<RocketFist>());
+            recipe.AddIngredient(ModContent.ItemType<FrostPlagueStaff>());
+
+
+            recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

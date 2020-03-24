@@ -58,7 +58,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 projectile.velocity = (pivot - projectile.Center).RotatedBy(Math.PI / 2 * projectile.ai[1]);
                 projectile.velocity *= 2 * (float)Math.PI / 240;
             }
-            
+
             projectile.spriteDirection = (int)projectile.ai[1];
             projectile.rotation += projectile.spriteDirection * 0.5f;
         }

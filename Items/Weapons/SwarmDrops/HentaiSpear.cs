@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
@@ -109,12 +110,12 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-                recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerMoon"));
-                recipe.AddIngredient(mod.ItemType("Sadism"), 15);
+            recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerMoon"));
+            recipe.AddIngredient(mod.ItemType("Sadism"), 15);
 
-                recipe.AddTile(mod, "CrucibleCosmosSheet");
-                recipe.SetResult(this);
-                recipe.AddRecipe();
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

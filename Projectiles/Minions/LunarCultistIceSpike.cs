@@ -40,7 +40,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             /*if (projectile.ai[0] > -1f)
             {
                 int ai0 = (int)projectile.ai[0];
-                if (Main.projectile[ai0].active && Main.projectile[ai0].type == mod.ProjectileType("LunarCultistIceMist"))
+                if (Main.projectile[ai0].active && Main.projectile[ai0].type == ModContent.\1Type<\2>\(\))
                 {
                     projectile.Center = Main.projectile[ai0].Center + projectile.velocity * ++projectile.ai[1];
                 }

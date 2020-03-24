@@ -58,25 +58,11 @@ Taking damage temporarily removes this weapon use speed increase");
             recipe.AddRecipeGroup("FargowiltasSouls:AnyMythrilHead");
             recipe.AddIngredient(ItemID.MythrilChainmail);
             recipe.AddIngredient(ItemID.MythrilGreaves);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("MythrilStaff"));
-                recipe.AddIngredient(ItemID.LaserRifle);
-                recipe.AddIngredient(ItemID.ClockworkAssaultRifle);
-                recipe.AddIngredient(thorium.ItemType("BulletStorm"));
-                recipe.AddIngredient(ItemID.Gatligator);
-                recipe.AddIngredient(ItemID.Megashark);
-                recipe.AddIngredient(thorium.ItemType("Trigun"));  
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.LaserRifle);
-                recipe.AddIngredient(ItemID.ClockworkAssaultRifle);
-                recipe.AddIngredient(ItemID.Gatligator);
-                recipe.AddIngredient(ItemID.OnyxBlaster);
-            }
-            
+            recipe.AddIngredient(ItemID.LaserRifle);
+            recipe.AddIngredient(ItemID.ClockworkAssaultRifle);
+            recipe.AddIngredient(ItemID.Gatligator);
+            recipe.AddIngredient(ItemID.OnyxBlaster);
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

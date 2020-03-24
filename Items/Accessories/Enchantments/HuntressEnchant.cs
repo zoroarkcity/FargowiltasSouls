@@ -48,10 +48,6 @@ Set oiled enemies on fire for extra damage");
             recipe.AddIngredient(ItemID.DD2PhoenixBow);
             recipe.AddIngredient(ItemID.DaedalusStormbow);
 
-            /*  
-          Cinder String (with Thorium)
-          Chlorophyte Shotbow*/
-
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

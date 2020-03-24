@@ -162,7 +162,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     Main.player[Main.myPlayer].buffImmune[ModLoader.GetMod("CalamityMod").BuffType("AdrenalineMode")] = true;
                 }
             }
-            
+
             Player player = Main.player[npc.target];
             npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
             Vector2 targetPos;
@@ -644,7 +644,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             npc.ai[3] *= -1;
                     }
                     break;
-                
+
                 case 8: //fire lasers in ring
                     if (Phase2Check())
                         break;

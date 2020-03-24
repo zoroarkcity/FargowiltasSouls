@@ -66,24 +66,10 @@ Projectiles still have the same tile collision hitbox";
             recipe.AddIngredient(ItemID.TungstenHelmet);
             recipe.AddIngredient(ItemID.TungstenChainmail);
             recipe.AddIngredient(ItemID.TungstenGreaves);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("TungstenBulwark"));
-                recipe.AddIngredient(ItemID.TungstenBroadsword);
-                recipe.AddIngredient(ItemID.TungstenHammer);
-                recipe.AddIngredient(ItemID.EmeraldStaff);
-                recipe.AddIngredient(ItemID.GreenPhaseblade);
-                recipe.AddIngredient(ItemID.Snail);
-                recipe.AddIngredient(ItemID.Sluggy);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.GreenPhaseblade);
-                recipe.AddIngredient(ItemID.EmeraldStaff);
-                recipe.AddIngredient(ItemID.Snail);
-                recipe.AddIngredient(ItemID.Sluggy);
-            }
+            recipe.AddIngredient(ItemID.GreenPhaseblade);
+            recipe.AddIngredient(ItemID.EmeraldStaff);
+            recipe.AddIngredient(ItemID.Snail);
+            recipe.AddIngredient(ItemID.Sluggy);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

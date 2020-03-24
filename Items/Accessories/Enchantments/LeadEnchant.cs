@@ -63,23 +63,9 @@ Lead Poisoning deals damage over time and spreads to nearby enemies";
             recipe.AddIngredient(ItemID.LeadHelmet);
             recipe.AddIngredient(ItemID.LeadChainmail);
             recipe.AddIngredient(ItemID.LeadGreaves);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("LeadShield"));
-                recipe.AddIngredient(ItemID.LeadShortsword);
-                recipe.AddIngredient(ItemID.LeadPickaxe);
-                recipe.AddIngredient(thorium.ItemType("OnyxStaff"));
-                recipe.AddIngredient(thorium.ItemType("RustySword"));
-                recipe.AddIngredient(ItemID.GrayPaint, 100);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.LeadShortsword);
-                recipe.AddIngredient(ItemID.LeadPickaxe);
-                recipe.AddIngredient(ItemID.GrayPaint, 100);
-            }
-            
+            recipe.AddIngredient(ItemID.LeadShortsword);
+            recipe.AddIngredient(ItemID.LeadPickaxe);
+            recipe.AddIngredient(ItemID.GrayPaint, 100);
             recipe.AddIngredient(ItemID.SulphurButterfly);
             
             recipe.AddTile(TileID.DemonAltar);

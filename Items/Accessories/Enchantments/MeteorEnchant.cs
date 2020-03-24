@@ -22,12 +22,6 @@ A meteor shower initiates every few seconds while attacking";
 @"'宇宙之力构建你的毁灭力量'
 攻击时,每隔几秒爆发一次流星雨";
 
-            if(thorium != null)
-            {
-                tooltip += "\nSummons a pet Bio-Feeder";
-                tooltip_ch += "\n召唤一个奇怪的外星生物";
-            }
-
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "陨星魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
@@ -58,9 +52,6 @@ A meteor shower initiates every few seconds while attacking";
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             modPlayer.MeteorEffect(50);
-
-            if (Fargowiltas.Instance.ThoriumLoaded)
-                modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.BioFeederPet, hideVisual, thorium.BuffType("BioFeederBuff"), thorium.ProjectileType("BioFeederPet"));
         }
 
         public override void AddRecipes()
@@ -71,21 +62,9 @@ A meteor shower initiates every few seconds while attacking";
             recipe.AddIngredient(ItemID.MeteorLeggings);
             recipe.AddIngredient(ItemID.SpaceGun);
             recipe.AddIngredient(ItemID.StarCannon);
+            recipe.AddIngredient(ItemID.MeteorStaff);
+            recipe.AddIngredient(ItemID.PlaceAbovetheClouds);
 
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(thorium.ItemType("StarTrail"));
-                recipe.AddIngredient(thorium.ItemType("CometCrossfire"));
-                recipe.AddIngredient(ItemID.MeteorStaff);
-                recipe.AddIngredient(ItemID.PlaceAbovetheClouds);
-                recipe.AddIngredient(thorium.ItemType("BioPod"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.MeteorStaff);
-                recipe.AddIngredient(ItemID.PlaceAbovetheClouds);
-            }
-            
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

@@ -5,6 +5,11 @@ using ThoriumMod;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using ThoriumMod.Items.EndofDays.Slag;
+using ThoriumMod.Items.MiniBoss;
+using ThoriumMod.Items.MagicItems;
+using ThoriumMod.Items.SummonItems;
+using ThoriumMod.Items.Cultist;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -63,28 +68,23 @@ Pressing the 'Special Ability' key will unleash an echo of Slag Fury's power");
             //pyro summon bonus
             thoriumPlayer.napalmSet = true;
         }
-        
-        private readonly string[] items =
-        {
-            "PyroSummonHat",
-            "PyromancerCowl",
-            "PyromancerTabard",
-            "PyromancerLeggings",
-            "StalagmiteBook",
-            "DevilDagger",
-            "MortarStaff",
-            "MoltenBanner",
-            "AlmanacofDespair",
-            "NorthLight"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<PyroSummonHat>());
+            recipe.AddIngredient(ModContent.ItemType<PyromancerCowl>());
+            recipe.AddIngredient(ModContent.ItemType<PyromancerTabard>());
+            recipe.AddIngredient(ModContent.ItemType<PyromancerLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<StalagmiteBook>());
+            recipe.AddIngredient(ModContent.ItemType<DevilDagger>());
+            recipe.AddIngredient(ModContent.ItemType<MortarStaff>());
+            recipe.AddIngredient(ModContent.ItemType<AncientFlame>());
+            recipe.AddIngredient(ModContent.ItemType<MoltenBanner>());
+            recipe.AddIngredient(ModContent.ItemType<AlmanacofDespair>());
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

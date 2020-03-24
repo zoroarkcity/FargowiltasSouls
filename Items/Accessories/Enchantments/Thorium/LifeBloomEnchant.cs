@@ -3,6 +3,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.SummonItems;
+using ThoriumMod.Items.Tracker;
+using ThoriumMod.Items.HealerItems;
+using ThoriumMod.Items.NPCItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -56,7 +60,7 @@ Effects of Bee Booties, Petal Shield, and Flawless Chrysalis");
             thoriumPlayer.livingWood = true;
             //free boi
             modPlayer.LivingWoodEnchant = true;
-            modPlayer.AddMinion(SoulConfig.Instance.thoriumToggles.SaplingMinion, thorium.ProjectileType("MinionSapling"), 25, 2f);
+            modPlayer.AddMinion(SoulConfig.Instance.thoriumToggles.SaplingMinion, thorium.ProjectileType("MinionSapling"), 10, 2f);
 
             //bulb set bonus
             modPlayer.BulbEnchant = true;
@@ -71,15 +75,6 @@ Effects of Bee Booties, Petal Shield, and Flawless Chrysalis");
                 player.maxRunSpeed -= 1f;
             }
         }
-        
-        private readonly string[] items =
-        {
-            "Chrysalis",
-            "HiveMind",
-            "ButterflyStaff",
-            "HoneyBlade",
-            "MushymenStaff"
-        };
 
         public override void AddRecipes()
         {
@@ -87,13 +82,16 @@ Effects of Bee Booties, Petal Shield, and Flawless Chrysalis");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("LifeBloomMask"));
-            recipe.AddIngredient(thorium.ItemType("LifeBloomMail"));
-            recipe.AddIngredient(thorium.ItemType("LifeBloomLeggings"));
-            recipe.AddIngredient(null, "LivingWoodEnchant");
-            recipe.AddIngredient(null, "BulbEnchant");
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+            recipe.AddIngredient(ModContent.ItemType<LifeBloomMask>());
+            recipe.AddIngredient(ModContent.ItemType<LifeBloomMail>());
+            recipe.AddIngredient(ModContent.ItemType<LifeBloomLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<LivingWoodEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<BulbEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<Chrysalis>());
+            recipe.AddIngredient(ModContent.ItemType<HiveMind>());
+            recipe.AddIngredient(ModContent.ItemType<ButterflyStaff>());
+            recipe.AddIngredient(ModContent.ItemType<HoneyBlade>());
+            recipe.AddIngredient(ModContent.ItemType<MistWeaver>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

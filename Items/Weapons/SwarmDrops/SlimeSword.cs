@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
@@ -54,14 +55,14 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-                recipe.AddIngredient(null, "SlimeKingsSlasher");
-                recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerSlime"));
-                recipe.AddIngredient(ItemID.LunarBar, 10);
-                recipe.AddIngredient(null, "LunarCrystal", 5);
+            recipe.AddIngredient(null, "SlimeKingsSlasher");
+            recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerSlime"));
+            recipe.AddIngredient(ItemID.LunarBar, 10);
+            recipe.AddIngredient(null, "LunarCrystal", 5);
 
-                recipe.AddTile(mod, "CrucibleCosmosSheet");
-                recipe.SetResult(this);
-                recipe.AddRecipe();
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

@@ -2,6 +2,12 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using ThoriumMod.Items.ThrownItems;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.Geode;
+using ThoriumMod.Items.Lodestone;
+using ThoriumMod.Items.Tracker;
+using ThoriumMod.Items.Misc;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -44,29 +50,23 @@ Ivory flares deal 0.1% of the hit target's maximum life as damage");
 
             player.GetModPlayer<FargoPlayer>().WhiteDwarfEnchant = true;
         }
-        
-        private readonly string[] items =
-        {
-            "WhiteDwarfMask",
-            "WhiteDwarfGuard",
-            "WhiteDwarfGreaves",
-            "BlackHammer",
-            "GeodeMallet",
-            "LodeStoneHammer",
-            "BlackDagger",
-            "CosmicDagger"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
-            recipe.AddIngredient(thorium.ItemType("WhiteDwarfKunai"), 300);
-            recipe.AddIngredient(thorium.ItemType("AngelsEnd"));
+            recipe.AddIngredient(ModContent.ItemType<WhiteDwarfMask>());
+            recipe.AddIngredient(ModContent.ItemType<WhiteDwarfGuard>());
+            recipe.AddIngredient(ModContent.ItemType<WhiteDwarfGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<BlackHammer>());
+            recipe.AddIngredient(ModContent.ItemType<GeodeMallet>());
+            recipe.AddIngredient(ModContent.ItemType<LodeStoneHammer>());
+            recipe.AddIngredient(ModContent.ItemType<BlackDagger>());
+            recipe.AddIngredient(ModContent.ItemType<WhiteDwarfPickaxe>());
+            recipe.AddIngredient(ModContent.ItemType<WhiteDwarfKunai>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<AngelsEnd>());
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

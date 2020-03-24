@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -100,34 +101,26 @@ namespace FargowiltasSouls.Items.Accessories.Souls
                 recipe.AddIngredient(thorium.ItemType("SpineBuster"));
                 recipe.AddIngredient(thorium.ItemType("DestroyersRage"));
                 recipe.AddIngredient(thorium.ItemType("TerraBow"));
-                recipe.AddIngredient(ItemID.NailGun);
-                recipe.AddIngredient(ItemID.PiranhaGun);
-                recipe.AddIngredient(thorium.ItemType("LaunchJumper"));
-                recipe.AddIngredient(thorium.ItemType("NovaRifle"));
-                recipe.AddIngredient(ItemID.DD2BetsyBow);
-                recipe.AddIngredient(ItemID.Tsunami);
-                recipe.AddIngredient(ItemID.StakeLauncher);
-                recipe.AddIngredient(ItemID.EldMelter);
-                recipe.AddIngredient(ItemID.FireworksLauncher);
             }
             else
             {
                 recipe.AddIngredient(ItemID.SniperScope);
                 recipe.AddIngredient(ItemID.DartPistol);
                 recipe.AddIngredient(ItemID.Megashark);
-                recipe.AddIngredient(ItemID.PulseBow);
-                recipe.AddIngredient(ItemID.NailGun);
-                recipe.AddIngredient(ItemID.PiranhaGun);
-                recipe.AddIngredient(ItemID.SniperRifle);
-                recipe.AddIngredient(ItemID.Tsunami);
-                recipe.AddIngredient(ItemID.StakeLauncher);
-                recipe.AddIngredient(ItemID.EldMelter);
-                recipe.AddIngredient(ItemID.Xenopopper);
-                recipe.AddIngredient(ItemID.FireworksLauncher);
             }
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
-                
+            recipe.AddIngredient(ItemID.PulseBow);
+            recipe.AddIngredient(ItemID.NailGun);
+            recipe.AddIngredient(ItemID.PiranhaGun);
+            recipe.AddIngredient(ItemID.SniperRifle);
+            recipe.AddIngredient(ItemID.Tsunami);
+            recipe.AddIngredient(ItemID.StakeLauncher);
+            recipe.AddIngredient(ItemID.EldMelter);
+            recipe.AddIngredient(ItemID.Xenopopper);
+            recipe.AddIngredient(ItemID.FireworksLauncher);
+
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

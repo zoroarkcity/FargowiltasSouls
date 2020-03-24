@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using ThoriumMod.Items.HealerItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -26,7 +27,6 @@ Healing potions heal 50% more life
 Every 5 seconds you generate up to 3 holy crosses
 When casting healing spells, a cross is used instead of mana
 Effects of Karmic Holder
-Summons a Li'l Cherub to periodically heal damaged allies
 Summons a pet Life Spirit");
             DisplayName.AddTranslation(GameCulture.Chinese, "圣骑士魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -56,8 +56,6 @@ Summons a pet Life Spirit");
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
             //sacred effect
             modPlayer.SacredEnchant = true;
-            //lil cherub
-            modPlayer.AddMinion(SoulConfig.Instance.thoriumToggles.CherubMinion, thorium.ProjectileType("Angel"), 0, 0f);
             //twinkle pet
             modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.SpiritPet, hideVisual, thorium.BuffType("LifeSpiritBuff"), thorium.ProjectileType("LifeSpirit"));
 
@@ -89,16 +87,6 @@ Summons a pet Life Spirit");
                 Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, thorium.ProjectileType("KarmicHolderPro"), 0, 0f, player.whoAmI, 0f, 0f);
             }
         }
-        
-        private readonly string[] items =
-        {
-            "KarmicHolder",
-            "LightBurstWand",
-            "HallowedBludgeon",
-            "AngelStaff",
-            "Liberation",
-            "Twinkle"
-        };
 
         public override void AddRecipes()
         {
@@ -106,12 +94,16 @@ Summons a pet Life Spirit");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("HallowedPaladinHelmet"));
-            recipe.AddIngredient(thorium.ItemType("HallowedPaladinBreastplate"));
-            recipe.AddIngredient(thorium.ItemType("HallowedPaladinLeggings"));
-            recipe.AddIngredient(null, "NoviceClericEnchant");
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+            recipe.AddIngredient(ModContent.ItemType<HallowedPaladinHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<HallowedPaladinBreastplate>());
+            recipe.AddIngredient(ModContent.ItemType<HallowedPaladinLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<NoviceClericEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<KarmicHolder>());
+            recipe.AddIngredient(ModContent.ItemType<HallowedBludgeon>());
+            recipe.AddIngredient(ModContent.ItemType<LightBurstWand>());
+            recipe.AddIngredient(ModContent.ItemType<Liberation>());
+            recipe.AddIngredient(ModContent.ItemType<BoneBaton>());
+            recipe.AddIngredient(ModContent.ItemType<Twinkle>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

@@ -3,6 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Magma;
+using ThoriumMod.Items.Misc;
+using ThoriumMod.Items.BasicAccessories;
+using ThoriumMod.Items.Consumable;
+using ThoriumMod.Items.ThrownItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -70,29 +75,23 @@ Effects of Spring Steps, Slag Stompers, and Molten Spear Tip");
             //molten spear tip
             thoriumPlayer.spearFlame = true;
         }
-        
-        private readonly string[] items =
-        {
-            "MagmaHelmet",
-            "MagmaChestGuard",
-            "MagmaGreaves",
-            "SpringSteps",
-            "SlagStompers",
-            "MoltenSpearTip",
-            "MagmaPolearm",
-            "MagmaticRicochet",
-            "MagmaFlail"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
-            recipe.AddIngredient(thorium.ItemType("MagmaShiv"), 300);
+            recipe.AddIngredient(ModContent.ItemType<MagmaHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<MagmaChestGuard>());
+            recipe.AddIngredient(ModContent.ItemType<MagmaGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<SpringSteps>());
+            recipe.AddIngredient(ModContent.ItemType<SlagStompers>());
+            recipe.AddIngredient(ModContent.ItemType<MoltenSpearTip>());
+            recipe.AddIngredient(ModContent.ItemType<MagmaPolearm>());
+            recipe.AddIngredient(ModContent.ItemType<MagmaticRicochet>());
+            recipe.AddIngredient(ModContent.ItemType<MagmaShiv>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<HotChocolate>(), 5);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

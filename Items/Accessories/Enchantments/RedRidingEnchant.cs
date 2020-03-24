@@ -68,19 +68,7 @@ Summons a pet Puppy");
             recipe.AddIngredient(ItemID.HuntressAltPants);
             recipe.AddIngredient(null, "HuntressEnchant");
             recipe.AddIngredient(ItemID.CelestialShell);
-
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(thorium.ItemType("BloodyHighClaws"));
-                recipe.AddIngredient(thorium.ItemType("LadyLight"));
-                recipe.AddIngredient(ItemID.DD2BetsyBow);
-                recipe.AddIngredient(ItemID.DD2ExplosiveTrapT3Popper);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.DD2BetsyBow);
-            }
-            
+            recipe.AddIngredient(ItemID.DD2BetsyBow);
             recipe.AddIngredient(ItemID.DogWhistle);
             
             recipe.AddTile(TileID.CrystalBall);

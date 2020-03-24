@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using SacredTools;
 using Microsoft.Xna.Framework;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.SoA
 {
@@ -92,7 +93,7 @@ Effects of Nuba's Blessing, Novaniel's Resolve, and Celestial Ring");
             recipe.AddIngredient(soa.ItemType("LunarRing"));
             recipe.AddIngredient(soa.ItemType("TrueMoonEdgedPandolarra"));
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -21,13 +22,13 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 
             Tooltip.SetDefault(@"'The true might of the 9 realms is yours!'
 All armor bonuses from Living Wood, Bulb, Life Bloom, Yew Wood, and Tide Hunter
-All armor bonuses from Icy, Cryo Magus, and Whispering
+All armor bonuses from Icy, Cryomancer, and Whispering
 All armor bonuses from Sacred, Warlock, and Biotech
 All armor bonuses from Cyber Punk and Maestro
 All armor bonuses from Bronze, Darksteel, and Durasteel
 All armor bonuses from Conduit, Lodestone, and Illumite
 All armor bonuses from Jester, Thorium, and Terrarium
-All armor bonuses from Malignant, Folv, White Dwarf, and Celestial
+All armor bonuses from Malignant, White Dwarf, and Celestial
 All armor bonuses from Spirit Trapper, Dragon, Dread, and Flesh
 All armor bonuses from Demon Blood, Magma, and Berserker
 All armor bonuses from Tide Turner, Assassin, Pyromancer, and Dream Weaver 
@@ -37,7 +38,7 @@ Effects of Eye of the Storm, Champion's Rebuttal, and Incandescent Spark
 Effects of the Greedy Magnet, Abyssal Shell, and Astro-Beetle Husk
 Effects of Eye of the Beholder, Crietz, and Mana-Charged Rocketeers 
 Effects of Inner Flame, Crash Boots, Vampire Gland, and Spring Steps
-Effects of Slag Stompers, Demon Blood Badge, Lich's Gaze, and Plague Lord's Flask
+Effects of Slag Stompers, Demon Blood Badge, and Lich's Gaze
 Summons several pets");
             DisplayName.AddTranslation(GameCulture.Chinese, "世界树之魂");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'九界的真正力量归于汝身!'
@@ -108,8 +109,9 @@ Summons several pets");
             recipe.AddIngredient(null, "VanaheimForce");
             recipe.AddIngredient(null, "HelheimForce");
             recipe.AddIngredient(null, "AsgardForce");
+            recipe.AddIngredient(null, "MutatingEnergy", 10);
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
 
             recipe.SetResult(this);
             recipe.AddRecipe();

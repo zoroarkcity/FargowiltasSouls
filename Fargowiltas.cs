@@ -13,6 +13,13 @@ using FargowiltasSouls.Items.Accessories;
 using FargowiltasSouls.NPCs.AbomBoss;
 using FargowiltasSouls.NPCs.DeviBoss;
 using FargowiltasSouls.NPCs.MutantBoss;
+using ThoriumMod.Items.Titan;
+using Fargowiltas.Items.Summons.Deviantt;
+using ThoriumMod.Projectiles.Pets;
+using ThoriumMod.Projectiles.Healer;
+using ThoriumMod.Projectiles.Minions;
+using Fargowiltas.Items.Misc;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls
 {
@@ -525,7 +532,7 @@ namespace FargowiltasSouls
                         return Main.LocalPlayer.GetModPlayer<FargoPlayer>().MutantsDiscountCard;
 
 
-                    case "DevianttGifts":
+                    /*case "DevianttGifts":
 
                         Player player = Main.LocalPlayer;
                         FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
@@ -548,7 +555,34 @@ namespace FargowiltasSouls
                             return true;
                         }
 
-                        return false;
+                        break;*/
+
+                    case "GiftsReceived":
+                        Player player = Main.LocalPlayer;
+                        FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
+                        return fargoPlayer.ReceivedMasoGift;
+
+                        
+
+                    case "GiveDevianttGifts":
+                        Player player2 = Main.LocalPlayer;
+                        FargoPlayer fargoPlayer2 = player2.GetModPlayer<FargoPlayer>();
+                        fargoPlayer2.ReceivedMasoGift = true;
+                        if (Main.netMode == NetmodeID.SinglePlayer)
+                        {
+                            DropDevianttsGift(player2);
+                        }
+                        else if (Main.netMode == NetmodeID.MultiplayerClient)
+                        {
+                            var netMessage = GetPacket(); // Broadcast item request to server
+                            netMessage.Write((byte)14);
+                            netMessage.Write((byte)player2.whoAmI);
+                            netMessage.Send();
+                        }
+
+                        //Main.npcChatText = "This world looks tougher than usual, so you can have these on the house just this once! Talk to me if you need any tips, yeah?";
+
+                        break;
 
                 }
 
@@ -572,8 +606,8 @@ namespace FargowiltasSouls
             {
                 Item.NewItem(player.Center, ItemID.WormholePotion, 15);
             }
-            Item.NewItem(player.Center, ModLoader.GetMod("Fargowiltas").ItemType("DevianttsSundial"));
-            Item.NewItem(player.Center, ModLoader.GetMod("Fargowiltas").ItemType("AutoHouse"), 3);
+            Item.NewItem(player.Center, ModContent.ItemType<DevianttsSundial>());
+            Item.NewItem(player.Center, ModContent.ItemType<AutoHouse>(), 3);
             Item.NewItem(player.Center, ModContent.ItemType<EurusSock>());
 
             //only give once per world
@@ -729,25 +763,7 @@ namespace FargowiltasSouls
 
                 if (ThoriumLoaded)
                 {
-                    Mod thorium = ModLoader.GetMod("ThoriumMod");
-                    ModProjDict.Add(thorium.ProjectileType("IFO"), 1);
-                    ModProjDict.Add(thorium.ProjectileType("BioFeederPet"), 2);
-                    ModProjDict.Add(thorium.ProjectileType("BlisterPet"), 3);
-                    ModProjDict.Add(thorium.ProjectileType("WyvernPet"), 4);
-                    ModProjDict.Add(thorium.ProjectileType("SupportLantern"), 5);
-                    ModProjDict.Add(thorium.ProjectileType("LockBoxPet"), 6);
-                    ModProjDict.Add(thorium.ProjectileType("Devil"), 7);
-                    ModProjDict.Add(thorium.ProjectileType("Angel"), 8);
-                    ModProjDict.Add(thorium.ProjectileType("LifeSpirit"), 9);
-                    ModProjDict.Add(thorium.ProjectileType("HolyGoat"), 10);
-                    ModProjDict.Add(thorium.ProjectileType("MinionSapling"), 11);
-                    ModProjDict.Add(thorium.ProjectileType("SnowyOwlPet"), 12);
-                    ModProjDict.Add(thorium.ProjectileType("JellyfishPet"), 13);
-                    ModProjDict.Add(thorium.ProjectileType("LilMog"), 14);
-                    ModProjDict.Add(thorium.ProjectileType("Maid1"), 15);
-                    ModProjDict.Add(thorium.ProjectileType("PinkSlime"), 16);
-                    ModProjDict.Add(thorium.ProjectileType("ShinyPet"), 17);
-                    ModProjDict.Add(thorium.ProjectileType("DrachmaBag"), 18);
+                    AddThoriumPets();
                 }
 
                 if (CalamityLoaded)
@@ -757,20 +773,6 @@ namespace FargowiltasSouls
                     String[] calamityPets = { "KendraPet" , "PerforaMini", "ThirdSage", "Bear", "BrimlingPet", "DannyDevitoPet",
                     "SirenYoung", "ChibiiDoggo", "ChibiiDoggoFly", "Akato", "Fox", "Levi" };
                     int calamityIndex = 101;
-
-                    /*ModProjDict.Add(calamity.ProjectileType("KendraPet"), 101);
-                    ModProjDict.Add(calamity.ProjectileType("PerforaMini"), 102);
-                    ModProjDict.Add(calamity.ProjectileType("ThirdSage"), 103);
-                    ModProjDict.Add(calamity.ProjectileType("Bear"), 104);
-                    ModProjDict.Add(calamity.ProjectileType("BrimlingPet"), 105);
-                    ModProjDict.Add(calamity.ProjectileType("DannyDevitoPet"), 106);
-                    ModProjDict.Add(calamity.ProjectileType("SirenYoung"), 107);
-                    ModProjDict.Add(calamity.ProjectileType("ChibiiDoggo"), 108);
-                    ModProjDict.Add(calamity.ProjectileType("ChibiiDoggoFly"), 109);
-                    ModProjDict.Add(calamity.ProjectileType("Akato"), 110);
-                    ModProjDict.Add(calamity.ProjectileType("Fox"), 111);
-                    ModProjDict.Add(calamity.ProjectileType("Levi"), 112);
-                    //ModProjDict.ContainsKey*/
 
                     for (int i = 0; i < calamityPets.Length; i++)
                     {
@@ -790,6 +792,29 @@ namespace FargowiltasSouls
             }
         }
 
+        private void AddThoriumPets()
+        {
+            Mod thorium = ModLoader.GetMod("ThoriumMod");
+            ModProjDict.Add(ModContent.ProjectileType<BioFeederPet>(), 2);
+            ModProjDict.Add(ModContent.ProjectileType<BlisterPet>(), 3);
+            ModProjDict.Add(ModContent.ProjectileType<WyvernPet>(), 4);
+            ModProjDict.Add(ModContent.ProjectileType<SupportLantern>(), 5);
+            ModProjDict.Add(ModContent.ProjectileType<LockBoxPet>(), 6);
+            ModProjDict.Add(ModContent.ProjectileType<Devil>(), 7);
+            ModProjDict.Add(ModContent.ProjectileType<Angel>(), 8);
+            ModProjDict.Add(ModContent.ProjectileType<LifeSpirit>(), 9);
+            ModProjDict.Add(ModContent.ProjectileType<HolyGoat>(), 10);
+            ModProjDict.Add(ModContent.ProjectileType<MinionSapling>(), 11);
+            ModProjDict.Add(ModContent.ProjectileType<SnowyOwlPet>(), 12);
+            ModProjDict.Add(ModContent.ProjectileType<JellyfishPet>(), 13);
+            ModProjDict.Add(ModContent.ProjectileType<LilMog>(), 14);
+            ModProjDict.Add(ModContent.ProjectileType<Maid1>(), 15);
+            ModProjDict.Add(ModContent.ProjectileType<PinkSlime>(), 16);
+            ModProjDict.Add(ModContent.ProjectileType<ShinyPet>(), 17);
+            ModProjDict.Add(ModContent.ProjectileType<DrachmaBag>(), 18);
+        }
+
+
         public override void AddRecipes()
         {
             ThoriumCompatibility?.TryAddRecipes();
@@ -799,14 +824,14 @@ namespace FargowiltasSouls
             recipe.AddIngredient(ItemID.SoulofNight, 7);
             recipe.AddIngredient(ItemType("VolatileEnergy"));
             recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("JungleChest"));
+            recipe.SetResult(ModContent.ItemType<JungleChest>());
             recipe.AddRecipe();
 
             recipe = new ModRecipe(this);
             recipe.AddIngredient(ItemID.WizardHat);
             recipe.AddIngredient(ItemType("VolatileEnergy"), 5);
             recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(ModLoader.GetMod("Fargowiltas").ItemType("RuneOrb"));
+            recipe.SetResult(ModContent.ItemType<RuneOrb>());
             recipe.AddRecipe();
         }
 
@@ -835,14 +860,6 @@ namespace FargowiltasSouls
             //evil wood
             group = new RecipeGroup(() => Lang.misc[37] + " Evil Wood", ItemID.Ebonwood, ItemID.Shadewood);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyEvilWood", group);
-
-            //anvil HM
-            group = new RecipeGroup(() => Lang.misc[37] + " Mythril Anvil", ItemID.MythrilAnvil, ItemID.OrichalcumAnvil);
-            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyAnvil", group);
-
-            //forge HM
-            group = new RecipeGroup(() => Lang.misc[37] + " Adamantite Forge", ItemID.AdamantiteForge, ItemID.TitaniumForge);
-            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyForge", group);
 
             //any adamantite
             group = new RecipeGroup(() => Lang.misc[37] + " Adamantite Bar", ItemID.AdamantiteBar, ItemID.TitaniumBar);
@@ -888,43 +905,6 @@ namespace FargowiltasSouls
             group = new RecipeGroup(() => Lang.misc[37] + " Spectre Head Piece", ItemID.SpectreHood, ItemID.SpectreMask);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnySpectreHead", group);
 
-            //book cases
-            group = new RecipeGroup(() => Lang.misc[37] + " Bookcase", new int[]
-            {
-                ItemID.Bookcase,
-                ItemID.BlueDungeonBookcase,
-                ItemID.BoneBookcase,
-                ItemID.BorealWoodBookcase,
-                ItemID.CactusBookcase,
-                ItemID.CrystalBookCase,
-                ItemID.DynastyBookcase,
-                ItemID.EbonwoodBookcase,
-                ItemID.FleshBookcase,
-                ItemID.FrozenBookcase,
-                ItemID.GlassBookcase,
-                ItemID.GoldenBookcase,
-                ItemID.GothicBookcase,
-                ItemID.GraniteBookcase,
-                ItemID.GreenDungeonBookcase,
-                ItemID.HoneyBookcase,
-                ItemID.LivingWoodBookcase,
-                ItemID.MarbleBookcase,
-                ItemID.MeteoriteBookcase,
-                ItemID.MushroomBookcase,
-                ItemID.ObsidianBookcase,
-                ItemID.PalmWoodBookcase,
-                ItemID.PearlwoodBookcase,
-                ItemID.PinkDungeonBookcase,
-                ItemID.PumpkinBookcase,
-                ItemID.RichMahoganyBookcase,
-                ItemID.ShadewoodBookcase,
-                ItemID.SkywareBookcase,
-                ItemID.SlimeBookcase,
-                ItemID.SpookyBookcase,
-                ItemID.SteampunkBookcase
-            });
-            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyBookcase", group);
-
             //beetle body
             group = new RecipeGroup(() => Lang.misc[37] + " Beetle Body", ItemID.BeetleShell, ItemID.BeetleScaleMail);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyBeetle", group);
@@ -953,31 +933,40 @@ namespace FargowiltasSouls
 
             if (ThoriumLoaded)
             {
-                Mod thorium = ModLoader.GetMod("ThoriumMod");
-
-                //jester mask
-                group = new RecipeGroup(() => Lang.misc[37] + " Jester Mask", thorium.ItemType("JestersMask"), thorium.ItemType("JestersMask2"));
-                RecipeGroup.RegisterGroup("FargowiltasSouls:AnyJesterMask", group);
-                //jester shirt
-                group = new RecipeGroup(() => Lang.misc[37] + " Jester Shirt", thorium.ItemType("JestersShirt"), thorium.ItemType("JestersShirt2"));
-                RecipeGroup.RegisterGroup("FargowiltasSouls:AnyJesterShirt", group);
-                //jester legging
-                group = new RecipeGroup(() => Lang.misc[37] + " Jester Leggings", thorium.ItemType("JestersLeggings"), thorium.ItemType("JestersLeggings2"));
-                RecipeGroup.RegisterGroup("FargowiltasSouls:AnyJesterLeggings", group);
-                //evil wood tambourine
-                group = new RecipeGroup(() => Lang.misc[37] + " Evil Wood Tambourine", thorium.ItemType("EbonWoodTambourine"), thorium.ItemType("ShadeWoodTambourine"));
-                RecipeGroup.RegisterGroup("FargowiltasSouls:AnyTambourine", group);
-                //fan letter
-                group = new RecipeGroup(() => Lang.misc[37] + " Fan Letter", thorium.ItemType("FanLetter"), thorium.ItemType("FanLetter2"));
-                RecipeGroup.RegisterGroup("FargowiltasSouls:AnyLetter", group);
-                //bugle horn
-                group = new RecipeGroup(() => Lang.misc[37] + " Bugle Horn", thorium.ItemType("GoldenBugleHorn"), thorium.ItemType("PlatinumBugle"));
-                RecipeGroup.RegisterGroup("FargowiltasSouls:AnyBugleHorn", group);
-
-                //butterflies
-                group = new RecipeGroup(() => Lang.misc[37] + " Dungeon Butterfly", thorium.ItemType("BlueDungeonButterfly"), thorium.ItemType("GreenDungeonButterfly"), thorium.ItemType("PinkDungeonButterfly"));
-                RecipeGroup.RegisterGroup("FargowiltasSouls:AnyDungeonButterfly", group);
+                ThoriumRecipes();
             }
+        }
+
+        private void ThoriumRecipes()
+        {
+            Mod thorium = ModLoader.GetMod("ThoriumMod");
+
+            //jester mask
+            RecipeGroup group = new RecipeGroup(() => Lang.misc[37] + " Jester Mask", thorium.ItemType("JestersMask"), thorium.ItemType("JestersMask2"));
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyJesterMask", group);
+            //jester shirt
+            group = new RecipeGroup(() => Lang.misc[37] + " Jester Shirt", thorium.ItemType("JestersShirt"), thorium.ItemType("JestersShirt2"));
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyJesterShirt", group);
+            //jester legging
+            group = new RecipeGroup(() => Lang.misc[37] + " Jester Leggings", thorium.ItemType("JestersLeggings"), thorium.ItemType("JestersLeggings2"));
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyJesterLeggings", group);
+            //evil wood tambourine
+            group = new RecipeGroup(() => Lang.misc[37] + " Evil Wood Tambourine", thorium.ItemType("EbonWoodTambourine"), thorium.ItemType("ShadeWoodTambourine"));
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyTambourine", group);
+            //fan letter
+            group = new RecipeGroup(() => Lang.misc[37] + " Fan Letter", thorium.ItemType("FanLetter"), thorium.ItemType("FanLetter2"));
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyLetter", group);
+            //bugle horn
+            group = new RecipeGroup(() => Lang.misc[37] + " Bugle Horn", thorium.ItemType("GoldenBugleHorn"), thorium.ItemType("PlatinumBugle"));
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyBugleHorn", group);
+
+            //titan 
+            group = new RecipeGroup(() => Lang.misc[37] + " Titan Headgear", ModContent.ItemType<TitanHelmet>(), ModContent.ItemType<TitanMask>(), ModContent.ItemType<TitanHeadgear>());
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyTitanHelmet", group);
+
+            //butterflies
+            //group = new RecipeGroup(() => Lang.misc[37] + " Dungeon Butterfly", thorium.ItemType("BlueDungeonButterfly"), thorium.ItemType("GreenDungeonButterfly"), thorium.ItemType("PinkDungeonButterfly"));
+            //RecipeGroup.RegisterGroup("FargowiltasSouls:AnyDungeonButterfly", group);
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)

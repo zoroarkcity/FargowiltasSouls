@@ -61,19 +61,7 @@ Melee attacks may inflict the Solar Flare debuff");
             recipe.AddIngredient(ItemID.SolarFlareHelmet);
             recipe.AddIngredient(ItemID.SolarFlareBreastplate);
             recipe.AddIngredient(ItemID.SolarFlareLeggings);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(ItemID.WingsSolar);
-                recipe.AddIngredient(ItemID.HelFire);
-                recipe.AddIngredient(thorium.ItemType("BlackBlade"));
-                recipe.AddIngredient(thorium.ItemType("EruptingFlare"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.HelFire);
-            }
-            
+            recipe.AddIngredient(ItemID.HelFire);
             recipe.AddIngredient(ItemID.SolarEruption);
             recipe.AddIngredient(ItemID.DayBreak);
             recipe.AddIngredient(ItemID.StarWrath);

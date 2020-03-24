@@ -9,7 +9,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
     public class Spazmarang : ModProjectile
     {
         private int counter = 0;
-        
+
 
         public override void SetStaticDefaults()
         {

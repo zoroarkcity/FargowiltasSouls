@@ -15,7 +15,7 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override void SetDefaults()
         {
             projectile.width = 80;
-            projectile.height = 66;
+            projectile.height = 82;
             projectile.aiStyle = -1;
             projectile.tileCollide = true;
             projectile.ignoreWater = true;
@@ -25,7 +25,10 @@ namespace FargowiltasSouls.Projectiles.Minions
 
         public override void AI()
         {
-            Player owner = Main.player[projectile.owner];
+            Player player = Main.player[projectile.owner];
+
+            if (player.active && !player.dead && player.GetModPlayer<FargoPlayer>().PalmEnchant)
+                projectile.timeLeft = 2;
 
             projectile.velocity.Y = projectile.velocity.Y + 0.2f;
             if (projectile.velocity.Y > 16f)
@@ -37,7 +40,7 @@ namespace FargowiltasSouls.Projectiles.Minions
 
             int attackRate = 60;
 
-            if (owner.ZoneDesert || owner.ZoneBeach)
+            if (player.ZoneDesert || player.ZoneBeach)
             {
                 attackRate = 30;
             }

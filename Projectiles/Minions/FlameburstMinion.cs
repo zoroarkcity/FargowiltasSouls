@@ -67,7 +67,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 projectile.spriteDirection = -1;
 
                 //absolute fuckery so it faces the right direction
-                Vector2 target = new Vector2(Main.MouseWorld.X - (Main.MouseWorld.X - projectile.Center.X) * 2, Main.MouseWorld.Y - (Main.MouseWorld.Y - projectile.Center.Y) * 2) -projectile.Center;
+                Vector2 target = new Vector2(Main.MouseWorld.X - (Main.MouseWorld.X - projectile.Center.X) * 2, Main.MouseWorld.Y - (Main.MouseWorld.Y - projectile.Center.Y) * 2) - projectile.Center;
 
                 projectile.rotation = projectile.rotation.AngleLerp(
                 target.ToRotation(), rotationModifier);
@@ -81,7 +81,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 if (projectile.owner == Main.myPlayer)
                     projectile.netUpdate = true;
             }
-            
+
             if (player.controlUseItem)
             {
                 //charge up while attacking

@@ -16,17 +16,17 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Main.projFrames[projectile.type] = Main.projFrames[ProjectileID.LunarFlare];
         }
 
-		public override void SetDefaults()
-		{
-			projectile.width = 100;
-			projectile.height = 100;
-			projectile.aiStyle = -1;
+        public override void SetDefaults()
+        {
+            projectile.width = 100;
+            projectile.height = 100;
+            projectile.aiStyle = -1;
             //aiType = ProjectileID.LunarFlare;
-			projectile.friendly = true;
-			projectile.melee = true;
-			projectile.tileCollide = false;
+            projectile.friendly = true;
+            projectile.melee = true;
+            projectile.tileCollide = false;
             //projectile.extraUpdates = 5;
-			projectile.penetrate = -1;
+            projectile.penetrate = -1;
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 0;
             projectile.scale = 2f;

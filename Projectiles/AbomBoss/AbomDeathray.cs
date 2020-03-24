@@ -43,7 +43,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            /*if (Main.npc[(int)projectile.ai[1]].active && Main.npc[(int)projectile.ai[1]].type == mod.NPCType("MutantBoss"))
+            /*if (Main.npc[(int)projectile.ai[1]].active && Main.npc[(int)projectile.ai[1]].type == ModContent.\1Type<\2>\(\))
             {
                 projectile.Center = Main.npc[(int)projectile.ai[1]].Center;
             }

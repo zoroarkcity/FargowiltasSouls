@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.ThrownItems;
+using Fargowiltas.Items.Weapons.Thrown;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -54,17 +56,17 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            recipe.AddIngredient(thorium.ItemType("ShadeMasterMask"));
-            recipe.AddIngredient(thorium.ItemType("ShadeMasterGarb"));
-            recipe.AddIngredient(thorium.ItemType("ShadeMasterTreads"));
-            recipe.AddIngredient(thorium.ItemType("ClockWorkBomb"), 300);
-            recipe.AddIngredient(fargos != null ? fargos.ItemType("KrakenThrown") : ItemID.Kraken);
-            recipe.AddIngredient(thorium.ItemType("CorrodlingStaff"));
-            recipe.AddIngredient(thorium.ItemType("BugenkaiShuriken"), 300);
-            recipe.AddIngredient(thorium.ItemType("ShadeKunai"), 300);
-            recipe.AddIngredient(thorium.ItemType("Soulslasher"), 300);
-            recipe.AddIngredient(thorium.ItemType("LihzahrdKukri"), 300);
+
+            recipe.AddIngredient(ModContent.ItemType<ShadeMasterMask>());
+            recipe.AddIngredient(ModContent.ItemType<ShadeMasterGarb>());
+            recipe.AddIngredient(ModContent.ItemType<ShadeMasterTreads>());
+            recipe.AddIngredient(ModContent.ItemType<ClockWorkBomb>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<KrakenThrown>());
+            recipe.AddIngredient(ModContent.ItemType<BugenkaiShuriken>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<ShadeKunai>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<Soulslasher>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<LihzahrdKukri>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<TechniqueShadowDance>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

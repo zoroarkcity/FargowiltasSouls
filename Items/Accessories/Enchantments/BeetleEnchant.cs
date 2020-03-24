@@ -68,13 +68,6 @@ Increases flight time by 50%";
             recipe.AddIngredient(ItemID.BeeWings);
             recipe.AddIngredient(ItemID.ButterflyWings);
             recipe.AddIngredient(ItemID.MothronWings);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(ItemID.GolemFist);
-                recipe.AddIngredient(thorium.ItemType("SolScorchedSlab"));
-                recipe.AddIngredient(ItemID.HeatRay);
-            }
               
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

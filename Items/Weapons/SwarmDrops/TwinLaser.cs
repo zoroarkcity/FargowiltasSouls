@@ -51,7 +51,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
 
 
-            Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI );
+            Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
 
             return true;
         }

@@ -58,23 +58,9 @@ Any secondary projectiles may also split");
             recipe.AddRecipeGroup("FargowiltasSouls:AnyAdamHead");
             recipe.AddIngredient(ItemID.AdamantiteBreastplate);
             recipe.AddIngredient(ItemID.AdamantiteLeggings);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("AdamantiteStaff"));
-                recipe.AddIngredient(ItemID.CrystalSerpent);
-                recipe.AddIngredient(thorium.ItemType("DynastyWarFan"));
-                recipe.AddIngredient(thorium.ItemType("Scorn"));
-                recipe.AddIngredient(thorium.ItemType("OgreSnotGun"));
-                recipe.AddIngredient(thorium.ItemType("MidasMallet"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.AdamantiteGlaive);
-                recipe.AddIngredient(ItemID.TitaniumTrident);
-                recipe.AddIngredient(ItemID.CrystalSerpent);
-            }
-            
+            recipe.AddIngredient(ItemID.AdamantiteGlaive);
+            recipe.AddIngredient(ItemID.TitaniumTrident);
+            recipe.AddIngredient(ItemID.CrystalSerpent);
             recipe.AddIngredient(ItemID.VenomStaff);
             
             recipe.AddTile(TileID.CrystalBall);

@@ -64,14 +64,6 @@ Your minions can now crit with a 20% chance
             recipe.AddIngredient(ItemID.SpiderMask);
             recipe.AddIngredient(ItemID.SpiderBreastplate);
             recipe.AddIngredient(ItemID.SpiderGreaves);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("Webgun"));
-                recipe.AddIngredient(thorium.ItemType("Arthropod"));
-                recipe.AddIngredient(thorium.ItemType("RiffWeaver"));
-            }
-
             recipe.AddIngredient(ItemID.SpiderStaff);
             recipe.AddIngredient(ItemID.QueenSpiderStaff);
             recipe.AddIngredient(ItemID.WebSlinger);

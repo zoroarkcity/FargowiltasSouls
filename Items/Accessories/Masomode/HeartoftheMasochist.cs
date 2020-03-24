@@ -2,6 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
@@ -115,7 +116,7 @@ Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu");
             recipe.AddIngredient(ItemID.LunarBar, 15);
             recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 10);
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

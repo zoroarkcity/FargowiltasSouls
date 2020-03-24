@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.BardItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -48,30 +49,24 @@ While in combat, a rainbow of damaging symphonic symbols will follow your moveme
                 //marching band set 
                 thoriumPlayer.setMarchingBand = true;
             }
-            
         }
-        
-        private readonly string[] items =
-        {
-            "MarchingBandCap",
-            "MarchingBandUniform",
-            "MarchingBandLeggings",
-            "FullScore",
-            "Cymbals",
-            "Violin",
-            "Chimes",
-            "Trombone",
-            "SummonerWarhorn",
-            "Tuba"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<MarchingBandCap>());
+            recipe.AddIngredient(ModContent.ItemType<MarchingBandUniform>());
+            recipe.AddIngredient(ModContent.ItemType<MarchingBandLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<FullScore>());
+            recipe.AddIngredient(ModContent.ItemType<Cymbals>());
+            recipe.AddIngredient(ModContent.ItemType<Violin>());
+            recipe.AddIngredient(ModContent.ItemType<Trombone>());
+            recipe.AddIngredient(ModContent.ItemType<SummonerWarhorn>());
+            recipe.AddIngredient(ModContent.ItemType<Tuba>());
+            recipe.AddIngredient(ModContent.ItemType<DragonsWail>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

@@ -2,6 +2,12 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using ThoriumMod.Items.Tracker;
+using ThoriumMod.Items.BasicAccessories;
+using ThoriumMod.Items.DD;
+using ThoriumMod.Items.Hero;
+using ThoriumMod.Items.QueenJelly;
+using ThoriumMod.Items.Scouter;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -47,16 +53,6 @@ Effects of Mana-Charged Rocketeers");
             //mana charge rockets
             thorium.GetItem("ManaChargedRocketeers").UpdateAccessory(player, hideVisual);
         }
-        
-        private readonly string[] items =
-        {
-            "ManaChargedRocketeers",
-            "JellyPondWand",
-            "DarkTome",
-            "ChampionBomberStaff",
-            "GaussSpark",
-            "MagicThorHammer"
-        };
 
         public override void AddRecipes()
         {
@@ -64,12 +60,15 @@ Effects of Mana-Charged Rocketeers");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("MalignantCap"));
-            recipe.AddIngredient(thorium.ItemType("MalignantRobe"));
-            recipe.AddIngredient(null, "SilkEnchant");
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
-
+            recipe.AddIngredient(ModContent.ItemType<MalignantCap>());
+            recipe.AddIngredient(ModContent.ItemType<MalignantRobe>());
+            recipe.AddIngredient(ModContent.ItemType<SilkEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<ManaChargedRocketeers>());
+            recipe.AddIngredient(ModContent.ItemType<EnchantedShield>());
+            recipe.AddIngredient(ModContent.ItemType<JellyPondWand>());
+            recipe.AddIngredient(ModContent.ItemType<DarkTome>());
+            recipe.AddIngredient(ModContent.ItemType<ChampionBomberStaff>());
+            recipe.AddIngredient(ModContent.ItemType<GaussSpark>());
             recipe.AddIngredient(ItemID.PurpleEmperorButterfly);
 
             recipe.AddTile(TileID.DemonAltar);

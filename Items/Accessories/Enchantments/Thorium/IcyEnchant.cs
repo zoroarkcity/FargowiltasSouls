@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Icy;
+using ThoriumMod.Items.HealerItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -20,8 +22,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             DisplayName.SetDefault("Icy Enchantment");
             Tooltip.SetDefault(
 @"'Cold to the touch'
-An icy aura surrounds you, which freezes nearby enemies after a short delay
-Effects of Frostburn Pouch");
+An icy aura surrounds you, which freezes nearby enemies after a short delay");
 
             DisplayName.AddTranslation(GameCulture.Chinese, "碎冰魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -52,32 +53,23 @@ Effects of Frostburn Pouch");
             {
                 Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, thorium.ProjectileType("IcyAura"), 0, 0f, player.whoAmI, 0f, 0f);
             }
-
-            //frostburn pouch
-            thoriumPlayer.frostburnPouch = true;
         }
         
-        private readonly string[] items =
-        {
-            "IcyBandana",
-            "IcyMail",
-            "IcyGreaves",
-            "FrostburnPouch",
-            "FrostFireKatana",
-            "IceShard",
-            "FrostFury",
-            "Blizzard"
-        };
-
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
-            recipe.AddIngredient(thorium.ItemType("IcyCaltrop"), 300);
+            recipe.AddIngredient(ModContent.ItemType<IcyBandana>());
+            recipe.AddIngredient(ModContent.ItemType<IcyMail>());
+            recipe.AddIngredient(ModContent.ItemType<IcyGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<FrostFireKatana>());
+            recipe.AddIngredient(ModContent.ItemType<IceShard>());
+            recipe.AddIngredient(ModContent.ItemType<FrostFury>());
+            recipe.AddIngredient(ModContent.ItemType<Blizzard>());
+            recipe.AddIngredient(ModContent.ItemType<IcyCaltrop>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<IceShaver>());
             recipe.AddIngredient(ItemID.IceBoomerang);
 
             recipe.AddTile(TileID.DemonAltar);

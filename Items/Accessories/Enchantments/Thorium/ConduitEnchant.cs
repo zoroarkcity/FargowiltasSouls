@@ -4,6 +4,12 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using ThoriumMod.Items.Misc;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.ThrownItems;
+using ThoriumMod.Items.BardItems;
+using ThoriumMod.Items.Scouter;
+using ThoriumMod.Items.Cultist;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -69,7 +75,7 @@ Summons a pet Omega");
                 }
             }
             //pets
-            //modPlayer.AddPet("Omega Pet", hideVisual, thorium.BuffType("OmegaBuff"), thorium.ProjectileType("Omega"));
+            //ModContent.\1Type<\2>\(\));
             modPlayer.ConduitEnchant = true;
         }
 
@@ -79,16 +85,17 @@ Summons a pet Omega");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("ConduitHelmet"));
-            recipe.AddIngredient(thorium.ItemType("ConduitSuit"));
-            recipe.AddIngredient(thorium.ItemType("ConduitLeggings"));
-            recipe.AddIngredient(thorium.ItemType("VegaPhaser"));
-            recipe.AddIngredient(thorium.ItemType("LivewireCrasher"));
-            recipe.AddIngredient(thorium.ItemType("SuperPlasmaCannon"));
-            recipe.AddIngredient(thorium.ItemType("ElectroRebounder"), 300);
-            recipe.AddIngredient(thorium.ItemType("Triangle"));
-            recipe.AddIngredient(thorium.ItemType("Turntable"));
-            recipe.AddIngredient(thorium.ItemType("OmegaDrive"));
+            recipe.AddIngredient(ModContent.ItemType<ConduitHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<ConduitSuit>());
+            recipe.AddIngredient(ModContent.ItemType<ConduitLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<VegaPhaser>());
+            recipe.AddIngredient(ModContent.ItemType<LivewireCrasher>());
+            recipe.AddIngredient(ModContent.ItemType<ElectroRebounder>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<Triangle>());
+            recipe.AddIngredient(ModContent.ItemType<Turntable>());
+            recipe.AddIngredient(ModContent.ItemType<AncientSpark>());
+            recipe.AddIngredient(ModContent.ItemType<OmegaDrive>());
+            
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

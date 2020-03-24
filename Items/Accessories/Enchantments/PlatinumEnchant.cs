@@ -23,17 +23,6 @@ If the enemy has Midas, the chance and bonus is doubled";
 敌人10%概率4倍掉落
 如果敌人带有点金手状态,概率和加成翻倍";
 
-            if(thorium != null)
-            {
-                tooltip +=
-@"
-Summons a pet Glitter";
-                tooltip_ch +=
-@"
-拥有铂金之庇护的效果
-召唤一团闪光";
-            }
-
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "铂金魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
@@ -64,16 +53,6 @@ Summons a pet Glitter";
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             modPlayer.PlatinumEnchant = true;
-
-            if (Fargowiltas.Instance.ThoriumLoaded)
-                modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.GlitterPet, hideVisual, thorium.BuffType("ShineDust"), thorium.ProjectileType("ShinyPet"));
-        }
-
-        private void Thorium(Player player, bool hideVisual)
-        {
-            ThoriumPlayer thoriumPlayer = (ThoriumPlayer)player.GetModPlayer(thorium, "ThoriumPlayer");
-            
-            
         }
 
         public override void AddRecipes()
@@ -83,22 +62,9 @@ Summons a pet Glitter";
             recipe.AddIngredient(ItemID.PlatinumChainmail);
             recipe.AddIngredient(ItemID.PlatinumGreaves);
             recipe.AddIngredient(ItemID.PlatinumCrown);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("PlatinumAegis"));
-                recipe.AddIngredient(ItemID.DiamondRing);
-                recipe.AddIngredient(ItemID.TaxCollectorsStickOfDoom);
-                recipe.AddIngredient(ItemID.WhitePhasesaber);
-                recipe.AddIngredient(ItemID.BeamSword);
-                recipe.AddIngredient(thorium.ItemType("ShinyObject"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.DiamondRing);
-                recipe.AddIngredient(ItemID.TaxCollectorsStickOfDoom);
-                recipe.AddIngredient(ItemID.BeamSword);
-            }
+            recipe.AddIngredient(ItemID.DiamondRing);
+            recipe.AddIngredient(ItemID.TaxCollectorsStickOfDoom);
+            recipe.AddIngredient(ItemID.BeamSword);
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

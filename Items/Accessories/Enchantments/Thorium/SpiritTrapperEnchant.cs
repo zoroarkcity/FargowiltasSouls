@@ -3,6 +3,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.SummonItems;
+using ThoriumMod.Items.HealerItems;
+using ThoriumMod.Items.DD;
+using ThoriumMod.Items.Misc;
+using ThoriumMod.Items.Tracker;
+using ThoriumMod.Items.Painting;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -53,28 +59,23 @@ Effects of Inner Flame");
             //inner flame
             thoriumPlayer.spiritFlame = true;
         }
-        
-        private readonly string[] items =
-        {
-            "SpiritTrapperHelmet",
-            "SpiritTrapperCuirass",
-            "SpiritTrapperGreaves",
-            "SpiritFlame",
-            "TabooWand",
-            "SpiritBlastWand",
-            "StrangeSkull",
-            "CalmingSpirit",
-            "AntagonizingSpirit",
-            "HagTotemCaller"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<SpiritTrapperHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<SpiritTrapperCuirass>());
+            recipe.AddIngredient(ModContent.ItemType<SpiritTrapperGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<SpiritFlame>());
+            recipe.AddIngredient(ModContent.ItemType<TabooWand>());
+            recipe.AddIngredient(ModContent.ItemType<SpiritBlastWand>());
+            recipe.AddIngredient(ModContent.ItemType<CalmingSpirit>());
+            recipe.AddIngredient(ModContent.ItemType<AntagonizingSpirit>());
+            recipe.AddIngredient(ModContent.ItemType<HagTotemCaller>());
+            recipe.AddIngredient(ModContent.ItemType<LoudFootstepsPaint>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

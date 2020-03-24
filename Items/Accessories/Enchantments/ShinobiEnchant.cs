@@ -84,14 +84,6 @@ Summons a pet Gato and Black Cat";
             recipe.AddIngredient(null, "NinjaEnchant");
             recipe.AddIngredient(null, "MonkEnchant");
             recipe.AddIngredient(ItemID.MasterNinjaGear);
-            
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(thorium.ItemType("ShadeKusarigama"));
-                recipe.AddIngredient(ItemID.DD2LightningAuraT3Popper);
-                recipe.AddIngredient(ItemID.DeadlySphereStaff);
-            }
-            
             recipe.AddIngredient(ItemID.DD2PetGato);
             
             recipe.AddTile(TileID.CrystalBall);

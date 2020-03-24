@@ -60,12 +60,9 @@ Increases your max number of sentries by 1");
 
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
-                //just thorium
                 recipe.AddIngredient(ItemID.SummonerEmblem);
-                recipe.AddIngredient(thorium.ItemType("RosySlimeStaff"));
                 recipe.AddIngredient(thorium.ItemType("HatchlingStaff"));
                 recipe.AddIngredient(thorium.ItemType("FalconeerCane"));
-                recipe.AddIngredient(thorium.ItemType("AmberMinion"));
                 recipe.AddIngredient(thorium.ItemType("MeteorStaff"));
                 recipe.AddIngredient(thorium.ItemType("NanoClamCane"));
                 recipe.AddIngredient(thorium.ItemType("ViscountCane"));
@@ -78,7 +75,7 @@ Increases your max number of sentries by 1");
             }
             else
             {
-                //no others
+                //1.4 help me
                 recipe.AddIngredient(ItemID.SummonerEmblem);
                 recipe.AddIngredient(ItemID.SlimeStaff);
                 recipe.AddIngredient(ItemID.HornetStaff);

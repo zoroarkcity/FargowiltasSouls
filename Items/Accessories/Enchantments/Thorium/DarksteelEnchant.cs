@@ -3,6 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Darksteel;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.Placeable;
+using ThoriumMod.Items.SummonItems;
+using ThoriumMod.Items.RangedItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -66,16 +71,6 @@ Effects of Spiked Bracer");
             //ball n chain
             thoriumPlayer.ballnChain = true;
         }
-        
-        private readonly string[] items =
-        {
-            "BallnChain",
-            "eeDarksteelMace",
-            "gDarkSteelCrossBow",
-            "ManHacker",
-            "DarksteelHelmetStand",
-            "GrayDPaintingItem",
-        };
 
         public override void AddRecipes()
         {
@@ -83,12 +78,16 @@ Effects of Spiked Bracer");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("hDarksteelFaceGuard"));
-            recipe.AddIngredient(thorium.ItemType("iDarksteelBreastPlate"));
-            recipe.AddIngredient(thorium.ItemType("jDarksteelGreaves"));
-            recipe.AddIngredient(null, "SteelEnchant");
-
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+            recipe.AddIngredient(ModContent.ItemType<hDarksteelFaceGuard>());
+            recipe.AddIngredient(ModContent.ItemType<iDarksteelBreastPlate>());
+            recipe.AddIngredient(ModContent.ItemType<jDarksteelGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<SteelEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<BallnChain>());
+            recipe.AddIngredient(ModContent.ItemType<eeDarksteelMace>());
+            recipe.AddIngredient(ModContent.ItemType<gDarkSteelCrossBow>());
+            recipe.AddIngredient(ModContent.ItemType<ElephantGun>());
+            recipe.AddIngredient(ModContent.ItemType<StrongestLink>());
+            recipe.AddIngredient(ModContent.ItemType<DarksteelHelmetStand>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

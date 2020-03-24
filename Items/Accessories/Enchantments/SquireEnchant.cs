@@ -51,12 +51,6 @@ Ballista pierces more targets and panics when you take damage");
             recipe.AddIngredient(ItemID.DD2SquireDemonSword);
             recipe.AddIngredient(ItemID.RedPhasesaber);
 
-//Doom Fire Axe (with Thorium)
-//Dragon's Tooth (with Thorium)
-//Rapier (with Thorium)
-//Warp Slicer (with Thorium)
-//Scalper (with Thorium)
-
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

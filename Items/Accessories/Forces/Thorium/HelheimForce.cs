@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using FargowiltasSouls.Items.Accessories.Enchantments.Thorium;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
 {
@@ -21,11 +22,11 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
             DisplayName.SetDefault("Force of Helheim");
             Tooltip.SetDefault(
 @"'From the halls of Hel, a vision of the end...'
-All armor bonuses from Spirit Trapper, Dragon, Dread, Flesh, Demon Blood, and Magma
-All armor bonuses from Berserker, White Knight, and Harbinger, Lich, and Plague Doctor
+All armor bonuses from Spirit Trapper, Malignant, Dragon, Dread, Flesh, and Demon Blood
+All armor bonuses from Magma, Berserker, White Knight, and Harbinger
 Effects of Inner Flame, Crash Boots, and Dragon Talon Necklace
 Effects of Vampire Gland, Demon Blood Badge, Spring Steps, and Slag Stompers
-Effects of Shade Band, Lich's Gaze, and Plague Lord's Flask
+Effects of Shade Band and Mana-Charged Rocketeers
 Summons several pets");
             DisplayName.AddTranslation(GameCulture.Chinese, "海姆冥界之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -71,6 +72,14 @@ Summons several pets");
             thoriumPlayer.spiritTrapper = true;
             //inner flame
             thoriumPlayer.spiritFlame = true;
+
+            //malignant
+            modPlayer.MalignantEnchant = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.ManaBoots))
+            {
+                //mana charge rockets
+                thorium.GetItem("ManaChargedRocketeers").UpdateAccessory(player, hideVisual);
+            }
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.DreadSpeed))
             {
@@ -125,11 +134,8 @@ Summons several pets");
             modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.BlisterPet, hideVisual, thorium.BuffType("BlisterBuff"), thorium.ProjectileType("BlisterPet"));
             modPlayer.FleshEnchant = true;
             //pet
-            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.MooglePet, hideVisual, thorium.BuffType("LilMogBuff"), thorium.ProjectileType("LilMog"));
             modPlayer.KnightEnchant = true;
-            //lich gaze
-            thoriumPlayer.lichGaze = true;
-            modPlayer.PlagueAcc = true;
+            
             //berserker
             mod.GetItem("BerserkerEnchant").UpdateAccessory(player, hideVisual);
 
@@ -149,10 +155,7 @@ Summons several pets");
             }
             //shade band
             thoriumPlayer.shadeBand = true;
-            //lich set bonus
-            modPlayer.LichEnchant = true;
-            //plague doctor
-            thoriumPlayer.plagueSet = true;
+           
         }
 
         public override void AddRecipes()
@@ -161,14 +164,14 @@ Summons several pets");
 
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(null, "SpiritTrapperEnchant");
-            recipe.AddIngredient(null, "DreadEnchant");
-            recipe.AddIngredient(null, "DemonBloodEnchant");
-            recipe.AddIngredient(null, "BerserkerEnchant");
-            recipe.AddIngredient(null, "HarbingerEnchant");
-            recipe.AddIngredient(null, "PlagueDoctorEnchant");
+            recipe.AddIngredient(ModContent.ItemType<SpiritTrapperEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<MalignantEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<DreadEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<DemonBloodEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<BerserkerEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<HarbingerEnchant>());
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(TileID.LunarCraftingStation);
 
             recipe.SetResult(this);
             recipe.AddRecipe();

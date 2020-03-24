@@ -64,26 +64,12 @@ Attacks that cause Wet cannot proc the lightning";
             recipe.AddIngredient(ItemID.CopperHelmet);
             recipe.AddIngredient(ItemID.CopperChainmail);
             recipe.AddIngredient(ItemID.CopperGreaves);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(thorium.ItemType("CopperBuckler"));
-                recipe.AddIngredient(ItemID.CopperShortsword);
-                recipe.AddIngredient(ItemID.AmethystStaff);
-                recipe.AddIngredient(ItemID.PurplePhaseblade);
-                recipe.AddIngredient(thorium.ItemType("ThunderTalon"));
-                recipe.AddIngredient(thorium.ItemType("Zapper"));
-                recipe.AddIngredient(ItemID.FirstEncounter);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.CopperShortsword);
-                recipe.AddIngredient(ItemID.AmethystStaff);
-                recipe.AddIngredient(ItemID.FirstEncounter);
-                //recipe.AddIngredient(ItemID.PurplePhaseblade);
-                recipe.AddIngredient(ItemID.Wire, 20);
-            }
-                       
+            recipe.AddIngredient(ItemID.CopperShortsword);
+            recipe.AddIngredient(ItemID.AmethystStaff);
+            recipe.AddIngredient(ItemID.FirstEncounter);
+            //recipe.AddIngredient(ItemID.PurplePhaseblade);
+            recipe.AddIngredient(ItemID.Wire, 20);
+
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();

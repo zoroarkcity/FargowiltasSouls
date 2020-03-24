@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using ThoriumMod.Items.Misc;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -64,8 +65,7 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
             if (thorium != null)
             {
                 tooltip += @"
-                Effects of Ocean's Retaliation and Cape of the Survivor
-                Effects of Blast Shield and Terrarium Defender
+                Effects of Ocean's Retaliation and Terrarium Defender
                 Effects of Air Walkers, Survivalist Boots, and Weighted Winglets";
                 
                 tooltip_ch += @"
@@ -177,21 +177,22 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
             }
 
             //SUPERSONIC
-            //frost spark plus super speed
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicSpeed) && !player.GetModPlayer<FargoPlayer>().noSupersonic)
             {
-                player.maxRunSpeed += 15f;
-                player.runAcceleration += .25f;
+                player.runAcceleration += SoulConfig.Instance.SupersonicMultiplier * .1f;
+                player.runSlowdown = 10;
+                player.maxRunSpeed += SoulConfig.Instance.SupersonicMultiplier * 2;
+                //frog legs
                 player.autoJump = true;
                 player.jumpSpeedBoost += 2.4f;
-                player.jumpBoost = true;
                 player.maxFallSpeed += 5f;
+                player.jumpBoost = true;
             }
-            /*else
+            else
             {
-                player.maxRunSpeed += 5f;
-                player.runAcceleration += .1f;
-            }*/
+                //same as frostspark
+                player.accRunSpeed = 6.75f;
+            }
 
             player.moveSpeed += 0.5f;
             player.accRunSpeed = 12f;
@@ -313,15 +314,6 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
                 player.AddBuff(thorium.BuffType("TerrariumDefense"), 10, true);
                 player.statDefense += 20;
             }
-            //blast shield
-            thoriumPlayer.blastHurt = true;
-            //cape of the survivor
-            if (player.FindBuffIndex(thorium.BuffType("Corporeal")) < 0)
-            {
-                thoriumPlayer.spiritBand2 = true;
-            }
-            //sweet vengeance
-            thoriumPlayer.sweetVengeance = true;
             //oceans retaliation
             thoriumPlayer.turtleShield2 = true;
             thoriumPlayer.SpinyShield = true;
@@ -451,7 +443,6 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
 
             //WORLD SHAPER
             //pets
-            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.LanternPet, hideVisual, thorium.BuffType("SupportLanternBuff"), thorium.ProjectileType("SupportLantern"));
             modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.BoxPet, hideVisual, thorium.BuffType("LockBoxBuff"), thorium.ProjectileType("LockBoxPet"));
         }
 
@@ -507,7 +498,7 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
                 recipe.AddIngredient(calamity.ItemType("CelestialTracers"));
             }
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
                 
             recipe.SetResult(this);
             recipe.AddRecipe();

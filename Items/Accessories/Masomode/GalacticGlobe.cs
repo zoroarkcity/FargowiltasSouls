@@ -47,7 +47,7 @@ Increases flight time by 100%");
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.TrueEyes))
                 player.AddBuff(mod.BuffType("TrueEyes"), 2);
-            
+
             player.GetModPlayer<FargoPlayer>().GravityGlobeEX = true;
             player.GetModPlayer<FargoPlayer>().wingTimeModifier += 1f;
         }

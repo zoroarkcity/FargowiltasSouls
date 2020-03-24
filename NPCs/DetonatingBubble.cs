@@ -80,6 +80,7 @@ namespace FargowiltasSouls.NPCs
             //target.AddBuff(mod.BuffType("SqueakyToy"), Main.rand.Next(60, 180));
             target.AddBuff(mod.BuffType("OceanicMaul"), 1800);
             target.GetModPlayer<FargoPlayer>().MaxLifeReduction += FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.fishBossEX, NPCID.DukeFishron) ? 10 : 50;
+
         }
 
         public override void FindFrame(int frameHeight)

@@ -15,10 +15,10 @@ namespace FargowiltasSouls.Projectiles.Minions
         private const float maxTime = 120;
 
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Divine Deathray");
-		}
-    	
+        {
+            DisplayName.SetDefault("Divine Deathray");
+        }
+
         public override void SetDefaults()
         {
             projectile.width = 48;

@@ -3,10 +3,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Blizzard;
+using ThoriumMod.Items.MagicItems;
+using ThoriumMod.Items.HealerItems;
+using ThoriumMod.Items.Painting;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
-    public class CryoMagusEnchant : ModItem
+    public class CryomancerEnchant : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
 
@@ -17,12 +21,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
         
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cryo-Magus Enchantment");
+            DisplayName.SetDefault("Cryomancer Enchantment");
             Tooltip.SetDefault(
 @"'What killed the dinosaurs? The ice age!'
-Damage will duplicate itself for 33% of the damage and apply the Frozen debuff to hit enemies
+Your damage will freeze enemies for two seconds
 An icy aura surrounds you, which freezes nearby enemies after a short delay
-Effects of Frostburn Pouch and Ice Bound Strider Hide
+Effects of Ice Bound Strider Hide
 Summons a pet Owl");
             DisplayName.AddTranslation(GameCulture.Chinese, "冰法魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -61,8 +65,6 @@ Summons a pet Owl");
             {
                 Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, thorium.ProjectileType("IcyAura"), 0, 0f, player.whoAmI, 0f, 0f);
             }
-            //frostburn pouch
-            thoriumPlayer.frostburnPouch = true;
         }
 
         public override void AddRecipes()
@@ -71,16 +73,16 @@ Summons a pet Owl");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("CryoMagusSpark"));
-            recipe.AddIngredient(thorium.ItemType("CryoMagusTabard"));
-            recipe.AddIngredient(thorium.ItemType("CryoMagusLeggings"));
-            recipe.AddIngredient(null, "IcyEnchant");
-            recipe.AddIngredient(thorium.ItemType("IceBoundStriderHide"));
-            recipe.AddIngredient(thorium.ItemType("IceFairyStaff"));
+            recipe.AddIngredient(ModContent.ItemType<CryomancersCrown>());
+            recipe.AddIngredient(ModContent.ItemType<CryomancersTabard>());
+            recipe.AddIngredient(ModContent.ItemType<CryomancersLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<IcyEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<IceBoundStriderHide>());
+            recipe.AddIngredient(ModContent.ItemType<IceFairyStaff>());
             recipe.AddIngredient(ItemID.FrostStaff);
-            recipe.AddIngredient(ItemID.IceRod);
-            recipe.AddIngredient(thorium.ItemType("Cryotherapy"));
-            recipe.AddIngredient(thorium.ItemType("LostMail"));
+            recipe.AddIngredient(ModContent.ItemType<Cryotherapy>());
+            recipe.AddIngredient(ModContent.ItemType<LostMail>());
+            recipe.AddIngredient(ModContent.ItemType<ShroudedbytheStormPaint>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

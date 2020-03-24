@@ -10,7 +10,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
     public class JungleEnchant : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        public int jungleCD = 0;
 
         public override void SetStaticDefaults()
         {
@@ -68,14 +67,6 @@ Effects of Guide to Plant Fiber Cordage";
             recipe.AddIngredient(ItemID.CordageGuide);
             recipe.AddIngredient(ItemID.JungleRose);
             recipe.AddIngredient(ItemID.ThornChakram);
-
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {      
-                recipe.AddIngredient(ItemID.PoisonedKnife, 300);
-                recipe.AddIngredient(thorium.ItemType("MantisCane"));
-                recipe.AddIngredient(thorium.ItemType("RivetingTadpole"));
-            }
-
             recipe.AddIngredient(ItemID.Buggy);
 
             recipe.AddTile(TileID.DemonAltar);

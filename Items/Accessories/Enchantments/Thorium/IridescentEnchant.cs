@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.HealerItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -51,28 +52,24 @@ Effects of Equalizer");
             //equalizer 
             thoriumPlayer.equilibrium = true;
         }
-        
-        private readonly string[] items =
-        {
-            "IridescentHelmet",
-            "IridescentMail",
-            "IridescentGreaves",
-            "Equalizer",
-            "HereticBreaker",
-            "AquaiteScythe",
-            "SpiritPouch", 
-            "TranquilLyre",
-            "IridescentStaff", 
-            "SerpentsBubbleWand"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<IridescentHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<IridescentMail>());
+            recipe.AddIngredient(ModContent.ItemType<IridescentGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<Equalizer>());
+            recipe.AddIngredient(ModContent.ItemType<HereticBreaker>());
+            recipe.AddIngredient(ModContent.ItemType<SpiritPouch>());
+            recipe.AddIngredient(ModContent.ItemType<TranquilLyre>());
+            recipe.AddIngredient(ModContent.ItemType<IridescentStaff>());
+            recipe.AddIngredient(ModContent.ItemType<SerpentsBubbleWand>());
+            recipe.AddIngredient(ModContent.ItemType<Recuperate>());
+
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -33,7 +34,7 @@ Increased minion knockback";
 
             if (thorium != null)
             {
-                tooltip += "\nEffects of Phylactery, Crystal Scorpion, and Yuma's Pendant";
+                tooltip += "\nEffects of Phylactery and Crystal Scorpion";
                 tooltip_ch += "\n拥有魂匣,魔晶蝎和云码垂饰的效果";
             }
 
@@ -93,11 +94,6 @@ Increased minion knockback";
             {
                 thoriumPlayer.crystalScorpion = true;
             }
-            //yumas pendant
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.YumasPendant))
-            {
-                thoriumPlayer.yuma = true;
-            }
         }
 
         private void Calamity(Player player)
@@ -118,11 +114,11 @@ Increased minion knockback";
             {
                 recipe.AddIngredient(thorium.ItemType("Phylactery"));
                 recipe.AddIngredient(thorium.ItemType("CrystalScorpion"));
-                recipe.AddIngredient(thorium.ItemType("YumasPendant"));
-                recipe.AddIngredient(thorium.ItemType("MastersLibram"));
                 recipe.AddIngredient(thorium.ItemType("HailBomber"));
+                recipe.AddIngredient(thorium.ItemType("MushymenStaff"));
                 recipe.AddIngredient(ItemID.PirateStaff);
                 recipe.AddIngredient(ItemID.OpticStaff);
+                recipe.AddIngredient(thorium.ItemType("BlackCane"));
                 recipe.AddIngredient(thorium.ItemType("TerrariumSummon"));
                 recipe.AddIngredient(ItemID.StaffoftheFrostHydra);
                 recipe.AddIngredient(ItemID.RavenStaff);
@@ -145,8 +141,8 @@ Increased minion knockback";
 
             recipe.AddIngredient(ItemID.MoonlordTurretStaff);
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
-                
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

@@ -43,7 +43,6 @@ namespace FargowiltasSouls.Buffs.Masomode
                     case 7: player.AddBuff(mod.BuffType("SqueakyToy"), Main.rand.Next(120)); break;
                     case 8: player.AddBuff(mod.BuffType("Unstable"), Main.rand.Next(90)); break;
                     case 9: player.AddBuff(mod.BuffType("Berserked"), Main.rand.Next(180)); break;
-                    default: player.AddBuff(BuffID.Rabies, Main.rand.Next(300)); break;
                 }
             }*/
 

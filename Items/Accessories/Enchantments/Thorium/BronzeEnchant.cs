@@ -4,6 +4,10 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using ThoriumMod.Items.Bronze;
+using ThoriumMod.Items.ThrownItems;
+using ThoriumMod.Items.Hero;
+using ThoriumMod.Items.NPCItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -23,7 +27,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             Tooltip.SetDefault(
 @"'You have the favor of Zeus'
 Attacks have a chance to cause a lightning bolt to strike
-Effects of Olympic Torch, Champion's Rebuttal, and Spartan Sandals");
+Effects of Olympic Torch, Champion's Rebuttal, and Spartan Sandals
+Summons a pet Coin Bag");
             DisplayName.AddTranslation(GameCulture.Chinese, "青铜魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'宙斯的青睐'
@@ -57,6 +62,9 @@ Effects of Olympic Torch, Champion's Rebuttal, and Spartan Sandals");
             player.maxRunSpeed -= 1f;
             //olympic torch
             thoriumPlayer.olympicTorch = true;
+
+            //spawn pet
+            player.GetModPlayer<FargoPlayer>().AddPet(SoulConfig.Instance.thoriumToggles.CoinPet, hideVisual, thorium.BuffType("DrachmaBuff"), thorium.ProjectileType("DrachmaBag"));
         }
 
         public override void AddRecipes()
@@ -65,16 +73,16 @@ Effects of Olympic Torch, Champion's Rebuttal, and Spartan Sandals");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(thorium.ItemType("BronzeHelmet"));
-            recipe.AddIngredient(thorium.ItemType("BronzeBreastplate"));
-            recipe.AddIngredient(thorium.ItemType("BronzeGreaves"));
-            recipe.AddIngredient(thorium.ItemType("OlympicTorch"));
-            recipe.AddIngredient(thorium.ItemType("ChampionsBarrier"));
-            recipe.AddIngredient(thorium.ItemType("SpartanSandles"));
-            recipe.AddIngredient(thorium.ItemType("ChampionBlade"));
-            recipe.AddIngredient(thorium.ItemType("SpikyCaltrop"), 300);
-            recipe.AddIngredient(thorium.ItemType("BronzeThrowing"), 300);
-            recipe.AddIngredient(thorium.ItemType("GraniteThrowingAxe"), 300);
+            recipe.AddIngredient(ModContent.ItemType<BronzeHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<BronzeBreastplate>());
+            recipe.AddIngredient(ModContent.ItemType<BronzeGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<OlympicTorch>());
+            recipe.AddIngredient(ModContent.ItemType<ChampionsBarrier>());
+            recipe.AddIngredient(ModContent.ItemType<SpartanSandles>());
+            recipe.AddIngredient(ModContent.ItemType<ChampionBlade>());
+            recipe.AddIngredient(ModContent.ItemType<SpikyCaltrop>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<BronzeThrowing>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<AncientDrachma>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

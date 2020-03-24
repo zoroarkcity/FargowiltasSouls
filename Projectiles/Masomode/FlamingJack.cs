@@ -73,7 +73,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 projectile.spriteDirection = 1;
                 projectile.rotation = projectile.velocity.ToRotation();
             }
-            
+
             int d = Dust.NewDust(projectile.position + new Vector2(8, 8), projectile.width - 16, projectile.height - 16, 6, 0f, 0f, 0, new Color(), 1f);
             Main.dust[d].velocity *= 0.5f;
             Main.dust[d].velocity += projectile.velocity * 0.5f;

@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using SacredTools;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.SoA
 {
@@ -79,7 +80,7 @@ Effects of Pumpkin Amulet");
             recipe.AddIngredient(null, "DreadfireEnchant");
             recipe.AddIngredient(null, "MarstechEnchant");
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

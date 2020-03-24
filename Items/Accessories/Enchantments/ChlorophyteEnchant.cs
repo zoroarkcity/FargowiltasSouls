@@ -75,21 +75,8 @@ Summons a pet Seedling";
             recipe.AddIngredient(ItemID.ChlorophytePlateMail);
             recipe.AddIngredient(ItemID.ChlorophyteGreaves);
             recipe.AddIngredient(null, "JungleEnchant");
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(ItemID.FlowerBoots);
-                recipe.AddIngredient(ItemID.StaffofRegrowth);
-                recipe.AddIngredient(ItemID.ChlorophyteSaber);
-                recipe.AddIngredient(ItemID.LeafBlower);
-                recipe.AddIngredient(thorium.ItemType("BudBomb"), 300);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.FlowerBoots);
-                recipe.AddIngredient(ItemID.StaffofRegrowth);
-            }
-            
+            recipe.AddIngredient(ItemID.FlowerBoots);
+            recipe.AddIngredient(ItemID.StaffofRegrowth);
             recipe.AddIngredient(ItemID.Seedling);
             
             recipe.AddTile(TileID.CrystalBall);

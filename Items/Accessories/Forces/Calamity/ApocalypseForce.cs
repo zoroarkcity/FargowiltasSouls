@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using CalamityMod.CalPlayer;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.Calamity
 {
@@ -85,7 +86,7 @@ Summons several pets");
             //recipe.AddIngredient(null, "UmbraphileEnchant");
             recipe.AddIngredient(null, "BloodflareEnchant");
 
-            recipe.AddTile(mod, "CrucibleCosmosSheet");
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

@@ -3,6 +3,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Steel;
+using ThoriumMod.Items.DD;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.BasicAccessories;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -22,7 +26,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 @"'Masterfully forged by the Blacksmith'
 12% damage reduction at Full HP
 Grants immunity to shambler chain-balls
-Effects of the Incandescent Spark, Spiked Bracers, and Greedy Magnet");
+Effects of Ogre Sandals, Crystal Spear Tip, and Spiked Bracers");
             DisplayName.AddTranslation(GameCulture.Chinese, "耐刚魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'精工打造'
@@ -52,15 +56,6 @@ Effects of the Incandescent Spark, Spiked Bracers, and Greedy Magnet");
                 player.endurance += .12f;
             }
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.IncandescentSpark))
-            {
-                thorium.GetItem("IncandescentSpark").UpdateAccessory(player, hideVisual);
-            }
-
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.GreedyMagnet))
-            {
-                thorium.GetItem("GreedyMagnet").HoldItem(player);
-            }
             //ball n chain
             thoriumPlayer.ballnChain = true;
 
@@ -68,30 +63,31 @@ Effects of the Incandescent Spark, Spiked Bracers, and Greedy Magnet");
 
             //spiked bracers
             player.thorns += 0.25f;
+
+            //ogre sandals
+            ModContent.GetModItem(ModContent.ItemType<OgreSandal>()).UpdateAccessory(player, hideVisual);
+
+            //crystal spear tip
+            ModContent.GetModItem(ModContent.ItemType<CrystalSpearTip>()).UpdateAccessory(player, hideVisual);
+
         }
-        
-        private readonly string[] items =
-        {
-            "IncandescentSpark",
-            "GreedyMagnet",
-            "DurasteelRepeater",
-            "SpudBomber",
-            "ThiefDagger",
-            "SeaMine"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            recipe.AddIngredient(thorium.ItemType("DurasteelHelmet"));
-            recipe.AddIngredient(thorium.ItemType("DurasteelChestplate"));
-            recipe.AddIngredient(thorium.ItemType("DurasteelGreaves"));
-            recipe.AddIngredient(null, "DarksteelEnchant");
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<DurasteelHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<DurasteelChestplate>());
+            recipe.AddIngredient(ModContent.ItemType<DurasteelGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<DarksteelEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<OgreSandal>());
+            recipe.AddIngredient(ModContent.ItemType<CrystalSpearTip>());
+            recipe.AddIngredient(ModContent.ItemType<DurasteelRepeater>());
+            recipe.AddIngredient(ModContent.ItemType<SpudBomber>());
+            recipe.AddIngredient(ModContent.ItemType<ThiefDagger>());
+            recipe.AddIngredient(ModContent.ItemType<SeaMine>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

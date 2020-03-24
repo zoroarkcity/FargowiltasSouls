@@ -61,14 +61,6 @@ Summons a pet Eater of Souls and Shadow Orb");
             recipe.AddIngredient(ItemID.ShadowGreaves);
             recipe.AddIngredient(ItemID.WarAxeoftheNight);
             recipe.AddIngredient(ItemID.PurpleClubberfish);
-            
-            if(Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(ItemID.TheBreaker);
-                recipe.AddIngredient(ItemID.BallOHurt);
-                recipe.AddIngredient(thorium.ItemType("DemoniteTomahawk"), 300);
-            }
-            
             recipe.AddIngredient(ItemID.EatersBone);
             recipe.AddIngredient(ItemID.ShadowOrb);
             

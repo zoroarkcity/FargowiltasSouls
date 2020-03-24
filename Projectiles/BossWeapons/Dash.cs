@@ -15,8 +15,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public float UpdateCount
         {
-            get { return projectile.ai[0]; }
-            set { projectile.ai[0] = value; }
+            get
+            {
+                return projectile.ai[0];
+            }
+            set
+            {
+                projectile.ai[0] = value;
+            }
         }
 
         public float DashCount => projectile.ai[0] - 20;
@@ -50,7 +56,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     Vector2 move = Collision.TileCollision(
                         projectile.position, projectile.velocity / 2,
                         projectile.width, projectile.height,
-                        true, true, (int) player.gravDir);
+                        true, true, (int)player.gravDir);
                     if (move == Vector2.Zero) break;
                     projectile.position += move / 2;
                 }
@@ -81,12 +87,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     DashStep / 2,
                     player.width,
                     player.height,
-                    true, true, (int) player.gravDir);
+                    true, true, (int)player.gravDir);
                 player.velocity = Collision.TileCollision(player.position,
                     DashStep * 0.8f,
                     player.width,
                     player.height,
-                    true, true, (int) player.gravDir);
+                    true, true, (int)player.gravDir);
 
                 // Set immunities
                 player.immune = true;
@@ -94,7 +100,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 player.hurtCooldowns[0] = Math.Max(player.hurtCooldowns[0], 2);
                 player.hurtCooldowns[1] = Math.Max(player.hurtCooldowns[1], 2);
                 player.immuneNoBlink = true;
-                player.fallStart = (int) (player.position.Y / 16f);
+                player.fallStart = (int)(player.position.Y / 16f);
                 player.fallStart2 = player.fallStart;
 
                 //point in direction

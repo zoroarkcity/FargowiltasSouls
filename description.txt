@@ -1,4 +1,20 @@
-NEW UPDATE - v 1.2.1
--Several Masochist Mode balance changes, and updated sprites.
+NEW UPDATE - v 1.2.2
+-Fixed Thorium compatability
+-Removed all extra items added to vanilla enchants with Thorium enabled
+-Removed all donater items from Thorium Enchantments and thus every single ones recipes and some effects are changed
+-Added Mutating Energy to modded souls
+-Reworked Supersonic Soul movement, toggled off it is the same as Frostspark Boots, toggled on you have a slider to control your speed, and it now gets rid of almost all momentum
+-Removed Crucible of the Cosmos (to Mutant Mod)
+-Worms continuing to exist after dying in masomode fixed
+-Snow Ballas snowballs do not create blocks anymore in masomode
+-Clowns no longer drop tile destroying bombs, they just drop a bomb that deals a lot of damage to the surrounding area
+-Updated Palm Tree Sentry sprite and it disappears when you unequip
+-Hallowed Sword, Stardust Guardian and all pets despawn when you die
+-Replaced Light Discs with Gungnir in Hallowed Enchantment
+-Removed Flameburst Staff from Dark Artist Enchantment
+-Fixed Monk Enchant rarity
+-Fixed Valhalla Knight Enchant missing Shiny Stone effect
+-Fixed Mind Break not giving its buff
+-Arms Dealer no longer sells Rockets early for Rockeater
 
 -See the wiki for full details

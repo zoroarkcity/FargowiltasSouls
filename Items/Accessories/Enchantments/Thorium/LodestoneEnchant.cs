@@ -4,6 +4,10 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using ThoriumMod.Items.Lodestone;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.MiniBoss;
+using ThoriumMod.Items.BasicAccessories;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -72,28 +76,23 @@ Effects of Astro-Beetle Husk");
             //astro beetle husk
             thoriumPlayer.metalShieldMax = 25;
         }
-        
-        private readonly string[] items =
-        {
-            "LodeStoneFaceGuard",
-            "LodeStoneChestGaurd",
-            "LodeStoneShinGaurds",
-            "AstroBeetleHusk",
-            "StoneSledge",
-            "TheJuggernaut",
-            "LodeStoneClaymore",
-            "LodeStoneMace",
-            "LodeStoneStaff",
-            "ValadiumSpear"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<LodeStoneFaceGuard>());
+            recipe.AddIngredient(ModContent.ItemType<LodeStoneChestGaurd>());
+            recipe.AddIngredient(ModContent.ItemType<LodeStoneShinGaurds>());
+            recipe.AddIngredient(ModContent.ItemType<AstroBeetleHusk>());
+            recipe.AddIngredient(ModContent.ItemType<ObsidianScale>());
+            recipe.AddIngredient(ModContent.ItemType<StoneSledge>());
+            recipe.AddIngredient(ModContent.ItemType<TheJuggernaut>());
+            recipe.AddIngredient(ModContent.ItemType<LodeStoneClaymore>());
+            recipe.AddIngredient(ModContent.ItemType<LodeStoneMace>());
+            recipe.AddIngredient(ModContent.ItemType<LodeStoneStaff>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

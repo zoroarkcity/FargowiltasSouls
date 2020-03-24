@@ -4,6 +4,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
@@ -21,20 +22,20 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             item.damage = 210; //
             item.ranged = true;
-            item.width = 24; 
-            item.height = 24; 
-            item.useTime = 20; 
-            item.useAnimation = 20; 
+            item.width = 24;
+            item.height = 24;
+            item.useTime = 20;
+            item.useAnimation = 20;
             item.useStyle = 5;
             item.noMelee = true;
-            item.knockBack = 5f; 
-            item.UseSound = new LegacySoundStyle(2, 62); 
+            item.knockBack = 5f;
+            item.UseSound = new LegacySoundStyle(2, 62);
             item.useAmmo = AmmoID.Rocket;
-            item.value = Item.sellPrice(0, 10); 
-            item.rare = 11; 
-            item.autoReuse = true; 
+            item.value = Item.sellPrice(0, 10);
+            item.rare = 11;
+            item.autoReuse = true;
             item.shoot = mod.ProjectileType("EaterRocket");
-            item.shootSpeed = 16f; 
+            item.shootSpeed = 16f;
             item.scale = .7f;
         }
 
@@ -59,14 +60,14 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-                recipe.AddIngredient(mod.ItemType("EaterStaff"));
-                recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerWorm"));
-                recipe.AddIngredient(ItemID.LunarBar, 10);
-                recipe.AddIngredient(null, "LunarCrystal", 5);
+            recipe.AddIngredient(mod.ItemType("EaterStaff"));
+            recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerWorm"));
+            recipe.AddIngredient(ItemID.LunarBar, 10);
+            recipe.AddIngredient(null, "LunarCrystal", 5);
 
-                recipe.AddTile(mod, "CrucibleCosmosSheet");
-                recipe.SetResult(this);
-                recipe.AddRecipe();
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

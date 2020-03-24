@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.HealerItems;
+using ThoriumMod.Items.BardItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -53,28 +55,23 @@ If an ally is below half health, you will gain increased healing abilities");
                 }
             }
         }
-        
-        private readonly string[] items =
-        {
-            "TemplarsCirclet",
-            "TemplarsTabard",
-            "TemplarsLeggings",
-            "LifesGift",
-            "TemplarsGrace",
-            "TemplarJudgment",
-            "ChiLantern",
-            "GraniteIonStaff",
-            "Prophecy",
-            "LifeDisperser"
-        };
 
         public override void AddRecipes()
         {
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
             
             ModRecipe recipe = new ModRecipe(mod);
-            
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+
+            recipe.AddIngredient(ModContent.ItemType<TemplarsCirclet>());
+            recipe.AddIngredient(ModContent.ItemType<TemplarsTabard>());
+            recipe.AddIngredient(ModContent.ItemType<TemplarsLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<LifesGift>());
+            recipe.AddIngredient(ModContent.ItemType<TemplarsGrace>());
+            recipe.AddIngredient(ModContent.ItemType<TemplarJudgment>());
+            recipe.AddIngredient(ModContent.ItemType<GraniteIonStaff>());
+            recipe.AddIngredient(ModContent.ItemType<Prophecy>());
+            recipe.AddIngredient(ModContent.ItemType<LifeDisperser>());
+            recipe.AddIngredient(ModContent.ItemType<BoneTrumpet>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

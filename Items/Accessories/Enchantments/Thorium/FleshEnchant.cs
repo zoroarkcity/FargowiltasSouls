@@ -3,6 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
+using ThoriumMod.Items.Depths;
+using ThoriumMod.Items.Flesh;
+using ThoriumMod.Items.NPCItems;
+using ThoriumMod.Items.ThrownItems;
+using ThoriumMod.Items.HealerItems;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -55,20 +60,6 @@ Summons a pet Flying Blister");
             modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.BlisterPet, hideVisual, thorium.BuffType("BlisterBuff"), thorium.ProjectileType("BlisterPet"));
             modPlayer.FleshEnchant = true;
         }
-        
-        private readonly string[] items =
-        {
-            "FleshMask",
-            "FleshBody",
-            "FleshLegs",
-            "VampireGland",
-            "GrimFlayer",
-            "ToothOfTheConsumer",
-            "FleshMace",
-            "BloodBelcher",
-            "TlordsTsword",
-            "BlisterSack"
-        };
 
         public override void AddRecipes()
         {
@@ -76,7 +67,16 @@ Summons a pet Flying Blister");
             
             ModRecipe recipe = new ModRecipe(mod);
 
-            foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
+            recipe.AddIngredient(ModContent.ItemType<FleshMask>());
+            recipe.AddIngredient(ModContent.ItemType<FleshBody>());
+            recipe.AddIngredient(ModContent.ItemType<FleshLegs>());
+            recipe.AddIngredient(ModContent.ItemType<VampireGland>());
+            recipe.AddIngredient(ModContent.ItemType<ToothOfTheConsumer>());
+            recipe.AddIngredient(ModContent.ItemType<FleshMace>());
+            recipe.AddIngredient(ModContent.ItemType<BloodBelcher>());
+            recipe.AddIngredient(ModContent.ItemType<StalkersSnippers>());
+            recipe.AddIngredient(ModContent.ItemType<BloodRage>());
+            recipe.AddIngredient(ModContent.ItemType<BlisterSack>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

@@ -24,10 +24,9 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Thorium
 @"'Behold the craftsmanship of the Dark Elves...'
 All armor bonuses from Granite, Bronze, and Darksteel
 All armor bonuses from Durasteel, Titan, and Conduit
-Effects of Eye of the Storm and Champion's Rebuttal
-Effects of Incandescent Spark and Spiked Bracers
-Effects of the Greedy Magnet, Mask of the Crystal Eye, and Abyssal Shell
-Summons a pet Omega and Bio-Feeder");
+Effects of Eye of the Storm, Champion's Rebuttal, and Spiked Bracers
+Effects of Ogre Sandals, Crystal Spear Tip, Mask of the Crystal Eye, and Abyssal Shell
+Summons a pet Omega and Coin Bag");
             DisplayName.AddTranslation(GameCulture.Chinese, "瓦特阿尔海姆之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'黑暗精灵的精湛技艺'
@@ -72,6 +71,8 @@ Summons a pet Omega and Bio-Feeder");
             modPlayer.BronzeEnchant = true;
             //rebuttal
             thoriumPlayer.championShield = true;
+            //spawn pet
+            player.GetModPlayer<FargoPlayer>().AddPet(SoulConfig.Instance.thoriumToggles.CoinPet, hideVisual, thorium.BuffType("DrachmaBuff"), thorium.ProjectileType("DrachmaBag"));
 
             //durasteel
             mod.GetItem("DurasteelEnchant").UpdateAccessory(player, hideVisual);
