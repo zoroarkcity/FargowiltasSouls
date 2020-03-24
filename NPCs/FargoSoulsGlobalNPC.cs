@@ -1461,6 +1461,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Piranha:
+                        masoBool[0] = npc.HasValidTarget && Main.player[npc.target].ZoneJungle;
                         Counter++;
                         if (Counter >= 120)
                         {
@@ -1471,8 +1472,6 @@ namespace FargowiltasSouls.NPCs
                                 Player player = Main.player[t];
                                 if (player.bleed && Main.netMode != 1)
                                 {
-                                    if (player.ZoneJungle)
-                                        masoBool[0] = true;
                                     if (NPC.CountNPCS(NPCID.Piranha) <= 6)
                                     {
                                         int piranha = NPC.NewNPC((int)npc.Center.X + Main.rand.Next(-20, 20), (int)npc.Center.Y + Main.rand.Next(-20, 20), NPCID.Piranha);

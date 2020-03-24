@@ -118,3 +118,4 @@ plantera only shoots in p2 if you're venomed
 plantera dicer mines don't deal damage, only their explosion does
 ice golem drops ice crate
 nerfed fishron's oceanic maul on direct contact to -50 max life
+adjusted how piranha detects you're in jungle (for jump)
