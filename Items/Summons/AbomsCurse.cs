@@ -33,18 +33,19 @@ namespace FargowiltasSouls.Items.Summons
         public override bool UseItem(Player player)
         {
             int mutant = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
-            if (mutant > -1 && Main.npc[mutant].active)
-            {
-                Main.npc[mutant].Transform(mod.NPCType("AbomBoss"));
-                if (Main.netMode == 0)
-                    Main.NewText("Abominationn has awoken!", 175, 75, 255);
-                else if (Main.netMode == 2)
-                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Abominationn has awoken!"), new Color(175, 75, 255));
-            }
-            else
-            {
-                NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("AbomBoss"));
-            }
+                if (mutant > -1 && Main.npc[mutant].active)
+                {
+                    Main.npc[mutant].Transform(mod.NPCType("AbomBoss"));
+                    if (Main.netMode == 0)
+                        Main.NewText("Yrimir has awoken!", 175, 75, 255);
+                    else if (Main.netMode == 2)
+                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Yrimir has awoken!"), new Color(175, 75, 255));
+                }
+                else
+                {
+                    NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("AbomBoss"));
+                }
+
             return true;
         }
 

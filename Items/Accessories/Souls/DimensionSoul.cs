@@ -491,7 +491,7 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
             recipe.AddIngredient(null, "FlightMasterySoul");
             recipe.AddIngredient(null, "TrawlerSoul");
             recipe.AddIngredient(null, "WorldShaperSoul");
-            recipe.AddIngredient(null, "MutatingEnergy", 10);
+            recipe.AddIngredient(null, "MutantScale", 10);
 
             if (Fargowiltas.Instance.CalamityLoaded)
             {

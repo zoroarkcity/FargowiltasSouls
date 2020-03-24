@@ -24,6 +24,8 @@ namespace FargowiltasSouls.Buffs.Masomode
 
         public override void Update(Player player, ref int buffIndex)
         {
+            player.GetModPlayer<FargoPlayer>().MutantPresence = true; //LUL
+
             player.GetModPlayer<FargoPlayer>().noDodge = true;
             player.GetModPlayer<FargoPlayer>().noSupersonic = true;
             player.moonLeech = true;

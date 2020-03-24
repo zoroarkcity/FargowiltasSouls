@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Fargowiltas.Items.Tiles;
@@ -53,11 +54,16 @@ namespace FargowiltasSouls.Items.Summons
                         Main.npc[abominationn].StrikeNPC(9999, 0f, 0);
                         if (mutant > -1 && Main.npc[mutant].active)
                         {
-                            Main.npc[mutant].Transform(mod.NPCType("MutantBoss"));
-                            if (Main.netMode == 0)
-                                Main.NewText("Mutant has been enraged by the death of his brother!", 175, 75, 255);
-                            else if (Main.netMode == 2)
-                                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Mutant has been enraged by the death of his brother!"), new Color(175, 75, 255));
+                            Main.npc[abominationn].StrikeNPC(9999, 0f, 0);
+                            if (mutant > -1 && Main.npc[mutant].active)
+                            {
+                                Main.npc[mutant].Transform(mod.NPCType("MutantBoss"));
+                                if (Main.netMode == 0)
+                                    Main.NewText("Yharim has been enraged by the death of his brother!", 175, 75, 255);
+                                else if (Main.netMode == 2)
+                                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Yharim has been enraged by the death of his brother!"), new Color(175, 75, 255));
+                            }
+
                         }
                     }
                 }
@@ -80,8 +86,9 @@ namespace FargowiltasSouls.Items.Summons
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(null, "MutantScale", 5);
-            recipe.AddIngredient(null, "MutatingEnergy", 3);
+            recipe.AddIngredient(ItemID.GuideVoodooDoll);
             recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+
             recipe.SetResult(this, 5);
             recipe.AddRecipe();
         }

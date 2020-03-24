@@ -10,6 +10,7 @@ namespace FargowiltasSouls.Items.Tiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Music Box (Abominationn)");
+            Tooltip.SetDefault("Sakuzyo 'Stigma'");
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)

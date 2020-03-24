@@ -328,6 +328,18 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool SinisterIcon;
 
+        [Label("$Mods.FargowiltasSouls.MasoIconDropsConfig")]
+        [DefaultValue(true)]
+        public bool SinisterIconDrops;
+
+        [Label("$Mods.FargowiltasSouls.MasoGrazeConfig")]
+        [DefaultValue(true)]
+        public bool Graze;
+
+        [Label("$Mods.FargowiltasSouls.MasoDevianttHeartsConfig")]
+        [DefaultValue(true)]
+        public bool DevianttHearts;
+
         [Header("$Mods.FargowiltasSouls.SupremeFairyHeader")]
         [Label("$Mods.FargowiltasSouls.MasoSlimeConfig")]
         [DefaultValue(true)]
@@ -451,10 +463,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool TrueEyes;
 
-        [Header("$Mods.FargowiltasSouls.CyclonicHeader")]
+        /*[Header("$Mods.FargowiltasSouls.CyclonicHeader")]
         [Label("$Mods.FargowiltasSouls.MasoFishronConfig")]
         [DefaultValue(true)]
-        public bool FishronMinion;
+        public bool FishronMinion;*/
 
         [Header("$Mods.FargowiltasSouls.MutantArmorHeader")]
         [Label("$Mods.FargowiltasSouls.MasoAbomConfig")]

@@ -295,6 +295,8 @@ namespace FargowiltasSouls
         public bool Graze;
         public int GrazeCounter;
         public double GrazeBonus;
+        public bool DevianttHearts;
+        public int DevianttHeartsCD;
 
         //public int PreNerfDamage;
 
@@ -310,6 +312,7 @@ namespace FargowiltasSouls
         public bool noSupersonic;
         public bool Bloodthirsty;
         public bool SinisterIcon;
+        public bool SinisterIconDrops;
 
         public bool GodEater;               //defense removed, endurance removed, colossal DOT
         public bool FlamesoftheUniverse;    //activates various vanilla debuffs
@@ -338,6 +341,7 @@ namespace FargowiltasSouls
         public int MaxLifeReduction;
         public bool Midas;
         public bool MutantPresence;
+        public bool DevianttPresence;
         public bool Swarming;
         public bool LowGround;
         public bool Flipped;
@@ -672,6 +676,7 @@ namespace FargowiltasSouls
             TwinsEX = false;
             TimsConcoction = false;
             Graze = false;
+            DevianttHearts = false;
 
             //debuffs
             Hexed = false;
@@ -684,6 +689,7 @@ namespace FargowiltasSouls
             noSupersonic = false;
             Bloodthirsty = false;
             SinisterIcon = false;
+            SinisterIconDrops = false;
 
             GodEater = false;
             FlamesoftheUniverse = false;
@@ -703,6 +709,7 @@ namespace FargowiltasSouls
             DeathMarked = false;
             Midas = false;
             MutantPresence = false;
+            DevianttPresence = false;
             Swarming = false;
             LowGround = false;
             Flipped = false;
@@ -767,8 +774,10 @@ namespace FargowiltasSouls
             SuperBleed = false;
             Bloodthirsty = false;
             SinisterIcon = false;
+            SinisterIconDrops = false;
             Graze = false;
             GrazeBonus = 0;
+            DevianttHearts = false;
 
             MaxLifeReduction = 0;
         }
@@ -1173,6 +1182,12 @@ namespace FargowiltasSouls
                 //player.jump = 0;
             }
 
+            if (DevianttHearts)
+            {
+                if (DevianttHeartsCD > 0)
+                    DevianttHeartsCD--;
+            }
+
             if (Graze && ++GrazeCounter > 60) //decrease graze bonus over time
             {
                 GrazeCounter = 0;
@@ -1258,7 +1273,7 @@ namespace FargowiltasSouls
 
             if (Atrophied)
             {
-                player.meleeSpeed = 0f; //melee silence
+                player.meleeSpeed = 0.01f; //melee silence
                 player.thrownVelocity = 0f;
                 //just in case
                 player.meleeDamage = 0.01f;
@@ -1305,19 +1320,19 @@ namespace FargowiltasSouls
 
             if (AgitatingLens)
             {
-                if (AgitatingLensCD++ > 10)
+                if (AgitatingLensCD++ > 12)
                 {
                     AgitatingLensCD = 0;
                     if ((Math.Abs(player.velocity.X) >= 5 || Math.Abs(player.velocity.Y) >= 5) && player.whoAmI == Main.myPlayer && SoulConfig.Instance.GetValue(SoulConfig.Instance.AgitatedLens))
                     {
-                        int damage = 20;
+                        int damage = 12;
                         if (SupremeDeathbringerFairy)
-                            damage = 30;
+                            damage = 24;
                         if (MasochistSoul)
                             damage = 60;
                         damage = (int)(damage * player.magicDamage);
-                        int proj = Projectile.NewProjectile(player.Center, player.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.Next(-5, 6))) * 0.1f,
-                            ModContent.ProjectileType<BloodScytheFriendly>(), damage, 5f, player.whoAmI);
+                        int proj = Projectile.NewProjectile(player.Center, player.velocity * 0.1f, mod.ProjectileType("BloodScytheFriendly"), damage, 5f, player.whoAmI);
+
                     }
                 }
             }
@@ -1508,7 +1523,6 @@ namespace FargowiltasSouls
 
             if (player.whoAmI == Main.myPlayer && player.controlUseItem && player.HeldItem.type == ModContent.ItemType<EaterLauncher>())
             {
-
                 for (int i = 0; i < 20; i++)
                 {
                     Vector2 offset = new Vector2();
@@ -1520,6 +1534,8 @@ namespace FargowiltasSouls
                         DustID.PurpleCrystalShard, 0, 0, 100, Color.White, 1f
                         )];
                     dust.velocity = player.velocity;
+                    if (Main.rand.Next(3) == 0)
+                        dust.velocity += Vector2.Normalize(offset) * 5f;
                     dust.noGravity = true;
 
                     Vector2 offset2 = new Vector2();
@@ -1531,6 +1547,8 @@ namespace FargowiltasSouls
                         DustID.PurpleCrystalShard, 0, 0, 100, Color.White, 1f
                         )];
                     dust2.velocity = player.velocity;
+                    if (Main.rand.Next(3) == 0)
+                        dust2.velocity += Vector2.Normalize(offset2) * -5f;
                     dust2.noGravity = true;
                 }
             }
@@ -1542,6 +1560,12 @@ namespace FargowiltasSouls
                 player.statDefense /= 2;
                 player.endurance /= 2;
             }
+
+            /*if (DevianttPresence)
+            {
+                player.statDefense /= 2;
+                player.endurance /= 2;
+            }*/
         }
 
         private void ThoriumPostUpdate()
@@ -1882,6 +1906,13 @@ namespace FargowiltasSouls
                 crit = false;
             }
 
+            if ((proj.melee || proj.thrown) && Atrophied)
+            {
+                damage = 0;
+                knockback = 0;
+                crit = false;
+            }
+
             if (Fargowiltas.Instance.ThoriumLoaded) ThoriumModifyProj(proj, target, damage, crit);
         }
 
@@ -2083,6 +2114,13 @@ namespace FargowiltasSouls
                 crit = true;
                 damage = (int)(damage * 1.5f);
                 player.ClearBuff(ModContent.BuffType<FirstStrike>());
+            }
+
+            if (Atrophied)
+            {
+                damage = 0;
+                knockback = 0;
+                crit = false;
             }
 
             if (Fargowiltas.Instance.ThoriumLoaded) ThoriumModifyNPC(target, item, damage, crit);
@@ -2309,7 +2347,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (CyclonicFin)
+            /*if (CyclonicFin)
             {
                 target.AddBuff(ModContent.BuffType<OceanicMaul>(), 900);
                 //target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 900);
@@ -2360,7 +2398,7 @@ namespace FargowiltasSouls
                     }
                     Projectile.NewProjectile(spawn, vel, ModContent.ProjectileType<SpectralFishron>(), dam, 10f, proj.owner, target.whoAmI, damageType);
                 }
-            }
+            }*/
 
             if (CorruptHeart && CorruptHeartCD <= 0)
             {
@@ -2534,6 +2572,34 @@ namespace FargowiltasSouls
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.CopperLightning) && CopperEnchant && copperCD == 0)
             {
                 CopperEffect(target);
+            }
+
+            if (DevianttHearts && DevianttHeartsCD <= 0)
+            {
+                DevianttHeartsCD = 600;
+
+                if (Main.myPlayer == player.whoAmI)
+                {
+                    Vector2 offset = 300 * player.DirectionFrom(Main.MouseWorld);
+                    for (int i = -3; i <= 3; i++)
+                    {
+                        Vector2 spawnPos = player.Center + offset.RotatedBy(Math.PI / 7 * i);
+                        Vector2 speed = 20 * Vector2.Normalize(Main.MouseWorld - spawnPos);
+                        int heartDamage = (int)(17 * player.minionDamage);
+                        float ai1 = (Main.MouseWorld - spawnPos).Length() / 20 + 10;
+                        Projectile.NewProjectile(spawnPos, speed, mod.ProjectileType("FriendHeart"), heartDamage, 3f, player.whoAmI, -1, ai1);
+
+                        for (int j = 0; j < 20; j++)
+                        {
+                            Vector2 vector6 = Vector2.UnitY * 7f;
+                            vector6 = vector6.RotatedBy((j - (20 / 2 - 1)) * 6.28318548f / 20) + spawnPos;
+                            Vector2 vector7 = vector6 - spawnPos;
+                            int d = Dust.NewDust(vector6 + vector7, 0, 0, 86, 0f, 0f, 0, default(Color), 2f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity = vector7;
+                        }
+                    }
+                }
             }
 
             if (GodEaterImbue)
@@ -2779,7 +2845,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (CyclonicFin)
+            /* if (CyclonicFin)
             {
                 target.AddBuff(ModContent.BuffType<OceanicMaul>(), 900);
                 //target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 900);
@@ -2801,7 +2867,7 @@ namespace FargowiltasSouls
                     int damageType = 1;
                     Projectile.NewProjectile(spawn, vel, ModContent.ProjectileType<SpectralFishron>(), dam, 10f, player.whoAmI, target.whoAmI, damageType);
                 }
-            }
+            }*/
 
             if (CorruptHeart && CorruptHeartCD <= 0)
             {
@@ -3108,11 +3174,11 @@ namespace FargowiltasSouls
                     player.statLife = player.statLifeMax2;
                     player.HealEffect(player.statLifeMax2);
                     player.immune = true;
-                    player.immuneTime = player.longInvince ? 180 : 120;
+                    player.immuneTime = 180;
+                    player.hurtCooldowns[0] = 180;
+                    player.hurtCooldowns[1] = 180;
                     Main.NewText("You've been revived!", Color.LimeGreen);
-                    player.ClearBuff(ModContent.BuffType<MutantFang>());
-                    player.buffImmune[ModContent.BuffType<MutantFang>()] = true;
-                    player.AddBuff(ModContent.BuffType<MutantRebirth>(), 7200);
+                    player.AddBuff(ModContent.BuffType<MutantRebirth>(), 10800);
                     Projectile.NewProjectile(player.Center, -Vector2.UnitY, ModContent.ProjectileType<GiantDeathray>(), (int)(7000 * player.minionDamage), 10f, player.whoAmI);
                     retVal = false;
                 }
@@ -3841,32 +3907,28 @@ namespace FargowiltasSouls
             AddMinion(SoulConfig.Instance.HallowSword, ModContent.ProjectileType<HallowSword>(), (int)(dmg * player.minionDamage), 0f);
 
             //reflect proj
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.HallowShield) && !noDodge)
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.HallowShield) && !noDodge && !player.HasBuff(mod.BuffType("HallowCooldown")))
             {
                 const int focusRadius = 50;
 
-                if (Math.Abs(player.velocity.X) < .5f && Math.Abs(player.velocity.Y) < .5f)
+                //if (Math.Abs(player.velocity.X) < .5f && Math.Abs(player.velocity.Y) < .5f)
+                for (int i = 0; i < 20; i++)
                 {
-                    for (int i = 0; i < 25; i++)
-                    {
-                        Vector2 offset = new Vector2();
-                        double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                        offset.X += (float)(Math.Sin(angle) * focusRadius);
-                        offset.Y += (float)(Math.Cos(angle) * focusRadius);
-                        Dust dust = Main.dust[Dust.NewDust(
-                            player.Center + offset - new Vector2(4, 4), 0, 0,
-                            DustID.GoldFlame, 0, 0, 100, Color.White, 1f
-                            )];
-                        dust.velocity = player.velocity;
-                        dust.noGravity = true;
-                    }
+                    Vector2 offset = new Vector2();
+                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                    offset.X += (float)(Math.Sin(angle) * focusRadius);
+                    offset.Y += (float)(Math.Cos(angle) * focusRadius);
+                    Dust dust = Main.dust[Dust.NewDust(
+                        player.Center + offset - new Vector2(4, 4), 0, 0,
+                        DustID.GoldFlame, 0, 0, 100, Color.White, 0.5f
+                        )];
+                    dust.velocity = player.velocity;
+                    dust.noGravity = true;
                 }
-
-                float distance = 5f * 16;
 
                 Main.projectile.Where(x => x.active && x.hostile).ToList().ForEach(x =>
                 {
-                    if ((Eternity || Main.rand.Next(5) == 0) && Vector2.Distance(x.Center, player.Center) <= distance)
+                    if (Vector2.Distance(x.Center, player.Center) <= focusRadius + Math.Min(x.width, x.height) / 2)
                     {
                         for (int i = 0; i < 5; i++)
                         {
@@ -3883,7 +3945,7 @@ namespace FargowiltasSouls
                         x.velocity *= -1f;
 
                         // Flip sprite
-                        if (x.Center.X > player.Center.X * 0.5f)
+                        if (x.Center.X > player.Center.X)
                         {
                             x.direction = 1;
                             x.spriteDirection = 1;
@@ -3896,6 +3958,8 @@ namespace FargowiltasSouls
 
                         // Don't know if this will help but here it is
                         x.netUpdate = true;
+
+                        player.AddBuff(mod.BuffType("HallowCooldown"), 600);
                     }
                 });
             }
@@ -4841,8 +4905,6 @@ namespace FargowiltasSouls
             switch (type)
             {
                 case ItemID.DaedalusStormbow:
-                    return 1f / 3f;
-
                 case ItemID.StarCannon:
                 case ItemID.Tsunami:
                 case ItemID.Phantasm:
@@ -4854,12 +4916,17 @@ namespace FargowiltasSouls
                 case ItemID.ChlorophyteShotbow:
                 case ItemID.Razorpine:
                 case ItemID.SnowmanCannon:
+                case ItemID.BeesKnees:
+                case ItemID.PhoenixBlaster:
                     return 2f / 3f;
-
+                    
                 case ItemID.OnyxBlaster:
                 case ItemID.LastPrism:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.ChainGun:
+                case ItemID.HellwingBow:
+                case ItemID.Beenade:
+                case ItemID.Handgun:
                     return 0.75f;
 
                 case ItemID.SpaceGun:

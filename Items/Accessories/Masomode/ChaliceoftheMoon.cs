@@ -87,6 +87,7 @@ Summons a friendly Cultist and plant to fight at your side");
             recipe.AddIngredient(ItemID.FragmentVortex, 10);
             recipe.AddIngredient(ItemID.FragmentNebula, 10);
             recipe.AddIngredient(ItemID.FragmentStardust, 10);
+            recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 10);
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

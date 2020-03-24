@@ -39,7 +39,9 @@ namespace FargowiltasSouls.Items.Summons
                 NPC npc = new NPC();
                 npc.SetDefaults(Main.rand.Next(totalNPCs));
 
-                if (!Main.hardMode && npc.boss)
+                if ((!Main.hardMode && npc.boss)
+                    || (!NPC.downedGolemBoss && (npc.type == NPCID.DD2Betsy || npc.type == NPCID.MartianProbe))
+                    || (!NPC.downedAncientCultist && (npc.type == NPCID.LunarTowerNebula || npc.type == NPCID.LunarTowerSolar || npc.type == NPCID.LunarTowerStardust || npc.type == NPCID.LunarTowerVortex)))
                 {
                     i--;
                     continue;

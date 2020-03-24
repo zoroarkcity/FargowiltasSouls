@@ -62,6 +62,7 @@ Creeper respawn speed increases when not moving");
             recipe.AddIngredient(ItemID.PurificationPowder, 30);
             recipe.AddIngredient(ItemID.GreenSolution, 50);
             recipe.AddIngredient(ItemID.ChlorophyteBar, 5);
+            recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 10);
 
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);

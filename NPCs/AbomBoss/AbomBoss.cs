@@ -1,10 +1,12 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using System.IO;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace FargowiltasSouls.NPCs.AbomBoss
 {
@@ -13,7 +15,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Abominationn");
+            DisplayName.SetDefault("Yrimir, God Emperor of Gamers");
+            //DisplayName.SetDefault("Abominationn");
             Main.npcFrameCount[npc.type] = 4;
         }
 
@@ -136,7 +139,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             {
                 Aura(2000f, mod.BuffType("GodEater"), true, 86);
             }
-            else if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
+
+            if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
             {
                 Main.player[Main.myPlayer].AddBuff(mod.BuffType("AbomPresence"), 2);
             }
@@ -378,6 +382,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 case 3: //while dashing (p2 makes side scythes)
                     if (Phase2Check())
                         break;
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.velocity.X);
                     if (++npc.ai[3] > 5)
                     {
                         npc.ai[3] = 0;
@@ -673,6 +678,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 case 11: //dash and make deathrays
                     npc.localAI[2] = 0;
                     npc.velocity.X = npc.ai[2] * 21f;
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.velocity.X);
                     MovementY(player.Center.Y - 250, 0.7f);
                     if (++npc.ai[3] > 5)
                     {
@@ -720,6 +726,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 case 13: //second deathray dash
                     npc.velocity.X = npc.ai[2] * -21f;
                     MovementY(player.Center.Y - 250, 0.7f);
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.velocity.X);
                     if (++npc.ai[3] > 5)
                     {
                         npc.ai[3] = 0;
@@ -792,6 +799,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 16: //while dashing
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.velocity.X);
                     if (++npc.ai[1] > 120)
                     {
                         npc.netUpdate = true;
@@ -853,7 +861,6 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
-                        npc.localAI[2] = 0;
                     }
                     else if (npc.ai[1] == 180 || (npc.dontTakeDamage && npc.ai[1] == 120))
                     {
@@ -864,7 +871,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     break;
 
                 case 19: //prepare to dash
-                    npc.localAI[2] = 0;
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.localAI[2]);
                     if (++npc.ai[1] > 60)
                     {
                         npc.netUpdate = true;
@@ -878,6 +885,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 case 20: //while dashing down
                     npc.velocity.Y *= 0.97f;
                     npc.position += npc.velocity;
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.localAI[2]);
                     if (++npc.ai[1] > 90)
                     {
                         npc.netUpdate = true;
@@ -889,6 +897,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 case 21: //wait for scythes to clear
                     if (!AliveCheck(player))
                         break;
+                    npc.localAI[2] = 0;
                     targetPos = player.Center;
                     targetPos.X += 500 * (npc.Center.X < targetPos.X ? -1 : 1);
                     if (npc.Distance(targetPos) > 50)
@@ -1118,23 +1127,15 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             FargoSoulsWorld.downedAbom = true;
             if (Main.netMode == 2)
                 NetMessage.SendData(7); //sync world
+
             //npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbomBag"));
-            int maxEX = Main.rand.Next(10) + 10;
-            for (int i = 0; i < maxEX; i++)
-                npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantScale"));
+
+            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantScale"), Main.rand.Next(11) + 10);
+            //npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"), Main.rand.Next(11) + 10);
+            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CyclonicFin"));
+
             if (Main.rand.Next(10) == 0)
                 Item.NewItem(npc.Hitbox, mod.ItemType("AbomTrophy"));
-
-            for (int i = 0; i < 1000; i++)
-                if (Main.projectile[i].active && Main.projectile[i].hostile)
-                    Main.projectile[i].Kill();
-
-            if (FargoSoulsWorld.downedFishronEX)
-            {
-                int maxEnergy = Main.rand.Next(10) + 10;
-                for (int i = 0; i < maxEnergy; i++)
-                    npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"));
-            }
         }
 
         public override void BossLoot(ref string name, ref int potionType)
@@ -1151,6 +1152,11 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 if (npc.frame.Y >= 4 * frameHeight)
                     npc.frame.Y = 0;
             }
+        }
+
+        public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
+        {
+            spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         }
     }
 }

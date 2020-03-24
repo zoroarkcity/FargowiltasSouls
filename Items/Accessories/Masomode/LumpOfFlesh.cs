@@ -71,7 +71,8 @@ Makes armed and magic skeletons less hostile outside the Dungeon");
 
             recipe.AddIngredient(mod.ItemType("PungentEyeball"));
             recipe.AddIngredient(mod.ItemType("SkullCharm"));
-            recipe.AddIngredient(ItemID.SpectreBar, 12);
+            recipe.AddIngredient(ItemID.SpectreBar, 10);
+            recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 10);
 
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);

@@ -31,7 +31,7 @@ namespace FargowiltasSouls.Items.Misc
 
         public override void RightClick(Player player)
         {
-            player.QuickSpawnItem(mod.ItemType("Sadism"), Main.rand.Next(5) + 15);
+            player.QuickSpawnItem(mod.ItemType("Sadism"), Main.rand.Next(6) + 15);
 
             if (!Fargowiltas.Instance.CalamityLoaded)
                 player.QuickSpawnItem(mod.ItemType("MutantsFury"));

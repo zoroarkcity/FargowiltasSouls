@@ -6,8 +6,6 @@ namespace FargowiltasSouls.Items.Misc
 {
 	public class MutantScale : ModItem
 	{
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Abominable Scale");

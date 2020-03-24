@@ -25,12 +25,13 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.penetrate = -1;
             projectile.ignoreWater = true;
 
-            projectile.usesIDStaticNPCImmunity = true;
-            projectile.idStaticNPCHitCooldown = 10;
+            /*projectile.usesIDStaticNPCImmunity = true;
+            projectile.idStaticNPCHitCooldown = 10;*/
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            target.immune[projectile.owner] = 6;
             target.AddBuff(BuffID.CursedInferno, 600);
         }
     }

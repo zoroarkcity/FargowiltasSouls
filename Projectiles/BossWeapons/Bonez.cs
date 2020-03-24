@@ -22,6 +22,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.penetrate = 1;
             projectile.timeLeft = 600;
             aiType = ProjectileID.CrystalBullet;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().HasKillCooldown = true;
         }
 
         public override void AI()

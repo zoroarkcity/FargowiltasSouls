@@ -22,7 +22,7 @@ namespace FargowiltasSouls.NPCs
             npc.width = 36;
             npc.height = 36;
             npc.damage = 100;
-            npc.lifeMax = 500;
+            npc.lifeMax = 5000;//500;
             npc.HitSound = SoundID.NPCHit3;
             npc.DeathSound = SoundID.NPCDeath3;
             npc.noGravity = true;
@@ -93,7 +93,7 @@ namespace FargowiltasSouls.NPCs
             {
                 target.AddBuff(BuffID.Wet, 420);
                 target.AddBuff(mod.BuffType("Defenseless"), 600);
-                target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 50;
+                target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;//50;
                 target.AddBuff(mod.BuffType("OceanicMaul"), 1800);
             }
         }

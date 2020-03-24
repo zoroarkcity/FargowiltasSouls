@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             DisplayName.SetDefault("Heart of the Masochist");
             Tooltip.SetDefault(@"'Suffering no longer hurts, mostly'
 Grants immunity to Living Wasteland, Frozen, Oozed, Withered Weapon, and Withered Armor
-Grants immunity to Feral Bite, Mutant Nibble, Flipped, Unstable, Distorted, and Chaos State
+Grants immunity to Feral Bite, Mutant Nibble, Flipped, Unstable, Distorted, and Curse of the Moon
 Grants immunity to Wet, Electrified, Moon Leech, Nullification Curse, and water debuffs
 Increases damage, critical strike chance, and damage reduction by 10%, 
 Increases flight time by 100%
@@ -87,9 +87,9 @@ Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu");
             player.buffImmune[mod.BuffType("Flipped")] = true;
             player.buffImmune[mod.BuffType("FlippedHallow")] = true;
             player.buffImmune[mod.BuffType("Unstable")] = true;
-            //player.buffImmune[mod.BuffType("CurseoftheMoon")] = true;
+            player.buffImmune[mod.BuffType("CurseoftheMoon")] = true;
             player.buffImmune[BuffID.VortexDebuff] = true;
-            player.buffImmune[BuffID.ChaosState] = true;
+            //player.buffImmune[BuffID.ChaosState] = true;
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.GravityControl))
                 player.gravControl = true;
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.TrueEyes))
@@ -114,6 +114,7 @@ Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu");
             recipe.AddIngredient(mod.ItemType("GalacticGlobe"));
             recipe.AddIngredient(mod.ItemType("LunarCrystal"), 30);
             recipe.AddIngredient(ItemID.LunarBar, 15);
+            recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 10);
 
             recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this);

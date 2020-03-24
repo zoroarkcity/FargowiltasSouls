@@ -61,7 +61,7 @@ namespace FargowiltasSouls.Projectiles
         public int TimeFrozen = 0;
         public bool TimeFreezeImmune;
         public bool TimeFreezeCheck;
-
+        public bool HasKillCooldown;
         
 
         public bool masobool;
@@ -74,6 +74,12 @@ namespace FargowiltasSouls.Projectiles
             {
                 switch (projectile.type)
                 {
+                    case ProjectileID.CrystalBullet:
+                    case ProjectileID.HolyArrow:
+                    case ProjectileID.HallowStar:
+                        HasKillCooldown = true;
+                        break;
+
                     case ProjectileID.StardustCellMinionShot:
                         projectile.minion = true; //allows it to hurt maso ML
                         break;
@@ -795,7 +801,13 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case ProjectileID.SandnadoHostile:
-                    if (FargoSoulsWorld.MasochistMode && projectile.timeLeft == 1199 && Main.netMode != 1)
+                    if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                    {
+                        projectile.damage = Main.npc[FargoSoulsGlobalNPC.deviBoss].damage / 4;
+                        if (Main.npc[FargoSoulsGlobalNPC.deviBoss].ai[0] != 5 && projectile.timeLeft > 90)
+                            projectile.timeLeft = 90;
+                    }
+                    else if (FargoSoulsWorld.MasochistMode && projectile.timeLeft == 1199 && Main.netMode != 1)
                     {
                         int n = NPC.NewNPC((int)projectile.Center.X, (int)projectile.Center.Y, NPCID.SandShark);
                         if (n < 200)
@@ -1130,7 +1142,7 @@ namespace FargowiltasSouls.Projectiles
                 FargoPlayer fargoPlayer = Main.LocalPlayer.GetModPlayer<FargoPlayer>();
                 if (fargoPlayer.Graze && --GrazeCD < 0 && !Main.LocalPlayer.immune && Main.LocalPlayer.hurtCooldowns[0] <= 0 && Main.LocalPlayer.hurtCooldowns[1] <= 0)
                 {
-                    if (projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + (fargoPlayer.MasochistSoul ? 100 : 75) && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0))
+                    if (projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + 100 && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0))
                     {
                         GrazeCD = 60;
                         fargoPlayer.GrazeBonus += 0.02;
@@ -1471,7 +1483,11 @@ namespace FargowiltasSouls.Projectiles
                     case ProjectileID.RuneBlast:
                         target.AddBuff(ModContent.BuffType<FlamesoftheUniverse>(), 120);
                         target.AddBuff(ModContent.BuffType<Hexed>(), 240);
-                        target.AddBuff(BuffID.Suffocation, 240);
+                        if (!FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                        {
+                            target.AddBuff(BuffID.Suffocation, 240);
+                        }
+
                         break;
 
                     case ProjectileID.ThornBall:
@@ -1539,20 +1555,30 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.LostSoulHostile:
-                        target.AddBuff(ModContent.BuffType<Hexed>(), 240);
+                        if (!FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                        {
+                            target.AddBuff(ModContent.BuffType<Hexed>(), 240);
+                        }
                         target.AddBuff(ModContent.BuffType<ReverseManaFlow>(), 600);
+
                         break;
 
                     case ProjectileID.InfernoHostileBlast:
                     case ProjectileID.InfernoHostileBolt:
-                        if (Main.rand.Next(5) == 0)
-                            target.AddBuff(ModContent.BuffType<Fused>(), 1800);
+                        if (!FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                        {
+                            if (Main.rand.Next(5) == 0)
+                                target.AddBuff(ModContent.BuffType<Fused>(), 1800);
+                        }
                         target.AddBuff(ModContent.BuffType<Jammed>(), 600);
                         break;
 
                     case ProjectileID.ShadowBeamHostile:
-                        target.AddBuff(ModContent.BuffType<Rotting>(), 1800);
-                        target.AddBuff(ModContent.BuffType<Shadowflame>(), 300);
+                        if (!FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                        {
+                            target.AddBuff(ModContent.BuffType<Rotting>(), 1800);
+                            target.AddBuff(ModContent.BuffType<Shadowflame>(), 300);
+                        }
                         target.AddBuff(ModContent.BuffType<Atrophied>(), 600);
                         break;
 
@@ -1639,11 +1665,8 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.Sharknado:
                         target.AddBuff(ModContent.BuffType<Defenseless>(), 600);
-                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.fishBossEX, NPCID.DukeFishron))
-                        {
-                            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
-                            target.AddBuff(ModContent.BuffType<OceanicMaul>(), 1800);
-                        }
+                        target.AddBuff(ModContent.BuffType<OceanicMaul>(), 1800);
+                        target.GetModPlayer<FargoPlayer>().MaxLifeReduction += FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.fishBossEX, NPCID.DukeFishron) ? 100 : 10;
                         break;
 
                     case ProjectileID.FlamingScythe:
@@ -1722,25 +1745,43 @@ namespace FargowiltasSouls.Projectiles
 
         public override bool PreKill(Projectile projectile, int timeLeft)
         {
-            if (FargoSoulsWorld.MasochistMode && projectile.type == ProjectileID.CrystalBullet && projectile.owner == Main.myPlayer)
+            if (FargoSoulsWorld.MasochistMode && projectile.owner == Main.myPlayer && HasKillCooldown)
             {
                 if (Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer <= 0)
                 {
-                    Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer = 30;
+                    Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer = 15;
                     return true;
                 }
                 else
                 {
-                    Main.PlaySound(0, (int)projectile.position.X, (int)projectile.position.Y, 1, 1f, 0.0f);
-                    for (int index1 = 0; index1 < 5; ++index1) //vanilla dusts
+                    /*if (projectile.type == ProjectileID.CrystalBullet)
                     {
-                        int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 68, 0.0f, 0.0f, 0, new Color(), 1f);
-                        Main.dust[index2].noGravity = true;
-                        Dust dust1 = Main.dust[index2];
-                        dust1.velocity = dust1.velocity * 1.5f;
-                        Dust dust2 = Main.dust[index2];
-                        dust2.scale = dust2.scale * 0.9f;
+                        Main.PlaySound(0, (int)projectile.position.X, (int)projectile.position.Y, 1, 1f, 0.0f);
+                        for (int index1 = 0; index1 < 5; ++index1) //vanilla dusts
+                        {
+                            int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 68, 0.0f, 0.0f, 0, new Color(), 1f);
+                            Main.dust[index2].noGravity = true;
+                            Dust dust1 = Main.dust[index2];
+                            dust1.velocity = dust1.velocity * 1.5f;
+                            Dust dust2 = Main.dust[index2];
+                            dust2.scale = dust2.scale * 0.9f;
+                        }
                     }
+                    else if (projectile.type == ProjectileID.HolyArrow || projectile.type == ProjectileID.HallowStar)
+                    {
+                        Main.PlaySound(SoundID.Item10, projectile.position);
+                        for (int index = 0; index < 10; ++index)
+                            Dust.NewDust(projectile.position, projectile.width, projectile.height, 58, projectile.velocity.X * 0.1f, projectile.velocity.Y * 0.1f, 150, new Color(), 1.2f);
+                        for (int index = 0; index < 3; ++index)
+                            Gore.NewGore(projectile.position, new Vector2(projectile.velocity.X * 0.05f, projectile.velocity.Y * 0.05f), Main.rand.Next(16, 18), 1f);
+                        if (projectile.type == 12 && projectile.damage < 500)
+                        {
+                            for (int index = 0; index < 10; ++index)
+                                Dust.NewDust(projectile.position, projectile.width, projectile.height, 57, projectile.velocity.X * 0.1f, projectile.velocity.Y * 0.1f, 150, new Color(), 1.2f);
+                            for (int index = 0; index < 3; ++index)
+                                Gore.NewGore(projectile.position, new Vector2(projectile.velocity.X * 0.05f, projectile.velocity.Y * 0.05f), Main.rand.Next(16, 18), 1f);
+                        }
+                    }*/
                     return false;
                 }
             }

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -13,15 +14,16 @@ namespace FargowiltasSouls.NPCs.MutantBoss
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mutant");
+            DisplayName.SetDefault("Jungle Tyrant, Yharim");
+            //DisplayName.SetDefault("Mutant");
             DisplayName.AddTranslation(GameCulture.Chinese, "突变体");
             Main.npcFrameCount[npc.type] = 4;
         }
 
         public override void SetDefaults()
         {
-            npc.width = 34;
-            npc.height = 50;
+            npc.width = 120;//34;
+            npc.height = 120;//50;
             npc.damage = 360;
             npc.defense = 360;
             npc.lifeMax = 7700000;
@@ -140,6 +142,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantBoss"), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
                             }
+
+                            if (Main.netMode != 1)
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantRitual5"), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                     }
                 }
@@ -609,6 +614,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     break;
 
                 case 6: //while dashing
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.velocity.X);
                     if (++npc.ai[1] > 30)
                     {
                         npc.netUpdate = true;
@@ -727,12 +733,17 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 npc.ai[1] = 0;
                                 npc.netUpdate = true;
                             }
+
+                            npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
                             break;
 
                         case 2: //swinging sword dash
                             if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
                                 Main.player[Main.myPlayer].AddBuff(mod.BuffType("MutantPresence"), 2);
+
                             npc.ai[3] += npc.ai[2];
+                            npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
+
                             if (++npc.ai[1] > 35)
                             {
                                 npc.ai[0] = 0;
@@ -798,7 +809,6 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (Main.netMode != 1)
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantRitual5"), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                         Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         for (int i = 0; i < 50; i++)
@@ -919,6 +929,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     break;
 
                 case 15: //while dashing
+                    npc.direction = npc.spriteDirection = Math.Sign(npc.velocity.X);
                     if (++npc.ai[1] > 30)
                     {
                         npc.netUpdate = true;
@@ -1770,7 +1781,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            damage *= 0.8;
+            damage *= 0.9;
             return true;
         }
 
@@ -1807,6 +1818,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             FargoSoulsWorld.skipMutantP1 = 0;
             if (Main.netMode == 2)
                 NetMessage.SendData(7); //sync world
+
             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantBag"));
             if (Main.rand.Next(10) == 0)
                 Item.NewItem(npc.Hitbox, mod.ItemType("MutantTrophy"));
@@ -1826,6 +1838,11 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 if (npc.frame.Y >= 4 * frameHeight)
                     npc.frame.Y = 0;
             }
+        }
+
+        public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
+        {
+            spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         }
     }
 }

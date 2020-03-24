@@ -33,8 +33,8 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.netImportant = true;
             projectile.scale = .5f;
 
-            projectile.usesIDStaticNPCImmunity = true;
-            projectile.idStaticNPCHitCooldown = 10;
+            /*projectile.usesIDStaticNPCImmunity = true;
+            projectile.idStaticNPCHitCooldown = 10;*/
         }
 
         public override void AI()
@@ -180,6 +180,7 @@ namespace FargowiltasSouls.Projectiles.Minions
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            target.immune[projectile.owner] = 6;
             target.AddBuff(BuffID.Ichor, 600);
         }
 

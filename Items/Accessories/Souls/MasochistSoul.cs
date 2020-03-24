@@ -22,13 +22,13 @@ Increases max life by 100%, damage by 50%, and damage reduction by 10%
 Increases life regen drastically, increases max number of minions and sentries by 10
 Grants gravity control, fastfall, and immunity to knockback, almost all Masochist Mode debuffs, and more
 Grants autofire to all weapons, modifier protection, and you automatically use mana potions when needed
-Empowers Cute Fishron and makes armed and magic skeletons less hostile outside the Dungeon
+Makes armed and magic skeletons less hostile outside the Dungeon
 Your attacks create additional attacks, hearts, and inflict a cocktail of Masochist Mode debuffs
 Press the Fireball Dash key to perform a short invincible dash
 Certain enemies will drop potions when defeated
 You respawn twice as fast, have Honey buff, improved night vision, and erupt into various attacks when injured
-Prevents boss spawns, increases spawn rate, and attacks may squeak and deal 1 damage to you
-Graze projectiles to gain increased crit damage
+Prevents boss spawns, increases spawn rate, increases loot, and attacks may squeak and deal 1 damage to you
+Graze projectiles to gain increased crit damage and crits periodically summon life-draining hearts
 Summons the aid of all Masochist Mode bosses to your side");
 
             DisplayName.AddTranslation(GameCulture.Chinese, "受虐之魂");
@@ -165,7 +165,15 @@ Summons the aid of all Masochist Mode bosses to your side");
             //sinister icon
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SinisterIcon))
                 fargoPlayer.SinisterIcon = true;
-            fargoPlayer.Graze = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SinisterIconDrops))
+                fargoPlayer.SinisterIconDrops = true;
+
+            //sparkling adoration
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Graze))
+                player.GetModPlayer<FargoPlayer>().Graze = true;
+
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DevianttHearts))
+                player.GetModPlayer<FargoPlayer>().DevianttHearts = true;
 
             //dragon fang
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DragonFang))
@@ -257,7 +265,7 @@ Summons the aid of all Masochist Mode bosses to your side");
 
             //galactic globe
             player.buffImmune[BuffID.VortexDebuff] = true;
-            player.buffImmune[BuffID.ChaosState] = true;
+            //player.buffImmune[BuffID.ChaosState] = true;
             fargoPlayer.GravityGlobeEX = true;
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.GravityControl))
                 player.gravControl = true;
@@ -267,10 +275,10 @@ Summons the aid of all Masochist Mode bosses to your side");
             player.buffImmune[BuffID.MoonLeech] = true;
 
             //cyclonic fin
-            fargoPlayer.CyclonicFin = true;
+            /*fargoPlayer.CyclonicFin = true;
             if (fargoPlayer.CyclonicFinCD > 0)
-                fargoPlayer.CyclonicFinCD -= 2;
-            if (player.mount.Active && player.mount.Type == MountID.CuteFishron)
+                fargoPlayer.CyclonicFinCD -= 2;*/
+            /*if (player.mount.Active && player.mount.Type == MountID.CuteFishron)
             {
                 if (player.ownedProjectileCounts[mod.ProjectileType("CuteFishronRitual")] < 1 && player.whoAmI == Main.myPlayer)
                     Projectile.NewProjectile(player.MountedCenter, Vector2.Zero, mod.ProjectileType("CuteFishronRitual"), 0, 0f, Main.myPlayer);
@@ -330,7 +338,7 @@ Summons the aid of all Masochist Mode bosses to your side");
                     if (player.velocity.Y > 16f)
                         player.velocity.Y = 16f;
                 }
-            }
+            }*/
 
             //sadism
             player.buffImmune[mod.BuffType("Antisocial")] = true;
@@ -376,6 +384,7 @@ Summons the aid of all Masochist Mode bosses to your side");
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddIngredient(mod.ItemType("SinisterIcon"));
+            recipe.AddIngredient(mod.ItemType("SparklingAdoration"));
             recipe.AddIngredient(mod.ItemType("SupremeDeathbringerFairy"));
             recipe.AddIngredient(mod.ItemType("BionomicCluster"));
             recipe.AddIngredient(mod.ItemType("DubiousCircuitry"));
@@ -383,8 +392,10 @@ Summons the aid of all Masochist Mode bosses to your side");
             recipe.AddIngredient(mod.ItemType("LumpOfFlesh"));
             recipe.AddIngredient(mod.ItemType("ChaliceoftheMoon"));
             recipe.AddIngredient(mod.ItemType("HeartoftheMasochist"));
-            recipe.AddIngredient(mod.ItemType("CyclonicFin"));
+            //recipe.AddIngredient(mod.ItemType("CyclonicFin"));
             //recipe.AddIngredient(mod.ItemType("Sadism"), 30);
+            recipe.AddIngredient(mod.ItemType("MutantScale"), 15);
+            recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 15);
 
             recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
 

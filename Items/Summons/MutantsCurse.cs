@@ -34,18 +34,20 @@ namespace FargowiltasSouls.Items.Summons
         public override bool UseItem(Player player)
         {
             int mutant = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
-            if (mutant > -1 && Main.npc[mutant].active)
-            {
-                Main.npc[mutant].Transform(mod.NPCType("MutantBoss"));
-                if (Main.netMode == 0)
-                    Main.NewText("Mutant has awoken!", 175, 75, 255);
-                else if (Main.netMode == 2)
-                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Mutant has awoken!"), new Color(175, 75, 255));
-            }
-            else
-            {
-                NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("MutantBoss"));
-            }
+
+                if (mutant > -1 && Main.npc[mutant].active)
+                {
+                    Main.npc[mutant].Transform(mod.NPCType("MutantBoss"));
+                    if (Main.netMode == 0)
+                        Main.NewText("Yharim has awoken!", 175, 75, 255);
+                    else if (Main.netMode == 2)
+                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Yharim has awoken!"), new Color(175, 75, 255));
+                }
+                else
+                {
+                    NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("MutantBoss"));
+                }
+
             return true;
         }
 

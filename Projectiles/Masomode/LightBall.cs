@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.hostile = true;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
-            projectile.timeLeft = 300;
+            projectile.timeLeft = 600;
             projectile.extraUpdates = 1;
         }
 
@@ -43,6 +43,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
             Vector2 acceleration = projectile.velocity.RotatedBy(Math.PI / 2);
             acceleration *= projectile.ai[1];
             projectile.velocity += acceleration;
+
+            projectile.velocity *= 1 + projectile.ai[0];
 
             projectile.spriteDirection = projectile.direction = projectile.velocity.X > 0 ? 1 : -1;
             projectile.rotation += 0.3f * projectile.direction;

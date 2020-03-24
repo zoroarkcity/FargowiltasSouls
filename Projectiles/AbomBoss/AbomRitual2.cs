@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 if (projectile.alpha < 0)
                     projectile.alpha = 0;
 
-                float distance = threshold * projectile.scale / 2f;
+                /*float distance = threshold * projectile.scale / 2f;
                 for (int i = 0; i < 30; i++)
                 {
                     Vector2 offset = new Vector2();
@@ -51,7 +51,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                         DustID.Shadowflame, 0, 0, 100, Color.White, 1f)];
                     dust.velocity = Main.npc[ai1].velocity;
                     dust.noGravity = true;
-                }
+                }*/
             }
             else
             {

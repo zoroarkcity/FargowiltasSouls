@@ -288,7 +288,7 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
             recipe.AddIngredient(null, "ArchWizardsSoul");
             recipe.AddIngredient(null, "ConjuristsSoul");
             recipe.AddIngredient(null, "OlympiansSoul");
-            recipe.AddIngredient(null, "MutatingEnergy", 10);
+            recipe.AddIngredient(null, "MutantScale", 10);
 
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
