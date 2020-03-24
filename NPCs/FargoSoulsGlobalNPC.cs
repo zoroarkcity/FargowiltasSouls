@@ -10243,6 +10243,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.GiantWormHead:
+                    case NPCID.DiggerHead:
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.WormholePotion, Main.rand.Next(0, 2) + 1);
                         break;
