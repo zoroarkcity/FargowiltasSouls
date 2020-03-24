@@ -93,7 +93,7 @@ Effects of Nuba's Blessing, Novaniel's Resolve, and Celestial Ring");
             recipe.AddIngredient(soa.ItemType("LunarRing"));
             recipe.AddIngredient(soa.ItemType("TrueMoonEdgedPandolarra"));
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

@@ -81,7 +81,7 @@ Effects of Ring of the Fallen, Memento Mori, and Arcanum of the Caster");
             recipe.AddIngredient(null, "SyranForce");
             recipe.AddIngredient(null, "MutatingEnergy", 10);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

@@ -80,7 +80,7 @@ Effects of Pumpkin Amulet");
             recipe.AddIngredient(null, "DreadfireEnchant");
             recipe.AddIngredient(null, "MarstechEnchant");
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

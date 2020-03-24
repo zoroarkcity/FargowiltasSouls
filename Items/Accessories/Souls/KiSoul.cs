@@ -127,7 +127,7 @@ Drastically increased ki regen
 
             //recipe.AddIngredient(_dbzModContent.\1Type<\2>\(\), 250);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this);
             recipe.AddRecipe();

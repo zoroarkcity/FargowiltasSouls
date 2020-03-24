@@ -164,7 +164,7 @@ Summons a pet Magic Lantern");
             recipe.AddIngredient(ShroomiteDiggingClaw);
             recipe.AddIngredient(DrillContainmentUnit);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this);
             recipe.AddRecipe();

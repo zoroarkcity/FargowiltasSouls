@@ -116,7 +116,7 @@ Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu");
             recipe.AddIngredient(ItemID.LunarBar, 15);
             recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 10);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

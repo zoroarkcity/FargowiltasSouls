@@ -75,7 +75,7 @@ namespace FargowiltasSouls.Items.Summons
             recipe.AddIngredient(ItemID.ShrimpyTruffle);
             recipe.AddIngredient(mod.ItemType("LunarCrystal"), 9);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this, 3);
             recipe.AddRecipe();
         }*/

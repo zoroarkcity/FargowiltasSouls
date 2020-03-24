@@ -283,7 +283,7 @@ Effects of Flying Carpet";
             recipe.AddIngredient(ItemID.ReindeerBells);
             recipe.AddIngredient(ItemID.BrainScrambler);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this);
             recipe.AddRecipe();

@@ -129,7 +129,7 @@ Increased melee knockback
             recipe.AddIngredient(InfluxWaver);
             recipe.AddIngredient(Meowmere);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this);
             recipe.AddRecipe();

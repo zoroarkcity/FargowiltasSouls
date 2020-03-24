@@ -87,7 +87,7 @@ namespace FargowiltasSouls.Items.Summons
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(null, "MutantScale", 5);
             recipe.AddIngredient(ItemID.GuideVoodooDoll);
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this, 5);
             recipe.AddRecipe();
