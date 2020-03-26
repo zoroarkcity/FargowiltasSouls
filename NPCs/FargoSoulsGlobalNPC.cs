@@ -11710,10 +11710,7 @@ namespace FargowiltasSouls.NPCs
                             reduction = 0.5f;
                         damage = (int)(damage * reduction);
                         break;
-
-                    case NPCID.MoonLordCore:
-                        damage = damage * 2 / 3;
-                        break;
+                        
                     case NPCID.MoonLordHead:
                         damage = damage * 2;
                         break;

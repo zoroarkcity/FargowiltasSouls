@@ -127,3 +127,5 @@ updated sprites:
 	squeaky toy
 added sprites:
 	bloodied skull
+
+removed moon lord core's DR
