@@ -6193,7 +6193,8 @@ namespace FargowiltasSouls.NPCs
                                                 Main.dust[d].noGravity = true;
                                                 Main.dust[d].velocity *= 0.5f;
                                             }*/
-                                            Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[0]), ModContent.ProjectileType<PhantasmalDeathrayMLSmall>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
+                                            if (Main.netMode != 1)
+                                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[0]), ModContent.ProjectileType<PhantasmalDeathrayMLSmall>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
                                         }
                                     }
                                 }
