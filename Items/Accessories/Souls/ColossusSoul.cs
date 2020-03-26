@@ -210,6 +210,8 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell";
             }
             else
             {
+                recipe.AddIngredient(ItemID.FrozenTurtleShell);
+                recipe.AddIngredient(ItemID.PaladinsShield);
                 recipe.AddIngredient(ItemID.AnkhShield);
             }
 
