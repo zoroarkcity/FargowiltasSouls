@@ -119,4 +119,11 @@ ice golem drops ice crate
 nerfed fishron's oceanic maul on direct contact to -50 max life
 adjusted how piranha detects you're in jungle (for jump)
 digger drops wormhole potions too (since giant worm is replaced in hm)
+
 changed nuke fishron recipe
+updated sprites:
+	remote control
+	nymph's perfume
+	squeaky toy
+added sprites:
+	bloodied skull

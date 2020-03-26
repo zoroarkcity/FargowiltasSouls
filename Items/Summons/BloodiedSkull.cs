@@ -7,8 +7,6 @@ namespace FargowiltasSouls.Items.Summons
 {
 	public class BloodiedSkull : ModItem
 	{
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Bloodied Skull");
