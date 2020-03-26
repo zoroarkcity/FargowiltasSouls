@@ -4013,7 +4013,7 @@ namespace FargowiltasSouls.NPCs
                             }
                         }
 
-                        if (!npc.dontTakeDamage)
+                        if (!npc.dontTakeDamage && Main.netMode != 1)
                             Counter++; //phases transition twice as fast when core is exposed
 
                         if (Main.player[Main.myPlayer].active && !Main.player[Main.myPlayer].dead && masoStateML >= 0 && masoStateML <= 3)

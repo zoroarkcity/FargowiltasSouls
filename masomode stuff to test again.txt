@@ -130,3 +130,4 @@ added sprites:
 
 removed moon lord core's DR
 fixed ML socket ray telegraphs in MP
+fixed(?) ML phases in MP
