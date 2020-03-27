@@ -9,27 +9,33 @@ namespace FargowiltasSouls.Projectiles.Masomode
 {
     public class SpectralFishron : ModProjectile
     {
-        public override string Texture => "Terraria/NPC_370";
+        public override string Texture => "FargowiltasSouls/NPCs/Eternals/AbominationnSoul";
+
+        private const float PI = (float)Math.PI;
+        private const float rotationPerTick = PI / 57f;
+        private const float threshold = 150;
+        private float ringRotation;
+        private float scytheRotation;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spectral Fishron");
-            Main.projFrames[projectile.type] = 8;
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 11;
+            DisplayName.SetDefault("Spectral Abominationn");
+            Main.projFrames[projectile.type] = 4;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 150;
-            projectile.height = 100;
+            projectile.width = 120;
+            projectile.height = 120;
             projectile.aiStyle = -1;
             projectile.penetrate = -1;
             projectile.friendly = true;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.timeLeft = 180;
-            projectile.alpha = 100;
+            //projectile.alpha = 100;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
         }
 
@@ -38,7 +44,10 @@ namespace FargowiltasSouls.Projectiles.Masomode
             if (projectile.localAI[1] == 0f)
             {
                 projectile.localAI[1] = projectile.ai[1] + 1;
-                Main.PlaySound(29, (int)projectile.Center.X, (int)projectile.Center.Y, 20);
+                
+                //Main.PlaySound(29, (int)projectile.Center.X, (int)projectile.Center.Y, 20);
+                Main.PlaySound(36, (int)projectile.Center.X, (int)projectile.Center.Y, -1, 1f, 0f);
+
                 switch ((int)projectile.ai[1])
                 {
                     case 1: projectile.melee = true; break;
@@ -60,10 +69,10 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
             if (projectile.ai[1] % 2 == 1) //dash
             {
-                projectile.rotation = projectile.velocity.ToRotation();
+                //projectile.rotation = projectile.velocity.ToRotation();
                 projectile.direction = projectile.spriteDirection = projectile.velocity.X > 0 ? 1 : -1;
-                projectile.frameCounter = 5;
-                projectile.frame = 6;
+                /*projectile.frameCounter = 5;
+                projectile.frame = 6;*/
 
                 int num22 = 7;
                 for (int index1 = 0; index1 < num22; ++index1)
@@ -71,7 +80,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     Vector2 vector2_1 = (Vector2.Normalize(projectile.velocity) * new Vector2((projectile.width + 50) / 2f, projectile.height) * 0.75f).RotatedBy((index1 - (num22 / 2 - 1)) * Math.PI / num22, new Vector2()) + projectile.Center;
                     Vector2 vector2_2 = ((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2() * Main.rand.Next(3, 8);
                     Vector2 vector2_3 = vector2_2;
-                    int index2 = Dust.NewDust(vector2_1 + vector2_3, 0, 0, 172, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
+                    int index2 = Dust.NewDust(vector2_1 + vector2_3, 0, 0, DustID.Shadowflame, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
                     Main.dust[index2].noGravity = true;
                     Main.dust[index2].noLight = true;
                     Main.dust[index2].velocity /= 4f;
@@ -89,21 +98,21 @@ namespace FargowiltasSouls.Projectiles.Masomode
                         projectile.velocity = Main.npc[ai0].Center + Main.npc[ai0].velocity * 15f - projectile.Center;
                         projectile.velocity.Normalize();
                         projectile.velocity *= 27f;
-                        projectile.rotation = projectile.velocity.ToRotation();
+                        //projectile.rotation = projectile.velocity.ToRotation();
                         projectile.direction = projectile.spriteDirection = projectile.velocity.X > 0 ? 1 : -1;
-                        projectile.frameCounter = 5;
-                        projectile.frame = 6;
+                        /*projectile.frameCounter = 5;
+                        projectile.frame = 6;*/
                     }
                     else //no target
                     {
                         projectile.localAI[0] = -1f;
                         TargetEnemies();
-                        if (++projectile.frameCounter > 5)
+                        /*if (++projectile.frameCounter > 5)
                         {
                             projectile.frameCounter = 0;
                             if (++projectile.frame > 5)
                                 projectile.frame = 0;
-                        }
+                        }*/
                     }
                 }
                 else //regular movement
@@ -111,7 +120,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     if (projectile.ai[0] >= 0 && Main.npc[ai0].CanBeChasedBy()) //has target
                     {
                         Vector2 vel = Main.npc[ai0].Center - projectile.Center;
-                        projectile.rotation = vel.ToRotation();
+                        //projectile.rotation = vel.ToRotation();
                         if (vel.X > 0) //projectile is on left side of target
                         {
                             vel.X -= 300;
@@ -162,15 +171,25 @@ namespace FargowiltasSouls.Projectiles.Masomode
                             projectile.velocity.Y += moveSpeed;
                         TargetEnemies();
                     }
-                    if (++projectile.frameCounter > 5)
+                    /*if (++projectile.frameCounter > 5)
                     {
                         projectile.frameCounter = 0;
                         if (++projectile.frame > 5)
                             projectile.frame = 0;
-                    }
+                    }*/
                 }
             }
             projectile.position += projectile.velocity / 4f;
+
+            if (++projectile.frameCounter > 4)
+            {
+                projectile.frameCounter = 0;
+                if (++projectile.frame >= 4)
+                    projectile.frame = 0;
+            }
+
+            ringRotation += rotationPerTick;
+            scytheRotation += 0.5f;
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -182,9 +201,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 0;
-            target.AddBuff(mod.BuffType("OceanicMaul"), 900);
+            //target.AddBuff(mod.BuffType("OceanicMaul"), 900);
             target.AddBuff(mod.BuffType("MutantNibble"), 900);
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 900);
+            //target.AddBuff(mod.BuffType("CurseoftheMoon"), 900);
         }
 
         public override void Kill(int timeleft)
@@ -203,7 +222,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             Vector2 vel = projectile.velocity;
             vel.Normalize();
             vel *= speed;
-            int type = mod.ProjectileType("RazorbladeTyphoonFriendly");
+            int type = mod.ProjectileType("AbomScytheFriendly");
             for (int i = 0; i < max; i++)
             {
                 vel = vel.RotatedBy(rotation);
@@ -247,33 +266,44 @@ namespace FargowiltasSouls.Projectiles.Masomode
             Color color26 = lightColor;
             color26 = projectile.GetAlpha(color26);
 
-            SpriteEffects spriteEffects = projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteEffects effects = projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i += 2)
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
             {
-                Color color27 = Color.Lerp(color26, Color.Blue, 0.5f);
+                Color color27 = Color.White * projectile.Opacity * 0.75f * 0.5f;
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 Vector2 value4 = projectile.oldPos[i];
                 float num165 = projectile.oldRot[i];
-                if (projectile.spriteDirection < 0)
-                    num165 += (float)Math.PI;
-                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, spriteEffects, 0f);
+                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, effects, 0f);
             }
 
-            float drawRotation = projectile.rotation;
-            if (projectile.spriteDirection < 0)
-                drawRotation += (float)Math.PI;
-            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), drawRotation, origin2, projectile.scale, spriteEffects, 0f);
+            DrawRing();
+
+            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, effects, 0f);
             return false;
+        }
+
+        private void DrawRing()
+        {
+            Texture2D texture2D13 = mod.GetTexture("Projectiles/AbomBoss/AbomRitual2");
+            int num156 = texture2D13.Height; //ypos of lower right corner of sprite to draw
+            int y3 = 0; //ypos of upper left corner of sprite to draw
+            Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
+            Vector2 origin2 = rectangle.Size() / 2f;
+
+            Color color26 = Color.White * projectile.Opacity;
+
+            for (int x = 0; x < 6; x++)
+            {
+                Vector2 drawOffset = new Vector2(threshold / 2f, 0f).RotatedBy(ringRotation);
+                drawOffset = drawOffset.RotatedBy(2f * PI / 6f * x);
+                Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, x % 2 == 0 ? scytheRotation : -scytheRotation, origin2, projectile.scale, x % 2 == 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            }
         }
 
         public override Color? GetAlpha(Color lightColor)
         {
-            float ratio = (255 - projectile.alpha) / 255f;
-            float blue = MathHelper.Lerp(ratio, 1f, 0.25f);
-            if (blue > 1f)
-                blue = 1f;
-            return new Color((int)(lightColor.R * ratio), (int)(lightColor.G * ratio), (int)(lightColor.B * blue), (int)(lightColor.A * ratio));
+            return Color.White * projectile.Opacity * 0.75f;
         }
     }
 }

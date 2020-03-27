@@ -218,8 +218,8 @@ namespace FargowiltasSouls
             AddToggle("MasoTrueEyeConfig", "True Eyes Minion", "GalacticGlobe", "ffffff");
 
             //cyclonic fin
-            /*AddToggle("CyclonicHeader", "Cyclonic Fin", "CyclonicFin", "ffffff");
-            AddToggle("MasoFishronConfig", "Spectral Fishron", "CyclonicFin", "ffffff");*/
+            AddToggle("CyclonicHeader", "Cyclonic Fin", "CyclonicFin", "ffffff");
+            AddToggle("MasoFishronConfig", "Spectral Abominationn", "CyclonicFin", "ffffff");
 
             //mutant armor
             AddToggle("MutantArmorHeader", "True Mutant Armor", "HeartoftheMasochist", "ffffff");

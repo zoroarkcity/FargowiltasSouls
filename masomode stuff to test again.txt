@@ -131,3 +131,5 @@ added sprites:
 removed moon lord core's DR
 fixed ML socket ray telegraphs in MP
 fixed(?) ML phases in MP
+replaced cyclonic fin with abominable wand
+mutant antibodies and upgrades give oceanic maul immune
