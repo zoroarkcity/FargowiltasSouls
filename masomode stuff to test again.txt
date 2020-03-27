@@ -133,3 +133,5 @@ fixed ML socket ray telegraphs in MP
 fixed(?) ML phases in MP
 replaced cyclonic fin with abominable wand
 mutant antibodies and upgrades give oceanic maul immune
+lightning bolts dont do increased damage until post-golem
+changed implementation of projectile damage scaling for certain attacks
