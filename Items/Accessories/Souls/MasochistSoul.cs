@@ -169,7 +169,7 @@ Summons the aid of all Masochist Mode bosses to your side");
                 fargoPlayer.SinisterIconDrops = true;
 
             //sparkling adoration
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Graze))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Graze, false))
                 player.GetModPlayer<FargoPlayer>().Graze = true;
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DevianttHearts))

@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Optic Staff EX");
-            Tooltip.SetDefault("'The reward for slaughtering many...'\nSummons the real twins to fight for you\nRequires 4 minion slots per use");
+            Tooltip.SetDefault("'The reward for slaughtering many...'\nSummons the real twins to fight for you\nNeeds 4 minion slots\nMinions do reduced damage when not holding a summon weapon");
             ItemID.Sets.StaffMinionSlotsRequired[item.type] = 4;
         }
 
