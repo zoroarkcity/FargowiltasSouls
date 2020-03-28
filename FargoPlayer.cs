@@ -4927,6 +4927,7 @@ namespace FargowiltasSouls
                 case ItemID.HellwingBow:
                 case ItemID.Beenade:
                 case ItemID.Handgun:
+                case ItemID.DemonScythe:
                     return 0.75f;
 
                 case ItemID.SpaceGun:
