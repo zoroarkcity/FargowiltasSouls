@@ -135,3 +135,4 @@ replaced cyclonic fin with abominable wand
 mutant antibodies and upgrades give oceanic maul immune
 lightning bolts dont do increased damage until post-golem
 changed implementation of projectile damage scaling for certain attacks
+abom/mutant p1 auras only affect target in mp
