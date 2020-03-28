@@ -137,7 +137,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             }
             else if (npc.localAI[3] == 1)
             {
-                Aura(2000f, mod.BuffType("GodEater"), true, 86, false, true);
+                Aura(2000f, mod.BuffType("GodEater"), true, 86, false, false);
             }
 
             if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
