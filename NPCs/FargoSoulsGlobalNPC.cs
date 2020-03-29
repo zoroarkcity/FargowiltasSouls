@@ -10542,12 +10542,12 @@ namespace FargowiltasSouls.NPCs
                 return false;
             }
 
-            if (npc.boss && BossIsAlive(ref mutantBoss, ModContent.NPCType<MutantBoss.MutantBoss>()) && npc.type != ModContent.NPCType<MutantBoss.MutantBoss>())
+            /*if (npc.boss && BossIsAlive(ref mutantBoss, ModContent.NPCType<MutantBoss.MutantBoss>()) && npc.type != ModContent.NPCType<MutantBoss.MutantBoss>())
             {
                 npc.active = false;
                 Main.PlaySound(npc.DeathSound, npc.Center);
                 return false;
-            }
+            }*/
 
             if (modPlayer.WoodEnchant && npc.damage == 0 && !npc.townNPC && npc.lifeMax == 5)
             {
