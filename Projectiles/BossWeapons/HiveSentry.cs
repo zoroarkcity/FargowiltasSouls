@@ -59,7 +59,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                     for (int i = 0; i < 10; i++)
                     {
-                        int p = Projectile.NewProjectile(projectile.Center, new Vector2(Main.rand.Next(-10, 10), Main.rand.Next(-10, 10)), ProjectileID.Bee, projectile.damage, 0, projectile.owner);
+                        int p = Projectile.NewProjectile(projectile.Center, new Vector2(Main.rand.Next(-10, 10), Main.rand.Next(-10, 10)), owner.beeType(), owner.beeDamage(projectile.damage), owner.beeKB(0f), projectile.owner);
                         Main.projectile[p].minion = true;
                         Main.projectile[p].ranged = false;
                     }
