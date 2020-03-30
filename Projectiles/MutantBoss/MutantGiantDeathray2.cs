@@ -27,6 +27,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.timeLeft = 600;
         }
 
+        public override bool CanDamage()
+        {
+            return projectile.scale >= 10f;
+        }
+
         public override void AI()
         {
             Vector2? vector78 = null;

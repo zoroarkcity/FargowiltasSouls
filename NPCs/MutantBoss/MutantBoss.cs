@@ -243,10 +243,12 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].timeLeft > 2)
                                 Main.projectile[i].timeLeft = 2;
                     }
-                    else if (npc.ai[2] == 420 && Main.netMode != 1)
+                    else if (npc.ai[2] == 420)
                     {
                         npc.ai[3] = npc.DirectionFrom(player.Center).ToRotation() - 0.001f;
-                        Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.ai[3]), mod.ProjectileType("MutantGiantDeathray2"), npc.defDamage / 2, 0f, Main.myPlayer, 0, npc.whoAmI);
+                        npc.netUpdate = true;
+                        if (Main.netMode != 1)
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.ai[3]), mod.ProjectileType("MutantGiantDeathray2"), npc.defDamage / 2, 0f, Main.myPlayer, 0, npc.whoAmI);
                     }
                     for (int i = 0; i < 5; i++)
                     {

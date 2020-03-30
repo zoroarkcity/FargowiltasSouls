@@ -138,3 +138,4 @@ changed implementation of projectile damage scaling for certain attacks
 abom/mutant p1 auras only affect target in mp
 nerfed demon scythe by -25%
 optic staff EX recipe includes optic staff ech
+fixed mutant spawning final spark on you in mp
