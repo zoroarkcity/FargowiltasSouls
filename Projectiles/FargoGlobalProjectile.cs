@@ -76,7 +76,6 @@ namespace FargowiltasSouls.Projectiles
                 {
                     case ProjectileID.CrystalBullet:
                     case ProjectileID.HolyArrow:
-                    case ProjectileID.HallowStar:
                         HasKillCooldown = true;
                         break;
 
