@@ -15,7 +15,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             Tooltip.SetDefault(@"'Suffering no longer hurts, mostly'
 Grants immunity to Living Wasteland, Frozen, Oozed, Withered Weapon, and Withered Armor
 Grants immunity to Feral Bite, Mutant Nibble, Flipped, Unstable, Distorted, and Curse of the Moon
-Grants immunity to Wet, Electrified, Moon Leech, Nullification Curse, and water debuffs
+Grants immunity to Wet, Electrified, Oceanic Maul, Moon Leech, Nullification Curse, and water debuffs
 Increases damage, critical strike chance, and damage reduction by 10%, 
 Increases flight time by 100%
 You may periodically fire additional attacks depending on weapon type
@@ -79,6 +79,7 @@ Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu");
             player.buffImmune[BuffID.Wet] = true;
             player.buffImmune[BuffID.Rabies] = true;
             player.buffImmune[mod.BuffType("MutantNibble")] = true;
+            player.buffImmune[mod.BuffType("OceanicMaul")] = true;
             fargoPlayer.MutantAntibodies = true;
             if (player.mount.Active && player.mount.Type == MountID.CuteFishron)
                 player.dripping = true;
@@ -116,7 +117,7 @@ Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu");
             recipe.AddIngredient(ItemID.LunarBar, 15);
             recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 10);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

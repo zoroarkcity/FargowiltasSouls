@@ -20,6 +20,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.timeLeft = 1200;
         }
 
+        public override bool CanDamage()
+        {
+            return false;
+        }
+
         public override void AI()
         {
             Lighting.AddLight(projectile.Center, .2f, .6f, .2f); //glow in the dark
@@ -53,11 +58,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        /*public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(mod.BuffType("Infested"), 180);
             target.AddBuff(mod.BuffType("IvyVenom"), 180);
-        }
+        }*/
 
         public override void Kill(int timeLeft)
         {

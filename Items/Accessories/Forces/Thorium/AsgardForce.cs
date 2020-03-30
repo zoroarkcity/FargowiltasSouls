@@ -91,7 +91,7 @@ All armor bonuses from Dream Weaver and Rhapsodist");
             recipe.AddIngredient(null, "DreamWeaverEnchant");
             recipe.AddIngredient(null, "RhapsodistEnchant");
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this);
             recipe.AddRecipe();

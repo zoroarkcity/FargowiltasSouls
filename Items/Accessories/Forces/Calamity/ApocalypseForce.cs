@@ -86,7 +86,7 @@ Summons several pets");
             //recipe.AddIngredient(null, "UmbraphileEnchant");
             recipe.AddIngredient(null, "BloodflareEnchant");
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

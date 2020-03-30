@@ -9,6 +9,8 @@ namespace FargowiltasSouls.Projectiles.Minions
 {
     public class Abominationn : ModProjectile
     {
+        public override string Texture => "FargowiltasSouls/NPCs/Eternals/AbominationnSoul";
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Abominationn");
@@ -55,7 +57,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 NPC npc = Main.npc[(int)projectile.ai[0]];
                 if (npc.CanBeChasedBy(projectile))
                 {
-                    projectile.direction = projectile.spriteDirection = projectile.Center.X < npc.Center.X ? 1 : -1;
+                    projectile.direction = projectile.spriteDirection = projectile.Center.X > npc.Center.X ? 1 : -1;
                     Vector2 targetPos = npc.Center + projectile.DirectionFrom(npc.Center) * 250;
                     if (projectile.Distance(targetPos) > 50)
                         Movement(targetPos, 1f);
@@ -74,7 +76,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             }
             else //no target
             {
-                projectile.direction = projectile.spriteDirection = projectile.Center.X < player.Center.X ? 1 : -1;
+                projectile.direction = projectile.spriteDirection = projectile.Center.X > player.Center.X ? 1 : -1;
 
                 Vector2 targetPos = player.Center;
                 if (player.velocity.X > 0)

@@ -93,7 +93,7 @@ Summons a pet Companion Cube";
             recipe.AddIngredient(null, "StardustEnchant");
             recipe.AddIngredient(ItemID.SuspiciousLookingTentacle);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this);
             recipe.AddRecipe();

@@ -137,7 +137,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             }
             else if (npc.localAI[3] == 1)
             {
-                Aura(2000f, mod.BuffType("GodEater"), true, 86);
+                Aura(2000f, mod.BuffType("GodEater"), true, 86, false, false);
             }
 
             if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
@@ -930,10 +930,10 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             }
         }
 
-        private void Aura(float distance, int buff, bool reverse = false, int dustid = DustID.GoldFlame, bool checkDuration = false)
+        private void Aura(float distance, int buff, bool reverse = false, int dustid = DustID.GoldFlame, bool checkDuration = false, bool targetEveryone = true)
         {
             //works because buffs are client side anyway :ech:
-            Player p = Main.player[Main.myPlayer];
+            Player p = targetEveryone ? Main.player[Main.myPlayer] : Main.player[npc.target];
             float range = npc.Distance(p.Center);
             if (reverse ? range > distance && range < 5000f : range < distance)
                 p.AddBuff(buff, checkDuration && Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);

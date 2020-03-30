@@ -92,7 +92,7 @@ Effects of Lich's Gaze and Ascension Statuette");
             recipe.AddIngredient(ModContent.ItemType<CelestialEnchant>());
             recipe.AddIngredient(ModContent.ItemType<ShootingStarEnchant>());
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this);
             recipe.AddRecipe();

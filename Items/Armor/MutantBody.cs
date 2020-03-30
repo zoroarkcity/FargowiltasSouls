@@ -74,7 +74,7 @@ Drastically increases life regen");
             recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("MutantBody"));
             recipe.AddIngredient(null, "MutantScale", 15);
             recipe.AddIngredient(null, "Sadism", 15);
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

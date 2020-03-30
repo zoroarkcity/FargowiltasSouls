@@ -463,10 +463,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool TrueEyes;
 
-        /*[Header("$Mods.FargowiltasSouls.CyclonicHeader")]
+        [Header("$Mods.FargowiltasSouls.CyclonicHeader")]
         [Label("$Mods.FargowiltasSouls.MasoFishronConfig")]
         [DefaultValue(true)]
-        public bool FishronMinion;*/
+        public bool FishronMinion;
 
         [Header("$Mods.FargowiltasSouls.MutantArmorHeader")]
         [Label("$Mods.FargowiltasSouls.MasoAbomConfig")]

@@ -81,7 +81,7 @@ Summons several pets");
             recipe.AddIngredient(null, "TarragonEnchant");
             recipe.AddIngredient(null, "DemonShadeEnchant");
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

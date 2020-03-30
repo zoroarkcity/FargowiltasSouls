@@ -103,6 +103,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
             return false; //dont kill proj when hits tiles
         }
 
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White;
+        }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             if (projectile.localAI[0] != 0)

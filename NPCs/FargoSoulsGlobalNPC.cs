@@ -1461,6 +1461,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Piranha:
+                        masoBool[0] = npc.HasValidTarget && Main.player[npc.target].ZoneJungle;
                         Counter++;
                         if (Counter >= 120)
                         {
@@ -1471,8 +1472,6 @@ namespace FargowiltasSouls.NPCs
                                 Player player = Main.player[t];
                                 if (player.bleed && Main.netMode != 1)
                                 {
-                                    if (player.ZoneJungle)
-                                        masoBool[0] = true;
                                     if (NPC.CountNPCS(NPCID.Piranha) <= 6)
                                     {
                                         int piranha = NPC.NewNPC((int)npc.Center.X + Main.rand.Next(-20, 20), (int)npc.Center.Y + Main.rand.Next(-20, 20), NPCID.Piranha);
@@ -4014,7 +4013,7 @@ namespace FargowiltasSouls.NPCs
                             }
                         }
 
-                        if (!npc.dontTakeDamage)
+                        if (!npc.dontTakeDamage && Main.netMode != 1)
                             Counter++; //phases transition twice as fast when core is exposed
 
                         if (Main.player[Main.myPlayer].active && !Main.player[Main.myPlayer].dead && masoStateML >= 0 && masoStateML <= 3)
@@ -4784,6 +4783,11 @@ namespace FargowiltasSouls.NPCs
                         }
                         break;
 
+                    case NPCID.PlanterasHook:
+                        npc.damage = 0;
+                        npc.defDamage = 0;
+                        break;
+
                     case NPCID.Plantera:
                         if (!masoBool[0]) //spawn protective crystal ring once
                         {
@@ -4832,8 +4836,7 @@ namespace FargowiltasSouls.NPCs
                                     }
                                 }
                             }
-
-                            Counter++;
+                            
                             if (Counter >= 30)
                             {
                                 Counter = 0;
@@ -4912,6 +4915,7 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
 
+                            //dont regen above half, this avoids exiting phase 2 by healing
                             if (RegenTimer <= 2 && npc.life + 1 + npc.lifeMax / 25 >= npc.lifeMax / 2)
                             {
                                 npc.life = npc.lifeMax / 2;
@@ -6189,7 +6193,8 @@ namespace FargowiltasSouls.NPCs
                                                 Main.dust[d].noGravity = true;
                                                 Main.dust[d].velocity *= 0.5f;
                                             }*/
-                                            Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[0]), ModContent.ProjectileType<PhantasmalDeathrayMLSmall>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
+                                            if (Main.netMode != 1)
+                                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[0]), ModContent.ProjectileType<PhantasmalDeathrayMLSmall>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
                                         }
                                     }
                                 }
@@ -8185,7 +8190,7 @@ namespace FargowiltasSouls.NPCs
                         target.AddBuff(ModContent.BuffType<MutantNibble>(), 600);
                         target.AddBuff(ModContent.BuffType<Defenseless>(), 600);
                         target.AddBuff(BuffID.Rabies, 3600);
-                        target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
+                        target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 50;
                         target.AddBuff(ModContent.BuffType<OceanicMaul>(), 3600);
                         break;
 
@@ -8250,7 +8255,7 @@ namespace FargowiltasSouls.NPCs
                         target.AddBuff(ModContent.BuffType<IvyVenom>(), 300);
                         break;
 
-                    case NPCID.PlanterasHook:
+                    //case NPCID.PlanterasHook:
                     case NPCID.PlanterasTentacle:
                     case NPCID.Spore:
                         target.AddBuff(ModContent.BuffType<Infested>(), 300);
@@ -9860,6 +9865,7 @@ namespace FargowiltasSouls.NPCs
                         goto case NPCID.BigMimicCrimson;
 
                     case NPCID.IceGolem:
+                        Item.NewItem(npc.Hitbox, ModLoader.GetMod("Fargowiltas").ItemType("IceCrate"));
                         if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<FrigidGemstone>());
                         if (Main.rand.Next(20) == 0)
@@ -10238,6 +10244,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.GiantWormHead:
+                    case NPCID.DiggerHead:
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.WormholePotion, Main.rand.Next(0, 2) + 1);
                         break;
@@ -10535,12 +10542,12 @@ namespace FargowiltasSouls.NPCs
                 return false;
             }
 
-            if (npc.boss && BossIsAlive(ref mutantBoss, ModContent.NPCType<MutantBoss.MutantBoss>()) && npc.type != ModContent.NPCType<MutantBoss.MutantBoss>())
+            /*if (npc.boss && BossIsAlive(ref mutantBoss, ModContent.NPCType<MutantBoss.MutantBoss>()) && npc.type != ModContent.NPCType<MutantBoss.MutantBoss>())
             {
                 npc.active = false;
                 Main.PlaySound(npc.DeathSound, npc.Center);
                 return false;
-            }
+            }*/
 
             if (modPlayer.WoodEnchant && npc.damage == 0 && !npc.townNPC && npc.lifeMax == 5)
             {
@@ -11704,10 +11711,7 @@ namespace FargowiltasSouls.NPCs
                             reduction = 0.5f;
                         damage = (int)(damage * reduction);
                         break;
-
-                    case NPCID.MoonLordCore:
-                        damage = damage * 2 / 3;
-                        break;
+                        
                     case NPCID.MoonLordHead:
                         damage = damage * 2;
                         break;

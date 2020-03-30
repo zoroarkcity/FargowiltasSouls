@@ -141,7 +141,7 @@ Increased minion knockback";
 
             recipe.AddIngredient(ItemID.MoonlordTurretStaff);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this);
             recipe.AddRecipe();

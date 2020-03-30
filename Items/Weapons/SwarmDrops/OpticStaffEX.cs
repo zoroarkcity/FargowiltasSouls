@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Optic Staff EX");
-            Tooltip.SetDefault("'The reward for slaughtering many...'\nSummons the real twins to fight for you\nRequires 4 minion slots per use");
+            Tooltip.SetDefault("'The reward for slaughtering many...'\nSummons the real twins to fight for you\nNeeds 4 minion slots\nMinions do reduced damage when not holding a summon weapon");
             ItemID.Sets.StaffMinionSlotsRequired[item.type] = 4;
         }
 
@@ -49,10 +49,11 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.OpticStaff);
             recipe.AddIngredient(null, "TwinRangs");
             recipe.AddIngredient(null, "MutantScale", 10);
             recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerTwins"));
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

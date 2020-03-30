@@ -119,7 +119,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             recipe.AddIngredient(ItemID.Xenopopper);
             recipe.AddIngredient(ItemID.FireworksLauncher);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this);
             recipe.AddRecipe();

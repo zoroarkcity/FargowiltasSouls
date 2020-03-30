@@ -2347,9 +2347,9 @@ namespace FargowiltasSouls
                 }
             }
 
-            /*if (CyclonicFin)
+            if (CyclonicFin)
             {
-                target.AddBuff(ModContent.BuffType<OceanicMaul>(), 900);
+                //target.AddBuff(ModContent.BuffType<OceanicMaul>(), 900);
                 //target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 900);
 
                 if (crit && CyclonicFinCD <= 0 && proj.type != ModContent.ProjectileType<RazorbladeTyphoonFriendly>() && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion))
@@ -2398,7 +2398,7 @@ namespace FargowiltasSouls
                     }
                     Projectile.NewProjectile(spawn, vel, ModContent.ProjectileType<SpectralFishron>(), dam, 10f, proj.owner, target.whoAmI, damageType);
                 }
-            }*/
+            }
 
             if (CorruptHeart && CorruptHeartCD <= 0)
             {
@@ -2845,9 +2845,9 @@ namespace FargowiltasSouls
                 }
             }
 
-            /* if (CyclonicFin)
+            if (CyclonicFin)
             {
-                target.AddBuff(ModContent.BuffType<OceanicMaul>(), 900);
+                //target.AddBuff(ModContent.BuffType<OceanicMaul>(), 900);
                 //target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 900);
 
                 if (crit && CyclonicFinCD <= 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion))
@@ -2867,7 +2867,7 @@ namespace FargowiltasSouls
                     int damageType = 1;
                     Projectile.NewProjectile(spawn, vel, ModContent.ProjectileType<SpectralFishron>(), dam, 10f, player.whoAmI, target.whoAmI, damageType);
                 }
-            }*/
+            }
 
             if (CorruptHeart && CorruptHeartCD <= 0)
             {
@@ -4927,6 +4927,7 @@ namespace FargowiltasSouls
                 case ItemID.HellwingBow:
                 case ItemID.Beenade:
                 case ItemID.Handgun:
+                case ItemID.DemonScythe:
                     return 0.75f;
 
                 case ItemID.SpaceGun:

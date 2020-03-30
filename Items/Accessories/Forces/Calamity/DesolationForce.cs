@@ -83,7 +83,7 @@ Summons several pets");
             recipe.AddIngredient(null, "GodSlayerEnchant");
             recipe.AddIngredient(null, "AuricEnchant");
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

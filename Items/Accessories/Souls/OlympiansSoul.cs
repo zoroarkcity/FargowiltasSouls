@@ -144,7 +144,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
                 recipe.AddIngredient(fargos != null ? fargos.ItemType("TerrarianThrown") : ItemID.Terrarian);
             }
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this);
             recipe.AddRecipe();

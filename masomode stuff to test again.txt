@@ -1,73 +1,3 @@
-dark star cannon nerfed, now pierces (must obey pierce iframes)
-dicer and blender are super speed yoyos now
-dicer changes:
-	nerfed projectile spray to pierce, must obey pierce iframes
-	buffed base damage to 100
-	buffed damage of projectile spray
-tweaked how maso item nerfs work internally
-added boss count disable (debug item)
-sinister icon prevents pumpkin/frost moon minibosses and clowns from spawning too
-changed ammo nerfs: -80% on arrows/bullets/darts, -20% otherwise
-
-martian saucer periodically sprays lasers when vulnerable
-twins:
-	no longer revive each other
-	the first twin defeated will endure at 1hp
-	twins begin shooting dark stars when brought to 1hp
-	twins become vulnerable again when both are at 1hp
-nerfed last prism to 75% damage
-
-nerfed snowman cannon to 66%, electrosphere launcher to 75%, chain gun to 75%
-golem body has 20% DR, reduced regen to 240 to compensate
-reduced landslide damage and fire rate
-nerfed dicer
-
-nerfed dicer again
-golem's body health modifier is now x3 (was x2)
-buffed destroyer gun damage slightly
-updated sprites:
-	fused lens
-	sinister icon
-	slimy shield
-	supreme deathbringer fairy
-	mutant's pact
-	betsy's heart
-	lump of flesh
-	pumpking's cape
-	ice queen's crown
-	pungent eyeball
-	fishron
-added recovering icon
-rearranged internal order of various buffs
-rearranged internal order of various items
-
-changed implementation of maso item nerfs so frozen doesnt break it
-removed instacatch from mutant antibodies and upgrades
-replaced angler ench's lure split with instacatch, also extends to upgrades
-space gun is now nerfed to 66% damage pre-eow/boc
-
-nerfed stormbow to only 33% damage in maso
-nerfed onyx blaster to only 75% damage in maso
-changed lead ench mechanics:
-	now only applies for half a second
-	right before it wears off, it spreads to nearby enemies
-	note: enemies still spread lead poisoning to themselves, so its effectively permanent once applied
-	eow body segments resist lead poisoning
-	propagates through walls again
-boc's dust ring and brain of confusion come from all illusions
-if you're confused at 1sec and boc is alive, berserk scream and dust ring happens
-brain of confusion is smaller and more transparent
-
-deviantt gift:
-	now has 15 recall potions
-	now has 15 wormhole potions in mp
-	removed crafting interface
-	nerfed terra storage to one per world
-
-added top hat squirrel cage
-
--------------------------NEXT UPDATE-------------------------
-
 added sprites:
 	low ground
 	twins EX buff
@@ -120,7 +50,6 @@ abom/mutant map icons turn when they turn
 
 removed truffle worm EX recipe
 remove duke fishron EX from boss checklist
-abom drops cyclonic fin for now
 abom always drops abominable energy
 all maso acc combos require deviating energy
 
@@ -182,3 +111,30 @@ wof gains a phase 3 below 10%:
 	fires deathrays MUCH more quickly
 	world evil attacks are twice as fast
 also reduced wof's max speed slightly again
+
+plantera's hook does no damage
+plantera only shoots in p2 if you're venomed
+plantera dicer mines don't deal damage, only their explosion does
+ice golem drops ice crate
+nerfed fishron's oceanic maul on direct contact to -50 max life
+adjusted how piranha detects you're in jungle (for jump)
+digger drops wormhole potions too (since giant worm is replaced in hm)
+
+changed nuke fishron recipe
+updated sprites:
+	remote control
+	nymph's perfume
+	squeaky toy
+added sprites:
+	bloodied skull
+
+removed moon lord core's DR
+fixed ML socket ray telegraphs in MP
+fixed(?) ML phases in MP
+replaced cyclonic fin with abominable wand
+mutant antibodies and upgrades give oceanic maul immune
+lightning bolts dont do increased damage until post-golem
+changed implementation of projectile damage scaling for certain attacks
+abom/mutant p1 auras only affect target in mp
+nerfed demon scythe by -25%
+optic staff EX recipe includes optic staff ech

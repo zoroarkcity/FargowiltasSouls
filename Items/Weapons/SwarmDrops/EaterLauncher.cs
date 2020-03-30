@@ -65,7 +65,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             recipe.AddIngredient(ItemID.LunarBar, 10);
             recipe.AddIngredient(null, "LunarCrystal", 5);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

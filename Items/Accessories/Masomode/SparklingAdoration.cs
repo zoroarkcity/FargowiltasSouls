@@ -31,7 +31,7 @@ Critical strikes periodically summon life-draining hearts");
             player.buffImmune[BuffID.Lovestruck] = true;
             player.buffImmune[mod.BuffType("Lovestruck")] = true;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Graze))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Graze, false))
                 player.GetModPlayer<FargoPlayer>().Graze = true;
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DevianttHearts))

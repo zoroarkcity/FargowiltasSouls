@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Items.Ammos
             recipe.AddIngredient(fargos, "CrystalDartBox");
 
             recipe.AddIngredient(mod.ItemType("Sadism"), 15);
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

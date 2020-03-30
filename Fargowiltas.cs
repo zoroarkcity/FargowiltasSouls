@@ -71,7 +71,7 @@ namespace FargowiltasSouls
             
             AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SteelRed"), ItemType("MutantMusicBox"), TileType("MutantMusicBoxSheet"));
             AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma"), ItemType("AbomMusicBox"), TileType("AbomMusicBoxSheet"));
-            AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/LexusCyanixs"), ItemType("DeviMusicBox"), TileType("DeviMusicBoxSheet"));
+            AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Deviantt"), ItemType("DeviMusicBox"), TileType("DeviMusicBoxSheet"));
 
             #region Toggles
 
@@ -218,8 +218,8 @@ namespace FargowiltasSouls
             AddToggle("MasoTrueEyeConfig", "True Eyes Minion", "GalacticGlobe", "ffffff");
 
             //cyclonic fin
-            /*AddToggle("CyclonicHeader", "Cyclonic Fin", "CyclonicFin", "ffffff");
-            AddToggle("MasoFishronConfig", "Spectral Fishron", "CyclonicFin", "ffffff");*/
+            AddToggle("CyclonicHeader", "Abominable Wand", "CyclonicFin", "ffffff");
+            AddToggle("MasoFishronConfig", "Spectral Abominationn", "CyclonicFin", "ffffff");
 
             //mutant armor
             AddToggle("MutantArmorHeader", "True Mutant Armor", "HeartoftheMasochist", "ffffff");
@@ -712,13 +712,13 @@ namespace FargowiltasSouls
                         14.01f,
                         ModContent.NPCType<NPCs.AbomBoss.AbomBoss>(),
                         this,
-                        "Abominationn",
+                        "Yrimir",
                         (Func<bool>)(() => FargoSoulsWorld.downedAbom),
                         ModContent.ItemType<Items.Summons.AbomsCurse>(),
                         new List<int> { ModContent.ItemType<Items.Tiles.AbomTrophy>(), ModContent.ItemType<Items.Tiles.AbomMusicBox>() },
                         new List<int> { ModContent.ItemType<Items.Misc.MutantScale>() },
                         "Spawn by using [i:" + ModContent.ItemType<Items.Summons.AbomsCurse>() + "].",
-                        "Abominationn has destroyed everyone.",
+                        "Yrimir has destroyed everyone.",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Still",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Head_Boss"
                     );
@@ -743,13 +743,13 @@ namespace FargowiltasSouls
                         14.03f,
                         ModContent.NPCType<NPCs.MutantBoss.MutantBoss>(),
                         this,
-                        "Mutant",
+                        "Yharim",
                         (Func<bool>)(() => FargoSoulsWorld.downedMutant),
                         ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
                         new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), ModContent.ItemType<Items.Tiles.MutantMusicBox>() },
                         ModContent.ItemType<Items.Misc.Sadism>(),
                         "Throw [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while Abominationn is alive, in Mutant's presence.",
-                        "Mutant has eviscerated everyone under its hands.",
+                        "Yharim has eviscerated everyone under its hands.",
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
                     );

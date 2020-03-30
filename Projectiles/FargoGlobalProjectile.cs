@@ -112,10 +112,6 @@ namespace FargowiltasSouls.Projectiles
                             projectile.extraUpdates++;
                         break;
 
-                    case ProjectileID.Sharknado:
-                        projectile.hostile = false;
-                        break;
-
                     case ProjectileID.FlamesTrap:
                         if (NPC.golemBoss != -1 && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem)
                             projectile.tileCollide = false;
@@ -848,150 +844,16 @@ namespace FargowiltasSouls.Projectiles
                         }
                     }
                     break;
-
-                #region maso boss scaling (CHECK THAT YOU'RE NOT DOUBLE DIPPING)
-
-                case ProjectileID.CursedFlameHostile: //spaz p3 balls are already scaled
-                    if (FargoSoulsWorld.MasochistMode && !masobool)
-                    {
-                        masobool = true;
-                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.eaterBoss, NPCID.EaterofWorldsHead))
-                            projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.EaterCount * .0125));
-                    }
-                    break;
-
-                case ProjectileID.Stinger:
-                    if (FargoSoulsWorld.MasochistMode && !masobool)
-                    {
-                        masobool = true;
-                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.beeBoss, NPCID.QueenBee))
-                            projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.BeeCount * .0125));
-                    }
-                    break;
-
-                case ProjectileID.DeathLaser: //may be used elsewhere?
-                    if (FargoSoulsWorld.MasochistMode && !masobool)
-                    {
-                        masobool = true;
-                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.retiBoss, NPCID.Retinazer))
-                            projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.TwinsCount * .0125));
-                        else if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.destroyBoss, NPCID.TheDestroyer))
-                            projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.DestroyerCount * .0125));
-                        else if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.primeBoss, NPCID.SkeletronPrime))
-                            projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.PrimeCount * .0125));
-                    }
-                    break;
-
-                case ProjectileID.PinkLaser:
-                    if (FargoSoulsWorld.MasochistMode && !masobool)
-                    {
-                        masobool = true;
-                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.destroyBoss, NPCID.TheDestroyer))
-                            projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.DestroyerCount * .0125));
-                    }
+    
+                case ProjectileID.PhantasmalEye:
+                    if (FargoSoulsWorld.MasochistMode)
+                        projectile.position.X -= projectile.velocity.X / 2;
                     break;
 
                 case ProjectileID.BombSkeletronPrime: //needs to be set every tick
                     if (FargoSoulsWorld.MasochistMode)
                         projectile.damage = (int)(40 * (1 + FargoSoulsWorld.PrimeCount * .0125));
                     break;
-
-                case ProjectileID.SeedPlantera:
-                case ProjectileID.PoisonSeedPlantera:
-                case ProjectileID.ThornBall:
-                    if (FargoSoulsWorld.MasochistMode && !masobool)
-                    {
-                        masobool = true;
-                        projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.PlanteraCount * .0125));
-                    }
-                    break;
-
-                case ProjectileID.EyeBeam:
-                    if (FargoSoulsWorld.MasochistMode && !masobool)
-                    {
-                        masobool = true;
-                        projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.GolemCount * .0125));
-                    }
-                    break;
-                case ProjectileID.Fireball:
-                    if (FargoSoulsWorld.MasochistMode && !masobool)
-                    {
-                        masobool = true;
-                        if (FargoSoulsGlobalNPC.BossIsAlive(ref NPC.golemBoss, NPCID.Golem))
-                            projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.GolemCount * .0125));
-                    }
-                    break;
-
-                case ProjectileID.Sharknado: //spawns from sharks too but whatever
-                case ProjectileID.Cthulunado:
-                    if (FargoSoulsWorld.MasochistMode)
-                    {
-                        if (!masobool)
-                        {
-                            masobool = true;
-                            if (FargoSoulsWorld.downedFishronEX || !FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.fishBossEX, NPCID.DukeFishron))
-                                projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.FishronCount * .0125));
-                        }
-                        if (counter > 30)
-                        {
-                            projectile.hostile = true;
-                        }
-                    }
-                    break;
-                    
-                case ProjectileID.VortexLightning:
-                    if (FargoSoulsWorld.MasochistMode && !masobool)
-                    {
-                        masobool = true;
-                        projectile.damage *= 2;
-                    }
-                    break;
-
-                case ProjectileID.CultistBossFireBall:
-                    if (FargoSoulsWorld.MasochistMode && !masobool)
-                    {
-                        masobool = true;
-                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.cultBoss, NPCID.CultistBoss))
-                            projectile.damage = (int)(projectile.damage * 1.5 * (1 + FargoSoulsWorld.CultistCount * .0125));
-                    }
-                    break;
-
-                case ProjectileID.CultistBossLightningOrb:
-                    if (FargoSoulsWorld.MasochistMode && !masobool)
-                    {
-                        masobool = true;
-                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.cultBoss, NPCID.CultistBoss))
-                            projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.CultistCount * .0125));
-                    }
-                    break;
-                case ProjectileID.CultistBossIceMist: //fixed value because it keeps growing otherwise...
-                    if (FargoSoulsWorld.MasochistMode && !masobool)
-                    {
-                        masobool = true;
-                        projectile.damage = (int)(25 * (1 + FargoSoulsWorld.CultistCount * .0125));
-                    }
-                    break;
-
-                case ProjectileID.PhantasmalBolt:
-                case ProjectileID.PhantasmalDeathray:
-                case ProjectileID.PhantasmalSphere:
-                    if (FargoSoulsWorld.MasochistMode && !masobool)
-                    {
-                        masobool = true;
-                        projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.MoonlordCount * .0125));
-                    }
-                    break;
-                case ProjectileID.PhantasmalEye:
-                    if (FargoSoulsWorld.MasochistMode && !masobool)
-                    {
-                        masobool = true;
-                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.moonBoss, NPCID.MoonLordCore))
-                            projectile.damage = (int)(projectile.damage * (1 + FargoSoulsWorld.MoonlordCount * .0125));
-                    }
-                    projectile.position.X -= projectile.velocity.X / 2;
-                    break;
-
-                #endregion
 
                 default:
                         break;
@@ -1354,6 +1216,85 @@ namespace FargowiltasSouls.Projectiles
             {
                 damage = 1;
                 target.GetModPlayer<FargoPlayer>().Squeak(target.Center);
+            }
+
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                switch (projectile.type)
+                {
+                    case ProjectileID.CursedFlameHostile: //spaz p3 balls are already scaled
+                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.eaterBoss, NPCID.EaterofWorldsHead))
+                            damage = (int)(damage * (1 + FargoSoulsWorld.EaterCount * .0125));
+                        break;
+
+                    case ProjectileID.Stinger:
+                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.beeBoss, NPCID.QueenBee))
+                            damage = (int)(damage * (1 + FargoSoulsWorld.BeeCount * .0125));
+                        break;
+
+                    case ProjectileID.DeathLaser: //may be used elsewhere?
+                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.retiBoss, NPCID.Retinazer))
+                            damage = (int)(damage * (1 + FargoSoulsWorld.TwinsCount * .0125));
+                        else if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.destroyBoss, NPCID.TheDestroyer))
+                            damage = (int)(damage * (1 + FargoSoulsWorld.DestroyerCount * .0125));
+                        else if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.primeBoss, NPCID.SkeletronPrime))
+                            damage = (int)(damage * (1 + FargoSoulsWorld.PrimeCount * .0125));
+                        break;
+
+                    case ProjectileID.PinkLaser:
+                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.destroyBoss, NPCID.TheDestroyer))
+                            damage = (int)(damage * (1 + FargoSoulsWorld.DestroyerCount * .0125));
+                        break;
+
+                    case ProjectileID.SeedPlantera:
+                    case ProjectileID.PoisonSeedPlantera:
+                    case ProjectileID.ThornBall:
+                        damage = (int)(damage * (1 + FargoSoulsWorld.PlanteraCount * .0125));
+                        break;
+
+                    case ProjectileID.EyeBeam:
+                        damage = (int)(damage * (1 + FargoSoulsWorld.GolemCount * .0125));
+                        break;
+                    case ProjectileID.Fireball:
+                        if (FargoSoulsGlobalNPC.BossIsAlive(ref NPC.golemBoss, NPCID.Golem))
+                            damage = (int)(damage * (1 + FargoSoulsWorld.GolemCount * .0125));
+                        break;
+
+                    case ProjectileID.VortexLightning:
+                        if (NPC.downedGolemBoss)
+                            damage *= 2;
+                        break;
+
+                    case ProjectileID.CultistBossFireBall:
+                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.cultBoss, NPCID.CultistBoss))
+                            damage = (int)(damage * 1.5 * (1 + FargoSoulsWorld.CultistCount * .0125));
+                        break;
+
+                    case ProjectileID.CultistBossLightningOrb:
+                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.cultBoss, NPCID.CultistBoss))
+                            damage = (int)(damage * (1 + FargoSoulsWorld.CultistCount * .0125));
+                        break;
+                    case ProjectileID.CultistBossIceMist:
+                        damage = (int)(damage * (1 + FargoSoulsWorld.CultistCount * .0125));
+                        break;
+
+                    case ProjectileID.Sharknado:
+                    case ProjectileID.Cthulunado:
+                        if (FargoSoulsWorld.downedFishronEX || !FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.fishBossEX, NPCID.DukeFishron))
+                            damage = (int)(damage * (1 + FargoSoulsWorld.FishronCount * .0125));
+                        break;
+
+                    case ProjectileID.PhantasmalBolt:
+                    case ProjectileID.PhantasmalDeathray:
+                    case ProjectileID.PhantasmalSphere:
+                    case ProjectileID.PhantasmalEye:
+                        if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.moonBoss, NPCID.MoonLordCore))
+                            damage = (int)(damage * (1 + FargoSoulsWorld.MoonlordCount * .0125));
+                        break;
+
+                    default:
+                        break;
+                }
             }
         }
 

@@ -117,7 +117,7 @@ Permanent Sonar and Crate Buffs";
             recipe.AddIngredient(ItemID.HardySaddle);
             recipe.AddIngredient(ItemID.ZephyrFish);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this);
             recipe.AddRecipe();

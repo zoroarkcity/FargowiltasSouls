@@ -203,7 +203,7 @@ namespace FargowiltasSouls.Items.Patreon
             recipe.AddIngredient(ItemID.ScalyTruffle);
             recipe.AddIngredient(ItemID.ObsidianSwordfish);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this);
             recipe.AddRecipe();

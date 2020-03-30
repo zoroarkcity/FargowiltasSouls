@@ -1006,7 +1006,7 @@ Additionally grants:");
 
             recipe.AddIngredient(null, "Sadism", 30);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

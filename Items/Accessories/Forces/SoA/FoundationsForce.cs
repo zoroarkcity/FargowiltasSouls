@@ -77,7 +77,7 @@ Effects of Frigid Pendant, Lapis Pendant, and Dreadflame Emblem");
             recipe.AddIngredient(null, "FrosthunterEnchant");
             recipe.AddIngredient(null, "BlightboneEnchant");
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

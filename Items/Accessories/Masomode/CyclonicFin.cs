@@ -12,12 +12,11 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cyclonic Fin");
-            Tooltip.SetDefault(@"'The wind is howling'
-Grants immunity to Curse of the Moon and Oceanic Maul
-Your attacks inflict Curse of the Moon and Oceanic Maul
-Spectral Fishron periodically manifests to support your critical hits
-Spectral Fishron also inflicts Mutant Nibble, disabling enemy healing");
+            DisplayName.SetDefault("Abominable Wand");
+            Tooltip.SetDefault(@"'Seems like something's missing'
+Grants immunity to Abominable Fang
+Spectral Abominationn periodically manifests to support your critical hits
+Spectral Abominationn also inflicts Mutant Nibble");
 //Upgrades Cute Fishron to Cute Fishron EX");
             DisplayName.AddTranslation(GameCulture.Chinese, "飓风鳍");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'风在咆哮'
@@ -50,8 +49,7 @@ Spectral Fishron also inflicts Mutant Nibble, disabling enemy healing");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.buffImmune[mod.BuffType("OceanicMaul")] = true;
-            player.buffImmune[mod.BuffType("CurseoftheMoon")] = true;
+            player.buffImmune[mod.BuffType("AbomFang")] = true;
             player.GetModPlayer<FargoPlayer>().CyclonicFin = true;
             if (player.GetModPlayer<FargoPlayer>().CyclonicFinCD > 0)
                 player.GetModPlayer<FargoPlayer>().CyclonicFinCD--;

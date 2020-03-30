@@ -498,7 +498,7 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
                 recipe.AddIngredient(calamity.ItemType("CelestialTracers"));
             }
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
                 
             recipe.SetResult(this);
             recipe.AddRecipe();

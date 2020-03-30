@@ -101,7 +101,7 @@ Allows for very long lasting flight");
                 recipe.AddIngredient(ItemID.WingsSolar);
             }
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this);
             recipe.AddRecipe();

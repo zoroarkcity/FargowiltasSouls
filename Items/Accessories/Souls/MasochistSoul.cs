@@ -169,7 +169,7 @@ Summons the aid of all Masochist Mode bosses to your side");
                 fargoPlayer.SinisterIconDrops = true;
 
             //sparkling adoration
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Graze))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Graze, false))
                 player.GetModPlayer<FargoPlayer>().Graze = true;
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DevianttHearts))
@@ -275,9 +275,9 @@ Summons the aid of all Masochist Mode bosses to your side");
             player.buffImmune[BuffID.MoonLeech] = true;
 
             //cyclonic fin
-            /*fargoPlayer.CyclonicFin = true;
+            fargoPlayer.CyclonicFin = true;
             if (fargoPlayer.CyclonicFinCD > 0)
-                fargoPlayer.CyclonicFinCD -= 2;*/
+                fargoPlayer.CyclonicFinCD -= 2;
             /*if (player.mount.Active && player.mount.Type == MountID.CuteFishron)
             {
                 if (player.ownedProjectileCounts[mod.ProjectileType("CuteFishronRitual")] < 1 && player.whoAmI == Main.myPlayer)
@@ -341,6 +341,7 @@ Summons the aid of all Masochist Mode bosses to your side");
             }*/
 
             //sadism
+            player.buffImmune[mod.BuffType("AbomFang")] = true;
             player.buffImmune[mod.BuffType("Antisocial")] = true;
             player.buffImmune[mod.BuffType("Atrophied")] = true;
             player.buffImmune[mod.BuffType("Berserked")] = true;
@@ -392,12 +393,12 @@ Summons the aid of all Masochist Mode bosses to your side");
             recipe.AddIngredient(mod.ItemType("LumpOfFlesh"));
             recipe.AddIngredient(mod.ItemType("ChaliceoftheMoon"));
             recipe.AddIngredient(mod.ItemType("HeartoftheMasochist"));
-            //recipe.AddIngredient(mod.ItemType("CyclonicFin"));
+            recipe.AddIngredient(mod.ItemType("CyclonicFin"));
             //recipe.AddIngredient(mod.ItemType("Sadism"), 30);
             recipe.AddIngredient(mod.ItemType("MutantScale"), 15);
             recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 15);
 
-            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
             recipe.SetResult(this);
             recipe.AddRecipe();
