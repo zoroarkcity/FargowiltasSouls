@@ -11978,8 +11978,8 @@ namespace FargowiltasSouls.NPCs
                                     break;
                             }
                         }
-                        if (projectile.type == ProjectileID.HallowStar)
-                            damage /= 4;
+                        /*if (projectile.type == ProjectileID.HallowStar)
+                            damage /= 4;*/
                         break;
 
                     case NPCID.IceTortoise:
