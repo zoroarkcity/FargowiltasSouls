@@ -81,7 +81,6 @@ Effects of Flying Carpet";
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicSpeed) && !player.GetModPlayer<FargoPlayer>().noSupersonic)
             {
                 player.runAcceleration += SoulConfig.Instance.SupersonicMultiplier * .1f;
-                player.runSlowdown = 10;
                 player.maxRunSpeed += SoulConfig.Instance.SupersonicMultiplier * 2;
                 //frog legs
                 player.autoJump = true;
@@ -94,6 +93,12 @@ Effects of Flying Carpet";
                 //same as frostspark
                 player.accRunSpeed = 6.75f;
             }
+
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.NoMomentum))
+            {
+                player.runSlowdown = 10;
+            }
+
 
             player.moveSpeed += 0.5f;
             player.rocketBoots = 3;

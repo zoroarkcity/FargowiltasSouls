@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Projectiles.Souls;
+using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -85,7 +86,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             if (player.controlUseItem)
             {
                 //charge up while attacking
-                if (player.ownedProjectileCounts[mod.ProjectileType("PhantasmalDeathrayPungent")] < 1)
+                if (player.ownedProjectileCounts[ModContent.ProjectileType<MegaFlameburst>()] < 1)
                 {
                     projectile.localAI[0]++;
                 }
@@ -124,7 +125,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                     {
                         Vector2 velocity = Vector2.UnitX.RotatedBy(projectile.rotation) * 6 * (projectile.spriteDirection == 1 ? 1 : -1);
 
-                        int type = mod.ProjectileType("MegaFlameburst");
+                        int type = ModContent.ProjectileType<MegaFlameburst>();
 
                         Projectile.NewProjectile(projectile.Center, velocity, type,
                             player.GetModPlayer<FargoPlayer>().HighestDamageTypeScaling(200), 4f, projectile.owner, projectile.whoAmI);

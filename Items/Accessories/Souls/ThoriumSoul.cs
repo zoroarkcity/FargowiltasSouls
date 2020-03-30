@@ -109,7 +109,7 @@ Summons several pets");
             recipe.AddIngredient(null, "VanaheimForce");
             recipe.AddIngredient(null, "HelheimForce");
             recipe.AddIngredient(null, "AsgardForce");
-            recipe.AddIngredient(null, "MutatingEnergy", 10);
+            recipe.AddIngredient(null, "MutantScale", 10);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 

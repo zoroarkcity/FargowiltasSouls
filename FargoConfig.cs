@@ -529,6 +529,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool SupersonicSpeed;
 
+        [Label("$Mods.FargowiltasSouls.MomentumConfig")]
+        [DefaultValue(true)]
+        public bool NoMomentum;
+
         [Label("Supersonic Speed Multiplier")]
         [Increment(1)]
         [Range(1, 10)]

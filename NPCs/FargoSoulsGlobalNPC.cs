@@ -1402,7 +1402,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.BloodCrawlerWall:
                     case NPCID.JungleCreeperWall:
                         if (++Counter >= 360)
-                            Shoot(npc, 60, 400, 14, ProjectileID.WebSpit, 9, 0);
+                            Shoot(npc, 60, 400, 14, ProjectileID.WebSpit, 9, 0, false, false, DustID.Web);
                         break;
 
                     case NPCID.SeekerHead:
@@ -6879,7 +6879,7 @@ namespace FargowiltasSouls.NPCs
                         else //not in a wall
                         {
                             if (++Counter >= 300)
-                                Shoot(npc, 30, 600, 12, ProjectileID.CursedFlameHostile, npc.damage / 4, 0);
+                                Shoot(npc, 30, 600, 12, ProjectileID.CursedFlameHostile, npc.damage / 4, 0, false, false, 75);
                         }
                         goto case NPCID.Harpy;
 
@@ -7482,7 +7482,7 @@ namespace FargowiltasSouls.NPCs
             }
         }
 
-        private void Shoot(NPC npc, int delay, float distance, int speed, int proj, int dmg, float kb, bool recolor = false, bool hostile = false)
+        private void Shoot(NPC npc, int delay, float distance, int speed, int proj, int dmg, float kb, bool recolor = false, bool hostile = false, int dustID = -1)
         {
             int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
             if (t == -1)
@@ -7496,6 +7496,22 @@ namespace FargowiltasSouls.NPCs
                 if (delay != 0 && Stop == 0)
                 {
                     Stop = delay;
+
+                    //dust ring
+                    if (dustID != -1)
+                    {
+                        for (int i = 0; i < 20; i++)
+                        {
+                            Vector2 vector6 = Vector2.UnitY * 5f;
+                            vector6 = vector6.RotatedBy((i - (20 / 2 - 1)) * 6.28318548f / 20) + npc.Center;
+                            Vector2 vector7 = vector6 - npc.Center;
+                            int d = Dust.NewDust(vector6 + vector7, 0, 0, dustID);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity = vector7;
+                            Main.dust[d].scale = 1.5f;
+                        }
+                    }
+
                 }
                 //half way through start attack
                 else if (delay == 0 || Stop == delay / 2)

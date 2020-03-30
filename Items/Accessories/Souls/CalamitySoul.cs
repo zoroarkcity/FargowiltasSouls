@@ -99,7 +99,7 @@ Summons several pets");
             recipe.AddIngredient(null, "ApocalypseForce");
             recipe.AddIngredient(null, "DevastationForce");
             recipe.AddIngredient(null, "DesolationForce");
-            recipe.AddIngredient(null, "MutatingEnergy", 10);
+            recipe.AddIngredient(null, "MutantScale", 10);
 
             recipe.AddTile(calamity, "DraedonsForge");
             recipe.SetResult(this);
