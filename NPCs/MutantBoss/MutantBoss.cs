@@ -52,7 +52,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             {
                 npc.lifeMax = 377000000;
                 npc.damage = (int)(npc.damage * 1.5);
-                npc.defense *= 10;
+                npc.defense *= 5;
                 if (Fargowiltas.Instance.CalamityLoaded)
                 {
                     npc.buffImmune[ModLoader.GetMod("CalamityMod").BuffType("ExoFreeze")] = true;
