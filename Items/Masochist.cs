@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mutant's Gift");
-            Tooltip.SetDefault("'Use this to turn on/off Masochist Mode'");
+            Tooltip.SetDefault("'Use this to turn on/off Eternity Mode'");
             DisplayName.AddTranslation(GameCulture.Chinese, "突变体的礼物");
             Tooltip.AddTranslation(GameCulture.Chinese, "'用开/关受虐模式'");
         }
@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Items
             {
                 FargoSoulsWorld.MasochistMode = !FargoSoulsWorld.MasochistMode;
                 Main.expertMode = true;
-                string text = FargoSoulsWorld.MasochistMode ? "Masochist Mode initiated!" : "Masochist Mode deactivated!";
+                string text = FargoSoulsWorld.MasochistMode ? "Eternity Mode initiated!" : "Eternity Mode deactivated!";
                 if (Main.netMode == 0)
                 {
                     Main.NewText(text, 175, 75, 255);
