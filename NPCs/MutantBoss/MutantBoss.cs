@@ -884,7 +884,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantSpearSpin"), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                     }
                     targetPos = player.Center;
-                    targetPos.Y += 400f;
+                    targetPos.Y += 400f * Math.Sign(npc.Center.Y - player.Center.Y); //can be above or below
                     Movement(targetPos, 0.7f, false);
                     if (++npc.ai[1] > 180)
                     {
@@ -1055,7 +1055,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("MutantSpearSpin"), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                     }
                     targetPos = player.Center;
-                    targetPos.Y -= 400f;
+                    targetPos.Y += 400f * Math.Sign(npc.Center.Y - player.Center.Y); //can be above or below
                     Movement(targetPos, 0.7f, false);
                     if (++npc.ai[1] > 180)
                     {
@@ -1563,7 +1563,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
                 case 42: //boomerangs
                     npc.velocity = Vector2.Zero;
-                    if (++npc.ai[1] > 30)
+                    if (++npc.ai[1] > 20)
                     {
                         npc.netUpdate = true;
                         npc.ai[1] = 0;
@@ -1571,8 +1571,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[2] = npc.ai[2] > 0 ? -1 : 1;
                         if (Main.netMode != 1)
                         {
-                            const float retiRad = 500;
-                            const float spazRad = 250;
+                            const float retiRad = 525; //500
+                            const float spazRad = 350; //250
                             float retiSpeed = 2 * (float)Math.PI * retiRad / 240;
                             float spazSpeed = 2 * (float)Math.PI * spazRad / 120;
                             float retiAcc = retiSpeed * retiSpeed / retiRad * npc.ai[2];

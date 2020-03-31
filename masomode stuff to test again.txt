@@ -140,3 +140,5 @@ nerfed demon scythe by -25%
 optic staff EX recipe includes optic staff ech
 fixed mutant spawning final spark on you in mp
 officially rebranded masomode to eternity mode
+changed mutant to not ram through you when spinning spear usually
+changed mutant rangs to not be campable at edge
