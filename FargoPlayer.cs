@@ -1251,7 +1251,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (((ShadeEnchant && player.ZoneCrimson) || WoodForce) && shadeCD == 0)
+            if (((ShadeEnchant && player.ZoneCrimson) || WoodForce) && shadeCD == 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.ShadewoodOnHitEffect))
             {
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
