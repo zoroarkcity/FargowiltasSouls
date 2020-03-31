@@ -81,6 +81,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool ShadewoodEffect;
 
+        [Label("$Mods.FargowiltasSouls.ShadeOnHitConfig")]
+        [DefaultValue(true)]
+        public bool ShadewoodOnHitEffect;
+
         [Label("$Mods.FargowiltasSouls.MahoganyConfig")]
         [DefaultValue(true)]
         public bool MahoganyHook;

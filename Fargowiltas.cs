@@ -82,6 +82,7 @@ namespace FargowiltasSouls
             AddToggle("MahoganyConfig", "Mahogany Hook Speed", "RichMahoganyEnchant", "b56c64");
             AddToggle("EbonConfig", "Ebonwood Shadowflame", "EbonwoodEnchant", "645a8d");
             AddToggle("ShadeConfig", "Blood Geyser On Hit", "ShadewoodEnchant", "586876");
+            AddToggle("ShadeOnHitConfig", "Proximity Triggers On Hit Effects", "ShadewoodEnchant", "586876");
             AddToggle("PalmConfig", "Palmwood Sentry", "PalmWoodEnchant", "b78d56");
             AddToggle("PearlConfig", "Pearlwood Rain", "PearlwoodEnchant", "ad9a5f");
 

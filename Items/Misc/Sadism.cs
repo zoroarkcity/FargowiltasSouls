@@ -11,9 +11,9 @@ namespace FargowiltasSouls.Items.Misc
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Sadism");
-            Tooltip.SetDefault(@"'Proof of having embraced suffering'
-Grants immunity to almost all Masochist Mode debuffs");
+            DisplayName.SetDefault("Eternal Energy");
+            Tooltip.SetDefault(@"'Proof of having embraced eternity'
+Grants immunity to almost all Eternity Mode debuffs");
             DisplayName.AddTranslation(GameCulture.Chinese, "施虐狂");
             Tooltip.AddTranslation(GameCulture.Chinese,
 @"'受苦的证明'
