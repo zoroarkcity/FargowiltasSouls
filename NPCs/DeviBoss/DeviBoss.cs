@@ -419,9 +419,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 Vector2 vel = Vector2.Normalize(npc.velocity);
                                 for (int i = 0; i < max; i++)
                                 {
-                                    Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("DeviLightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .01f * npc.direction);
+                                    Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("DeviLightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .009f * npc.direction);
                                     if (npc.localAI[3] > 1)
-                                        Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("DeviLightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .01f * -npc.direction);
+                                        Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("DeviLightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .009f * -npc.direction);
                                 }
                             }
                         }
@@ -568,6 +568,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             Main.LocalPlayer.AddBuff(mod.BuffType("Hexed"), 2);
                             Main.LocalPlayer.AddBuff(mod.BuffType("Crippled"), 2);
                             Main.LocalPlayer.AddBuff(BuffID.Dazed, 2);
+                            Main.LocalPlayer.AddBuff(BuffID.OgreSpit, 2);
                         }
 
                         Aura(150, mod.BuffType("Hexed"), false, 119);
@@ -575,6 +576,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         {
                             Main.LocalPlayer.AddBuff(mod.BuffType("Crippled"), 2);
                             Main.LocalPlayer.AddBuff(BuffID.Dazed, 2);
+                            Main.LocalPlayer.AddBuff(BuffID.OgreSpit, 2);
                         }
 
                         for (int i = 0; i < 20; i++)
@@ -842,7 +844,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                     Vector2 spawnPos = player.Center;
                                     spawnPos.X += 1200 * i;
                                     spawnPos.Y += 50 * j;
-                                    Vector2 vel = 12 * Vector2.UnitX * -i;
+                                    Vector2 vel = 14 * Vector2.UnitX * -i;
                                     Projectile.NewProjectile(spawnPos, vel, mod.ProjectileType("DeviGuardian"), npc.damage / 3, 0f, Main.myPlayer);
                                 }
                             }
@@ -860,7 +862,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 Vector2 spawnPos = player.Center;
                                 spawnPos.X += Main.rand.Next(-200, 201);
                                 spawnPos.Y += 700;
-                                Vector2 vel = Main.rand.NextFloat(10, 12f) * Vector2.Normalize(player.Center - spawnPos);
+                                Vector2 vel = Main.rand.NextFloat(12, 16f) * Vector2.Normalize(player.Center - spawnPos);
                                 Projectile.NewProjectile(spawnPos, vel, mod.ProjectileType("DeviGuardian"), npc.damage / 3, 0f, Main.myPlayer);
                             }
                         }
@@ -886,7 +888,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                         Vector2 spawnPos = player.Center;
                                         spawnPos.X += 1200 * i;
                                         spawnPos.Y += 60 * j;
-                                        Vector2 vel = 12 * Vector2.UnitX * -i;
+                                        Vector2 vel = 14 * Vector2.UnitX * -i;
                                         Projectile.NewProjectile(spawnPos, vel, mod.ProjectileType("DeviGuardian"), npc.damage / 3, 0f, Main.myPlayer);
                                     }
                                 }

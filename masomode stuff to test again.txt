@@ -145,3 +145,5 @@ changed mutant rangs to not be campable at edge
 ADDED SHADEWOOD TOGGLE FOR THE PROXIMITY ON HIT THING
 
 slowed down devi balls
+devi rune wizard aura inflicts oozed
+increased velocity of devi baby guardian attack
