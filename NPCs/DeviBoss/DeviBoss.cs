@@ -1188,6 +1188,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             npc.netUpdate = true;
                         }
                         TeleportDust();
+                        Main.PlaySound(SoundID.Item84, npc.Center);
 
                         if (Main.netMode != 1) //spawn ritual for strong attacks
                         {
@@ -1195,7 +1196,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         }
                     }
                     
-                    if (++npc.ai[1] < 120)
+                    if (++npc.ai[1] < 150)
                     {
                         npc.velocity = Vector2.Zero;
 
@@ -1223,7 +1224,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
                     }
-                    else if (npc.ai[1] == 120) //start swinging
+                    else if (npc.ai[1] == 150) //start swinging
                     {
                         targetPos = player.Center;
                         targetPos.X += 200 * (npc.Center.X < targetPos.X ? -1 : 1);
@@ -1232,7 +1233,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
                     }
-                    else if (npc.ai[1] < 150)
+                    else if (npc.ai[1] < 180)
                     {
                         npc.ai[3] += npc.ai[2];
                         npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
@@ -1243,7 +1244,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.2f);
 
-                        if (npc.ai[1] > 240)
+                        if (npc.ai[1] > 270)
                         {
                             GetNextAttack();
                         }
@@ -1256,10 +1257,10 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                     npc.dontTakeDamage = false;
 
-                    targetPos = player.Center + player.DirectionTo(npc.Center) * 250;
+                    targetPos = player.Center + player.DirectionTo(npc.Center) * 200;
                     Movement(targetPos, 0.1f);
                     if (npc.Distance(player.Center) < 100)
-                        Movement(targetPos, 0.3f);
+                        Movement(targetPos, 0.5f);
 
                     if (++npc.ai[1] > (npc.localAI[3] > 1 ? 60 : 90))
                     {

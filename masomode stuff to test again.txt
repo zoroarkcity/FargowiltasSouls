@@ -149,3 +149,4 @@ devi rune wizard aura inflicts oozed
 increased velocity of devi baby guardian attack
 reverted mutant and abom boss
 adjusted devi movement to hopefully not bump into you as much
+increased delay during axe swing by half a second

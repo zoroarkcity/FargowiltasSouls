@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             projectile.hostile = true;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
-            projectile.timeLeft = 150;
+            projectile.timeLeft = 180;
             projectile.alpha = 250;
 
             projectile.aiStyle = -1;
@@ -67,7 +67,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             }
             
             //important again
-            if (++projectile.localAI[0] > 21)
+            if (++projectile.localAI[0] > 31)
             {
                 projectile.localAI[0] = 1;
                 if (++scaleCounter < 3)

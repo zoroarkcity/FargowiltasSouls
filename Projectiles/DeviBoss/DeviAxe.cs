@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             projectile.hostile = true;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
-            projectile.timeLeft = 150;
+            projectile.timeLeft = 180;
             projectile.hide = true;
         }
 
