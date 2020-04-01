@@ -1258,6 +1258,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                     targetPos = player.Center + player.DirectionTo(npc.Center) * 250;
                     Movement(targetPos, 0.1f);
+                    if (npc.Distance(player.Center) < 100)
+                        Movement(targetPos, 0.3f);
 
                     if (++npc.ai[1] > (npc.localAI[3] > 1 ? 60 : 90))
                     {
