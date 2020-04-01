@@ -145,4 +145,3 @@ changed mutant rangs to not be campable at edge
 ADDED SHADEWOOD TOGGLE FOR THE PROXIMITY ON HIT THING
 
 slowed down devi balls
-fixed pinky and dungeon slime not dropping cracked gems

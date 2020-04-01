@@ -9963,11 +9963,6 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, ItemID.LuckyCoin);
                         break;
 
-                    case NPCID.DungeonSlime:
-                        if (Main.rand.Next(5) == 0)
-                            Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
-                        break;
-
                     case NPCID.Nymph:
                         if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<NymphsPerfume>());
