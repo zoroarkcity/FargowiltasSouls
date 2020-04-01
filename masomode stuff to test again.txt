@@ -147,3 +147,4 @@ ADDED SHADEWOOD TOGGLE FOR THE PROXIMITY ON HIT THING
 slowed down devi balls
 devi rune wizard aura inflicts oozed
 increased velocity of devi baby guardian attack
+reverted mutant and abom boss

@@ -15,8 +15,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Yrimir, God Emperor of Gamers");
-            //DisplayName.SetDefault("Abominationn");
+            DisplayName.SetDefault("Abominationn");
             Main.npcFrameCount[npc.type] = 4;
         }
 
