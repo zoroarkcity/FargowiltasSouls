@@ -208,6 +208,12 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell";
                 recipe.AddIngredient(calamity.ItemType("RampartofDeities"));
                 recipe.AddIngredient(calamity.ItemType("AsgardianAegis"));
             }
+            else
+            {
+                recipe.AddIngredient(ItemID.FrozenTurtleShell);
+                recipe.AddIngredient(ItemID.PaladinsShield);
+                recipe.AddIngredient(ItemID.AnkhShield);
+            }
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 

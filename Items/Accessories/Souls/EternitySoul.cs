@@ -590,7 +590,6 @@ Additionally grants:");
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicSpeed) && !player.GetModPlayer<FargoPlayer>().noSupersonic)
             {
                 player.runAcceleration += SoulConfig.Instance.SupersonicMultiplier * .1f;
-                player.runSlowdown = 10;
                 player.maxRunSpeed += SoulConfig.Instance.SupersonicMultiplier * 2;
                 //frog legs
                 player.autoJump = true;
@@ -602,6 +601,11 @@ Additionally grants:");
             {
                 //same as frostspark
                 player.accRunSpeed = 6.75f;
+            }
+
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.NoMomentum))
+            {
+                player.runSlowdown = 10;
             }
             player.moveSpeed += 0.5f;
             player.accRunSpeed = 12f;
@@ -649,6 +653,7 @@ Additionally grants:");
             player.accFishFinder = true;
 
             //WORLD SHAPER
+            modPlayer.MinerEffect(hideVisual, .66f);
             //placing speed up
             player.tileSpeed += 0.5f;
             player.wallSpeed += 0.5f;

@@ -4866,7 +4866,7 @@ namespace FargowiltasSouls
 
         public override bool PreItemCheck()
         {
-            if (TribalCharm && SoulConfig.Instance.TribalCharm)
+            if (TribalCharm && SoulConfig.Instance.TribalCharm && player.HeldItem.type != ItemID.RodofDiscord)
             {
                 TribalAutoFire = player.HeldItem.autoReuse;
                 player.HeldItem.autoReuse = true;
@@ -4883,7 +4883,7 @@ namespace FargowiltasSouls
 
         public override void PostItemCheck()
         {
-            if (TribalCharm && SoulConfig.Instance.TribalCharm)
+            if (TribalCharm && SoulConfig.Instance.TribalCharm && player.HeldItem.type != ItemID.RodofDiscord)
             {
                 player.HeldItem.autoReuse = TribalAutoFire;
             }

@@ -25,8 +25,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 @"'Protect e-girls at all costs'
 Enemies that attack friendly NPCs are marked as Villains
 You deal 50% bonus damage to Villains
-Effects of Shade Band
-Summons a Moogle pet");
+Effects of Shade Band");
             DisplayName.AddTranslation(GameCulture.Chinese, "白骑士魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'不惜一切代价保护电工妹'
