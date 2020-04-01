@@ -9777,6 +9777,14 @@ namespace FargowiltasSouls.NPCs
             {
                 switch (npc.type)
                 {
+                    case NPCID.BlueSlime:
+                        if (npc.netID == NPCID.Pinky)
+                        {
+                            if (Main.rand.Next(5) == 0)
+                                Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
+                        }
+                        break;
+
                     case NPCID.BrainScrambler:
                         if (Main.rand.Next(100) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.BrainScrambler);
@@ -9961,6 +9969,11 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, ItemID.CoinGun);
                         if (Main.rand.Next(100) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.LuckyCoin);
+                        break;
+
+                    case NPCID.DungeonSlime:
+                        if (Main.rand.Next(5) == 0)
+                            Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
                         break;
 
                     case NPCID.Nymph:

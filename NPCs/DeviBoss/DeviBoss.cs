@@ -419,9 +419,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 Vector2 vel = Vector2.Normalize(npc.velocity);
                                 for (int i = 0; i < max; i++)
                                 {
-                                    Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("DeviLightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .012f * npc.direction);
+                                    Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("DeviLightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .01f * npc.direction);
                                     if (npc.localAI[3] > 1)
-                                        Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("DeviLightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .012f * -npc.direction);
+                                        Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("DeviLightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .01f * -npc.direction);
                                 }
                             }
                         }
