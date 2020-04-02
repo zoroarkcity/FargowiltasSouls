@@ -95,7 +95,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 {
                     if (projectile.ai[0] >= 0 && Main.npc[ai0].CanBeChasedBy()) //has target
                     {
-                        projectile.velocity = Main.npc[ai0].Center + Main.npc[ai0].velocity * 15f - projectile.Center;
+                        projectile.velocity = Main.npc[ai0].Center - projectile.Center;
                         projectile.velocity.Normalize();
                         projectile.velocity *= 27f;
                         //projectile.rotation = projectile.velocity.ToRotation();

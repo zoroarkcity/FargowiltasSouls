@@ -66,14 +66,6 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 dust2.velocity = dust2.velocity * 2f;
                 Main.dust[index3].noGravity = true;
             }
-            for (int index1 = 0; index1 < 1; ++index1)
-            {
-                int index2 = Gore.NewGore(projectile.position + new Vector2((float)(projectile.width * Main.rand.Next(100)) / 100f, (float)(projectile.height * Main.rand.Next(100)) / 100f) - Vector2.One * 10f, new Vector2(), Main.rand.Next(61, 64), 1f);
-                Gore gore = Main.gore[index2];
-                gore.velocity = gore.velocity * 0.3f;
-                Main.gore[index2].velocity.X += (float)Main.rand.Next(-10, 11) * 0.05f;
-                Main.gore[index2].velocity.Y += (float)Main.rand.Next(-10, 11) * 0.05f;
-            }
         }
 
         public override Color? GetAlpha(Color lightColor)

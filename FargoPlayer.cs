@@ -297,6 +297,9 @@ namespace FargowiltasSouls
         public double GrazeBonus;
         public bool DevianttHearts;
         public int DevianttHeartsCD;
+        public bool MutantEye;
+        public bool MutantEyeVisual;
+        public int MutantEyeCD;
 
         //public int PreNerfDamage;
 
@@ -466,6 +469,68 @@ namespace FargowiltasSouls
                     Projectile.NewProjectile(player.Center, vel, ModContent.ProjectileType<Projectiles.Masomode.BetsyDash>(), (int)(100 * player.meleeDamage), 0f, player.whoAmI);
                     player.AddBuff(ModContent.BuffType<Buffs.Souls.BetsyDash>(), 20);
                 }
+            }
+
+            if (Fargowiltas.MutantBombKey.JustPressed && MutantEye && MutantEyeCD <= 0)
+            {
+                MutantEyeCD = 3600;
+
+                const int invulTime = 90;
+                player.immune = true;
+                player.immuneTime = invulTime;
+                player.hurtCooldowns[0] = invulTime;
+                player.hurtCooldowns[1] = invulTime;
+
+                Main.PlaySound(SoundID.Item84, player.Center);
+
+                const int max = 100; //make some indicator dusts
+                for (int i = 0; i < max; i++)
+                {
+                    Vector2 vector6 = Vector2.UnitY * 30f;
+                    vector6 = vector6.RotatedBy((i - (max / 2 - 1)) * 6.28318548f / max) + Main.LocalPlayer.Center;
+                    Vector2 vector7 = vector6 - Main.LocalPlayer.Center;
+                    int d = Dust.NewDust(vector6 + vector7, 0, 0, 229, 0f, 0f, 0, default(Color), 3f);
+                    Main.dust[d].noGravity = true;
+                    Main.dust[d].velocity = vector7;
+                }
+
+                for (int i = 0; i < 50; i++) //make some indicator dusts
+                {
+                    int d = Dust.NewDust(player.position, player.width, player.height, 229, 0f, 0f, 0, default(Color), 2.5f);
+                    Main.dust[d].noGravity = true;
+                    Main.dust[d].noLight = true;
+                    Main.dust[d].velocity *= 24f;
+                }
+
+                for (int i = 0; i < Main.maxProjectiles; i++) //clear projs
+                {
+                    if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].damage > 0
+                        && !Main.projectile[i].GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb)
+                        Main.projectile[i].Kill();
+                }
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].damage > 0
+                        && !Main.projectile[i].GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb)
+                        Main.projectile[i].Kill();
+                }
+
+
+                void SpawnSphereRing(int max2, float speed, int damage2, float rotationModifier)
+                {
+                    float rotation = 2f * (float)Math.PI / max2;
+                    Vector2 vel = Vector2.UnitY * speed;
+                    int type = ModContent.ProjectileType<PhantasmalSphereRing>();
+                    for (int i = 0; i < max; i++)
+                    {
+                        vel = vel.RotatedBy(rotation);
+                        Projectile.NewProjectile(player.Center, vel, type, damage2, 0f, Main.myPlayer, rotationModifier * player.direction, speed);
+                    }
+                }
+
+                int damage = (int)(1700 * player.magicDamage);
+                SpawnSphereRing(16, 16f, damage, -1f);
+                SpawnSphereRing(16, 16f, damage, 1f);
             }
         }
 
@@ -677,6 +742,8 @@ namespace FargowiltasSouls
             TimsConcoction = false;
             Graze = false;
             DevianttHearts = false;
+            MutantEye = false;
+            MutantEyeVisual = false;
 
             //debuffs
             Hexed = false;
@@ -778,6 +845,9 @@ namespace FargowiltasSouls
             Graze = false;
             GrazeBonus = 0;
             DevianttHearts = false;
+            MutantEye = false;
+            MutantEyeVisual = false;
+            MutantEyeCD = 60;
 
             MaxLifeReduction = 0;
         }
@@ -2352,7 +2422,7 @@ namespace FargowiltasSouls
                 //target.AddBuff(ModContent.BuffType<OceanicMaul>(), 900);
                 //target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 900);
 
-                if (crit && CyclonicFinCD <= 0 && proj.type != ModContent.ProjectileType<RazorbladeTyphoonFriendly>() && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion))
+                if (crit && CyclonicFinCD <= 0 && proj.type != ModContent.ProjectileType<RazorbladeTyphoonFriendly>() && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion, !MutantEye))
                 {
                     CyclonicFinCD = 360;
 
@@ -2365,7 +2435,10 @@ namespace FargowiltasSouls
                     Vector2 vel = target.Center - spawn;
                     vel.Normalize();
                     vel *= 27f;
+
                     int dam = 150;
+                    if (MutantEye)
+                        dam *= 3;
                     int damageType;
                     if (proj.melee)
                     {
@@ -2576,7 +2649,7 @@ namespace FargowiltasSouls
 
             if (DevianttHearts && DevianttHeartsCD <= 0)
             {
-                DevianttHeartsCD = 600;
+                DevianttHeartsCD = MutantEye ? 300 : 600;
 
                 if (Main.myPlayer == player.whoAmI)
                 {
@@ -2585,7 +2658,10 @@ namespace FargowiltasSouls
                     {
                         Vector2 spawnPos = player.Center + offset.RotatedBy(Math.PI / 7 * i);
                         Vector2 speed = 20 * Vector2.Normalize(Main.MouseWorld - spawnPos);
-                        int heartDamage = (int)(17 * player.minionDamage);
+
+                        int heartDamage = MutantEye ? 170 : 17;
+                        heartDamage = (int)(heartDamage * player.minionDamage);
+
                         float ai1 = (Main.MouseWorld - spawnPos).Length() / 20 + 10;
                         Projectile.NewProjectile(spawnPos, speed, mod.ProjectileType("FriendHeart"), heartDamage, 3f, player.whoAmI, -1, ai1);
 
@@ -2850,7 +2926,7 @@ namespace FargowiltasSouls
                 //target.AddBuff(ModContent.BuffType<OceanicMaul>(), 900);
                 //target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 900);
 
-                if (crit && CyclonicFinCD <= 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion))
+                if (crit && CyclonicFinCD <= 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion, !MutantEye))
                 {
                     CyclonicFinCD = 360;
 
@@ -2864,6 +2940,8 @@ namespace FargowiltasSouls
                     vel.Normalize();
                     vel *= 27f;
                     int dam = (int)(150 * player.meleeDamage);
+                    if (MutantEye)
+                        dam *= 3;
                     int damageType = 1;
                     Projectile.NewProjectile(spawn, vel, ModContent.ProjectileType<SpectralFishron>(), dam, 10f, player.whoAmI, target.whoAmI, damageType);
                 }

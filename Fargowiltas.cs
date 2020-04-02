@@ -29,6 +29,7 @@ namespace FargowiltasSouls
         internal static ModHotKey GoldKey;
         internal static ModHotKey SmokeBombKey;
         internal static ModHotKey BetsyDashKey;
+        internal static ModHotKey MutantBombKey;
 
         internal static List<int> DebuffIDs;
 
@@ -60,6 +61,7 @@ namespace FargowiltasSouls
                 GoldKey = RegisterHotKey("金身", "O");
                 SmokeBombKey = RegisterHotKey("Throw Smoke Bomb", "I");
                 BetsyDashKey = RegisterHotKey("Betsy Dash", "C");
+                MutantBombKey = RegisterHotKey("Mutant Bomb", "Z");
             }
             else
             {
@@ -67,6 +69,7 @@ namespace FargowiltasSouls
                 GoldKey = RegisterHotKey("Turn Gold", "O");
                 SmokeBombKey = RegisterHotKey("Throw Smoke Bomb", "I");
                 BetsyDashKey = RegisterHotKey("Fireball Dash", "C");
+                MutantBombKey = RegisterHotKey("Mutant Bomb", "Z");
             }
             
             AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SteelRed"), ItemType("MutantMusicBox"), TileType("MutantMusicBoxSheet"));
@@ -714,13 +717,13 @@ namespace FargowiltasSouls
                         14.01f,
                         ModContent.NPCType<NPCs.AbomBoss.AbomBoss>(),
                         this,
-                        "Yrimir",
+                        "Abominationn",
                         (Func<bool>)(() => FargoSoulsWorld.downedAbom),
                         ModContent.ItemType<Items.Summons.AbomsCurse>(),
                         new List<int> { ModContent.ItemType<Items.Tiles.AbomTrophy>(), ModContent.ItemType<Items.Tiles.AbomMusicBox>() },
                         new List<int> { ModContent.ItemType<Items.Misc.MutantScale>() },
                         "Spawn by using [i:" + ModContent.ItemType<Items.Summons.AbomsCurse>() + "].",
-                        "Yrimir has destroyed everyone.",
+                        "Abominationn has destroyed everyone.",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Still",
                         "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Head_Boss"
                     );
@@ -745,13 +748,13 @@ namespace FargowiltasSouls
                         14.03f,
                         ModContent.NPCType<NPCs.MutantBoss.MutantBoss>(),
                         this,
-                        "Yharim",
+                        "Mutant",
                         (Func<bool>)(() => FargoSoulsWorld.downedMutant),
                         ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
                         new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), ModContent.ItemType<Items.Tiles.MutantMusicBox>() },
                         ModContent.ItemType<Items.Misc.Sadism>(),
                         "Throw [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while Abominationn is alive, in Mutant's presence.",
-                        "Yharim has eviscerated everyone under its hands.",
+                        "Mutant has eviscerated everyone under its hands.",
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
                         "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
                     );
