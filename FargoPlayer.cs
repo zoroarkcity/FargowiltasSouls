@@ -473,7 +473,7 @@ namespace FargowiltasSouls
 
             if (Fargowiltas.MutantBombKey.JustPressed && MutantEye && MutantEyeCD <= 0)
             {
-                MutantEyeCD = 300;
+                MutantEyeCD = 3600;
 
                 const int invulTime = 90;
                 player.immune = true;
