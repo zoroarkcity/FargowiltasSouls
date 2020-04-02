@@ -2422,7 +2422,7 @@ namespace FargowiltasSouls
                 //target.AddBuff(ModContent.BuffType<OceanicMaul>(), 900);
                 //target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 900);
 
-                if (crit && CyclonicFinCD <= 0 && proj.type != ModContent.ProjectileType<RazorbladeTyphoonFriendly>() && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion))
+                if (crit && CyclonicFinCD <= 0 && proj.type != ModContent.ProjectileType<RazorbladeTyphoonFriendly>() && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion, !MutantEye))
                 {
                     CyclonicFinCD = 360;
 
@@ -2435,7 +2435,10 @@ namespace FargowiltasSouls
                     Vector2 vel = target.Center - spawn;
                     vel.Normalize();
                     vel *= 27f;
+
                     int dam = 150;
+                    if (MutantEye)
+                        dam *= 3;
                     int damageType;
                     if (proj.melee)
                     {
@@ -2646,7 +2649,7 @@ namespace FargowiltasSouls
 
             if (DevianttHearts && DevianttHeartsCD <= 0)
             {
-                DevianttHeartsCD = MasochistSoul ? 300 : 600;
+                DevianttHeartsCD = MutantEye ? 300 : 600;
 
                 if (Main.myPlayer == player.whoAmI)
                 {
@@ -2656,7 +2659,7 @@ namespace FargowiltasSouls
                         Vector2 spawnPos = player.Center + offset.RotatedBy(Math.PI / 7 * i);
                         Vector2 speed = 20 * Vector2.Normalize(Main.MouseWorld - spawnPos);
 
-                        int heartDamage = MasochistSoul ? 170 : 17;
+                        int heartDamage = MutantEye ? 170 : 17;
                         heartDamage = (int)(heartDamage * player.minionDamage);
 
                         float ai1 = (Main.MouseWorld - spawnPos).Length() / 20 + 10;
@@ -2923,7 +2926,7 @@ namespace FargowiltasSouls
                 //target.AddBuff(ModContent.BuffType<OceanicMaul>(), 900);
                 //target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 900);
 
-                if (crit && CyclonicFinCD <= 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion))
+                if (crit && CyclonicFinCD <= 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion, !MutantEye))
                 {
                     CyclonicFinCD = 360;
 
@@ -2937,6 +2940,8 @@ namespace FargowiltasSouls
                     vel.Normalize();
                     vel *= 27f;
                     int dam = (int)(150 * player.meleeDamage);
+                    if (MutantEye)
+                        dam *= 3;
                     int damageType = 1;
                     Projectile.NewProjectile(spawn, vel, ModContent.ProjectileType<SpectralFishron>(), dam, 10f, player.whoAmI, target.whoAmI, damageType);
                 }

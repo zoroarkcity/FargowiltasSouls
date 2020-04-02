@@ -169,11 +169,11 @@ Summons the aid of all Eternity Mode bosses to your side");
                 fargoPlayer.SinisterIconDrops = true;
 
             //sparkling adoration
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Graze, false))
+            /*if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Graze, false))
                 player.GetModPlayer<FargoPlayer>().Graze = true;
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DevianttHearts))
-                player.GetModPlayer<FargoPlayer>().DevianttHearts = true;
+                player.GetModPlayer<FargoPlayer>().DevianttHearts = true;*/
 
             //dragon fang
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.DragonFang))
@@ -275,9 +275,9 @@ Summons the aid of all Eternity Mode bosses to your side");
             player.buffImmune[BuffID.MoonLeech] = true;
 
             //cyclonic fin
-            fargoPlayer.CyclonicFin = true;
+            /*fargoPlayer.CyclonicFin = true;
             if (fargoPlayer.CyclonicFinCD > 0)
-                fargoPlayer.CyclonicFinCD -= 2;
+                fargoPlayer.CyclonicFinCD -= 2;*/
             /*if (player.mount.Active && player.mount.Type == MountID.CuteFishron)
             {
                 if (player.ownedProjectileCounts[mod.ProjectileType("CuteFishronRitual")] < 1 && player.whoAmI == Main.myPlayer)
@@ -385,7 +385,7 @@ Summons the aid of all Eternity Mode bosses to your side");
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddIngredient(mod.ItemType("SinisterIcon"));
-            recipe.AddIngredient(mod.ItemType("SparklingAdoration"));
+            //recipe.AddIngredient(mod.ItemType("SparklingAdoration"));
             recipe.AddIngredient(mod.ItemType("SupremeDeathbringerFairy"));
             recipe.AddIngredient(mod.ItemType("BionomicCluster"));
             recipe.AddIngredient(mod.ItemType("DubiousCircuitry"));
@@ -393,7 +393,7 @@ Summons the aid of all Eternity Mode bosses to your side");
             recipe.AddIngredient(mod.ItemType("LumpOfFlesh"));
             recipe.AddIngredient(mod.ItemType("ChaliceoftheMoon"));
             recipe.AddIngredient(mod.ItemType("HeartoftheMasochist"));
-            recipe.AddIngredient(mod.ItemType("CyclonicFin"));
+            //recipe.AddIngredient(mod.ItemType("CyclonicFin"));
             //recipe.AddIngredient(mod.ItemType("Sadism"), 30);
             recipe.AddIngredient(mod.ItemType("MutantScale"), 15);
             recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 15);

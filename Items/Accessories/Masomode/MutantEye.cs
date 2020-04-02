@@ -17,6 +17,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 Grants immunity to Mutant Fang
 Increases graze bonus cap to 100% increased critical damage
 Increases critical damage gained per graze
+Enables Spectral Abominationn even when toggles are sealed
+Increases Spectral Abominationn respawn rate and damage
 Press the Mutant Bomb key to unleash a wave of spheres and destroy most hostile projectiles
 Mutant Bomb has a 60 second cooldown");
         }
@@ -86,8 +88,8 @@ Mutant Bomb has a 60 second cooldown");
                 Projectile.NewProjectile(player.Center, Vector2.Zero, mod.ProjectileType("PhantasmalRing2"), 0, 0f, Main.myPlayer);
             }
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Graze, false))
-                fargoPlayer.Graze = true;
+            if (fargoPlayer.CyclonicFinCD > 0)
+                fargoPlayer.CyclonicFinCD--;
         }
     }
 }
