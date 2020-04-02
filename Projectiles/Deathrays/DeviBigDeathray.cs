@@ -10,13 +10,18 @@ namespace FargowiltasSouls.Projectiles.Deathrays
 {
     public class DeviBigDeathray : BaseDeathray
     {
-        public DeviBigDeathray() : base(180, "DeviBigDeathray") { }
+        public DeviBigDeathray() : base(180, "DeviDeathray") { }
 
         private const float maxTime = 180;
 
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Love Ray");
+        }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
         }
 

@@ -52,6 +52,8 @@ namespace FargowiltasSouls.Projectiles
         public bool Rainbow = false;
         public int GrazeCD;
 
+        public Func<Projectile, bool> GrazeCheck = projectile => projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + 100 && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0);
+
         public bool Rotate = false;
         public int RotateDist = 32;
         public int RotateDir = 1;
@@ -1003,7 +1005,7 @@ namespace FargowiltasSouls.Projectiles
                 FargoPlayer fargoPlayer = Main.LocalPlayer.GetModPlayer<FargoPlayer>();
                 if (fargoPlayer.Graze && --GrazeCD < 0 && !Main.LocalPlayer.immune && Main.LocalPlayer.hurtCooldowns[0] <= 0 && Main.LocalPlayer.hurtCooldowns[1] <= 0)
                 {
-                    if (projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + 100 && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0))
+                    if (GrazeCheck(projectile))
                     {
                         double grazeGain = fargoPlayer.MutantEye ? 0.04 : 0.02;
                         double grazeCap = fargoPlayer.MutantEye ? 1.0 : 0.3;

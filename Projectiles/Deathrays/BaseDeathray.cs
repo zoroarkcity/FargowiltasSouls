@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
 
         }
 
-        public override void SetDefaults()
+        public override void SetDefaults() //MAKE SURE YOU CALL BASE.SETDEFAULTS IF OVERRIDING
         {
             projectile.width = 48;
             projectile.height = 48;
@@ -36,6 +36,18 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             projectile.timeLeft = 600;
 
             cooldownSlot = 1; //not in warning line, test?
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().GrazeCheck =
+                projectile =>
+                {
+                    float num6 = 0f;
+                    if (CanDamage() && Collision.CheckAABBvLineCollision(Main.LocalPlayer.Hitbox.TopLeft(), Main.LocalPlayer.Hitbox.Size(), projectile.Center,
+                        projectile.Center + projectile.velocity * projectile.localAI[1], 22f * projectile.scale + 200 + Player.defaultHeight, ref num6))
+                    {
+                        return true;
+                    }
+                    return false;
+                };
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

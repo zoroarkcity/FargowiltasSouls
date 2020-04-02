@@ -155,3 +155,4 @@ removed aqua scepter from silver ench recipe, but halved minion damage
 added aqua scepter to apprentice essence recipe
 soul of mutants buffs sparkling adoration's hearts
 added mutant eye
+deathrays give graze

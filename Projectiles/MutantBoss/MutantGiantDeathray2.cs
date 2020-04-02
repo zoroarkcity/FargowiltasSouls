@@ -7,8 +7,9 @@ using Terraria.Enums;
 
 namespace FargowiltasSouls.Projectiles.MutantBoss
 {
-    public class MutantGiantDeathray2 : ModProjectile
+    public class MutantGiantDeathray2 : Deathrays.BaseDeathray
     {
+        public MutantGiantDeathray2() : base(600, "PhantasmalDeathrayML") { }
         private const float maxTime = 600;
 
         public override void SetStaticDefaults()
@@ -18,13 +19,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void SetDefaults()
         {
-            projectile.width = 48;
-            projectile.height = 48;
-            projectile.hostile = true;
-            projectile.alpha = 255;
-            projectile.penetrate = -1;
-            projectile.tileCollide = false;
-            projectile.timeLeft = 600;
+            base.SetDefaults();
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
         }
 
@@ -165,27 +160,6 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             Vector2 arg_AE2D_2 = value20 - Main.screenPosition;
             sourceRectangle2 = null;
             arg_AE2D_0.Draw(arg_AE2D_1, arg_AE2D_2, sourceRectangle2, color44, projectile.rotation, texture2D21.Frame(1, 1, 0, 0).Top(), projectile.scale, SpriteEffects.None, 0f);
-            return false;
-        }
-
-        public override void CutTiles()
-        {
-            DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
-            Vector2 unit = projectile.velocity;
-            Utils.PlotTileLine(projectile.Center, projectile.Center + unit * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CutTiles));
-        }
-
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {
-            if (projHitbox.Intersects(targetHitbox))
-            {
-                return true;
-            }
-            float num6 = 0f;
-            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], 22f * projectile.scale, ref num6))
-            {
-                return true;
-            }
             return false;
         }
 
