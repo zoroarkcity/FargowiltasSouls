@@ -1821,6 +1821,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 NetMessage.SendData(7); //sync world
 
             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantBag"));
+            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantEye"));
             if (Main.rand.Next(10) == 0)
                 Item.NewItem(npc.Hitbox, mod.ItemType("MutantTrophy"));
         }

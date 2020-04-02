@@ -30,6 +30,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             projectile.timeLeft = 600;
             projectile.aiStyle = -1;
             cooldownSlot = 1;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
         }
 
         public override bool? CanHitNPC(NPC target)

@@ -24,6 +24,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             projectile.tileCollide = false;
             projectile.timeLeft = 180;
             projectile.hide = true;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
         }
 
         public override bool? CanHitNPC(NPC target)

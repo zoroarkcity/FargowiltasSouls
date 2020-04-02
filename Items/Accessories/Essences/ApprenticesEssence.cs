@@ -86,6 +86,7 @@ Increases your maximum mana by 50");
                 recipe.AddIngredient(ItemID.MagicMissile);
                 recipe.AddIngredient(ItemID.Flamelash);
                 recipe.AddIngredient(ItemID.DemonScythe);
+                recipe.AddIngredient(ItemID.AquaScepter);
             }
 
             recipe.AddTile(TileID.TinkerersWorkbench);

@@ -25,6 +25,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.penetrate = -1;
             projectile.tileCollide = false;
             projectile.timeLeft = 600;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
         }
 
         public override bool CanDamage()

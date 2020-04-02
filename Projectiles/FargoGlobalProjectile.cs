@@ -62,7 +62,7 @@ namespace FargowiltasSouls.Projectiles
         public bool TimeFreezeImmune;
         public bool TimeFreezeCheck;
         public bool HasKillCooldown;
-        
+        public bool ImmuneToMutantBomb;
 
         public bool masobool;
 
@@ -1005,10 +1005,13 @@ namespace FargowiltasSouls.Projectiles
                 {
                     if (projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + 100 && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0))
                     {
+                        double grazeGain = fargoPlayer.MutantEye ? 0.04 : 0.02;
+                        double grazeCap = fargoPlayer.MutantEye ? 1.0 : 0.3;
+
                         GrazeCD = 60;
-                        fargoPlayer.GrazeBonus += 0.02;
-                        if (fargoPlayer.GrazeBonus > 0.3)
-                            fargoPlayer.GrazeBonus = 0.3;
+                        fargoPlayer.GrazeBonus += grazeGain;
+                        if (fargoPlayer.GrazeBonus > grazeCap)
+                            fargoPlayer.GrazeBonus = grazeCap;
                         fargoPlayer.GrazeCounter = -1; //reset counter whenever successful graze
 
                         if (!Main.dedServ) //is this check needed...?
@@ -1021,7 +1024,7 @@ namespace FargowiltasSouls.Projectiles
                             vector6 = vector6.RotatedBy((i - (max / 2 - 1)) * 6.28318548f / max) + Main.LocalPlayer.Center;
                             Vector2 vector7 = vector6 - Main.LocalPlayer.Center;
                             //changes color when bonus is maxed
-                            int d = Dust.NewDust(vector6 + vector7, 0, 0, fargoPlayer.GrazeBonus >= .3 ? 86 : 228, 0f, 0f, 0, default(Color), 2f);
+                            int d = Dust.NewDust(vector6 + vector7, 0, 0, fargoPlayer.GrazeBonus >= grazeCap ? 86 : 228, 0f, 0f, 0, default(Color), 2f);
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity = vector7;
                         }

@@ -17,7 +17,8 @@ namespace FargowiltasSouls.Projectiles.Deathrays
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Love Ray");
-		}
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
+        }
 
         public override bool? CanHitNPC(NPC target)
         {

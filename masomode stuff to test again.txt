@@ -151,3 +151,7 @@ reverted mutant and abom boss
 adjusted devi movement to hopefully not bump into you as much
 increased delay during axe swing by half a second
 nerfed blender damage slightly
+removed aqua scepter from silver ench recipe, but halved minion damage
+added aqua scepter to apprentice essence recipe
+soul of mutants buffs sparkling adoration's hearts
+added mutant eye

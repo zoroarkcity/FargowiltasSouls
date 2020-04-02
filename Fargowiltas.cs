@@ -29,6 +29,7 @@ namespace FargowiltasSouls
         internal static ModHotKey GoldKey;
         internal static ModHotKey SmokeBombKey;
         internal static ModHotKey BetsyDashKey;
+        internal static ModHotKey MutantBombKey;
 
         internal static List<int> DebuffIDs;
 
@@ -60,6 +61,7 @@ namespace FargowiltasSouls
                 GoldKey = RegisterHotKey("金身", "O");
                 SmokeBombKey = RegisterHotKey("Throw Smoke Bomb", "I");
                 BetsyDashKey = RegisterHotKey("Betsy Dash", "C");
+                MutantBombKey = RegisterHotKey("Mutant Bomb", "Z");
             }
             else
             {
@@ -67,6 +69,7 @@ namespace FargowiltasSouls
                 GoldKey = RegisterHotKey("Turn Gold", "O");
                 SmokeBombKey = RegisterHotKey("Throw Smoke Bomb", "I");
                 BetsyDashKey = RegisterHotKey("Fireball Dash", "C");
+                MutantBombKey = RegisterHotKey("Mutant Bomb", "Z");
             }
             
             AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SteelRed"), ItemType("MutantMusicBox"), TileType("MutantMusicBoxSheet"));

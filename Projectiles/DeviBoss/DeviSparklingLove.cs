@@ -27,8 +27,8 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             projectile.tileCollide = false;
             projectile.timeLeft = 180;
             projectile.alpha = 250;
-
             projectile.aiStyle = -1;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
         }
 
         public override bool CanDamage()
