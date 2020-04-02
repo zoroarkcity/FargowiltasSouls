@@ -1,8 +1,7 @@
-NEW UPDATE - v 1.2.2
--updated mod souls to have mutant scales
--fixed some tooltips
--added dust rings before spiders shoot webs, eater shoot fireballs
--added supersonic no momentum toggle
--fixed miner enchant effects missing from soul of dimensions +
+NEW UPDATE - v 1.3
+-Removed prototype name and changed the mod name to its final name
+-Masochist Mode is renamed
+-Added 3 new bosses
+-Nerfed Fargo’s Mom.
 
 -See the wiki for full details
