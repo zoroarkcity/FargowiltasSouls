@@ -157,3 +157,4 @@ soul of mutants buffs sparkling adoration's hearts
 added mutant eye
 deathrays give graze
 removed abominable wand and sparkling adoration from soul of mutants
+changed purple mocos to black ink in palmwood ench recipe
