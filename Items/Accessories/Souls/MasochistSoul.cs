@@ -28,7 +28,6 @@ Press the Fireball Dash key to perform a short invincible dash
 Certain enemies will drop potions when defeated
 You respawn twice as fast, have Honey buff, improved night vision, and erupt into various attacks when injured
 Prevents boss spawns, increases spawn rate, increases loot, and attacks may squeak and deal 1 damage to you
-Graze projectiles to gain increased crit damage and crits periodically summon life-draining hearts
 Summons the aid of all Eternity Mode bosses to your side");
 
             DisplayName.AddTranslation(GameCulture.Chinese, "受虐之魂");
