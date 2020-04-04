@@ -10,3 +10,13 @@ updated sprites:
 betsy dash makes a sound when its cooldown ends
 sueaky toy drop rate becomes 10% in hardmode
 increased cracked gem rates to 33%, but decreased max drop to 3 (was 20%, max 5)
+abominable wand now grants a 1 life survival
+mutant eye:
+	no longer unseals spectral aboms
+	reduces abominable rebirth duration
+true mutant armor no longer gives a revive, instead causes deathrays whenever you revive
+fixed soul of eternity granting chaos state immune
+nerfed SOE revive to 3min cd (was 2)
+SOE no longer gives faster respawn during boss fights
+SOE lifesteal is inhibited by mutant nibble
+eternity stacking ignores mutant presence

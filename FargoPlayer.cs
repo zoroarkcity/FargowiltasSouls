@@ -300,6 +300,9 @@ namespace FargowiltasSouls
         public bool MutantEye;
         public bool MutantEyeVisual;
         public int MutantEyeCD;
+        public bool AbominableWandRevived;
+        public bool AbomRebirth;
+        public bool WasHurtBySomething;
 
         //public int PreNerfDamage;
 
@@ -744,6 +747,8 @@ namespace FargowiltasSouls
             DevianttHearts = false;
             MutantEye = false;
             MutantEyeVisual = false;
+            AbomRebirth = false;
+            WasHurtBySomething = false;
 
             //debuffs
             Hexed = false;
@@ -782,16 +787,10 @@ namespace FargowiltasSouls
             Flipped = false;
         }
 
-        public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
-        {
-            if (Eternity)
-                player.respawnTimer = (int)(player.respawnTimer * .1);
-        }
-
         public override void UpdateDead()
         {
-            if (SandsofTime && !FargoSoulsGlobalNPC.AnyBossAlive() && player.respawnTimer > 1)
-                player.respawnTimer--;
+            if (SandsofTime && !FargoSoulsGlobalNPC.AnyBossAlive() && player.respawnTimer > 10)
+                player.respawnTimer -= Eternity ? 6 : 1;
 
             wingTimeModifier = 1f;
 
@@ -848,6 +847,9 @@ namespace FargowiltasSouls
             MutantEye = false;
             MutantEyeVisual = false;
             MutantEyeCD = 60;
+            AbominableWandRevived = false;
+            AbomRebirth = false;
+            WasHurtBySomething = false;
 
             MaxLifeReduction = 0;
         }
@@ -1243,6 +1245,34 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (CyclonicFin)
+            {
+                if (AbominableWandRevived && player.statLife >= player.statLifeMax2) //can revive again
+                {
+                    AbominableWandRevived = false;
+
+                    Main.PlaySound(SoundID.Item28, player.Center);
+
+                    const int max = 50; //make some indicator dusts
+                    for (int i = 0; i < max; i++)
+                    {
+                        Vector2 vector6 = Vector2.UnitY * 8f;
+                        vector6 = vector6.RotatedBy((i - (max / 2 - 1)) * 6.28318548f / max) + Main.LocalPlayer.Center;
+                        Vector2 vector7 = vector6 - Main.LocalPlayer.Center;
+                        int d = Dust.NewDust(vector6 + vector7, 0, 0, 87, 0f, 0f, 0, default(Color), 2f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity = vector7;
+                    }
+
+                    for (int i = 0; i < 30; i++)
+                    {
+                        int d = Dust.NewDust(player.position, player.width, player.height, 87, 0f, 0f, 0, default(Color), 2.5f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity *= 8f;
+                    }
+                }
+            }
+
             if (Flipped && !player.gravControl)
             {
                 player.gravControl = true;
@@ -1793,6 +1823,13 @@ namespace FargowiltasSouls
 
                 if (player.lifeRegenTime > 0)
                     player.lifeRegenTime -= 7;
+            }
+
+            if (AbomRebirth)
+            {
+                player.lifeRegen = 0;
+                player.lifeRegenCount = 0;
+                player.lifeRegenTime = 0;
             }
         }
 
@@ -2424,7 +2461,7 @@ namespace FargowiltasSouls
                 //target.AddBuff(ModContent.BuffType<OceanicMaul>(), 900);
                 //target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 900);
 
-                if (crit && CyclonicFinCD <= 0 && proj.type != ModContent.ProjectileType<RazorbladeTyphoonFriendly>() && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion, !MutantEye))
+                if (crit && CyclonicFinCD <= 0 && proj.type != ModContent.ProjectileType<RazorbladeTyphoonFriendly>() && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion))
                 {
                     CyclonicFinCD = 360;
 
@@ -2767,13 +2804,16 @@ namespace FargowiltasSouls
                 }
                 else if (TinCrit >= 100)
                 {
-                    if (damage / 10 > 0)
+                    if (damage / 10 > 0 && !player.moonLeech)
                     {
                         player.statLife += damage / 10;
                         player.HealEffect(damage / 10);
+                        int max = MutantNibble ? StatLifePrevious : player.statLifeMax2;
+                        if (player.statLife > max)
+                            player.statLife = max;
                     }
 
-                    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.EternityStacking))
+                    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.EternityStacking, false))
                     {
                         eternityDamage += .1f;
                     }
@@ -2928,7 +2968,7 @@ namespace FargowiltasSouls
                 //target.AddBuff(ModContent.BuffType<OceanicMaul>(), 900);
                 //target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 900);
 
-                if (crit && CyclonicFinCD <= 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion, !MutantEye))
+                if (crit && CyclonicFinCD <= 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion))
                 {
                     CyclonicFinCD = 360;
 
@@ -3138,6 +3178,8 @@ namespace FargowiltasSouls
 
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
+            WasHurtBySomething = true;
+
             if (MythrilEnchant && !EarthForce)
             {
                 player.AddBuff(ModContent.BuffType<DisruptedFocus>(), 300);
@@ -3249,7 +3291,7 @@ namespace FargowiltasSouls
 
             if (player.statLife <= 0) //revives
             {
-                if (MutantSetBonus && player.whoAmI == Main.myPlayer && retVal && player.FindBuffIndex(ModContent.BuffType<MutantRebirth>()) == -1)
+                /*if (MutantSetBonus && player.whoAmI == Main.myPlayer && retVal && player.FindBuffIndex(ModContent.BuffType<MutantRebirth>()) == -1)
                 {
                     player.statLife = player.statLifeMax2;
                     player.HealEffect(player.statLifeMax2);
@@ -3261,18 +3303,27 @@ namespace FargowiltasSouls
                     player.AddBuff(ModContent.BuffType<MutantRebirth>(), 10800);
                     Projectile.NewProjectile(player.Center, -Vector2.UnitY, ModContent.ProjectileType<GiantDeathray>(), (int)(7000 * player.minionDamage), 10f, player.whoAmI);
                     retVal = false;
+                }*/
+                if (player.whoAmI == Main.myPlayer && retVal && AbomRebirth)
+                {
+                    if (!WasHurtBySomething)
+                    {
+                        player.statLife = 1;
+                        return false; //this is deliberate
+                    }
                 }
 
                 if (player.whoAmI == Main.myPlayer && retVal && player.FindBuffIndex(ModContent.BuffType<Revived>()) == -1)
                 {
                     if (Eternity)
                     {
-                        player.statLife = player.statLifeMax2;
-                        player.HealEffect(player.statLifeMax2);
+                        int heal = player.statLifeMax2 / 2 > 200 ? player.statLifeMax2 / 2 : 200;
+                        player.statLife = heal;
+                        player.HealEffect(heal);
                         player.immune = true;
                         player.immuneTime = player.longInvince ? 180 : 120;
                         Main.NewText("You've been revived!", 175, 75);
-                        player.AddBuff(ModContent.BuffType<Revived>(), 7200);
+                        player.AddBuff(ModContent.BuffType<Revived>(), 10800);
                         retVal = false;
                     }
                     else if (TerrariaSoul)
@@ -3297,6 +3348,19 @@ namespace FargowiltasSouls
                         player.AddBuff(ModContent.BuffType<Revived>(), 18000);
                         retVal = false;
                     }
+                }
+
+                if (player.whoAmI == Main.myPlayer && retVal && CyclonicFin && !AbominableWandRevived)
+                {
+                    AbominableWandRevived = true;
+                    int heal = 1;
+                    player.statLife = heal;
+                    player.HealEffect(heal);
+                    player.immune = true;
+                    player.immuneTime = player.longInvince ? 180 : 120;
+                    Main.NewText("You've been revived!", Color.Yellow);
+                    player.AddBuff(ModContent.BuffType<AbomRebirth>(), MutantEye ? 600 : 900);
+                    retVal = false;
                 }
             }
             
@@ -3328,6 +3392,18 @@ namespace FargowiltasSouls
 
             if (StatLifePrevious > 0 && player.statLife > StatLifePrevious)
                 StatLifePrevious = player.statLife;
+
+            if (MutantSetBonus && player.whoAmI == Main.myPlayer && player.statLife > 0)
+            {
+                player.immune = true;
+                if (player.immuneTime < 180)
+                    player.immuneTime = 180;
+                if (player.hurtCooldowns[0] < 180)
+                    player.hurtCooldowns[0] = 180;
+                if (player.hurtCooldowns[1] < 180)
+                    player.hurtCooldowns[1] = 180;
+                Projectile.NewProjectile(player.Center, -Vector2.UnitY, ModContent.ProjectileType<GiantDeathray>(), (int)(7000 * player.minionDamage), 10f, player.whoAmI);
+            }
 
             return retVal;
         }

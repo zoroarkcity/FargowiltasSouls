@@ -15,8 +15,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 Grants immunity to Mutant Fang
 Increases graze bonus cap to 100% increased critical damage
 Increases critical damage gained per graze
-Enables Spectral Abominationn even when toggles are sealed
 Increases Spectral Abominationn respawn rate and damage
+Reduces Abominable Rebirth duration
 Press the Mutant Bomb key to unleash a wave of spheres and destroy most hostile projectiles
 Mutant Bomb has a 60 second cooldown");
         }
