@@ -7,5 +7,5 @@ buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*, lib\*, .git\*
 languageVersion = 6
 hideCode = true
 hideResources = true
-modReferences = Fargowiltas@2.1.1
+modReferences = Fargowiltas@2.1.2
 sortAfter = ThoriumMod, CalamityMod, SacredTools, DBZMOD
