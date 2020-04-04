@@ -3,3 +3,8 @@ nerfed maso spawn rates (now rates x0.9, max spawns x1.25)
 fixed sadism buff being named sadism buff
 added banner recipe for baby guardian summon
 adjusted recipe for jungle chest/rune orb to use deviating energy
+updated sprites:
+	cracked gem
+	galactic globe
+	fireball dash
+betsy dash makes a sound when its cooldown ends

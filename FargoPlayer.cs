@@ -1276,6 +1276,8 @@ namespace FargowiltasSouls
                 BetsyDashCD--;
                 if (BetsyDashCD == 0)
                 {
+                    Main.PlaySound(2, player.Center, 14);
+
                     for (int i = 0; i < 30; i++)
                     {
                         int d = Dust.NewDust(player.position, player.width, player.height, 87, 0, 0, 0, default, 2.5f);
