@@ -8,3 +8,5 @@ updated sprites:
 	galactic globe
 	fireball dash
 betsy dash makes a sound when its cooldown ends
+sueaky toy drop rate becomes 10% in hardmode
+increased cracked gem rates to 33%, but decreased max drop to 3 (was 20%, max 5)
