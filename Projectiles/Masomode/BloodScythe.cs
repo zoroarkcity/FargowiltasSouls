@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.hostile = true;
             projectile.friendly = false;
             projectile.magic = false;
-            projectile.timeLeft = 300;
+            projectile.timeLeft = 600;
             projectile.tileCollide = false;
             cooldownSlot = 1;
         }
