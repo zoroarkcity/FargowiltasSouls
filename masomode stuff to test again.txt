@@ -15,8 +15,8 @@ mutant eye:
 	no longer unseals spectral aboms
 	reduces abominable rebirth duration
 true mutant armor no longer gives a revive, instead causes deathrays whenever you revive
-fixed soul of eternity granting chaos state immune
 nerfed SOE revive to 3min cd (was 2)
 SOE no longer gives faster respawn during boss fights
 SOE lifesteal is inhibited by mutant nibble
 eternity stacking ignores mutant presence
+nerfed spiky ball by -25%

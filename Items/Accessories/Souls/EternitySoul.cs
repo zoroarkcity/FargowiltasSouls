@@ -545,7 +545,7 @@ Additionally grants:");
             player.buffImmune[BuffID.Silenced] = true;
             player.buffImmune[BuffID.Cursed] = true;
             player.buffImmune[BuffID.Darkness] = true;
-            //player.buffImmune[BuffID.ChaosState] = true;
+            player.buffImmune[BuffID.ChaosState] = true;
             player.noKnockback = true;
             player.fireWalk = true;
 
