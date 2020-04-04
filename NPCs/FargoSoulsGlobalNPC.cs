@@ -9084,8 +9084,8 @@ namespace FargowiltasSouls.NPCs
 
             if (FargoSoulsWorld.MasochistMode)
             {
-                spawnRate = (int)(spawnRate * 0.8);
-                maxSpawns = (int)(maxSpawns * 1.5f);
+                spawnRate = (int)(spawnRate * 0.9);
+                maxSpawns = (int)(maxSpawns * 1.25f);
 
                 if (AnyBossAlive())
                 {

@@ -1,13 +1,3 @@
-slowed down devi balls
-devi rune wizard aura inflicts oozed
-increased velocity of devi baby guardian attack
-reverted mutant and abom boss
-adjusted devi movement to hopefully not bump into you as much
-increased delay during axe swing by half a second
-nerfed blender damage slightly
-removed aqua scepter from silver ench recipe, but halved minion damage
-added aqua scepter to apprentice essence recipe
-added mutant eye
-deathrays give graze
-removed abominable wand and sparkling adoration from soul of mutants
-changed purple mocos to black ink in palmwood ench recipe
+nerfed eoc sickle acceleration
+nerfed maso spawn rates (now rates x0.9, max spawns x1.25)
+fixed sadism buff being named sadism buff
