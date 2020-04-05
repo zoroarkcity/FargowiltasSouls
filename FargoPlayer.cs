@@ -1247,28 +1247,35 @@ namespace FargowiltasSouls
         {
             if (CyclonicFin)
             {
-                if (AbominableWandRevived && player.statLife >= player.statLifeMax2) //can revive again
+                if (AbominableWandRevived) //has been revived already
                 {
-                    AbominableWandRevived = false;
-
-                    Main.PlaySound(SoundID.Item28, player.Center);
-
-                    const int max = 50; //make some indicator dusts
-                    for (int i = 0; i < max; i++)
+                    if (player.statLife >= player.statLifeMax2) //can revive again
                     {
-                        Vector2 vector6 = Vector2.UnitY * 8f;
-                        vector6 = vector6.RotatedBy((i - (max / 2 - 1)) * 6.28318548f / max) + Main.LocalPlayer.Center;
-                        Vector2 vector7 = vector6 - Main.LocalPlayer.Center;
-                        int d = Dust.NewDust(vector6 + vector7, 0, 0, 87, 0f, 0f, 0, default(Color), 2f);
-                        Main.dust[d].noGravity = true;
-                        Main.dust[d].velocity = vector7;
+                        AbominableWandRevived = false;
+
+                        Main.PlaySound(SoundID.Item28, player.Center);
+
+                        const int max = 50; //make some indicator dusts
+                        for (int i = 0; i < max; i++)
+                        {
+                            Vector2 vector6 = Vector2.UnitY * 8f;
+                            vector6 = vector6.RotatedBy((i - (max / 2 - 1)) * 6.28318548f / max) + Main.LocalPlayer.Center;
+                            Vector2 vector7 = vector6 - Main.LocalPlayer.Center;
+                            int d = Dust.NewDust(vector6 + vector7, 0, 0, 87, 0f, 0f, 0, default(Color), 2f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity = vector7;
+                        }
+
+                        for (int i = 0; i < 30; i++)
+                        {
+                            int d = Dust.NewDust(player.position, player.width, player.height, 87, 0f, 0f, 0, default(Color), 2.5f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity *= 8f;
+                        }
                     }
-
-                    for (int i = 0; i < 30; i++)
+                    else //cannot currently revive
                     {
-                        int d = Dust.NewDust(player.position, player.width, player.height, 87, 0f, 0f, 0, default(Color), 2.5f);
-                        Main.dust[d].noGravity = true;
-                        Main.dust[d].velocity *= 8f;
+                        player.AddBuff(ModContent.BuffType<AbomCooldown>(), 2);
                     }
                 }
             }
@@ -1306,7 +1313,7 @@ namespace FargowiltasSouls
                 BetsyDashCD--;
                 if (BetsyDashCD == 0)
                 {
-                    Main.PlaySound(2, player.Center, 14);
+                    Main.PlaySound(SoundID.Item9, player.Center);
 
                     for (int i = 0; i < 30; i++)
                     {
@@ -3393,7 +3400,7 @@ namespace FargowiltasSouls
             if (StatLifePrevious > 0 && player.statLife > StatLifePrevious)
                 StatLifePrevious = player.statLife;
 
-            if (MutantSetBonus && player.whoAmI == Main.myPlayer && player.statLife > 0)
+            if (MutantSetBonus && player.whoAmI == Main.myPlayer && player.statLife > 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.ReviveDeathray, false))
             {
                 player.immune = true;
                 if (player.immuneTime < 180)

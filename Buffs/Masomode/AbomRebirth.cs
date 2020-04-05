@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
-namespace FargowiltasSouls.Buffs
+namespace FargowiltasSouls.Buffs.Masomode
 {
     public class AbomRebirth : ModBuff
     {
@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Buffs
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             longerExpertDebuff = false;
-            canBeCleared = false;
+            canBeCleared = true;
         }
 
         public override bool Autoload(ref string name, ref string texture)

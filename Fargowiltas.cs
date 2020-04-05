@@ -229,6 +229,7 @@ namespace FargowiltasSouls
             AddToggle("MutantArmorHeader", "True Mutant Armor", "HeartoftheMasochist", "ffffff");
             AddToggle("MasoAbomConfig", "Abominationn Minion", "MutantMask", "ffffff");
             AddToggle("MasoRingConfig", "Phantasmal Ring Minion", "MutantMask", "ffffff");
+            AddToggle("MasoReviveDeathrayConfig", "Deathray When Revived", "MutantMask", "ffffff");
 
             #endregion
 

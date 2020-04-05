@@ -19,4 +19,8 @@ nerfed SOE revive to 3min cd (was 2)
 SOE no longer gives faster respawn during boss fights
 SOE lifesteal is inhibited by mutant nibble
 eternity stacking ignores mutant presence
+
 nerfed spiky ball by -25%
+toggle for mutant armor revive deathray
+fixed soul of mutants buff still saying soul of the masochist
+debuff for abom rebirth cooldown

@@ -9,8 +9,8 @@ namespace FargowiltasSouls.Buffs.Minions
     {
         public override void SetDefaults()
         {
-            DisplayName.SetDefault("Soul of the Masochist");
-            Description.SetDefault("The power of Masochist Mode is with you");
+            DisplayName.SetDefault("Soul of the Mutants");
+            Description.SetDefault("The power of Eternity Mode is with you");
             Main.buffNoTimeDisplay[Type] = true;
             Main.buffNoSave[Type] = true;
             DisplayName.AddTranslation(GameCulture.Chinese, "受虐之魂");
