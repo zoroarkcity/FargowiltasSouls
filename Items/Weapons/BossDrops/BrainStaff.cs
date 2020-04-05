@@ -13,15 +13,14 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mind Break");
-            Tooltip.SetDefault("'An old foe beaten into submission..'\n Needs 2 minion slots");
+            Tooltip.SetDefault("'An old foe beaten into submission..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "精神崩坏");
-            Tooltip.AddTranslation(GameCulture.Chinese, "'一个被迫屈服的老对手..'\n需要2个召唤栏");
-            ItemID.Sets.StaffMinionSlotsRequired[item.type] = 2;
+            Tooltip.AddTranslation(GameCulture.Chinese, "'一个被迫屈服的老对手..'");
         }
 
         public override void SetDefaults()
         {
-            item.damage = 35;
+            item.damage = 16;
             item.summon = true;
             item.mana = 10;
             item.width = 26;
@@ -44,7 +43,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         {
             player.AddBuff(item.buffType, 2);
             Vector2 spawnPos = Main.MouseWorld;
-            Projectile.NewProjectile(spawnPos, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, -1);
+            Projectile.NewProjectile(spawnPos, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, 1f);
             return false;
         }
     }

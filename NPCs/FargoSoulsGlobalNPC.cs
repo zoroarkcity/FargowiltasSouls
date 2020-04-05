@@ -1461,7 +1461,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Piranha:
-                        masoBool[0] = npc.HasValidTarget && Main.player[npc.target].ZoneJungle;
+                        masoBool[0] = npc.HasValidTarget;
                         Counter++;
                         if (Counter >= 120)
                         {
@@ -1470,7 +1470,7 @@ namespace FargowiltasSouls.NPCs
                             if (t != -1 && Main.rand.Next(2) == 0)
                             {
                                 Player player = Main.player[t];
-                                if (player.bleed && Main.netMode != 1)
+                                if (player.bleed && player.ZoneJungle && Main.netMode != 1)
                                 {
                                     if (NPC.CountNPCS(NPCID.Piranha) <= 6)
                                     {
@@ -5787,7 +5787,7 @@ namespace FargowiltasSouls.NPCs
                             }
 
                             int b = Main.LocalPlayer.FindBuffIndex(BuffID.Confused);
-                            if (b != -1 && Main.LocalPlayer.buffTime[b] == 90)
+                            if (b != -1 && Main.LocalPlayer.buffTime[b] == 60)
                             {
                                 Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f);
                                 MakeDust(Main.LocalPlayer.Center);

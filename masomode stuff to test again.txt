@@ -24,3 +24,10 @@ nerfed spiky ball by -25%
 toggle for mutant armor revive deathray
 fixed soul of mutants buff still saying soul of the masochist
 debuff for abom rebirth cooldown
+mind break rework:
+	massive damage cut
+	slight homing on creepers
+	only uses one slot now
+fixed(?) piranha jump
+fixed purified being double duration in expert
+fixed(?) bug where mind break minion refuses to attack anything
