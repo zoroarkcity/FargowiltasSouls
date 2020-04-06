@@ -32,3 +32,6 @@ fixed purified being double duration in expert
 fixed(?) bug where mind break minion refuses to attack anything
 
 fixed piranha jump
+baby guardian spawn rate boosted to 10% until killed at least once
+added a small telegraph for devi mega ray
+buffed phantasm (nerf is now -33%, was -50%)

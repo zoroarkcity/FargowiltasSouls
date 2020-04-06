@@ -10623,12 +10623,11 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.AngryBonesBigMuscle:
                         if (Main.rand.Next(5) == 0 && Main.netMode != 1)
                         {
-                            bool spawnGuardian = Main.rand.Next(20) == 0 && Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().NecromanticBrew;
-                            int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, spawnGuardian ? ModContent.NPCType<BabyGuardian>() : NPCID.CursedSkull);
+                            int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.CursedSkull);
                             if (n < 200 && Main.netMode == 2)
                                 NetMessage.SendData(23, -1, -1, null, n);
                         }
-                        break;
+                        goto case 269;
 
                     //all armored bones
                     case 269:
@@ -10643,11 +10642,15 @@ namespace FargowiltasSouls.NPCs
                     case 278:
                     case 279:
                     case 280:
-                        if (Main.netMode != 1 && Main.rand.Next(100) == 0 && Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().NecromanticBrew)
+                        if (Main.netMode != 1 && Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().NecromanticBrew)
                         {
-                            int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<BabyGuardian>());
-                            if (n < 200 && Main.netMode == 2)
-                                NetMessage.SendData(23, -1, -1, null, n);
+                            int chance = (bool)ModLoader.GetMod("Fargowiltas").Call("GetDownedEnemy", "babyGuardian") ? 100 : 10;
+                            if (Main.rand.Next(chance) == 0)
+                            {
+                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<BabyGuardian>());
+                                if (n < 200 && Main.netMode == 2)
+                                    NetMessage.SendData(23, -1, -1, null, n);
+                            }
                         }
                         break;
 

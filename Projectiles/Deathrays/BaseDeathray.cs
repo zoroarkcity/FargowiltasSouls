@@ -50,6 +50,12 @@ namespace FargowiltasSouls.Projectiles.Deathrays
                 };
         }
 
+        public override void PostAI()
+        {
+            if (projectile.GetGlobalProjectile<FargoGlobalProjectile>().GrazeCD > 30)
+                projectile.GetGlobalProjectile<FargoGlobalProjectile>().GrazeCD = 30;
+        }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             if (projectile.velocity == Vector2.Zero)

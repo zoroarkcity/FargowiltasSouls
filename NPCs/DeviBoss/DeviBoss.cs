@@ -1136,6 +1136,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             }
                             
                             npc.localAI[1] = npc.DirectionTo(player.Center).ToRotation(); //store for aiming ray
+
+                            if (npc.ai[3] == 6 && Main.netMode != 1) //final warning
+                            {
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[1]), mod.ProjectileType("DeviDeathraySmall"),
+                                    0, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            }
                         }
                         else if (npc.ai[3] == 7) //fire deathray
                         {
