@@ -196,9 +196,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                     NetMessage.SendData(23, -1, -1, null, n);
                             }
                         }
-                        npc.NPCLoot();
                         npc.life = 0;
-                        npc.active = false;
+                        npc.dontTakeDamage = false;
+                        npc.checkDead();
                     }
                     break;
 
@@ -1525,6 +1525,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
         public override bool CheckDead()
         {
+            if (npc.ai[0] == -2 && npc.ai[1] >= 180)
+                return true;
+
             npc.life = 1;
             npc.active = true;
             if (npc.localAI[3] < 2)

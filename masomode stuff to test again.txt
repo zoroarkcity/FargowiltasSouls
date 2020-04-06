@@ -35,3 +35,4 @@ fixed piranha jump
 baby guardian spawn rate boosted to 10% until killed at least once
 added a small telegraph for devi mega ray
 buffed phantasm (nerf is now -33%, was -50%)
+changed how mutant/devi/abom dies so hopefully it doesnt say "x is no longer after you..."
