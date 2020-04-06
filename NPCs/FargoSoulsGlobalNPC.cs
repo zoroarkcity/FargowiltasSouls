@@ -1461,24 +1461,16 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Piranha:
-                        masoBool[0] = npc.HasValidTarget;
+                        masoBool[0] = npc.HasValidTarget && Main.player[npc.target].bleed && Main.player[npc.target].ZoneJungle;
                         Counter++;
-                        if (Counter >= 120)
+                        if (Counter >= 120) //swarm
                         {
                             Counter = 0;
-                            int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
-                            if (t != -1 && Main.rand.Next(2) == 0)
+                            if (Main.rand.Next(2) == 0 && masoBool[0] && Main.netMode != 1 && NPC.CountNPCS(NPCID.Piranha) <= 6)
                             {
-                                Player player = Main.player[t];
-                                if (player.bleed && player.ZoneJungle && Main.netMode != 1)
-                                {
-                                    if (NPC.CountNPCS(NPCID.Piranha) <= 6)
-                                    {
-                                        int piranha = NPC.NewNPC((int)npc.Center.X + Main.rand.Next(-20, 20), (int)npc.Center.Y + Main.rand.Next(-20, 20), NPCID.Piranha);
-                                        if (piranha != 200 && Main.netMode == 2)
-                                            NetMessage.SendData(23, -1, -1, null, piranha);
-                                    }
-                                }
+                                int piranha = NPC.NewNPC((int)npc.Center.X + Main.rand.Next(-20, 20), (int)npc.Center.Y + Main.rand.Next(-20, 20), NPCID.Piranha);
+                                if (piranha != 200 && Main.netMode == 2)
+                                    NetMessage.SendData(23, -1, -1, null, piranha);
                             }
                         }
                         if (masoBool[0] && npc.wet && ++Counter2 > 240) //initiate jump

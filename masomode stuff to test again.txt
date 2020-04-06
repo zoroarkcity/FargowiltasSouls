@@ -28,6 +28,7 @@ mind break rework:
 	massive damage cut
 	slight homing on creepers
 	only uses one slot now
-fixed(?) piranha jump
 fixed purified being double duration in expert
 fixed(?) bug where mind break minion refuses to attack anything
+
+fixed piranha jump
