@@ -3146,7 +3146,7 @@ namespace FargowiltasSouls.NPCs
                             npc.TargetClosest(true);
                             if (Main.player[npc.target].dead || Vector2.Distance(npc.Center, Main.player[npc.target].Center) > 3000)
                             {
-                                npc.position.X += 20 * Math.Sign(npc.velocity.X); //move faster to despawn
+                                npc.position.X += 60 * Math.Sign(npc.velocity.X); //move faster to despawn
                                 if (!masoBool[3]) //drop a resummon
                                 {
                                     masoBool[3] = true;
@@ -3197,7 +3197,11 @@ namespace FargowiltasSouls.NPCs
                         if (npc.life < npc.lifeMax / 10)
                         {
                             Counter++;
-                            masoBool[3] = true;
+                            if (!masoBool[3])
+                            {
+                                masoBool[3] = true;
+                                Main.PlaySound(15, (int)npc.position.X, (int)npc.position.Y, 0);
+                            }
                         }
                         break;
 
@@ -3214,9 +3218,10 @@ namespace FargowiltasSouls.NPCs
 
                             if (npc.realLife != -1 && Main.npc[npc.realLife].GetGlobalNPC<FargoSoulsGlobalNPC>().masoBool[3])
                             {
-                                maxTime = 240f;
-                                npc.localAI[1] = 0f; //no more lasers
+                                if (npc.ai[1] < maxTime - 180) //dont lower this if it's already telegraphing laser
+                                    maxTime = 240f;
 
+                                npc.localAI[1] = 0f; //no more regular lasers
                             }
 
                             if (++npc.ai[1] >= maxTime)

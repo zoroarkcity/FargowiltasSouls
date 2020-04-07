@@ -34,7 +34,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.value = Item.sellPrice(0, 10);
             item.rare = 11;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("Hungry");
+            item.shoot = mod.ProjectileType("Hungry2");
             item.shootSpeed = 20f;
         }
 
@@ -46,12 +46,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
             if (counter == 0 || counter == factor / 2) //burp hungy
             {
-                int p = Projectile.NewProjectile(position, speed * 2f, type, damage, knockBack, player.whoAmI);
-                if (p != Main.maxProjectiles)
-                {
-                    Main.projectile[p].minion = false;
-                    Main.projectile[p].magic = true;
-                }
+                Projectile.NewProjectile(position, speed * 2f, type, damage, knockBack, player.whoAmI);
                 Main.PlaySound(new LegacySoundStyle(4, 13), position);
             }
 

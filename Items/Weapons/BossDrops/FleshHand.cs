@@ -1,6 +1,7 @@
 using Terraria.Audio;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {

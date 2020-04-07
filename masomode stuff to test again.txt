@@ -36,3 +36,9 @@ baby guardian spawn rate boosted to 10% until killed at least once
 added a small telegraph for devi mega ray
 buffed phantasm (nerf is now -33%, was -50%)
 changed how mutant/devi/abom dies so hopefully it doesnt say "x is no longer after you..."
+
+reworked flesh hand and destroyer gun (EX) to only work if you have spare slots
+wof moves disgustingly fast when despawning
+fixed(?) wof shooting instant deathrays when transitioning into phase 3
+changed abom's sword slightly
+updated some abom boss visuals

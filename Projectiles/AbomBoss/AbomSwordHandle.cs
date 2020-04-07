@@ -8,13 +8,12 @@ using Terraria.Enums;
 
 namespace FargowiltasSouls.Projectiles.AbomBoss
 {
-    public class AbomSword : Deathrays.BaseDeathray
+    public class AbomSwordHandle : Deathrays.BaseDeathray
     {
-        public AbomSword() : base(150, "AbomDeathray") { }
+        public AbomSwordHandle() : base(150, "AbomDeathray") { }
         private const float maxTime = 150;
 
         public int counter;
-        public bool spawnedHandle;
 
         public override void SetStaticDefaults()
         {
@@ -39,9 +38,11 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            if (Main.npc[(int)projectile.ai[1]].active && Main.npc[(int)projectile.ai[1]].type == mod.NPCType("AbomBoss"))
+            int ai1 = (int)projectile.ai[1];
+            if (Main.projectile[ai1].active && Main.projectile[ai1].type == ModContent.ProjectileType<AbomSword>())
             {
-                projectile.Center = Main.npc[(int)projectile.ai[1]].Center;
+                projectile.Center = Main.projectile[ai1].Center + Main.projectile[ai1].velocity * 75;
+                projectile.velocity = Main.projectile[ai1].velocity.RotatedBy(projectile.ai[0]);
             }
             else
             {
@@ -69,8 +70,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 projectile.scale = num801;
             }
             float num804 = projectile.velocity.ToRotation();
-            if (Main.npc[(int)projectile.ai[1]].velocity != Vector2.Zero)
-                num804 += projectile.ai[0];
+            /*if (Main.npc[ai1].velocity != Vector2.Zero)
+                num804 += projectile.ai[0];*/
             projectile.rotation = num804 - 1.57079637f;
             projectile.velocity = num804.ToRotationVector2();
             float num805 = 3f;
@@ -83,7 +84,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             float[] array3 = new float[(int)num805];
             //Collision.LaserScan(samplingPoint, projectile.velocity, num806 * projectile.scale, 3000f, array3);
             for (int i = 0; i < array3.Length; i++)
-                array3[i] = 3000f;
+                array3[i] = 100f;
             float num807 = 0f;
             int num3;
             for (int num808 = 0; num808 < array3.Length; num808 = num3 + 1)
@@ -94,7 +95,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             num807 /= num805;
             float amount = 0.5f;
             projectile.localAI[1] = MathHelper.Lerp(projectile.localAI[1], num807, amount);
-            Vector2 vector79 = projectile.Center + projectile.velocity * (projectile.localAI[1] - 14f);
+            /*Vector2 vector79 = projectile.Center + projectile.velocity * (projectile.localAI[1] - 14f);
             for (int num809 = 0; num809 < 2; num809 = num3 + 1)
             {
                 float num810 = projectile.velocity.ToRotation() + ((Main.rand.Next(2) == 1) ? -1f : 1f) * 1.57079637f;
@@ -112,11 +113,11 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 Dust dust = Main.dust[num813];
                 dust.velocity *= 0.5f;
                 Main.dust[num813].velocity.Y = -Math.Abs(Main.dust[num813].velocity.Y);
-            }
+            }*/
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
             //Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
 
-            if (Main.npc[(int)projectile.ai[1]].velocity != Vector2.Zero && --counter < 0)
+            /*if (Main.npc[ai1].velocity != Vector2.Zero && --counter < 0)
             {
                 counter = 5;
                 if (Main.netMode != 1) //spawn bonus projs
@@ -130,32 +131,19 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                         Projectile.NewProjectile(spawnPos, vel, mod.ProjectileType("AbomSickle2"), projectile.damage, 0f, projectile.owner);
                     }
                 }
-            }
-
-            if (!spawnedHandle)
-            {
-                spawnedHandle = true;
-                if (Main.netMode != 1)
-                {
-                    Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<AbomSwordHandle>(), projectile.damage, projectile.knockBack, projectile.owner, (float)Math.PI / 2, projectile.whoAmI);
-                    Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<AbomSwordHandle>(), projectile.damage, projectile.knockBack, projectile.owner, -(float)Math.PI / 2, projectile.whoAmI);
-                }
-            }
-
-            for (int i = 0; i < 40; i++)
-            {
-                int d = Dust.NewDust(projectile.position + projectile.velocity * Main.rand.NextFloat(3000), projectile.width, projectile.height, 87, 0f, 0f, 0, default(Color), 1.5f);
-                Main.dust[d].noGravity = true;
-                Main.dust[d].velocity *= 4f;
-            }
+            }*/
+            
+            int d = Dust.NewDust(projectile.position + projectile.velocity * Main.rand.NextFloat(100), projectile.width, projectile.height, 87, 0f, 0f, 0, default(Color), 1.5f);
+            Main.dust[d].noGravity = true;
+            Main.dust[d].velocity *= 4f;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.velocity.X = target.Center.X < Main.npc[(int)projectile.ai[1]].Center.X ? -15f : 15f;
+            target.velocity.X = target.Center.X < Main.projectile[(int)projectile.ai[1]].Center.X ? -15f : 15f;
             target.velocity.Y = -10f;
 
-            Projectile.NewProjectile(target.Center + Main.rand.NextVector2Circular(100, 100), Vector2.Zero, mod.ProjectileType("AbomBlast"), 0, 0f, projectile.owner);
+            //Projectile.NewProjectile(target.Center + Main.rand.NextVector2Circular(100, 100), Vector2.Zero, mod.ProjectileType("AbomBlast"), 0, 0f, projectile.owner);
 
             target.AddBuff(mod.BuffType("AbomFang"), 300);
             target.AddBuff(BuffID.WitheredArmor, 600);

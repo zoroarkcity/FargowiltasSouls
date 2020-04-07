@@ -27,6 +27,8 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.tileCollide = false;
             projectile.alpha = 255;
             projectile.netImportant = true;
+
+            projectile.minionSlots = 1f;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -59,6 +61,27 @@ namespace FargowiltasSouls.Projectiles.Minions
 
         public override void AI()
         {
+            if (projectile.minionPos >= Main.player[projectile.owner].maxMinions)
+            {
+                projectile.Kill();
+                return;
+            }
+
+            if (projectile.localAI[0] == 0)
+            {
+                projectile.localAI[0] = 1;
+                if (projectile.owner == Main.myPlayer)
+                {
+                    int current = projectile.whoAmI;
+                    for (int i = 0; i < 9; i++)
+                        current = Projectile.NewProjectile(projectile.Center, projectile.velocity, mod.ProjectileType("DestroyerBody"), projectile.damage, projectile.knockBack, projectile.owner, current);
+                    int previous = current;
+                    current = Projectile.NewProjectile(projectile.Center, projectile.velocity, mod.ProjectileType("DestroyerTail"), projectile.damage, projectile.knockBack, projectile.owner, current);
+                    Main.projectile[previous].localAI[1] = current;
+                    Main.projectile[previous].netUpdate = true;
+                }
+            }
+
             //keep the head looking right
             projectile.rotation = projectile.velocity.ToRotation() + 1.57079637f;
             projectile.spriteDirection = projectile.velocity.X > 0f ? 1 : -1;
