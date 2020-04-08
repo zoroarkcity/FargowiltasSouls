@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Soul of the Mutants");
+            DisplayName.SetDefault("Soul of the Siblings");
             Tooltip.SetDefault(
 @"'Embrace eternity'
 Increases wing time by 200%, armor penetration by 50, and movement speed by 20%

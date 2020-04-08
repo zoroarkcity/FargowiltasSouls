@@ -4,6 +4,13 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria.Localization;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Summon;
+using CalamityMod.Items.Pets;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -21,6 +28,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
             DisplayName.SetDefault("Bloodflare Enchantment");
             Tooltip.SetDefault(
 @"'The souls of the fallen are at your disposal...'
+Press Y to trigger a brimflame frenzy effect
+While under this effect, your damage is significantly boosted
+However, this comes at the cost of rapid life loss and no mana regeneration
 Enemies below 50% life have a chance to drop hearts when struck
 Enemies above 50% life have a chance to drop mana stars when struck
 Enemies killed during a Blood Moon have a much higher chance to drop Blood Orbs
@@ -35,7 +45,8 @@ Magic weapons will sometimes fire ghostly bolts
 Magic critical strikes cause flame explosions every 2 seconds
 Summons polterghast mines to circle you
 Rogue critical strikes have a 50% chance to heal you
-Effects of the Core of the Blood God and Affliction");
+Effects of the Core of the Blood God and Affliction
+Summons a Brimling pet");
             DisplayName.AddTranslation(GameCulture.Chinese, "血炎魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'堕落者的灵魂由你支配...'
@@ -98,6 +109,16 @@ Effects of the Core of the Blood God and Affliction");
             calamity.GetItem("CoreOfTheBloodGod").UpdateAccessory(player, hideVisual);
             //affliction
             calamity.GetItem("Affliction").UpdateAccessory(player, hideVisual);
+            //brimflame
+            mod.GetItem("BrimflameEnchant").UpdateAccessory(player, hideVisual);
+
+            /* modPlayer.StatigelEnchant = true;
+             //modPlayer.AddPet("Perforator Pet", hideVisual, calamity.BuffType("BloodBound"), calamity.ProjectileType("PerforaMini"));
+
+             if (player.FindBuffIndex(calamity.BuffType("BloodBound")) == -1 && player.ownedProjectileCounts[calamity.ProjectileType("PerforaMini")] < 1)
+             {
+                 Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, calamity.ProjectileType("PerforaMini"), 0, 0f, player.whoAmI);
+             }*/
         }
 
         public override void AddRecipes()
@@ -107,19 +128,19 @@ Effects of the Core of the Blood God and Affliction");
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddRecipeGroup("FargowiltasSouls:AnyBloodflareHelmet");
-            recipe.AddIngredient(calamity.ItemType("BloodflareBodyArmor"));
-            recipe.AddIngredient(calamity.ItemType("BloodflareCuisses"));
-            recipe.AddIngredient(calamity.ItemType("CoreOfTheBloodGod"));
-            recipe.AddIngredient(calamity.ItemType("EldritchSoulArtifact"));
-            recipe.AddIngredient(calamity.ItemType("Affliction"));
-            recipe.AddIngredient(calamity.ItemType("DevilsSunrise"));
-            recipe.AddIngredient(calamity.ItemType("MolecularManipulator"));
-            recipe.AddIngredient(calamity.ItemType("AethersWhisper"));
-            recipe.AddIngredient(calamity.ItemType("DarkSpark"));
-            recipe.AddIngredient(calamity.ItemType("DodusHandcannon"));
-            recipe.AddIngredient(calamity.ItemType("TheLastMourning"));
-            recipe.AddIngredient(calamity.ItemType("TimeBolt"));
-            recipe.AddIngredient(calamity.ItemType("LightGodsBrilliance"));
+            recipe.AddIngredient(ModContent.ItemType<BloodflareBodyArmor>());
+            recipe.AddIngredient(ModContent.ItemType<BloodflareCuisses>());
+            recipe.AddIngredient(ModContent.ItemType<BrimflameEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<CoreOfTheBloodGod>());
+            recipe.AddIngredient(ModContent.ItemType<EldritchSoulArtifact>());
+            recipe.AddIngredient(ModContent.ItemType<Affliction>());
+            recipe.AddIngredient(ModContent.ItemType<DevilsSunrise>());
+            recipe.AddIngredient(ModContent.ItemType<DarkSpark>());
+            recipe.AddIngredient(ModContent.ItemType<DodusHandcannon>());
+            recipe.AddIngredient(ModContent.ItemType<TheLastMourning>());
+            recipe.AddIngredient(ModContent.ItemType<LightGodsBrilliance>());
+            recipe.AddIngredient(ModContent.ItemType<LanternoftheSoul>());
+            recipe.AddIngredient(ModContent.ItemType<BloodyVein>());
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

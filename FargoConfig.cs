@@ -1019,6 +1019,14 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool UnstablePrism = true;
 
+        [Label("$Mods.FargowiltasSouls.CalamityRotomConfig")]
+        [DefaultValue(true)]
+        public bool RotomPet = true;
+
+        [Label("$Mods.FargowiltasSouls.CalamityAstrophageConfig")]
+        [DefaultValue(true)]
+        public bool AstrophagePet = true;
+
         [Label("$Mods.FargowiltasSouls.CalamityKendraConfig")]
         [DefaultValue(true)]
         public bool KendraPet = true;
@@ -1103,6 +1111,26 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.CalamityAkatoConfig")]
         [DefaultValue(true)]
         public bool AkatoPet = true;
+
+        [Label("$Mods.FargowiltasSouls.CalamitySparksConfig")]
+        [DefaultValue(true)]
+        public bool SparksPet = true;
+
+        [Label("$Mods.FargowiltasSouls.CalamityRadiatorConfig")]
+        [DefaultValue(true)]
+        public bool RadiatorPet = true;
+
+        [Label("$Mods.FargowiltasSouls.CalamityGhostBellConfig")]
+        [DefaultValue(true)]
+        public bool GhostBellPet = true;
+
+        [Label("$Mods.FargowiltasSouls.CalamityFlakConfig")]
+        [DefaultValue(true)]
+        public bool FlakPet = true;
+
+        [Label("$Mods.FargowiltasSouls.CalamityScalConfig")]
+        [DefaultValue(true)]
+        public bool ScalPet = true;
 
         [Label("$Mods.FargowiltasSouls.CalamityFoxConfig")]
         [DefaultValue(true)]

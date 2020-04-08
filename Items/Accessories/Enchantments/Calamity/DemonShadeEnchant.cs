@@ -5,6 +5,15 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using CalamityMod.CalPlayer;
 using Terraria.Localization;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Pets;
+using CalamityMod.Projectiles.Pets;
+using CalamityMod.Buffs.Pets;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -27,7 +36,8 @@ Shadowbeams and Demon Scythes fall from the sky on hit
 A friendly red devil follows you around
 Press Y to enrage nearby enemies with a dark magic spell for 10 seconds
 This makes them do 1.5 times more damage but they also take five times as much damage
-Summons a Levi pet");
+Effects of Profaned Soul Crystal
+Summons a Levi and Supreme Calamitas pet");
             DisplayName.AddTranslation(GameCulture.Chinese, "魔影魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'你身上散发着恶魔之力...'
@@ -85,9 +95,12 @@ Summons a Levi pet");
                 }
             }
 
+            calamity.GetItem("ProfanedSoulCrystal").UpdateAccessory(player, hideVisual);
+
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.DemonShadeEnchant = true;
-            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.LeviPet, hideVisual, calamity.BuffType("Levi"), calamity.ProjectileType("Levi"));
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.LeviPet, hideVisual, ModContent.BuffType<LeviBuff>(), ModContent.ProjectileType<LeviPet>());
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.ScalPet, hideVisual, ModContent.BuffType<SCalPetBuff>(), ModContent.ProjectileType<SCalPet>());
         }
 
         public override void AddRecipes()
@@ -95,20 +108,20 @@ Summons a Levi pet");
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(calamity.ItemType("DemonshadeHelm"));
-            recipe.AddIngredient(calamity.ItemType("DemonshadeBreastplate"));
-            recipe.AddIngredient(calamity.ItemType("DemonshadeGreaves"));
-            recipe.AddIngredient(calamity.ItemType("Earth"));
-            recipe.AddIngredient(calamity.ItemType("Animus"));
-            recipe.AddIngredient(calamity.ItemType("Contagion"));
-            recipe.AddIngredient(calamity.ItemType("Megafleet"));
-            recipe.AddIngredient(calamity.ItemType("SomaPrime"));
-            recipe.AddIngredient(calamity.ItemType("Judgement"));
-            recipe.AddIngredient(calamity.ItemType("Apotheosis"));
-            recipe.AddIngredient(calamity.ItemType("RoyalKnives"));
-            recipe.AddIngredient(calamity.ItemType("NanoblackReaperRogue"));
-            recipe.AddIngredient(calamity.ItemType("TriactisTruePaladinianMageHammerofMight"));
-            recipe.AddIngredient(calamity.ItemType("Levi"));
+            recipe.AddIngredient(ModContent.ItemType<DemonshadeHelm>());
+            recipe.AddIngredient(ModContent.ItemType<DemonshadeBreastplate>());
+            recipe.AddIngredient(ModContent.ItemType<DemonshadeGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<ProfanedSoulCrystal>());
+            recipe.AddIngredient(ModContent.ItemType<Animus>());
+            recipe.AddIngredient(ModContent.ItemType<Contagion>());
+            recipe.AddIngredient(ModContent.ItemType<Megafleet>());
+            recipe.AddIngredient(ModContent.ItemType<SomaPrime>());
+            recipe.AddIngredient(ModContent.ItemType<Judgement>());
+            recipe.AddIngredient(ModContent.ItemType<Apotheosis>());
+            recipe.AddIngredient(ModContent.ItemType<Eternity>());
+            recipe.AddIngredient(ModContent.ItemType<NanoblackReaperRogue>());
+            recipe.AddIngredient(ModContent.ItemType<BrimstoneJewel>());
+            recipe.AddIngredient(ModContent.ItemType<Levi>());
 
             recipe.AddTile(calamity, "DraedonsForge");
             recipe.SetResult(this);

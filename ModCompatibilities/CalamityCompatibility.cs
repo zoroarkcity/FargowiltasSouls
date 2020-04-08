@@ -1,4 +1,5 @@
 ﻿using CalamityMod.Items.Armor;
+using CalamityMod.Items.Placeables.Furniture;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -48,7 +49,10 @@ namespace FargowiltasSouls.ModCompatibilities
             //Statigel
             group = new RecipeGroup(() => Lang.misc[37] + " Statigel Helmet", ModContent.ItemType<StatigelHelm>(), ModContent.ItemType<StatigelHeadgear>(), ModContent.ItemType<StatigelCap>(), ModContent.ItemType<StatigelHood>(), ModContent.ItemType<StatigelMask>());
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyStatigelHelmet", group);
-            
+            //evil effigy
+            group = new RecipeGroup(() => Lang.misc[37] + " Evil Effigy", ModContent.ItemType<CorruptionEffigy>(), ModContent.ItemType<CrimsonEffigy>());
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyEvilEffigy", group);
+
             //Tarragon
             group = new RecipeGroup(() => Lang.misc[37] + " Tarragon Helmet", ModContent.ItemType<TarragonHelm>(), ModContent.ItemType<TarragonVisage>(), ModContent.ItemType<TarragonMask>(), ModContent.ItemType<TarragonHornedHelm>(), ModContent.ItemType<TarragonHelmet>());
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyTarragonHelmet", group);

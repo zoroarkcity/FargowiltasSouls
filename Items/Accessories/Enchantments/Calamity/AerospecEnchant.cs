@@ -4,6 +4,13 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Pets;
+using CalamityMod.Buffs.Pets;
+using CalamityMod.Projectiles.Pets;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -25,7 +32,7 @@ You fall quicker and are immune to fall damage
 Taking over 25 damage in one hit causes several homing feathers to fall
 Summons a Valkyrie minion to protect you
 Effects of Gladiator's Locket and Unstable Prism
-Summons a Kendra pet");
+Summons a Rotom pet");
             DisplayName.AddTranslation(GameCulture.Chinese, "天蓝魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"天空向你施以援手...
@@ -88,7 +95,7 @@ Summons a Kendra pet");
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.AerospecEnchant = true;
-            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.KendraPet, hideVisual, calamity.BuffType("Kendra"), calamity.ProjectileType("KendraPet"));
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.RotomPet, hideVisual, ModContent.BuffType<RotomBuff>(), ModContent.ProjectileType<RotomPet>());
         }
 
         public override void AddRecipes()
@@ -98,15 +105,15 @@ Summons a Kendra pet");
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddRecipeGroup("FargowiltasSouls:AnyAerospecHelmet");
-            recipe.AddIngredient(calamity.ItemType("AerospecBreastplate"));
-            recipe.AddIngredient(calamity.ItemType("AerospecLeggings"));
-            recipe.AddIngredient(calamity.ItemType("GladiatorsLocket"));
-            recipe.AddIngredient(calamity.ItemType("UnstablePrism"));
-            recipe.AddIngredient(calamity.ItemType("StormSurge"));
-            recipe.AddIngredient(calamity.ItemType("SkyGlaze"));
-            recipe.AddIngredient(calamity.ItemType("PerfectDark"));
-            recipe.AddIngredient(calamity.ItemType("SausageMaker"));
-            recipe.AddIngredient(calamity.ItemType("RomajedaOrchid"));
+            recipe.AddIngredient(ModContent.ItemType<AerospecBreastplate>());
+            recipe.AddIngredient(ModContent.ItemType<AerospecLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<GladiatorsLocket>());
+            recipe.AddIngredient(ModContent.ItemType<UnstablePrism>());
+            recipe.AddIngredient(ModContent.ItemType<StormSurge>());
+            recipe.AddIngredient(ModContent.ItemType<FlurrystormCannon>());
+            recipe.AddIngredient(ModContent.ItemType<PerfectDark>());
+            recipe.AddIngredient(ModContent.ItemType<SausageMaker>());
+            recipe.AddIngredient(ModContent.ItemType<RotomRemote>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

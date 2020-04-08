@@ -200,6 +200,9 @@ namespace FargowiltasSouls
 
         //calamity
         public bool AerospecEnchant;
+        public bool AstralEnchant;
+        public bool BrimflameEnchant;
+        public bool ReaverEnchant;
         public bool StatigelEnchant;
         public bool DaedalusEnchant;
         public bool AtaxiaEnchant;
@@ -208,6 +211,8 @@ namespace FargowiltasSouls
         public bool GodSlayerEnchant;
         public bool SilvaEnchant;
         public bool DemonShadeEnchant;
+        public bool SulphurEnchant;
+        public bool FathomEnchant;
 
         private int[] wetProj = { ProjectileID.Kraken, ProjectileID.Trident, ProjectileID.Flairon, ProjectileID.FlaironBubble, ProjectileID.WaterStream, ProjectileID.WaterBolt, ProjectileID.RainNimbus, ProjectileID.Bubble, ProjectileID.WaterGun };
 
@@ -671,6 +676,10 @@ namespace FargowiltasSouls
 
             //calamity
             AerospecEnchant = false;
+            AstralEnchant = false;
+            BrimflameEnchant = false;
+            ReaverEnchant = false;
+            SulphurEnchant = false;
             StatigelEnchant = false;
             DaedalusEnchant = false;
             AtaxiaEnchant = false;
@@ -679,6 +688,7 @@ namespace FargowiltasSouls
             GodSlayerEnchant = false;
             SilvaEnchant = false;
             DemonShadeEnchant = false;
+            FathomEnchant = false;
 
             #endregion
 

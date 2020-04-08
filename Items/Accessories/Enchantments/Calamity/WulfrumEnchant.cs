@@ -4,6 +4,12 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Fishing;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -22,7 +28,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
             Tooltip.SetDefault(
 @"'Not to be confused with Tungsten Enchantment…'
 +5 defense when below 50% life
-Effects of the Spirit Glyph, Raider's Talisman, and Trinket of Chi");
+Effects of Trinket of Chi");
             DisplayName.AddTranslation(GameCulture.Chinese, "钨钢魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'别和钨金魔石搞混了...'
@@ -60,10 +66,6 @@ Effects of the Spirit Glyph, Raider's Talisman, and Trinket of Chi");
             {
                 player.statDefense += 5;
             }
-            //spirit glyph
-            calamity.GetItem("SpiritGenerator").UpdateAccessory(player, hideVisual);
-            //raiders talisman
-            calamity.GetItem("RaidersTalisman").UpdateAccessory(player, hideVisual);
             //trinket of chi
             calamity.GetItem("TrinketofChi").UpdateAccessory(player, hideVisual);
         }
@@ -75,15 +77,15 @@ Effects of the Spirit Glyph, Raider's Talisman, and Trinket of Chi");
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddRecipeGroup("FargowiltasSouls:AnyWulfrumHelmet");
-            recipe.AddIngredient(calamity.ItemType("WulfrumArmor"));
-            recipe.AddIngredient(calamity.ItemType("WulfrumLeggings"));
-            recipe.AddIngredient(calamity.ItemType("SpiritGenerator"));
-            recipe.AddIngredient(calamity.ItemType("RaidersTalisman"));
-            recipe.AddIngredient(calamity.ItemType("TrinketofChi"));
-            recipe.AddIngredient(calamity.ItemType("IcicleStaff"));
-            recipe.AddIngredient(calamity.ItemType("MandibleBow"));
-            recipe.AddIngredient(calamity.ItemType("MarniteSpear"));
-            recipe.AddIngredient(calamity.ItemType("Pumpler"));
+            recipe.AddIngredient(ModContent.ItemType<WulfrumArmor>());
+            recipe.AddIngredient(ModContent.ItemType<WulfrumLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<TrinketofChi>());
+            recipe.AddIngredient(ModContent.ItemType<Spadefish>());
+            recipe.AddIngredient(ModContent.ItemType<MandibleBow>());
+            recipe.AddIngredient(ModContent.ItemType<BurntSienna>());
+            recipe.AddIngredient(ModContent.ItemType<MarniteSpear>());
+            recipe.AddIngredient(ModContent.ItemType<SparkSpreader>());
+            recipe.AddIngredient(ModContent.ItemType<Pumpler>());
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

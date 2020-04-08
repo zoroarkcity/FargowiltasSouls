@@ -1,7 +1,11 @@
-NEW UPDATE - v 1.3
--Removed prototype name and changed the mod name to its final name
--Masochist Mode is renamed
--Added 3 new bosses
--Nerfed Fargo’s Mom.
+NEW UPDATE - v 1.3.1
+-Renamed Heart of the Mutants to Heart of the Eternal
+-Renamed Soul of the Mutants to Soul of the Siblings
+
+-Updated all Calamity Enchantment and Force recipes
+-Added several pets and new accessory effects
+-Added Brimflame, Snow Ruffian, Umbraphile, Sulphurous, Fearmonger, Fathom Swarmer, and Plague Reaper Enchantments
+-Added Force of Exaltation, renamed Force of the Apocalypse to Force of Annihilation
+
 
 -See the wiki for full details

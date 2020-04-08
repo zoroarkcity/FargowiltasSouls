@@ -4,6 +4,11 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria.Localization;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Magic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -33,7 +38,7 @@ At full health you gain +2 max minions and 10% increased minion damage
 Summons a life aura around you that damages nearby enemies
 After every 25 rogue critical hits you will gain 5 seconds of damage immunity
 While under the effects of a debuff you gain 10% increased rogue damage
-Effects of the Profaned Soul Artifact and Dark Sun Ring");
+Effects of Blazing Core and Dark Sun Ring");
             DisplayName.AddTranslation(GameCulture.Chinese, "龙蒿魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'布拉洛的不死之力从你身上流过...'
@@ -86,13 +91,15 @@ Debuff状态下, 增加10%盗贼伤害
                 calamity.Call("SetSetBonus", player, "tarragon_summon", true);
                 calamity.Call("SetSetBonus", player, "tarragon_rogue", true);
             }
-            
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ProfanedSoulArtifact))
+
+            /*if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ProfanedSoulArtifact))
             {
                 //profaned soul artifact
                 calamity.GetItem("ProfanedSoulArtifact").UpdateAccessory(player, hideVisual);
-            }
+            }*/
 
+            
+            calamity.GetItem("BlazingCore").UpdateAccessory(player, hideVisual);
             //dark sun ring
             calamity.GetItem("DarkSunRing").UpdateAccessory(player, hideVisual);
         }
@@ -104,19 +111,19 @@ Debuff状态下, 增加10%盗贼伤害
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddRecipeGroup("FargowiltasSouls:AnyTarragonHelmet");
-            recipe.AddIngredient(calamity.ItemType("TarragonBreastplate"));
-            recipe.AddIngredient(calamity.ItemType("TarragonLeggings"));
-            recipe.AddIngredient(calamity.ItemType("ProfanedSoulArtifact"));
-            recipe.AddIngredient(calamity.ItemType("DarkSunRing"));
-            recipe.AddIngredient(calamity.ItemType("AquaticDissolution"));
-            recipe.AddIngredient(calamity.ItemType("AngelicShotgun"));
-            recipe.AddIngredient(calamity.ItemType("TrueTyrantYharimsUltisword"));
-            recipe.AddIngredient(calamity.ItemType("PlasmaRifle"));
-            recipe.AddIngredient(calamity.ItemType("Spyker"));
-            recipe.AddIngredient(calamity.ItemType("DivineRetribution"));
-            recipe.AddIngredient(calamity.ItemType("HandheldTank"));
-            recipe.AddIngredient(calamity.ItemType("Mistlestorm"));
-            recipe.AddIngredient(calamity.ItemType("Thunderstorm"));
+            recipe.AddIngredient(ModContent.ItemType<TarragonBreastplate>());
+            recipe.AddIngredient(ModContent.ItemType<TarragonLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<BlazingCore>());
+            recipe.AddIngredient(ModContent.ItemType<DarkSunRing>());
+            recipe.AddIngredient(ModContent.ItemType<AquaticDissolution>());
+            recipe.AddIngredient(ModContent.ItemType<AngelicShotgun>());
+            recipe.AddIngredient(ModContent.ItemType<TrueTyrantYharimsUltisword>());
+            recipe.AddIngredient(ModContent.ItemType<PlasmaRifle>());
+            recipe.AddIngredient(ModContent.ItemType<PristineFury>());
+            recipe.AddIngredient(ModContent.ItemType<DivineRetribution>());
+            recipe.AddIngredient(ModContent.ItemType<HandheldTank>());
+            recipe.AddIngredient(ModContent.ItemType<Mistlestorm>());
+            recipe.AddIngredient(ModContent.ItemType<Thunderstorm>());
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

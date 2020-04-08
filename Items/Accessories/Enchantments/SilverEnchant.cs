@@ -66,6 +66,7 @@ Summons a sword familiar that scales with minion damage";
             recipe.AddIngredient(ItemID.SilverBroadsword);
             recipe.AddIngredient(ItemID.SapphireStaff);
             recipe.AddIngredient(ItemID.BluePhaseblade);
+            recipe.AddIngredient(ItemID.TreeNymphButterfly);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

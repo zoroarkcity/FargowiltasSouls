@@ -5,6 +5,13 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System;
 using Terraria.Localization;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Pets;
+using CalamityMod.Items.Weapons.Summon;
+using CalamityMod.Items.Armor.Vanity;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -230,19 +237,19 @@ Summons a Chibii Doggo pet");
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddRecipeGroup("FargowiltasSouls:AnyGodslayerHelmet");
-            recipe.AddIngredient(calamity.ItemType("GodSlayerChestplate"));
-            recipe.AddIngredient(calamity.ItemType("GodSlayerLeggings"));
-            recipe.AddIngredient(calamity.ItemType("NebulousCore"));
-            recipe.AddIngredient(calamity.ItemType("DimensionalSoulArtifact"));
-            recipe.AddIngredient(calamity.ItemType("DraedonsHeart"));
-            recipe.AddIngredient(calamity.ItemType("ThePack"));
-            recipe.AddIngredient(calamity.ItemType("PrimordialAncient"));
-            recipe.AddIngredient(calamity.ItemType("DevilsDevastation"));
-            recipe.AddIngredient(calamity.ItemType("StarfleetMK2"));
-            recipe.AddIngredient(calamity.ItemType("Norfleet"));
-            recipe.AddIngredient(calamity.ItemType("Skullmasher"));
-            recipe.AddIngredient(calamity.ItemType("Nadir"));
-            recipe.AddIngredient(calamity.ItemType("CosmicPlushie"));
+            recipe.AddIngredient(ModContent.ItemType<GodSlayerChestplate>());
+            recipe.AddIngredient(ModContent.ItemType<GodSlayerLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<AncientGodSlayerHelm>());
+            recipe.AddIngredient(ModContent.ItemType<NebulousCore>());
+            recipe.AddIngredient(ModContent.ItemType<DimensionalSoulArtifact>());
+            recipe.AddIngredient(ModContent.ItemType<DraedonsHeart>());
+            recipe.AddIngredient(ModContent.ItemType<DevilsDevastation>());
+            recipe.AddIngredient(ModContent.ItemType<StarfleetMK2>());
+            recipe.AddIngredient(ModContent.ItemType<Norfleet>());
+            recipe.AddIngredient(ModContent.ItemType<Skullmasher>());
+            recipe.AddIngredient(ModContent.ItemType<Nadir>());
+            recipe.AddIngredient(ModContent.ItemType<CosmicViperEngine>());
+            recipe.AddIngredient(ModContent.ItemType<CosmicPlushie>());
 
             recipe.AddTile(calamity, "DraedonsForge");
             recipe.SetResult(this);

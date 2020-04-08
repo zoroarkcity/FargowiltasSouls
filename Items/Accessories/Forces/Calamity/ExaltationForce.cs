@@ -6,7 +6,7 @@ using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.Calamity
 {
-    public class DevastationForce : ModItem
+    public class ExaltationForce : ModItem
     {
         private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
 
@@ -17,12 +17,15 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Calamity
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Force of Devastation");
+            DisplayName.SetDefault("Force of Exaltation");
             Tooltip.SetDefault(
-@"'Rain hell down on those who resist your power'
-All armor bonuses from Wulfrum, Reaver, Plague Reaper, and Demonshade
-Effects of Trinket of Chi, Fabled Tortoise Shell, and Plague Hive
-Effects of Plagued Fuel Pack, The Bee, The Camper, and Profaned Soul Crystal
+@"''
+All armor bonuses from Tarragon, Bloodflare, and Brimflame
+All armor bonuses from God Slayer, Silva, and Auric
+Effects of Blazing Core, Dark Sun Ring, and Core of the Blood God
+Effects of Affliction, Nebulous Core, and Draedon's Heart
+Effects of the The Amalgam, Dynamo Stem Cells, and Godly Soul Artifact
+Effects of Yharim's Gift, Heart of the Elements, and The Sponge
 Summons several pets");
             DisplayName.AddTranslation(GameCulture.Chinese, "毁灭之力");
             Tooltip.AddTranslation(GameCulture.Chinese,
@@ -50,10 +53,11 @@ Summons several pets");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            mod.GetItem("WulfrumEnchant").UpdateAccessory(player, hideVisual);
-            mod.GetItem("ReaverEnchant").UpdateAccessory(player, hideVisual);
-            mod.GetItem("PlagueReaperEnchant").UpdateAccessory(player, hideVisual);
-            mod.GetItem("DemonShadeEnchant").UpdateAccessory(player, hideVisual);
+            mod.GetItem("TarragonEnchant").UpdateAccessory(player, hideVisual);
+            mod.GetItem("BloodflareEnchant").UpdateAccessory(player, hideVisual);
+            mod.GetItem("GodSlayerEnchant").UpdateAccessory(player, hideVisual);
+            mod.GetItem("SilvaEnchant").UpdateAccessory(player, hideVisual);
+            mod.GetItem("AuricEnchant").UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
@@ -62,10 +66,11 @@ Summons several pets");
 
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(null, "WulfrumEnchant");
-            recipe.AddIngredient(null, "ReaverEnchant");
-            recipe.AddIngredient(null, "PlagueReaperEnchant");
-            recipe.AddIngredient(null, "DemonShadeEnchant");
+            recipe.AddIngredient(null, "TarragonEnchant");
+            recipe.AddIngredient(null, "BloodflareEnchant");
+            recipe.AddIngredient(null, "GodSlayerEnchant");
+            recipe.AddIngredient(null, "SilvaEnchant");
+            recipe.AddIngredient(null, "AuricEnchant");
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
