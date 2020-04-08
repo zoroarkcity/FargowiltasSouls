@@ -13,7 +13,6 @@ namespace FargowiltasSouls.Buffs.Masomode
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
-            longerExpertDebuff = true;
             canBeCleared = true;
             DisplayName.AddTranslation(GameCulture.Chinese, "净化");
             Description.AddTranslation(GameCulture.Chinese, "你被净化了");

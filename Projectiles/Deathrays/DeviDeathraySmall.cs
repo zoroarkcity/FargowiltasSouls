@@ -2,32 +2,23 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Enums;
 
-namespace FargowiltasSouls.Projectiles.AbomBoss
+namespace FargowiltasSouls.Projectiles.Deathrays
 {
-    public class AbomSword : Deathrays.BaseDeathray
+    public class DeviDeathraySmall : BaseDeathray
     {
-        public AbomSword() : base(150, "AbomDeathray") { }
-        private const float maxTime = 150;
+        public DeviDeathraySmall() : base(60, "DeviDeathray") { }
 
-        public int counter;
-        public bool spawnedHandle;
+        private const float maxTime = 60;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Styx Gazer Blade");
+            DisplayName.SetDefault("Love Ray");
         }
 
-        public override void SetDefaults()
-        {
-            base.SetDefaults();
-            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
-        }
-
-        public override bool? CanHitNPC(NPC target)
+        public override bool CanDamage()
         {
             return false;
         }
@@ -39,7 +30,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            if (Main.npc[(int)projectile.ai[1]].active && Main.npc[(int)projectile.ai[1]].type == mod.NPCType("AbomBoss"))
+            /*if (Main.npc[(int)projectile.ai[1]].active && Main.npc[(int)projectile.ai[1]].type == mod.NPCType("MutantBoss"))
             {
                 projectile.Center = Main.npc[(int)projectile.ai[1]].Center;
             }
@@ -47,32 +38,35 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             {
                 projectile.Kill();
                 return;
-            }
+            }*/
             if (projectile.velocity.HasNaNs() || projectile.velocity == Vector2.Zero)
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            if (projectile.localAI[0] == 0f)
+            /*if (projectile.localAI[0] == 0f)
             {
                 Main.PlaySound(29, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
-            }
-            float num801 = 1f;
+            }*/
+            float num801 = 0.3f;
             projectile.localAI[0] += 1f;
             if (projectile.localAI[0] >= maxTime)
             {
                 projectile.Kill();
                 return;
             }
-            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * num801 * 6f;
+            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 0.6f * num801;
             if (projectile.scale > num801)
             {
                 projectile.scale = num801;
             }
-            float num804 = projectile.velocity.ToRotation();
-            if (Main.npc[(int)projectile.ai[1]].velocity != Vector2.Zero)
-                num804 += projectile.ai[0];
-            projectile.rotation = num804 - 1.57079637f;
-            projectile.velocity = num804.ToRotationVector2();
+            //float num804 = projectile.velocity.ToRotation();
+            //num804 += projectile.ai[0];
+            //projectile.rotation = num804 - 1.57079637f;
+            //float num804 = Main.npc[(int)projectile.ai[1]].ai[3] - 1.57079637f;
+            //if (projectile.ai[0] != 0f) num804 -= (float)Math.PI;
+            //projectile.rotation = num804;
+            //num804 += 1.57079637f;
+            //projectile.velocity = num804.ToRotationVector2();
             float num805 = 3f;
             float num806 = (float)projectile.width;
             Vector2 samplingPoint = projectile.Center;
@@ -116,51 +110,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
             //Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
 
-            if (Main.npc[(int)projectile.ai[1]].velocity != Vector2.Zero && --counter < 0)
-            {
-                counter = 5;
-                if (Main.netMode != 1) //spawn bonus projs
-                {
-                    Vector2 spawnPos = projectile.Center;
-                    Vector2 vel = projectile.velocity.RotatedBy(Math.PI / 2 * Math.Sign(projectile.ai[0]));
-                    const int max = 15;
-                    for (int i = 1; i <= max; i++)
-                    {
-                        spawnPos += projectile.velocity * 3000f / max;
-                        Projectile.NewProjectile(spawnPos, vel, mod.ProjectileType("AbomSickle2"), projectile.damage, 0f, projectile.owner);
-                    }
-                }
-            }
-
-            if (!spawnedHandle)
-            {
-                spawnedHandle = true;
-                if (Main.netMode != 1)
-                {
-                    Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<AbomSwordHandle>(), projectile.damage, projectile.knockBack, projectile.owner, (float)Math.PI / 2, projectile.whoAmI);
-                    Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<AbomSwordHandle>(), projectile.damage, projectile.knockBack, projectile.owner, -(float)Math.PI / 2, projectile.whoAmI);
-                }
-            }
-
-            for (int i = 0; i < 40; i++)
-            {
-                int d = Dust.NewDust(projectile.position + projectile.velocity * Main.rand.NextFloat(3000), projectile.width, projectile.height, 87, 0f, 0f, 0, default(Color), 1.5f);
-                Main.dust[d].noGravity = true;
-                Main.dust[d].velocity *= 4f;
-            }
-        }
-
-        public override void OnHitPlayer(Player target, int damage, bool crit)
-        {
-            target.velocity.X = target.Center.X < Main.npc[(int)projectile.ai[1]].Center.X ? -15f : 15f;
-            target.velocity.Y = -10f;
-
-            Projectile.NewProjectile(target.Center + Main.rand.NextVector2Circular(100, 100), Vector2.Zero, mod.ProjectileType("AbomBlast"), 0, 0f, projectile.owner);
-
-            target.AddBuff(mod.BuffType("AbomFang"), 300);
-            target.AddBuff(BuffID.WitheredArmor, 600);
-            target.AddBuff(BuffID.WitheredWeapon, 600);
-            target.AddBuff(BuffID.Burning, 180);
+            projectile.position -= projectile.velocity;
+            projectile.rotation = projectile.velocity.ToRotation() - 1.57079637f;
         }
     }
 }

@@ -16,7 +16,10 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             Tooltip.SetDefault(@"'Seems like something's missing'
 Grants immunity to Abominable Fang
 Spectral Abominationn periodically manifests to support your critical hits
-Spectral Abominationn also inflicts Mutant Nibble");
+Spectral Abominationn also inflicts Mutant Nibble
+You can endure any attack and survive with 1 life
+Once triggered, you cannot heal for 10 seconds
+Endurance recovers when you reach full life again");
 //Upgrades Cute Fishron to Cute Fishron EX");
             DisplayName.AddTranslation(GameCulture.Chinese, "飓风鳍");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'风在咆哮'

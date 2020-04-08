@@ -10,11 +10,12 @@ namespace FargowiltasSouls.Projectiles.Minions
     {
         public override void SetDefaults()
         {
-            projectile.width = 16;
-            projectile.height = 16;
+            projectile.width = 30;
+            projectile.height = 30;
             projectile.penetrate = 1;
             projectile.friendly = true;
             projectile.ignoreWater = true;
+            projectile.aiStyle = -1;
             ProjectileID.Sets.Homing[projectile.type] = true;
             ProjectileID.Sets.MinionShot[projectile.type] = true;
         }
@@ -25,9 +26,10 @@ namespace FargowiltasSouls.Projectiles.Minions
             {
                 Main.PlaySound(SoundID.Item20, projectile.position);
                 projectile.localAI[0] = 1f;
+                projectile.ai[1] = -1f;
             }
 
-            int dust = Dust.NewDust(projectile.Center, 0, 0, 66, 0f, 0f, 100, new Color(244, 66, 113), 1.5f);
+            int dust = Dust.NewDust(projectile.Center, 0, 0, 66, 0f, 0f, 100, new Color(244, 66, 113), 1f);
             Main.dust[dust].velocity *= 0.1f;
             if (projectile.velocity == Vector2.Zero)
             {
@@ -42,6 +44,62 @@ namespace FargowiltasSouls.Projectiles.Minions
             /*Main.dust[dust].position.X = projectile.Center.X + 4f + Main.rand.Next(-2, 3);
             Main.dust[dust].position.Y = projectile.Center.Y + Main.rand.Next(-2, 3);*/
             Main.dust[dust].noGravity = true;
+
+
+            if (projectile.ai[1] > -1f && projectile.ai[1] < 200f) //has target
+            {
+                NPC npc = Main.npc[(int)projectile.ai[1]];
+                if (npc.CanBeChasedBy(projectile))
+                {
+                    float rotation = projectile.velocity.ToRotation();
+                    Vector2 vel = npc.Center - projectile.Center;
+                    float targetAngle = vel.ToRotation();
+                    projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, 0.008f));
+                }
+                else
+                {
+                    projectile.ai[1] = -1f;
+                    projectile.netUpdate = true;
+                }
+            }
+            else //currently has no target
+            {
+                if (--projectile.localAI[1] < 0)
+                {
+                    projectile.localAI[1] = 10;
+                    projectile.ai[1] = HomeOnTarget();
+                    if (projectile.ai[1] != -1)
+                        projectile.netUpdate = true;
+                }
+            }
+
+
+        }
+
+        private int HomeOnTarget()
+        {
+            NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
+            if (minionAttackTargetNpc != null && minionAttackTargetNpc.CanBeChasedBy(projectile))
+                return minionAttackTargetNpc.whoAmI;
+
+            const float homingMaximumRangeInPixels = 2000;
+            int selectedTarget = -1;
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC n = Main.npc[i];
+                if (n.CanBeChasedBy(projectile))
+                {
+                    float distance = projectile.Distance(n.Center);
+                    if (distance <= homingMaximumRangeInPixels &&
+                        (
+                            selectedTarget == -1 || //there is no selected target
+                            projectile.Distance(Main.npc[selectedTarget].Center) > distance) //or we are closer to this target than the already selected target
+                    )
+                        selectedTarget = i;
+                }
+            }
+
+            return selectedTarget;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

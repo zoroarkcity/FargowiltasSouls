@@ -196,9 +196,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                     NetMessage.SendData(23, -1, -1, null, n);
                             }
                         }
-                        npc.NPCLoot();
                         npc.life = 0;
-                        npc.active = false;
+                        npc.dontTakeDamage = false;
+                        npc.checkDead();
                     }
                     break;
 
@@ -1136,6 +1136,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             }
                             
                             npc.localAI[1] = npc.DirectionTo(player.Center).ToRotation(); //store for aiming ray
+
+                            if (npc.ai[3] == 6 && Main.netMode != 1) //final warning
+                            {
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[1]), mod.ProjectileType("DeviDeathraySmall"),
+                                    0, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            }
                         }
                         else if (npc.ai[3] == 7) //fire deathray
                         {
@@ -1519,6 +1525,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
         public override bool CheckDead()
         {
+            if (npc.ai[0] == -2 && npc.ai[1] >= 180)
+                return true;
+
             npc.life = 1;
             npc.active = true;
             if (npc.localAI[3] < 2)

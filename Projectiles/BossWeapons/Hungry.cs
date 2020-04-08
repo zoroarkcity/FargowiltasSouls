@@ -11,8 +11,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hungry");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
@@ -24,11 +22,19 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.minion = true; 
             projectile.penetrate = 4; 
             projectile.timeLeft = 300;
-            aiType = ProjectileID.Bullet; 
+            aiType = ProjectileID.Bullet;
+
+            projectile.minionSlots = 1f;
         }
 
         public override void AI()
         {
+            if (projectile.minionPos >= Main.player[projectile.owner].maxMinions)
+            {
+                projectile.Kill();
+                return;
+            }
+
             //dust!
             int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width, projectile.height + 5, 60, projectile.velocity.X * 0.2f,
                 projectile.velocity.Y * 0.2f, 100, default(Color), 2f);

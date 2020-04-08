@@ -229,6 +229,7 @@ namespace FargowiltasSouls
             AddToggle("MutantArmorHeader", "True Mutant Armor", "HeartoftheMasochist", "ffffff");
             AddToggle("MasoAbomConfig", "Abominationn Minion", "MutantMask", "ffffff");
             AddToggle("MasoRingConfig", "Phantasmal Ring Minion", "MutantMask", "ffffff");
+            AddToggle("MasoReviveDeathrayConfig", "Deathray When Revived", "MutantMask", "ffffff");
 
             #endregion
 
@@ -829,16 +830,23 @@ namespace FargowiltasSouls
             ModRecipe recipe = new ModRecipe(this);
             recipe.AddIngredient(ItemID.SoulofLight, 7);
             recipe.AddIngredient(ItemID.SoulofNight, 7);
-            recipe.AddIngredient(ItemType("VolatileEnergy"));
+            recipe.AddIngredient(ModContent.ItemType<Items.Misc.DeviatingEnergy>(), 5);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(ModContent.ItemType<JungleChest>());
             recipe.AddRecipe();
 
             recipe = new ModRecipe(this);
             recipe.AddIngredient(ItemID.WizardHat);
-            recipe.AddIngredient(ItemType("VolatileEnergy"), 5);
+            recipe.AddIngredient(ModContent.ItemType<Items.Misc.DeviatingEnergy>(), 5);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(ModContent.ItemType<RuneOrb>());
+            recipe.AddRecipe();
+
+            recipe = new ModRecipe(this);
+            recipe.AddRecipeGroup("FargowiltasSouls:AnyBonesBanner", 2);
+            recipe.AddIngredient(ModContent.ItemType<Items.Misc.DeviatingEnergy>(), 5);
+            recipe.AddTile(TileID.Anvils);
+            recipe.SetResult(ModContent.ItemType<InnocuousSkull>());
             recipe.AddRecipe();
         }
 
@@ -847,6 +855,10 @@ namespace FargowiltasSouls
             //drax
             RecipeGroup group = new RecipeGroup(() => Lang.misc[37] + " Drax", ItemID.Drax, ItemID.PickaxeAxe);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyDrax", group);
+
+            //dungeon enemies
+            group = new RecipeGroup(() => Lang.misc[37] + " Angry or Armored Bones Banner", ItemID.AngryBonesBanner, ItemID.BlueArmoredBonesBanner, ItemID.HellArmoredBonesBanner, ItemID.RustyArmoredBonesBanner);
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyBonesBanner", group);
 
             //cobalt
             group = new RecipeGroup(() => Lang.misc[37] + " Cobalt Repeater", ItemID.CobaltRepeater, ItemID.PalladiumRepeater);

@@ -481,6 +481,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool RingMinion;
 
+        [Label("$Mods.FargowiltasSouls.MasoReviveDeathrayConfig")]
+        [DefaultValue(true)]
+        public bool ReviveDeathray;
+
         #endregion
 
         #region souls

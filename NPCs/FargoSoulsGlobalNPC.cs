@@ -1461,24 +1461,16 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Piranha:
-                        masoBool[0] = npc.HasValidTarget && Main.player[npc.target].ZoneJungle;
+                        masoBool[0] = npc.HasValidTarget && Main.player[npc.target].bleed && Main.player[npc.target].ZoneJungle;
                         Counter++;
-                        if (Counter >= 120)
+                        if (Counter >= 120) //swarm
                         {
                             Counter = 0;
-                            int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
-                            if (t != -1 && Main.rand.Next(2) == 0)
+                            if (Main.rand.Next(2) == 0 && masoBool[0] && Main.netMode != 1 && NPC.CountNPCS(NPCID.Piranha) <= 6)
                             {
-                                Player player = Main.player[t];
-                                if (player.bleed && Main.netMode != 1)
-                                {
-                                    if (NPC.CountNPCS(NPCID.Piranha) <= 6)
-                                    {
-                                        int piranha = NPC.NewNPC((int)npc.Center.X + Main.rand.Next(-20, 20), (int)npc.Center.Y + Main.rand.Next(-20, 20), NPCID.Piranha);
-                                        if (piranha != 200 && Main.netMode == 2)
-                                            NetMessage.SendData(23, -1, -1, null, piranha);
-                                    }
-                                }
+                                int piranha = NPC.NewNPC((int)npc.Center.X + Main.rand.Next(-20, 20), (int)npc.Center.Y + Main.rand.Next(-20, 20), NPCID.Piranha);
+                                if (piranha != 200 && Main.netMode == 2)
+                                    NetMessage.SendData(23, -1, -1, null, piranha);
                             }
                         }
                         if (masoBool[0] && npc.wet && ++Counter2 > 240) //initiate jump
@@ -3154,7 +3146,7 @@ namespace FargowiltasSouls.NPCs
                             npc.TargetClosest(true);
                             if (Main.player[npc.target].dead || Vector2.Distance(npc.Center, Main.player[npc.target].Center) > 3000)
                             {
-                                npc.position.X += 20 * Math.Sign(npc.velocity.X); //move faster to despawn
+                                npc.position.X += 60 * Math.Sign(npc.velocity.X); //move faster to despawn
                                 if (!masoBool[3]) //drop a resummon
                                 {
                                     masoBool[3] = true;
@@ -3205,7 +3197,11 @@ namespace FargowiltasSouls.NPCs
                         if (npc.life < npc.lifeMax / 10)
                         {
                             Counter++;
-                            masoBool[3] = true;
+                            if (!masoBool[3])
+                            {
+                                masoBool[3] = true;
+                                Main.PlaySound(15, (int)npc.position.X, (int)npc.position.Y, 0);
+                            }
                         }
                         break;
 
@@ -3222,9 +3218,10 @@ namespace FargowiltasSouls.NPCs
 
                             if (npc.realLife != -1 && Main.npc[npc.realLife].GetGlobalNPC<FargoSoulsGlobalNPC>().masoBool[3])
                             {
-                                maxTime = 240f;
-                                npc.localAI[1] = 0f; //no more lasers
+                                if (npc.ai[1] < maxTime - 180) //dont lower this if it's already telegraphing laser
+                                    maxTime = 240f;
 
+                                npc.localAI[1] = 0f; //no more regular lasers
                             }
 
                             if (++npc.ai[1] >= maxTime)
@@ -5787,7 +5784,7 @@ namespace FargowiltasSouls.NPCs
                             }
 
                             int b = Main.LocalPlayer.FindBuffIndex(BuffID.Confused);
-                            if (b != -1 && Main.LocalPlayer.buffTime[b] == 90)
+                            if (b != -1 && Main.LocalPlayer.buffTime[b] == 60)
                             {
                                 Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f);
                                 MakeDust(Main.LocalPlayer.Center);
@@ -9084,8 +9081,8 @@ namespace FargowiltasSouls.NPCs
 
             if (FargoSoulsWorld.MasochistMode)
             {
-                spawnRate = (int)(spawnRate * 0.8);
-                maxSpawns = (int)(maxSpawns * 1.5f);
+                spawnRate = (int)(spawnRate * 0.9);
+                maxSpawns = (int)(maxSpawns * 1.25f);
 
                 if (AnyBossAlive())
                 {
@@ -9813,7 +9810,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.CorruptBunny:
                     case NPCID.CrimsonBunny:
-                        if (Main.rand.Next(25) == 0)
+                        if (Main.rand.Next(Main.hardMode ? 10 : 25) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<Items.Accessories.Masomode.SqueakyToy>());
                         goto case NPCID.Bunny;
 
@@ -9821,7 +9818,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.CrimsonGoldfish:
                     case NPCID.CorruptPenguin:
                     case NPCID.CrimsonPenguin:
-                        if (Main.rand.Next(25) == 0)
+                        if (Main.rand.Next(Main.hardMode ? 10 : 25) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<Items.Accessories.Masomode.SqueakyToy>());
                         break;
 
@@ -9969,14 +9966,14 @@ namespace FargowiltasSouls.NPCs
 
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.LovePotion, Main.rand.Next(2, 5) + 1);
-                        if (Main.rand.Next(5) == 0)
-                            Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
+                        if (Main.rand.Next(3) == 0)
+                            Item.NewItem(npc.Hitbox, ModContent.ItemType<CrackedGem>(), Main.rand.Next(3) + 1);
                         break;
 
                     case NPCID.DoctorBones:
                     case NPCID.DungeonSlime:
-                        if (Main.rand.Next(5) == 0)
-                            Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
+                        if (Main.rand.Next(3) == 0)
+                            Item.NewItem(npc.Hitbox, ModContent.ItemType<CrackedGem>(), Main.rand.Next(3) + 1);
                         break;
 
                     case NPCID.MourningWood:
@@ -10038,8 +10035,8 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<TimsConcoction>());
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.ManaRegenerationPotion, Main.rand.Next(2, 5) + 1);
-                        if (Main.rand.Next(5) == 0)
-                            Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
+                        if (Main.rand.Next(3) == 0)
+                            Item.NewItem(npc.Hitbox, ModContent.ItemType<CrackedGem>(), Main.rand.Next(3) + 1);
                         break;
 
                     case NPCID.RuneWizard:
@@ -10126,8 +10123,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.BlueSlime:
                         if (npc.netID == NPCID.YellowSlime && Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.RecallPotion, Main.rand.Next(0, 2) + 1);
-                        if (npc.netID == NPCID.Pinky && Main.rand.Next(5) == 0)
-                            Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
+                        if (npc.netID == NPCID.Pinky && Main.rand.Next(3) == 0)
+                            Item.NewItem(npc.Hitbox, ModContent.ItemType<CrackedGem>(), Main.rand.Next(3) + 1);
                         break;
 
                     case NPCID.GoblinArcher:
@@ -10187,8 +10184,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.UndeadMiner:
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.MiningPotion, Main.rand.Next(2, 5) + 1);
-                        if (Main.rand.Next(5) == 0)
-                            Item.NewItem(npc.Hitbox, mod.ItemType("CrackedGem"), Main.rand.Next(5) + 1);
+                        if (Main.rand.Next(3) == 0)
+                            Item.NewItem(npc.Hitbox, ModContent.ItemType<CrackedGem>(), Main.rand.Next(3) + 1);
                         break;
 
                     case NPCID.Raven:
@@ -10631,12 +10628,11 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.AngryBonesBigMuscle:
                         if (Main.rand.Next(5) == 0 && Main.netMode != 1)
                         {
-                            bool spawnGuardian = Main.rand.Next(20) == 0 && Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().NecromanticBrew;
-                            int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, spawnGuardian ? ModContent.NPCType<BabyGuardian>() : NPCID.CursedSkull);
+                            int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.CursedSkull);
                             if (n < 200 && Main.netMode == 2)
                                 NetMessage.SendData(23, -1, -1, null, n);
                         }
-                        break;
+                        goto case 269;
 
                     //all armored bones
                     case 269:
@@ -10651,11 +10647,15 @@ namespace FargowiltasSouls.NPCs
                     case 278:
                     case 279:
                     case 280:
-                        if (Main.netMode != 1 && Main.rand.Next(100) == 0 && Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().NecromanticBrew)
+                        if (Main.netMode != 1 && Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().NecromanticBrew)
                         {
-                            int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<BabyGuardian>());
-                            if (n < 200 && Main.netMode == 2)
-                                NetMessage.SendData(23, -1, -1, null, n);
+                            int chance = (bool)ModLoader.GetMod("Fargowiltas").Call("GetDownedEnemy", "babyGuardian") ? 100 : 10;
+                            if (Main.rand.Next(chance) == 0)
+                            {
+                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<BabyGuardian>());
+                                if (n < 200 && Main.netMode == 2)
+                                    NetMessage.SendData(23, -1, -1, null, n);
+                            }
                         }
                         break;
 

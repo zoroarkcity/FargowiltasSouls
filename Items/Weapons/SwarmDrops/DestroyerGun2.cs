@@ -39,19 +39,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.shootSpeed = 18f;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            //looks kinda weird but prob less buggy :ech: we'll see
-            int current = Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("DestroyerHead2"), damage, 0f, player.whoAmI);
-            for (int i = 0; i < 18; i++)
-                current = Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("DestroyerBody2"), damage, 0f, player.whoAmI, current);
-            int previous = current;
-            current = Projectile.NewProjectile(position.X, position.Y, speedX, speedY, mod.ProjectileType("DestroyerTail2"), damage, 0f, player.whoAmI, current);
-            Main.projectile[previous].localAI[1] = current;
-            Main.projectile[previous].netUpdate = true;
-            return false;
-        }
-
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);

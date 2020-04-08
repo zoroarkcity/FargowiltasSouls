@@ -8,10 +8,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 {
     public class AbomBlast : BossWeapons.PhantasmalBlast
     {
-        public override Color? GetAlpha(Color lightColor)
-        {
-            return new Color(255, 50, 50, 127);
-        }
+        public override string Texture => "FargowiltasSouls/Projectiles/AbomBoss/AbomBlast";
     }
 }
 

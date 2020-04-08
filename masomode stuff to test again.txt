@@ -1,1 +1,44 @@
-e
+nerfed eoc sickle acceleration
+nerfed maso spawn rates (now rates x0.9, max spawns x1.25)
+fixed sadism buff being named sadism buff
+added banner recipe for baby guardian summon
+adjusted recipe for jungle chest/rune orb to use deviating energy
+updated sprites:
+	cracked gem
+	galactic globe
+	fireball dash
+betsy dash makes a sound when its cooldown ends
+sueaky toy drop rate becomes 10% in hardmode
+increased cracked gem rates to 33%, but decreased max drop to 3 (was 20%, max 5)
+abominable wand now grants a 1 life survival
+mutant eye:
+	no longer unseals spectral aboms
+	reduces abominable rebirth duration
+true mutant armor no longer gives a revive, instead causes deathrays whenever you revive
+nerfed SOE revive to 3min cd (was 2)
+SOE no longer gives faster respawn during boss fights
+SOE lifesteal is inhibited by mutant nibble
+eternity stacking ignores mutant presence
+
+nerfed spiky ball by -25%
+toggle for mutant armor revive deathray
+fixed soul of mutants buff still saying soul of the masochist
+debuff for abom rebirth cooldown
+mind break rework:
+	massive damage cut
+	slight homing on creepers
+	only uses one slot now
+fixed purified being double duration in expert
+fixed(?) bug where mind break minion refuses to attack anything
+
+fixed piranha jump
+baby guardian spawn rate boosted to 10% until killed at least once
+added a small telegraph for devi mega ray
+buffed phantasm (nerf is now -33%, was -50%)
+changed how mutant/devi/abom dies so hopefully it doesnt say "x is no longer after you..."
+
+reworked flesh hand and destroyer gun (EX) to only work if you have spare slots
+wof moves disgustingly fast when despawning
+fixed(?) wof shooting instant deathrays when transitioning into phase 3
+changed abom's sword slightly
+updated some abom boss visuals

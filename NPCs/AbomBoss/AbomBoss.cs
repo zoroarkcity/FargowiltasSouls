@@ -154,6 +154,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     if (!AliveCheck(player))
                         break;
                     npc.velocity *= 0.9f;
+                    npc.dontTakeDamage = true;
                     for (int i = 0; i < 5; i++)
                     {
                         int d = Dust.NewDust(npc.position, npc.width, npc.height, 87, 0f, 0f, 0, default(Color), 2.5f);
@@ -174,9 +175,9 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                                     NetMessage.SendData(23, -1, -1, null, n);
                             }
                         }
-                        npc.NPCLoot();
                         npc.life = 0;
-                        npc.active = false;
+                        npc.dontTakeDamage = false;
+                        npc.checkDead();
                     }
                     break;
 
@@ -1092,6 +1093,9 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         public override bool CheckDead()
         {
+            if (npc.ai[0] == -3 && npc.ai[1] >= 180)
+                return true;
+
             npc.life = 1;
             npc.active = true;
             if (npc.localAI[3] < 2)

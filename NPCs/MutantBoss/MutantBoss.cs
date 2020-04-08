@@ -181,9 +181,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (++npc.alpha > 255)
                     {
                         npc.alpha = 255;
-                        npc.NPCLoot();
                         npc.life = 0;
-                        npc.active = false;
+                        npc.dontTakeDamage = false;
+                        npc.checkDead();
                         if (Main.netMode != 1 && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Mutant")))
                         {
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
@@ -1788,6 +1788,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override bool CheckDead()
         {
+            if (npc.ai[0] == -7)
+                return true;
+
             npc.life = 1;
             npc.active = true;
             npc.localAI[3] = 2;
