@@ -100,7 +100,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
         public override void AI()
         {
-            FargoSoulsGlobalNPC.deviBoss = npc.whoAmI;
+            EModeGlobalNPC.deviBoss = npc.whoAmI;
 
             if (npc.localAI[3] == 0)
             {

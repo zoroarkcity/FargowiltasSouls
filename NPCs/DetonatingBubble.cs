@@ -40,7 +40,7 @@ namespace FargowiltasSouls.NPCs
         {
             npc.damage = (int)(npc.damage * 0.75);
             npc.lifeMax = 1;
-            if (FargoSoulsWorld.downedFishronEX || !FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.fishBossEX, NPCID.DukeFishron))
+            if (FargoSoulsWorld.downedFishronEX || !EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.fishBossEX, NPCID.DukeFishron))
                 npc.damage = (int)(npc.damage * (1 + FargoSoulsWorld.FishronCount * .0125));
         }
 
@@ -79,7 +79,7 @@ namespace FargowiltasSouls.NPCs
             target.AddBuff(BuffID.Wet, 420);
             //target.AddBuff(mod.BuffType("SqueakyToy"), Main.rand.Next(60, 180));
             target.AddBuff(mod.BuffType("OceanicMaul"), 1800);
-            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.fishBossEX, NPCID.DukeFishron) ? 10 : 50;
+            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.fishBossEX, NPCID.DukeFishron) ? 10 : 50;
 
         }
 

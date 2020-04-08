@@ -47,13 +47,13 @@ namespace FargowiltasSouls.NPCs
 
         public override void AI()
         {
-            if (!npc.GetGlobalNPC<FargoSoulsGlobalNPC>().masoBool[0])
+            if (!npc.GetGlobalNPC<EModeGlobalNPC>().masoBool[0])
             {
-                npc.GetGlobalNPC<FargoSoulsGlobalNPC>().masoBool[0] = true;
+                npc.GetGlobalNPC<EModeGlobalNPC>().masoBool[0] = true;
                 Main.npcTexture[npc.type] = Main.npcTexture[NPCID.QueenBee];
             }
 
-            if (!FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.beeBoss, NPCID.QueenBee)
+            if (!EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.beeBoss, NPCID.QueenBee)
                 && !NPC.AnyNPCs(NPCID.QueenBee))
             {
                 npc.StrikeNPCNoInteraction(9999, 0f, 0);

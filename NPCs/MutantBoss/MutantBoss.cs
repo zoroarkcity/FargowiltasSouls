@@ -91,7 +91,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override void AI()
         {
-            FargoSoulsGlobalNPC.mutantBoss = npc.whoAmI;
+            EModeGlobalNPC.mutantBoss = npc.whoAmI;
 
             if (npc.localAI[3] == 0)
             {

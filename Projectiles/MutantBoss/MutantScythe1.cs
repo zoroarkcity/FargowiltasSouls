@@ -89,7 +89,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            if (NPCs.FargoSoulsGlobalNPC.BossIsAlive(ref NPCs.FargoSoulsGlobalNPC.mutantBoss, mod.NPCType("MutantBoss")))
+            if (NPCs.EModeGlobalNPC.BossIsAlive(ref NPCs.EModeGlobalNPC.mutantBoss, mod.NPCType("MutantBoss")))
                 target.AddBuff(mod.BuffType("MutantFang"), 180);
             target.AddBuff(mod.BuffType("AbomFang"), 300);
             target.AddBuff(mod.BuffType("Shadowflame"), 300);
