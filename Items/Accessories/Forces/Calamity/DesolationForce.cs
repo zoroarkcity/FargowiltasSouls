@@ -20,13 +20,17 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Calamity
             DisplayName.SetDefault("Force of Desolation");
             Tooltip.SetDefault(
 @"'When the world is barren and cold, you will be all that remains'
-All armor bonuses from Victide, Xeroc, and Omega Blue
-All armor bonuses from God Slayer, Silva, and Auric Tesla
-Effects of Deep Diver, The Transformer, and Luxor's Gift
-Effects of The Community, Abyssal Diving Suit, and Lumenous Amulet
-Effects of the Aquatic Emblem, Nebulous Core, and Draedon's Heart
-Effects of the The Amalgam, Godly Soul Artifact, and Yharim's Gift
-Effects of Heart of the Elements and The Sponge
+All armor bonuses from Daedalus, Snow Ruffian, Umbraphile, and Astral
+All armor bonuses from Omega Blue, Mollusk, Victide, Fathom Swarmer, and Sulphurous
+Effects of Scuttler's Jewel, Permafrost's Concoction, and Regenator
+Effects of Thief's Dime, Vampiric Talisman, and Momentum Capacitor
+Effects of the Astral Arcanum, Hide of Astrum Deus, and Gravistar Sabaton
+Effects of the Abyssal Diving Suit, Mutated Truffle, and Old Duke's Scales
+Effects of Giant Pearl and Amidias' Pendant
+Effects of Aquatic Emblem and Enchanted Pearl
+Effects of Ocean's Crest, Deep Diver, The Transformer, and Luxor's Gift
+Effects of Corrosive Spine and Lumenous Amulet
+Effects of Sand Cloak and Alluring Bait
 Summons several pets");
             DisplayName.AddTranslation(GameCulture.Chinese, "荒芜之力");
             Tooltip.AddTranslation(GameCulture.Chinese,
@@ -55,20 +59,11 @@ Summons several pets");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            //VICTIDE
-            mod.GetItem("VictideEnchant").UpdateAccessory(player, hideVisual);
-            //XEROC
-            mod.GetItem("XerocEnchant").UpdateAccessory(player, hideVisual);
-            //OMEGA BLUE
+            mod.GetItem("DaedalusEnchant").UpdateAccessory(player, hideVisual);
+            mod.GetItem("UmbraphileEnchant").UpdateAccessory(player, hideVisual);
+            mod.GetItem("AstralEnchant").UpdateAccessory(player, hideVisual);
             mod.GetItem("OmegaBlueEnchant").UpdateAccessory(player, hideVisual);
-            //GODSLAYER
-            mod.GetItem("GodSlayerEnchant").UpdateAccessory(player, hideVisual);
-            //SILVA
-            mod.GetItem("SilvaEnchant").UpdateAccessory(player, hideVisual);
-            //AURIC
-            mod.GetItem("AuricEnchant").UpdateAccessory(player, hideVisual);
         }
-
 
         public override void AddRecipes()
         {
@@ -76,12 +71,10 @@ Summons several pets");
 
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(null, "VictideEnchant");
-            recipe.AddIngredient(null, "XerocEnchant");
-            recipe.AddIngredient(null, "SilvaEnchant");
+            recipe.AddIngredient(null, "DaedalusEnchant");
+            recipe.AddIngredient(null, "UmbraphileEnchant");
+            recipe.AddIngredient(null, "AstralEnchant");
             recipe.AddIngredient(null, "OmegaBlueEnchant");
-            recipe.AddIngredient(null, "GodSlayerEnchant");
-            recipe.AddIngredient(null, "AuricEnchant");
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);

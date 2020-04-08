@@ -401,7 +401,8 @@ namespace FargowiltasSouls
                 AddToggle("CalamityValkyrieMinionConfig", "Valkyrie Minion", "AerospecEnchant", "ffffff");
                 AddToggle("CalamityGladiatorLocketConfig", "Gladiator's Locket", "AerospecEnchant", "ffffff");
                 AddToggle("CalamityUnstablePrismConfig", "Unstable Prism", "AerospecEnchant", "ffffff");
-                AddToggle("CalamityKendraConfig", "Kendra Pet", "AerospecEnchant", "ffffff");
+                AddToggle("CalamityRotomConfig", "Rotom Pet", "AerospecEnchant", "ffffff");
+                AddToggle("CalamityKendraConfig", "Kendra Pet", "AerospecEnchant", "ffffff"); ////
                 AddToggle("CalamitySlimeMinionConfig", "Slime God Minion", "StatigelEnchant", "ffffff");
                 AddToggle("CalamityPerforatorConfig", "Perforator Pet", "StatigelEnchant", "ffffff");
                 AddToggle("CalamityDaedalusEffectsConfig", "Daedalus Effects", "DaedalusEnchant", "ffffff");
@@ -440,10 +441,11 @@ namespace FargowiltasSouls
                 AddToggle("CalamityShellfishMinionConfig", "Shellfish Minions", "MolluskEnchant", "ffffff");
                 AddToggle("CalamityAmidiasPendantConfig", "Amidias' Pendant", "MolluskEnchant", "ffffff");
                 AddToggle("CalamityGiantPearlConfig", "Giant Pearl", "MolluskEnchant", "ffffff");
-                AddToggle("CalamityDannyConfig", "Danny Pet", "MolluskEnchant", "ffffff");
+                AddToggle("CalamityDannyConfig", "Danny Pet", "SulphurousEnchant", "ffffff");
                 AddToggle("CalamityReaverEffectsConfig", "Reaver Effects", "ReaverEnchant", "ffffff");
                 AddToggle("CalamityReaverMinionConfig", "Reaver Orb Minion", "ReaverEnchant", "ffffff");
                 AddToggle("CalamityFabledTurtleConfig", "Fabled Turtle Shell", "ReaverEnchant", "ffffff");
+                AddToggle("CalamitySparksConfig", "Sparks Pet", "ReaverEnchant", "ffffff");
                 AddToggle("CalamityAtaxiaEffectsConfig", "Ataxia Effects", "AtaxiaEnchant", "ffffff");
                 AddToggle("CalamityChaosMinionConfig", "Chaos Spirit Minion", "AtaxiaEnchant", "ffffff");
                 AddToggle("CalamityPlagueHiveConfig", "Plague Hive", "AtaxiaEnchant", "ffffff");
@@ -777,7 +779,7 @@ namespace FargowiltasSouls
                     Mod calamity = ModLoader.GetMod("CalamityMod");
 
                     String[] calamityPets = { "KendraPet" , "PerforaMini", "ThirdSage", "Bear", "BrimlingPet", "DannyDevitoPet",
-                    "SirenYoung", "ChibiiDoggo", "ChibiiDoggoFly", "Akato", "Fox", "Levi" };
+                    "SirenYoung", "ChibiiDoggo", "ChibiiDoggoFly", "Akato", "Fox", "LeviPet", "RotomPet", "Astrophage", "Sparks", "RadiatorPet", "BabyGhostBell", "FlakPet", "SCalPet" };
                     int calamityIndex = 101;
 
                     for (int i = 0; i < calamityPets.Length; i++)

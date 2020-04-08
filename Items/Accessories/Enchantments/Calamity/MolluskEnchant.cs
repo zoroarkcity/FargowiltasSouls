@@ -4,6 +4,14 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Items.Fishing.AstralCatches;
+using CalamityMod.Items.Fishing.SunkenSeaCatches;
+using CalamityMod.Projectiles.Pets;
+using CalamityMod.Buffs.Pets;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -22,8 +30,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
             Tooltip.SetDefault(
 @"'The world is your oyster'
 Two shellfishes aid you in combat
+When using any weapon you have a 10% chance to throw a returning seashell projectile
+Summons a sea urchin to protect you
 Effects of Giant Pearl and Amidias' Pendant
-Summons a Danny Devito pet");
+Effects of Aquatic Emblem and Enchanted Pearl
+Effects of Ocean's Crest, Deep Diver, The Transformer, and Luxor's Gift
+Summons a Baby Ghost Bell pet");
             DisplayName.AddTranslation(GameCulture.Chinese, "软壳魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'世界任你驰骋'
@@ -84,9 +96,13 @@ Summons a Danny Devito pet");
                 calamity.GetItem("AmidiasPendant").UpdateAccessory(player, hideVisual);
             }
 
+            calamity.GetItem("AquaticEmblem").UpdateAccessory(player, hideVisual);
+            calamity.GetItem("EnchantedPearl").UpdateAccessory(player, hideVisual);
+            mod.GetItem("VictideEnchant").UpdateAccessory(player, hideVisual);
+
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.MolluskEnchant = true;
-            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.DannyPet, hideVisual, calamity.BuffType("DannyDevito"), calamity.ProjectileType("DannyDevitoPet"));
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.GhostBellPet, hideVisual, ModContent.BuffType<BabyGhostBellBuff>(), ModContent.ProjectileType<BabyGhostBell>());
         }
 
         public override void AddRecipes()
@@ -95,20 +111,20 @@ Summons a Danny Devito pet");
 
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(calamity.ItemType("MolluskShellmet"));
-            recipe.AddIngredient(calamity.ItemType("MolluskShellplate"));
-            recipe.AddIngredient(calamity.ItemType("MolluskShelleggings"));
-            recipe.AddIngredient(calamity.ItemType("GiantPearl"));
-            recipe.AddIngredient(calamity.ItemType("AmidiasPendant"));
-            recipe.AddIngredient(calamity.ItemType("BlackAnurian"));
-            recipe.AddIngredient(calamity.ItemType("Archerfish"));
-            recipe.AddIngredient(calamity.ItemType("Lionfish"));
-            recipe.AddIngredient(calamity.ItemType("HerringStaff"));
-            recipe.AddIngredient(calamity.ItemType("SeafoamBomb"));
-            recipe.AddIngredient(calamity.ItemType("AmidiasTrident"));
-            recipe.AddIngredient(calamity.ItemType("EutrophicShank"));
-            recipe.AddIngredient(calamity.ItemType("Serpentine"));
-            recipe.AddIngredient(calamity.ItemType("TrashmanTrashcan"));
+            recipe.AddIngredient(ModContent.ItemType<MolluskShellmet>());
+            recipe.AddIngredient(ModContent.ItemType<MolluskShellplate>());
+            recipe.AddIngredient(ModContent.ItemType<MolluskShelleggings>());
+            recipe.AddIngredient(ModContent.ItemType<VictideEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<GiantPearl>());
+            recipe.AddIngredient(ModContent.ItemType<AmidiasPendant>());
+            recipe.AddIngredient(ModContent.ItemType<AquaticEmblem>());
+            recipe.AddIngredient(ModContent.ItemType<EnchantedPearl>());
+            recipe.AddIngredient(ModContent.ItemType<AbyssShocker>());
+            recipe.AddIngredient(ModContent.ItemType<PolarisParrotfish>());
+            recipe.AddIngredient(ModContent.ItemType<AmidiasTrident>());
+            recipe.AddIngredient(ModContent.ItemType<EutrophicShank>());
+            recipe.AddIngredient(ModContent.ItemType<Serpentine>());
+            recipe.AddIngredient(ModContent.ItemType<RustedJingleBell>()); 
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

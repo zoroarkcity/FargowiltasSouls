@@ -4,6 +4,15 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Summon;
+using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.Items.Fishing.AstralCatches;
+using CalamityMod.Buffs.Pets;
+using CalamityMod.Projectiles.Pets;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -23,7 +32,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 @"'The Astral Infection has consumed you...'
 Whenever you crit an enemy fallen, hallowed, and astral stars will rain down
 This effect has a 1 second cooldown before it can trigger again
-Effects of the Astral Arcanum and Hide of Astrum Deus");
+Effects of the Astral Arcanum, Hide of Astrum Deus, and Gravistar Sabaton
+Summons a pet Astrophage");
             DisplayName.AddTranslation(GameCulture.Chinese, "星幻魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'星体感染侵蚀了你...'
@@ -64,6 +74,11 @@ Effects of the Astral Arcanum and Hide of Astrum Deus");
 
             calamity.GetItem("AstralArcanum").UpdateAccessory(player, hideVisual);
             calamity.GetItem("HideofAstrumDeus").UpdateAccessory(player, hideVisual);
+            calamity.GetItem("GravistarSabaton").UpdateAccessory(player, hideVisual);
+
+            FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
+            fargoPlayer.AstralEnchant = true;
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.AstrophagePet, hideVisual, ModContent.BuffType<AstrophageBuff>(), ModContent.ProjectileType<Astrophage>());
         }
 
         public override void AddRecipes()
@@ -72,20 +87,20 @@ Effects of the Astral Arcanum and Hide of Astrum Deus");
 
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(calamity.ItemType("AstralHelm"));
-            recipe.AddIngredient(calamity.ItemType("AstralBreastplate"));
-            recipe.AddIngredient(calamity.ItemType("AstralLeggings"));
-            recipe.AddIngredient(calamity.ItemType("AstralArcanum"));
-            recipe.AddIngredient(calamity.ItemType("HideofAstrumDeus"));
-            recipe.AddIngredient(calamity.ItemType("EyeofMagnus"));
-            recipe.AddIngredient(calamity.ItemType("Nebulash"));
-            recipe.AddIngredient(calamity.ItemType("Quasar"));
-            recipe.AddIngredient(calamity.ItemType("HivePod"));
-            recipe.AddIngredient(calamity.ItemType("HeavenfallenStardisk"));
-            recipe.AddIngredient(calamity.ItemType("AegisBlade"));
-            recipe.AddIngredient(calamity.ItemType("Omniblade"));
-            recipe.AddIngredient(calamity.ItemType("Lazhar"));
-            recipe.AddIngredient(calamity.ItemType("SolsticeClaymore"));
+            recipe.AddIngredient(ModContent.ItemType<AstralHelm>());
+            recipe.AddIngredient(ModContent.ItemType<AstralBreastplate>());
+            recipe.AddIngredient(ModContent.ItemType<AstralLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<AstralArcanum>());
+            recipe.AddIngredient(ModContent.ItemType<HideofAstrumDeus>());
+            recipe.AddIngredient(ModContent.ItemType<GravistarSabaton>());
+            recipe.AddIngredient(ModContent.ItemType<UrsaSergeant>());
+            recipe.AddIngredient(ModContent.ItemType<EyeofMagnus>());
+            recipe.AddIngredient(ModContent.ItemType<AbandonedSlimeStaff>());
+            recipe.AddIngredient(ModContent.ItemType<Quasar>());
+            recipe.AddIngredient(ModContent.ItemType<HivePod>());
+            recipe.AddIngredient(ModContent.ItemType<HeavenfallenStardisk>());
+            recipe.AddIngredient(ModContent.ItemType<AegisBlade>());
+            recipe.AddIngredient(ModContent.ItemType<AstrophageItem>());
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

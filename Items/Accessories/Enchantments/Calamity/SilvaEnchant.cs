@@ -4,6 +4,11 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria.Localization;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Pets;
+using CalamityMod.Items.Weapons.Magic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -36,7 +41,7 @@ Increases your rate of fire with all ranged weapons
 Magic projectiles have a 10% chance to cause a massive explosion on enemy hits
 Summons an ancient leaf prism to blast your enemies with life energy
 Rogue weapons have a faster throwing rate while you are above 90% life
-Effects of the The Amalgam, Godly Soul Artifact, and Yharim's Gift
+Effects of the The Amalgam, Dynamo Stem Cells, Godly Soul Artifact, and Yharim's Gift
 Summons an Akato and Fox pet");
             DisplayName.AddTranslation(GameCulture.Chinese, "始源林海魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -123,6 +128,8 @@ Summons an Akato and Fox pet");
                 calamity.GetItem("YharimsGift").UpdateAccessory(player, hideVisual);
             }
 
+            calamity.GetItem("DynamoStemCells").UpdateAccessory(player, hideVisual);
+
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.SilvaEnchant = true;
             fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.AkatoPet, hideVisual, calamity.BuffType("AkatoYharonBuff"), calamity.ProjectileType("Akato"));
@@ -136,19 +143,19 @@ Summons an Akato and Fox pet");
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddRecipeGroup("FargowiltasSouls:AnySilvaHelmet");
-            recipe.AddIngredient(calamity.ItemType("SilvaArmor"));
-            recipe.AddIngredient(calamity.ItemType("SilvaLeggings"));
-            recipe.AddIngredient(calamity.ItemType("TheAmalgam"));
-            recipe.AddIngredient(calamity.ItemType("GodlySoulArtifact"));
-            recipe.AddIngredient(calamity.ItemType("YharimsGift"));
-            recipe.AddIngredient(calamity.ItemType("AlphaRay"));
-            recipe.AddIngredient(calamity.ItemType("ScourgeoftheCosmos"));
-            recipe.AddIngredient(calamity.ItemType("Swordsplosion"));
-            recipe.AddIngredient(calamity.ItemType("Climax"));
-            recipe.AddIngredient(calamity.ItemType("VoidVortex"));
-            recipe.AddIngredient(calamity.ItemType("YharimsCrystal"));
-            recipe.AddIngredient(calamity.ItemType("ForgottenDragonEgg"));
-            recipe.AddIngredient(calamity.ItemType("FoxDrive"));
+            recipe.AddIngredient(ModContent.ItemType<SilvaArmor>());
+            recipe.AddIngredient(ModContent.ItemType<SilvaLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<TheAmalgam>());
+            recipe.AddIngredient(ModContent.ItemType<GodlySoulArtifact>());
+            recipe.AddIngredient(ModContent.ItemType<YharimsGift>());
+            recipe.AddIngredient(ModContent.ItemType<DynamoStemCells>());
+            recipe.AddIngredient(ModContent.ItemType<AlphaRay>());
+            recipe.AddIngredient(ModContent.ItemType<ScourgeoftheCosmos>());
+            recipe.AddIngredient(ModContent.ItemType<Swordsplosion>());
+            recipe.AddIngredient(ModContent.ItemType<VoidVortex>());
+            recipe.AddIngredient(ModContent.ItemType<YharimsCrystal>());
+            recipe.AddIngredient(ModContent.ItemType<ForgottenDragonEgg>());
+            recipe.AddIngredient(ModContent.ItemType<FoxDrive>());
 
             recipe.AddTile(calamity, "DraedonsForge");
             recipe.SetResult(this);

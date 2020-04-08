@@ -4,6 +4,11 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Fishing.SunkenSeaCatches;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -24,7 +29,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 When using any weapon you have a 10% chance to throw a returning seashell projectile
 This seashell does true damage and does not benefit from any damage class
 Summons a sea urchin to protect you
-Effects of Deep Diver, The Transformer, and Luxor's Gift");
+Effects of Ocean's Crest, Deep Diver, The Transformer, and Luxor's Gift");
             DisplayName.AddTranslation(GameCulture.Chinese, "胜潮魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'前海给予你力量...'
@@ -81,6 +86,7 @@ Effects of Deep Diver, The Transformer, and Luxor's Gift");
                 }
             }
 
+            calamity.GetItem("OceanCrest").UpdateAccessory(player, hideVisual);
             calamity.GetItem("DeepDiver").UpdateAccessory(player, hideVisual);
             calamity.GetItem("TheTransformer").UpdateAccessory(player, hideVisual);
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.LuxorGift))
@@ -94,15 +100,15 @@ Effects of Deep Diver, The Transformer, and Luxor's Gift");
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddRecipeGroup("FargowiltasSouls:AnyVictideHelmet");
-            recipe.AddIngredient(calamity.ItemType("VictideBreastplate"));
-            recipe.AddIngredient(calamity.ItemType("VictideLeggings"));
-            recipe.AddIngredient(calamity.ItemType("DeepDiver"));
-            recipe.AddIngredient(calamity.ItemType("TheTransformer"));
-            recipe.AddIngredient(calamity.ItemType("LuxorsGift"));
-            recipe.AddIngredient(calamity.ItemType("RedtideSword"));
-            recipe.AddIngredient(calamity.ItemType("DuneHopper"));
-            recipe.AddIngredient(calamity.ItemType("TeardropCleaver"));
-            recipe.AddIngredient(calamity.ItemType("MycelialClaws"));
+            recipe.AddIngredient(ModContent.ItemType<VictideBreastplate>());
+            recipe.AddIngredient(ModContent.ItemType<VictideLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<OceanCrest>());
+            recipe.AddIngredient(ModContent.ItemType<DeepDiver>());
+            recipe.AddIngredient(ModContent.ItemType<TheTransformer>());
+            recipe.AddIngredient(ModContent.ItemType<LuxorsGift>());
+            recipe.AddIngredient(ModContent.ItemType<SparklingEmpress>());
+            recipe.AddIngredient(ModContent.ItemType<TeardropCleaver>());
+            recipe.AddIngredient(ModContent.ItemType<MycelialClaws>());
             
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

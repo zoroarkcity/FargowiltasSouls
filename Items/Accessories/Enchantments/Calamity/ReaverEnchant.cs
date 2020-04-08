@@ -4,6 +4,15 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Summon;
+using CalamityMod.Items.Pets;
+using CalamityMod.Projectiles.Pets;
+using CalamityMod.Buffs.Pets;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -27,7 +36,8 @@ Your magic projectiles emit a burst of spore gas on enemy hits
 Summons a reaver orb that emits spore gas when enemies are near
 You emit a cloud of spores when you are hit
 Rage activates when you are damaged
-Effects of Fabled Tortoise Shell");
+Effects of Fabled Tortoise Shell
+Summons a Sparks pet");
             DisplayName.AddTranslation(GameCulture.Chinese, "掠夺者魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'痛苦的死亡等待着你的敌人...'
@@ -97,7 +107,11 @@ Effects of Fabled Tortoise Shell");
                 calamity.GetItem("FabledTortoiseShell").UpdateAccessory(player, hideVisual);
                 player.statDefense += 35;
             }
-            
+
+            //pet
+            FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
+            fargoPlayer.ReaverEnchant = true;
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.SparksPet, hideVisual, ModContent.BuffType<SparksBuff>(), ModContent.ProjectileType<Sparks>());
         }
 
         public override void AddRecipes()
@@ -107,19 +121,19 @@ Effects of Fabled Tortoise Shell");
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddRecipeGroup("FargowiltasSouls:AnyReaverHelmet");
-            recipe.AddIngredient(calamity.ItemType("ReaverScaleMail"));
-            recipe.AddIngredient(calamity.ItemType("ReaverCuisses"));
-            recipe.AddIngredient(calamity.ItemType("FabledTortoiseShell"));
-            recipe.AddIngredient(calamity.ItemType("EvilSmasher"));
-            recipe.AddIngredient(calamity.ItemType("Animosity"));
-            recipe.AddIngredient(calamity.ItemType("Tumbleweed"));
-            recipe.AddIngredient(calamity.ItemType("SandSharknadoStaff"));
-            recipe.AddIngredient(calamity.ItemType("Leviatitan"));
-            recipe.AddIngredient(calamity.ItemType("Keelhaul"));
-            recipe.AddIngredient(calamity.ItemType("Triploon"));
-            recipe.AddIngredient(calamity.ItemType("MagnaStriker"));
-            recipe.AddIngredient(calamity.ItemType("PearlGod"));
-            recipe.AddIngredient(calamity.ItemType("ConferenceCall"));
+            recipe.AddIngredient(ModContent.ItemType<ReaverScaleMail>());
+            recipe.AddIngredient(ModContent.ItemType<ReaverCuisses>());
+            recipe.AddIngredient(ModContent.ItemType<FabledTortoiseShell>());
+            recipe.AddIngredient(ModContent.ItemType<EvilSmasher>());
+            recipe.AddIngredient(ModContent.ItemType<MantisClaws>());
+            recipe.AddIngredient(ModContent.ItemType<SandSharknadoStaff>());
+            recipe.AddIngredient(ModContent.ItemType<Keelhaul>());
+            recipe.AddIngredient(ModContent.ItemType<Triploon>());
+            recipe.AddIngredient(ModContent.ItemType<MagnaStriker>());
+            recipe.AddIngredient(ModContent.ItemType<PearlGod>());
+            recipe.AddIngredient(ModContent.ItemType<ConferenceCall>());
+            recipe.AddIngredient(ModContent.ItemType<ResurrectionButterfly>());
+            recipe.AddIngredient(ModContent.ItemType<SparksSummon>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

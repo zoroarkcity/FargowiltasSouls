@@ -4,6 +4,11 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Summon;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -87,17 +92,7 @@ Effects of Counter Scarf and Fungal Symbiote");
             }*/
 
             calamity.GetItem("FungalSymbiote").UpdateAccessory(player, hideVisual);
-
-            //counter scarf
             calamity.GetItem("CounterScarf").UpdateAccessory(player, hideVisual);
-
-            /* modPlayer.StatigelEnchant = true;
-             //modPlayer.AddPet("Perforator Pet", hideVisual, calamity.BuffType("BloodBound"), calamity.ProjectileType("PerforaMini"));
-
-             if (player.FindBuffIndex(calamity.BuffType("BloodBound")) == -1 && player.ownedProjectileCounts[calamity.ProjectileType("PerforaMini")] < 1)
-             {
-                 Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, calamity.ProjectileType("PerforaMini"), 0, 0f, player.whoAmI);
-             }*/
         }
 
         public override void AddRecipes()
@@ -107,15 +102,15 @@ Effects of Counter Scarf and Fungal Symbiote");
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddRecipeGroup("FargowiltasSouls:AnyStatigelHelmet");
-            recipe.AddIngredient(calamity.ItemType("StatigelArmor"));
-            recipe.AddIngredient(calamity.ItemType("StatigelGreaves"));
-            recipe.AddIngredient(calamity.ItemType("CounterScarf"));
-            recipe.AddIngredient(calamity.ItemType("ManaOverloader"));
-            recipe.AddIngredient(calamity.ItemType("FungalSymbiote"));
-            recipe.AddIngredient(calamity.ItemType("Carnage"));
-            recipe.AddIngredient(calamity.ItemType("Waraxe"));
-            recipe.AddIngredient(calamity.ItemType("ClothiersWrath"));
-            recipe.AddIngredient(calamity.ItemType("BloodyVein"));
+            recipe.AddIngredient(ModContent.ItemType<StatigelArmor>());
+            recipe.AddIngredient(ModContent.ItemType<StatigelGreaves>());
+            recipe.AddIngredient(ModContent.ItemType<CounterScarf>());
+            recipe.AddIngredient(ModContent.ItemType<ManaOverloader>());
+            recipe.AddIngredient(ModContent.ItemType<FungalSymbiote>());
+            recipe.AddIngredient(ModContent.ItemType<Carnage>());
+            recipe.AddIngredient(ModContent.ItemType<ClothiersWrath>());
+            recipe.AddIngredient(ModContent.ItemType<CinderBlossomStaff>());
+            recipe.AddRecipeGroup("FargowiltasSouls:AnyEvilEffigy");
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

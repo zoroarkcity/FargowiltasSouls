@@ -945,7 +945,7 @@ namespace FargowiltasSouls.Projectiles
             switch (ModProjID)
             {
                 case 101:
-                    KillPet(projectile, player, ModContent.BuffType<Kendra>(), modPlayer.AerospecEnchant, SoulConfig.Instance.calamityToggles.KendraPet);
+                    KillPet(projectile, player, ModContent.BuffType<Kendra>(), modPlayer.DaedalusEnchant, SoulConfig.Instance.calamityToggles.KendraPet);
                     break;
 
                 case 102:
@@ -961,15 +961,15 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case 105:
-                    KillPet(projectile, player, ModContent.BuffType<BrimlingBuff>(), modPlayer.AtaxiaEnchant, SoulConfig.Instance.calamityToggles.BrimlingPet);
+                    KillPet(projectile, player, ModContent.BuffType<BrimlingBuff>(), modPlayer.BrimflameEnchant, SoulConfig.Instance.calamityToggles.BrimlingPet);
                     break;
 
                 case 106:
-                    KillPet(projectile, player, ModContent.BuffType<DannyDevito>(), modPlayer.MolluskEnchant, SoulConfig.Instance.calamityToggles.DannyPet);
+                    KillPet(projectile, player, ModContent.BuffType<DannyDevito>(), modPlayer.SulphurEnchant, SoulConfig.Instance.calamityToggles.DannyPet);
                     break;
 
                 case 107:
-                    KillPet(projectile, player, ModContent.BuffType<SirenLightPetBuff>(), modPlayer.OmegaBlueEnchant, SoulConfig.Instance.calamityToggles.SirenPet);
+                    KillPet(projectile, player, ModContent.BuffType<SirenLightPetBuff>(), modPlayer.FathomEnchant, SoulConfig.Instance.calamityToggles.SirenPet);
                     break;
 
                 case 108:
@@ -988,6 +988,35 @@ namespace FargowiltasSouls.Projectiles
                 case 112:
                     KillPet(projectile, player, ModContent.BuffType<LeviBuff>(), modPlayer.DemonShadeEnchant, SoulConfig.Instance.calamityToggles.LeviPet);
                     break;
+
+                case 113:
+                    KillPet(projectile, player, ModContent.BuffType<RotomBuff>(), modPlayer.AerospecEnchant, SoulConfig.Instance.calamityToggles.RotomPet);
+                    break;
+
+                case 114:
+                    KillPet(projectile, player, ModContent.BuffType<AstrophageBuff>(), modPlayer.AstralEnchant, SoulConfig.Instance.calamityToggles.AstrophagePet);
+                    break;
+
+                case 115:
+                    KillPet(projectile, player, ModContent.BuffType<SparksBuff>(), modPlayer.ReaverEnchant, SoulConfig.Instance.calamityToggles.SparksPet);
+                    break;
+
+                case 116:
+                    KillPet(projectile, player, ModContent.BuffType<RadiatorBuff>(), modPlayer.SulphurEnchant, SoulConfig.Instance.calamityToggles.RadiatorPet);
+                    break;
+
+                case 117:
+                    KillPet(projectile, player, ModContent.BuffType<BabyGhostBellBuff>(), modPlayer.MolluskEnchant, SoulConfig.Instance.calamityToggles.GhostBellPet);
+                    break;
+
+                case 118:
+                    KillPet(projectile, player, ModContent.BuffType<FlakPetBuff>(), modPlayer.FathomEnchant, SoulConfig.Instance.calamityToggles.FlakPet);
+                    break;
+
+                case 119:
+                    KillPet(projectile, player, ModContent.BuffType<SCalPetBuff>(), modPlayer.DemonShadeEnchant, SoulConfig.Instance.calamityToggles.ScalPet);
+                    break;
+
             }
         }
 

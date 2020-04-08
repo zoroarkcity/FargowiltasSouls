@@ -5,6 +5,11 @@ using Microsoft.Xna.Framework;
 using CalamityMod.CalPlayer;
 using Terraria.Localization;
 using System.Collections.Generic;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.Items.Weapons.Summon;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -27,15 +32,20 @@ Short-ranged tentacles heal you by sucking enemy life
 Press Y to activate abyssal madness for 5 seconds
 Abyssal madness increases damage, critical strike chance, and tentacle aggression/range
 This effect has a 30 second cooldown
-Effects of the Abyssal Diving Suit, Lumenous Amulet, and Aquatic Emblem
-Summons a Siren pet");
-            DisplayName.AddTranslation(GameCulture.Chinese, "蓝色欧米茄魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
-@"'深渊的黑暗淹没了你...'
-增加100点护甲穿透
-触手会吸取敌人的生命治愈你
-按'Y'键开启5秒'深渊狂乱'状态
-此状态下增加攻击, 暴击率, 触手攻击性和射程");
+Two shellfishes aid you in combat
+When using any weapon you have a 10% chance to throw a returning seashell projectile
+Summons a sea urchin to protect you
+10% increased minion damage while submerged in liquid
+Provides a moderate amount of light and moderately reduces breath loss in the abyss
+Attacking and being attacked by enemies inflicts poison
+Grants a sulphurous bubble jump that applies venom on hit
+Effects of the Abyssal Diving Suit, Mutated Truffle, and Old Duke's Scales
+Effects of Giant Pearl and Amidias' Pendant
+Effects of Aquatic Emblem and Enchanted Pearl
+Effects of Ocean's Crest, Deep Diver, The Transformer, and Luxor's Gift
+Effects of Corrosive Spine and Lumenous Amulet
+Effects of Sand Cloak and Alluring Bait
+Summons several pets");
         }
 
         public override void SetDefaults()
@@ -100,21 +110,17 @@ Summons a Siren pet");
                 calamity.GetItem("AbyssalDivingSuit").UpdateAccessory(player, hideVisual);
             }
 
-            //lumenous amulet
-            calamity.GetItem("LumenousAmulet").UpdateAccessory(player, hideVisual);
-
             //reaper tooth necklace
             if (SoulConfig.Instance.calamityToggles.ReaperToothNecklace)
             {
                 calamity.GetItem("ReaperToothNecklace").UpdateAccessory(player, hideVisual);
             }
 
-            //aquatic emblem
-            calamity.GetItem("AquaticEmblem").UpdateAccessory(player, hideVisual);
+            calamity.GetItem("MutatedTruffle").UpdateAccessory(player, hideVisual);
+            calamity.GetItem("DukeScales").UpdateAccessory(player, hideVisual);
 
-            FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
-            fargoPlayer.OmegaBlueEnchant = true;
-            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.SirenPet, hideVisual, calamity.BuffType("StrangeOrb"), calamity.ProjectileType("SirenYoung"));
+            mod.GetItem("MolluskEnchant").UpdateAccessory(player, hideVisual);
+            mod.GetItem("FathomSwarmerEnchant").UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
@@ -123,21 +129,21 @@ Summons a Siren pet");
 
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(calamity.ItemType("OmegaBlueHelmet"));
-            recipe.AddIngredient(calamity.ItemType("OmegaBlueChestplate"));
-            recipe.AddIngredient(calamity.ItemType("OmegaBlueLeggings"));
-            recipe.AddIngredient(calamity.ItemType("AbyssalDivingSuit"));
-            recipe.AddIngredient(calamity.ItemType("LumenousAmulet"));
-            recipe.AddIngredient(calamity.ItemType("ReaperToothNecklace"));
-            recipe.AddIngredient(calamity.ItemType("AquaticEmblem"));
-            recipe.AddIngredient(calamity.ItemType("HalibutCannon"));
-            recipe.AddIngredient(calamity.ItemType("CalamarisLament"));
-            recipe.AddIngredient(calamity.ItemType("TheReaper"));
-            recipe.AddIngredient(calamity.ItemType("EidolicWail"));
-            recipe.AddIngredient(calamity.ItemType("SDFMG"));
-            recipe.AddIngredient(calamity.ItemType("NeptunesBounty"));
-            recipe.AddIngredient(calamity.ItemType("StrangeOrb"));
-
+            recipe.AddIngredient(ModContent.ItemType<OmegaBlueHelmet>());
+            recipe.AddIngredient(ModContent.ItemType<OmegaBlueChestplate>());
+            recipe.AddIngredient(ModContent.ItemType<OmegaBlueLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<MolluskEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<FathomSwarmerEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<AbyssalDivingSuit>());
+            recipe.AddIngredient(ModContent.ItemType<ReaperToothNecklace>());
+            recipe.AddIngredient(ModContent.ItemType<MutatedTruffle>());
+            recipe.AddIngredient(ModContent.ItemType<DukeScales>());
+            recipe.AddIngredient(ModContent.ItemType<HalibutCannon>());
+            recipe.AddIngredient(ModContent.ItemType<CalamarisLament>());
+            recipe.AddIngredient(ModContent.ItemType<TheReaper>());
+            recipe.AddIngredient(ModContent.ItemType<SulphuricAcidCannon>());
+            recipe.AddIngredient(ModContent.ItemType<SDFMG>());
+            
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);
             recipe.AddRecipe();

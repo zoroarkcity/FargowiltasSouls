@@ -1,13 +1,12 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.CalPlayer;
 using Terraria.Localization;
 using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Forces.Calamity
 {
-    public class ApocalypseForce : ModItem
+    public class AnnihilationForce : ModItem
     {
         private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
 
@@ -18,15 +17,15 @@ namespace FargowiltasSouls.Items.Accessories.Forces.Calamity
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Force of the Apocalypse");
+            DisplayName.SetDefault("Force of Annihilation");
             Tooltip.SetDefault(
 @"'Where once there was life and light, only ruin remains...'
-All armor bonuses from Aerospec, Statigel, Daedalus, and Bloodflare
-Effects of the Spirit Glyph, Raider's Talisman, and Trinket of Chi
+All armor bonuses from Aerospec, Statigel, and Hydrothermic
+All armor bonuses from Xeroc and Fearmonger
 Effects of Gladiator's Locket and Unstable Prism
 Effects of Counter Scarf and Fungal Symbiote
-Effects of Permafrost's Concoction and Regenator
-Effects of the Core of the Blood God and Affliction
+Effects of Hallowed Rune, Ethereal Extorter, and The Community
+Effects of The Evolution, Spectral Veil, and Statis' Void Sash
 Summons several pets");
             DisplayName.AddTranslation(GameCulture.Chinese, "天启之力");
             Tooltip.AddTranslation(GameCulture.Chinese,
@@ -54,24 +53,12 @@ Summons several pets");
         {
             if (!Fargowiltas.Instance.CalamityLoaded) return;
 
-            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            CalamityPlayer calamityPlayer = player.GetModPlayer<CalamityPlayer>();
-
-            if (!modPlayer.TerrariaSoul)
-            {
-                //WULFRUM
-                mod.GetItem("WulfrumEnchant").UpdateAccessory(player, hideVisual);
-            }
-            //AEROSPEC
             mod.GetItem("AerospecEnchant").UpdateAccessory(player, hideVisual);
-            //STATIGEL
             mod.GetItem("StatigelEnchant").UpdateAccessory(player, hideVisual);
-            //DAEDALUS
-            mod.GetItem("DaedalusEnchant").UpdateAccessory(player, hideVisual);
-            //BLOOD FLARE
-            mod.GetItem("BloodflareEnchant").UpdateAccessory(player, hideVisual);
+            mod.GetItem("AtaxiaEnchant").UpdateAccessory(player, hideVisual);
+            mod.GetItem("XerocEnchant").UpdateAccessory(player, hideVisual);
+            mod.GetItem("FearmongerEnchant").UpdateAccessory(player, hideVisual);
         }
-
 
         public override void AddRecipes()
         {
@@ -79,12 +66,11 @@ Summons several pets");
 
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(null, "WulfrumEnchant");
             recipe.AddIngredient(null, "AerospecEnchant");
             recipe.AddIngredient(null, "StatigelEnchant");
-            recipe.AddIngredient(null, "DaedalusEnchant");
-            //recipe.AddIngredient(null, "UmbraphileEnchant");
-            recipe.AddIngredient(null, "BloodflareEnchant");
+            recipe.AddIngredient(null, "AtaxiaEnchant");
+            recipe.AddIngredient(null, "XerocEnchant");
+            recipe.AddIngredient(null, "FearmongerEnchant");
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);

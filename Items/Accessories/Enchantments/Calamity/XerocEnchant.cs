@@ -4,6 +4,14 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Typeless.FiniteUse;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.Items.Fishing;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -21,12 +29,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
             DisplayName.SetDefault("Xeroc Enchantment");
             Tooltip.SetDefault(
 @"'The power of an ancient god at your command…'
-All attacks have a chance to inflict On Fire! and Cursed Inferno
-Melee attacks create Xeroc Blast explosions
-Ranged attacks spawn Xeroc Fire sparks
-Magic attacks spawn Xeroc Orbs
-Minion attacks spawn Xeroc Bubbles
-Rogue attacks spawn Xeroc Stars
+Rogue projectiles have special effects on enemy hits
+Imbued with cosmic wrath and rage when you are damaged
 Effects of The Community");
             DisplayName.AddTranslation(GameCulture.Chinese, "克希洛克魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -80,20 +84,20 @@ Effects of The Community");
 
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(calamity.ItemType("XerocMask"));
-            recipe.AddIngredient(calamity.ItemType("XerocPlateMail"));
-            recipe.AddIngredient(calamity.ItemType("XerocCuisses"));
-            recipe.AddIngredient(calamity.ItemType("TheCommunity"));
-            recipe.AddIngredient(calamity.ItemType("BrinyBaron"));
-            recipe.AddIngredient(calamity.ItemType("StormRuler"));
-            recipe.AddIngredient(calamity.ItemType("ThornBlossom"));
-            recipe.AddIngredient(calamity.ItemType("Interfacer"));
-            recipe.AddIngredient(calamity.ItemType("ElephantKiller"));
-            recipe.AddIngredient(calamity.ItemType("UltraLiquidator"));
-            recipe.AddIngredient(calamity.ItemType("Shredder"));
-            recipe.AddIngredient(calamity.ItemType("Infinity"));
-            recipe.AddIngredient(calamity.ItemType("GrandDad"));
-            recipe.AddIngredient(calamity.ItemType("ElementalBlaster"));
+            recipe.AddIngredient(ModContent.ItemType<XerocMask>());
+            recipe.AddIngredient(ModContent.ItemType<XerocPlateMail>());
+            recipe.AddIngredient(ModContent.ItemType<XerocCuisses>());
+            recipe.AddIngredient(ModContent.ItemType<TheCommunity>());
+            recipe.AddIngredient(ModContent.ItemType<Xerocodile>());
+            recipe.AddIngredient(ModContent.ItemType<BrinyBaron>());
+            recipe.AddIngredient(ModContent.ItemType<StormRuler>());
+            recipe.AddIngredient(ModContent.ItemType<ThornBlossom>());
+            recipe.AddIngredient(ModContent.ItemType<Interfacer>());
+            recipe.AddIngredient(ModContent.ItemType<ElephantKiller>());
+            recipe.AddIngredient(ModContent.ItemType<UtensilPoker>());
+            recipe.AddIngredient(ModContent.ItemType<Infinity>());
+            recipe.AddIngredient(ModContent.ItemType<GrandDad>());
+            recipe.AddIngredient(ModContent.ItemType<ElementalBlaster>());
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

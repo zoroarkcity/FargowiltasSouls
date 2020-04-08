@@ -4,6 +4,13 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.Items.Pets;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -28,8 +35,9 @@ You have a 10% chance to absorb physical attacks and projectiles when hit
 If you absorb an attack you are healed for 1/2 of that attack's damage
 A daedalus crystal floats above you to protect you
 Rogue projectiles throw out crystal shards as they travel
-Effects of Permafrost's Concoction and Regenator
-Summons a Bear and Third Sage pet");
+You can glide to negate fall damage
+Effects of Scuttler's Jewel, Permafrost's Concoction, and Regenator
+Summons a Bear, Kendra, and Third Sage pet");
             DisplayName.AddTranslation(GameCulture.Chinese, "代达罗斯魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'冰霜魔法保护着你...'
@@ -101,10 +109,13 @@ Summons a Bear and Third Sage pet");
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.Regenerator))
                 calamity.GetItem("Regenator").UpdateAccessory(player, hideVisual);
 
+            mod.GetItem("SnowRuffianEnchant").UpdateAccessory(player, hideVisual);
+
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.DaedalusEnchant = true;
             fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.ThirdSagePet, hideVisual, calamity.BuffType("ThirdSageBuff"), calamity.ProjectileType("ThirdSage"));
             fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.BearPet, hideVisual, calamity.BuffType("BearBuff"), calamity.ProjectileType("Bear"));
+            fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.KendraPet, hideVisual, calamity.BuffType("Kendra"), calamity.ProjectileType("KendraPet"));
         }
 
         public override void AddRecipes()
@@ -114,19 +125,19 @@ Summons a Bear and Third Sage pet");
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddRecipeGroup("FargowiltasSouls:AnyDaedalusHelmet");
-            recipe.AddIngredient(calamity.ItemType("DaedalusBreastplate"));
-            recipe.AddIngredient(calamity.ItemType("DaedalusLeggings"));
-            recipe.AddIngredient(calamity.ItemType("PermafrostsConcoction"));
-            recipe.AddIngredient(calamity.ItemType("Regenator"));
-            recipe.AddIngredient(calamity.ItemType("Cryophobia"));
-            recipe.AddIngredient(calamity.ItemType("Roxcalibur"));
-            recipe.AddIngredient(calamity.ItemType("CrystalBlade"));
-            recipe.AddIngredient(calamity.ItemType("KelvinCatalyst"));
-            recipe.AddIngredient(calamity.ItemType("SlagMagnum"));
-            recipe.AddIngredient(calamity.ItemType("Arbalest"));
-            recipe.AddIngredient(calamity.ItemType("SHPC"));
-            recipe.AddIngredient(calamity.ItemType("IbarakiBox"));
-            recipe.AddIngredient(calamity.ItemType("BearEye"));
+            recipe.AddIngredient(ModContent.ItemType<DaedalusBreastplate>());
+            recipe.AddIngredient(ModContent.ItemType<DaedalusLeggings>());
+            recipe.AddIngredient(ModContent.ItemType<SnowRuffianEnchant>());
+            recipe.AddIngredient(ModContent.ItemType<PermafrostsConcoction>());
+            recipe.AddIngredient(ModContent.ItemType<Regenator>());
+            recipe.AddIngredient(ModContent.ItemType<CrystalBlade>());
+            recipe.AddIngredient(ModContent.ItemType<KelvinCatalyst>());
+            recipe.AddIngredient(ModContent.ItemType<SlagMagnum>());
+            recipe.AddIngredient(ModContent.ItemType<Arbalest>());
+            recipe.AddIngredient(ModContent.ItemType<SHPC>());
+            recipe.AddIngredient(calamity.ItemType("ColdDivinity"));//e
+            recipe.AddIngredient(ModContent.ItemType<IbarakiBox>());
+            recipe.AddIngredient(ModContent.ItemType<PrimroseKeepsake>());
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

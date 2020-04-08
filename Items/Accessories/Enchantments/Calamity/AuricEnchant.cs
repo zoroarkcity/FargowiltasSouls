@@ -6,6 +6,13 @@ using System.Collections.Generic;
 using CalamityMod.CalPlayer;
 using System;
 using Terraria.Localization;
+using CalamityMod.Items.Armor;
+using CalamityMod.Items.Accessories;
+using CalamityMod.Items.Weapons.Melee;
+using CalamityMod.Items.Weapons.Ranged;
+using CalamityMod.Items.Weapons.Summon;
+using CalamityMod.Items.Weapons.Rogue;
+using CalamityMod.Items.Weapons.Magic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 {
@@ -248,19 +255,19 @@ Effects of Heart of the Elements and The Sponge");
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddRecipeGroup("FargowiltasSouls:AnyAuricHelmet");
-            recipe.AddIngredient(calamity.ItemType("AuricTeslaBodyArmor"));
-            recipe.AddIngredient(calamity.ItemType("AuricTeslaCuisses"));
-            recipe.AddIngredient(calamity.ItemType("HeartoftheElements"));
-            recipe.AddIngredient(calamity.ItemType("Sponge"));
-            recipe.AddIngredient(calamity.ItemType("DraedonsExoblade"));
-            recipe.AddIngredient(calamity.ItemType("ArkoftheCosmos"));
-            recipe.AddIngredient(calamity.ItemType("DragonPow"));
-            recipe.AddIngredient(calamity.ItemType("Oracle"));
-            recipe.AddIngredient(calamity.ItemType("Drataliornus"));
-            recipe.AddIngredient(calamity.ItemType("Photoviscerator"));
-            recipe.AddIngredient(calamity.ItemType("VividClarity"));
-            recipe.AddIngredient(calamity.ItemType("CosmicImmaterializer"));
-            recipe.AddIngredient(calamity.ItemType("Celestus"));
+            recipe.AddIngredient(ModContent.ItemType<AuricTeslaBodyArmor>());
+            recipe.AddIngredient(ModContent.ItemType<AuricTeslaCuisses>());
+            recipe.AddIngredient(ModContent.ItemType<HeartoftheElements>());
+            recipe.AddIngredient(ModContent.ItemType<Sponge>());
+            recipe.AddIngredient(ModContent.ItemType<DraedonsExoblade>());
+            recipe.AddIngredient(ModContent.ItemType<ArkoftheCosmos>());
+            recipe.AddIngredient(ModContent.ItemType<DragonPow>());
+            recipe.AddIngredient(ModContent.ItemType<Oracle>());
+            recipe.AddIngredient(ModContent.ItemType<Drataliornus>());
+            recipe.AddIngredient(ModContent.ItemType<VividClarity>());
+            recipe.AddIngredient(ModContent.ItemType<CosmicImmaterializer>());
+            recipe.AddIngredient(ModContent.ItemType<Celestus>());
+            recipe.AddIngredient(ModContent.ItemType<Supernova>());
 
             recipe.AddTile(calamity, "DraedonsForge");
             recipe.SetResult(this);

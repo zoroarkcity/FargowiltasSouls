@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Heart of the Mutants");
+            DisplayName.SetDefault("Heart of the Eternal");
             Tooltip.SetDefault(@"'Warm, beating, and no body needed'
 Grants immunity to Living Wasteland, Frozen, Oozed, Withered Weapon, and Withered Armor
 Grants immunity to Feral Bite, Mutant Nibble, Flipped, Unstable, Distorted, and Curse of the Moon
