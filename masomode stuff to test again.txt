@@ -37,8 +37,23 @@ added a small telegraph for devi mega ray
 buffed phantasm (nerf is now -33%, was -50%)
 changed how mutant/devi/abom dies so hopefully it doesnt say "x is no longer after you..."
 
-reworked flesh hand and destroyer gun (EX) to only work if you have spare slots
 wof moves disgustingly fast when despawning
 fixed(?) wof shooting instant deathrays when transitioning into phase 3
 changed abom's sword slightly
 updated some abom boss visuals
+
+retinazer:
+	regular lasers now accelerate
+	has	x1.25 health
+	cancels deathray immediately if you die during it
+king slime enrage completely changed, now only makes him attack faster, is cancelled when you return to his elevation
+moon lord:
+	does pillar attacks immediately when core is exposed
+	instead, socket rays only begin below 50% hp
+reworked flesh hand:
+	much slower use speed
+	homing depends on number of empty slots (max speed at 5 or more empty slots)
+	can target using minion right click
+reworked destroyer gun (EX):
+	homing, speed, and length depend on number of empty slots (all max at 5 or more empty slots)
+	can target using minion right click

@@ -842,12 +842,12 @@ namespace FargowiltasSouls
             recipe.SetResult(ModContent.ItemType<RuneOrb>());
             recipe.AddRecipe();
 
-            /*recipe = new ModRecipe(this);
+            recipe = new ModRecipe(this);
             recipe.AddRecipeGroup("FargowiltasSouls:AnyBonesBanner", 2);
             recipe.AddIngredient(ModContent.ItemType<Items.Misc.DeviatingEnergy>(), 5);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(ModContent.ItemType<InnocuousSkull>());
-            recipe.AddRecipe();*/
+            recipe.AddRecipe();
         }
 
         public override void AddRecipeGroups()

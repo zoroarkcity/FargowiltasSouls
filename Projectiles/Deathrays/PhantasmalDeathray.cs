@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Enums;
+using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.Deathrays
 {
@@ -34,6 +35,9 @@ namespace FargowiltasSouls.Projectiles.Deathrays
                 //projectile.position = fireFrom + value22 - new Vector2(projectile.width, projectile.height) / 2f;
                 Vector2 offset = new Vector2(Main.npc[(int)projectile.ai[1]].width - 24, 0).RotatedBy(Main.npc[(int)projectile.ai[1]].rotation + 1.57079633);
                 projectile.Center = Main.npc[(int)projectile.ai[1]].Center + offset;
+
+                if (Main.npc[(int)projectile.ai[1]].GetGlobalNPC<EModeGlobalNPC>().Counter >= 3 && projectile.localAI[0] < maxTime - 30)
+                    projectile.localAI[0] = maxTime - 30;
             }
             else
             {

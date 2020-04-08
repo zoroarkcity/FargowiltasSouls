@@ -27,8 +27,6 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.tileCollide = false;
             projectile.alpha = 0;
             projectile.netImportant = true;
-
-            projectile.minionSlots = 1f;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -61,11 +59,11 @@ namespace FargowiltasSouls.Projectiles.Minions
 
         public override void AI()
         {
-            if (projectile.minionPos >= Main.player[projectile.owner].maxMinions)
-            {
-                projectile.Kill();
-                return;
-            }
+            float modifier = Main.player[projectile.owner].maxMinions - Main.player[projectile.owner].slotsMinions;
+            if (modifier < 0)
+                modifier = 0;
+            if (modifier > 5)
+                modifier = 5;
 
             if (projectile.localAI[0] == 0)
             {
@@ -73,7 +71,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 if (projectile.owner == Main.myPlayer)
                 {
                     int current = projectile.whoAmI;
-                    for (int i = 0; i < 18; i++)
+                    for (int i = 0; i <= modifier * 3; i++)
                         current = Projectile.NewProjectile(projectile.Center, projectile.velocity, mod.ProjectileType("DestroyerBody2"), projectile.damage, projectile.knockBack, projectile.owner, current);
                     int previous = current;
                     current = Projectile.NewProjectile(projectile.Center, projectile.velocity, mod.ProjectileType("DestroyerTail2"), projectile.damage, projectile.knockBack, projectile.owner, current);
@@ -88,8 +86,8 @@ namespace FargowiltasSouls.Projectiles.Minions
 
             const int aislotHomingCooldown = 0;
             const int homingDelay = 30;
-            const float desiredFlySpeedInPixelsPerFrame = 60;
-            const float amountOfFramesToLerpBy = 30; // minimum of 1, please keep in full numbers even though it's a float!
+            float desiredFlySpeedInPixelsPerFrame = 40 + modifier * 4;
+            float amountOfFramesToLerpBy = 30 + 30 - modifier * 6; // minimum of 1, please keep in full numbers even though it's a float!
 
             projectile.ai[aislotHomingCooldown]++;
             if (projectile.ai[aislotHomingCooldown] > homingDelay)
@@ -108,6 +106,10 @@ namespace FargowiltasSouls.Projectiles.Minions
 
         private int HomeOnTarget()
         {
+            NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
+            if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile))
+                return minionAttackTargetNpc.whoAmI;
+
             const bool homingCanAimAtWetEnemies = true;
             const float homingMaximumRangeInPixels = 1000;
 
