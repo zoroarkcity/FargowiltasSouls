@@ -84,7 +84,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         public override void AI()
         {
-            FargoSoulsGlobalNPC.abomBoss = npc.whoAmI;
+            EModeGlobalNPC.abomBoss = npc.whoAmI;
 
             if (npc.localAI[3] == 0)
             {

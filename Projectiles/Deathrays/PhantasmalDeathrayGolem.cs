@@ -28,7 +28,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             }
             int ai1 = (int)projectile.ai[1];
             if (Main.npc[ai1].active && Main.npc[ai1].type == NPCID.GolemHeadFree
-                && Main.npc[ai1].GetGlobalNPC<NPCs.FargoSoulsGlobalNPC>().masoBool[0])
+                && Main.npc[ai1].GetGlobalNPC<NPCs.EModeGlobalNPC>().masoBool[0])
             {
                 projectile.Center = Main.npc[(int)projectile.ai[1]].Center;
             }

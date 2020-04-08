@@ -39,7 +39,7 @@ namespace FargowiltasSouls.NPCs
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            if (FargoSoulsWorld.downedFishronEX || !FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.fishBossEX, NPCID.DukeFishron))
+            if (FargoSoulsWorld.downedFishronEX || !EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.fishBossEX, NPCID.DukeFishron))
             {
                 npc.lifeMax = (int)(npc.lifeMax * (1 + FargoSoulsWorld.FishronCount * .025));
                 npc.damage = (int)(npc.damage * (1 + FargoSoulsWorld.FishronCount * .0125));

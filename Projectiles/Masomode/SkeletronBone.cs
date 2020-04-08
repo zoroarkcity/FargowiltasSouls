@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.guardBoss, NPCID.DungeonGuardian))
+            if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.guardBoss, NPCID.DungeonGuardian))
             {
                 target.AddBuff(mod.BuffType("GodEater"), 420);
                 target.AddBuff(mod.BuffType("FlamesoftheUniverse"), 420);

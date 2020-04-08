@@ -799,7 +799,7 @@ namespace FargowiltasSouls
 
         public override void UpdateDead()
         {
-            if (SandsofTime && !FargoSoulsGlobalNPC.AnyBossAlive() && player.respawnTimer > 10)
+            if (SandsofTime && !EModeGlobalNPC.AnyBossAlive() && player.respawnTimer > 10)
                 player.respawnTimer -= Eternity ? 6 : 1;
 
             wingTimeModifier = 1f;
@@ -4721,7 +4721,7 @@ namespace FargowiltasSouls
 
             if (FreezeTime && freezeLength != 0)
             {
-                if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>()))
+                if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>()))
                     player.AddBuff(ModContent.BuffType<TimeFrozen>(), freezeLength);
 
                 for (int i = 0; i < 200; i++)
@@ -5131,10 +5131,10 @@ namespace FargowiltasSouls
                             spawned = true;
                             if (Main.netMode == 0) //singleplayer
                             {
-                                FargoSoulsGlobalNPC.spawnFishronEX = true;
+                                EModeGlobalNPC.spawnFishronEX = true;
                                 NPC.NewNPC((int)Main.projectile[i].Center.X, (int)Main.projectile[i].Center.Y + 100,
                                     NPCID.DukeFishron, 0, 0f, 0f, 0f, 0f, player.whoAmI);
-                                FargoSoulsGlobalNPC.spawnFishronEX = false;
+                                EModeGlobalNPC.spawnFishronEX = false;
                                 Main.NewText("Duke Fishron EX has awoken!", 50, 100, 255);
                             }
                             else if (Main.netMode == 1) //MP, broadcast(?) packet from spawning player's client

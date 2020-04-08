@@ -37,19 +37,19 @@ namespace FargowiltasSouls.NPCs
 
         public override void AI()
         {
-            if (!npc.GetGlobalNPC<FargoSoulsGlobalNPC>().masoBool[0])
+            if (!npc.GetGlobalNPC<EModeGlobalNPC>().masoBool[0])
             {
-                npc.GetGlobalNPC<FargoSoulsGlobalNPC>().masoBool[0] = true;
+                npc.GetGlobalNPC<EModeGlobalNPC>().masoBool[0] = true;
                 Main.npcTexture[npc.type] = Main.npcTexture[NPCID.BrainofCthulhu];
             }
 
-            if (FargoSoulsGlobalNPC.brainBoss < 0f || FargoSoulsGlobalNPC.brainBoss >= 200f)
+            if (EModeGlobalNPC.brainBoss < 0f || EModeGlobalNPC.brainBoss >= 200f)
             {
                 npc.StrikeNPCNoInteraction(9999, 0f, 0);
                 npc.active = false;
                 return;
             }
-            NPC brain = Main.npc[FargoSoulsGlobalNPC.brainBoss];
+            NPC brain = Main.npc[EModeGlobalNPC.brainBoss];
             if (!brain.active || brain.type != NPCID.BrainofCthulhu)
             {
                 npc.StrikeNPCNoInteraction(9999, 0f, 0);
@@ -168,9 +168,9 @@ namespace FargowiltasSouls.NPCs
 
         public override void FindFrame(int frameHeight)
         {
-            if (FargoSoulsGlobalNPC.brainBoss > -1 && FargoSoulsGlobalNPC.brainBoss < 200)
+            if (EModeGlobalNPC.brainBoss > -1 && EModeGlobalNPC.brainBoss < 200)
             {
-                NPC brain = Main.npc[FargoSoulsGlobalNPC.brainBoss];
+                NPC brain = Main.npc[EModeGlobalNPC.brainBoss];
                 if (brain.active && brain.type == NPCID.BrainofCthulhu)
                     npc.frame.Y = brain.frame.Y;
             }
@@ -207,9 +207,9 @@ namespace FargowiltasSouls.NPCs
 
         public override bool CheckDead()
         {
-            if (FargoSoulsGlobalNPC.brainBoss > -1 && FargoSoulsGlobalNPC.brainBoss < 200)
+            if (EModeGlobalNPC.brainBoss > -1 && EModeGlobalNPC.brainBoss < 200)
             {
-                NPC brain = Main.npc[FargoSoulsGlobalNPC.brainBoss];
+                NPC brain = Main.npc[EModeGlobalNPC.brainBoss];
                 if (brain.active && brain.type == NPCID.BrainofCthulhu)
                 {
                     npc.active = true;

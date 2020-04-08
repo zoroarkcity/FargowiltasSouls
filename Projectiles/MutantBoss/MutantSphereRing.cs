@@ -79,7 +79,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            if (NPCs.FargoSoulsGlobalNPC.BossIsAlive(ref NPCs.FargoSoulsGlobalNPC.mutantBoss, mod.NPCType("MutantBoss")))
+            if (NPCs.EModeGlobalNPC.BossIsAlive(ref NPCs.EModeGlobalNPC.mutantBoss, mod.NPCType("MutantBoss")))
             {
                 target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
                 target.AddBuff(mod.BuffType("OceanicMaul"), 5400);
