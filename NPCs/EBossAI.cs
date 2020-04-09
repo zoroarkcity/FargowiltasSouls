@@ -1507,7 +1507,7 @@ namespace FargowiltasSouls.NPCs
         public bool DestroyerAI(NPC npc)
         {
             destroyBoss = npc.whoAmI;
-
+            
             if (!masoBool[0])
             {
                 if (npc.life < (int)(npc.lifeMax * .75))
@@ -1533,7 +1533,7 @@ namespace FargowiltasSouls.NPCs
                         if (++npc.localAI[2] > 40) //shoot star spreads into the circle
                         {
                             npc.localAI[2] = 0;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != 1 && !NPC.AnyNPCs(NPCID.Probe) && !Main.player[npc.target].HasBuff(ModContent.BuffType<LightningRod>()))
                             {
                                 Vector2 distance = Main.player[npc.target].Center - npc.Center;
                                 double angleModifier = MathHelper.ToRadians(5) * distance.Length() / 1800.0;
@@ -1649,6 +1649,10 @@ namespace FargowiltasSouls.NPCs
                                 Counter = 0;
                                 masoBool[2] = true;
                                 NetUpdateMaso(npc.whoAmI);
+                            }
+                            else if (Counter == 900 - 120) //telegraph with roar
+                            {
+                                Main.PlaySound(15, (int)Main.player[npc.target].position.X, (int)Main.player[npc.target].position.Y, 0);
                             }
                         }
                         float num17 = target.X;
@@ -1964,7 +1968,7 @@ namespace FargowiltasSouls.NPCs
 
                 if (npc.ai[1] == 1f && npc.ai[2] > 2f) //spinning
                 {
-                    timeToShoot = 60;
+                    timeToShoot = 120;
                     if (npc.HasValidTarget)
                         npc.position += npc.DirectionTo(Main.player[npc.target].Center) * 5;
                 }

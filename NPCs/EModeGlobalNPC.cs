@@ -87,7 +87,7 @@ namespace FargowiltasSouls.NPCs
             switch (npc.type)
             {
                 case NPCID.Retinazer:
-                    npc.lifeMax = (int)(npc.lifeMax * 1.25);
+                    npc.lifeMax = (int)(npc.lifeMax * 1.2);
                     break;
 
                 case NPCID.GoblinWarrior:
@@ -1061,6 +1061,14 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.Spazmatism:
                         SpazmatismAI(npc);
+                        break;
+
+                    case NPCID.Probe:
+                        if (BossIsAlive(ref destroyBoss, NPCID.TheDestroyer))
+                        {
+                            if (npc.localAI[0] > 30)
+                                npc.localAI[0] = -30;
+                        }
                         break;
 
                     case NPCID.TheDestroyer:

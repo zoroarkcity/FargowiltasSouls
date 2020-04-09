@@ -21,7 +21,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             base.SetDefaults();
             projectile.minion = false;
-            projectile.minionSlots = 1;
             projectile.magic = true;
         }
     }

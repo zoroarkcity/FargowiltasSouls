@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.aiStyle = 1; 
             projectile.friendly = true;
             projectile.minion = true; 
-            projectile.penetrate = 4; 
+            projectile.penetrate = 4;
             projectile.timeLeft = 300;
             aiType = ProjectileID.Bullet;
         }
@@ -69,7 +69,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         private int HomeOnTarget()
         {
             NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
-            if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile))
+            if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile)
+                && Collision.CanHitLine(projectile.Center, 0, 0, minionAttackTargetNpc.Center, 0, 0))
                 return minionAttackTargetNpc.whoAmI;
 
             const bool homingCanAimAtWetEnemies = true;
@@ -79,7 +80,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC n = Main.npc[i];
-                if (n.CanBeChasedBy(projectile) && (!n.wet || homingCanAimAtWetEnemies))
+                if (n.CanBeChasedBy(projectile) && (!n.wet || homingCanAimAtWetEnemies) && Collision.CanHit(projectile.Center, 0, 0, n.Center, 0, 0))
                 {
                     float distance = projectile.Distance(n.Center);
                     if (distance <= homingMaximumRangeInPixels &&
@@ -92,6 +93,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
 
             return selectedTarget;
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (projectile.velocity.X != oldVelocity.X)
+                projectile.velocity.X = -oldVelocity.X;
+            if (projectile.velocity.Y != oldVelocity.Y)
+                projectile.velocity.Y = -oldVelocity.Y;
+            
+            return --projectile.penetrate <= 0;
         }
 
         public override void Kill(int timeleft)
