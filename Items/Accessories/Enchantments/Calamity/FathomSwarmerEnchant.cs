@@ -95,7 +95,7 @@ Summons several pets");
             recipe.AddIngredient(ModContent.ItemType<BelchingSaxophone>());
             recipe.AddIngredient(ModContent.ItemType<SulphurousGrabber>());
             recipe.AddIngredient(ModContent.ItemType<FlakKraken>());
-            recipe.AddIngredient(ModContent.ItemType<Atlantis>(), 5);
+            recipe.AddIngredient(ModContent.ItemType<Atlantis>());
             recipe.AddIngredient(ModContent.ItemType<BrackishFlask>());
             recipe.AddIngredient(ModContent.ItemType<StrangeOrb>());
             recipe.AddIngredient(ModContent.ItemType<GeyserShell>());
