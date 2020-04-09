@@ -704,6 +704,28 @@ namespace FargowiltasSouls.Projectiles
 
                 #endregion
 
+                case ProjectileID.DeathLaser:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.retiBoss, NPCID.Retinazer))
+                        {
+                            if (!masobool)
+                            {
+                                masobool = true;
+                                projectile.velocity.Normalize();
+                            }
+                            
+                            if (projectile.timeLeft % (projectile.extraUpdates + 1) == 0) //only run once per tick
+                            {
+                                if (++projectile.localAI[1] < 90)
+                                {
+                                    projectile.velocity *= 1.06f;
+                                }
+                            }
+                        }
+                    }
+                    break;
+
                 case ProjectileID.JavelinHostile:
                 case ProjectileID.FlamingWood:
                     if (FargoSoulsWorld.MasochistMode)

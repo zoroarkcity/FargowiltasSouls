@@ -97,6 +97,10 @@ namespace FargowiltasSouls.NPCs
 
                 switch (npc.type)
                 {
+                    case NPCID.Retinazer:
+                        npc.lifeMax = (int)(npc.lifeMax * 1.25);
+                        break;
+
                     case NPCID.GoblinWarrior:
                         npc.knockBackResist = 0;
                         break;
@@ -1653,188 +1657,214 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Retinazer:
-                        retiBoss = npc.whoAmI;
-                        bool spazAlive = BossIsAlive(ref spazBoss, NPCID.Spazmatism);
-                        bool targetAlive = npc.HasPlayerTarget && Main.player[npc.target].active;
-
-                        if (!masoBool[0]) //start phase 2
                         {
-                            masoBool[0] = true;
-                            npc.ai[0] = 1f;
-                            npc.ai[1] = 0.0f;
-                            npc.ai[2] = 0.0f;
-                            npc.ai[3] = 0.0f;
-                            npc.netUpdate = true;
-                        }
+                            retiBoss = npc.whoAmI;
+                            bool spazAlive = BossIsAlive(ref spazBoss, NPCID.Spazmatism);
 
-                        if (npc.ai[0] < 4f) //going to phase 3
-                        {
-                            if (npc.life <= npc.lifeMax / 2)
+                            if (!masoBool[0]) //start phase 2
                             {
-                                //npc.ai[0] = 4f;
-                                npc.ai[0] = 604f; //initiate spin immediately
+                                masoBool[0] = true;
+                                npc.ai[0] = 1f;
+                                npc.ai[1] = 0.0f;
+                                npc.ai[2] = 0.0f;
+                                npc.ai[3] = 0.0f;
                                 npc.netUpdate = true;
-                                Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
-                            }
-                        }
-                        else
-                        {
-                            Player p = Main.player[Main.myPlayer];
-                            const float auraDistance = 2000;
-                            float range = npc.Distance(p.Center);
-                            if (range > auraDistance && range < 10000)
-                                p.AddBuff(BuffID.Burning, 2);
-
-                            Vector2 dustPos = Vector2.Normalize(p.Center - npc.Center) * auraDistance;
-                            for (int i = 0; i < 20; i++) //dust
-                            {
-                                int d = Dust.NewDust(npc.Center + dustPos.RotatedBy(Math.PI / 3 * (-0.5 + Main.rand.NextDouble())), 0, 0, DustID.Fire);
-                                Main.dust[d].velocity = npc.velocity;
-                                Main.dust[d].noGravity = true;
-                                Main.dust[d].noLight = true;
-                                Main.dust[d].scale++;
                             }
 
-                            if (masoBool[3] && --Counter2 < 0) //when brought to 1hp, begin shooting dark stars
+                            if (npc.ai[0] < 4f) //going to phase 3
                             {
-                                Counter2 = 240;
-                                if (Main.netMode != 1 && npc.HasPlayerTarget)
+                                if (npc.life <= npc.lifeMax / 2)
                                 {
-                                    Vector2 distance = Main.player[npc.target].Center - npc.Center;
-                                    distance.Normalize();
-                                    distance *= 10f;
-                                    for (int i = 0; i < 12; i++)
-                                        Projectile.NewProjectile(npc.Center, distance.RotatedBy(2 * Math.PI / 12 * i),
-                                            ModContent.ProjectileType<DarkStar>(), npc.damage / 5, 0f, Main.myPlayer);
+                                    //npc.ai[0] = 4f;
+                                    npc.ai[0] = 604f; //initiate spin immediately
+                                    npc.netUpdate = true;
+                                    Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
                                 }
                             }
-
-                            //dust code
-                            if (Main.rand.Next(4) < 3)
+                            else
                             {
-                                int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 90, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 3.5f);
-                                Main.dust[dust].noGravity = true;
-                                Main.dust[dust].velocity *= 1.8f;
-                                Main.dust[dust].velocity.Y -= 0.5f;
-                                if (Main.rand.Next(4) == 0)
+                                Player p = Main.player[Main.myPlayer];
+                                const float auraDistance = 2000;
+                                float range = npc.Distance(p.Center);
+                                if (range > auraDistance && range < 10000)
+                                    p.AddBuff(BuffID.Burning, 2);
+
+                                Vector2 dustPos = Vector2.Normalize(p.Center - npc.Center) * auraDistance;
+                                for (int i = 0; i < 20; i++) //dust
                                 {
-                                    Main.dust[dust].noGravity = false;
-                                    Main.dust[dust].scale *= 0.5f;
+                                    int d = Dust.NewDust(npc.Center + dustPos.RotatedBy(Math.PI / 3 * (-0.5 + Main.rand.NextDouble())), 0, 0, DustID.Fire);
+                                    Main.dust[d].velocity = npc.velocity;
+                                    Main.dust[d].noGravity = true;
+                                    Main.dust[d].noLight = true;
+                                    Main.dust[d].scale++;
                                 }
-                            }
-                            SharkCount = 253;
 
-                            //become vulnerable again when both twins at 1hp
-                            if (npc.dontTakeDamage && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
-                                npc.dontTakeDamage = false;
-
-                            //2*pi * (# of full circles) / (seconds to finish rotation) / (ticks per sec)
-                            const float rotationInterval = 2f * (float)Math.PI * 1f / 4f / 60f;
-
-                            npc.ai[0]++; //base value is 4
-                            switch (Counter) //laser code idfk
-                            {
-                                case 0:
-                                    if (!targetAlive)
-                                        npc.ai[0]--; //stop counting up if player is dead
-                                    if (npc.ai[0] > 604f)
+                                if (masoBool[3] && --Counter2 < 0) //when brought to 1hp, begin shooting dark stars
+                                {
+                                    Counter2 = 240;
+                                    if (Main.netMode != 1 && npc.HasPlayerTarget)
                                     {
-                                        npc.ai[0] = 4f;
-                                        if (npc.HasPlayerTarget)
+                                        Vector2 distance = Main.player[npc.target].Center - npc.Center;
+                                        distance.Normalize();
+                                        distance *= 10f;
+                                        for (int i = 0; i < 12; i++)
+                                            Projectile.NewProjectile(npc.Center, distance.RotatedBy(2 * Math.PI / 12 * i),
+                                                ModContent.ProjectileType<DarkStar>(), npc.damage / 5, 0f, Main.myPlayer);
+                                    }
+                                }
+
+                                //dust code
+                                if (Main.rand.Next(4) < 3)
+                                {
+                                    int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 90, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 3.5f);
+                                    Main.dust[dust].noGravity = true;
+                                    Main.dust[dust].velocity *= 1.8f;
+                                    Main.dust[dust].velocity.Y -= 0.5f;
+                                    if (Main.rand.Next(4) == 0)
+                                    {
+                                        Main.dust[dust].noGravity = false;
+                                        Main.dust[dust].scale *= 0.5f;
+                                    }
+                                }
+                                SharkCount = 253;
+
+                                //become vulnerable again when both twins at 1hp
+                                if (npc.dontTakeDamage && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
+                                    npc.dontTakeDamage = false;
+
+                                //2*pi * (# of full circles) / (seconds to finish rotation) / (ticks per sec)
+                                const float rotationInterval = 2f * (float)Math.PI * 1f / 4f / 60f;
+
+                                npc.ai[0]++; //base value is 4
+                                switch (Counter) //laser code idfk
+                                {
+                                    case 0:
+                                        if (!npc.HasValidTarget)
+                                        {
+                                            npc.ai[0]--; //stop counting up if player is dead
+                                            if (!spazAlive) //despawn REALLY fast
+                                                npc.velocity.Y -= 0.5f;
+                                        }
+                                        if (npc.ai[0] > 604f)
+                                        {
+                                            npc.ai[0] = 4f;
+                                            if (npc.HasPlayerTarget)
+                                            {
+                                                Counter++;
+                                                npc.ai[3] = -npc.rotation;
+                                                if (--npc.ai[2] > 295f)
+                                                    npc.ai[2] = 295f;
+                                                masoBool[2] = (Main.player[npc.target].Center.X - npc.Center.X < 0);
+
+                                                for (int i = 0; i < 72; i++) //warning dust ring
+                                                {
+                                                    Vector2 vector6 = Vector2.UnitY * 60f;
+                                                    vector6 = vector6.RotatedBy((i - (72 / 2 - 1)) * 6.28318548f / 72) + npc.Center;
+                                                    Vector2 vector7 = vector6 - npc.Center;
+                                                    int d = Dust.NewDust(vector6 + vector7, 0, 0, 90, 0f, 0f, 0, default(Color), 3f);
+                                                    Main.dust[d].noGravity = true;
+                                                    Main.dust[d].velocity = vector7;
+                                                }
+
+                                                Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f); //eoc roar
+                                            }
+                                            npc.netUpdate = true;
+                                            if (Main.netMode == 2) //synchronize counter with clients
+                                            {
+                                                var netMessage = mod.GetPacket();
+                                                netMessage.Write((byte)5);
+                                                netMessage.Write((byte)npc.whoAmI);
+                                                netMessage.Write(masoBool[2]);
+                                                netMessage.Write(Counter);
+                                                netMessage.Send();
+                                            }
+                                        }
+                                        break;
+
+                                    case 1: //slowing down, beginning rotation
+                                        npc.velocity *= 1f - (npc.ai[0] - 4f) / 120f;
+                                        npc.localAI[1] = 0f;
+                                        //if (--npc.ai[2] > 295f) npc.ai[2] = 295f;
+                                        npc.ai[3] -= (npc.ai[0] - 4f) / 120f * rotationInterval * (masoBool[2] ? 1f : -1f);
+                                        npc.rotation = -npc.ai[3];
+
+                                        if (npc.ai[0] >= 124f) //FIRE LASER
+                                        {
+                                            if (Main.netMode != 1)
+                                            {
+                                                Vector2 speed = Vector2.UnitX.RotatedBy(npc.rotation);
+                                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<PhantasmalDeathray>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                            }
+                                            Counter++;
+                                            npc.ai[0] = 4f;
+                                            npc.netUpdate = true;
+                                            if (Main.netMode == 2) //synchronize counter with clients
+                                            {
+                                                var netMessage = mod.GetPacket();
+                                                netMessage.Write((byte)5);
+                                                netMessage.Write((byte)npc.whoAmI);
+                                                netMessage.Write(masoBool[2]);
+                                                netMessage.Write(Counter);
+                                                netMessage.Send();
+                                            }
+                                        }
+                                        return false;
+
+                                    case 2: //spinning full speed
+                                        npc.velocity = Vector2.Zero;
+                                        npc.localAI[1] = 0f;
+                                        //if (--npc.ai[2] > 295f) npc.ai[2] = 295f;
+                                        npc.ai[3] -= rotationInterval * (masoBool[2] ? 1f : -1f);
+                                        npc.rotation = -npc.ai[3];
+
+                                        if (npc.ai[0] >= 244f)
                                         {
                                             Counter++;
-                                            npc.ai[3] = -npc.rotation;
-                                            if (--npc.ai[2] > 295f)
-                                                npc.ai[2] = 295f;
-                                            masoBool[2] = (Main.player[npc.target].Center.X - npc.Center.X < 0);
-
-                                            for (int i = 0; i < 72; i++) //warning dust ring
+                                            npc.ai[0] = 4f;
+                                            npc.netUpdate = true;
+                                            if (Main.netMode == 2) //synchronize counter with clients
                                             {
-                                                Vector2 vector6 = Vector2.UnitY * 60f;
-                                                vector6 = vector6.RotatedBy((i - (72 / 2 - 1)) * 6.28318548f / 72) + npc.Center;
-                                                Vector2 vector7 = vector6 - npc.Center;
-                                                int d = Dust.NewDust(vector6 + vector7, 0, 0, 90, 0f, 0f, 0, default(Color), 3f);
-                                                Main.dust[d].noGravity = true;
-                                                Main.dust[d].velocity = vector7;
+                                                var netMessage = mod.GetPacket();
+                                                netMessage.Write((byte)5);
+                                                netMessage.Write((byte)npc.whoAmI);
+                                                netMessage.Write(masoBool[2]);
+                                                netMessage.Write(Counter);
+                                                netMessage.Send();
                                             }
-
-                                            Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f); //eoc roar
                                         }
-                                        npc.netUpdate = true;
-                                        if (Main.netMode == 2) //synchronize counter with clients
+                                        else if (!npc.HasValidTarget) //end spin immediately if player dead
                                         {
-                                            var netMessage = mod.GetPacket();
-                                            netMessage.Write((byte)5);
-                                            netMessage.Write((byte)npc.whoAmI);
-                                            netMessage.Write(masoBool[2]);
-                                            netMessage.Write(Counter);
-                                            netMessage.Send();
+                                            npc.TargetClosest(false);
+                                            if (!npc.HasValidTarget)
+                                                npc.ai[0] = 244f;
                                         }
-                                    }
-                                    break;
+                                        return false;
 
-                                case 1: //slowing down, beginning rotation
-                                    npc.velocity *= 1f - (npc.ai[0] - 4f) / 120f;
-                                    npc.localAI[1] = 0f;
-                                    //if (--npc.ai[2] > 295f) npc.ai[2] = 295f;
-                                    npc.ai[3] -= (npc.ai[0] - 4f) / 120f * rotationInterval * (masoBool[2] ? 1f : -1f);
-                                    npc.rotation = -npc.ai[3];
+                                    case 3: //laser done, slowing down spin, moving again
+                                        npc.velocity *= (npc.ai[0] - 4f) / 60f;
+                                        npc.localAI[1] = 0f;
+                                        //if (--npc.ai[2] > 295f) npc.ai[2] = 295f;
+                                        npc.ai[3] -= (1f - (npc.ai[0] - 4f) / 60f) * rotationInterval * (masoBool[2] ? 1f : -1f);
+                                        npc.rotation = -npc.ai[3];
 
-                                    if (npc.ai[0] >= 124f) //FIRE LASER
-                                    {
-                                        if (Main.netMode != 1)
+                                        if (npc.ai[0] >= 64f)
                                         {
-                                            Vector2 speed = Vector2.UnitX.RotatedBy(npc.rotation);
-                                            Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<PhantasmalDeathray>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                            Counter = 0;
+                                            npc.ai[0] = 4f;
+                                            npc.netUpdate = true;
+                                            if (Main.netMode == 2) //synchronize counter with clients
+                                            {
+                                                var netMessage = mod.GetPacket();
+                                                netMessage.Write((byte)5);
+                                                netMessage.Write((byte)npc.whoAmI);
+                                                netMessage.Write(masoBool[2]);
+                                                netMessage.Write(Counter);
+                                                netMessage.Send();
+                                            }
                                         }
-                                        Counter++;
-                                        npc.ai[0] = 4f;
-                                        npc.netUpdate = true;
-                                        if (Main.netMode == 2) //synchronize counter with clients
-                                        {
-                                            var netMessage = mod.GetPacket();
-                                            netMessage.Write((byte)5);
-                                            netMessage.Write((byte)npc.whoAmI);
-                                            netMessage.Write(masoBool[2]);
-                                            netMessage.Write(Counter);
-                                            netMessage.Send();
-                                        }
-                                    }
-                                    return false;
+                                        return false;
 
-                                case 2: //spinning full speed
-                                    npc.velocity = Vector2.Zero;
-                                    npc.localAI[1] = 0f;
-                                    //if (--npc.ai[2] > 295f) npc.ai[2] = 295f;
-                                    npc.ai[3] -= rotationInterval * (masoBool[2] ? 1f : -1f);
-                                    npc.rotation = -npc.ai[3];
-
-                                    if (npc.ai[0] >= 244f)
-                                    {
-                                        Counter++;
-                                        npc.ai[0] = 4f;
-                                        npc.netUpdate = true;
-                                        if (Main.netMode == 2) //synchronize counter with clients
-                                        {
-                                            var netMessage = mod.GetPacket();
-                                            netMessage.Write((byte)5);
-                                            netMessage.Write((byte)npc.whoAmI);
-                                            netMessage.Write(masoBool[2]);
-                                            netMessage.Write(Counter);
-                                            netMessage.Send();
-                                        }
-                                    }
-                                    return false;
-
-                                case 3: //laser done, slowing down spin, moving again
-                                    npc.velocity *= (npc.ai[0] - 4f) / 60f;
-                                    npc.localAI[1] = 0f;
-                                    //if (--npc.ai[2] > 295f) npc.ai[2] = 295f;
-                                    npc.ai[3] -= (1f - (npc.ai[0] - 4f) / 60f) * rotationInterval * (masoBool[2] ? 1f : -1f);
-                                    npc.rotation = -npc.ai[3];
-
-                                    if (npc.ai[0] >= 64f)
-                                    {
+                                    default:
                                         Counter = 0;
                                         npc.ai[0] = 4f;
                                         npc.netUpdate = true;
@@ -1847,217 +1877,204 @@ namespace FargowiltasSouls.NPCs
                                             netMessage.Write(Counter);
                                             netMessage.Send();
                                         }
-                                    }
-                                    return false;
+                                        break;
+                                }
 
-                                default:
-                                    Counter = 0;
-                                    npc.ai[0] = 4f;
-                                    npc.netUpdate = true;
-                                    if (Main.netMode == 2) //synchronize counter with clients
-                                    {
-                                        var netMessage = mod.GetPacket();
-                                        netMessage.Write((byte)5);
-                                        netMessage.Write((byte)npc.whoAmI);
-                                        netMessage.Write(masoBool[2]);
-                                        netMessage.Write(Counter);
-                                        netMessage.Send();
-                                    }
-                                    break;
+                                //npc.position += npc.velocity / 4f;
+
+                                //if (Counter == 600 && Main.netMode != 1 && npc.HasPlayerTarget)
+                                //{
+                                //    Vector2 vector200 = Main.player[npc.target].Center - npc.Center;
+                                //    vector200.Normalize();
+                                //    float num1225 = -1f;
+                                //    if (vector200.X < 0f)
+                                //    {
+                                //        num1225 = 1f;
+                                //    }
+                                //    vector200 = vector200.RotatedBy(-num1225 * 1.04719755f, default(Vector2));
+                                //    Projectile.NewProjectile(npc.Center, vector200, ModContent.ProjectileType<PhantasmalDeathray>(), npc.damage / 2, 0f, Main.myPlayer, num1225 * 0.0104719755f, npc.whoAmI);
+                                //    npc.netUpdate = true;
+                                //}
                             }
 
-                            //npc.position += npc.velocity / 4f;
+                            //become vulnerable again when both twins at 1hp
+                            if (npc.dontTakeDamage && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
+                                npc.dontTakeDamage = false;
 
-                            //if (Counter == 600 && Main.netMode != 1 && npc.HasPlayerTarget)
-                            //{
-                            //    Vector2 vector200 = Main.player[npc.target].Center - npc.Center;
-                            //    vector200.Normalize();
-                            //    float num1225 = -1f;
-                            //    if (vector200.X < 0f)
-                            //    {
-                            //        num1225 = 1f;
-                            //    }
-                            //    vector200 = vector200.RotatedBy(-num1225 * 1.04719755f, default(Vector2));
-                            //    Projectile.NewProjectile(npc.Center, vector200, ModContent.ProjectileType<PhantasmalDeathray>(), npc.damage / 2, 0f, Main.myPlayer, num1225 * 0.0104719755f, npc.whoAmI);
-                            //    npc.netUpdate = true;
-                            //}
-                        }
-
-                        //become vulnerable again when both twins at 1hp
-                        if (npc.dontTakeDamage && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
-                            npc.dontTakeDamage = false;
-
-                        /*if (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) && targetAlive)
-                        {
-                            Timer--;
-
-                            if (Timer <= 0)
+                            /*if (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) && targetAlive)
                             {
-                                Timer = 600;
-                                if (Main.netMode != 1)
+                                Timer--;
+
+                                if (Timer <= 0)
                                 {
-                                    int spawn = NPC.NewNPC((int)npc.position.X + Main.rand.Next(-1000, 1000), (int)npc.position.Y + Main.rand.Next(-400, -100), NPCID.Spazmatism);
-                                    if (spawn != 200)
+                                    Timer = 600;
+                                    if (Main.netMode != 1)
                                     {
-                                        Main.npc[spawn].life = Main.npc[spawn].lifeMax / 4;
-                                        if (Main.netMode == 2)
+                                        int spawn = NPC.NewNPC((int)npc.position.X + Main.rand.Next(-1000, 1000), (int)npc.position.Y + Main.rand.Next(-400, -100), NPCID.Spazmatism);
+                                        if (spawn != 200)
                                         {
-                                            NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Spazmatism has been revived!"), new Color(175, 75, 255));
-                                            NetMessage.SendData(23, -1, -1, null, spawn);
-                                        }
-                                        else
-                                        {
-                                            Main.NewText("Spazmatism has been revived!", 175, 75, 255);
+                                            Main.npc[spawn].life = Main.npc[spawn].lifeMax / 4;
+                                            if (Main.netMode == 2)
+                                            {
+                                                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Spazmatism has been revived!"), new Color(175, 75, 255));
+                                                NetMessage.SendData(23, -1, -1, null, spawn);
+                                            }
+                                            else
+                                            {
+                                                Main.NewText("Spazmatism has been revived!", 175, 75, 255);
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        }*/
+                            }*/
+                        }
                         break;
 
                     case NPCID.Spazmatism:
-                        spazBoss = npc.whoAmI;
-                        bool retiAlive = BossIsAlive(ref retiBoss, NPCID.Retinazer);
-
-                        if (!masoBool[0]) //spawn in phase 2
                         {
-                            masoBool[0] = true;
-                            npc.ai[0] = 1f;
-                            npc.ai[1] = 0.0f;
-                            npc.ai[2] = 0.0f;
-                            npc.ai[3] = 0.0f;
-                            npc.netUpdate = true;
-                        }
+                            spazBoss = npc.whoAmI;
+                            bool retiAlive = BossIsAlive(ref retiBoss, NPCID.Retinazer);
 
-                        if (npc.ai[0] < 4f)
-                        {
-                            if (npc.life <= npc.lifeMax / 2) //going to phase 3
+                            if (!masoBool[0]) //spawn in phase 2
                             {
-                                npc.ai[0] = 4f;
+                                masoBool[0] = true;
+                                npc.ai[0] = 1f;
+                                npc.ai[1] = 0.0f;
+                                npc.ai[2] = 0.0f;
+                                npc.ai[3] = 0.0f;
                                 npc.netUpdate = true;
-                                Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
-
-                                int index = npc.FindBuffIndex(BuffID.CursedInferno);
-                                if (index != -1)
-                                    npc.DelBuff(index); //remove cursed inferno debuff if i have it
-
-                                npc.buffImmune[BuffID.CursedInferno] = true;
-                                npc.buffImmune[BuffID.OnFire] = true;
-                                npc.buffImmune[BuffID.ShadowFlame] = true;
-                                npc.buffImmune[BuffID.Frostburn] = true;
                             }
-                        }
-                        else
-                        {
-                            npc.position += npc.velocity / 4f;
 
-                            if (npc.ai[1] == 0f) //not dashing
+                            if (npc.ai[0] < 4f)
                             {
-                                if (retiAlive && (Main.npc[retiBoss].ai[0] < 4f || Main.npc[retiBoss].GetGlobalNPC<EModeGlobalNPC>().Counter == 0)) //reti is in normal AI
+                                if (npc.life <= npc.lifeMax / 2) //going to phase 3
                                 {
-                                    npc.ai[1] = 1; //switch to dashing
-                                    npc.ai[2] = 0;
-                                    npc.ai[3] = 0;
+                                    npc.ai[0] = 4f;
                                     npc.netUpdate = true;
-                                }
+                                    Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
 
-                                if (++Counter > 40)
+                                    int index = npc.FindBuffIndex(BuffID.CursedInferno);
+                                    if (index != -1)
+                                        npc.DelBuff(index); //remove cursed inferno debuff if i have it
+
+                                    npc.buffImmune[BuffID.CursedInferno] = true;
+                                    npc.buffImmune[BuffID.OnFire] = true;
+                                    npc.buffImmune[BuffID.ShadowFlame] = true;
+                                    npc.buffImmune[BuffID.Frostburn] = true;
+                                }
+                            }
+                            else
+                            {
+                                npc.position += npc.velocity / 4f;
+
+                                if (npc.ai[1] == 0f) //not dashing
                                 {
-                                    Counter = 0;
-                                    if (Main.netMode != 1 && npc.HasPlayerTarget) //vanilla spaz p1 shoot fireball code
+                                    if (retiAlive && (Main.npc[retiBoss].ai[0] < 4f || Main.npc[retiBoss].GetGlobalNPC<EModeGlobalNPC>().Counter == 0)) //reti is in normal AI
                                     {
-                                        Vector2 Speed = Main.player[npc.target].Center - npc.Center;
-                                        Speed.Normalize();
-                                        int Damage;
-                                        if (Main.expertMode)
-                                        {
-                                            Speed *= 14f;
-                                            Damage = 22;
-                                        }
-                                        else
-                                        {
-                                            Speed *= 12f;
-                                            Damage = 25;
-                                        }
-                                        Damage = (int)(Damage * (1 + FargoSoulsWorld.TwinsCount * .0125));
-                                        Projectile.NewProjectile(npc.Center + Speed * 4f, Speed, ProjectileID.CursedFlameHostile, Damage, 0f, Main.myPlayer);
+                                        npc.ai[1] = 1; //switch to dashing
+                                        npc.ai[2] = 0;
+                                        npc.ai[3] = 0;
+                                        npc.netUpdate = true;
                                     }
-                                }
-                            }
-                            else //dashing
-                            {
-                                if (retiAlive && Main.npc[retiBoss].ai[0] >= 4f && Main.npc[retiBoss].GetGlobalNPC<EModeGlobalNPC>().Counter != 0) //reti is doing the spin
-                                {
-                                    npc.ai[1] = 0; //switch to not dashing
-                                    npc.netUpdate = true;
-                                }
-                                if (npc.HasValidTarget && ++Counter > 3) //cursed flamethrower when dashing
-                                {
-                                    Counter = 0;
-                                    Projectile.NewProjectile(npc.Center, npc.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-6f, 6f))) * 0.5f, ProjectileID.EyeFire, npc.damage / 4, 0f, Main.myPlayer);
-                                }
-                            }
 
-                            if (masoBool[3] && --Counter2 < 0) //when brought to 1hp, begin shooting dark stars
-                            {
-                                Counter2 = 120;
-                                if (Main.netMode != 1 && npc.HasPlayerTarget)
-                                {
-                                    Vector2 distance = Main.player[npc.target].Center - npc.Center;
-                                    distance.Normalize();
-                                    distance *= 14f;
-                                    for (int i = 0; i < 8; i++)
-                                        Projectile.NewProjectile(npc.Center, distance.RotatedBy(2 * Math.PI / 8 * i),
-                                            ModContent.ProjectileType<DarkStar>(), npc.damage / 5, 0f, Main.myPlayer);
-                                }
-                            }
-
-                            //dust code
-                            if (Main.rand.Next(4) < 3)
-                            {
-                                int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 89, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 3.5f);
-                                Main.dust[dust].noGravity = true;
-                                Main.dust[dust].velocity *= 1.8f;
-                                Main.dust[dust].velocity.Y -= 0.5f;
-                                if (Main.rand.Next(4) == 0)
-                                {
-                                    Main.dust[dust].noGravity = false;
-                                    Main.dust[dust].scale *= 0.5f;
-                                }
-                            }
-                            SharkCount = 254;
-                        }
-
-                        //become vulnerable again when both twins at 1hp
-                        if (npc.dontTakeDamage && (!BossIsAlive(ref retiBoss, NPCID.Retinazer) || Main.npc[retiBoss].life == 1))
-                            npc.dontTakeDamage = false;
-
-                        /*if (!retiAlive && npc.HasPlayerTarget && Main.player[npc.target].active)
-                        {
-                            Timer--;
-
-                            if (Timer <= 0)
-                            {
-                                Timer = 600;
-                                if (Main.netMode != 1)
-                                {
-                                    int spawn = NPC.NewNPC((int)npc.position.X + Main.rand.Next(-1000, 1000), (int)npc.position.Y + Main.rand.Next(-400, -100), NPCID.Retinazer);
-                                    if (spawn != 200)
+                                    if (++Counter > 40)
                                     {
-                                        Main.npc[spawn].life = Main.npc[spawn].lifeMax / 4;
-                                        if (Main.netMode == 2)
+                                        Counter = 0;
+                                        if (Main.netMode != 1 && npc.HasPlayerTarget) //vanilla spaz p1 shoot fireball code
                                         {
-                                            NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Retinazer has been revived!"), new Color(175, 75, 255));
-                                            NetMessage.SendData(23, -1, -1, null, spawn);
-                                        }
-                                        else
-                                        {
-                                            Main.NewText("Retinazer has been revived!", 175, 75, 255);
+                                            Vector2 Speed = Main.player[npc.target].Center - npc.Center;
+                                            Speed.Normalize();
+                                            int Damage;
+                                            if (Main.expertMode)
+                                            {
+                                                Speed *= 14f;
+                                                Damage = 22;
+                                            }
+                                            else
+                                            {
+                                                Speed *= 12f;
+                                                Damage = 25;
+                                            }
+                                            Damage = (int)(Damage * (1 + FargoSoulsWorld.TwinsCount * .0125));
+                                            Projectile.NewProjectile(npc.Center + Speed * 4f, Speed, ProjectileID.CursedFlameHostile, Damage, 0f, Main.myPlayer);
                                         }
                                     }
                                 }
+                                else //dashing
+                                {
+                                    if (retiAlive && Main.npc[retiBoss].ai[0] >= 4f && Main.npc[retiBoss].GetGlobalNPC<EModeGlobalNPC>().Counter != 0) //reti is doing the spin
+                                    {
+                                        npc.ai[1] = 0; //switch to not dashing
+                                        npc.netUpdate = true;
+                                    }
+                                    if (npc.HasValidTarget && ++Counter > 3) //cursed flamethrower when dashing
+                                    {
+                                        Counter = 0;
+                                        Projectile.NewProjectile(npc.Center, npc.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-6f, 6f))) * 0.5f, ProjectileID.EyeFire, npc.damage / 4, 0f, Main.myPlayer);
+                                    }
+                                }
+
+                                if (masoBool[3] && --Counter2 < 0) //when brought to 1hp, begin shooting dark stars
+                                {
+                                    Counter2 = 120;
+                                    if (Main.netMode != 1 && npc.HasPlayerTarget)
+                                    {
+                                        Vector2 distance = Main.player[npc.target].Center - npc.Center;
+                                        distance.Normalize();
+                                        distance *= 14f;
+                                        for (int i = 0; i < 8; i++)
+                                            Projectile.NewProjectile(npc.Center, distance.RotatedBy(2 * Math.PI / 8 * i),
+                                                ModContent.ProjectileType<DarkStar>(), npc.damage / 5, 0f, Main.myPlayer);
+                                    }
+                                }
+
+                                //dust code
+                                if (Main.rand.Next(4) < 3)
+                                {
+                                    int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 89, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 3.5f);
+                                    Main.dust[dust].noGravity = true;
+                                    Main.dust[dust].velocity *= 1.8f;
+                                    Main.dust[dust].velocity.Y -= 0.5f;
+                                    if (Main.rand.Next(4) == 0)
+                                    {
+                                        Main.dust[dust].noGravity = false;
+                                        Main.dust[dust].scale *= 0.5f;
+                                    }
+                                }
+                                SharkCount = 254;
                             }
-                        }*/
+
+                            //become vulnerable again when both twins at 1hp
+                            if (npc.dontTakeDamage && (!BossIsAlive(ref retiBoss, NPCID.Retinazer) || Main.npc[retiBoss].life == 1))
+                                npc.dontTakeDamage = false;
+
+                            /*if (!retiAlive && npc.HasPlayerTarget && Main.player[npc.target].active)
+                            {
+                                Timer--;
+
+                                if (Timer <= 0)
+                                {
+                                    Timer = 600;
+                                    if (Main.netMode != 1)
+                                    {
+                                        int spawn = NPC.NewNPC((int)npc.position.X + Main.rand.Next(-1000, 1000), (int)npc.position.Y + Main.rand.Next(-400, -100), NPCID.Retinazer);
+                                        if (spawn != 200)
+                                        {
+                                            Main.npc[spawn].life = Main.npc[spawn].lifeMax / 4;
+                                            if (Main.netMode == 2)
+                                            {
+                                                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Retinazer has been revived!"), new Color(175, 75, 255));
+                                                NetMessage.SendData(23, -1, -1, null, spawn);
+                                            }
+                                            else
+                                            {
+                                                Main.NewText("Retinazer has been revived!", 175, 75, 255);
+                                            }
+                                        }
+                                    }
+                                }
+                            }*/
+                        }
                         break;
 
                     case NPCID.LunarTowerNebula:
@@ -2457,7 +2474,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.KingSlime:
                         slimeBoss = npc.whoAmI;
-                        npc.color = Main.DiscoColor * 0.3f;
+                        npc.color = Main.DiscoColor * 0.2f;
                         if (masoBool[1])
                         {
                             if (npc.velocity.Y == 0f) //start attack
@@ -2479,7 +2496,7 @@ namespace FargowiltasSouls.NPCs
                             masoBool[1] = true;
                         }
 
-                        if (npc.life < npc.lifeMax * .5f && npc.HasPlayerTarget)
+                        if ((masoBool[0] || npc.life < npc.lifeMax * .5f) && npc.HasPlayerTarget)
                         {
                             Player p = Main.player[npc.target];
 
@@ -2497,7 +2514,7 @@ namespace FargowiltasSouls.NPCs
                                         spawn.Y -= Main.rand.Next(600, 901);
                                         Vector2 speed = p.Center - spawn;
                                         speed.Normalize();
-                                        speed *= 5f;
+                                        speed *= masoBool[0] ? 10f : 5f;
                                         speed = speed.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-5, 5)));
                                         Projectile.NewProjectile(spawn, speed, ModContent.ProjectileType<SlimeBallHostile>(), npc.damage / 5, 0f, Main.myPlayer);
                                     }
@@ -2508,20 +2525,22 @@ namespace FargowiltasSouls.NPCs
                             {
                                 Timer = 0;
                                 const float gravity = 0.15f;
-                                const float time = 120f;
+                                float time = masoBool[0] ? 60f : 120f;
                                 Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 30f;
                                 distance.X = distance.X / time;
                                 distance.Y = distance.Y / time - 0.5f * gravity * time;
                                 for (int i = 0; i < 10; i++)
                                 {
-                                    Projectile.NewProjectile(npc.Center, distance + Main.rand.NextVector2Square(-0.5f, 0.5f),
+                                    Projectile.NewProjectile(npc.Center, distance + Main.rand.NextVector2Square(-0.5f, 0.5f) * (masoBool[0] ? 3 : 1),
                                         ModContent.ProjectileType<SlimeSpike>(), npc.damage / 5, 0f, Main.myPlayer);
                                 }
                             }
                         }
 
-                        if (!masoBool[0])
+                        if (!masoBool[0]) //is not berserk
                         {
+                            SharkCount = 0;
+
                             if (npc.HasPlayerTarget)
                             {
                                 Player player = Main.player[npc.target];
@@ -2547,17 +2566,28 @@ namespace FargowiltasSouls.NPCs
                         }
                         else //is berserk
                         {
+                            SharkCount = 1;
+
                             if (!masoBool[2])
                             {
                                 masoBool[2] = true;
                                 Main.PlaySound(15, npc.Center, 0);
                             }
 
-                            SharkCount = 1;
-                            npc.damage = npc.defDamage * 5;
-                            npc.defense = npc.defDefense * 2;
+                            if (Counter < 60) //slime rain much faster
+                                Counter = 60;
 
-                            if (npc.HasPlayerTarget)
+                            if (Timer < 270) //aimed spikes much faster
+                                Timer = 270;
+
+                            if (npc.HasValidTarget && Main.player[npc.target].position.Y > npc.position.Y) //player went back down
+                            {
+                                masoBool[0] = false;
+                                masoBool[2] = false;
+                                NetUpdateMaso(npc.whoAmI);
+                            }
+                            
+                            /*if (npc.HasPlayerTarget)
                             {
                                 Player p = Main.player[npc.target];
 
@@ -2594,7 +2624,7 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     npc.noTileCollide = true;
                                 }
-                            }
+                            }*/
                         }
                         break;
 
@@ -3910,11 +3940,12 @@ namespace FargowiltasSouls.NPCs
 
                         if (!masoBool[0])
                         {
-                            masoBool[0] = npc.life < (int)(npc.lifeMax / 3.0 * 2.0); //remembers even if core goes above 66% hp
+                            masoBool[0] = npc.life < npc.lifeMax / 2; //remembers even if core goes above 50% hp
                             if (masoBool[0]) //roar
                                 Main.PlaySound(15, Main.player[Main.myPlayer].Center, 0);
                         }
-                        else //phase 3, went below 66% life
+
+                        if (!npc.dontTakeDamage) //only when vulnerable
                         {
                             Timer++;
                             if (Timer >= 240)
@@ -3963,26 +3994,26 @@ namespace FargowiltasSouls.NPCs
                                             }
                                             break;
                                         case 1: //ranged
-                                            /*for (int i = 0; i < 12; i++) //spawn lightning
-                                            {
-                                                Point tileCoordinates = Main.player[npc.target].Top.ToTileCoordinates();
-
-                                                if (Main.rand.Next(2) == 0)
+                                                /*for (int i = 0; i < 12; i++) //spawn lightning
                                                 {
-                                                    tileCoordinates.X += Main.rand.Next(-40, 41);
-                                                    tileCoordinates.Y += Main.rand.Next(30, 41) * (Main.rand.Next(2) == 0 ? 1 : -1);
-                                                }
-                                                else
-                                                {
-                                                    tileCoordinates.X += Main.rand.Next(30, 41) * (Main.rand.Next(2) == 0 ? 1 : -1);
-                                                    tileCoordinates.Y += Main.rand.Next(-40, 41);
-                                                }
+                                                    Point tileCoordinates = Main.player[npc.target].Top.ToTileCoordinates();
 
-                                                for (int index = 0; index < 10 && !WorldGen.SolidTile(tileCoordinates.X, tileCoordinates.Y) && tileCoordinates.Y > 10; ++index)
-                                                    tileCoordinates.Y -= 1;
+                                                    if (Main.rand.Next(2) == 0)
+                                                    {
+                                                        tileCoordinates.X += Main.rand.Next(-40, 41);
+                                                        tileCoordinates.Y += Main.rand.Next(30, 41) * (Main.rand.Next(2) == 0 ? 1 : -1);
+                                                    }
+                                                    else
+                                                    {
+                                                        tileCoordinates.X += Main.rand.Next(30, 41) * (Main.rand.Next(2) == 0 ? 1 : -1);
+                                                        tileCoordinates.Y += Main.rand.Next(-40, 41);
+                                                    }
 
-                                                Projectile.NewProjectile(tileCoordinates.X * 16 + 8, tileCoordinates.Y * 16 + 17, 0f, 0f, 578, 0, 1f, Main.myPlayer);
-                                            }*/
+                                                    for (int index = 0; index < 10 && !WorldGen.SolidTile(tileCoordinates.X, tileCoordinates.Y) && tileCoordinates.Y > 10; ++index)
+                                                        tileCoordinates.Y -= 1;
+
+                                                    Projectile.NewProjectile(tileCoordinates.X * 16 + 8, tileCoordinates.Y * 16 + 17, 0f, 0f, 578, 0, 1f, Main.myPlayer);
+                                                }*/
                                             for (int i = 0; i < 3; i++) //shoot lightning bolt
                                             {
                                                 NPC bodyPart = Main.npc[(int)npc.localAI[i]];
@@ -4075,42 +4106,42 @@ namespace FargowiltasSouls.NPCs
                                             break;
                                     }
                                 }
-                            }
 
-                            /*if (--Counter2 < 0)
-                            {
-                                Counter2 = 600;
-                                Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
-                                if (Main.netMode != 1 && npc.HasPlayerTarget)
+                                /*if (--Counter2 < 0)
                                 {
-                                    for (int i = 0; i < 3; i++)
+                                    Counter2 = 600;
+                                    Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                                    if (Main.netMode != 1 && npc.HasPlayerTarget)
                                     {
-                                        NPC bodyPart = Main.npc[(int)npc.localAI[i]];
-                                        if (bodyPart.active)
+                                        for (int i = 0; i < 3; i++)
                                         {
-                                            bodyPart.localAI[0] = (Main.player[npc.target].Center - bodyPart.Center).ToRotation();
-                                            Vector2 speed = Vector2.UnitX.RotatedBy(bodyPart.localAI[0]);
-                                            Projectile.NewProjectile(bodyPart.Center, speed, ModContent.ProjectileType<PhantasmalDeathrayMLSmall>(), 0, 0f, Main.myPlayer, 0f, bodyPart.whoAmI);
+                                            NPC bodyPart = Main.npc[(int)npc.localAI[i]];
+                                            if (bodyPart.active)
+                                            {
+                                                bodyPart.localAI[0] = (Main.player[npc.target].Center - bodyPart.Center).ToRotation();
+                                                Vector2 speed = Vector2.UnitX.RotatedBy(bodyPart.localAI[0]);
+                                                Projectile.NewProjectile(bodyPart.Center, speed, ModContent.ProjectileType<PhantasmalDeathrayMLSmall>(), 0, 0f, Main.myPlayer, 0f, bodyPart.whoAmI);
+                                            }
                                         }
                                     }
                                 }
+                                else if (Counter2 == 540)
+                                {
+                                    if (Main.netMode != 1)
+                                    {
+                                        for (int i = 0; i < 3; i++)
+                                        {
+                                            NPC bodyPart = Main.npc[(int)npc.localAI[i]];
+                                            if (bodyPart.active)
+                                            {
+                                                Vector2 speed = Vector2.UnitX.RotatedBy(bodyPart.localAI[0]);
+                                                int damage = (int)(75 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
+                                                Projectile.NewProjectile(bodyPart.Center, speed, ModContent.ProjectileType<PhantasmalDeathrayML>(), damage, 0f, Main.myPlayer, 0f, bodyPart.whoAmI);
+                                            }
+                                        }
+                                    }
+                                }*/
                             }
-                            else if (Counter2 == 540)
-                            {
-                                if (Main.netMode != 1)
-                                {
-                                    for (int i = 0; i < 3; i++)
-                                    {
-                                        NPC bodyPart = Main.npc[(int)npc.localAI[i]];
-                                        if (bodyPart.active)
-                                        {
-                                            Vector2 speed = Vector2.UnitX.RotatedBy(bodyPart.localAI[0]);
-                                            int damage = (int)(75 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
-                                            Projectile.NewProjectile(bodyPart.Center, speed, ModContent.ProjectileType<PhantasmalDeathrayML>(), damage, 0f, Main.myPlayer, 0f, bodyPart.whoAmI);
-                                        }
-                                    }
-                                }
-                            }*/
                         }
 
                         if (npc.ai[0] == 2f) //moon lord is dead
@@ -6052,13 +6083,14 @@ namespace FargowiltasSouls.NPCs
                         if (npc.ai[0] == -2f) //eye socket is empty
                         {
                             if (npc.ai[1] == 0f //happens every 32 ticks
-                                && Main.npc[(int)npc.ai[3]].ai[0] != 2f) //will stop when ML dies
+                                && Main.npc[(int)npc.ai[3]].ai[0] != 2f //will stop when ML dies
+                                && Main.npc[(int)npc.ai[3]].GetGlobalNPC<EModeGlobalNPC>().masoBool[0]) //only during p3
                             {
                                 Timer++;
                                 if (Timer >= 29) //warning dust, reset timer
                                 {
                                     bool fireLaser = true;
-                                    for (int i = 0; i < Main.maxNPCs; i++) //find this ML's true eye (they're synced, so any is fine)
+                                    /*for (int i = 0; i < Main.maxNPCs; i++) //find this ML's true eye (they're synced, so any is fine)
                                         if (Main.npc[i].active && Main.npc[i].type == NPCID.MoonLordFreeEye && Main.npc[i].ai[3] == npc.ai[3])
                                         {
                                             if (Main.npc[i].ai[0] == 4 && Main.npc[i].ai[1] > 800) //if free eyes are firing deathray, delay own ray
@@ -6067,7 +6099,7 @@ namespace FargowiltasSouls.NPCs
                                                 Timer = 27;
                                             }
                                             break;
-                                        }
+                                        }*/
                                     if (fireLaser)
                                     {
                                         Timer = 0;

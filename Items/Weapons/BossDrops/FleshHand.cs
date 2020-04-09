@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Flesh Hand");
-            Tooltip.SetDefault("'The enslaved minions of a defeated foe..'");
+            Tooltip.SetDefault("'The enslaved minions of a defeated foe..'\nBecomes faster with empty minion slots");
             DisplayName.AddTranslation(GameCulture.Chinese, "血肉之手");
             Tooltip.AddTranslation(GameCulture.Chinese, "'战败敌人的仆从..'");
         }
@@ -22,8 +22,8 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.mana = 5;
             item.width = 24;
             item.height = 24;
-            item.useTime = 16;
-            item.useAnimation = 16;
+            item.useTime = 32;
+            item.useAnimation = 32;
             item.useStyle = 5;
             item.noMelee = true;
             item.knockBack = 1.5f;

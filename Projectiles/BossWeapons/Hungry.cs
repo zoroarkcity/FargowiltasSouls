@@ -23,18 +23,10 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.penetrate = 4; 
             projectile.timeLeft = 300;
             aiType = ProjectileID.Bullet;
-
-            projectile.minionSlots = 1f;
         }
 
         public override void AI()
         {
-            if (projectile.minionPos >= Main.player[projectile.owner].maxMinions)
-            {
-                projectile.Kill();
-                return;
-            }
-
             //dust!
             int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width, projectile.height + 5, 60, projectile.velocity.X * 0.2f,
                 projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
@@ -46,7 +38,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             const int aislotHomingCooldown = 0;
             const int homingDelay = 10;
             const float desiredFlySpeedInPixelsPerFrame = 60;
-            const float amountOfFramesToLerpBy = 20; // minimum of 1, please keep in full numbers even though it's a float!
+
+            float modifier = Main.player[projectile.owner].maxMinions - Main.player[projectile.owner].slotsMinions;
+            if (modifier < 0)
+                modifier = 0;
+            if (modifier > 5)
+                modifier = 5;
+            float amountOfFramesToLerpBy = 120 - 20 * modifier; // minimum of 1, please keep in full numbers even though it's a float!
 
             projectile.ai[aislotHomingCooldown]++;
             if (projectile.ai[aislotHomingCooldown] > homingDelay)
@@ -61,10 +59,19 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     projectile.velocity = Vector2.Lerp(projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
                 }
             }
+            /*else
+            {
+                Main.NewText(amountOfFramesToLerpBy.ToString());
+                //Main.NewText(Main.player[projectile.owner].numMinions.ToString() + " " + Main.player[projectile.owner].maxMinions.ToString() + " " + Main.player[projectile.owner].slotsMinions.ToString());
+            }*/
         }
 
         private int HomeOnTarget()
         {
+            NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
+            if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile))
+                return minionAttackTargetNpc.whoAmI;
+
             const bool homingCanAimAtWetEnemies = true;
             const float homingMaximumRangeInPixels = 1000;
 
