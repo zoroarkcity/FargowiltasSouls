@@ -70,3 +70,4 @@ destroyer:
 	won't shoot dark stars during coil if there are probes or you have lightning rod
 
 removed spaz's +25% speed bonus in p3
+twins won't become vulnerable at 1 hp if you are dead and the other twin despawns (should prevent cheese)

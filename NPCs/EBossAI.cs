@@ -1325,7 +1325,7 @@ namespace FargowiltasSouls.NPCs
             }
 
             //become vulnerable again when both twins at 1hp
-            if (npc.dontTakeDamage && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
+            if (npc.dontTakeDamage && npc.HasPlayerTarget && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
                 npc.dontTakeDamage = false;
 
             /*if (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) && targetAlive)
@@ -1471,7 +1471,7 @@ namespace FargowiltasSouls.NPCs
             }
 
             //become vulnerable again when both twins at 1hp
-            if (npc.dontTakeDamage && (!BossIsAlive(ref retiBoss, NPCID.Retinazer) || Main.npc[retiBoss].life == 1))
+            if (npc.dontTakeDamage && npc.HasPlayerTarget && (!BossIsAlive(ref retiBoss, NPCID.Retinazer) || Main.npc[retiBoss].life == 1))
                 npc.dontTakeDamage = false;
 
             /*if (!retiAlive && npc.HasPlayerTarget && Main.player[npc.target].active)
