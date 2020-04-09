@@ -68,3 +68,5 @@ destroyer:
 	coil lasers no longer combo with dark stars
 	roars to telegraph coil
 	won't shoot dark stars during coil if there are probes or you have lightning rod
+
+removed spaz's +25% speed bonus in p3

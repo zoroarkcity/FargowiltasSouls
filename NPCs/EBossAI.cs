@@ -1393,8 +1393,6 @@ namespace FargowiltasSouls.NPCs
             }
             else
             {
-                npc.position += npc.velocity / 4f;
-
                 if (npc.ai[1] == 0f) //not dashing
                 {
                     if (retiAlive && (Main.npc[retiBoss].ai[0] < 4f || Main.npc[retiBoss].GetGlobalNPC<EModeGlobalNPC>().Counter == 0)) //reti is in normal AI
