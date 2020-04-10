@@ -34,7 +34,6 @@ fixed(?) bug where mind break minion refuses to attack anything
 fixed piranha jump
 baby guardian spawn rate boosted to 10% until killed at least once
 added a small telegraph for devi mega ray
-buffed phantasm (nerf is now -33%, was -50%)
 changed how mutant/devi/abom dies so hopefully it doesnt say "x is no longer after you..."
 
 wof moves disgustingly fast when despawning
@@ -83,3 +82,8 @@ prime no longer shoots rockets during DG
 demons can horde in hm
 sands of time and biocluster can be used to tp to last death point
 fixed abom sword handle in mp
+
+phantasm is -50%
+last prism is -33%
+nerfed SDMG -25%
+nerfed xenopopper -25%

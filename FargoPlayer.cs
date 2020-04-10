@@ -5081,6 +5081,7 @@ namespace FargowiltasSouls
                 case ItemID.StarCannon:
                 case ItemID.Tsunami:
                 case ItemID.DD2BetsyBow:
+                case ItemID.Phantasm:
                     return 0.5f;
 
                 case ItemID.Uzi:
@@ -5090,11 +5091,10 @@ namespace FargowiltasSouls
                 case ItemID.SnowmanCannon:
                 case ItemID.BeesKnees:
                 case ItemID.PhoenixBlaster:
-                case ItemID.Phantasm:
+                case ItemID.LastPrism:
                     return 2f / 3f;
                     
                 case ItemID.OnyxBlaster:
-                case ItemID.LastPrism:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.ChainGun:
                 case ItemID.HellwingBow:
@@ -5102,6 +5102,8 @@ namespace FargowiltasSouls
                 case ItemID.Handgun:
                 case ItemID.DemonScythe:
                 case ItemID.SpikyBall:
+                case ItemID.SDMG:
+                case ItemID.Xenopopper:
                     return 0.75f;
 
                 case ItemID.SpaceGun:
