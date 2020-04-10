@@ -67,7 +67,8 @@ destroyer:
 	probes wont laser during coil
 	coil lasers no longer combo with dark stars
 	roars to telegraph coil
-	won't shoot dark stars during coil if there are probes or you have lightning rod
+	won't shoot dark stars during coil if you have lightning rod
+	reduced dark star velocity during coil
 
 nerfed spaz's p3 +25% speed bonus to +10%
 twins won't become vulnerable at 1 hp if you are dead and the other twin despawns (should prevent cheese)
@@ -77,3 +78,8 @@ minion weapons with right click targeting now:
 	destroyer gun ex
 	big brain buster
 	optic staff ex
+SLOWED prime DG during night by 10%
+prime no longer shoots rockets during DG
+demons can horde in hm
+sands of time and biocluster can be used to tp to last death point
+fixed abom sword handle in mp

@@ -5,7 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class BionomicCluster : ModItem
+    public class BionomicCluster : SandsofTime
     {
         public override void SetStaticDefaults()
         {
@@ -20,7 +20,8 @@ Automatically use mana potions when needed and gives modifier protection
 Attacks have a chance to squeak and deal 1 damage to you
 You erupt into Shadowflame tentacles when injured
 Certain enemies will drop potions when defeated
-Summons a friendly rainbow slime");
+Summons a friendly rainbow slime
+Use to teleport to your last death point");
             DisplayName.AddTranslation(GameCulture.Chinese, "生态集群");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'由上千普通敌人融合而成'
 免疫寒焰,暗影烈焰,吱吱响的玩具,内疚,强风和窒息

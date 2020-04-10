@@ -821,6 +821,7 @@ namespace FargowiltasSouls.NPCs
                                 Horde(npc, 3);
                             break;
 
+                        case NPCID.Demon:
                         case NPCID.RedDevil:
                             if (Main.hardMode && Main.rand.Next(5) == 0)
                                 Horde(npc, 5);
@@ -6402,12 +6403,7 @@ namespace FargowiltasSouls.NPCs
                             npc.life = 1;
                             npc.active = true;
                             if (Main.netMode != 1)
-                            {
                                 npc.netUpdate = true;
-                                npc.dontTakeDamage = true;
-                                masoBool[3] = true;
-                                NetUpdateMaso(npc.whoAmI);
-                            }
                             return false;
                         }
 
@@ -6421,12 +6417,7 @@ namespace FargowiltasSouls.NPCs
                             npc.life = 1;
                             npc.active = true;
                             if (Main.netMode != 1)
-                            {
                                 npc.netUpdate = true;
-                                npc.dontTakeDamage = true;
-                                masoBool[3] = true;
-                                NetUpdateMaso(npc.whoAmI);
-                            }
                             return false;
                         }
 

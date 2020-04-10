@@ -70,6 +70,8 @@ namespace FargowiltasSouls.Projectiles.Minions
 
             if (projectile.localAI[0] == 0)
             {
+                Main.NewText(modifier.ToString());
+
                 projectile.localAI[0] = 1;
                 if (projectile.owner == Main.myPlayer)
                 {

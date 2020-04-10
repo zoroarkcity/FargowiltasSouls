@@ -1098,6 +1098,11 @@ namespace FargowiltasSouls.NPCs
                 npc.netUpdate = true;
             }
 
+            npc.dontTakeDamage = npc.life == 1;
+            //become vulnerable again when both twins at 1hp
+            if (npc.dontTakeDamage && npc.HasPlayerTarget && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
+                npc.dontTakeDamage = false;
+
             if (npc.ai[0] < 4f) //going to phase 3
             {
                 if (npc.life <= npc.lifeMax / 2)
@@ -1108,7 +1113,7 @@ namespace FargowiltasSouls.NPCs
                     Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
                 }
             }
-            else
+            else //in phase 3
             {
                 Player p = Main.player[Main.myPlayer];
                 const float auraDistance = 2000;
@@ -1126,7 +1131,7 @@ namespace FargowiltasSouls.NPCs
                     Main.dust[d].scale++;
                 }
 
-                if (masoBool[3] && --Counter2 < 0) //when brought to 1hp, begin shooting dark stars
+                if (npc.life == 1 && --Counter2 < 0) //when brought to 1hp, begin shooting dark stars
                 {
                     Counter2 = 240;
                     if (Main.netMode != 1 && npc.HasPlayerTarget)
@@ -1324,10 +1329,6 @@ namespace FargowiltasSouls.NPCs
                 //}
             }
 
-            //become vulnerable again when both twins at 1hp
-            if (npc.dontTakeDamage && npc.HasPlayerTarget && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
-                npc.dontTakeDamage = false;
-
             /*if (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) && targetAlive)
             {
                 Timer--;
@@ -1373,6 +1374,11 @@ namespace FargowiltasSouls.NPCs
                 npc.netUpdate = true;
             }
 
+            npc.dontTakeDamage = npc.life == 1;
+            //become vulnerable again when both twins at 1hp
+            if (npc.dontTakeDamage && npc.HasPlayerTarget && (!BossIsAlive(ref retiBoss, NPCID.Retinazer) || Main.npc[retiBoss].life == 1))
+                npc.dontTakeDamage = false;
+
             if (npc.ai[0] < 4f)
             {
                 if (npc.life <= npc.lifeMax / 2) //going to phase 3
@@ -1391,7 +1397,7 @@ namespace FargowiltasSouls.NPCs
                     npc.buffImmune[BuffID.Frostburn] = true;
                 }
             }
-            else
+            else //in phase 3
             {
                 npc.position += npc.velocity / 10f;
 
@@ -1442,7 +1448,7 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
 
-                if (masoBool[3] && --Counter2 < 0) //when brought to 1hp, begin shooting dark stars
+                if (npc.life == 1 && --Counter2 < 0) //when brought to 1hp, begin shooting dark stars
                 {
                     Counter2 = 120;
                     if (Main.netMode != 1 && npc.HasPlayerTarget)
@@ -1471,10 +1477,6 @@ namespace FargowiltasSouls.NPCs
                 }
                 SharkCount = 254;
             }
-
-            //become vulnerable again when both twins at 1hp
-            if (npc.dontTakeDamage && npc.HasPlayerTarget && (!BossIsAlive(ref retiBoss, NPCID.Retinazer) || Main.npc[retiBoss].life == 1))
-                npc.dontTakeDamage = false;
 
             /*if (!retiAlive && npc.HasPlayerTarget && Main.player[npc.target].active)
             {
@@ -1530,15 +1532,15 @@ namespace FargowiltasSouls.NPCs
                         npc.velocity += npc.velocity.RotatedBy(Math.PI / 2) * npc.velocity.Length() / Counter2;
                         npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) + 1.57f;
 
-                        if (++npc.localAI[2] > 40) //shoot star spreads into the circle
+                        if (++npc.localAI[2] > 45) //shoot star spreads into the circle
                         {
                             npc.localAI[2] = 0;
-                            if (Main.netMode != 1 && !NPC.AnyNPCs(NPCID.Probe) && !Main.player[npc.target].HasBuff(ModContent.BuffType<LightningRod>()))
+                            if (Main.netMode != 1 && !Main.player[npc.target].HasBuff(ModContent.BuffType<LightningRod>()))
                             {
                                 Vector2 distance = Main.player[npc.target].Center - npc.Center;
                                 double angleModifier = MathHelper.ToRadians(5) * distance.Length() / 1800.0;
                                 distance.Normalize();
-                                distance *= 8f;
+                                distance *= 7f;
                                 int type = ModContent.ProjectileType<DarkStar>();
                                 Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 12, 0f, Main.myPlayer);
                                 Projectile.NewProjectile(npc.Center, distance, type, npc.damage / 12, 0f, Main.myPlayer);
@@ -1972,15 +1974,20 @@ namespace FargowiltasSouls.NPCs
                     if (npc.HasValidTarget)
                         npc.position += npc.DirectionTo(Main.player[npc.target].Center) * 5;
                 }
-                else if (npc.ai[1] != 2f) //not spinning
+                else if (npc.ai[1] == 2f) //dg phase
+                {
+                    if (!Main.dayTime)
+                        npc.position -= npc.velocity / 10;
+                }
+                else //not spinning
                 {
                     npc.position += npc.velocity / 3f;
                 }
 
-                if (++Timer >= timeToShoot)
+                if (++Timer >= timeToShoot) //skeleton commando rockets LUL
                 {
                     Timer = 0;
-                    if (npc.HasPlayerTarget) //skeleton commando rockets LUL
+                    if (npc.ai[1] != 2 && npc.HasPlayerTarget) //dont do during DG
                     {
                         Vector2 speed = Main.player[npc.target].Center - npc.Center;
                         speed.Normalize();
