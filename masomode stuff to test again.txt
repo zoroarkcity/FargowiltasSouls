@@ -85,5 +85,6 @@ fixed abom sword handle in mp
 
 phantasm is -50%
 last prism is -33%
+tsunami -33%
 nerfed SDMG -25%
 nerfed xenopopper -25%

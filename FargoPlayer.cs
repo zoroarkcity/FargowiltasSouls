@@ -5079,7 +5079,6 @@ namespace FargowiltasSouls
             {
                 case ItemID.DaedalusStormbow:
                 case ItemID.StarCannon:
-                case ItemID.Tsunami:
                 case ItemID.DD2BetsyBow:
                 case ItemID.Phantasm:
                     return 0.5f;
@@ -5092,6 +5091,7 @@ namespace FargowiltasSouls
                 case ItemID.BeesKnees:
                 case ItemID.PhoenixBlaster:
                 case ItemID.LastPrism:
+                case ItemID.Tsunami:
                     return 2f / 3f;
                     
                 case ItemID.OnyxBlaster:
