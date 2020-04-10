@@ -69,7 +69,7 @@ destroyer:
 	roars to telegraph coil
 	won't shoot dark stars during coil if there are probes or you have lightning rod
 
-removed spaz's +25% speed bonus in p3
+nerfed spaz's p3 +25% speed bonus to +10%
 twins won't become vulnerable at 1 hp if you are dead and the other twin despawns (should prevent cheese)
 minion weapons with right click targeting now:
 	flesh hand
