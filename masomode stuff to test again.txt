@@ -71,3 +71,9 @@ destroyer:
 
 removed spaz's +25% speed bonus in p3
 twins won't become vulnerable at 1 hp if you are dead and the other twin despawns (should prevent cheese)
+minion weapons with right click targeting now:
+	flesh hand
+	destroyer gun
+	destroyer gun ex
+	big brain buster
+	optic staff ex
