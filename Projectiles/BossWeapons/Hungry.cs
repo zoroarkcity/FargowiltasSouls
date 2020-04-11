@@ -68,7 +68,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }*/
         }
 
-        private int HomeOnTarget()
+        protected int HomeOnTarget()
         {
             NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
             if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile)
