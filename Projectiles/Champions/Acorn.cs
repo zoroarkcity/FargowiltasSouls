@@ -19,22 +19,18 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.width = 20;
             projectile.height = 20;
             projectile.aiStyle = -1;
-            projectile.alpha = 100;
             projectile.hostile = true;
-            projectile.timeLeft = 1200;
+            projectile.timeLeft = 600;
         }
 
         public override void AI()
         {
-            for (int index1 = 0; index1 < 2; ++index1)
+            if (projectile.localAI[0] == 0f)
             {
-                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6,
-                    projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, new Color(), 2f);
-                Main.dust[index2].noGravity = true;
-                Main.dust[index2].velocity.X *= 0.3f;
-                Main.dust[index2].velocity.Y *= 0.3f;
+                projectile.localAI[0] = 1f;
+                Main.PlaySound(SoundID.Item17, projectile.position);
             }
-            projectile.velocity.Y += projectile.ai[0];
+            projectile.velocity.Y += 0.2f;
 
             projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI * 0.75f;
         }
