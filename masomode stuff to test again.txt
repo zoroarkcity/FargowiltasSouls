@@ -88,3 +88,9 @@ last prism is -33%
 tsunami -33%
 nerfed SDMG -25%
 nerfed xenopopper -25%
+tried fixing flesh hand and desgun/ex further
+abom saucers must now be manually destroyed
+plantera's hooks track you VERY aggressively in phase 2
+plantera's tentacles have 1 life
+toggle for panic buff when hit
+toggle for ballista panic buff when hit

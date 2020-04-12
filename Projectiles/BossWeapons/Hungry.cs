@@ -1,3 +1,4 @@
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -8,6 +9,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 {
     public class Hungry : ModProjectile
     {
+        public float modifier;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hungry");
@@ -27,8 +30,41 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             aiType = ProjectileID.Bullet;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(modifier);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            modifier = reader.ReadSingle();
+        }
+
         public override void AI()
         {
+            if (projectile.localAI[0] == 0)
+            {
+                projectile.localAI[0] = 1;
+
+                float minionSlotsUsed = 0;
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    if (Main.projectile[i].active && !Main.projectile[i].hostile && Main.projectile[i].owner == projectile.owner && Main.projectile[i].minion)
+                        minionSlotsUsed += Main.projectile[i].minionSlots;
+                }
+
+                modifier = Main.player[projectile.owner].maxMinions - minionSlotsUsed;
+                if (modifier < 0)
+                    modifier = 0;
+                if (modifier > 5)
+                    modifier = 5;
+
+                if (projectile.owner == Main.myPlayer)
+                {
+                    projectile.netUpdate = true;
+                }
+            }
+
             //dust!
             int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width, projectile.height + 5, 60, projectile.velocity.X * 0.2f,
                 projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
@@ -40,12 +76,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             const int aislotHomingCooldown = 0;
             const int homingDelay = 10;
             const float desiredFlySpeedInPixelsPerFrame = 60;
-
-            float modifier = Main.player[projectile.owner].maxMinions - Main.player[projectile.owner].slotsMinions;
-            if (modifier < 0)
-                modifier = 0;
-            if (modifier > 5)
-                modifier = 5;
+            
             float amountOfFramesToLerpBy = 120 - 20 * modifier; // minimum of 1, please keep in full numbers even though it's a float!
 
             projectile.ai[aislotHomingCooldown]++;
@@ -61,11 +92,10 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     projectile.velocity = Vector2.Lerp(projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
                 }
             }
-            /*else
+            else
             {
-                Main.NewText(amountOfFramesToLerpBy.ToString());
-                //Main.NewText(Main.player[projectile.owner].numMinions.ToString() + " " + Main.player[projectile.owner].maxMinions.ToString() + " " + Main.player[projectile.owner].slotsMinions.ToString());
-            }*/
+                Main.NewText(modifier.ToString());
+            }
         }
 
         protected int HomeOnTarget()

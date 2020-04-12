@@ -98,10 +98,6 @@ namespace FargowiltasSouls.NPCs
                     npc.lifeMax = (int)(npc.lifeMax * 1.25);
                     break;
 
-                case NPCID.PlanterasTentacle:
-                    npc.lifeMax /= 4;
-                    break;
-
                 case NPCID.Pixie:
                     npc.noTileCollide = true;
                     break;
@@ -1095,8 +1091,13 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.PlanterasHook:
-                        npc.damage = 0;
-                        npc.defDamage = 0;
+                        PlanterasHookAI(npc);
+                        break;
+
+                    case NPCID.PlanterasTentacle:
+                        npc.lifeMax = 1;
+                        if (npc.life > npc.lifeMax)
+                            npc.life = npc.lifeMax;
                         break;
 
                     case NPCID.Golem:

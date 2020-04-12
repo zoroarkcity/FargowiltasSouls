@@ -152,7 +152,10 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
             {
                 player.bee = true;
             }
-            player.panic = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.PanicOnHit))
+            {
+                player.panic = true;
+            }
             player.longInvince = true;
             //spore sac
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SporeSac))

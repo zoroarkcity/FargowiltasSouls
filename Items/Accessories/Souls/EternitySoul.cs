@@ -562,7 +562,10 @@ Additionally grants:");
             {
                 player.bee = true;
             }
-            player.panic = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.PanicOnHit))
+            {
+                player.panic = true;
+            }
             player.longInvince = true;
             //spore sac
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SporeSac))

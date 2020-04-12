@@ -4811,6 +4811,8 @@ namespace FargowiltasSouls
             //immune frames
             ValhallaEnchant = true;
             AddPet(SoulConfig.Instance.DragonPet, hideVisual, BuffID.PetDD2Dragon, ProjectileID.DD2PetDragon);
+            if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.SquirePanic))
+                player.buffImmune[BuffID.BallistaPanic] = true;
         }
 
         public void VortexEffect(bool hideVisual)

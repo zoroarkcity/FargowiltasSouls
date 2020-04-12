@@ -2395,6 +2395,41 @@ namespace FargowiltasSouls.NPCs
             }
         }
 
+        public void PlanterasHookAI(NPC npc)
+        {
+            npc.damage = 0;
+            npc.defDamage = 0;
+
+            /*if (NPC.FindFirstNPC(NPCID.PlanterasHook) == npc.whoAmI)
+            {
+                npc.color = Color.LightGreen;
+                PrintAI(npc);
+            }*/
+
+            if (BossIsAlive(ref NPC.plantBoss, NPCID.Plantera) && Main.npc[NPC.plantBoss].life < Main.npc[NPC.plantBoss].lifeMax / 2 && Main.npc[NPC.plantBoss].HasValidTarget)
+            {
+                if (npc.Distance(Main.player[Main.npc[NPC.plantBoss].target].Center) > 600)
+                {
+                    Vector2 targetPos = Main.player[Main.npc[NPC.plantBoss].target].Center / 16; //pick a new target pos near player
+                    targetPos.X += Main.rand.Next(-25, 26);
+                    targetPos.Y += Main.rand.Next(-25, 26);
+
+                    if (WorldGen.SolidTile(Framing.GetTileSafely((int)targetPos.X, (int)targetPos.Y)) //check the tile can be grappled
+                        || Framing.GetTileSafely((int)targetPos.X, (int)targetPos.Y).wall > 0)
+                    {
+                        npc.localAI[0] = 600; //reset vanilla timer for picking new block
+                        if (Main.netMode != 1)
+                            npc.netUpdate = true;
+
+                        npc.ai[0] = targetPos.X;
+                        npc.ai[1] = targetPos.Y;
+                    }
+                }
+
+                npc.position += npc.velocity;
+            }
+        }
+
         public void GolemAI(NPC npc)
         {
             /*if (npc.ai[0] == 0f && npc.velocity.Y == 0f) //manipulating golem jump ai

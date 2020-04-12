@@ -112,6 +112,7 @@ namespace FargowiltasSouls
             AddToggle("HuntressConfig", "Huntress Ability", "HuntressEnchant", "ffffff");
             AddToggle("ValhallaConfig", "Valhalla Effect", "ValhallaKnightEnchant", "93651e");
             AddToggle("SquireConfig", "Squire Knockback", "SquireEnchant", "ffffff");
+            AddToggle("SquirePanicConfig", "Ballista Panic On Hit", "SquireEnchant", "ffffff");
 
             AddToggle("LifeHeader", "Force of Life", "LifeForce", "ffffff");
             AddToggle("BeetleConfig", "Beetles", "BeetleEnchant", "6D5C85");
@@ -247,6 +248,7 @@ namespace FargowiltasSouls
             AddToggle("DefenseSporeConfig", "Spore Sac", "ColossusSoul", "ffffff");
             AddToggle("DefenseStarConfig", "Stars On Hit", "ColossusSoul", "ffffff");
             AddToggle("DefenseBeeConfig", "Bees On Hit", "ColossusSoul", "ffffff");
+            AddToggle("DefensePanicConfig", "Panic On Hit", "ColossusSoul", "ffffff");
             AddToggle("SupersonicConfig", "Supersonic Speed Boosts", "SupersonicSoul", "ffffff");
             AddToggle("MomentumConfig", "No Momentum", "SupersonicSoul", "ffffff");
             AddToggle("EternityConfig", "Eternity Stacking", "EternitySoul", "ffffff");
