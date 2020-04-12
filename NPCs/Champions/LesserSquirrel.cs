@@ -1,0 +1,76 @@
+using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.Localization;
+using FargowiltasSouls.Projectiles.DeviBoss;
+
+namespace FargowiltasSouls.NPCs.Champions
+{
+    public class LesserSquirrel : ModNPC
+    {
+        public override string Texture => "FargowiltasSouls/NPCs/Critters/TophatSquirrel";
+
+        public int counter;
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Lesser Squirrel");
+            Main.npcFrameCount[npc.type] = 6;
+        }
+
+        public override void SetDefaults()
+        {
+            npc.width = 50;
+            npc.height = 32;
+            npc.damage = 50;
+            npc.defense = 0;
+            npc.lifeMax = 1800;
+            //Main.npcCatchable[npc.type] = true;
+            //npc.catchItem = (short)mod.ItemType("TophatSquirrel");
+            npc.HitSound = SoundID.NPCHit1;
+            npc.DeathSound = SoundID.NPCDeath1;
+            npc.value = 0f;
+            npc.knockBackResist = .25f;
+            //banner = npc.type;
+            //bannerItem = mod.ItemType("TophatSquirrelBanner");
+
+            animationType = NPCID.Squirrel;
+            npc.aiStyle = 7;
+            aiType = NPCID.Squirrel;
+
+            //NPCID.Sets.TownCritter[npc.type] = true;
+
+            //npc.closeDoor;
+        }
+
+        public override void AI()
+        {
+            if (++counter > 300)
+            {
+                npc.StrikeNPCNoInteraction(9999, 0f, 0);
+            }
+        }
+
+        public override bool CheckDead()
+        {
+            if (Main.netMode != 1)
+            {
+                int p = Player.FindClosest(npc.Center, 0, 0);
+                if (p != -1)
+                {
+                    Projectile.NewProjectile(npc.Center, 4f * npc.DirectionTo(Main.player[p].Center),
+                        ModContent.ProjectileType<DeviLostSoul>(), 50, 0, Main.myPlayer);
+                }
+            }
+            return true;
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (npc.life <= 0)
+                for (int k = 0; k < 20; k++)
+                    Dust.NewDust(npc.position, npc.width, npc.height, 5, hitDirection, -1f);
+        }
+    }
+}

@@ -94,3 +94,4 @@ plantera's hooks track you VERY aggressively in phase 2
 plantera's tentacles have 1 life
 toggle for panic buff when hit
 toggle for ballista panic buff when hit
+moon lord no longer shoots cultist lightning orb

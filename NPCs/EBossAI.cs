@@ -3578,8 +3578,7 @@ namespace FargowiltasSouls.NPCs
                                             damage, 0, Main.myPlayer, dir.ToRotation(), ai1New);
                                     }
                                 }
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.CultistBossLightningOrb,
-                                    (int)(30 * (1 + FargoSoulsWorld.MoonlordCount * .0125)), 0f, Main.myPlayer);
+                                //Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.CultistBossLightningOrb, (int)(30 * (1 + FargoSoulsWorld.MoonlordCount * .0125)), 0f, Main.myPlayer);
                                 break;
                             case 2: //magic
                                 for (int i = 0; i < 3; i++)
