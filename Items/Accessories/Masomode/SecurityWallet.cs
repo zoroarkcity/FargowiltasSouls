@@ -12,7 +12,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             Tooltip.SetDefault(@"'Results not guaranteed in multiplayer'
 Grants immunity to Midas and enemies that steal items
 Prevents you from reforging items with certain modifiers
-Protected modifiers can be chosen in the toggles menu");
+Protected modifiers can be chosen in the toggles menu
+50% discount on reforges");
             DisplayName.AddTranslation(GameCulture.Chinese, "安全钱包");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'无法保证在多人游戏中的效果'
 免疫点金手和偷取物品的敌人

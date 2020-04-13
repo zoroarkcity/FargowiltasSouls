@@ -19,7 +19,7 @@ You have autofire, improved night vision, and faster respawn when no boss is ali
 Automatically use mana potions when needed and gives modifier protection
 Attacks have a chance to squeak and deal 1 damage to you
 You erupt into Shadowflame tentacles when injured
-Certain enemies will drop potions when defeated
+Certain enemies will drop potions when defeated and 50% discount on reforges
 Summons a friendly rainbow slime
 Use to teleport to your last death point");
             DisplayName.AddTranslation(GameCulture.Chinese, "生态集群");

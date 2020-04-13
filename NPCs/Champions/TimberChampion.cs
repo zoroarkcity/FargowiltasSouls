@@ -26,9 +26,9 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 340;
             npc.height = 400;
-            npc.damage = 100;
+            npc.damage = 125;
             npc.defense = 50;
-            npc.lifeMax = 180000;
+            npc.lifeMax = 360000;
             npc.HitSound = SoundID.NPCHit7;
             npc.DeathSound = SoundID.NPCDeath1;
             npc.noGravity = false;
@@ -51,6 +51,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void AI()
         {
+            EModeGlobalNPC.squirrelBoss = npc.whoAmI;
+
             Player player = Main.player[npc.target];
             npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
 
@@ -129,9 +131,12 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     else //less than 60
                     {
-                        npc.velocity.X *= 0.95f;
+                        if (Math.Abs(npc.velocity.X) > Math.Abs(npc.velocity.Y))
+                            npc.velocity.X = Math.Abs(npc.velocity.Y) * Math.Sign(npc.velocity.X);
+                        if (npc.velocity.Y == 0)
+                            npc.velocity.X *= 0.99f;
 
-                        if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f)
+                        if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2000f)
                         {
                             npc.TargetClosest();
                             if (npc.timeLeft > 30)
@@ -149,7 +154,10 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case 1: //acorn sprays
-                    npc.velocity.X *= 0.95f;
+                    if (Math.Abs(npc.velocity.X) > Math.Abs(npc.velocity.Y))
+                        npc.velocity.X = Math.Abs(npc.velocity.Y) * Math.Sign(npc.velocity.X);
+                    if (npc.velocity.Y == 0)
+                        npc.velocity.X *= 0.99f;
                     npc.noTileCollide = false;
                     npc.noGravity = false;
 
@@ -182,7 +190,10 @@ namespace FargowiltasSouls.NPCs.Champions
                     goto case 0;
 
                 case 3: //snowball barrage
-                    npc.velocity.X *= 0.95f;
+                    if (Math.Abs(npc.velocity.X) > Math.Abs(npc.velocity.Y))
+                        npc.velocity.X = Math.Abs(npc.velocity.Y) * Math.Sign(npc.velocity.X);
+                    if (npc.velocity.Y == 0)
+                        npc.velocity.X *= 0.99f;
                     npc.noTileCollide = false;
                     npc.noGravity = false;
 
@@ -192,7 +203,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (Main.netMode != 1 && npc.ai[1] > 30 && npc.ai[1] < 120)
                         {
                             Projectile.NewProjectile(npc.Center + new Vector2(Main.rand.NextFloat(-100, 100), Main.rand.NextFloat(-150, 0)),
-                                Vector2.UnitY * -16f, ModContent.ProjectileType<Snowball>(), npc.damage / 4, 0f, Main.myPlayer);
+                                Vector2.UnitY * -12f, ModContent.ProjectileType<Snowball>(), npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
 
@@ -210,7 +221,10 @@ namespace FargowiltasSouls.NPCs.Champions
                     goto case 0;
 
                 case 5: //spray squirrels
-                    npc.velocity.X *= 0.95f;
+                    if (Math.Abs(npc.velocity.X) > Math.Abs(npc.velocity.Y))
+                        npc.velocity.X = Math.Abs(npc.velocity.Y) * Math.Sign(npc.velocity.X);
+                    if (npc.velocity.Y == 0)
+                        npc.velocity.X *= 0.99f;
                     npc.noTileCollide = false;
                     npc.noGravity = false;
 
@@ -244,22 +258,70 @@ namespace FargowiltasSouls.NPCs.Champions
                 case 6:
                     goto case 0;
 
-                /*case 7:
+                case 7:
                     goto case 3;
 
                 case 8:
                     goto case 0;
 
                 case 9: //grappling hook
-                    npc.velocity.X *= 0.95f;
+                    if (Math.Abs(npc.velocity.X) > Math.Abs(npc.velocity.Y))
+                        npc.velocity.X = Math.Abs(npc.velocity.Y) * Math.Sign(npc.velocity.X);
+                    if (npc.velocity.Y == 0)
+                        npc.velocity.X *= 0.99f;
                     npc.noTileCollide = false;
                     npc.noGravity = false;
 
-                    if (npc.ai[2] == 0)
+                    if (npc.ai[2] == 0) //shoot hook
                     {
-                        
+                        npc.ai[2] = 1;
+                        if (Main.netMode != 1)
+                        {
+                            Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center) * 16, ModContent.ProjectileType<SquirrelHook>(), 0, 0f, Main.myPlayer, npc.whoAmI);
+                        }
                     }
-                    break;*/
+
+                    if (++npc.ai[1] < 240) //charge power
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Shadowflame, 0f, 0f, 0, default(Color), 2f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity *= 8f;
+                            d = Dust.NewDust(npc.Center, 0, 0, DustID.Shadowflame, 0f, 0f, 0, default(Color), 3f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity *= 16f;
+                        }
+
+                        for (int i = 0; i < 20; i++)
+                        {
+                            Vector2 offset = new Vector2();
+                            double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                            offset.X += (float)(Math.Sin(angle) * 500);
+                            offset.Y += (float)(Math.Cos(angle) * 500);
+                            Dust dust = Main.dust[Dust.NewDust(npc.Center + offset - new Vector2(4, 4), 0, 0, DustID.Shadowflame, 0, 0, 100, Color.White, 2f)];
+                            dust.velocity = npc.velocity;
+                            if (Main.rand.Next(3) == 0)
+                                dust.velocity += Vector2.Normalize(offset) * -5f;
+                            dust.noGravity = true;
+                        }
+                    }
+                    else if (npc.ai[1] == 240) //explode
+                    {
+                        if (Main.netMode != 1)
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<ShadowflameBlast>(), npc.damage / 2, 0f, Main.myPlayer);
+                        }
+                    }
+                    else if (npc.ai[1] > 300)
+                    {
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.netUpdate = true;
+                        npc.TargetClosest();
+                    }
+                    break;
 
                 default:
                     npc.ai[0] = 0;
@@ -269,7 +331,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            
+            target.AddBuff(ModContent.BuffType<Buffs.Masomode.Guilty>(), 600);
         }
 
         /*public override void BossLoot(ref string name, ref int potionType)

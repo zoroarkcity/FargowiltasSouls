@@ -23,7 +23,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 50;
             npc.height = 32;
-            npc.damage = 50;
+            npc.damage = 0;
             npc.defense = 0;
             npc.lifeMax = 1800;
             //Main.npcCatchable[npc.type] = true;
@@ -42,11 +42,16 @@ namespace FargowiltasSouls.NPCs.Champions
             //NPCID.Sets.TownCritter[npc.type] = true;
 
             //npc.closeDoor;
+
+            npc.dontTakeDamage = true;
         }
 
         public override void AI()
         {
-            if (++counter > 300)
+            if (npc.velocity.Y == 0)
+                npc.dontTakeDamage = false;
+
+            if (++counter > 600)
             {
                 npc.StrikeNPCNoInteraction(9999, 0f, 0);
             }
@@ -57,10 +62,11 @@ namespace FargowiltasSouls.NPCs.Champions
             if (Main.netMode != 1)
             {
                 int p = Player.FindClosest(npc.Center, 0, 0);
-                if (p != -1)
+                int n = NPC.FindFirstNPC(ModContent.NPCType<TimberChampion>());
+                if (p != -1 && n != -1)
                 {
                     Projectile.NewProjectile(npc.Center, 4f * npc.DirectionTo(Main.player[p].Center),
-                        ModContent.ProjectileType<DeviLostSoul>(), 50, 0, Main.myPlayer);
+                        ModContent.ProjectileType<DeviLostSoul>(), Main.npc[n].damage / 4, 0, Main.myPlayer);
                 }
             }
             return true;

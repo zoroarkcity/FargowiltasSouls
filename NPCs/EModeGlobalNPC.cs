@@ -66,6 +66,7 @@ namespace FargowiltasSouls.NPCs
         public static int deviBoss = -1;
         public static int abomBoss = -1;
         public static int mutantBoss = -1;
+        public static int squirrelBoss = -1;
 
         public static bool Revengeance => CalamityMod.World.CalamityWorld.revenge;
 
@@ -2729,19 +2730,25 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.MartianSaucerCore:
-                        Aura(npc, 250, BuffID.VortexDebuff, false, DustID.Vortex);
-                        if (!npc.dontTakeDamage && npc.HasPlayerTarget && ++Counter > 240)
+                        Aura(npc, 200, BuffID.VortexDebuff, false, DustID.Vortex);
+                        if (!npc.dontTakeDamage && npc.HasValidTarget)
                         {
-                            if (++Counter2 > 2)
+                            if ((npc.ai[3] - 60) % 120 == 0)
                             {
-                                Counter2 = 0;
-                                Vector2 speed = 16f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
-                                if (Main.netMode != 1)
-                                    Projectile.NewProjectile(npc.Center, speed, ProjectileID.SaucerLaser, 15, 0f, Main.myPlayer);
+                                Counter = 30;
                             }
 
-                            if (Counter > 360)
-                                Counter = 0;
+                            if (Counter > 0)
+                            {
+                                Counter--;
+                                if (++Counter2 > 2)
+                                {
+                                    Counter2 = 0;
+                                    Vector2 speed = 16f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 3.0);
+                                    if (Main.netMode != 1)
+                                        Projectile.NewProjectile(npc.Center, speed, ProjectileID.SaucerLaser, 15, 0f, Main.myPlayer);
+                                }
+                            }
                         }
                         break;
 
@@ -8109,7 +8116,7 @@ namespace FargowiltasSouls.NPCs
             }
         }
 
-        private void Aura(NPC npc, float distance, int buff, bool reverse = false, int dustid = DustID.GoldFlame, bool checkDuration = false)
+        public static void Aura(NPC npc, float distance, int buff, bool reverse = false, int dustid = DustID.GoldFlame, bool checkDuration = false)
         {
             //works because buffs are client side anyway :ech:
             Player p = Main.player[Main.myPlayer];

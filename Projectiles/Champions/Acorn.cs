@@ -35,6 +35,11 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI * 1.25f;
         }
 
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            target.AddBuff(ModContent.BuffType<Buffs.Masomode.Guilty>(), 600);
+        }
+
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(0, projectile.Center, 1);

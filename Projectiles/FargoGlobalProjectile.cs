@@ -726,6 +726,28 @@ namespace FargowiltasSouls.Projectiles
                     }
                     break;
 
+                case ProjectileID.EyeBeam:
+                    /*if (FargoSoulsWorld.MasochistMode)
+                    {
+                        if (EModeGlobalNPC.BossIsAlive(ref NPC.golemBoss, NPCID.Golem))
+                        {
+                            if (!masobool)
+                            {
+                                masobool = true;
+                                projectile.velocity.Normalize();
+                            }
+
+                            if (projectile.timeLeft % (projectile.extraUpdates + 1) == 0) //only run once per tick
+                            {
+                                if (++projectile.localAI[1] < 90)
+                                {
+                                    projectile.velocity *= 1.06f;
+                                }
+                            }
+                        }
+                    }*/
+                    break;
+
                 case ProjectileID.JavelinHostile:
                 case ProjectileID.FlamingWood:
                     if (FargoSoulsWorld.MasochistMode)
@@ -1308,8 +1330,6 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.EyeBeam:
-                        damage = (int)(damage * (1 + FargoSoulsWorld.GolemCount * .0125));
-                        break;
                     case ProjectileID.Fireball:
                         if (EModeGlobalNPC.BossIsAlive(ref NPC.golemBoss, NPCID.Golem))
                             damage = (int)(damage * (1 + FargoSoulsWorld.GolemCount * .0125));
@@ -1618,12 +1638,12 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.SpikyBallTrap:
-                        if (NPC.golemBoss != -1 && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem)
+                        /*if (NPC.golemBoss != -1 && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem)
                         {
                             target.AddBuff(BuffID.BrokenArmor, 600);
                             target.AddBuff(ModContent.BuffType<Defenseless>(), 600);
                             target.AddBuff(BuffID.WitheredArmor, 600);
-                        }
+                        }*/
                         break;
 
                     case ProjectileID.DD2BetsyFireball:

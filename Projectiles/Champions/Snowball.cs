@@ -60,6 +60,12 @@ namespace FargowiltasSouls.Projectiles.Champions
             }
         }
 
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            target.AddBuff(BuffID.Chilled, 180);
+            target.AddBuff(BuffID.Frostburn, 180);
+        }
+
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(0, projectile.Center, 1);

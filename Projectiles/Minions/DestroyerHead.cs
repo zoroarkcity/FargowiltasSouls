@@ -83,7 +83,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 if (modifier > 5)
                     modifier = 5;
 
-                Main.NewText(modifier.ToString() + ", " + minionSlotsUsed.ToString());
+                //Main.NewText(modifier.ToString() + ", " + minionSlotsUsed.ToString());
 
                 if (projectile.owner == Main.myPlayer)
                 {

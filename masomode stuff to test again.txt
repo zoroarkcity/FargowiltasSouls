@@ -95,4 +95,8 @@ plantera's tentacles have 1 life
 toggle for panic buff when hit
 toggle for ballista panic buff when hit
 moon lord no longer shoots cultist lightning orb
+
 slowed plantera 10% in p2 unless you're envenomed
+golem spiky balls glow
+security wallet and upgrades give 50% discount on reforging
+saucer only shoots lasers in vulnerable phase while also doing deathray
