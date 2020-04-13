@@ -55,7 +55,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
             Player player = Main.player[npc.target];
             npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
-
+            
             switch ((int)npc.ai[0])
             {
                 case 0: //jump at player
@@ -65,6 +65,24 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (++npc.ai[1] == 60)
                     {
                         npc.TargetClosest();
+
+                        if (npc.localAI[0] == 0 && npc.life < npc.lifeMax * .66f) //spawn palm tree supports
+                        {
+                            npc.localAI[0] = 1;
+                            if (Main.netMode != 1)
+                            {
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<PalmTreeHostile>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
+                            }
+                        }
+
+                        if (npc.localAI[1] == 0 && npc.life < npc.lifeMax * .33f) //spawn palm tree supports
+                        {
+                            npc.localAI[1] = 1;
+                            if (Main.netMode != 1)
+                            {
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<PalmTreeHostile>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
+                            }
+                        }
 
                         const float gravity = 0.4f;
                         const float time = 90f;

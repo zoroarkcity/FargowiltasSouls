@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using FargowiltasSouls.Items.Accessories;
 using FargowiltasSouls.NPCs.AbomBoss;
+using FargowiltasSouls.NPCs.Champions;
 using FargowiltasSouls.NPCs.DeviBoss;
 using FargowiltasSouls.NPCs.MutantBoss;
 using ThoriumMod.Items.Titan;
@@ -697,6 +698,7 @@ namespace FargowiltasSouls
                 if (bossHealthBar != null)
                 {
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<BabyGuardian>());
+                    bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<TimberChampion>());
                 }
 
                 Mod bossChecklist = ModLoader.GetMod("BossChecklist");
