@@ -2384,6 +2384,10 @@ namespace FargowiltasSouls.NPCs
                             RegenTimer = 120;
                     }
                 }
+                else
+                {
+                    npc.position -= npc.velocity * 0.1f;
+                }
 
                 //dont regen above half, this avoids exiting phase 2 by healing
                 if (RegenTimer <= 2 && npc.life + 1 + npc.lifeMax / 25 >= npc.lifeMax / 2)
