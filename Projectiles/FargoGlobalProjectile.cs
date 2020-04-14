@@ -7,6 +7,7 @@ using FargowiltasSouls.Buffs.Boss;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Buffs.Souls;
 using FargowiltasSouls.NPCs;
+using FargowiltasSouls.NPCs.Champions;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Minions;
 using FargowiltasSouls.Projectiles.Souls;
@@ -1634,6 +1635,11 @@ namespace FargowiltasSouls.Projectiles
                             {
                                 target.AddBuff(BuffID.Burning, 120);
                             }
+                        }
+
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<EarthChampion>()))
+                        {
+                            target.AddBuff(BuffID.Burning, 300);
                         }
                         break;
 

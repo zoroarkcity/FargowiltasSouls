@@ -28,6 +28,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.ignoreWater = true;
             projectile.hide = true;
             projectile.extraUpdates = 1;
+            cooldownSlot = 1;
         }
 
         public override bool CanHitPlayer(Player target)
@@ -132,7 +133,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             }
 
 
-            const int num226 = 80; //dusts indicate charged up
+            const int num226 = 80;
             for (int num227 = 0; num227 < num226; num227++)
             {
                 Vector2 vector6 = Vector2.UnitX * 40f;

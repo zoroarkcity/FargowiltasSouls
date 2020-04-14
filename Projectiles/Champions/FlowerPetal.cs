@@ -7,27 +7,30 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.Champions
 {
-    public class Snowball : ModProjectile
+    public class FlowerPetal : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_109";
+        public override string Texture => "Terraria/Projectile_221";
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Snowball");
+            DisplayName.SetDefault("Flower Petal");
+            Main.projFrames[projectile.type] = 3;
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
+            projectile.width = 20;
+            projectile.height = 20;
             projectile.aiStyle = -1;
             projectile.hostile = true;
-            projectile.timeLeft = 600;
+            projectile.timeLeft = 300;
+            projectile.tileCollide = false;
+            projectile.ignoreWater = true;
 
-            projectile.coldDamage = true;
-            projectile.scale = 2f;
+            projectile.alpha = 0;
+            projectile.hide = true;
             cooldownSlot = 1;
         }
 
@@ -36,46 +39,35 @@ namespace FargowiltasSouls.Projectiles.Champions
             if (projectile.localAI[0] == 0f)
             {
                 projectile.localAI[0] = 1f;
-                Main.PlaySound(0, projectile.Center, 1);
-                for (int index1 = 0; index1 < 5; ++index1)
-                {
-                    int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 51);
-                    Dust dust = Main.dust[index2];
-                    dust.velocity = dust.velocity * 0.6f;
-                }
+                projectile.scale = Main.rand.NextFloat(1.5f, 2f);
+                projectile.frame = Main.rand.Next(3);
+                projectile.hide = false;
+                Main.PlaySound(SoundID.Item8, projectile.Center);
             }
-            
-            if (projectile.ai[0] == 0)
+
+            if (++projectile.localAI[1] > 30 && projectile.localAI[1] < 100)
             {
-                projectile.velocity.Y += 0.3f;
-                if (projectile.velocity.Y > 0)
-                {
-                    int p = Player.FindClosest(projectile.Center, 0, 0);
-                    if (p != -1)
-                    {
-                        projectile.velocity = projectile.DirectionTo(Main.player[p].Center) * 30;
-                        projectile.ai[0] = 1f;
-                        projectile.netUpdate = true;
-                    }
-                }
+                projectile.velocity *= 1.06f;
             }
+
+            projectile.rotation += projectile.velocity.X * 0.01f;
+
+            int dust = Dust.NewDust(projectile.Center, 0, 0, 86);
+            Main.dust[dust].noGravity = true;
+            Main.dust[dust].scale *= 2f;
+            Main.dust[dust].velocity *= 0.1f;
+
+            Dust.NewDust(projectile.position, projectile.width, projectile.height, 86, projectile.velocity.X, projectile.velocity.Y);
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.Chilled, 180);
-            target.AddBuff(BuffID.Frostburn, 180);
+            target.AddBuff(ModContent.BuffType<Buffs.Masomode.Purified>(), 300);
         }
 
-        public override void Kill(int timeLeft)
+        public override Color? GetAlpha(Color lightColor)
         {
-            Main.PlaySound(0, projectile.Center, 1);
-            for (int index1 = 0; index1 < 5; ++index1)
-            {
-                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 51);
-                Dust dust = Main.dust[index2];
-                dust.velocity = dust.velocity * 0.6f;
-            }
+            return Color.White * projectile.Opacity;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

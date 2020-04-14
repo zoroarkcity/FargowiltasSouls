@@ -66,7 +66,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                 }
                 else
                 {
-                    float dragSpeed = projectile.Distance(npc.Center) / 80;
+                    float dragSpeed = projectile.Distance(npc.Center) / 50;
                     
                     player.position += projectile.DirectionTo(npc.Center) * dragSpeed;
                     projectile.Center = player.Center;

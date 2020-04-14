@@ -2,6 +2,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.NPCs;
+using FargowiltasSouls.NPCs.Champions;
 
 namespace FargowiltasSouls.Projectiles.Masomode
 {
@@ -40,6 +42,12 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
                 if (Framing.GetTileSafely(Main.npc[NPC.golemBoss].Center).wall != WallID.LihzahrdBrickUnsafe) //outside temple
                     target.AddBuff(BuffID.Burning, 120);
+            }
+
+            if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<EarthChampion>()))
+            {
+                target.AddBuff(BuffID.OnFire, 300);
+                target.AddBuff(BuffID.Burning, 300);
             }
         }
 

@@ -26,7 +26,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 340;
             npc.height = 400;
-            npc.damage = 125;
+            npc.damage = 150;
             npc.defense = 50;
             npc.lifeMax = 360000;
             npc.HitSound = SoundID.NPCHit7;
@@ -37,8 +37,9 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.lavaImmune = true;
             npc.aiStyle = -1;
             npc.value = Item.buyPrice(0, 10);
-            //npc.boss = true;
-            music = MusicID.TheTowers;
+
+            npc.boss = true;
+            music = MusicID.Boss1;
             musicPriority = MusicPriority.BossMedium;
 
             npc.buffImmune[BuffID.Chilled] = true;
@@ -49,9 +50,15 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
         }
 
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            cooldownSlot = 1;
+            return true;
+        }
+
         public override void AI()
         {
-            EModeGlobalNPC.squirrelBoss = npc.whoAmI;
+            EModeGlobalNPC.championBoss = npc.whoAmI;
 
             Player player = Main.player[npc.target];
             npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
@@ -154,7 +161,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.velocity.Y == 0)
                             npc.velocity.X *= 0.99f;
 
-                        if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2000f)
+                        if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f)
                         {
                             npc.TargetClosest();
                             if (npc.timeLeft > 30)
@@ -163,6 +170,8 @@ namespace FargowiltasSouls.NPCs.Champions
                             npc.noTileCollide = true;
                             npc.noGravity = true;
                             npc.velocity.Y -= 1f;
+
+                            npc.ai[0] = 0; //prevent proceeding to next steps of ai while despawning
                         }
                         else
                         {
@@ -352,10 +361,10 @@ namespace FargowiltasSouls.NPCs.Champions
             target.AddBuff(ModContent.BuffType<Buffs.Masomode.Guilty>(), 600);
         }
 
-        /*public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = ItemID.SuperHealingPotion;
-        }*/
+        }
 
         public override void NPCLoot()
         {

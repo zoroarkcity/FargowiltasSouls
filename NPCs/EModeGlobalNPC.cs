@@ -66,7 +66,7 @@ namespace FargowiltasSouls.NPCs
         public static int deviBoss = -1;
         public static int abomBoss = -1;
         public static int mutantBoss = -1;
-        public static int squirrelBoss = -1;
+        public static int championBoss = -1;
 
         public static bool Revengeance => CalamityMod.World.CalamityWorld.revenge;
 
