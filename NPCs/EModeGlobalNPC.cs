@@ -66,6 +66,7 @@ namespace FargowiltasSouls.NPCs
         public static int deviBoss = -1;
         public static int abomBoss = -1;
         public static int mutantBoss = -1;
+        public static int championBoss = -1;
 
         public static bool Revengeance => CalamityMod.World.CalamityWorld.revenge;
 
@@ -87,7 +88,7 @@ namespace FargowiltasSouls.NPCs
             switch (npc.type)
             {
                 case NPCID.Retinazer:
-                    npc.lifeMax = (int)(npc.lifeMax * 1.25);
+                    npc.lifeMax = (int)(npc.lifeMax * 1.2);
                     break;
 
                 case NPCID.GoblinWarrior:
@@ -96,10 +97,6 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.Plantera:
                     npc.lifeMax = (int)(npc.lifeMax * 1.25);
-                    break;
-
-                case NPCID.PlanterasTentacle:
-                    npc.lifeMax /= 4;
                     break;
 
                 case NPCID.Pixie:
@@ -821,6 +818,7 @@ namespace FargowiltasSouls.NPCs
                                 Horde(npc, 3);
                             break;
 
+                        case NPCID.Demon:
                         case NPCID.RedDevil:
                             if (Main.hardMode && Main.rand.Next(5) == 0)
                                 Horde(npc, 5);
@@ -1063,6 +1061,14 @@ namespace FargowiltasSouls.NPCs
                         SpazmatismAI(npc);
                         break;
 
+                    case NPCID.Probe:
+                        if (BossIsAlive(ref destroyBoss, NPCID.TheDestroyer))
+                        {
+                            if (npc.localAI[0] > 30)
+                                npc.localAI[0] = -30;
+                        }
+                        break;
+
                     case NPCID.TheDestroyer:
                         return DestroyerAI(npc);
 
@@ -1086,8 +1092,13 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.PlanterasHook:
-                        npc.damage = 0;
-                        npc.defDamage = 0;
+                        PlanterasHookAI(npc);
+                        break;
+
+                    case NPCID.PlanterasTentacle:
+                        npc.lifeMax = 1;
+                        if (npc.life > npc.lifeMax)
+                            npc.life = npc.lifeMax;
                         break;
 
                     case NPCID.Golem:
@@ -2719,19 +2730,25 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.MartianSaucerCore:
-                        Aura(npc, 250, BuffID.VortexDebuff, false, DustID.Vortex);
-                        if (!npc.dontTakeDamage && npc.HasPlayerTarget && ++Counter > 240)
+                        Aura(npc, 200, BuffID.VortexDebuff, false, DustID.Vortex);
+                        if (!npc.dontTakeDamage && npc.HasValidTarget)
                         {
-                            if (++Counter2 > 2)
+                            if ((npc.ai[3] - 60) % 120 == 0)
                             {
-                                Counter2 = 0;
-                                Vector2 speed = 16f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 2.0);
-                                if (Main.netMode != 1)
-                                    Projectile.NewProjectile(npc.Center, speed, ProjectileID.SaucerLaser, 15, 0f, Main.myPlayer);
+                                Counter = 30;
                             }
 
-                            if (Counter > 360)
-                                Counter = 0;
+                            if (Counter > 0)
+                            {
+                                Counter--;
+                                if (++Counter2 > 2)
+                                {
+                                    Counter2 = 0;
+                                    Vector2 speed = 16f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 3.0);
+                                    if (Main.netMode != 1)
+                                        Projectile.NewProjectile(npc.Center, speed, ProjectileID.SaucerLaser, 15, 0f, Main.myPlayer);
+                                }
+                            }
                         }
                         break;
 
@@ -6394,12 +6411,7 @@ namespace FargowiltasSouls.NPCs
                             npc.life = 1;
                             npc.active = true;
                             if (Main.netMode != 1)
-                            {
                                 npc.netUpdate = true;
-                                npc.dontTakeDamage = true;
-                                masoBool[3] = true;
-                                NetUpdateMaso(npc.whoAmI);
-                            }
                             return false;
                         }
 
@@ -6413,12 +6425,7 @@ namespace FargowiltasSouls.NPCs
                             npc.life = 1;
                             npc.active = true;
                             if (Main.netMode != 1)
-                            {
                                 npc.netUpdate = true;
-                                npc.dontTakeDamage = true;
-                                masoBool[3] = true;
-                                NetUpdateMaso(npc.whoAmI);
-                            }
                             return false;
                         }
 
@@ -8109,7 +8116,7 @@ namespace FargowiltasSouls.NPCs
             }
         }
 
-        private void Aura(NPC npc, float distance, int buff, bool reverse = false, int dustid = DustID.GoldFlame, bool checkDuration = false)
+        public static void Aura(NPC npc, float distance, int buff, bool reverse = false, int dustid = DustID.GoldFlame, bool checkDuration = false)
         {
             //works because buffs are client side anyway :ech:
             Player p = Main.player[Main.myPlayer];

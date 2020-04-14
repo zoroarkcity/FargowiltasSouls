@@ -1,3 +1,4 @@
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -8,9 +9,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 {
     public class Hungry : ModProjectile
     {
+        public float modifier;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hungry");
+            ProjectileID.Sets.Homing[projectile.type] = true;
+            ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
         }
 
         public override void SetDefaults()
@@ -20,13 +25,46 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.aiStyle = 1; 
             projectile.friendly = true;
             projectile.minion = true; 
-            projectile.penetrate = 4; 
+            projectile.penetrate = 4;
             projectile.timeLeft = 300;
             aiType = ProjectileID.Bullet;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(modifier);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            modifier = reader.ReadSingle();
+        }
+
         public override void AI()
         {
+            if (projectile.localAI[0] == 0)
+            {
+                projectile.localAI[0] = 1;
+
+                float minionSlotsUsed = 0;
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    if (Main.projectile[i].active && !Main.projectile[i].hostile && Main.projectile[i].owner == projectile.owner && Main.projectile[i].minion)
+                        minionSlotsUsed += Main.projectile[i].minionSlots;
+                }
+
+                modifier = Main.player[projectile.owner].maxMinions - minionSlotsUsed;
+                if (modifier < 0)
+                    modifier = 0;
+                if (modifier > 5)
+                    modifier = 5;
+
+                if (projectile.owner == Main.myPlayer)
+                {
+                    projectile.netUpdate = true;
+                }
+            }
+
             //dust!
             int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width, projectile.height + 5, 60, projectile.velocity.X * 0.2f,
                 projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
@@ -38,12 +76,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             const int aislotHomingCooldown = 0;
             const int homingDelay = 10;
             const float desiredFlySpeedInPixelsPerFrame = 60;
-
-            float modifier = Main.player[projectile.owner].maxMinions - Main.player[projectile.owner].slotsMinions;
-            if (modifier < 0)
-                modifier = 0;
-            if (modifier > 5)
-                modifier = 5;
+            
             float amountOfFramesToLerpBy = 120 - 20 * modifier; // minimum of 1, please keep in full numbers even though it's a float!
 
             projectile.ai[aislotHomingCooldown]++;
@@ -59,17 +92,17 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     projectile.velocity = Vector2.Lerp(projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
                 }
             }
-            /*else
+            else
             {
-                Main.NewText(amountOfFramesToLerpBy.ToString());
-                //Main.NewText(Main.player[projectile.owner].numMinions.ToString() + " " + Main.player[projectile.owner].maxMinions.ToString() + " " + Main.player[projectile.owner].slotsMinions.ToString());
-            }*/
+                Main.NewText(modifier.ToString());
+            }
         }
 
-        private int HomeOnTarget()
+        protected int HomeOnTarget()
         {
             NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
-            if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile))
+            if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile)
+                && Collision.CanHitLine(projectile.Center, 0, 0, minionAttackTargetNpc.Center, 0, 0))
                 return minionAttackTargetNpc.whoAmI;
 
             const bool homingCanAimAtWetEnemies = true;
@@ -79,7 +112,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC n = Main.npc[i];
-                if (n.CanBeChasedBy(projectile) && (!n.wet || homingCanAimAtWetEnemies))
+                if (n.CanBeChasedBy(projectile) && (!n.wet || homingCanAimAtWetEnemies) && Collision.CanHit(projectile.Center, 0, 0, n.Center, 0, 0))
                 {
                     float distance = projectile.Distance(n.Center);
                     if (distance <= homingMaximumRangeInPixels &&
@@ -92,6 +125,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
 
             return selectedTarget;
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (projectile.velocity.X != oldVelocity.X)
+                projectile.velocity.X = -oldVelocity.X;
+            if (projectile.velocity.Y != oldVelocity.Y)
+                projectile.velocity.Y = -oldVelocity.Y;
+            
+            return --projectile.penetrate <= 0;
         }
 
         public override void Kill(int timeleft)

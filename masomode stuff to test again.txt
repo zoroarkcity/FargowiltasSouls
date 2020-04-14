@@ -34,7 +34,6 @@ fixed(?) bug where mind break minion refuses to attack anything
 fixed piranha jump
 baby guardian spawn rate boosted to 10% until killed at least once
 added a small telegraph for devi mega ray
-buffed phantasm (nerf is now -33%, was -50%)
 changed how mutant/devi/abom dies so hopefully it doesnt say "x is no longer after you..."
 
 wof moves disgustingly fast when despawning
@@ -44,7 +43,7 @@ updated some abom boss visuals
 
 retinazer:
 	regular lasers now accelerate
-	has	x1.25 health
+	has	x1.2 health
 	cancels deathray immediately if you die during it
 king slime enrage completely changed, now only makes him attack faster, is cancelled when you return to his elevation
 moon lord:
@@ -57,3 +56,49 @@ reworked flesh hand:
 reworked destroyer gun (EX):
 	homing, speed, and length depend on number of empty slots (all max at 5 or more empty slots)
 	can target using minion right click
+
+sprites:
+	curse of the moon
+	recovering
+	plantera's fruit
+flesh hand/regurgitator no longer try to home through walls, now bounces off surfaces
+destroyer:
+	probes wont laser during coil
+	coil lasers no longer combo with dark stars
+	roars to telegraph coil
+	won't shoot dark stars during coil if you have lightning rod
+	reduced dark star velocity during coil
+
+nerfed spaz's p3 +25% speed bonus to +10%
+twins won't become vulnerable at 1 hp if you are dead and the other twin despawns (should prevent cheese)
+minion weapons with right click targeting now:
+	flesh hand
+	destroyer gun
+	destroyer gun ex
+	big brain buster
+	optic staff ex
+SLOWED prime DG during night by 10%
+prime no longer shoots rockets during DG
+demons can horde in hm
+sands of time and biocluster can be used to tp to last death point
+fixed abom sword handle in mp
+
+phantasm is -50%
+last prism is -33%
+tsunami -33%
+nerfed SDMG -25%
+nerfed xenopopper -25%
+tried fixing flesh hand and desgun/ex further
+abom saucers must now be manually destroyed
+plantera's hooks track you VERY aggressively in phase 2
+plantera's tentacles have 1 life
+toggle for panic buff when hit
+toggle for ballista panic buff when hit
+moon lord no longer shoots cultist lightning orb
+
+slowed plantera 10% in p2 unless you're envenomed
+golem spiky balls glow
+security wallet and upgrades give 50% discount on reforging
+saucer only shoots lasers in vulnerable phase while also doing deathray
+added timber champion's sentries
+added earth champion (hell only)

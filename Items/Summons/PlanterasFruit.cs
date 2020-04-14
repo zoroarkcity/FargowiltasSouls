@@ -8,8 +8,6 @@ namespace FargowiltasSouls.Items.Summons
 {
 	public class PlanterasFruit : ModItem
 	{
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Plantera's Fruit");

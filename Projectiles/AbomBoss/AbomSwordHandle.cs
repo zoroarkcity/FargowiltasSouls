@@ -46,7 +46,21 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             }
             else
             {
-                projectile.Kill();
+                if (projectile.localAI[0] == 15)
+                {
+                    for (int i = 0; i < Main.maxProjectiles; i++)
+                    {
+                        if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].type == ModContent.ProjectileType<AbomSword>())
+                        {
+                            projectile.ai[1] = i;
+                            return;
+                        }
+                    }
+                }
+                else if (projectile.localAI[0] > 15 || Main.netMode != 1)
+                {
+                    projectile.Kill();
+                }
                 return;
             }
             if (projectile.velocity.HasNaNs() || projectile.velocity == Vector2.Zero)

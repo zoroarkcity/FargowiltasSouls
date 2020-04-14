@@ -20,7 +20,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.width = 25;
             npc.height = 25;
             npc.defense = 90;
-            npc.lifeMax = 50000;
+            npc.lifeMax = 1200;
             npc.scale = 2f;
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath14;
@@ -50,8 +50,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
         public override void AI()
         {
             if (npc.ai[0] < 0 || npc.ai[0] >= Main.maxNPCs || !Main.npc[(int)npc.ai[0]].active ||
-                Main.npc[(int)npc.ai[0]].type != mod.NPCType("AbomBoss") ||
-                !(Main.npc[(int)npc.ai[0]].ai[0] == 0 || (Main.npc[(int)npc.ai[0]].ai[0] == 1 && Main.npc[(int)npc.ai[0]].ai[1] < 120)))
+                Main.npc[(int)npc.ai[0]].type != mod.NPCType("AbomBoss") || Main.npc[(int)npc.ai[0]].dontTakeDamage)
             {
                 npc.StrikeNPCNoInteraction(999999, 0f, 0);
                 return;
@@ -59,6 +58,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
             NPC abom = Main.npc[(int)npc.ai[0]];
             npc.target = abom.target;
+
+            npc.dontTakeDamage = abom.ai[0] == 0;
 
             if (++npc.ai[1] > 90) //pause before attacking
             {

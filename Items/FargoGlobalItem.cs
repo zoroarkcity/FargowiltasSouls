@@ -267,5 +267,12 @@ namespace FargowiltasSouls.Items
 
             return true;
         }
+
+        public override bool ReforgePrice(Item item, ref int reforgePrice, ref bool canApplyDiscount)
+        {
+            if (Main.LocalPlayer.GetModPlayer<FargoPlayer>().SecurityWallet)
+                reforgePrice /= 2;
+            return true;
+        }
     }
 }

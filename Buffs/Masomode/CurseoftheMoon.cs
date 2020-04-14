@@ -17,12 +17,6 @@ namespace FargowiltasSouls.Buffs.Masomode
             Description.AddTranslation(GameCulture.Chinese, "月亮的愤怒吞噬了你");
         }
 
-        public override bool Autoload(ref string name, ref string texture)
-        {
-            texture = "FargowiltasSouls/Buffs/PlaceholderDebuff";
-            return true;
-        }
-
         public override void Update(Player player, ref int buffIndex)
         {
             player.statDefense -= 10;

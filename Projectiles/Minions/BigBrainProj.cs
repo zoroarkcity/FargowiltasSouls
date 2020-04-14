@@ -13,6 +13,9 @@ namespace FargowiltasSouls.Projectiles.Minions
         {
             DisplayName.SetDefault("Big Brain Proj");
             Main.projFrames[projectile.type] = 11;
+            ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
+            ProjectileID.Sets.Homing[projectile.type] = true;
+            ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
         }
 
         public override void SetDefaults()

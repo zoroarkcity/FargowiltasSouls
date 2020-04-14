@@ -172,6 +172,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool SquireKB;
 
+        [Label("$Mods.FargowiltasSouls.SquirePanicConfig")]
+        [DefaultValue(true)]
+        public bool SquirePanic;
+
         [Header("$Mods.FargowiltasSouls.LifeHeader")]
         [Label("$Mods.FargowiltasSouls.BeetleConfig")]
         [DefaultValue(true)]
@@ -532,6 +536,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.DefenseBeeConfig")]
         [DefaultValue(true)]
         public bool BeesOnHit;
+
+        [Label("$Mods.FargowiltasSouls.DefensePanicConfig")]
+        [DefaultValue(true)]
+        public bool PanicOnHit;
 
         [Label("$Mods.FargowiltasSouls.SupersonicConfig")]
         [DefaultValue(true)]
