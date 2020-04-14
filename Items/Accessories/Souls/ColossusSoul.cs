@@ -47,7 +47,7 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell";
 
             if (calamity != null)
             {
-                tooltip += "\nEffects of Asgardian Aegis";
+                tooltip += "\nEffects of Rampart of Deities and Asgardian Aegis";
                 tooltip_ch += "\n拥有阿斯加德之庇护的效果";
             }
 
@@ -80,106 +80,8 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell";
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 100;
-            player.endurance += 0.15f;
-            player.lifeRegen += 5;
-
-            //hand warmer, pocket mirror, ankh shield
-            player.buffImmune[BuffID.Chilled] = true;
-            player.buffImmune[BuffID.Frozen] = true;
-            player.buffImmune[BuffID.Stoned] = true;
-            player.buffImmune[BuffID.Weak] = true;
-            player.buffImmune[BuffID.BrokenArmor] = true;
-            player.buffImmune[BuffID.Bleeding] = true;
-            player.buffImmune[BuffID.Poisoned] = true;
-            player.buffImmune[BuffID.Slow] = true;
-            player.buffImmune[BuffID.Confused] = true;
-            player.buffImmune[BuffID.Silenced] = true;
-            player.buffImmune[BuffID.Cursed] = true;
-            player.buffImmune[BuffID.Darkness] = true;
-            player.noKnockback = true;
-            player.fireWalk = true;
-            //brain of confusion
-            player.brainOfConfusion = true;
-            //charm of myths
-            player.pStone = true;
-            //bee cloak, sweet heart necklace, star veil
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.StarCloak))
-            {
-                player.starCloak = true;
-            }
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BeesOnHit))
-            {
-                player.bee = true;
-            }
-            player.panic = true;
-            player.longInvince = true;
-            //spore sac
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SporeSac))
-            {
-                player.SporeSac();
-                player.sporeSac = true;
-            }
-            //flesh knuckles
-            player.aggro += 400;
-            //frozen turtle shell
-            if (player.statLife <= player.statLifeMax2 * 0.5) player.AddBuff(BuffID.IceBarrier, 5, true);
-            //paladins shield
-            player.hasPaladinShield = true;
-            if (player.statLife > player.statLifeMax2 * .25)
-            {
-                for (int k = 0; k < 255; k++)
-                {
-                    Player target = Main.player[k];
-
-                    if (target.active && player != target && Vector2.Distance(target.Center, player.Center) < 400) target.AddBuff(BuffID.PaladinsShield, 30);
-                }
-            }
-
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
-
-            if (Fargowiltas.Instance.CalamityLoaded) Calamity(player);
-        }
-
-        
-
-        private void Thorium(Player player)
-        {
-            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            //terrarium defender
-            if (player.statLife < player.statLifeMax * 0.2f)
-            {
-                player.AddBuff(thorium.BuffType("TerrariumRegen"), 10, true);
-                player.lifeRegen += 20;
-            }
-            if (player.statLife < player.statLifeMax * 0.25f)
-            {
-                player.AddBuff(thorium.BuffType("TerrariumDefense"), 10, true);
-                player.statDefense += 20;
-            }
-            //oceans retaliation
-            thoriumPlayer.turtleShield2 = true;
-            thoriumPlayer.SpinyShield = true;
-        }
-
-        private void Calamity(Player player)
-        {
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-            //rampart of dieties
-            modPlayer.dAmulet = true;
-            if ((double)player.statLife <= (double)player.statLifeMax2 * 0.15)
-            {
-                player.endurance += 0.05f;
-                player.statDefense += 10;
-            }
-            //becase calamity made it itself for some reason no duplicate
-            player.starCloak = false;
-            //asgardian aegis
-            modPlayer.dashMod = 4;
-            modPlayer.elysianAegis = true;
-            player.buffImmune[calamity.BuffType("BrimstoneFlames")] = true;
-            player.buffImmune[calamity.BuffType("HolyLight")] = true;
-            player.buffImmune[calamity.BuffType("GlacialState")] = true;
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            modPlayer.ColossusSoul(100, 0.15f, 5, hideVisual);
         }
 
         public override void AddRecipes()

@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
 using Fargowiltas.Items.Tiles;
+using CalamityMod.Items.Accessories;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -40,7 +41,7 @@ Increased minion knockback";
 
             if (calamity != null)
             {
-                tooltip += "\nEffects of Statis' Belt of Curses";
+                tooltip += "\nEffects of Nucleogenesis";
                 tooltip_ch += "\n拥有斯塔提斯的诅咒系带的效果";
             }
 
@@ -78,7 +79,7 @@ Increased minion knockback";
 
             if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
 
-            if (Fargowiltas.Instance.CalamityLoaded) Calamity(player);
+            if (Fargowiltas.Instance.CalamityLoaded) Calamity(player, hideVisual);
         }
 
         private void Thorium(Player player)
@@ -96,19 +97,16 @@ Increased minion knockback";
             }
         }
 
-        private void Calamity(Player player)
+        private void Calamity(Player player, bool hideVisual)
         {
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-            modPlayer.statisBeltOfCurses = true;
-            modPlayer.shadowMinions = true;
-            modPlayer.tearMinions = true;
+            calamity.GetItem("Nucleogenesis").UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(null, "OccultistsEssence");
-            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? calamity.ItemType("StatisBeltOfCurses") : ItemID.PapyrusScarab);
+            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? ModContent.ItemType<Nucleogenesis>() : ItemID.PapyrusScarab);
 
             if (Fargowiltas.Instance.ThoriumLoaded)
             {

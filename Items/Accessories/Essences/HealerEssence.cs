@@ -97,7 +97,7 @@ namespace FargowiltasSouls.Items.Accessories.Essences
             
             foreach (string i in items) recipe.AddIngredient(thorium.ItemType(i));
 
-            recipe.AddTile(TileID.DemonAltar);
+            recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
