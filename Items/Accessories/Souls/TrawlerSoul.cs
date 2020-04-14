@@ -68,25 +68,7 @@ Permanent Sonar and Crate Buffs";
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            //instacatch
-            modPlayer.FishSoul1 = true;
-            //extra lures
-            modPlayer.FishSoul2 = true;
-            modPlayer.AddPet(SoulConfig.Instance.ZephyrFishPet, hideVisual, BuffID.ZephyrFish, ProjectileID.ZephyrFish);
-            player.fishingSkill += 60;
-            player.sonarPotion = true;
-            player.cratePotion = true;
-            player.accFishingLine = true;
-            player.accTackleBox = true;
-            player.accFishFinder = true;
-
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
-        }
-
-        private void Thorium(Player player)
-        {
-            MagmaBoundFishingLineMP magmaPlayer = player.GetModPlayer<MagmaBoundFishingLineMP>();
-            magmaPlayer.magmaLine = true;
+            modPlayer.TrawlerSoul(hideVisual);
         }
 
         public override void AddRecipes()

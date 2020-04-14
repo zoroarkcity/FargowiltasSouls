@@ -264,9 +264,9 @@ Effects of Heart of the Elements and The Sponge");
             recipe.AddIngredient(ModContent.ItemType<DragonPow>());
             recipe.AddIngredient(ModContent.ItemType<Oracle>());
             recipe.AddIngredient(ModContent.ItemType<Drataliornus>());
+            recipe.AddIngredient(ModContent.ItemType<Photoviscerator>());
             recipe.AddIngredient(ModContent.ItemType<VividClarity>());
             recipe.AddIngredient(ModContent.ItemType<CosmicImmaterializer>());
-            recipe.AddIngredient(ModContent.ItemType<Celestus>());
             recipe.AddIngredient(ModContent.ItemType<Supernova>());
 
             recipe.AddTile(calamity, "DraedonsForge");

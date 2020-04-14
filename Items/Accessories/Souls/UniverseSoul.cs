@@ -260,7 +260,10 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
             modPlayer.shadowMinions = true;
             modPlayer.tearMinions = true;
             //throw
-            modPlayer.nanotech = true;
+            calamity.GetItem("EclipseMirror").UpdateAccessory(player, hideVisual);
+            calamity.GetItem("Nanotech").UpdateAccessory(player, hideVisual);
+            calamity.GetItem("VeneratedLocket").UpdateAccessory(player, hideVisual);
+            calamity.GetItem("DragonScales").UpdateAccessory(player, hideVisual);
         }
 
         private void DBT(Player player)
@@ -288,8 +291,7 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
             recipe.AddIngredient(null, "ArchWizardsSoul");
             recipe.AddIngredient(null, "ConjuristsSoul");
             recipe.AddIngredient(null, "OlympiansSoul");
-            recipe.AddIngredient(null, "MutantScale", 10);
-
+            
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
                 recipe.AddIngredient(null, "GuardianAngelsSoul");
@@ -297,10 +299,17 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
                 recipe.AddIngredient(thorium.ItemType("TheRing"));              
             }
 
+            if (Fargowiltas.Instance.CalamityLoaded)
+            {
+                recipe.AddIngredient(null, "RogueSoul");
+            }
+
             if (Fargowiltas.Instance.DBZMODLoaded)
             {
                 recipe.AddIngredient(null, "KiSoul");
             }
+
+            recipe.AddIngredient(null, "MutantScale", 10);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 

@@ -87,62 +87,7 @@ Summons a pet Magic Lantern");
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            //mining speed, spelunker, dangersense, light, hunter, pet
-            modPlayer.MinerEffect(hideVisual, .66f);
-            //placing speed up
-            player.tileSpeed += 0.5f;
-            player.wallSpeed += 0.5f;
-            //toolbox
-            Player.tileRangeX += 50;
-            Player.tileRangeY += 50;
-            //gizmo pack
-            player.autoPaint = true;
-            //presserator
-            player.autoActuator = true;
-            //royal gel
-            player.npcTypeNoAggro[1] = true;
-            player.npcTypeNoAggro[16] = true;
-            player.npcTypeNoAggro[59] = true;
-            player.npcTypeNoAggro[71] = true;
-            player.npcTypeNoAggro[81] = true;
-            player.npcTypeNoAggro[138] = true;
-            player.npcTypeNoAggro[121] = true;
-            player.npcTypeNoAggro[122] = true;
-            player.npcTypeNoAggro[141] = true;
-            player.npcTypeNoAggro[147] = true;
-            player.npcTypeNoAggro[183] = true;
-            player.npcTypeNoAggro[184] = true;
-            player.npcTypeNoAggro[204] = true;
-            player.npcTypeNoAggro[225] = true;
-            player.npcTypeNoAggro[244] = true;
-            player.npcTypeNoAggro[302] = true;
-            player.npcTypeNoAggro[333] = true;
-            player.npcTypeNoAggro[335] = true;
-            player.npcTypeNoAggro[334] = true;
-            player.npcTypeNoAggro[336] = true;
-            player.npcTypeNoAggro[537] = true;
-
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BuilderMode))
-                modPlayer.BuilderMode = true;
-
-            //cell phone
-            player.accWatch = 3;
-            player.accDepthMeter = 1;
-            player.accCompass = 1;
-            player.accFishFinder = true;
-            player.accDreamCatcher = true;
-            player.accOreFinder = true;
-            player.accStopwatch = true;
-            player.accCritterGuide = true;
-            player.accJarOfSouls = true;
-            player.accThirdEye = true;
-            player.accCalendar = true;
-            player.accWeatherRadio = true;
-
-            if (!Fargowiltas.Instance.ThoriumLoaded) return;
-
-            //pets
-            modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.BoxPet, hideVisual, thorium.BuffType("LockBoxBuff"), thorium.ProjectileType("LockBoxPet"));
+            modPlayer.WorldShaperSoul(hideVisual);
         }
 
         public override void AddRecipes()
