@@ -70,6 +70,9 @@ namespace FargowiltasSouls.Projectiles.Champions
                     
                     player.position += projectile.DirectionTo(npc.Center) * dragSpeed;
                     projectile.Center = player.Center;
+
+                    if (projectile.timeLeft == 1)
+                        player.velocity = Vector2.Zero;
                 }
             }
         }
