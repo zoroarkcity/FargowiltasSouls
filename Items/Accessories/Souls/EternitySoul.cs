@@ -409,7 +409,6 @@ Efectos de pociones de Brillo, Espeleólogo, Cazador, y Sentido del peligro; Efe
 
             if (calamity != null)
             {
-
                 tooltip_ch += @"拥有元素之握, 元素箭袋, 空灵护符, 斯塔提斯的诅咒系带和纳米技术的效果
                 拥有阿斯加德之庇护的效果";
             }
