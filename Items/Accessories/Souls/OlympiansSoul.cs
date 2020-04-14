@@ -37,12 +37,6 @@ namespace FargowiltasSouls.Items.Accessories.Souls
                 tooltip_ch += "\n拥有投手大师指导:卷三,美人鱼水壶和亡者眼罩的效果";
             }
 
-            if (calamity != null)
-            {
-                tooltip += "\nEffects of Nanotech\nBonuses also effect rogue damage";
-                tooltip_ch += "\n拥有纳米技术的效果\n加成同样影响盗贼伤害";
-            }
-
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "奥林匹斯之魂");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
@@ -77,8 +71,6 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             player.thrownVelocity += 0.15f;
 
             if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
-
-            if (Fargowiltas.Instance.CalamityLoaded) Calamity(player);
         }
 
         private void Thorium(Player player)
@@ -92,15 +84,6 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             thoriumPlayer.canteenCadet = true;
         }
 
-        private void Calamity(Player player)
-        {
-            calamity.Call("AddRogueDamage", player, 0.3f);
-            calamity.Call("AddRogueCrit", player, 15);
-            calamity.Call("AddRogueVelocity", player, 0.15f);
-
-            player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().nanotech = true;
-        }
-
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
@@ -109,39 +92,35 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
-                recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? calamity.ItemType("Nanotech") : thorium.ItemType("MagnetoGrip"));
+                recipe.AddIngredient(thorium.ItemType("MagnetoGrip"));
                 recipe.AddIngredient(thorium.ItemType("ThrowingGuideVolume3"));
                 recipe.AddIngredient(thorium.ItemType("MermaidCanteen"));
                 recipe.AddIngredient(thorium.ItemType("DeadEyePatch"));
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("BananarangThrown") : ItemID.Bananarang, 5);
+                recipe.AddIngredient(fargos.ItemType("BananarangThrown"), 5);
                 recipe.AddIngredient(thorium.ItemType("HotPot"));
                 recipe.AddIngredient(thorium.ItemType("VoltHatchet"));
                 recipe.AddIngredient(thorium.ItemType("SparkTaser"));
                 recipe.AddIngredient(thorium.ItemType("PharaohsSlab"));
                 recipe.AddIngredient(thorium.ItemType("TerraKnife"));
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("VampireKnivesThrown") : ItemID.VampireKnives);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("PaladinsHammerThrown") : ItemID.PaladinsHammer);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("TerrarianThrown") : ItemID.Terrarian);
+                recipe.AddIngredient(fargos.ItemType("VampireKnivesThrown"));
+                recipe.AddIngredient(fargos.ItemType("PaladinsHammerThrown"));
+                recipe.AddIngredient(fargos.ItemType("TerrarianThrown"));
             }
             else
             {
-                if(Fargowiltas.Instance.CalamityLoaded)
-                    recipe.AddIngredient( calamity.ItemType("Nanotech"));
-                else
-                    recipe.AddIngredient(fargos != null ? fargos.ItemType("MagicDaggerThrown") : ItemID.MagicDagger);
-
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("BananarangThrown") : ItemID.Bananarang, 5);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("AmarokThrown") : ItemID.Amarok);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("ShadowFlameKnifeThrown") : ItemID.ShadowFlameKnife);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("FlyingKnifeThrown") : ItemID.FlyingKnife);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("LightDiscThrown") : ItemID.LightDisc, 5);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("FlowerPowThrown") : ItemID.FlowerPow);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("ToxicFlaskThrown") : ItemID.ToxicFlask);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("VampireKnivesThrown") : ItemID.VampireKnives);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("PaladinsHammerThrown") : ItemID.PaladinsHammer);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("PossessedHatchetThrown") : ItemID.PossessedHatchet);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("TheEyeOfCthulhuThrown") : ItemID.TheEyeOfCthulhu);
-                recipe.AddIngredient(fargos != null ? fargos.ItemType("TerrarianThrown") : ItemID.Terrarian);
+                recipe.AddIngredient(fargos.ItemType("MagicDaggerThrown"));
+                recipe.AddIngredient(fargos.ItemType("BananarangThrown"), 5);
+                recipe.AddIngredient(fargos.ItemType("AmarokThrown"));
+                recipe.AddIngredient(fargos.ItemType("ShadowFlameKnifeThrown"));
+                recipe.AddIngredient(fargos.ItemType("FlyingKnifeThrown"));
+                recipe.AddIngredient(fargos.ItemType("LightDiscThrown"), 5);
+                recipe.AddIngredient(fargos.ItemType("FlowerPowThrown"));
+                recipe.AddIngredient(fargos.ItemType("ToxicFlaskThrown"));
+                recipe.AddIngredient(fargos.ItemType("VampireKnivesThrown"));
+                recipe.AddIngredient(fargos.ItemType("PaladinsHammerThrown"));
+                recipe.AddIngredient(fargos.ItemType("PossessedHatchetThrown"));
+                recipe.AddIngredient(fargos.ItemType("TheEyeOfCthulhuThrown"));
+                recipe.AddIngredient(fargos.ItemType("TerrarianThrown"));
             }
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));

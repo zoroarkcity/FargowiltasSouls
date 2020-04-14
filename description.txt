@@ -5,6 +5,8 @@ NEW UPDATE - v 1.3.1
 -Updated all Calamity Enchantment and Force recipes
 -Added several pets and new accessory effects
 -Added Brimflame, Snow Ruffian, Umbraphile, Sulphurous, Fearmonger, Fathom Swarmer, and Plague Reaper Enchantments
+-Added Outlaw's Essence and Vagabond's Soul, removed rogue bonuses from Slinger's Essence and Olympian's Soul
+-Added nucleogenesis to conjurist
 -Added Force of Exaltation, renamed Force of the Apocalypse to Force of Annihilation
 
 

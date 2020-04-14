@@ -47,9 +47,8 @@ Allows for very long lasting flight");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.wingTimeMax = 2000;
-            player.wingTime = player.wingTimeMax;
-            player.ignoreWater = true;
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            modPlayer.FlightMasterySoul();
         }
 
         public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,
