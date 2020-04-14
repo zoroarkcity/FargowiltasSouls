@@ -26,7 +26,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.height = 160;
             npc.damage = 150;
             npc.defense = 80;
-            npc.lifeMax = 240000;
+            npc.lifeMax = 320000;
             npc.HitSound = SoundID.NPCHit41;
             npc.DeathSound = SoundID.NPCDeath44;
             npc.noGravity = true;
@@ -52,8 +52,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            cooldownSlot = 1;
-            return true;
+            return false;
         }
 
         public override void AI()
@@ -99,7 +98,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (++npc.ai[1] < 120)
                     {
                         targetPos = player.Center;
-                        targetPos.Y -= 400;
+                        targetPos.Y -= 375;
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.6f, 24f, true);
                     }
@@ -124,7 +123,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         if (++npc.ai[2] > 15)
                         {
-                            int heal = (int)(npc.lifeMax / 2 / 120 * 15 * Main.rand.NextFloat(1f, 1.5f));
+                            int heal = (int)(npc.lifeMax / 2 / 120 * Main.rand.NextFloat(1f, 1.5f));
                             npc.life += heal;
                             if (npc.life > npc.lifeMax)
                                 npc.life = npc.lifeMax;
@@ -165,9 +164,70 @@ namespace FargowiltasSouls.NPCs.Champions
                     else
                     {
                         targetPos = player.Center;
-                        targetPos.Y -= 350;
+                        targetPos.Y -= 325;
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.4f, 24f, true);
+                    }
+
+                    if (npc.localAI[2] == 0 && npc.life < npc.lifeMax / 2)
+                    {
+                        npc.ai[0] = -1;
+
+                        for (int i = 0; i < Main.maxNPCs; i++) //find hands, update
+                        {
+                            if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<EarthChampionHand>() && Main.npc[i].ai[2] == npc.whoAmI)
+                            {
+                                Main.npc[i].ai[0] = -1;
+                                Main.npc[i].ai[1] = 0;
+                                Main.npc[i].localAI[0] = 0;
+                                Main.npc[i].localAI[1] = 0;
+                                Main.npc[i].netUpdate = true;
+                            }
+                        }
+                    }
+                    break;
+
+                case 1: //fireballs
+                    if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f
+                        || !player.ZoneUnderworldHeight) //despawn code
+                    {
+                        npc.TargetClosest(false);
+                        if (npc.timeLeft > 30)
+                            npc.timeLeft = 30;
+
+                        npc.noTileCollide = true;
+                        npc.noGravity = true;
+                        npc.velocity.Y += 1f;
+
+                        return;
+                    }
+                    else
+                    {
+                        targetPos = player.Center;
+                        targetPos.Y -= 350;
+                        if (npc.Distance(targetPos) > 50)
+                            Movement(targetPos, 0.2f, 24f, true);
+
+                        if (++npc.ai[2] > 75)
+                        {
+                            npc.ai[2] = 0;
+                            if (Main.netMode != 1) //shoot spread of fireballs
+                            {
+                                for (int i = -1; i <= 1; i++)
+                                {
+                                    Projectile.NewProjectile(npc.Center,
+                                        (npc.localAI[2] == 1 ? 12 : 8) * npc.DirectionTo(player.Center).RotatedBy(MathHelper.ToRadians(8 * i)),
+                                        ProjectileID.Fireball, npc.damage / 4, 0f, Main.myPlayer);
+                                }
+                            }
+                        }
+
+                        if (++npc.ai[1] > 480)
+                        {
+                            npc.ai[0]++;
+                            npc.ai[1] = 0;
+                            npc.netUpdate = true;
+                        }
                     }
 
                     if (npc.localAI[2] == 0 && npc.life < npc.lifeMax / 2)

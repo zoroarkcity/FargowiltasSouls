@@ -166,17 +166,17 @@ namespace FargowiltasSouls.NPCs.Champions
                     else if (npc.ai[1] == 105) //dash
                     {
                         npc.localAI[3] = 1;
-                        npc.velocity = npc.DirectionTo(player.Center) * (head.localAI[2] == 1 ? 18 : 16);
+                        npc.velocity = npc.DirectionTo(player.Center) * (head.localAI[2] == 1 ? 20 : 16);
                     }
                     else //while dashing
                     {
-                        npc.velocity *= head.localAI[2] == 1 ? 1.02f : 1.01f;
+                        npc.velocity *= 1.02f;
 
                         npc.localAI[3] = 1;
                         npc.rotation = npc.velocity.ToRotation() - (float)Math.PI / 2;
 
                         //passed player, prepare another dash
-                        if ((++npc.localAI[1] > 45 && npc.Distance(player.Center) > 1000) ||
+                        if ((++npc.localAI[1] > 60 && npc.Distance(player.Center) > 1000) ||
                             (npc.ai[3] > 0 ? npc.Center.X > player.Center.X + 300 : npc.Center.X < player.Center.X - 300))
                         {
                             npc.ai[1] = 0;
@@ -320,6 +320,86 @@ namespace FargowiltasSouls.NPCs.Champions
                                 }
                             }
                         }
+                    }
+                    break;
+
+                case 8: //wait while head does fireballs
+                    npc.noTileCollide = true;
+
+                    targetPos = head.Center;
+                    targetPos.Y += 250;
+                    targetPos.X += 300 * -npc.ai[3];
+                    Movement(targetPos, 0.8f, 24f);
+
+                    npc.rotation = 0;
+
+                    if (npc.ai[1] > 60) //grace period over, if head reverts back then leave this state
+                    {
+                        if (head.ai[0] != 1)
+                        {
+                            npc.ai[0]++;
+                            npc.ai[1] = 0;
+                            npc.netUpdate = true;
+                        }
+                    }
+                    else
+                    {
+                        npc.ai[1]++;
+
+                        if (head.ai[0] == 0) //just entered here, change head to shoot fireballs
+                        {
+                            head.ai[0] = 1;
+                            head.netUpdate = true;
+                        }
+                    }
+                    break;
+
+                case 9:
+                    goto case 0;
+
+                case 10: //crystal bomb drop
+                    if (head.localAI[2] == 1)
+                        npc.position += player.velocity / 2;
+
+                    if (npc.ai[3] > 0)
+                    {
+                        targetPos = player.Center;
+                        targetPos.Y = player.Center.Y - 400;
+                        targetPos.X += player.velocity.X * 60;
+
+                        if (npc.Distance(targetPos) > 50)
+                            Movement(targetPos, 0.6f, 32f);
+
+                        npc.rotation = (float)Math.PI / 2;
+                    }
+                    else
+                    {
+                        targetPos = player.Center;
+                        targetPos.Y -= 300;
+                        targetPos.X += 1000 * (float)Math.Sin(2 * Math.PI / 77 * npc.ai[1]);
+
+                        Movement(targetPos, 1.8f, 32f);
+                        
+                        npc.rotation = -(float)Math.PI / 2;
+
+                        npc.localAI[0] += 0.5f;
+                    }
+
+                    if (++npc.localAI[0] > 60 && npc.ai[1] > 120)
+                    {
+                        npc.localAI[0] = 0;
+                        if (Main.netMode != 1)
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitY * 4f, ModContent.ProjectileType<CrystalBomb>(), npc.damage / 4, 0f, Main.myPlayer);
+                        }
+                    }
+
+                    if (++npc.ai[1] > 600)
+                    {
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.localAI[0] = 0;
+                        npc.netUpdate = true;
                     }
                     break;
 
