@@ -140,7 +140,7 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
 
             if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
 
-            if (Fargowiltas.Instance.CalamityLoaded) Calamity(player);
+            if (Fargowiltas.Instance.CalamityLoaded) Calamity(player, hideVisual);
 
             if (Fargowiltas.Instance.DBZMODLoaded) DBT(player);
         }
@@ -237,7 +237,7 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
             thoriumPlayer.bardBounceBonus = 5;
         }
 
-        private void Calamity(Player player)
+        private void Calamity(Player player, bool hideVisual)
         {
             CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
             //melee

@@ -106,7 +106,7 @@ Increased minion knockback";
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(null, "OccultistsEssence");
-            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? ModContent.ItemType<Nucleogenesis>() : ItemID.PapyrusScarab);
+            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? calamity.ItemType("Nucleogenesis") : ItemID.PapyrusScarab);
 
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
