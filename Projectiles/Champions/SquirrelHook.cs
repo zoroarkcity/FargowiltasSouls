@@ -72,7 +72,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                     projectile.Center = player.Center;
 
                     if (projectile.timeLeft == 1)
-                        player.velocity = Vector2.Zero;
+                        player.velocity /= 3;
                 }
             }
         }
