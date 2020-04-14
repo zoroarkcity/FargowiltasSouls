@@ -151,11 +151,13 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 1.2f, 24f);
 
-                        npc.position += player.velocity / 3f;
+                        if (head.localAI[2] == 1)
+                            npc.position += player.velocity / 3f;
                     }
                     else if (npc.ai[1] < 105) //prepare to dash, enable hitbox
                     {
-                        npc.position += player.velocity / 10f;
+                        if (head.localAI[2] == 1)
+                            npc.position += player.velocity / 10f;
 
                         npc.localAI[3] = 1;
                         npc.velocity *= 0.95f;
@@ -164,11 +166,11 @@ namespace FargowiltasSouls.NPCs.Champions
                     else if (npc.ai[1] == 105) //dash
                     {
                         npc.localAI[3] = 1;
-                        npc.velocity = npc.DirectionTo(player.Center) * 18;
+                        npc.velocity = npc.DirectionTo(player.Center) * (head.localAI[2] == 1 ? 18 : 16);
                     }
                     else //while dashing
                     {
-                        npc.velocity *= 1.02f;
+                        npc.velocity *= head.localAI[2] == 1 ? 1.02f : 1.01f;
 
                         npc.localAI[3] = 1;
                         npc.rotation = npc.velocity.ToRotation() - (float)Math.PI / 2;
@@ -214,7 +216,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         Movement(targetPos, 0.8f, 24f);
                     }
 
-                    if (++npc.localAI[0] > 18)
+                    if (++npc.localAI[0] > (head.localAI[2] == 1 ? 18 : 24))
                     {
                         npc.localAI[0] = 0;
                         if (Main.netMode != 1)
@@ -251,7 +253,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     else if (npc.ai[1] == 90) //dash down
                     {
-                        npc.velocity = Vector2.UnitY * 30;
+                        npc.velocity = Vector2.UnitY * (head.localAI[2] == 1 ? 36 : 24);
                         npc.localAI[0] = player.position.Y;
                         npc.netUpdate = true;
                     }
@@ -294,7 +296,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             npc.localAI[1]++;
 
-                            if (npc.localAI[1] > 30) //proceed after short pause
+                            if (npc.localAI[1] > (head.localAI[2] == 1 ? 20 : 30)) //proceed after short pause
                             {
                                 npc.netUpdate = true;
                                 npc.ai[0]++;
