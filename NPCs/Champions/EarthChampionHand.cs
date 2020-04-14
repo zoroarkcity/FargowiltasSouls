@@ -26,7 +26,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 112;
             npc.height = 112;
-            npc.damage = 150;
+            npc.damage = 125;
             npc.defense = 80;
             npc.lifeMax = 300000;
             npc.HitSound = SoundID.NPCHit41;
@@ -151,7 +151,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 1.2f, 24f);
 
-                        npc.position += player.velocity / 4f;
+                        npc.position += player.velocity / 3f;
                     }
                     else if (npc.ai[1] < 105) //prepare to dash, enable hitbox
                     {
@@ -164,11 +164,11 @@ namespace FargowiltasSouls.NPCs.Champions
                     else if (npc.ai[1] == 105) //dash
                     {
                         npc.localAI[3] = 1;
-                        npc.velocity = npc.DirectionTo(player.Center) * 20;
+                        npc.velocity = npc.DirectionTo(player.Center) * 18;
                     }
                     else //while dashing
                     {
-                        npc.velocity *= 1.03f;
+                        npc.velocity *= 1.02f;
 
                         npc.localAI[3] = 1;
                         npc.rotation = npc.velocity.ToRotation() - (float)Math.PI / 2;
