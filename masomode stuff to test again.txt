@@ -100,5 +100,5 @@ slowed plantera 10% in p2 unless you're envenomed
 golem spiky balls glow
 security wallet and upgrades give 50% discount on reforging
 saucer only shoots lasers in vulnerable phase while also doing deathray
-added timber champion's sentries
-added earth champion (hell only)
+
+did something to reduce hand despawning off bottom of map and slowed crystal bombs

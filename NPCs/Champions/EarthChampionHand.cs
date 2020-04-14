@@ -269,9 +269,13 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.position.Y + npc.height > npc.localAI[0]) //become solid to smash on tiles
                             npc.noTileCollide = false;
 
-                        //extra check to prevent noclipping
-                        if (!npc.noTileCollide && Collision.SolidCollision(npc.position, npc.width, npc.height))
-                            npc.velocity.Y = 0;
+                        //extra checks to prevent noclipping
+                        if (!npc.noTileCollide)
+                        {
+                            if (Collision.SolidCollision(npc.position, npc.width, npc.height)
+                                || npc.position.Y + npc.height > Main.maxTilesY * 16 - 16)
+                                npc.velocity.Y = 0;
+                        }
 
                         if (npc.velocity.Y == 0) //we've hit something
                         {
@@ -390,7 +394,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.localAI[0] = 0;
                         if (Main.netMode != 1)
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.UnitY * 4f, ModContent.ProjectileType<CrystalBomb>(), npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitY * 2f, ModContent.ProjectileType<CrystalBomb>(), npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
 
