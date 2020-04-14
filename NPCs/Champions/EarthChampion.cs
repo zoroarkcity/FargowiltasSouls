@@ -173,6 +173,9 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.localAI[2] == 0 && npc.life < npc.lifeMax / 2)
                     {
                         npc.ai[0] = -1;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
 
                         for (int i = 0; i < Main.maxNPCs; i++) //find hands, update
                         {
@@ -234,6 +237,9 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.localAI[2] == 0 && npc.life < npc.lifeMax / 2)
                     {
                         npc.ai[0] = -1;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
 
                         for (int i = 0; i < Main.maxNPCs; i++) //find hands, update
                         {

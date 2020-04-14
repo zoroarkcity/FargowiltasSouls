@@ -705,6 +705,25 @@ namespace FargowiltasSouls.Projectiles
 
                 #endregion
 
+                case ProjectileID.PhantasmalBolt:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore))
+                        {
+                            if (Main.netMode != 1)
+                            {
+                                for (int i = -1; i <= 1; i++)
+                                {
+                                    Projectile.NewProjectile(projectile.Center,
+                                        Vector2.Normalize(projectile.velocity).RotatedBy(MathHelper.ToRadians(5 * i)),
+                                        ModContent.ProjectileType<PhantasmalBolt2>(), projectile.damage, 0f, Main.myPlayer);
+                                }
+                                projectile.Kill();
+                            }
+                        }
+                    }
+                    break;
+
                 case ProjectileID.DeathLaser:
                     if (FargoSoulsWorld.MasochistMode)
                     {
@@ -728,7 +747,7 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case ProjectileID.EyeBeam:
-                    /*if (FargoSoulsWorld.MasochistMode)
+                    if (FargoSoulsWorld.MasochistMode)
                     {
                         if (EModeGlobalNPC.BossIsAlive(ref NPC.golemBoss, NPCID.Golem))
                         {
@@ -742,11 +761,11 @@ namespace FargowiltasSouls.Projectiles
                             {
                                 if (++projectile.localAI[1] < 90)
                                 {
-                                    projectile.velocity *= 1.06f;
+                                    projectile.velocity *= 1.05f;
                                 }
                             }
                         }
-                    }*/
+                    }
                     break;
 
                 case ProjectileID.JavelinHostile:
@@ -893,7 +912,7 @@ namespace FargowiltasSouls.Projectiles
     
                 case ProjectileID.PhantasmalEye:
                     if (FargoSoulsWorld.MasochistMode)
-                        projectile.position.X -= projectile.velocity.X / 2;
+                        projectile.position.X -= projectile.velocity.X * 0.75f;
                     break;
 
                 case ProjectileID.BombSkeletronPrime: //needs to be set every tick

@@ -2823,7 +2823,8 @@ namespace FargowiltasSouls.NPCs
                         int speed = inTemple ? -6 : -11;
                         for (int i = -max; i <= max; i++)
                         {
-                            int p = Projectile.NewProjectile(npc.Center, speed * Vector2.UnitY.RotatedBy(Math.PI / 2 / max * i), ProjectileID.EyeBeam, npc.damage / 5, 0f, Main.myPlayer);
+                            int p = Projectile.NewProjectile(npc.Center, speed * Vector2.UnitY.RotatedBy(Math.PI / 2 / max * i),
+                                ModContent.ProjectileType<EyeBeam2>(), npc.damage / 5, 0f, Main.myPlayer);
                             if (p != Main.maxProjectiles)
                                 Main.projectile[p].timeLeft = 1200;
                         }

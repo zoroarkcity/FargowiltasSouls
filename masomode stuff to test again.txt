@@ -107,3 +107,8 @@ supersonic soul:
 	SUPERSONIC SPEED IS DISABLED DURING BOSS FIGHTS
 fixed guilty debuff icon being placeholder
 placeholder map icons for champions
+
+tweaked abom sickle acceleration
+moon lord now shoots trios of semi-homing phantasmal bolts
+reduced phantasmal eye horiz movement even more
+golem lasers have accel too
