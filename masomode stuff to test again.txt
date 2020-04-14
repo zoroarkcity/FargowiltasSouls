@@ -102,3 +102,8 @@ security wallet and upgrades give 50% discount on reforging
 saucer only shoots lasers in vulnerable phase while also doing deathray
 
 did something to reduce hand despawning off bottom of map and slowed crystal bombs
+supersonic soul:
+	new toggle for increased base run speed (matches flight mastery soul)
+	SUPERSONIC SPEED IS DISABLED DURING BOSS FIGHTS
+fixed guilty debuff icon being placeholder
+placeholder map icons for champions

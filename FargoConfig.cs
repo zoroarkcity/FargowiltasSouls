@@ -541,13 +541,18 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool PanicOnHit;
 
-        [Label("$Mods.FargowiltasSouls.SupersonicConfig")]
+        [Label("$Mods.FargowiltasSouls.RunSpeedConfig")]
         [DefaultValue(true)]
-        public bool SupersonicSpeed;
+        public bool IncreasedRunSpeed;
 
         [Label("$Mods.FargowiltasSouls.MomentumConfig")]
         [DefaultValue(true)]
         public bool NoMomentum;
+
+        [Label("$Mods.FargowiltasSouls.SupersonicConfig")]
+        [DefaultValue(true)]
+        public bool SupersonicSpeed;
+
 
         [Label("Supersonic Speed Multiplier")]
         [Increment(1)]

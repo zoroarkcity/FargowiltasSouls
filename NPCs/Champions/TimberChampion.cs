@@ -10,6 +10,7 @@ using FargowiltasSouls.Projectiles.Champions;
 
 namespace FargowiltasSouls.NPCs.Champions
 {
+    [AutoloadBossHead]
     public class TimberChampion : ModNPC
     {
         public override void SetStaticDefaults()

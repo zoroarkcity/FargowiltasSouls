@@ -1508,7 +1508,7 @@ namespace FargowiltasSouls
 
         public void SupersonicSoul(bool hideVisual)
         {
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicSpeed) && !player.GetModPlayer<FargoPlayer>().noSupersonic)
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicSpeed) && !player.GetModPlayer<FargoPlayer>().noSupersonic && !EModeGlobalNPC.AnyBossAlive())
             {
                 player.runAcceleration += SoulConfig.Instance.SupersonicMultiplier * .1f;
                 player.maxRunSpeed += SoulConfig.Instance.SupersonicMultiplier * 2;
@@ -1520,8 +1520,8 @@ namespace FargowiltasSouls
             }
             else
             {
-                //same as frostspark
-                player.accRunSpeed = 6.75f;
+                //6.75 same as frostspark
+                player.accRunSpeed = SoulConfig.Instance.GetValue(SoulConfig.Instance.IncreasedRunSpeed) ? 18.25f : 6.75f;
             }
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.NoMomentum))

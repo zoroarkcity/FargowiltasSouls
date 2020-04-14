@@ -11,6 +11,7 @@ using FargowiltasSouls.Projectiles.Champions;
 
 namespace FargowiltasSouls.NPCs.Champions
 {
+    [AutoloadBossHead]
     public class EarthChampion : ModNPC
     {
         public override void SetStaticDefaults()
