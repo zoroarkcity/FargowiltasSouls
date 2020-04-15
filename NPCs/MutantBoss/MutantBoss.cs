@@ -462,7 +462,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     else if (npc.ai[1] == 61 && npc.ai[2] < 5 && Main.netMode != 1)
                     {
-                        if (FargoSoulsWorld.skipMutantP1 >= 10)
+                        if (FargoSoulsWorld.MasochistMode && FargoSoulsWorld.skipMutantP1 >= 10)
                         {
                             if (FargoSoulsWorld.skipMutantP1 == 10)
                             {
@@ -801,7 +801,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     else if (npc.ai[1] == 120)
                     {
-                        if (FargoSoulsWorld.skipMutantP1 <= 10)
+                        if (FargoSoulsWorld.MasochistMode && FargoSoulsWorld.skipMutantP1 <= 10)
                         {
                             FargoSoulsWorld.skipMutantP1++;
                             if (Main.netMode == 2)
