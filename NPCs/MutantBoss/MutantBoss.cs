@@ -744,7 +744,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             break;
 
                         case 2: //swinging sword dash
-                            if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
+                            if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f && FargoSoulsWorld.MasochistMode)
                                 Main.player[Main.myPlayer].AddBuff(mod.BuffType("MutantPresence"), 2);
 
                             npc.ai[3] += npc.ai[2];
