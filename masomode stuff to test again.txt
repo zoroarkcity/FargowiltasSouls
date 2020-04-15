@@ -128,3 +128,4 @@ removed cracked gem
 removed lunar crystal
 removed innocuous skull recipe
 adjusted recipes so the game should be winnable in all modes
+fixed abom/mutant fang still saying masochist mode
