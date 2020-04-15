@@ -783,7 +783,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.localAI[3] = 2;
                         if (++npc.ai[2] > 15 && FargoSoulsWorld.MasochistMode)
                         {
-                            int heal = (int)(npc.lifeMax / 2 / 60 * Main.rand.NextFloat(1.5f, 2f));
+                            npc.ai[2] = 0;
+                            int heal = (int)(npc.lifeMax / 90 * Main.rand.NextFloat(1f, 1.5f));
                             npc.life += heal;
                             if (npc.life > npc.lifeMax)
                                 npc.life = npc.lifeMax;
@@ -1840,11 +1841,13 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             FargoSoulsWorld.skipMutantP1 = 0;
             if (Main.netMode == 2)
                 NetMessage.SendData(7); //sync world
+            
             if (FargoSoulsWorld.MasochistMode)
             {
                 npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantBag"));
                 npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantEye"));
             }
+
             if (Main.rand.Next(10) == 0)
                 Item.NewItem(npc.Hitbox, mod.ItemType("MutantTrophy"));
         }

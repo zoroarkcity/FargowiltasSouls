@@ -85,7 +85,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             recipe.AddIngredient(null, "HiveStaff");
             recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerBee"));
             recipe.AddIngredient(ItemID.LunarBar, 10);
-            recipe.AddIngredient(null, "LunarCrystal", 5);
+            //recipe.AddIngredient(null, "LunarCrystal", 5);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);

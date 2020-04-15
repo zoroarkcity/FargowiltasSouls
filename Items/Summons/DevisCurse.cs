@@ -71,8 +71,8 @@ namespace FargowiltasSouls.Items.Summons
             recipe.AddIngredient(ItemID.RottenChunk);
             recipe.AddIngredient(ItemID.Stinger);
             //recipe.AddIngredient(ItemID.Bone);
-            recipe.AddIngredient(ItemID.HellstoneBar);
-            recipe.AddIngredient(mod.ItemType("CrackedGem"), 5);
+            recipe.AddIngredient(ItemID.HellstoneBar, 5);
+            //recipe.AddIngredient(mod.ItemType("CrackedGem"), 5);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this, 5);
@@ -84,8 +84,8 @@ namespace FargowiltasSouls.Items.Summons
             recipe.AddIngredient(ItemID.Vertebrae);
             recipe.AddIngredient(ItemID.Stinger);
             //recipe.AddIngredient(ItemID.Bone);
-            recipe.AddIngredient(ItemID.HellstoneBar);
-            recipe.AddIngredient(mod.ItemType("CrackedGem"), 5);
+            recipe.AddIngredient(ItemID.HellstoneBar, 5);
+            //recipe.AddIngredient(mod.ItemType("CrackedGem"), 5);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this, 5);

@@ -20,7 +20,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.width = 25;
             npc.height = 25;
             npc.defense = 90;
-            npc.lifeMax = 1200;
+            npc.lifeMax = 600;
             npc.scale = 2f;
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath14;
@@ -44,7 +44,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             npc.damage = (int)(npc.damage * 0.5f);
-            npc.lifeMax = (int)(npc.lifeMax * 0.5f * bossLifeScale);
+            npc.lifeMax = (int)(npc.lifeMax /** 0.5f*/ * bossLifeScale);
         }
 
         public override void AI()

@@ -118,12 +118,13 @@ fixed clipped wings working at ALL on ANY boss
 mutant:
 	loses last stand, mutant presence, mutant fang, p2 heal, and half his p2 moveset in expert
 	loses p2 entirely in normal
-
-TO DO:
-
 abom:
 	loses abom presence, abom fang, p2 heal, and p2 super attacks in expert
 	loses p2 entirely in normal
 deviantt:
 	loses devi presence, p2 heal, and super attacks in expert
 	loses p2 entirely in normal
+removed cracked gem
+removed lunar crystal
+removed innocuous skull recipe
+adjusted recipes so the game should be winnable in all modes

@@ -30,7 +30,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.height = 120;
             npc.damage = 300;
             npc.defense = 60;
-            npc.lifeMax = 1600000;
+            npc.lifeMax = 700000;
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -57,7 +57,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             npc.damage = (int)(npc.damage * 0.5f);
-            npc.lifeMax = (int)(npc.lifeMax * 0.5f * bossLifeScale);
+            npc.lifeMax = (int)(npc.lifeMax /** 0.5f*/ * bossLifeScale);
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -141,7 +141,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
             if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
             {
-                Main.player[Main.myPlayer].AddBuff(mod.BuffType("AbomPresence"), 2);
+                if (FargoSoulsWorld.MasochistMode)
+                    Main.player[Main.myPlayer].AddBuff(mod.BuffType("AbomPresence"), 2);
             }
 
             Player player = Main.player[npc.target];
@@ -213,9 +214,10 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             Main.dust[d].velocity *= 4f;
                         }
                         npc.localAI[3] = 2; //this marks p2
-                        if (++npc.ai[2] > 15)
+                        if (++npc.ai[2] > 15 && FargoSoulsWorld.MasochistMode)
                         {
-                            int heal = (int)(npc.lifeMax / 2 / 60 * Main.rand.NextFloat(1.5f, 2f));
+                            npc.ai[2] = 0;
+                            int heal = (int)(npc.lifeMax / 90 * Main.rand.NextFloat(1f, 1.5f));
                             npc.life += heal;
                             if (npc.life > npc.lifeMax)
                                 npc.life = npc.lifeMax;
@@ -590,7 +592,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
                         npc.TargetClosest();
-                        if (npc.localAI[3] > 1) //if in p2
+                        if (npc.localAI[3] > 1 && FargoSoulsWorld.MasochistMode) //if in maso p2, do super attacks
                         {
                             if (npc.localAI[1] == 0)
                             {
@@ -995,7 +997,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             if (npc.localAI[3] > 1)
                 return false;
 
-            if (npc.life < npc.lifeMax / 2)
+            if (npc.life < npc.lifeMax / 2 && Main.expertMode)
             {
                 if (Main.netMode != 1)
                 {
@@ -1068,10 +1070,13 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("MutantNibble"), 300);
-            target.AddBuff(mod.BuffType("AbomFang"), 300);
-            target.AddBuff(mod.BuffType("Unstable"), 240);
-            target.AddBuff(mod.BuffType("Berserked"), 120);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(mod.BuffType("MutantNibble"), 300);
+                target.AddBuff(mod.BuffType("AbomFang"), 300);
+                target.AddBuff(mod.BuffType("Unstable"), 240);
+                target.AddBuff(mod.BuffType("Berserked"), 120);
+            }
             target.AddBuff(BuffID.Bleeding, 600);
         }
 
@@ -1101,10 +1106,10 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             if (npc.localAI[3] < 2)
             {
                 npc.localAI[3] = 2;
-                if (Main.netMode != 1)
+                /*if (Main.netMode != 1 && Main.expertMode)
                 {
                     Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("AbomRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                }
+                }*/
             }
             if (Main.netMode != 1 && npc.ai[0] > -2)
             {
@@ -1130,12 +1135,17 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             FargoSoulsWorld.downedAbom = true;
             if (Main.netMode == 2)
                 NetMessage.SendData(7); //sync world
-
-            //npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbomBag"));
-
+            
             npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantScale"), Main.rand.Next(11) + 10);
-            //npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"), Main.rand.Next(11) + 10);
-            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CyclonicFin"));
+            /*if (Main.expertMode)
+            {
+                //npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbomBag"));
+                //npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"), Main.rand.Next(11) + 10);
+            }*/
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CyclonicFin"));
+            }
 
             if (Main.rand.Next(10) == 0)
                 Item.NewItem(npc.Hitbox, mod.ItemType("AbomTrophy"));

@@ -58,8 +58,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 if (FargoSoulsWorld.MasochistMode)
                     target.AddBuff(mod.BuffType("MutantFang"), 180);
             }
-            target.AddBuff(mod.BuffType("AbomFang"), 300);
-            target.AddBuff(mod.BuffType("Shadowflame"), 300);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(mod.BuffType("AbomFang"), 300);
+                target.AddBuff(mod.BuffType("Shadowflame"), 300);
+            }
             target.AddBuff(BuffID.Bleeding, 600);
         }
 

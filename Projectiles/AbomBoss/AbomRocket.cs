@@ -104,10 +104,13 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("AbomFang"), 300);
-            target.AddBuff(mod.BuffType("Defenseless"), 300);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(mod.BuffType("AbomFang"), 300);
+                target.AddBuff(mod.BuffType("Defenseless"), 300);
+                target.AddBuff(BuffID.Confused, 180);
+            }
             target.AddBuff(BuffID.BrokenArmor, 300);
-            target.AddBuff(BuffID.Confused, 180);
             projectile.timeLeft = 0;
         }
 
