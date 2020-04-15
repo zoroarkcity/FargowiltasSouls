@@ -113,6 +113,8 @@ moon lord now shoots trios of semi-homing phantasmal bolts
 reduced phantasmal eye horiz movement even more
 golem lasers have accel too
 
+fixed lump of flesh minion deathray being able to apply clipped wings on bosses
+fixed clipped wings working at ALL on ANY boss
 mutant:
 	loses last stand, mutant presence, mutant fang, p2 heal, and half his p2 moveset in expert
 	loses p2 entirely in normal
