@@ -112,3 +112,16 @@ tweaked abom sickle acceleration
 moon lord now shoots trios of semi-homing phantasmal bolts
 reduced phantasmal eye horiz movement even more
 golem lasers have accel too
+
+mutant:
+	loses last stand, mutant presence, mutant fang, p2 heal, and half his p2 moveset in expert
+	loses p2 entirely in normal
+
+TO DO:
+
+abom:
+	loses abom presence, abom fang, p2 heal, and p2 super attacks in expert
+	loses p2 entirely in normal
+deviantt:
+	loses devi presence, p2 heal, and super attacks in expert
+	loses p2 entirely in normal

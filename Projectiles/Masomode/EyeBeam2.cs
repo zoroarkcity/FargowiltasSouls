@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.NPCs;
 using FargowiltasSouls.NPCs.Champions;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Projectiles.Masomode
 {
@@ -41,6 +42,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
             {
                 target.AddBuff(BuffID.Burning, 300);
             }
+        }
+
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White * projectile.Opacity;
         }
     }
 }

@@ -80,8 +80,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         {
             target.velocity.X = target.Center.X < Main.npc[(int)projectile.ai[0]].Center.X ? -15f : 15f;
             target.velocity.Y = -10f;
-            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
-            target.AddBuff(mod.BuffType("OceanicMaul"), 5400);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
+                target.AddBuff(mod.BuffType("OceanicMaul"), 5400);
+            }
             target.AddBuff(mod.BuffType("CurseoftheMoon"), 300);
             target.AddBuff(mod.BuffType("MutantFang"), 180);
         }

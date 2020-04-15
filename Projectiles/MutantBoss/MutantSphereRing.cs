@@ -81,8 +81,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         {
             if (NPCs.EModeGlobalNPC.BossIsAlive(ref NPCs.EModeGlobalNPC.mutantBoss, mod.NPCType("MutantBoss")))
             {
-                target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
-                target.AddBuff(mod.BuffType("OceanicMaul"), 5400);
+                if (FargoSoulsWorld.MasochistMode)
+                {
+                    target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
+                    target.AddBuff(mod.BuffType("OceanicMaul"), 5400);
+                }
                 target.AddBuff(mod.BuffType("MutantFang"), 180);
             }
             target.AddBuff(mod.BuffType("CurseoftheMoon"), 300);
