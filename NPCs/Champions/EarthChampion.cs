@@ -88,7 +88,7 @@ namespace FargowiltasSouls.NPCs.Champions
             Player player = Main.player[npc.target];
             Vector2 targetPos;
 
-            if (npc.HasValidTarget && npc.Distance(player.Center) < 2500)
+            if (npc.HasValidTarget && npc.Distance(player.Center) < 2500 && player.ZoneUnderworldHeight)
                 npc.timeLeft = 600;
 
             switch ((int)npc.ai[0])
