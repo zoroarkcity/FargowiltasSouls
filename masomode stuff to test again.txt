@@ -124,8 +124,8 @@ abom:
 deviantt:
 	loses devi presence, p2 heal, and super attacks in expert
 	loses p2 entirely in normal
-removed cracked gem
 removed lunar crystal
 removed innocuous skull recipe
 adjusted recipes so the game should be winnable in all modes
 fixed abom/mutant fang still saying masochist mode
+cracked gem drops in all modes
