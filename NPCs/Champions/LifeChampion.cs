@@ -269,7 +269,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 case 7: //deathray spin
                     npc.velocity *= 0.95f;
 
-                    npc.ai[3] +=  (float)Math.PI * 2 / (npc.localAI[2] == 1 ? -270 : 360);
+                    npc.ai[3] +=  (float)Math.PI * 2 / (npc.localAI[2] == 1 ? -300 : 360);
 
                     if (--npc.ai[2] < 0)
                     {
