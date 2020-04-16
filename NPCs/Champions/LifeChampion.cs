@@ -49,6 +49,12 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
         }
 
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            cooldownSlot = 1;
+            return true;
+        }
+
         public override void AI()
         {
             if (npc.localAI[3] == 0) //just spawned
