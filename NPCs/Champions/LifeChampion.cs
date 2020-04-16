@@ -276,7 +276,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.ai[2] = 60;
                         npc.localAI[1] = npc.localAI[1] == 0 ? 1 : 0;
 
-                        if (npc.ai[1] < 480 && Main.netMode != 1)
+                        if (npc.ai[1] < 360 && Main.netMode != 1)
                         {
                             int type = npc.localAI[1] == 1 ? ModContent.ProjectileType<LifeDeathraySmall>() : ModContent.ProjectileType<LifeDeathray>();
                             int max = npc.localAI[2] == 1 ? 8 : 4;
@@ -289,7 +289,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
                     }
 
-                    if (++npc.ai[1] > 510)
+                    if (++npc.ai[1] > 390)
                     {
                         npc.TargetClosest();
                         npc.ai[0]++;
