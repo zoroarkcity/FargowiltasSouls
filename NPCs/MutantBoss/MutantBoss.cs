@@ -23,7 +23,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
         {
             npc.width = 120;//34;
             npc.height = 120;//50;
-            npc.damage = 300;//360;
+            npc.damage = 360;
             npc.defense = 360;
             npc.lifeMax = Main.expertMode ? 7700000 : 3700000;
             npc.HitSound = SoundID.NPCHit57;
@@ -70,8 +70,6 @@ namespace FargowiltasSouls.NPCs.MutantBoss
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             npc.damage = (int)(npc.damage * 0.5f);
-            if (FargoSoulsWorld.MasochistMode)
-                npc.damage = (int)(npc.damage * 1.2f);
             npc.lifeMax = (int)(npc.lifeMax * 0.5f * bossLifeScale);
         }
 
@@ -781,9 +779,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Main.dust[d].velocity *= 4f;
                         }
                         npc.localAI[3] = 2;
-                        if (++npc.ai[2] > 15 && FargoSoulsWorld.MasochistMode)
+                        if (FargoSoulsWorld.MasochistMode)
                         {
-                            npc.ai[2] = 0;
                             int heal = (int)(npc.lifeMax / 90 * Main.rand.NextFloat(1f, 1.5f));
                             npc.life += heal;
                             if (npc.life > npc.lifeMax)

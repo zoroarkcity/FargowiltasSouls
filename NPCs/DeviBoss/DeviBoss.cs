@@ -217,9 +217,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             Main.dust[d].velocity *= 4f;
                         }
                         npc.localAI[3] = 2; //this marks p2
-                        if (++npc.ai[2] > 15 && FargoSoulsWorld.MasochistMode)
+                        if (FargoSoulsWorld.MasochistMode)
                         {
-                            npc.ai[2] = 0;
                             int heal = (int)(npc.lifeMax / 90 * Main.rand.NextFloat(1f, 1.5f));
                             npc.life += heal;
                             if (npc.life > npc.lifeMax)
