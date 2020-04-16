@@ -162,6 +162,12 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             Main.PlaySound(SoundID.Item4, npc.Center);
 
+                            for (int i = 0; i < Main.maxProjectiles; i++) //purge leftover bombs
+                            {
+                                if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].type == ModContent.ProjectileType<WillBomb>())
+                                    Main.projectile[i].Kill();
+                            }
+
                             npc.localAI[0] = npc.Center.X - 1600;
                             npc.localAI[1] = npc.Center.Y - 200;
                             if (npc.position.Y < 2400)
