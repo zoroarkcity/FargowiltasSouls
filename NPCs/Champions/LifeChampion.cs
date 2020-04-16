@@ -212,7 +212,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
                     }
 
-                    if (++npc.ai[1] > 600)
+                    if (++npc.ai[1] > 360)
                     {
                         npc.TargetClosest();
                         npc.ai[0]++;
