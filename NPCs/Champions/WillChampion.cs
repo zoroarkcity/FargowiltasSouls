@@ -398,7 +398,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             Main.PlaySound(36, npc.Center, -1);
 
-                            if (Main.netMode != 1 && npc.ai[1] < 150)
+                            if (Main.netMode != 1 && npc.ai[1] < 130)
                             {
                                 for (int i = 0; i < 15; i++)
                                 {
