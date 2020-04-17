@@ -8,7 +8,7 @@ using FargowiltasSouls.Buffs.Masomode;
 
 namespace FargowiltasSouls.Projectiles.Champions
 {
-    public class WillJavelin : ModProjectile
+    public class WillJavelin3 : ModProjectile
     {
         public override string Texture => "Terraria/Projectile_508";
 
@@ -25,36 +25,38 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.height = 10;
             projectile.aiStyle = -1;
             projectile.hostile = true;
-            projectile.timeLeft = 600;
+            projectile.timeLeft = 360;
 
+            projectile.tileCollide = false;
+            projectile.ignoreWater = true;
+
+            projectile.alpha = 255;
             projectile.scale = 1.5f;
-            projectile.hide = true;
             cooldownSlot = 1;
         }
-
+        
         public override void AI()
         {
             if (projectile.localAI[0] == 0)
             {
                 projectile.localAI[0] = Main.rand.Next(2) == 0 ? 1 : -1;
-                projectile.rotation = Main.rand.NextFloat(0, (float)Math.PI * 2);
+                projectile.rotation = projectile.ai[1] + (float)Math.PI / 2;
                 projectile.hide = false;
             }
 
             if (projectile.ai[0] == 0)
             {
-                projectile.velocity -= new Vector2(projectile.ai[1], 0).RotatedBy(projectile.velocity.ToRotation());
-                projectile.rotation += projectile.velocity.Length() * .1f * projectile.localAI[0];
+                projectile.rotation += (float)Math.PI * 5 / 51 * projectile.localAI[0];
 
-                if (projectile.velocity.Length() < 1)
+                projectile.alpha -= 6;
+                if (projectile.alpha < 0)
+                    projectile.alpha = 0;
+
+                if (++projectile.localAI[1] >= 51)
                 {
-                    int p = Player.FindClosest(projectile.Center, 0, 0);
-                    if (p != -1)
-                    {
-                        projectile.velocity = projectile.DirectionTo(Main.player[p].Center) * 30;
-                        projectile.ai[0] = 1f;
-                        projectile.netUpdate = true;
-                    }
+                    projectile.velocity = Vector2.UnitX.RotatedBy(projectile.ai[1]) * 30f;
+                    projectile.ai[0] = 1;
+                    projectile.netUpdate = true;
                 }
             }
             else

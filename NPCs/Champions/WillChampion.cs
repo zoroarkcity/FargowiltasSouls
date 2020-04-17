@@ -111,14 +111,70 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 case -1:
                     {
-                        if (npc.position.Y < 0) //dont go OOB
-                            npc.position.Y = 0;
-
                         npc.damage = 0;
                         npc.dontTakeDamage = true;
                         npc.velocity *= 0.9f;
 
-                        const int delay = 7;
+                        if (++npc.ai[2] > 40)
+                        {
+                            npc.ai[2] = 0;
+
+                            Main.PlaySound(SoundID.Item92, npc.Center);
+
+                            npc.localAI[0] = npc.localAI[0] > 0 ? -1 : 1;
+                            
+                            if (Main.netMode != 1)
+                            {
+                                const int max = 6;
+                                float offset = npc.localAI[0] > 0 && player.velocity != Vector2.Zero //aim to intercept
+                                    ? Main.rand.NextFloat((float)Math.PI * 2) : player.velocity.ToRotation();
+                                for (int i = 0; i < max; i++)
+                                {
+                                    float rotation = offset + (float)Math.PI * 2 / max * i;
+                                    Projectile.NewProjectile(player.Center + 450 * Vector2.UnitX.RotatedBy(rotation), Vector2.Zero,
+                                        ModContent.ProjectileType<WillJavelin3>(), npc.defDamage / 4, 0f, Main.myPlayer, 0f, rotation + (float)Math.PI);
+                                }
+                            }
+                        }
+
+                        if (++npc.ai[1] == 1)
+                        {
+                            Main.PlaySound(SoundID.Item4, npc.Center);
+
+                            for (int i = 0; i < Main.maxProjectiles; i++) //purge leftover bombs
+                            {
+                                if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].type == ModContent.ProjectileType<WillBomb>())
+                                    Main.projectile[i].Kill();
+                            }
+
+                            if (Main.netMode != 1)
+                            {
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<WillShell>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitY * -12f, ModContent.ProjectileType<WillBomb>(), npc.defDamage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            }
+
+                            const int num226 = 80;
+                            for (int num227 = 0; num227 < num226; num227++)
+                            {
+                                Vector2 vector6 = Vector2.UnitX * 40f;
+                                vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + npc.Center;
+                                Vector2 vector7 = vector6 - npc.Center;
+                                int num228 = Dust.NewDust(vector6 + vector7, 0, 0, 174, 0f, 0f, 0, default(Color), 3f);
+                                Main.dust[num228].noGravity = true;
+                                Main.dust[num228].velocity = vector7;
+                            }
+                        }
+                        else if (npc.ai[1] > 360)
+                        {
+                            npc.ai[0]++;
+                            npc.ai[1] = 0;
+                            npc.ai[2] = 0;
+                            npc.localAI[0] = 0;
+                            npc.localAI[1] = 0;
+                            npc.netUpdate = true;
+                        }
+
+                        /*const int delay = 7;
                         const int gap = 150;
 
                         int threshold = delay * 2 * 1600 / gap; //rate of spawn * cover length twice * length / gap
@@ -200,7 +256,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             npc.localAI[0] = 0;
                             npc.localAI[1] = 0;
                             npc.netUpdate = true;
-                        }
+                        }*/
                     }
                     break;
 
@@ -396,16 +452,19 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             npc.localAI[0] = 0;
 
-                            Main.PlaySound(36, npc.Center, -1);
-
-                            if (Main.netMode != 1 && npc.ai[1] < 130)
+                            if (npc.ai[1] < 130)
                             {
-                                for (int i = 0; i < 15; i++)
+                                Main.PlaySound(36, npc.Center, -1);
+
+                                if (Main.netMode != 1)
                                 {
-                                    float speed = Main.rand.NextFloat(4f, 12f);
-                                    Vector2 velocity = speed * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * -Math.PI);
-                                    float ai1 = speed / 120f;
-                                    Projectile.NewProjectile(npc.Center, velocity, ModContent.ProjectileType<WillJavelin>(), npc.defDamage / 4, 0f, Main.myPlayer, 0f, ai1);
+                                    for (int i = 0; i < 15; i++)
+                                    {
+                                        float speed = Main.rand.NextFloat(4f, 12f);
+                                        Vector2 velocity = speed * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * -Math.PI);
+                                        float ai1 = speed / 120f;
+                                        Projectile.NewProjectile(npc.Center, velocity, ModContent.ProjectileType<WillJavelin>(), npc.defDamage / 4, 0f, Main.myPlayer, 0f, ai1);
+                                    }
                                 }
                             }
                         }
