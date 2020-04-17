@@ -129,3 +129,5 @@ removed innocuous skull recipe
 adjusted recipes so the game should be winnable in all modes
 fixed abom/mutant fang still saying masochist mode
 cracked gem drops in all modes
+
+moon lord overhauled

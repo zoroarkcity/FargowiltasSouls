@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using FargowiltasSouls.Items.Accessories.Forces;
+using FargowiltasSouls.Items.Accessories.Enchantments;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
 
@@ -306,7 +306,16 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
-            Item.NewItem(npc.position, npc.Size, ModContent.ItemType<EarthForce>());
+            //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<EarthForce>());
+            int[] drops = {
+                ModContent.ItemType<CobaltEnchant>(),
+                ModContent.ItemType<PalladiumEnchant>(),
+                ModContent.ItemType<MythrilEnchant>(),
+                ModContent.ItemType<OrichalcumEnchant>(),
+                ModContent.ItemType<AdamantiteEnchant>(),
+                ModContent.ItemType<TitaniumEnchant>()
+            };
+            Item.NewItem(npc.position, npc.Size, drops[Main.rand.Next(drops.Length)]);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

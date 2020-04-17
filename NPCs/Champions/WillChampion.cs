@@ -6,7 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using FargowiltasSouls.Buffs.Masomode;
-using FargowiltasSouls.Items.Accessories.Forces;
+using FargowiltasSouls.Items.Accessories.Enchantments;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
 using System.IO;
@@ -30,7 +30,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.height = 100;
             npc.damage = 150;
             npc.defense = 40;
-            npc.lifeMax = 480000;
+            npc.lifeMax = 390000;
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath14;
             npc.noGravity = true;
@@ -395,7 +395,10 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (++npc.localAI[0] > 40)
                         {
                             npc.localAI[0] = 0;
-                            if (Main.netMode != 1)
+
+                            Main.PlaySound(36, npc.Center, -1);
+
+                            if (Main.netMode != 1 && npc.ai[1] < 150)
                             {
                                 for (int i = 0; i < 15; i++)
                                 {
@@ -407,11 +410,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             }
                         }
 
-                        if (++npc.ai[1] == 40)
-                        {
-                            Main.PlaySound(36, npc.Center, -1);
-                        }
-                        else if (npc.ai[1] > 180)
+                        if (++npc.ai[1] > 180)
                         {
                             npc.ai[0] = 0;
                             npc.ai[1] = 0;
@@ -469,7 +468,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (++npc.localAI[0] > 3)
                         {
                             npc.localAI[0] = 0;
-                            if (Main.netMode != 1) //shoot fireball
+                            if (Main.netMode != 1 && npc.ai[1] < 90) //shoot fireball
                             {
                                 Main.PlaySound(SoundID.Item34, npc.Center);
                                 Vector2 spawn = npc.Center;
@@ -547,7 +546,15 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
-            Item.NewItem(npc.position, npc.Size, ModContent.ItemType<WillForce>());
+            //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<WillForce>());
+            int[] drops = {
+                ModContent.ItemType<GoldEnchant>(),
+                ModContent.ItemType<PlatinumEnchant>(),
+                ModContent.ItemType<GladiatorEnchant>(),
+                ModContent.ItemType<RedRidingEnchant>(),
+                ModContent.ItemType<ValhallaKnightEnchant>(),
+            };
+            Item.NewItem(npc.position, npc.Size, drops[Main.rand.Next(drops.Length)]);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

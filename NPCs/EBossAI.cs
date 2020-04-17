@@ -3497,6 +3497,10 @@ namespace FargowiltasSouls.NPCs
                 if (masoBool[0]) //roar
                     Main.PlaySound(15, Main.player[Main.myPlayer].Center, 0);
             }
+            else //in phase 2, move slower
+            {
+                npc.position -= npc.velocity / 3;
+            }
 
             if (!npc.dontTakeDamage) //only when vulnerable
             {
@@ -3515,32 +3519,14 @@ namespace FargowiltasSouls.NPCs
 
                                     if (bodyPart.active)
                                     {
-                                        if (i == 2 && bodyPart.type == NPCID.MoonLordHead)
+                                        if ((i == 2 && bodyPart.type == NPCID.MoonLordHead) || bodyPart.type == NPCID.MoonLordHand)
                                         {
-                                            Vector2 speed = new Vector2(0f, -12f).RotatedBy(MathHelper.ToRadians(-60));
-                                            for (int j = 0; j < 6; j++)
-                                            {
-                                                int n = NPC.NewNPC((int)bodyPart.Center.X, (int)bodyPart.Center.Y, NPCID.SolarGoop);
-                                                if (n < 200)
-                                                {
-                                                    Main.npc[n].velocity = speed;
-                                                    if (Main.netMode == 2)
-                                                        NetMessage.SendData(23, -1, -1, null, n);
-                                                }
-                                                speed = speed.RotatedBy(MathHelper.ToRadians(20));
-                                            }
-                                        }
-                                        else if (bodyPart.type == NPCID.MoonLordHand)
-                                        {
-                                            Vector2 speed = Main.player[npc.target].Center - bodyPart.Center;
-                                            speed.Normalize();
-                                            speed *= 6f;
                                             int damage = (int)(25 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
-                                            for (int j = 0; j < 4; j++)
+                                            for (int j = -1; j <= 1; j++)
                                             {
-                                                Projectile.NewProjectile(bodyPart.Center, speed,
+                                                Projectile.NewProjectile(bodyPart.Center,
+                                                    6f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI / 2 * i),
                                                     ProjectileID.CultistBossFireBall, damage, 0f, Main.myPlayer);
-                                                speed = speed.RotatedBy(Math.PI / 2);
                                             }
                                         }
                                     }
@@ -3575,12 +3561,14 @@ namespace FargowiltasSouls.NPCs
                                         ((i == 2 && bodyPart.type == NPCID.MoonLordHead) ||
                                         bodyPart.type == NPCID.MoonLordHand))
                                     {
-                                        Vector2 dir = Main.player[npc.target].Center - bodyPart.Center;
+                                        Projectile.NewProjectile(bodyPart.Center, Vector2.Zero, 578, 0, 1f, Main.myPlayer);
+
+                                        /*Vector2 dir = Main.player[npc.target].Center - bodyPart.Center;
                                         float ai1New = Main.rand.Next(100);
                                         Vector2 vel = Vector2.Normalize(dir.RotatedByRandom(Math.PI / 4)) * 6f;
                                         int damage = (int)(30 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
                                         Projectile.NewProjectile(bodyPart.Center, vel, ProjectileID.CultistBossLightningOrbArc,
-                                            damage, 0, Main.myPlayer, dir.ToRotation(), ai1New);
+                                            damage, 0, Main.myPlayer, dir.ToRotation(), ai1New);*/
                                     }
                                 }
                                 //Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.CultistBossLightningOrb, (int)(30 * (1 + FargoSoulsWorld.MoonlordCount * .0125)), 0f, Main.myPlayer);
@@ -3594,19 +3582,27 @@ namespace FargowiltasSouls.NPCs
                                         ((i == 2 && bodyPart.type == NPCID.MoonLordHead) ||
                                         bodyPart.type == NPCID.MoonLordHand))
                                     {
-                                        Vector2 distance = Main.player[npc.target].Center - bodyPart.Center;
+                                        int damage = (int)(35 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
+                                        for (int j = 0; j < 4; j++)
+                                        {
+                                            Projectile.NewProjectile(bodyPart.Center,
+                                                5f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI / 2 * j),
+                                                ProjectileID.NebulaLaser, damage, 0f, Main.myPlayer);
+                                        }
+
+                                        /*Vector2 distance = Main.player[npc.target].Center - bodyPart.Center;
                                         distance.Normalize();
                                         distance *= 7f;
                                         int damage = (int)(35 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
                                         for (int j = -1; j <= 1; j += 2) //aim above and below player
                                         {
-                                            Vector2 speed = distance.RotatedBy(Math.PI / 6 * j);
-                                            for (int k = -2; k <= 2; k++) //fire a 5-spread each
+                                            Vector2 speed = distance.RotatedBy(Math.PI / 5 * j);
+                                            for (int k = -1; k <= 1; k++) //fire a 5-spread each
                                             {
                                                 Projectile.NewProjectile(bodyPart.Center, speed.RotatedBy(Math.PI / 32 * k),
                                                     ProjectileID.NebulaLaser, damage, 0f, Main.myPlayer);
                                             }
-                                        }
+                                        }*/
                                     }
                                 }
                                 break;
@@ -3621,10 +3617,10 @@ namespace FargowiltasSouls.NPCs
                                     {
                                         Vector2 speed = Main.player[npc.target].Center - bodyPart.Center;
                                         speed.Normalize();
-                                        speed *= 9f;
-                                        for (int j = -3; j <= 3; j++)
+                                        speed *= 7f;
+                                        for (int j = -1; j <= 1; j++)
                                         {
-                                            Vector2 vel = speed.RotatedBy(Math.PI / 6 * j);
+                                            Vector2 vel = speed.RotatedBy(MathHelper.ToRadians(10) * j);
                                             int n = NPC.NewNPC((int)bodyPart.Center.X, (int)bodyPart.Center.Y, NPCID.AncientLight, 0, 0f, (Main.rand.NextFloat() - 0.5f) * 0.3f * 6.28318548202515f / 60f, vel.X, vel.Y);
                                             if (n < 200)
                                             {
@@ -3640,7 +3636,7 @@ namespace FargowiltasSouls.NPCs
                             default: //phantasmal eye rings
                                 if (Main.netMode != 1)
                                 {
-                                    const int max = 6;
+                                    const int max = 3;
                                     const int speed = 9;
                                     const float rotationModifier = 0.5f;
                                     int damage = (int)(40 * (1 + FargoSoulsWorld.MoonlordCount * .0125));

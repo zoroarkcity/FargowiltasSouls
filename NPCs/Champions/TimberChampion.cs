@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using FargowiltasSouls.Items.Accessories.Forces;
+using FargowiltasSouls.Items.Accessories.Enchantments;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
 
@@ -369,7 +369,17 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
-            Item.NewItem(npc.position, npc.Size, ModContent.ItemType<TimberForce>());
+            //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<TimberForce>());
+            int[] drops = {
+                ModContent.ItemType<WoodEnchant>(),
+                ModContent.ItemType<BorealWoodEnchant>(),
+                ModContent.ItemType<RichMahoganyEnchant>(),
+                ModContent.ItemType<EbonwoodEnchant>(),
+                ModContent.ItemType<ShadewoodEnchant>(),
+                ModContent.ItemType<PalmWoodEnchant>(),
+                ModContent.ItemType<PearlwoodEnchant>()
+            };
+            Item.NewItem(npc.position, npc.Size, drops[Main.rand.Next(drops.Length)]);
         }
     }
 }

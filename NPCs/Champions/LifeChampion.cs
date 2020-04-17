@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using FargowiltasSouls.Items.Accessories.Forces;
+using FargowiltasSouls.Items.Accessories.Enchantments;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
 
@@ -416,7 +416,15 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
-            Item.NewItem(npc.position, npc.Size, ModContent.ItemType<LifeForce>());
+            //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<LifeForce>());
+            int[] drops = {
+                ModContent.ItemType<PumpkinEnchant>(),
+                ModContent.ItemType<BeeEnchant>(),
+                ModContent.ItemType<SpiderEnchant>(),
+                ModContent.ItemType<TurtleEnchant>(),
+                ModContent.ItemType<BeetleEnchant>(),
+            };
+            Item.NewItem(npc.position, npc.Size, drops[Main.rand.Next(drops.Length)]);
         }
 
         public override Color? GetAlpha(Color drawColor)

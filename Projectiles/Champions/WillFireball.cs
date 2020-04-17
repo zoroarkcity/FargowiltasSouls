@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.hostile = true;
             projectile.timeLeft = 600;
             
-            cooldownSlot = 1;
+            //cooldownSlot = 1;
         }
 
         public override void AI()
