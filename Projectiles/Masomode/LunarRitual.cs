@@ -44,6 +44,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
                 if (projectile.Distance(Main.npc[ai1].Center) <= 1)
                     projectile.Center = Main.npc[ai1].Center;
+                else if (projectile.Distance(Main.npc[ai1].Center) > threshold)
+                    projectile.velocity = (Main.npc[ai1].Center - projectile.Center) / 30;
                 else
                     projectile.velocity = projectile.DirectionTo(Main.npc[ai1].Center);
                 //projectile.Center = Main.npc[ai1].Center;
