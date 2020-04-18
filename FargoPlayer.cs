@@ -3168,6 +3168,12 @@ namespace FargowiltasSouls
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
+            if (FargoSoulsWorld.MasochistMode && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore)
+                && player.Distance(Main.npc[EModeGlobalNPC.moonBoss].Center) < 2500)
+            {
+                damage = (int)(damage * 1.10);
+            }
+
             if (IronGuard && internalTimer > 0 && !player.immune)
             {
                 player.immune = true;
