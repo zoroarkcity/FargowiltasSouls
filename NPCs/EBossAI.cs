@@ -3472,7 +3472,7 @@ namespace FargowiltasSouls.NPCs
         {
             moonBoss = npc.whoAmI;
             RegenTimer = 2;
-            npc.defense = masoStateML >= 0 && masoStateML <= 3 ? 0 : npc.defDefense;
+            //npc.defense = masoStateML >= 0 && masoStateML <= 3 ? 0 : npc.defDefense;
 
             if (!masoBool[3])
             {
@@ -3493,19 +3493,31 @@ namespace FargowiltasSouls.NPCs
 
             npc.position -= npc.velocity / 3; //SLOW DOWN
 
-            if (!masoBool[0])
+            /*if (!masoBool[0])
             {
                 masoBool[0] = npc.life < npc.lifeMax / 2; //remembers even if core goes above 50% hp
                 if (masoBool[0]) //roar
+                {
                     Main.PlaySound(15, Main.player[Main.myPlayer].Center, 0);
-            }
+                    npc.netUpdate = true;
+                }
+            }*/
 
             if (!npc.dontTakeDamage) //only when vulnerable
             {
+                if (!masoBool[0])
+                {
+                    masoBool[0] = true;
+                    Main.PlaySound(15, Main.player[Main.myPlayer].Center, 0);
+                    npc.netUpdate = true;
+                }
+
                 Timer++;
                 if (Timer >= 240)
                 {
                     Timer = 0;
+                    npc.netUpdate = true;
+
                     if (Main.netMode != 1)
                     {
                         switch (masoStateML)
@@ -3518,8 +3530,12 @@ namespace FargowiltasSouls.NPCs
                                     if (bodyPart.active)
                                     {
                                         int damage = (int)(25 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
-                                        Projectile.NewProjectile(bodyPart.Center, 5f * bodyPart.DirectionTo(Main.player[npc.target].Center),
-                                            ProjectileID.CultistBossFireBall, damage, 0f, Main.myPlayer);
+                                        for (int j = -3; j <= 3; j++)
+                                        {
+                                            Projectile.NewProjectile(bodyPart.Center,
+                                                6f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI / 2 / 3 * j),
+                                                ProjectileID.CultistBossFireBall, damage, 0f, Main.myPlayer);
+                                        }
                                     }
                                 }
                                 break;
@@ -3552,7 +3568,12 @@ namespace FargowiltasSouls.NPCs
                                         ((i == 2 && bodyPart.type == NPCID.MoonLordHead) ||
                                         bodyPart.type == NPCID.MoonLordHand))
                                     {
-                                        Projectile.NewProjectile(bodyPart.Center, Vector2.Zero, 578, 0, 1f, Main.myPlayer);
+                                        Vector2 spawnOffset = bodyPart.Center - Main.player[npc.target].Center;
+                                        for (int j = -1; j <= 1; j++)
+                                        {
+                                            Projectile.NewProjectile(Main.player[npc.target].Center + spawnOffset.RotatedBy(MathHelper.ToRadians(10) * j),
+                                                Vector2.Zero, 578, 0, 1f, Main.myPlayer);
+                                        }
 
                                         /*Vector2 dir = Main.player[npc.target].Center - bodyPart.Center;
                                         float ai1New = Main.rand.Next(100);
@@ -3574,10 +3595,11 @@ namespace FargowiltasSouls.NPCs
                                         bodyPart.type == NPCID.MoonLordHand))
                                     {
                                         int damage = (int)(35 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
-                                        for (int j = 0; j < 4; j++)
+                                        const int max = 8;
+                                        for (int j = 0; j < max; j++)
                                         {
                                             Projectile.NewProjectile(bodyPart.Center,
-                                                5f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI / 2 * j),
+                                                2.5f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * 2 / max * j),
                                                 ProjectileID.NebulaLaser, damage, 0f, Main.myPlayer);
                                         }
 
@@ -3608,7 +3630,7 @@ namespace FargowiltasSouls.NPCs
                                     {
                                         Vector2 speed = Main.player[npc.target].Center - bodyPart.Center;
                                         speed.Normalize();
-                                        speed *= 7f;
+                                        speed *= 6f;
                                         for (int j = -1; j <= 1; j++)
                                         {
                                             Vector2 vel = speed.RotatedBy(MathHelper.ToRadians(10) * j);
@@ -3742,7 +3764,7 @@ namespace FargowiltasSouls.NPCs
         public void MoonLordSocketAI(NPC npc)
         {
             RegenTimer = 2;
-            npc.defense = masoStateML >= 0 && masoStateML <= 3 ? 0 : npc.defDefense;
+            //npc.defense = masoStateML >= 0 && masoStateML <= 3 ? 0 : npc.defDefense;
 
             if (npc.ai[0] == -2f) //eye socket is empty
             {

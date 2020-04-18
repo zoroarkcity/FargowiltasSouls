@@ -130,4 +130,14 @@ adjusted recipes so the game should be winnable in all modes
 fixed abom/mutant fang still saying masochist mode
 cracked gem drops in all modes
 
-moon lord overhauled
+moon lord overhauled:
+	arena moves EXTREMELY slowly
+	bolts are now fired in bursts of three, have acceleration and homing
+	hand spheres accelerate
+	reduced moon lord overall movement speed
+	removed contact damage entirely
+	nerfed phase 2 pillar attacks
+	restored defense
+	nerfed phantasmal eye movement overall
+	nerfed true eyes until core is exposed
+	moon lord immediately does both rays and pillar attacks in p2

@@ -912,7 +912,20 @@ namespace FargowiltasSouls.Projectiles
     
                 case ProjectileID.PhantasmalEye:
                     if (FargoSoulsWorld.MasochistMode)
-                        projectile.position.X -= projectile.velocity.X * 0.8f;
+                    {
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore))
+                        {
+                            if (projectile.ai[0] == 2) //diving down and homing
+                            {
+                                if (++counter > 60)
+                                {
+                                    projectile.velocity.Y = 9;
+                                }
+                            }
+
+                            projectile.position.X -= projectile.velocity.X * 0.75f;
+                        }
+                    }
                     break;
 
                 case ProjectileID.PhantasmalSphere:
@@ -930,7 +943,7 @@ namespace FargowiltasSouls.Projectiles
 
                         if (projectile.ai[0] == -1 && projectile.localAI[0] > 0) //sent to fly, flagged as from hand
                         {
-                            projectile.velocity *= 1.025f;
+                            projectile.velocity *= 1.022f;
 
                             if (projectile.localAI[0] == 1 && projectile.velocity.Length() > 11) //only do this once
                             {

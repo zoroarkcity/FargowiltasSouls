@@ -461,8 +461,12 @@ namespace FargowiltasSouls.NPCs
                     masoStateML = 0;
                     npc.value += Item.buyPrice(0, 20);
                     break;
-                case NPCID.MoonLordHand:
+
                 case NPCID.MoonLordHead:
+                    npc.lifeMax /= 2;
+                    goto case NPCID.MoonLordHand;
+
+                case NPCID.MoonLordHand:
                 case NPCID.MoonLordFreeEye:
                 case NPCID.MoonLordLeechBlob:
                     npc.buffImmune[ModContent.BuffType<ClippedWings>()] = true;
@@ -1161,24 +1165,34 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.MoonLordFreeEye:
-                        if (!masoBool[0] & ++Counter > 2) //sync to other eyes of same core when spawned
+                        if (Main.npc[(int)npc.ai[3]].active && Main.npc[(int)npc.ai[3]].type == NPCID.MoonLordCore)
                         {
-                            masoBool[0] = true;
-                            Counter = 0;
-                            for (int i = 0; i < Main.maxNPCs; i++)
-                                if (Main.npc[i].active && Main.npc[i].type == NPCID.MoonLordFreeEye && Main.npc[i].ai[3] == npc.ai[3] && i != npc.whoAmI)
-                                {
-                                    npc.ai[0] = Main.npc[i].ai[0];
-                                    npc.ai[1] = Main.npc[i].ai[1];
-                                    npc.ai[2] = Main.npc[i].ai[2];
-                                    npc.ai[3] = Main.npc[i].ai[3];
-                                    npc.localAI[0] = Main.npc[i].localAI[0];
-                                    npc.localAI[1] = Main.npc[i].localAI[1];
-                                    npc.localAI[2] = Main.npc[i].localAI[2];
-                                    npc.localAI[3] = Main.npc[i].localAI[3];
-                                    break;
-                                }
-                            npc.netUpdate = true;
+                            if (!masoBool[0] & ++Counter > 2) //sync to other eyes of same core when spawned
+                            {
+                                masoBool[0] = true;
+                                Counter = 0;
+                                for (int i = 0; i < Main.maxNPCs; i++)
+                                    if (Main.npc[i].active && Main.npc[i].type == NPCID.MoonLordFreeEye && Main.npc[i].ai[3] == npc.ai[3] && i != npc.whoAmI)
+                                    {
+                                        npc.ai[0] = Main.npc[i].ai[0];
+                                        npc.ai[1] = Main.npc[i].ai[1];
+                                        npc.ai[2] = Main.npc[i].ai[2];
+                                        npc.ai[3] = Main.npc[i].ai[3];
+                                        npc.localAI[0] = Main.npc[i].localAI[0];
+                                        npc.localAI[1] = Main.npc[i].localAI[1];
+                                        npc.localAI[2] = Main.npc[i].localAI[2];
+                                        npc.localAI[3] = Main.npc[i].localAI[3];
+                                        break;
+                                    }
+                                npc.netUpdate = true;
+                            }
+
+                            if (Main.npc[(int)npc.ai[3]].dontTakeDamage) //behave slower until p2 proper
+                            {
+                                masoBool[1] = !masoBool[1];
+                                if (masoBool[1])
+                                    return false;
+                            }
                         }
                         break;
 
@@ -7123,10 +7137,6 @@ namespace FargowiltasSouls.NPCs
                         if (reduction < 0.5f)
                             reduction = 0.5f;
                         damage = (int)(damage * reduction);
-                        break;
-
-                    case NPCID.MoonLordHead:
-                        damage = damage * 2;
                         break;
 
                     case NPCID.GiantTortoise:
