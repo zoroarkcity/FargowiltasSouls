@@ -912,7 +912,33 @@ namespace FargowiltasSouls.Projectiles
     
                 case ProjectileID.PhantasmalEye:
                     if (FargoSoulsWorld.MasochistMode)
-                        projectile.position.X -= projectile.velocity.X * 0.75f;
+                        projectile.position.X -= projectile.velocity.X * 0.8f;
+                    break;
+
+                case ProjectileID.PhantasmalSphere:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
+                        if (!masobool)
+                        {
+                            masobool = true;
+                            int ai1 = (int)projectile.ai[1];
+                            if (ai1 > -1 && ai1 < Main.maxNPCs && Main.npc[ai1].active && Main.npc[ai1].type == NPCID.MoonLordHand)
+                            {
+                                projectile.localAI[0] = 1;
+                            }
+                        }
+
+                        if (projectile.ai[0] == -1 && projectile.localAI[0] > 0) //sent to fly, flagged as from hand
+                        {
+                            projectile.velocity *= 1.025f;
+
+                            if (projectile.localAI[0] == 1 && projectile.velocity.Length() > 11) //only do this once
+                            {
+                                projectile.localAI[0] = 2;
+                                projectile.velocity.Normalize();
+                            }
+                        }
+                    }
                     break;
 
                 case ProjectileID.BombSkeletronPrime: //needs to be set every tick

@@ -464,12 +464,10 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.MoonLordHand:
                 case NPCID.MoonLordHead:
                 case NPCID.MoonLordFreeEye:
+                case NPCID.MoonLordLeechBlob:
                     npc.buffImmune[ModContent.BuffType<ClippedWings>()] = true;
                     isMasoML = true;
                     break;
-                case NPCID.MoonLordLeechBlob:
-                    npc.lifeMax *= 3;
-                    goto case NPCID.MoonLordHand;
 
                 #endregion
 
@@ -730,6 +728,13 @@ namespace FargowiltasSouls.NPCs
             }
 
             //if (npc.boss) npc.npcSlots += 100;
+        }
+
+        public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
+        {
+            if (FargoSoulsWorld.MasochistMode && isMasoML)
+                return false;
+            return true;
         }
 
         public override bool PreAI(NPC npc)

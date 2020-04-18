@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         private const float PI = (float)Math.PI;
         private const float rotationPerTick = PI / 140f;
-        private const float threshold = 1000f;
+        private const float threshold = 1600f;
 
         public override void SetStaticDefaults()
         {
@@ -42,7 +42,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 if (projectile.alpha < 0)
                     projectile.alpha = 0;
 
-                projectile.Center = Main.npc[ai1].Center;
+                if (projectile.Distance(Main.npc[ai1].Center) <= 1)
+                    projectile.Center = Main.npc[ai1].Center;
+                else
+                    projectile.velocity = projectile.DirectionTo(Main.npc[ai1].Center);
+                //projectile.Center = Main.npc[ai1].Center;
 
                 Player player = Main.player[Main.myPlayer];
                 if (player.active && !player.dead)

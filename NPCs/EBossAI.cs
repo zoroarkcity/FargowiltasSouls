@@ -3491,15 +3491,13 @@ namespace FargowiltasSouls.NPCs
             if (Main.player[Main.myPlayer].active && !Main.player[Main.myPlayer].dead && masoStateML >= 0 && masoStateML <= 3)
                 Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<NullificationCurse>(), 2);
 
+            npc.position -= npc.velocity / 3; //SLOW DOWN
+
             if (!masoBool[0])
             {
                 masoBool[0] = npc.life < npc.lifeMax / 2; //remembers even if core goes above 50% hp
                 if (masoBool[0]) //roar
                     Main.PlaySound(15, Main.player[Main.myPlayer].Center, 0);
-            }
-            else //in phase 2, move slower
-            {
-                npc.position -= npc.velocity / 3;
             }
 
             if (!npc.dontTakeDamage) //only when vulnerable
@@ -3519,16 +3517,9 @@ namespace FargowiltasSouls.NPCs
 
                                     if (bodyPart.active)
                                     {
-                                        if ((i == 2 && bodyPart.type == NPCID.MoonLordHead) || bodyPart.type == NPCID.MoonLordHand)
-                                        {
-                                            int damage = (int)(25 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
-                                            for (int j = -1; j <= 1; j++)
-                                            {
-                                                Projectile.NewProjectile(bodyPart.Center,
-                                                    6f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI / 2 * i),
-                                                    ProjectileID.CultistBossFireBall, damage, 0f, Main.myPlayer);
-                                            }
-                                        }
+                                        int damage = (int)(25 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
+                                        Projectile.NewProjectile(bodyPart.Center, 5f * bodyPart.DirectionTo(Main.player[npc.target].Center),
+                                            ProjectileID.CultistBossFireBall, damage, 0f, Main.myPlayer);
                                     }
                                 }
                                 break;
