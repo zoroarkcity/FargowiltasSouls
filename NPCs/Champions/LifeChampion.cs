@@ -85,7 +85,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     if (++npc.ai[1] == 180) //heal up
                     {
-                        Main.PlaySound(15, npc.Center, 0);
+                        Main.PlaySound(15, npc.Center, 2); //arte scream
 
                         int heal = npc.lifeMax - npc.life;
                         npc.life += heal;

@@ -105,7 +105,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     else if (npc.ai[1] == 120) //begin healing
                     {
-                        Main.PlaySound(15, npc.Center, 0);
+                        Main.PlaySound(SoundID.NPCDeath10, npc.Center);
 
                         const int num226 = 80;
                         for (int num227 = 0; num227 < num226; num227++)
@@ -121,15 +121,12 @@ namespace FargowiltasSouls.NPCs.Champions
                     else if (npc.ai[1] > 120) //healing
                     {
                         npc.velocity *= 0.9f;
-
-                        if (++npc.ai[2] > 15)
-                        {
-                            int heal = (int)(npc.lifeMax / 2 / 120 * Main.rand.NextFloat(1f, 1.5f));
-                            npc.life += heal;
-                            if (npc.life > npc.lifeMax)
-                                npc.life = npc.lifeMax;
-                            CombatText.NewText(npc.Hitbox, CombatText.HealLife, heal);
-                        }
+                        
+                        int heal = (int)(npc.lifeMax / 2 / 120 * Main.rand.NextFloat(1f, 1.5f));
+                        npc.life += heal;
+                        if (npc.life > npc.lifeMax)
+                            npc.life = npc.lifeMax;
+                        CombatText.NewText(npc.Hitbox, CombatText.HealLife, heal);
 
                         for (int i = 0; i < 5; i++)
                         {
