@@ -123,7 +123,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             npc.localAI[0] = npc.localAI[0] > 0 ? -1 : 1;
                             
-                            if (Main.netMode != 1)
+                            if (Main.netMode != 1 && npc.ai[1] < 300)
                             {
                                 const int max = 6;
                                 float offset = npc.localAI[0] > 0 && player.velocity != Vector2.Zero //aim to intercept
