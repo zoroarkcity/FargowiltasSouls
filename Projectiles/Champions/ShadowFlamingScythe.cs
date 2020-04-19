@@ -38,6 +38,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             {
                 projectile.hide = false;
                 projectile.rotation = Main.rand.NextFloat((float)Math.PI / 2);
+                projectile.direction = projectile.spriteDirection = Main.rand.Next(2) == 0 ? 1 : -1;
             }
 
             if (++projectile.localAI[0] > 30 && projectile.localAI[0] < 180)
