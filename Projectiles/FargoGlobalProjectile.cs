@@ -943,7 +943,8 @@ namespace FargowiltasSouls.Projectiles
 
                         if (projectile.ai[0] == -1 && projectile.localAI[0] > 0) //sent to fly, flagged as from hand
                         {
-                            projectile.velocity *= 1.022f;
+                            if (++projectile.localAI[1] < 140)
+                                projectile.velocity *= 1.022f;
 
                             if (projectile.localAI[0] == 1 && projectile.velocity.Length() > 11) //only do this once
                             {

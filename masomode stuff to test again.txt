@@ -144,3 +144,5 @@ moon lord overhauled:
 	all attacks do 10% more damage
 
 fishron enrages EVEN FURTHER BEYOND outside ocean
+changed mutant boss to use modcontent
+mutant boss has a custom background in p2

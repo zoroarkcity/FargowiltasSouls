@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using FargowiltasSouls.ModCompatibilities;
 using Terraria;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -55,6 +56,8 @@ namespace FargowiltasSouls
         public override void Load()
         {
             Instance = this;
+
+            SkyManager.Instance["FargowiltasSouls:MutantBoss"] = new MutantSky();
 
             if (Language.ActiveCulture == GameCulture.Chinese)
             {
