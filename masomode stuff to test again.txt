@@ -142,3 +142,5 @@ moon lord overhauled:
 	nerfed true eyes until core is exposed
 	moon lord immediately does both rays and pillar attacks in p2
 	all attacks do 10% more damage
+
+fishron enrages EVEN FURTHER BEYOND outside ocean

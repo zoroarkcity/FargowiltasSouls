@@ -3116,6 +3116,8 @@ namespace FargowiltasSouls.NPCs
                     case 0: //phase 1
                         if (!masoBool[1])
                             npc.dontTakeDamage = false;
+                        if (!Main.player[npc.target].ZoneBeach)
+                            npc.ai[2]++;
                         break;
 
                     case 1: //p1 dash
@@ -3157,6 +3159,8 @@ namespace FargowiltasSouls.NPCs
                     case 5: //phase 2
                         if (!masoBool[1])
                             npc.dontTakeDamage = false;
+                        if (!Main.player[npc.target].ZoneBeach)
+                            npc.ai[2]++;
                         break;
 
                     case 6: //p2 dash
@@ -3220,6 +3224,8 @@ namespace FargowiltasSouls.NPCs
                             if (Main.netMode != 1)
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.SharknadoBolt, 0, 0f, Main.myPlayer, 1f, npc.target + 1);
                         }*/
+                        if (!Main.player[npc.target].ZoneBeach)
+                            npc.ai[2]++;
                         break;
 
                     case 11: //p3 dash
