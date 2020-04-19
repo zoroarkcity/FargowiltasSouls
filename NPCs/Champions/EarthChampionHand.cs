@@ -428,7 +428,10 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
             if (!projectile.minion)
+            {
+                projectile.penetrate = 0;
                 projectile.timeLeft = 0;
+            }
         }
 
         private void Movement(Vector2 targetPos, float speedModifier, float cap = 12f)

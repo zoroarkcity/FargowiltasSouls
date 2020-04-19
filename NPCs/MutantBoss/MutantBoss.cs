@@ -160,7 +160,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             }
             else if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
             {
-                if (FargoSoulsWorld.MasochistMode)
+                if (Main.expertMode)
                 {
                     Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<MutantPresence>(), 2);
                 }
@@ -720,7 +720,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             break;
 
                         case 1: //spawn sword
-                            if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f && FargoSoulsWorld.MasochistMode)
+                            if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f && Main.expertMode)
                                 Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<MutantPresence>(), 2);
                             npc.velocity = Vector2.Zero;
                             if (npc.ai[2] == 0 && Main.netMode != 1)
@@ -751,7 +751,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             break;
 
                         case 2: //swinging sword dash
-                            if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f && FargoSoulsWorld.MasochistMode)
+                            if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f && Main.expertMode)
                                 Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<MutantPresence>(), 2);
 
                             npc.ai[3] += npc.ai[2];

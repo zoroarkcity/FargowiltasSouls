@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.IO;
 
 namespace FargowiltasSouls.NPCs.Champions
 {
@@ -36,6 +37,16 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             npc.lifeMax = 9999;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(npc.localAI[3]);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            npc.localAI[3] = reader.ReadSingle();
         }
 
         public override void AI()
@@ -82,16 +93,23 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.ai[1] += (float)Math.Sin(npc.ai[2]) * 30;
             }
 
-            npc.alpha = npc.dontTakeDamage ? 150 : 0;
+            npc.alpha = npc.localAI[3] == 1 ? 150 : 0;
 
             if ((npc.ai[1] == 110 && host.life < host.lifeMax * .66)
                 || (npc.ai[1] == 700 && host.life < host.lifeMax * .33))
                 npc.active = false;
+
+            npc.dontTakeDamage = host.ai[0] == -1;
+
+            if (npc.localAI[3] == 1)
+                npc.dontTakeDamage = true;
         }
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
             npc.dontTakeDamage = true;
+            npc.localAI[3] = 1;
+            npc.netUpdate = true;
             damage = 0;
 
             Main.PlaySound(2, npc.Center, 14);

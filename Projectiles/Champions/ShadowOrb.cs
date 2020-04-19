@@ -5,82 +5,64 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
+using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.Champions
 {
-    public class WillFireball : ModProjectile
+    public class ShadowOrb : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_711";
-
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fireball");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+            DisplayName.SetDefault("Shadow Orb");
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 30;
-            projectile.height = 30;
+            projectile.width = 10;
+            projectile.height = 10;
             projectile.aiStyle = -1;
             projectile.hostile = true;
-            projectile.timeLeft = 600;
+            projectile.timeLeft = 45;
             
-            //cooldownSlot = 1;
-        }
-
-        public override void AI()
-        {
-            projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2;
-        }
-
-        public override void Kill(int timeLeft)
-        {
-            Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 14);
-
-            for (int i = 0; i < 30; i++)
-            {
-                int dust = Dust.NewDust(projectile.position, projectile.width,
-                    projectile.height, 31, 0f, 0f, 100, default(Color), 3f);
-                Main.dust[dust].velocity *= 1.4f;
-            }
-
-            for (int i = 0; i < 20; i++)
-            {
-                int dust = Dust.NewDust(projectile.position, projectile.width,
-                    projectile.height, 6, 0f, 0f, 100, default(Color), 3.5f);
-                Main.dust[dust].noGravity = true;
-                Main.dust[dust].velocity *= 7f;
-                dust = Dust.NewDust(projectile.position, projectile.width,
-                    projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
-                Main.dust[dust].velocity *= 3f;
-            }
-
-            float scaleFactor9 = 0.5f;
-            for (int j = 0; j < 4; j++)
-            {
-                int gore = Gore.NewGore(new Vector2(projectile.Center.X, projectile.Center.Y),
-                    default(Vector2),
-                    Main.rand.Next(61, 64));
-
-                Main.gore[gore].velocity *= scaleFactor9;
-                Main.gore[gore].velocity.X += 1f;
-                Main.gore[gore].velocity.Y += 1f;
-            }
+            cooldownSlot = 1;
+            projectile.tileCollide = false;
+            projectile.scale = 2f;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Defenseless>(), 300);
-            target.AddBuff(ModContent.BuffType<Midas>(), 300);
-            target.AddBuff(BuffID.Bleeding, 300);
-            projectile.timeLeft = 0;
+            target.AddBuff(BuffID.Darkness, 300);
+            target.AddBuff(BuffID.Blackout, 300);
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            if (Main.netMode != 1)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity).RotatedBy(Math.PI / 4 * i),
+                        ModContent.ProjectileType<ShadowFlamingScythe>(), projectile.damage, 0f, Main.myPlayer);
+                }
+            }
+            
+            Main.PlaySound(2, projectile.Center, 14);
+
+            const int num226 = 36;
+            for (int num227 = 0; num227 < num226; num227++)
+            {
+                Vector2 vector6 = Vector2.UnitX * 10f;
+                vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + projectile.Center;
+                Vector2 vector7 = vector6 - projectile.Center;
+                int num228 = Dust.NewDust(vector6 + vector7, 0, 0, DustID.Fire, 0f, 0f, 0, default(Color), 3f);
+                Main.dust[num228].noGravity = true;
+                Main.dust[num228].velocity = vector7;
+            }
         }
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * projectile.Opacity;
+            return Color.White;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

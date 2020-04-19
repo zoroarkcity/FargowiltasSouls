@@ -5,82 +5,60 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
+using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.Champions
 {
-    public class WillFireball : ModProjectile
+    public class ShadowFlamingScythe : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_711";
+        public override string Texture => "Terraria/Projectile_329";
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fireball");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+            DisplayName.SetDefault("Flaming Scythe");
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 30;
-            projectile.height = 30;
+            projectile.width = 80;
+            projectile.height = 80;
             projectile.aiStyle = -1;
             projectile.hostile = true;
-            projectile.timeLeft = 600;
+            projectile.timeLeft = 300;
             
-            //cooldownSlot = 1;
+            cooldownSlot = 1;
+            projectile.light = 0.25f;
+            projectile.tileCollide = false;
+            projectile.hide = true;
         }
 
         public override void AI()
         {
-            projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2;
-        }
-
-        public override void Kill(int timeLeft)
-        {
-            Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 14);
-
-            for (int i = 0; i < 30; i++)
+            if (projectile.localAI[0] == 0)
             {
-                int dust = Dust.NewDust(projectile.position, projectile.width,
-                    projectile.height, 31, 0f, 0f, 100, default(Color), 3f);
-                Main.dust[dust].velocity *= 1.4f;
+                projectile.hide = false;
+                projectile.rotation = Main.rand.NextFloat((float)Math.PI / 2);
             }
 
-            for (int i = 0; i < 20; i++)
+            if (++projectile.localAI[0] > 30 && projectile.localAI[0] < 180)
             {
-                int dust = Dust.NewDust(projectile.position, projectile.width,
-                    projectile.height, 6, 0f, 0f, 100, default(Color), 3.5f);
-                Main.dust[dust].noGravity = true;
-                Main.dust[dust].velocity *= 7f;
-                dust = Dust.NewDust(projectile.position, projectile.width,
-                    projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
-                Main.dust[dust].velocity *= 3f;
+                projectile.velocity *= 1.05f;
             }
 
-            float scaleFactor9 = 0.5f;
-            for (int j = 0; j < 4; j++)
-            {
-                int gore = Gore.NewGore(new Vector2(projectile.Center.X, projectile.Center.Y),
-                    default(Vector2),
-                    Main.rand.Next(61, 64));
-
-                Main.gore[gore].velocity *= scaleFactor9;
-                Main.gore[gore].velocity.X += 1f;
-                Main.gore[gore].velocity.Y += 1f;
-            }
+            projectile.rotation += projectile.velocity.Length() * 0.015f;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Defenseless>(), 300);
-            target.AddBuff(ModContent.BuffType<Midas>(), 300);
-            target.AddBuff(BuffID.Bleeding, 300);
-            projectile.timeLeft = 0;
+            target.AddBuff(BuffID.Darkness, 300);
+            target.AddBuff(BuffID.Blackout, 300);
+            target.AddBuff(BuffID.OnFire, 900);
+            target.AddBuff(ModContent.BuffType<LivingWasteland>(), 900);
         }
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * projectile.Opacity;
+            return Color.White;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

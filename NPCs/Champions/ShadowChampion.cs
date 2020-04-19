@@ -27,8 +27,8 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.width = 110;
             npc.height = 110;
             npc.damage = 150;
-            npc.defense = 0;
-            npc.lifeMax = 300000;
+            npc.defense = 60;
+            npc.lifeMax = 320000;
             npc.HitSound = SoundID.NPCHit5;
             npc.DeathSound = SoundID.NPCDeath7;
             npc.noGravity = true;
@@ -109,6 +109,11 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.localAI[3] = 2;
                 npc.dontTakeDamage = true;
                 npc.netUpdate = true;
+                float buffer = npc.ai[0];
+                npc.ai[0] = -1;
+                npc.ai[1] = 0;
+                npc.ai[2] = buffer;
+                npc.ai[3] = 0;
 
                 if (Main.netMode != 1)
                 {
@@ -129,6 +134,11 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.localAI[3] = 3;
                 npc.dontTakeDamage = true;
                 npc.netUpdate = true;
+                float buffer = npc.ai[0];
+                npc.ai[0] = -1;
+                npc.ai[1] = 0;
+                npc.ai[2] = buffer;
+                npc.ai[3] = 0;
 
                 if (Main.netMode != 1)
                 {
@@ -145,50 +155,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 }
             }
 
-            switch ((int)npc.ai[0])
-            {
-                case -1:
-                    npc.dontTakeDamage = true;
-
-                    break;
-
-                case 0: //float over player
-                    if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f || Main.dayTime) //despawn code
-                    {
-                        npc.TargetClosest(false);
-                        if (npc.timeLeft > 30)
-                            npc.timeLeft = 30;
-
-                        npc.noTileCollide = true;
-                        npc.noGravity = true;
-                        npc.velocity.Y -= 1f;
-
-                        return;
-                    }
-                    else
-                    {
-                        targetPos = player.Center + npc.DirectionFrom(player.Center) * 400f;
-                        if (npc.Distance(targetPos) > 50)
-                            Movement(targetPos, 0.2f, 24f, true);
-                    }
-
-                    if (++npc.ai[1] > 180)
-                    {
-                        npc.TargetClosest();
-                        npc.ai[0]++;
-                        npc.ai[1] = 0;
-                        npc.ai[2] = 0;
-                        npc.ai[3] = 0;
-                        npc.netUpdate = true;
-                    }
-                    break;
-
-                default:
-                    npc.ai[0] = 0;
-                    goto case 0;
-            }
-
-            if (npc.dontTakeDamage)
+            if (npc.dontTakeDamage && npc.ai[0] != -1)
             {
                 bool anyBallInvulnerable = false;
                 for (int i = 0; i < Main.maxNPCs; i++)
@@ -230,6 +197,281 @@ namespace FargowiltasSouls.NPCs.Champions
                     int d = Dust.NewDust(npc.position, npc.width, npc.height, 54, 0f, 0f, 0, default(Color), 5f);
                     Main.dust[d].noGravity = true;
                 }
+            }
+
+            switch ((int)npc.ai[0])
+            {
+                case -1: //trails for orbs
+                    npc.dontTakeDamage = true;
+                    npc.velocity *= 0.97f;
+
+                    if (npc.ai[1] == 120)
+                    {
+                        Main.PlaySound(15, npc.Center, 0);
+                    }
+
+                    if (++npc.ai[3] > 9 && npc.ai[1] > 120)
+                    {
+                        npc.ai[3] = 0;
+
+                        if (Main.netMode != 1)
+                        {
+                            for (int i = 0; i < Main.maxNPCs; i++)
+                            {
+                                if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<ShadowOrb>() && Main.npc[i].ai[0] == npc.whoAmI)
+                                {
+                                    Vector2 vel = npc.DirectionTo(Main.npc[i].Center).RotatedBy(Math.PI / 2);
+                                    Projectile.NewProjectile(Main.npc[i].Center, vel, ProjectileID.DemonSickle, npc.damage / 4, 0f, Main.myPlayer);
+                                }
+                            }
+                        }
+                    }
+
+                    if (++npc.ai[1] > 300)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0] = npc.ai[2];
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 0: //float over player
+                    if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f || Main.dayTime) //despawn code
+                    {
+                        npc.TargetClosest(false);
+                        if (npc.timeLeft > 30)
+                            npc.timeLeft = 30;
+
+                        npc.noTileCollide = true;
+                        npc.noGravity = true;
+                        npc.velocity.Y -= 1f;
+
+                        return;
+                    }
+                    else
+                    {
+                        targetPos = player.Center + npc.DirectionFrom(player.Center) * 400f;
+                        if (npc.Distance(targetPos) > 50)
+                            Movement(targetPos, 0.2f, 24f);
+                    }
+
+                    if (++npc.ai[1] > 60)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 1: //dungeon guardians
+                    targetPos = player.Center + npc.DirectionFrom(player.Center) * 400f;
+                    if (npc.Distance(targetPos) > 50)
+                        Movement(targetPos, 0.2f, 24f);
+
+                    //warning dust
+                    Main.dust[Dust.NewDust(npc.Center, 0, 0, DustID.Fire, 0f, 0f, 0, default(Color), 2f)].velocity *= 7f;
+
+                    if (++npc.ai[2] > 4 && npc.ai[1] > 120)
+                    {
+                        npc.ai[2] = 0;
+
+                        Main.PlaySound(SoundID.Item21, npc.Center);
+
+                        if (Main.netMode != 1)
+                        {
+                            for (int i = -1; i <= 1; i++) //on both sides
+                            {
+                                if (i == 0)
+                                    continue;
+
+                                Vector2 spawnPos = player.Center + Vector2.UnitX * 1000 * i;
+
+                                for (int j = -1; j <= 1; j++) //three angles
+                                {
+                                    Vector2 vel = Main.rand.NextFloat(20f, 25f) * Vector2.Normalize(player.Center - spawnPos);
+                                    vel = vel.RotatedBy(MathHelper.ToRadians(25) * j); //offset between three streams
+                                    vel = vel.RotatedBy(MathHelper.ToRadians(5) * (Main.rand.NextDouble() - 0.5)); //random variation
+                                    Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<ShadowGuardian>(), npc.damage / 4, 0f, Main.myPlayer);
+                                }
+                            }
+                        }
+                    }
+
+                    if (++npc.ai[1] == 120)
+                    {
+                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                    }
+                    else if (npc.ai[1] > 300)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 2:
+                    goto case 0;
+
+                case 3: //curving flamebursts
+                    targetPos = player.Center + npc.DirectionFrom(player.Center) * 400f;
+                    if (npc.Distance(targetPos) > 50)
+                        Movement(targetPos, 0.1f, 24f);
+
+                    if (++npc.ai[2] > 60)
+                    {
+                        npc.ai[2] = 0;
+
+                        Main.PlaySound(2, npc.Center, 14);
+
+                        if (Main.netMode != 1)
+                        {
+                            for (int i = 0; i < 40; i++)
+                            {
+                                Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5));
+                                float ai0 = Main.rand.NextFloat(1.03f, 1.06f);
+                                float ai1 = Main.rand.NextFloat(-0.02f, 0.02f);
+                                Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
+                            }
+                        }
+                    }
+
+                    if (++npc.ai[1] > 300)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 4:
+                    goto case 0;
+
+                case 5: //flaming scythe shadow orbs
+                    targetPos = player.Center + npc.DirectionFrom(player.Center) * 400f;
+                    if (npc.Distance(targetPos) > 50)
+                        Movement(targetPos, 0.3f, 24f);
+
+                    if (++npc.ai[2] > 60)
+                    {
+                        npc.ai[2] = 0;
+
+                        Main.PlaySound(SoundID.Item8, npc.Center);
+
+                        if (Main.netMode != 1)
+                        {
+                            Vector2 vel = (player.Center - npc.Center) / 30;
+                            Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<Projectiles.Champions.ShadowOrb>(), npc.damage / 4, 0f, Main.myPlayer);
+                        }
+                    }
+
+                    if (++npc.ai[1] > 300)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 6:
+                    goto case 0;
+
+                case 7: //dash for tentacles
+                    if (++npc.ai[2] == 1)
+                    {
+                        npc.velocity = (player.Center - npc.Center) / 30f;
+                        npc.netUpdate = true;
+                    }
+                    else if (npc.ai[2] == 31)
+                    {
+                        npc.velocity = Vector2.Zero;
+                        npc.netUpdate = true;
+                    }
+                    else if (npc.ai[2] == 38)
+                    {
+                        if (Main.netMode != 1)
+                        {
+                            Vector2 vel = new Vector2(12f, 0f).RotatedByRandom(2 * Math.PI);
+                            for (int i = 0; i < 20; i++)
+                            {
+                                Vector2 speed = vel.RotatedBy(2 * Math.PI / 6 * (i + Main.rand.NextDouble() - 0.5));
+                                float ai1 = Main.rand.Next(10, 80) * (1f / 1000f);
+                                if (Main.rand.Next(2) == 0)
+                                    ai1 *= -1f;
+                                float ai0 = Main.rand.Next(10, 80) * (1f / 1000f);
+                                if (Main.rand.Next(2) == 0)
+                                    ai0 *= -1f;
+                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<ShadowflameTentacleHostile>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
+                            }
+                        }
+                    }
+                    else if (npc.ai[2] > 60)
+                    {
+                        npc.ai[2] = 0;
+                    }
+
+                    if (++npc.ai[1] > 330)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 8:
+                    goto case 0;
+
+                case 9: //shadow clones
+                    targetPos = player.Center + npc.DirectionFrom(player.Center) * 400f;
+                    if (npc.Distance(targetPos) > 50)
+                        Movement(targetPos, 0.3f, 24f);
+
+                    if (npc.ai[2] == 0)
+                    {
+                        npc.ai[2] = 1;
+                        if (Main.netMode != 1)
+                        {
+                            for (int i = 0; i < 15; i++)
+                            {
+                                Vector2 spawnPos = player.Center + Main.rand.NextFloat(500, 700) * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * 2 * Math.PI);
+                                Vector2 vel = npc.velocity.RotatedBy(Main.rand.NextDouble() * Math.PI * 2);
+                                Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<ShadowClone>(),
+                                    npc.damage / 4, 0f, Main.myPlayer, npc.target, 120 + 30 * i);
+                            }
+                        }
+                    }
+
+                    if (++npc.ai[1] > 600)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                default:
+                    npc.ai[0] = 0;
+                    goto case 0;
             }
         }
 

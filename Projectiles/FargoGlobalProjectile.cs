@@ -976,7 +976,7 @@ namespace FargowiltasSouls.Projectiles
 
             if (stormBoosted)
             {
-                int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.GoldFlame, projectile.velocity.X, projectile.velocity.Y, 100, default(Color), 1.5f);
+                int dustId = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.GoldFlame, projectile.velocity.X, projectile.velocity.Y, 100, default(Color), 1.5f);
                 Main.dust[dustId].noGravity = true;
             }
 
