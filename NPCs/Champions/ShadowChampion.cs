@@ -128,6 +128,12 @@ namespace FargowiltasSouls.NPCs.Champions
                             NetMessage.SendData(23, -1, -1, null, n);
                     }
                 }
+
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].type == ModContent.ProjectileType<ShadowClone>())
+                        Main.projectile[i].Kill();
+                }
             }
             else if (npc.localAI[3] == 2 && npc.life < npc.lifeMax * .33)
             {
@@ -152,6 +158,12 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (Main.netMode == 2 && n < 200)
                             NetMessage.SendData(23, -1, -1, null, n);
                     }
+                }
+
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].type == ModContent.ProjectileType<ShadowClone>())
+                        Main.projectile[i].Kill();
                 }
             }
 
@@ -448,17 +460,17 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.ai[2] = 1;
                         if (Main.netMode != 1)
                         {
-                            for (int i = 0; i < 15; i++)
+                            for (int i = 0; i < 10; i++)
                             {
                                 Vector2 spawnPos = player.Center + Main.rand.NextFloat(500, 700) * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * 2 * Math.PI);
                                 Vector2 vel = npc.velocity.RotatedBy(Main.rand.NextDouble() * Math.PI * 2);
                                 Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<ShadowClone>(),
-                                    npc.damage / 4, 0f, Main.myPlayer, npc.target, 120 + 30 * i);
+                                    npc.damage / 4, 0f, Main.myPlayer, npc.target, 60 + 30 * i);
                             }
                         }
                     }
 
-                    if (++npc.ai[1] > 600)
+                    if (++npc.ai[1] > 360)
                     {
                         npc.TargetClosest();
                         npc.ai[0]++;
