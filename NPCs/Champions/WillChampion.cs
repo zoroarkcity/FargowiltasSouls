@@ -111,6 +111,9 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 case -1:
                     {
+                        if (!npc.HasValidTarget)
+                            npc.TargetClosest(false);
+
                         npc.damage = 0;
                         npc.dontTakeDamage = true;
                         npc.velocity *= 0.9f;
@@ -278,6 +281,8 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         if (++npc.ai[1] > 45f) //time to progress
                         {
+                            npc.TargetClosest(false);
+
                             npc.ai[0]++;
                             npc.ai[1] = 0;
                             //npc.ai[2] = 0;

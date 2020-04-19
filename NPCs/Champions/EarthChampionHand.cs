@@ -24,8 +24,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void SetDefaults()
         {
-            npc.width = 112;
-            npc.height = 112;
+            npc.width = 60;
+            npc.height = 60;
             npc.damage = 125;
             npc.defense = 80;
             npc.lifeMax = 300000;
@@ -45,6 +45,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
 
             npc.trapImmune = true;
+            npc.scale = 2;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -415,7 +416,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void FindFrame(int frameHeight)
         {
-            npc.frame.Y = npc.localAI[3] == 1 ? frameHeight : 0;
+            npc.frame.Y = npc.localAI[3] == 1 ? 0 : frameHeight;
         }
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
@@ -501,6 +502,9 @@ namespace FargowiltasSouls.NPCs.Champions
             }
 
             Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
+
+            Texture2D glowmask = ModContent.GetTexture("FargowiltasSouls/NPCs/Champions/EarthChampionHand_Glow");
+            Main.spriteBatch.Draw(glowmask, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, npc.rotation, origin2, npc.scale, effects, 0f);
             return false;
         }
     }
