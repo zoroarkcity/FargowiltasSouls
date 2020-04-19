@@ -48,6 +48,8 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.buffImmune[mod.BuffType("Lethargic")] = true;
             npc.buffImmune[mod.BuffType("ClippedWings")] = true;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
+
+            npc.dontTakeDamage = true;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -56,7 +58,7 @@ namespace FargowiltasSouls.NPCs.Champions
             return true;
         }
 
-        public override void SendExtraAI(BinaryWriter writer)
+        /*public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(npc.localAI[0]);
             writer.Write(npc.localAI[1]);
@@ -70,7 +72,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.localAI[1] = reader.ReadSingle();
             npc.localAI[2] = reader.ReadSingle();
             npc.localAI[3] = reader.ReadSingle();
-        }
+        }*/
 
         public override void AI()
         {
@@ -81,7 +83,16 @@ namespace FargowiltasSouls.NPCs.Champions
 
                 if (Main.netMode != 1)
                 {
-                    
+                    const int max = 8;
+                    const float distance = 110f;
+                    float rotation = 2f * (float)Math.PI / max;
+                    for (int i = 0; i < max; i++)
+                    {
+                        Vector2 spawnPos = npc.Center + new Vector2(distance, 0f).RotatedBy(rotation * i);
+                        int n = NPC.NewNPC((int)spawnPos.X, (int)spawnPos.Y, ModContent.NPCType<ShadowOrb>(), 0, npc.whoAmI, distance, 0, rotation * i);
+                        if (Main.netMode == 2 && n < 200)
+                            NetMessage.SendData(23, -1, -1, null, n);
+                    }
                 }
             }
 
@@ -90,27 +101,49 @@ namespace FargowiltasSouls.NPCs.Champions
             Player player = Main.player[npc.target];
             Vector2 targetPos;
 
-            if (npc.HasValidTarget && npc.Distance(player.Center) < 2500)
+            if (npc.HasValidTarget && npc.Distance(player.Center) < 2500 && !Main.dayTime)
                 npc.timeLeft = 600;
 
-            /*if (npc.localAI[2] == 0 && npc.life < npc.lifeMax * .66)
+            if (npc.localAI[3] == 1 && npc.life < npc.lifeMax * .66)
             {
-                npc.localAI[2] = 1;
-                npc.ai[0] = -1;
-                npc.ai[1] = 0;
-                npc.ai[2] = 0;
-                npc.localAI[0] = 0;
+                npc.localAI[3] = 2;
+                npc.dontTakeDamage = true;
                 npc.netUpdate = true;
+
+                if (Main.netMode != 1)
+                {
+                    const int max = 16;
+                    const float distance = 700f;
+                    float rotation = 2f * (float)Math.PI / max;
+                    for (int i = 0; i < max; i++)
+                    {
+                        Vector2 spawnPos = npc.Center + new Vector2(distance, 0f).RotatedBy(rotation * i);
+                        int n = NPC.NewNPC((int)spawnPos.X, (int)spawnPos.Y, ModContent.NPCType<ShadowOrb>(), 0, npc.whoAmI, distance, 0, rotation * i);
+                        if (Main.netMode == 2 && n < 200)
+                            NetMessage.SendData(23, -1, -1, null, n);
+                    }
+                }
             }
-            else if (npc.localAI[3] == 0 && npc.life < npc.lifeMax * .33)
+            else if (npc.localAI[3] == 2 && npc.life < npc.lifeMax * .33)
             {
-                npc.localAI[3] = 1;
-                npc.ai[0] = -1;
-                npc.ai[1] = 0;
-                npc.ai[2] = 0;
-                npc.localAI[0] = 0;
+                npc.localAI[3] = 3;
+                npc.dontTakeDamage = true;
                 npc.netUpdate = true;
-            }*/
+
+                if (Main.netMode != 1)
+                {
+                    const int max = 24;
+                    const float distance = 350f;
+                    float rotation = 2f * (float)Math.PI / max;
+                    for (int i = 0; i < max; i++)
+                    {
+                        Vector2 spawnPos = npc.Center + new Vector2(distance, 0f).RotatedBy(rotation * i);
+                        int n = NPC.NewNPC((int)spawnPos.X, (int)spawnPos.Y, ModContent.NPCType<ShadowOrb>(), 0, npc.whoAmI, distance, 0, rotation * i);
+                        if (Main.netMode == 2 && n < 200)
+                            NetMessage.SendData(23, -1, -1, null, n);
+                    }
+                }
+            }
 
             switch ((int)npc.ai[0])
             {
@@ -120,7 +153,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case 0: //float over player
-                    if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f) //despawn code
+                    if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f || Main.dayTime) //despawn code
                     {
                         npc.TargetClosest(false);
                         if (npc.timeLeft > 30)
@@ -157,6 +190,35 @@ namespace FargowiltasSouls.NPCs.Champions
 
             if (npc.dontTakeDamage)
             {
+                bool anyBallInvulnerable = false;
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<ShadowOrb>() && Main.npc[i].ai[0] == npc.whoAmI
+                        && !Main.npc[i].dontTakeDamage)
+                    {
+                        anyBallInvulnerable = true;
+                        break;
+                    }
+                }
+
+                if (!anyBallInvulnerable)
+                {
+                    Main.PlaySound(SoundID.Item92, npc.Center);
+
+                    const int num226 = 80;
+                    for (int num227 = 0; num227 < num226; num227++)
+                    {
+                        Vector2 vector6 = Vector2.UnitX * 40f;
+                        vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + npc.Center;
+                        Vector2 vector7 = vector6 - npc.Center;
+                        int num228 = Dust.NewDust(vector6 + vector7, 0, 0, 27, 0f, 0f, 0, default(Color), 3f);
+                        Main.dust[num228].noGravity = true;
+                        Main.dust[num228].velocity = vector7;
+                    }
+
+                    npc.dontTakeDamage = false;
+                }
+
                 for (int i = 0; i < 3; i++)
                 {
                     int d = Dust.NewDust(npc.position, npc.width, npc.height, 27, 0f, 0f, 0, default(Color), 2f);
