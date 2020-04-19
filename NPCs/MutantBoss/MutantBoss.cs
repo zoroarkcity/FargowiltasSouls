@@ -967,8 +967,14 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (npc.ai[2] > (float)Math.PI)
                             npc.ai[2] -= (float)Math.PI * 2;
                         if (Main.netMode != 1)
-                            for (int i = 0; i < 6; i++)
-                                Projectile.NewProjectile(npc.Center, new Vector2(6f, 0).RotatedBy(npc.ai[2] + Math.PI / 3 * i), ModContent.ProjectileType<MutantEye>(), npc.defDamage / 3, 0f, Main.myPlayer);
+                        {
+                            int max = FargoSoulsWorld.MasochistMode ? 6 : 4;
+                            for (int i = 0; i < max; i++)
+                            {
+                                Projectile.NewProjectile(npc.Center, new Vector2(6f, 0).RotatedBy(npc.ai[2] + Math.PI * 2 / max * i),
+                                      ModContent.ProjectileType<MutantEye>(), npc.defDamage / 3, 0f, Main.myPlayer);
+                            }
+                        }
                     }
                     if (++npc.ai[3] > 360)
                     {
@@ -1039,7 +1045,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (++npc.ai[1] > 60)
                     {
                         npc.ai[1] = 0;
-                        if (++npc.ai[2] > 3)
+                        if (++npc.ai[2] > (FargoSoulsWorld.MasochistMode ? 1 : 3))
                         {
                             /*float[] options = { 13, 18, 21, 24, 26, 31, 33, 40 };
                             npc.ai[0] = options[Main.rand.Next(options.Length)];*/
@@ -1083,7 +1089,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
                 case 22: //pause and then initiate dash
                     npc.velocity *= 0.9f;
-                    if (++npc.ai[1] > 10)
+                    if (++npc.ai[1] > (FargoSoulsWorld.MasochistMode ? 10 : 15))
                     {
                         npc.netUpdate = true;
                         npc.ai[0]++;
@@ -1123,7 +1129,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     {
                         npc.netUpdate = true;
                         npc.ai[1] = 30;
-                        if (++npc.ai[2] > 5)
+                        if (++npc.ai[2] > (FargoSoulsWorld.MasochistMode ? 5 : 3))
                         {
                             npc.TargetClosest();
                             /*float[] options = { 13, 20, 21, 25, 29, 31, 35, 40 };
