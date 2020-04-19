@@ -146,3 +146,4 @@ moon lord overhauled:
 fishron enrages EVEN FURTHER BEYOND outside ocean
 changed mutant boss to use modcontent
 mutant boss has a custom background in p2
+skeleton rockets inflict defenseless instead of confused

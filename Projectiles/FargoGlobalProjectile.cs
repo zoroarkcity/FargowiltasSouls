@@ -1676,7 +1676,8 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.RocketSkeleton:
                         target.AddBuff(BuffID.Dazed, 120);
-                        target.AddBuff(BuffID.Confused, 120);
+                        target.AddBuff(ModContent.BuffType<Defenseless>(), 300);
+                        //target.AddBuff(BuffID.Confused, 120);
                         break;
 
                     case ProjectileID.FlamesTrap:
