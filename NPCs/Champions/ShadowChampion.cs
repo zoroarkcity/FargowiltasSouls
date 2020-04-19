@@ -532,6 +532,12 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].type == ModContent.ProjectileType<ShadowClone>())
+                    Main.projectile[i].Kill();
+            }
+
             //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<LifeForce>());
             int[] drops = {
                 ModContent.ItemType<AncientShadowEnchant>(),
