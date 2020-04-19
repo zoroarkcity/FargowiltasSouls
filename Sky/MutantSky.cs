@@ -5,8 +5,10 @@ using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.NPCs;
+using FargowiltasSouls.NPCs.MutantBoss;
 
-namespace FargowiltasSouls.NPCs.MutantBoss
+namespace FargowiltasSouls.Sky
 {
     public class MutantSky : CustomSky
     {
@@ -39,7 +41,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
         {
             if (maxDepth >= 0 && minDepth < 0)
             {
-                spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/NPCs/MutantBoss/MutantGradient"),
+                spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantSky"),
                     new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White * intensity * 0.5f);
             }
         }

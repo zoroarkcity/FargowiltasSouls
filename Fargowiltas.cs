@@ -15,6 +15,7 @@ using FargowiltasSouls.NPCs.AbomBoss;
 using FargowiltasSouls.NPCs.Champions;
 using FargowiltasSouls.NPCs.DeviBoss;
 using FargowiltasSouls.NPCs.MutantBoss;
+using FargowiltasSouls.Sky;
 using ThoriumMod.Items.Titan;
 using Fargowiltas.Items.Summons.Deviantt;
 using ThoriumMod.Projectiles.Pets;

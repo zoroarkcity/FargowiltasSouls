@@ -1045,7 +1045,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (++npc.ai[1] > 60)
                     {
                         npc.ai[1] = 0;
-                        if (++npc.ai[2] > (FargoSoulsWorld.MasochistMode ? 1 : 3))
+                        if (++npc.ai[2] > (FargoSoulsWorld.MasochistMode ? 3 : 1))
                         {
                             /*float[] options = { 13, 18, 21, 24, 26, 31, 33, 40 };
                             npc.ai[0] = options[Main.rand.Next(options.Length)];*/
@@ -1089,7 +1089,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
                 case 22: //pause and then initiate dash
                     npc.velocity *= 0.9f;
-                    if (++npc.ai[1] > (FargoSoulsWorld.MasochistMode ? 10 : 15))
+                    if (++npc.ai[1] > (FargoSoulsWorld.MasochistMode ? 10 : 20))
                     {
                         npc.netUpdate = true;
                         npc.ai[0]++;
@@ -1120,11 +1120,24 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 case 24: //destroyers
                     if (!AliveCheck(player))
                         break;
-                    targetPos = player.Center + npc.DirectionFrom(player.Center) * 300;
-                    if (npc.Distance(targetPos) > 50)
+                    if (FargoSoulsWorld.MasochistMode)
                     {
-                        Movement(targetPos, 0.9f);
+                        targetPos = player.Center + npc.DirectionFrom(player.Center) * 300;
+                        if (npc.Distance(targetPos) > 50)
+                        {
+                            Movement(targetPos, 0.9f);
+                        }
                     }
+                    else
+                    {
+                        targetPos = player.Center;
+                        targetPos.X += 500 * (npc.Center.X < targetPos.X ? -1 : 1);
+                        if (npc.Distance(targetPos) > 50)
+                        {
+                            Movement(targetPos, 0.4f);
+                        }
+                    }
+
                     if (++npc.ai[1] > 60)
                     {
                         npc.netUpdate = true;
