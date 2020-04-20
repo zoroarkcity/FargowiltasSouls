@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameInput;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -1114,6 +1115,9 @@ namespace FargowiltasSouls
 
             if (FreezeTime && freezeLength != 0)
             {
+                if (!Filters.Scene["FargowiltasSouls:TimeStop"].IsActive())
+                    Filters.Scene.Activate("FargowiltasSouls:TimeStop");
+
                 if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>()))
                     player.AddBuff(ModContent.BuffType<TimeFrozen>(), freezeLength);
 

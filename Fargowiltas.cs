@@ -6,6 +6,7 @@ using System.IO;
 using FargowiltasSouls.ModCompatibilities;
 using Terraria;
 using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -59,6 +60,8 @@ namespace FargowiltasSouls
             Instance = this;
 
             SkyManager.Instance["FargowiltasSouls:MutantBoss"] = new MutantSky();
+            Filters.Scene["FargowiltasSouls:TimeStop"] = new Filter(
+                new TimeStopShader("FilterMiniTower").UseColor(0.2f, 0.2f, 0.2f).UseOpacity(0.7f), EffectPriority.VeryHigh);
 
             if (Language.ActiveCulture == GameCulture.Chinese)
             {

@@ -148,3 +148,4 @@ changed mutant boss to use modcontent
 mutant boss has a custom background in p2
 skeleton rockets inflict defenseless instead of confused
 nerfed mutant p2 patterns in expert
+added shader for timestop
