@@ -1204,6 +1204,8 @@ namespace FargowiltasSouls
         {
             player.shinyStone = true;
             player.setSquireT2 = true;
+            if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.SquirePanic))
+                player.buffImmune[BuffID.BallistaPanic] = true;
             player.setSquireT3 = true;
             //immune frames
             ValhallaEnchant = true;
