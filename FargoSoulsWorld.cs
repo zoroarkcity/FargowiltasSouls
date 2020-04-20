@@ -239,6 +239,9 @@ namespace FargowiltasSouls
 
         public override void PostUpdate()
         {
+            if (!Main.expertMode && MasochistMode)
+                MasochistMode = false;
+
             //Main.NewText(BuilderMode);
 
             #region commented
