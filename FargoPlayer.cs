@@ -1830,19 +1830,16 @@ namespace FargowiltasSouls
                 player.lifeRegen *= 2;
             }
 
-            if (MutantPresence)
+            if (MutantPresence && FargoSoulsWorld.MasochistMode)
             {
                 if (player.lifeRegen > 0)
                     player.lifeRegen = 0;
+                
+                if (player.lifeRegenCount > 0)
+                    player.lifeRegenCount -= 7;
 
-                if (FargoSoulsWorld.MasochistMode)
-                {
-                    if (player.lifeRegenCount > 0)
-                        player.lifeRegenCount -= 7;
-
-                    if (player.lifeRegenTime > 0)
-                        player.lifeRegenTime -= 7;
-                }
+                if (player.lifeRegenTime > 0)
+                    player.lifeRegenTime -= 7;
             }
 
             if (AbomRebirth)
