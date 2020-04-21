@@ -101,14 +101,15 @@ namespace FargowiltasSouls.NPCs.Champions
 
                 case 1: //you think you're safe?
                     {
-                        if (head.ai[0] != 3)
+                        if (head.ai[0] != 3 && head.ai[0] != -3)
                         {
                             npc.ai[0] = 0;
                             npc.netUpdate = true;
                         }
 
-                        if (Math.Sign(player.Center.X - head.Center.X) * Math.Sign(npc.Center.X - head.Center.X) == 1
+                        if ((Math.Sign(player.Center.X - head.Center.X) * Math.Sign(npc.Center.X - head.Center.X) == 1
                             && Math.Sign(player.Center.Y - head.Center.Y) * Math.Sign(npc.Center.Y - head.Center.Y) == 1)
+                            || head.ai[0] == -3)
                         {
                             targetPos = player.Center;
                         }
@@ -118,26 +119,29 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
 
                         if (npc.Distance(targetPos) > 50)
-                            Movement(targetPos, 0.2f, 6f);
+                            Movement(targetPos, 0.2f, 8f);
 
-                        if (npc.Distance(player.Center) < npc.width / 2) //GOTCHA
+                        if (npc.Hitbox.Intersects(player.Hitbox)) //GOTCHA
                         {
                             Main.PlaySound(15, npc.Center, 0);
-
+                            
                             npc.ai[0] = 2;
                             npc.netUpdate = true;
 
-                            head.ai[0] = -1;
-                            head.ai[1] = 0;
-                            head.netUpdate = true;
+                            if (head.ai[0] != -3)
+                            {
+                                head.ai[0] = -1;
+                                head.ai[1] = 0;
+                                head.netUpdate = true;
+                            }
                         }
                     }
                     break;
 
                 case 2: //grab
-                    if (npc.Distance(player.Center) > npc.width || head.ai[0] != -1 || !player.active || player.dead) //somehow escaped
+                    if (!npc.Hitbox.Intersects(player.Hitbox) || (head.ai[0] != -1 && head.ai[0] != -3) || !player.active || player.dead) //somehow escaped
                     {
-                        npc.ai[0] = 0;
+                        npc.ai[0] = head.ai[0] == -3 ? 1 : 0;
                         npc.netUpdate = true;
                     }
                     else
@@ -173,6 +177,27 @@ namespace FargowiltasSouls.NPCs.Champions
                 Main.dust[d].velocity *= 3f;
             }
             Main.dust[Dust.NewDust(npc.position, npc.width, npc.height, 54, 0f, 0f, 0, default(Color), 2f)].noGravity = true;
+
+            npc.dontTakeDamage = head.ai[0] < 0;
+        }
+
+        public override bool CheckDead()
+        {
+            if (!(npc.ai[1] > -1 && npc.ai[1] < Main.maxNPCs && Main.npc[(int)npc.ai[1]].active
+                && Main.npc[(int)npc.ai[1]].type == ModContent.NPCType<SpiritChampion>()))
+            {
+                return true;
+            }
+
+            NPC head = Main.npc[(int)npc.ai[1]];
+            if (head.ai[0] != -3)
+            {
+                npc.active = true;
+                npc.life = 1;
+                return false;
+            }
+
+            return true;
         }
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)

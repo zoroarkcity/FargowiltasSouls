@@ -861,6 +861,14 @@ namespace FargowiltasSouls.Projectiles
                     }
                     break;
 
+                case ProjectileID.DesertDjinnCurse:
+                    if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<NPCs.Champions.SpiritChampion>())
+                        && projectile.damage > 0)
+                    {
+                        projectile.damage = Main.npc[EModeGlobalNPC.championBoss].damage / 4;
+                    }
+                    break;
+
                 case ProjectileID.SandnadoHostile:
                     if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, ModContent.NPCType<NPCs.DeviBoss.DeviBoss>())
                         && projectile.Distance(Main.npc[EModeGlobalNPC.deviBoss].Center) < 2000f)

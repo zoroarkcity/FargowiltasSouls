@@ -1,15 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Items.Accessories.Enchantments;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
-using System.IO;
 
 namespace FargowiltasSouls.NPCs.Champions
 {
@@ -127,6 +127,91 @@ namespace FargowiltasSouls.NPCs.Champions
             
             switch ((int)npc.ai[0])
             {
+                case -4: //final float
+                    npc.dontTakeDamage = true;
+                    goto case 0;
+
+                case -3: //final you think you're safe
+                    if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f
+                        || Framing.GetTileSafely(player.Center).wall == WallID.None) //despawn code
+                    {
+                        npc.TargetClosest(false);
+                        if (npc.timeLeft > 30)
+                            npc.timeLeft = 30;
+
+                        npc.noTileCollide = true;
+                        npc.noGravity = true;
+                        npc.velocity.Y += 1f;
+
+                        return;
+                    }
+
+                    targetPos = new Vector2(npc.localAI[0], npc.localAI[1]);
+                    if (npc.Distance(targetPos) > 25)
+                        Movement(targetPos, 0.8f, 24f);
+
+                    npc.dontTakeDamage = true;
+
+                    if (npc.ai[3] == 0)
+                    {
+                        npc.ai[3] = 1;
+
+                        Main.PlaySound(15, npc.Center, 0);
+
+                        int handsLeft = 0;
+
+                        for (int i = 0; i < Main.maxNPCs; i++)
+                        {
+                            if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<SpiritChampionHand>() && Main.npc[i].ai[1] == npc.whoAmI)
+                            {
+                                Main.npc[i].ai[0] = 1f;
+                                Main.npc[i].netUpdate = true;
+                                handsLeft++;
+                            }
+                        }
+
+                        if (Main.netMode != 1) //if hands somehow disappear
+                        {
+                            while (handsLeft < 4)
+                            {
+                                handsLeft++;
+
+                                float ai2 = Main.rand.Next(2) == 0 ? -1 : 1;
+                                float ai3 = Main.rand.Next(2) == 0 ? -1 : 1;
+                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 1f, npc.whoAmI, ai2, ai3, npc.target);
+                                if (n != Main.maxNPCs)
+                                {
+                                    Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
+                                    Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
+                                    if (Main.netMode != 2)
+                                        NetMessage.SendData(23, -1, -1, null, n);
+                                }
+                            }
+                        }
+                    }
+
+                    if (++npc.ai[2] > 60) //bone spray
+                    {
+                        npc.ai[2] = 0;
+
+                        if (Main.netMode != 1)
+                        {
+                            Main.PlaySound(SoundID.Item2, npc.Center);
+
+                            for (int i = 0; i < 12; i++)
+                            {
+                                Projectile.NewProjectile(npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
+                                    Main.rand.NextFloat(-8f, 8f), Main.rand.NextFloat(-8f, 8f), ModContent.ProjectileType<SpiritCrossBone>(), npc.damage / 4, 0f, Main.myPlayer);
+                            }
+                        }
+                    }
+                    
+                    if (++npc.ai[1] > 600)
+                    {
+                        npc.dontTakeDamage = false;
+                    }
+                    break;
+
                 case -1:
                     targetPos = new Vector2(npc.localAI[0], npc.localAI[1]);
                     if (npc.Distance(targetPos) > 25)
@@ -289,7 +374,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             {
                                 float speed = Main.rand.NextFloat(4f, 8f);
                                 Vector2 velocity = speed * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * 2 * Math.PI);
-                                float ai1 = speed / Main.rand.NextFloat(60f, 150f);
+                                float ai1 = speed / Main.rand.NextFloat(60f, 120f);
                                 Projectile.NewProjectile(npc.Center, velocity, ModContent.ProjectileType<SpiritSword>(), npc.damage / 4, 0f, Main.myPlayer, 0f, ai1);
                             }
                         }
@@ -306,10 +391,181 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     break;
 
+                case 6:
+                    goto case 0;
+
+                case 7: //skip this number, staying on even number allows hands to remain drawn close
+                    npc.ai[0]++;
+                    break;
+
+                case 8: //shadow hands, reflect, mummy spirits
+                    {
+                        targetPos = new Vector2(npc.localAI[0], npc.localAI[1]);
+                        if (npc.Distance(targetPos) > 25)
+                            Movement(targetPos, 0.8f, 24f);
+
+                        const float distance = 150;
+
+                        for (int i = 0; i < 20; i++)
+                        {
+                            Vector2 offset = new Vector2();
+                            double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                            offset.X += (float)(Math.Sin(angle) * distance);
+                            offset.Y += (float)(Math.Cos(angle) * distance);
+                            Dust dust = Main.dust[Dust.NewDust(
+                                npc.Center + offset - new Vector2(4, 4), 0, 0,
+                                87, 0, 0, 100, Color.White, 1f
+                                )];
+                            dust.velocity = npc.velocity;
+                            //if (Main.rand.Next(3) == 0) dust.velocity += Vector2.Normalize(offset) * -5f;
+                            dust.noGravity = true;
+                        }
+
+                        Main.projectile.Where(x => x.active && x.friendly && !x.minion).ToList().ForEach(x => //reflect projectiles
+                        {
+                            if (Vector2.Distance(x.Center, npc.Center) <= distance)
+                            {
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    int dustId = Dust.NewDust(x.position, x.width, x.height, 87,
+                                        x.velocity.X * 0.2f, x.velocity.Y * 0.2f, 100, default(Color), 1.5f);
+                                    Main.dust[dustId].noGravity = true;
+                                }
+
+                            // Set ownership
+                            x.hostile = true;
+                                x.friendly = false;
+                                x.owner = Main.myPlayer;
+                            x.damage /= 4;
+
+                            // Turn around
+                            x.velocity *= -1f;
+
+                            // Flip sprite
+                            if (x.Center.X > npc.Center.X * 0.5f)
+                                {
+                                    x.direction = 1;
+                                    x.spriteDirection = 1;
+                                }
+                                else
+                                {
+                                    x.direction = -1;
+                                    x.spriteDirection = -1;
+                                }
+
+                            //x.netUpdate = true;
+                        }
+                        });
+
+                        if (npc.ai[1] == 0)
+                        {
+                            Main.PlaySound(15, npc.Center, 0);
+                        }
+
+                        if (++npc.ai[3] > 10) //spirits
+                        {
+                            npc.ai[3] = 0;
+
+                            Main.PlaySound(SoundID.Item8, npc.Center);
+
+                            if (Main.netMode != 1) //vanilla code from desert spirits idfk
+                            {
+                                Point tileCoordinates1 = npc.Center.ToTileCoordinates();
+                                Point tileCoordinates2 = Main.player[npc.target].Center.ToTileCoordinates();
+                                Vector2 vector2 = Main.player[npc.target].Center - npc.Center;
+                                int num1 = 6;
+                                int num2 = 6;
+                                int num3 = 0;
+                                int num4 = 2;
+                                int num5 = 0;
+                                bool flag1 = false;
+                                if (vector2.Length() > 2000)
+                                    flag1 = true;
+                                while (!flag1 && num5 < 50)
+                                {
+                                    ++num5;
+                                    int index1 = Main.rand.Next(tileCoordinates2.X - num1, tileCoordinates2.X + num1 + 1);
+                                    int index2 = Main.rand.Next(tileCoordinates2.Y - num1, tileCoordinates2.Y + num1 + 1);
+                                    if ((index2 < tileCoordinates2.Y - num3 || index2 > tileCoordinates2.Y + num3 || (index1 < tileCoordinates2.X - num3 || index1 > tileCoordinates2.X + num3)) && (index2 < tileCoordinates1.Y - num2 || index2 > tileCoordinates1.Y + num2 || (index1 < tileCoordinates1.X - num2 || index1 > tileCoordinates1.X + num2)) && !Main.tile[index1, index2].nactive())
+                                    {
+                                        bool flag2 = true;
+                                        if (flag2 && Main.tile[index1, index2].lava())
+                                            flag2 = false;
+                                        if (flag2 && Collision.SolidTiles(index1 - num4, index1 + num4, index2 - num4, index2 + num4))
+                                            flag2 = false;
+                                        if (flag2)
+                                        {
+                                            Projectile.NewProjectile(index1 * 16 + 8, index2 * 16 + 8, 0, 0f,
+                                                ProjectileID.DesertDjinnCurse, 0, 1f, Main.myPlayer, npc.target, 0f);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if (++npc.ai[2] > 70) //hands
+                        {
+                            npc.ai[2] = 0;
+
+                            if (Main.netMode != 1)
+                            {
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5));
+                                    float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
+                                    float ai1 = Main.rand.NextFloat(0.025f);
+                                    Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<SpiritHand>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
+                                }
+                            }
+                        }
+
+                        if (++npc.ai[1] > 360)
+                        {
+                            npc.TargetClosest();
+                            npc.ai[0]++;
+                            npc.ai[1] = 0;
+                            npc.ai[2] = 0;
+                            npc.ai[3] = 0;
+                            npc.netUpdate = true;
+                        }
+                    }
+                    break;
+
+                case 9: //skip this number, get back to usual behaviour
+                    npc.ai[0]++;
+                    break;
+
+                /*case 10:
+                    goto case 0;*/
+
                 default:
                     npc.ai[0] = 0;
                     goto case 0;
             }
+        }
+
+        public override bool CheckDead()
+        {
+            if (npc.ai[0] != -3f)
+            {
+                npc.active = true;
+                npc.life = 1;
+
+                if (Main.netMode != 1)
+                {
+                    npc.TargetClosest(false);
+                    npc.ai[0] = -4f;
+                    npc.ai[1] = 0;
+                    npc.ai[2] = 0;
+                    npc.ai[3] = 0;
+                    npc.dontTakeDamage = true;
+                    npc.netUpdate = true;
+                }
+
+                return false;
+            }
+            return true;
         }
 
         private void Movement(Vector2 targetPos, float speedModifier, float cap = 12f)

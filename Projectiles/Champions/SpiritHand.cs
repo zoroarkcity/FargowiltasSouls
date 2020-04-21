@@ -9,30 +9,35 @@ using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.Champions
 {
-    public class ShadowFlameburst : ModProjectile
+    public class SpiritHand : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_664";
+        public override string Texture => "FargowiltasSouls/NPCs/Champions/SpiritChampionHand";
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flameburst");
+            DisplayName.SetDefault("Spirit Hand");
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
+            projectile.width = 100;
+            projectile.height = 100;
             projectile.aiStyle = -1;
             projectile.hostile = true;
             projectile.timeLeft = 300;
             
             cooldownSlot = 1;
+            projectile.tileCollide = false;
         }
 
         public override void AI()
         {
             if (projectile.localAI[0] == 0)
             {
+                Main.PlaySound(SoundID.Item8, projectile.Center);
+
                 for (int i = 0; i < 5; i++)
                 {
                     int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire,
@@ -48,7 +53,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
             if (projectile.localAI[0] > 60 && projectile.localAI[0] < 180)
             {
-                if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<NPCs.Champions.ShadowChampion>()))
+                if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<NPCs.Champions.SpiritChampion>()))
                 {
                     float rotation = projectile.velocity.ToRotation();
                     Vector2 vel = Main.player[Main.npc[EModeGlobalNPC.championBoss].target].Center - projectile.Center;
@@ -57,35 +62,18 @@ namespace FargowiltasSouls.Projectiles.Champions
                 }
             }
 
-            projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2;
-        }
+            projectile.direction = projectile.spriteDirection = projectile.velocity.X > 0 ? -1 : 1;
+            projectile.rotation = projectile.velocity.ToRotation();
+            if (projectile.spriteDirection < 0)
+                projectile.rotation += (float)Math.PI;
 
-        public override void Kill(int timeLeft)
-        {
-            for (int i = 0; i < 15; i++)
-            {
-                int dust = Dust.NewDust(projectile.position, projectile.width,
-                    projectile.height, 31, 0f, 0f, 100, default(Color), 3f);
-                Main.dust[dust].velocity *= 1.4f;
-            }
-
-            for (int i = 0; i < 10; i++)
-            {
-                int dust = Dust.NewDust(projectile.position, projectile.width,
-                    projectile.height, 6, 0f, 0f, 100, default(Color), 3.5f);
-                Main.dust[dust].noGravity = true;
-                Main.dust[dust].velocity *= 7f;
-                dust = Dust.NewDust(projectile.position, projectile.width,
-                    projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
-                Main.dust[dust].velocity *= 3f;
-            }
+            Main.dust[Dust.NewDust(projectile.position, projectile.width, projectile.height, 54, 0f, 0f, 0, default(Color), 2f)].noGravity = true;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.Darkness, 300);
-            target.AddBuff(BuffID.Blackout, 300);
-            target.AddBuff(BuffID.OnFire, 300);
+            target.AddBuff(ModContent.BuffType<Infested>(), 360);
+            target.AddBuff(ModContent.BuffType<ClippedWings>(), 180);
         }
 
         public override Color? GetAlpha(Color lightColor)
@@ -104,7 +92,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             Color color26 = lightColor;
             color26 = projectile.GetAlpha(color26);
 
-            SpriteEffects effects = projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteEffects effects = projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
             {
