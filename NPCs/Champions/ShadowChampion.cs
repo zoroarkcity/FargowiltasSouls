@@ -197,18 +197,6 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     npc.dontTakeDamage = false;
                 }
-
-                for (int i = 0; i < 3; i++)
-                {
-                    int d = Dust.NewDust(npc.position, npc.width, npc.height, 27, 0f, 0f, 0, default(Color), 2f);
-                    Main.dust[d].noGravity = true;
-                    Main.dust[d].velocity *= 4f;
-                }
-                for (int i = 0; i < 3; i++)
-                {
-                    int d = Dust.NewDust(npc.position, npc.width, npc.height, 54, 0f, 0f, 0, default(Color), 5f);
-                    Main.dust[d].noGravity = true;
-                }
             }
 
             switch ((int)npc.ai[0])
@@ -484,6 +472,21 @@ namespace FargowiltasSouls.NPCs.Champions
                 default:
                     npc.ai[0] = 0;
                     goto case 0;
+            }
+
+            if (npc.dontTakeDamage)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    int d = Dust.NewDust(npc.position, npc.width, npc.height, 27, 0f, 0f, 0, default(Color), 2f);
+                    Main.dust[d].noGravity = true;
+                    Main.dust[d].velocity *= 4f;
+                }
+                for (int i = 0; i < 3; i++)
+                {
+                    int d = Dust.NewDust(npc.position, npc.width, npc.height, 54, 0f, 0f, 0, default(Color), 5f);
+                    Main.dust[d].noGravity = true;
+                }
             }
         }
 
