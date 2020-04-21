@@ -862,11 +862,16 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case ProjectileID.SandnadoHostile:
-                    if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                    if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, ModContent.NPCType<NPCs.DeviBoss.DeviBoss>())
+                        && projectile.Distance(Main.npc[EModeGlobalNPC.deviBoss].Center) < 2000f)
                     {
                         projectile.damage = Main.npc[EModeGlobalNPC.deviBoss].damage / 4;
                         if (Main.npc[EModeGlobalNPC.deviBoss].ai[0] != 5 && projectile.timeLeft > 90)
                             projectile.timeLeft = 90;
+                    }
+                    else if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<NPCs.Champions.SpiritChampion>()))
+                    {
+                        projectile.damage = Main.npc[EModeGlobalNPC.championBoss].damage / 4;
                     }
                     else if (FargoSoulsWorld.MasochistMode && projectile.timeLeft == 1199 && Main.netMode != 1)
                     {

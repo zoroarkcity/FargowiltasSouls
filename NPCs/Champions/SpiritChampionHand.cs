@@ -88,11 +88,66 @@ namespace FargowiltasSouls.NPCs.Champions
             switch ((int)npc.ai[0])
             {
                 case 0: //float near head
-                    targetPos = head.Center;
-                    targetPos.X += 150 * npc.ai[2];
-                    targetPos.Y += 150 * npc.ai[3];
-                    if (npc.Distance(targetPos) > 100)
-                        Movement(targetPos, 0.7f, 24f);
+                    {
+                        targetPos = head.Center;
+                        float offset = head.ai[0] % 2 == 0 ? 50 : 150;
+                        float distance = head.ai[0] % 2 == 0 ? 50 : 100;
+                        targetPos.X += offset * npc.ai[2];
+                        targetPos.Y += offset * npc.ai[3];
+                        if (npc.Distance(targetPos) > distance)
+                            Movement(targetPos, 0.8f, 24f);
+                    }
+                    break;
+
+                case 1: //you think you're safe?
+                    {
+                        if (head.ai[0] != 3)
+                        {
+                            npc.ai[0] = 0;
+                            npc.netUpdate = true;
+                        }
+
+                        if (Math.Sign(player.Center.X - head.Center.X) * Math.Sign(npc.Center.X - head.Center.X) == 1
+                            && Math.Sign(player.Center.Y - head.Center.Y) * Math.Sign(npc.Center.Y - head.Center.Y) == 1)
+                        {
+                            targetPos = player.Center;
+                        }
+                        else
+                        {
+                            targetPos = head.Center + head.DirectionTo(npc.Center) * head.Distance(player.Center);
+                        }
+
+                        if (npc.Distance(targetPos) > 50)
+                            Movement(targetPos, 0.2f, 6f);
+
+                        if (npc.Distance(player.Center) < npc.width / 2) //GOTCHA
+                        {
+                            Main.PlaySound(15, npc.Center, 0);
+
+                            npc.ai[0] = 2;
+                            npc.netUpdate = true;
+
+                            head.ai[0] = -1;
+                            head.ai[1] = 0;
+                            head.netUpdate = true;
+                        }
+                    }
+                    break;
+
+                case 2: //grab
+                    if (npc.Distance(player.Center) > npc.width || head.ai[0] != -1 || !player.active || player.dead) //somehow escaped
+                    {
+                        npc.ai[0] = 0;
+                        npc.netUpdate = true;
+                    }
+                    else
+                    {
+                        player.Center = npc.Center;
+                        player.velocity.X = 0;
+                        player.velocity.Y = -0.4f;
+
+                        Movement(head.Center, 0.8f, 24f);
+                    }
                     break;
 
                 default:

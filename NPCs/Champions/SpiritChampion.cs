@@ -57,7 +57,7 @@ namespace FargowiltasSouls.NPCs.Champions
             return true;
         }
 
-        /*public override void SendExtraAI(BinaryWriter writer)
+        public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(npc.localAI[0]);
             writer.Write(npc.localAI[1]);
@@ -71,7 +71,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.localAI[1] = reader.ReadSingle();
             npc.localAI[2] = reader.ReadSingle();
             npc.localAI[3] = reader.ReadSingle();
-        }*/
+        }
 
         public override void AI()
         {
@@ -127,6 +127,29 @@ namespace FargowiltasSouls.NPCs.Champions
             
             switch ((int)npc.ai[0])
             {
+                case -1:
+                    targetPos = new Vector2(npc.localAI[0], npc.localAI[1]);
+                    if (npc.Distance(targetPos) > 25)
+                        Movement(targetPos, 0.8f, 24f);
+
+                    if (++npc.ai[1] > 200)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0] = 4;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+
+                        if (npc.Distance(player.Center) < 50)
+                        {
+                            player.velocity.X = player.Center.X < npc.Center.X ? -15f : 15f;
+                            player.velocity.Y = -10f;
+                            Main.PlaySound(15, npc.Center, 0);
+                        }
+                    }
+                    break;
+
                 case 0: //float to player
                     if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f
                         || Framing.GetTileSafely(player.Center).wall == WallID.None) //despawn code
@@ -145,13 +168,14 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.ai[1] == 0)
                     {
                         targetPos = player.Center;
-                        npc.velocity = (targetPos - npc.Center) / 45;
+                        npc.velocity = (targetPos - npc.Center) / 75;
+
+                        npc.localAI[0] = targetPos.X;
+                        npc.localAI[1] = targetPos.Y;
                     }
 
-                    if (++npc.ai[1] > 45)
+                    if (++npc.ai[1] > 75)
                     {
-                        npc.velocity = Vector2.Zero;
-
                         npc.TargetClosest();
                         npc.ai[0]++;
                         npc.ai[1] = 0;
@@ -161,8 +185,117 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     break;
 
-                case 1:
-                    if (++npc.ai[1] > 120)
+                case 1: //cross bone/sandnado
+                    targetPos = new Vector2(npc.localAI[0], npc.localAI[1]);
+                    if (npc.Distance(targetPos) > 25)
+                        Movement(targetPos, 0.8f, 24f);
+
+                    if (++npc.ai[2] > 60)
+                    {
+                        npc.ai[2] = 0;
+                        
+                        if (Main.netMode != 1)
+                        {
+                            if (npc.ai[1] < 180) //cross bones
+                            {
+                                Main.PlaySound(SoundID.Item2, npc.Center);
+
+                                for (int i = 0; i < 12; i++)
+                                {
+                                    Projectile.NewProjectile(npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
+                                        Main.rand.NextFloat(-8f, 8f), Main.rand.NextFloat(-8f, 8f), ModContent.ProjectileType<SpiritCrossBone>(), npc.damage / 4, 0f, Main.myPlayer);
+                                }
+                            }
+                            else //sandnado
+                            {
+                                Vector2 target = player.Center;
+                                target.X += player.velocity.X * 90;
+                                target.Y -= 150;
+                                Projectile.NewProjectile(target, Vector2.Zero, ProjectileID.SandnadoHostileMark, 0, 0f, Main.myPlayer);
+
+                                int length = (int)npc.Distance(target) / 10;
+                                Vector2 offset = npc.DirectionTo(target) * 10f;
+                                for (int i = 0; i < length; i++) //dust warning line for sandnado
+                                {
+                                    int d = Dust.NewDust(npc.Center + offset * i, 0, 0, 269, 0f, 0f, 0, new Color());
+                                    Main.dust[d].noLight = true;
+                                    Main.dust[d].scale = 1.25f;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (++npc.ai[1] > 400)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 2:
+                    goto case 0;
+
+                case 3: //grab
+                    targetPos = new Vector2(npc.localAI[0], npc.localAI[1]);
+                    if (npc.Distance(targetPos) > 25)
+                        Movement(targetPos, 0.8f, 24f);
+
+                    if (npc.ai[2] == 0)
+                    {
+                        npc.ai[2] = 1;
+
+                        for (int i = 0; i < Main.maxNPCs; i++)
+                        {
+                            if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<SpiritChampionHand>() && Main.npc[i].ai[1] == npc.whoAmI)
+                            {
+                                Main.npc[i].ai[0] = 1f;
+                                Main.npc[i].netUpdate = true;
+                            }
+                        }
+                    }
+
+                    if (++npc.ai[1] > 360)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 4:
+                    goto case 0;
+
+                case 5: //swords
+                    targetPos = new Vector2(npc.localAI[0], npc.localAI[1]);
+                    if (npc.Distance(targetPos) > 25)
+                        Movement(targetPos, 0.8f, 24f);
+
+                    if (++npc.ai[2] > 80)
+                    {
+                        npc.ai[2] = 0;
+
+                        Main.PlaySound(SoundID.Item92, npc.Center);
+
+                        if (Main.netMode != 1)
+                        {
+                            for (int i = 0; i < 15; i++)
+                            {
+                                float speed = Main.rand.NextFloat(4f, 8f);
+                                Vector2 velocity = speed * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * 2 * Math.PI);
+                                float ai1 = speed / Main.rand.NextFloat(30f, 120f);
+                                Projectile.NewProjectile(npc.Center, velocity, ModContent.ProjectileType<SpiritSword>(), npc.damage / 4, 0f, Main.myPlayer, 0f, ai1);
+                            }
+                        }
+                    }
+
+                    if (++npc.ai[1] > 300)
                     {
                         npc.TargetClosest();
                         npc.ai[0]++;
@@ -177,6 +310,38 @@ namespace FargowiltasSouls.NPCs.Champions
                     npc.ai[0] = 0;
                     goto case 0;
             }
+        }
+
+        private void Movement(Vector2 targetPos, float speedModifier, float cap = 12f)
+        {
+            if (npc.Center.X < targetPos.X)
+            {
+                npc.velocity.X += speedModifier;
+                if (npc.velocity.X < 0)
+                    npc.velocity.X += speedModifier * 2;
+            }
+            else
+            {
+                npc.velocity.X -= speedModifier;
+                if (npc.velocity.X > 0)
+                    npc.velocity.X -= speedModifier * 2;
+            }
+            if (npc.Center.Y < targetPos.Y)
+            {
+                npc.velocity.Y += speedModifier;
+                if (npc.velocity.Y < 0)
+                    npc.velocity.Y += speedModifier * 2;
+            }
+            else
+            {
+                npc.velocity.Y -= speedModifier;
+                if (npc.velocity.Y > 0)
+                    npc.velocity.Y -= speedModifier * 2;
+            }
+            if (Math.Abs(npc.velocity.X) > cap)
+                npc.velocity.X = cap * Math.Sign(npc.velocity.X);
+            if (Math.Abs(npc.velocity.Y) > cap)
+                npc.velocity.Y = cap * Math.Sign(npc.velocity.Y);
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
