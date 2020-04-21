@@ -546,7 +546,8 @@ namespace FargowiltasSouls.NPCs.Champions
                 ModContent.ItemType<ShinobiEnchant>(),
                 ModContent.ItemType<DarkArtistEnchant>(),
             };
-            Item.NewItem(npc.position, npc.Size, drops[Main.rand.Next(drops.Length)]);
+            for (int i = 0; i < 2; i++)
+                Item.NewItem(npc.position, npc.Size, drops[Main.rand.Next(drops.Length)]);
         }
 
         public override Color? GetAlpha(Color drawColor)

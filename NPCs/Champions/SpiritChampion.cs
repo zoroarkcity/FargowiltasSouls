@@ -289,7 +289,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             {
                                 float speed = Main.rand.NextFloat(4f, 8f);
                                 Vector2 velocity = speed * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * 2 * Math.PI);
-                                float ai1 = speed / Main.rand.NextFloat(30f, 120f);
+                                float ai1 = speed / Main.rand.NextFloat(60f, 150f);
                                 Projectile.NewProjectile(npc.Center, velocity, ModContent.ProjectileType<SpiritSword>(), npc.damage / 4, 0f, Main.myPlayer, 0f, ai1);
                             }
                         }
@@ -365,7 +365,8 @@ namespace FargowiltasSouls.NPCs.Champions
                 ModContent.ItemType<TikiEnchant>(),
                 ModContent.ItemType<SpectreEnchant>(),
             };
-            Item.NewItem(npc.position, npc.Size, drops[Main.rand.Next(drops.Length)]);
+            for (int i = 0; i < 2; i++)
+                Item.NewItem(npc.position, npc.Size, drops[Main.rand.Next(drops.Length)]);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
