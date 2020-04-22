@@ -313,8 +313,17 @@ namespace FargowiltasSouls.NPCs.Champions
                 ModContent.ItemType<AdamantiteEnchant>(),
                 ModContent.ItemType<TitaniumEnchant>()
             };
+            int lastDrop = 0; //don't drop same ench twice
             for (int i = 0; i < 2; i++)
-                Item.NewItem(npc.position, npc.Size, drops[Main.rand.Next(drops.Length)]);
+            {
+                int thisDrop = drops[Main.rand.Next(drops.Length)];
+
+                if (lastDrop == thisDrop) //try again
+                    i--;
+
+                lastDrop = thisDrop;
+                Item.NewItem(npc.position, npc.Size, thisDrop);
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
