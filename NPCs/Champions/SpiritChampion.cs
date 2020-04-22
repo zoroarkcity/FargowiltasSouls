@@ -391,10 +391,8 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.Distance(targetPos) > 25)
                         Movement(targetPos, 0.8f, 24f);
 
-                    if (npc.ai[2] == 0)
+                    if (++npc.ai[2] == 30)
                     {
-                        npc.ai[2] = 1;
-
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<SpiritChampionHand>() && Main.npc[i].ai[1] == npc.whoAmI)
