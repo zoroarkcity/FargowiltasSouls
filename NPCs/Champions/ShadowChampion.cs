@@ -231,6 +231,10 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         npc.TargetClosest();
                         npc.ai[0] = npc.ai[2];
+                        if (npc.ai[0] % 2 == 1) //always delay before resuming attack
+                            npc.ai[0]--;
+                        if (npc.ai[0] == 6) //skip shadow dash
+                            npc.ai[0] += 2;
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;

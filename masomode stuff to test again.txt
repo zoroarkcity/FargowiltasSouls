@@ -149,3 +149,8 @@ mutant boss has a custom background in p2
 skeleton rockets inflict defenseless instead of confused
 nerfed mutant p2 patterns in expert
 added shader for timestop
+
+spirit champ last stand adjusted
+spirit champ grab cant be escaped via rod
+sprit champ grab can be escaped via mashing
+shadow champ wont fastball you

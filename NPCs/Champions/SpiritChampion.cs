@@ -132,6 +132,9 @@ namespace FargowiltasSouls.NPCs.Champions
                     goto case 0;
 
                 case -3: //final you think you're safe
+                    if (npc.localAI[2] == 0)
+                        npc.localAI[2] = 1;
+
                     if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f
                         || Framing.GetTileSafely(player.Center).wall == WallID.None) //despawn code
                     {
@@ -152,33 +155,30 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     npc.dontTakeDamage = true;
 
-                    if (npc.ai[3] == 0)
+                    if (npc.ai[1] == 0) //respawn dead hands
                     {
-                        npc.ai[3] = 1;
-
-                        Main.PlaySound(15, npc.Center, 0);
-
-                        int handsLeft = 0;
+                        bool[] foundHand = new bool[4];
 
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<SpiritChampionHand>() && Main.npc[i].ai[1] == npc.whoAmI)
                             {
-                                Main.npc[i].ai[0] = 1f;
-                                Main.npc[i].netUpdate = true;
-                                handsLeft++;
+                                if (!foundHand[0])
+                                    foundHand[0] = Main.npc[i].ai[2] == -1f && Main.npc[i].ai[3] == -1f;
+                                if (!foundHand[1])
+                                    foundHand[1] = Main.npc[i].ai[2] == -1f && Main.npc[i].ai[3] == 1f;
+                                if (!foundHand[2])
+                                    foundHand[2] = Main.npc[i].ai[2] == 1f && Main.npc[i].ai[3] == -1f;
+                                if (!foundHand[3])
+                                    foundHand[3] = Main.npc[i].ai[2] == 1f && Main.npc[i].ai[3] == 1f;
                             }
                         }
 
                         if (Main.netMode != 1) //if hands somehow disappear
                         {
-                            while (handsLeft < 4)
+                            if (!foundHand[0])
                             {
-                                handsLeft++;
-
-                                float ai2 = Main.rand.Next(2) == 0 ? -1 : 1;
-                                float ai3 = Main.rand.Next(2) == 0 ? -1 : 1;
-                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 1f, npc.whoAmI, ai2, ai3, npc.target);
+                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 0f, npc.whoAmI, -1f, -1f, npc.target);
                                 if (n != Main.maxNPCs)
                                 {
                                     Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
@@ -186,6 +186,65 @@ namespace FargowiltasSouls.NPCs.Champions
                                     if (Main.netMode != 2)
                                         NetMessage.SendData(23, -1, -1, null, n);
                                 }
+                            }
+                            if (!foundHand[1])
+                            {
+                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 0f, npc.whoAmI, -1f, 1f, npc.target);
+                                if (n != Main.maxNPCs)
+                                {
+                                    Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
+                                    Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
+                                    if (Main.netMode != 2)
+                                        NetMessage.SendData(23, -1, -1, null, n);
+                                }
+                            }
+                            if (!foundHand[2])
+                            {
+                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 0f, npc.whoAmI, 1f, -1f, npc.target);
+                                if (n != Main.maxNPCs)
+                                {
+                                    Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
+                                    Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
+                                    if (Main.netMode != 2)
+                                        NetMessage.SendData(23, -1, -1, null, n);
+                                }
+                            }
+                            if (!foundHand[3])
+                            {
+                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 0f, npc.whoAmI, 1f, 1f, npc.target);
+                                if (n != Main.maxNPCs)
+                                {
+                                    Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
+                                    Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
+                                    if (Main.netMode != 2)
+                                        NetMessage.SendData(23, -1, -1, null, n);
+                                }
+                            }
+                        }
+                    }
+                    else if (npc.ai[1] == 120)
+                    {
+                        Main.PlaySound(15, npc.Center, 0);
+
+                        for (int i = 0; i < Main.maxNPCs; i++) //update ai
+                        {
+                            if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<SpiritChampionHand>() && Main.npc[i].ai[1] == npc.whoAmI)
+                            {
+                                Main.npc[i].ai[0] = 1f;
+                                Main.npc[i].netUpdate = true;
+                            }
+                        }
+
+                        if (Main.netMode != 1) //spawn super hand
+                        {
+
+                            int n2 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 3f, npc.whoAmI, 1f, 1f, npc.target);
+                            if (n2 != Main.maxNPCs)
+                            {
+                                Main.npc[n2].velocity.X = Main.rand.NextFloat(-24f, 24f);
+                                Main.npc[n2].velocity.Y = Main.rand.NextFloat(-24f, 24f);
+                                if (Main.netMode != 2)
+                                    NetMessage.SendData(23, -1, -1, null, n2);
                             }
                         }
                     }
@@ -217,7 +276,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.Distance(targetPos) > 25)
                         Movement(targetPos, 0.8f, 24f);
 
-                    if (++npc.ai[1] > 200)
+                    if (++npc.ai[1] > 360)
                     {
                         npc.TargetClosest();
                         npc.ai[0] = 4;
@@ -226,7 +285,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
 
-                        if (npc.Distance(player.Center) < 50)
+                        if (npc.Hitbox.Intersects(player.Hitbox))
                         {
                             player.velocity.X = player.Center.X < npc.Center.X ? -15f : 15f;
                             player.velocity.Y = -10f;
@@ -271,6 +330,9 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case 1: //cross bone/sandnado
+                    if (npc.localAI[2] == 0)
+                        npc.localAI[2] = 1;
+
                     targetPos = new Vector2(npc.localAI[0], npc.localAI[1]);
                     if (npc.Distance(targetPos) > 25)
                         Movement(targetPos, 0.8f, 24f);
@@ -542,6 +604,43 @@ namespace FargowiltasSouls.NPCs.Champions
                 default:
                     npc.ai[0] = 0;
                     goto case 0;
+            }
+
+            if (npc.localAI[2] != 0) //aura
+            {
+                const float auraDistance = 1200;
+                float range = npc.Distance(player.Center);
+                if (range > auraDistance && range < 3000)
+                {
+                    if (++npc.localAI[2] > 60)
+                    {
+                        npc.localAI[2] = 1;
+                        npc.netUpdate = true;
+                        
+                        Main.PlaySound(15, npc.Center, 0);
+
+                        if (Main.netMode != 1) //spawn super hand
+                        {
+
+                            int n2 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 4f, npc.whoAmI, 1f, 1f, npc.target);
+                            if (n2 != Main.maxNPCs)
+                            {
+                                Main.npc[n2].velocity.X = Main.rand.NextFloat(-24f, 24f);
+                                Main.npc[n2].velocity.Y = Main.rand.NextFloat(-24f, 24f);
+                                if (Main.netMode != 2)
+                                    NetMessage.SendData(23, -1, -1, null, n2);
+                            }
+                        }
+                    }
+                }
+                
+                for (int i = 0; i < 20; i++) //dust
+                {
+                    int d = Dust.NewDust(npc.Center + auraDistance * Vector2.UnitX.RotatedBy(Math.PI * 2 * Main.rand.NextDouble()), 0, 0, 87);
+                    Main.dust[d].velocity = npc.velocity;
+                    Main.dust[d].noGravity = true;
+                    Main.dust[d].scale++;
+                }
             }
         }
 

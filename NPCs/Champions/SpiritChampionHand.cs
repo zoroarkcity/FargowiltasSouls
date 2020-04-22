@@ -49,22 +49,6 @@ namespace FargowiltasSouls.NPCs.Champions
             return true;
         }
 
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            writer.Write(npc.localAI[0]);
-            writer.Write(npc.localAI[1]);
-            writer.Write(npc.localAI[2]);
-            writer.Write(npc.localAI[3]);
-        }
-
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            npc.localAI[0] = reader.ReadSingle();
-            npc.localAI[1] = reader.ReadSingle();
-            npc.localAI[2] = reader.ReadSingle();
-            npc.localAI[3] = reader.ReadSingle();
-        }
-
         public override void AI()
         {
             if (!(npc.ai[1] > -1 && npc.ai[1] < Main.maxNPCs && Main.npc[(int)npc.ai[1]].active
@@ -101,34 +85,39 @@ namespace FargowiltasSouls.NPCs.Champions
 
                 case 1: //you think you're safe?
                     {
-                        if (head.ai[0] != 3 && head.ai[0] != -3)
+                        if (head.ai[0] != 3 && head.ai[0] != -3) //return to normal when head no longer wants to grab
                         {
                             npc.ai[0] = 0;
                             npc.netUpdate = true;
                         }
 
-                        if ((Math.Sign(player.Center.X - head.Center.X) * Math.Sign(npc.Center.X - head.Center.X) == 1
-                            && Math.Sign(player.Center.Y - head.Center.Y) * Math.Sign(npc.Center.Y - head.Center.Y) == 1)
-                            || head.ai[0] == -3)
+                        bool targetPlayer = Math.Sign(player.Center.X - head.Center.X) * Math.Sign(npc.Center.X - head.Center.X) == 1
+                            && Math.Sign(player.Center.Y - head.Center.Y) * Math.Sign(npc.Center.Y - head.Center.Y) == 1; //in same quadrant as you
+                        if (head.ai[0] == -3) //four hands never target you during last stand
+                            targetPlayer = false;
+                        if (npc.ai[0] == 3) //FIFTH hand always targets you
+                            targetPlayer = true;
+
+                        if (targetPlayer)
                         {
                             targetPos = player.Center;
                         }
-                        else
+                        else //wave around
                         {
                             targetPos = head.Center + head.DirectionTo(npc.Center) * head.Distance(player.Center);
                         }
 
                         if (npc.Distance(targetPos) > 50)
-                            Movement(targetPos, 0.2f, 8f);
+                            Movement(targetPos, 0.15f, 7f);
 
-                        if (npc.Hitbox.Intersects(player.Hitbox)) //GOTCHA
+                        if (npc.Hitbox.Intersects(player.Hitbox) && player.GetModPlayer<FargoPlayer>().MashCounter <= 0) //GOTCHA
                         {
                             Main.PlaySound(15, npc.Center, 0);
                             
                             npc.ai[0] = 2;
                             npc.netUpdate = true;
 
-                            if (head.ai[0] != -3)
+                            if (head.ai[0] != -3) //don't change head state in last stand
                             {
                                 head.ai[0] = -1;
                                 head.ai[1] = 0;
@@ -139,18 +128,66 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case 2: //grab
-                    if (!npc.Hitbox.Intersects(player.Hitbox) || (head.ai[0] != -1 && head.ai[0] != -3) || !player.active || player.dead) //somehow escaped
+                    if ((head.ai[0] != -1 && head.ai[0] != -3) || !player.active || player.dead || player.GetModPlayer<FargoPlayer>().MashCounter > 40)
                     {
+                        if (npc.Hitbox.Intersects(player.Hitbox)) //throw aside
+                        {
+                            player.velocity.X = player.Center.X < head.Center.X ? -15f : 15f;
+                            player.velocity.Y = -10f;
+                            Main.PlaySound(15, npc.Center, 0);
+                        }
+
                         npc.ai[0] = head.ai[0] == -3 ? 1 : 0;
                         npc.netUpdate = true;
                     }
-                    else
+                    else //keep trying to grab
+                    {
+                        if (npc.Hitbox.Intersects(player.Hitbox))
+                        {
+                            player.Center = npc.Center;
+                            player.velocity.X = 0;
+                            player.velocity.Y = -0.4f;
+
+                            Movement(head.Center, 0.8f, 24f);
+
+                            player.AddBuff(ModContent.BuffType<Buffs.Boss.Grabbed>(), 2);
+                        }
+                        else
+                        {
+                            Movement(player.Center, 2.4f, 48f);
+                        }
+                    }
+                    break;
+
+                case 3:
+                    goto case 1;
+
+                case 4: //enrage grab
+                    if (npc.Hitbox.Intersects(player.Hitbox))
                     {
                         player.Center = npc.Center;
                         player.velocity.X = 0;
                         player.velocity.Y = -0.4f;
 
                         Movement(head.Center, 0.8f, 24f);
+                    }
+                    else
+                    {
+                        Movement(player.Center, 2.4f, 48f);
+                    }
+
+                    if (++npc.localAI[0] > 120)
+                    {
+                        if (head.Hitbox.Intersects(player.Hitbox)) //throw aside
+                        {
+                            player.velocity.X = player.Center.X < head.Center.X ? -15f : 15f;
+                            player.velocity.Y = -10f;
+                            Main.PlaySound(15, npc.Center, 0);
+                        }
+
+                        npc.life = 0;
+                        npc.StrikeNPCNoInteraction(npc.lifeMax, 0f, 0);
+                        npc.active = false;
                     }
                     break;
 

@@ -356,6 +356,9 @@ namespace FargowiltasSouls
         public bool Swarming;
         public bool LowGround;
         public bool Flipped;
+        public bool Mash;
+        public bool[] MashPressed = new bool[4];
+        public int MashCounter;
 
         public int MasomodeCrystalTimer = 0;
         public int MasomodeFreezeTimer = 0;
@@ -425,7 +428,56 @@ namespace FargowiltasSouls
 
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
-            if(Fargowiltas.FreezeKey.JustPressed && StardustEnchant && FreezeCD == 0)
+            if (Mash)
+            {
+                const int increment = 1;
+
+                if (triggersSet.Up)
+                {
+                    if (!MashPressed[0])
+                        MashCounter += increment;
+                    MashPressed[0] = true;
+                }
+                else
+                {
+                    MashPressed[0] = false;
+                }
+
+                if (triggersSet.Left)
+                {
+                    if (!MashPressed[1])
+                        MashCounter += increment;
+                    MashPressed[1] = true;
+                }
+                else
+                {
+                    MashPressed[1] = false;
+                }
+
+                if (triggersSet.Right)
+                {
+                    if (!MashPressed[2])
+                        MashCounter += increment;
+                    MashPressed[2] = true;
+                }
+                else
+                {
+                    MashPressed[2] = false;
+                }
+
+                if (triggersSet.Down)
+                {
+                    if (!MashPressed[3])
+                        MashCounter += increment;
+                    MashPressed[3] = true;
+                }
+                else
+                {
+                    MashPressed[3] = false;
+                }
+            }
+
+            if (Fargowiltas.FreezeKey.JustPressed && StardustEnchant && FreezeCD == 0)
             {
                 FreezeTime = true;
                 FreezeCD = 3600; 
@@ -795,6 +847,12 @@ namespace FargowiltasSouls
             Swarming = false;
             LowGround = false;
             Flipped = false;
+
+            if (!Mash && MashCounter > 0)
+            {
+                MashCounter--;
+            }
+            Mash = false;
         }
 
         public override void UpdateDead()
@@ -860,6 +918,8 @@ namespace FargowiltasSouls
             AbominableWandRevived = false;
             AbomRebirth = false;
             WasHurtBySomething = false;
+            Mash = false;
+            MashCounter = 0;
 
             MaxLifeReduction = 0;
         }
