@@ -430,7 +430,10 @@ namespace FargowiltasSouls.NPCs.Champions
                 int thisDrop = drops[Main.rand.Next(drops.Length)];
 
                 if (lastDrop == thisDrop) //try again
+                {
                     i--;
+                    continue;
+                }
 
                 lastDrop = thisDrop;
                 Item.NewItem(npc.position, npc.Size, thisDrop);
