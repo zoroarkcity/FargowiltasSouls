@@ -16,6 +16,7 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Timber");
+            Main.npcFrameCount[npc.type] = 6;
         }
 
         /*public override bool Autoload(ref string name)
@@ -25,8 +26,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void SetDefaults()
         {
-            npc.width = 340;
-            npc.height = 400;
+            npc.width = 160;
+            npc.height = 228;
             npc.damage = 150;
             npc.defense = 50;
             npc.lifeMax = 320000;
@@ -94,6 +95,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         const float gravity = 0.4f;
                         const float time = 90f;
+                        
                         Vector2 distance = player.Center - npc.Center;
                         distance.Y -= npc.height;
 
@@ -230,7 +232,10 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.ai[2] = 0;
                         if (Main.netMode != 1 && npc.ai[1] > 30 && npc.ai[1] < 120)
                         {
-                            Projectile.NewProjectile(npc.Center + new Vector2(Main.rand.NextFloat(-100, 100), Main.rand.NextFloat(-150, 0)),
+                            Vector2 offset;
+                            offset.X = Main.rand.NextFloat(0, npc.width / 2) * npc.direction;
+                            offset.Y = 16;
+                            Projectile.NewProjectile(npc.Center + offset,
                                 Vector2.UnitY * -12f, ModContent.ProjectileType<Snowball>(), npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
@@ -354,6 +359,17 @@ namespace FargowiltasSouls.NPCs.Champions
                 default:
                     npc.ai[0] = 0;
                     goto case 0;
+            }
+        }
+
+        public override void FindFrame(int frameHeight)
+        {
+            if (++npc.frameCounter > 6)
+            {
+                npc.frameCounter = 0;
+                npc.frame.Y += frameHeight;
+                if (npc.frame.Y >= frameHeight * Main.npcFrameCount[npc.type])
+                    npc.frame.Y = 0;
             }
         }
 
