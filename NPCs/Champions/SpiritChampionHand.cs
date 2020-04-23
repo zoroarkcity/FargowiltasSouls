@@ -128,10 +128,11 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case 2: //grab
-                    if ((head.ai[0] != -1 && head.ai[0] != -3) || !player.active || player.dead || player.GetModPlayer<FargoPlayer>().MashCounter > 40)
+                    if ((head.ai[0] != -1 && head.ai[0] != -3) || !player.active || player.dead || player.GetModPlayer<FargoPlayer>().MashCounter > 30)
                     {
                         if (npc.Hitbox.Intersects(player.Hitbox)) //throw aside
                         {
+                            player.GetModPlayer<FargoPlayer>().MashCounter += 30;
                             player.velocity.X = player.Center.X < head.Center.X ? -15f : 15f;
                             player.velocity.Y = -10f;
                             Main.PlaySound(15, npc.Center, 0);
