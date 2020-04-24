@@ -29,6 +29,11 @@ Grants autofire to all weapons");
             item.defense = 6;
         }
 
+        public override void UpdateInventory(Player player)
+        {
+            player.GetModPlayer<FargoPlayer>().TribalCharm = true;
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.buffImmune[BuffID.Webbed] = true;

@@ -5721,7 +5721,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.DD2OgreT2:
                     case NPCID.DD2OgreT3:
-                        Item.NewItem(npc.Hitbox, ItemID.DefenderMedal, 10);
+                        Item.NewItem(npc.Hitbox, ItemID.DefenderMedal, 20);
                         break;
 
                     case NPCID.Clown:
