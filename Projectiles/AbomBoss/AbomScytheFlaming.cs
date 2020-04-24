@@ -73,12 +73,15 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("AbomFang"), 300);
-            target.AddBuff(BuffID.Burning, 180);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(mod.BuffType("AbomFang"), 300);
+                target.AddBuff(BuffID.Burning, 180);
+                target.AddBuff(mod.BuffType("Rotting"), 900);
+                target.AddBuff(mod.BuffType("LivingWasteland"), 900);
+            }
             target.AddBuff(BuffID.OnFire, 900);
             target.AddBuff(BuffID.Weak, 900);
-            target.AddBuff(mod.BuffType("Rotting"), 900);
-            target.AddBuff(mod.BuffType("LivingWasteland"), 900);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

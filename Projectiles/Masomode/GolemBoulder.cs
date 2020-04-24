@@ -80,7 +80,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             Main.PlaySound(0, (int)projectile.position.X, (int)projectile.position.Y, 1, 1f, 0.0f);
             for (int index = 0; index < 5; ++index)
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 148, 0.0f, 0.0f, 0, new Color(), 1f);
+                Dust.NewDust(projectile.position, projectile.width, projectile.height, 148, 0.0f, 0.0f, 0, new Color(), 1f);
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

@@ -5,12 +5,13 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using FargowiltasSouls.Items.Accessories.Forces;
+using FargowiltasSouls.Items.Accessories.Enchantments;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
 
 namespace FargowiltasSouls.NPCs.Champions
 {
+    [AutoloadBossHead]
     public class EarthChampion : ModNPC
     {
         public override void SetStaticDefaults()
@@ -22,11 +23,11 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void SetDefaults()
         {
-            npc.width = 160;
-            npc.height = 160;
+            npc.width = 120;
+            npc.height = 120;
             npc.damage = 150;
             npc.defense = 80;
-            npc.lifeMax = 240000;
+            npc.lifeMax = 320000;
             npc.HitSound = SoundID.NPCHit41;
             npc.DeathSound = SoundID.NPCDeath44;
             npc.noGravity = true;
@@ -48,12 +49,12 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
 
             npc.trapImmune = true;
+            npc.scale = 1.5f;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            cooldownSlot = 1;
-            return true;
+            return false;
         }
 
         public override void AI()
@@ -88,7 +89,7 @@ namespace FargowiltasSouls.NPCs.Champions
             Player player = Main.player[npc.target];
             Vector2 targetPos;
 
-            if (npc.HasValidTarget && npc.Distance(player.Center) < 2500)
+            if (npc.HasValidTarget && npc.Distance(player.Center) < 2500 && player.ZoneUnderworldHeight)
                 npc.timeLeft = 600;
 
             switch ((int)npc.ai[0])
@@ -99,13 +100,13 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (++npc.ai[1] < 120)
                     {
                         targetPos = player.Center;
-                        targetPos.Y -= 400;
+                        targetPos.Y -= 375;
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.6f, 24f, true);
                     }
                     else if (npc.ai[1] == 120) //begin healing
                     {
-                        Main.PlaySound(15, npc.Center, 0);
+                        Main.PlaySound(SoundID.NPCDeath10, npc.Center);
 
                         const int num226 = 80;
                         for (int num227 = 0; num227 < num226; num227++)
@@ -121,15 +122,12 @@ namespace FargowiltasSouls.NPCs.Champions
                     else if (npc.ai[1] > 120) //healing
                     {
                         npc.velocity *= 0.9f;
-
-                        if (++npc.ai[2] > 15)
-                        {
-                            int heal = (int)(npc.lifeMax / 2 / 120 * 15 * Main.rand.NextFloat(1f, 1.5f));
-                            npc.life += heal;
-                            if (npc.life > npc.lifeMax)
-                                npc.life = npc.lifeMax;
-                            CombatText.NewText(npc.Hitbox, CombatText.HealLife, heal);
-                        }
+                        
+                        int heal = (int)(npc.lifeMax / 2 / 120 * Main.rand.NextFloat(1f, 1.5f));
+                        npc.life += heal;
+                        if (npc.life > npc.lifeMax)
+                            npc.life = npc.lifeMax;
+                        CombatText.NewText(npc.Hitbox, CombatText.HealLife, heal);
 
                         for (int i = 0; i < 5; i++)
                         {
@@ -165,7 +163,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     else
                     {
                         targetPos = player.Center;
-                        targetPos.Y -= 350;
+                        targetPos.Y -= 325;
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.4f, 24f, true);
                     }
@@ -173,6 +171,73 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.localAI[2] == 0 && npc.life < npc.lifeMax / 2)
                     {
                         npc.ai[0] = -1;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+
+                        for (int i = 0; i < Main.maxNPCs; i++) //find hands, update
+                        {
+                            if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<EarthChampionHand>() && Main.npc[i].ai[2] == npc.whoAmI)
+                            {
+                                Main.npc[i].ai[0] = -1;
+                                Main.npc[i].ai[1] = 0;
+                                Main.npc[i].localAI[0] = 0;
+                                Main.npc[i].localAI[1] = 0;
+                                Main.npc[i].netUpdate = true;
+                            }
+                        }
+                    }
+                    break;
+
+                case 1: //fireballs
+                    if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f
+                        || !player.ZoneUnderworldHeight) //despawn code
+                    {
+                        npc.TargetClosest(false);
+                        if (npc.timeLeft > 30)
+                            npc.timeLeft = 30;
+
+                        npc.noTileCollide = true;
+                        npc.noGravity = true;
+                        npc.velocity.Y += 1f;
+
+                        return;
+                    }
+                    else
+                    {
+                        targetPos = player.Center;
+                        targetPos.Y -= 350;
+                        if (npc.Distance(targetPos) > 50)
+                            Movement(targetPos, 0.2f, 24f, true);
+
+                        if (++npc.ai[2] > 75)
+                        {
+                            npc.ai[2] = 0;
+                            if (Main.netMode != 1) //shoot spread of fireballs
+                            {
+                                for (int i = -1; i <= 1; i++)
+                                {
+                                    Projectile.NewProjectile(npc.Center + Vector2.UnitY * 60,
+                                        (npc.localAI[2] == 1 ? 12 : 8) * npc.DirectionTo(player.Center).RotatedBy(MathHelper.ToRadians(8 * i)),
+                                        ProjectileID.Fireball, npc.damage / 4, 0f, Main.myPlayer);
+                                }
+                            }
+                        }
+
+                        if (++npc.ai[1] > 480)
+                        {
+                            npc.ai[0]++;
+                            npc.ai[1] = 0;
+                            npc.netUpdate = true;
+                        }
+                    }
+
+                    if (npc.localAI[2] == 0 && npc.life < npc.lifeMax / 2)
+                    {
+                        npc.ai[0] = -1;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
 
                         for (int i = 0; i < Main.maxNPCs; i++) //find hands, update
                         {
@@ -239,7 +304,29 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
-            Item.NewItem(npc.position, npc.Size, ModContent.ItemType<EarthForce>());
+            //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<EarthForce>());
+            int[] drops = {
+                ModContent.ItemType<CobaltEnchant>(),
+                ModContent.ItemType<PalladiumEnchant>(),
+                ModContent.ItemType<MythrilEnchant>(),
+                ModContent.ItemType<OrichalcumEnchant>(),
+                ModContent.ItemType<AdamantiteEnchant>(),
+                ModContent.ItemType<TitaniumEnchant>()
+            };
+            int lastDrop = 0; //don't drop same ench twice
+            for (int i = 0; i < 2; i++)
+            {
+                int thisDrop = drops[Main.rand.Next(drops.Length)];
+
+                if (lastDrop == thisDrop) //try again
+                {
+                    i--;
+                    continue;
+                }
+
+                lastDrop = thisDrop;
+                Item.NewItem(npc.position, npc.Size, thisDrop);
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -265,6 +352,8 @@ namespace FargowiltasSouls.NPCs.Champions
             }
 
             Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
+            Texture2D glowmask = ModContent.GetTexture("FargowiltasSouls/NPCs/Champions/EarthChampion_Glow");
+            Main.spriteBatch.Draw(glowmask, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, npc.rotation, origin2, npc.scale, effects, 0f);
             return false;
         }
     }

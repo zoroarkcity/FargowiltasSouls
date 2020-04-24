@@ -56,7 +56,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
             for (int index1 = 0; index1 < 10; ++index1)
             {
-                int index2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, dusttype, 0.0f, 0.0f, 0, new Color(), 1f);
+                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, dusttype, 0.0f, 0.0f, 0, new Color(), 1f);
                 Main.dust[index2].noGravity = true;
                 Dust dust = Main.dust[index2];
                 dust.velocity = dust.velocity - projectile.velocity * 0.5f;

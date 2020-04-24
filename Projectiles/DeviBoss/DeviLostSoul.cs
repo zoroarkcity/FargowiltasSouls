@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
         {
             projectile.CloneDefaults(ProjectileID.LostSoulHostile);
             aiType = ProjectileID.LostSoulHostile;
-
+            projectile.timeLeft = 300;
             cooldownSlot = 1;
         }
 

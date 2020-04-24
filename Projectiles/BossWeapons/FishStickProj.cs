@@ -58,7 +58,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             for (int i = 0; i < 20; i++)
             {
-                int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 59, -projectile.velocity.X * 0.2f,
+                int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 59, -projectile.velocity.X * 0.2f,
                     -projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].velocity *= 2f;

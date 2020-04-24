@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Projectiles.Masomode
+namespace FargowiltasSouls.Projectiles.MutantBoss
 {
     public class MutantNuke : ModProjectile
     {
@@ -81,11 +81,14 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 50;
-            target.AddBuff(mod.BuffType("OceanicMaul"), 900);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
+                target.AddBuff(mod.BuffType("OceanicMaul"), 5400);
+                target.AddBuff(mod.BuffType("MutantFang"), 180);
+            }
             target.AddBuff(mod.BuffType("MutantNibble"), 900);
             target.AddBuff(mod.BuffType("CurseoftheMoon"), 900);
-            target.AddBuff(mod.BuffType("MutantFang"), 180);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

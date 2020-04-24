@@ -37,11 +37,14 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
-            target.AddBuff(mod.BuffType("OceanicMaul"), 5400);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
+                target.AddBuff(mod.BuffType("OceanicMaul"), 5400);
+                target.AddBuff(mod.BuffType("MutantFang"), 180);
+            }
             target.AddBuff(mod.BuffType("MutantNibble"), 900);
             target.AddBuff(mod.BuffType("CurseoftheMoon"), 900);
-            target.AddBuff(mod.BuffType("MutantFang"), 180);
         }
 
         public override void Kill(int timeLeft)
@@ -49,7 +52,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             Main.PlaySound(2, projectile.Center, 14);
             for (int i = 0; i < 20; i++)
             {
-                int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width,
+                int dust = Dust.NewDust(projectile.position, projectile.width,
                     projectile.height, 31, 0f, 0f, 100, default(Color), 3f);
                 Main.dust[dust].velocity *= 1.4f;
             }
@@ -62,11 +65,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             }
             for (int i = 0; i < 20; i++)
             {
-                int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width,
+                int dust = Dust.NewDust(projectile.position, projectile.width,
                     projectile.height, 6, 0f, 0f, 100, default(Color), 3.5f);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].velocity *= 7f;
-                dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width,
+                dust = Dust.NewDust(projectile.position, projectile.width,
                     projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
                 Main.dust[dust].velocity *= 3f;
             }

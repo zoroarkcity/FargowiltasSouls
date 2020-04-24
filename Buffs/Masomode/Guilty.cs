@@ -18,12 +18,6 @@ namespace FargowiltasSouls.Buffs.Masomode
             Description.AddTranslation(GameCulture.Chinese, "杀害无辜动物的内疚使你的武器变得迟钝");
         }
 
-        public override bool Autoload(ref string name, ref string texture)
-        {
-            texture = "FargowiltasSouls/Buffs/PlaceholderDebuff";
-            return true;
-        }
-
         public override void Update(Player player, ref int buffIndex)
         {
             player.meleeDamage -= 0.25f;

@@ -69,7 +69,7 @@ namespace FargowiltasSouls.Items.Summons
             recipe.AddIngredient(ItemID.SnowGlobe);
             recipe.AddIngredient(ItemID.DD2ElderCrystal);
             recipe.AddIngredient(ItemID.LunarBar, 5);
-            recipe.AddIngredient(null, "LunarCrystal");
+            //recipe.AddIngredient(null, "LunarCrystal");
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this, 5);

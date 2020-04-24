@@ -24,8 +24,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void SetDefaults()
         {
-            npc.width = 112;
-            npc.height = 112;
+            npc.width = 60;
+            npc.height = 60;
             npc.damage = 125;
             npc.defense = 80;
             npc.lifeMax = 300000;
@@ -45,6 +45,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
 
             npc.trapImmune = true;
+            npc.scale = 2;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -166,17 +167,17 @@ namespace FargowiltasSouls.NPCs.Champions
                     else if (npc.ai[1] == 105) //dash
                     {
                         npc.localAI[3] = 1;
-                        npc.velocity = npc.DirectionTo(player.Center) * (head.localAI[2] == 1 ? 18 : 16);
+                        npc.velocity = npc.DirectionTo(player.Center) * (head.localAI[2] == 1 ? 20 : 16);
                     }
                     else //while dashing
                     {
-                        npc.velocity *= head.localAI[2] == 1 ? 1.02f : 1.01f;
+                        npc.velocity *= 1.02f;
 
                         npc.localAI[3] = 1;
                         npc.rotation = npc.velocity.ToRotation() - (float)Math.PI / 2;
 
                         //passed player, prepare another dash
-                        if ((++npc.localAI[1] > 45 && npc.Distance(player.Center) > 1000) ||
+                        if ((++npc.localAI[1] > 60 && npc.Distance(player.Center) > 1000) ||
                             (npc.ai[3] > 0 ? npc.Center.X > player.Center.X + 300 : npc.Center.X < player.Center.X - 300))
                         {
                             npc.ai[1] = 0;
@@ -269,9 +270,13 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.position.Y + npc.height > npc.localAI[0]) //become solid to smash on tiles
                             npc.noTileCollide = false;
 
-                        //extra check to prevent noclipping
-                        if (!npc.noTileCollide && Collision.SolidCollision(npc.position, npc.width, npc.height))
-                            npc.velocity.Y = 0;
+                        //extra checks to prevent noclipping
+                        if (!npc.noTileCollide)
+                        {
+                            if (Collision.SolidCollision(npc.position, npc.width, npc.height)
+                                || npc.position.Y + npc.height > Main.maxTilesY * 16 - 16)
+                                npc.velocity.Y = 0;
+                        }
 
                         if (npc.velocity.Y == 0) //we've hit something
                         {
@@ -323,6 +328,86 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     break;
 
+                case 8: //wait while head does fireballs
+                    npc.noTileCollide = true;
+
+                    targetPos = head.Center;
+                    targetPos.Y += 250;
+                    targetPos.X += 300 * -npc.ai[3];
+                    Movement(targetPos, 0.8f, 24f);
+
+                    npc.rotation = 0;
+
+                    if (npc.ai[1] > 60) //grace period over, if head reverts back then leave this state
+                    {
+                        if (head.ai[0] != 1)
+                        {
+                            npc.ai[0]++;
+                            npc.ai[1] = 0;
+                            npc.netUpdate = true;
+                        }
+                    }
+                    else
+                    {
+                        npc.ai[1]++;
+
+                        if (head.ai[0] == 0) //just entered here, change head to shoot fireballs
+                        {
+                            head.ai[0] = 1;
+                            head.netUpdate = true;
+                        }
+                    }
+                    break;
+
+                case 9:
+                    goto case 0;
+
+                case 10: //crystal bomb drop
+                    if (head.localAI[2] == 1)
+                        npc.position += player.velocity / 2;
+
+                    if (npc.ai[3] > 0)
+                    {
+                        targetPos = player.Center;
+                        targetPos.Y = player.Center.Y - 400;
+                        targetPos.X += player.velocity.X * 60;
+
+                        if (npc.Distance(targetPos) > 50)
+                            Movement(targetPos, 0.6f, 32f);
+
+                        npc.rotation = (float)Math.PI / 2;
+                    }
+                    else
+                    {
+                        targetPos = player.Center;
+                        targetPos.Y -= 300;
+                        targetPos.X += 1000 * (float)Math.Sin(2 * Math.PI / 77 * npc.ai[1]);
+
+                        Movement(targetPos, 1.8f, 32f);
+                        
+                        npc.rotation = -(float)Math.PI / 2;
+
+                        npc.localAI[0] += 0.5f;
+                    }
+
+                    if (++npc.localAI[0] > 60 && npc.ai[1] > 120)
+                    {
+                        npc.localAI[0] = 0;
+                        if (Main.netMode != 1)
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitY * 2f, ModContent.ProjectileType<CrystalBomb>(), npc.damage / 4, 0f, Main.myPlayer);
+                        }
+                    }
+
+                    if (++npc.ai[1] > 600)
+                    {
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.localAI[0] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
                 default:
                     npc.ai[0] = 0;
                     goto case 0;
@@ -331,7 +416,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void FindFrame(int frameHeight)
         {
-            npc.frame.Y = npc.localAI[3] == 1 ? frameHeight : 0;
+            npc.frame.Y = npc.localAI[3] == 1 ? 0 : frameHeight;
         }
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
@@ -343,7 +428,10 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
             if (!projectile.minion)
+            {
+                projectile.penetrate = 0;
                 projectile.timeLeft = 0;
+            }
         }
 
         private void Movement(Vector2 targetPos, float speedModifier, float cap = 12f)
@@ -389,6 +477,11 @@ namespace FargowiltasSouls.NPCs.Champions
             return false;
         }
 
+        public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
+        {
+            return false;
+        }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture2D13 = Main.npcTexture[npc.type];
@@ -412,6 +505,9 @@ namespace FargowiltasSouls.NPCs.Champions
             }
 
             Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
+
+            Texture2D glowmask = ModContent.GetTexture("FargowiltasSouls/NPCs/Champions/EarthChampionHand_Glow");
+            Main.spriteBatch.Draw(glowmask, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, npc.rotation, origin2, npc.scale, effects, 0f);
             return false;
         }
     }

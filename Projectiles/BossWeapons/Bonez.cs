@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Main.PlaySound(0, (int) projectile.position.X, (int) projectile.position.Y);
             for (int num489 = 0; num489 < 5; num489++)
             {
-                int num490 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 68, 10f, 30f);
+                int num490 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 68, 10f, 30f);
                 Main.dust[num490].noGravity = true;
                 Main.dust[num490].velocity *= 1.5f;
                 Main.dust[num490].scale *= 0.9f;

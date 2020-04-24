@@ -81,14 +81,15 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(mod.BuffType("LightningRod"), Main.rand.Next(300, 1200));
-            target.AddBuff(mod.BuffType("MutantFang"), 180);
+            if (FargoSoulsWorld.MasochistMode)
+                target.AddBuff(mod.BuffType("MutantFang"), 180);
         }
 
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 20; i++)
             {
-                int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 60, -projectile.velocity.X * 0.2f,
+                int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 60, -projectile.velocity.X * 0.2f,
                     -projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].velocity *= 2f;

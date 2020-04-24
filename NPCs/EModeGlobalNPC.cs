@@ -461,15 +461,17 @@ namespace FargowiltasSouls.NPCs
                     masoStateML = 0;
                     npc.value += Item.buyPrice(0, 20);
                     break;
-                case NPCID.MoonLordHand:
+
                 case NPCID.MoonLordHead:
+                    npc.lifeMax /= 2;
+                    goto case NPCID.MoonLordHand;
+
+                case NPCID.MoonLordHand:
                 case NPCID.MoonLordFreeEye:
+                case NPCID.MoonLordLeechBlob:
                     npc.buffImmune[ModContent.BuffType<ClippedWings>()] = true;
                     isMasoML = true;
                     break;
-                case NPCID.MoonLordLeechBlob:
-                    npc.lifeMax *= 3;
-                    goto case NPCID.MoonLordHand;
 
                 #endregion
 
@@ -730,6 +732,13 @@ namespace FargowiltasSouls.NPCs
             }
 
             //if (npc.boss) npc.npcSlots += 100;
+        }
+
+        public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
+        {
+            if (FargoSoulsWorld.MasochistMode && isMasoML)
+                return false;
+            return true;
         }
 
         public override bool PreAI(NPC npc)
@@ -1156,24 +1165,34 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.MoonLordFreeEye:
-                        if (!masoBool[0] & ++Counter > 2) //sync to other eyes of same core when spawned
+                        if (Main.npc[(int)npc.ai[3]].active && Main.npc[(int)npc.ai[3]].type == NPCID.MoonLordCore)
                         {
-                            masoBool[0] = true;
-                            Counter = 0;
-                            for (int i = 0; i < Main.maxNPCs; i++)
-                                if (Main.npc[i].active && Main.npc[i].type == NPCID.MoonLordFreeEye && Main.npc[i].ai[3] == npc.ai[3] && i != npc.whoAmI)
-                                {
-                                    npc.ai[0] = Main.npc[i].ai[0];
-                                    npc.ai[1] = Main.npc[i].ai[1];
-                                    npc.ai[2] = Main.npc[i].ai[2];
-                                    npc.ai[3] = Main.npc[i].ai[3];
-                                    npc.localAI[0] = Main.npc[i].localAI[0];
-                                    npc.localAI[1] = Main.npc[i].localAI[1];
-                                    npc.localAI[2] = Main.npc[i].localAI[2];
-                                    npc.localAI[3] = Main.npc[i].localAI[3];
-                                    break;
-                                }
-                            npc.netUpdate = true;
+                            if (!masoBool[0] & ++Counter > 2) //sync to other eyes of same core when spawned
+                            {
+                                masoBool[0] = true;
+                                Counter = 0;
+                                for (int i = 0; i < Main.maxNPCs; i++)
+                                    if (Main.npc[i].active && Main.npc[i].type == NPCID.MoonLordFreeEye && Main.npc[i].ai[3] == npc.ai[3] && i != npc.whoAmI)
+                                    {
+                                        npc.ai[0] = Main.npc[i].ai[0];
+                                        npc.ai[1] = Main.npc[i].ai[1];
+                                        npc.ai[2] = Main.npc[i].ai[2];
+                                        npc.ai[3] = Main.npc[i].ai[3];
+                                        npc.localAI[0] = Main.npc[i].localAI[0];
+                                        npc.localAI[1] = Main.npc[i].localAI[1];
+                                        npc.localAI[2] = Main.npc[i].localAI[2];
+                                        npc.localAI[3] = Main.npc[i].localAI[3];
+                                        break;
+                                    }
+                                npc.netUpdate = true;
+                            }
+
+                            if (Main.npc[(int)npc.ai[3]].dontTakeDamage) //behave slower until p2 proper
+                            {
+                                masoBool[1] = !masoBool[1];
+                                if (masoBool[1])
+                                    return false;
+                            }
                         }
                         break;
 
@@ -5576,14 +5595,6 @@ namespace FargowiltasSouls.NPCs
 
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.LovePotion, Main.rand.Next(2, 5) + 1);
-                        if (Main.rand.Next(3) == 0)
-                            Item.NewItem(npc.Hitbox, ModContent.ItemType<CrackedGem>(), Main.rand.Next(3) + 1);
-                        break;
-
-                    case NPCID.DoctorBones:
-                    case NPCID.DungeonSlime:
-                        if (Main.rand.Next(3) == 0)
-                            Item.NewItem(npc.Hitbox, ModContent.ItemType<CrackedGem>(), Main.rand.Next(3) + 1);
                         break;
 
                     case NPCID.MourningWood:
@@ -5645,8 +5656,6 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<TimsConcoction>());
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.ManaRegenerationPotion, Main.rand.Next(2, 5) + 1);
-                        if (Main.rand.Next(3) == 0)
-                            Item.NewItem(npc.Hitbox, ModContent.ItemType<CrackedGem>(), Main.rand.Next(3) + 1);
                         break;
 
                     case NPCID.RuneWizard:
@@ -5733,8 +5742,6 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.BlueSlime:
                         if (npc.netID == NPCID.YellowSlime && Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.RecallPotion, Main.rand.Next(0, 2) + 1);
-                        if (npc.netID == NPCID.Pinky && Main.rand.Next(3) == 0)
-                            Item.NewItem(npc.Hitbox, ModContent.ItemType<CrackedGem>(), Main.rand.Next(3) + 1);
                         break;
 
                     case NPCID.GoblinArcher:
@@ -5794,8 +5801,6 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.UndeadMiner:
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.MiningPotion, Main.rand.Next(2, 5) + 1);
-                        if (Main.rand.Next(3) == 0)
-                            Item.NewItem(npc.Hitbox, ModContent.ItemType<CrackedGem>(), Main.rand.Next(3) + 1);
                         break;
 
                     case NPCID.Raven:
@@ -6042,7 +6047,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.MoonLordCore:
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<GalacticGlobe>());
-                        npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<LunarCrystal>(), Main.rand.Next(10) + 5);
+                        //npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<LunarCrystal>(), Main.rand.Next(10) + 5);
                         break;
 
                     case NPCID.DungeonGuardian:
@@ -7132,10 +7137,6 @@ namespace FargowiltasSouls.NPCs
                         if (reduction < 0.5f)
                             reduction = 0.5f;
                         damage = (int)(damage * reduction);
-                        break;
-
-                    case NPCID.MoonLordHead:
-                        damage = damage * 2;
                         break;
 
                     case NPCID.GiantTortoise:

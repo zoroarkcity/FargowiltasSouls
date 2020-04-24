@@ -92,10 +92,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     projectile.velocity = Vector2.Lerp(projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
                 }
             }
-            else
-            {
-                Main.NewText(modifier.ToString());
-            }
         }
 
         protected int HomeOnTarget()

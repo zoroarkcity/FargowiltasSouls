@@ -1,7 +1,8 @@
 ﻿using FargowiltasSouls.NPCs;
 using Terraria;
-using Terraria.ModLoader;
+using Terraria.Graphics.Effects;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Buffs.Souls
 {
@@ -40,6 +41,9 @@ namespace FargowiltasSouls.Buffs.Souls
             player.controlMount = false;
             player.velocity = player.oldVelocity;
             player.position = player.oldPosition;
+
+            if (!Filters.Scene["FargowiltasSouls:TimeStop"].IsActive())
+                Filters.Scene.Activate("FargowiltasSouls:TimeStop");
         }
 
         public override void Update(NPC npc, ref int buffIndex)

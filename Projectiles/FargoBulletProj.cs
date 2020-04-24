@@ -182,7 +182,7 @@ namespace FargowiltasSouls.Projectiles
             Main.PlaySound(0, (int) projectile.position.X, (int) projectile.position.Y);
             for (int i = 0; i < 5; i++)
             {
-                int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 68);
+                int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 68);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].velocity *= 1.5f;
                 Main.dust[dust].scale *= 0.9f;
@@ -197,13 +197,13 @@ namespace FargowiltasSouls.Projectiles
 
             //explosion
             Main.PlaySound(SoundID.Item14, projectile.position);
-            for (int i = 0; i < 7; i++) Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1.5f);
+            for (int i = 0; i < 7; i++) Dust.NewDust(projectile.position, projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1.5f);
             for (int i = 0; i < 3; i++)
             {
-                int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 2.5f);
+                int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 2.5f);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].velocity *= 3f;
-                dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
+                dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
                 Main.dust[dust].velocity *= 2f;
             }
 
@@ -246,7 +246,7 @@ namespace FargowiltasSouls.Projectiles
             for (int i = 0; i < 10; i++)
             {
                 int rand = Main.rand.Next(139, 143);
-                int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, rand, -projectile.velocity.X * 0.3f,
+                int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, rand, -projectile.velocity.X * 0.3f,
                     -projectile.velocity.Y * 0.3f, 0, default(Color), 1.2f);
                 Dust dust1 = Main.dust[dust];
                 dust1.velocity.X = dust1.velocity.X + Main.rand.Next(-50, 51) * 0.01f;

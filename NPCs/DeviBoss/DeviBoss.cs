@@ -36,7 +36,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             npc.height = 120;
             npc.damage = 64;
             npc.defense = 10;
-            npc.lifeMax = 14000;
+            npc.lifeMax = 7000;
             npc.HitSound = SoundID.NPCHit9;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -65,7 +65,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             npc.damage = (int)(npc.damage * 0.5f);
-            npc.lifeMax = (int)(npc.lifeMax * 0.5f * bossLifeScale);
+            npc.lifeMax = (int)(npc.lifeMax /** 0.5f*/ * bossLifeScale);
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -164,7 +164,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             }*/
             else if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
             {
-                Main.player[Main.myPlayer].AddBuff(mod.BuffType("DeviPresence"), 2);
+                if (FargoSoulsWorld.MasochistMode)
+                    Main.player[Main.myPlayer].AddBuff(mod.BuffType("DeviPresence"), 2);
             }
 
             int projectileDamage = npc.damage / (npc.localAI[3] > 1 ? 4 : 5);
@@ -216,9 +217,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             Main.dust[d].velocity *= 4f;
                         }
                         npc.localAI[3] = 2; //this marks p2
-                        if (++npc.ai[2] > 15)
+                        if (FargoSoulsWorld.MasochistMode)
                         {
-                            int heal = (int)(npc.lifeMax / 2 / 60 * Main.rand.NextFloat(1.5f, 2f));
+                            int heal = (int)(npc.lifeMax / 90 * Main.rand.NextFloat(1f, 1.5f));
                             npc.life += heal;
                             if (npc.life > npc.lifeMax)
                                 npc.life = npc.lifeMax;
@@ -1277,7 +1278,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         npc.ai[3] = 0;
                         npc.localAI[0] = 0;
                         npc.localAI[1] = 0;
-                        if (++npc.localAI[2] >= attackQueue.Length)
+
+                        int threshold = attackQueue.Length; //only do super attacks in maso
+                        if (!FargoSoulsWorld.MasochistMode)
+                            threshold -= 1;
+                        if (++npc.localAI[2] >= threshold)
                         {
                             npc.localAI[2] = npc.localAI[3] > 1 ? 1 : 0;
                             RefreshAttackQueue();
@@ -1410,7 +1415,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             if (npc.localAI[3] > 1)
                 return false;
 
-            if (npc.life < npc.lifeMax * 0.5)
+            if (npc.life < npc.lifeMax * 0.5 && Main.expertMode)
             {
                 if (Main.netMode != 1)
                 {
@@ -1564,11 +1569,15 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             if (Main.netMode == 2)
                 NetMessage.SendData(7); //sync world
             
+            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("DeviatingEnergy"), Main.rand.Next(11) + 10);
+            
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("SparklingAdoration"));
+            }
+
             if (Main.rand.Next(10) == 0)
                 Item.NewItem(npc.Hitbox, mod.ItemType("DeviTrophy"));
-
-            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("SparklingAdoration"));
-            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("DeviatingEnergy"), Main.rand.Next(11) + 10);
         }
 
         public override void BossLoot(ref string name, ref int potionType)

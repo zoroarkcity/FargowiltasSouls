@@ -27,6 +27,13 @@ namespace FargowiltasSouls.Buffs.Masomode
 
         public override void Update(NPC npc, ref int buffIndex)
         {
+            if (npc.boss)
+            {
+                if (npc.buffTime[buffIndex] > 1)
+                    npc.buffTime[buffIndex] = 1;
+                return;
+            }
+
             npc.position -= npc.velocity / 2;
             if (npc.velocity.Y < 0)
                 npc.velocity.Y = 0;

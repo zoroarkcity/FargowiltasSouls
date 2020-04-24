@@ -705,6 +705,25 @@ namespace FargowiltasSouls.Projectiles
 
                 #endregion
 
+                case ProjectileID.PhantasmalBolt:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore))
+                        {
+                            if (Main.netMode != 1)
+                            {
+                                for (int i = -1; i <= 1; i++)
+                                {
+                                    Projectile.NewProjectile(projectile.Center,
+                                        Vector2.Normalize(projectile.velocity).RotatedBy(MathHelper.ToRadians(5 * i)),
+                                        ModContent.ProjectileType<PhantasmalBolt2>(), projectile.damage, 0f, Main.myPlayer);
+                                }
+                                projectile.Kill();
+                            }
+                        }
+                    }
+                    break;
+
                 case ProjectileID.DeathLaser:
                     if (FargoSoulsWorld.MasochistMode)
                     {
@@ -728,7 +747,7 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case ProjectileID.EyeBeam:
-                    /*if (FargoSoulsWorld.MasochistMode)
+                    if (FargoSoulsWorld.MasochistMode)
                     {
                         if (EModeGlobalNPC.BossIsAlive(ref NPC.golemBoss, NPCID.Golem))
                         {
@@ -742,11 +761,11 @@ namespace FargowiltasSouls.Projectiles
                             {
                                 if (++projectile.localAI[1] < 90)
                                 {
-                                    projectile.velocity *= 1.06f;
+                                    projectile.velocity *= 1.05f;
                                 }
                             }
                         }
-                    }*/
+                    }
                     break;
 
                 case ProjectileID.JavelinHostile:
@@ -842,12 +861,25 @@ namespace FargowiltasSouls.Projectiles
                     }
                     break;
 
+                case ProjectileID.DesertDjinnCurse:
+                    if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<NPCs.Champions.SpiritChampion>())
+                        && projectile.damage > 0)
+                    {
+                        projectile.damage = Main.npc[EModeGlobalNPC.championBoss].damage / 4;
+                    }
+                    break;
+
                 case ProjectileID.SandnadoHostile:
-                    if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                    if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, ModContent.NPCType<NPCs.DeviBoss.DeviBoss>())
+                        && projectile.Distance(Main.npc[EModeGlobalNPC.deviBoss].Center) < 2000f)
                     {
                         projectile.damage = Main.npc[EModeGlobalNPC.deviBoss].damage / 4;
                         if (Main.npc[EModeGlobalNPC.deviBoss].ai[0] != 5 && projectile.timeLeft > 90)
                             projectile.timeLeft = 90;
+                    }
+                    else if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<NPCs.Champions.SpiritChampion>()))
+                    {
+                        projectile.damage = Main.npc[EModeGlobalNPC.championBoss].damage / 4;
                     }
                     else if (FargoSoulsWorld.MasochistMode && projectile.timeLeft == 1199 && Main.netMode != 1)
                     {
@@ -893,7 +925,47 @@ namespace FargowiltasSouls.Projectiles
     
                 case ProjectileID.PhantasmalEye:
                     if (FargoSoulsWorld.MasochistMode)
-                        projectile.position.X -= projectile.velocity.X / 2;
+                    {
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore))
+                        {
+                            if (projectile.ai[0] == 2) //diving down and homing
+                            {
+                                if (++counter > 60)
+                                {
+                                    projectile.velocity.Y = 9;
+                                }
+                            }
+
+                            projectile.position.X -= projectile.velocity.X * 0.75f;
+                        }
+                    }
+                    break;
+
+                case ProjectileID.PhantasmalSphere:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
+                        if (!masobool)
+                        {
+                            masobool = true;
+                            int ai1 = (int)projectile.ai[1];
+                            if (ai1 > -1 && ai1 < Main.maxNPCs && Main.npc[ai1].active && Main.npc[ai1].type == NPCID.MoonLordHand)
+                            {
+                                projectile.localAI[0] = 1;
+                            }
+                        }
+
+                        if (projectile.ai[0] == -1 && projectile.localAI[0] > 0) //sent to fly, flagged as from hand
+                        {
+                            if (++projectile.localAI[1] < 140)
+                                projectile.velocity *= 1.022f;
+
+                            if (projectile.localAI[0] == 1 && projectile.velocity.Length() > 11) //only do this once
+                            {
+                                projectile.localAI[0] = 2;
+                                projectile.velocity.Normalize();
+                            }
+                        }
+                    }
                     break;
 
                 case ProjectileID.BombSkeletronPrime: //needs to be set every tick
@@ -917,7 +989,7 @@ namespace FargowiltasSouls.Projectiles
 
             if (stormBoosted)
             {
-                int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustID.GoldFlame, projectile.velocity.X, projectile.velocity.Y, 100, default(Color), 1.5f);
+                int dustId = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.GoldFlame, projectile.velocity.X, projectile.velocity.Y, 100, default(Color), 1.5f);
                 Main.dust[dustId].noGravity = true;
             }
 
@@ -1617,7 +1689,8 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.RocketSkeleton:
                         target.AddBuff(BuffID.Dazed, 120);
-                        target.AddBuff(BuffID.Confused, 120);
+                        target.AddBuff(ModContent.BuffType<Defenseless>(), 300);
+                        //target.AddBuff(BuffID.Confused, 120);
                         break;
 
                     case ProjectileID.FlamesTrap:
