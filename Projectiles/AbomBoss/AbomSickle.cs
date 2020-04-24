@@ -37,8 +37,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 Main.PlaySound(SoundID.Item8, projectile.Center);
             }
             projectile.rotation += 0.8f;
-            if (++projectile.localAI[1] > 30 && projectile.localAI[1] < 100)
-                projectile.velocity *= 1.06f;
+            if (++projectile.localAI[1] < 90)
+                projectile.velocity *= 1.05f;
             for (int i = 0; i < 2; i++)
             {
                 int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 27, 0f, 0f, 100);
@@ -77,10 +77,13 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("AbomFang"), 300);
-            target.AddBuff(mod.BuffType("Berserked"), 120);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(mod.BuffType("AbomFang"), 300);
+                target.AddBuff(mod.BuffType("Berserked"), 120);
+                target.AddBuff(BuffID.Cursed, 120);
+            }
             target.AddBuff(BuffID.Bleeding, 600);
-            target.AddBuff(BuffID.Cursed, 120);
         }
     }
 }

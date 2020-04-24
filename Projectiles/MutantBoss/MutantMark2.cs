@@ -72,8 +72,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         {
             target.AddBuff(BuffID.Poisoned, Main.rand.Next(60, 300));
             target.AddBuff(mod.BuffType("Infested"), Main.rand.Next(60, 300));
-            target.AddBuff(mod.BuffType("IvyVenom"), Main.rand.Next(60, 300));
-            target.AddBuff(mod.BuffType("MutantFang"), 180);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(mod.BuffType("IvyVenom"), Main.rand.Next(60, 300));
+                target.AddBuff(mod.BuffType("MutantFang"), 180);
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

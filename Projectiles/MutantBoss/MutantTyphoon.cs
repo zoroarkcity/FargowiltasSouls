@@ -84,11 +84,14 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void OnHitPlayer(Player player, int damage, bool crit)
         {
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                player.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
+                player.AddBuff(mod.BuffType("OceanicMaul"), 5400);
+                player.AddBuff(mod.BuffType("MutantFang"), 180);
+            }
             player.AddBuff(mod.BuffType("Defenseless"), Main.rand.Next(600, 900));
             player.AddBuff(BuffID.WitheredWeapon, Main.rand.Next(300, 600));
-            player.GetModPlayer<FargoPlayer>().MaxLifeReduction += 200;
-            player.AddBuff(mod.BuffType("OceanicMaul"), 5400);
-            player.AddBuff(mod.BuffType("MutantFang"), 180);
         }
 
         public override void Kill(int timeLeft)

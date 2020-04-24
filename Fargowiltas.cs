@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using FargowiltasSouls.ModCompatibilities;
 using Terraria;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -14,6 +16,7 @@ using FargowiltasSouls.NPCs.AbomBoss;
 using FargowiltasSouls.NPCs.Champions;
 using FargowiltasSouls.NPCs.DeviBoss;
 using FargowiltasSouls.NPCs.MutantBoss;
+using FargowiltasSouls.Sky;
 using ThoriumMod.Items.Titan;
 using Fargowiltas.Items.Summons.Deviantt;
 using ThoriumMod.Projectiles.Pets;
@@ -55,6 +58,10 @@ namespace FargowiltasSouls
         public override void Load()
         {
             Instance = this;
+
+            SkyManager.Instance["FargowiltasSouls:MutantBoss"] = new MutantSky();
+            Filters.Scene["FargowiltasSouls:TimeStop"] = new Filter(
+                new TimeStopShader("FilterMiniTower").UseColor(0.2f, 0.2f, 0.2f).UseOpacity(0.7f), EffectPriority.VeryHigh);
 
             if (Language.ActiveCulture == GameCulture.Chinese)
             {
@@ -250,8 +257,9 @@ namespace FargowiltasSouls
             AddToggle("DefenseStarConfig", "Stars On Hit", "ColossusSoul", "ffffff");
             AddToggle("DefenseBeeConfig", "Bees On Hit", "ColossusSoul", "ffffff");
             AddToggle("DefensePanicConfig", "Panic On Hit", "ColossusSoul", "ffffff");
-            AddToggle("SupersonicConfig", "Supersonic Speed Boosts", "SupersonicSoul", "ffffff");
+            AddToggle("RunspeedConfig", "Higher Base Run Speed", "SupersonicSoul", "ffffff");
             AddToggle("MomentumConfig", "No Momentum", "SupersonicSoul", "ffffff");
+            AddToggle("SupersonicConfig", "Supersonic Speed Boosts", "SupersonicSoul", "ffffff");
             AddToggle("EternityConfig", "Eternity Stacking", "EternitySoul", "ffffff");
 
             #endregion
@@ -700,6 +708,10 @@ namespace FargowiltasSouls
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<BabyGuardian>());
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<TimberChampion>());
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<EarthChampion>());
+                    bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<LifeChampion>());
+                    bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<WillChampion>());
+                    bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<ShadowChampion>());
+                    bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<SpiritChampion>());
                 }
 
                 Mod bossChecklist = ModLoader.GetMod("BossChecklist");
@@ -847,12 +859,12 @@ namespace FargowiltasSouls
             recipe.SetResult(ModContent.ItemType<RuneOrb>());
             recipe.AddRecipe();
 
-            recipe = new ModRecipe(this);
+            /*recipe = new ModRecipe(this);
             recipe.AddRecipeGroup("FargowiltasSouls:AnyBonesBanner", 2);
             recipe.AddIngredient(ModContent.ItemType<Items.Misc.DeviatingEnergy>(), 5);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(ModContent.ItemType<InnocuousSkull>());
-            recipe.AddRecipe();
+            recipe.AddRecipe();*/
         }
 
         public override void AddRecipeGroups()

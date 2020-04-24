@@ -9,7 +9,7 @@ namespace FargowiltasSouls.Buffs.Boss
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Mutant Fang");
-            Description.SetDefault("The power of Masochist Mode compels you");
+            Description.SetDefault("The power of Eternity Mode compels you");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             longerExpertDebuff = false;

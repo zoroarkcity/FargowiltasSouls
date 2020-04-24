@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameInput;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -1114,6 +1115,9 @@ namespace FargowiltasSouls
 
             if (FreezeTime && freezeLength != 0)
             {
+                if (!Filters.Scene["FargowiltasSouls:TimeStop"].IsActive())
+                    Filters.Scene.Activate("FargowiltasSouls:TimeStop");
+
                 if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>()))
                     player.AddBuff(ModContent.BuffType<TimeFrozen>(), freezeLength);
 
@@ -1200,6 +1204,8 @@ namespace FargowiltasSouls
         {
             player.shinyStone = true;
             player.setSquireT2 = true;
+            if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.SquirePanic))
+                player.buffImmune[BuffID.BallistaPanic] = true;
             player.setSquireT3 = true;
             //immune frames
             ValhallaEnchant = true;
@@ -1469,7 +1475,10 @@ namespace FargowiltasSouls
             {
                 player.bee = true;
             }
-            player.panic = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.PanicOnHit))
+            {
+                player.panic = true;
+            }
             player.longInvince = true;
             //spore sac
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SporeSac))
@@ -1508,7 +1517,7 @@ namespace FargowiltasSouls
 
         public void SupersonicSoul(bool hideVisual)
         {
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicSpeed) && !player.GetModPlayer<FargoPlayer>().noSupersonic)
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicSpeed) && !player.GetModPlayer<FargoPlayer>().noSupersonic && !EModeGlobalNPC.AnyBossAlive())
             {
                 player.runAcceleration += SoulConfig.Instance.SupersonicMultiplier * .1f;
                 player.maxRunSpeed += SoulConfig.Instance.SupersonicMultiplier * 2;
@@ -1520,8 +1529,8 @@ namespace FargowiltasSouls
             }
             else
             {
-                //same as frostspark
-                player.accRunSpeed = 6.75f;
+                //6.75 same as frostspark
+                player.accRunSpeed = SoulConfig.Instance.GetValue(SoulConfig.Instance.IncreasedRunSpeed) ? 18.25f : 6.75f;
             }
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.NoMomentum))

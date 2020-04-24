@@ -39,10 +39,13 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         {
             if (target.GetModPlayer<FargoPlayer>().BetsyDashing)
                 return;
-            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
-            target.AddBuff(mod.BuffType("OceanicMaul"), 5400);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
+                target.AddBuff(mod.BuffType("OceanicMaul"), 5400);
+                target.AddBuff(mod.BuffType("MutantFang"), 180);
+            }
             target.AddBuff(mod.BuffType("CurseoftheMoon"), 300);
-            target.AddBuff(mod.BuffType("MutantFang"), 180);
             projectile.timeLeft = 0;
         }
 
@@ -54,14 +57,14 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.position.X -= (float)(projectile.width / 2);
             projectile.position.Y -= (float)(projectile.height / 2);
             for (int index = 0; index < 4; ++index)
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);
+                Dust.NewDust(projectile.position, projectile.width, projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);
             for (int index1 = 0; index1 < 40; ++index1)
             {
-                int index2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 229, 0.0f, 0.0f, 0, new Color(), 2.5f);
+                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 229, 0.0f, 0.0f, 0, new Color(), 2.5f);
                 Main.dust[index2].noGravity = true;
                 Dust dust1 = Main.dust[index2];
                 dust1.velocity = dust1.velocity * 3f;
-                int index3 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 229, 0.0f, 0.0f, 100, new Color(), 1.5f);
+                int index3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 229, 0.0f, 0.0f, 100, new Color(), 1.5f);
                 Dust dust2 = Main.dust[index3];
                 dust2.velocity = dust2.velocity * 2f;
                 Main.dust[index3].noGravity = true;

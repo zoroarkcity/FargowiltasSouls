@@ -56,16 +56,9 @@ namespace FargowiltasSouls.Projectiles.Champions
                     return;
                 }
 
-                projectile.velocity.X *= 0.95f;
-                projectile.velocity.Y = projectile.velocity.Y + 0.2f;
-                if (projectile.velocity.Y > 16f)
+                if (projectile.velocity.Y == 0 && --projectile.localAI[1] < 0)
                 {
-                    projectile.velocity.Y = 16f;
-                }
-                
-                if (++projectile.localAI[1] >= 180)
-                {
-                    projectile.localAI[1] = 0f;
+                    projectile.localAI[1] = 120f;
                     if (Main.netMode != 1)
                     {
                         const float gravity = 0.2f;
@@ -79,6 +72,13 @@ namespace FargowiltasSouls.Projectiles.Champions
                                 ModContent.ProjectileType<Acorn>(), projectile.damage, 0f, Main.myPlayer);
                         }
                     }
+                }
+
+                projectile.velocity.X *= 0.95f;
+                projectile.velocity.Y = projectile.velocity.Y + 0.2f;
+                if (projectile.velocity.Y > 16f)
+                {
+                    projectile.velocity.Y = 16f;
                 }
             }
             else //chase to get back in range

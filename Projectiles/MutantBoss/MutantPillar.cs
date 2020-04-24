@@ -151,9 +151,12 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             target.velocity.X = projectile.velocity.X < 0 ? -15f : 15f;
             target.velocity.Y = -10f;
             target.AddBuff(mod.BuffType("Stunned"), 60);
-            target.AddBuff(mod.BuffType("MarkedforDeath"), 240);
             target.AddBuff(mod.BuffType("CurseoftheMoon"), 600);
-            target.AddBuff(mod.BuffType("MutantFang"), 180);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(mod.BuffType("MarkedforDeath"), 240);
+                target.AddBuff(mod.BuffType("MutantFang"), 180);
+            }
             switch ((int)projectile.ai[0])
             {
                 case 0: target.AddBuff(mod.BuffType("ReverseManaFlow"), 360); break; //nebula

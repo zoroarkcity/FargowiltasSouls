@@ -24,6 +24,8 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.timeLeft = 240;
             projectile.hostile = true;
             projectile.penetrate = -1;
+            projectile.tileCollide = false;
+            projectile.ignoreWater = true;
         }
 
         public override void AI()

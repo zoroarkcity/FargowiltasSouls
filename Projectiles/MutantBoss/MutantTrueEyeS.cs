@@ -169,7 +169,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(mod.BuffType("CurseoftheMoon"), 300);
-            target.AddBuff(mod.BuffType("MutantFang"), 180);
+            if (FargoSoulsWorld.MasochistMode)
+                target.AddBuff(mod.BuffType("MutantFang"), 180);
         }
 
         public override bool? CanCutTiles()

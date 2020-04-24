@@ -77,18 +77,18 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
             for (int i = 0; i < 30; i++)
             {
-                int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width,
+                int dust = Dust.NewDust(projectile.position, projectile.width,
                     projectile.height, 31, 0f, 0f, 100, default(Color), 3f);
                 Main.dust[dust].velocity *= 1.4f;
             }
 
             for (int i = 0; i < 20; i++)
             {
-                int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width,
+                int dust = Dust.NewDust(projectile.position, projectile.width,
                     projectile.height, 6, 0f, 0f, 100, default(Color), 3.5f);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].velocity *= 7f;
-                dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width,
+                dust = Dust.NewDust(projectile.position, projectile.width,
                     projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
                 Main.dust[dust].velocity *= 3f;
             }

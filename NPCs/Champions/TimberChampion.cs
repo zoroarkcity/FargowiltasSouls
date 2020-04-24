@@ -4,17 +4,19 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using FargowiltasSouls.Items.Accessories.Forces;
+using FargowiltasSouls.Items.Accessories.Enchantments;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
 
 namespace FargowiltasSouls.NPCs.Champions
 {
+    [AutoloadBossHead]
     public class TimberChampion : ModNPC
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Timber");
+            Main.npcFrameCount[npc.type] = 6;
         }
 
         /*public override bool Autoload(ref string name)
@@ -24,11 +26,11 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void SetDefaults()
         {
-            npc.width = 340;
-            npc.height = 400;
+            npc.width = 160;
+            npc.height = 228;
             npc.damage = 150;
             npc.defense = 50;
-            npc.lifeMax = 300000;
+            npc.lifeMax = 320000;
             npc.HitSound = SoundID.NPCHit7;
             npc.DeathSound = SoundID.NPCDeath1;
             npc.noGravity = false;
@@ -93,6 +95,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         const float gravity = 0.4f;
                         const float time = 90f;
+                        
                         Vector2 distance = player.Center - npc.Center;
                         distance.Y -= npc.height;
 
@@ -229,7 +232,10 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.ai[2] = 0;
                         if (Main.netMode != 1 && npc.ai[1] > 30 && npc.ai[1] < 120)
                         {
-                            Projectile.NewProjectile(npc.Center + new Vector2(Main.rand.NextFloat(-100, 100), Main.rand.NextFloat(-150, 0)),
+                            Vector2 offset;
+                            offset.X = Main.rand.NextFloat(0, npc.width / 2) * npc.direction;
+                            offset.Y = 16;
+                            Projectile.NewProjectile(npc.Center + offset,
                                 Vector2.UnitY * -12f, ModContent.ProjectileType<Snowball>(), npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
@@ -356,6 +362,17 @@ namespace FargowiltasSouls.NPCs.Champions
             }
         }
 
+        public override void FindFrame(int frameHeight)
+        {
+            if (++npc.frameCounter > 6)
+            {
+                npc.frameCounter = 0;
+                npc.frame.Y += frameHeight;
+                if (npc.frame.Y >= frameHeight * Main.npcFrameCount[npc.type])
+                    npc.frame.Y = 0;
+            }
+        }
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(ModContent.BuffType<Buffs.Masomode.Guilty>(), 600);
@@ -368,7 +385,30 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
-            Item.NewItem(npc.position, npc.Size, ModContent.ItemType<TimberForce>());
+            //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<TimberForce>());
+            int[] drops = {
+                ModContent.ItemType<WoodEnchant>(),
+                ModContent.ItemType<BorealWoodEnchant>(),
+                ModContent.ItemType<RichMahoganyEnchant>(),
+                ModContent.ItemType<EbonwoodEnchant>(),
+                ModContent.ItemType<ShadewoodEnchant>(),
+                ModContent.ItemType<PalmWoodEnchant>(),
+                ModContent.ItemType<PearlwoodEnchant>()
+            };
+            int lastDrop = 0; //don't drop same ench twice
+            for (int i = 0; i < 2; i++)
+            {
+                int thisDrop = drops[Main.rand.Next(drops.Length)];
+
+                if (lastDrop == thisDrop) //try again
+                {
+                    i--;
+                    continue;
+                }
+
+                lastDrop = thisDrop;
+                Item.NewItem(npc.position, npc.Size, thisDrop);
+            }
         }
     }
 }

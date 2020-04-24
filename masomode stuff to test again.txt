@@ -100,5 +100,57 @@ slowed plantera 10% in p2 unless you're envenomed
 golem spiky balls glow
 security wallet and upgrades give 50% discount on reforging
 saucer only shoots lasers in vulnerable phase while also doing deathray
-added timber champion's sentries
-added earth champion (hell only)
+
+did something to reduce hand despawning off bottom of map and slowed crystal bombs
+supersonic soul:
+	new toggle for increased base run speed (matches flight mastery soul)
+	SUPERSONIC SPEED IS DISABLED DURING BOSS FIGHTS
+fixed guilty debuff icon being placeholder
+placeholder map icons for champions
+
+tweaked abom sickle acceleration
+moon lord now shoots trios of semi-homing phantasmal bolts
+reduced phantasmal eye horiz movement even more
+golem lasers have accel too
+
+fixed lump of flesh minion deathray being able to apply clipped wings on bosses
+fixed clipped wings working at ALL on ANY boss
+mutant:
+	loses last stand, mutant presence, mutant fang, p2 heal, and half his p2 moveset in expert
+	loses p2 entirely in normal
+abom:
+	loses abom presence, abom fang, p2 heal, and p2 super attacks in expert
+	loses p2 entirely in normal
+deviantt:
+	loses devi presence, p2 heal, and super attacks in expert
+	loses p2 entirely in normal
+removed lunar crystal
+removed innocuous skull recipe
+adjusted recipes so the game should be winnable in all modes
+fixed abom/mutant fang still saying masochist mode
+cracked gem drops in all modes
+
+moon lord overhauled:
+	arena moves EXTREMELY slowly
+	bolts are now fired in bursts of three, have acceleration and homing
+	hand spheres accelerate
+	reduced moon lord overall movement speed
+	removed contact damage entirely
+	nerfed phase 2 pillar attacks
+	restored defense
+	nerfed phantasmal eye movement overall
+	nerfed true eyes until core is exposed
+	moon lord immediately does both rays and pillar attacks in p2
+	all attacks do 10% more damage
+
+fishron enrages EVEN FURTHER BEYOND outside ocean
+changed mutant boss to use modcontent
+mutant boss has a custom background in p2
+skeleton rockets inflict defenseless instead of confused
+nerfed mutant p2 patterns in expert
+added shader for timestop
+
+spirit champ last stand adjusted
+spirit champ grab cant be escaped via rod
+sprit champ grab can be escaped via mashing
+shadow champ wont fastball you

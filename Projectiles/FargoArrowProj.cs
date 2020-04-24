@@ -161,23 +161,23 @@ namespace FargowiltasSouls.Projectiles
             Main.PlaySound(SoundID.Item14, projectile.position);
             for (int num613 = 0; num613 < 10; num613++)
             {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1.5f);
+                Dust.NewDust(projectile.position, projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1.5f);
             }
             for (int num614 = 0; num614 < 5; num614++)
             {
-                int num615 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 2.5f);
+                int num615 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 2.5f);
                 Main.dust[num615].noGravity = true;
                 Main.dust[num615].velocity *= 3f;
-                num615 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
+                num615 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
                 Main.dust[num615].velocity *= 2f;
             }
-            int num616 = Gore.NewGore(new Vector2(projectile.position.X, projectile.position.Y), default(Vector2), Main.rand.Next(61, 64), 1f);
+            int num616 = Gore.NewGore(projectile.position, default(Vector2), Main.rand.Next(61, 64), 1f);
             Main.gore[num616].velocity *= 0.4f;
             Gore expr_14419_cp_0 = Main.gore[num616];
             expr_14419_cp_0.velocity.X = expr_14419_cp_0.velocity.X + (float)Main.rand.Next(-10, 11) * 0.1f;
             Gore expr_14449_cp_0 = Main.gore[num616];
             expr_14449_cp_0.velocity.Y = expr_14449_cp_0.velocity.Y + (float)Main.rand.Next(-10, 11) * 0.1f;
-            num616 = Gore.NewGore(new Vector2(projectile.position.X, projectile.position.Y), default(Vector2), Main.rand.Next(61, 64), 1f);
+            num616 = Gore.NewGore(projectile.position, default(Vector2), Main.rand.Next(61, 64), 1f);
             Main.gore[num616].velocity *= 0.4f;
             Gore expr_144DD_cp_0 = Main.gore[num616];
             expr_144DD_cp_0.velocity.X = expr_144DD_cp_0.velocity.X + (float)Main.rand.Next(-10, 11) * 0.1f;

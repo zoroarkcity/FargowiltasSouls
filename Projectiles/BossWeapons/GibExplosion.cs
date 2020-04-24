@@ -38,17 +38,17 @@ namespace FargowiltasSouls.Projectiles
             Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 14);
             for (int i = 0; i < 15; i++)
             {
-                int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width,
+                int dust = Dust.NewDust(projectile.position, projectile.width,
                     projectile.height, DustID.t_Lihzahrd, 0f, 0f, 100, default(Color), 1.5f);
                 Main.dust[dust].velocity *= 1.4f;
             }
             for (int i = 0; i < 15; i++)
             {
-                int dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width,
+                int dust = Dust.NewDust(projectile.position, projectile.width,
                     projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].velocity *= 7f;
-                dust = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width,
+                dust = Dust.NewDust(projectile.position, projectile.width,
                     projectile.height, 6, 0f, 0f, 100, default(Color), 1f);
                 Main.dust[dust].velocity *= 3f;
             }

@@ -52,7 +52,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             recipe.AddIngredient(null, "BrainStaff");
             recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerBrain"));
             recipe.AddIngredient(ItemID.LunarBar, 10);
-            recipe.AddIngredient(null, "LunarCrystal", 5);
+            //recipe.AddIngredient(null, "LunarCrystal", 5);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
