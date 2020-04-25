@@ -63,7 +63,11 @@ namespace FargowiltasSouls.Projectiles.Minions
                     {
                         projectile.localAI[0] = 0;
                         if (projectile.owner == Main.myPlayer)
-                            Projectile.NewProjectile(projectile.Center + Vector2.UnitX.RotatedBy(projectile.rotation + Math.PI / 2) * 100, projectile.DirectionTo(npc.Center) * 12, mod.ProjectileType("OpticLaser"), projectile.damage, projectile.knockBack, projectile.owner);
+                        {
+                            Projectile.NewProjectile(projectile.Center + Vector2.UnitX.RotatedBy(projectile.rotation + Math.PI / 2) * 100,
+                                projectile.DirectionTo(npc.Center) * 12, ModContent.ProjectileType<OpticLaser>(),
+                                projectile.damage, projectile.knockBack, projectile.owner);
+                        }
                     }
                 }
                 else //forget target

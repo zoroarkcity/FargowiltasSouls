@@ -10,28 +10,34 @@ using FargowiltasSouls.NPCs.MutantBoss;
 
 namespace FargowiltasSouls.Sky
 {
-    public class MutantSky : CustomSky
+    public class MutantSky2 : CustomSky
     {
         private bool isActive = false;
+        private bool increase = true;
         private float intensity = 0f;
 
         public override void Update(GameTime gameTime)
         {
-            const float increment = 0.01f;
-            if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>()))
+            if (increase)
             {
+                float increment = 0.04f;
+
                 intensity += increment;
                 if (intensity > 1f)
                 {
                     intensity = 1f;
+                    increase = false;
                 }
             }
             else
             {
+                float increment = 0.01f;
+
                 intensity -= increment;
                 if (intensity < 0f)
                 {
                     intensity = 0f;
+                    increase = true;
                     Deactivate();
                 }
             }
@@ -41,7 +47,7 @@ namespace FargowiltasSouls.Sky
         {
             if (maxDepth >= 0 && minDepth < 0)
             {
-                spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantSky"),
+                spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantSky2"),
                     new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White * intensity * 0.5f);
             }
         }
@@ -54,16 +60,19 @@ namespace FargowiltasSouls.Sky
         public override void Activate(Vector2 position, params object[] args)
         {
             isActive = true;
+            increase = true;
         }
 
         public override void Deactivate(params object[] args)
         {
             isActive = false;
+            increase = true;
         }
 
         public override void Reset()
         {
             isActive = false;
+            increase = true;
         }
 
         public override bool IsActive()

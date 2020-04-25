@@ -60,6 +60,7 @@ namespace FargowiltasSouls
             Instance = this;
 
             SkyManager.Instance["FargowiltasSouls:MutantBoss"] = new MutantSky();
+            SkyManager.Instance["FargowiltasSouls:MutantBoss2"] = new MutantSky2();
             Filters.Scene["FargowiltasSouls:TimeStop"] = new Filter(
                 new TimeStopShader("FilterMiniTower").UseColor(0.2f, 0.2f, 0.2f).UseOpacity(0.7f), EffectPriority.VeryHigh);
 
@@ -173,7 +174,7 @@ namespace FargowiltasSouls
             #region masomode toggles
 
             //Masomode Header
-            AddToggle("MasoHeader", "Masochist Mode", "MutantStatue", "ffffff");
+            AddToggle("MasoHeader", "Eternity Mode", "MutantStatue", "ffffff");
             AddToggle("MasoBossRecolors", "Boss Recolors (Restart to use)", "Masochist", "ffffff");
             AddToggle("MasoIconConfig", "Sinister Icon", "SinisterIcon", "ffffff");
             AddToggle("MasoIconDropsConfig", "Sinister Icon Drops", "SinisterIcon", "ffffff");
@@ -764,8 +765,8 @@ namespace FargowiltasSouls
                         new List<int> { ModContent.ItemType<Items.Misc.DeviatingEnergy>() },
                         "Spawn by using [i:" + ModContent.ItemType<Items.Summons.DevisCurse>() + "].",
                         "Deviantt is satisfied with its show of love.",
-                        "FargowiltasSouls/NPCs/AbomBoss/DeviBoss_Still",
-                        "FargowiltasSouls/NPCs/AbomBoss/DeviBoss_Head_Boss"
+                        "FargowiltasSouls/NPCs/DeviBoss/DeviBoss_Still",
+                        "FargowiltasSouls/NPCs/DeviBoss/DeviBoss_Head_Boss"
                     );
                     bossChecklist.Call(
                         "AddBoss",

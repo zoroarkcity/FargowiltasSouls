@@ -56,6 +56,8 @@ namespace FargowiltasSouls.Projectiles.Minions
                 {
                     if (projectile.ai[1] <= 0)
                     {
+                        projectile.position += npc.velocity / 4f;
+
                         Vector2 targetPos = npc.Center + projectile.DirectionFrom(npc.Center) * 300;
                         if (projectile.Distance(targetPos) > 50)
                         {
@@ -63,7 +65,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                         }
                         else if (--projectile.ai[1] < -30) //in target range for 1 second, initiate dash
                         {
-                            projectile.velocity = projectile.DirectionTo(npc.Center + npc.velocity * 10) * 20;
+                            projectile.velocity = projectile.DirectionTo(npc.Center + npc.velocity * 10) * 30f;
                             projectile.ai[1] = 20;
                             projectile.netUpdate = true;
                         }
@@ -74,7 +76,11 @@ namespace FargowiltasSouls.Projectiles.Minions
                             projectile.localAI[0] = 0;
                             Main.PlaySound(SoundID.Item34, projectile.Center);
                             if (projectile.owner == Main.myPlayer)
-                                Projectile.NewProjectile(projectile.Center - (projectile.rotation + (float)Math.PI / 2).ToRotationVector2() * 60, projectile.DirectionTo(npc.Center) * 8, mod.ProjectileType("OpticFlame"), projectile.damage, projectile.knockBack, projectile.owner);
+                            {
+                                Projectile.NewProjectile(projectile.Center - (projectile.rotation + (float)Math.PI / 2).ToRotationVector2() * 60,
+                                    projectile.DirectionTo(npc.Center) * 12, ModContent.ProjectileType<OpticFlame>(),
+                                    projectile.damage, projectile.knockBack, projectile.owner);
+                            }
                         }
                     }
                     else //is dashing

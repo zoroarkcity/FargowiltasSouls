@@ -109,9 +109,10 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.WyvernHead:
                     if (Main.hardMode)
+                    {
                         npc.lifeMax *= 2;
-                    else
-                        npc.lifeMax /= 2;
+                        npc.defense /= 2;
+                    }
                     Counter = Main.rand.Next(180);
                     break;
 
@@ -233,7 +234,7 @@ namespace FargowiltasSouls.NPCs
                         npc.lifeMax *= 3;
                     else
                     {
-                        npc.lifeMax /= 2;
+                        npc.defense /= 2;
                         npc.damage /= 2;
                     }
                     break;
@@ -318,22 +319,21 @@ namespace FargowiltasSouls.NPCs
                     npc.value /= 4;
                     goto case NPCID.Medusa;
 
+                case NPCID.Medusa:
                 case NPCID.PigronCorruption:
                 case NPCID.PigronCrimson:
                 case NPCID.PigronHallow:
-                case NPCID.RedDevil:
-                case NPCID.AngryNimbus:
                 case NPCID.IchorSticker:
                 case NPCID.SeekerHead:
+                case NPCID.AngryNimbus:
+                case NPCID.RedDevil:
                 case NPCID.MushiLadybug:
                 case NPCID.AnomuraFungus:
                 case NPCID.ZombieMushroom:
                 case NPCID.ZombieMushroomHat:
-                case NPCID.Medusa:
                     if (!Main.hardMode)
                     {
-                        npc.lifeMax /= 2;
-                        npc.defense = 0;
+                        npc.defense /= 2;
                     }
                     break;
 
@@ -5177,6 +5177,11 @@ namespace FargowiltasSouls.NPCs
                             pool[NPCID.LightningBug] = .1f;
                         }
 
+                        if (corruption)
+                        {
+                            pool[NPCID.SeekerHead] = .1f;
+                        }
+
                         if (crimson)
                         {
                             pool[NPCID.IchorSticker] = .1f;
@@ -5395,6 +5400,93 @@ namespace FargowiltasSouls.NPCs
 
                 }
             }
+        }
+
+        public override bool PreNPCLoot(NPC npc)
+        {
+            if (FargoSoulsWorld.MasochistMode && !Main.hardMode)
+            {
+                switch (npc.type)
+                {
+                    case NPCID.Medusa:
+                        if (!npc.SpawnedFromStatue)
+                        {
+                            Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(5));
+                            if (Main.rand.Next(10) == 0)
+                                Item.NewItem(npc.Hitbox, ItemID.MedusaHead);
+                            if (Main.rand.Next(10) == 0)
+                                Item.NewItem(npc.Hitbox, ItemID.PocketMirror);
+                            return false;
+                        }
+                        break;
+
+                    case NPCID.WyvernHead:
+                        Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(5));
+                        Item.NewItem(npc.Hitbox, ItemID.FloatingIslandFishingCrate);
+                        if (Main.rand.Next(5) == 0)
+                            Item.NewItem(npc.Hitbox, ModContent.ItemType<DragonFang>());
+                        return false;
+
+                    case NPCID.RedDevil:
+                        Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(5));
+                        if (Main.rand.Next(3) == 0)
+                            Item.NewItem(npc.Hitbox, ItemID.DemonScythe);
+                        return false;
+
+                    case NPCID.IchorSticker:
+                        {
+                            Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(5));
+                            int[] drops = { ItemID.TheUndertaker, ItemID.TheRottedFork, ItemID.CrimsonRod, ItemID.CrimsonHeart, ItemID.PanicNecklace };
+                            Item.NewItem(npc.Hitbox, drops[Main.rand.Next(drops.Length)]);
+                        }
+                        return false;
+
+                    case NPCID.SeekerHead:
+                        {
+                            Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(5));
+                            int[] drops = { ItemID.BallOHurt, ItemID.BandofStarpower, ItemID.Musket, ItemID.ShadowOrb, ItemID.Vilethorn };
+                            Item.NewItem(npc.Hitbox, drops[Main.rand.Next(drops.Length)]);
+                        }
+                        return false;
+
+                    case NPCID.Mimic:
+                        if (!npc.SpawnedFromStatue)
+                        {
+                            Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(5));
+                            int[] drops = { ItemID.TitanGlove, ItemID.PhilosophersStone, ItemID.CrossNecklace, ItemID.DualHook, ItemID.StarCloak };
+                            Item.NewItem(npc.Hitbox, drops[Main.rand.Next(drops.Length)]);
+                            return false;
+                        }
+                        break;
+
+                    case NPCID.AngryNimbus:
+                        Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(5));
+                        Item.NewItem(npc.Hitbox, ItemID.FloatingIslandFishingCrate);
+                        return false;
+
+                    case NPCID.DuneSplicerHead:
+                        Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(5));
+                        if (Main.rand.Next(3) == 0)
+                            Item.NewItem(npc.Hitbox, ItemID.SandstorminaBottle);
+                        return false;
+
+                    case NPCID.PigronCorruption:
+                    case NPCID.PigronCrimson:
+                    case NPCID.PigronHallow:
+                        if (!npc.SpawnedFromStatue)
+                        {
+                            Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(5));
+                            Item.NewItem(npc.Hitbox, ItemID.Bacon, 1 + Main.rand.Next(15));
+                            return false;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            return true;
         }
 
         public override void NPCLoot(NPC npc)
@@ -6024,19 +6116,35 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.DukeFishron:
-                        /*if (masoBool[3])
                         {
-                            npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<CyclonicFin>());
-                            npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<Sadism>(), Main.rand.Next(10) + 1);
+                            npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<MutantAntibodies>());
+                            npc.DropItemInstanced(npc.position, npc.Size, ItemID.Bacon, Main.rand.Next(10) + 1);
+                            npc.DropItemInstanced(npc.position, npc.Size, ItemID.GoldenCrate, 5);
+                            if (!Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantsPact)
+                                npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<MutantsPact>());
+
+                            int[] fishingDrops = {
+                                ItemID.FuzzyCarrot,
+                                ItemID.AnglerHat,
+                                ItemID.AnglerVest,
+                                ItemID.AnglerPants,
+                                ItemID.GoldenFishingRod,
+                                ItemID.GoldenBugNet,
+                                ItemID.FishHook,
+                                ItemID.HighTestFishingLine,
+                                ItemID.AnglerEarring,
+                                ItemID.TackleBox,
+                                ItemID.FishermansGuide,
+                                ItemID.WeatherRadio,
+                                ItemID.Sextant,
+                                ItemID.FinWings,
+                                ItemID.BottomlessBucket,
+                                ItemID.SuperAbsorbantSponge,
+                                ItemID.HotlineFishingHook
+                            };
+                            for (int i = 0; i < 3; i++)
+                                Item.NewItem(npc.Hitbox, fishingDrops[Main.rand.Next(fishingDrops.Length)]);
                         }
-                        else
-                        {*/
-                        npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<MutantAntibodies>());
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.Bacon, Main.rand.Next(10) + 1);
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.GoldenCrate, 5);
-                        if (!Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantsPact)
-                            npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<MutantsPact>());
-                        //}
                         break;
 
                     case NPCID.CultistBoss:
@@ -6705,26 +6813,6 @@ namespace FargowiltasSouls.NPCs
                         }
                         break;
 
-                    case NPCID.Medusa:
-                    case NPCID.IchorSticker:
-                    case NPCID.SeekerHead:
-                    case NPCID.RedDevil:
-                    case NPCID.WyvernHead:
-                    case NPCID.DuneSplicerHead:
-                    case NPCID.AngryNimbus:
-                    case NPCID.PigronCorruption:
-                    case NPCID.PigronCrimson:
-                    case NPCID.PigronHallow:
-                        if (!Main.hardMode) //in pre-hm, fake death
-                        {
-                            Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(2));
-
-                            npc.active = false;
-                            Main.PlaySound(npc.DeathSound, npc.Center);
-                            return false;
-                        }
-                        break;
-
                     case NPCID.Mimic:
                         Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(2));
 
@@ -6735,7 +6823,7 @@ namespace FargowiltasSouls.NPCs
                                 Projectile.NewProjectile(npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
                                     Main.rand.Next(-30, 31) * .1f, Main.rand.Next(-40, -15) * .1f, ModContent.ProjectileType<FakeHeart>(), 20, 0f, Main.myPlayer);
                         }
-                        goto case NPCID.Medusa;
+                        break;
 
                     case NPCID.PresentMimic:
                     case NPCID.BigMimicCorruption:
