@@ -422,7 +422,7 @@ namespace FargowiltasSouls
                 AddToggle("CalamityTheEvolutionConfig", "The Evolution", "FearmongerEnchant", "ffffff");
                 AddToggle("CalamityStatisBeltOfCursesConfig", "Statis' Void Sash", "FearmongerEnchant", "ffffff");
 
-                AddToggle("DevastationForce", "Force of the Devastation", "DevastationForce", "ffffff");
+                AddToggle("DevastationForce", "Force of Devastation", "DevastationForce", "ffffff");
                 AddToggle("CalamityReaverEffectsConfig", "Reaver Effects", "ReaverEnchant", "ffffff");
                 AddToggle("CalamityReaverMinionConfig", "Reaver Orb Minion", "ReaverEnchant", "ffffff");
                 AddToggle("CalamityFabledTurtleConfig", "Fabled Turtle Shell", "ReaverEnchant", "ffffff");
@@ -438,7 +438,7 @@ namespace FargowiltasSouls
 
 
 
-                AddToggle("DesolationForce", "Force of the Desolation", "DesolationForce", "ffffff");
+                AddToggle("DesolationForce", "Force of Desolation", "DesolationForce", "ffffff");
                 AddToggle("CalamityDaedalusEffectsConfig", "Daedalus Effects", "DaedalusEnchant", "ffffff");
                 AddToggle("CalamityDaedalusMinionConfig", "Daedalus Crystal Minion", "DaedalusEnchant", "ffffff");
                 AddToggle("CalamityPermafrostPotionConfig", "Permafrost's Concoction", "DaedalusEnchant", "ffffff");
