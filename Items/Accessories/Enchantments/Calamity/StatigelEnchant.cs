@@ -68,30 +68,11 @@ Effects of Counter Scarf and Fungal Symbiote");
             player.doubleJumpSail = true;
             player.jumpBoost = true;
 
-            //idk even
-            /*if (SoulConfig.Instance.GetValue("Slime God Minion"))
+            if (SoulConfig.Instance.calamityToggles.FungalSymbiote)
             {
-                //summon
-                calamity.Call("SetSetBonus", player, "statigel_summon", true);
-                if (player.whoAmI == Main.myPlayer)
-                {
-                    if (player.FindBuffIndex(ModContent.BuffType<StatigelSummonSetBuff>()) == -1)
-                    {
-                        player.AddBuff(ModContent.BuffType<StatigelSummonSetBuff>(), 3600, true);
-                    }
-                    if (WorldGen.crimson && player.ownedProjectileCounts[ModContent.ProjectileType<CrimsonSlimeGodMinion>()] < 1)
-                    {
-                        Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, ModContent.ProjectileType<CrimsonSlimeGodMinion>(), (int)(33f * player.minionDamage), 0f, Main.myPlayer, 0f, 0f);
-                        return;
-                    }
-                    if (!WorldGen.crimson && player.ownedProjectileCounts[ModContent.ProjectileType<CorruptionSlimeGodMinion>()] < 1)
-                    {
-                        Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, ModContent.ProjectileType<CorruptionSlimeGodMinion>(), (int)(33f * player.minionDamage), 0f, Main.myPlayer, 0f, 0f);
-                    }
-                }
-            }*/
+                calamity.GetItem("FungalSymbiote").UpdateAccessory(player, hideVisual);
+            }
 
-            calamity.GetItem("FungalSymbiote").UpdateAccessory(player, hideVisual);
             calamity.GetItem("CounterScarf").UpdateAccessory(player, hideVisual);
         }
 

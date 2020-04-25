@@ -74,6 +74,7 @@ Summons the aid of all Eternity Mode bosses to your side");
             player.buffImmune[BuffID.Suffocation] = true;
             player.manaFlower = true;
             fargoPlayer.SecurityWallet = true;
+            fargoPlayer.TribalCharm = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

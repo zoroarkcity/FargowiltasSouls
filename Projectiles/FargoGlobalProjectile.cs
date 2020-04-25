@@ -1065,9 +1065,7 @@ namespace FargowiltasSouls.Projectiles
                     KillPet(projectile, player, ModContent.BuffType<Kendra>(), modPlayer.DaedalusEnchant, SoulConfig.Instance.calamityToggles.KendraPet);
                     break;
 
-                case 102:
-                    KillPet(projectile, player, ModContent.BuffType<BloodBound>(), modPlayer.StatigelEnchant, SoulConfig.Instance.calamityToggles.PerforatorPet);
-                    break;
+                
 
                 case 103:
                     KillPet(projectile, player, ModContent.BuffType<ThirdSageBuff>(), modPlayer.DaedalusEnchant, SoulConfig.Instance.calamityToggles.ThirdSagePet);
