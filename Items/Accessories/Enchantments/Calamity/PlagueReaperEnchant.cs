@@ -85,9 +85,18 @@ Effects of Plague Hive, Plagued Fuel Pack, The Bee, and The Camper");
             {
                 calamity.GetItem("PlagueHive").UpdateAccessory(player, hideVisual);
             }
-            calamity.GetItem("PlaguedFuelPack").UpdateAccessory(player, hideVisual);
-            calamity.GetItem("TheBee").UpdateAccessory(player, hideVisual);
-            calamity.GetItem("TheCamper").UpdateAccessory(player, hideVisual);
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.PlaguedFuelPack))
+            {
+                calamity.GetItem("PlaguedFuelPack").UpdateAccessory(player, hideVisual);
+            }
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.TheBee))
+            {
+                calamity.GetItem("TheBee").UpdateAccessory(player, hideVisual);
+            }
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.TheCamper))
+            {
+                calamity.GetItem("TheCamper").UpdateAccessory(player, hideVisual);
+            }
         }
 
         public override void AddRecipes()

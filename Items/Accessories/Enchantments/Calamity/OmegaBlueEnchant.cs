@@ -104,19 +104,21 @@ Summons several pets");
                 }
             }
 
-            //abyssal diving suit
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.DivingSuit))
             {
                 calamity.GetItem("AbyssalDivingSuit").UpdateAccessory(player, hideVisual);
             }
 
-            //reaper tooth necklace
             if (SoulConfig.Instance.calamityToggles.ReaperToothNecklace)
             {
                 calamity.GetItem("ReaperToothNecklace").UpdateAccessory(player, hideVisual);
             }
 
-            calamity.GetItem("MutatedTruffle").UpdateAccessory(player, hideVisual);
+            if (SoulConfig.Instance.calamityToggles.MutatedTruffle)
+            {
+                calamity.GetItem("MutatedTruffle").UpdateAccessory(player, hideVisual);
+            }
+
             calamity.GetItem("DukeScales").UpdateAccessory(player, hideVisual);
 
             mod.GetItem("MolluskEnchant").UpdateAccessory(player, hideVisual);

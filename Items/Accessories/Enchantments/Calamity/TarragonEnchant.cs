@@ -91,13 +91,6 @@ Debuff状态下, 增加10%盗贼伤害
                 calamity.Call("SetSetBonus", player, "tarragon_summon", true);
                 calamity.Call("SetSetBonus", player, "tarragon_rogue", true);
             }
-
-            /*if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ProfanedSoulArtifact))
-            {
-                //profaned soul artifact
-                calamity.GetItem("ProfanedSoulArtifact").UpdateAccessory(player, hideVisual);
-            }*/
-
             
             calamity.GetItem("BlazingCore").UpdateAccessory(player, hideVisual);
             //dark sun ring

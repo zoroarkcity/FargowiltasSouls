@@ -95,8 +95,11 @@ Summons a Levi and Supreme Calamitas pet");
                 }
             }
 
-            calamity.GetItem("ProfanedSoulCrystal").UpdateAccessory(player, hideVisual);
-
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ProfanedSoulCrystal))
+            {
+                calamity.GetItem("ProfanedSoulCrystal").UpdateAccessory(player, hideVisual);
+            }
+                
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.DemonShadeEnchant = true;
             fargoPlayer.AddPet(SoulConfig.Instance.calamityToggles.LeviPet, hideVisual, ModContent.BuffType<LeviBuff>(), ModContent.ProjectileType<LeviPet>());

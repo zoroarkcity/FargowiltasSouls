@@ -408,27 +408,70 @@ namespace FargowiltasSouls
                 AddToggle("CalamityHeader", "Calamity Toggles", "CalamitySoul", "ffffff");
                 AddToggle("CalamityElementalQuiverConfig", "Elemental Quiver", "SnipersSoul", "ffffff");
 
-                AddToggle("ApocalypseForce", "Force of the Apocalypse", "ApocalypseForce", "ffffff");
+                AddToggle("AnnihilationForce", "Force of Annihilation", "AnnihilationForce", "ffffff");
                 AddToggle("CalamityValkyrieMinionConfig", "Valkyrie Minion", "AerospecEnchant", "ffffff");
                 AddToggle("CalamityGladiatorLocketConfig", "Gladiator's Locket", "AerospecEnchant", "ffffff");
                 AddToggle("CalamityUnstablePrismConfig", "Unstable Prism", "AerospecEnchant", "ffffff");
                 AddToggle("CalamityRotomConfig", "Rotom Pet", "AerospecEnchant", "ffffff");
-                AddToggle("CalamityKendraConfig", "Kendra Pet", "AerospecEnchant", "ffffff"); ////
-                AddToggle("CalamitySlimeMinionConfig", "Slime God Minion", "StatigelEnchant", "ffffff");
-                AddToggle("CalamityPerforatorConfig", "Perforator Pet", "StatigelEnchant", "ffffff");
+                AddToggle("CalamityFungalSymbiote", "Fungal Symbiote", "StatigelEnchant", "ffffff");
+                AddToggle("CalamityAtaxiaEffectsConfig", "Ataxia Effects", "AtaxiaEnchant", "ffffff");
+                AddToggle("CalamityChaosMinionConfig", "Chaos Spirit Minion", "AtaxiaEnchant", "ffffff");
+                AddToggle("CalamityHallowedRuneConfig", "Hallowed Rune", "AtaxiaEnchant", "ffffff");
+                AddToggle("CalamityEtherealExtorterConfig", "Ethereal Extorter", "AtaxiaEnchant", "ffffff");
+                AddToggle("CalamityXerocEffectsConfig", "Xeroc Effects", "XerocEnchant", "ffffff");
+                AddToggle("CalamityTheEvolutionConfig", "The Evolution", "FearmongerEnchant", "ffffff");
+                AddToggle("CalamityStatisBeltOfCursesConfig", "Statis' Void Sash", "FearmongerEnchant", "ffffff");
+
+                AddToggle("DevastationForce", "Force of the Devastation", "DevastationForce", "ffffff");
+                AddToggle("CalamityReaverEffectsConfig", "Reaver Effects", "ReaverEnchant", "ffffff");
+                AddToggle("CalamityReaverMinionConfig", "Reaver Orb Minion", "ReaverEnchant", "ffffff");
+                AddToggle("CalamityFabledTurtleConfig", "Fabled Turtle Shell", "ReaverEnchant", "ffffff");
+                AddToggle("CalamitySparksConfig", "Sparks Pet", "ReaverEnchant", "ffffff");
+                AddToggle("CalamityPlagueHiveConfig", "Plague Hive", "PlagueReaperEnchant", "ffffff");
+                AddToggle("CalamityPlaguedFuelPackConfig", "Plague Fuel Pack", "PlagueReaperEnchant", "ffffff");
+                AddToggle("CalamityTheBeeConfig", "The Bee", "PlagueReaperEnchant", "ffffff");
+                AddToggle("CalamityTheCamperConfig", "The Camper", "PlagueReaperEnchant", "ffffff");
+                AddToggle("CalamityDevilMinionConfig", "Red Devil Minion", "DemonShadeEnchant", "ffffff");
+                AddToggle("CalamityProfanedSoulConfig", "Profaned Soul Crystal", "DemonShadeEnchant", "ffffff");
+                AddToggle("CalamityLeviConfig", "Levi Pet", "DemonShadeEnchant", "ffffff");
+                AddToggle("CalamityScalConfig", "SCal Pet", "DemonShadeEnchant", "ffffff");
+
+
+
+                AddToggle("DesolationForce", "Force of the Desolation", "DesolationForce", "ffffff");
                 AddToggle("CalamityDaedalusEffectsConfig", "Daedalus Effects", "DaedalusEnchant", "ffffff");
                 AddToggle("CalamityDaedalusMinionConfig", "Daedalus Crystal Minion", "DaedalusEnchant", "ffffff");
                 AddToggle("CalamityPermafrostPotionConfig", "Permafrost's Concoction", "DaedalusEnchant", "ffffff");
                 AddToggle("CalamityRegeneratorConfig", "Regenator", "DaedalusEnchant", "ffffff");
+                AddToggle("CalamityKendraConfig", "Kendra Pet", "DaedalusEnchant", "ffffff");
                 AddToggle("CalamityBearConfig", "Bear Pet", "DaedalusEnchant", "ffffff");
                 AddToggle("CalamityThirdSageConfig", "Third Sage Pet", "DaedalusEnchant", "ffffff");
+
+                AddToggle("CalamityAstralStarsConfig", "Astral Stars", "AstralEnchant", "ffffff");
+                AddToggle("CalamityHideofAstrumDeusConfig", "Hide of Astrum Deus", "AstralEnchant", "ffffff");
+                AddToggle("CalamityGravistarSabatonConfig", "GravistarSabaton", "AstralEnchant", "ffffff");
+                AddToggle("CalamityAstrophageConfig", "Astrophage Pet", "AstralEnchant", "ffffff");
+
+                AddToggle("CalamityOmegaTentaclesConfig", "Omega Blue Tentacles", "OmegaBlueEnchant", "ffffff");
+                AddToggle("CalamityDivingSuitConfig", "Abyssal Diving Suit", "OmegaBlueEnchant", "ffffff");
+                AddToggle("CalamityReaperToothNecklaceConfig", "Reaper Tooth Necklace", "OmegaBlueEnchant", "ffffff");
+                AddToggle("CalamityMutatedTruffleConfig", "Mutated Truffle", "OmegaBlueEnchant", "ffffff");
+                AddToggle("CalamityUrchinConfig", "Victide Sea Urchin", "VictideEnchant", "ffffff");
+                AddToggle("CalamityLuxorGiftConfig", "Luxor's Gift", "VictideEnchant", "ffffff");
+
+
+
+
+
+
+                //e
+
                 AddToggle("CalamityBloodflareEffectsConfig", "Bloodflare Effects", "BloodflareEnchant", "ffffff");
                 AddToggle("CalamityPolterMinesConfig", "Polterghast Mines", "BloodflareEnchant", "ffffff");
 
-                AddToggle("DesolationForce", "Force of the Desolation", "DesolationForce", "ffffff");
-                AddToggle("CalamityUrchinConfig", "Victide Sea Urchin", "VictideEnchant", "ffffff");
-                AddToggle("CalamityLuxorGiftConfig", "Luxor's Gift", "VictideEnchant", "ffffff");
-                AddToggle("CalamityXerocEffectsConfig", "Xeroc Effects", "XerocEnchant", "ffffff");
+               
+                
+                
                 AddToggle("CalamitySilvaEffectsConfig", "Silva Effects", "SilvaEnchant", "ffffff");
                 AddToggle("CalamitySilvaMinionConfig", "Silva Crystal Minion", "SilvaEnchant", "ffffff");
                 AddToggle("CalamityGodlyArtifactConfig", "Godly Soul Artifact", "SilvaEnchant", "ffffff");
@@ -437,9 +480,7 @@ namespace FargowiltasSouls
                 AddToggle("CalamityPoisonSeawaterConfig", "Poisonous Sea Water", "SilvaEnchant", "ffffff");
                 AddToggle("CalamityAkatoConfig", "Akato Pet", "SilvaEnchant", "ffffff");
                 AddToggle("CalamityFoxConfig", "Fox Pet", "SilvaEnchant", "ffffff");
-                AddToggle("CalamityOmegaTentaclesConfig", "Omega Blue Tentacles", "OmegaBlueEnchant", "ffffff");
-                AddToggle("CalamityDivingSuitConfig", "Abyssal Diving Suit", "OmegaBlueEnchant", "ffffff");
-                AddToggle("CalamityReaperToothNecklaceConfig", "Reaper Tooth Necklace", "OmegaBlueEnchant", "ffffff");
+                
                 AddToggle("CalamitySirenConfig", "Siren Pet", "OmegaBlueEnchant", "ffffff");
                 AddToggle("CalamityGodSlayerEffectsConfig", "God Slayer Effects", "GodSlayerEnchant", "ffffff");
                 AddToggle("CalamityMechwormMinionConfig", "Mechworm Minion", "GodSlayerEnchant", "ffffff");
@@ -448,24 +489,18 @@ namespace FargowiltasSouls
                 AddToggle("CalamityAuricEffectsConfig", "Auric Tesla Effects", "AuricEnchant", "ffffff");
                 AddToggle("CalamityWaifuMinionsConfig", "Elemental Waifus", "AuricEnchant", "ffffff");
 
-                AddToggle("DevastationForce", "Force of the Devastation", "DevastationForce", "ffffff");
+                
                 AddToggle("CalamityShellfishMinionConfig", "Shellfish Minions", "MolluskEnchant", "ffffff");
                 AddToggle("CalamityAmidiasPendantConfig", "Amidias' Pendant", "MolluskEnchant", "ffffff");
                 AddToggle("CalamityGiantPearlConfig", "Giant Pearl", "MolluskEnchant", "ffffff");
                 AddToggle("CalamityDannyConfig", "Danny Pet", "SulphurousEnchant", "ffffff");
-                AddToggle("CalamityReaverEffectsConfig", "Reaver Effects", "ReaverEnchant", "ffffff");
-                AddToggle("CalamityReaverMinionConfig", "Reaver Orb Minion", "ReaverEnchant", "ffffff");
-                AddToggle("CalamityFabledTurtleConfig", "Fabled Turtle Shell", "ReaverEnchant", "ffffff");
-                AddToggle("CalamitySparksConfig", "Sparks Pet", "ReaverEnchant", "ffffff");
-                AddToggle("CalamityAtaxiaEffectsConfig", "Ataxia Effects", "AtaxiaEnchant", "ffffff");
-                AddToggle("CalamityChaosMinionConfig", "Chaos Spirit Minion", "AtaxiaEnchant", "ffffff");
-                AddToggle("CalamityPlagueHiveConfig", "Plague Hive", "AtaxiaEnchant", "ffffff");
+                
+                
+                
                 AddToggle("CalamityBrimlingConfig", "Brimling Pet", "AtaxiaEnchant", "ffffff");
-                AddToggle("CalamityAstralStarsConfig", "Astral Stars", "AstralEnchant", "ffffff");
+               
                 AddToggle("CalamityTarragonEffectsConfig", "Tarragon Effects", "TarragonEnchant", "ffffff");
-                AddToggle("CalamityProfanedArtifactConfig", "Profaned Soul Artifact", "TarragonEnchant", "ffffff");
-                AddToggle("CalamityDevilMinionConfig", "Red Devil Minion", "DemonShadeEnchant", "ffffff");
-                AddToggle("CalamityLeviConfig", "Levi Pet", "DemonShadeEnchant", "ffffff");
+                
             }
             else
             {

@@ -31,7 +31,7 @@ You have a 20% chance to emit a blazing explosion on hit
 Melee attacks and projectiles cause chaos flames to erupt on enemy hits
 You have a 50% chance to fire a homing chaos flare when using ranged weapons
 Magic attacks summon damaging and healing flare orbs on hit
-Summons a chaos spirit to protect you
+Summons a hydrothermic vent to protect you
 Rogue weapons have a 10% chance to unleash a volley of chaos flames around the player
 Effects of Hallowed Rune and Ethereal Extorter");
             DisplayName.AddTranslation(GameCulture.Chinese, "阿塔西亚魔石");
@@ -80,8 +80,15 @@ Effects of Hallowed Rune and Ethereal Extorter");
                 calamity.Call("SetSetBonus", player, "ataxia_rogue", true);
             }
 
-            calamity.GetItem("HallowedRune").UpdateAccessory(player, hideVisual);
-            calamity.GetItem("EtherealExtorter").UpdateAccessory(player, hideVisual);
+            if (SoulConfig.Instance.calamityToggles.HallowedRune)
+            {
+                calamity.GetItem("HallowedRune").UpdateAccessory(player, hideVisual);
+            }
+
+            if (SoulConfig.Instance.calamityToggles.HallowedRune)
+            {
+                calamity.GetItem("EtherealExtorter").UpdateAccessory(player, hideVisual);
+            } 
 
             if (player.GetModPlayer<FargoPlayer>().Eternity) return;
 

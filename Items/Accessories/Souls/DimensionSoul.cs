@@ -60,8 +60,8 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
             if (thorium != null)
             {
                 tooltip += @"
-                Effects of Ocean's Retaliation and Terrarium Defender
-                Effects of Air Walkers, Survivalist Boots, and Weighted Winglets";
+Effects of Ocean's Retaliation and Terrarium Defender
+Effects of Air Walkers, Survivalist Boots, and Weighted Winglets";
                 
                 tooltip_ch += @"
                 拥有海潮之噬和生存者披风的效果

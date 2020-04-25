@@ -73,8 +73,16 @@ Summons a pet Astrophage");
             }
 
             calamity.GetItem("AstralArcanum").UpdateAccessory(player, hideVisual);
-            calamity.GetItem("HideofAstrumDeus").UpdateAccessory(player, hideVisual);
-            calamity.GetItem("GravistarSabaton").UpdateAccessory(player, hideVisual);
+
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.HideofAstrumDeus))
+            {
+                calamity.GetItem("HideofAstrumDeus").UpdateAccessory(player, hideVisual);
+            }
+
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.GravistarSabaton))
+            {
+                calamity.GetItem("GravistarSabaton").UpdateAccessory(player, hideVisual);
+            }
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.AstralEnchant = true;
