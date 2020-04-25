@@ -24,7 +24,7 @@ Eating Pumpkin Pie heals you to full HP
 Enemies may explode into needles on death
 50% chance for any friendly bee to become a Mega Bee
 Mega Bees ignore most enemy defense, immune frames, and last twice as long
-15% chance for minions to crit
+20% chance for minions to crit
 When standing still and not attacking, you gain the Shell Hide buff
 Shell Hide protects you from all projectiles, but increases contact damage
 Beetles protect you from damage

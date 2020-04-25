@@ -76,7 +76,7 @@ Effects of Eclipse Mirror, Nanotech, Venerated Locket, and Dragon Scales");
             recipe.AddIngredient(ModContent.ItemType<Nanotech>());
             recipe.AddIngredient(ModContent.ItemType<VeneratedLocket>());
             recipe.AddIngredient(ModContent.ItemType<DragonScales>());
-            recipe.AddIngredient(ModContent.ItemType<HellsSun>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<HellsSun>(), 10);
             recipe.AddIngredient(ModContent.ItemType<SylvanSlasher>());
             recipe.AddIngredient(ModContent.ItemType<JawsOfOblivion>());
             recipe.AddIngredient(ModContent.ItemType<DeepSeaDumbbell>());

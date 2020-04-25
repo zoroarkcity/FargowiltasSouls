@@ -3,4 +3,7 @@ NEW UPDATE - v 1.3.2
 -Added several new Calamity Enchantments
 -Tons of balance changes and fixes to Eternity Mode and several weapons
 
+
+-Fixed some recipe and tooltip errors, Durasteeel Enchant effects, Builder Mode and Camper toggles are default off
+
 -See the wiki for full details
