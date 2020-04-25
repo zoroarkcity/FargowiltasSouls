@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -16,7 +17,18 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void SetStaticDefaults()
         {
+            DisplayName.SetDefault("Hell Flame");
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(targetID);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            targetID = reader.ReadInt32();
         }
 
         public override void SetDefaults()

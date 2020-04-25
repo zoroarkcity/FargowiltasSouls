@@ -1085,6 +1085,9 @@ namespace FargowiltasSouls.NPCs
 
         public bool RetinazerAI(NPC npc)
         {
+            if (npc.life == 1)
+                RegenTimer = 2;
+
             retiBoss = npc.whoAmI;
             bool spazAlive = BossIsAlive(ref spazBoss, NPCID.Spazmatism);
 
@@ -1361,6 +1364,9 @@ namespace FargowiltasSouls.NPCs
 
         public void SpazmatismAI(NPC npc)
         {
+            if (npc.life == 1)
+                RegenTimer = 2;
+
             spazBoss = npc.whoAmI;
             bool retiAlive = BossIsAlive(ref retiBoss, NPCID.Retinazer);
 
