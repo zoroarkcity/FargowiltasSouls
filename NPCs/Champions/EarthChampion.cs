@@ -14,11 +14,6 @@ namespace FargowiltasSouls.NPCs.Champions
     [AutoloadBossHead]
     public class EarthChampion : ModNPC
     {
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Earth");

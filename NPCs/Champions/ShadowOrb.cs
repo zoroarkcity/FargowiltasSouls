@@ -10,11 +10,6 @@ namespace FargowiltasSouls.NPCs.Champions
 {
     public class ShadowOrb : ModNPC
     {
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shadow Orb");

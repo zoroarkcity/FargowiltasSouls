@@ -9,11 +9,6 @@ namespace FargowiltasSouls.NPCs.Champions
 {
     public class LesserSquirrel : ModNPC
     {
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
-
         public override string Texture => "FargowiltasSouls/NPCs/Critters/TophatSquirrel";
 
         public int counter;
