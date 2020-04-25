@@ -174,7 +174,7 @@ namespace FargowiltasSouls
             #region masomode toggles
 
             //Masomode Header
-            AddToggle("MasoHeader", "Masochist Mode", "MutantStatue", "ffffff");
+            AddToggle("MasoHeader", "Eternity Mode", "MutantStatue", "ffffff");
             AddToggle("MasoBossRecolors", "Boss Recolors (Restart to use)", "Masochist", "ffffff");
             AddToggle("MasoIconConfig", "Sinister Icon", "SinisterIcon", "ffffff");
             AddToggle("MasoIconDropsConfig", "Sinister Icon Drops", "SinisterIcon", "ffffff");
