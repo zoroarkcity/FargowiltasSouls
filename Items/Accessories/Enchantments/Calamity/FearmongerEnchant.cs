@@ -86,7 +86,7 @@ Effects of The Evolution, Spectral Veil, and Statis' Void Sash");
             recipe.AddIngredient(ModContent.ItemType<Hypothermia>());
             recipe.AddIngredient(ModContent.ItemType<IceBarrage>());
 
-            recipe.AddTile(TileID.CrystalBall);
+            recipe.AddTile(calamity, "DraedonsForge");
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
