@@ -1,2 +1,14 @@
 buffed targeting/homing of twins ex
 twins dont regen at 1 life
+hardmode spawns in pre-hm drop more gold and can drop various other items, but have full max life and only halved defense
+	medusa drops medusa head and pocket mirror
+	wyvern drops sky crate and dragon fang
+	red devil drops demon scythe
+	ichor sticker drops a crimson heart item
+	world feeder drops a shadow orb item
+	mimic drops any normal purity mimic drop except magic dagger
+	angry nimbus drops a sky crate
+	dune splicer drops sandstorm in a bottle
+	pigron drops lots of bacon
+	mushroom biome enemies drop truffle worms
+fishron drops angler quest items
