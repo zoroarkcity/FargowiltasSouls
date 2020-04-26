@@ -27,7 +27,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.height = 80;
             npc.damage = 150;
             npc.defense = 80;
-            npc.lifeMax = 480000;
+            npc.lifeMax = 390000;
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath14;
             npc.noGravity = true;
@@ -41,16 +41,35 @@ namespace FargowiltasSouls.NPCs.Champions
             music = MusicID.Boss1;
             musicPriority = MusicPriority.BossMedium;
 
-            npc.buffImmune[BuffID.Chilled] = true;
-            npc.buffImmune[BuffID.OnFire] = true;
-            npc.buffImmune[BuffID.Suffocation] = true;
-            npc.buffImmune[mod.BuffType("Lethargic")] = true;
-            npc.buffImmune[mod.BuffType("ClippedWings")] = true;
+            for (int i = 0; i < npc.buffImmune.Length; i++)
+                npc.buffImmune[i] = true;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
 
             npc.behindTiles = true;
 
             npc.scale *= 1.5f;
+        }
+
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            cooldownSlot = 1;
+            return npc.Distance(target.Center) < 30 * npc.scale;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(npc.localAI[0]);
+            writer.Write(npc.localAI[1]);
+            writer.Write(npc.localAI[2]);
+            writer.Write(npc.localAI[3]);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            npc.localAI[0] = reader.ReadSingle();
+            npc.localAI[1] = reader.ReadSingle();
+            npc.localAI[2] = reader.ReadSingle();
+            npc.localAI[3] = reader.ReadSingle();
         }
 
         public override void AI()
@@ -60,9 +79,34 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.localAI[3] = 1;
                 npc.TargetClosest(false);
 
-                if (Main.netMode != 1)
+                if (Main.netMode != 1) //spawn segments
                 {
+                    int prev = npc.whoAmI;
+                    const int max = 99;
+                    for (int i = 0; i < max; i++)
+                    {
+                        int type = i == max - 1 ? ModContent.NPCType<TerraChampionTail>() : ModContent.NPCType<TerraChampionBody>();
+                        int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, npc.whoAmI);
+                        if (n != 200)
+                        {
+                            Main.npc[n].ai[3] = npc.whoAmI;
+                            Main.npc[n].realLife = npc.whoAmI;
+                            Main.npc[n].ai[1] = prev;
+                            Main.npc[prev].ai[0] = n;
 
+                            if (Main.netMode == 2)
+                                NetMessage.SendData(23, -1, -1, null, n);
+
+                            prev = n;
+                        }
+                        else //can't spawn all segments
+                        {
+                            npc.active = false;
+                            if (Main.netMode == 2)
+                                NetMessage.SendData(23, -1, -1, null, npc.whoAmI);
+                            return;
+                        }
+                    }
                 }
             }
 
@@ -71,25 +115,65 @@ namespace FargowiltasSouls.NPCs.Champions
             Player player = Main.player[npc.target];
             Vector2 targetPos;
 
-            if (npc.HasValidTarget && player.Center.Y >= Main.worldSurface)
+            if (npc.HasValidTarget && player.Center.Y >= Main.worldSurface * 16 && !player.ZoneUnderworldHeight)
                 npc.timeLeft = 600;
 
-            switch ((int)npc.ai[0])
+            if (npc.position.Y < 0 || npc.position.Y > Main.maxTilesY * 16) //OOB elevation, leave
             {
+                npc.active = false;
+                return;
+            }
+
+            if (npc.ai[1] != -1 && npc.life < npc.lifeMax / 10)
+            {
+                Main.PlaySound(15, npc.Center, 0);
+                npc.ai[1] = -1f;
+                npc.localAI[0] = 0;
+                npc.netUpdate = true;
+            }
+
+            switch ((int)npc.ai[1])
+            {
+                case -1: //flying head alone
+                    if (!player.active || player.dead || player.Center.Y < Main.worldSurface * 16 || player.ZoneUnderworldHeight) //despawn code
+                    {
+                        npc.TargetClosest(false);
+                        if (npc.timeLeft > 30)
+                            npc.timeLeft = 30;
+                        npc.velocity.Y += 1f;
+                        break;
+                    }
+
+                    npc.scale = 2f;
+                    targetPos = player.Center;
+                    Movement(targetPos, 0.22f, 32f);
+
+                    npc.rotation = npc.DirectionTo(player.Center).ToRotation();
+
+                    if (++npc.localAI[0] > 50)
+                    {
+                        npc.localAI[0] = 0;
+                        float ai1New = Main.rand.Next(100);
+                        Vector2 vel = Vector2.Normalize(npc.DirectionTo(player.Center).RotatedBy(Math.PI / 4 * (Main.rand.NextDouble() - 0.5))) * 6f;
+                        Projectile.NewProjectile(npc.Center, vel, ProjectileID.CultistBossLightningOrbArc,
+                            npc.damage / 4, 0, Main.myPlayer, npc.rotation, ai1New);
+                    }
+                    break;
+
                 case 0: //ripped from destroyer
                     {
-                        if (!player.active || player.dead || player.Center.Y < Main.worldSurface) //despawn code
+                        if (!player.active || player.dead || player.Center.Y < Main.worldSurface * 16 || player.ZoneUnderworldHeight) //despawn code
                         {
                             npc.TargetClosest(false);
                             if (npc.timeLeft > 30)
                                 npc.timeLeft = 30;
                             npc.velocity.Y += 1f;
-                            return;
+                            break;
                         }
-
-                        float num14 = 16f;    //max speed?
-                        float num15 = 0.15f;   //turn speed?
-                        float num16 = 0.20f;   //acceleration?
+                        
+                        float num14 = 18f;    //max speed?
+                        float num15 = 0.2f;   //turn speed?
+                        float num16 = 0.25f;   //acceleration?
 
                         Vector2 target = player.Center;
                         float num17 = target.X;
@@ -174,13 +258,39 @@ namespace FargowiltasSouls.NPCs.Champions
                             }
                         }
 
-                        npc.rotation = npc.velocity.ToRotation();
+                        if (++npc.localAI[0] > 360)
+                        {
+
+                        }
                     }
                     break;
 
                 default:
-                    npc.ai[0] = 0;
+                    npc.ai[1] = 0;
                     goto case 0;
+            }
+
+            npc.netUpdate = true;
+
+            if (npc.ai[1] != -1f)
+                npc.rotation = npc.velocity.ToRotation();
+
+            Vector2 dustOffset = new Vector2(77, -41) * npc.scale; //dust from horns
+            int dust = Dust.NewDust(npc.Center + npc.velocity - dustOffset.RotatedBy(npc.rotation), 0, 0, DustID.Fire, npc.velocity.X * .4f, npc.velocity.Y * 0.4f, 0, default(Color), 2f);
+            Main.dust[dust].velocity *= 2;
+            if (Main.rand.Next(2) == 0)
+            {
+                Main.dust[dust].scale++;
+                Main.dust[dust].noGravity = true;
+            }
+
+            dustOffset.Y *= -1f;
+            dust = Dust.NewDust(npc.Center + npc.velocity - dustOffset.RotatedBy(npc.rotation), 0, 0, DustID.Fire, npc.velocity.X * .4f, npc.velocity.Y * 0.4f, 0, default(Color), 2f);
+            Main.dust[dust].velocity *= 2;
+            if (Main.rand.Next(2) == 0)
+            {
+                Main.dust[dust].scale++;
+                Main.dust[dust].noGravity = true;
             }
         }
 
@@ -216,9 +326,18 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.velocity.Y = cap * Math.Sign(npc.velocity.Y);
         }
 
+        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            if (npc.life < npc.lifeMax)
+                damage /= 5;
+            return true;
+        }
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            
+            target.AddBuff(BuffID.OnFire, 600);
+            target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
+            target.AddBuff(ModContent.BuffType<LightningRod>(), 600);
         }
 
         public override void BossLoot(ref string name, ref int potionType)
