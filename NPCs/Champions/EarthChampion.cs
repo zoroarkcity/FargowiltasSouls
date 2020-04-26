@@ -318,7 +318,7 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 int thisDrop = drops[Main.rand.Next(drops.Length)];
 
-                if (lastDrop == thisDrop) //try again
+                if (lastDrop == thisDrop && !Main.dedServ) //try again
                 {
                     i--;
                     continue;

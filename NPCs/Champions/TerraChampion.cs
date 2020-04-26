@@ -16,6 +16,11 @@ namespace FargowiltasSouls.NPCs.Champions
     [AutoloadBossHead]
     public class TerraChampion : ModNPC
     {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Champion of Terra");
+        }
+
         public override void SetDefaults()
         {
             npc.width = 80;
@@ -237,7 +242,7 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 int thisDrop = drops[Main.rand.Next(drops.Length)];
 
-                if (lastDrop == thisDrop) //try again
+                if (lastDrop == thisDrop && !Main.dedServ) //try again
                 {
                     i--;
                     continue;
