@@ -56,6 +56,11 @@ Effects of Ogre Sandals, Crystal Spear Tip, and Spiked Bracers");
                 player.endurance += .12f;
             }
 
+            //darksteel bonuses
+            player.noKnockback = true;
+            player.iceSkate = true;
+            player.dash = 1;
+
             //ball n chain
             thoriumPlayer.ballnChain = true;
 
