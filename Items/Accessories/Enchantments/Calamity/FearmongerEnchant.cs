@@ -81,7 +81,7 @@ Effects of The Evolution, Spectral Veil, and Statis' Void Sash");
             recipe.AddIngredient(ModContent.ItemType<Karasawa>());
             recipe.AddIngredient(ModContent.ItemType<FaceMelter>());
             recipe.AddIngredient(ModContent.ItemType<SoulPiercer>());
-            recipe.AddIngredient(ModContent.ItemType<GodsParanoia>(), 300);
+            recipe.AddIngredient(ModContent.ItemType<GodsParanoia>(), 10);
             recipe.AddIngredient(ModContent.ItemType<Penumbra>());
             recipe.AddIngredient(ModContent.ItemType<Hypothermia>());
             recipe.AddIngredient(ModContent.ItemType<IceBarrage>());

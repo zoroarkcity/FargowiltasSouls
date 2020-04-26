@@ -522,7 +522,7 @@ namespace FargowiltasSouls
         public bool MinerShine;
 
         [Label("$Mods.FargowiltasSouls.BuilderConfig")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool BuilderMode;
 
         [Label("$Mods.FargowiltasSouls.DefenseSporeConfig")]
@@ -1109,7 +1109,7 @@ namespace FargowiltasSouls
         public bool TheBee = true;
 
         [Label("$Mods.FargowiltasSouls.CalamityTheCamperConfig")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool TheCamper = true;
 
         //demonshade

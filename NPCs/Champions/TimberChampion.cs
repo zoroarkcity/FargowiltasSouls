@@ -19,10 +19,10 @@ namespace FargowiltasSouls.NPCs.Champions
             Main.npcFrameCount[npc.type] = 6;
         }
 
-        /*public override bool Autoload(ref string name)
+        public override bool Autoload(ref string name)
         {
             return false;
-        }*/
+        }
 
         public override void SetDefaults()
         {

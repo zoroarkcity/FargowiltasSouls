@@ -111,6 +111,9 @@ namespace FargowiltasSouls.NPCs
                     if (Main.hardMode)
                     {
                         npc.lifeMax *= 2;
+                    }
+                    else
+                    {
                         npc.defense /= 2;
                     }
                     Counter = Main.rand.Next(180);
@@ -5467,7 +5470,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.DuneSplicerHead:
                         Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(5));
                         if (Main.rand.Next(3) == 0)
-                            Item.NewItem(npc.Hitbox, ItemID.SandstorminaBottle);
+                            Item.NewItem(npc.Hitbox, ItemID.SandstorminaBottle); //desert crate soon
                         return false;
 
                     case NPCID.PigronCorruption:

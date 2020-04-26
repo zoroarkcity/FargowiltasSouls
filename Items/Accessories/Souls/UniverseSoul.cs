@@ -79,7 +79,7 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
             
             if (calamity != null)
             {
-                tooltip += "\nEffects of Elemental Gauntlet, Elemental Quiver, Ethereal Talisman, Statis' Belt of Curses, and Nanotech";
+                tooltip += "\nEffects of Elemental Gauntlet, Elemental Quiver, Ethereal Talisman, Nucleogenesis, and Nanotech";
                 
                 tooltip_ch += "\n拥有元素之握, 元素箭袋, 空灵护符, 斯塔提斯的诅咒系带和纳米技术的效果";
             }

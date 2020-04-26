@@ -1,6 +1,14 @@
-NEW UPDATE - v 1.3.2
+NEW UPDATE - V 1.3.2.2
+-Updated a few sprites
+-Buffed Optic Staff EX homing
+-Hard mode enemies spawning early now have more rewards in Eternity Mode
+-Duke Fishron drops some fishing items in Eternity Mode
+-Fixed some recipe and tooltip errors and Durasteeel Enchant effects, Builder Mode and Camper toggles are default off
+
+NEW UPDATE - V 1.3.2
 -Deviantt, Abominationn, and Mutant are now available to fight in any mode.
 -Added several new Calamity Enchantments
 -Tons of balance changes and fixes to Eternity Mode and several weapons
+
 
 -See the wiki for full details
