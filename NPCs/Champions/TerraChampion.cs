@@ -149,7 +149,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     npc.scale = 3f;
                     targetPos = player.Center;
-                    Movement(targetPos, 0.32f, 32f);
+                    if (npc.Distance(targetPos) > 50)
+                        Movement(targetPos, 0.32f, 32f);
 
                     npc.rotation = npc.DirectionTo(player.Center).ToRotation();
 
