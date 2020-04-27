@@ -587,8 +587,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 Main.dust[dust].noGravity = true;
             }
 
-            if (Collision.SolidTiles((int)npc.position.X / 16, (int)(npc.position.X + npc.width) / 16, (int)npc.position.Y / 16, (int)(npc.position.Y + npc.height) / 16)
-                && npc.soundDelay == 0)
+            if (Collision.SolidCollision(npc.position, npc.width, npc.height) && npc.soundDelay == 0)
             {
                 npc.soundDelay = (int)(npc.Distance(player.Center) / 40f);
                 if (npc.soundDelay < 10)

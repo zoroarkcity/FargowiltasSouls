@@ -46,6 +46,9 @@ namespace FargowiltasSouls.Projectiles.Champions
                 Main.dust[index2].velocity.X *= 0.3f;
                 Main.dust[index2].velocity.Y *= 0.3f;
             }
+
+            if (!projectile.tileCollide && !Collision.SolidCollision(projectile.position, projectile.width, projectile.height))
+                projectile.tileCollide = true;
         }
 
         public override void Kill(int timeLeft)
