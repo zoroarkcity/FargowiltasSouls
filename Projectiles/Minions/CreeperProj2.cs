@@ -52,7 +52,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             if (--projectile.ai[0] < 0)
             {
                 projectile.netUpdate = true;
-                projectile.ai[0] = 60;
+                projectile.ai[0] = 10;
 
                 float maxDistance = 1500;
                 int possibleTarget = -1;
