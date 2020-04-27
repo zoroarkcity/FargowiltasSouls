@@ -159,7 +159,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
             for (int i = 0; i < 80; i++) //warning dust ring
             {
-                Vector2 vector6 = Vector2.UnitY * 20f * projectile.scale;
+                Vector2 vector6 = Vector2.UnitY * 10f * projectile.scale;
                 vector6 = vector6.RotatedBy((i - (80 / 2 - 1)) * 6.28318548f / 80) + projectile.Center;
                 Vector2 vector7 = vector6 - projectile.Center;
                 int d = Dust.NewDust(vector6 + vector7, 0, 0, 226, 0f, 0f, 0, default(Color), 1.5f);
