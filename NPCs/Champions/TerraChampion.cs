@@ -41,7 +41,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.value = Item.buyPrice(0, 10);
 
             npc.boss = true;
-            music = MusicID.Boss1;
+            music = MusicID.Boss3;
             musicPriority = MusicPriority.BossMedium;
 
             for (int i = 0; i < npc.buffImmune.Length; i++)
