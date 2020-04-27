@@ -52,14 +52,14 @@ namespace FargowiltasSouls.Projectiles.Minions
             if (--projectile.ai[0] < 0)
             {
                 projectile.netUpdate = true;
-                projectile.ai[0] = 10;
+                projectile.ai[0] = 20;
 
                 float maxDistance = 1500;
                 int possibleTarget = -1;
                 for (int i = 0; i < 200; i++)
                 {
                     NPC npc = Main.npc[i];
-                    if (npc.CanBeChasedBy(projectile) && npc.immune[projectile.owner] == 0 && Collision.CanHitLine(projectile.Center, 0, 0, npc.Center, 0, 0))
+                    if (npc.CanBeChasedBy(projectile) && Collision.CanHitLine(projectile.Center, 0, 0, npc.Center, 0, 0))
                     {
                         float npcDistance = projectile.Distance(npc.Center);
                         if (npcDistance < maxDistance)
