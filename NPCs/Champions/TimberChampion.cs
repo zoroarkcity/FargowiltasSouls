@@ -380,7 +380,6 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
-            //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<TimberForce>());
             int[] drops = {
                 ModContent.ItemType<WoodEnchant>(),
                 ModContent.ItemType<BorealWoodEnchant>(),
@@ -390,18 +389,18 @@ namespace FargowiltasSouls.NPCs.Champions
                 ModContent.ItemType<PalmWoodEnchant>(),
                 ModContent.ItemType<PearlwoodEnchant>()
             };
-            int lastDrop = 0; //don't drop same ench twice
+            //int lastDrop = 0; //don't drop same ench twice
             for (int i = 0; i < 2; i++)
             {
                 int thisDrop = drops[Main.rand.Next(drops.Length)];
 
-                if (lastDrop == thisDrop && !Main.dedServ) //try again
+                /*if (lastDrop == thisDrop && !Main.dedServ) //try again
                 {
                     i--;
                     continue;
                 }
 
-                lastDrop = thisDrop;
+                lastDrop = thisDrop;*/
                 Item.NewItem(npc.position, npc.Size, thisDrop);
             }
         }

@@ -21,8 +21,8 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void SetDefaults()
         {
-            projectile.width = 80;
-            projectile.height = 80;
+            projectile.width = 70;
+            projectile.height = 70;
             projectile.aiStyle = -1;
             projectile.alpha = 255;
             projectile.hostile = true;
@@ -37,6 +37,11 @@ namespace FargowiltasSouls.Projectiles.Champions
         public override bool CanDamage()
         {
             return projectile.alpha == 0;
+        }
+
+        public override bool CanHitPlayer(Player target) //round hitbox
+        {
+            return projectile.Distance(target.Center) < projectile.width / 2;
         }
 
         public override bool? CanHitNPC(NPC target)
@@ -100,6 +105,9 @@ namespace FargowiltasSouls.Projectiles.Champions
             }
             else
             {
+                if (projectile.timeLeft < 2)
+                    projectile.timeLeft = 2;
+
                 projectile.alpha += 10;
                 if (projectile.alpha > 255)
                 {
@@ -147,11 +155,11 @@ namespace FargowiltasSouls.Projectiles.Champions
         {
             for (int index1 = 0; index1 < 25; ++index1)
             {
-                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 226, 0f, 0f, 100, new Color(), 1f);
+                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 226, 0f, 0f, 100, new Color(), 1.5f);
                 Main.dust[index2].noGravity = true;
                 Main.dust[index2].velocity *= 7f * projectile.scale;
                 Main.dust[index2].noLight = true;
-                int index3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 226, 0f, 0f, 100, new Color(), 0.75f);
+                int index3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 226, 0f, 0f, 100, new Color(), 1f);
                 Main.dust[index3].velocity *= 4f * projectile.scale;
                 Main.dust[index3].noGravity = true;
                 Main.dust[index3].noLight = true;
@@ -162,7 +170,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                 Vector2 vector6 = Vector2.UnitY * 10f * projectile.scale;
                 vector6 = vector6.RotatedBy((i - (80 / 2 - 1)) * 6.28318548f / 80) + projectile.Center;
                 Vector2 vector7 = vector6 - projectile.Center;
-                int d = Dust.NewDust(vector6 + vector7, 0, 0, 226, 0f, 0f, 0, default(Color), 1.5f);
+                int d = Dust.NewDust(vector6 + vector7, 0, 0, 92, 0f, 0f, 0, default(Color), 2f);
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity = vector7;
             }
@@ -174,7 +182,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
             MakeDust();
 
-            if (Main.netMode != 1)
+            if (projectile.alpha == 0 && Main.netMode != 1)
             {
                 for (int i = 0; i < 8; i++)
                 {
@@ -188,7 +196,6 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.OnFire, 600);
             target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
             target.AddBuff(ModContent.BuffType<LightningRod>(), 600);
         }

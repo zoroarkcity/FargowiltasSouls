@@ -28,7 +28,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 80;
             npc.height = 80;
-            npc.damage = 150;
+            npc.damage = 160;
             npc.defense = 80;
             npc.lifeMax = 170000;
             npc.HitSound = SoundID.NPCHit4;
@@ -153,21 +153,25 @@ namespace FargowiltasSouls.NPCs.Champions
                     npc.scale = 3f;
                     targetPos = player.Center;
                     if (npc.Distance(targetPos) > 50)
-                        Movement(targetPos, 0.12f, 32f);
+                        Movement(targetPos, 0.16f, 32f);
 
                     npc.rotation = npc.DirectionTo(player.Center).ToRotation();
 
-                    if (++npc.localAI[0] > 60)
+                    if (++npc.localAI[0] > 40)
                     {
                         npc.localAI[0] = 0;
-                        Main.PlaySound(SoundID.Item12, npc.Center);
 
-                        if (Main.netMode != 1)
+                        if (npc.localAI[1] > 60 && npc.localAI[1] < 360) //dont shoot while orb is exploding
                         {
-                            float ai1New = Main.rand.Next(100);
-                            Vector2 vel = Vector2.Normalize(npc.DirectionTo(player.Center).RotatedBy(Math.PI / 4 * (Main.rand.NextDouble() - 0.5))) * 6f;
-                            Projectile.NewProjectile(npc.Center, vel, ProjectileID.CultistBossLightningOrbArc,
-                                npc.damage / 4, 0, Main.myPlayer, npc.rotation, ai1New);
+                            Main.PlaySound(SoundID.Item12, npc.Center);
+
+                            if (Main.netMode != 1)
+                            {
+                                float ai1New = Main.rand.Next(100);
+                                Vector2 vel = Vector2.Normalize(npc.DirectionTo(player.Center).RotatedBy(Math.PI / 4 * (Main.rand.NextDouble() - 0.5))) * 6f;
+                                Projectile.NewProjectile(npc.Center, vel, ProjectileID.CultistBossLightningOrbArc,
+                                    npc.damage / 4, 0, Main.myPlayer, npc.rotation, ai1New);
+                            }
                         }
                     }
 
@@ -414,25 +418,41 @@ namespace FargowiltasSouls.NPCs.Champions
                         Vector2 offset;
                         offset.X = 10f * npc.localAI[0];
                         offset.Y = 600 * (float)Math.Sin(2f * Math.PI / end * 4 * npc.localAI[0]);
-                        offset = offset.RotatedBy(npc.localAI[1]);
 
-                        npc.Center = new Vector2(npc.localAI[2], npc.localAI[3]) + offset;
+                        npc.Center = new Vector2(npc.localAI[2], npc.localAI[3]) + offset.RotatedBy(npc.localAI[1]);
                         npc.velocity = Vector2.Zero;
                         npc.rotation = (npc.position - npc.oldPosition).ToRotation();
 
-                        if (++npc.ai[2] > 30)
+                        if (++npc.ai[2] > 6 && Math.Abs(offset.Y) > 595)
                         {
                             npc.ai[2] = 0;
+
                             Main.PlaySound(SoundID.Item12, npc.Center);
 
                             if (Main.netMode != 1)
                             {
-                                float ai1New = Main.rand.Next(100);
                                 Vector2 vel = Vector2.UnitX.RotatedBy(Math.PI / 4 * (Main.rand.NextDouble() - 0.5)) * 8f;
-                                Projectile.NewProjectile(npc.Center, vel.RotatedBy(npc.localAI[1] + (float)Math.PI / 2), ProjectileID.CultistBossLightningOrbArc,
-                                    npc.damage / 4, 0, Main.myPlayer, npc.localAI[1] + (float)Math.PI / 2, ai1New);
-                                Projectile.NewProjectile(npc.Center, vel.RotatedBy(npc.localAI[1] - (float)Math.PI / 2), ProjectileID.CultistBossLightningOrbArc,
-                                    npc.damage / 4, 0, Main.myPlayer, npc.localAI[1] - (float)Math.PI / 2, ai1New);
+                                Projectile.NewProjectile(npc.Center, vel.RotatedBy(npc.localAI[1] - Math.PI / 2 * Math.Sign(offset.Y)), ProjectileID.CultistBossLightningOrbArc,
+                                    npc.damage / 4, 0, Main.myPlayer, npc.localAI[1] - (float)Math.PI / 2 * Math.Sign(offset.Y), Main.rand.Next(100));
+
+                                for (int j = -5; j <= 5; j++)
+                                {
+                                    float rotationOffset = (float)Math.PI / 2 + (float)Math.PI / 2 / 5 * j;
+                                    rotationOffset *= Math.Sign(offset.Y);
+                                    Projectile.NewProjectile(npc.Center,
+                                        6f * Vector2.UnitX.RotatedBy(npc.localAI[1] + rotationOffset),
+                                        ProjectileID.CultistBossFireBall, npc.damage / 4, 0f, Main.myPlayer);
+                                }
+
+                                for (int i = -5; i <= 5; i++)
+                                {
+                                    float ai1New = Main.rand.Next(100);
+                                    float rotationOffset = (float)Math.PI / 2 + (float)Math.PI / 2 / 4.5f * i;
+                                    rotationOffset *= Math.Sign(offset.Y);
+                                    Vector2 vel2 = Vector2.UnitX.RotatedBy(Math.PI / 4 * (Main.rand.NextDouble() - 0.5)) * 8f;
+                                    Projectile.NewProjectile(npc.Center, vel2.RotatedBy(npc.localAI[1] + rotationOffset), ProjectileID.CultistBossLightningOrbArc,
+                                        npc.damage / 4, 0, Main.myPlayer, npc.localAI[1] + rotationOffset, ai1New);
+                                }
                             }
                         }
 
@@ -603,7 +623,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 Main.dust[dust].noGravity = true;
             }
 
-            if (Collision.SolidCollision(npc.position, npc.width, npc.height) && npc.soundDelay == 0)
+            if (npc.ai[1] != -1 && Collision.SolidCollision(npc.position, npc.width, npc.height) && npc.soundDelay == 0)
             {
                 npc.soundDelay = (int)(npc.Distance(player.Center) / 40f);
                 if (npc.soundDelay < 10)
@@ -678,18 +698,18 @@ namespace FargowiltasSouls.NPCs.Champions
                 ModContent.ItemType<TungstenEnchant>(),
                 ModContent.ItemType<ObsidianEnchant>()
             };
-            int lastDrop = 0; //don't drop same ench twice
+            //int lastDrop = 0; //don't drop same ench twice
             for (int i = 0; i < 2; i++)
             {
                 int thisDrop = drops[Main.rand.Next(drops.Length)];
 
-                if (lastDrop == thisDrop && !Main.dedServ) //try again
+                /*if (lastDrop == thisDrop && !Main.dedServ) //try again
                 {
                     i--;
                     continue;
                 }
 
-                lastDrop = thisDrop;
+                lastDrop = thisDrop;*/
                 Item.NewItem(npc.position, npc.Size, thisDrop);
             }
         }

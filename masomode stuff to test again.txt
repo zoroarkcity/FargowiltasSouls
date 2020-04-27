@@ -12,3 +12,5 @@ hardmode spawns in pre-hm drop more gold and can drop various other items, but h
 	pigron drops lots of bacon
 	mushroom biome enemies drop truffle worms
 fishron drops angler quest items
+
+nerfed mutant family's contact damage hitbox (hurtbox is unchanged)

@@ -718,18 +718,18 @@ namespace FargowiltasSouls.NPCs.Champions
                 ModContent.ItemType<TikiEnchant>(),
                 ModContent.ItemType<SpectreEnchant>(),
             };
-            int lastDrop = 0; //don't drop same ench twice
+            //int lastDrop = 0; //don't drop same ench twice
             for (int i = 0; i < 2; i++)
             {
                 int thisDrop = drops[Main.rand.Next(drops.Length)];
 
-                if (lastDrop == thisDrop && !Main.dedServ) //try again
+                /*if (lastDrop == thisDrop && !Main.dedServ) //try again
                 {
                     i--;
                     continue;
                 }
 
-                lastDrop = thisDrop;
+                lastDrop = thisDrop;*/
                 Item.NewItem(npc.position, npc.Size, thisDrop);
             }
         }
