@@ -26,7 +26,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.height = 80;
             npc.damage = 150;
             npc.defense = 80;
-            npc.lifeMax = 480000;
+            npc.lifeMax = 690000;
             npc.HitSound = SoundID.NPCHit4;
             npc.DeathSound = SoundID.NPCDeath14;
             npc.noGravity = true;
@@ -48,6 +48,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.chaseable = false;
 
             npc.scale *= 1.25f;
+            npc.trapImmune = true;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -90,6 +91,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
                 if (Main.netMode != 1)
                 {
+                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<TerraLightningOrb>(), npc.damage / 4, 0f, Main.myPlayer, npc.ai[3]);
+
                     npc.active = false;
                     if (Main.netMode == 2)
                         NetMessage.SendData(23, -1, -1, null, npc.whoAmI);
@@ -109,6 +112,14 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.position.Y += num5;
 
             npc.timeLeft = Main.npc[ai1].timeLeft;
+
+            if (Main.npc[(int)npc.ai[3]].ai[1] == 11)
+            {
+                Vector2 pivot = Main.npc[(int)npc.ai[3]].Center;
+                pivot += Vector2.Normalize(Main.npc[(int)npc.ai[3]].velocity.RotatedBy(Math.PI / 2)) * 600;
+                if (npc.Distance(pivot) < 600) //make sure body doesnt coil into the circling zone
+                    npc.Center = pivot + npc.DirectionFrom(pivot) * 600;
+            }
         }
 
         public override bool CheckActive()
@@ -118,6 +129,9 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
+            /*damage *= 0.01;
+            return true;*/
+
             damage = 1;
             crit = false;
             return false;

@@ -7,7 +7,7 @@ using FargowiltasSouls.Buffs.Masomode;
 
 namespace FargowiltasSouls.Projectiles.Champions
 {
-    public class LifeFireball : ModProjectile
+    public class TerraFireball : ModProjectile
     {
         public override string Texture => "Terraria/Projectile_258";
 
@@ -27,6 +27,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.timeLeft = 240;
+            projectile.extraUpdates = 1;
             cooldownSlot = 1;
         }
 
@@ -45,67 +46,10 @@ namespace FargowiltasSouls.Projectiles.Champions
                 Main.dust[index2].velocity.X *= 0.3f;
                 Main.dust[index2].velocity.Y *= 0.3f;
             }
-
-            if (--projectile.ai[0] > 0)
-            {
-                float speed = projectile.velocity.Length();
-                speed += projectile.ai[1];
-                projectile.velocity = Vector2.Normalize(projectile.velocity) * speed;
-            }
-            else if (projectile.ai[0] == 0)
-            {
-                projectile.ai[1] = Player.FindClosest(projectile.Center, 0, 0);
-
-                if (projectile.ai[1] != -1 && Main.player[(int)projectile.ai[1]].active && !Main.player[(int)projectile.ai[1]].dead)
-                {
-                    projectile.velocity = projectile.DirectionTo(Main.player[(int)projectile.ai[1]].Center);
-                    projectile.netUpdate = true;
-                }
-                else
-                {
-                    projectile.Kill();
-                }
-            }
-            else
-            {
-                projectile.tileCollide = true;
-
-                if (++projectile.localAI[1] < 90) //accelerate
-                {
-                    projectile.velocity *= 1.04f;
-                }
-
-                if (projectile.localAI[1] < 120)
-                {
-                    float rotation = projectile.velocity.ToRotation();
-                    Vector2 vel = Main.player[(int)projectile.ai[1]].Center - projectile.Center;
-                    float targetAngle = vel.ToRotation();
-                    projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, 0.025f));
-                }
-
-                /*if (projectile.velocity.Y <= 0) //don't home upwards ever
-                {
-                    projectile.velocity = projectile.oldVelocity;
-                    if (projectile.localAI[1] < 90)
-                        projectile.velocity *= 1.04f;
-                }*/
-            }
         }
 
         public override void Kill(int timeLeft)
         {
-            if (timeLeft > 0)
-            {
-                for (int i = 0; i < 5; i++) //drop greek fire
-                {
-                    if (Main.netMode != 1)
-                    {
-                        Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.NextFloat(-6, 6), Main.rand.NextFloat(-10, 0),
-                              Main.rand.Next(326, 329), projectile.damage / 4, 0f, Main.myPlayer);
-                    }
-                }
-            }
-
             Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 14);
 
             for (int i = 0; i < 30; i++)
@@ -137,19 +81,15 @@ namespace FargowiltasSouls.Projectiles.Champions
                 Main.gore[gore].velocity.X += 1f;
                 Main.gore[gore].velocity.Y += 1f;
             }
-        }
 
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
-        {
-            fallThrough = false;
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+            projectile.rotation += 0.3f;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.OnFire, 120);
-            target.AddBuff(BuffID.CursedInferno, 120);
-            target.AddBuff(ModContent.BuffType<Shadowflame>(), 120);
+            target.AddBuff(BuffID.OnFire, 600);
+            target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
+            target.AddBuff(ModContent.BuffType<LightningRod>(), 600);
         }
 
         public override Color? GetAlpha(Color lightColor)

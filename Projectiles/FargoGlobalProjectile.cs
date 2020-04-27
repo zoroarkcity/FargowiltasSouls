@@ -1712,6 +1712,12 @@ namespace FargowiltasSouls.Projectiles
                         {
                             target.AddBuff(BuffID.Burning, 300);
                         }
+
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<TerraChampion>()))
+                        {
+                            target.AddBuff(BuffID.OnFire, 600);
+                            target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
+                        }
                         break;
 
                     case ProjectileID.SpikyBallTrap:
