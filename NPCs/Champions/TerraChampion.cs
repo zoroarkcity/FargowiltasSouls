@@ -153,11 +153,11 @@ namespace FargowiltasSouls.NPCs.Champions
                     npc.scale = 3f;
                     targetPos = player.Center;
                     if (npc.Distance(targetPos) > 50)
-                        Movement(targetPos, 0.24f, 32f);
+                        Movement(targetPos, 0.12f, 32f);
 
                     npc.rotation = npc.DirectionTo(player.Center).ToRotation();
 
-                    if (++npc.localAI[0] > 50)
+                    if (++npc.localAI[0] > 60)
                     {
                         npc.localAI[0] = 0;
                         Main.PlaySound(SoundID.Item12, npc.Center);
@@ -168,6 +168,16 @@ namespace FargowiltasSouls.NPCs.Champions
                             Vector2 vel = Vector2.Normalize(npc.DirectionTo(player.Center).RotatedBy(Math.PI / 4 * (Main.rand.NextDouble() - 0.5))) * 6f;
                             Projectile.NewProjectile(npc.Center, vel, ProjectileID.CultistBossLightningOrbArc,
                                 npc.damage / 4, 0, Main.myPlayer, npc.rotation, ai1New);
+                        }
+                    }
+
+                    if (--npc.localAI[1] < 0)
+                    {
+                        npc.localAI[1] = 420;
+
+                        if (Main.netMode != 1) //shoot orb
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<TerraLightningOrb2>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                         }
                     }
                     break;
@@ -641,7 +651,7 @@ namespace FargowiltasSouls.NPCs.Champions
             if (resist)
                 damage /= 10;
             if (npc.life < npc.lifeMax / 10)
-                damage /= 4;
+                damage /= 5;
             return true;
         }
 
