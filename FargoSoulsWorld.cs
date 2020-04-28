@@ -44,7 +44,7 @@ namespace FargowiltasSouls
         public static bool forceMeteor;
         public static int skipMutantP1;
 
-        public static bool NoMasoBossScaling;
+        public static bool NoMasoBossScaling = true;
         public static bool ReceivedTerraStorage;
 
         public override void Initialize()
@@ -80,7 +80,7 @@ namespace FargowiltasSouls
             forceMeteor = true;
             skipMutantP1 = 0;
 
-            NoMasoBossScaling = false;
+            NoMasoBossScaling = true;
             ReceivedTerraStorage = false;
         }
 

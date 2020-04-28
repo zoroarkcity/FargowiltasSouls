@@ -827,7 +827,7 @@ namespace FargowiltasSouls
                 player.onHitRegen = true;
                 PalladEnchant = true;
 
-                if (palladiumCD > 0)
+                if (EarthForce && palladiumCD > 0)
                     palladiumCD--;
             }
         }

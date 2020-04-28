@@ -17,3 +17,5 @@ nerfed mutant family's contact damage hitbox (hurtbox is unchanged)
 reworked slime slinging slasher, homing and piercing
 reworked big sting, consumes darts to shoot piercing stingers, much more spread
 reworked mech flail, spawns fewer and slower eyes, creates burst of much faster eyes on hit
+maso boss scaling now disabled by default
+removed lifesteal from palladium (still present on force of earth)
