@@ -22,6 +22,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.friendly = true;
             projectile.penetrate = -1;
             projectile.melee = true;
+            projectile.extraUpdates = 1;
         }
 
         public override void AI()
@@ -51,7 +52,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             float distance = (float)Math.Sqrt(num166 * num166 + num167 * num167);
             if (projectile.ai[0] == 0f)
             {
-                if (distance > 400f) projectile.ai[0] = 1f;
+                if (distance > 700f) projectile.ai[0] = 1f;
                 projectile.rotation = (float)Math.Atan2(projectile.velocity.Y, projectile.velocity.X) + 1.57f;
                 projectile.ai[1] += 1f;
                 if (projectile.ai[1] > 8f) projectile.ai[1] = 8f;
@@ -92,7 +93,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vector55.X, vector55.Y, mod.ProjectileType("MechEyeProjectile"), projectile.damage, projectile.knockBack,
                     projectile.owner, -10f);
 
-                eyeSpawn = 6;
+                eyeSpawn = 10;
             }
         }
 
