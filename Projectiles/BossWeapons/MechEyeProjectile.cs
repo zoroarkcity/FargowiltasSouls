@@ -7,6 +7,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 {
     public class MechEyeProjectile : ModProjectile
     {
+        private float speed;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("MechEyeProjectile");
@@ -19,7 +21,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.aiStyle = 1;
             projectile.friendly = true;
             projectile.melee = true;
-            projectile.penetrate = 4;
+            projectile.penetrate = 2;
             projectile.timeLeft = 180;
             aiType = ProjectileID.Bullet;
 
@@ -29,9 +31,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void AI()
         {
+            if (speed == 0) //store homing speed
+                speed = projectile.velocity.Length() * 2f;
+
             const int aislotHomingCooldown = 0;
             const int homingDelay = 15;
-            const float desiredFlySpeedInPixelsPerFrame = 30;
+            float desiredFlySpeedInPixelsPerFrame = speed;
             const float amountOfFramesToLerpBy = 10; // minimum of 1, please keep in full numbers even though it's a float!
 
             projectile.ai[aislotHomingCooldown]++;

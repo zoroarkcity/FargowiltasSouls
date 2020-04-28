@@ -92,7 +92,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vector55.X, vector55.Y, mod.ProjectileType("MechEyeProjectile"), projectile.damage, projectile.knockBack,
                     projectile.owner, -10f);
 
-                eyeSpawn = 2;
+                eyeSpawn = 6;
             }
         }
 
@@ -100,6 +100,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             //retract
             projectile.ai[0] = 1f;
+
+            for (int i = 0; i < 20; i++)
+            {
+                Vector2 vector55 = Vector2.UnitX.RotatedBy(Math.PI * 2 / 20 * i);
+                vector55 *= Main.rand.Next(45, 65) * 0.3f;
+                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vector55.X, vector55.Y,
+                    mod.ProjectileType("MechEyeProjectile"), projectile.damage, projectile.knockBack, projectile.owner, -10f);
+            }
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
