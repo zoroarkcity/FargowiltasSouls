@@ -12,14 +12,14 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Big Sting");
-            Tooltip.SetDefault("'The reward for slaughtering many..'");
+            Tooltip.SetDefault("'The reward for slaughtering many..'\nUses darts for ammo\n66% chance to not consume ammo");
             DisplayName.AddTranslation(GameCulture.Chinese, "大螫刺");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励..'");
         }
 
         public override void SetDefaults()
         {
-            item.damage = 60;
+            item.damage = 300;
             item.ranged = true;
             item.width = 24;
             item.height = 24;
@@ -31,13 +31,16 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.value = 50000;
             item.rare = 11;
             item.autoReuse = true;
-            item.shoot = ProjectileID.HornetStinger;
-            //item.useAmmo = ItemID.Stinger;
-            item.shootSpeed = 20f;
+            item.shoot = ProjectileID.Bee;
+            item.useAmmo = AmmoID.Dart;
+            item.UseSound = SoundID.Item97;
+            item.shootSpeed = 18f;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
+            type = ProjectileID.Bee;
+
             //tsunami code
             Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
             float num = 0.314159274f;
@@ -62,6 +65,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 {
                     Main.projectile[p].ranged = true;
                     Main.projectile[p].minion = false;
+                    Main.projectile[p].magic = false;
                 }
             }
 
@@ -74,10 +78,10 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             return new Vector2(-10, 0);
         }
 
-        /*public override bool ConsumeAmmo(Player p)
+        public override bool ConsumeAmmo(Player player)
         {
-            return Main.rand.Next(4) != 0;
-        }*/
+            return Main.rand.Next(3) == 0;
+        }
 
         public override void AddRecipes()
         {

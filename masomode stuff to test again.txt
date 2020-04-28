@@ -15,3 +15,4 @@ fishron drops angler quest items
 
 nerfed mutant family's contact damage hitbox (hurtbox is unchanged)
 reworked slime slinging slasher, homing and piercing
+reworked big sting, consumes darts to shoot bees
