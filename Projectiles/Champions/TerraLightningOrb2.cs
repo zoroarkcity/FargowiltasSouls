@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override bool CanHitPlayer(Player target) //round hitbox
         {
-            return projectile.Distance(target.Center) < projectile.width / 2;
+            return projectile.Distance(target.Center) < projectile.width / 2 * projectile.scale;
         }
 
         public override bool? CanHitNPC(NPC target)

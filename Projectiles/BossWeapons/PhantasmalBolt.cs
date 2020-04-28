@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Projectiles.Minions
+namespace FargowiltasSouls.Projectiles.BossWeapons
 {
     public class PhantasmalBolt : ModProjectile
     {
