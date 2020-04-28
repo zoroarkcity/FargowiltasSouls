@@ -14,4 +14,4 @@ hardmode spawns in pre-hm drop more gold and can drop various other items, but h
 fishron drops angler quest items
 
 nerfed mutant family's contact damage hitbox (hurtbox is unchanged)
-slime slinging slasher is homing
+reworked slime slinging slasher, homing and piercing

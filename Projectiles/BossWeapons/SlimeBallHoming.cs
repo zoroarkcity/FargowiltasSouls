@@ -9,11 +9,17 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
     {
         public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/SlimeBall";
 
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            projectile.penetrate = 2;
+        }
+
         public override void AI()
         {
             base.AI();
 
-            if (++projectile.localAI[0] > 12)
+            if (++projectile.localAI[0] > 30)
             {
                 projectile.localAI[0] = 0;
                 
@@ -48,6 +54,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
 
             return selectedTarget;
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            base.OnHitNPC(target, damage, knockback, crit);
+            target.immune[projectile.owner] = 8;
         }
     }
 }
