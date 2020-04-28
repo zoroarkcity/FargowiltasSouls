@@ -1002,6 +1002,13 @@ namespace FargowiltasSouls.NPCs
                 FirstTick = true;
             }
 
+            if (Stop > 0)
+            {
+                Stop--;
+                npc.position = npc.oldPosition;
+                npc.frameCounter = 0;
+            }
+
             if (FargoSoulsWorld.MasochistMode)
             {
                 if (RegenTimer > 0)

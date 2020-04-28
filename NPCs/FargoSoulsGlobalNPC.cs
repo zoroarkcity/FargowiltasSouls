@@ -39,7 +39,6 @@ namespace FargowiltasSouls.NPCs
         }
 
         public bool FirstTick = false;
-        private int Stop = 0;
         //debuffs
         public bool SBleed;
         public bool Shock;
@@ -102,13 +101,6 @@ namespace FargowiltasSouls.NPCs
                 npc.position = npc.oldPosition;
                 npc.frameCounter = 0;
                 return false;
-            }
-
-            if (Stop > 0)
-            {
-                Stop--;
-                npc.position = npc.oldPosition;
-                npc.frameCounter = 0;
             }
 
             if (!FirstTick)
