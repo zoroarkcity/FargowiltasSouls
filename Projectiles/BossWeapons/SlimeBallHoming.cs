@@ -19,9 +19,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             base.AI();
 
-            if (++projectile.localAI[0] > 30)
+            if (++projectile.localAI[0] == 30)
             {
-                projectile.localAI[0] = 0;
+                //projectile.localAI[0] = 0;
                 
                 int foundTarget = HomeOnTarget();
                 if (foundTarget != -1)
@@ -59,7 +59,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             base.OnHitNPC(target, damage, knockback, crit);
-            target.immune[projectile.owner] = 8;
+            target.immune[projectile.owner] = 7;
         }
     }
 }

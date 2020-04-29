@@ -37,10 +37,10 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockback)
         {
-            int numberProjectiles = 5 + Main.rand.Next(6); // 5 to 10 shots
+            int numberProjectiles = 9;
             for (int i = 0; i < numberProjectiles; i++)
             {
-                Vector2 velocity = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(15)); // 15 degree spread.
+                Vector2 velocity = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(30) * (Main.rand.NextDouble() - 0.5));
                 Projectile.NewProjectile(position.X, position.Y, velocity.X, velocity.Y, type, damage, knockback, player.whoAmI);
             }
 
