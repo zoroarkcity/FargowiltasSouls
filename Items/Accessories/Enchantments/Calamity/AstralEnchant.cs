@@ -39,7 +39,8 @@ Summons a pet Astrophage");
 @"'星体感染侵蚀了你...'
 暴击时落下落星, 圣星和彗星攻击敌人
 该效果有1秒的冷却
-拥有星陨幻空石和星神游龙外壳的效果");
+拥有星辉秘术，星神隐壳和引力靴的效果
+召唤噬星体宠物");
         }
 
         public override void SetDefaults()
