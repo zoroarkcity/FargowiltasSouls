@@ -32,8 +32,8 @@ Effects of Trinket of Chi");
             DisplayName.AddTranslation(GameCulture.Chinese, "钨钢魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'别和钨金魔石搞混了...'
-生命值低于50%时, 增加5点防御
-拥有灵魂浮雕, 掠袭者护符和气之挂坠的效果");
+如果生命值低于50%增加5点防御力
+拥有气功念珠的效果");
         }
 
         public override void SetDefaults()
