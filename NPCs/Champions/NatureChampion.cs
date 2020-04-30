@@ -31,7 +31,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.width = 224;
             npc.height = 112;
             npc.damage = 150;
-            npc.defense = 120;
+            npc.defense = 150;
             npc.lifeMax = 700000;
             npc.HitSound = SoundID.NPCHit6;
             npc.DeathSound = SoundID.NPCDeath1;
