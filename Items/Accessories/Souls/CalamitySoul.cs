@@ -53,7 +53,7 @@ Summons several pets");
             DisplayName.AddTranslation(GameCulture.Chinese, "暴君之魂");
             Tooltip.AddTranslation(GameCulture.Chinese,
 @"'然后大地再次恢复了宁静...'
-拥有天蓝, 斯塔提斯, 代达罗斯和血炎的套装效果
+拥有天蓝, 斯塔提斯, 代达罗斯和渊泉的套装效果
 拥有克希洛克，神惧者的套装效果
 拥有代达罗斯, 雪境暴徒，日影和星幻的套装效果
 拥有欧米伽蓝，软壳，胜潮，幻渊鱼群和硫磺的套装效果
