@@ -37,6 +37,17 @@ Grants a sulphurous bubble jump that applies venom on hit
 Effects of Corrosive Spine and Lumenous Amulet
 Effects of Sand Cloak and Alluring Bait
 Summons several pets");
+            DisplayName.AddTranslation(GameCulture.Chinese, "幻渊鱼群魔石");
+            Tooltip.AddTranslation(GameCulture.Chinese, 
+@"'足以屠神的力量存于你的体内...'
+浸没在液体中时增加10%召唤伤害
+在深渊提供适量光照，并适度减少深渊中的氧气损耗
+攻击敌人或被敌人攻击赋予他们中毒减益
+获得一段硫磺泡泡跳跃，击中敌人赋予毒液减益
+拥有腐蚀脊椎和流明护身符的效果
+拥有沙尘披风和诱惑鱼饵的效果
+召唤几个宠物
+");
         }
 
         public override void SetDefaults()
