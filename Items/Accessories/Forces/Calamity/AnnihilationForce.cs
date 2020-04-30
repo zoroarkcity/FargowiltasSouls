@@ -30,7 +30,7 @@ Summons several pets");
             DisplayName.AddTranslation(GameCulture.Chinese, "湮灭之力");
             Tooltip.AddTranslation(GameCulture.Chinese,
 @"'此地曾充满生命与光明, 现在只余废墟'
-拥有天蓝, 斯塔提斯, 代达罗斯和血炎的套装效果
+拥有天蓝, 斯塔提斯和渊泉的套装效果
 拥有克希洛克，神惧者的套装效果
 拥有角斗士金锁和不稳定棱晶的效果
 拥有反击围巾和真菌共生体的效果
