@@ -46,6 +46,27 @@ Effects of Ocean's Crest, Deep Diver, The Transformer, and Luxor's Gift
 Effects of Corrosive Spine and Lumenous Amulet
 Effects of Sand Cloak and Alluring Bait
 Summons several pets");
+            DisplayName.AddTranslation(GameCulture.Chinese, "欧米伽蓝魔石");
+            Tooltip.AddTranslation(GameCulture.Chinese, 
+@"'深渊的黑暗压垮了你...'
+提高50点护甲穿透
+提高10%伤害和暴击率
+触手会攻击附近的敌人，偷取生命值治疗你
+按Y键进入深渊狂乱状态5秒
+深渊狂乱提升你的暴击率，同时触手的攻击欲望和攻击范围都会增加
+此效果有25秒冷却时间
+两只贝壳会为你而战
+使用任何武器时都有10%的几率发射回旋贝壳弹幕
+召唤一只海胆为你而战
+攻击敌人或被敌人攻击赋予他们中毒减益
+获得一段硫磺泡泡跳跃，击中敌人赋予毒液减益
+拥有深渊潜游服，突变松露和硫海遗爵之鳞的效果
+拥有大珍珠和阿米迪亚斯之垂饰的效果
+拥有海波纹章和附魔珍珠的效果
+拥有海波项链，深潜者，变压护符和卢克索的礼物的效果
+拥有腐蚀脊椎和流明护身符的效果
+拥有沙尘披风和诱惑鱼饵的效果
+召唤几只宠物");
         }
 
         public override void SetDefaults()
