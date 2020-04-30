@@ -28,6 +28,13 @@ Rogue weapons have a chance to create explosions on hit
 Stealth strikes always create an explosion
 Penumbra potions always build stealth at max effectiveness
 Effects of Thief's Dime, Vampiric Talisman, and Momentum Capacitor");
+            DisplayName.AddTranslation(GameCulture.Chinese, "日影魔石");
+            Tooltip.AddTranslation(GameCulture.Chinese, 
+@"''
+盗贼武器击中敌人时概率产生爆炸
+暴击总是会产生爆炸
+半影药剂总是发挥最大功效
+拥有盗贼铸币，吸血鬼符咒和动量电容器的效果");
         }
 
         public override void SetDefaults()
