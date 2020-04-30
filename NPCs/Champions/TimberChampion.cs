@@ -108,10 +108,10 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         for (int k = -2; k <= 2; k++) //explosions
                         {
-                            Vector2 dustPos = npc.position;
+                            Vector2 dustPos = npc.Center;
                             int width = npc.width / 5;
                             dustPos.X += width * k + Main.rand.NextFloat(-width, width);
-                            dustPos.Y += npc.height - width / 2 + Main.rand.NextFloat(-width, width) / 2;
+                            dustPos.Y += Main.rand.NextFloat(npc.height / 2);
 
                             for (int i = 0; i < 30; i++)
                             {

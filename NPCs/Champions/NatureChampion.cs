@@ -16,11 +16,12 @@ namespace FargowiltasSouls.NPCs.Champions
     [AutoloadBossHead]
     public class NatureChampion : ModNPC
     {
-        public int[] heads = new int[5];
+        public int[] heads = { -1, -1, -1, -1, -1, -1 };
+        public int lastHead = -1;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Champion of Nature");
+            DisplayName.SetDefault("Champion of Pog");
             NPCID.Sets.TrailCacheLength[npc.type] = 6;
             NPCID.Sets.TrailingMode[npc.type] = 1;
         }
@@ -63,12 +64,14 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             for (int i = 0; i < heads.Length; i++)
                 writer.Write(heads[i]);
+            writer.Write(lastHead);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             for (int i = 0; i < heads.Length; i++)
                 heads[i] = reader.ReadInt32();
+            lastHead = reader.ReadInt32();
         }
 
         public override void AI()
@@ -80,45 +83,68 @@ namespace FargowiltasSouls.NPCs.Champions
 
                 if (Main.netMode != 1)
                 {
-                    int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NatureChampionHead>(), npc.whoAmI, 0f, npc.whoAmI, 0f, -2f, npc.target);
+                    int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NatureChampionHead>(), npc.whoAmI, 0f, npc.whoAmI, 0f, -3f, npc.target);
                     if (n != Main.maxNPCs)
                     {
+                        heads[0] = n;
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode != 2)
+                        if (Main.netMode == 2)
+                            NetMessage.SendData(23, -1, -1, null, n);
+                    }
+                    n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NatureChampionHead>(), npc.whoAmI, 0f, npc.whoAmI, 0f, -2f, npc.target);
+                    if (n != Main.maxNPCs)
+                    {
+                        heads[1] = n;
+                        Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
+                        Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
+                        if (Main.netMode == 2)
                             NetMessage.SendData(23, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NatureChampionHead>(), npc.whoAmI, 0f, npc.whoAmI, 0f, -1f, npc.target);
                     if (n != Main.maxNPCs)
                     {
+                        heads[2] = n;
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode != 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
-                    }
-                    n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NatureChampionHead>(), npc.whoAmI, 0f, npc.whoAmI, 0f, 0f, npc.target);
-                    if (n != Main.maxNPCs)
-                    {
-                        Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
-                        Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode != 2)
+                        if (Main.netMode == 2)
                             NetMessage.SendData(23, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NatureChampionHead>(), npc.whoAmI, 0f, npc.whoAmI, 0f, 1f, npc.target);
                     if (n != Main.maxNPCs)
                     {
+                        heads[3] = n;
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode != 2)
+                        if (Main.netMode == 2)
                             NetMessage.SendData(23, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NatureChampionHead>(), npc.whoAmI, 0f, npc.whoAmI, 0f, 2f, npc.target);
                     if (n != Main.maxNPCs)
                     {
+                        heads[4] = n;
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode != 2)
+                        if (Main.netMode == 2)
                             NetMessage.SendData(23, -1, -1, null, n);
+                    }
+                    n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NatureChampionHead>(), npc.whoAmI, 0f, npc.whoAmI, 0f, 3f, npc.target);
+                    if (n != Main.maxNPCs)
+                    {
+                        heads[5] = n;
+                        Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
+                        Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
+                        if (Main.netMode == 2)
+                            NetMessage.SendData(23, -1, -1, null, n);
+                    }
+
+                    for (int i = 0; i < heads.Length; i++) //failsafe, die if couldnt spawn heads
+                    {
+                        if (heads[i] == -1 && Main.netMode != 1)
+                        {
+                            npc.active = false;
+                            return;
+                        }
                     }
                 }
             }
@@ -133,7 +159,7 @@ namespace FargowiltasSouls.NPCs.Champions
             
             switch ((int)npc.ai[0])
             {
-                case 0: //float to player
+                case 0: //think
                     if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f
                         || player.Center.Y < Main.worldSurface * 16 || player.ZoneUnderworldHeight) //despawn code
                     {
@@ -145,10 +171,218 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.noGravity = true;
                         npc.velocity.Y += 1f;
 
-                        return;
+                        break;
                     }
 
-                    if (++npc.ai[1] > 60)
+                    npc.noTileCollide = false;
+                    npc.noGravity = false;
+
+                    if (++npc.ai[1] > 45)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 1: //stomp
+                    {
+                        void StompDust()
+                        {
+                            Main.PlaySound(2, npc.Center, 14);
+
+                            for (int k = -2; k <= 2; k++) //explosions
+                            {
+                                Vector2 dustPos = npc.Center;
+                                int width = npc.width / 5;
+                                dustPos.X += width * k + Main.rand.NextFloat(-width, width);
+                                dustPos.Y += Main.rand.NextFloat(npc.height / 2);
+
+                                for (int i = 0; i < 30; i++)
+                                {
+                                    int dust = Dust.NewDust(dustPos, 32, 32, 31, 0f, 0f, 100, default(Color), 3f);
+                                    Main.dust[dust].velocity *= 1.4f;
+                                }
+
+                                for (int i = 0; i < 20; i++)
+                                {
+                                    int dust = Dust.NewDust(dustPos, 32, 32, 6, 0f, 0f, 100, default(Color), 3.5f);
+                                    Main.dust[dust].noGravity = true;
+                                    Main.dust[dust].velocity *= 7f;
+                                    dust = Dust.NewDust(dustPos, 32, 32, 6, 0f, 0f, 100, default(Color), 1.5f);
+                                    Main.dust[dust].velocity *= 3f;
+                                }
+
+                                float scaleFactor9 = 0.5f;
+                                for (int j = 0; j < 4; j++)
+                                {
+                                    int gore = Gore.NewGore(dustPos, default(Vector2), Main.rand.Next(61, 64));
+                                    Main.gore[gore].velocity *= scaleFactor9;
+                                    Main.gore[gore].velocity.X += 1f;
+                                    Main.gore[gore].velocity.Y += 1f;
+                                }
+                            }
+                        }
+
+                        const int jumpTime = 40;
+
+                        npc.noGravity = true;
+                        npc.noTileCollide = true;
+
+                        if (npc.ai[2] == 0) //move over player
+                        {
+                            StompDust();
+
+                            npc.ai[2] = 1;
+                            npc.netUpdate = true;
+
+                            targetPos = player.Center;
+                            targetPos.Y -= 600;
+
+                            npc.velocity = (targetPos - npc.Center) / jumpTime;
+                        }
+
+                        if (++npc.ai[1] > jumpTime + 18) //do the stomp
+                        {
+                            npc.noGravity = false;
+                            npc.noTileCollide = false;
+
+                            if (npc.velocity.Y == 0) //landed, now stomp
+                            {
+                                StompDust();
+
+                                npc.TargetClosest();
+                                npc.ai[0]++;
+                                npc.ai[1] = 0;
+                                npc.ai[2] = 0;
+                                npc.ai[3] = 0;
+                                npc.netUpdate = true;
+                            }
+                        }
+                        else if (npc.ai[1] > jumpTime) //falling
+                        {
+                            npc.velocity.X = 0;
+                            npc.velocity.Y = 30f;
+                        }
+                    }
+                    break;
+
+                case 2:
+                    goto case 0;
+
+                case 3: //decide an attack
+                    if (npc.ai[2] == 0)
+                    {
+                        npc.ai[2] = 1;
+                        npc.netUpdate = true;
+
+                        int nextHead = heads[Main.rand.Next(heads.Length)];
+                        while (nextHead == lastHead) //dont choose same one twice ever
+                            nextHead = heads[Main.rand.Next(heads.Length)];
+                        lastHead = nextHead;
+
+                        Main.npc[nextHead].ai[0] += Main.npc[nextHead].ai[3];
+                        Main.npc[nextHead].netUpdate = true;
+
+                        Main.PlaySound(36, Main.npc[nextHead].Center, -1);
+
+                        int dustType;
+                        switch((int)Main.npc[nextHead].ai[3])
+                        {
+                            case -3: dustType = 183; break;
+                            case -2: dustType = 6; break;
+                            case -1: dustType = 87; break;
+                            case 1: dustType = 111; break;
+                            case 2: dustType = 89; break;
+                            case 3: dustType = 113; break;
+                            default: dustType = 1; break;
+                        }
+
+                        const int num226 = 70;
+                        for (int num227 = 0; num227 < num226; num227++)
+                        {
+                            Vector2 vector6 = Vector2.UnitX * 30f;
+                            vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + Main.npc[nextHead].Center;
+                            Vector2 vector7 = vector6 - Main.npc[nextHead].Center;
+                            int num228 = Dust.NewDust(vector6 + vector7, 0, 0, dustType, 0f, 0f, 0, default(Color), 3f);
+                            Main.dust[num228].noGravity = true;
+                            Main.dust[num228].velocity = vector7;
+                        }
+                    }
+
+                    if (++npc.ai[1] > 300) //wait
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 4:
+                    goto case 0;
+
+                case 5:
+                    goto case 3;
+
+                case 6:
+                    goto case 0;
+
+                case 7:
+                    goto case 3;
+
+                case 8:
+                    goto case 0;
+
+                case 9:
+                    goto case 1;
+
+                case 10:
+                    goto case 0;
+
+                case 11: //deathrays
+                    if (npc.ai[2] == 0)
+                    {
+                        npc.ai[2] = 1;
+
+                        Main.PlaySound(15, npc.Center, 0);
+
+                        for (int i = 0; i < heads.Length; i++) //activate all heads
+                        {
+                            Main.npc[heads[i]].ai[0] = 4f;
+                            Main.npc[heads[i]].netUpdate = true;
+
+                            int dustType;
+                            switch ((int)Main.npc[heads[i]].ai[3])
+                            {
+                                case -3: dustType = 183; break;
+                                case -2: dustType = 6; break;
+                                case -1: dustType = 87; break;
+                                case 1: dustType = 111; break;
+                                case 2: dustType = 89; break;
+                                case 3: dustType = 113; break;
+                                default: dustType = 1; break;
+                            }
+
+                            const int num226 = 70;
+                            for (int num227 = 0; num227 < num226; num227++)
+                            {
+                                Vector2 vector6 = Vector2.UnitX * 30f;
+                                vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + Main.npc[heads[i]].Center;
+                                Vector2 vector7 = vector6 - Main.npc[heads[i]].Center;
+                                int num228 = Dust.NewDust(vector6 + vector7, 0, 0, dustType, 0f, 0f, 0, default(Color), 3f);
+                                Main.dust[num228].noGravity = true;
+                                Main.dust[num228].velocity = vector7;
+                            }
+                        }
+                    }
+
+                    if (++npc.ai[1] > 330) //wait
                     {
                         npc.TargetClosest();
                         npc.ai[0]++;

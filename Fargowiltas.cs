@@ -749,6 +749,7 @@ namespace FargowiltasSouls
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<ShadowChampion>());
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<SpiritChampion>());
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<TerraChampion>());
+                    bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<NatureChampion>());
                 }
 
                 Mod bossChecklist = ModLoader.GetMod("BossChecklist");

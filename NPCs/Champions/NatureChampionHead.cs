@@ -17,6 +17,7 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Nature");
+            Main.npcFrameCount[npc.type] = 6;
             NPCID.Sets.TrailCacheLength[npc.type] = 6;
             NPCID.Sets.TrailingMode[npc.type] = 1;
         }
@@ -44,6 +45,18 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(npc.localAI[0]);
+            writer.Write(npc.localAI[1]);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            npc.localAI[0] = reader.ReadSingle();
+            npc.localAI[1] = reader.ReadSingle();
+        }
+
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             cooldownSlot = 1;
@@ -69,17 +82,285 @@ namespace FargowiltasSouls.NPCs.Champions
 
             Player player = Main.player[npc.target];
             Vector2 targetPos;
+
+            npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
+            npc.rotation = 0;
             
             switch ((int)npc.ai[0])
             {
+                case -3: //crimson
+                    if (body.Distance(player.Center) < 3000 && body.Distance(player.Center) > 300)
+                        targetPos = player.Center - Vector2.UnitY * 250f;
+                    else
+                        targetPos = body.Center + body.DirectionTo(player.Center) * 300;
+                    Movement(targetPos, 0.4f, 24f);
+
+                    if (++npc.ai[2] > 30) //ichor every other 0.5 seconds
+                    {
+                        if (npc.ai[2] > 60)
+                        {
+                            npc.ai[2] = 0;
+                        }
+
+                        if (++npc.localAI[1] > 2) //rain piss
+                        {
+                            npc.localAI[1] = 0;
+                            if (npc.localAI[0] > 60 && Main.netMode != 1)
+                            {
+                                Projectile.NewProjectile(npc.Center + Main.rand.NextVector2Circular(npc.width / 2, npc.height / 2),
+                                    Vector2.UnitY * Main.rand.NextFloat(4f, 8f), ProjectileID.GoldenShowerHostile, npc.damage / 4, 0f, Main.myPlayer);
+                            }
+                        }
+                    }
+
+                    if (++npc.localAI[0] > 300)
+                    {
+                        npc.ai[0] = 0;
+                        npc.localAI[0] = 0;
+                        npc.ai[2] = 0;
+                        npc.localAI[1] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case -2: //molten
+                    if (++npc.localAI[0] < 240) //stay near
+                    {
+                        if (body.Distance(player.Center) < 3000 && body.Distance(player.Center) > 300)
+                            targetPos = player.Center;
+                        else
+                            targetPos = body.Center + body.DirectionTo(player.Center) * 300;
+                        Movement(targetPos, 0.18f, 24f);
+
+                        for (int i = 0; i < 20; i++) //warning ring
+                        {
+                            Vector2 offset = new Vector2();
+                            double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                            offset.X += (float)(Math.Sin(angle) * 300);
+                            offset.Y += (float)(Math.Cos(angle) * 300);
+                            Dust dust = Main.dust[Dust.NewDust(npc.Center + offset - new Vector2(4, 4), 0, 0, DustID.Fire, 0, 0, 100, Color.White, 2f)];
+                            dust.velocity = npc.velocity;
+                            if (Main.rand.Next(3) == 0)
+                                dust.velocity += Vector2.Normalize(offset) * -5f;
+                            dust.noGravity = true;
+                        }
+                    }
+                    else if (npc.localAI[0] == 240) //explode into attacks
+                    {
+                        npc.velocity = Vector2.Zero;
+                        npc.netUpdate = true;
+
+                        Main.PlaySound(15, npc.Center, 0);
+
+                        if (Main.netMode != 1)
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<NatureExplosion>(), npc.damage / 4, 0f, Main.myPlayer);
+
+                            const int max = 16;
+                            for (int i = 0; i < max; i++)
+                            {
+                                Vector2 speed = 20f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i);
+                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<NatureFireball>(), npc.damage / 4, 0f, Main.myPlayer);
+                            }
+                        }
+                    }
+                    else if (npc.localAI[0] > 300)
+                    {
+                        npc.ai[0] = 0;
+                        npc.localAI[0] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case -1: //rain
+                    if (body.Distance(player.Center) < 3000 && body.Distance(player.Center) > 300)
+                        targetPos = player.Center + npc.DirectionFrom(player.Center) * 300;
+                    else
+                        targetPos = body.Center + body.DirectionTo(player.Center) * 300;
+                    Movement(targetPos, 0.25f, 24f);
+
+                    if (++npc.localAI[1] > 60)
+                    {
+                        npc.localAI[1] = 0;
+
+                        Main.PlaySound(SoundID.Item66, npc.Center);
+
+                        if (Main.netMode != 1)
+                        {
+                            Vector2 dir = Main.player[npc.target].Center - npc.Center;
+                            float ai1New = Main.rand.Next(100);
+                            Vector2 vel = Vector2.Normalize(dir.RotatedByRandom(Math.PI / 4)) * 6f;
+                            Projectile.NewProjectile(npc.Center, vel, ProjectileID.CultistBossLightningOrbArc,
+                                npc.damage / 4, 0, Main.myPlayer, dir.ToRotation(), ai1New);
+
+                            Vector2 speed = player.Center - npc.Center;
+                            speed.Y -= 300;
+                            speed /= 40;
+                            Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<NatureCloudMoving>(), npc.damage / 4, 0f, Main.myPlayer);
+                        }
+                    }
+
+                    if (++npc.localAI[0] > 300)
+                    {
+                        npc.ai[0] = 0;
+                        npc.localAI[0] = 0;
+                        npc.ai[2] = 0;
+                        npc.localAI[1] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
                 case 0: //float near body
                     {
                         Vector2 offset;
-                        offset.X = 150f * npc.ai[3];
-                        offset.Y = -350 + 100f * Math.Abs(npc.ai[3]);
+                        offset.X = 100f * npc.ai[3] - 50 * Math.Sign(npc.ai[3]);
+                        offset.Y = -350 + 75f * Math.Abs(npc.ai[3]);
                         targetPos = body.Center + offset;
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.8f, 24f);
+                    }
+                    break;
+
+                case 1: //frost
+                    {
+                        Vector2 offset;
+                        offset.X = 100f * npc.ai[3] - 50 * Math.Sign(npc.ai[3]);
+                        offset.Y = -350 + 75f * Math.Abs(npc.ai[3]);
+                        targetPos = body.Center + offset;
+                        if (npc.Distance(targetPos) > 50)
+                            Movement(targetPos, 0.8f, 24f);
+
+                        if (++npc.ai[2] > 50)
+                        {
+                            npc.ai[2] = 0;
+                            if (Main.netMode != 1)
+                            {
+                                const int max = 16;
+                                for (int i = 0; i < max; i++)
+                                {
+                                    Vector2 speed = Main.rand.NextFloat(2f, 5f) * Vector2.UnitX.RotatedBy(2 * Math.PI / max * (i + Main.rand.NextDouble()));
+                                    Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<NatureIcicle>(),
+                                        npc.damage / 4, 0f, Main.myPlayer, 60 + Main.rand.Next(20));
+                                }
+                            }
+                        }
+
+                        if (++npc.localAI[0] > 300)
+                        {
+                            npc.ai[0] = 0;
+                            npc.localAI[0] = 0;
+                            npc.ai[2] = 0;
+                            npc.localAI[1] = 0;
+                            npc.netUpdate = true;
+                        }
+                    }
+                    break;
+
+                case 2: //chlorophyte
+                    if (body.Distance(player.Center) < 3000 && body.Distance(player.Center) > 300)
+                        targetPos = player.Center;
+                    else
+                        targetPos = body.Center + body.DirectionTo(player.Center) * 300;
+                    Movement(targetPos, 0.18f, 24f);
+
+                    if (npc.ai[2] == 0)
+                    {
+                        npc.ai[2] = 1;
+                        if (Main.netMode != 1)
+                        {
+                            const int max = 5;
+                            const float distance = 125f;
+                            float rotation = 2f * (float)Math.PI / max;
+                            for (int i = 0; i < max; i++)
+                            {
+                                Vector2 spawnPos = npc.Center + new Vector2(distance, 0f).RotatedBy(rotation * i);
+                                Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<NatureCrystalLeaf>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, rotation * i);
+                            }
+                        }
+                    }
+
+                    if (++npc.localAI[0] > 300)
+                    {
+                        npc.ai[0] = 0;
+                        npc.localAI[0] = 0;
+                        npc.ai[2] = 0;
+                        npc.localAI[1] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 3: //shroomite
+                    {
+                        Vector2 offset;
+                        offset.X = 100f * npc.ai[3] - 50 * Math.Sign(npc.ai[3]);
+                        offset.Y = -350 + 75f * Math.Abs(npc.ai[3]);
+                        targetPos = body.Center + offset;
+                        if (npc.Distance(targetPos) > 50)
+                            Movement(targetPos, 0.8f, 24f);
+
+                        if (++npc.ai[2] > 2)
+                        {
+                            npc.ai[2] = 0;
+
+                            Vector2 speed = player.Center - npc.Center;
+                            speed.X += Main.rand.Next(-40, 41);
+                            speed.Y += Main.rand.Next(-40, 41);
+                            speed.Normalize();
+                            speed *= 14f;
+                            if (Main.netMode != 1 && npc.localAI[0] > 60)
+                            {
+                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<NatureBullet>(), npc.damage / 4, 0f, Main.myPlayer);
+                            }
+                        }
+
+                        if (++npc.localAI[0] > 300)
+                        {
+                            npc.ai[0] = 0;
+                            npc.localAI[0] = 0;
+                            npc.ai[2] = 0;
+                            npc.localAI[1] = 0;
+                            npc.netUpdate = true;
+                        }
+                    }
+                    break;
+
+                case 4: //deathrays
+                    {
+                        Vector2 offset = -600 * Vector2.UnitY.RotatedBy(MathHelper.ToRadians(60 / 3) * npc.ai[3]);
+                        targetPos = body.Center + offset;
+                        Movement(targetPos, 0.8f, 24f);
+
+                        npc.direction = npc.spriteDirection = npc.Center.X < body.Center.X ? 1 : -1;
+
+                        if (++npc.ai[2] == 90)
+                        {
+                            npc.netUpdate = true;
+                            npc.localAI[1] = npc.DirectionTo(body.Center - Vector2.UnitY * 300).ToRotation();
+
+                            if (Main.netMode != 1)
+                            {
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[1]), 
+                                    ModContent.ProjectileType<NatureDeathraySmall>(), npc.damage / 3, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            }
+                        }
+                        else if (npc.ai[2] == 150)
+                        {
+                            float ai0 = 2f * (float)Math.PI / 120 * Math.Sign(npc.ai[3]);
+                            if (Main.netMode != 1)
+                            {
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[1]),
+                                    ModContent.ProjectileType<NatureDeathray>(), npc.damage / 3, 0f, Main.myPlayer, ai0, npc.whoAmI);
+                            }
+                        }
+
+                        if (++npc.localAI[0] > 330)
+                        {
+                            npc.ai[0] = 0;
+                            npc.localAI[0] = 0;
+                            npc.ai[2] = 0;
+                            npc.localAI[1] = 0;
+                            npc.netUpdate = true;
+                        }
                     }
                     break;
 
@@ -87,8 +368,6 @@ namespace FargowiltasSouls.NPCs.Champions
                     npc.ai[0] = 0;
                     goto case 0;
             }
-
-            npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
         }
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
@@ -138,6 +417,20 @@ namespace FargowiltasSouls.NPCs.Champions
         public override bool CheckActive()
         {
             return false;
+        }
+
+        public override void FindFrame(int frameHeight)
+        {
+            int frameModifier = (int)npc.ai[3];
+            if (frameModifier > 0)
+                frameModifier--;
+            frameModifier += 3;
+
+            npc.frame.Y = frameHeight * frameModifier;
+            if (npc.frame.Y < 0)
+                npc.frame.Y = 0;
+            if (npc.frame.Y >= frameHeight * Main.npcFrameCount[npc.type])
+                npc.frame.Y = frameHeight * (Main.npcFrameCount[npc.type] - 1);
         }
 
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)

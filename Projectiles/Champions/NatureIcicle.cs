@@ -8,79 +8,98 @@ using FargowiltasSouls.Buffs.Masomode;
 
 namespace FargowiltasSouls.Projectiles.Champions
 {
-    public class WillFireball : ModProjectile
+    public class NatureIcicle : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_711";
+        public override string Texture => "FargowiltasSouls/Projectiles/Souls/FrostIcicle";
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Fireball");
+            DisplayName.SetDefault("Nature Icicle");
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 30;
-            projectile.height = 30;
+            projectile.width = 20;
+            projectile.height = 20;
             projectile.aiStyle = -1;
             projectile.hostile = true;
             projectile.timeLeft = 600;
-            projectile.ignoreWater = true;
-            //cooldownSlot = 1;
+
+            projectile.scale = 1.5f;
+            projectile.hide = true;
+            cooldownSlot = 1;
+            projectile.tileCollide = false;
         }
 
         public override void AI()
         {
-            projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2;
+            if (projectile.localAI[0] == 0)
+            {
+                projectile.localAI[0] = Main.rand.Next(2) == 0 ? 1 : -1;
+                projectile.rotation = Main.rand.NextFloat(0, (float)Math.PI * 2);
+                projectile.hide = false;
+            }
+            
+            if (--projectile.ai[0] > 0)
+            {
+                projectile.tileCollide = false;
+                projectile.rotation += projectile.velocity.Length() * .1f * projectile.localAI[0];
+            }
+            else if (projectile.ai[0] == 0)
+            {
+                int p = Player.FindClosest(projectile.Center, 0, 0);
+                if (p != -1)
+                {
+                    projectile.velocity = projectile.DirectionTo(Main.player[p].Center) * 30;
+                    projectile.netUpdate = true;
+
+                    Main.PlaySound(SoundID.Item1, projectile.Center);
+                }
+            }
+            else
+            {
+                if (!projectile.tileCollide && !Collision.SolidCollision(projectile.position, projectile.width, projectile.height))
+                    projectile.tileCollide = true;
+
+                if (projectile.velocity != Vector2.Zero)
+                    projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2;
+            }
         }
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 14);
+            Main.PlaySound(SoundID.Item27, projectile.Center);
 
-            for (int i = 0; i < 30; i++)
+            for (int index1 = 0; index1 < 20; ++index1)
             {
-                int dust = Dust.NewDust(projectile.position, projectile.width,
-                    projectile.height, 31, 0f, 0f, 100, default(Color), 3f);
-                Main.dust[dust].velocity *= 1.4f;
-            }
-
-            for (int i = 0; i < 20; i++)
-            {
-                int dust = Dust.NewDust(projectile.position, projectile.width,
-                    projectile.height, 6, 0f, 0f, 100, default(Color), 3.5f);
-                Main.dust[dust].noGravity = true;
-                Main.dust[dust].velocity *= 7f;
-                dust = Dust.NewDust(projectile.position, projectile.width,
-                    projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
-                Main.dust[dust].velocity *= 3f;
-            }
-
-            float scaleFactor9 = 0.5f;
-            for (int j = 0; j < 4; j++)
-            {
-                int gore = Gore.NewGore(new Vector2(projectile.Center.X, projectile.Center.Y),
-                    default(Vector2),
-                    Main.rand.Next(61, 64));
-
-                Main.gore[gore].velocity *= scaleFactor9;
-                Main.gore[gore].velocity.X += 1f;
-                Main.gore[gore].velocity.Y += 1f;
+                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 92, 0.0f, 0.0f, 0, new Color(), 1f);
+                if (Main.rand.Next(3) != 0)
+                {
+                    Dust dust1 = Main.dust[index2];
+                    dust1.velocity = dust1.velocity * 2f;
+                    Main.dust[index2].noGravity = true;
+                    Dust dust2 = Main.dust[index2];
+                    dust2.scale = dust2.scale * 1.75f;
+                }
+                else
+                {
+                    Dust dust = Main.dust[index2];
+                    dust.scale = dust.scale * 0.5f;
+                }
             }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Defenseless>(), 300);
-            target.AddBuff(ModContent.BuffType<Midas>(), 300);
-            target.AddBuff(BuffID.Bleeding, 300);
-            projectile.timeLeft = 0;
+            target.AddBuff(BuffID.Chilled, 300);
+            target.AddBuff(BuffID.Frostburn, 300);
         }
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * projectile.Opacity;
+            return Color.White;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

@@ -87,7 +87,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode != 2)
+                        if (Main.netMode == 2)
                             NetMessage.SendData(23, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 0f, npc.whoAmI, -1f, 1f, npc.target);
@@ -95,7 +95,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode != 2)
+                        if (Main.netMode == 2)
                             NetMessage.SendData(23, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 0f, npc.whoAmI, 1f, -1f, npc.target);
@@ -103,7 +103,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode != 2)
+                        if (Main.netMode == 2)
                             NetMessage.SendData(23, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 0f, npc.whoAmI, 1f, 1f, npc.target);
@@ -111,7 +111,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode != 2)
+                        if (Main.netMode == 2)
                             NetMessage.SendData(23, -1, -1, null, n);
                     }
                 }
@@ -183,7 +183,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                     Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                    if (Main.netMode != 2)
+                                    if (Main.netMode == 2)
                                         NetMessage.SendData(23, -1, -1, null, n);
                                 }
                             }
@@ -194,7 +194,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                     Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                    if (Main.netMode != 2)
+                                    if (Main.netMode == 2)
                                         NetMessage.SendData(23, -1, -1, null, n);
                                 }
                             }
@@ -205,7 +205,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                     Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                    if (Main.netMode != 2)
+                                    if (Main.netMode == 2)
                                         NetMessage.SendData(23, -1, -1, null, n);
                                 }
                             }
@@ -216,7 +216,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                     Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                    if (Main.netMode != 2)
+                                    if (Main.netMode == 2)
                                         NetMessage.SendData(23, -1, -1, null, n);
                                 }
                             }
@@ -243,7 +243,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             {
                                 Main.npc[n2].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                 Main.npc[n2].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                if (Main.netMode != 2)
+                                if (Main.netMode == 2)
                                     NetMessage.SendData(23, -1, -1, null, n2);
                             }
                         }
@@ -625,7 +625,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             {
                                 Main.npc[n2].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                 Main.npc[n2].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                if (Main.netMode != 2)
+                                if (Main.netMode == 2)
                                     NetMessage.SendData(23, -1, -1, null, n2);
                             }
                         }
