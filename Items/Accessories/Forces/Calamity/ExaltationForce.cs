@@ -27,15 +27,15 @@ Effects of Affliction, Nebulous Core, and Draedon's Heart
 Effects of the The Amalgam, Dynamo Stem Cells, and Godly Soul Artifact
 Effects of Yharim's Gift, Heart of the Elements, and The Sponge
 Summons several pets");
-            DisplayName.AddTranslation(GameCulture.Chinese, "毁灭之力");
+            DisplayName.AddTranslation(GameCulture.Chinese, "晋升之力");
             Tooltip.AddTranslation(GameCulture.Chinese,
-@"'让那些反抗你的人下地狱吧'
-拥有软壳, 掠夺者和阿塔西亚的套装效果
-拥有炫星, 龙蒿和魔影的套装效果
-拥有大珍珠和阿米迪亚斯之垂饰的效果
-拥有寓言龟壳和瘟疫蜂巢的效果
-拥有星陨幻空石和星神游龙外壳的效果
-拥有渎魂神物和蚀日尊戒的效果");
+@"''
+拥有龙蒿，血炎和硫火的套装效果
+拥有弑神者，始源林海和古圣金源的套装效果
+拥有渎火核心，蚀日尊戒和血神核心的效果
+拥有灾劫之尖啸，星云核心和嘉登之心的效果
+拥有聚合之脑，痴愚金龙干细胞和圣魂神物的效果
+拥有魔君的礼物，元素之心和化绵留香石的效果");
 
         }
 
