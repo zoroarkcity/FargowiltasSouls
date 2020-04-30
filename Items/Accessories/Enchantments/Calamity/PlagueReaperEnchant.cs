@@ -32,6 +32,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 Enemies receive 10% more damage from ranged projectiles when afflicted by the Plague
 Getting hit causes the plague cinders to rain from above
 Effects of Plague Hive, Plagued Fuel Pack, The Bee, and The Camper");
+            DisplayName.AddTranslation(GameCulture.Chinese, "瘟疫死神魔石");
+            Tooltip.AddTranslation(GameCulture.Chinese, 
+@"''
+受瘟疫减益作用的敌人会额外受到10%的远程伤害
+受到伤害会使瘟疫残渣从天而降
+拥有瘟疫蜂巢，瘟疫燃料背包，蜜蜂护符和露营者的效果");
         }
 
         public override void SetDefaults()
