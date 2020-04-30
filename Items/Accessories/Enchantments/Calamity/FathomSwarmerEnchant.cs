@@ -39,7 +39,7 @@ Effects of Sand Cloak and Alluring Bait
 Summons several pets");
             DisplayName.AddTranslation(GameCulture.Chinese, "幻渊鱼群魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
-@"'足以屠神的力量存于你的体内...'
+@"''
 浸没在液体中时增加10%召唤伤害
 在深渊提供适量光照，并适度减少深渊中的氧气损耗
 攻击敌人或被敌人攻击赋予他们中毒减益
