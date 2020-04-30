@@ -611,6 +611,18 @@ namespace FargowiltasSouls.NPCs.Champions
             target.AddBuff(BuffID.Bleeding, 300);
         }
 
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (npc.life <= 0)
+            {
+                for (int i = 1; i <= 4; i++)
+                {
+                    Vector2 pos = npc.Center + Main.rand.NextVector2Circular(npc.width / 4, npc.height / 4);
+                    Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/WillGore" + i.ToString()), npc.scale);
+                }
+            }
+        }
+
         public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = ItemID.SuperHealingPotion;
@@ -669,7 +681,7 @@ namespace FargowiltasSouls.NPCs.Champions
             
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
             {
-                Color color27 = Color.White * 0.5f;
+                Color color27 = Color.White;
                 color27 *= (float)(NPCID.Sets.TrailCacheLength[npc.type] - i) / NPCID.Sets.TrailCacheLength[npc.type];
                 Vector2 value4 = npc.oldPos[i];
                 float num165 = npc.rotation; //npc.oldRot[i];
@@ -677,7 +689,7 @@ namespace FargowiltasSouls.NPCs.Champions
             }
 
             Main.spriteBatch.Draw(glowmask, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, npc.rotation, origin2, npc.scale, effects, 0f);
-            Main.spriteBatch.Draw(glowmask2, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White * 0.5f, npc.rotation, origin2, npc.scale, effects, 0f);
+            Main.spriteBatch.Draw(glowmask2, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, npc.rotation, origin2, npc.scale, effects, 0f);
             return false;
         }
     }

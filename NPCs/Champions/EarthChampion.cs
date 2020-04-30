@@ -297,6 +297,18 @@ namespace FargowiltasSouls.NPCs.Champions
             target.AddBuff(BuffID.Burning, 300);
         }
 
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (npc.life <= 0)
+            {
+                for (int i = 1; i <= 3; i++)
+                {
+                    Vector2 pos = npc.Center + Main.rand.NextVector2Circular(npc.width / 4, npc.height / 4);
+                    Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/EarthGore" + i.ToString()), npc.scale);
+                }
+            }
+        }
+
         public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = ItemID.SuperHealingPotion;
