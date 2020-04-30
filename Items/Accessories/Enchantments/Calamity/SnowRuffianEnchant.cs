@@ -34,6 +34,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Calamity
 @"''
 You can glide to negate fall damage
 Effects of Scuttler's Jewel");
+            DisplayName.AddTranslation(GameCulture.Chinese, "雪境暴徒魔石");
+            Tooltip.AddTranslation(GameCulture.Chinese, 
+@"''
+你可以缓降来消除坠落伤害
+拥有潜遁者宝石的效果");
         }
 
         /*public override void ModifyTooltips(List<TooltipLine> list)
