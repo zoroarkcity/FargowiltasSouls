@@ -253,7 +253,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.noGravity = true;
                         npc.velocity.Y -= 1f;
 
-                        return;
+                        break;
                     }
                     else
                     {

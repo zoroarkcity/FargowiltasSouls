@@ -123,15 +123,13 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.noGravity = true;
                         npc.velocity.Y -= 1f;
 
-                        return;
+                        break;
                     }
-                    else
-                    {
-                        targetPos = player.Center;
-                        targetPos.Y -= 350;
-                        if (npc.Distance(targetPos) > 50)
-                            Movement(targetPos, 0.15f, 24f, true);
-                    }
+                    
+                    targetPos = player.Center;
+                    targetPos.Y -= 300;
+                    if (npc.Distance(targetPos) > 50)
+                        Movement(targetPos, 0.16f, 24f, true);
 
                     if (++npc.ai[1] > 180)
                     {
@@ -184,9 +182,89 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case 2:
+                    if (npc.ai[3] == 0)
+                    {
+                        if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f) //despawn code
+                        {
+                            npc.TargetClosest(false);
+                            if (npc.timeLeft > 30)
+                                npc.timeLeft = 30;
+
+                            npc.noTileCollide = true;
+                            npc.noGravity = true;
+                            npc.velocity.Y -= 1f;
+
+                            return;
+                        }
+
+                        if (npc.ai[2] == 0)
+                            npc.ai[2] = npc.Center.Y; //store arena height
+                        
+                        if (npc.Center.Y > npc.ai[2] + 1000) //now below arena, track player
+                        {
+                            targetPos = new Vector2(player.Center.X, npc.ai[2] + 1100);
+                            Movement(targetPos, 1.2f, 24f);
+
+                            if (Math.Abs(player.Center.X - npc.Center.X) < npc.width / 2
+                                && ++npc.ai[1] > (npc.localAI[2] == 1 ? 30 : 60)) //in position under player
+                            {
+                                Main.PlaySound(SoundID.Item92, npc.Center);
+
+                                npc.ai[3]++;
+                                npc.ai[1] = 0;
+                                npc.netUpdate = true;
+                            }
+                        }
+                        else //drop below arena
+                        {
+                            npc.velocity.X *= 0.95f;
+                            npc.velocity.Y += 0.6f;
+                        }
+                    }
+                    else
+                    {
+                        npc.velocity.X = 0;
+                        npc.velocity.Y = -36f;
+
+                        if (++npc.ai[1] > 1) //spawn pixies
+                        {
+                            npc.ai[1] = 0;
+                            npc.localAI[0] = npc.localAI[0] == 1 ? -1 : 1; //alternate sides
+                            if (Main.netMode != 1)
+                            {
+                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LesserFairy>(), npc.whoAmI, Target: npc.target);
+                                if (n != Main.maxNPCs)
+                                {
+                                    Main.npc[n].velocity = 4f * Vector2.UnitX.RotatedBy(Math.PI * (Main.rand.NextDouble() - 0.5));
+                                    Main.npc[n].velocity.X *= npc.localAI[0];
+
+                                    if (Main.netMode == 2)
+                                    {
+                                        NetMessage.SendData(23, -1, -1, null, n);
+                                    }
+                                }
+                            }
+                        }
+
+                        if (npc.Center.Y < player.Center.Y - 600) //dash ended
+                        {
+                            npc.velocity.Y = 0f;
+                            npc.localAI[0] = 0f;
+
+                            npc.TargetClosest();
+                            npc.ai[0]++;
+                            npc.ai[1] = 0;
+                            npc.ai[2] = 0;
+                            npc.ai[3] = 0;
+                            npc.netUpdate = true;
+                        }
+                    }
+                    break;
+
+                case 3:
                     goto case 0;
 
-                case 3: //beetle swarm
+                case 4: //beetle swarm
                     npc.velocity *= 0.9f;
 
                     if (npc.ai[3] == 0)
@@ -220,6 +298,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     if (++npc.ai[1] > 360)
                     {
+                        npc.localAI[0] = 0;
+
                         npc.TargetClosest();
                         npc.ai[0]++;
                         npc.ai[1] = 0;
@@ -229,10 +309,10 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     break;
 
-                case 4:
+                case 5:
                     goto case 0;
 
-                case 5:
+                case 6:
                     npc.velocity *= 0.98f;
 
                     if (++npc.ai[2] > 60)
@@ -269,10 +349,10 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     break;
 
-                case 6:
+                case 7:
                     goto case 0;
 
-                case 7: //deathray spin
+                case 8: //deathray spin
                     npc.velocity *= 0.95f;
 
                     npc.ai[3] +=  (float)Math.PI * 2 / (npc.localAI[2] == 1 ? -300 : 360);
@@ -307,10 +387,13 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     break;
 
-                case 8:
+                case 9:
+                    goto case 2;
+
+                case 10:
                     goto case 0;
 
-                case 9: //cactus mines
+                case 11: //cactus mines
                     npc.velocity *= 0.98f;
 
                     if (++npc.ai[2] > (npc.localAI[2] == 1 ? 75 : 100))
