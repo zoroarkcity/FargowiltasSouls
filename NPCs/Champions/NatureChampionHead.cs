@@ -124,20 +124,37 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case -2: //molten
+                    if (++npc.ai[2] > 60)
+                    {
+                        npc.ai[2] = 0;
+
+                        Main.PlaySound(2, npc.Center, 14);
+
+                        if (Main.netMode != 1)
+                        {
+                            const int max = 12;
+                            for (int i = 0; i < max; i++)
+                            {
+                                Vector2 speed = 20f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i);
+                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<NatureFireball>(), npc.damage / 4, 0f, Main.myPlayer);
+                            }
+                        }
+                    }
+
                     if (++npc.localAI[0] < 240) //stay near
                     {
                         if (body.Distance(player.Center) < 3000 && body.Distance(player.Center) > 300)
                             targetPos = player.Center;
                         else
                             targetPos = body.Center + body.DirectionTo(player.Center) * 300;
-                        Movement(targetPos, 0.18f, 24f);
+                        Movement(targetPos, 0.12f, 24f);
 
                         for (int i = 0; i < 20; i++) //warning ring
                         {
                             Vector2 offset = new Vector2();
                             double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                            offset.X += (float)(Math.Sin(angle) * 300);
-                            offset.Y += (float)(Math.Cos(angle) * 300);
+                            offset.X += (float)(Math.Sin(angle) * 400);
+                            offset.Y += (float)(Math.Cos(angle) * 400);
                             Dust dust = Main.dust[Dust.NewDust(npc.Center + offset - new Vector2(4, 4), 0, 0, DustID.Fire, 0, 0, 100, Color.White, 2f)];
                             dust.velocity = npc.velocity;
                             if (Main.rand.Next(3) == 0)
@@ -155,18 +172,12 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (Main.netMode != 1)
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<NatureExplosion>(), npc.damage / 4, 0f, Main.myPlayer);
-
-                            const int max = 16;
-                            for (int i = 0; i < max; i++)
-                            {
-                                Vector2 speed = 20f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i);
-                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<NatureFireball>(), npc.damage / 4, 0f, Main.myPlayer);
-                            }
                         }
                     }
                     else if (npc.localAI[0] > 300)
                     {
                         npc.ai[0] = 0;
+                        npc.ai[2] = 0;
                         npc.localAI[0] = 0;
                         npc.netUpdate = true;
                     }
@@ -230,17 +241,18 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.8f, 24f);
 
-                        if (++npc.ai[2] > 50)
+                        if (++npc.ai[2] > 40)
                         {
                             npc.ai[2] = 0;
+                            npc.localAI[1] = npc.localAI[1] == 1 ? -1 : 1;
                             if (Main.netMode != 1)
                             {
-                                const int max = 16;
+                                const int max = 25;
                                 for (int i = 0; i < max; i++)
                                 {
                                     Vector2 speed = Main.rand.NextFloat(2f, 5f) * Vector2.UnitX.RotatedBy(2 * Math.PI / max * (i + Main.rand.NextDouble()));
                                     Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<NatureIcicle>(),
-                                        npc.damage / 4, 0f, Main.myPlayer, 60 + Main.rand.Next(20));
+                                        npc.damage / 4, 0f, Main.myPlayer, 60 + Main.rand.Next(20), npc.localAI[1]);
                                 }
                             }
                         }
@@ -302,14 +314,20 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             npc.ai[2] = 0;
 
-                            Vector2 speed = player.Center - npc.Center;
-                            speed.X += Main.rand.Next(-40, 41);
-                            speed.Y += Main.rand.Next(-40, 41);
-                            speed.Normalize();
-                            speed *= 14f;
-                            if (Main.netMode != 1 && npc.localAI[0] > 60)
+                            if (npc.localAI[0] > 60)
                             {
-                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<NatureBullet>(), npc.damage / 4, 0f, Main.myPlayer);
+                                Main.PlaySound(SoundID.Item11, npc.Center);
+
+                                Vector2 speed = player.Center - npc.Center;
+                                speed.X += Main.rand.Next(-40, 41);
+                                speed.Y += Main.rand.Next(-40, 41);
+                                speed.Normalize();
+                                speed *= 14f;
+                                if (Main.netMode != 1)
+                                {
+                                    Projectile.NewProjectile(npc.Center + speed * 5, speed,
+                                        ModContent.ProjectileType<NatureBullet>(), npc.damage / 4, 0f, Main.myPlayer);
+                                }
                             }
                         }
 

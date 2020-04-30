@@ -7,7 +7,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 {
     public class NatureBullet : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_89";
+        public override string Texture => "FargowiltasSouls/Projectiles/Masomode/SniperBullet";
 
         public override void SetStaticDefaults()
         {
@@ -51,6 +51,11 @@ namespace FargowiltasSouls.Projectiles.Champions
                         ModContent.ProjectileType<CrystalBombShard>(), projectile.damage, 0f, projectile.owner);
                 }
             }
+        }
+
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White;
         }
     }
 }

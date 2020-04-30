@@ -55,6 +55,14 @@ namespace FargowiltasSouls.Projectiles.Champions
                     projectile.velocity = projectile.DirectionTo(Main.player[p].Center) * 30;
                     projectile.netUpdate = true;
 
+                    if (projectile.ai[1] > 0)
+                    {
+                        float rotation = MathHelper.ToRadians(10) + Main.rand.NextFloat(MathHelper.ToRadians(35));
+                        if (Main.rand.Next(2) == 0)
+                            rotation *= -1;
+                        projectile.velocity = projectile.velocity.RotatedBy(rotation);
+                    }
+
                     Main.PlaySound(SoundID.Item1, projectile.Center);
                 }
             }

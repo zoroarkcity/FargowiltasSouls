@@ -17,8 +17,8 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void SetDefaults()
         {
-            projectile.width = 600;
-            projectile.height = 600;
+            projectile.width = 800;
+            projectile.height = 800;
             projectile.aiStyle = -1;
             projectile.friendly = false;
             projectile.hostile = true;

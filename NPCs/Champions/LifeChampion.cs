@@ -235,7 +235,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LesserFairy>(), npc.whoAmI, Target: npc.target);
                                 if (n != Main.maxNPCs)
                                 {
-                                    Main.npc[n].velocity = 4f * Vector2.UnitX.RotatedBy(Math.PI * (Main.rand.NextDouble() - 0.5));
+                                    Main.npc[n].velocity = 5f * Vector2.UnitX.RotatedBy(Math.PI * (Main.rand.NextDouble() - 0.5));
                                     Main.npc[n].velocity.X *= npc.localAI[0];
 
                                     if (Main.netMode == 2)
