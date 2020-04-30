@@ -10,6 +10,7 @@ using FargowiltasSouls.Items.Accessories.Enchantments;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
 using System.IO;
+using Terraria.Graphics.Shaders;
 
 namespace FargowiltasSouls.NPCs.Champions
 {
@@ -20,7 +21,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             DisplayName.SetDefault("Champion of Will");
             Main.npcFrameCount[npc.type] = 8;
-            NPCID.Sets.TrailCacheLength[npc.type] = 6;
+            NPCID.Sets.TrailCacheLength[npc.type] = 10;
             NPCID.Sets.TrailingMode[npc.type] = 1;
         }
 
@@ -453,11 +454,11 @@ namespace FargowiltasSouls.NPCs.Champions
                                 npc.velocity.Y -= moveSpeed;
                         }
 
-                        if (++npc.localAI[0] > 40)
+                        if (--npc.localAI[0] < 0)
                         {
-                            npc.localAI[0] = 0;
+                            npc.localAI[0] = 40;
 
-                            if (npc.ai[1] < 130)
+                            if (npc.ai[1] < 110)
                             {
                                 Main.PlaySound(36, npc.Center, -1);
 
@@ -474,7 +475,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             }
                         }
 
-                        if (++npc.ai[1] > 180)
+                        if (++npc.ai[1] > 150)
                         {
                             npc.ai[0] = 0;
                             npc.ai[1] = 0;
@@ -535,7 +536,14 @@ namespace FargowiltasSouls.NPCs.Champions
                             if (Main.netMode != 1 && npc.ai[1] < 90) //shoot fireball
                             {
                                 Main.PlaySound(SoundID.Item34, npc.Center);
-                                Vector2 spawn = npc.Center;
+                                Vector2 spawn = new Vector2(40, 50);
+                                if (npc.direction < 0)
+                                {
+                                    spawn.X *= -1;
+                                    spawn = spawn.RotatedBy(Math.PI);
+                                }
+                                spawn = spawn.RotatedBy(npc.rotation);
+                                spawn += npc.Center;
                                 Vector2 projVel = npc.DirectionTo(player.Center).RotatedBy((Main.rand.NextDouble() - 0.5) * Math.PI / 10);
                                 projVel.Normalize();
                                 projVel *= Main.rand.NextFloat(8f, 12f);
@@ -574,25 +582,25 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void FindFrame(int frameHeight)
         {
-            if (npc.ai[0] == 1)
+            if (++npc.frameCounter > 4)
             {
-                npc.frameCounter = 5;
-                npc.frame.Y = 6 * frameHeight;
+                npc.frameCounter = 0;
+                npc.frame.Y += frameHeight;
             }
-            else if (npc.ai[0] == -1)
+
+            if (npc.ai[0] == 0 || npc.ai[0] == 2)
             {
-                npc.frameCounter = 5;
-                npc.frame.Y = 0;
+                if (npc.frame.Y >= 6 * frameHeight)
+                    npc.frame.Y = 0;
             }
             else
             {
-                if (++npc.frameCounter > 4)
-                {
-                    npc.frameCounter = 0;
-                    npc.frame.Y += frameHeight;
-                    if (npc.frame.Y >= 4 * frameHeight)
-                        npc.frame.Y = 0;
-                }
+
+                if (npc.frame.Y < frameHeight * 6)
+                    npc.frame.Y = frameHeight * 6;
+
+                if (npc.frame.Y >= 8 * frameHeight)
+                    npc.frame.Y = 0;
             }
         }
 
@@ -636,6 +644,8 @@ namespace FargowiltasSouls.NPCs.Champions
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture2D13 = Main.npcTexture[npc.type];
+            Texture2D glowmask = ModContent.GetTexture("FargowiltasSouls/NPCs/Champions/WillChampion_Glow");
+            Texture2D glowmask2 = ModContent.GetTexture("FargowiltasSouls/NPCs/Champions/WillChampion_Glow2");
             //int num156 = Main.npcTexture[npc.type].Height / Main.npcFrameCount[npc.type]; //ypos of lower right corner of sprite to draw
             //int y3 = num156 * npc.frame.Y; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = npc.frame;//new Rectangle(0, y3, texture2D13.Width, num156);
@@ -644,18 +654,30 @@ namespace FargowiltasSouls.NPCs.Champions
             Color color26 = lightColor;
             color26 = npc.GetAlpha(color26);
 
-            SpriteEffects effects = npc.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteEffects effects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
+            /*for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
             {
-                Color color27 = color26 * 0.5f;
+                Color color27 = color26 * 0.2f;
                 color27 *= (float)(NPCID.Sets.TrailCacheLength[npc.type] - i) / NPCID.Sets.TrailCacheLength[npc.type];
                 Vector2 value4 = npc.oldPos[i];
                 float num165 = npc.rotation; //npc.oldRot[i];
                 Main.spriteBatch.Draw(texture2D13, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
-            }
+            }*/
 
             Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
+            
+            for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
+            {
+                Color color27 = Color.White * 0.5f;
+                color27 *= (float)(NPCID.Sets.TrailCacheLength[npc.type] - i) / NPCID.Sets.TrailCacheLength[npc.type];
+                Vector2 value4 = npc.oldPos[i];
+                float num165 = npc.rotation; //npc.oldRot[i];
+                Main.spriteBatch.Draw(glowmask2, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
+            }
+
+            Main.spriteBatch.Draw(glowmask, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, npc.rotation, origin2, npc.scale, effects, 0f);
+            Main.spriteBatch.Draw(glowmask2, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White * 0.5f, npc.rotation, origin2, npc.scale, effects, 0f);
             return false;
         }
     }
