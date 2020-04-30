@@ -32,6 +32,14 @@ Grants a sulphurous bubble jump that applies venom on hit
 Slightly reduces breath loss in the abyss
 Effects of Sand Cloak and Alluring Bait
 Summons a Danny Devito and Radiator pet");
+            DisplayName.AddTranslation(GameCulture.Chinese, "硫磺魔石");
+            Tooltip.AddTranslation(GameCulture.Chinese, 
+@"''
+攻击敌人或被敌人攻击赋予他们中毒减益
+获得一段硫磺泡泡跳跃，击中敌人赋予毒液减益
+稍微减轻深渊带来的呼吸困难
+拥有沙尘披风和诱惑鱼饵的效果
+召唤丹尼·德维托和辐射海参宠物");
         }
 
         public override void SetDefaults()
