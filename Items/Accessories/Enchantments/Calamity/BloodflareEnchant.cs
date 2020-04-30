@@ -50,9 +50,9 @@ Summons a Brimling pet");
             DisplayName.AddTranslation(GameCulture.Chinese, "血炎魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'堕落者的灵魂由你支配...'
-按下Y键进入鲜血狂怒状态
-此状态下大幅度增加你的伤害
-此状态下血量快速减伤，无魔力回复
+按Y键进入硫火狂暴模式
+在此模式下，你造成的伤害会显著增加
+然而这是以快速的生命流失和魔力再生速度归零为代价的
 击中一个生命值低于50%的敌人有几率掉落红心
 击中一个生命值高于50%的敌人有几率掉落魔力星
 血月期间击杀的敌人掉落血珠的概率大幅提高
