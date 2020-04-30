@@ -303,7 +303,7 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 for (int i = 1; i <= 3; i++)
                 {
-                    Vector2 pos = npc.Center + Main.rand.NextVector2Circular(npc.width / 4, npc.height / 4);
+                    Vector2 pos = npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height));
                     Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/EarthGore" + i.ToString()), npc.scale);
                 }
             }
