@@ -466,7 +466,7 @@ namespace FargowiltasSouls.NPCs
                     break;
 
                 case NPCID.MoonLordHead:
-                    npc.lifeMax /= 2;
+                    npc.lifeMax = (int)(npc.lifeMax * .75);
                     goto case NPCID.MoonLordHand;
 
                 case NPCID.MoonLordHand:

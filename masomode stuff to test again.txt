@@ -28,4 +28,5 @@ all of moon lord's attacks will inflict curse of the moon (phantasmal inflicts l
 all sources of curse of the moon extended
 curse of the moon inflicts defense, DR, damage, crit down
 removed moon lord damage boost
+buffed lord head from 50% to 75% life
 beetle ench MURDERED: caps at first beetle level (unnerfed in SOT)
