@@ -136,12 +136,16 @@ namespace FargowiltasSouls
         {
             if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.BeetleEffect)) return;
 
+            if (player.beetleDefense) //don't let this stack
+                return;
+
             player.beetleDefense = true;
             player.beetleCounter += 1f;
             int num5 = 180;
+            int cap = TerrariaSoul ? 3 : 1;
             if (player.beetleCounter >= num5)
             {
-                if (player.beetleOrbs > 0 && player.beetleOrbs < 3)
+                if (player.beetleOrbs > 0 && player.beetleOrbs < cap)
                 {
                     for (int k = 0; k < 22; k++)
                     {
@@ -151,7 +155,7 @@ namespace FargowiltasSouls
                         }
                     }
                 }
-                if (player.beetleOrbs < 3)
+                if (player.beetleOrbs < cap)
                 {
                     player.AddBuff(95 + player.beetleOrbs, 5, false);
                     player.beetleCounter = 0f;

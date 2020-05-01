@@ -24,7 +24,8 @@ life champion has a new ram attack
 increased mutant DR from 10% to 20%
 reduced mutant eye graze cap buff to 50%
 cyclonic fin grants a graze cap buff by 20%
-buffed moon lord damage boost from +10% to +20%
 all of moon lord's attacks will inflict curse of the moon (phantasmal inflicts longer)
 all sources of curse of the moon extended
 curse of the moon inflicts defense, DR, damage, crit down
+removed moon lord damage boost
+beetle ench MURDERED: caps at first beetle level (unnerfed in SOT)

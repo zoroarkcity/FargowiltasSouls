@@ -3231,7 +3231,6 @@ namespace FargowiltasSouls
             if (FargoSoulsWorld.MasochistMode && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore)
                 && player.Distance(Main.npc[EModeGlobalNPC.moonBoss].Center) < 2500)
             {
-                damage = (int)(damage * 1.20);
                 player.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 180);
             }
 
