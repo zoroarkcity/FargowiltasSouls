@@ -82,7 +82,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(mod.BuffType("MutantFang"), 180);
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 300);
+            target.AddBuff(mod.BuffType("CurseoftheMoon"), 360);
         }
 
         public override void Kill(int timeleft)

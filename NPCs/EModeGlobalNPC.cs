@@ -4101,11 +4101,11 @@ namespace FargowiltasSouls.NPCs
                         break;
                     case NPCID.CultistBossClone:
                         target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 180);
-                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 300);
+                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 360);
                         break;
                     case NPCID.CultistBoss:
                         target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 180);
-                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 300);
+                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 360);
                         break;
 
                     case NPCID.BigMossHornet:
@@ -4355,7 +4355,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.CultistDragonHead:
-                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 300);
+                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 360);
                         target.AddBuff(ModContent.BuffType<MutantNibble>(), 300);
                         break;
 

@@ -1679,13 +1679,13 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.PhantasmalDeathray:
-                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 300);
+                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 360);
                         break;
 
                     case ProjectileID.PhantasmalBolt:
                     case ProjectileID.PhantasmalEye:
                     case ProjectileID.PhantasmalSphere:
-                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 300);
+                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 360);
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<NPCs.MutantBoss.MutantBoss>()))
                         {
                             target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;

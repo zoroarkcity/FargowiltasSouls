@@ -19,9 +19,12 @@ namespace FargowiltasSouls.Buffs.Masomode
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.statDefense -= 10;
-            player.endurance -= 0.1f;
+            player.statDefense -= 15;
+            player.endurance -= 0.15f;
+            player.GetModPlayer<FargoPlayer>().AllDamageUp(-0.15f);
+            player.GetModPlayer<FargoPlayer>().AllCritUp(-15);
             player.GetModPlayer<FargoPlayer>().CurseoftheMoon = true;
+            player.GetModPlayer<FargoPlayer>().MutantNibble = true;
         }
 
         public override void Update(NPC npc, ref int buffIndex)

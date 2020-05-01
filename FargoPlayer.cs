@@ -1882,7 +1882,7 @@ namespace FargowiltasSouls
                     player.lifeRegenCount = 0;
 
                 player.lifeRegenTime = 0;
-                player.lifeRegen -= 8;
+                player.lifeRegen -= 15;
             }
 
             if (Oiled && player.lifeRegen < 0)
@@ -3231,7 +3231,8 @@ namespace FargowiltasSouls
             if (FargoSoulsWorld.MasochistMode && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore)
                 && player.Distance(Main.npc[EModeGlobalNPC.moonBoss].Center) < 2500)
             {
-                damage = (int)(damage * 1.10);
+                damage = (int)(damage * 1.20);
+                player.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 180);
             }
 
             if (IronGuard && internalTimer > 0 && !player.immune)
