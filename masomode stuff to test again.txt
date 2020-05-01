@@ -21,3 +21,6 @@ maso boss scaling now disabled by default
 removed lifesteal from palladium (still present on force of earth)
 
 life champion has a new ram attack
+increased mutant DR from 10% to 20%
+reduced mutant eye graze cap buff to 50%
+cyclonic fin grants a graze cap buff by 20%

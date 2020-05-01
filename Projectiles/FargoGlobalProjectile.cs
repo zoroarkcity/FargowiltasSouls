@@ -1151,8 +1151,17 @@ namespace FargowiltasSouls.Projectiles
                 {
                     if (GrazeCheck(projectile))
                     {
-                        double grazeGain = fargoPlayer.MutantEye ? 0.04 : 0.02;
-                        double grazeCap = fargoPlayer.MutantEye ? 1.0 : 0.3;
+                        double grazeCap = 0.3;
+                        double grazeGain = 0.02;
+                        if (fargoPlayer.CyclonicFin)
+                        {
+                            grazeCap += 0.2;
+                        }
+                        if (fargoPlayer.MutantEye)
+                        {
+                            grazeCap += 0.5;
+                            grazeGain += 0.02;
+                        }
 
                         GrazeCD = 60;
                         fargoPlayer.GrazeBonus += grazeGain;

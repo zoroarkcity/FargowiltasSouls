@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             DisplayName.SetDefault("Mutant Eye");
             Tooltip.SetDefault(@"'Only a little suspicious'
 Grants immunity to Mutant Fang
-Increases graze bonus cap to 100% increased critical damage
+50% increased graze bonus critical damage cap
 Increases critical damage gained per graze
 Increases Spectral Abominationn respawn rate and damage
 Reduces Abominable Rebirth duration
