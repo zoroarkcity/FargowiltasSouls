@@ -65,32 +65,32 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 Main.PlaySound(2, npc.Center, 14);
 
-                for (int i = 0; i < 30; i++)
-                {
-                    int dust = Dust.NewDust(npc.position, npc.width, npc.height, 31, 0f, 0f, 100, default(Color), 3f);
-                    Main.dust[dust].velocity *= 1.4f;
-                }
-
-                for (int i = 0; i < 20; i++)
-                {
-                    int dust = Dust.NewDust(npc.position, npc.width, npc.height, 6, 0f, 0f, 100, default(Color), 3.5f);
-                    Main.dust[dust].noGravity = true;
-                    Main.dust[dust].velocity *= 7f;
-                    dust = Dust.NewDust(npc.position, npc.width, npc.height, 6, 0f, 0f, 100, default(Color), 1.5f);
-                    Main.dust[dust].velocity *= 3f;
-                }
-
-                float scaleFactor9 = 0.5f;
-                for (int j = 0; j < 4; j++)
-                {
-                    int gore = Gore.NewGore(npc.Center, default(Vector2), Main.rand.Next(61, 64));
-                    Main.gore[gore].velocity *= scaleFactor9;
-                    Main.gore[gore].velocity.X += 1f;
-                    Main.gore[gore].velocity.Y += 1f;
-                }
-
                 if (Main.netMode != 1)
                 {
+                    for (int i = 0; i < 30; i++)
+                    {
+                        int dust = Dust.NewDust(npc.position, npc.width, npc.height, 31, 0f, 0f, 100, default(Color), 3f);
+                        Main.dust[dust].velocity *= 1.4f;
+                    }
+
+                    for (int i = 0; i < 20; i++)
+                    {
+                        int dust = Dust.NewDust(npc.position, npc.width, npc.height, 6, 0f, 0f, 100, default(Color), 3.5f);
+                        Main.dust[dust].noGravity = true;
+                        Main.dust[dust].velocity *= 7f;
+                        dust = Dust.NewDust(npc.position, npc.width, npc.height, 6, 0f, 0f, 100, default(Color), 1.5f);
+                        Main.dust[dust].velocity *= 3f;
+                    }
+
+                    float scaleFactor9 = 0.5f;
+                    for (int j = 0; j < 4; j++)
+                    {
+                        int gore = Gore.NewGore(npc.Center, default(Vector2), Main.rand.Next(61, 64));
+                        Main.gore[gore].velocity *= scaleFactor9;
+                        Main.gore[gore].velocity.X += 1f;
+                        Main.gore[gore].velocity.Y += 1f;
+                    }
+
                     Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<TerraLightningOrb>(), npc.damage / 4, 0f, Main.myPlayer, npc.ai[3]);
 
                     npc.active = false;

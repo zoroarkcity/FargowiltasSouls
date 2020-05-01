@@ -329,7 +329,8 @@ namespace FargowiltasSouls.NPCs.Champions
                                 }
 
                                 Main.npc[i].Center = npc.Center;
-                                Main.npc[i].netUpdate = true;
+                                if (Main.netMode == 2)
+                                    NetMessage.SendData(23, -1, -1, null, i);
                             }
                         }
                     }
