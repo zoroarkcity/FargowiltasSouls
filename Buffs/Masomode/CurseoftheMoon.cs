@@ -24,7 +24,6 @@ namespace FargowiltasSouls.Buffs.Masomode
             player.GetModPlayer<FargoPlayer>().AllDamageUp(-0.15f);
             player.GetModPlayer<FargoPlayer>().AllCritUp(-15);
             player.GetModPlayer<FargoPlayer>().CurseoftheMoon = true;
-            player.GetModPlayer<FargoPlayer>().MutantNibble = true;
         }
 
         public override void Update(NPC npc, ref int buffIndex)
