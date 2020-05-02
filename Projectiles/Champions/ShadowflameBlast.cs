@@ -43,9 +43,6 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.BrokenArmor, 60);
-            target.AddBuff(ModContent.BuffType<Defenseless>(), 600);
-            target.AddBuff(ModContent.BuffType<Stunned>(), 60);
             target.AddBuff(ModContent.BuffType<Shadowflame>(), 1200);
             target.velocity.X = target.Center.X < Main.npc[(int)projectile.ai[0]].Center.X ? -15f : 15f;
             target.velocity.Y = -10f;

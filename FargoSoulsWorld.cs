@@ -47,6 +47,8 @@ namespace FargowiltasSouls
         public static bool NoMasoBossScaling = true;
         public static bool ReceivedTerraStorage;
 
+        public static bool[] downedChampions = new bool[9];
+
         public override void Initialize()
         {
             downedBetsy = false;
@@ -82,6 +84,9 @@ namespace FargowiltasSouls
 
             NoMasoBossScaling = true;
             ReceivedTerraStorage = false;
+
+            for (int i = 0; i < downedChampions.Length; i++)
+                downedChampions[i] = false;
         }
 
         public override TagCompound Save()
@@ -118,6 +123,12 @@ namespace FargowiltasSouls
             if (forceMeteor) downed.Add("forceMeteor");
             if (NoMasoBossScaling) downed.Add("NoMasoBossScaling");
             if (ReceivedTerraStorage) downed.Add("ReceivedTerraStorage");
+            
+            for (int i = 0; i < downedChampions.Length; i++)
+            {
+                if (downedChampions[i])
+                    downed.Add("downedChamp" + i.ToString());
+            }
 
             return new TagCompound
             {
@@ -161,6 +172,11 @@ namespace FargowiltasSouls
             NoMasoBossScaling = downed.Contains("NoMasoBossScaling");
             ReceivedTerraStorage = downed.Contains("ReceivedTerraStorage");
 
+            for (int i = 0; i < downedChampions.Length; i++)
+            {
+                downedChampions[i] = downed.Contains("downedChampion" + i.ToString());
+            }
+
             if (tag.ContainsKey("mutantP1"))
                 skipMutantP1 = tag.GetAsInt("mutantP1");
         }
@@ -197,6 +213,12 @@ namespace FargowiltasSouls
             forceMeteor = flags[9];
             NoMasoBossScaling = flags[10];
             ReceivedTerraStorage = flags[11];
+
+            const int offset = 12;
+            for (int i = 0; i < downedChampions.Length; i++)
+            {
+                downedChampions[i] = flags[i + offset];
+            }
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -231,7 +253,16 @@ namespace FargowiltasSouls
                 [8] = downedMM,
                 [9] = forceMeteor,
                 [10] = NoMasoBossScaling,
-                [11] = ReceivedTerraStorage
+                [11] = ReceivedTerraStorage,
+                [12] = downedChampions[0],
+                [13] = downedChampions[1],
+                [14] = downedChampions[2],
+                [15] = downedChampions[3],
+                [16] = downedChampions[4],
+                [17] = downedChampions[5],
+                [18] = downedChampions[6],
+                [19] = downedChampions[7],
+                [20] = downedChampions[8]
             };
 
             writer.Write(flags);

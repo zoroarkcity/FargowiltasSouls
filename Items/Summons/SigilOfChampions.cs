@@ -86,14 +86,14 @@ Not consumed on use");
             }
             else //above ground
             {
-                /*if (player.ZoneSkyHeight)
+                if (player.ZoneSkyHeight)
                 {
                     if (player.altFunctionUse == 2)
                         Main.NewText("The stars are aligning...", color);
                     else
                         NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<CosmosChampion>());
                 }
-                else*/ if (player.ZoneBeach)
+                else if (player.ZoneBeach)
                 {
                     if (player.altFunctionUse == 2)
                         Main.NewText("Metallic groans echo from the depths...", color);

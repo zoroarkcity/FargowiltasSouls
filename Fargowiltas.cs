@@ -772,6 +772,27 @@ namespace FargowiltasSouls
                     );
                     bossChecklist.Call(
                         "AddBoss",
+                        14.009f,
+                        ModContent.NPCType<NPCs.Champions.CosmosChampion>(),
+                        this,
+                        "Eridanus, Champion of Cosmos",
+                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[8]),
+                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
+                        new List<int> { },
+                        new List<int> {
+                            ModContent.ItemType<Items.Accessories.Enchantments.SolarEnchant>(),
+                            ModContent.ItemType<Items.Accessories.Enchantments.NebulaEnchant>(),
+                            ModContent.ItemType<Items.Accessories.Enchantments.VortexEnchant>(),
+                            ModContent.ItemType<Items.Accessories.Enchantments.StardustEnchant>(),
+                            ModContent.ItemType<Items.Accessories.Enchantments.MeteorEnchant>()
+                        },
+                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in space.",
+                        "Eridanus, Champion of Cosmos returns to the stars...",
+                        "FargowiltasSouls/NPCs/Champions/CosmosChampion_Still",
+                        "FargowiltasSouls/NPCs/Champions/CosmosChampion_Head_Boss"
+                    );
+                    bossChecklist.Call(
+                        "AddBoss",
                         14.01f,
                         ModContent.NPCType<NPCs.AbomBoss.AbomBoss>(),
                         this,
