@@ -29,7 +29,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.height = 160;
             npc.damage = 180;
             npc.defense = 0;
-            npc.lifeMax = 600000;
+            npc.lifeMax = 700000;
             npc.HitSound = SoundID.NPCHit5;
             npc.DeathSound = SoundID.NPCDeath7;
             npc.noGravity = true;
@@ -40,7 +40,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.value = Item.buyPrice(0, 10);
 
             npc.boss = true;
-            music = MusicID.Boss5;
+            music = MusicID.LunarBoss;
             musicPriority = MusicPriority.BossMedium;
 
             npc.buffImmune[BuffID.Chilled] = true;
@@ -510,26 +510,225 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<CosmosReticle>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                     }
-                    
-                    if (++npc.ai[3] == 3)
-                    {
-                        Main.PlaySound(SoundID.Item20, npc.Center);
 
-                        if (Main.netMode != 1)
-                        {
-                            float rotation = MathHelper.ToRadians(10) + Main.rand.NextFloat(MathHelper.ToRadians(20));
-                            if (Main.rand.Next(2) == 0)
-                                rotation *= -1f;
-                            Vector2 vel = Main.rand.NextFloat(8f, 12f) * npc.DirectionTo(player.Center).RotatedBy(rotation);
-                            Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<CosmosNebulaBlaze>(), npc.damage / 4, 0f, Main.myPlayer);
-                        }
-                    }
-                    else if (npc.ai[3] >= 6)
+                    if (npc.ai[1] > 60)
                     {
-                        npc.ai[3] = 0;
+                        if (++npc.ai[3] == 3)
+                        {
+                            Main.PlaySound(SoundID.Item20, npc.Center);
+
+                            if (Main.netMode != 1)
+                            {
+                                float rotation = MathHelper.ToRadians(npc.localAI[2] == 0 ? 20 : 10) + Main.rand.NextFloat(MathHelper.ToRadians(20));
+                                if (Main.rand.Next(2) == 0)
+                                    rotation *= -1f;
+                                Vector2 vel = Main.rand.NextFloat(8f, 12f) * npc.DirectionTo(player.Center).RotatedBy(rotation);
+                                Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<CosmosNebulaBlaze>(), npc.damage / 4, 0f, Main.myPlayer);
+                            }
+                        }
+                        else if (npc.ai[3] >= 6)
+                        {
+                            npc.ai[3] = 0;
+                        }
                     }
 
                     if (++npc.ai[1] > 300)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 12:
+                    goto case 0;
+
+                case 13: //2 punch uppercut
+                    if (++npc.ai[1] < 110)
+                    {
+                        targetPos = player.Center;
+                        targetPos.X += 300 * (npc.Center.X < targetPos.X ? -1 : 1);
+                        if (npc.Distance(targetPos) > 50)
+                            Movement(targetPos, 0.8f, 32f);
+
+                        if (npc.ai[1] == 1)
+                            Main.PlaySound(15, npc.Center, 0);
+
+                        if (++npc.ai[2] <= 10)
+                        {
+                            npc.rotation = npc.DirectionTo(player.Center).ToRotation();
+                            if (npc.direction < 0)
+                                npc.rotation += (float)Math.PI;
+
+                            npc.ai[3] = npc.Center.X < player.Center.X ? 1 : -1; //store direction im facing
+
+                            if (npc.ai[2] == 10)
+                            {
+                                npc.netUpdate = true;
+                                if (npc.ai[1] > 50)
+                                {
+                                    if (Main.netMode != 1)
+                                    {
+                                        Vector2 offset = Vector2.UnitX;
+                                        if (npc.direction < 0)
+                                            offset.X *= -1f;
+                                        offset = offset.RotatedBy(npc.DirectionTo(player.Center).ToRotation());
+
+                                        Projectile.NewProjectile(npc.Center + offset, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.Center + offset, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    }
+                                }
+                                else
+                                {
+                                    npc.ai[2] = 0;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            npc.direction = npc.spriteDirection = Math.Sign(npc.ai[3]); //dont turn around if crossed up
+
+                            if (npc.ai[2] > 20)
+                            {
+                                npc.ai[2] = 0;
+                                npc.ai[3] = 0;
+                                npc.netUpdate = true;
+                            }
+                        }
+                    }
+                    else //uppercut time
+                    {
+                        if (npc.ai[1] <= 110 + 45)
+                        {
+                            targetPos = player.Center;
+                            targetPos.X += 350 * (npc.Center.X < targetPos.X ? -1 : 1);
+                            targetPos.Y += 700;
+                            Movement(targetPos, 1.6f, 32f);
+
+                            npc.rotation = npc.DirectionTo(player.Center).ToRotation();
+                            if (npc.direction < 0)
+                                npc.rotation += (float)Math.PI;
+
+                            npc.ai[3] = npc.Center.X < player.Center.X ? 1 : -1; //store direction im facing
+
+                            if (npc.ai[1] == 110 + 45) //meteor punch
+                            {
+                                npc.velocity = 42f * npc.DirectionTo(player.Center);
+                                npc.netUpdate = true;
+
+                                Vector2 target = player.Center;
+                                float xOffset = target.X - npc.Center.X;
+                                target.X -= xOffset * 2;
+                                npc.localAI[0] = target.X;
+                                npc.localAI[1] = target.Y;
+
+                                if (Main.netMode != 1)
+                                {
+                                    Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            npc.direction = npc.spriteDirection = Math.Sign(npc.ai[3]); //dont turn around if crossed up
+                            npc.rotation = 0;
+
+                            if (++npc.ai[2] > 2)
+                            {
+                                npc.ai[2] = 0;
+
+                                if (Main.netMode != 1)
+                                {
+                                    Vector2 target = new Vector2(npc.localAI[0], npc.localAI[1]);
+                                    Projectile.NewProjectile(npc.Center, 0.5f * npc.DirectionTo(target), ModContent.ProjectileType<CosmosBolt>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center, -0.5f * npc.DirectionTo(target), ModContent.ProjectileType<CosmosBolt>(), npc.damage / 4, 0f, Main.myPlayer);
+                                }
+                            }
+                        }
+
+                        if (npc.ai[1] > 110 + 45 + 120 || (npc.ai[1] > 110 + 45 && npc.Center.Y < player.Center.Y - 700))
+                        {
+                            npc.velocity.Y = 0f;
+
+                            npc.TargetClosest();
+                            npc.ai[0]++;
+                            npc.ai[1] = 0;
+                            npc.ai[2] = 0;
+                            npc.ai[3] = 0;
+                            npc.localAI[0] = 0;
+                            npc.localAI[1] = 0;
+                            npc.netUpdate = true;
+                        }
+                    }
+                    break;
+
+                case 14:
+                    goto case 2;
+
+                case 15: //ZA WARUDO
+                    targetPos = player.Center + npc.DirectionFrom(player.Center) * 500;
+                    if (npc.Distance(targetPos) > 50)
+                        Movement(targetPos, 0.8f, 32f);
+
+                    if (npc.ai[1] == 90)
+                    {
+                        Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/ZaWarudo").WithVolume(1f).WithPitchVariance(.5f), player.Center);
+
+                        const int num226 = 80;
+                        for (int num227 = 0; num227 < num226; num227++)
+                        {
+                            Vector2 vector6 = Vector2.UnitX * 20f;
+                            vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + npc.Center;
+                            Vector2 vector7 = vector6 - npc.Center;
+                            int num228 = Dust.NewDust(vector6 + vector7, 0, 0, 135, 0f, 0f, 0, default(Color), 3f);
+                            Main.dust[num228].noGravity = true;
+                            Main.dust[num228].velocity = vector7;
+                        }
+                    }
+
+                    if (npc.ai[1] > 90 && npc.ai[1] < 270)
+                    {
+                        if (Main.LocalPlayer.active && !Main.LocalPlayer.dead)
+                        {
+                            Main.LocalPlayer.AddBuff(ModContent.BuffType<Buffs.Souls.TimeFrozen>(), 2);
+                            Main.LocalPlayer.AddBuff(BuffID.ChaosState, 300); //no cheesing this attack
+                        }
+                        for (int i = 0; i < Main.maxNPCs; i++)
+                        {
+                            if (Main.npc[i].active)
+                                Main.npc[i].AddBuff(ModContent.BuffType<Buffs.Souls.TimeFrozen>(), 2);
+                        }
+                        for (int i = 0; i < Main.maxProjectiles; i++)
+                        {
+                            if (Main.projectile[i].active && !Main.projectile[i].GetGlobalProjectile<Projectiles.FargoGlobalProjectile>().TimeFreezeImmune)
+                                Main.projectile[i].GetGlobalProjectile<Projectiles.FargoGlobalProjectile>().TimeFrozen = 2;
+                        }
+
+                        if (++npc.ai[2] > 20)
+                        {
+                            npc.ai[2] = 0;
+
+                            int max = 8 + (int)npc.ai[3] * (npc.localAI[2] == 0 ? 2 : 4);
+                            float rotation = Main.rand.NextFloat((float)Math.PI * 2);
+                            for (int i = 0; i < max; i++)
+                            {
+                                float ai0 = 300;
+                                float distance = ai0 + npc.ai[3] * 150;
+                                Vector2 spawnPos = player.Center + distance * Vector2.UnitX.RotatedBy(2 * Math.PI / max * i + rotation);
+                                Vector2 vel = 2.5f * player.DirectionFrom(spawnPos);// distance * player.DirectionFrom(spawnPos) / ai0;
+                                ai0 = distance / 2.5f;
+                                Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<CosmosInvader>(), npc.damage / 4, 0f, Main.myPlayer, ai0);
+                            }
+
+                            npc.ai[3]++;
+                        }
+                    }
+                    
+                    if (++npc.ai[1] > 490)
                     {
                         npc.TargetClosest();
                         npc.ai[0]++;

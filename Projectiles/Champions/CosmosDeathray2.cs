@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override bool CanDamage()
         {
-            return projectile.scale >= 5f;
+            return projectile.scale >= 3f;
         }
 
         public override void AI()
@@ -48,7 +48,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             {
                 Main.PlaySound(29, projectile.Center, 104);
             }
-            float num801 = 5f;
+            float num801 = 3f;
             projectile.localAI[0] += 1f;
             if (projectile.localAI[0] >= maxTime)
             {
@@ -117,7 +117,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             {
                 int d = Dust.NewDust(projectile.position + projectile.velocity * Main.rand.NextFloat(3000), projectile.width, projectile.height, 229, 0f, 0f, 0, default(Color), 1.5f);
                 Main.dust[d].noGravity = true;
-                Main.dust[d].velocity *= 8f;
+                Main.dust[d].velocity *= 6f;
             }
         }
 
