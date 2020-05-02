@@ -20,7 +20,6 @@ reworked mech flail, spawns fewer and slower eyes, creates burst of much faster 
 maso boss scaling now disabled by default
 removed lifesteal from palladium (still present on force of earth)
 
-life champion has a new ram attack
 increased mutant DR from 10% to 20%
 reduced mutant eye graze cap buff to 50%
 cyclonic fin grants a graze cap buff by 20%
@@ -32,3 +31,4 @@ buffed lord head from 50% to 75% life
 beetle ench MURDERED: caps at first beetle level (unnerfed in SOT)
 
 added sigil of champions
+fixed biocluster tp not working

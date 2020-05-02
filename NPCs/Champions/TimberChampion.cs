@@ -7,6 +7,7 @@ using Terraria.Localization;
 using FargowiltasSouls.Items.Accessories.Enchantments;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace FargowiltasSouls.NPCs.Champions
 {
@@ -415,6 +416,11 @@ namespace FargowiltasSouls.NPCs.Champions
                 lastDrop = thisDrop;*/
                 Item.NewItem(npc.position, npc.Size, thisDrop);
             }
+        }
+
+        public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
+        {
+            spriteEffects = npc.direction < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         }
     }
 }

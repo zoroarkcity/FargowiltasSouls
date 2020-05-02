@@ -34,6 +34,16 @@ Not consumed on use");
             item.value = Item.buyPrice(1);
         }
 
+        public override bool CanUseItem(Player player)
+        {
+            for (int i = 0; i < Main.maxNPCs; i++) //no using during another champ fight
+            {
+                if (Main.npc[i].active && i == NPCs.EModeGlobalNPC.championBoss)
+                    return false;
+            }
+            return true;
+        }
+
         public override bool AltFunctionUse(Player player)
         {
             return true;

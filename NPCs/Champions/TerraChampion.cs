@@ -329,8 +329,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 }
 
                                 Main.npc[i].Center = npc.Center;
-                                if (Main.netMode == 2)
-                                    NetMessage.SendData(23, -1, -1, null, i);
+                                //if (Main.netMode == 2) NetMessage.SendData(23, -1, -1, null, i);
                             }
                         }
                     }
@@ -725,6 +724,11 @@ namespace FargowiltasSouls.NPCs.Champions
                 lastDrop = thisDrop;*/
                 Item.NewItem(npc.position, npc.Size, thisDrop);
             }
+        }
+
+        public override void BossHeadRotation(ref float rotation)
+        {
+            rotation = npc.rotation;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
