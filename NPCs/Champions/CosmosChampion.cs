@@ -28,8 +28,8 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.width = 100;
             npc.height = 160;
             npc.damage = 180;
-            npc.defense = 0;
-            npc.lifeMax = 600000;
+            npc.defense = 70;
+            npc.lifeMax = 700000;
             npc.HitSound = SoundID.NPCHit5;
             npc.DeathSound = SoundID.NPCDeath7;
             npc.noGravity = true;
@@ -56,6 +56,13 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             cooldownSlot = 1;
             return true;
+        }
+
+        public override bool? CanBeHitByProjectile(Projectile projectile)
+        {
+            if (npc.ai[0] == 15 && npc.ai[1] > 90 && npc.ai[1] < 210) //intangible during timestop
+                return false;
+            return null;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -93,7 +100,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
             npc.direction = npc.spriteDirection = npc.Center.X < player.Center.X ? 1 : -1;
 
-            if (npc.localAI[2] == 0 && npc.ai[0] != -1 && npc.life < npc.lifeMax * .66)
+            if (npc.localAI[2] == 0 && npc.ai[0] != -1 && npc.life < npc.lifeMax * .75)
             {
                 float buffer = npc.ai[0];
                 npc.ai[0] = -1;
@@ -122,7 +129,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     npc.rotation = 0;
                     npc.dontTakeDamage = true;
 
-                    npc.velocity *= 0.95f;
+                    npc.velocity *= 0.925f;
 
                     if (++npc.ai[1] == 120)
                     {
@@ -879,19 +886,19 @@ namespace FargowiltasSouls.NPCs.Champions
                 ModContent.ItemType<StardustEnchant>(),
                 ModContent.ItemType<MeteorEnchant>(),
             };
-            //int lastDrop = 0; //don't drop same ench twice
+            int lastDrop = -1; //don't drop same ench twice
             for (int i = 0; i < 2; i++)
             {
-                int thisDrop = drops[Main.rand.Next(drops.Length)];
+                int thisDrop = Main.rand.Next(drops.Length);
 
-                /*if (lastDrop == thisDrop && !Main.dedServ) //try again
+                if (lastDrop == thisDrop) //try again
                 {
-                    i--;
-                    continue;
+                    if (++thisDrop >= drops.Length) //drop first ench in line if looped past array
+                        thisDrop = 0;
                 }
 
-                lastDrop = thisDrop;*/
-                Item.NewItem(npc.position, npc.Size, thisDrop);
+                lastDrop = thisDrop;
+                Item.NewItem(npc.position, npc.Size, drops[thisDrop]);
             }
         }
 
