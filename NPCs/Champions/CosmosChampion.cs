@@ -127,6 +127,8 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.ai[1] = 0;
                 npc.ai[2] = 0;
                 npc.ai[3] = 0;
+                npc.localAI[0] = 0;
+                npc.localAI[1] = 0;
                 npc.netUpdate = true;
 
                 if (Main.netMode != 1) //clear projs
@@ -981,6 +983,20 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             switch((int)npc.ai[0])
             {
+                case -3:
+                    if (npc.ai[2] < 60 || (npc.ai[2] > 150 && npc.ai[2] < 210))
+                        npc.frame.Y = frameHeight * 3;
+                    else
+                        npc.frame.Y = frameHeight;
+                    break;
+
+                case -1:
+                    if (npc.ai[1] > 120)
+                        npc.frame.Y = frameHeight * 2;
+                    else
+                        npc.frame.Y = 0;
+                    break;
+
                 case 1:
                     if (npc.ai[2] <= 10)
                         npc.frame.Y = frameHeight;
