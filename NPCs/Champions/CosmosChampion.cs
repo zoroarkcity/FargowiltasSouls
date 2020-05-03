@@ -356,8 +356,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             if (Main.netMode != 1)
                             {
-                                Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 3, 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 3, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -468,8 +468,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             if (Main.netMode != 1)
                             {
-                                Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 3, 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 3, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -492,7 +492,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.netUpdate = true;
                     }
                     break;
-
+                    
                 case 10:
                     goto case 2;
 
@@ -519,13 +519,16 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             if (Main.netMode != 1)
                             {
+                                Vector2 offset = new Vector2(40, -16);
+                                if (player.Center.X < npc.Center.X)
+                                    offset.X *= -1f;
                                 for (int i = 0; i < 2; i++)
                                 {
                                     float rotation = MathHelper.ToRadians(npc.localAI[2] == 0 ? 20 : 10) + Main.rand.NextFloat(MathHelper.ToRadians(20));
                                     if (i == 0)
                                         rotation *= -1f;
                                     Vector2 vel = Main.rand.NextFloat(8f, 12f) * npc.DirectionTo(player.Center).RotatedBy(rotation);
-                                    Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<CosmosNebulaBlaze>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center + offset, vel, ModContent.ProjectileType<CosmosNebulaBlaze>(), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -627,8 +630,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
                                 if (Main.netMode != 1)
                                 {
-                                    Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 3, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(npc.Center, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 3, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -783,6 +786,71 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.velocity.X = cap * Math.Sign(npc.velocity.X);
             if (Math.Abs(npc.velocity.Y) > cap)
                 npc.velocity.Y = cap * Math.Sign(npc.velocity.Y);
+        }
+
+        public override void FindFrame(int frameHeight)
+        {
+            switch((int)npc.ai[0])
+            {
+                case 1:
+                    if (npc.ai[2] <= 10)
+                        npc.frame.Y = frameHeight;
+                    else
+                        npc.frame.Y = frameHeight * 2;
+                    break;
+
+                case 3:
+                    {
+                        int threshold = npc.localAI[2] == 0 ? 70 : 50;
+                        if (npc.ai[2] <= threshold)
+                            npc.frame.Y = frameHeight;
+                        else
+                            npc.frame.Y = frameHeight * 2;
+                    }
+                    break;
+
+                case 5:
+                    if (npc.ai[2] <= 75)
+                        npc.frame.Y = frameHeight;
+                    else
+                        npc.frame.Y = frameHeight * 2;
+                    break;
+
+                case 9:
+                    if (npc.ai[2] <= 180)
+                        npc.frame.Y = frameHeight;
+                    else
+                        npc.frame.Y = frameHeight * 2;
+                    break;
+
+                case 11:
+                    if (npc.ai[3] <= 3)
+                        npc.frame.Y = frameHeight;
+                    else
+                        npc.frame.Y = frameHeight * 2;
+                    break;
+
+                case 13:
+                    if (npc.ai[1] < 110)
+                    {
+                        if (npc.ai[2] <= 10)
+                            npc.frame.Y = frameHeight;
+                        else
+                            npc.frame.Y = frameHeight * 2;
+                    }
+                    else //uppercut time
+                    {
+                        if (npc.ai[1] <= 110 + 45)
+                            npc.frame.Y = frameHeight;
+                        else
+                            npc.frame.Y = frameHeight * 3;
+                    }
+                    break;
+
+                default:
+                    npc.frame.Y = 0;
+                    break;
+            }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
