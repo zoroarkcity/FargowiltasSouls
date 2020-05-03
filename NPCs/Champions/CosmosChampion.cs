@@ -121,15 +121,196 @@ namespace FargowiltasSouls.NPCs.Champions
                 }
             }
 
+            if (npc.localAI[2] < 2 && npc.ai[0] != -2 && npc.life < npc.lifeMax * .25)
+            {
+                npc.ai[0] = -2;
+                npc.ai[1] = 0;
+                npc.ai[2] = 0;
+                npc.ai[3] = 0;
+                npc.netUpdate = true;
+
+                if (Main.netMode != 1) //clear projs
+                {
+                    for (int i = 0; i < Main.maxProjectiles; i++)
+                    {
+                        if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].damage > 0)
+                        {
+                            Main.projectile[i].Kill();
+                        }
+                    }
+                }
+            }
+
             npc.dontTakeDamage = false;
 
             switch ((int)npc.ai[0])
             {
+                case -3: //final phase
+                    if ((!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f)) //despawn code
+                    {
+                        npc.TargetClosest(false);
+                        if (npc.timeLeft > 30)
+                            npc.timeLeft = 30;
+
+                        npc.velocity.Y -= 1f;
+                        break;
+                    }
+
+                    npc.rotation = 0;
+                    npc.velocity *= 0.9f;
+
+                    if (npc.ai[1] == 0)
+                    {
+                        npc.ai[1] = 1;
+
+                        Main.PlaySound(15, npc.Center, 0);
+
+                        if (Main.netMode != 1)
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<CosmosRitual>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
+
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<CosmosMeteor2>(), npc.damage / 4, 0f, Main.myPlayer, 1, npc.whoAmI);
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<CosmosMeteor2>(), npc.damage / 4, 0f, Main.myPlayer, -1, npc.whoAmI);
+                        }
+                    }
+
+                    if (++npc.ai[2] > 300 || npc.ai[2] == 150)
+                    {
+                        if (npc.ai[2] > 300)
+                            npc.ai[2] = 0;
+
+                        npc.netUpdate = true;
+
+                        Main.PlaySound(SoundID.Item92, npc.Center);
+
+                        int type; //for dust
+
+                        if (npc.ai[3] == 0) //solar
+                        {
+                            npc.ai[3]++;
+                            type = 127;
+                            if (Main.netMode != 1)
+                            {
+                                const int max = 12;
+                                for (int i = 0; i < max; i++)
+                                {
+                                    Projectile.NewProjectile(npc.Center, 12f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i),
+                                        ModContent.ProjectileType<CosmosFireball2>(), npc.damage / 4, 0f, Main.myPlayer, 30, 30 + 60);
+                                }
+                            }
+                        }
+                        else if (npc.ai[3] == 1) //vortex
+                        {
+                            npc.ai[3]++;
+                            type = 229;
+                            if (Main.netMode != 1)
+                            {
+                                const int max = 12;
+                                for (int i = 0; i < max; i++)
+                                {
+                                    Vector2 dir = npc.DirectionTo(player.Center).RotatedBy(2 * (float)Math.PI / max * i);
+                                    float ai1New = Main.rand.Next(100);
+                                    Vector2 vel = Vector2.Normalize(dir.RotatedByRandom(Math.PI / 4)) * 6f;
+                                    Projectile.NewProjectile(npc.Center, vel, ProjectileID.CultistBossLightningOrbArc,
+                                        npc.damage / 4, 0, Main.myPlayer, dir.ToRotation(), ai1New);
+                                }
+                            }
+                        }
+                        else if (npc.ai[3] == 2) //nebula
+                        {
+                            npc.ai[3]++;
+                            type = 242;
+                            if (Main.netMode != 1)
+                            {
+                                const int max = 10;
+                                for (int i = 0; i < max; i++)
+                                {
+                                    Projectile.NewProjectile(npc.Center, 6f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i),
+                                        ModContent.ProjectileType<CosmosNebulaBlaze>(), npc.damage / 4, 0f, Main.myPlayer, 0.006f);
+                                }
+                            }
+                        }
+                        else //stardust
+                        {
+                            npc.ai[3] = 0;
+                            type = 135;
+                            if (Main.netMode != 1)
+                            {
+                                const int max = 16;
+                                for (int i = 0; i < max; i++)
+                                {
+                                    Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(2 * Math.PI / max * i),
+                                        ModContent.ProjectileType<CosmosInvader>(), npc.damage / 4, 0f, Main.myPlayer, 180, 0.045f);
+                                    Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(2 * Math.PI / max * (i + 0.5)),
+                                        ModContent.ProjectileType<CosmosInvader>(), npc.damage / 4, 0f, Main.myPlayer, 180, 0.03f);
+                                }
+                            }
+                        }
+                    
+                        for (int index = 0; index < 50; ++index) //dust
+                        {
+                            Dust dust = Main.dust[Dust.NewDust(npc.position, npc.width, npc.height, type, 0.0f, 0.0f, 0, new Color(), 1f)];
+                            dust.velocity *= 10f;
+                            dust.fadeIn = 1f;
+                            dust.scale = 1 + Main.rand.NextFloat() + Main.rand.Next(4) * 0.3f;
+                            if (Main.rand.Next(3) != 0)
+                            {
+                                dust.noGravity = true;
+                                dust.velocity *= 3f;
+                                dust.scale *= 2f;
+                            }
+                        }
+
+                        const int num226 = 80;
+                        for (int num227 = 0; num227 < num226; num227++)
+                        {
+                            Vector2 vector6 = Vector2.UnitX * 40f;
+                            vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + npc.Center;
+                            Vector2 vector7 = vector6 - npc.Center;
+                            int num228 = Dust.NewDust(vector6 + vector7, 0, 0, type, 0f, 0f, 0, default(Color), 3f);
+                            Main.dust[num228].noGravity = true;
+                            Main.dust[num228].velocity = vector7;
+                        }
+                    }
+                    break;
+
+                case -2: //prepare for last phase
+                    npc.rotation = 0;
+                    npc.dontTakeDamage = true;
+
+                    npc.localAI[2] = 2;
+
+                    targetPos = player.Center;
+                    targetPos.X += 600 * (npc.Center.X < targetPos.X ? -1 : 1);
+                    Movement(targetPos, 0.8f, 32f);
+
+                    if (++npc.ai[1] > 150)
+                    {
+                        const int num226 = 80;
+                        for (int num227 = 0; num227 < num226; num227++)
+                        {
+                            Vector2 vector6 = Vector2.UnitX * 40f;
+                            vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + npc.Center;
+                            Vector2 vector7 = vector6 - npc.Center;
+                            int num228 = Dust.NewDust(vector6 + vector7, 0, 0, 229, 0f, 0f, 0, default(Color), 3f);
+                            Main.dust[num228].noGravity = true;
+                            Main.dust[num228].velocity = vector7;
+                        }
+
+                        npc.TargetClosest();
+                        npc.ai[0]--;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
                 case -1:
                     npc.rotation = 0;
                     npc.dontTakeDamage = true;
 
-                    npc.velocity *= 0.925f;
+                    npc.velocity *= 0.9f;
 
                     if (++npc.ai[1] == 120)
                     {
@@ -531,11 +712,12 @@ namespace FargowiltasSouls.NPCs.Champions
                                     offset.X *= -1f;
                                 for (int i = 0; i < 2; i++)
                                 {
-                                    float rotation = MathHelper.ToRadians(npc.localAI[2] == 0 ? 20 : 10) + Main.rand.NextFloat(MathHelper.ToRadians(20));
+                                    float rotation = MathHelper.ToRadians(npc.localAI[2] == 0 ? 30 : 15) + Main.rand.NextFloat(MathHelper.ToRadians(20));
                                     if (i == 0)
                                         rotation *= -1f;
                                     Vector2 vel = Main.rand.NextFloat(8f, 12f) * npc.DirectionTo(player.Center).RotatedBy(rotation);
-                                    Projectile.NewProjectile(npc.Center + offset, vel, ModContent.ProjectileType<CosmosNebulaBlaze>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center + offset, vel, ModContent.ProjectileType<CosmosNebulaBlaze>(),
+                                        npc.damage / 4, 0f, Main.myPlayer, 0.006f);
                                 }
                             }
                         }
@@ -900,6 +1082,8 @@ namespace FargowiltasSouls.NPCs.Champions
                 lastDrop = thisDrop;
                 Item.NewItem(npc.position, npc.Size, drops[thisDrop]);
             }
+
+            Item.NewItem(npc.position, npc.Size, ModLoader.GetMod("Fargowiltas").ItemType("CrucibleCosmos"));
         }
 
         public override Color? GetAlpha(Color drawColor)

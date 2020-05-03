@@ -21,6 +21,7 @@ namespace FargowiltasSouls.Projectiles.Champions
         {
             projectile.width = 20;
             projectile.height = 20;
+            projectile.aiStyle = -1;
             projectile.timeLeft = 600;
             projectile.hostile = true;
 
@@ -31,6 +32,16 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void AI() //vanilla code echprimebegone
         {
+            if (++projectile.localAI[1] < 45 * projectile.MaxUpdates
+                && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<NPCs.Champions.CosmosChampion>())
+                && Main.npc[EModeGlobalNPC.championBoss].HasValidTarget) //home
+            {
+                float rotation = projectile.velocity.ToRotation();
+                Vector2 vel = Main.player[Main.npc[EModeGlobalNPC.championBoss].target].Center - projectile.Center;
+                float targetAngle = vel.ToRotation();
+                projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, projectile.ai[0]));
+            }
+
             float num1 = 5f;
             float num2 = 250f;
             float num3 = 6f;

@@ -97,6 +97,8 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void AI()
         {
+            projectile.velocity *= 1 + projectile.ai[1];
+
             projectile.rotation = projectile.velocity.ToRotation() + 1.570796f;
 
             int num4 = projectile.frameCounter + 1;
