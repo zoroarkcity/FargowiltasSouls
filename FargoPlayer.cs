@@ -3238,6 +3238,8 @@ namespace FargowiltasSouls
             {
                 player.immune = true;
                 player.immuneTime = player.longInvince ? 60 : 30;
+                player.hurtCooldowns[0] = player.longInvince ? 60 : 30;
+                player.hurtCooldowns[1] = player.longInvince ? 60 : 30;
                 player.AddBuff(BuffID.ParryDamageBuff, 300);
                 return false;
             }
