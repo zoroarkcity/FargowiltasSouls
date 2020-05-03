@@ -100,7 +100,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
             npc.direction = npc.spriteDirection = npc.Center.X < player.Center.X ? 1 : -1;
 
-            if (npc.localAI[2] == 0 && npc.ai[0] != -1 && npc.life < npc.lifeMax * .75)
+            if (npc.localAI[2] == 0 && npc.ai[0] != -1 && npc.life < npc.lifeMax * .8)
             {
                 float buffer = npc.ai[0];
                 npc.ai[0] = -1;
@@ -121,7 +121,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 }
             }
 
-            if (npc.localAI[2] < 2 && npc.ai[0] != -2 && npc.life < npc.lifeMax * .25)
+            if (npc.localAI[2] < 2 && npc.ai[0] != -2 && npc.life < npc.lifeMax * .2)
             {
                 npc.ai[0] = -2;
                 npc.ai[1] = 0;
@@ -224,11 +224,11 @@ namespace FargowiltasSouls.NPCs.Champions
                             type = 242;
                             if (Main.netMode != 1)
                             {
-                                const int max = 10;
+                                const int max = 12;
                                 for (int i = 0; i < max; i++)
                                 {
-                                    Projectile.NewProjectile(npc.Center, 6f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i),
-                                        ModContent.ProjectileType<CosmosNebulaBlaze>(), npc.damage / 4, 0f, Main.myPlayer, 0.006f);
+                                    Projectile.NewProjectile(npc.Center, 5f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * (i + 0.5)),
+                                        ModContent.ProjectileType<CosmosNebulaBlaze>(), npc.damage / 4, 0f, Main.myPlayer, 0.008f);
                                 }
                             }
                         }
@@ -238,13 +238,13 @@ namespace FargowiltasSouls.NPCs.Champions
                             type = 135;
                             if (Main.netMode != 1)
                             {
-                                const int max = 16;
+                                const int max = 18;
                                 for (int i = 0; i < max; i++)
                                 {
                                     Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(2 * Math.PI / max * i),
-                                        ModContent.ProjectileType<CosmosInvader>(), npc.damage / 4, 0f, Main.myPlayer, 180, 0.045f);
+                                        ModContent.ProjectileType<CosmosInvader>(), npc.damage / 4, 0f, Main.myPlayer, 180, 0.04f);
                                     Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(2 * Math.PI / max * (i + 0.5)),
-                                        ModContent.ProjectileType<CosmosInvader>(), npc.damage / 4, 0f, Main.myPlayer, 180, 0.03f);
+                                        ModContent.ProjectileType<CosmosInvader>(), npc.damage / 4, 0f, Main.myPlayer, 180, 0.025f);
                                 }
                             }
                         }

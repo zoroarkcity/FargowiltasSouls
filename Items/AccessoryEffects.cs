@@ -591,7 +591,7 @@ namespace FargowiltasSouls
             else if (wasHoldingShield)
             {
                 wasHoldingShield = false;
-                player.shield_parry_cooldown = 15;
+                player.shield_parry_cooldown = 30;
                 player.shieldParryTimeLeft = 0;
                 internalTimer = 0;
             }

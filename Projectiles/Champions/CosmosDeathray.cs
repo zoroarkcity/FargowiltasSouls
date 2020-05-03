@@ -11,8 +11,8 @@ namespace FargowiltasSouls.Projectiles.Champions
 {
     public class CosmosDeathray : Deathrays.BaseDeathray
     {
-        public CosmosDeathray() : base(30, "PhantasmalDeathrayML") { }
-        private const float maxTime = 30;
+        public CosmosDeathray() : base(20, "PhantasmalDeathrayML") { }
+        private const float maxTime = 20;
 
         public override void SetStaticDefaults()
         {
