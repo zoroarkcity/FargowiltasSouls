@@ -26,7 +26,8 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.aiStyle = 1;
             aiType = ProjectileID.PhantasmalBolt;
             projectile.penetrate = -1;
-            projectile.alpha = 255;
+            projectile.alpha = 0;
+            projectile.scale = 2f;
             projectile.hostile = true;
             projectile.extraUpdates = 3;
 
@@ -42,12 +43,12 @@ namespace FargowiltasSouls.Projectiles.Champions
             Main.dust[index].velocity = projectile.velocity;
             Main.dust[index].position -= Vector2.One * 4f;
             Main.dust[index].scale = 0.8f;
-            if (++projectile.frameCounter >= 6 * 4) //projectile extra updates + 1
+            /*if (++projectile.frameCounter >= 12 * 12)
             {
                 projectile.frameCounter = 0;
                 if (++projectile.frame >= 5)
                     projectile.frame = 0;
-            }
+            }*/
         }
 
         public override void Kill(int timeLeft)

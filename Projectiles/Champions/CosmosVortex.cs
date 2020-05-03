@@ -150,6 +150,8 @@ namespace FargowiltasSouls.Projectiles.Champions
                 if (++projectile.localAI[0] > 15) //shoot lightning out
                 {
                     projectile.localAI[0] = 0;
+
+                    Main.PlaySound(SoundID.Item82, projectile.Center);
                     
                     if (Main.netMode != 1)
                     {

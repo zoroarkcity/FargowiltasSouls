@@ -32,3 +32,4 @@ beetle ench MURDERED: caps at first beetle level (unnerfed in SOT)
 
 added sigil of champions
 fixed biocluster tp not working
+fixed betsy dash tooltip

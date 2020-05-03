@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.hostile = true;
 
             projectile.extraUpdates = 2;
-            projectile.scale *= 2f;
+            projectile.scale = 1.5f;
             cooldownSlot = 1;
         }
 
