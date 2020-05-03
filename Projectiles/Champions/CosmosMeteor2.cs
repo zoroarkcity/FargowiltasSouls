@@ -52,6 +52,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
                 Main.PlaySound(SoundID.Item92, projectile.Center);
 
+                projectile.rotation += (float)Math.PI / 2;
                 if (projectile.ai[0] < 0)
                     projectile.rotation += (float)Math.PI;
 
