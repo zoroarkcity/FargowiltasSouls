@@ -5455,8 +5455,6 @@ namespace FargowiltasSouls.NPCs
                         {
                             Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(5));
                             if (Main.rand.Next(10) == 0)
-                                Item.NewItem(npc.Hitbox, ItemID.MedusaHead);
-                            if (Main.rand.Next(10) == 0)
                                 Item.NewItem(npc.Hitbox, ItemID.PocketMirror);
                             return false;
                         }
