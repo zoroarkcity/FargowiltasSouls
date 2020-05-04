@@ -34,3 +34,6 @@ added sigil of champions
 fixed biocluster tp not working
 fixed betsy dash tooltip
 fixed iron guard not blocking attacks that used alternative cooldowns, but longer cooldown on guard
+piranhas, sharks, arapaima emit dust while jumping
+nerfed nebula ench to cap at level 2
+nerfed solar ench to give less DR

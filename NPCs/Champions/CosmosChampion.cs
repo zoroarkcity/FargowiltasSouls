@@ -227,8 +227,8 @@ namespace FargowiltasSouls.NPCs.Champions
                                 const int max = 12;
                                 for (int i = 0; i < max; i++)
                                 {
-                                    Projectile.NewProjectile(npc.Center, 5f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * (i + 0.5)),
-                                        ModContent.ProjectileType<CosmosNebulaBlaze>(), npc.damage / 4, 0f, Main.myPlayer, 0.008f);
+                                    Projectile.NewProjectile(npc.Center, 4f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * (i + 0.5)),
+                                        ModContent.ProjectileType<CosmosNebulaBlaze>(), npc.damage / 4, 0f, Main.myPlayer, 0.007f);
                                 }
                             }
                         }
@@ -1021,6 +1021,15 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.frame.Y = frameHeight * 2;
                     break;
 
+                case 7:
+                    if (npc.ai[1] < 30)
+                        npc.frame.Y = frameHeight;
+                    else if (npc.ai[1] < 60)
+                        npc.frame.Y = frameHeight * 2;
+                    else
+                        npc.frame.Y = 0;
+                    break;
+
                 case 9:
                     if (npc.ai[2] <= 180)
                         npc.frame.Y = frameHeight;
@@ -1050,6 +1059,15 @@ namespace FargowiltasSouls.NPCs.Champions
                         else
                             npc.frame.Y = frameHeight * 3;
                     }
+                    break;
+
+                case 15: //ZA WARUDO
+                    if (npc.ai[1] < 90)
+                        npc.frame.Y = frameHeight;
+                    else if (npc.ai[1] < 120)
+                        npc.frame.Y = frameHeight * 2;
+                    else
+                        npc.frame.Y = 0;
                     break;
 
                 default:

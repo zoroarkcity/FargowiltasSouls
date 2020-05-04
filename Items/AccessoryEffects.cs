@@ -742,9 +742,7 @@ namespace FargowiltasSouls
         {
             if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.NebulaBoost, false)) return;
 
-            if (player.nebulaCD > 0)
-                player.nebulaCD--;
-            player.setNebula = true;
+            Nebula = true;
         }
 
         public void NecroEffect(bool hideVisual)
@@ -929,61 +927,7 @@ namespace FargowiltasSouls
         {
             if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.SolarShield)) return;
 
-            player.AddBuff(BuffID.SolarShield3, 5, false);
-            player.setSolar = true;
-            player.solarCounter++;
-            int solarCD = 240;
-            if (player.solarCounter >= solarCD)
-            {
-                if (player.solarShields > 0 && player.solarShields < 3)
-                {
-                    for (int i = 0; i < 22; i++)
-                    {
-                        if (player.buffType[i] >= BuffID.SolarShield1 && player.buffType[i] <= BuffID.SolarShield2)
-                        {
-                            player.DelBuff(i);
-                        }
-                    }
-                }
-                if (player.solarShields < 3)
-                {
-                    player.AddBuff(BuffID.SolarShield1 + player.solarShields, 5, false);
-                    for (int i = 0; i < 16; i++)
-                    {
-                        Dust dust = Main.dust[Dust.NewDust(player.position, player.width, player.height, 6, 0f, 0f, 100)];
-                        dust.noGravity = true;
-                        dust.scale = 1.7f;
-                        dust.fadeIn = 0.5f;
-                        dust.velocity *= 5f;
-                    }
-                    player.solarCounter = 0;
-                }
-                else
-                {
-                    player.solarCounter = solarCD;
-                }
-            }
-            for (int i = player.solarShields; i < 3; i++)
-            {
-                player.solarShieldPos[i] = Vector2.Zero;
-            }
-            for (int i = 0; i < player.solarShields; i++)
-            {
-                player.solarShieldPos[i] += player.solarShieldVel[i];
-                Vector2 value = (player.miscCounter / 100f * 6.28318548f + i * (6.28318548f / player.solarShields)).ToRotationVector2() * 6f;
-                value.X = player.direction * 20;
-                player.solarShieldVel[i] = (value - player.solarShieldPos[i]) * 0.2f;
-            }
-            if (player.dashDelay >= 0)
-            {
-                player.solarDashing = false;
-                player.solarDashConsumedFlare = false;
-            }
-            bool flag = player.solarDashing && player.dashDelay < 0;
-            if (player.solarShields > 0 || flag)
-            {
-                player.dash = 3;
-            }
+            Solar = true;
         }
 
         public void SpectreEffect(bool hideVisual)

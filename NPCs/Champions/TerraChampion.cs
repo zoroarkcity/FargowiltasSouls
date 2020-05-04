@@ -161,7 +161,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         npc.localAI[0] = 0;
 
-                        if (npc.localAI[1] > 60 && npc.localAI[1] < 360) //dont shoot while orb is exploding
+                        if (npc.localAI[1] > 30 && npc.localAI[1] < 330) //dont shoot while orb is exploding
                         {
                             Main.PlaySound(SoundID.Item12, npc.Center);
 

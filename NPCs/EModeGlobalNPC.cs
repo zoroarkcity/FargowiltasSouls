@@ -1528,6 +1528,19 @@ namespace FargowiltasSouls.NPCs
                             npc.velocity.Y = npc.ai[3];
                             npc.ai[3] += 0.3f;
                             masoBool[0] = false;
+                            
+                            int num22 = 7;
+                            for (int index1 = 0; index1 < num22; ++index1)
+                            {
+                                Vector2 vector2_1 = (Vector2.Normalize(npc.velocity) * new Vector2((npc.width + 50) / 2f, npc.height) * 0.75f).RotatedBy((index1 - (num22 / 2 - 1)) * Math.PI / num22, new Vector2()) + npc.Center;
+                                Vector2 vector2_2 = ((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2() * Main.rand.Next(3, 8);
+                                Vector2 vector2_3 = vector2_2;
+                                int index2 = Dust.NewDust(vector2_1 + vector2_3, 0, 0, 172, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
+                                Main.dust[index2].noGravity = true;
+                                Main.dust[index2].noLight = true;
+                                Main.dust[index2].velocity /= 4f;
+                                Main.dust[index2].velocity -= npc.velocity;
+                            }
                         }
                         else
                         {
@@ -1560,6 +1573,19 @@ namespace FargowiltasSouls.NPCs
                             npc.velocity.X = npc.ai[2];
                             npc.velocity.Y = npc.ai[3];
                             npc.ai[3] += 0.3f;
+
+                            int num22 = 7;
+                            for (int index1 = 0; index1 < num22; ++index1)
+                            {
+                                Vector2 vector2_1 = (Vector2.Normalize(npc.velocity) * new Vector2((npc.width + 50) / 2f, npc.height) * 0.75f).RotatedBy((index1 - (num22 / 2 - 1)) * Math.PI / num22, new Vector2()) + npc.Center;
+                                Vector2 vector2_2 = ((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2() * Main.rand.Next(3, 8);
+                                Vector2 vector2_3 = vector2_2;
+                                int index2 = Dust.NewDust(vector2_1 + vector2_3, 0, 0, 172, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
+                                Main.dust[index2].noGravity = true;
+                                Main.dust[index2].noLight = true;
+                                Main.dust[index2].velocity /= 4f;
+                                Main.dust[index2].velocity -= npc.velocity;
+                            }
                         }
                         else
                         {
@@ -1592,6 +1618,19 @@ namespace FargowiltasSouls.NPCs
                             npc.velocity.X = npc.ai[2];
                             npc.velocity.Y = npc.ai[3];
                             npc.ai[3] += 0.3f;
+
+                            int num22 = 7;
+                            for (int index1 = 0; index1 < num22; ++index1)
+                            {
+                                Vector2 vector2_1 = (Vector2.Normalize(npc.velocity) * new Vector2((npc.width + 50) / 2f, npc.height) * 0.75f).RotatedBy((index1 - (num22 / 2 - 1)) * Math.PI / num22, new Vector2()) + npc.Center;
+                                Vector2 vector2_2 = ((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2() * Main.rand.Next(3, 8);
+                                Vector2 vector2_3 = vector2_2;
+                                int index2 = Dust.NewDust(vector2_1 + vector2_3, 0, 0, 172, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
+                                Main.dust[index2].noGravity = true;
+                                Main.dust[index2].noLight = true;
+                                Main.dust[index2].velocity /= 4f;
+                                Main.dust[index2].velocity -= npc.velocity;
+                            }
                         }
                         else
                         {
