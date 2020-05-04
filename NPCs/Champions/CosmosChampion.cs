@@ -894,6 +894,8 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     else if (npc.ai[1] < 210)
                     {
+                        npc.velocity = Vector2.Zero;
+
                         if (Main.LocalPlayer.active && !Main.LocalPlayer.dead)
                         {
                             Main.LocalPlayer.AddBuff(ModContent.BuffType<Buffs.Souls.TimeFrozen>(), 2);
@@ -1064,7 +1066,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 case 15: //ZA WARUDO
                     if (npc.ai[1] < 90)
                         npc.frame.Y = frameHeight;
-                    else if (npc.ai[1] < 120)
+                    else if (npc.ai[1] < 210)
                         npc.frame.Y = frameHeight * 2;
                     else
                         npc.frame.Y = 0;
