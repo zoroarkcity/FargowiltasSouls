@@ -15,7 +15,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Lesser Squirrel");
+            DisplayName.SetDefault("Lesser Fairy");
             Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.Pixie];
         }
 
