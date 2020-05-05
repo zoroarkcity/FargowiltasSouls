@@ -19,8 +19,8 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void SetDefaults()
         {
-            projectile.width = 70;
-            projectile.height = 70;
+            projectile.width = 50;
+            projectile.height = 50;
             projectile.aiStyle = -1;
             projectile.hostile = true;
             projectile.timeLeft = 600;
@@ -36,6 +36,8 @@ namespace FargowiltasSouls.Projectiles.Champions
             {
                 projectile.Kill();
             }
+
+            projectile.rotation += projectile.velocity.Length() * 0.03f;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

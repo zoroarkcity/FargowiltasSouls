@@ -17,6 +17,8 @@ namespace FargowiltasSouls.NPCs.Champions
     [AutoloadBossHead]
     public class WillChampion : ModNPC
     {
+        public bool spawned;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Will");
@@ -79,6 +81,16 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void AI()
         {
+            if (!spawned)
+            {
+                npc.TargetClosest(false);
+                Movement(Main.player[npc.target].Center, 0.8f, 32f);
+                if (npc.Distance(Main.player[npc.target].Center) < 2000)
+                    spawned = true;
+                else
+                    return;
+            }
+
             EModeGlobalNPC.championBoss = npc.whoAmI;
 
             if (!npc.HasValidTarget)
@@ -580,6 +592,38 @@ namespace FargowiltasSouls.NPCs.Champions
 
             if (npc.spriteDirection < 0 && npc.ai[0] != -1f)
                 npc.rotation += (float)Math.PI;
+        }
+
+        private void Movement(Vector2 targetPos, float speedModifier, float cap = 12f)
+        {
+            if (npc.Center.X < targetPos.X)
+            {
+                npc.velocity.X += speedModifier;
+                if (npc.velocity.X < 0)
+                    npc.velocity.X += speedModifier * 2;
+            }
+            else
+            {
+                npc.velocity.X -= speedModifier;
+                if (npc.velocity.X > 0)
+                    npc.velocity.X -= speedModifier * 2;
+            }
+            if (npc.Center.Y < targetPos.Y)
+            {
+                npc.velocity.Y += speedModifier;
+                if (npc.velocity.Y < 0)
+                    npc.velocity.Y += speedModifier * 2;
+            }
+            else
+            {
+                npc.velocity.Y -= speedModifier;
+                if (npc.velocity.Y > 0)
+                    npc.velocity.Y -= speedModifier * 2;
+            }
+            if (Math.Abs(npc.velocity.X) > cap)
+                npc.velocity.X = cap * Math.Sign(npc.velocity.X);
+            if (Math.Abs(npc.velocity.Y) > cap)
+                npc.velocity.Y = cap * Math.Sign(npc.velocity.Y);
         }
 
         public override void FindFrame(int frameHeight)

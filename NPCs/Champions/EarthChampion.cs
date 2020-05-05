@@ -61,9 +61,13 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             if (npc.localAI[3] == 0) //just spawned
             {
-                npc.localAI[3] = 1;
                 npc.TargetClosest(false);
-
+                Movement(Main.player[npc.target].Center, 0.8f, 32f);
+                if (npc.Distance(Main.player[npc.target].Center) < 2000)
+                    npc.localAI[3] = 1;
+                else
+                    return;
+                
                 if (Main.netMode != 1)
                 {
                     int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<EarthChampionHand>(), npc.whoAmI, 0, 0, npc.whoAmI, 1);
@@ -71,7 +75,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         Main.npc[n].velocity = Main.rand.NextVector2Unit() * Main.rand.NextFloat(32f);
                         if (Main.netMode == 2)
-                        NetMessage.SendData(23, -1, -1, null, n);
+                            NetMessage.SendData(23, -1, -1, null, n);
                     }
 
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<EarthChampionHand>(), npc.whoAmI, 0, 0, npc.whoAmI, -1);
