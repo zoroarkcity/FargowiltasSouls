@@ -1119,7 +1119,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 Item.NewItem(npc.position, npc.Size, drops[thisDrop]);
             }
 
-            Item.NewItem(npc.position, npc.Size, ModLoader.GetMod("Fargowiltas").ItemType("CrucibleCosmos"));
+            //Item.NewItem(npc.position, npc.Size, ModLoader.GetMod("Fargowiltas").ItemType("CrucibleCosmos"));
         }
 
         public override Color? GetAlpha(Color drawColor)
