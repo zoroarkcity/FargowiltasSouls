@@ -36,7 +36,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.knockBackResist = 0f;
             npc.lavaImmune = true;
             npc.aiStyle = -1;
-            npc.value = Item.buyPrice(0, 10);
+            npc.value = Item.buyPrice(0, 5);
 
             npc.boss = true;
             music = MusicID.Boss5;
@@ -543,6 +543,10 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
+            FargoSoulsWorld.downedChampions[5] = true;
+            if (Main.netMode == 2)
+                NetMessage.SendData(7); //sync world
+
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].type == ModContent.ProjectileType<ShadowClone>())

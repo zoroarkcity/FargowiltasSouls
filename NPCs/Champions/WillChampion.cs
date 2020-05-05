@@ -41,7 +41,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.knockBackResist = 0f;
             npc.lavaImmune = true;
             npc.aiStyle = -1;
-            npc.value = Item.buyPrice(0, 10);
+            npc.value = Item.buyPrice(0, 5);
 
             npc.boss = true;
             music = MusicID.Boss2;
@@ -671,6 +671,10 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
+            FargoSoulsWorld.downedChampions[7] = true;
+            if (Main.netMode == 2)
+                NetMessage.SendData(7); //sync world
+
             int[] drops = {
                 ModContent.ItemType<GoldEnchant>(),
                 ModContent.ItemType<PlatinumEnchant>(),

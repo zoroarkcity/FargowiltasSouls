@@ -127,7 +127,7 @@ namespace FargowiltasSouls
             for (int i = 0; i < downedChampions.Length; i++)
             {
                 if (downedChampions[i])
-                    downed.Add("downedChamp" + i.ToString());
+                    downed.Add("downedChampion" + i.ToString());
             }
 
             return new TagCompound
