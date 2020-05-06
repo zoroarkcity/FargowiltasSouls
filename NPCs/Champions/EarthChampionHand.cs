@@ -100,7 +100,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     targetPos = head.Center;
                     targetPos.Y += head.height;
                     targetPos.X += head.width * npc.ai[3] / 2;
-                    Movement(targetPos, 0.8f, 24f);
+                    Movement(targetPos, 0.8f, 32f);
 
                     if (npc.ai[3] > 0)
                         npc.rotation = -(float)Math.PI / 4 - (float)Math.PI / 2;
@@ -126,7 +126,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     targetPos = head.Center;
                     targetPos.Y += 250;
                     targetPos.X += 300 * -npc.ai[3];
-                    Movement(targetPos, 0.8f, 24f);
+                    Movement(targetPos, 0.8f, 32f);
 
                     npc.rotation = 0;
 
@@ -150,7 +150,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             targetPos.X = player.Center.X - 400;
 
                         if (npc.Distance(targetPos) > 50)
-                            Movement(targetPos, 1.2f, 24f);
+                            Movement(targetPos, 1.2f, 32f);
 
                         if (head.localAI[2] == 1)
                             npc.position += player.velocity / 3f;
@@ -206,7 +206,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         targetPos.X = player.Center.X - 400;
 
                         if (npc.Distance(targetPos) > 50)
-                            Movement(targetPos, 0.4f, 24f);
+                            Movement(targetPos, 0.4f, 32f);
                     }
                     else
                     {
@@ -214,7 +214,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         targetPos.X += 400;
                         targetPos.Y += 600 * (float)Math.Sin(2 * Math.PI / 77 * npc.ai[1]);
 
-                        Movement(targetPos, 0.8f, 24f);
+                        Movement(targetPos, 0.8f, 32f);
                     }
 
                     if (++npc.localAI[0] > (head.localAI[2] == 1 ? 18 : 24))
@@ -248,7 +248,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         targetPos = head.Center;
                         targetPos.Y -= head.height;
                         targetPos.X += 50 * -npc.ai[3];
-                        Movement(targetPos, 1.6f, 24f);
+                        Movement(targetPos, 1.6f, 32f);
 
                         npc.rotation = 0;
                     }
@@ -334,7 +334,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     targetPos = head.Center;
                     targetPos.Y += 250;
                     targetPos.X += 300 * -npc.ai[3];
-                    Movement(targetPos, 0.8f, 24f);
+                    Movement(targetPos, 0.8f, 32f);
 
                     npc.rotation = 0;
 
