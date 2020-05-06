@@ -894,8 +894,6 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     else if (npc.ai[1] < 210)
                     {
-                        npc.velocity = Vector2.Zero;
-
                         if (Main.LocalPlayer.active && !Main.LocalPlayer.dead)
                         {
                             Main.LocalPlayer.AddBuff(ModContent.BuffType<Buffs.Souls.TimeFrozen>(), 2);
