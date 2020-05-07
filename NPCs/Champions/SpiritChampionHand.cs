@@ -13,11 +13,6 @@ namespace FargowiltasSouls.NPCs.Champions
 {
     public class SpiritChampionHand : ModNPC
     {
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Spirit");
@@ -283,8 +278,11 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Infested>(), 360);
-            target.AddBuff(ModContent.BuffType<ClippedWings>(), 180);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(ModContent.BuffType<Infested>(), 360);
+                target.AddBuff(ModContent.BuffType<ClippedWings>(), 180);
+            }
         }
 
         public override bool CheckActive()

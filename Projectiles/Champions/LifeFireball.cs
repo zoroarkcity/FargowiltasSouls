@@ -27,6 +27,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.timeLeft = 240;
+            cooldownSlot = 1;
         }
 
         public override void AI()
@@ -146,9 +147,12 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(BuffID.CursedInferno, 120);
+                target.AddBuff(ModContent.BuffType<Shadowflame>(), 120);
+            }
             target.AddBuff(BuffID.OnFire, 120);
-            target.AddBuff(BuffID.CursedInferno, 120);
-            target.AddBuff(ModContent.BuffType<Shadowflame>(), 120);
         }
 
         public override Color? GetAlpha(Color lightColor)

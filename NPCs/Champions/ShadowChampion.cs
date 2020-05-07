@@ -15,11 +15,6 @@ namespace FargowiltasSouls.NPCs.Champions
     [AutoloadBossHead]
     public class ShadowChampion : ModNPC
     {
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Shadow");
@@ -31,7 +26,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 110;
             npc.height = 110;
-            npc.damage = 150;
+            npc.damage = 130;
             npc.defense = 60;
             npc.lifeMax = 320000;
             npc.HitSound = SoundID.NPCHit5;
@@ -41,7 +36,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.knockBackResist = 0f;
             npc.lavaImmune = true;
             npc.aiStyle = -1;
-            npc.value = Item.buyPrice(0, 10);
+            npc.value = Item.buyPrice(0, 5);
 
             npc.boss = true;
             music = MusicID.Boss5;
@@ -83,8 +78,12 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             if (npc.localAI[3] == 0) //spawn friends
             {
-                npc.localAI[3] = 1;
                 npc.TargetClosest(false);
+                Movement(Main.player[npc.target].Center, 0.8f, 32f);
+                if (npc.Distance(Main.player[npc.target].Center) < 2000)
+                    npc.localAI[3] = 1;
+                else
+                    return;
 
                 if (Main.netMode != 1)
                 {
@@ -258,7 +257,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.noGravity = true;
                         npc.velocity.Y -= 1f;
 
-                        return;
+                        break;
                     }
                     else
                     {
@@ -534,7 +533,8 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(BuffID.Darkness, 300);
-            target.AddBuff(BuffID.Blackout, 300);
+            if (FargoSoulsWorld.MasochistMode)
+                target.AddBuff(BuffID.Blackout, 300);
         }
 
         public override void BossLoot(ref string name, ref int potionType)
@@ -544,6 +544,10 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
+            FargoSoulsWorld.downedChampions[5] = true;
+            if (Main.netMode == 2)
+                NetMessage.SendData(7); //sync world
+
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].type == ModContent.ProjectileType<ShadowClone>())
@@ -558,19 +562,19 @@ namespace FargowiltasSouls.NPCs.Champions
                 ModContent.ItemType<ShinobiEnchant>(),
                 ModContent.ItemType<DarkArtistEnchant>(),
             };
-            int lastDrop = 0; //don't drop same ench twice
+            int lastDrop = -1; //don't drop same ench twice
             for (int i = 0; i < 2; i++)
             {
-                int thisDrop = drops[Main.rand.Next(drops.Length)];
+                int thisDrop = Main.rand.Next(drops.Length);
 
                 if (lastDrop == thisDrop) //try again
                 {
-                    i--;
-                    continue;
+                    if (++thisDrop >= drops.Length) //drop first ench in line if looped past array
+                        thisDrop = 0;
                 }
 
                 lastDrop = thisDrop;
-                Item.NewItem(npc.position, npc.Size, thisDrop);
+                Item.NewItem(npc.position, npc.Size, drops[thisDrop]);
             }
         }
 

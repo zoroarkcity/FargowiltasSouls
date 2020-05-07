@@ -72,7 +72,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(mod.BuffType("Hexed"), 120);
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 300);
+            target.AddBuff(mod.BuffType("CurseoftheMoon"), 360);
             switch ((int)projectile.ai[0])
             {
                 case 0: target.AddBuff(mod.BuffType("ReverseManaFlow"), 180); break; //nebula

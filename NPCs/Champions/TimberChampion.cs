@@ -7,6 +7,7 @@ using Terraria.Localization;
 using FargowiltasSouls.Items.Accessories.Enchantments;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace FargowiltasSouls.NPCs.Champions
 {
@@ -19,16 +20,11 @@ namespace FargowiltasSouls.NPCs.Champions
             Main.npcFrameCount[npc.type] = 6;
         }
 
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
-
         public override void SetDefaults()
         {
             npc.width = 160;
             npc.height = 228;
-            npc.damage = 150;
+            npc.damage = 130;
             npc.defense = 50;
             npc.lifeMax = 320000;
             npc.HitSound = SoundID.NPCHit7;
@@ -38,7 +34,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.knockBackResist = 0f;
             npc.lavaImmune = true;
             npc.aiStyle = -1;
-            npc.value = Item.buyPrice(0, 10);
+            npc.value = Item.buyPrice(0, 5);
 
             npc.boss = true;
             music = MusicID.Boss1;
@@ -60,6 +56,16 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void AI()
         {
+            if (npc.localAI[2] == 0)
+            {
+                npc.TargetClosest(false);
+                Movement(Main.player[npc.target].Center, 0.8f, 32f);
+                if (npc.Distance(Main.player[npc.target].Center) < 2000)
+                    npc.localAI[2] = 1;
+                else
+                    return;
+            }
+
             EModeGlobalNPC.championBoss = npc.whoAmI;
 
             Player player = Main.player[npc.target];
@@ -113,10 +119,10 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         for (int k = -2; k <= 2; k++) //explosions
                         {
-                            Vector2 dustPos = npc.position;
+                            Vector2 dustPos = npc.Center;
                             int width = npc.width / 5;
                             dustPos.X += width * k + Main.rand.NextFloat(-width, width);
-                            dustPos.Y += npc.height - width / 2 + Main.rand.NextFloat(-width, width) / 2;
+                            dustPos.Y += Main.rand.NextFloat(npc.height / 2);
 
                             for (int i = 0; i < 30; i++)
                             {
@@ -362,6 +368,38 @@ namespace FargowiltasSouls.NPCs.Champions
             }
         }
 
+        private void Movement(Vector2 targetPos, float speedModifier, float cap = 12f)
+        {
+            if (npc.Center.X < targetPos.X)
+            {
+                npc.velocity.X += speedModifier;
+                if (npc.velocity.X < 0)
+                    npc.velocity.X += speedModifier * 2;
+            }
+            else
+            {
+                npc.velocity.X -= speedModifier;
+                if (npc.velocity.X > 0)
+                    npc.velocity.X -= speedModifier * 2;
+            }
+            if (npc.Center.Y < targetPos.Y)
+            {
+                npc.velocity.Y += speedModifier;
+                if (npc.velocity.Y < 0)
+                    npc.velocity.Y += speedModifier * 2;
+            }
+            else
+            {
+                npc.velocity.Y -= speedModifier;
+                if (npc.velocity.Y > 0)
+                    npc.velocity.Y -= speedModifier * 2;
+            }
+            if (Math.Abs(npc.velocity.X) > cap)
+                npc.velocity.X = cap * Math.Sign(npc.velocity.X);
+            if (Math.Abs(npc.velocity.Y) > cap)
+                npc.velocity.Y = cap * Math.Sign(npc.velocity.Y);
+        }
+
         public override void FindFrame(int frameHeight)
         {
             if (++npc.frameCounter > 6)
@@ -375,7 +413,20 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Buffs.Masomode.Guilty>(), 600);
+            if (FargoSoulsWorld.MasochistMode)
+                target.AddBuff(ModContent.BuffType<Buffs.Masomode.Guilty>(), 600);
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (npc.life <= 0)
+            {
+                for (int i = 2; i <= 6; i++)
+                {
+                    Vector2 pos = npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height));
+                    Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/TimberGore" + i.ToString()), npc.scale);
+                }
+            }
         }
 
         public override void BossLoot(ref string name, ref int potionType)
@@ -385,7 +436,10 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
-            //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<TimberForce>());
+            FargoSoulsWorld.downedChampions[0] = true;
+            if (Main.netMode == 2)
+                NetMessage.SendData(7); //sync world
+
             int[] drops = {
                 ModContent.ItemType<WoodEnchant>(),
                 ModContent.ItemType<BorealWoodEnchant>(),
@@ -395,20 +449,25 @@ namespace FargowiltasSouls.NPCs.Champions
                 ModContent.ItemType<PalmWoodEnchant>(),
                 ModContent.ItemType<PearlwoodEnchant>()
             };
-            int lastDrop = 0; //don't drop same ench twice
+            int lastDrop = -1; //don't drop same ench twice
             for (int i = 0; i < 2; i++)
             {
-                int thisDrop = drops[Main.rand.Next(drops.Length)];
+                int thisDrop = Main.rand.Next(drops.Length);
 
                 if (lastDrop == thisDrop) //try again
                 {
-                    i--;
-                    continue;
+                    if (++thisDrop >= drops.Length) //drop first ench in line if looped past array
+                        thisDrop = 0;
                 }
 
                 lastDrop = thisDrop;
-                Item.NewItem(npc.position, npc.Size, thisDrop);
+                Item.NewItem(npc.position, npc.Size, drops[thisDrop]);
             }
+        }
+
+        public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
+        {
+            spriteEffects = npc.direction < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         }
     }
 }

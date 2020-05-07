@@ -53,9 +53,12 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("Infested"), 300);
             target.AddBuff(BuffID.BrokenArmor, 300);
-            target.AddBuff(mod.BuffType("Swarming"), 300);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(mod.BuffType("Infested"), 300);
+                target.AddBuff(mod.BuffType("Swarming"), 300);
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

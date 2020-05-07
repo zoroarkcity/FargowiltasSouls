@@ -62,9 +62,11 @@ namespace FargowiltasSouls.Projectiles.Champions
                         int hitDirection = projectile.Center.X > target.Center.X ? 1 : -1;
                         target.Hurt(PlayerDeathReason.ByProjectile(target.whoAmI, projectile.whoAmI),
                             Main.npc[ai1].damage / 2, hitDirection, false, false, false, 0);
-
-                        target.AddBuff(ModContent.BuffType<Defenseless>(), 300);
-                        target.AddBuff(ModContent.BuffType<Midas>(), 300);
+                        if (FargoSoulsWorld.MasochistMode)
+                        {
+                            target.AddBuff(ModContent.BuffType<Defenseless>(), 300);
+                            target.AddBuff(ModContent.BuffType<Midas>(), 300);
+                        }
                         target.AddBuff(BuffID.Bleeding, 300);
                     }
                     if (distance > threshold && distance < threshold * 5f)

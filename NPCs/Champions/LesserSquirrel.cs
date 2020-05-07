@@ -9,11 +9,6 @@ namespace FargowiltasSouls.NPCs.Champions
 {
     public class LesserSquirrel : ModNPC
     {
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
-
         public override string Texture => "FargowiltasSouls/NPCs/Critters/TophatSquirrel";
 
         public int counter;
@@ -80,8 +75,13 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void HitEffect(int hitDirection, double damage)
         {
             if (npc.life <= 0)
+            {
                 for (int k = 0; k < 20; k++)
                     Dust.NewDust(npc.position, npc.width, npc.height, 5, hitDirection, -1f);
+
+                Vector2 pos = npc.Center;
+                Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/TimberGore1"));
+            }
         }
     }
 }

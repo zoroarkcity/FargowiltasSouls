@@ -16,11 +16,6 @@ namespace FargowiltasSouls.NPCs.Champions
     [AutoloadBossHead]
     public class SpiritChampion : ModNPC
     {
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Spirit");
@@ -32,7 +27,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 150;
             npc.height = 150;
-            npc.damage = 140;
+            npc.damage = 120;
             npc.defense = 40;
             npc.lifeMax = 700000;
             npc.HitSound = SoundID.NPCHit54;
@@ -42,7 +37,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.knockBackResist = 0f;
             npc.lavaImmune = true;
             npc.aiStyle = -1;
-            npc.value = Item.buyPrice(0, 10);
+            npc.value = Item.buyPrice(0, 5);
 
             npc.boss = true;
             music = MusicID.Boss4;
@@ -82,8 +77,12 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             if (npc.localAI[3] == 0) //spawn friends
             {
-                npc.localAI[3] = 1;
                 npc.TargetClosest(false);
+                Movement(Main.player[npc.target].Center, 0.8f, 32f);
+                if (npc.Distance(Main.player[npc.target].Center) < 2000)
+                    npc.localAI[3] = 1;
+                else
+                    return;
 
                 if (Main.netMode != 1)
                 {
@@ -92,7 +91,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode != 2)
+                        if (Main.netMode == 2)
                             NetMessage.SendData(23, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 0f, npc.whoAmI, -1f, 1f, npc.target);
@@ -100,7 +99,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode != 2)
+                        if (Main.netMode == 2)
                             NetMessage.SendData(23, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 0f, npc.whoAmI, 1f, -1f, npc.target);
@@ -108,7 +107,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode != 2)
+                        if (Main.netMode == 2)
                             NetMessage.SendData(23, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 0f, npc.whoAmI, 1f, 1f, npc.target);
@@ -116,7 +115,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode != 2)
+                        if (Main.netMode == 2)
                             NetMessage.SendData(23, -1, -1, null, n);
                     }
                 }
@@ -188,7 +187,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                     Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                    if (Main.netMode != 2)
+                                    if (Main.netMode == 2)
                                         NetMessage.SendData(23, -1, -1, null, n);
                                 }
                             }
@@ -199,7 +198,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                     Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                    if (Main.netMode != 2)
+                                    if (Main.netMode == 2)
                                         NetMessage.SendData(23, -1, -1, null, n);
                                 }
                             }
@@ -210,7 +209,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                     Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                    if (Main.netMode != 2)
+                                    if (Main.netMode == 2)
                                         NetMessage.SendData(23, -1, -1, null, n);
                                 }
                             }
@@ -221,7 +220,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                     Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                    if (Main.netMode != 2)
+                                    if (Main.netMode == 2)
                                         NetMessage.SendData(23, -1, -1, null, n);
                                 }
                             }
@@ -248,7 +247,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             {
                                 Main.npc[n2].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                 Main.npc[n2].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                if (Main.netMode != 2)
+                                if (Main.netMode == 2)
                                     NetMessage.SendData(23, -1, -1, null, n2);
                             }
                         }
@@ -609,7 +608,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     goto case 0;
             }
 
-            if (npc.localAI[2] != 0) //aura
+            if (npc.localAI[2] != 0 && FargoSoulsWorld.MasochistMode) //aura
             {
                 const float auraDistance = 1200;
                 float range = npc.Distance(player.Center);
@@ -630,7 +629,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             {
                                 Main.npc[n2].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                 Main.npc[n2].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                if (Main.netMode != 2)
+                                if (Main.netMode == 2)
                                     NetMessage.SendData(23, -1, -1, null, n2);
                             }
                         }
@@ -704,8 +703,11 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Infested>(), 360);
-            target.AddBuff(ModContent.BuffType<ClippedWings>(), 180);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(ModContent.BuffType<Infested>(), 360);
+                target.AddBuff(ModContent.BuffType<ClippedWings>(), 180);
+            }
         }
 
         public override void BossLoot(ref string name, ref int potionType)
@@ -715,6 +717,10 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
+            FargoSoulsWorld.downedChampions[6] = true;
+            if (Main.netMode == 2)
+                NetMessage.SendData(7); //sync world
+
             //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<SpiritForce>());
             int[] drops = {
                 ModContent.ItemType<FossilEnchant>(),
@@ -723,19 +729,19 @@ namespace FargowiltasSouls.NPCs.Champions
                 ModContent.ItemType<TikiEnchant>(),
                 ModContent.ItemType<SpectreEnchant>(),
             };
-            int lastDrop = 0; //don't drop same ench twice
+            int lastDrop = -1; //don't drop same ench twice
             for (int i = 0; i < 2; i++)
             {
-                int thisDrop = drops[Main.rand.Next(drops.Length)];
+                int thisDrop = Main.rand.Next(drops.Length);
 
                 if (lastDrop == thisDrop) //try again
                 {
-                    i--;
-                    continue;
+                    if (++thisDrop >= drops.Length) //drop first ench in line if looped past array
+                        thisDrop = 0;
                 }
 
                 lastDrop = thisDrop;
-                Item.NewItem(npc.position, npc.Size, thisDrop);
+                Item.NewItem(npc.position, npc.Size, drops[thisDrop]);
             }
         }
 

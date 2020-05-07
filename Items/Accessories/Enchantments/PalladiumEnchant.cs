@@ -16,8 +16,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Palladium Enchantment");
             Tooltip.SetDefault(
 @"'You feel your wounds slowly healing' 
-Greatly increases life regeneration after striking an enemy 
-One attack gains 10% life steal every 4 seconds, capped at 8 HP");
+Greatly increases life regeneration after striking an enemy ");
+//One attack gains 10% life steal every 4 seconds, capped at 8 HP");
             DisplayName.AddTranslation(GameCulture.Chinese, "钯金魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'你感到你的伤口在慢慢愈合'

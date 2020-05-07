@@ -82,7 +82,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             cooldownSlot = 1;
-            return true;
+            return npc.Distance(target.Center) < target.height / 2 + 20;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -1829,7 +1829,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            damage *= 0.9;
+            damage *= 0.8;
             return true;
         }
 
