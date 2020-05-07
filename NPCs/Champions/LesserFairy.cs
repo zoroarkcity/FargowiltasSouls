@@ -39,6 +39,12 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.noGravity = true;
         }
 
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            cooldownSlot = 1;
+            return true;
+        }
+
         public override void AI()
         {
             if (Main.rand.Next(6) == 0)
@@ -70,6 +76,12 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 npc.StrikeNPCNoInteraction(9999, 0f, 0);
             }
+        }
+
+        public override void OnHitPlayer(Player target, int damage, bool crit)
+        {
+            if (FargoSoulsWorld.MasochistMode)
+                target.AddBuff(ModContent.BuffType<Buffs.Masomode.Purified>(), 300);
         }
 
         public override Color? GetAlpha(Color drawColor)

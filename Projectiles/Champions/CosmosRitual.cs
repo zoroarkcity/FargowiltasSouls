@@ -55,10 +55,13 @@ namespace FargowiltasSouls.Projectiles.Champions
                         int hitDirection = projectile.Center.X > player.Center.X ? 1 : -1;
                         player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, projectile.whoAmI),
                             projectile.damage, hitDirection, false, false, false, 0);
-                        player.AddBuff(BuffID.OnFire, 300);
-                        player.AddBuff(BuffID.Electrified, 300);
-                        player.AddBuff(ModContent.BuffType<Hexed>(), 300);
-                        player.AddBuff(BuffID.Frostburn, 300);
+                        if (FargoSoulsWorld.MasochistMode)
+                        {
+                            player.AddBuff(BuffID.OnFire, 300);
+                            player.AddBuff(BuffID.Electrified, 300);
+                            player.AddBuff(ModContent.BuffType<Hexed>(), 300);
+                            player.AddBuff(BuffID.Frostburn, 300);
+                        }
                     }
                     if (distance > threshold && distance < threshold * 5f)
                     {
@@ -81,7 +84,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
                         for (int i = 0; i < 20; i++)
                         {
-                            int d = Dust.NewDust(player.position, player.width, player.height, 87, 0f, 0f, 0, default(Color), 2f);
+                            int d = Dust.NewDust(player.position, player.width, player.height, 135, 0f, 0f, 0, default(Color), 2.5f);
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity *= 5f;
                         }

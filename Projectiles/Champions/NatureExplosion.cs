@@ -43,7 +43,8 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.Burning, 300);
+            if (FargoSoulsWorld.MasochistMode)
+                target.AddBuff(BuffID.Burning, 300);
             target.AddBuff(BuffID.OnFire, 300);
             target.velocity.X = target.Center.X < Main.npc[(int)projectile.ai[0]].Center.X ? -15f : 15f;
             target.velocity.Y = -10f;

@@ -103,9 +103,11 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.OnFire, 600);
-            target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
-            target.AddBuff(ModContent.BuffType<LightningRod>(), 600);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
+                target.AddBuff(ModContent.BuffType<LightningRod>(), 600);
+            }
         }
 
         public override Color? GetAlpha(Color lightColor)

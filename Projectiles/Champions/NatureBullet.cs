@@ -26,7 +26,8 @@ namespace FargowiltasSouls.Projectiles.Champions
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(BuffID.Frostburn, 180);
-            target.AddBuff(BuffID.Chilled, 180);
+            if (FargoSoulsWorld.MasochistMode)
+                target.AddBuff(BuffID.Chilled, 180);
         }
 
         public override void Kill(int timeLeft)

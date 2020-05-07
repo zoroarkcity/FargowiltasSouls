@@ -493,7 +493,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("Purified"), 300);
+            if (FargoSoulsWorld.MasochistMode)
+                target.AddBuff(mod.BuffType("Purified"), 300);
         }
 
         public override void BossLoot(ref string name, ref int potionType)

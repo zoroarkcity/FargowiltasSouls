@@ -75,7 +75,8 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 360);
+            if (FargoSoulsWorld.MasochistMode)
+                target.AddBuff(mod.BuffType("CurseoftheMoon"), 360);
         }
 
         public override void Kill(int timeleft)

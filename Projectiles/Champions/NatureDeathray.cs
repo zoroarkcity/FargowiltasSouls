@@ -117,9 +117,12 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.Frostburn, 300);
-            target.AddBuff(BuffID.OnFire, 300);
-            target.AddBuff(ModContent.BuffType<Infested>(), 300);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(BuffID.Frostburn, 300);
+                target.AddBuff(BuffID.OnFire, 300);
+                target.AddBuff(ModContent.BuffType<Infested>(), 300);
+            }
         }
     }
 }
