@@ -21,9 +21,7 @@ using FargowiltasSouls.Projectiles.BossWeapons;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Items.Weapons.SwarmDrops;
 using FargowiltasSouls.NPCs.MutantBoss;
-using FargowiltasSouls.Buffs.Boss;
-using FargowiltasSouls.Buffs;
-using FargowiltasSouls.Projectiles.Minions;
+
 using FargowiltasSouls.Items.Summons;
 
 // ReSharper disable CompareOfFloatsByEqualityOperator
