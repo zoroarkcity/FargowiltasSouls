@@ -39,8 +39,13 @@ Summons a Baby Ghost Bell pet");
             DisplayName.AddTranslation(GameCulture.Chinese, "软壳魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'世界任你驰骋'
-召唤2个海贝为你而战
-拥有大珍珠和阿米迪亚斯之垂饰的效果");
+两只贝壳会为你而战
+使用任何武器时都有10%的几率发射回旋贝壳弹幕
+召唤一只海胆为你而战
+拥有大珍珠和阿米迪亚斯之垂饰的效果
+拥有海波纹章和附魔珍珠的效果
+拥有海波项链，深潜者，变压护符和卢克索的礼物的效果
+召唤小鬼铃水母宠物");
         }
 
         public override void SetDefaults()

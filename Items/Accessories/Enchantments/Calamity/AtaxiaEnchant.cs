@@ -34,16 +34,16 @@ Magic attacks summon damaging and healing flare orbs on hit
 Summons a hydrothermic vent to protect you
 Rogue weapons have a 10% chance to unleash a volley of chaos flames around the player
 Effects of Hallowed Rune and Ethereal Extorter");
-            DisplayName.AddTranslation(GameCulture.Chinese, "阿塔西亚魔石");
+            DisplayName.AddTranslation(GameCulture.Chinese, "渊泉魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
-@"'别和禅心搞混了'
-攻击有20%概率释放炎爆
-近战攻击和抛射物会对敌人造成混乱之火
-使用远程武器时有50%概率发射追踪的混乱之火
-魔法攻击召唤治愈和伤害的火球
-召唤混乱之灵保护你
-盗贼武器有10%概率在玩家周围释放一串混乱之火
-拥有瘟疫蜂巢的效果");
+@"''
+你受伤时有20%的几率在原地产生一场烈焰爆炸
+近战攻击和弹幕在击中敌人时喷发出混沌火焰
+使用远程武器时有50%的几率发射追踪的混沌火焰
+魔法攻击产生伤害火球和治疗火球
+召唤沸腾渊泉保护你
+盗贼武器有10%的几率释放混沌火焰
+拥有神圣符文和虚空掠夺者的效果");
         }
 
         public override void SetDefaults()
