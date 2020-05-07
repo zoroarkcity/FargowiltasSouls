@@ -56,7 +56,9 @@ namespace FargowiltasSouls.Projectiles.Champions
 
             if (Main.netMode != 1)
             {
-                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<WillRitual>(), 0, 0f, Main.myPlayer, 0f, projectile.ai[1]);
+                if (FargoSoulsWorld.MasochistMode)
+                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<WillRitual>(), 0, 0f, Main.myPlayer, 0f, projectile.ai[1]);
+
                 for (int i = 0; i < 4; i++)
                 {
                     Projectile.NewProjectile(projectile.Center, Vector2.UnitX.RotatedBy(Math.PI / 4 * 2 * i + Math.PI / 4),

@@ -608,7 +608,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     goto case 0;
             }
 
-            if (npc.localAI[2] != 0) //aura
+            if (npc.localAI[2] != 0 && FargoSoulsWorld.MasochistMode) //aura
             {
                 const float auraDistance = 1200;
                 float range = npc.Distance(player.Center);

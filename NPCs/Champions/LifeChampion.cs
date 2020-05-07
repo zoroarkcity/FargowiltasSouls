@@ -68,7 +68,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
                 if (Main.netMode != 1)
                 {
-                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<LifeRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                    if (FargoSoulsWorld.MasochistMode)
+                        Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<LifeRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                 }
             }
 

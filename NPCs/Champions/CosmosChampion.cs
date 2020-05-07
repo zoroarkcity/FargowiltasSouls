@@ -169,7 +169,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         if (Main.netMode != 1)
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<CosmosRitual>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            if (FargoSoulsWorld.MasochistMode)
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<CosmosRitual>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
 
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<CosmosMeteor2>(), npc.damage / 4, 0f, Main.myPlayer, 1, npc.whoAmI);
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<CosmosMeteor2>(), npc.damage / 4, 0f, Main.myPlayer, -1, npc.whoAmI);
