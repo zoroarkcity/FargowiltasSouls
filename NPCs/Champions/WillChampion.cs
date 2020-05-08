@@ -31,7 +31,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 150;
             npc.height = 100;
-            npc.damage = 130;
+            npc.damage = 120;
             npc.defense = 40;
             npc.lifeMax = 390000;
             npc.HitSound = SoundID.NPCHit4;
@@ -60,7 +60,7 @@ namespace FargowiltasSouls.NPCs.Champions
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             cooldownSlot = 1;
-            return true;
+            return npc.Distance(target.Center) < 120;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -313,7 +313,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             }
                             else //actually just dash
                             {
-                                npc.velocity = npc.DirectionTo(player.Center) * 35f;
+                                npc.velocity = npc.DirectionTo(player.Center) * 33f;
                             }
                         }
                         else //regular movement
@@ -380,12 +380,22 @@ namespace FargowiltasSouls.NPCs.Champions
                         Main.dust[index2].velocity -= npc.velocity;
                     }
 
+                    if (--npc.localAI[0] < 0)
+                    {
+                        npc.localAI[0] = 2;
+                        if (Main.netMode != 1 && npc.localAI[3] == 1)
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<WillFireball2>(), npc.damage / 4, 0f, Main.myPlayer);
+                        }
+                    }
+
                     if (++npc.ai[1] > 30)
                     {
                         npc.ai[0]--; //return to previous step
                         npc.ai[1] = 0;
                         //npc.ai[2] = 0;
                         //npc.ai[3] = 0;
+                        npc.localAI[0] = 2;
                         npc.netUpdate = true;
                     }
                     break;
@@ -470,9 +480,9 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         if (--npc.localAI[0] < 0)
                         {
-                            npc.localAI[0] = 40;
+                            npc.localAI[0] = npc.localAI[2] == 1 ? 30 : 40;
 
-                            if (npc.ai[1] < 110)
+                            if (npc.ai[1] < 110 || npc.localAI[3] == 1)
                             {
                                 Main.PlaySound(36, npc.Center, -1);
 
@@ -568,6 +578,17 @@ namespace FargowiltasSouls.NPCs.Champions
                                     projVel *= 2.5f;
                                 }
                                 Projectile.NewProjectile(spawn, projVel, type, npc.defDamage / 4, 0f, Main.myPlayer);
+                            }
+                        }
+
+                        if (--npc.localAI[1] < 0)
+                        {
+                            npc.localAI[1] = npc.localAI[3] == 1 ? 35 : 180;
+
+                            if (npc.localAI[2] == 1 && Main.netMode != 1)
+                            {
+                                Projectile.NewProjectile(player.Center, Vector2.UnitY, ModContent.ProjectileType<WillDeathraySmall>(), npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                Projectile.NewProjectile(player.Center, -Vector2.UnitY, ModContent.ProjectileType<WillDeathraySmall>(), npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
                             }
                         }
 
