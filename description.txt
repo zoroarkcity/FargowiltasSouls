@@ -1,9 +1,38 @@
 NEW UPDATE - V 1.3.3
 
+Enchants
+-Angler Enchant lost Frost Daggerfish, gained Angler Tackle Bag and its effects (add the effects still, and new item to trawler)
+-Wood bois
+
+-Wood Enchantments no longer gain bonuses in certain biomes, they always have the old buffed effect or a slightly weaker version of it
+
+
+-Updated several Thorium Enchantments with missing or extra accessory effects: Crier
+-Removed Grand Thorium Armor from Thorium Enchant, added some stuff
+
+-Removed The Ring from SoU 
+
+-Added several missing calamity toggles, some disruptive toggles will start off by default
+
+
+
+
+
+Souls
+-Added Aelous Boots to Supersonic Soul, Removed Frostspark and Green Horseshoe Balloon, Added Pink Horseshoe Balloon
+-Removed all Thorium wings from Flight Mastery Soul
+
+-Updated some calamity support tooltips
+
+Emode
 -Zombies no longer kill doors, they just always open them
-
 -Updated Big mimic stomp, lava slime jump (tm)
+-Hallowed Cactus inflict Flipped instead of Confused
 
 
+
+-Removed Apoth support in SoE
+
+-Look into meme weapon and enchant nerfs/reworks
 
 -See the wiki for full details

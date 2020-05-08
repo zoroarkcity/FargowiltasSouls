@@ -1202,10 +1202,7 @@ namespace FargowiltasSouls
             if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.EbonwoodAura))
                 return;
 
-            int dist = 150;
-
-            if (player.ZoneCorrupt || WoodForce)
-                dist *= 2;
+            int dist = 250;
 
             for (int i = 0; i < Main.maxNPCs; i++)
             {

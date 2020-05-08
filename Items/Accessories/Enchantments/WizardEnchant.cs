@@ -7,31 +7,27 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class PalmWoodEnchant : ModItem
+    public class WizardEnchant : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Palm Wood Enchantment");
+            DisplayName.SetDefault("Wizard Enchantment");
             Tooltip.SetDefault(
-@"'Alarmingly calm'
-Double tap down to spawn a palm tree sentry that throws nuts at enemies"); e
-            DisplayName.AddTranslation(GameCulture.Chinese, "棕榈木魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
-@"'出奇的平静'
-双击'下'键生成一个向敌人投掷坚果的棕榈树哨兵
-在海洋或沙漠中,它的攻击速度翻倍");
+@"'I'm a what?'
+");
+
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        /*public override void ModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
                 if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
                 {
-                    tooltipLine.overrideColor = new Color(183, 141, 86);
+                    tooltipLine.overrideColor = new Color(151, 107, 75);
                 }
             }
-        }
+        }*/
 
         public override void SetDefaults()
         {
@@ -39,26 +35,28 @@ Double tap down to spawn a palm tree sentry that throws nuts at enemies"); e
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 2;
+            item.rare = 1;
             item.value = 10000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().PalmEffect();
+            player.GetModPlayer<FargoPlayer>().WizardEnchant = true;
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-
-            recipe.AddIngredient(ItemID.PalmWoodHelmet);
-            recipe.AddIngredient(ItemID.PalmWoodBreastplate);
-            recipe.AddIngredient(ItemID.PalmWoodGreaves);
-            recipe.AddIngredient(ItemID.BreathingReed);
-            recipe.AddIngredient(ItemID.Tuna);
-            recipe.AddIngredient(ItemID.Seashell);
-            recipe.AddIngredient(ItemID.BlackInk);
+            //recipe.AddIngredient(ItemID.WizardHat);
+            //magic hat
+            //amethyst robe
+            //topaz robe
+            //sapphire robe
+            //emerald robe
+            //ruby robe
+            //diamond robe
+            //gypsy robe
+            //rare enchantment
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

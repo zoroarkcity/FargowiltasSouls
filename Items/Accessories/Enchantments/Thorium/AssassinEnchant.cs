@@ -25,7 +25,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             Tooltip.SetDefault(
 @"'Blacken the skies and cull the weak'
 Attacks have a 10% chance to duplicate and become increased by 15%
-Attacks have a 5% chance to instantly kill the enemy");
+Attacks have a 5% chance to instantly kill the enemy
+Effects of Dart Pouch");
             DisplayName.AddTranslation(GameCulture.Chinese, "刺客魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'遮蔽天空，抹除弱者'
@@ -60,6 +61,8 @@ Attacks have a 5% chance to instantly kill the enemy");
 
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             modPlayer.AssassinEnchant = true;
+
+            dart pouch effect
         }
 
         public override void AddRecipes()

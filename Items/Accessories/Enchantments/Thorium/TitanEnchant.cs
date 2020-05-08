@@ -59,6 +59,8 @@ Effects of Mask of the Crystal Eye, Abyssal Shell, and Rock Music Player");
             //music player
             thoriumPlayer.accMusicPlayer = true;
             thoriumPlayer.accMP3String = true;
+
+            spiritband
         }
 
         public override void AddRecipes()

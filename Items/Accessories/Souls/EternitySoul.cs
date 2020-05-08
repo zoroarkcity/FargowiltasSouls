@@ -548,11 +548,6 @@ Additionally grants:");
             if (Fargowiltas.Instance.DBZMODLoaded) DBT(player);
 
             if (Fargowiltas.Instance.SoALoaded) SOA(player, hideVisual);
-
-            if (Fargowiltas.Instance.ApothLoaded)
-            {
-                ModLoader.GetMod("ApothTestMod").GetItem("Ataraxia").UpdateAccessory(player, hideVisual);
-            }
         }
 
         private void Thorium(Player player, bool hideVisual)
@@ -749,11 +744,6 @@ Additionally grants:");
             if (Fargowiltas.Instance.SoALoaded)
             {
                 recipe.AddIngredient(null, "SoASoul");
-            }
-
-            if (Fargowiltas.Instance.ApothLoaded)
-            {
-                recipe.AddIngredient(ModLoader.GetMod("ApothTestMod").ItemType("Ataraxia"));
             }
 
             recipe.AddIngredient(null, "Sadism", 30);

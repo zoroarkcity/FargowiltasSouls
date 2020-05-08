@@ -54,6 +54,8 @@ Summons a pet Magic Lantern and Lock Box");
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
 
+            increase range from crystallinecharm
+
             thoriumPlayer.geodeShine = true;
             Lighting.AddLight(player.position, 1.2f, 0.8f, 1.2f);
             //pets

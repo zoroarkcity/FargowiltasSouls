@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Items.Accessories.Essences
         {
             DisplayName.SetDefault("Vagabond's Soul");
             Tooltip.SetDefault(
-@"'This is only the beginning..'
+@"'They’ll never see it coming'
 30% increased rogue damage
 15% increased rogue velocity
 15% increased rogue critical strike chance

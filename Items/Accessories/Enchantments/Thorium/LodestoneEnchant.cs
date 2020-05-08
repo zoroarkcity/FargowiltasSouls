@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 @"'Sturdy'
 Damage reduction is increased by 10% at every 25% segment of life
 Maximum damage reduction is reached at 30% while below 50% life
-Effects of Astro-Beetle Husk");
+Effects of Astro-Beetle Husk and Obsidian Scale");
             DisplayName.AddTranslation(GameCulture.Chinese, "地脉魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'坚实'
@@ -75,6 +75,8 @@ Effects of Astro-Beetle Husk");
 
             //astro beetle husk
             thoriumPlayer.metalShieldMax = 25;
+
+            obsidianscale
         }
 
         public override void AddRecipes()
