@@ -33,6 +33,13 @@ Press Y to trigger a brimflame frenzy effect
 While under this effect, your damage is significantly boosted
 However, this comes at the cost of rapid life loss and no mana regeneration
 Summons a Brimling pet");
+            DisplayName.AddTranslation(GameCulture.Chinese, "硫火魔石");
+            Tooltip.AddTranslation(GameCulture.Chinese, 
+@"''
+按Y键进入硫火狂暴模式
+在此模式下，你造成的伤害会显著增加
+然而这是以快速的生命流失和魔力再生速度归零为代价的
+召唤小硫火灵宠物");
         }
 
         /*public override void ModifyTooltips(List<TooltipLine> list)

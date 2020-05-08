@@ -1002,6 +1002,13 @@ namespace FargowiltasSouls.NPCs
                 FirstTick = true;
             }
 
+            if (Stop > 0)
+            {
+                Stop--;
+                npc.position = npc.oldPosition;
+                npc.frameCounter = 0;
+            }
+
             if (FargoSoulsWorld.MasochistMode)
             {
                 if (RegenTimer > 0)
@@ -2907,22 +2914,19 @@ namespace FargowiltasSouls.NPCs
                                 Main.PlaySound(2, npc.Center, 14);
                                 if (Main.netMode != 1)
                                 {
-                                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.DD2OgreSmash, npc.damage / 4, 4, Main.myPlayer);
-                                    /*int type;
-                                    if (npc.type == NPCID.BigMimicHallow)
-                                        type = ProjectileID.HallowSpray;
-                                    else if (npc.type == NPCID.BigMimicCorruption)
-                                        type = ProjectileID.CorruptSpray;
-                                    else if (npc.type == NPCID.BigMimicCrimson)
-                                        type = ProjectileID.CrimsonSpray;
-                                    else
-                                        type = ProjectileID.PureSpray;
-                                    const int max = 16;
-                                    for (int i = 0; i < max; i++)
-                                    {
-                                        Vector2 vel = new Vector2(0f, -4f).RotatedBy(2 * Math.PI / max * i);
-                                        Projectile.NewProjectile(npc.Center, vel, type, 0, 0f, Main.myPlayer, 8f);
-                                    }*/
+                                    Projectile proj = FargoGlobalProjectile.NewProjectileDirectSafe(npc.Center, Vector2.Zero, ProjectileID.DD2ExplosiveTrapT3Explosion, npc.damage / 4, 4, Main.myPlayer);
+                                    proj.hostile = true;
+                                    proj.friendly = false;
+
+                                    proj = FargoGlobalProjectile.NewProjectileDirectSafe(new Vector2(npc.Center.X + npc.width * 2, npc.Center.Y), Vector2.Zero, ProjectileID.DD2ExplosiveTrapT3Explosion, npc.damage / 4, 4, Main.myPlayer);
+                                    proj.hostile = true;
+                                    proj.friendly = false;
+
+                                    proj = FargoGlobalProjectile.NewProjectileDirectSafe(new Vector2(npc.Center.X - npc.width * 2, npc.Center.Y), Vector2.Zero, ProjectileID.DD2ExplosiveTrapT3Explosion, npc.damage / 4, 4, Main.myPlayer);
+                                    proj.hostile = true;
+                                    proj.friendly = false;
+
+
                                 }
                             }
                         }
@@ -3351,6 +3355,9 @@ namespace FargowiltasSouls.NPCs
                                 && npc.Center.ToTileCoordinates().Y > Main.maxTilesY - 200) //in hell and below player
                             {
                                 masoBool[0] = false;
+
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.DD2ExplosiveTrapT1Explosion, 0, 0, Main.myPlayer);
+
                                 int tileX = (int)(npc.Center.X / 16f);
                                 int tileY = (int)(npc.Center.Y / 16f);
                                 Tile tile = Framing.GetTileSafely(tileX, tileY);
@@ -3674,11 +3681,13 @@ namespace FargowiltasSouls.NPCs
                             Tile tile = Framing.GetTileSafely(tileX, tileY);
                             if (tile.type == TileID.ClosedDoor || tile.type == TileID.TallGateClosed)
                             {
-                                WorldGen.KillTile(tileX, tileY);
+                                //WorldGen.KillTile(tileX, tileY);
+                                WorldGen.OpenDoor(tileX, tileY, npc.direction);
                                 if (Main.netMode == 2)
                                     NetMessage.SendData(17, -1, -1, null, 0, tileX, tileY);
                             }
                         }
+
                         break;
 
                     default:

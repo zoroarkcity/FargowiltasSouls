@@ -27,15 +27,16 @@ Effects of Counter Scarf and Fungal Symbiote
 Effects of Hallowed Rune, Ethereal Extorter, and The Community
 Effects of The Evolution, Spectral Veil, and Statis' Void Sash
 Summons several pets");
-            DisplayName.AddTranslation(GameCulture.Chinese, "天启之力");
+            DisplayName.AddTranslation(GameCulture.Chinese, "湮灭之力");
             Tooltip.AddTranslation(GameCulture.Chinese,
 @"'此地曾充满生命与光明, 现在只余废墟'
-拥有天蓝, 斯塔提斯, 代达罗斯和血炎的套装效果
-拥有灵魂浮雕, 掠袭者护符和气之挂坠的效果
-拥有角斗士链坠和不稳定棱镜的效果
+拥有天蓝, 斯塔提斯和渊泉的套装效果
+拥有克希洛克，神惧者的套装效果
+拥有角斗士金锁和不稳定棱晶的效果
 拥有反击围巾和真菌共生体的效果
-拥有佩码·福洛斯特之融魔台和再生器的效果
-拥有血神核心和灾劫之尖啸的效果");
+拥有神圣符文，虚空掠夺者和归一心元石的效果
+拥有进化者，幽灵披风和斯塔提斯的虚空饰带的效果
+召唤几个宠物");
 
         }
 

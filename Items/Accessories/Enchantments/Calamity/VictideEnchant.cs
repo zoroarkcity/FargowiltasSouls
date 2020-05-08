@@ -32,11 +32,11 @@ Summons a sea urchin to protect you
 Effects of Ocean's Crest, Deep Diver, The Transformer, and Luxor's Gift");
             DisplayName.AddTranslation(GameCulture.Chinese, "胜潮魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
-@"'前海给予你力量...'
-攻击时有10%的概率抛出一个贝壳回旋镖
-贝壳回旋镖造成真实伤害但不受任何增幅
-召唤一个海胆保护你
-拥有深潜者, 变压器和祖玛的礼物的效果");
+@"'彼时之海给予你力量...'
+使用任何武器时都有10%的几率发射回旋贝壳弹幕
+贝壳造成真实伤害，不受任何职业伤害加成影响
+召唤一只海胆为你而战
+拥有海波项链，深潜者，变压护符和卢克索的礼物的效果");
         }
 
         public override void SetDefaults()

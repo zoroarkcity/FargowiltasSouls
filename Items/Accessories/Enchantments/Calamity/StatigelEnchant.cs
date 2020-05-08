@@ -32,9 +32,8 @@ Effects of Counter Scarf and Fungal Symbiote");
             DisplayName.AddTranslation(GameCulture.Chinese, "斯塔提斯魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'斯塔提斯的神秘力量环绕着你...'
-一次性承受超过100点伤害时, 加长无敌时间
-能够多跳跃一次, 增加跳跃高度
-召唤迷你史莱姆之神为你而战, 种类视世界而定
+当你一次性受到超过100点伤害时，获得额外的无敌帧
+增加跳跃高度，并获得一段额外跳跃
 拥有反击围巾和真菌共生体的效果");
         }
 

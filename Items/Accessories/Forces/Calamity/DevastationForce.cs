@@ -27,13 +27,10 @@ Summons several pets");
             DisplayName.AddTranslation(GameCulture.Chinese, "毁灭之力");
             Tooltip.AddTranslation(GameCulture.Chinese,
 @"'让那些反抗你的人下地狱吧'
-拥有软壳, 掠夺者和阿塔西亚的套装效果
-拥有炫星, 龙蒿和魔影的套装效果
-拥有大珍珠和阿米迪亚斯之垂饰的效果
-拥有寓言龟壳和瘟疫蜂巢的效果
-拥有星陨幻空石和星神游龙外壳的效果
-拥有渎魂神物和蚀日尊戒的效果");
-
+拥有钨钢, 掠夺者，瘟疫死神和魔影的套装效果
+拥有气功念珠，传说龟壳和瘟疫蜂巢的效果
+拥有瘟疫燃料背包，蜜蜂护符，露营者和渎神魂晶的效果
+召唤几个宠物");
         }
 
         public override void SetDefaults()
