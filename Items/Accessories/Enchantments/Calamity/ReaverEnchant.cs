@@ -41,13 +41,14 @@ Summons a Sparks pet");
             DisplayName.AddTranslation(GameCulture.Chinese, "掠夺者魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'痛苦的死亡等待着你的敌人...'
-近战抛射物造成爆炸
-远程攻击有10%概率发射一个强力火箭
-魔法抛射物命中敌人时释放孢子爆炸
-召唤收割者之球向附近敌人发射孢子云
-被攻击时释放孢子云
-被攻击时激活'愤怒'
-拥有寓言龟壳的效果");
+近战武器的弹幕会产生爆炸
+使用远程武器时10%的几率发射一枚强力火箭弹
+你的魔法弹幕击中敌人时释放出孢子毒气
+召唤会在敌人接近时释放孢子毒气的掠夺者毒球
+受伤时释放一片孢子云
+受伤时获得掠夺者之怒增益
+拥有传说龟甲的效果
+召唤溅花闪蜓宠物");
         }
 
         public override void SetDefaults()

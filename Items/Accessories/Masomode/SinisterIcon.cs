@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         {
             DisplayName.SetDefault("Sinister Icon");
             Tooltip.SetDefault(@"'Most definitely not alive'
-Prevents Masochist Mode-induced natural boss spawns
+Prevents Eternity Mode-induced natural boss spawns
 Increases spawn rate
 Enemies with 1000 or less max life will drop doubled loot but zero coins");
 /*Graze projectiles to gain up to 30% increased crit damage

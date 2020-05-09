@@ -26,7 +26,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.aiStyle = -1;
             projectile.hostile = true;
             projectile.timeLeft = 600;
-            
+            projectile.ignoreWater = true;
             //cooldownSlot = 1;
         }
 
@@ -72,8 +72,11 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Defenseless>(), 300);
-            target.AddBuff(ModContent.BuffType<Midas>(), 300);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(ModContent.BuffType<Defenseless>(), 300);
+                target.AddBuff(ModContent.BuffType<Midas>(), 300);
+            }
             target.AddBuff(BuffID.Bleeding, 300);
             projectile.timeLeft = 0;
         }

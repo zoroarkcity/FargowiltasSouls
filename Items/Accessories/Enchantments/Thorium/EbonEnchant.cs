@@ -22,7 +22,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             DisplayName.SetDefault("Ebon Enchantment");
             Tooltip.SetDefault(
 @"'Great for brooding'
-Corrupts your radiant powers, causing them to take on dark forms and deal additional effects");
+Corrupts your radiant powers, causing them to take on dark forms and deal additional effects
+Effects if Dark Heart");
             DisplayName.AddTranslation(GameCulture.Chinese, "黑檀魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'适合沉思'
@@ -46,6 +47,8 @@ Corrupts your radiant powers, causing them to take on dark forms and deal additi
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
             //set bonus
             thoriumPlayer.darkAura = true;
+
+            darkheart
         }
 
         public override void AddRecipes()

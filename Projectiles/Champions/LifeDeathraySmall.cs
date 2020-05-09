@@ -31,8 +31,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            if (Main.npc[(int)projectile.ai[1]].active && Main.npc[(int)projectile.ai[1]].type == ModContent.NPCType<LifeChampion>()
-                && Main.npc[(int)projectile.ai[1]].ai[0] == 7)
+            if (Main.npc[(int)projectile.ai[1]].active && Main.npc[(int)projectile.ai[1]].type == ModContent.NPCType<LifeChampion>())
             {
                 projectile.Center = Main.npc[(int)projectile.ai[1]].Center;
             }
@@ -115,7 +114,8 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("Purified"), 300);
+            if (FargoSoulsWorld.MasochistMode)
+                target.AddBuff(mod.BuffType("Purified"), 300);
         }
     }
 }

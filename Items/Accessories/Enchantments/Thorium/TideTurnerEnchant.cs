@@ -104,6 +104,8 @@ Attacks have a 20% chance to unleash aquatic homing daggers all around you");
             }
             //set bonus damage to healing hot key
             thoriumPlayer.tideSet = true;
+
+            fishegg pet
         }
 
         public override void AddRecipes()

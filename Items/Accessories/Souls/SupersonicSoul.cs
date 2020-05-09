@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Supersonic Soul");
+            DisplayName.SetDefault("Supersonic Soul"); e
 
             string tooltip = 
 @"'I am speed'
@@ -90,7 +90,8 @@ Effects of Flying Carpet";
             }
             else
             {
-                recipe.AddIngredient(ItemID.FrostsparkBoots);
+                recipe.AddIngredient(ModContent.ItemType<AeolusBoots>());
+                //recipe.AddIngredient(ItemID.FrostsparkBoots);
                 recipe.AddIngredient(ItemID.LavaWaders);
                 recipe.AddIngredient(ItemID.ArcticDivingGear);
             }
@@ -105,7 +106,8 @@ Effects of Flying Carpet";
                 recipe.AddIngredient(ItemID.BundleofBalloons);
             }
 
-            recipe.AddIngredient(ItemID.BalloonHorseshoeFart);
+            //recipe.AddIngredient(ItemID.BalloonHorseshoeFart);
+            recipe.AddIngredient(ItemID.BalloonHorseshoePink);
             recipe.AddIngredient(ItemID.FlyingCarpet);
             recipe.AddIngredient(ItemID.MinecartMech);
             recipe.AddIngredient(ItemID.BlessedApple);

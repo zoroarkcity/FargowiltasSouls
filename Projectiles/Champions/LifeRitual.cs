@@ -44,8 +44,12 @@ namespace FargowiltasSouls.Projectiles.Champions
                 projectile.alpha -= 2;
                 if (projectile.alpha < 0)
                     projectile.alpha = 0;
-                
-                projectile.Center = Main.npc[ai1].Center;
+
+                if (Main.npc[ai1].ai[0] != 2f && Main.npc[ai1].ai[0] != 3f
+                    && Main.npc[ai1].ai[0] != 9f && Main.npc[ai1].ai[0] != 10f)
+                {
+                    projectile.velocity = (Main.npc[ai1].Center - projectile.Center) / 30;
+                }
 
                 Player player = Main.player[Main.myPlayer];
                 if (player.active && !player.dead)
@@ -56,7 +60,8 @@ namespace FargowiltasSouls.Projectiles.Champions
                         int hitDirection = projectile.Center.X > player.Center.X ? 1 : -1;
                         player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, projectile.whoAmI),
                             projectile.damage, hitDirection, false, false, false, 0);
-                        player.AddBuff(mod.BuffType("Purified"), 300);
+                        if (FargoSoulsWorld.MasochistMode)
+                            player.AddBuff(mod.BuffType("Purified"), 300);
                     }
                     if (distance > threshold && distance < threshold * 5f)
                     {

@@ -15,6 +15,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             DisplayName.SetDefault("Abominable Wand");
             Tooltip.SetDefault(@"'Seems like something's missing'
 Grants immunity to Abominable Fang
+20% increased graze bonus critical damage cap
 Spectral Abominationn periodically manifests to support your critical hits
 Spectral Abominationn also inflicts Mutant Nibble
 You can endure any attack and survive with 1 life

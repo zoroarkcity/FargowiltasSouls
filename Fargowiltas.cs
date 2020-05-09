@@ -12,6 +12,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using FargowiltasSouls.Items.Accessories;
+using FargowiltasSouls.Items.Accessories.Enchantments;
 using FargowiltasSouls.NPCs.AbomBoss;
 using FargowiltasSouls.NPCs.Champions;
 using FargowiltasSouls.NPCs.DeviBoss;
@@ -258,7 +259,7 @@ namespace FargowiltasSouls
             AddToggle("DefenseStarConfig", "Stars On Hit", "ColossusSoul", "ffffff");
             AddToggle("DefenseBeeConfig", "Bees On Hit", "ColossusSoul", "ffffff");
             AddToggle("DefensePanicConfig", "Panic On Hit", "ColossusSoul", "ffffff");
-            AddToggle("RunspeedConfig", "Higher Base Run Speed", "SupersonicSoul", "ffffff");
+            AddToggle("RunSpeedConfig", "Higher Base Run Speed", "SupersonicSoul", "ffffff");
             AddToggle("MomentumConfig", "No Momentum", "SupersonicSoul", "ffffff");
             AddToggle("SupersonicConfig", "Supersonic Speed Boosts", "SupersonicSoul", "ffffff");
             AddToggle("EternityConfig", "Eternity Stacking", "EternitySoul", "ffffff");
@@ -748,6 +749,8 @@ namespace FargowiltasSouls
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<WillChampion>());
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<ShadowChampion>());
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<SpiritChampion>());
+                    bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<TerraChampion>());
+                    bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<NatureChampion>());
                 }
 
                 Mod bossChecklist = ModLoader.GetMod("BossChecklist");
@@ -767,6 +770,200 @@ namespace FargowiltasSouls
                         "Deviantt is satisfied with its show of love.",
                         "FargowiltasSouls/NPCs/DeviBoss/DeviBoss_Still",
                         "FargowiltasSouls/NPCs/DeviBoss/DeviBoss_Head_Boss"
+                    );
+                    bossChecklist.Call(
+                        "AddMiniBoss",
+                        14.0001f,
+                        ModContent.NPCType<TimberChampion>(),
+                        this,
+                        "Champion of Timber",
+                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[0]),
+                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
+                        new List<int> { },
+                        new List<int> {
+                            ModContent.ItemType<WoodEnchant>(),
+                            ModContent.ItemType<BorealWoodEnchant>(),
+                            ModContent.ItemType<RichMahoganyEnchant>(),
+                            ModContent.ItemType<EbonwoodEnchant>(),
+                            ModContent.ItemType<ShadewoodEnchant>(),
+                            ModContent.ItemType<PalmWoodEnchant>(),
+                            ModContent.ItemType<PearlwoodEnchant>()
+                        },
+                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] on the surface at day.",
+                        "Champion of Timber returns to its squirrel clan...",
+                        "FargowiltasSouls/NPCs/Champions/TimberChampion_Still",
+                        "FargowiltasSouls/NPCs/Champions/TimberChampion_Head_Boss"
+                    );
+                    bossChecklist.Call(
+                        "AddMiniBoss",
+                        14.001f,
+                        ModContent.NPCType<TerraChampion>(),
+                        this,
+                        "Champion of Terra",
+                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[1]),
+                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
+                        new List<int> { },
+                        new List<int> {
+                            ModContent.ItemType<CopperEnchant>(),
+                            ModContent.ItemType<TinEnchant>(),
+                            ModContent.ItemType<IronEnchant>(),
+                            ModContent.ItemType<LeadEnchant>(),
+                            ModContent.ItemType<TungstenEnchant>(),
+                            ModContent.ItemType<ObsidianEnchant>()
+                        },
+                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] underground.",
+                        "Champion of Terra vanishes into the caverns...",
+                        "FargowiltasSouls/NPCs/Champions/TerraChampion_Still",
+                        "FargowiltasSouls/NPCs/Champions/TerraChampion_Head_Boss"
+                    );
+                    bossChecklist.Call(
+                        "AddMiniBoss",
+                        14.002f,
+                        ModContent.NPCType<EarthChampion>(),
+                        this,
+                        "Champion of Earth",
+                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[2]),
+                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
+                        new List<int> { },
+                        new List<int> {
+                            ModContent.ItemType<CobaltEnchant>(),
+                            ModContent.ItemType<PalladiumEnchant>(),
+                            ModContent.ItemType<MythrilEnchant>(),
+                            ModContent.ItemType<OrichalcumEnchant>(),
+                            ModContent.ItemType<AdamantiteEnchant>(),
+                            ModContent.ItemType<TitaniumEnchant>()
+                        },
+                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in the underworld.",
+                        "Champion of Earth disappears beneath the magma...",
+                        "FargowiltasSouls/NPCs/Champions/EarthChampion_Still",
+                        "FargowiltasSouls/NPCs/Champions/EarthChampion_Head_Boss"
+                    );
+                    bossChecklist.Call(
+                        "AddMiniBoss",
+                        14.003f,
+                        ModContent.NPCType<NatureChampion>(),
+                        this,
+                        "Champion of Nature",
+                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[3]),
+                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
+                        new List<int> { },
+                        new List<int> {
+                            ModContent.ItemType<CrimsonEnchant>(),
+                            ModContent.ItemType<MoltenEnchant>(),
+                            ModContent.ItemType<RainEnchant>(),
+                            ModContent.ItemType<FrostEnchant>(),
+                            ModContent.ItemType<ChlorophyteEnchant>(),
+                            ModContent.ItemType<ShroomiteEnchant>()
+                        },
+                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in underground snow.",
+                        "Champion of Nature returns to its slumber...",
+                        "FargowiltasSouls/NPCs/Champions/NatureChampion_Still",
+                        "FargowiltasSouls/NPCs/Champions/NatureChampionHead_Head_Boss"
+                    );
+                    bossChecklist.Call(
+                        "AddMiniBoss",
+                        14.004f,
+                        ModContent.NPCType<LifeChampion>(),
+                        this,
+                        "Champion of Life",
+                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[4]),
+                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
+                        new List<int> { },
+                        new List<int> {
+                            ModContent.ItemType<PumpkinEnchant>(),
+                            ModContent.ItemType<BeeEnchant>(),
+                            ModContent.ItemType<SpiderEnchant>(),
+                            ModContent.ItemType<TurtleEnchant>(),
+                            ModContent.ItemType<BeetleEnchant>()
+                        },
+                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in the Hallow.",
+                        "Champion of Life fades away...",
+                        "FargowiltasSouls/NPCs/Champions/LifeChampion_Still",
+                        "FargowiltasSouls/NPCs/Champions/LifeChampion_Head_Boss"
+                    );
+                    bossChecklist.Call(
+                        "AddMiniBoss",
+                        14.005f,
+                        ModContent.NPCType<ShadowChampion>(),
+                        this,
+                        "Champion of Shadow",
+                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[5]),
+                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
+                        new List<int> { },
+                        new List<int> {
+                            ModContent.ItemType<AncientShadowEnchant>(),
+                            ModContent.ItemType<NecroEnchant>(),
+                            ModContent.ItemType<SpookyEnchant>(),
+                            ModContent.ItemType<ShinobiEnchant>(),
+                            ModContent.ItemType<DarkArtistEnchant>()
+                        },
+                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] on surface at night.",
+                        "Champion of Shadow fades away...",
+                        "FargowiltasSouls/NPCs/Champions/ShadowChampion_Still",
+                        "FargowiltasSouls/NPCs/Champions/ShadowChampion_Head_Boss"
+                    );
+                    bossChecklist.Call(
+                        "AddMiniBoss",
+                        14.006f,
+                        ModContent.NPCType<SpiritChampion>(),
+                        this,
+                        "Champion of Spirit",
+                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[6]),
+                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
+                        new List<int> { },
+                        new List<int> {
+                            ModContent.ItemType<FossilEnchant>(),
+                            ModContent.ItemType<ForbiddenEnchant>(),
+                            ModContent.ItemType<HallowEnchant>(),
+                            ModContent.ItemType<TikiEnchant>(),
+                            ModContent.ItemType<SpectreEnchant>()
+                        },
+                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in underground desert.",
+                        "Champion of Spirit vanishes into the desert...",
+                        "FargowiltasSouls/NPCs/Champions/SpiritChampion_Still",
+                        "FargowiltasSouls/NPCs/Champions/SpiritChampion_Head_Boss"
+                    );
+                    bossChecklist.Call(
+                        "AddMiniBoss",
+                        14.007f,
+                        ModContent.NPCType<WillChampion>(),
+                        this,
+                        "Champion of Will",
+                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[7]),
+                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
+                        new List<int> { },
+                        new List<int> {
+                            ModContent.ItemType<GoldEnchant>(),
+                            ModContent.ItemType<PlatinumEnchant>(),
+                            ModContent.ItemType<GladiatorEnchant>(),
+                            ModContent.ItemType<RedRidingEnchant>(),
+                            ModContent.ItemType<ValhallaKnightEnchant>()
+                        },
+                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] at the ocean.",
+                        "Champion of Will returns to the depths...",
+                        "FargowiltasSouls/NPCs/Champions/WillChampion_Still",
+                        "FargowiltasSouls/NPCs/Champions/WillChampion_Head_Boss"
+                    );
+                    bossChecklist.Call(
+                        "AddBoss",
+                        14.008f,
+                        ModContent.NPCType<CosmosChampion>(),
+                        this,
+                        "Eridanus, Champion of Cosmos",
+                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[8]),
+                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
+                        new List<int> { },
+                        new List<int> {
+                            ModContent.ItemType<SolarEnchant>(),
+                            ModContent.ItemType<NebulaEnchant>(),
+                            ModContent.ItemType<VortexEnchant>(),
+                            ModContent.ItemType<StardustEnchant>(),
+                            ModContent.ItemType<MeteorEnchant>()
+                        },
+                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in space.",
+                        "Eridanus, Champion of Cosmos returns to the stars...",
+                        "FargowiltasSouls/NPCs/Champions/CosmosChampion_Still",
+                        "FargowiltasSouls/NPCs/Champions/CosmosChampion_Head_Boss"
                     );
                     bossChecklist.Call(
                         "AddBoss",

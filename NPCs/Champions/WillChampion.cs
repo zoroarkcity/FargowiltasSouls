@@ -10,22 +10,20 @@ using FargowiltasSouls.Items.Accessories.Enchantments;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
 using System.IO;
+using Terraria.Graphics.Shaders;
 
 namespace FargowiltasSouls.NPCs.Champions
 {
     [AutoloadBossHead]
     public class WillChampion : ModNPC
     {
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
+        public bool spawned;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Will");
             Main.npcFrameCount[npc.type] = 8;
-            NPCID.Sets.TrailCacheLength[npc.type] = 6;
+            NPCID.Sets.TrailCacheLength[npc.type] = 10;
             NPCID.Sets.TrailingMode[npc.type] = 1;
         }
 
@@ -33,7 +31,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 150;
             npc.height = 100;
-            npc.damage = 150;
+            npc.damage = 130;
             npc.defense = 40;
             npc.lifeMax = 390000;
             npc.HitSound = SoundID.NPCHit4;
@@ -43,7 +41,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.knockBackResist = 0f;
             npc.lavaImmune = true;
             npc.aiStyle = -1;
-            npc.value = Item.buyPrice(0, 10);
+            npc.value = Item.buyPrice(0, 5);
 
             npc.boss = true;
             music = MusicID.Boss2;
@@ -55,6 +53,8 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.buffImmune[mod.BuffType("Lethargic")] = true;
             npc.buffImmune[mod.BuffType("ClippedWings")] = true;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
+
+            npc.netAlways = true;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -81,6 +81,16 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void AI()
         {
+            if (!spawned)
+            {
+                npc.TargetClosest(false);
+                Movement(Main.player[npc.target].Center, 0.8f, 32f);
+                if (npc.Distance(Main.player[npc.target].Center) < 2000)
+                    spawned = true;
+                else
+                    return;
+            }
+
             EModeGlobalNPC.championBoss = npc.whoAmI;
 
             if (!npc.HasValidTarget)
@@ -458,11 +468,11 @@ namespace FargowiltasSouls.NPCs.Champions
                                 npc.velocity.Y -= moveSpeed;
                         }
 
-                        if (++npc.localAI[0] > 40)
+                        if (--npc.localAI[0] < 0)
                         {
-                            npc.localAI[0] = 0;
+                            npc.localAI[0] = 40;
 
-                            if (npc.ai[1] < 130)
+                            if (npc.ai[1] < 110)
                             {
                                 Main.PlaySound(36, npc.Center, -1);
 
@@ -479,7 +489,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             }
                         }
 
-                        if (++npc.ai[1] > 180)
+                        if (++npc.ai[1] > 150)
                         {
                             npc.ai[0] = 0;
                             npc.ai[1] = 0;
@@ -540,7 +550,14 @@ namespace FargowiltasSouls.NPCs.Champions
                             if (Main.netMode != 1 && npc.ai[1] < 90) //shoot fireball
                             {
                                 Main.PlaySound(SoundID.Item34, npc.Center);
-                                Vector2 spawn = npc.Center;
+                                Vector2 spawn = new Vector2(40, 50);
+                                if (npc.direction < 0)
+                                {
+                                    spawn.X *= -1;
+                                    spawn = spawn.RotatedBy(Math.PI);
+                                }
+                                spawn = spawn.RotatedBy(npc.rotation);
+                                spawn += npc.Center;
                                 Vector2 projVel = npc.DirectionTo(player.Center).RotatedBy((Main.rand.NextDouble() - 0.5) * Math.PI / 10);
                                 projVel.Normalize();
                                 projVel *= Main.rand.NextFloat(8f, 12f);
@@ -577,35 +594,77 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.rotation += (float)Math.PI;
         }
 
-        public override void FindFrame(int frameHeight)
+        private void Movement(Vector2 targetPos, float speedModifier, float cap = 12f)
         {
-            if (npc.ai[0] == 1)
+            if (npc.Center.X < targetPos.X)
             {
-                npc.frameCounter = 5;
-                npc.frame.Y = 6 * frameHeight;
-            }
-            else if (npc.ai[0] == -1)
-            {
-                npc.frameCounter = 5;
-                npc.frame.Y = 0;
+                npc.velocity.X += speedModifier;
+                if (npc.velocity.X < 0)
+                    npc.velocity.X += speedModifier * 2;
             }
             else
             {
-                if (++npc.frameCounter > 4)
-                {
-                    npc.frameCounter = 0;
-                    npc.frame.Y += frameHeight;
-                    if (npc.frame.Y >= 4 * frameHeight)
-                        npc.frame.Y = 0;
-                }
+                npc.velocity.X -= speedModifier;
+                if (npc.velocity.X > 0)
+                    npc.velocity.X -= speedModifier * 2;
+            }
+            if (npc.Center.Y < targetPos.Y)
+            {
+                npc.velocity.Y += speedModifier;
+                if (npc.velocity.Y < 0)
+                    npc.velocity.Y += speedModifier * 2;
+            }
+            else
+            {
+                npc.velocity.Y -= speedModifier;
+                if (npc.velocity.Y > 0)
+                    npc.velocity.Y -= speedModifier * 2;
+            }
+            if (Math.Abs(npc.velocity.X) > cap)
+                npc.velocity.X = cap * Math.Sign(npc.velocity.X);
+            if (Math.Abs(npc.velocity.Y) > cap)
+                npc.velocity.Y = cap * Math.Sign(npc.velocity.Y);
+        }
+
+        public override void FindFrame(int frameHeight)
+        {
+            if (++npc.frameCounter > 4)
+            {
+                npc.frameCounter = 0;
+                npc.frame.Y += frameHeight;
+            }
+
+            if (npc.ai[0] == 0 || npc.ai[0] == 2)
+            {
+                if (npc.frame.Y >= 6 * frameHeight)
+                    npc.frame.Y = 0;
+            }
+            else
+            {
+                npc.frame.Y = frameHeight * 7;
             }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Defenseless>(), 300);
-            target.AddBuff(ModContent.BuffType<Midas>(), 300);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(ModContent.BuffType<Defenseless>(), 300);
+                target.AddBuff(ModContent.BuffType<Midas>(), 300);
+            }
             target.AddBuff(BuffID.Bleeding, 300);
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (npc.life <= 0)
+            {
+                for (int i = 1; i <= 4; i++)
+                {
+                    Vector2 pos = npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height));
+                    Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/WillGore" + i.ToString()), npc.scale);
+                }
+            }
         }
 
         public override void BossLoot(ref string name, ref int potionType)
@@ -615,7 +674,10 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
-            //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<WillForce>());
+            FargoSoulsWorld.downedChampions[7] = true;
+            if (Main.netMode == 2)
+                NetMessage.SendData(7); //sync world
+
             int[] drops = {
                 ModContent.ItemType<GoldEnchant>(),
                 ModContent.ItemType<PlatinumEnchant>(),
@@ -623,25 +685,27 @@ namespace FargowiltasSouls.NPCs.Champions
                 ModContent.ItemType<RedRidingEnchant>(),
                 ModContent.ItemType<ValhallaKnightEnchant>(),
             };
-            int lastDrop = 0; //don't drop same ench twice
+            int lastDrop = -1; //don't drop same ench twice
             for (int i = 0; i < 2; i++)
             {
-                int thisDrop = drops[Main.rand.Next(drops.Length)];
+                int thisDrop = Main.rand.Next(drops.Length);
 
                 if (lastDrop == thisDrop) //try again
                 {
-                    i--;
-                    continue;
+                    if (++thisDrop >= drops.Length) //drop first ench in line if looped past array
+                        thisDrop = 0;
                 }
 
                 lastDrop = thisDrop;
-                Item.NewItem(npc.position, npc.Size, thisDrop);
+                Item.NewItem(npc.position, npc.Size, drops[thisDrop]);
             }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture2D13 = Main.npcTexture[npc.type];
+            Texture2D glowmask = ModContent.GetTexture("FargowiltasSouls/NPCs/Champions/WillChampion_Glow");
+            Texture2D glowmask2 = ModContent.GetTexture("FargowiltasSouls/NPCs/Champions/WillChampion_Glow2");
             //int num156 = Main.npcTexture[npc.type].Height / Main.npcFrameCount[npc.type]; //ypos of lower right corner of sprite to draw
             //int y3 = num156 * npc.frame.Y; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = npc.frame;//new Rectangle(0, y3, texture2D13.Width, num156);
@@ -650,18 +714,38 @@ namespace FargowiltasSouls.NPCs.Champions
             Color color26 = lightColor;
             color26 = npc.GetAlpha(color26);
 
-            SpriteEffects effects = npc.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteEffects effects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
+            /*for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
             {
-                Color color27 = color26 * 0.5f;
+                Color color27 = color26 * 0.2f;
                 color27 *= (float)(NPCID.Sets.TrailCacheLength[npc.type] - i) / NPCID.Sets.TrailCacheLength[npc.type];
                 Vector2 value4 = npc.oldPos[i];
                 float num165 = npc.rotation; //npc.oldRot[i];
                 Main.spriteBatch.Draw(texture2D13, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
-            }
+            }*/
 
             Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
+            Main.spriteBatch.Draw(glowmask, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, npc.rotation, origin2, npc.scale, effects, 0f);
+            
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp/*.PointWrap*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+
+            ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(ItemID.NebulaDye);
+            shader.Apply(npc, new Terraria.DataStructures.DrawData?());
+
+            for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
+            {
+                Color color27 = Color.White;
+                color27 *= (float)(NPCID.Sets.TrailCacheLength[npc.type] - i) / NPCID.Sets.TrailCacheLength[npc.type];
+                Vector2 value4 = npc.oldPos[i];
+                float num165 = npc.rotation; //npc.oldRot[i];
+                Main.spriteBatch.Draw(glowmask2, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
+            }
+            Main.spriteBatch.Draw(glowmask2, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, npc.rotation, origin2, npc.scale, effects, 0f);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
             return false;
         }
     }

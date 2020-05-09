@@ -32,8 +32,17 @@ All minion attacks grant colossal life regeneration
 This extra damage reduction ignores the soft cap
 Provides cold protection in Death Mode
 Effects of The Evolution, Spectral Veil, and Statis' Void Sash");
+            DisplayName.AddTranslation(GameCulture.Chinese, "神惧者魔石");
+            Tooltip.AddTranslation(GameCulture.Chinese, 
+@"''
+你的召唤物即便在你手持其他职业武器时也能造成全额伤害
+召唤物攻击敌人使你获得极高的生命恢复速度
+在南瓜月冰霜月事件期间获得15%伤害减免
+这15%伤害减免可以突破减伤率软上限
+在死亡模式下免疫寒冷
+拥有进化者，幽灵披风和斯塔提斯的虚空饰带的效果");
         }
-
+        
         public override void SetDefaults()
         {
             item.width = 20;

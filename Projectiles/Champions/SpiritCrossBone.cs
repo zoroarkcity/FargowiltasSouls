@@ -34,8 +34,11 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Infested>(), 360);
-            target.AddBuff(ModContent.BuffType<ClippedWings>(), 180);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(ModContent.BuffType<Infested>(), 360);
+                target.AddBuff(ModContent.BuffType<ClippedWings>(), 180);
+            }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

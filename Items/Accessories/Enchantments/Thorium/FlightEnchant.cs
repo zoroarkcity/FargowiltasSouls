@@ -47,6 +47,8 @@ Effects of the Faberge Egg");
 
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             modPlayer.wingTimeModifier += 1f;
+
+            faberge egg efectc
         }
 
         public override void AddRecipes()

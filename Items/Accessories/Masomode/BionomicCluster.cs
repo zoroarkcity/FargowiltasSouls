@@ -1,11 +1,12 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class BionomicCluster : SandsofTime
+    public class BionomicCluster : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -44,6 +45,12 @@ Use to teleport to your last death point");
             item.rare = 8;
             item.value = Item.sellPrice(0, 6);
             item.defense = 6;
+
+            item.useTime = 90;
+            item.useAnimation = 90;
+            item.useStyle = 4;
+            item.useTurn = true;
+            item.UseSound = SoundID.Item6;
         }
 
         public override void UpdateInventory(Player player)
@@ -126,6 +133,46 @@ Use to teleport to your last death point");
             //tim's concoction
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.TimsConcoction))
                 player.GetModPlayer<FargoPlayer>().TimsConcoction = true;
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            return player.lastDeathPostion != Vector2.Zero;
+        }
+
+        public override bool UseItem(Player player)
+        {
+            for (int index = 0; index < 70; ++index)
+            {
+                int d = Dust.NewDust(player.position, player.width, player.height, 87, player.velocity.X * 0.5f, player.velocity.Y * 0.5f, 150, new Color(), 1.5f);
+                Main.dust[d].velocity *= 4f;
+                Main.dust[d].noGravity = true;
+            }
+
+            player.grappling[0] = -1;
+            player.grapCount = 0;
+            for (int index = 0; index < 1000; ++index)
+            {
+                if (Main.projectile[index].active && Main.projectile[index].owner == player.whoAmI && Main.projectile[index].aiStyle == 7)
+                    Main.projectile[index].Kill();
+            }
+
+            if (player.whoAmI == Main.myPlayer)
+            {
+                player.Teleport(player.lastDeathPostion, 1);
+                player.velocity = Vector2.Zero;
+                if (Main.netMode == 1)
+                    NetMessage.SendData(65, -1, -1, null, 0, player.whoAmI, player.lastDeathPostion.X, player.lastDeathPostion.Y, 1);
+            }
+
+            for (int index = 0; index < 70; ++index)
+            {
+                int d = Dust.NewDust(player.position, player.width, player.height, 87, 0.0f, 0.0f, 150, new Color(), 1.5f);
+                Main.dust[d].velocity *= 4f;
+                Main.dust[d].noGravity = true;
+            }
+
+            return true;
         }
 
         public override void AddRecipes()

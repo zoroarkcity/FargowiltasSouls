@@ -52,6 +52,8 @@ Effects of Mana-Charged Rocketeers");
             modPlayer.MalignantEnchant = true;
             //mana charge rockets
             thorium.GetItem("ManaChargedRocketeers").UpdateAccessory(player, hideVisual);
+
+            enchantedshield
         }
 
         public override void AddRecipes()

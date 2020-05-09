@@ -65,9 +65,12 @@ namespace FargowiltasSouls.Projectiles.Champions
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(BuffID.Darkness, 300);
-            target.AddBuff(BuffID.Blackout, 300);
-            target.AddBuff(mod.BuffType("Defenseless"), 300);
-            target.AddBuff(mod.BuffType("Lethargic"), 300);
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(BuffID.Blackout, 300);
+                target.AddBuff(mod.BuffType("Defenseless"), 300);
+                target.AddBuff(mod.BuffType("Lethargic"), 300);
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

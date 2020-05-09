@@ -14,11 +14,6 @@ namespace FargowiltasSouls.NPCs.Champions
     [AutoloadBossHead]
     public class LifeChampion : ModNPC
     {
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Life");
@@ -30,7 +25,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 110;
             npc.height = 110;
-            npc.damage = 180;
+            npc.damage = 160;
             npc.defense = 0;
             npc.lifeMax = 35000;
             npc.HitSound = SoundID.NPCHit5;
@@ -40,7 +35,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.knockBackResist = 0f;
             npc.lavaImmune = true;
             npc.aiStyle = -1;
-            npc.value = Item.buyPrice(0, 10);
+            npc.value = Item.buyPrice(0, 5);
 
             npc.boss = true;
             music = MusicID.Boss5;
@@ -64,12 +59,17 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             if (npc.localAI[3] == 0) //just spawned
             {
-                npc.localAI[3] = 1;
                 npc.TargetClosest(false);
+                Movement(Main.player[npc.target].Center, 0.8f, 32f);
+                if (npc.Distance(Main.player[npc.target].Center) < 2000)
+                    npc.localAI[3] = 1;
+                else
+                    return;
 
                 if (Main.netMode != 1)
                 {
-                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<LifeRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                    if (FargoSoulsWorld.MasochistMode)
+                        Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<LifeRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                 }
             }
 
@@ -128,15 +128,13 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.noGravity = true;
                         npc.velocity.Y -= 1f;
 
-                        return;
+                        break;
                     }
-                    else
-                    {
-                        targetPos = player.Center;
-                        targetPos.Y -= 350;
-                        if (npc.Distance(targetPos) > 50)
-                            Movement(targetPos, 0.15f, 24f, true);
-                    }
+                    
+                    targetPos = player.Center;
+                    targetPos.Y -= 300;
+                    if (npc.Distance(targetPos) > 50)
+                        Movement(targetPos, 0.16f, 24f, true);
 
                     if (++npc.ai[1] > 180)
                     {
@@ -189,9 +187,89 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case 2:
+                    if (npc.ai[3] == 0)
+                    {
+                        if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f) //despawn code
+                        {
+                            npc.TargetClosest(false);
+                            if (npc.timeLeft > 30)
+                                npc.timeLeft = 30;
+
+                            npc.noTileCollide = true;
+                            npc.noGravity = true;
+                            npc.velocity.Y -= 1f;
+
+                            return;
+                        }
+
+                        if (npc.ai[2] == 0)
+                            npc.ai[2] = npc.Center.Y; //store arena height
+                        
+                        if (npc.Center.Y > npc.ai[2] + 1000) //now below arena, track player
+                        {
+                            targetPos = new Vector2(player.Center.X, npc.ai[2] + 1100);
+                            Movement(targetPos, 1.2f, 24f);
+
+                            if (Math.Abs(player.Center.X - npc.Center.X) < npc.width / 2
+                                && ++npc.ai[1] > (npc.localAI[2] == 1 ? 30 : 60)) //in position under player
+                            {
+                                Main.PlaySound(SoundID.Item92, npc.Center);
+
+                                npc.ai[3]++;
+                                npc.ai[1] = 0;
+                                npc.netUpdate = true;
+                            }
+                        }
+                        else //drop below arena
+                        {
+                            npc.velocity.X *= 0.95f;
+                            npc.velocity.Y += 0.6f;
+                        }
+                    }
+                    else
+                    {
+                        npc.velocity.X = 0;
+                        npc.velocity.Y = -36f;
+
+                        if (++npc.ai[1] > 1) //spawn pixies
+                        {
+                            npc.ai[1] = 0;
+                            npc.localAI[0] = npc.localAI[0] == 1 ? -1 : 1; //alternate sides
+                            if (Main.netMode != 1)
+                            {
+                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LesserFairy>(), npc.whoAmI, Target: npc.target);
+                                if (n != Main.maxNPCs)
+                                {
+                                    Main.npc[n].velocity = 5f * Vector2.UnitX.RotatedBy(Math.PI * (Main.rand.NextDouble() - 0.5));
+                                    Main.npc[n].velocity.X *= npc.localAI[0];
+
+                                    if (Main.netMode == 2)
+                                    {
+                                        NetMessage.SendData(23, -1, -1, null, n);
+                                    }
+                                }
+                            }
+                        }
+
+                        if (npc.Center.Y < player.Center.Y - 600) //dash ended
+                        {
+                            npc.velocity.Y = 0f;
+                            npc.localAI[0] = 0f;
+
+                            npc.TargetClosest();
+                            npc.ai[0]++;
+                            npc.ai[1] = 0;
+                            npc.ai[2] = 0;
+                            npc.ai[3] = 0;
+                            npc.netUpdate = true;
+                        }
+                    }
+                    break;
+
+                case 3:
                     goto case 0;
 
-                case 3: //beetle swarm
+                case 4: //beetle swarm
                     npc.velocity *= 0.9f;
 
                     if (npc.ai[3] == 0)
@@ -225,6 +303,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     if (++npc.ai[1] > 360)
                     {
+                        npc.localAI[0] = 0;
+
                         npc.TargetClosest();
                         npc.ai[0]++;
                         npc.ai[1] = 0;
@@ -234,10 +314,10 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     break;
 
-                case 4:
+                case 5:
                     goto case 0;
 
-                case 5:
+                case 6:
                     npc.velocity *= 0.98f;
 
                     if (++npc.ai[2] > 60)
@@ -274,10 +354,10 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     break;
 
-                case 6:
+                case 7:
                     goto case 0;
 
-                case 7: //deathray spin
+                case 8: //deathray spin
                     npc.velocity *= 0.95f;
 
                     npc.ai[3] +=  (float)Math.PI * 2 / (npc.localAI[2] == 1 ? -300 : 360);
@@ -312,10 +392,13 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     break;
 
-                case 8:
+                case 9:
+                    goto case 2;
+
+                case 10:
                     goto case 0;
 
-                case 9: //cactus mines
+                case 11: //cactus mines
                     npc.velocity *= 0.98f;
 
                     if (++npc.ai[2] > (npc.localAI[2] == 1 ? 75 : 100))
@@ -411,7 +494,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("Purified"), 300);
+            if (FargoSoulsWorld.MasochistMode)
+                target.AddBuff(mod.BuffType("Purified"), 300);
         }
 
         public override void BossLoot(ref string name, ref int potionType)
@@ -421,6 +505,10 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
+            FargoSoulsWorld.downedChampions[4] = true;
+            if (Main.netMode == 2)
+                NetMessage.SendData(7); //sync world
+
             //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<LifeForce>());
             int[] drops = {
                 ModContent.ItemType<PumpkinEnchant>(),
@@ -429,19 +517,19 @@ namespace FargowiltasSouls.NPCs.Champions
                 ModContent.ItemType<TurtleEnchant>(),
                 ModContent.ItemType<BeetleEnchant>(),
             };
-            int lastDrop = 0; //don't drop same ench twice
+            int lastDrop = -1; //don't drop same ench twice
             for (int i = 0; i < 2; i++)
             {
-                int thisDrop = drops[Main.rand.Next(drops.Length)];
+                int thisDrop = Main.rand.Next(drops.Length);
 
                 if (lastDrop == thisDrop) //try again
                 {
-                    i--;
-                    continue;
+                    if (++thisDrop >= drops.Length) //drop first ench in line if looped past array
+                        thisDrop = 0;
                 }
 
                 lastDrop = thisDrop;
-                Item.NewItem(npc.position, npc.Size, thisDrop);
+                Item.NewItem(npc.position, npc.Size, drops[thisDrop]);
             }
         }
 

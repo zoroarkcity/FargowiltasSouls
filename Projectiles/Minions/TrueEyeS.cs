@@ -288,7 +288,7 @@ namespace FargowiltasSouls.Projectiles.Minions
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 300);
+            target.AddBuff(mod.BuffType("CurseoftheMoon"), 360);
         }
 
         public override bool? CanCutTiles()

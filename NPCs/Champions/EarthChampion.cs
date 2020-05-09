@@ -14,11 +14,6 @@ namespace FargowiltasSouls.NPCs.Champions
     [AutoloadBossHead]
     public class EarthChampion : ModNPC
     {
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Earth");
@@ -30,7 +25,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 120;
             npc.height = 120;
-            npc.damage = 150;
+            npc.damage = 130;
             npc.defense = 80;
             npc.lifeMax = 320000;
             npc.HitSound = SoundID.NPCHit41;
@@ -40,7 +35,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.knockBackResist = 0f;
             npc.lavaImmune = true;
             npc.aiStyle = -1;
-            npc.value = Item.buyPrice(0, 10);
+            npc.value = Item.buyPrice(0, 5);
 
             npc.boss = true;
             music = MusicID.Boss1;
@@ -66,9 +61,13 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             if (npc.localAI[3] == 0) //just spawned
             {
-                npc.localAI[3] = 1;
                 npc.TargetClosest(false);
-
+                Movement(Main.player[npc.target].Center, 0.8f, 32f);
+                if (npc.Distance(Main.player[npc.target].Center) < 2000)
+                    npc.localAI[3] = 1;
+                else
+                    return;
+                
                 if (Main.netMode != 1)
                 {
                     int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<EarthChampionHand>(), npc.whoAmI, 0, 0, npc.whoAmI, 1);
@@ -76,7 +75,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         Main.npc[n].velocity = Main.rand.NextVector2Unit() * Main.rand.NextFloat(32f);
                         if (Main.netMode == 2)
-                        NetMessage.SendData(23, -1, -1, null, n);
+                            NetMessage.SendData(23, -1, -1, null, n);
                     }
 
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<EarthChampionHand>(), npc.whoAmI, 0, 0, npc.whoAmI, -1);
@@ -299,7 +298,20 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(BuffID.OnFire, 300);
-            target.AddBuff(BuffID.Burning, 300);
+            if (FargoSoulsWorld.MasochistMode)
+                target.AddBuff(BuffID.Burning, 300);
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (npc.life <= 0)
+            {
+                for (int i = 1; i <= 3; i++)
+                {
+                    Vector2 pos = npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height));
+                    Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/EarthGore" + i.ToString()), npc.scale);
+                }
+            }
         }
 
         public override void BossLoot(ref string name, ref int potionType)
@@ -309,6 +321,10 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void NPCLoot()
         {
+            FargoSoulsWorld.downedChampions[2] = true;
+            if (Main.netMode == 2)
+                NetMessage.SendData(7); //sync world
+
             //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<EarthForce>());
             int[] drops = {
                 ModContent.ItemType<CobaltEnchant>(),
@@ -318,19 +334,19 @@ namespace FargowiltasSouls.NPCs.Champions
                 ModContent.ItemType<AdamantiteEnchant>(),
                 ModContent.ItemType<TitaniumEnchant>()
             };
-            int lastDrop = 0; //don't drop same ench twice
+            int lastDrop = -1; //don't drop same ench twice
             for (int i = 0; i < 2; i++)
             {
-                int thisDrop = drops[Main.rand.Next(drops.Length)];
+                int thisDrop = Main.rand.Next(drops.Length);
 
                 if (lastDrop == thisDrop) //try again
                 {
-                    i--;
-                    continue;
+                    if (++thisDrop >= drops.Length) //drop first ench in line if looped past array
+                        thisDrop = 0;
                 }
 
                 lastDrop = thisDrop;
-                Item.NewItem(npc.position, npc.Size, thisDrop);
+                Item.NewItem(npc.position, npc.Size, drops[thisDrop]);
             }
         }
 
