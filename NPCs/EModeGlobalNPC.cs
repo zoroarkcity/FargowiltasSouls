@@ -3317,7 +3317,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 masoBool[0] = false;
 
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.DD2ExplosiveTrapT1Explosion, 0, 0, Main.myPlayer);
+                                //Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.DD2ExplosiveTrapT1Explosion, 0, 0, Main.myPlayer);
 
                                 int tileX = (int)(npc.Center.X / 16f);
                                 int tileY = (int)(npc.Center.Y / 16f);

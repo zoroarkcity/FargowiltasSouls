@@ -1,7 +1,5 @@
-NEW UPDATE - V 1.3.3
-
--Zombies no longer kill doors, they just always open them
-
-
-
--See the wiki for full details
+NEW UPDATE - V 1.3.2.4
+-Fixed Thorium incompatability
+Eternity Mode:
+-Zombies no longer break doors, they just always open them
+-Updated Big Mimic stomp attack to not be the horrible ogre attack hitbox
