@@ -40,3 +40,4 @@ nerfed solar ench to give less DR
 
 wyverns no longer horde in pre hm
 cultist clones no longer deal contact damage
+removed oozed effect from devi's rune wizard attack
