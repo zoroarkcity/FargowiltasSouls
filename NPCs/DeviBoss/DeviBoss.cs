@@ -569,7 +569,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             Main.LocalPlayer.AddBuff(mod.BuffType("Hexed"), 2);
                             Main.LocalPlayer.AddBuff(mod.BuffType("Crippled"), 2);
                             Main.LocalPlayer.AddBuff(BuffID.Dazed, 2);
-                            //Main.LocalPlayer.AddBuff(BuffID.OgreSpit, 2);
+                            Main.LocalPlayer.AddBuff(BuffID.OgreSpit, 2);
                         }
 
                         Aura(150, mod.BuffType("Hexed"), false, 119);
@@ -577,7 +577,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         {
                             Main.LocalPlayer.AddBuff(mod.BuffType("Crippled"), 2);
                             Main.LocalPlayer.AddBuff(BuffID.Dazed, 2);
-                            //Main.LocalPlayer.AddBuff(BuffID.OgreSpit, 2);
+                            Main.LocalPlayer.AddBuff(BuffID.OgreSpit, 2);
                         }
 
                         for (int i = 0; i < 20; i++)
