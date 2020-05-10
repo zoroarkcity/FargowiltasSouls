@@ -444,7 +444,7 @@ namespace FargowiltasSouls.NPCs
                     break;
                 case NPCID.CultistBossClone:
                     npc.buffImmune[ModContent.BuffType<ClippedWings>()] = true;
-                    npc.damage = 75;
+                    //npc.damage = 75;
                     break;
                 case NPCID.AncientDoom:
                     npc.lifeMax *= 4;
@@ -806,7 +806,7 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.WyvernHead:
-                            if (Main.rand.Next(4) == 0)
+                            if (Main.hardMode && Main.rand.Next(4) == 0)
                                 Horde(npc, 2);
                             break;
 

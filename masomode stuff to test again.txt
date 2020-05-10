@@ -37,3 +37,6 @@ fixed iron guard not blocking attacks that used alternative cooldowns, but longe
 piranhas, sharks, arapaima emit dust while jumping
 nerfed nebula ench to cap at level 2
 nerfed solar ench to give less DR
+
+wyverns no longer horde in pre hm
+cultist clones no longer deal contact damage
