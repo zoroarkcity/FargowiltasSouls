@@ -42,6 +42,6 @@ wyverns no longer horde in pre hm
 cultist clones no longer deal contact damage
 increased safe space of rune wizard
 reduced damage of some of mutant's attacks, mainly last stand
-removed berserked from big mimics
-changed mimics to inflict midas
-jungle mimic inflicts purified instead of suffocation
+
+nerfed reverse mana flow to only inflict the weapon's mana times two as damage
+nerfed debuffs like HELL, i literally cannot list it

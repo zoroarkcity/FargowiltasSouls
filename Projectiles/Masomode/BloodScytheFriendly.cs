@@ -28,9 +28,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
             return Color.Red;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        /*public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffID.ShadowFlame, 300);
-        }
+        }*/
     }
 }

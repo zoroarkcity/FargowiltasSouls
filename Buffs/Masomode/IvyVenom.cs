@@ -26,7 +26,7 @@ namespace FargowiltasSouls.Buffs.Masomode
 
         public override void Update(Player player, ref int buffIndex)
         {
-            if (player.buffTime[buffIndex] > 1200)
+            if (player.buffTime[buffIndex] > 1200 && !player.buffImmune[ModContent.BuffType<Infested>()])
             {
                 player.AddBuff(mod.BuffType("Infested"), player.buffTime[buffIndex]);
                 player.buffTime[buffIndex] = 1;
