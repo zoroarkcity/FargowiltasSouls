@@ -237,8 +237,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[1] = 0;
                         if (Main.netMode != 1)
                         {
-                            SpawnSphereRing(8, 6f, npc.defDamage / 2, 0.5f);
-                            SpawnSphereRing(8, 6f, npc.defDamage / 2, -.5f);
+                            SpawnSphereRing(8, 6f, npc.defDamage / 3, 0.5f);
+                            SpawnSphereRing(8, 6f, npc.defDamage / 3, -.5f);
                         }
                     }
                     if (++npc.ai[2] > 1020)
@@ -256,7 +256,10 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[3] = npc.DirectionFrom(player.Center).ToRotation() - 0.001f;
                         npc.netUpdate = true;
                         if (Main.netMode != 1)
-                            Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.ai[3]), ModContent.ProjectileType<MutantGiantDeathray2>(), npc.defDamage / 2, 0f, Main.myPlayer, 0, npc.whoAmI);
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.ai[3]),
+                                ModContent.ProjectileType<MutantGiantDeathray2>(), npc.defDamage / 3, 0f, Main.myPlayer, 0, npc.whoAmI);
+                        }
                     }
                     for (int i = 0; i < 5; i++)
                     {
@@ -280,8 +283,13 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (npc.ai[2] > (float)Math.PI)
                             npc.ai[2] -= (float)Math.PI * 2;
                         if (Main.netMode != 1)
+                        {
                             for (int i = 0; i < 8; i++)
-                                Projectile.NewProjectile(npc.Center, new Vector2(6f, 0).RotatedBy(npc.ai[2] + Math.PI / 4 * i), ModContent.ProjectileType<MutantEye>(), npc.defDamage / 3, 0f, Main.myPlayer);
+                            {
+                                Projectile.NewProjectile(npc.Center, new Vector2(6f, 0).RotatedBy(npc.ai[2] + Math.PI / 4 * i),
+                                    ModContent.ProjectileType<MutantEye>(), npc.defDamage / 4, 0f, Main.myPlayer);
+                            }
+                        }
                     }
                     if (++npc.ai[3] > 480)
                     {
@@ -308,8 +316,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (++npc.ai[1] > 10 && npc.ai[3] > 60 && npc.ai[3] < 300)
                     {
                         npc.ai[1] = 0;
-                        SpawnSphereRing(12, 12f, npc.defDamage / 3, -0.8f);
-                        SpawnSphereRing(12, 12f, npc.defDamage / 3, 0.8f);
+                        SpawnSphereRing(12, 12f, npc.defDamage / 4, -0.8f);
+                        SpawnSphereRing(12, 12f, npc.defDamage / 4, 0.8f);
                     }
                     if (++npc.ai[3] > 420)
                     {
@@ -336,7 +344,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (--npc.ai[1] < 0)
                     {
                         if (Main.netMode != 1)
-                            Projectile.NewProjectile(npc.Center, new Vector2(2, 0).RotatedBy(npc.ai[2]), ModContent.ProjectileType<MutantMark1>(), npc.defDamage / 3, 0f, Main.myPlayer);
+                        {
+                            Projectile.NewProjectile(npc.Center, new Vector2(2, 0).RotatedBy(npc.ai[2]), ModContent.ProjectileType<MutantMark1>(), npc.defDamage / 4, 0f, Main.myPlayer);
+                        }
                         npc.ai[1] = 1;
                         npc.ai[2] += npc.ai[3];
                         if (npc.localAI[0]++ == 40 || npc.localAI[0] == 80)
@@ -972,7 +982,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             for (int i = 0; i < max; i++)
                             {
                                 Projectile.NewProjectile(npc.Center, new Vector2(6f, 0).RotatedBy(npc.ai[2] + Math.PI * 2 / max * i),
-                                      ModContent.ProjectileType<MutantEye>(), npc.defDamage / 3, 0f, Main.myPlayer);
+                                      ModContent.ProjectileType<MutantEye>(), npc.damage / 4, 0f, Main.myPlayer);
                             }
                         }
                     }

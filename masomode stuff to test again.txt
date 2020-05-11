@@ -41,3 +41,4 @@ nerfed solar ench to give less DR
 wyverns no longer horde in pre hm
 cultist clones no longer deal contact damage
 increased safe space of rune wizard
+reduced damage of some of mutant's attacks, mainly last stand
