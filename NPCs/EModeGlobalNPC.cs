@@ -4197,7 +4197,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.Mimic:
                     case NPCID.PresentMimic:
-                        target.AddBuff(ModContent.BuffType<Purified>(), 300);
+                        target.AddBuff(ModContent.BuffType<Midas>(), 300);
                         break;
 
                     case NPCID.BigMimicCorruption:
@@ -4207,17 +4207,14 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.BigMimicCrimson:
                         target.AddBuff(BuffID.Ichor, 180);
-                        target.AddBuff(ModContent.BuffType<Berserked>(), 300);
                         goto case NPCID.Mimic;
 
                     case NPCID.BigMimicHallow:
                         target.AddBuff(BuffID.Confused, 180);
-                        target.AddBuff(ModContent.BuffType<Berserked>(), 300);
                         goto case NPCID.Mimic;
 
                     case NPCID.BigMimicJungle:
-                        target.AddBuff(BuffID.Suffocation, 180);
-                        target.AddBuff(ModContent.BuffType<Berserked>(), 300);
+                        target.AddBuff(ModContent.BuffType<Purified>(), 360);
                         goto case NPCID.Mimic;
 
                     case NPCID.RuneWizard:
