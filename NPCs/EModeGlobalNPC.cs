@@ -3627,8 +3627,8 @@ namespace FargowiltasSouls.NPCs
                                 Vector2 vel = Vector2.Normalize(npc.velocity) * 2f;
                                 for (int i = 0; i < max; i++)
                                 {
-                                    Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i),
-                                        ModContent.ProjectileType<LightBall>(), npc.damage / 5, 0f, Main.myPlayer, 0f, .012f * npc.direction);
+                                    Projectile.NewProjectile(npc.Center, vel.RotatedBy(1.25f * Math.PI / max * i),
+                                        ModContent.ProjectileType<LightBall>(), npc.damage / 5, 0f, Main.myPlayer, 0f, .01f * npc.direction);
                                 }
                             }
                         }

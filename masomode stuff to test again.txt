@@ -45,3 +45,4 @@ reduced damage of some of mutant's attacks, mainly last stand
 
 nerfed reverse mana flow to only inflict the weapon's mana times two as damage
 nerfed debuffs like HELL, i literally cannot list it
+nerfed wyvern light orb speed
