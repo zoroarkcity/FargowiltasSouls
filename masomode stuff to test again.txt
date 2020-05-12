@@ -33,7 +33,6 @@ beetle ench MURDERED: caps at first beetle level (unnerfed in SOT)
 added sigil of champions
 fixed biocluster tp not working
 fixed betsy dash tooltip
-fixed iron guard not blocking attacks that used alternative cooldowns, but longer cooldown on guard
 piranhas, sharks, arapaima emit dust while jumping
 nerfed nebula ench to cap at level 2
 nerfed solar ench to give less DR
@@ -46,3 +45,8 @@ reduced damage of some of mutant's attacks, mainly last stand
 nerfed reverse mana flow to only inflict the weapon's mana times two as damage
 nerfed debuffs like HELL, i literally cannot list it
 nerfed wyvern light orb speed
+iron enchantment rework:
+	can block attacks that use alternative cooldowns
+	parry window is 30 ticks (was 20)
+	gives 1 second invul (2 with cross necklace)
+	parry cooldown increases to 2 seconds

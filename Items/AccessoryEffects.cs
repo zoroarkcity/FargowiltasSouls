@@ -557,7 +557,7 @@ namespace FargowiltasSouls
             {
                 internalTimer++;
                 player.shieldParryTimeLeft = internalTimer;
-                if (player.shieldParryTimeLeft > 20)
+                if (player.shieldParryTimeLeft > 30)
                 {
                     player.shieldParryTimeLeft = 0;
                     internalTimer = 0;
@@ -591,7 +591,7 @@ namespace FargowiltasSouls
             else if (wasHoldingShield)
             {
                 wasHoldingShield = false;
-                player.shield_parry_cooldown = 30;
+                player.shield_parry_cooldown = 120;
                 player.shieldParryTimeLeft = 0;
                 internalTimer = 0;
             }

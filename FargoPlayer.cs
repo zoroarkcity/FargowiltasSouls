@@ -3335,9 +3335,10 @@ namespace FargowiltasSouls
             if (IronGuard && internalTimer > 0 && !player.immune)
             {
                 player.immune = true;
-                player.immuneTime = player.longInvince ? 60 : 30;
-                player.hurtCooldowns[0] = player.longInvince ? 60 : 30;
-                player.hurtCooldowns[1] = player.longInvince ? 60 : 30;
+                int invul = player.longInvince ? 120 : 60;
+                player.immuneTime = invul;
+                player.hurtCooldowns[0] = invul;
+                player.hurtCooldowns[1] = invul;
                 player.AddBuff(BuffID.ParryDamageBuff, 300);
                 return false;
             }
