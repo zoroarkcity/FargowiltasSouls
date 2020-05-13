@@ -160,9 +160,80 @@ namespace FargowiltasSouls.NPCs.Champions
             
             if (npc.HasValidTarget && npc.Distance(player.Center) < 2500 && player.Center.Y >= Main.worldSurface * 16 && !player.ZoneUnderworldHeight)
                 npc.timeLeft = 600;
+
+            npc.direction = npc.spriteDirection = player.Center.X < npc.Center.X ? -1 : 1;
             
             switch ((int)npc.ai[0])
             {
+                case -1: //mourning wood movement
+                    {
+                        npc.noTileCollide = true;
+                        npc.noGravity = true;
+
+                        if (Math.Abs(player.Center.X - npc.Center.X) < npc.width / 2)
+                        {
+                            npc.velocity.X *= 0.9f;
+                            if (Math.Abs(npc.velocity.X) < 0.1f)
+                                npc.velocity.X = 0f;
+                        }
+                        else
+                        {
+                            float accel = 2f;
+                            if (npc.direction > 0)
+                                npc.velocity.X = (npc.velocity.X * 20 + accel) / 21;
+                            else
+                                npc.velocity.X = (npc.velocity.X * 20 - accel) / 21;
+                        }
+
+                        bool onPlatforms = false;
+                        for (int i = (int)npc.position.X; i <= npc.position.X + npc.width; i += 16)
+                        {
+                            if (Framing.GetTileSafely(new Vector2(i, npc.position.Y + npc.height + npc.velocity.Y + 1)).type == TileID.Platforms)
+                            {
+                                onPlatforms = true;
+                                break;
+                            }
+                        }
+
+                        bool onCollision = Collision.SolidCollision(npc.position, npc.width, npc.height);
+
+                        if (npc.position.X < player.position.X && npc.position.X + npc.width > player.position.X + player.width
+                            && npc.position.Y + npc.height < player.position.Y + player.height - 16)
+                        {
+                            npc.velocity.Y += 0.5f;
+                        }
+                        else if (onCollision || (onPlatforms && player.position.Y + player.height <= npc.position.Y + npc.height))
+                        {
+                            if (npc.velocity.Y > 0f)
+                                npc.velocity.Y = 0f;
+
+                            if (onCollision)
+                            {
+                                if (npc.velocity.Y > -0.2f)
+                                    npc.velocity.Y -= 0.025f;
+                                else
+                                    npc.velocity.Y -= 0.2f;
+
+                                if (npc.velocity.Y < -4f)
+                                    npc.velocity.Y = -4f;
+                            }
+                        }
+                        else
+                        {
+                            if (npc.velocity.Y < 0f)
+                                npc.velocity.Y = 0f;
+
+                            if (npc.velocity.Y < 0.1f)
+                                npc.velocity.Y += 0.025f;
+                            else
+                                npc.velocity.Y += 0.5f;
+                        }
+
+                        if (npc.velocity.Y > 10f)
+                            npc.velocity.Y = 10f;
+                    }
+                    break;
+
                 case 0: //think
                     if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f
                         || player.Center.Y < Main.worldSurface * 16 || player.ZoneUnderworldHeight) //despawn code
@@ -190,7 +261,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
                     }
-                    break;
+                    goto case -1;
 
                 case 1: //stomp
                     {
@@ -326,7 +397,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
                     }
-                    break;
+                    goto case -1;
 
                 case 4:
                     goto case 0;
@@ -395,7 +466,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
                     }
-                    break;
+                    goto case -1;
 
                 default:
                     npc.ai[0] = 0;
