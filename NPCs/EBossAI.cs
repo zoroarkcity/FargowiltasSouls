@@ -456,6 +456,18 @@ namespace FargowiltasSouls.NPCs
                     Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f);
                     MakeDust(Main.LocalPlayer.Center);
                 }
+
+                if (--Counter2 < 0)
+                {
+                    Counter2 = Main.rand.Next(10, 30);
+                    if (Main.netMode != 1)
+                    {
+                        Vector2 spawn = Main.player[npc.target].Center + Main.rand.NextVector2CircularEdge(1200f, 1200f);
+                        Vector2 speed = Main.player[npc.target].Center + Main.rand.NextVector2Circular(-600f, 600f) - spawn;
+                        speed = Vector2.Normalize(speed) * Main.rand.NextFloat(24f, 48f);
+                        Projectile.NewProjectile(spawn, speed, ModContent.ProjectileType<BrainIllusionProj>(), 0, 0f, Main.myPlayer, npc.whoAmI);
+                    }
+                }
             }
         }
 
@@ -709,6 +721,14 @@ namespace FargowiltasSouls.NPCs
             {
                 npc.defense = 9999;
                 npc.damage = npc.defDamage * 15;
+
+                if (!Main.dayTime)
+                {
+                    if (++Counter2 < 180)
+                    {
+                        npc.position -= npc.velocity * (180 - Counter2) / 180;
+                    }
+                }
             }
         }
 
@@ -1983,7 +2003,14 @@ namespace FargowiltasSouls.NPCs
                 else if (npc.ai[1] == 2f) //dg phase
                 {
                     if (!Main.dayTime)
-                        npc.position -= npc.velocity / 10;
+                    {
+                        npc.position -= npc.velocity * 0.1f;
+
+                        if (++Counter2 < 180)
+                        {
+                            npc.position -= npc.velocity * (180 - Counter2) / 180 * 0.9f;
+                        }
+                    }
                 }
                 else //not spinning
                 {

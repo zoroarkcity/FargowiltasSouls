@@ -77,6 +77,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 Main.dust[index2].noLight = true;
                 Main.dust[index2].velocity = vector2_2;
             }
+            
+            if (Main.netMode != 1)
+            {
+                Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("PhantasmalBlast"), 0, 0f, projectile.owner);
+            }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

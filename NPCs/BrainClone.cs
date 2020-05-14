@@ -88,12 +88,13 @@ namespace FargowiltasSouls.NPCs
             Vector2 vector2 = new Vector2(npc.Center.X, npc.Center.Y);
             float num1 = Main.player[npc.target].Center.X - vector2.X;
             float num2 = Main.player[npc.target].Center.Y - vector2.Y;
-            float num3 = 8f / (float)Math.Sqrt(num1 * num1 + num2 * num2);
+            float num3 = (npc.Distance(Main.player[npc.target].Center) > 600 ? 8f : 4f) / (float)Math.Sqrt(num1 * num1 + num2 * num2);
             float num4 = num1 * num3;
             float num5 = num2 * num3;
             npc.velocity.X = (npc.velocity.X * 50 + num4) / 51f;
             npc.velocity.Y = (npc.velocity.Y * 50 + num5) / 51f;
-            if (npc.ai[0] == -2)
+
+            /*if (npc.ai[0] == -2)
             {
                 npc.velocity *= 0.9f;
                 if (Main.netMode != 0)
@@ -163,16 +164,14 @@ namespace FargowiltasSouls.NPCs
                         while (num7 <= 100);
                     }
                 }
-            }
+            }*/
         }
 
         public override void FindFrame(int frameHeight)
         {
-            if (EModeGlobalNPC.brainBoss > -1 && EModeGlobalNPC.brainBoss < 200)
+            if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.brainBoss, NPCID.BrainofCthulhu))
             {
-                NPC brain = Main.npc[EModeGlobalNPC.brainBoss];
-                if (brain.active && brain.type == NPCID.BrainofCthulhu)
-                    npc.frame.Y = brain.frame.Y;
+                npc.frame.Y = Main.npc[EModeGlobalNPC.brainBoss].frame.Y;
             }
         }
 

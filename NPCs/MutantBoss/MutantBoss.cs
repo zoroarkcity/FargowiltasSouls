@@ -1386,7 +1386,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Vector2 distance = player.Center - npc.Center;
                             distance.X = distance.X / time;
                             distance.Y = distance.Y / time - 0.5f * gravity * time;
-                            Projectile.NewProjectile(npc.Center, distance, ModContent.ProjectileType<MutantNuke>(), npc.damage / 3, 0f, Main.myPlayer, gravity);
+                            Projectile.NewProjectile(npc.Center, distance, ModContent.ProjectileType<MutantNuke>(), 0, 0f, Main.myPlayer, gravity);
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantFishronRitual>(), 0, 0f, Main.myPlayer, npc.whoAmI);
                         }
                         npc.ai[0]++;
@@ -1405,7 +1405,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     {
                         Vector2 safeZone = npc.Center;
                         safeZone.Y -= 100;
-                        const float safeRange = 150 + 354;
+                        const float safeRange = 150 + 200;
                         for (int i = 0; i < 3; i++)
                         {
                             Vector2 spawnPos = npc.Center + Main.rand.NextVector2Circular(1200, 1200);

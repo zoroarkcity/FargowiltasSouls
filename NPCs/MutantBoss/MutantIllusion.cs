@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -124,6 +125,11 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 if (npc.frame.Y >= 4 * frameHeight)
                     npc.frame.Y = 0;
             }
+        }
+
+        public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
+        {
+            spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         }
     }
 }

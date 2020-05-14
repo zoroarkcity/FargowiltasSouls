@@ -50,3 +50,11 @@ iron enchantment rework:
 	parry window is 30 ticks (was 20)
 	gives 1 second invul (2 with cross necklace)
 	parry cooldown increases to 2 seconds
+
+mutant clone map icons also turn to face you
+brain p2 rework
+	spams harmless illusions that fly around and be annoying, become opaque as life decreases
+	brain clone moves much slower and doesn't teleport
+wof deathrays dont freeze you
+skeletron and prime have a 3 second windup while entering DG form
+mutant nuke has a visual effect and hitboxes adjusted

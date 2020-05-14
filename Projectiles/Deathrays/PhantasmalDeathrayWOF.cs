@@ -122,9 +122,6 @@ namespace FargowiltasSouls.Projectiles.Deathrays
         {
             target.AddBuff(mod.BuffType("Flipped"), 300);
             target.AddBuff(BuffID.Confused, 300);
-            target.AddBuff(mod.BuffType("ClippedWings"), 300);
-            target.AddBuff(mod.BuffType("Crippled"), 300);
-            target.velocity = target.velocity / 4;
         }
     }
 }
