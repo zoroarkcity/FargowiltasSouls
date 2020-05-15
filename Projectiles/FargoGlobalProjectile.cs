@@ -77,6 +77,10 @@ namespace FargowiltasSouls.Projectiles
             {
                 switch (projectile.type)
                 {
+                    case ProjectileID.ChlorophyteBullet:
+                        projectile.extraUpdates = 1;
+                        break;
+
                     case ProjectileID.CrystalBullet:
                     case ProjectileID.HolyArrow:
                         HasKillCooldown = true;

@@ -285,7 +285,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         private void DrawRing()
         {
-            Texture2D texture2D13 = mod.GetTexture("Projectiles/AbomBoss/AbomRitual2");
+            Texture2D texture2D13 = Main.projectileTexture[ProjectileID.DeathSickle];
             int num156 = texture2D13.Height; //ypos of lower right corner of sprite to draw
             int y3 = 0; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
