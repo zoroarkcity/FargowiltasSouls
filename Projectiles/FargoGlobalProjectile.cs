@@ -705,6 +705,14 @@ namespace FargowiltasSouls.Projectiles
 
                 #endregion
 
+                case ProjectileID.NebulaSphere:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss))
+                            projectile.position += projectile.velocity / 2;
+                    }
+                    break;
+
                 case ProjectileID.PhantasmalBolt:
                     if (FargoSoulsWorld.MasochistMode)
                     {
