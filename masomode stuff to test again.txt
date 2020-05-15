@@ -58,6 +58,7 @@ brain p2 rework
 wof deathrays dont freeze you
 skeletron and prime have a 3 second windup while entering DG form
 mutant nuke has a visual effect and hitboxes adjusted
+
 removed nerf to moon lord head's max life
 cultist's homing nebula spheres move faster
 reduced speed and homing of chlorophyte bullets
