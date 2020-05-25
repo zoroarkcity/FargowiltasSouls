@@ -66,3 +66,4 @@ adjusted rotation offset of abom's phase 2 arena to look a little better
 
 timber champ walks
 changed will arena from fireballs to typhoons
+nature uses two heads to attack at a time

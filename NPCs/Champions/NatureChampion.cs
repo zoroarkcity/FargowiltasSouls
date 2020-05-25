@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,8 +16,27 @@ namespace FargowiltasSouls.NPCs.Champions
     [AutoloadBossHead]
     public class NatureChampion : ModNPC
     {
+        /* order of heads:
+         * 0 = crimson
+         * 1 = molten
+         * 2 = rain
+         * 3 = frost
+         * 4 = chloro
+         * 5 = shroomite
+         */
         public int[] heads = { -1, -1, -1, -1, -1, -1 };
-        public int lastHead = -1;
+        public int lastSet = 0;
+        public static readonly KeyValuePair<int, int>[] configurations = {
+            new KeyValuePair<int, int>(0, 2),
+            new KeyValuePair<int, int>(1, 3),
+            new KeyValuePair<int, int>(3, 5),
+            new KeyValuePair<int, int>(3, 4),
+            new KeyValuePair<int, int>(1, 4),
+            new KeyValuePair<int, int>(0, 5),
+            new KeyValuePair<int, int>(1, 2),
+            new KeyValuePair<int, int>(2, 5),
+            new KeyValuePair<int, int>(0, 4)
+        };
 
         public override void SetStaticDefaults()
         {
@@ -64,14 +83,14 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             for (int i = 0; i < heads.Length; i++)
                 writer.Write(heads[i]);
-            writer.Write(lastHead);
+            writer.Write(lastSet);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             for (int i = 0; i < heads.Length; i++)
                 heads[i] = reader.ReadInt32();
-            lastHead = reader.ReadInt32();
+            lastSet = reader.ReadInt32();
         }
 
         public override void AI()
@@ -80,7 +99,7 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 npc.TargetClosest(false);
                 Movement(Main.player[npc.target].Center, 0.8f, 32f);
-                if (npc.Distance(Main.player[npc.target].Center) < 2000)
+                if (npc.Distance(Main.player[npc.target].Center) < 2500)
                     npc.localAI[3] = 1;
                 else
                     return;
@@ -158,7 +177,7 @@ namespace FargowiltasSouls.NPCs.Champions
             Player player = Main.player[npc.target];
             Vector2 targetPos;
             
-            if (npc.HasValidTarget && npc.Distance(player.Center) < 2500 && player.Center.Y >= Main.worldSurface * 16 && !player.ZoneUnderworldHeight)
+            if (npc.HasValidTarget && npc.Distance(player.Center) < 3000 && player.Center.Y >= Main.worldSurface * 16 && !player.ZoneUnderworldHeight)
                 npc.timeLeft = 600;
 
             npc.direction = npc.spriteDirection = player.Center.X < npc.Center.X ? -1 : 1;
@@ -235,7 +254,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case 0: //think
-                    if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f
+                    if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 3000f
                         || player.Center.Y < Main.worldSurface * 16 || player.ZoneUnderworldHeight) //despawn code
                     {
                         npc.TargetClosest(false);
@@ -351,41 +370,50 @@ namespace FargowiltasSouls.NPCs.Champions
                 case 3: //decide an attack
                     if (npc.ai[2] == 0)
                     {
+                        void ActivateHead(int targetHead)
+                        {
+                            Main.npc[targetHead].ai[0] += Main.npc[targetHead].ai[3];
+                            Main.npc[targetHead].netUpdate = true;
+
+                            Main.PlaySound(SoundID.ForceRoar, Main.npc[targetHead].Center, -1);
+
+                            int dustType;
+                            switch ((int)Main.npc[targetHead].ai[3])
+                            {
+                                case -3: dustType = 183; break;
+                                case -2: dustType = 6; break;
+                                case -1: dustType = 87; break;
+                                case 1: dustType = 111; break;
+                                case 2: dustType = 89; break;
+                                case 3: dustType = 113; break;
+                                default: dustType = 1; break;
+                            }
+
+                            const int num226 = 70;
+                            for (int num227 = 0; num227 < num226; num227++)
+                            {
+                                Vector2 vector6 = Vector2.UnitX * 30f;
+                                vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + Main.npc[targetHead].Center;
+                                Vector2 vector7 = vector6 - Main.npc[targetHead].Center;
+                                int num228 = Dust.NewDust(vector6 + vector7, 0, 0, dustType, 0f, 0f, 0, default(Color), 3f);
+                                Main.dust[num228].noGravity = true;
+                                Main.dust[num228].velocity = vector7;
+                            }
+                        };
+
                         npc.ai[2] = 1;
                         npc.netUpdate = true;
+                        
+                        int set = Main.rand.Next(configurations.Length);
+                        while (heads[configurations[set].Key] == heads[configurations[lastSet].Key] //don't reuse heads you just attacked with
+                            || heads[configurations[set].Key] == heads[configurations[lastSet].Value]
+                            || heads[configurations[set].Value] == heads[configurations[lastSet].Key]
+                            || heads[configurations[set].Value] == heads[configurations[lastSet].Value])
+                            set = Main.rand.Next(configurations.Length);
+                        lastSet = set;
 
-                        int nextHead = heads[Main.rand.Next(heads.Length)];
-                        while (nextHead == lastHead) //dont choose same one twice ever
-                            nextHead = heads[Main.rand.Next(heads.Length)];
-                        lastHead = nextHead;
-
-                        Main.npc[nextHead].ai[0] += Main.npc[nextHead].ai[3];
-                        Main.npc[nextHead].netUpdate = true;
-
-                        Main.PlaySound(SoundID.ForceRoar, Main.npc[nextHead].Center, -1);
-
-                        int dustType;
-                        switch((int)Main.npc[nextHead].ai[3])
-                        {
-                            case -3: dustType = 183; break;
-                            case -2: dustType = 6; break;
-                            case -1: dustType = 87; break;
-                            case 1: dustType = 111; break;
-                            case 2: dustType = 89; break;
-                            case 3: dustType = 113; break;
-                            default: dustType = 1; break;
-                        }
-
-                        const int num226 = 70;
-                        for (int num227 = 0; num227 < num226; num227++)
-                        {
-                            Vector2 vector6 = Vector2.UnitX * 30f;
-                            vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + Main.npc[nextHead].Center;
-                            Vector2 vector7 = vector6 - Main.npc[nextHead].Center;
-                            int num228 = Dust.NewDust(vector6 + vector7, 0, 0, dustType, 0f, 0f, 0, default(Color), 3f);
-                            Main.dust[num228].noGravity = true;
-                            Main.dust[num228].velocity = vector7;
-                        }
+                        ActivateHead(heads[configurations[set].Key]);
+                        ActivateHead(heads[configurations[set].Value]);
                     }
 
                     if (++npc.ai[1] > 300) //wait

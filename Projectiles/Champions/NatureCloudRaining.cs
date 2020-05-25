@@ -32,6 +32,8 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void AI()
         {
+            Lighting.AddLight(projectile.Center, 0.5f, 0.75f, 1f);
+
             if (++projectile.ai[0] > 8)
             {
                 projectile.ai[0] = 0;

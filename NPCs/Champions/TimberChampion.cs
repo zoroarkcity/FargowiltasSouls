@@ -86,7 +86,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
                         else
                         {
-                            float accel = 2f;
+                            float accel = 4f;
                             if (npc.direction > 0)
                                 npc.velocity.X = (npc.velocity.X * 20 + accel) / 21;
                             else
@@ -403,7 +403,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.netUpdate = true;
                         npc.TargetClosest();
                     }
-                    break;
+                    goto case -1;
 
                 default:
                     npc.ai[0] = 0;

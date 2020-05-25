@@ -57,7 +57,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
                     if (projectile.ai[1] > 0)
                     {
-                        float rotation = MathHelper.ToRadians(10) + Main.rand.NextFloat(MathHelper.ToRadians(35));
+                        float rotation = MathHelper.ToRadians(20) + Main.rand.NextFloat(MathHelper.ToRadians(30));
                         if (Main.rand.Next(2) == 0)
                             rotation *= -1;
                         projectile.velocity = projectile.velocity.RotatedBy(rotation);
