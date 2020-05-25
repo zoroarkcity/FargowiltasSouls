@@ -143,6 +143,8 @@ Summons the aid of all Eternity Mode bosses to your side");
             player.buffImmune[BuffID.Wet] = true;
             player.buffImmune[BuffID.Rabies] = true;
             fargoPlayer.MutantAntibodies = true;
+            if (player.mount.Active && player.mount.Type == MountID.CuteFishron)
+                player.dripping = true;
 
             //lump of flesh
             player.buffImmune[BuffID.Blackout] = true;
