@@ -220,7 +220,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (++npc.localAI[0] > (head.localAI[2] == 1 ? 18 : 24))
                     {
                         npc.localAI[0] = 0;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.UnitX * npc.ai[3], ModContent.ProjectileType<FlowerPetal>(), npc.damage / 4, 0f, Main.myPlayer);
                         }
@@ -284,7 +284,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             {
                                 npc.localAI[0] = 0;
 
-                                if (Main.netMode != 1) //spawn geysers and bombs
+                                if (Main.netMode != NetmodeID.MultiplayerClient) //spawn geysers and bombs
                                 {
                                     Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<FuseBomb>(), npc.damage / 4, 0f, Main.myPlayer);
 
@@ -393,7 +393,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (++npc.localAI[0] > 60 && npc.ai[1] > 120)
                     {
                         npc.localAI[0] = 0;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.UnitY * 2f, ModContent.ProjectileType<CrystalBomb>(), npc.damage / 4, 0f, Main.myPlayer);
                         }

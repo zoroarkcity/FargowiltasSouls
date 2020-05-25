@@ -76,7 +76,7 @@ namespace FargowiltasSouls.NPCs
                 if (npc.localAI[1] == 0f) //roar again
                 {
                     npc.localAI[1] = 1f;
-                    Main.PlaySound(15, npc.Center, 0);
+                    Main.PlaySound(SoundID.Roar, npc.Center, 0);
                 }
                 npc.TargetClosest(true); //chase nearest player, etc
                 npc.alpha = 0;
@@ -88,7 +88,7 @@ namespace FargowiltasSouls.NPCs
                     if (++npc.localAI[2] > 180) //shoot skulls when below half health
                     {
                         npc.localAI[2] = 0f;
-                        if (npc.life < npc.lifeMax / 2 && Main.netMode != 1)
+                        if (npc.life < npc.lifeMax / 2 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 speed = Main.player[npc.target].Center - npc.Center;
                             speed.X += Main.rand.Next(-20, 21);

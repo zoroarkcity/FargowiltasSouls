@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             {
                 projectile.localAI[1] = 1;
 
-                Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 14);
+                Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 14);
 
                 for (int i = 0; i < 30; i++)
                 {
@@ -144,7 +144,7 @@ namespace FargowiltasSouls.Projectiles.Champions
         {
             Main.PlaySound(SoundID.Item14, projectile.position);
 
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Projectile.NewProjectile(projectile.Center, 12f * Vector2.UnitX.RotatedBy(projectile.rotation),
                     ProjectileID.CultistBossFireBall, projectile.damage, 0f, Main.myPlayer);

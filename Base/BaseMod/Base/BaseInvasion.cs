@@ -47,7 +47,7 @@ namespace FargowiltasSouls
 
 		public void OnWorldUpdate()
 		{
-			if(Main.netMode == 1) return;
+			if(Main.netMode == NetmodeID.MultiplayerClient) return;
 			int oldCount = undeadipedeCount;
 			undeadipedeCount = Fargowiltas.BaseAI.GetNPCs(default, GRealm.UNDEADIPEDE_TYPES[0], -1, null).Length + Fargowiltas.BaseAI.GetNPCs(default, GRealm.UNDEADIPEDE_TYPES[1], -1, null).Length;	
 			if(oldCount == 0 && undeadipedeCount > 0)
@@ -56,7 +56,7 @@ namespace FargowiltasSouls
 			}else
 			if(oldCount > 0 && undeadipedeCount == 0)
 			{
-				bool old = MWorld.downedUndeadipede; MWorld.downedUndeadipede = true; if(!old && Main.netMode == 2) MNet.SendNetMessage(MNet.DownedGRealmBoss, (byte)2, MWorld.downedUndeadipede);
+				bool old = MWorld.downedUndeadipede; MWorld.downedUndeadipede = true; if(!old && Main.netMode == NetmodeID.Server) MNet.SendNetMessage(MNet.DownedGRealmBoss, (byte)2, MWorld.downedUndeadipede);
 				HandleHardMobDeath(GRealm.UNDEADIPEDE_TYPES[0]);
 			}
 		}
@@ -103,7 +103,7 @@ namespace FargowiltasSouls
 
 		public void HandleHardMobSpawn(int type)
 		{
-            if (Main.netMode != 1 && IsHardMob(type))
+            if (Main.netMode != NetmodeID.MultiplayerClient && IsHardMob(type))
 			{
 				hardMobs++;
 				spawnHardMobCount = Math.Max(0, spawnHardMobCount - 1);
@@ -115,7 +115,7 @@ namespace FargowiltasSouls
 
 		public void HandleHardMobDeath(int type)
 		{
-			if (Main.netMode != 1 && IsHardMob(type))
+			if (Main.netMode != NetmodeID.MultiplayerClient && IsHardMob(type))
 			{
 				hardMobs = Math.Max(0, hardMobs - 1); 
 				string chat = GetHardMobDeathText(type);				

@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         private void SpawnSphereRing(int max, float speed, int damage, float rotationModifier)
         {
-            if (Main.netMode == 1) return;
+            if (Main.netMode == NetmodeID.MultiplayerClient) return;
             float rotation = 2f * (float)Math.PI / max;
             Vector2 vel = Vector2.UnitY * speed;
             int type = ModContent.ProjectileType<WillTyphoon>();
@@ -69,7 +69,7 @@ namespace FargowiltasSouls.Projectiles.Champions
         {
             Main.PlaySound(SoundID.Item92, projectile.Center);
 
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (FargoSoulsWorld.MasochistMode)
                     Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<WillRitual>(), 0, 0f, Main.myPlayer, 0f, projectile.ai[1]);
@@ -102,7 +102,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.height = 250;
             projectile.Center = projectile.position;
 
-            Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14);
+            Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 14);
 
             for (int num615 = 0; num615 < 45; num615++)
             {

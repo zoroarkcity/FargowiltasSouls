@@ -42,7 +42,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                 Main.dust[index2].scale *= 0.9f;
             }
 
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 for (int index = 0; index < 6; ++index)
                 {

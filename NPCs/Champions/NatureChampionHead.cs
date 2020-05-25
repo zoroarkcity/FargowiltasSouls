@@ -105,7 +105,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (++npc.localAI[1] > 2) //rain piss
                         {
                             npc.localAI[1] = 0;
-                            if (npc.localAI[0] > 60 && Main.netMode != 1)
+                            if (npc.localAI[0] > 60 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(npc.Center + Main.rand.NextVector2Circular(npc.width / 2, npc.height / 2),
                                     Vector2.UnitY * Main.rand.NextFloat(4f, 8f), ProjectileID.GoldenShowerHostile, npc.damage / 4, 0f, Main.myPlayer);
@@ -124,13 +124,13 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case -2: //molten
-                    if (++npc.ai[2] > 60)
+                    /*if (++npc.ai[2] > 60)
                     {
                         npc.ai[2] = 0;
 
-                        Main.PlaySound(2, npc.Center, 14);
+                        Main.PlaySound(SoundID.Item, npc.Center, 14);
 
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             const int max = 12;
                             for (int i = 0; i < max; i++)
@@ -139,7 +139,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<NatureFireball>(), npc.damage / 4, 0f, Main.myPlayer);
                             }
                         }
-                    }
+                    }*/
 
                     if (++npc.localAI[0] < 240) //stay near
                     {
@@ -167,9 +167,9 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.velocity = Vector2.Zero;
                         npc.netUpdate = true;
 
-                        Main.PlaySound(15, npc.Center, 0);
+                        Main.PlaySound(SoundID.Roar, npc.Center, 0);
 
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<NatureExplosion>(), npc.damage / 4, 0f, Main.myPlayer);
                         }
@@ -196,7 +196,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         Main.PlaySound(SoundID.Item66, npc.Center);
 
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 dir = Main.player[npc.target].Center - npc.Center;
                             float ai1New = Main.rand.Next(100);
@@ -245,7 +245,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             npc.ai[2] = 0;
                             npc.localAI[1] = npc.localAI[1] == 1 ? -1 : 1;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 const int max = 25;
                                 for (int i = 0; i < max; i++)
@@ -278,7 +278,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.ai[2] == 0)
                     {
                         npc.ai[2] = 1;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             const int max = 5;
                             const float distance = 125f;
@@ -323,7 +323,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 speed.Y += Main.rand.Next(-40, 41);
                                 speed.Normalize();
                                 speed *= 14f;
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Projectile.NewProjectile(npc.Center + speed * 5, speed,
                                         ModContent.ProjectileType<NatureBullet>(), npc.damage / 4, 0f, Main.myPlayer);
@@ -355,7 +355,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             npc.netUpdate = true;
                             npc.localAI[1] = npc.DirectionTo(body.Center - Vector2.UnitY * 300).ToRotation();
 
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[1]), 
                                     ModContent.ProjectileType<NatureDeathraySmall>(), npc.damage / 3, 0f, Main.myPlayer, 0f, npc.whoAmI);
@@ -364,7 +364,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         else if (npc.ai[2] == 150)
                         {
                             float ai0 = 2f * (float)Math.PI / 120 * Math.Sign(npc.ai[3]);
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[1]),
                                     ModContent.ProjectileType<NatureDeathray>(), npc.damage / 3, 0f, Main.myPlayer, ai0, npc.whoAmI);

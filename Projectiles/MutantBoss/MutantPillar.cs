@@ -191,7 +191,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     dust.scale *= 2f;
                 }
             }
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 const int max = 24;
                 const float rotationInterval = 2f * (float)Math.PI / max;

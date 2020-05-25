@@ -38,7 +38,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void Kill(int timeLeft)
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 for (int i = 0; i < 8; i++)
                 {
@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                 }
             }
             
-            Main.PlaySound(2, projectile.Center, 14);
+            Main.PlaySound(SoundID.Item, projectile.Center, 14);
 
             const int num226 = 36;
             for (int num227 = 0; num227 < num226; num227++)

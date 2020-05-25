@@ -36,9 +36,9 @@ namespace FargowiltasSouls.Items.Summons
             if (abom > -1 && Main.npc[abom].active)
             {
                 Main.npc[abom].Transform(mod.NPCType("AbomBoss"));
-                if (Main.netMode == 0)
+                if (Main.netMode == NetmodeID.SinglePlayer)
                     Main.NewText("Abominationn has awoken!", 175, 75, 255);
-                else if (Main.netMode == 2)
+                else if (Main.netMode == NetmodeID.Server)
                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Abominationn has awoken!"), new Color(175, 75, 255));
             }
             else

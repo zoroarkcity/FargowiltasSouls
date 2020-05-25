@@ -57,7 +57,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                         }
                     }
                 }
-                else if (projectile.localAI[0] > 15 || Main.netMode != 1)
+                else if (projectile.localAI[0] > 15 || Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     projectile.Kill();
                 }
@@ -69,7 +69,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             }
             if (projectile.localAI[0] == 0f)
             {
-                Main.PlaySound(29, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
+                Main.PlaySound(SoundID.Zombie, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
             }
             float num801 = 1f;
             projectile.localAI[0] += 1f;
@@ -134,7 +134,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             /*if (Main.npc[ai1].velocity != Vector2.Zero && --counter < 0)
             {
                 counter = 5;
-                if (Main.netMode != 1) //spawn bonus projs
+                if (Main.netMode != NetmodeID.MultiplayerClient) //spawn bonus projs
                 {
                     Vector2 spawnPos = projectile.Center;
                     Vector2 vel = projectile.velocity.RotatedBy(Math.PI / 2 * Math.Sign(projectile.ai[0]));

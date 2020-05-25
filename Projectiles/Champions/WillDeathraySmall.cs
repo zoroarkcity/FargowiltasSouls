@@ -122,7 +122,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void Kill(int timeLeft)
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<WillDeathray2>(), projectile.damage, 0f, Main.myPlayer, 0f, projectile.ai[1]);
             }

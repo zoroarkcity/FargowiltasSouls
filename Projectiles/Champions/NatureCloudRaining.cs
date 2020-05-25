@@ -36,7 +36,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             {
                 projectile.ai[0] = 0;
 
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Projectile.NewProjectile(projectile.position.X + 14 + Main.rand.Next(projectile.width - 28),
                         projectile.position.Y + projectile.height + 4, 0f, 5f,

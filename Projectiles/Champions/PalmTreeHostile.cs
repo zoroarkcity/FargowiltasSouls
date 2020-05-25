@@ -59,7 +59,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                 if (projectile.velocity.Y == 0 && --projectile.localAI[1] < 0)
                 {
                     projectile.localAI[1] = 120f;
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         const float gravity = 0.2f;
                         float time = 90f;

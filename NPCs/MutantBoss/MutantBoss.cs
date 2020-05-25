@@ -107,9 +107,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 if (npc.Distance(Main.player[npc.target].Center) < 2000)
                 {
                     npc.localAI[3] = 1;
-                    Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                    Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                     //EdgyBossText("I hope you're ready to embrace suffering.");
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         if (Fargowiltas.Instance.MasomodeEXLoaded)
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModLoader.GetMod("MasomodeEX").ProjectileType("MutantText"), 0, 0f, Main.myPlayer, npc.whoAmI);
@@ -128,7 +128,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         }
                         if (number >= 0)
                         {
-                            if (Main.netMode == 0)
+                            if (Main.netMode == NetmodeID.SinglePlayer)
                             {
                                 Projectile projectile = Main.projectile[number];
                                 projectile.SetDefaults(ModContent.ProjectileType<Projectiles.MutantBoss.MutantBoss>());
@@ -143,12 +143,12 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 projectile.stepSpeed = 1f;
                                 projectile.ai[1] = npc.whoAmI;
                             }
-                            else if (Main.netMode == 2)
+                            else if (Main.netMode == NetmodeID.Server)
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.MutantBoss.MutantBoss>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
                             }
 
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual5>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                     }
@@ -193,11 +193,11 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.life = 0;
                         npc.dontTakeDamage = false;
                         npc.checkDead();
-                        if (Main.netMode != 1 && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Mutant")))
+                        if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Mutant")))
                         {
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
-                            if (n != 200 && Main.netMode == 2)
-                                NetMessage.SendData(23, -1, -1, null, n);
+                            if (n != 200 && Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
                         //EdgyBossText("Oh, right... my revive...");
                     }
@@ -215,7 +215,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[1] = 0;
                         npc.ai[3] = (float)-Math.PI / 2;
                         npc.netUpdate = true;
-                        if (Main.netMode != 1) //shoot harmless mega ray
+                        if (Main.netMode != NetmodeID.MultiplayerClient) //shoot harmless mega ray
                             Projectile.NewProjectile(npc.Center, Vector2.UnitY * -1, ModContent.ProjectileType<MutantGiantDeathray>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
                         //EdgyBossText("I have not a single regret in my existence!");
                     }
@@ -235,7 +235,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (++npc.ai[1] > 120)
                     {
                         npc.ai[1] = 0;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             SpawnSphereRing(8, 6f, npc.defDamage / 3, 0.5f);
                             SpawnSphereRing(8, 6f, npc.defDamage / 3, -.5f);
@@ -255,7 +255,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     {
                         npc.ai[3] = npc.DirectionFrom(player.Center).ToRotation() - 0.001f;
                         npc.netUpdate = true;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.ai[3]),
                                 ModContent.ProjectileType<MutantGiantDeathray2>(), npc.defDamage / 3, 0f, Main.myPlayer, 0, npc.whoAmI);
@@ -282,7 +282,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[2] += (float)Math.PI / 5 / 480 * npc.ai[3];
                         if (npc.ai[2] > (float)Math.PI)
                             npc.ai[2] -= (float)Math.PI * 2;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = 0; i < 8; i++)
                             {
@@ -343,7 +343,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     npc.velocity = Vector2.Zero;
                     if (--npc.ai[1] < 0)
                     {
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(npc.Center, new Vector2(2, 0).RotatedBy(npc.ai[2]), ModContent.ProjectileType<MutantMark1>(), npc.defDamage / 4, 0f, Main.myPlayer);
                         }
@@ -395,7 +395,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             npc.ai[1] = 0;
                             npc.ai[2] = npc.DirectionFrom(player.Center).ToRotation();
                             npc.ai[3] = (float)Math.PI / 20f;
-                            Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                            Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                             if (player.Center.X < npc.Center.X)
                                 npc.ai[3] *= -1;
                             //EdgyBossText("But we're not done yet!");
@@ -472,21 +472,21 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             npc.ai[2] = 0;
                             npc.velocity = npc.DirectionTo(player.Center) * 2f;
                         }
-                        else if (Main.netMode != 1)
+                        else if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center) * 25f, ModContent.ProjectileType<MutantSpearThrown>(), npc.damage / 4, 0f, Main.myPlayer, npc.target);
                         }
                     }
-                    else if (npc.ai[1] == 61 && npc.ai[2] < 5 && Main.netMode != 1)
+                    else if (npc.ai[1] == 61 && npc.ai[2] < 5 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         if (FargoSoulsWorld.MasochistMode && FargoSoulsWorld.skipMutantP1 >= 10)
                         {
                             if (FargoSoulsWorld.skipMutantP1 == 10)
                             {
                                 string text = "Mutant tires of the charade...";
-                                if (Main.netMode == 0)
+                                if (Main.netMode == NetmodeID.SinglePlayer)
                                     Main.NewText(text, Color.LimeGreen);
-                                else if (Main.netMode == 2)
+                                else if (Main.netMode == NetmodeID.Server)
                                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), Color.LimeGreen);
                             }
                             npc.ai[0] = 10;
@@ -516,7 +516,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             npc.netUpdate = true;
                             npc.TargetClosest();
                         }
-                        else if (Main.netMode != 1)
+                        else if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             SpawnSphereRing(6, 9f, npc.damage / 5, 1f);
                             SpawnSphereRing(6, 9f, npc.damage / 5, -0.5f);
@@ -542,7 +542,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[0]++;
                         npc.ai[1] = 0;
                         npc.netUpdate = true;
-                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                        Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                     }
                     break;
 
@@ -569,7 +569,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         }
                         else
                         {
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int type = ModContent.ProjectileType<MutantTrueEyeL>();
                                 if (npc.ai[2] == 2)
@@ -598,7 +598,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (!AliveCheck(player))
                             break;
                         npc.ai[3] = 1;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSpearSpin>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                     }
                     targetPos = player.Center;
@@ -630,7 +630,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         else
                         {
                             npc.velocity = npc.DirectionTo(player.Center + player.velocity) * 30f;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSpearDash>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                         }
                     }
@@ -674,7 +674,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     npc.velocity = Vector2.Zero;
                     if (--npc.ai[1] < 0)
                     {
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, new Vector2(2, 0).RotatedBy(npc.ai[2]), ModContent.ProjectileType<MutantMark1>(), npc.damage / 4, 0f, Main.myPlayer);
                         npc.ai[1] = 5;
                         npc.ai[2] += npc.ai[3];
@@ -714,7 +714,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 Main.PlaySound(SoundID.Item12, npc.Center);
                                 npc.ai[1] = 0;
                                 npc.ai[2] += (float)Math.PI / 77f;
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                     for (int i = 0; i < 4; i++)
                                         Projectile.NewProjectile(npc.Center, new Vector2(6f, 0).RotatedBy(npc.ai[2] + Math.PI / 2 * i), ModContent.ProjectileType<MutantEye>(), npc.damage / 4, 0f, Main.myPlayer);
                             }
@@ -733,7 +733,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f && Main.expertMode)
                                 Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<MutantPresence>(), 2);
                             npc.velocity = Vector2.Zero;
-                            if (npc.ai[2] == 0 && Main.netMode != 1)
+                            if (npc.ai[2] == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 double angle = npc.position.X < player.position.X ? -Math.PI / 4 : Math.PI / 4;
                                 npc.ai[2] = (float)angle * -4f / 30;
@@ -823,8 +823,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (FargoSoulsWorld.MasochistMode && FargoSoulsWorld.skipMutantP1 <= 10)
                         {
                             FargoSoulsWorld.skipMutantP1++;
-                            if (Main.netMode == 2)
-                                NetMessage.SendData(7);
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData);
                         }
                         for (int i = 0; i < Main.maxProjectiles; i++)
                             if (Main.projectile[i].active && Main.projectile[i].friendly && !Main.projectile[i].minion && Main.projectile[i].damage > 0)
@@ -832,11 +832,11 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         for (int i = 0; i < Main.maxProjectiles; i++)
                             if (Main.projectile[i].active && Main.projectile[i].friendly && !Main.projectile[i].minion && Main.projectile[i].damage > 0)
                                 Main.projectile[i].Kill();
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
-                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                        Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         for (int i = 0; i < 50; i++)
                         {
                             int d = Dust.NewDust(Main.player[Main.myPlayer].position, Main.player[Main.myPlayer].width, Main.player[Main.myPlayer].height, 229, 0f, 0f, 0, default(Color), 2.5f);
@@ -864,7 +864,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[1] = 0;
                         npc.ai[2] = player.DirectionTo(npc.Center).ToRotation();
                         npc.ai[3] = (float)Math.PI / 10f;
-                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                        Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         if (player.Center.X < npc.Center.X)
                             npc.ai[3] *= -1;
                     }
@@ -874,7 +874,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     npc.velocity = Vector2.Zero;
                     if (--npc.ai[1] < 0)
                     {
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, new Vector2(2, 0).RotatedBy(npc.ai[2]), ModContent.ProjectileType<MutantMark1>(), npc.damage / 4, 0f, Main.myPlayer);
                         npc.ai[1] = 3;
                         npc.ai[2] += npc.ai[3];
@@ -904,7 +904,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (!AliveCheck(player))
                             break;
                         npc.ai[3] = 1;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSpearSpin>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                     }
                     targetPos = player.Center;
@@ -925,7 +925,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (npc.ai[3] == 0)
                     {
                         npc.ai[3] = 1;
-                        if (npc.ai[2] < 5 && Main.netMode != 1)
+                        if (npc.ai[2] < 5 && Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center + player.velocity * 30f), ModContent.ProjectileType<MutantDeathrayAim>(), 0, 0f, Main.myPlayer, 30f, npc.whoAmI);
                     }
                     if (++npc.ai[1] > 30)
@@ -944,7 +944,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         else
                         {
                             npc.velocity = npc.DirectionTo(player.Center + player.velocity * 30f) * 45f;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity), ModContent.ProjectileType<MutantDeathray2>(), npc.damage / 5, 0f, Main.myPlayer);
                                 Projectile.NewProjectile(npc.Center, -Vector2.Normalize(npc.velocity), ModContent.ProjectileType<MutantDeathray2>(), npc.damage / 5, 0f, Main.myPlayer);
@@ -976,7 +976,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[2] += (float)Math.PI / 8 / 480 * npc.ai[3];
                         if (npc.ai[2] > (float)Math.PI)
                             npc.ai[2] -= (float)Math.PI * 2;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int max = FargoSoulsWorld.MasochistMode ? 6 : 4;
                             for (int i = 0; i < max; i++)
@@ -1000,18 +1000,18 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     break;
 
                 case 18: //spawn illusions for next attack
-                    Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
-                    if (Main.netMode != 1)
+                    Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<MutantIllusion>(), npc.whoAmI, npc.whoAmI, -1, 1, 60);
-                        if (n != 200 && Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (n != 200 && Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<MutantIllusion>(), npc.whoAmI, npc.whoAmI, 1, -1, 120);
-                        if (n != 200 && Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (n != 200 && Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<MutantIllusion>(), npc.whoAmI, npc.whoAmI, 1, 1, 180);
-                        if (n != 200 && Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (n != 200 && Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                     npc.ai[0]++;
                     break;
@@ -1039,7 +1039,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     else if (npc.ai[1] == 240)
                     {
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, Vector2.UnitY * -10, ModContent.ProjectileType<MutantPillar>(), npc.damage / 3, 0, Main.myPlayer, 3, npc.whoAmI);
                     }
                     break;
@@ -1065,10 +1065,10 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         }
                         else
                         {
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 for (int i = 0; i < 8; i++)
                                     Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 4 * i) * 10f, ModContent.ProjectileType<MutantScythe1>(), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
-                            Main.PlaySound(36, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f);
+                            Main.PlaySound(SoundID.ForceRoar, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f);
                         }
                         npc.netUpdate = true;
                         break;
@@ -1081,7 +1081,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (!AliveCheck(player))
                             break;
                         npc.ai[3] = 1;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSpearSpin>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                     }
                     targetPos = player.Center;
@@ -1114,7 +1114,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         else
                         {
                             npc.velocity = npc.DirectionTo(player.Center) * 45f;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity), ModContent.ProjectileType<MutantDeathray2>(), npc.damage / 5, 0f, Main.myPlayer);
                                 Projectile.NewProjectile(npc.Center, -Vector2.Normalize(npc.velocity), ModContent.ProjectileType<MutantDeathray2>(), npc.damage / 5, 0f, Main.myPlayer);
@@ -1163,8 +1163,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         }
                         else
                         {
-                            Main.PlaySound(4, (int)npc.Center.X, (int)npc.Center.Y, 13);
-                            if (Main.netMode != 1) //spawn worm
+                            Main.PlaySound(SoundID.NPCKilled, (int)npc.Center.X, (int)npc.Center.Y, 13);
+                            if (Main.netMode != NetmodeID.MultiplayerClient) //spawn worm
                             {
                                 Vector2 vel = Vector2.Normalize(npc.velocity) * 10f;
                                 int current = Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<MutantDestroyerHead>(), npc.damage / 4, 0f, Main.myPlayer, npc.target);
@@ -1201,7 +1201,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             npc.ai[2] = 0;
                             npc.TargetClosest();
                         }
-                        else if (Main.netMode != 1)
+                        else if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 vel = npc.DirectionTo(player.Center + player.velocity * 30f) * 30f;
                             Projectile.NewProjectile(npc.Center, Vector2.Normalize(vel), ModContent.ProjectileType<MutantDeathray2>(), npc.damage / 5, 0f, Main.myPlayer);
@@ -1209,7 +1209,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<MutantSpearThrown>(), npc.damage / 4, 0f, Main.myPlayer, npc.target, 1f);
                         }
                     }
-                    else if (npc.ai[1] == 1 && npc.ai[2] < 5 && Main.netMode != 1)
+                    else if (npc.ai[1] == 1 && npc.ai[2] < 5 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center + player.velocity * 30f), ModContent.ProjectileType<MutantDeathrayAim>(), 0, 0f, Main.myPlayer, 60f, npc.whoAmI);
                         Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSpearAim>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 2);
@@ -1233,7 +1233,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
-                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                        Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         npc.TargetClosest();
                     }
                     for (int i = 0; i < 3; i++)
@@ -1250,7 +1250,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (++npc.ai[1] > 10)
                     {
                         npc.ai[1] = 0;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.UnitX, ModContent.ProjectileType<MutantDeathray3>(), npc.damage / 4, 0, Main.myPlayer, MathHelper.ToRadians(260) / -90f, npc.whoAmI);
                             Projectile.NewProjectile(npc.Center, -Vector2.UnitX, ModContent.ProjectileType<MutantDeathray3>(), npc.damage / 4, 0, Main.myPlayer, MathHelper.ToRadians(260) / 90f, npc.whoAmI);
@@ -1262,7 +1262,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[1] = 0;
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
-                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                        Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         npc.TargetClosest();
                     }
                     for (int i = 0; i < 3; i++)
@@ -1279,7 +1279,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     {
                         npc.ai[1] = 0;
                         Main.PlaySound(SoundID.Item21, npc.Center);
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 spawnPos = npc.Center;
                             spawnPos.X += Main.rand.Next(-600, 601);
@@ -1334,7 +1334,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         }
                         else
                         {
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(npc.Center, Vector2.UnitY * -3f, ModContent.ProjectileType<MutantFishron>(), npc.damage / 4, 0f, Main.myPlayer, npc.target);
                             for (int i = 0; i < 30; i++)
                             {
@@ -1378,8 +1378,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     Movement(targetPos, 0.6f, false);
                     if (++npc.ai[1] > 180)
                     {
-                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
-                        if (Main.netMode != 1)
+                        Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             float gravity = 0.2f;
                             const float time = 180f;
@@ -1401,7 +1401,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         break;
                     npc.velocity.Normalize();
                     npc.velocity *= 2f;
-                    if (npc.ai[1] > 180 && Main.netMode != 1)
+                    if (npc.ai[1] > 180 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Vector2 safeZone = npc.Center;
                         safeZone.Y -= 100;
@@ -1455,7 +1455,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     {
                         npc.ai[1] = 0;
                         Main.PlaySound(SoundID.Item34, player.Center);
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 spawnPos = npc.Center;
                             spawnPos.X += (npc.Center.X < player.Center.X) ? 900 : -900;
@@ -1467,7 +1467,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (npc.ai[3] == 0)
                     {
                         npc.ai[3] = 1;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSlimeRain>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                     }
                     if (++npc.ai[2] > 180)
@@ -1525,7 +1525,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (npc.ai[2] == 0)
                     {
                         npc.ai[2] = 1;
-                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                        Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                     }
                     if (++npc.ai[3] > 300)
                     {
@@ -1565,7 +1565,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             npc.ai[2] = 0;
                             npc.TargetClosest();
                         }
-                        else if (Main.netMode != 1)
+                        else if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 vel = npc.DirectionTo(player.Center) * 30f;
                             Projectile.NewProjectile(npc.Center, Vector2.Normalize(vel), ModContent.ProjectileType<MutantDeathray2>(), npc.damage / 5, 0f, Main.myPlayer);
@@ -1573,7 +1573,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<MutantSpearThrown>(), npc.damage / 4, 0f, Main.myPlayer, npc.target);
                         }
                     }
-                    else if (npc.ai[1] == 181 && npc.ai[2] < 5 && Main.netMode != 1)
+                    else if (npc.ai[1] == 181 && npc.ai[2] < 5 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSpearAim>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 1);
                     }
@@ -1581,7 +1581,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
                 case 41: //spawn leaf crystals
                     Main.PlaySound(SoundID.Item84, npc.Center);
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int p = Projectile.NewProjectile(npc.Center, Vector2.UnitY * 10f, ModContent.ProjectileType<MutantMark2>(), npc.damage / 4, 0f, Main.myPlayer, 30, 30 + 120);
                         if (p != 1000)
@@ -1619,7 +1619,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[1] = 0;
                         Main.PlaySound(SoundID.Item92, npc.Center);
                         npc.ai[2] = npc.ai[2] > 0 ? -1 : 1;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             const float retiRad = 525; //500
                             const float spazRad = 350; //250
@@ -1670,7 +1670,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         private void SpawnSphereRing(int max, float speed, int damage, float rotationModifier)
         {
-            if (Main.netMode == 1) return;
+            if (Main.netMode == NetmodeID.MultiplayerClient) return;
             float rotation = 2f * (float)Math.PI / max;
             Vector2 vel = Vector2.UnitY * speed;
             int type = ModContent.ProjectileType<MutantSphereRing>();
@@ -1721,7 +1721,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     {
                         if (npc.position.Y < 0)
                             npc.position.Y = 0;
-                        if (Main.netMode != 1 && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Mutant")))
+                        if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Mutant")))
                         {
                             for (int i = 0; i < 1000; i++)
                                 if (Main.projectile[i].active && Main.projectile[i].hostile)
@@ -1730,8 +1730,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 if (Main.projectile[i].active && Main.projectile[i].hostile)
                                     Main.projectile[i].Kill();
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
-                            if (n != 200 && Main.netMode == 2)
-                                NetMessage.SendData(23, -1, -1, null, n);
+                            if (n != 200 && Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
                     }
                     return false;
@@ -1746,7 +1746,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
         {
             if (Main.expertMode && npc.life < npc.lifeMax / 2)
             {
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     npc.ai[0] = 10;
                     npc.ai[1] = 0;
@@ -1808,9 +1808,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
         {
             if (Fargowiltas.Instance.CalamityLoaded) //edgy boss text
             {
-                if (Main.netMode == 0)
+                if (Main.netMode == NetmodeID.SinglePlayer)
                     Main.NewText(text, Color.LimeGreen);
-                else if (Main.netMode == 2)
+                else if (Main.netMode == NetmodeID.Server)
                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), Color.LimeGreen);
             }
         }*/
@@ -1851,9 +1851,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             npc.life = 1;
             npc.active = true;
             npc.localAI[3] = 2;
-            if (Main.netMode != 1 && npc.ai[0] > -1)
+            if (Main.netMode != NetmodeID.MultiplayerClient && npc.ai[0] > -1)
             {
-                if (npc.ai[0] < 11 && Main.netMode != 1 && Main.expertMode)
+                if (npc.ai[0] < 11 && Main.netMode != NetmodeID.MultiplayerClient && Main.expertMode)
                 {
                     Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual>(), npc.damage, 0f, Main.myPlayer, 0f, npc.whoAmI);
                     Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual5>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
@@ -1877,8 +1877,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
         {
             FargoSoulsWorld.downedMutant = true;
             FargoSoulsWorld.skipMutantP1 = 0;
-            if (Main.netMode == 2)
-                NetMessage.SendData(7); //sync world
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.WorldData); //sync world
             
             if (FargoSoulsWorld.MasochistMode)
             {

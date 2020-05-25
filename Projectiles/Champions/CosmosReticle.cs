@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                 {
                     Main.PlaySound(SoundID.Item89, projectile.Center);
 
-                    if (Main.netMode != 1) //rain meteors
+                    if (Main.netMode != NetmodeID.MultiplayerClient) //rain meteors
                     {
                         Vector2 spawnPos = projectile.Center;
                         spawnPos.X += Main.rand.Next(-200, 201);

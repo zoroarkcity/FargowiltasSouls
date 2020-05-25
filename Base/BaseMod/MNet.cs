@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 
 namespace FargowiltasSouls
 {
@@ -6,7 +7,7 @@ namespace FargowiltasSouls
 	{
 		public static void SendBaseNetMessage(int msg, params object[] param)
 		{
-			if (Main.netMode == 0) { return; } //nothing to sync in SP
+			if (Main.netMode == NetmodeID.SinglePlayer) { return; } //nothing to sync in SP
             BaseNet.WriteToPacket(Fargowiltas.Instance.GetPacket(), (byte)msg, param).Send();
 		}
 	}

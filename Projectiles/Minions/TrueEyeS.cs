@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.Minions
@@ -109,7 +110,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                         case 2: //shoot
                             if (projectile.localAI[0] == 7f)
                             {
-                                Main.PlaySound(4, (int)projectile.Center.X, (int)projectile.Center.Y, 6, 1f, 0.0f);
+                                Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 6, 1f, 0.0f);
                                 ShootBolts(npc);
                             }
                             else if (projectile.localAI[0] == 14f)

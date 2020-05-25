@@ -85,7 +85,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 else
                     return;
 
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NatureChampionHead>(), npc.whoAmI, 0f, npc.whoAmI, 0f, -3f, npc.target);
                     if (n != Main.maxNPCs)
@@ -93,8 +93,8 @@ namespace FargowiltasSouls.NPCs.Champions
                         heads[0] = n;
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NatureChampionHead>(), npc.whoAmI, 0f, npc.whoAmI, 0f, -2f, npc.target);
                     if (n != Main.maxNPCs)
@@ -102,8 +102,8 @@ namespace FargowiltasSouls.NPCs.Champions
                         heads[1] = n;
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NatureChampionHead>(), npc.whoAmI, 0f, npc.whoAmI, 0f, -1f, npc.target);
                     if (n != Main.maxNPCs)
@@ -111,8 +111,8 @@ namespace FargowiltasSouls.NPCs.Champions
                         heads[2] = n;
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NatureChampionHead>(), npc.whoAmI, 0f, npc.whoAmI, 0f, 1f, npc.target);
                     if (n != Main.maxNPCs)
@@ -120,8 +120,8 @@ namespace FargowiltasSouls.NPCs.Champions
                         heads[3] = n;
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NatureChampionHead>(), npc.whoAmI, 0f, npc.whoAmI, 0f, 2f, npc.target);
                     if (n != Main.maxNPCs)
@@ -129,8 +129,8 @@ namespace FargowiltasSouls.NPCs.Champions
                         heads[4] = n;
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NatureChampionHead>(), npc.whoAmI, 0f, npc.whoAmI, 0f, 3f, npc.target);
                     if (n != Main.maxNPCs)
@@ -138,13 +138,13 @@ namespace FargowiltasSouls.NPCs.Champions
                         heads[5] = n;
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
 
                     for (int i = 0; i < heads.Length; i++) //failsafe, die if couldnt spawn heads
                     {
-                        if (heads[i] == -1 && Main.netMode != 1)
+                        if (heads[i] == -1 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             npc.active = false;
                             return;
@@ -267,7 +267,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         void StompDust()
                         {
-                            Main.PlaySound(2, npc.Center, 14);
+                            Main.PlaySound(SoundID.Item, npc.Center, 14);
 
                             for (int k = -2; k <= 2; k++) //explosions
                             {
@@ -362,7 +362,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         Main.npc[nextHead].ai[0] += Main.npc[nextHead].ai[3];
                         Main.npc[nextHead].netUpdate = true;
 
-                        Main.PlaySound(36, Main.npc[nextHead].Center, -1);
+                        Main.PlaySound(SoundID.ForceRoar, Main.npc[nextHead].Center, -1);
 
                         int dustType;
                         switch((int)Main.npc[nextHead].ai[3])
@@ -425,7 +425,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         npc.ai[2] = 1;
 
-                        Main.PlaySound(15, npc.Center, 0);
+                        Main.PlaySound(SoundID.Roar, npc.Center, 0);
 
                         for (int i = 0; i < heads.Length; i++) //activate all heads
                         {
@@ -525,8 +525,8 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void NPCLoot()
         {
             FargoSoulsWorld.downedChampions[3] = true;
-            if (Main.netMode == 2)
-                NetMessage.SendData(7); //sync world
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.WorldData); //sync world
 
             int[] drops = {
                 ModContent.ItemType<CrimsonEnchant>(),

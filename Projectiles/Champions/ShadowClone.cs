@@ -60,7 +60,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                 projectile.position += player.velocity / 4f;
                 projectile.netUpdate = true;
                 projectile.localAI[0] = projectile.DirectionTo(player.Center).ToRotation();
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Projectile.NewProjectile(projectile.Center, projectile.DirectionTo(player.Center), ModContent.ProjectileType<ShadowDeathraySmall>(), 0, 0f, Main.myPlayer);
                 }

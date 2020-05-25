@@ -44,14 +44,14 @@ namespace FargowiltasSouls.Items.Summons
             FargoSoulsWorld.FishronEX = !FargoSoulsWorld.FishronEX;
             string text = FargoSoulsWorld.FishronEX ? "The ocean stirs..." : "The ocean settles.";
             Color color = new Color(0, 100, 200);
-            if (Main.netMode == 0)
+            if (Main.netMode == NetmodeID.SinglePlayer)
             {
                 Main.NewText(text, color);
             }
-            else if (Main.netMode == 2)
+            else if (Main.netMode == NetmodeID.Server)
             {
                 NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), color);
-                NetMessage.SendData(7);
+                NetMessage.SendData(MessageID.WorldData);
             }
             return true;
         }*/

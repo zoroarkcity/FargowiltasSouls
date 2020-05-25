@@ -81,7 +81,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void Kill(int timeleft)
         {
-            Main.PlaySound(4, projectile.Center, 6);
+            Main.PlaySound(SoundID.NPCKilled, projectile.Center, 6);
             projectile.position = projectile.Center;
             projectile.width = projectile.height = 208;
             projectile.Center = projectile.position;

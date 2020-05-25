@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 {
     public class WillRitual : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_467";
+        public override string Texture => "FargowiltasSouls/Projectiles/Champions/WillTyphoon";
 
         private const float PI = (float)Math.PI;
         private const float rotationPerTick = PI / 140f;
@@ -22,14 +22,12 @@ namespace FargowiltasSouls.Projectiles.Champions
         {
             DisplayName.SetDefault("Will Seal");
             Main.projFrames[projectile.type] = 4;
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 4;
-            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 42;
-            projectile.height = 42;
+            projectile.width = 30;
+            projectile.height = 30;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.alpha = 255;
@@ -117,14 +115,10 @@ namespace FargowiltasSouls.Projectiles.Champions
                 projectile.netUpdate = true;
             }
 
-            projectile.rotation += 0.77f;
-            
-            if (++projectile.frameCounter > 6)
-            {
-                projectile.frameCounter = 0;
-                if (++projectile.frame > 3)
-                    projectile.frame = 0;
-            }
+            projectile.rotation += 0.2f;
+            projectile.frame++;
+            if (projectile.frame > 2)
+                projectile.frame = 0;
         }
 
         public override bool CanDamage()

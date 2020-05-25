@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Enums;
 
@@ -44,7 +45,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             }
             /*if (projectile.localAI[0] == 0f)
             {
-                Main.PlaySound(29, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
+                Main.PlaySound(SoundID.Zombie, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
             }*/
             float num801 = 0.3f;
             projectile.localAI[0] += 1f;
@@ -115,7 +116,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 
         public override void Kill(int timeLeft)
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
                 Projectile.NewProjectile(projectile.Center, projectile.velocity, mod.ProjectileType("AbomDeathray"), projectile.damage, projectile.knockBack, projectile.owner);
         }
     }

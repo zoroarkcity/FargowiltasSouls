@@ -43,7 +43,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             if (projectile.localAI[1] == 0f)
             {
                 projectile.localAI[1] = projectile.ai[1] + 1;
-                Main.PlaySound(29, (int)projectile.Center.X, (int)projectile.Center.Y, 20);
+                Main.PlaySound(SoundID.Zombie, (int)projectile.Center.X, (int)projectile.Center.Y, 20);
                 projectile.netUpdate = true;
             }
 
@@ -153,7 +153,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         public override void Kill(int timeleft)
         {
             Main.PlaySound(SoundID.Item84, projectile.Center);
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 SpawnRazorbladeRing(6, 12f, 1f);
                 SpawnRazorbladeRing(6, 12f, -1f);

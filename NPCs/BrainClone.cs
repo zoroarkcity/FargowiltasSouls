@@ -130,7 +130,7 @@ namespace FargowiltasSouls.NPCs
             }
             else
             {
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     npc.localAI[1]++;
                     if (npc.justHit)

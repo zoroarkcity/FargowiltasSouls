@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.MutantBoss
@@ -44,7 +45,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             if (projectile.localAI[0] == 0)
             {
                 projectile.localAI[0] = 1;
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                     Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity), mod.ProjectileType("MutantDeathraySmall"), projectile.damage, 0f, projectile.owner);
             }
             //projectile.velocity *= 0.96f;
@@ -79,7 +80,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void Kill(int timeleft)
         {
-            Main.PlaySound(4, projectile.Center, 6);
+            Main.PlaySound(SoundID.NPCKilled, projectile.Center, 6);
             projectile.position = projectile.Center;
             projectile.width = projectile.height = 208;
             projectile.Center = projectile.position;
@@ -102,7 +103,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 Main.dust[index3].noGravity = true;
             }
 
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
                 Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity), mod.ProjectileType("MutantDeathray1"), projectile.damage, 0f, projectile.owner);
         }
 

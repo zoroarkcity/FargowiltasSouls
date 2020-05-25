@@ -91,7 +91,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void Kill(int timeleft)
         {
-            Main.PlaySound(4, projectile.Center, 6);
+            Main.PlaySound(SoundID.NPCKilled, projectile.Center, 6);
             projectile.position = projectile.Center;
             projectile.width = projectile.height = 208;
             projectile.Center = projectile.position;
@@ -114,7 +114,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 Main.dust[index3].noGravity = true;
             }
 
-            if (Main.netMode != 1) //cosmetic explosion
+            if (Main.netMode != NetmodeID.MultiplayerClient) //cosmetic explosion
                 Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("PhantasmalBlast"), 0, 0f, Main.myPlayer);
         }
 

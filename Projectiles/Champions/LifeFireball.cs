@@ -98,7 +98,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             {
                 for (int i = 0; i < 5; i++) //drop greek fire
                 {
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, Main.rand.NextFloat(-6, 6), Main.rand.NextFloat(-10, 0),
                               Main.rand.Next(326, 329), projectile.damage / 4, 0f, Main.myPlayer);
@@ -106,7 +106,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                 }
             }
 
-            Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 14);
+            Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 14);
 
             for (int i = 0; i < 30; i++)
             {

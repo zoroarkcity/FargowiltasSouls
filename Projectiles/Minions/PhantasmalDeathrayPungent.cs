@@ -59,7 +59,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             }
             if (projectile.localAI[0] == 0f)
             {
-                Main.PlaySound(29, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
+                Main.PlaySound(SoundID.Zombie, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
             }
             float num801 = (projectile.ai[1] == 0f) ? 0.4f : 1f;
             projectile.localAI[0] += 1f;

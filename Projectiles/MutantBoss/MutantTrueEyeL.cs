@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.MutantBoss
@@ -96,7 +97,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                             rotationDirection *= -1;
                         localAI0 -= rotationDirection * 45f;
                         Vector2 speed = -Vector2.UnitX.RotatedBy(localAI0);
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(projectile.Center - Vector2.UnitY * 6f, speed, mod.ProjectileType("MutantTrueEyeDeathray"),
                                 projectile.damage, 0f, projectile.owner, rotationDirection, projectile.whoAmI);
                         projectile.localAI[1] = rotationDirection;
@@ -121,7 +122,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                         Main.dust[d].noLight = true;
                         Main.dust[d].velocity *= 8f;
                     }
-                    Main.PlaySound(29, (int)projectile.Center.X, (int)projectile.Center.Y, 102, 1f, 0.0f);
+                    Main.PlaySound(SoundID.Zombie, (int)projectile.Center.X, (int)projectile.Center.Y, 102, 1f, 0.0f);
                     projectile.Kill();
                     break;
             }

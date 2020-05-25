@@ -36,7 +36,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             {
                 projectile.localAI[1] = 1;
 
-                Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 14);
+                Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 14);
             }
 
             projectile.frameCounter++;
@@ -119,7 +119,7 @@ namespace FargowiltasSouls.Projectiles.Champions
         {
             Main.PlaySound(SoundID.Item14, projectile.position);
 
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int p = Player.FindClosest(projectile.Center, 0, 0);
                 if (p != -1)

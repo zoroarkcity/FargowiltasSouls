@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
@@ -30,7 +31,7 @@ namespace FargowiltasSouls.Buffs.Masomode
             {
                 player.AddBuff(mod.BuffType("Infested"), player.buffTime[buffIndex]);
                 player.buffTime[buffIndex] = 1;
-                Main.PlaySound(15, (int)player.Center.X, (int)player.Center.Y, 0);
+                Main.PlaySound(SoundID.Roar, (int)player.Center.X, (int)player.Center.Y, 0);
             }
             player.venom = true;
         }

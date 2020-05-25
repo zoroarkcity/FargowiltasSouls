@@ -101,7 +101,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     ai0 = 1;
                 else
                     ai0 = 2;
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                     Projectile.NewProjectile(npc.Center, Vector2.UnitY * -10, mod.ProjectileType("MutantPillar"), npc.damage / 3, 0, Main.myPlayer, ai0, npc.whoAmI);
             }
         }

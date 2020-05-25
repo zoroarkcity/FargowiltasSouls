@@ -63,3 +63,6 @@ removed nerf to moon lord head's max life
 cultist's homing nebula spheres move faster
 reduced speed and homing of chlorophyte bullets
 adjusted rotation offset of abom's phase 2 arena to look a little better
+
+timber champ walks
+changed will arena from fireballs to typhoons

@@ -39,9 +39,9 @@ namespace FargowiltasSouls.Items.Summons
                     Main.dayTime = false;
                     Main.time = 0;
                 }
-                if (Main.netMode == 2) //sync time, downed boss flags, other world stuff
-                    NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
-                Main.PlaySound(15, player.Center, 0);
+                if (Main.netMode == NetmodeID.Server) //sync time, downed boss flags, other world stuff
+                    NetMessage.SendData(MessageID.WorldData, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+                Main.PlaySound(SoundID.Roar, player.Center, 0);
                 NPC.SpawnOnPlayer(player.whoAmI, NPC.downedBoss3 ? NPCID.DungeonGuardian : NPCID.OldMan);
             }
             return true;

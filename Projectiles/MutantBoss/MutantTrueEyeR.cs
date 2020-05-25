@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.MutantBoss
@@ -89,7 +90,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                         for (int i = 0; i < max; i++)
                         {
                             Vector2 spawnPos = projectile.Center - Vector2.UnitY * 6f + new Vector2(distance, 0f).RotatedBy(rotation * i);
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(spawnPos, Vector2.Zero, mod.ProjectileType("MutantTrueEyeSphere"),
                                     projectile.damage, 0f, projectile.owner, projectile.whoAmI, i);
                         }
@@ -111,7 +112,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 case 2: //ramming
                     if (projectile.localAI[0] == 1f)
                     {
-                        Main.PlaySound(29, (int)projectile.Center.X, (int)projectile.Center.Y, 102, 1f, 0.0f);
+                        Main.PlaySound(SoundID.Zombie, (int)projectile.Center.X, (int)projectile.Center.Y, 102, 1f, 0.0f);
                         projectile.velocity = target.Center - projectile.Center;
                         if (projectile.velocity != Vector2.Zero)
                         {
@@ -141,7 +142,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                         Main.dust[d].noLight = true;
                         Main.dust[d].velocity *= 8f;
                     }
-                    Main.PlaySound(29, (int)projectile.Center.X, (int)projectile.Center.Y, 102, 1f, 0.0f);
+                    Main.PlaySound(SoundID.Zombie, (int)projectile.Center.X, (int)projectile.Center.Y, 102, 1f, 0.0f);
                     projectile.Kill();
                     break;
             }

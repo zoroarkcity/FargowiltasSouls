@@ -75,7 +75,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 Main.dust[index2].velocity *= 4f;
             }
 
-            if (Main.netMode != 1) //fire at player
+            if (Main.netMode != NetmodeID.MultiplayerClient) //fire at player
             {
                 int p = Player.FindClosest(projectile.Center, 0, 0);
                 if (p != -1)

@@ -1142,7 +1142,7 @@ namespace FargowiltasSouls.NPCs
                         if (npc.localAI[3] == 0f)
                         {
                             npc.localAI[3] = 1f;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 pivot = npc.Center + new Vector2(250f, 0f).RotatedByRandom(2 * Math.PI);
                                 npc.ai[2] = pivot.X;
@@ -1325,7 +1325,7 @@ namespace FargowiltasSouls.NPCs
                             if (++Counter >= 600)
                             {
                                 Counter = 0;
-                                if (Main.netMode != 1 && NPC.CountNPCS(NPCID.IlluminantBat) < 10)
+                                if (Main.netMode != NetmodeID.MultiplayerClient && NPC.CountNPCS(NPCID.IlluminantBat) < 10)
                                 {
                                     int bat = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.IlluminantBat);
                                     if (bat < Main.maxNPCs)
@@ -1333,8 +1333,8 @@ namespace FargowiltasSouls.NPCs
                                         Main.npc[bat].velocity.X = Main.rand.Next(-5, 6);
                                         Main.npc[bat].velocity.Y = Main.rand.Next(-5, 6);
                                         Main.npc[bat].GetGlobalNPC<EModeGlobalNPC>().masoBool[0] = true;
-                                        if (Main.netMode == 2)
-                                            NetMessage.SendData(23, -1, -1, null, bat);
+                                        if (Main.netMode == NetmodeID.Server)
+                                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, bat);
                                     }
                                 }
                             }
@@ -1347,7 +1347,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             Counter = 0;
                             int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
-                            if (t != -1 && npc.Distance(Main.player[t].Center) < 600 && Main.netMode != 1)
+                            if (t != -1 && npc.Distance(Main.player[t].Center) < 600 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 npc.velocity *= 5;
                                 npc.netUpdate = true;
@@ -1362,11 +1362,11 @@ namespace FargowiltasSouls.NPCs
                         {
                             Counter = 0;
                             int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
-                            if (t != -1 && npc.Distance(Main.player[t].Center) < 600 && Main.netMode != 1)
+                            if (t != -1 && npc.Distance(Main.player[t].Center) < 600 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.BurningSphere);
-                                if (n != 200 && Main.netMode == 2)
-                                    NetMessage.SendData(23, -1, -1, null, n);
+                                if (n != 200 && Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                             }
                         }
                         break;
@@ -1397,7 +1397,7 @@ namespace FargowiltasSouls.NPCs
                         if (Counter >= 10)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1 && npc.HasPlayerTarget //collision check to reduce spam when not relevant
+                            if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget //collision check to reduce spam when not relevant
                                 && Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
                             {
                                 Vector2 vel = npc.DirectionTo(Main.player[npc.target].Center) * 14f;
@@ -1416,7 +1416,7 @@ namespace FargowiltasSouls.NPCs
                             if (t != -1)
                             {
                                 Player player = Main.player[t];
-                                if (npc.Distance(player.Center) < 800 & Main.netMode != 1)
+                                if (npc.Distance(player.Center) < 800 & Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Vector2 velocity = Vector2.Normalize(player.Center - npc.Center) * 10;
                                     int bubble = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.DetonatingBubble);
@@ -1424,8 +1424,8 @@ namespace FargowiltasSouls.NPCs
                                     {
                                         Main.npc[bubble].velocity = velocity;
                                         Main.npc[bubble].damage = npc.damage / 2;
-                                        if (Main.netMode == 2)
-                                            NetMessage.SendData(23, -1, -1, null, bubble);
+                                        if (Main.netMode == NetmodeID.Server)
+                                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, bubble);
                                     }
                                 }
                             }
@@ -1458,7 +1458,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             //Counter = 0;
                             int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
-                            if (t != -1 && npc.Distance(Main.player[t].Center) < 800 && Main.netMode != 1)
+                            if (t != -1 && npc.Distance(Main.player[t].Center) < 800 && Main.netMode != NetmodeID.MultiplayerClient)
                                 FargoGlobalProjectile.XWay(6, npc.Center, ProjectileID.DemonSickle, 1, npc.damage / 4, .5f);
                         }
                         break;
@@ -1475,18 +1475,18 @@ namespace FargowiltasSouls.NPCs
                         }
                         else
                         {
-                            Main.PlaySound(4, (int)npc.position.X, (int)npc.position.Y, 10, 1f, 0.5f);
+                            Main.PlaySound(SoundID.NPCKilled, (int)npc.position.X, (int)npc.position.Y, 10, 1f, 0.5f);
                             Timer--;
-                            if (Timer <= 0 && !BossIsAlive(ref wallBoss, NPCID.WallofFlesh) && npc.HasPlayerTarget && Main.netMode != 1)
+                            if (Timer <= 0 && !BossIsAlive(ref wallBoss, NPCID.WallofFlesh) && npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int guide = NPC.FindFirstNPC(NPCID.Guide);
                                 if (guide != -1 && Main.npc[guide].active)
                                 {
                                     Main.npc[guide].StrikeNPC(9999, 0f, 0);
                                     NPC.SpawnWOF(Main.player[npc.target].Center);
-                                    /*if (Main.netMode == 0)
+                                    /*if (Main.netMode == NetmodeID.SinglePlayer)
                                         Main.NewText("Wall of Flesh has awoken!", 175, 75, 255);
-                                    else if (Main.netMode == 2)
+                                    else if (Main.netMode == NetmodeID.Server)
                                         NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Wall of Flesh has awoken!"), new Color(175, 75, 255));*/
                                 }
                                 npc.Transform(NPCID.Demon);
@@ -1500,18 +1500,18 @@ namespace FargowiltasSouls.NPCs
                         if (Counter >= 120) //swarm
                         {
                             Counter = 0;
-                            if (Main.rand.Next(2) == 0 && masoBool[0] && Main.netMode != 1 && NPC.CountNPCS(NPCID.Piranha) <= 6)
+                            if (Main.rand.Next(2) == 0 && masoBool[0] && Main.netMode != NetmodeID.MultiplayerClient && NPC.CountNPCS(NPCID.Piranha) <= 6)
                             {
                                 int piranha = NPC.NewNPC((int)npc.Center.X + Main.rand.Next(-20, 20), (int)npc.Center.Y + Main.rand.Next(-20, 20), NPCID.Piranha);
-                                if (piranha != 200 && Main.netMode == 2)
-                                    NetMessage.SendData(23, -1, -1, null, piranha);
+                                if (piranha != 200 && Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, piranha);
                             }
                         }
                         if (masoBool[0] && npc.wet && ++Counter2 > 240) //initiate jump
                         {
                             Counter2 = 0;
                             int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
-                            if (Main.rand.Next(2) == 0 && t != -1 && Main.netMode != 1)
+                            if (Main.rand.Next(2) == 0 && t != -1 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 const float gravity = 0.3f;
                                 const float time = 120f;
@@ -1557,7 +1557,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             Counter2 = 0;
                             int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
-                            if (npc.life < npc.lifeMax && t != -1 && Main.player[t].wet && Main.netMode != 1)
+                            if (npc.life < npc.lifeMax && t != -1 && Main.player[t].wet && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 const float gravity = 0.3f;
                                 const float time = 120f;
@@ -1602,7 +1602,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             Counter2 = 360;
                             int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
-                            if (t != -1 && Main.netMode != 1)
+                            if (t != -1 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 const float gravity = 0.3f;
                                 const float time = 90;
@@ -1653,11 +1653,11 @@ namespace FargowiltasSouls.NPCs
                             if (t != -1 && SharkCount < 5)
                             {
                                 Player player = Main.player[t];
-                                if (player.bleed && Main.netMode != 1)
+                                if (player.bleed && Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     SharkCount++;
                                     npc.netUpdate = true;
-                                    if (Main.netMode == 2)
+                                    if (Main.netMode == NetmodeID.Server)
                                     {
                                         var netMessage = mod.GetPacket();
                                         netMessage.Write((byte)6);
@@ -1730,7 +1730,7 @@ namespace FargowiltasSouls.NPCs
                                     Main.dust[d].noGravity = true;
                                     Main.dust[d].scale += 1.5f;
                                 }
-                                if (npc.HasPlayerTarget && Main.netMode != 1 && npc.Distance(Main.player[npc.target].Center) < 5000)
+                                if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient && npc.Distance(Main.player[npc.target].Center) < 5000)
                                 {
                                     int x = (int)Main.player[npc.target].Center.X / 16;
                                     int y = (int)Main.player[npc.target].Center.Y / 16;
@@ -1762,7 +1762,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 Timer = 0;
                                 npc.TargetClosest(false);
-                                if (npc.HasPlayerTarget && Main.netMode != 1 && npc.Distance(Main.player[npc.target].Center) < 5000)
+                                if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient && npc.Distance(Main.player[npc.target].Center) < 5000)
                                 {
                                     for (int i = 0; i < 3; i++)
                                     {
@@ -1803,7 +1803,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 Timer = 0;
                                 npc.TargetClosest(false);
-                                if (npc.HasPlayerTarget && Main.netMode != 1)
+                                if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     const float rotate = (float)Math.PI / 4f;
                                     Vector2 speed = Main.player[npc.target].Center - npc.Center;
@@ -1839,7 +1839,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 Timer = 0;
                                 npc.TargetClosest(false);
-                                if (npc.HasPlayerTarget && Main.netMode != 1)
+                                if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     const float rotate = (float)Math.PI / 12f;
                                     Vector2 speed = Main.player[npc.target].Center - npc.Center;
@@ -1854,8 +1854,8 @@ namespace FargowiltasSouls.NPCs
                                         {
                                             Main.npc[n].velocity = vel;
                                             Main.npc[n].netUpdate = true;
-                                            if (Main.netMode == 2)
-                                                NetMessage.SendData(23, -1, -1, null, n);
+                                            if (Main.netMode == NetmodeID.Server)
+                                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                                         }
                                     }
                                 }
@@ -1915,7 +1915,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 Timer = 0;
                                 npc.TargetClosest(false);
-                                if (npc.HasPlayerTarget && Main.netMode != 1)
+                                if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Vector2 speed = Main.player[npc.target].Center + Main.player[npc.target].velocity * 15f - npc.Center;
                                     speed.Normalize();
@@ -1932,7 +1932,7 @@ namespace FargowiltasSouls.NPCs
                         if (Counter >= 60)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(npc.Center.X, npc.Center.Y, Main.rand.Next(-3, 4), Main.rand.Next(-5, 0),
                                     Main.rand.Next(326, 329), npc.damage / 4, 0f, Main.myPlayer);
                         }
@@ -1959,7 +1959,7 @@ namespace FargowiltasSouls.NPCs
                             if (t != -1)
                             {
                                 Player player = Main.player[t];
-                                if (player.active && Main.netMode != 1)
+                                if (player.active && Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Vector2 velocity = player.Center - npc.Center;
                                     velocity.Normalize();
@@ -1973,7 +1973,7 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter2 > 30)
                         {
                             Counter2 = -90;
-                            if (npc.HasPlayerTarget && Main.netMode != 1)
+                            if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 vel = npc.DirectionTo(Main.player[npc.target].Center) * 10f;
                                 Projectile.NewProjectile(npc.Center, vel, ProjectileID.Fireball, npc.damage / 5, 0f, Main.myPlayer);
@@ -1984,7 +1984,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.StardustCellSmall:
                         if (npc.ai[0] >= 240f)
                         {
-                            if (Main.netMode == 1)
+                            if (Main.netMode == NetmodeID.MultiplayerClient)
                                 break;
 
                             int newType;
@@ -2010,7 +2010,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 Player player = Main.player[t];
                                 Vector2 distance = player.Center - npc.Center;
-                                if (Math.Abs(distance.X) < npc.width && Main.netMode != 1) //flame rain if player roughly below me
+                                if (Math.Abs(distance.X) < npc.width && Main.netMode != NetmodeID.MultiplayerClient) //flame rain if player roughly below me
                                     Projectile.NewProjectile(npc.Center.X, npc.position.Y, Main.rand.Next(-3, 4), Main.rand.Next(-4, 0), Main.rand.Next(326, 329), npc.damage / 5, 0f, Main.myPlayer);
                             }
                         }
@@ -2024,7 +2024,7 @@ namespace FargowiltasSouls.NPCs
                         Counter++;
                         if (Counter >= 300)
                         {
-                            if (npc.ai[0] != 5f && npc.HasValidTarget && Main.netMode != 1) //if not latched on player
+                            if (npc.ai[0] != 5f && npc.HasValidTarget && Main.netMode != NetmodeID.MultiplayerClient) //if not latched on player
                                 Projectile.NewProjectile(npc.Center, 6 * npc.DirectionTo(Main.player[npc.target].Center), ProjectileID.NebulaLaser, npc.damage / 4, 0, Main.myPlayer);
                             Counter = (short)Main.rand.Next(120);
                         }
@@ -2049,11 +2049,11 @@ namespace FargowiltasSouls.NPCs
                             if (++Counter2 > 25)
                             {
                                 Counter2 = 0;
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.Flocko);
-                                    if (Main.netMode == 2)
-                                        NetMessage.SendData(23, -1, -1, null, n);
+                                    if (Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                                 }
                             }
                             Vector2 speed = new Vector2(Main.rand.Next(-1000, 1001), Main.rand.Next(-1000, 1001));
@@ -2062,7 +2062,7 @@ namespace FargowiltasSouls.NPCs
                             Vector2 spawn = npc.Center;
                             spawn.Y -= 20f;
                             spawn += speed * 4f;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(spawn, speed, ProjectileID.FrostShard, 30, 0f, Main.myPlayer);
                         }
                         break;
@@ -2081,7 +2081,7 @@ namespace FargowiltasSouls.NPCs
                                     Vector2 velocity = player.Center - npc.Center;
                                     velocity.Normalize();
                                     velocity *= 4f;
-                                    if (Main.netMode != 1)
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
                                         Projectile.NewProjectile(npc.Center, velocity, ProjectileID.EyeFire, npc.damage / 5, 0f, Main.myPlayer);
                                 }
                             }
@@ -2093,8 +2093,8 @@ namespace FargowiltasSouls.NPCs
                         if (Timer >= 180)
                         {
                             Timer = Main.rand.Next(90);
-                            if (Main.netMode != 1)
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, 578, 0, 0f, Main.myPlayer);
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.VortexVortexLightning, 0, 0f, Main.myPlayer);
                         }
                         break;
 
@@ -2124,7 +2124,7 @@ namespace FargowiltasSouls.NPCs
                         if (Counter >= 90)
                         {
                             Counter = (short)Main.rand.Next(60);
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 //npc entire block is fucked
                                 int length = Main.rand.Next(3, 6);
@@ -2204,7 +2204,7 @@ namespace FargowiltasSouls.NPCs
                             if (vec.HasNaNs())
                                 vec = new Vector2(npc.direction * 8f, 0f);
 
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int Damage = Main.expertMode ? 50 : 75;
                                 for (int index = 0; index < 4; ++index)
@@ -2222,7 +2222,7 @@ namespace FargowiltasSouls.NPCs
                         if (npc.localAI[0] >= 14f)
                         {
                             npc.localAI[0] = 0f;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 float num8 = Main.player[npc.target].Center.X - npc.Center.X;
                                 float num9 = Main.player[npc.target].Center.Y - npc.Center.Y;
@@ -2243,7 +2243,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.TacticalSkeleton: //num3 = 120, damage = 40/50, num8 = 0
                         if (npc.ai[2] > 0f && npc.ai[1] <= 65f)
                         {
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 for (int index = 0; index < 6; ++index)
                                 {
@@ -2271,7 +2271,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.SkeletonSniper: //num3 = 200, num8 = 0
                         if (npc.ai[2] > 0f && npc.ai[1] <= 105f)
                         {
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 speed = Main.player[npc.target].Center - npc.Center;
                                 speed.X += Main.rand.Next(-40, 41) * 0.2f;
@@ -2292,7 +2292,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.SkeletonArcher: //damage = 28/35, ID.VenomArrow
                         if (npc.ai[2] > 0f && npc.ai[1] <= 40f)
                         {
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 speed = Main.player[npc.target].Center - npc.Center;
                                 speed.Y -= Math.Abs(speed.X) * 0.075f; //account for gravity (default *0.1f)
@@ -2314,7 +2314,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.SkeletonCommando: //num3 = 90, num5 = 4f, damage = 48/60, ID.RocketSkeleton
                         if (npc.ai[2] > 0f && npc.ai[1] <= 50f)
                         {
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 speed = Main.player[npc.target].Center - npc.Center;
                                 speed.X += Main.rand.Next(-20, 21);
@@ -2336,7 +2336,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.ElfArcher: //num3 = 110, damage = 36/45, tsunami
                         if (npc.ai[2] > 0f && npc.ai[1] <= 60f)
                         {
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 speed = Main.player[npc.target].Center - npc.Center;
                                 speed.Y -= Math.Abs(speed.X) * 0.1f; //account for gravity
@@ -2373,7 +2373,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.PirateCrossbower: //num3 = 80, num5 = 16f, num8 = Math.Abs(num7) * .08f, damage = 32/40, num12 = 800f?
                         if (npc.ai[2] > 0f && npc.ai[1] <= 45f)
                         {
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 speed = Main.player[npc.target].Center - npc.Center;
                                 speed.X += Main.rand.Next(-20, 21);
@@ -2394,7 +2394,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.PirateDeadeye: //num3 = 40, num5 = 14f, num8 = 0f, damage = 20/25, num12 = 550f?
                         if (npc.ai[2] > 0f && npc.ai[1] <= 25f)
                         {
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 speed = Main.player[npc.target].Center - npc.Center;
                                 speed.X += Main.rand.Next(-20, 21);
@@ -2416,7 +2416,7 @@ namespace FargowiltasSouls.NPCs
                         if (npc.ai[2] > 0f && npc.localAI[2] >= 20f && npc.ai[1] <= 30)
                         {
                             //npc.localAI[2]++;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 speed = Main.player[npc.target].Center - npc.Center;
                                 speed.Y -= Math.Abs(speed.X) * 0.2f; //account for gravity
@@ -2490,10 +2490,10 @@ namespace FargowiltasSouls.NPCs
                         if (!masoBool[0]) //roar when spawn
                         {
                             masoBool[0] = true;
-                            Main.PlaySound(15, npc.Center, 0);
-                            if (Main.netMode == 0)
+                            Main.PlaySound(SoundID.Roar, npc.Center, 0);
+                            if (Main.netMode == NetmodeID.SinglePlayer)
                                 Main.NewText("A Clown has begun ticking!", 175, 75, 255);
-                            else if (Main.netMode == 2)
+                            else if (Main.netMode == NetmodeID.Server)
                                 NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("A Clown has begun ticking!"), new Color(175, 75, 255));
                         }
 
@@ -2518,7 +2518,7 @@ namespace FargowiltasSouls.NPCs
                                     }
                                 }
 
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     if (bossAlive)
                                     {
@@ -2553,9 +2553,9 @@ namespace FargowiltasSouls.NPCs
                                     }
                                 }
 
-                                if (Main.netMode == 0)
+                                if (Main.netMode == NetmodeID.SinglePlayer)
                                     Main.NewText("A Clown has exploded!", 175, 75, 255);
-                                else if (Main.netMode == 2)
+                                else if (Main.netMode == NetmodeID.Server)
                                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("A Clown has exploded!"), new Color(175, 75, 255));
                             }
                         }
@@ -2567,7 +2567,7 @@ namespace FargowiltasSouls.NPCs
                             if (!masoBool[1] && ++Counter > 15)
                             {
                                 masoBool[1] = true;
-                                if (Main.netMode == 2) //MP sync
+                                if (Main.netMode == NetmodeID.Server) //MP sync
                                 {
                                     var netMessage = mod.GetPacket();
                                     netMessage.Write((byte)3);
@@ -2677,7 +2677,7 @@ namespace FargowiltasSouls.NPCs
                         if (Counter >= 360)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(new Vector2(npc.Center.X + 100, npc.Center.Y), Vector2.Zero, ProjectileID.VortexVortexLightning, 0, 1, Main.myPlayer, 0, 1);
                                 Projectile.NewProjectile(new Vector2(npc.Center.X - 100, npc.Center.Y), Vector2.Zero, ProjectileID.VortexVortexLightning, 0, 1, Main.myPlayer, 0, 1);
@@ -2702,7 +2702,7 @@ namespace FargowiltasSouls.NPCs
                         /*if (--Counter2 < 0)
                         {
                             Counter2 = 6;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int p = Projectile.NewProjectile(npc.position.X + Main.rand.Next(npc.width), npc.position.Y + npc.height,
                                   npc.velocity.X * .4f + Main.rand.NextFloat(-0.5f, 0.5f), npc.velocity.Y * .4f + Main.rand.NextFloat(-0.5f, 0.5f),
@@ -2810,7 +2810,7 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     Counter2 = 0;
                                     Vector2 speed = 16f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 3.0);
-                                    if (Main.netMode != 1)
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
                                         Projectile.NewProjectile(npc.Center, speed, ProjectileID.SaucerLaser, 15, 0f, Main.myPlayer);
                                 }
                             }
@@ -2842,7 +2842,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             if (++Counter > 1800)
                             {
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                     Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<FuseBomb>(), npc.damage / 4, 0f, Main.myPlayer);
                                 npc.StrikeNPCNoInteraction(999999, 0f, 0);
                             }
@@ -2867,7 +2867,7 @@ namespace FargowiltasSouls.NPCs
                                           Main.rand.Next(-30, 31) * .1f, Main.rand.Next(-40, -15) * .1f, mod.ProjectileType("FakeHeart"), 20, 0f, Main.myPlayer);
                                 }
 
-                                Main.PlaySound(2, (int)npc.position.X, (int)npc.position.Y, 14);
+                                Main.PlaySound(SoundID.Item, (int)npc.position.X, (int)npc.position.Y, 14);
 
                                 for (int i = 0; i < 30; i++)
                                 {
@@ -2908,8 +2908,8 @@ namespace FargowiltasSouls.NPCs
                             if (npc.velocity.Y == 0f) //spawn smash
                             {
                                 masoBool[0] = false;
-                                Main.PlaySound(2, npc.Center, 14);
-                                if (Main.netMode != 1)
+                                Main.PlaySound(SoundID.Item, npc.Center, 14);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Projectile proj = FargoGlobalProjectile.NewProjectileDirectSafe(npc.Center, Vector2.Zero, ProjectileID.DD2ExplosiveTrapT3Explosion, npc.damage / 4, 4, Main.myPlayer);
                                     proj.hostile = true;
@@ -2949,7 +2949,7 @@ namespace FargowiltasSouls.NPCs
                                     speed.Y += Main.rand.Next(-80, 81);
                                     speed.Normalize();
                                     speed *= 8f;
-                                    if (Main.netMode != 1)
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
                                         Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<MimicCoin>(), npc.damage / 5, 0f, Main.myPlayer, Main.rand.Next(3));
 
                                     Main.PlaySound(SoundID.Item11, npc.Center);
@@ -2962,11 +2962,11 @@ namespace FargowiltasSouls.NPCs
                         betsyBoss = npc.whoAmI;
                         if (npc.ai[0] == 6f && npc.ai[1] == 1f)
                         {
-                            if (Main.netMode != 1 && NPC.CountNPCS(NPCID.DD2DarkMageT3) < 3)
+                            if (Main.netMode != NetmodeID.MultiplayerClient && NPC.CountNPCS(NPCID.DD2DarkMageT3) < 3)
                             {
                                 int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.DD2DarkMageT3, npc.whoAmI);
-                                if (n != 200 && Main.netMode == 2)
-                                    NetMessage.SendData(23, -1, -1, null, n);
+                                if (n != 200 && Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                             }
                             npc.netUpdate = true;
                         }
@@ -2992,7 +2992,7 @@ namespace FargowiltasSouls.NPCs
                         if (--Counter < 0)
                         {
                             Counter = 60;
-                            if (npc.HasPlayerTarget && Main.netMode != 1)
+                            if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 speed = Main.player[npc.target].Center - npc.Center;
                                 speed.X += Main.rand.Next(-20, 21);
@@ -3011,7 +3011,7 @@ namespace FargowiltasSouls.NPCs
                             speed *= 6f;
                             speed += npc.velocity * 1.25f;
                             speed.Y -= Math.Abs(speed.X) * 0.2f;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<SkeletronBone>(), npc.damage / 4, 0f, Main.myPlayer);
                         }
                         break;
@@ -3025,7 +3025,7 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter > 300)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1 && npc.HasPlayerTarget)
+                            if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                             {
                                 for (int index = 0; index < 6; ++index)
                                 {
@@ -3054,7 +3054,7 @@ namespace FargowiltasSouls.NPCs
                             float num7 = num3 / num6;
                             float SpeedX = num4 * num7;
                             float SpeedY = num5 * num7;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int Damage = 35;
                                 int Type = 109;
@@ -3062,7 +3062,7 @@ namespace FargowiltasSouls.NPCs
                                 Main.projectile[p].ai[0] = 2f;
                                 Main.projectile[p].timeLeft = 300;
                                 Main.projectile[p].friendly = false;
-                                NetMessage.SendData(27, -1, -1, null, p);
+                                NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, p);
                                 npc.netUpdate = true;
                             }
                         }
@@ -3092,7 +3092,7 @@ namespace FargowiltasSouls.NPCs
                                 speed.Y += Main.rand.Next(-40, 41);
                                 speed.Normalize();
                                 speed *= 14f;
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                     Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<PirateDeadeyeBullet>(), 15, 0f, Main.myPlayer);
 
                                 Main.PlaySound(SoundID.Item11, npc.Center);
@@ -3106,15 +3106,15 @@ namespace FargowiltasSouls.NPCs
                         {
                             Counter = 0;
                             Main.PlaySound(SoundID.Item8, npc.Center);
-                            if (npc.HasPlayerTarget && Main.netMode != 1)
+                            if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 for (int i = 0; i < 4; i++)
                                 {
                                     Vector2 spawnPos = npc.Center + new Vector2(200f, 0f).RotatedBy(Math.PI / 2 * (i + 0.5));
                                     //Vector2 speed = Vector2.Normalize(Main.player[npc.target].Center - spawnPos) * 10f;
                                     int n = NPC.NewNPC((int)spawnPos.X, (int)spawnPos.Y, NPCID.ChaosBall);
-                                    if (n != 200 && Main.netMode == 2)
-                                        NetMessage.SendData(23, -1, -1, null, n);
+                                    if (n != 200 && Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                                     for (int j = 0; j < 20; j++)
                                     {
                                         int d = Dust.NewDust(spawnPos, 0, 0, DustID.Shadowflame);
@@ -3132,7 +3132,7 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter > 60)
                         {
                             Counter = 0;
-                            if (npc.HasPlayerTarget && Main.netMode != 1)
+                            if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(npc.Center, new Vector2(6f, 0f).RotatedByRandom(2 * Math.PI),
                                     ModContent.ProjectileType<FrostfireballHostile>(), npc.damage / 5, 0f, Main.myPlayer, npc.target, 30f);
@@ -3159,7 +3159,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             masoBool[0] = true;
                             Counter2 = 0;
-                            if (Main.netMode != 1 && Main.rand.Next(2) == 0)
+                            if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.Next(2) == 0)
                             {
                                 masoBool[1] = true;
                                 NetUpdateMaso(npc.whoAmI);
@@ -3226,7 +3226,7 @@ namespace FargowiltasSouls.NPCs
                         /*if (--Counter2 < 0)
                         {
                             Counter2 = 12;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int p = Projectile.NewProjectile(npc.Center, npc.velocity, ProjectileID.CorruptSpray, 0, 0f, Main.myPlayer, 8f);
                                 if (p != 1000)
@@ -3244,7 +3244,7 @@ namespace FargowiltasSouls.NPCs
                             if (++Counter > 20)
                             {
                                 Counter = 0;
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                     Projectile.NewProjectile(npc.Center, npc.velocity / 10, ModContent.ProjectileType<BloodScythe>(), npc.damage / 4, 0f, Main.myPlayer);
                             }
                         }
@@ -3267,11 +3267,11 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter > 420)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.ChaosBall);
-                                if (n != 200 && Main.netMode == 2)
-                                    NetMessage.SendData(23, -1, -1, null, n);
+                                if (n != 200 && Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                             }
                         }
                         break;
@@ -3315,7 +3315,7 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter >= 180)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Shoot(npc, 0, 300, 6, ProjectileID.Fireball, npc.damage / 4, 0f);
                         }
                         break;
@@ -3325,8 +3325,8 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter > 240)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1)
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, 578, 0, 0f, Main.myPlayer);
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.VortexVortexLightning, 0, 0f, Main.myPlayer);
                         }
                         break;
 
@@ -3335,7 +3335,7 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter > 60)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(npc.Center, new Vector2(Main.rand.NextFloat(-2f, 2f), -5f),
                                     ModContent.ProjectileType<GoblinSpikyBall>(), npc.damage / 5, 0f, Main.myPlayer);
                         }
@@ -3348,7 +3348,7 @@ namespace FargowiltasSouls.NPCs
                         }
                         else if (npc.velocity.Y > 0f) //coming down
                         {
-                            if (masoBool[0] && Main.netMode != 1 && npc.HasValidTarget && npc.position.Y > Main.player[npc.target].position.Y + 200
+                            if (masoBool[0] && Main.netMode != NetmodeID.MultiplayerClient && npc.HasValidTarget && npc.position.Y > Main.player[npc.target].position.Y + 200
                                 && npc.Center.ToTileCoordinates().Y > Main.maxTilesY - 200) //in hell and below player
                             {
                                 masoBool[0] = false;
@@ -3362,7 +3362,7 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     tile.liquidType(1);
                                     tile.liquid = 255;
-                                    if (Main.netMode == 2)
+                                    if (Main.netMode == NetmodeID.Server)
                                         NetMessage.SendTileSquare(-1, tileX, tileY, 1);
                                     WorldGen.SquareTileFrame(tileX, tileY, true);
                                     npc.netUpdate = true;
@@ -3386,7 +3386,7 @@ namespace FargowiltasSouls.NPCs
                         if (--Counter < 0)
                         {
                             Counter = 300;
-                            if (Main.netMode != 1 && npc.HasPlayerTarget && npc.Distance(Main.player[npc.target].Center) < 1000)
+                            if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && npc.Distance(Main.player[npc.target].Center) < 1000)
                             {
                                 Vector2 spawnVel = npc.DirectionFrom(Main.player[npc.target].Center) * 10f;
                                 for (int i = -3; i < 3; i++)
@@ -3402,7 +3402,7 @@ namespace FargowiltasSouls.NPCs
                             if (Counter2 == 1)
                             {
                                 Counter2 = 0;
-                                if (Main.netMode != 1 && npc.HasPlayerTarget)
+                                if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                                 {
                                     npc.ai[0] = 1f;
                                     int num1 = (int)Main.player[npc.target].position.X / 16;
@@ -3426,7 +3426,7 @@ namespace FargowiltasSouls.NPCs
                                             if ((index2 < num2 - 4 || index2 > num2 + 4 || (index1 < num1 - 4 || index1 > num1 + 4)) && (index2 < num4 - 1 || index2 > num4 + 1 || (index1 < num3 - 1 || index1 > num3 + 1)) && Main.tile[index1, index2].nactive())
                                             {
                                                 bool flag2 = true;
-                                                if ((npc.type == 32 || npc.type >= 281 && npc.type <= 286) && !Main.wallDungeon[(int)Main.tile[index1, index2 - 1].wall])
+                                                if ((npc.type == NPCID.DarkCaster || npc.type >= NPCID.RaggedCaster && npc.type <= NPCID.DiabolistWhite) && !Main.wallDungeon[(int)Main.tile[index1, index2 - 1].wall])
                                                     flag2 = false;
                                                 else if (Main.tile[index1, index2 - 1].lava())
                                                     flag2 = false;
@@ -3442,7 +3442,7 @@ namespace FargowiltasSouls.NPCs
                                         }
                                     }
                                     npc.netUpdate = true;
-                                    if (Main.netMode == 2)
+                                    if (Main.netMode == NetmodeID.Server)
                                     {
                                         var netMessage = mod.GetPacket();
                                         netMessage.Write((byte)8);
@@ -3465,17 +3465,17 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter > 60)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1 && !NPC.AnyNPCs(NPCID.DuneSplicerHead))
+                            if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.AnyNPCs(NPCID.DuneSplicerHead))
                             {
                                 int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.DuneSplicerHead, npc.whoAmI, 0f, 0f, 0f, 0f, npc.target);
-                                if (n != 200 && Main.netMode == 2)
-                                    NetMessage.SendData(23, -1, -1, null, n);
+                                if (n != 200 && Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                             }
                         }
                         if (++Counter2 > 240)
                         {
                             Counter2 = 0;
-                            if (npc.HasValidTarget && Main.netMode != 1)
+                            if (npc.HasValidTarget && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 target = Main.player[npc.target].Center;
                                 target.Y -= 150;
@@ -3507,7 +3507,7 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter > 180)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1 && npc.HasPlayerTarget)
+                            if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                             {
                                 Vector2 vel = npc.DirectionTo(Main.player[npc.target].Center) * 4f;
                                 int p = Projectile.NewProjectile(npc.Center, vel, ProjectileID.LostSoulHostile, npc.damage / 4, 0f, Main.myPlayer);
@@ -3532,7 +3532,7 @@ namespace FargowiltasSouls.NPCs
                                 speed += npc.velocity * 1.25f;
                                 speed.Y -= Math.Abs(speed.X) * 0.2f;
                                 speed.Y -= 3f;
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                     Projectile.NewProjectile(npc.Center, speed, ProjectileID.SkeletonBone, npc.damage / 4, 0f, Main.myPlayer);
                             }
                             if (Counter > 300)
@@ -3548,7 +3548,7 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter > 240)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1 && npc.HasPlayerTarget)
+                            if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                             {
                                 Vector2 vel = npc.DirectionTo(Main.player[npc.target].Center) * 14;
                                 Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<VenomSpit>(), 9, 0, Main.myPlayer);
@@ -3560,7 +3560,7 @@ namespace FargowiltasSouls.NPCs
                         if (--Counter < 0)
                         {
                             Counter = 20 + (int)(100f * npc.life / npc.lifeMax);
-                            if (npc.HasPlayerTarget && Main.netMode != 1)
+                            if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 spawnPos = npc.Center + new Vector2(30f * -npc.direction, 30f);
                                 Vector2 vel = Main.player[npc.target].Center - spawnPos
@@ -3574,7 +3574,7 @@ namespace FargowiltasSouls.NPCs
                         if (--Counter2 < 0)
                         {
                             Counter2 = 60 + (int)(120f * npc.life / npc.lifeMax);
-                            if (npc.HasPlayerTarget && Main.netMode != 1)
+                            if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 spawnPos = npc.Center;
                                 spawnPos.X += 45f * npc.direction;
@@ -3608,7 +3608,7 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter > 6)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(npc.Center, Main.rand.NextVector2Unit() * 12f,
                                     ModContent.ProjectileType<MothDust>(), npc.damage / 5, 0f, Main.myPlayer);
                         }
@@ -3618,7 +3618,7 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter > 240)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1 && npc.velocity != Vector2.Zero)
+                            if (Main.netMode != NetmodeID.MultiplayerClient && npc.velocity != Vector2.Zero)
                             {
                                 const int max = 12;
                                 Vector2 vel = Vector2.Normalize(npc.velocity) * 2f;
@@ -3635,7 +3635,7 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter > 360)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1 && npc.HasPlayerTarget)
+                            if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                             {
                                 Vector2 vel = (Main.player[npc.target].Center - npc.Center) / 60f;
                                 if (vel.Length() < 12f)
@@ -3650,7 +3650,7 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter > 300)
                         {
                             Counter = 0;
-                            if (Main.netMode != 1 && npc.HasPlayerTarget)
+                            if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                                 Projectile.NewProjectile(npc.Center, npc.DirectionTo(Main.player[npc.target].Center) * 12f,
                                     ProjectileID.DD2OgreSpit, npc.damage / 4, 0, Main.myPlayer);
                         }
@@ -3671,7 +3671,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.SmallSwampZombie:
                     case NPCID.BigSwampZombie:
                     case NPCID.ZombieDoctor:
-                        if (npc.ai[2] >= 45f && npc.ai[3] == 0f && Main.netMode != 1)
+                        if (npc.ai[2] >= 45f && npc.ai[3] == 0f && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int tileX = (int)(npc.position.X + npc.width / 2 + 15 * npc.direction) / 16;
                             int tileY = (int)(npc.position.Y + npc.height - 15) / 16 - 1;
@@ -3680,8 +3680,8 @@ namespace FargowiltasSouls.NPCs
                             {
                                 //WorldGen.KillTile(tileX, tileY);
                                 WorldGen.OpenDoor(tileX, tileY, npc.direction);
-                                if (Main.netMode == 2)
-                                    NetMessage.SendData(17, -1, -1, null, 0, tileX, tileY);
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, tileX, tileY);
                             }
                         }
 
@@ -4770,7 +4770,6 @@ namespace FargowiltasSouls.NPCs
         {
             Player player = Main.player[Main.myPlayer];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            int dmg;
 
             if (FargoSoulsWorld.MasochistMode)
             {
@@ -5992,11 +5991,11 @@ namespace FargowiltasSouls.NPCs
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.HerbBag, Main.rand.Next(5) + 1);
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.WoodenCrate, 5);
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<SlimyShield>());
-                        if (Main.netMode != 1 && !BossIsAlive(ref mutantBoss, mod.NPCType("MutantBoss")) && !NPC.AnyNPCs(ModContent.NPCType<Mutant>()))
+                        if (Main.netMode != NetmodeID.MultiplayerClient && !BossIsAlive(ref mutantBoss, mod.NPCType("MutantBoss")) && !NPC.AnyNPCs(ModContent.NPCType<Mutant>()))
                         {
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<Mutant>());
-                            if (n < 200 && Main.netMode == 2)
-                                NetMessage.SendData(23, -1, -1, null, n);
+                            if (n < 200 && Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
                         break;
 
@@ -6170,7 +6169,7 @@ namespace FargowiltasSouls.NPCs
                 switch (npc.type)
                 {
                     case NPCID.Drippler:
-                        if (Main.rand.Next(3) == 0 && Main.netMode != 1)
+                        if (Main.rand.Next(3) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = 0; i < 4; i++)
                             {
@@ -6179,8 +6178,8 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     Main.npc[n].velocity = new Vector2(Main.rand.Next(-3, 3), Main.rand.Next(-3, 3));
                                     Main.npc[n].netUpdate = true;
-                                    if (Main.netMode == 2)
-                                        NetMessage.SendData(23, -1, -1, null, n);
+                                    if (Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                                 }
                             }
                         }
@@ -6192,7 +6191,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.GoblinScout:
                     case NPCID.GoblinSorcerer:
                     case NPCID.GoblinThief:
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, new Vector2(Main.rand.NextFloat(-2f, 2f), -5), ModContent.ProjectileType<GoblinSpikyBall>(), 15, 0, Main.myPlayer);
                         break;
 
@@ -6200,11 +6199,11 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.AngryBonesBig:
                     case NPCID.AngryBonesBigHelmet:
                     case NPCID.AngryBonesBigMuscle:
-                        if (Main.rand.Next(5) == 0 && Main.netMode != 1)
+                        if (Main.rand.Next(5) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.CursedSkull);
-                            if (n < 200 && Main.netMode == 2)
-                                NetMessage.SendData(23, -1, -1, null, n);
+                            if (n < 200 && Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
                         goto case 269;
 
@@ -6221,20 +6220,20 @@ namespace FargowiltasSouls.NPCs
                     case 278:
                     case 279:
                     case 280:
-                        if (Main.netMode != 1 && Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().NecromanticBrew)
+                        if (Main.netMode != NetmodeID.MultiplayerClient && Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().NecromanticBrew)
                         {
                             int chance = (bool)ModLoader.GetMod("Fargowiltas").Call("GetDownedEnemy", "babyGuardian") ? 100 : 10;
                             if (Main.rand.Next(chance) == 0)
                             {
                                 int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<BabyGuardian>());
-                                if (n < 200 && Main.netMode == 2)
-                                    NetMessage.SendData(23, -1, -1, null, n);
+                                if (n < 200 && Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                             }
                         }
                         break;
 
                     case NPCID.DungeonSlime:
-                        if (NPC.downedPlantBoss && Main.netMode != 1)
+                        if (NPC.downedPlantBoss && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int paladin = NPC.NewNPC((int)(npc.position.X + npc.width / 2), (int)(npc.position.Y + npc.height), NPCID.Paladin);
                             if (paladin != 200)
@@ -6248,8 +6247,8 @@ namespace FargowiltasSouls.NPCs
                                 Main.npc[paladin].life = Main.npc[paladin].lifeMax;
                                 Main.npc[paladin].GetGlobalNPC<EModeGlobalNPC>().masoBool[0] = true;
                                 Main.npc[paladin].velocity = new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 1));
-                                if (Main.netMode == 2)
-                                    NetMessage.SendData(23, -1, -1, null, paladin);
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, paladin);
                             }
                         }
                         break;
@@ -6258,7 +6257,7 @@ namespace FargowiltasSouls.NPCs
                         switch (npc.netID)
                         {
                             case NPCID.YellowSlime:
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     for (int i = 0; i < 2; i++)
                                     {
@@ -6275,15 +6274,15 @@ namespace FargowiltasSouls.NPCs
                                             spawn3.velocity.Y = spawn3.velocity.Y - (Main.rand.Next(0, 10) * 0.1f + i);
                                             Main.npc[spawn].ai[0] = -1000 * Main.rand.Next(3);
 
-                                            if (Main.netMode == 2)
-                                                NetMessage.SendData(23, -1, -1, null, spawn);
+                                            if (Main.netMode == NetmodeID.Server)
+                                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, spawn);
                                         }
                                     }
                                 }
                                 break;
 
                             case NPCID.PurpleSlime:
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     for (int i = 0; i < 2; i++)
                                     {
@@ -6301,15 +6300,15 @@ namespace FargowiltasSouls.NPCs
                                             spawn3.velocity.Y = spawn3.velocity.Y - (Main.rand.Next(0, 10) * 0.1f + i);
                                             Main.npc[spawn].ai[0] = -1000 * Main.rand.Next(3);
 
-                                            if (Main.netMode == 2)
-                                                NetMessage.SendData(23, -1, -1, null, spawn);
+                                            if (Main.netMode == NetmodeID.Server)
+                                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, spawn);
                                         }
                                     }
                                 }
                                 break;
 
                             case NPCID.RedSlime:
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     for (int i = 0; i < 2; i++)
                                     {
@@ -6324,14 +6323,14 @@ namespace FargowiltasSouls.NPCs
                                         spawn3.velocity.Y = spawn3.velocity.Y - (Main.rand.Next(0, 10) * 0.1f + i);
                                         Main.npc[spawn].ai[0] = -1000 * Main.rand.Next(3);
 
-                                        if (Main.netMode == 2)
-                                            NetMessage.SendData(23, -1, -1, null, spawn);
+                                        if (Main.netMode == NetmodeID.Server)
+                                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, spawn);
                                     }
                                 }
                                 break;
 
                             case NPCID.Pinky:
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     for (int i = 0; i < 3; i++)
                                     {
@@ -6349,8 +6348,8 @@ namespace FargowiltasSouls.NPCs
                                             spawn3.velocity.Y = spawn3.velocity.Y - (Main.rand.Next(0, 10) * 0.1f + i);
                                             Main.npc[spawn].ai[0] = -1000 * Main.rand.Next(3);
 
-                                            if (Main.netMode == 2)
-                                                NetMessage.SendData(23, -1, -1, null, spawn);
+                                            if (Main.netMode == NetmodeID.Server)
+                                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, spawn);
                                         }
                                     }
                                 }
@@ -6362,7 +6361,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.DrManFly:
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = 0; i < 10; i++)
                                 Projectile.NewProjectile(npc.Center, new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 11)),
@@ -6399,7 +6398,7 @@ namespace FargowiltasSouls.NPCs
                             return false;
                         }
 
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int count = NPC.CountNPCS(NPCID.BigEater) + NPC.CountNPCS(NPCID.EaterofSouls) + NPC.CountNPCS(NPCID.LittleEater);
 
@@ -6408,8 +6407,8 @@ namespace FargowiltasSouls.NPCs
                                 int type = Main.rand.Next(2) == 0 ? NPCID.EaterofSouls
                                 : (Main.rand.Next(2) == 0 ? NPCID.BigEater : NPCID.LittleEater);
                                 int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type);
-                                if (n < 200 && Main.netMode == 2)
-                                    NetMessage.SendData(23, -1, -1, null, n);
+                                if (n < 200 && Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                             }
                         }
 
@@ -6421,7 +6420,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             for (int i = 0; i < 200; i++)
                             {
-                                if (Main.npc[i].active && i != npc.whoAmI && (Main.npc[i].type == 13 || Main.npc[i].type == 14 || Main.npc[i].type == 15))
+                                if (Main.npc[i].active && i != npc.whoAmI && (Main.npc[i].type == NPCID.EaterofWorldsHead || Main.npc[i].type == NPCID.EaterofWorldsBody || Main.npc[i].type == NPCID.EaterofWorldsTail))
                                 {
                                     Main.PlaySound(npc.DeathSound, npc.Center);
                                     npc.active = false;
@@ -6452,7 +6451,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.SkeletronHead:
                         if (npc.ai[1] != 2f)
                         {
-                            Main.PlaySound(15, (int)npc.position.X, (int)npc.position.Y, 0);
+                            Main.PlaySound(SoundID.Roar, (int)npc.position.X, (int)npc.position.Y, 0);
                             npc.life = npc.lifeMax / 176;
                             if (npc.life < 50)
                                 npc.life = 50;
@@ -6460,9 +6459,9 @@ namespace FargowiltasSouls.NPCs
                             npc.damage = npc.defDamage * 15;
                             npc.ai[1] = 2f;
                             npc.netUpdate = true;
-                            if (Main.netMode == 2)
+                            if (Main.netMode == NetmodeID.Server)
                                 NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Skeletron has entered Dungeon Guardian form!"), new Color(175, 75, 255));
-                            else if (Main.netMode == 0)
+                            else if (Main.netMode == NetmodeID.SinglePlayer)
                                 Main.NewText("Skeletron has entered Dungeon Guardian form!", 175, 75, 255);
                             return false;
                         }
@@ -6485,7 +6484,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.SkeletronPrime:
                         if (npc.ai[1] != 2f)
                         {
-                            Main.PlaySound(15, (int)npc.position.X, (int)npc.position.Y, 0);
+                            Main.PlaySound(SoundID.Roar, (int)npc.position.X, (int)npc.position.Y, 0);
                             npc.life = npc.lifeMax / 420;
                             if (npc.life < 100)
                                 npc.life = 100;
@@ -6495,9 +6494,9 @@ namespace FargowiltasSouls.NPCs
                             npc.damage *= 13;
                             npc.ai[1] = 2f;
                             npc.netUpdate = true;
-                            if (Main.netMode == 2)
+                            if (Main.netMode == NetmodeID.Server)
                                 NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Skeletron Prime has entered Dungeon Guardian form!"), new Color(175, 75, 255));
-                            else if (Main.netMode == 0)
+                            else if (Main.netMode == NetmodeID.SinglePlayer)
                                 Main.NewText("Skeletron Prime has entered Dungeon Guardian form!", 175, 75, 255);
                             return false;
                         }
@@ -6512,7 +6511,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             npc.life = 1;
                             npc.active = true;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 npc.netUpdate = true;
                             return false;
                         }
@@ -6526,7 +6525,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             npc.life = 1;
                             npc.active = true;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 npc.netUpdate = true;
                             return false;
                         }
@@ -6550,7 +6549,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             npc.life = 1;
                             npc.active = true;
-                            if (Main.netMode != 1) //something about wack ass MP
+                            if (Main.netMode != NetmodeID.MultiplayerClient) //something about wack ass MP
                             {
                                 npc.netUpdate = true;
                                 npc.dontTakeDamage = true;
@@ -6616,9 +6615,9 @@ namespace FargowiltasSouls.NPCs
                             if (fishBossEX == npc.whoAmI) //drop loot here (avoids the vanilla "fishron defeated" message)
                             {
                                 FargoSoulsWorld.downedFishronEX = true;
-                                if (Main.netMode == 0)
+                                if (Main.netMode == NetmodeID.SinglePlayer)
                                     Main.NewText("Duke Fishron EX has been defeated!", 50, 100, 255);
-                                else if (Main.netMode == 2)
+                                else if (Main.netMode == NetmodeID.Server)
                                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Duke Fishron EX has been defeated!"), new Color(50, 100, 255));
 
                                 Main.PlaySound(npc.DeathSound, npc.Center);
@@ -6662,7 +6661,7 @@ namespace FargowiltasSouls.NPCs
                             masoBool[0] = true;
                             npc.life = npc.lifeMax;
                             npc.active = true;
-                            if (Main.netMode == 2)
+                            if (Main.netMode == NetmodeID.Server)
                             {
                                 npc.netUpdate = true;
                                 NetUpdateMaso(npc.whoAmI);
@@ -6673,7 +6672,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.Lihzahrd:
                     case NPCID.LihzahrdCrawler:
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, Vector2.UnitY * -6, ProjectileID.SpikyBallTrap, 30, 0f, Main.myPlayer);
                         break;
 
@@ -6689,7 +6688,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.GoblinSummoner:
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = 0; i < 50; i++)
                             {
@@ -6708,7 +6707,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Shark:
-                        if (Main.hardMode && Main.rand.Next(4) == 0 && Main.netMode != 1)
+                        if (Main.hardMode && Main.rand.Next(4) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.Cthulunado, npc.damage / 2, 0f, Main.myPlayer, 16, 11);
                         break;
 
@@ -6743,7 +6742,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.FungoFish:
                     case NPCID.FungiBulb:
                     case NPCID.GiantFungiBulb:
-                        if (Main.netMode != 1)// && Main.hardMode)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)// && Main.hardMode)
                         {
                             for (int i = 0; i < 10; i++)
                             {
@@ -6752,8 +6751,8 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     Main.npc[spore].damage = npc.damage / 3;
                                     Main.npc[spore].velocity = new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5)) / 2;
-                                    if (Main.netMode == 2)
-                                        NetMessage.SendData(23, -1, -1, null, spore);
+                                    if (Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, spore);
                                 }
                             }
                         }
@@ -6764,7 +6763,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             npc.active = false;
                             Main.PlaySound(npc.DeathSound);
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 for (int i = 0; i < 4; i++)
                                 {
@@ -6785,8 +6784,8 @@ namespace FargowiltasSouls.NPCs
                                         slime.GetGlobalNPC<EModeGlobalNPC>().masoBool[0] = true;
                                         slime.velocity = new Vector2(Main.rand.Next(-10, 11), Main.rand.Next(-10, 1));
 
-                                        if (Main.netMode == 2)
-                                            NetMessage.SendData(23, -1, -1, null, slimeIndex);
+                                        if (Main.netMode == NetmodeID.Server)
+                                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, slimeIndex);
                                     }
                                 }
                             }
@@ -6805,7 +6804,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.Mimic:
                         Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(2));
 
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int max = 5;
                             for (int i = 0; i < max; i++)
@@ -6819,7 +6818,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.BigMimicCrimson:
                     case NPCID.BigMimicHallow:
                     case NPCID.BigMimicJungle:
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int max = 5;
                             for (int i = 0; i < max; i++)
@@ -6872,7 +6871,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Gastropod:
-                        if (Main.netMode != 1 && npc.HasPlayerTarget)
+                        if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                         {
                             Vector2 vel = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 7f;
                             for (int i = 0; i < 12; i++)
@@ -6883,7 +6882,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.DD2GoblinBomberT1:
                     case NPCID.DD2GoblinBomberT2:
                     case NPCID.DD2GoblinBomberT3:
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = 0; i < 3; i++)
                                 Projectile.NewProjectile(npc.Center, new Vector2(Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-9f, -6f)),
@@ -6892,18 +6891,18 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.PossessedArmor:
-                        if (Main.rand.Next(2) == 0 && Main.netMode != 1)
+                        if (Main.rand.Next(2) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.Ghost);
-                            if (n != 200 && Main.netMode == 2)
-                                NetMessage.SendData(23, -1, -1, null, n);
+                            if (n != 200 && Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
                         break;
 
                     case NPCID.Mummy:
                     case NPCID.DarkMummy:
                     case NPCID.LightMummy:
-                        if (Main.rand.Next(5) == 0 && Main.netMode != 1)
+                        if (Main.rand.Next(5) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = 0; i < 4; i++)
                             {
@@ -6912,8 +6911,8 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     Main.npc[n].velocity.X = Main.rand.NextFloat(-5f, 5f);
                                     Main.npc[n].velocity.Y = Main.rand.NextFloat(-10f, 0f);
-                                    if (Main.netMode == 2)
-                                        NetMessage.SendData(23, -1, -1, null, n);
+                                    if (Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                                 }
                             }
                         }
@@ -6930,7 +6929,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.BoneThrowingSkeleton2:
                     case NPCID.BoneThrowingSkeleton3:
                     case NPCID.BoneThrowingSkeleton4:
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = 0; i < 10; i++)
                             {
@@ -6939,7 +6938,7 @@ namespace FargowiltasSouls.NPCs
                                 speed *= Main.rand.NextFloat(3f, 6f);
                                 speed.Y -= Math.Abs(speed.X) * 0.2f;
                                 speed.Y -= 3f;
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                     Projectile.NewProjectile(npc.Center, speed, ProjectileID.SkeletonBone, npc.damage / 4, 0f, Main.myPlayer);
                             }
                         }
@@ -6947,7 +6946,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.SolarSpearman:
                         int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
-                        if (t != -1 && Main.player[t].active && !Main.player[t].dead && Main.netMode != 1)
+                        if (t != -1 && Main.player[t].active && !Main.player[t].dead && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 velocity = Main.player[t].Center - npc.Center;
                             velocity.Normalize();
@@ -7022,7 +7021,7 @@ namespace FargowiltasSouls.NPCs
                                 Vector2 boltVel2 = boltVel.RotatedBy(MathHelper.ToRadians(Main.rand.Next(-20, 21)));
                                 boltVel2 *= Main.rand.NextFloat(0.8f, 1.2f);
 
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                     Projectile.NewProjectile(spawnPos, boltVel2, ProjectileID.NebulaLaser, 48, 0f, Main.myPlayer);
                             }
                         }
@@ -7062,7 +7061,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.StardustSoldier:
                     case NPCID.StardustSpiderBig:
                     case NPCID.StardustWormHead:
-                        if (NPC.TowerActiveStardust && Main.netMode != 1 && NPC.CountNPCS(NPCID.StardustCellSmall) < 10)
+                        if (NPC.TowerActiveStardust && Main.netMode != NetmodeID.MultiplayerClient && NPC.CountNPCS(NPCID.StardustCellSmall) < 10)
                         {
                             for (int i = 0; i < 3; i++)
                             {
@@ -7071,8 +7070,8 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     Main.npc[n].velocity.X = Main.rand.Next(-10, 11);
                                     Main.npc[n].velocity.Y = Main.rand.Next(-10, 11);
-                                    if (Main.netMode == 2)
-                                        NetMessage.SendData(23, -1, -1, null, n);
+                                    if (Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                                 }
                             }
                         }
@@ -7157,7 +7156,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.ForceBubble:
-                        if (Main.rand.Next(2) == 0 && Main.netMode != 1)
+                        if (Main.rand.Next(2) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 velocity = player.Center - npc.Center;
                             velocity.Normalize();
@@ -7182,7 +7181,7 @@ namespace FargowiltasSouls.NPCs
                             int armCount = 0;
                             for (int i = 0; i < 200; i++)
                             {
-                                if (Main.npc[i].active && Main.npc[i].type >= 128 && Main.npc[i].type <= 131 && Main.npc[i].ai[1] == npc.whoAmI)
+                                if (Main.npc[i].active && Main.npc[i].type >= NPCID.PrimeCannon && Main.npc[i].type <= NPCID.PrimeLaser && Main.npc[i].ai[1] == npc.whoAmI)
                                     armCount++;
                             }
                             switch (armCount)
@@ -7231,7 +7230,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.GoblinSummoner:
-                        if (Main.rand.Next(3) == 0 && Main.netMode != 1)
+                        if (Main.rand.Next(3) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 vel = new Vector2(9f, 0f).RotatedByRandom(2 * Math.PI);
                             for (int i = 0; i < 6; i++)
@@ -7278,7 +7277,7 @@ namespace FargowiltasSouls.NPCs
                         if (Counter2 == 0)
                         {
                             Counter2 = 180;
-                            if (Main.netMode == 1)
+                            if (Main.netMode == NetmodeID.MultiplayerClient)
                             {
                                 var netMessage = mod.GetPacket();
                                 netMessage.Write((byte)7);
@@ -7294,7 +7293,7 @@ namespace FargowiltasSouls.NPCs
                         if (Counter2 == 0)
                         {
                             Counter2 = 90;
-                            if (Main.netMode == 1)
+                            if (Main.netMode == NetmodeID.MultiplayerClient)
                             {
                                 var netMessage = mod.GetPacket();
                                 netMessage.Write((byte)7);
@@ -7405,7 +7404,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.ForceBubble:
-                        if (Main.rand.Next(2) == 0 && Main.netMode != 1)
+                        if (Main.rand.Next(2) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int closest = npc.FindClosestPlayer();
                             if (closest != -1)
@@ -7452,7 +7451,7 @@ namespace FargowiltasSouls.NPCs
                             int armCount = 0;
                             for (int i = 0; i < 200; i++)
                             {
-                                if (Main.npc[i].active && Main.npc[i].type >= 128 && Main.npc[i].type <= 131 && Main.npc[i].ai[1] == npc.whoAmI)
+                                if (Main.npc[i].active && Main.npc[i].type >= NPCID.PrimeCannon && Main.npc[i].type <= NPCID.PrimeLaser && Main.npc[i].ai[1] == npc.whoAmI)
                                     armCount++;
                             }
                             switch (armCount)
@@ -7520,7 +7519,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.GoblinSummoner:
-                        if (Main.rand.Next(4) == 0 && Main.netMode != 1)
+                        if (Main.rand.Next(4) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 vel = new Vector2(12f, 0f).RotatedByRandom(2 * Math.PI);
                             for (int i = 0; i < 6; i++)
@@ -7574,7 +7573,7 @@ namespace FargowiltasSouls.NPCs
                         if (Counter2 == 0)
                         {
                             Counter2 = 180;
-                            if (Main.netMode == 1)
+                            if (Main.netMode == NetmodeID.MultiplayerClient)
                             {
                                 var netMessage = mod.GetPacket();
                                 netMessage.Write((byte)7);
@@ -7590,7 +7589,7 @@ namespace FargowiltasSouls.NPCs
                         if (Counter2 == 0)
                         {
                             Counter2 = 90;
-                            if (Main.netMode == 1)
+                            if (Main.netMode == NetmodeID.MultiplayerClient)
                             {
                                 var netMessage = mod.GetPacket();
                                 netMessage.Write((byte)7);
@@ -7655,8 +7654,8 @@ namespace FargowiltasSouls.NPCs
                 Main.item[i].noGrabDelay = 100;
                 Main.item[i].newAndShiny = false;
 
-                if (Main.netMode == 1)
-                    NetMessage.SendData(21, -1, -1, null, i, 0.0f, 0.0f, 0.0f, 0, 0, 0);
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    NetMessage.SendData(MessageID.SyncItem, -1, -1, null, i, 0.0f, 0.0f, 0.0f, 0, 0, 0);
 
                 item = new Item();
 
@@ -7670,7 +7669,7 @@ namespace FargowiltasSouls.NPCs
 
         private void LoadSprites(NPC npc)
         {
-            if (Main.dedServ || Main.netMode == 2)
+            if (Main.dedServ || Main.netMode == NetmodeID.Server)
                 return;
 
             bool recolor = SoulConfig.Instance.BossRecolors && FargoSoulsWorld.MasochistMode;
@@ -8133,7 +8132,7 @@ namespace FargowiltasSouls.NPCs
 
         private void SpawnRazorbladeRing(NPC npc, int max, float speed, int damage, float rotationModifier, bool reduceTimeleft = false)
         {
-            if (Main.netMode == 1)
+            if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
             float rotation = 2f * (float)Math.PI / max;
             Vector2 vel = Main.player[npc.target].Center - npc.Center;
@@ -8158,7 +8157,7 @@ namespace FargowiltasSouls.NPCs
 
         public void NetUpdateMaso(int npc) //MAKE SURE THAT YOU CALL THIS FROM THE GLOBALNPC INSTANCE OF THE NPC ITSELF
         {
-            if (Main.netMode == 0)
+            if (Main.netMode == NetmodeID.SinglePlayer)
                 return;
 
             var netMessage = mod.GetPacket();
@@ -8179,7 +8178,7 @@ namespace FargowiltasSouls.NPCs
             for (int i = 0; i < size; i++)
             {
                 Vector2 pos = new Vector2(npc.Center.X + Main.rand.NextFloat(-2f, 2f) * npc.width, npc.Center.Y);
-                if (!Collision.SolidCollision(pos, npc.width, npc.height) && Main.netMode != 1)
+                if (!Collision.SolidCollision(pos, npc.width, npc.height) && Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     int j = NPC.NewNPC((int)pos.X + npc.width / 2, (int)pos.Y + npc.height / 2, npc.type);
                     if (j != 200)
@@ -8187,8 +8186,8 @@ namespace FargowiltasSouls.NPCs
                         NPC newNPC = Main.npc[j];
                         newNPC.velocity = Vector2.UnitX.RotatedByRandom(2 * Math.PI) * 5f;
                         newNPC.GetGlobalNPC<EModeGlobalNPC>().FirstTick = true;
-                        if (Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, j);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, j);
                     }
                 }
             }

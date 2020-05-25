@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.Minions
@@ -130,7 +131,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                         case 2: //ramming
                             if (projectile.localAI[0] == 1f)
                             {
-                                Main.PlaySound(29, (int)projectile.Center.X, (int)projectile.Center.Y, 102, 1f, 0.0f);
+                                Main.PlaySound(SoundID.Zombie, (int)projectile.Center.X, (int)projectile.Center.Y, 102, 1f, 0.0f);
                                 projectile.velocity = npc.Center - projectile.Center;
                                 if (projectile.velocity != Vector2.Zero)
                                 {

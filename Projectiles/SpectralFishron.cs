@@ -44,9 +44,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
             if (projectile.localAI[1] == 0f)
             {
                 projectile.localAI[1] = projectile.ai[1] + 1;
-                
-                //Main.PlaySound(29, (int)projectile.Center.X, (int)projectile.Center.Y, 20);
-                Main.PlaySound(36, (int)projectile.Center.X, (int)projectile.Center.Y, -1, 1f, 0f);
+
+                //Main.PlaySound(SoundID.Zombie, (int)projectile.Center.X, (int)projectile.Center.Y, 20);
+                Main.PlaySound(SoundID.ForceRoar, (int)projectile.Center.X, (int)projectile.Center.Y, -1, 1f, 0f);
 
                 switch ((int)projectile.ai[1])
                 {

@@ -675,7 +675,7 @@ namespace FargowiltasSouls
 
                 FargoSoulsWorld.ReceivedTerraStorage = true;
                 if (Main.netMode != 0)
-                    NetMessage.SendData(7); //sync world in mp
+                    NetMessage.SendData(MessageID.WorldData); //sync world in mp
             }
         }
 
@@ -1243,7 +1243,7 @@ namespace FargowiltasSouls
             switch (reader.ReadByte())
             {
                 case 0: //server side spawning creepers
-                    if (Main.netMode == 2)
+                    if (Main.netMode == NetmodeID.Server)
                     {
                         byte p = reader.ReadByte();
                         int multiplier = reader.ReadByte();
@@ -1252,13 +1252,13 @@ namespace FargowiltasSouls
                         if (n != 200)
                         {
                             Main.npc[n].velocity = Vector2.UnitX.RotatedByRandom(2 * Math.PI) * 8;
-                            NetMessage.SendData(23, -1, -1, null, n);
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
                     }
                     break;
 
                 case 1: //server side synchronize pillar data request
-                    if (Main.netMode == 2)
+                    if (Main.netMode == NetmodeID.Server)
                     {
                         byte pillar = reader.ReadByte();
                         if (!Main.npc[pillar].GetGlobalNPC<EModeGlobalNPC>().masoBool[1])
@@ -1282,7 +1282,7 @@ namespace FargowiltasSouls
                     break;
 
                 case 3: //rainbow slime/paladin, MP clients syncing to server
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         byte npc = reader.ReadByte();
                         Main.npc[npc].lifeMax = reader.ReadInt32();
@@ -1296,7 +1296,7 @@ namespace FargowiltasSouls
                     break;
 
                 case 4: //moon lord vulnerability synchronization
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         int ML = reader.ReadByte();
                         Main.npc[ML].GetGlobalNPC<EModeGlobalNPC>().Counter = reader.ReadInt32();
@@ -1305,7 +1305,7 @@ namespace FargowiltasSouls
                     break;
 
                 case 5: //retinazer laser MP sync
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         int reti = reader.ReadByte();
                         Main.npc[reti].GetGlobalNPC<EModeGlobalNPC>().masoBool[2] = reader.ReadBoolean();
@@ -1314,7 +1314,7 @@ namespace FargowiltasSouls
                     break;
 
                 case 6: //shark MP sync
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         int shark = reader.ReadByte();
                         Main.npc[shark].GetGlobalNPC<EModeGlobalNPC>().SharkCount = reader.ReadByte();
@@ -1322,7 +1322,7 @@ namespace FargowiltasSouls
                     break;
 
                 case 7: //client to server activate dark caster family
-                    if (Main.netMode == 2)
+                    if (Main.netMode == NetmodeID.Server)
                     {
                         int caster = reader.ReadByte();
                         if (Main.npc[caster].GetGlobalNPC<EModeGlobalNPC>().Counter2 == 0)
@@ -1331,7 +1331,7 @@ namespace FargowiltasSouls
                     break;
 
                 case 8: //server to clients reset counter
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         int caster = reader.ReadByte();
                         Main.npc[caster].GetGlobalNPC<EModeGlobalNPC>().Counter2 = 0;
@@ -1339,7 +1339,7 @@ namespace FargowiltasSouls
                     break;
 
                 case 9: //client to server, request heart spawn
-                    if (Main.netMode == 2)
+                    if (Main.netMode == NetmodeID.Server)
                     {
                         int n = reader.ReadByte();
                         Item.NewItem(Main.npc[n].Hitbox, ItemID.Heart);
@@ -1347,7 +1347,7 @@ namespace FargowiltasSouls
                     break;
 
                 case 10: //client to server, sync cultist data
-                    if (Main.netMode == 2)
+                    if (Main.netMode == NetmodeID.Server)
                     {
                         int cult = reader.ReadByte();
                         EModeGlobalNPC cultNPC = Main.npc[cult].GetGlobalNPC<EModeGlobalNPC>();
@@ -1369,14 +1369,14 @@ namespace FargowiltasSouls
                             creeper.life = creeper.lifeMax;
                             if (damage > 0)
                                 CombatText.NewText(creeper.Hitbox, CombatText.HealLife, damage);
-                            if (Main.netMode == 2)
+                            if (Main.netMode == NetmodeID.Server)
                                 creeper.netUpdate = true;
                         }
                     }
                     break;
 
                 case 12: //prime limbs spin
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         int n = reader.ReadByte();
                         EModeGlobalNPC limb = Main.npc[n].GetGlobalNPC<EModeGlobalNPC>();
@@ -1387,7 +1387,7 @@ namespace FargowiltasSouls
                     break;
 
                 case 13: //prime limbs swipe
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         int n = reader.ReadByte();
                         EModeGlobalNPC limb = Main.npc[n].GetGlobalNPC<EModeGlobalNPC>();
@@ -1405,7 +1405,7 @@ namespace FargowiltasSouls
                     break;
 
                 case 77: //server side spawning fishron EX
-                    if (Main.netMode == 2)
+                    if (Main.netMode == NetmodeID.Server)
                     {
                         byte target = reader.ReadByte();
                         int x = reader.ReadInt32();
@@ -1440,7 +1440,7 @@ namespace FargowiltasSouls
                     Main.projectile[projID].friendly = friendly;
                     Main.projectile[projID].hostile = hostile;
                 }
-                if (Main.netMode == 2) MNet.SendBaseNetMessage(0, owner, projID, friendly, hostile);
+                if (Main.netMode == NetmodeID.Server) MNet.SendBaseNetMessage(0, owner, projID, friendly, hostile);
             }
             else
             if (msg == MsgType.SyncAI) //sync AI array
@@ -1463,7 +1463,7 @@ namespace FargowiltasSouls
                 {
                     ((ParentProjectile)Main.projectile[id].modProjectile).SetAI(newAI, aitype);
                 }
-                if (Main.netMode == 2) BaseNet.SyncAI(classID, id, newAI, aitype);
+                if (Main.netMode == NetmodeID.Server) BaseNet.SyncAI(classID, id, newAI, aitype);
             }*/
         }
 

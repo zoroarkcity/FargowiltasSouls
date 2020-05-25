@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void Kill(int timeLeft)
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<CosmosDeathray>(), projectile.damage, 0f, Main.myPlayer);
             }

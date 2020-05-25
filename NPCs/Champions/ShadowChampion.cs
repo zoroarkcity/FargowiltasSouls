@@ -85,7 +85,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 else
                     return;
 
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     const int max = 8;
                     const float distance = 110f;
@@ -94,8 +94,8 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         Vector2 spawnPos = npc.Center + new Vector2(distance, 0f).RotatedBy(rotation * i);
                         int n = NPC.NewNPC((int)spawnPos.X, (int)spawnPos.Y, ModContent.NPCType<ShadowOrb>(), 0, npc.whoAmI, distance, 0, rotation * i);
-                        if (Main.netMode == 2 && n < 200)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server && n < 200)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                 }
             }
@@ -119,7 +119,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.ai[2] = buffer;
                 npc.ai[3] = 0;
 
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     const int max = 16;
                     const float distance = 700f;
@@ -128,8 +128,8 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         Vector2 spawnPos = npc.Center + new Vector2(distance, 0f).RotatedBy(rotation * i);
                         int n = NPC.NewNPC((int)spawnPos.X, (int)spawnPos.Y, ModContent.NPCType<ShadowOrb>(), 0, npc.whoAmI, distance, 0, rotation * i);
-                        if (Main.netMode == 2 && n < 200)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server && n < 200)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                 }
 
@@ -150,7 +150,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.ai[2] = buffer;
                 npc.ai[3] = 0;
 
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     const int max = 24;
                     const float distance = 350f;
@@ -159,8 +159,8 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         Vector2 spawnPos = npc.Center + new Vector2(distance, 0f).RotatedBy(rotation * i);
                         int n = NPC.NewNPC((int)spawnPos.X, (int)spawnPos.Y, ModContent.NPCType<ShadowOrb>(), 0, npc.whoAmI, distance, 0, rotation * i);
-                        if (Main.netMode == 2 && n < 200)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server && n < 200)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                 }
 
@@ -211,14 +211,14 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     if (npc.ai[1] == 120)
                     {
-                        Main.PlaySound(15, npc.Center, 0);
+                        Main.PlaySound(SoundID.Roar, npc.Center, 0);
                     }
 
                     if (++npc.ai[3] > 9 && npc.ai[1] > 120)
                     {
                         npc.ai[3] = 0;
 
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = 0; i < Main.maxNPCs; i++)
                             {
@@ -291,7 +291,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         Main.PlaySound(SoundID.Item21, npc.Center);
 
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = -1; i <= 1; i++) //on both sides
                             {
@@ -313,7 +313,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     if (++npc.ai[1] == 120)
                     {
-                        Main.PlaySound(15, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                        Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                     }
                     else if (npc.ai[1] > 300)
                     {
@@ -338,9 +338,9 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         npc.ai[2] = 0;
 
-                        Main.PlaySound(2, npc.Center, 14);
+                        Main.PlaySound(SoundID.Item, npc.Center, 14);
 
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = 0; i < 40; i++)
                             {
@@ -377,7 +377,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         Main.PlaySound(SoundID.Item8, npc.Center);
 
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 vel = (player.Center - npc.Center) / 30;
                             Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<Projectiles.Champions.ShadowOrb>(), npc.damage / 4, 0f, Main.myPlayer);
@@ -411,7 +411,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     else if (npc.ai[2] == 38)
                     {
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 vel = new Vector2(12f, 0f).RotatedByRandom(2 * Math.PI);
                             for (int i = 0; i < 20; i++)
@@ -454,7 +454,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.ai[2] == 0)
                     {
                         npc.ai[2] = 1;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = 0; i < 10; i++)
                             {
@@ -545,8 +545,8 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void NPCLoot()
         {
             FargoSoulsWorld.downedChampions[5] = true;
-            if (Main.netMode == 2)
-                NetMessage.SendData(7); //sync world
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.WorldData); //sync world
 
             for (int i = 0; i < Main.maxProjectiles; i++)
             {

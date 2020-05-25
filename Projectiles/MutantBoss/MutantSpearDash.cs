@@ -57,7 +57,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 if (projectile.ai[1] == 0f && --projectile.localAI[0] < 0)
                 {
                     projectile.localAI[0] = 2;
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                         Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("MutantSphereSmall"), projectile.damage, 0f, projectile.owner, mutant.target);
                 }
             }

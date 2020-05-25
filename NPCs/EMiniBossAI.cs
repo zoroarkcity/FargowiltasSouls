@@ -40,7 +40,7 @@ namespace FargowiltasSouls.NPCs
             if (++Counter > 300)
             {
                 Counter = 0;
-                if (Main.netMode != 1 && npc.HasPlayerTarget)
+                if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                 {
                     Vector2 vel = npc.DirectionFrom(Main.player[npc.target].Center) * 8f;
                     for (int i = 0; i < 5; i++)
@@ -61,7 +61,7 @@ namespace FargowiltasSouls.NPCs
                 if (!masoBool[1] && ++Counter > 15)
                 {
                     masoBool[1] = true;
-                    if (Main.netMode == 2) //MP sync
+                    if (Main.netMode == NetmodeID.Server) //MP sync
                     {
                         var netMessage = mod.GetPacket();
                         netMessage.Write((byte)3);
@@ -79,7 +79,7 @@ namespace FargowiltasSouls.NPCs
                 if (npc.velocity.Y == 0f) //start attack
                 {
                     masoBool[2] = false;
-                    if (npc.HasPlayerTarget && Main.netMode != 1)
+                    if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         const float gravity = 0.15f;
                         const float time = 120f;

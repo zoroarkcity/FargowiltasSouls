@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
@@ -46,7 +47,7 @@ You probably shouldn't be reading this...");
                 FargoSoulsWorld.FishronCount = 0;
                 FargoSoulsWorld.CultistCount = 0;
                 FargoSoulsWorld.MoonlordCount = 0;
-                Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
+                Main.PlaySound(SoundID.Roar, (int)player.position.X, (int)player.position.Y, 0);
 
                 FargoSoulsWorld.NoMasoBossScaling = true;
 

@@ -59,7 +59,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override bool CheckDead()
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int p = Player.FindClosest(npc.Center, 0, 0);
                 int n = NPC.FindFirstNPC(ModContent.NPCType<TimberChampion>());

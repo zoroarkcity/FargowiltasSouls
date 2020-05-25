@@ -40,7 +40,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             /*if (projectile.localAI[0] == 0) //spawn surrounding crystals
             {
                 projectile.localAI[0] = 1;
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     const int max = 5;
                     const float distance = 125f;

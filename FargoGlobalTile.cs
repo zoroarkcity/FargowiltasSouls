@@ -96,7 +96,7 @@ namespace FargowiltasSouls
             tile.lava(false);
             tile.honey(false);
 
-            if (Main.netMode == 2)
+            if (Main.netMode == NetmodeID.Server)
                 NetMessage.sendWater(x, y);
         }
         internal static void ClearTile(int x, int y) => ClearTile(Main.tile[x, y]);
@@ -235,7 +235,7 @@ namespace FargowiltasSouls
                             int p = Player.FindClosest(new Vector2(i * 16, j * 16), 0, 0);
                             if (p != -1 && Main.player[p].statLifeMax2 >= 200)
                             {
-                                if (Main.netMode != 1)
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Main.invasionDelay = 0;
                                     Main.StartInvasion(1);
@@ -255,7 +255,7 @@ namespace FargowiltasSouls
                         int p = Player.FindClosest(new Vector2(i * 16, j * 16), 0, 0);
                         if (p != -1 && Main.player[p].statLifeMax2 >= 200)
                         {
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Main.invasionDelay = 0;
                                 Main.StartInvasion(3);
