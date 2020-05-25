@@ -459,7 +459,7 @@ namespace FargowiltasSouls.NPCs
 
                 if (--Counter2 < 0)
                 {
-                    Counter2 = Main.rand.Next(10, 30);
+                    Counter2 = Main.rand.Next(7, 15);
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Vector2 spawn = Main.player[npc.target].Center + Main.rand.NextVector2CircularEdge(1200f, 1200f);
