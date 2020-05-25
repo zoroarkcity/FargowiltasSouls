@@ -725,7 +725,7 @@ Additionally grants:");
 
         public override void HorizontalWingSpeeds(Player player, ref float speed, ref float acceleration)
         {
-            speed = SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicSpeed) ? 25f : 15f;
+            speed = SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicSpeed) ? 25f : 18f;
             acceleration *= 3.5f;
         }
 
