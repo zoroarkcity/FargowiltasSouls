@@ -67,7 +67,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.timeLeft = 2;
             
             const float maxAmplitude = 850;
-            float offset = Math.Abs(maxAmplitude * (float)Math.Sin(Main.npc[ai1].ai[2] * 2 * (float)Math.PI / 300));
+            float offset = Math.Abs(maxAmplitude * (float)Math.Sin(Main.npc[ai1].ai[2] * 2 * (float)Math.PI / 240));
             offset += 150;
             projectile.rotation += 0.01f;
             projectile.Center = Main.npc[ai1].Center + offset * projectile.rotation.ToRotationVector2();

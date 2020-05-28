@@ -114,9 +114,12 @@ namespace FargowiltasSouls.NPCs.Champions
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
                         if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].damage > 0)
-                        {
                             Main.projectile[i].Kill();
-                        }
+                    }
+                    for (int i = 0; i < Main.maxProjectiles; i++)
+                    {
+                        if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].damage > 0)
+                            Main.projectile[i].Kill();
                     }
                 }
             }
@@ -136,9 +139,12 @@ namespace FargowiltasSouls.NPCs.Champions
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
                         if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].damage > 0)
-                        {
                             Main.projectile[i].Kill();
-                        }
+                    }
+                    for (int i = 0; i < Main.maxProjectiles; i++)
+                    {
+                        if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].damage > 0)
+                            Main.projectile[i].Kill();
                     }
                 }
             }
@@ -259,9 +265,9 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
                     }
 
-                    if (++npc.ai[2] > 300 || npc.ai[2] == 150)
+                    if (++npc.ai[2] > 240 || npc.ai[2] == 120)
                     {
-                        if (npc.ai[2] > 300)
+                        if (npc.ai[2] > 240)
                             npc.ai[2] = 0;
 
                         npc.netUpdate = true;
