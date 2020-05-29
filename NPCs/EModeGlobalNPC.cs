@@ -374,12 +374,13 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.SkeletronPrime:
                     Timer = 0;
                     npc.trapImmune = true;
+                    npc.lifeMax = (int)(npc.lifeMax * 1.2);
                     break;
                 case NPCID.PrimeCannon:
                 case NPCID.PrimeLaser:
                 case NPCID.PrimeSaw:
                 case NPCID.PrimeVice:
-                    npc.lifeMax /= 2;
+                    npc.dontTakeDamage = true;
                     npc.trapImmune = true;
                     npc.buffImmune[ModContent.BuffType<ClippedWings>()] = true;
                     break;
@@ -4359,6 +4360,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.PrimeVice:
+                    case NPCID.PrimeSaw:
                         AddBuffNoStack(target, ModContent.BuffType<Stunned>());
                         break;
 
@@ -6715,7 +6717,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.PrimeLaser:
                     case NPCID.PrimeVice:
                     case NPCID.PrimeSaw:
-                        if (npc.ai[1] >= 0f && npc.ai[1] < 200f && Main.npc[(int)npc.ai[1]].type == NPCID.SkeletronPrime)
+                        /*if (npc.ai[1] >= 0f && npc.ai[1] < 200f && Main.npc[(int)npc.ai[1]].type == NPCID.SkeletronPrime)
                         {
                             int ai1 = (int)npc.ai[1];
                             if (Main.npc[ai1].ai[0] == 1f)
@@ -6732,7 +6734,7 @@ namespace FargowiltasSouls.NPCs
                             Main.npc[ai1].GetGlobalNPC<EModeGlobalNPC>().masoBool[0] = true;
                             Main.npc[ai1].GetGlobalNPC<EModeGlobalNPC>().NetUpdateMaso(ai1);
                             Main.npc[ai1].netUpdate = true;
-                        }
+                        }*/
                         break;
 
                     case NPCID.ZombieMushroom:
@@ -7176,7 +7178,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.SkeletronPrime:
-                        if (npc.ai[0] != 2f) //in phase 1
+                        /*if (npc.ai[0] != 2f) //in phase 1
                         {
                             int armCount = 0;
                             for (int i = 0; i < 200; i++)
@@ -7201,7 +7203,7 @@ namespace FargowiltasSouls.NPCs
                                 default:
                                     break;
                             }
-                        }
+                        }*/
                         break;
 
                     case NPCID.Golem:
@@ -7446,7 +7448,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.SkeletronPrime:
-                        if (npc.ai[0] != 2f)
+                        /*if (npc.ai[0] != 2f)
                         {
                             int armCount = 0;
                             for (int i = 0; i < 200; i++)
@@ -7471,7 +7473,7 @@ namespace FargowiltasSouls.NPCs
                                 default:
                                     break;
                             }
-                        }
+                        }*/
                         /*if (projectile.type == ProjectileID.HallowStar)
                             damage /= 4;*/
                         break;

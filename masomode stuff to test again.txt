@@ -68,3 +68,14 @@ timber champ walks
 changed will arena from fireballs to typhoons
 nature uses two heads to attack at a time
 fixed soul of siblings not giving fishron speed bonus
+
+prime changes:
+	all limbs use prime's contact damage while swiping or spinning
+	reduced prime p2 speed bonus from 33% to 25%
+	reduced spread of p2 rockets
+	fixed(?) swipe limbs desyncing
+	removed flaming sword
+	buffed cannon dark star damage
+	prime shoots rings of dark stars while spinning instead of rockets in p2
+	removed p1 DR, prime skull is always vulnerable
+	increased prime life 20%

@@ -1875,7 +1875,6 @@ namespace FargowiltasSouls.NPCs
         public void SkeletronPrimeAI(NPC npc)
         {
             primeBoss = npc.whoAmI;
-            npc.dontTakeDamage = !masoBool[0];
 
             if (npc.ai[0] != 2f) //in phase 1
             {
@@ -1885,7 +1884,7 @@ namespace FargowiltasSouls.NPCs
                     npc.ai[3] = 0f;
                     npc.netUpdate = true;
 
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    /*if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         if (!NPC.AnyNPCs(NPCID.PrimeLaser)) //revive all dead limbs
                         {
@@ -1911,13 +1910,13 @@ namespace FargowiltasSouls.NPCs
                             if (n != 200 && Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
-                    }
+                    }*/
 
                     Main.PlaySound(SoundID.Roar, (int)npc.position.X, (int)npc.position.Y, 0);
                     return;
                 }
 
-                if (npc.ai[0] != 1f) //limb is dead and needs reviving
+                /*if (npc.ai[0] != 1f) //limb is dead and needs reviving
                 {
                     npc.ai[3]++;
                     if (npc.ai[3] > 1800f) //revive a dead limb
@@ -1962,7 +1961,7 @@ namespace FargowiltasSouls.NPCs
                         else
                             npc.ai[0] = 1f;
                     }
-                }
+                }*/
 
                 if (++Timer >= 360)
                 {
@@ -1999,6 +1998,8 @@ namespace FargowiltasSouls.NPCs
                     timeToShoot = 120;
                     if (npc.HasValidTarget)
                         npc.position += npc.DirectionTo(Main.player[npc.target].Center) * 5;
+
+                    masoBool[0] = true;
                 }
                 else if (npc.ai[1] == 2f) //dg phase
                 {
@@ -2014,43 +2015,75 @@ namespace FargowiltasSouls.NPCs
                 }
                 else //not spinning
                 {
-                    npc.position += npc.velocity / 3f;
+                    npc.position += npc.velocity / 4f;
+
+                    if (masoBool[0]) //switch hands
+                    {
+                        masoBool[0] = false;
+
+                        /*int rangedArm = Main.rand.Next(2) == 0 ? NPCID.PrimeCannon : NPCID.PrimeLaser;
+                        int meleeArm = Main.rand.Next(2) == 0 ? NPCID.PrimeSaw : NPCID.PrimeVice;
+
+                        foreach (NPC l in Main.npc.Where(l => l.active && l.ai[1] == npc.whoAmI && !l.GetGlobalNPC<EModeGlobalNPC>().masoBool[1]))
+                        {
+                            switch (l.type) //change out attacking limbs
+                            {
+                                case NPCID.PrimeCannon:
+                                case NPCID.PrimeLaser:
+                                case NPCID.PrimeSaw:
+                                case NPCID.PrimeVice:
+                                    l.GetGlobalNPC<EModeGlobalNPC>().masoBool[0] = npc.type == rangedArm || npc.type == meleeArm;
+                                    l.GetGlobalNPC<EModeGlobalNPC>().NetUpdateMaso(l.whoAmI);
+                                    l.netUpdate = true;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }*/
+                    }
                 }
 
-                if (++Timer >= timeToShoot) //skeleton commando rockets LUL
+                if (++Timer >= timeToShoot) //projectile attack
                 {
                     Timer = 0;
+                    int damage = npc.defDamage * 2 / 7;
                     if (npc.ai[1] != 2 && npc.HasPlayerTarget) //dont do during DG
                     {
-                        Vector2 speed = Main.player[npc.target].Center - npc.Center;
-                        speed.Normalize();
-
-                        int damage = npc.defDamage * 2 / 7;
-
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (npc.ai[1] == 1) //spinning, do stars instead
                         {
-                            Projectile.NewProjectile(npc.Center, 4f * speed, ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
-                            Projectile.NewProjectile(npc.Center, 4f * speed.RotatedBy(MathHelper.ToRadians(3f)), ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
-                            Projectile.NewProjectile(npc.Center, 4f * speed.RotatedBy(MathHelper.ToRadians(-3f)), ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                const int max = 16;
+                                for (int i = 0; i < max; i++)
+                                    Projectile.NewProjectile(npc.Center, 14f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(2 * Math.PI / max * i),
+                                        ModContent.ProjectileType<DarkStar>(), damage, 0f, Main.myPlayer);
+                            }
                         }
-
-                        Main.PlaySound(SoundID.Item11, npc.Center);
+                        else //rockets
+                        {
+                            Vector2 speed = Main.player[npc.target].Center - npc.Center;
+                            speed.Normalize();
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Projectile.NewProjectile(npc.Center, 4f * speed, ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, 4f * speed.RotatedBy(MathHelper.ToRadians(2f)), ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, 4f * speed.RotatedBy(MathHelper.ToRadians(-2f)), ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
+                            }
+                            Main.PlaySound(SoundID.Item11, npc.Center);
+                        }
                     }
                 }
 
                 if (!masoBool[1] && npc.ai[3] >= 0f) //spawn 4 more limbs
                 {
                     npc.ai[3]++;
-                    if (npc.ai[3] >= 180f)
+                    if (npc.ai[3] == 60f) //first set of limb management
                     {
-                        masoBool[1] = true;
-                        npc.ai[3] = -1f;
-                        npc.netUpdate = true;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             foreach (NPC l in Main.npc.Where(l => l.active && l.ai[1] == npc.whoAmI))
                             {
-                                switch (l.type) //my first four limbs become super mode
+                                switch (l.type) //my first four limbs become swipers
                                 {
                                     case NPCID.PrimeCannon:
                                     case NPCID.PrimeLaser:
@@ -2058,11 +2091,14 @@ namespace FargowiltasSouls.NPCs
                                     case NPCID.PrimeVice:
                                         l.GetGlobalNPC<EModeGlobalNPC>().masoBool[1] = true;
                                         l.GetGlobalNPC<EModeGlobalNPC>().NetUpdateMaso(l.whoAmI);
+                                        l.ai[2] = 0;
+                                        l.netUpdate = true;
                                         break;
                                     default:
                                         break;
                                 }
                             }
+
                             //now spawn the other four
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.PrimeLaser, npc.whoAmI, -1f, npc.whoAmI, 0f, 150f, npc.target);
                             if (n != 200 && Main.netMode == NetmodeID.Server)
@@ -2077,7 +2113,53 @@ namespace FargowiltasSouls.NPCs
                             if (n != 200 && Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
+                    }
+                    /*else if (npc.ai[3] == 120f)
+                    {
+                        //now spawn the last four
+                        int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.PrimeLaser, npc.whoAmI, 1f, npc.whoAmI, 0f, 150f, npc.target);
+                        if (n != 200 && Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                        n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.PrimeSaw, npc.whoAmI, 1f, npc.whoAmI, 0f, 0f, npc.target);
+                        if (n != 200 && Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                        n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.PrimeCannon, npc.whoAmI, -1f, npc.whoAmI, 0f, 150f, npc.target);
+                        if (n != 200 && Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                        n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.PrimeVice, npc.whoAmI, -1f, npc.whoAmI, 0f, 0f, npc.target);
+                        if (n != 200 && Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                    }*/
+                    else if (npc.ai[3] >= 180f)
+                    {
+                        masoBool[1] = true;
+                        npc.ai[3] = -1f;
+                        npc.netUpdate = true;
+
                         Main.PlaySound(SoundID.Roar, (int)npc.position.X, (int)npc.position.Y, 0);
+
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int rangedArm = Main.rand.Next(2) == 0 ? NPCID.PrimeCannon : NPCID.PrimeLaser;
+                            int meleeArm = Main.rand.Next(2) == 0 ? NPCID.PrimeSaw : NPCID.PrimeVice;
+
+                            foreach (NPC l in Main.npc.Where(l => l.active && l.ai[1] == npc.whoAmI && !l.GetGlobalNPC<EModeGlobalNPC>().masoBool[1]))
+                            {
+                                switch (l.type) //change out attacking limbs
+                                {
+                                    case NPCID.PrimeCannon:
+                                    case NPCID.PrimeLaser:
+                                    case NPCID.PrimeSaw:
+                                    case NPCID.PrimeVice:
+                                        l.GetGlobalNPC<EModeGlobalNPC>().masoBool[0] = npc.type == rangedArm || npc.type == meleeArm;
+                                        l.GetGlobalNPC<EModeGlobalNPC>().NetUpdateMaso(l.whoAmI);
+                                        l.netUpdate = true;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2085,9 +2167,9 @@ namespace FargowiltasSouls.NPCs
 
         public bool PrimeLimbAI(NPC npc)
         {
-            if (npc.type == NPCID.PrimeSaw)
+            /*if (npc.type == NPCID.PrimeSaw)
             {
-                if (!masoBool[1] && ++Counter2 >= 2) //flamethrower in same direction that saw is pointing
+                if (!masoBool[0] && !masoBool[1] && ++Counter2 >= 2) //flamethrower in same direction that saw is pointing
                 {
                     Counter2 = 0;
                     Vector2 velocity = new Vector2(7f, 0f).RotatedBy(npc.rotation + Math.PI / 2.0);
@@ -2096,7 +2178,9 @@ namespace FargowiltasSouls.NPCs
                     Main.PlaySound(SoundID.Item34, npc.Center);
                 }
             }
-            else if (npc.type == NPCID.PrimeCannon)
+            else*/
+
+            if (npc.type == NPCID.PrimeCannon)
             {
                 if (npc.ai[2] != 0f)
                 {
@@ -2106,7 +2190,7 @@ namespace FargowiltasSouls.NPCs
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 speed = new Vector2(16f, 0f).RotatedBy(npc.rotation + Math.PI / 2);
-                            Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<DarkStar>(), npc.damage / 5, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<DarkStar>(), (int)(npc.damage / 2.5), 0f, Main.myPlayer);
                         }
                     }
                 }
@@ -2118,35 +2202,45 @@ namespace FargowiltasSouls.NPCs
             }
 
             //all limbs
-            if (!masoBool[0])
+
+            int ai1 = (int)npc.ai[1];
+            if (!(ai1 > -1 && ai1 < 200 && Main.npc[ai1].active && Main.npc[ai1].type == NPCID.SkeletronPrime))
             {
-                RegenTimer = 2;
-                if (Main.npc[(int)npc.ai[1]].type == NPCID.SkeletronPrime && Main.npc[(int)npc.ai[1]].ai[0] == 2f)
-                {
-                    masoBool[0] = true;
-                    npc.defDamage = npc.defDamage * 4 / 3;
-                    npc.damage = npc.defDamage;
-                    int heal = npc.lifeMax - npc.life;
-                    npc.life = npc.lifeMax;
-                    if (heal > 0)
-                        CombatText.NewText(npc.Hitbox, CombatText.HealLife, heal);
-                    npc.netUpdate = true;
-                }
+                npc.life = 0; //die if prime gone
+                npc.HitEffect();
+                npc.checkDead();
+                return false;
             }
-            else
+
+            npc.damage = npc.defDamage;
+
+            if (Main.npc[ai1].ai[0] == 2f) //phase 2
             {
-                npc.dontTakeDamage = !(Fargowiltas.Instance.CalamityLoaded && Revengeance);
-                int ai1 = (int)npc.ai[1];
-                if (!(ai1 > -1 && ai1 < 200 && Main.npc[ai1].active && Main.npc[ai1].type == NPCID.SkeletronPrime))
-                {
-                    npc.StrikeNPCNoInteraction(9999, 0f, 0); //die if prime gone
-                    return false;
-                }
+                //npc.dontTakeDamage = !(Fargowiltas.Instance.CalamityLoaded && Revengeance);
+                
                 npc.target = Main.npc[ai1].target;
                 if (Main.npc[ai1].ai[1] == 3 || !npc.HasValidTarget) //return to normal AI
                     return true;
+
+                /*if (masoBool[0])
+                {
+                    npc.velocity = (Main.npc[ai1].Center - npc.Center) / 30;
+                    npc.damage = 0;
+
+                    for (int i = 0; i < 5; i++)
+                    {
+                        int d = Dust.NewDust(npc.position, npc.width, npc.height, 87, 0f, 0f, 0, default(Color), 1.5f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity *= 4f;
+                    }
+
+                    return false;
+                }*/
+
                 if (masoBool[1]) //swipe AI
                 {
+                    npc.damage = Main.npc[ai1].damage;
+
                     if (!masoBool[3])
                     {
                         masoBool[3] = true;
@@ -2166,6 +2260,7 @@ namespace FargowiltasSouls.NPCs
                         target.Y += 400 * Counter2;
                         npc.velocity = (target - npc.Center) / 30;
                         if (npc.ai[2] == 140)
+                        {
                             for (int i = 0; i < 20; i++)
                             {
                                 int d = Dust.NewDust(npc.position, npc.width, npc.height, 112, npc.velocity.X * .4f, npc.velocity.Y * .4f, 0, Color.White, 2);
@@ -2173,17 +2268,20 @@ namespace FargowiltasSouls.NPCs
                                 Main.dust[d].velocity *= 3f;
                                 Main.dust[d].noGravity = true;
                             }
+                        }
+
+                        npc.damage = 0;
                     }
                     else if (npc.ai[2] == 180)
                     {
-                        npc.velocity = npc.DirectionTo(Main.player[npc.target].Center) * 20;
+                        npc.velocity = npc.DirectionTo(Main.player[npc.target].Center) * 20f;
                         npc.netUpdate = true;
                         Counter *= -1;
                         Counter2 *= -1;
                     }
                     else if (npc.ai[2] < 240)
                     {
-                        npc.velocity *= 0.996f;
+                        npc.velocity *= 0.9965f;
                     }
                     else
                     {
@@ -2209,6 +2307,8 @@ namespace FargowiltasSouls.NPCs
                 }
                 else if (Main.npc[ai1].ai[1] == 1 || Main.npc[ai1].ai[1] == 2) //other limbs while prime spinning
                 {
+                    npc.damage = Main.npc[ai1].damage;
+
                     int d = Dust.NewDust(npc.position, npc.width, npc.height, 112, npc.velocity.X * .4f, npc.velocity.Y * .4f, 0, Color.White, 2);
                     Main.dust[d].noGravity = true;
                     if (!masoBool[2]) //AND STRETCH HIS ARMS OUT JUST FOR YOU
@@ -2234,7 +2334,7 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter > 60)
                         {
                             masoBool[2] = true;
-                            Counter = (int)Main.npc[ai1].Distance(npc.Center);
+                            Counter = (int)offset.Length();
                             if (Counter < 300)
                                 Counter = 300;
                             npc.localAI[3] = Main.npc[ai1].DirectionTo(npc.Center).ToRotation();
