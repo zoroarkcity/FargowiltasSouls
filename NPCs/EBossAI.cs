@@ -2053,10 +2053,16 @@ namespace FargowiltasSouls.NPCs
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                const int max = 16;
+                                const int max = 8;
                                 for (int i = 0; i < max; i++)
-                                    Projectile.NewProjectile(npc.Center, 14f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(2 * Math.PI / max * i),
-                                        ModContent.ProjectileType<DarkStar>(), damage, 0f, Main.myPlayer);
+                                {
+                                    Vector2 speed = 12f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(2 * Math.PI / max * i);
+                                    for (int j = -2; j <= 2; j++)
+                                    {
+                                        Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(5) * j), 
+                                            ModContent.ProjectileType<DarkStar>(), damage, 0f, Main.myPlayer);
+                                    }
+                                }
                             }
                         }
                         else //rockets
@@ -2239,7 +2245,7 @@ namespace FargowiltasSouls.NPCs
 
                 if (masoBool[1]) //swipe AI
                 {
-                    npc.damage = Main.npc[ai1].damage;
+                    npc.damage = (int)(Main.npc[ai1].defDamage * 1.25);
 
                     if (!masoBool[3])
                     {
@@ -2307,7 +2313,7 @@ namespace FargowiltasSouls.NPCs
                 }
                 else if (Main.npc[ai1].ai[1] == 1 || Main.npc[ai1].ai[1] == 2) //other limbs while prime spinning
                 {
-                    npc.damage = Main.npc[ai1].damage;
+                    npc.damage = (int)(Main.npc[ai1].defDamage * 1.25);
 
                     int d = Dust.NewDust(npc.position, npc.width, npc.height, 112, npc.velocity.X * .4f, npc.velocity.Y * .4f, 0, Color.White, 2);
                     Main.dust[d].noGravity = true;
