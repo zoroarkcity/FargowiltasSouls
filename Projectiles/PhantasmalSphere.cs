@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.Buffs.Masomode;
 
 namespace FargowiltasSouls.Projectiles
 {
@@ -28,6 +29,8 @@ namespace FargowiltasSouls.Projectiles
             projectile.tileCollide = false;
             projectile.alpha = 200;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+
+            projectile.penetrate = 2;
         }
 
         public override void AI()
@@ -40,19 +43,15 @@ namespace FargowiltasSouls.Projectiles
                 projectile.velocity.Y * 0.2f, 100, default(Color), .5f);
             Main.dust[dustId3].noGravity = true;*/
 
-            const int aislotHomingCooldown = 0;
-            const int homingDelay = 20;
-            const float desiredFlySpeedInPixelsPerFrame = 60;
-            const float amountOfFramesToLerpBy = 20; // minimum of 1, please keep in full numbers even though it's a float!
-            if (++projectile.ai[aislotHomingCooldown] > homingDelay)
+            if (++projectile.localAI[0] == 20)
             {
-                projectile.ai[aislotHomingCooldown] = 0; //reset
+                projectile.localAI[0] = 0;
+
                 int foundTarget = HomeOnTarget();
                 if (foundTarget != -1)
                 {
                     NPC n = Main.npc[foundTarget];
-                    Vector2 desiredVelocity = projectile.DirectionTo(n.Center) * desiredFlySpeedInPixelsPerFrame;
-                    projectile.velocity = Vector2.Lerp(projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
+                    projectile.velocity = projectile.DirectionTo(n.Center) * 32f;
                 }
             }
 
@@ -80,15 +79,16 @@ namespace FargowiltasSouls.Projectiles
             }
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        /*public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (projectile.ai[1] == 1)
                 crit = true;
-        }
+        }*/
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 600);
+            target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 600);
+            target.immune[projectile.owner] = 1;
         }
 
         private int HomeOnTarget()

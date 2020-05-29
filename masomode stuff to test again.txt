@@ -79,3 +79,8 @@ prime changes:
 	prime shoots rings of dark stars while spinning instead of rockets in p2
 	removed p1 DR, prime skull is always vulnerable
 	increased prime life 20%
+
+rework penetrator:
+	each attack leaves a deathray as well
+	spheres pierce and are much faster
+	spear is on 0 local iframe cooldown, everything else is shared 1frame

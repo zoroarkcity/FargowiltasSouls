@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.Buffs.Masomode;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
@@ -52,8 +53,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 projectile.localAI[0] = 3;
                 if (projectile.owner == Main.myPlayer)
                 {
-                    int p = Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("PhantasmalSphere"), projectile.damage, projectile.knockBack / 2, projectile.owner);
-                    if (p < 1000)
+                    int p = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack / 2, projectile.owner);
+                    if (p != Main.maxProjectiles)
                     {
                         Main.projectile[p].melee = false;
                         Main.projectile[p].thrown = true;
@@ -65,6 +66,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 projectile.localAI[1] = 1f;
                 Main.PlaySound(SoundID.Item1, projectile.Center);
+                if (projectile.owner == Main.myPlayer)
+                {
+                    int p = Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity), 
+                        ModContent.ProjectileType<HentaiSpearDeathray>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    if (p != Main.maxProjectiles)
+                    {
+                        Main.projectile[p].melee = false;
+                        Main.projectile[p].thrown = true;
+                    }
+                }
             }
 
             projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
@@ -74,14 +85,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             if (projectile.owner == Main.myPlayer)
             {
-                int p = Projectile.NewProjectile(target.position + new Vector2(Main.rand.Next(target.width), Main.rand.Next(target.height)), Vector2.Zero, mod.ProjectileType("PhantasmalBlast"), projectile.damage, 0f, projectile.owner);
+                int p = Projectile.NewProjectile(target.position + new Vector2(Main.rand.Next(target.width), Main.rand.Next(target.height)), Vector2.Zero, ModContent.ProjectileType<PhantasmalBlast>(), projectile.damage, 0f, projectile.owner);
                 if (p < 1000)
                 {
                     Main.projectile[p].melee = false;
                     Main.projectile[p].thrown = true;
                 }
             }
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 600);
+            target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 600);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
