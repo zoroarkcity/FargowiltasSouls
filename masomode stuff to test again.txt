@@ -84,3 +84,5 @@ rework penetrator:
 	each attack leaves a deathray as well
 	spheres pierce and are much faster
 	spear is on 0 local iframe cooldown, everything else is shared 1frame
+
+pog champ jump slower, less rain timeleft, changed configs

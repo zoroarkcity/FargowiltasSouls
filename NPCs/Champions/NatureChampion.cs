@@ -27,11 +27,11 @@ namespace FargowiltasSouls.NPCs.Champions
         public int[] heads = { -1, -1, -1, -1, -1, -1 };
         public int lastSet = 0;
         public static readonly KeyValuePair<int, int>[] configurations = {
-            new KeyValuePair<int, int>(0, 2),
+            new KeyValuePair<int, int>(0, 1),
             new KeyValuePair<int, int>(1, 3),
             new KeyValuePair<int, int>(3, 5),
             new KeyValuePair<int, int>(3, 4),
-            new KeyValuePair<int, int>(1, 4),
+            new KeyValuePair<int, int>(2, 4),
             new KeyValuePair<int, int>(0, 5),
             new KeyValuePair<int, int>(1, 2),
             new KeyValuePair<int, int>(2, 5),
@@ -321,7 +321,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             }
                         }
 
-                        const int jumpTime = 40;
+                        const int jumpTime = 60;
 
                         npc.noGravity = true;
                         npc.noTileCollide = true;

@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.height = 28;
             projectile.aiStyle = -1;
             projectile.hostile = true;
-            projectile.timeLeft = 600;
+            projectile.timeLeft = 300;
             projectile.tileCollide = false;
             
             cooldownSlot = 1;
