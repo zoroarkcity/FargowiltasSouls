@@ -265,9 +265,9 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
                     }
 
-                    if (++npc.ai[2] > 240 || npc.ai[2] == 120)
+                    if (++npc.ai[2] > 180 || npc.ai[2] == 90)
                     {
-                        if (npc.ai[2] > 240)
+                        if (npc.ai[2] > 180)
                             npc.ai[2] = 0;
 
                         npc.netUpdate = true;
@@ -1292,6 +1292,8 @@ namespace FargowiltasSouls.NPCs.Champions
             }
 
             //Item.NewItem(npc.position, npc.Size, ModLoader.GetMod("Fargowiltas").ItemType("CrucibleCosmos"));
+
+            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.MutantBoss.MutantBomb>(), 0, 0f, Main.myPlayer);
         }
 
         public override Color? GetAlpha(Color drawColor)

@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override bool CanDamage()
         {
-            return projectile.scale == 7f;
+            return projectile.scale == 10f;
         }
 
         public override void AI()
@@ -54,14 +54,14 @@ namespace FargowiltasSouls.Projectiles.Champions
             {
                 Main.PlaySound(SoundID.Zombie, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
             }
-            float num801 = 5f;
+            float num801 = 10f;
             projectile.localAI[0] += 1f;
             if (projectile.localAI[0] >= maxTime)
             {
                 projectile.Kill();
                 return;
             }
-            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 1f * num801;
+            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 1.5f * num801;
             if (projectile.scale > num801)
             {
                 projectile.scale = num801;

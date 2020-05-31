@@ -20,8 +20,8 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
+            projectile.width = 14;
+            projectile.height = 14;
             projectile.aiStyle = -1;
             projectile.hostile = true;
             projectile.timeLeft = 300;
@@ -58,6 +58,13 @@ namespace FargowiltasSouls.Projectiles.Champions
             }
 
             projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2;
+
+            int index = Dust.NewDust(projectile.position, projectile.width, projectile.height, 
+                DustID.Fire, projectile.velocity.X, projectile.velocity.Y, 100, new Color(), 1.2f);
+            Main.dust[index].position = (Main.dust[index].position + projectile.Center) / 2f;
+            Main.dust[index].noGravity = true;
+            Main.dust[index].velocity = Main.dust[index].velocity * 0.3f;
+            Main.dust[index].velocity = Main.dust[index].velocity - projectile.velocity * 0.1f;
         }
 
         public override void Kill(int timeLeft)

@@ -86,3 +86,6 @@ rework penetrator:
 	spear is on 0 local iframe cooldown, everything else is shared 1frame
 
 pog champ jump slower, less rain timeleft, changed configs
+dusts for some shadow champ attacks
+cosmos champ p3 even more aggressive
+will deathray strike scale increased
