@@ -60,9 +60,9 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.width = projectile.height = 144;
             projectile.position.X -= (float)(projectile.width / 2);
             projectile.position.Y -= (float)(projectile.height / 2);
-            for (int index = 0; index < 4; ++index)
+            for (int index = 0; index < 2; ++index)
                 Dust.NewDust(projectile.position, projectile.width, projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);
-            for (int index1 = 0; index1 < 40; ++index1)
+            for (int index1 = 0; index1 < 20; ++index1)
             {
                 int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 229, 0.0f, 0.0f, 0, new Color(), 2.5f);
                 Main.dust[index2].noGravity = true;

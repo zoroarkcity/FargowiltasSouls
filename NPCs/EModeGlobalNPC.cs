@@ -3504,7 +3504,7 @@ namespace FargowiltasSouls.NPCs
                         Aura(npc, 300, ModContent.BuffType<Buffs.Masomode.SqueakyToy>());
                         break;
 
-                    case NPCID.Poltergeist:
+                    /*case NPCID.Poltergeist:
                         if (++Counter > 180)
                         {
                             Counter = 0;
@@ -3516,7 +3516,7 @@ namespace FargowiltasSouls.NPCs
                                     Main.projectile[p].timeLeft = 300;
                             }
                         }
-                        break;
+                        break;*/
 
                     case NPCID.AngryBones:
                     case NPCID.AngryBonesBig:
@@ -7169,12 +7169,12 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.SolarSolenian:
-                        if (npc.ai[2] <= -6f)
+                        /*if (npc.ai[2] <= -6f)
                         {
                             damage /= 3;
                             if (npc.HasPlayerTarget && npc.Distance(Main.player[npc.target].Center) > 250)
                                 npc.ai[2] = -6f;
-                        }
+                        }*/
                         break;
 
                     case NPCID.SkeletronPrime:
@@ -7207,7 +7207,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Golem:
-                        damage = (int)(damage * 0.8);
+                        //damage = (int)(damage * 0.8);
                         break;
 
                     case NPCID.IceTortoise:
@@ -7422,11 +7422,11 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.SolarSolenian:
-                        if (npc.ai[2] <= -6f)
+                        /*if (npc.ai[2] <= -6f)
                         {
                             damage /= 3;
                             npc.ai[2] = -6f;
-                        }
+                        }*/
                         break;
 
                     case NPCID.TheDestroyer:

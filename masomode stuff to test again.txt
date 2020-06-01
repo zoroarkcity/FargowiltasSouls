@@ -90,3 +90,7 @@ dusts for some shadow champ attacks
 cosmos champ p3 even more aggressive
 will deathray strike scale increased
 changed mutant ring attacks
+removed poltergeist shooting lost souls
+removed golem DR
+removed selenians chaining rolls when hit
+nerfed fishron's p3 heal from 50% to 33%

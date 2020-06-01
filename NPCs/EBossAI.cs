@@ -3348,7 +3348,7 @@ namespace FargowiltasSouls.NPCs
                         masoBool[1] = false;
                         if (npc.ai[2] == 120)
                         {
-                            int max = Fargowiltas.Instance.MasomodeEXLoaded ? npc.lifeMax : npc.lifeMax / 2;
+                            int max = Fargowiltas.Instance.MasomodeEXLoaded ? npc.lifeMax : npc.lifeMax / 3;
                             int heal = max - npc.life;
                             npc.life = max;
                             CombatText.NewText(npc.Hitbox, CombatText.HealLife, heal);
