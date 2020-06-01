@@ -89,3 +89,4 @@ pog champ jump slower, less rain timeleft, changed configs
 dusts for some shadow champ attacks
 cosmos champ p3 even more aggressive
 will deathray strike scale increased
+changed mutant ring attacks

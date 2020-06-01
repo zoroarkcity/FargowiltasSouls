@@ -31,8 +31,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void AI()
         {
-            int d = Dust.NewDust(projectile.Center - Vector2.One * 5f, 10, 10, 229, -projectile.velocity.X / 3f, -projectile.velocity.Y / 3f, 150, Color.Transparent, 1.2f);
-            Main.dust[d].noGravity = true;
+            if (Main.rand.Next(3) == 0)
+            {
+                int d = Dust.NewDust(projectile.Center - Vector2.One * 5f, 10, 10, 229, -projectile.velocity.X / 3f, -projectile.velocity.Y / 3f, 150, Color.Transparent, 1.2f);
+                Main.dust[d].noGravity = true;
+            }
             projectile.rotation = projectile.velocity.ToRotation() + 1.570796f;
         }
 
