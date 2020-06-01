@@ -7030,18 +7030,6 @@ namespace FargowiltasSouls.NPCs
                         goto case NPCID.NebulaSoldier;
 
                     case NPCID.NebulaHeadcrab:
-                        if (npc.ai[0] == 5f) //latched on player
-                        {
-                            npc.Transform(NPCID.NebulaBrain);
-                            return false;
-                        }
-                        else if (Main.rand.Next(3) != 0) //die without contributing to pillar shield
-                        {
-                            Main.PlaySound(npc.DeathSound, npc.Center);
-                            return false;
-                        }
-                        goto case NPCID.NebulaSoldier;
-
                     case NPCID.NebulaBeast:
                     case NPCID.NebulaSoldier:
                         if (NPC.TowerActiveNebula && NPC.ShieldStrengthTowerNebula > 0)

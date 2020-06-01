@@ -94,3 +94,4 @@ removed poltergeist shooting lost souls
 removed golem DR
 removed selenians chaining rolls when hit
 nerfed fishron's p3 heal from 50% to 33%
+nebula headcrabs always contribute to shield and no longer become floaters after latching
