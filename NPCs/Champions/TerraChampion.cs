@@ -671,7 +671,7 @@ namespace FargowiltasSouls.NPCs.Champions
             if (resist)
                 damage /= 10;
             if (npc.life < npc.lifeMax / 10)
-                damage /= 4;
+                damage /= 3;
             return true;
         }
 
