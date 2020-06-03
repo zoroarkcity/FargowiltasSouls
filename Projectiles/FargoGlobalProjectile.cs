@@ -709,6 +709,14 @@ namespace FargowiltasSouls.Projectiles
 
                 #endregion
 
+                case ProjectileID.WireKite:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
+                        if (!NPC.downedGolemBoss && Framing.GetTileSafely(projectile.Center).wall == WallID.LihzahrdBrickUnsafe)
+                            projectile.Kill();
+                    }
+                    break;
+
                 case ProjectileID.NebulaSphere:
                     if (FargoSoulsWorld.MasochistMode)
                     {

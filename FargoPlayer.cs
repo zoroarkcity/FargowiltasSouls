@@ -1319,6 +1319,21 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (FargoSoulsWorld.MasochistMode && !NPC.downedGolemBoss)
+            {
+                if (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe)
+                {
+                    player.dangerSense = false;
+                    player.InfoAccMechShowWires = false;
+                }
+                if ((player.HeldItem.type == ItemID.WireCutter || player.HeldItem.type == ItemID.WireKite)
+                    && (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe
+                    || Framing.GetTileSafely(Main.MouseWorld).wall == WallID.LihzahrdBrickUnsafe))
+                {
+                    player.controlUseItem = false;
+                }
+            }
+
             if (Solar)
             {
                 if (!player.setSolar && !TerrariaSoul) //nerf DR

@@ -97,3 +97,7 @@ nerfed fishron's p3 heal from 50% to 33%
 nebula headcrabs always contribute to shield and no longer become floaters after latching
 tried something to make devi's frostballs and rune blasts despawn after their attacks (check in mp)
 removed that one damn bolt terra champ fires during sin wave
+now disabled in temple until golem is killed:
+	-mining traps and pressure plates
+	-dangersense and wire vision
+	-wire cutter and grand design
