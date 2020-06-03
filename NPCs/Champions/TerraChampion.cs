@@ -431,9 +431,9 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Vector2 vel = Vector2.UnitX.RotatedBy(Math.PI / 4 * (Main.rand.NextDouble() - 0.5)) * 8f;
+                                /*Vector2 vel = Vector2.UnitX.RotatedBy(Math.PI / 4 * (Main.rand.NextDouble() - 0.5)) * 8f;
                                 Projectile.NewProjectile(npc.Center, vel.RotatedBy(npc.localAI[1] - Math.PI / 2 * Math.Sign(offset.Y)), ProjectileID.CultistBossLightningOrbArc,
-                                    npc.damage / 4, 0, Main.myPlayer, npc.localAI[1] - (float)Math.PI / 2 * Math.Sign(offset.Y), Main.rand.Next(100));
+                                    npc.damage / 4, 0, Main.myPlayer, npc.localAI[1] - (float)Math.PI / 2 * Math.Sign(offset.Y), Main.rand.Next(100));*/
 
                                 for (int j = -5; j <= 5; j++)
                                 {
