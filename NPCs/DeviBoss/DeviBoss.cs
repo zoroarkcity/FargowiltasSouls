@@ -7,6 +7,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using FargowiltasSouls.Projectiles.Deathrays;
+using FargowiltasSouls.Projectiles.DeviBoss;
+using FargowiltasSouls.Projectiles.Masomode;
 
 namespace FargowiltasSouls.NPCs.DeviBoss
 {
@@ -135,7 +138,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             if (Main.netMode == NetmodeID.SinglePlayer)
                             {
                                 Projectile projectile = Main.projectile[number];
-                                projectile.SetDefaults(mod.ProjectileType("DeviBoss"));
+                                projectile.SetDefaults(ModContent.ProjectileType<Projectiles.DeviBoss.DeviBoss>());
                                 projectile.Center = npc.Center;
                                 projectile.owner = Main.myPlayer;
                                 projectile.velocity.X = 0;
@@ -147,12 +150,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 projectile.stepSpeed = 1f;
                                 projectile.ai[1] = npc.whoAmI;
 
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual2"), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual2>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
                             }
                             else if (Main.netMode == NetmodeID.Server)
                             {
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual2"), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviBoss"), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual2>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.DeviBoss.DeviBoss>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
                             }
                         }
                     }
@@ -243,7 +246,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 Main.projectile[i].Kill();
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("AbomRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<AbomRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }*/
                         Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                     }
@@ -332,8 +335,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             for (int i = 0; i < 4; i++)
                             {
                                 if (npc.localAI[3] > 1) //p2 throw another set of hammers
-                                    Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i) * retiSpeed, mod.ProjectileType("DeviHammer"), projectileDamage, 0f, Main.myPlayer, retiAcc, retiTime);
-                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i + Math.PI / 4) * spazSpeed, mod.ProjectileType("DeviHammer"), projectileDamage, 0f, Main.myPlayer, spazAcc, spazTime);
+                                    Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i) * retiSpeed, ModContent.ProjectileType<DeviHammer>(), projectileDamage, 0f, Main.myPlayer, retiAcc, retiTime);
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i + Math.PI / 4) * spazSpeed, ModContent.ProjectileType<DeviHammer>(), projectileDamage, 0f, Main.myPlayer, spazAcc, spazTime);
                             }
                         }
                     }
@@ -379,14 +382,14 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 for (int i = -3; i < 3; i++)
                                 {
                                     Projectile.NewProjectile(npc.Center, spawnVel.RotatedBy(Math.PI / 7 * i),
-                                        mod.ProjectileType("FakeHeart2"), damage, 0f, Main.myPlayer, 20, 30);
+                                        ModContent.ProjectileType<FakeHeart2>(), damage, 0f, Main.myPlayer, 20, 30);
                                 }
                                 if (npc.localAI[3] > 1)
                                 {
                                     for (int i = -5; i < 5; i++)
                                     {
                                         Projectile.NewProjectile(npc.Center, 1.5f * spawnVel.RotatedBy(Math.PI / 10 * i),
-                                            mod.ProjectileType("FakeHeart2"), damage, 0f, Main.myPlayer, 20, 40 + 5 * Math.Abs(i));
+                                            ModContent.ProjectileType<FakeHeart2>(), damage, 0f, Main.myPlayer, 20, 40 + 5 * Math.Abs(i));
                                     }
                                 }
                             }
@@ -420,9 +423,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 Vector2 vel = Vector2.Normalize(npc.velocity);
                                 for (int i = 0; i < max; i++)
                                 {
-                                    Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("DeviLightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .009f * npc.direction);
+                                    Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), ModContent.ProjectileType<DeviLightBall>(), projectileDamage, 0f, Main.myPlayer, 0f, .009f * npc.direction);
                                     if (npc.localAI[3] > 1)
-                                        Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), mod.ProjectileType("DeviLightBall"), projectileDamage, 0f, Main.myPlayer, 0f, .009f * -npc.direction);
+                                        Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / max * i), ModContent.ProjectileType<DeviLightBall>(), projectileDamage, 0f, Main.myPlayer, 0f, .009f * -npc.direction);
                                 }
                             }
                         }
@@ -457,12 +460,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int type = mod.ProjectileType("DeviMimic");
+                                int type = ModContent.ProjectileType<DeviMimic>();
                                 float ai0 = player.position.Y - 16;
 
                                 if (npc.localAI[3] > 1)
                                 {
-                                    type = mod.ProjectileType("DeviBigMimic");
+                                    type = ModContent.ProjectileType<DeviBigMimic>();
                                     ai0 = player.whoAmI;
                                 }
 
@@ -493,12 +496,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int type = mod.ProjectileType("DeviMimic");
+                                int type = ModContent.ProjectileType<DeviMimic>();
                                 float ai0 = player.position.Y - 16;
 
                                 if (npc.localAI[3] > 1)
                                 {
-                                    type = mod.ProjectileType("DeviBigMimic");
+                                    type = ModContent.ProjectileType<DeviBigMimic>();
                                     ai0 = player.whoAmI;
                                 }
 
@@ -525,6 +528,15 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (++npc.ai[1] > 360)
                     {
                         GetNextAttack();
+
+                        for (int i = 0; i < Main.maxProjectiles; i++)
+                        {
+                            if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].type == ModContent.ProjectileType<FrostfireballHostile>()
+                                && Main.projectile[i].timeLeft > 60)
+                            {
+                                Main.projectile[i].timeLeft = 60;
+                            }
+                        }
                     }
                     if (++npc.ai[2] > (npc.localAI[3] > 1 ? 15 : 30))
                     {
@@ -534,7 +546,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(npc.Center, new Vector2(4f, 0f).RotatedBy(Main.rand.NextDouble() * Math.PI * 2),
-                                mod.ProjectileType("FrostfireballHostile"), projectileDamage, 0f, Main.myPlayer, npc.target, 15f);
+                                ModContent.ProjectileType<FrostfireballHostile>(), projectileDamage, 0f, Main.myPlayer, npc.target, 15f);
                         }
                     }
                     if (npc.localAI[3] > 1 && --npc.ai[3] < 0) //spawn sandnado
@@ -643,6 +655,15 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         if (++npc.ai[2] > 3)
                         {
                             GetNextAttack();
+
+                            for (int i = 0; i < Main.maxProjectiles; i++)
+                            {
+                                if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].type == ProjectileID.RuneBlast
+                                    && Main.projectile[i].timeLeft > 60)
+                                {
+                                    Main.projectile[i].timeLeft = 60;
+                                }
+                            }
                         }
                         else
                         {
@@ -680,7 +701,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         npc.ai[3] = 0;
 
                         if (Main.netMode != NetmodeID.MultiplayerClient) //make moth dust trail
-                            Projectile.NewProjectile(npc.Center, Main.rand.NextVector2Unit() * 2f, mod.ProjectileType("MothDust"), projectileDamage, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, Main.rand.NextVector2Unit() * 2f, ModContent.ProjectileType<MothDust>(), projectileDamage, 0f, Main.myPlayer);
                     }
 
                     npc.velocity *= 0.9f;
@@ -711,7 +732,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         npc.ai[3] = 0;
 
                         if (Main.netMode != NetmodeID.MultiplayerClient) //make moth dust trail
-                            Projectile.NewProjectile(npc.Center, Main.rand.NextVector2Unit() * 2f, mod.ProjectileType("MothDust"), projectileDamage, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, Main.rand.NextVector2Unit() * 2f, ModContent.ProjectileType<MothDust>(), projectileDamage, 0f, Main.myPlayer);
                     }
 
                     if (++npc.ai[1] > 30)
@@ -793,7 +814,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 int max = npc.localAI[3] > 1 ? 30 : 20;
                                 for (int i = 0; i < max; i++)
                                 {
-                                    int p = Projectile.NewProjectile(npc.Center, 4f * Vector2.UnitX.RotatedBy(Main.rand.NextFloat((float)Math.PI * 2)), mod.ProjectileType("DeviLostSoul"), projectileDamage, 0f, Main.myPlayer);
+                                    int p = Projectile.NewProjectile(npc.Center, 4f * Vector2.UnitX.RotatedBy(Main.rand.NextFloat((float)Math.PI * 2)), ModContent.ProjectileType<DeviLostSoul>(), projectileDamage, 0f, Main.myPlayer);
                                     if (p != Main.maxProjectiles)
                                         Main.projectile[p].timeLeft = 300;
                                 }
@@ -846,7 +867,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                     spawnPos.X += 1200 * i;
                                     spawnPos.Y += 50 * j;
                                     Vector2 vel = 14 * Vector2.UnitX * -i;
-                                    Projectile.NewProjectile(spawnPos, vel, mod.ProjectileType("DeviGuardian"), npc.damage / 3, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<DeviGuardian>(), npc.damage / 3, 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -864,7 +885,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 spawnPos.X += Main.rand.Next(-200, 201);
                                 spawnPos.Y += 700;
                                 Vector2 vel = Main.rand.NextFloat(12, 16f) * Vector2.Normalize(player.Center - spawnPos);
-                                Projectile.NewProjectile(spawnPos, vel, mod.ProjectileType("DeviGuardian"), npc.damage / 3, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<DeviGuardian>(), npc.damage / 3, 0f, Main.myPlayer);
                             }
                         }
 
@@ -890,7 +911,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                         spawnPos.X += 1200 * i;
                                         spawnPos.Y += 60 * j;
                                         Vector2 vel = 14 * Vector2.UnitX * -i;
-                                        Projectile.NewProjectile(spawnPos, vel, mod.ProjectileType("DeviGuardian"), npc.damage / 3, 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<DeviGuardian>(), npc.damage / 3, 0f, Main.myPlayer);
                                     }
                                 }
                             }
@@ -911,7 +932,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         if (Main.netMode != NetmodeID.MultiplayerClient) //spawn ritual for strong attacks
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                     }
 
@@ -930,7 +951,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(npc.Center, -24 * Vector2.UnitY.RotatedBy((Main.rand.NextDouble() - 0.5) * Math.PI / 2),
-                                    mod.ProjectileType("DeviVisualHeart"), 0, 0f, Main.myPlayer);
+                                    ModContent.ProjectileType<DeviVisualHeart>(), 0, 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -946,7 +967,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 speed = 24 * Vector2.UnitY.RotatedBy(MathHelper.ToRadians(10) * npc.ai[2]);
-                                int type = npc.localAI[3] > 1 ? mod.ProjectileType("DeviRainHeart2") : mod.ProjectileType("DeviRainHeart");
+                                int type = npc.localAI[3] > 1 ? ModContent.ProjectileType<DeviRainHeart2>() : ModContent.ProjectileType<DeviRainHeart>();
                                 int damage = npc.localAI[3] > 1 ? npc.damage / 3 : npc.damage / 4;
                                 for (int i = -8; i <= 8; i++)
                                 {
@@ -978,7 +999,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         if (Main.netMode != NetmodeID.MultiplayerClient) //spawn ritual for strong attacks
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                     }
 
@@ -998,7 +1019,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                                 int damage = npc.localAI[3] > 1 ? npc.damage / 3 : npc.damage / 4;
 
-                                Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("DeviEnergyHeart"),
+                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<DeviEnergyHeart>(),
                                     damage, 0f, Main.myPlayer, 0f, acceleration);
                             }
                         }
@@ -1034,14 +1055,14 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             for (int i = 0; i < 8; i++) //make butterflies
                             {
                                 Vector2 speed = new Vector2(Main.rand.NextFloat(40f), Main.rand.NextFloat(-20f, 20f));
-                                Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("DeviButterfly"),
+                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<DeviButterfly>(),
                                    damage, 0f, Main.myPlayer, npc.whoAmI, 300 / 4 * i + offset);
                             }
                         }
 
                         if (Main.netMode != NetmodeID.MultiplayerClient) //spawn ritual for strong attacks
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                     }
 
@@ -1062,7 +1083,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         if (Main.netMode != NetmodeID.MultiplayerClient) //spawn ritual for strong attacks
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                     }
 
@@ -1079,7 +1100,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 for (int i = 0; i < max; i++)
                                 {
                                     Projectile.NewProjectile(npc.Center, 6f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * i),
-                                        mod.ProjectileType("DeviHeart"), damage, 0f, Main.myPlayer);
+                                        ModContent.ProjectileType<DeviHeart>(), damage, 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -1104,7 +1125,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             Main.PlaySound(SoundID.NPCKilled, npc.Center, 17);
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(npc.Center, new Vector2(0, -4), mod.ProjectileType("DeviMedusa"), 0, 0, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, new Vector2(0, -4), ModContent.ProjectileType<DeviMedusa>(), 0, 0, Main.myPlayer);
 
                             if (npc.Distance(Main.LocalPlayer.Center) < 3000 && Collision.CanHitLine(npc.Center, 0, 0, Main.LocalPlayer.Center, 0, 0))
                             {
@@ -1140,7 +1161,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                             if (npc.ai[3] == 6 && Main.netMode != NetmodeID.MultiplayerClient) //final warning
                             {
-                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[1]), mod.ProjectileType("DeviDeathraySmall"),
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[1]), ModContent.ProjectileType<DeviDeathraySmall>(),
                                     0, 0f, Main.myPlayer, 0f, npc.whoAmI);
                             }
                         }
@@ -1152,7 +1173,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[1]), mod.ProjectileType("DeviBigDeathray"),
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.localAI[1]), ModContent.ProjectileType<DeviBigDeathray>(),
                                     npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                             }
                         }
@@ -1199,7 +1220,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         if (Main.netMode != NetmodeID.MultiplayerClient) //spawn ritual for strong attacks
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("DeviRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                     }
                     
@@ -1216,7 +1237,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             const int loveOffset = 300;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(npc.Center + -Vector2.UnitY.RotatedBy(angle) * loveOffset, Vector2.Zero, mod.ProjectileType("DeviSparklingLove"), npc.damage / 2, 0f, Main.myPlayer, npc.whoAmI, loveOffset);
+                                Projectile.NewProjectile(npc.Center + -Vector2.UnitY.RotatedBy(angle) * loveOffset, Vector2.Zero, ModContent.ProjectileType<DeviSparklingLove>(), npc.damage / 2, 0f, Main.myPlayer, npc.whoAmI, loveOffset);
                             }
 
                             //spawn hitboxes
@@ -1225,7 +1246,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 for (int i = 0; i < 7; i++)
-                                    Projectile.NewProjectile(npc.Center + offset * i, Vector2.Zero, mod.ProjectileType("DeviAxe"), npc.damage / 2, 0f, Main.myPlayer, npc.whoAmI, spacing * i);
+                                    Projectile.NewProjectile(npc.Center + offset * i, Vector2.Zero, ModContent.ProjectileType<DeviAxe>(), npc.damage / 2, 0f, Main.myPlayer, npc.whoAmI, spacing * i);
                             }
                         }
 
@@ -1540,7 +1561,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 npc.localAI[3] = 2;
                 /*if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("AbomRitual"), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<AbomRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                 }*/
             }
             if (Main.netMode != NetmodeID.MultiplayerClient && npc.ai[0] > -2)
