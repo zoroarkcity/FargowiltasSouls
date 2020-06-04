@@ -101,3 +101,5 @@ now disabled in temple until golem is killed:
 	-mining traps and pressure plates
 	-dangersense and wire vision
 	-wire cutter and grand design
+
+reduced severity of nerfs
