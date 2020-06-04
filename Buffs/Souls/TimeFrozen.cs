@@ -42,6 +42,8 @@ namespace FargowiltasSouls.Buffs.Souls
             player.velocity = player.oldVelocity;
             player.position = player.oldPosition;
 
+            player.GetModPlayer<FargoPlayer>().MutantNibble = true; //no heal
+
             if (!Filters.Scene["FargowiltasSouls:TimeStop"].IsActive())
                 Filters.Scene.Activate("FargowiltasSouls:TimeStop");
         }
