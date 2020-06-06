@@ -14,6 +14,7 @@ namespace FargowiltasSouls.Sky
     {
         private bool isActive = false;
         private float intensity = 0f;
+        private float lifeIntensity = 0f;
 
         public override void Update(GameTime gameTime)
         {
@@ -25,13 +26,22 @@ namespace FargowiltasSouls.Sky
                 {
                     intensity = 1f;
                 }
+
+                if (Main.npc[EModeGlobalNPC.mutantBoss].ai[0] != 10)
+                {
+                    lifeIntensity = 1f - (float)Main.npc[EModeGlobalNPC.mutantBoss].life / Main.npc[EModeGlobalNPC.mutantBoss].lifeMax;
+                }
             }
             else
             {
                 intensity -= increment;
+                lifeIntensity -= increment;
+                if (lifeIntensity < 0f)
+                    lifeIntensity = 0f;
                 if (intensity < 0f)
                 {
                     intensity = 0f;
+                    lifeIntensity = 0f;
                     Deactivate();
                 }
             }
@@ -42,7 +52,15 @@ namespace FargowiltasSouls.Sky
             if (maxDepth >= 0 && minDepth < 0)
             {
                 spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantSky"),
-                    new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White * intensity * 0.5f);
+                    new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White * (intensity * 0.5f + lifeIntensity * 0.5f));
+                
+                for (int i = 0; i < 40; i++) //static on screen
+                {
+                    int width = Main.rand.Next(100, 251);
+                        spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantStatic"),
+                        new Rectangle(Main.rand.Next(Main.screenWidth) - width / 2, Main.rand.Next(Main.screenHeight), width, 3), 
+                        Color.White * lifeIntensity);
+                }
             }
         }
 
