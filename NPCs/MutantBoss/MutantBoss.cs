@@ -834,6 +834,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             npc.ai[1] = 0;
                             npc.ai[2] = 0;
                             npc.ai[3] = 0;
+                            npc.localAI[0] = 0;
                             npc.netUpdate = true;
                         }
                     }
@@ -1639,7 +1640,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[1] = 0;
                         Main.PlaySound(SoundID.Item92, npc.Center);
                         npc.ai[2] = npc.ai[2] > 0 ? -1 : 1;
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (Main.netMode != NetmodeID.MultiplayerClient && npc.ai[3] < 240)
                         {
                             const float retiRad = 525; //500
                             const float spazRad = 350; //250
