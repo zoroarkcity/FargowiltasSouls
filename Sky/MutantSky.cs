@@ -30,6 +30,12 @@ namespace FargowiltasSouls.Sky
                 if (Main.npc[EModeGlobalNPC.mutantBoss].ai[0] != 10)
                 {
                     lifeIntensity = 1f - (float)Main.npc[EModeGlobalNPC.mutantBoss].life / Main.npc[EModeGlobalNPC.mutantBoss].lifeMax;
+                    if (!FargoSoulsWorld.MasochistMode)
+                    {
+                        lifeIntensity -= 0.5f;
+                        if (lifeIntensity < 0)
+                            lifeIntensity = 0;
+                    }
                 }
             }
             else
