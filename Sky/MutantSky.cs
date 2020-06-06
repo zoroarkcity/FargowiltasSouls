@@ -15,6 +15,9 @@ namespace FargowiltasSouls.Sky
         private bool isActive = false;
         private float intensity = 0f;
         private float lifeIntensity = 0f;
+        private int delay = 0;
+        private int[] xPos = new int[50];
+        private int[] yPos = new int[50];
 
         public override void Update(GameTime gameTime)
         {
@@ -48,6 +51,7 @@ namespace FargowiltasSouls.Sky
                 {
                     intensity = 0f;
                     lifeIntensity = 0f;
+                    delay = 0;
                     Deactivate();
                 }
             }
@@ -59,13 +63,23 @@ namespace FargowiltasSouls.Sky
             {
                 spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantSky"),
                     new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White * (intensity * 0.5f + lifeIntensity * 0.5f));
-                
-                for (int i = 0; i < 40; i++) //static on screen
+
+                if (--delay < 0)
                 {
-                    int width = Main.rand.Next(100, 251);
-                        spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantStatic"),
-                        new Rectangle(Main.rand.Next(Main.screenWidth) - width / 2, Main.rand.Next(Main.screenHeight), width, 3), 
-                        Color.White * lifeIntensity);
+                    delay = Main.rand.Next(5) + (int)(25f * (1f - lifeIntensity));
+                    for (int i = 0; i < 50; i++) //update positions
+                    {
+                        xPos[i] = Main.rand.Next(Main.screenWidth);
+                        yPos[i] = Main.rand.Next(Main.screenHeight);
+                    }
+                }
+
+                for (int i = 0; i < 50; i++) //static on screen
+                {
+                    int width = Main.rand.Next(50, 251);
+                    spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantStatic"),
+                    new Rectangle(xPos[i] - width / 2, yPos[i], width, 3),
+                    Color.White * lifeIntensity * 0.75f);
                 }
             }
         }
