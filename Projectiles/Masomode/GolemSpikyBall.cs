@@ -23,6 +23,19 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.penetrate = 1;
         }
 
+        public override void Kill(int timeLeft)
+        {
+            Main.PlaySound(SoundID.Item10, projectile.position);
+            for (int index1 = 0; index1 < 7; ++index1)
+            {
+                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 246, -projectile.velocity.X * 0.2f, -projectile.velocity.Y * 0.2f, 100, new Color(), 2f);
+                Main.dust[index2].noGravity = true;
+                Main.dust[index2].velocity *= 1.5f;
+                int index3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 246, -projectile.velocity.X * 0.2f, -projectile.velocity.Y * 0.2f, 100, new Color(), 1f);
+                Main.dust[index3].velocity *= 1.5f;
+            }
+        }
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(BuffID.BrokenArmor, 600);
