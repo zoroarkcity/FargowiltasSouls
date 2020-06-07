@@ -100,7 +100,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 }
             }*/
 
-            if (projectile.localAI[1] == 0)
+            /*if (projectile.localAI[1] == 0)
             {
                 projectile.localAI[1] = 1;
                 if (projectile.owner == Main.myPlayer)
@@ -108,7 +108,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity), 
                         ModContent.ProjectileType<HentaiSpearDeathray>(), projectile.damage, projectile.knockBack, projectile.owner);
                 }
-            }
+            }*/
 
             // When we reach the end of the animation, we can kill the spear projectile
             if (projOwner.itemAnimation == 0) projectile.Kill();
