@@ -182,7 +182,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
             MakeDust();
 
-            if (projectile.alpha == 0 && Main.netMode != 1)
+            if (projectile.alpha == 0 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 for (int i = 0; i < 8; i++)
                 {

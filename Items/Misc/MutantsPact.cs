@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Misc
@@ -35,7 +36,7 @@ namespace FargowiltasSouls.Items.Misc
             if (player.itemAnimation > 0 && player.itemTime == 0)
             {
                 player.GetModPlayer<FargoPlayer>().MutantsPact = true;
-                Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
+                Main.PlaySound(SoundID.Roar, (int)player.position.X, (int)player.position.Y, 0);
             }
             return true;
         }

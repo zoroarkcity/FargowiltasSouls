@@ -32,7 +32,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
                 Main.dust[index3].velocity *= 2f;
             }
 
-            if (projectile.ai[0] == 0f && Main.netMode != 1) //split
+            if (projectile.ai[0] == 0f && Main.netMode != NetmodeID.MultiplayerClient) //split
             {
                 for (int i = 1; i <= 4; i++)
                     Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity).RotatedBy(MathHelper.ToRadians(15) * i * Math.Sign(projectile.ai[1])),

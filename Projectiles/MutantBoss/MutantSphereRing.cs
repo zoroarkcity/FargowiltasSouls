@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.MutantBoss
@@ -18,8 +19,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void SetDefaults()
         {
-            projectile.width = 46;
-            projectile.height = 46;
+            projectile.width = 58;
+            projectile.height = 58;
             projectile.hostile = true;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
@@ -30,7 +31,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override bool CanHitPlayer(Player target)
         {
-            return target.hurtCooldowns[1] == 0;
+            return target.hurtCooldowns[1] == 0 && projectile.Distance(target.Center) < projectile.width / 2;
         }
 
         public override void AI()
@@ -60,15 +61,14 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     projectile.alpha = 0;
             }
             projectile.scale = (1f - projectile.alpha / 255f);
-            for (int i = 0; i < 2; i++)
-            {
-                float num = Main.rand.NextFloat(-0.5f, 0.5f);
-                Vector2 vector2 = new Vector2(-projectile.width * 0.65f * projectile.scale, 0.0f).RotatedBy(num * 6.28318548202515, new Vector2()).RotatedBy(projectile.velocity.ToRotation(), new Vector2());
-                int index2 = Dust.NewDust(projectile.Center - Vector2.One * 5f, 10, 10, 229, -projectile.velocity.X / 3f, -projectile.velocity.Y / 3f, 150, Color.Transparent, 0.7f);
-                Main.dust[index2].velocity = Vector2.Zero;
-                Main.dust[index2].position = projectile.Center + vector2;
-                Main.dust[index2].noGravity = true;
-            }
+            
+            float num = Main.rand.NextFloat(-0.5f, 0.5f);
+            Vector2 vector2 = new Vector2(-projectile.width * 0.65f * projectile.scale, 0.0f).RotatedBy(num * 6.28318548202515, new Vector2()).RotatedBy(projectile.velocity.ToRotation(), new Vector2());
+            int index2 = Dust.NewDust(projectile.Center - Vector2.One * 5f, 10, 10, 229, -projectile.velocity.X / 3f, -projectile.velocity.Y / 3f, 150, Color.Transparent, 0.7f);
+            Main.dust[index2].velocity = Vector2.Zero;
+            Main.dust[index2].position = projectile.Center + vector2;
+            Main.dust[index2].noGravity = true;
+            
             if (++projectile.frameCounter >= 6)
             {
                 projectile.frameCounter = 0;
@@ -93,16 +93,16 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void Kill(int timeleft)
         {
-            Main.PlaySound(4, projectile.Center, 6);
+            Main.PlaySound(SoundID.NPCKilled, projectile.Center, 6);
             projectile.position = projectile.Center;
             projectile.width = projectile.height = 208;
             projectile.Center = projectile.position;
-            for (int index1 = 0; index1 < 3; ++index1)
+            for (int index1 = 0; index1 < 2; ++index1)
             {
                 int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);
                 Main.dust[index2].position = new Vector2((float)(projectile.width / 2), 0.0f).RotatedBy(6.28318548202515 * Main.rand.NextDouble(), new Vector2()) * (float)Main.rand.NextDouble() + projectile.Center;
             }
-            for (int index1 = 0; index1 < 10; ++index1)
+            for (int index1 = 0; index1 < 5; ++index1)
             {
                 int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 229, 0.0f, 0.0f, 0, new Color(), 2.5f);
                 Main.dust[index2].position = new Vector2((float)(projectile.width / 2), 0.0f).RotatedBy(6.28318548202515 * Main.rand.NextDouble(), new Vector2()) * (float)Main.rand.NextDouble() + projectile.Center;

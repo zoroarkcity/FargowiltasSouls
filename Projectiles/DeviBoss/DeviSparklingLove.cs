@@ -125,12 +125,12 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
         public override void Kill(int timeleft)
         {
-            Main.PlaySound(4, projectile.Center, 6);
+            Main.PlaySound(SoundID.NPCKilled, projectile.Center, 6);
             Main.PlaySound(SoundID.Item92, projectile.Center);
 
             MakeDust();
 
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 /*for (int i = 0; i < 8; i++)
                 {

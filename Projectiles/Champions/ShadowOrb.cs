@@ -18,15 +18,28 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
+            projectile.width = 20;
+            projectile.height = 20;
             projectile.aiStyle = -1;
             projectile.hostile = true;
             projectile.timeLeft = 45;
             
             cooldownSlot = 1;
             projectile.tileCollide = false;
+            projectile.ignoreWater = true;
             projectile.scale = 2f;
+        }
+
+        public override void AI()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                int index = Dust.NewDust(projectile.position, (int)(projectile.width * projectile.scale), (int)(projectile.height * projectile.scale), 27, projectile.velocity.X, projectile.velocity.Y, 100, new Color(), 2.5f);
+                Main.dust[index].position = (Main.dust[index].position + projectile.Center) / 2f;
+                Main.dust[index].noGravity = true;
+                Main.dust[index].velocity = Main.dust[index].velocity * 0.3f;
+                Main.dust[index].velocity = Main.dust[index].velocity - projectile.velocity * 0.1f;
+            }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -38,7 +51,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void Kill(int timeLeft)
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 for (int i = 0; i < 8; i++)
                 {
@@ -47,7 +60,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                 }
             }
             
-            Main.PlaySound(2, projectile.Center, 14);
+            Main.PlaySound(SoundID.Item, projectile.Center, 14);
 
             const int num226 = 36;
             for (int num227 = 0; num227 < num226; num227++)

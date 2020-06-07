@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Items.Summons
         {
             if (player.itemAnimation > 0 && player.itemTime == 0)
             {
-                Main.PlaySound(15, player.Center, 0);
+                Main.PlaySound(SoundID.Roar, player.Center, 0);
                 NPC.SpawnOnPlayer(player.whoAmI, NPCID.Plantera);
                 if (NPC.downedPlantBoss)
                 {

@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             if (++projectile.localAI[0] > 8)
             {
                 projectile.localAI[0] = 0;
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                     Projectile.NewProjectile(projectile.position + Main.rand.NextVector2Square(0f, projectile.width), Vector2.UnitX.RotatedByRandom(Math.PI) * 6f, ProjectileID.PhantasmalEye, projectile.damage, 0f, projectile.owner);
             }
 

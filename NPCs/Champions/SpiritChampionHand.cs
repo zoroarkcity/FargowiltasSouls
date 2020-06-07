@@ -40,6 +40,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.buffImmune[BuffID.Suffocation] = true;
             npc.buffImmune[mod.BuffType("Lethargic")] = true;
             npc.buffImmune[mod.BuffType("ClippedWings")] = true;
+            npc.buffImmune[mod.BuffType("LightningRod")] = true;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
         }
 
@@ -112,7 +113,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         if (npc.Hitbox.Intersects(player.Hitbox) && player.GetModPlayer<FargoPlayer>().MashCounter <= 0) //GOTCHA
                         {
-                            Main.PlaySound(15, npc.Center, 0);
+                            Main.PlaySound(SoundID.Roar, npc.Center, 0);
                             
                             npc.ai[0] = 2;
                             npc.netUpdate = true;
@@ -135,7 +136,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             player.GetModPlayer<FargoPlayer>().MashCounter += 30;
                             player.velocity.X = player.Center.X < head.Center.X ? -15f : 15f;
                             player.velocity.Y = -10f;
-                            Main.PlaySound(15, npc.Center, 0);
+                            Main.PlaySound(SoundID.Roar, npc.Center, 0);
                         }
 
                         npc.ai[0] = head.ai[0] == -3 ? 1 : 0;
@@ -183,7 +184,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             player.velocity.X = player.Center.X < head.Center.X ? -15f : 15f;
                             player.velocity.Y = -10f;
-                            Main.PlaySound(15, npc.Center, 0);
+                            Main.PlaySound(SoundID.Roar, npc.Center, 0);
                         }
 
                         npc.life = 0;

@@ -410,7 +410,7 @@ namespace FargowiltasSouls
                 || Main.npc[i].type == NPCID.LunarTowerNebula
                 || Main.npc[i].type == NPCID.LunarTowerStardust)
                 {
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         var netMessage = mod.GetPacket();
                         netMessage.Write((byte)1);
@@ -1090,7 +1090,7 @@ namespace FargowiltasSouls
                             player.breath--;
                         }
                         if (player.breath == 0)
-                            Main.PlaySound(23);
+                            Main.PlaySound(SoundID.Item3);
                         if (player.breath <= 0)
                             player.AddBuff(BuffID.Suffocation, 2);
                     }
@@ -1113,8 +1113,8 @@ namespace FargowiltasSouls
                             int num3 = (int)vector.X;
                             int num4 = (int)vector.Y;
                             WorldGen.KillTile(num3, num4, false, false, false);
-                            if (Main.netMode == 1 && !Main.tile[num3, num4].active())
-                                NetMessage.SendData(17, -1, -1, null, 0, num3, num4, 0f, 0, 0, 0);
+                            if (Main.netMode == NetmodeID.MultiplayerClient && !Main.tile[num3, num4].active())
+                                NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, num3, num4, 0f, 0, 0, 0);
                         }
                     }
                 }
@@ -1189,7 +1189,7 @@ namespace FargowiltasSouls
                     }
 
                     player.Teleport(teleportPos, 1);
-                    NetMessage.SendData(65, -1, -1, null, 0, player.whoAmI, teleportPos.X, teleportPos.Y, 1);
+                    NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, teleportPos.X, teleportPos.Y, 1);
 
                     unstableCD = 60;
                 }
@@ -1319,6 +1319,21 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (FargoSoulsWorld.MasochistMode && !NPC.downedGolemBoss)
+            {
+                if (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe)
+                {
+                    player.dangerSense = false;
+                    player.InfoAccMechShowWires = false;
+                }
+                if ((player.HeldItem.type == ItemID.WireCutter || player.HeldItem.type == ItemID.WireKite)
+                    && (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe
+                    || Framing.GetTileSafely(Main.MouseWorld).wall == WallID.LihzahrdBrickUnsafe))
+                {
+                    player.controlUseItem = false;
+                }
+            }
+
             if (Solar)
             {
                 if (!player.setSolar && !TerrariaSoul) //nerf DR
@@ -1640,13 +1655,13 @@ namespace FargowiltasSouls
                                 multiplier = 2;
                             if (MasochistSoul)
                                 multiplier = 5;
-                            if (Main.netMode == 0)
+                            if (Main.netMode == NetmodeID.SinglePlayer)
                             {
                                 int n = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y, ModContent.NPCType<CreeperGutted>(), 0, player.whoAmI, 0f, multiplier);
                                 if (n != 200)
                                     Main.npc[n].velocity = Vector2.UnitX.RotatedByRandom(2 * Math.PI) * 8;
                             }
-                            else if (Main.netMode == 1)
+                            else if (Main.netMode == NetmodeID.MultiplayerClient)
                             {
                                 var netMessage = mod.GetPacket();
                                 netMessage.Write((byte)0);
@@ -1670,13 +1685,13 @@ namespace FargowiltasSouls
                             }
                             if (Main.npc[lowestHealth].life < Main.npc[lowestHealth].lifeMax)
                             {
-                                if (Main.netMode == 0)
+                                if (Main.netMode == NetmodeID.SinglePlayer)
                                 {
                                     int damage = Main.npc[lowestHealth].lifeMax - Main.npc[lowestHealth].life;
                                     Main.npc[lowestHealth].life = Main.npc[lowestHealth].lifeMax;
                                     CombatText.NewText(Main.npc[lowestHealth].Hitbox, CombatText.HealLife, damage);
                                 }
-                                else if (Main.netMode == 1)
+                                else if (Main.netMode == NetmodeID.MultiplayerClient)
                                 {
                                     var netMessage = mod.GetPacket();
                                     netMessage.Write((byte)11);
@@ -2215,10 +2230,10 @@ namespace FargowiltasSouls
             if (TideTurnerEnchant)
             {
                 //tide turner daggers
-                if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.TideDaggers) && player.ownedProjectileCounts[thorium.ProjectileType("TideDagger")] < 24 && proj.type != thorium.ProjectileType("ThrowingGuideFollowup") && proj.type != thorium.ProjectileType("TideDagger") && target.type != 488 && Main.rand.Next(5) == 0)
+                if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.TideDaggers) && player.ownedProjectileCounts[thorium.ProjectileType("TideDagger")] < 24 && proj.type != thorium.ProjectileType("ThrowingGuideFollowup") && proj.type != thorium.ProjectileType("TideDagger") && target.type != NPCID.TargetDummy && Main.rand.Next(5) == 0)
                 {
                     FargoGlobalProjectile.XWay(4, player.position, thorium.ProjectileType("TideDagger"), 3, (int)(proj.damage * 0.75), 3);
-                    Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 43, 1f, 0f);
+                    Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 43, 1f, 0f);
                 }
                 //mini crits
                 if (thoriumPlayer.tideOrb > 0 && !crit)
@@ -2249,12 +2264,12 @@ namespace FargowiltasSouls
                 //assassin duplicate damage
                 if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.AssassinDamage) && Utils.NextFloat(Main.rand) < 0.1f)
                 {
-                    Main.PlaySound(2, (int)target.position.X, (int)target.position.Y, 92, 1f, 0f);
+                    Main.PlaySound(SoundID.Item, (int)target.position.X, (int)target.position.Y, 92, 1f, 0f);
                     Projectile.NewProjectile((float)((int)target.Center.X), (float)((int)target.Center.Y), 0f, 0f, thorium.ProjectileType("MeteorPlasmaDamage"), (int)((float)proj.damage * 1.15f), 0f, Main.myPlayer, 0f, 0f);
                     Projectile.NewProjectile((float)((int)target.Center.X), (float)((int)target.Center.Y), 0f, 0f, thorium.ProjectileType("MeteorPlasma"), 0, 0f, Main.myPlayer, 0f, 0f);
                 }
                 //insta kill
-                if (target.type != 488 && target.lifeMax < 100000 && Utils.NextFloat(Main.rand) < 0.05f)
+                if (target.type != NPCID.TargetDummy && target.lifeMax < 100000 && Utils.NextFloat(Main.rand) < 0.05f)
                 {
                     if ((target.boss || NPCID.Sets.BossHeadTextures[target.type] > -1) && target.life < target.lifeMax * 0.05)
                     {
@@ -2310,7 +2325,7 @@ namespace FargowiltasSouls
             //white dwarf
             if (WhiteDwarfEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.WhiteDwarf) && crit)
             {
-                Main.PlaySound(2, (int)target.position.X, (int)target.position.Y, 92, 1f, 0f);
+                Main.PlaySound(SoundID.Item, (int)target.position.X, (int)target.position.Y, 92, 1f, 0f);
                 Projectile.NewProjectile((float)((int)target.Center.X), (float)((int)target.Center.Y), 0f, 0f, thorium.ProjectileType("WhiteFlare"), (int)((float)target.lifeMax * 0.001f), 0f, Main.myPlayer, 0f, 0f);
             }
 
@@ -2420,10 +2435,10 @@ namespace FargowiltasSouls
             if (TideTurnerEnchant)
             {
                 //tide turner daggers
-                if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.TideDaggers) && player.ownedProjectileCounts[thorium.ProjectileType("TideDagger")] < 24 && target.type != 488 && Main.rand.Next(5) == 0)
+                if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.TideDaggers) && player.ownedProjectileCounts[thorium.ProjectileType("TideDagger")] < 24 && target.type != NPCID.TargetDummy && Main.rand.Next(5) == 0)
                 {
                     FargoGlobalProjectile.XWay(4, player.position, thorium.ProjectileType("TideDagger"), 3, (int)(item.damage * 0.75), 3);
-                    Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 43, 1f, 0f);
+                    Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 43, 1f, 0f);
                 }
                 //mini crits
                 if (thoriumPlayer.tideOrb > 0 && !crit)
@@ -2454,12 +2469,12 @@ namespace FargowiltasSouls
                 //assassin duplicate damage
                 if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.AssassinDamage) && Utils.NextFloat(Main.rand) < 0.1f)
                 {
-                    Main.PlaySound(2, (int)target.position.X, (int)target.position.Y, 92, 1f, 0f);
+                    Main.PlaySound(SoundID.Item, (int)target.position.X, (int)target.position.Y, 92, 1f, 0f);
                     Projectile.NewProjectile((float)((int)target.Center.X), (float)((int)target.Center.Y), 0f, 0f, thorium.ProjectileType("MeteorPlasmaDamage"), (int)((float)item.damage * 1.15f), 0f, Main.myPlayer, 0f, 0f);
                     Projectile.NewProjectile((float)((int)target.Center.X), (float)((int)target.Center.Y), 0f, 0f, thorium.ProjectileType("MeteorPlasma"), 0, 0f, Main.myPlayer, 0f, 0f);
                 }
                 //insta kill
-                if (target.type != 488 && target.lifeMax < 100000 && Utils.NextFloat(Main.rand) < 0.05f)
+                if (target.type != NPCID.TargetDummy && target.lifeMax < 100000 && Utils.NextFloat(Main.rand) < 0.05f)
                 {
                     if ((target.boss || NPCID.Sets.BossHeadTextures[target.type] > -1) && target.life < target.lifeMax * 0.05)
                     {
@@ -2515,7 +2530,7 @@ namespace FargowiltasSouls
             //white dwarf
             if (WhiteDwarfEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.WhiteDwarf) && crit)
             {
-                Main.PlaySound(2, (int)target.position.X, (int)target.position.Y, 92, 1f, 0f);
+                Main.PlaySound(SoundID.Item, (int)target.position.X, (int)target.position.Y, 92, 1f, 0f);
                 Projectile.NewProjectile((float)((int)target.Center.X), (float)((int)target.Center.Y), 0f, 0f, thorium.ProjectileType("WhiteFlare"), (int)((float)target.lifeMax * 0.001f), 0f, Main.myPlayer, 0f, 0f);
             }
 
@@ -2617,7 +2632,7 @@ namespace FargowiltasSouls
                 num483 *= num486;
                 num484 *= num486;
                 int num487 = proj.damage;
-                int num488 = Projectile.NewProjectile(x, y, num483, num484, 92, num487, proj.knockBack, proj.owner, 0f, 0f);
+                int num488 = Projectile.NewProjectile(x, y, num483, num484, ProjectileID.HallowStar, num487, proj.knockBack, proj.owner, 0f, 0f);
                 if (num488 != 1000)
                     Main.projectile[num488].ai[1] = proj.position.Y;
                 //Main.projectile[num488].ai[0] = 1f;
@@ -2692,7 +2707,7 @@ namespace FargowiltasSouls
                 CorruptHeartCD = 60;
                 if (proj.type != ProjectileID.TinyEater && SoulConfig.Instance.GetValue(SoulConfig.Instance.CorruptHeart))
                 {
-                    Main.PlaySound(3, (int)player.Center.X, (int)player.Center.Y, 1, 1f, 0.0f);
+                    Main.PlaySound(SoundID.NPCHit, (int)player.Center.X, (int)player.Center.Y, 1, 1f, 0.0f);
                     for (int index1 = 0; index1 < 20; ++index1)
                     {
                         int index2 = Dust.NewDust(player.position, player.width, player.height, 184, 0.0f, 0.0f, 0, new Color(), 1f);
@@ -2752,7 +2767,7 @@ namespace FargowiltasSouls
 
             if (BulbEnchant && !TerrariaSoul && Main.rand.Next(4) == 0)
             {
-                Main.PlaySound(2, (int)proj.position.X, (int)proj.position.Y, 34, 1f, 0f);
+                Main.PlaySound(SoundID.Item, (int)proj.position.X, (int)proj.position.Y, 34, 1f, 0f);
                 Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, thorium.ProjectileType("BloomCloud"), 0, 0f, proj.owner, 0f, 0f);
                 Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, thorium.ProjectileType("BloomCloudDamage"), (int)(10f * player.magicDamage), 0f, proj.owner, 0f, 0f);
             }
@@ -2804,7 +2819,7 @@ namespace FargowiltasSouls
             }
 
             //life bloom
-            if (LifeBloomEnchant && target.type != 488 && Main.rand.Next(4) == 0 && thoriumPlayer.lifeBloomMax < 50)
+            if (LifeBloomEnchant && target.type != NPCID.TargetDummy && Main.rand.Next(4) == 0 && thoriumPlayer.lifeBloomMax < 50)
             {
                 for (int l = 0; l < 10; l++)
                 {
@@ -2818,7 +2833,7 @@ namespace FargowiltasSouls
             }
 
             //demon blood
-            if (DemonBloodEnchant && target.type != 488 && !thoriumPlayer.bloodChargeExhaust)
+            if (DemonBloodEnchant && target.type != NPCID.TargetDummy && !thoriumPlayer.bloodChargeExhaust)
             {
                 thoriumPlayer.bloodCharge++;
                 thoriumPlayer.bloodChargeTimer = 120;
@@ -2846,7 +2861,7 @@ namespace FargowiltasSouls
             if (MixTape && SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.MixTape) && crit && proj.type != thorium.ProjectileType("MixtapeNote"))
             {
                 int num23 = Main.rand.Next(3);
-                Main.PlaySound(2, (int)target.position.X, (int)target.position.Y, 73, 1f, 0f);
+                Main.PlaySound(SoundID.Item, (int)target.position.X, (int)target.position.Y, 73, 1f, 0f);
                 for (int n = 0; n < 5; n++)
                 {
                     Projectile.NewProjectile(target.Center.X, target.Center.Y, Utils.NextFloat(Main.rand, -5f, 5f), Utils.NextFloat(Main.rand, -5f, 5f), thorium.ProjectileType("MixtapeNote"), (int)((float)proj.damage * 0.25f), 2f, proj.owner, (float)num23, 0f);
@@ -3040,11 +3055,11 @@ namespace FargowiltasSouls
             if (NymphsPerfume && NymphsPerfumeCD <= 0 && !target.immortal && !player.moonLeech)
             {
                 NymphsPerfumeCD = 600;
-                if (Main.netMode == 0)
+                if (Main.netMode == NetmodeID.SinglePlayer)
                 {
                     Item.NewItem(target.Hitbox, ItemID.Heart);
                 }
-                else if (Main.netMode == 1)
+                else if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
                     var netMessage = mod.GetPacket();
                     netMessage.Write((byte)9);
@@ -3169,7 +3184,7 @@ namespace FargowiltasSouls
                 CorruptHeartCD = 60;
                 if (SoulConfig.Instance.GetValue(SoulConfig.Instance.CorruptHeart))
                 {
-                    Main.PlaySound(3, (int)player.Center.X, (int)player.Center.Y, 1, 1f, 0.0f);
+                    Main.PlaySound(SoundID.NPCHit, (int)player.Center.X, (int)player.Center.Y, 1, 1f, 0.0f);
                     for (int index1 = 0; index1 < 20; ++index1)
                     {
                         int index2 = Dust.NewDust(player.position, player.width, player.height, 184, 0.0f, 0.0f, 0, new Color(), 1f);
@@ -3227,7 +3242,7 @@ namespace FargowiltasSouls
 
             if (BulbEnchant && !TerrariaSoul && Main.rand.Next(4) == 0)
             {
-                Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 34, 1f, 0f);
+                Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 34, 1f, 0f);
                 Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, thorium.ProjectileType("BloomCloud"), 0, 0f, player.whoAmI, 0f, 0f);
                 Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, thorium.ProjectileType("BloomCloudDamage"), (int)(10f * player.magicDamage), 0f, player.whoAmI, 0f, 0f);
             }
@@ -3279,7 +3294,7 @@ namespace FargowiltasSouls
             }
 
             //life bloom
-            if (LifeBloomEnchant && target.type != 488 && Main.rand.Next(4) == 0 && thoriumPlayer.lifeBloomMax < 50)
+            if (LifeBloomEnchant && target.type != NPCID.TargetDummy && Main.rand.Next(4) == 0 && thoriumPlayer.lifeBloomMax < 50)
             {
                 for (int l = 0; l < 10; l++)
                 {
@@ -3293,7 +3308,7 @@ namespace FargowiltasSouls
             }
 
             //demon blood
-            if (DemonBloodEnchant && target.type != 488 && !thoriumPlayer.bloodChargeExhaust)
+            if (DemonBloodEnchant && target.type != NPCID.TargetDummy && !thoriumPlayer.bloodChargeExhaust)
             {
                 thoriumPlayer.bloodCharge++;
                 thoriumPlayer.bloodChargeTimer = 120;
@@ -3316,7 +3331,7 @@ namespace FargowiltasSouls
             if (MixTape && SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.MixTape) && crit)
             {
                 int num23 = Main.rand.Next(3);
-                Main.PlaySound(2, (int)target.position.X, (int)target.position.Y, 73, 1f, 0f);
+                Main.PlaySound(SoundID.Item, (int)target.position.X, (int)target.position.Y, 73, 1f, 0f);
                 for (int n = 0; n < 5; n++)
                 {
                     Projectile.NewProjectile(target.Center.X, target.Center.Y, Utils.NextFloat(Main.rand, -5f, 5f), Utils.NextFloat(Main.rand, -5f, 5f), thorium.ProjectileType("MixtapeNote"), (int)((float)item.damage * 0.25f), 2f, player.whoAmI, (float)num23, 0f);
@@ -3335,9 +3350,10 @@ namespace FargowiltasSouls
             if (IronGuard && internalTimer > 0 && !player.immune)
             {
                 player.immune = true;
-                player.immuneTime = player.longInvince ? 60 : 30;
-                player.hurtCooldowns[0] = player.longInvince ? 60 : 30;
-                player.hurtCooldowns[1] = player.longInvince ? 60 : 30;
+                int invul = player.longInvince ? 120 : 60;
+                player.immuneTime = invul;
+                player.hurtCooldowns[0] = invul;
+                player.hurtCooldowns[1] = invul;
                 player.AddBuff(BuffID.ParryDamageBuff, 300);
                 return false;
             }
@@ -3845,7 +3861,7 @@ namespace FargowiltasSouls
                 case ItemID.DaedalusStormbow:
                 case ItemID.StarCannon:
                 case ItemID.DD2BetsyBow:
-                    return 0.5f;
+                    return 2f / 3f;
 
                 case ItemID.Uzi:
                 case ItemID.Megashark:
@@ -3857,7 +3873,7 @@ namespace FargowiltasSouls
                 case ItemID.LastPrism:
                 case ItemID.Tsunami:
                 case ItemID.Phantasm:
-                    return 2f / 3f;
+                    return 0.75f;
                     
                 case ItemID.OnyxBlaster:
                 case ItemID.ElectrosphereLauncher:
@@ -3896,7 +3912,7 @@ namespace FargowiltasSouls
                         if (!spawned && Main.projectile[i].wet && FargoSoulsWorld.MasochistMode && !NPC.AnyNPCs(NPCID.DukeFishron)) //should spawn boss
                         {
                             spawned = true;
-                            if (Main.netMode == 0) //singleplayer
+                            if (Main.netMode == NetmodeID.SinglePlayer) //singleplayer
                             {
                                 EModeGlobalNPC.spawnFishronEX = true;
                                 NPC.NewNPC((int)Main.projectile[i].Center.X, (int)Main.projectile[i].Center.Y + 100,
@@ -3904,7 +3920,7 @@ namespace FargowiltasSouls
                                 EModeGlobalNPC.spawnFishronEX = false;
                                 Main.NewText("Duke Fishron EX has awoken!", 50, 100, 255);
                             }
-                            else if (Main.netMode == 1) //MP, broadcast(?) packet from spawning player's client
+                            else if (Main.netMode == NetmodeID.MultiplayerClient) //MP, broadcast(?) packet from spawning player's client
                             {
                                 var netMessage = mod.GetPacket();
                                 netMessage.Write((byte)77);
@@ -3913,7 +3929,7 @@ namespace FargowiltasSouls
                                 netMessage.Write((int)Main.projectile[i].Center.Y + 100);
                                 netMessage.Send();
                             }
-                            else if (Main.netMode == 2)
+                            else if (Main.netMode == NetmodeID.Server)
                             {
                                 NetMessage.BroadcastChatMessage(Terraria.Localization.NetworkText.FromLiteral("???????"), Color.White);
                             }

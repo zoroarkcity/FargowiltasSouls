@@ -1,7 +1,10 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.Buffs.Masomode;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
@@ -24,6 +27,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Penetrator");
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
@@ -60,10 +65,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.direction = projOwner.direction;
             projOwner.heldProj = projectile.whoAmI;
             projOwner.itemTime = projOwner.itemAnimation;
-            projectile.position.X = ownerMountedCenter.X - projectile.width / 2;
-            projectile.position.Y = ownerMountedCenter.Y - projectile.height / 2;
+            projectile.Center = ownerMountedCenter;
             // Change the spear position based off of the velocity and the movementFactor
-            projectile.position += Vector2.Normalize(projectile.velocity) * 116f;
+            //projectile.position += Vector2.Normalize(projectile.velocity) * 116f;
             // As long as the player isn't frozen, the spear can move
             /*if (!projOwner.frozen)
             {
@@ -96,6 +100,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 }
             }*/
 
+            /*if (projectile.localAI[1] == 0)
+            {
+                projectile.localAI[1] = 1;
+                if (projectile.owner == Main.myPlayer)
+                {
+                    Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity), 
+                        ModContent.ProjectileType<HentaiSpearDeathray>(), projectile.damage, projectile.knockBack, projectile.owner);
+                }
+            }*/
+
             // When we reach the end of the animation, we can kill the spear projectile
             if (projOwner.itemAnimation == 0) projectile.Kill();
             // Apply proper rotation, with an offset of 135 degrees due to the sprite's rotation, notice the usage of MathHelper, use this class!
@@ -112,19 +126,43 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 if (projectile.ai[1] != 0f)
                 {
                     Projectile.NewProjectile(target.position + new Vector2(Main.rand.Next(target.width), Main.rand.Next(target.height)),
-                        Vector2.Zero, mod.ProjectileType("PhantasmalBlast"), projectile.damage, projectile.knockBack * 3f, projectile.owner);
+                        Vector2.Zero, ModContent.ProjectileType<PhantasmalBlast>(), projectile.damage, projectile.knockBack * 3f, projectile.owner);
                     Projectile.NewProjectile(target.position + new Vector2(Main.rand.Next(target.width), Main.rand.Next(target.height)),
-                        Vector2.Zero, mod.ProjectileType("PhantasmalBlast"), projectile.damage, projectile.knockBack * 3f, projectile.owner);
+                        Vector2.Zero, ModContent.ProjectileType<PhantasmalBlast>(), projectile.damage, projectile.knockBack * 3f, projectile.owner);
                     Projectile.NewProjectile(target.position + new Vector2(Main.rand.Next(target.width), Main.rand.Next(target.height)),
-                        Vector2.Zero, mod.ProjectileType("PhantasmalBlast"), projectile.damage, projectile.knockBack * 3f, projectile.owner);
+                        Vector2.Zero, ModContent.ProjectileType<PhantasmalBlast>(), projectile.damage, projectile.knockBack * 3f, projectile.owner);
                 }
                 else if (projectile.numHits % 3 == 0)
                 {
                     Projectile.NewProjectile(target.position + new Vector2(Main.rand.Next(target.width), Main.rand.Next(target.height)),
-                        Vector2.Zero, mod.ProjectileType("PhantasmalBlast"), projectile.damage, projectile.knockBack * 3f, projectile.owner);
+                        Vector2.Zero, ModContent.ProjectileType<PhantasmalBlast>(), projectile.damage, projectile.knockBack * 3f, projectile.owner);
                 }
             }
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 600);
+            target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 600);
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            Texture2D texture2D13 = Main.projectileTexture[projectile.type];
+            int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
+            int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
+            Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
+            Vector2 origin2 = rectangle.Size() / 2f;
+
+            Color color26 = lightColor;
+            color26 = projectile.GetAlpha(color26);
+
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i += 2)
+            {
+                Color color27 = color26;
+                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                Vector2 value4 = projectile.oldPos[i];
+                float num165 = projectile.oldRot[i];
+                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
+            }
+
+            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+            return false;
         }
     }
 }

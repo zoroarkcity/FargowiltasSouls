@@ -153,7 +153,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
                     Main.PlaySound(SoundID.Item82, projectile.Center);
                     
-                    if (Main.netMode != 1)
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         const int max = 3;
                         for (int i = 0; i < max; i++)

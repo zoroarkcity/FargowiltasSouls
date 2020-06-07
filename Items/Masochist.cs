@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.Graphics.Effects;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -48,20 +49,20 @@ namespace FargowiltasSouls.Items
                 Main.expertMode = true;
 
                 string text = FargoSoulsWorld.MasochistMode ? "Eternity Mode initiated!" : "Eternity Mode deactivated!";
-                if (Main.netMode == 0)
+                if (Main.netMode == NetmodeID.SinglePlayer)
                 {
                     Main.NewText(text, 175, 75, 255);
                 }
-                else if (Main.netMode == 2)
+                else if (Main.netMode == NetmodeID.Server)
                 {
                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), new Color(175, 75, 255));
-                    NetMessage.SendData(7); //sync world
+                    NetMessage.SendData(MessageID.WorldData); //sync world
                 }
 
                 if (FargoSoulsWorld.MasochistMode && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Deviantt")))
                     NPC.SpawnOnPlayer(player.whoAmI, ModLoader.GetMod("Fargowiltas").NPCType("Deviantt"));
 
-                Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
+                Main.PlaySound(SoundID.Roar, (int)player.position.X, (int)player.position.Y, 0);
 
                 /*if (FargoSoulsWorld.MasochistMode && !SkyManager.Instance["FargowiltasSouls:MutantBoss2"].IsActive())
                     SkyManager.Instance.Activate("FargowiltasSouls:MutantBoss2");*/

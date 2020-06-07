@@ -77,6 +77,10 @@ namespace FargowiltasSouls.Projectiles
             {
                 switch (projectile.type)
                 {
+                    case ProjectileID.ChlorophyteBullet:
+                        projectile.extraUpdates = 1;
+                        break;
+
                     case ProjectileID.CrystalBullet:
                     case ProjectileID.HolyArrow:
                         HasKillCooldown = true;
@@ -414,7 +418,7 @@ namespace FargowiltasSouls.Projectiles
                         && projectile.minion && projectile.minionSlots > 0
                         && counter % 60 == 0 && Main.rand.Next(8 + Main.player[projectile.owner].maxMinions) == 0)
                     {
-                        Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 62);
+                        Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 62);
                         Projectile[] projs = XWay(8, projectile.Center, ModContent.ProjectileType<SpookyScythe>(), 5, projectile.damage / 2, 2f);
                         counter = 0;
 
@@ -705,12 +709,28 @@ namespace FargowiltasSouls.Projectiles
 
                 #endregion
 
+                case ProjectileID.WireKite:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
+                        if (!NPC.downedGolemBoss && Framing.GetTileSafely(projectile.Center).wall == WallID.LihzahrdBrickUnsafe)
+                            projectile.Kill();
+                    }
+                    break;
+
+                case ProjectileID.NebulaSphere:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss))
+                            projectile.position += projectile.velocity / 2;
+                    }
+                    break;
+
                 case ProjectileID.PhantasmalBolt:
                     if (FargoSoulsWorld.MasochistMode)
                     {
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore))
                         {
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 for (int i = -1; i <= 1; i++)
                                 {
@@ -788,7 +808,7 @@ namespace FargowiltasSouls.Projectiles
                             if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss))
                             {
                                 NPC cultist = Main.npc[EModeGlobalNPC.cultBoss];
-                                if (Main.netMode == 1)
+                                if (Main.netMode == NetmodeID.MultiplayerClient)
                                 {
                                     EModeGlobalNPC fargoCultist = cultist.GetGlobalNPC<EModeGlobalNPC>();
 
@@ -844,7 +864,7 @@ namespace FargowiltasSouls.Projectiles
                                 if (weight[max] > 0)
                                     ai0 = max;
 
-                                if ((cultist.life < cultist.lifeMax / 2 || Fargowiltas.Instance.MasomodeEXLoaded) && Main.netMode != 1)
+                                if ((cultist.life < cultist.lifeMax / 2 || Fargowiltas.Instance.MasomodeEXLoaded) && Main.netMode != NetmodeID.MultiplayerClient)
                                     Projectile.NewProjectile(projectile.Center, Vector2.UnitY * -10f, ModContent.ProjectileType<CelestialPillar>(),
                                         (int)(75 * (1 + FargoSoulsWorld.CultistCount * .0125)), 0f, Main.myPlayer, ai0);
                             }
@@ -881,7 +901,7 @@ namespace FargowiltasSouls.Projectiles
                     {
                         projectile.damage = Main.npc[EModeGlobalNPC.championBoss].damage / 4;
                     }
-                    else if (FargoSoulsWorld.MasochistMode && projectile.timeLeft == 1199 && Main.netMode != 1)
+                    else if (FargoSoulsWorld.MasochistMode && projectile.timeLeft == 1199 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int n = NPC.NewNPC((int)projectile.Center.X, (int)projectile.Center.Y, NPCID.SandShark);
                         if (n < 200)
@@ -889,14 +909,14 @@ namespace FargowiltasSouls.Projectiles
                             Main.npc[n].velocity.X = Main.rand.NextFloat(-10, 10);
                             Main.npc[n].velocity.Y = Main.rand.NextFloat(-20, -10);
                             Main.npc[n].netUpdate = true;
-                            if (Main.netMode == 2)
-                                NetMessage.SendData(23, -1, -1, null, n);
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
                     }
                     break;
 
                 case ProjectileID.GoldenShowerHostile:
-                    /*if (FargoSoulsWorld.MasochistMode && Main.netMode != 1 && Main.rand.Next(6) == 0
+                    /*if (FargoSoulsWorld.MasochistMode && Main.netMode != NetmodeID.MultiplayerClient && Main.rand.Next(6) == 0
                         && !(projectile.position.Y / 16 > Main.maxTilesY - 200 && FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.wallBoss, NPCID.WallofFlesh)))
                     {
                         int p = Projectile.NewProjectile(projectile.Center, projectile.velocity, ProjectileID.CrimsonSpray, 0, 0f, Main.myPlayer, 8f);
@@ -1261,7 +1281,7 @@ namespace FargowiltasSouls.Projectiles
                             return;
                         }
                     }
-                    Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 35, 1f, 0f);
+                    Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 35, 1f, 0f);
                     Projectile.NewProjectile(player.Center.X, player.Center.Y - 50f, 0f, 0f, thorium.ProjectileType("JestersBell"), 0, 0f, projectile.owner, 0f, 0f);
                     Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, thorium.ProjectileType("JestersBell2"), 0, 0f, projectile.owner, 0f, 0f);
                 }
@@ -1315,7 +1335,7 @@ namespace FargowiltasSouls.Projectiles
                 if (teleportPos.X > 50 && teleportPos.X < (double)(Main.maxTilesX * 16 - 50) && teleportPos.Y > 50 && teleportPos.Y < (double)(Main.maxTilesY * 16 - 50))
                 {
                     player.Teleport(teleportPos, 1);
-                    NetMessage.SendData(65, -1, -1, null, 0, player.whoAmI, teleportPos.X, teleportPos.Y, 1);
+                    NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, teleportPos.X, teleportPos.Y, 1);
 
                     player.AddBuff(ModContent.BuffType<FirstStrike>(), 60);
                 }
@@ -1466,7 +1486,6 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.DemonSickle:
-                        target.AddBuff(BuffID.Darkness, 600);
                         target.AddBuff(ModContent.BuffType<Shadowflame>(), 300);
                         break;
 
@@ -1480,9 +1499,6 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.Stinger:
-                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.beeBoss, NPCID.QueenBee))
-                            target.AddBuff(ModContent.BuffType<Infested>(), 300);
-                        target.AddBuff(BuffID.BrokenArmor, 300);
                         target.AddBuff(ModContent.BuffType<Swarming>(), 300);
                         break;
 
@@ -1503,11 +1519,7 @@ namespace FargowiltasSouls.Projectiles
                     case ProjectileID.GoldenShowerHostile:
                     case ProjectileID.CursedFlameHostile:
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.wallBoss, NPCID.WallofFlesh))
-                        {
                             target.AddBuff(BuffID.OnFire, 300);
-                            target.AddBuff(ModContent.BuffType<ClippedWings>(), 240);
-                            target.AddBuff(ModContent.BuffType<Crippled>(), 120);
-                        }
                         break;
 
                     case ProjectileID.DeathSickle:
@@ -1551,7 +1563,6 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.CultistBossLightningOrb:
                     case ProjectileID.CultistBossLightningOrbArc:
-                        target.AddBuff(ModContent.BuffType<LightningRod>(), 300);
                         target.AddBuff(BuffID.Electrified, 300);
                         break;
 
@@ -1562,8 +1573,6 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.CultistBossFireBall:
-                        target.AddBuff(ModContent.BuffType<Berserked>(), 300);
-                        target.AddBuff(BuffID.BrokenArmor, 300);
                         target.AddBuff(BuffID.OnFire, 300);
                         break;
 
@@ -1577,13 +1586,9 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.RuneBlast:
-                        target.AddBuff(ModContent.BuffType<FlamesoftheUniverse>(), 120);
                         target.AddBuff(ModContent.BuffType<Hexed>(), 240);
                         if (!EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
-                        {
                             target.AddBuff(BuffID.Suffocation, 240);
-                        }
-
                         break;
 
                     case ProjectileID.ThornBall:
@@ -1599,12 +1604,11 @@ namespace FargowiltasSouls.Projectiles
                             target.AddBuff(BuffID.CursedInferno, 240);
                         else if (target.ZoneCrimson)
                             target.AddBuff(BuffID.Ichor, 240);
-                        target.AddBuff(BuffID.Silenced, 120);
                         break;
 
                     case ProjectileID.BrainScramblerBolt:
-                        target.AddBuff(ModContent.BuffType<Flipped>(), 240);
-                        target.AddBuff(ModContent.BuffType<Unstable>(), 120);
+                        target.AddBuff(ModContent.BuffType<Flipped>(), 60);
+                        target.AddBuff(ModContent.BuffType<Unstable>(), 60);
                         break;
 
                     case ProjectileID.MartianTurretBolt:
@@ -1613,7 +1617,7 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.RayGunnerLaser:
-                        target.AddBuff(BuffID.VortexDebuff, 240);
+                        target.AddBuff(BuffID.VortexDebuff, 180);
                         break;
 
                     case ProjectileID.SaucerMissile:
@@ -1634,9 +1638,7 @@ namespace FargowiltasSouls.Projectiles
                     case ProjectileID.GreekFire1:
                     case ProjectileID.GreekFire2:
                     case ProjectileID.GreekFire3:
-                        target.AddBuff(BuffID.OnFire, 120);
-                        target.AddBuff(BuffID.CursedInferno, 120);
-                        target.AddBuff(ModContent.BuffType<Shadowflame>(), 120);
+                        target.AddBuff(ModContent.BuffType<Shadowflame>(), 180);
                         break;
 
                     case ProjectileID.VortexAcid:
@@ -1646,35 +1648,30 @@ namespace FargowiltasSouls.Projectiles
                         break;
                         
                     case ProjectileID.VortexLightning:
-                        damage *= 2;
                         target.AddBuff(BuffID.Electrified, 300);
                         break;
 
                     case ProjectileID.LostSoulHostile:
-                        if (!EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
-                        {
-                            target.AddBuff(ModContent.BuffType<Hexed>(), 240);
-                        }
+                        //target.AddBuff(ModContent.BuffType<Hexed>(), 240);
                         target.AddBuff(ModContent.BuffType<ReverseManaFlow>(), 600);
-
                         break;
 
                     case ProjectileID.InfernoHostileBlast:
                     case ProjectileID.InfernoHostileBolt:
-                        if (!EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                        /*if (!EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
                         {
                             if (Main.rand.Next(5) == 0)
                                 target.AddBuff(ModContent.BuffType<Fused>(), 1800);
-                        }
+                        }*/
                         target.AddBuff(ModContent.BuffType<Jammed>(), 600);
                         break;
 
                     case ProjectileID.ShadowBeamHostile:
-                        if (!EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                        /*if (!EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
                         {
                             target.AddBuff(ModContent.BuffType<Rotting>(), 1800);
                             target.AddBuff(ModContent.BuffType<Shadowflame>(), 300);
-                        }
+                        }*/
                         target.AddBuff(ModContent.BuffType<Atrophied>(), 600);
                         break;
 
@@ -1688,8 +1685,8 @@ namespace FargowiltasSouls.Projectiles
                         target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 360);
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<NPCs.MutantBoss.MutantBoss>()))
                         {
-                            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
-                            target.AddBuff(ModContent.BuffType<OceanicMaul>(), 5400);
+                            /*target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
+                            target.AddBuff(ModContent.BuffType<OceanicMaul>(), 5400);*/
                             target.AddBuff(ModContent.BuffType<MutantFang>(), 180);
                         }
                         break;
@@ -1697,7 +1694,6 @@ namespace FargowiltasSouls.Projectiles
                     case ProjectileID.RocketSkeleton:
                         target.AddBuff(BuffID.Dazed, 120);
                         target.AddBuff(ModContent.BuffType<Defenseless>(), 300);
-                        //target.AddBuff(BuffID.Confused, 120);
                         break;
 
                     case ProjectileID.FlamesTrap:
@@ -1740,10 +1736,10 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.DD2BetsyFireball:
                     case ProjectileID.DD2BetsyFlameBreath:
-                        target.AddBuff(BuffID.OnFire, 600);
-                        target.AddBuff(BuffID.Ichor, 600);
-                        //target.AddBuff(BuffID.WitheredArmor, Main.rand.Next(60, 300));
-                        //target.AddBuff(BuffID.WitheredWeapon, Main.rand.Next(60, 300));
+                        //target.AddBuff(BuffID.OnFire, 600);
+                        //target.AddBuff(BuffID.Ichor, 600);
+                        target.AddBuff(BuffID.WitheredArmor, Main.rand.Next(60, 300));
+                        target.AddBuff(BuffID.WitheredWeapon, Main.rand.Next(60, 300));
                         target.AddBuff(BuffID.Burning, 300);
                         break;
 
@@ -1756,11 +1752,8 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.NebulaLaser:
-                        target.AddBuff(ModContent.BuffType<Hexed>(), 120);
-                        break;
-
                     case ProjectileID.NebulaBolt:
-                        target.AddBuff(ModContent.BuffType<Lethargic>(), 600);
+                        target.AddBuff(ModContent.BuffType<Hexed>(), 120);
                         break;
 
                     case ProjectileID.StardustJellyfishSmall:
@@ -1795,7 +1788,7 @@ namespace FargowiltasSouls.Projectiles
                         target.AddBuff(BuffID.Darkness, 300);
                         target.AddBuff(BuffID.Blackout, 300);
                         target.AddBuff(ModContent.BuffType<Shadowflame>(), 600);
-                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 180);
+                        //target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 180);
                         break;
 
                     case ProjectileID.BombSkeletronPrime:
@@ -1914,7 +1907,7 @@ namespace FargowiltasSouls.Projectiles
                     if (modPlayer.EarthForce)
                         damage = 80;
 
-                    Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 27);
+                    Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 27);
 
                     for (int i = 0; i < 5; i++)
                     {

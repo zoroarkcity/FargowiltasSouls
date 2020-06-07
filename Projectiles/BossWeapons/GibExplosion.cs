@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 14);
+            Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 14);
             for (int i = 0; i < 15; i++)
             {
                 int dust = Dust.NewDust(projectile.position, projectile.width,

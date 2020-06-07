@@ -30,8 +30,15 @@ namespace FargowiltasSouls.Projectiles.Champions
             cooldownSlot = 1;
         }
 
+        public override bool CanDamage()
+        {
+            return false;
+        }
+
         public override void AI()
         {
+            Lighting.AddLight(projectile.Center, 0.5f, 0.75f, 1f);
+
             projectile.rotation = projectile.rotation + projectile.velocity.X * 0.02f;
             if (++projectile.frameCounter > 4)
             {
@@ -43,7 +50,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void Kill(int timeLeft)
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<NatureCloudRaining>(), projectile.damage, 0f, Main.myPlayer);
             }

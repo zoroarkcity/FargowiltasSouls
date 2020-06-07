@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
                 projectile.timeLeft = (int)projectile.ai[0];
 
-                Main.PlaySound(4, (int)projectile.position.X, (int)projectile.position.Y, 7, 1f, 0.0f);
+                Main.PlaySound(SoundID.NPCKilled, (int)projectile.position.X, (int)projectile.position.Y, 7, 1f, 0.0f);
                 for (int index1 = 0; index1 < 4; ++index1)
                 {
                     int index2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);
@@ -118,7 +118,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.position = projectile.Center;
             projectile.width = projectile.height = 80;
             projectile.Center = projectile.position;
-            Main.PlaySound(4, (int)projectile.position.X, (int)projectile.position.Y, 7, 1f, 0.0f);
+            Main.PlaySound(SoundID.NPCKilled, (int)projectile.position.X, (int)projectile.position.Y, 7, 1f, 0.0f);
             for (int index1 = 0; index1 < 2; ++index1)
             {
                 int index2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);

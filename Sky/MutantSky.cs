@@ -14,6 +14,10 @@ namespace FargowiltasSouls.Sky
     {
         private bool isActive = false;
         private float intensity = 0f;
+        private float lifeIntensity = 0f;
+        private int delay = 0;
+        private int[] xPos = new int[50];
+        private int[] yPos = new int[50];
 
         public override void Update(GameTime gameTime)
         {
@@ -25,13 +29,29 @@ namespace FargowiltasSouls.Sky
                 {
                     intensity = 1f;
                 }
+
+                if (Main.npc[EModeGlobalNPC.mutantBoss].ai[0] != 10)
+                {
+                    lifeIntensity = 1f - (float)Main.npc[EModeGlobalNPC.mutantBoss].life / Main.npc[EModeGlobalNPC.mutantBoss].lifeMax;
+                    if (!FargoSoulsWorld.MasochistMode)
+                    {
+                        lifeIntensity -= 0.5f;
+                        if (lifeIntensity < 0)
+                            lifeIntensity = 0;
+                    }
+                }
             }
             else
             {
                 intensity -= increment;
+                lifeIntensity -= increment;
+                if (lifeIntensity < 0f)
+                    lifeIntensity = 0f;
                 if (intensity < 0f)
                 {
                     intensity = 0f;
+                    lifeIntensity = 0f;
+                    delay = 0;
                     Deactivate();
                 }
             }
@@ -42,7 +62,25 @@ namespace FargowiltasSouls.Sky
             if (maxDepth >= 0 && minDepth < 0)
             {
                 spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantSky"),
-                    new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White * intensity * 0.5f);
+                    new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White * (intensity * 0.5f + lifeIntensity * 0.5f));
+
+                if (--delay < 0)
+                {
+                    delay = Main.rand.Next(5) + (int)(25f * (1f - lifeIntensity));
+                    for (int i = 0; i < 50; i++) //update positions
+                    {
+                        xPos[i] = Main.rand.Next(Main.screenWidth);
+                        yPos[i] = Main.rand.Next(Main.screenHeight);
+                    }
+                }
+
+                for (int i = 0; i < 50; i++) //static on screen
+                {
+                    int width = Main.rand.Next(50, 251);
+                    spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantStatic"),
+                    new Rectangle(xPos[i] - width / 2, yPos[i], width, 3),
+                    Color.White * lifeIntensity * 0.75f);
+                }
             }
         }
 

@@ -35,7 +35,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.knockBackResist = 0f;
             npc.lavaImmune = true;
             npc.aiStyle = -1;
-            npc.value = Item.buyPrice(0, 5);
+            npc.value = Item.buyPrice(0, 15);
 
             npc.boss = true;
             music = MusicID.Boss1;
@@ -68,22 +68,22 @@ namespace FargowiltasSouls.NPCs.Champions
                 else
                     return;
                 
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<EarthChampionHand>(), npc.whoAmI, 0, 0, npc.whoAmI, 1);
                     if (n < Main.maxNPCs)
                     {
                         Main.npc[n].velocity = Main.rand.NextVector2Unit() * Main.rand.NextFloat(32f);
-                        if (Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
 
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<EarthChampionHand>(), npc.whoAmI, 0, 0, npc.whoAmI, -1);
                     if (n < Main.maxNPCs)
                     {
                         Main.npc[n].velocity = Main.rand.NextVector2Unit() * Main.rand.NextFloat(32f);
-                        if (Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                 }
             }
@@ -217,7 +217,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (++npc.ai[2] > 75)
                         {
                             npc.ai[2] = 0;
-                            if (Main.netMode != 1) //shoot spread of fireballs
+                            if (Main.netMode != NetmodeID.MultiplayerClient) //shoot spread of fireballs
                             {
                                 for (int i = -1; i <= 1; i++)
                                 {
@@ -322,8 +322,8 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void NPCLoot()
         {
             FargoSoulsWorld.downedChampions[2] = true;
-            if (Main.netMode == 2)
-                NetMessage.SendData(7); //sync world
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.WorldData); //sync world
 
             //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<EarthForce>());
             int[] drops = {

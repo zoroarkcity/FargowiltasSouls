@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.MutantBoss
@@ -30,8 +31,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void AI()
         {
-            int d = Dust.NewDust(projectile.Center - Vector2.One * 5f, 10, 10, 229, -projectile.velocity.X / 3f, -projectile.velocity.Y / 3f, 150, Color.Transparent, 1.2f);
-            Main.dust[d].noGravity = true;
+            if (Main.rand.Next(3) == 0)
+            {
+                int d = Dust.NewDust(projectile.Center - Vector2.One * 5f, 10, 10, 229, -projectile.velocity.X / 3f, -projectile.velocity.Y / 3f, 150, Color.Transparent, 1.2f);
+                Main.dust[d].noGravity = true;
+            }
             projectile.rotation = projectile.velocity.ToRotation() + 1.570796f;
         }
 
@@ -51,14 +55,14 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void Kill(int timeleft)
         {
-            Main.PlaySound(29, (int)projectile.position.X, (int)projectile.position.Y, 103, 1f, 0.0f);
+            Main.PlaySound(SoundID.Zombie, (int)projectile.position.X, (int)projectile.position.Y, 103, 1f, 0.0f);
             projectile.position = projectile.Center;
             projectile.width = projectile.height = 144;
             projectile.position.X -= (float)(projectile.width / 2);
             projectile.position.Y -= (float)(projectile.height / 2);
-            for (int index = 0; index < 4; ++index)
+            for (int index = 0; index < 2; ++index)
                 Dust.NewDust(projectile.position, projectile.width, projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);
-            for (int index1 = 0; index1 < 40; ++index1)
+            for (int index1 = 0; index1 < 20; ++index1)
             {
                 int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 229, 0.0f, 0.0f, 0, new Color(), 2.5f);
                 Main.dust[index2].noGravity = true;

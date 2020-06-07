@@ -112,21 +112,22 @@ Not consumed on use");
                     else
                         NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<WillChampion>());
                 }
-                else if (player.ZoneHoly)
+                else if (player.ZoneHoly && Main.dayTime)
                 {
                     if (player.altFunctionUse == 2)
                         Main.NewText("A wave of warmth passes over you...", color);
                     else
                         NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<LifeChampion>());
                 }
-                else if (!Main.dayTime) //night
+                else if ((player.ZoneCorrupt || player.ZoneCrimson) && !Main.dayTime) //night
                 {
                     if (player.altFunctionUse == 2)
                         Main.NewText("The darkness of the night feels deeper...", color);
                     else
                         NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<ShadowChampion>());
                 }
-                else if (!player.ZoneCorrupt && !player.ZoneCrimson && !player.ZoneDesert && !player.ZoneSnow && !player.ZoneJungle) //purity daytime
+                else if (!player.ZoneHoly && !player.ZoneCorrupt && !player.ZoneCrimson 
+                    && !player.ZoneDesert && !player.ZoneSnow && !player.ZoneJungle) //purity
                 {
                     if (player.altFunctionUse == 2)
                         Main.NewText("You are surrounded by the rustling of trees...", color);

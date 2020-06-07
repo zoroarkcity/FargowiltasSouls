@@ -44,9 +44,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
             if (projectile.localAI[1] == 0f)
             {
                 projectile.localAI[1] = projectile.ai[1] + 1;
-                
-                //Main.PlaySound(29, (int)projectile.Center.X, (int)projectile.Center.Y, 20);
-                Main.PlaySound(36, (int)projectile.Center.X, (int)projectile.Center.Y, -1, 1f, 0f);
+
+                //Main.PlaySound(SoundID.Zombie, (int)projectile.Center.X, (int)projectile.Center.Y, 20);
+                Main.PlaySound(SoundID.ForceRoar, (int)projectile.Center.X, (int)projectile.Center.Y, -1, 1f, 0f);
 
                 switch ((int)projectile.ai[1])
                 {
@@ -285,7 +285,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         private void DrawRing()
         {
-            Texture2D texture2D13 = mod.GetTexture("Projectiles/AbomBoss/AbomRitual2");
+            Texture2D texture2D13 = Main.projectileTexture[ProjectileID.DeathSickle];
             int num156 = texture2D13.Height; //ypos of lower right corner of sprite to draw
             int y3 = 0; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);

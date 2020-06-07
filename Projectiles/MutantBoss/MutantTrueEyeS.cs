@@ -91,7 +91,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 case 2: //shoot
                     if (projectile.localAI[0] == 7f)
                     {
-                        Main.PlaySound(4, (int)projectile.Center.X, (int)projectile.Center.Y, 6, 1f, 0.0f);
+                        Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 6, 1f, 0.0f);
                         ShootBolts(target);
                     }
                     else if (projectile.localAI[0] == 14f)
@@ -113,7 +113,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                         Main.dust[d].noLight = true;
                         Main.dust[d].velocity *= 8f;
                     }
-                    Main.PlaySound(29, (int)projectile.Center.X, (int)projectile.Center.Y, 102, 1f, 0.0f);
+                    Main.PlaySound(SoundID.Zombie, (int)projectile.Center.X, (int)projectile.Center.Y, 102, 1f, 0.0f);
                     projectile.Kill();
                     break;
             }
@@ -139,7 +139,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             {
                 vel.Normalize();
                 vel *= 8f;
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                     Projectile.NewProjectile(spawn, vel, ProjectileID.PhantasmalBolt, projectile.damage, 0f, projectile.owner);
             }
         }

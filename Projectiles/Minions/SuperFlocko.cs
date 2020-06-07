@@ -93,7 +93,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                             Vector2 speed = new Vector2(Main.rand.Next(-1000, 1001), Main.rand.Next(-1000, 1001));
                             speed.Normalize();
                             speed *= 12f;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(projectile.Center + speed * 4f, speed, mod.ProjectileType("FrostShard"),
                                     projectile.damage / 2, projectile.knockBack / 2, projectile.owner);
                         }

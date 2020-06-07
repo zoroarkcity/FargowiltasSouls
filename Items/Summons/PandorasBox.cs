@@ -72,7 +72,7 @@ namespace FargowiltasSouls.Items.Summons
                 }
             }
 
-            Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
+            Main.PlaySound(SoundID.Roar, (int)player.position.X, (int)player.position.Y, 0);
             return true;
         }
     }

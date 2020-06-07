@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.height = 28;
             projectile.aiStyle = -1;
             projectile.hostile = true;
-            projectile.timeLeft = 1200;
+            projectile.timeLeft = 300;
             projectile.tileCollide = false;
             
             cooldownSlot = 1;
@@ -32,11 +32,13 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void AI()
         {
+            Lighting.AddLight(projectile.Center, 0.5f, 0.75f, 1f);
+
             if (++projectile.ai[0] > 8)
             {
                 projectile.ai[0] = 0;
 
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Projectile.NewProjectile(projectile.position.X + 14 + Main.rand.Next(projectile.width - 28),
                         projectile.position.Y + projectile.height + 4, 0f, 5f,

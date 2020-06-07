@@ -50,7 +50,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             if (--projectile.localAI[0] < 0)
             {
                 projectile.localAI[0] = 4;
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     int p = Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("PhantasmalSphere"), projectile.damage, projectile.knockBack / 2, projectile.owner, 0, 1);
                     Main.projectile[p].melee = false;
@@ -73,7 +73,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int p = Projectile.NewProjectile(target.position + new Vector2(Main.rand.Next(target.width), Main.rand.Next(target.height)), Vector2.Zero, mod.ProjectileType("PhantasmalBlast"), projectile.damage, 0f, projectile.owner);
                 Main.projectile[p].melee = false;

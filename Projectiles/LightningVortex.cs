@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles
@@ -99,7 +100,7 @@ namespace FargowiltasSouls.Projectiles
                 d.velocity = vector2_2;
                 d.scale = 0.5f + Main.rand.NextFloat();
                 d.fadeIn = 0.5f;*/
-                if (projectile.ai[0] == 90 && projectile.ai[1] != -1 && Main.netMode != 1)
+                if (projectile.ai[0] == 90 && projectile.ai[1] != -1 && Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Vector2 rotationVector2 = Main.npc[ai1].Center - projectile.Center;
                     rotationVector2.Normalize();

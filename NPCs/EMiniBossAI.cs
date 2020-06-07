@@ -14,15 +14,15 @@ namespace FargowiltasSouls.NPCs
         {
             if (npc.Distance(Main.player[Main.myPlayer].Center) < 1500f)
             {
-                if (npc.Distance(Main.player[Main.myPlayer].Center) > 400f)
+                if (npc.Distance(Main.player[Main.myPlayer].Center) > 450f)
                     Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<Hexed>(), 2);
 
                 for (int i = 0; i < 20; i++)
                 {
                     Vector2 offset = new Vector2();
                     double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                    offset.X += (float)(Math.Sin(angle) * 400);
-                    offset.Y += (float)(Math.Cos(angle) * 400);
+                    offset.X += (float)(Math.Sin(angle) * 450);
+                    offset.Y += (float)(Math.Cos(angle) * 450);
                     Dust dust = Main.dust[Dust.NewDust(
                         npc.Center + offset - new Vector2(4, 4), 0, 0,
                         DustID.BubbleBlock, 0, 0, 100, default(Color), 1f
@@ -34,13 +34,13 @@ namespace FargowiltasSouls.NPCs
                     dust.color = Color.GreenYellow;
                 }
             }
-            Aura(npc, 200, BuffID.Suffocation, false, 119);
-            if (npc.Distance(Main.player[Main.myPlayer].Center) < 200)
+            Aura(npc, 150, BuffID.Suffocation, false, 119);
+            if (npc.Distance(Main.player[Main.myPlayer].Center) < 150)
                 Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<Hexed>(), 2);
             if (++Counter > 300)
             {
                 Counter = 0;
-                if (Main.netMode != 1 && npc.HasPlayerTarget)
+                if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                 {
                     Vector2 vel = npc.DirectionFrom(Main.player[npc.target].Center) * 8f;
                     for (int i = 0; i < 5; i++)
@@ -61,7 +61,7 @@ namespace FargowiltasSouls.NPCs
                 if (!masoBool[1] && ++Counter > 15)
                 {
                     masoBool[1] = true;
-                    if (Main.netMode == 2) //MP sync
+                    if (Main.netMode == NetmodeID.Server) //MP sync
                     {
                         var netMessage = mod.GetPacket();
                         netMessage.Write((byte)3);
@@ -79,7 +79,7 @@ namespace FargowiltasSouls.NPCs
                 if (npc.velocity.Y == 0f) //start attack
                 {
                     masoBool[2] = false;
-                    if (npc.HasPlayerTarget && Main.netMode != 1)
+                    if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         const float gravity = 0.15f;
                         const float time = 120f;

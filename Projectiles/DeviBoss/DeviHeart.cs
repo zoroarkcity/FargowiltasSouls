@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(2, projectile.Center, 14);
+            Main.PlaySound(SoundID.Item, projectile.Center, 14);
 
             for (int i = 0; i < 10; i++)
             {

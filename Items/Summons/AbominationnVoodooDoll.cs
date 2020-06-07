@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Items.Summons
         {
             if (item.lavaWet)
             {
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     int abominationn = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
                     int mutant = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
@@ -58,9 +58,9 @@ namespace FargowiltasSouls.Items.Summons
                             if (mutant > -1 && Main.npc[mutant].active)
                             {
                                 Main.npc[mutant].Transform(mod.NPCType("MutantBoss"));
-                                if (Main.netMode == 0)
+                                if (Main.netMode == NetmodeID.SinglePlayer)
                                     Main.NewText("Mutant has been enraged by the death of his brother!", 175, 75, 255);
-                                else if (Main.netMode == 2)
+                                else if (Main.netMode == NetmodeID.Server)
                                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Mutant has been enraged by the death of his brother!"), new Color(175, 75, 255));
                             }
 

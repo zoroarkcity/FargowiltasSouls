@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 projectile.velocity.X *= 0.97f;
                 projectile.velocity.Y += 0.45f;
             }
-            else if (projectile.ai[1] == 60f && Main.netMode != 1)
+            else if (projectile.ai[1] == 60f && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 const int max = 4;
                 for (int i = 0; i < max; i++)

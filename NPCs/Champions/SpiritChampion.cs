@@ -37,7 +37,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.knockBackResist = 0f;
             npc.lavaImmune = true;
             npc.aiStyle = -1;
-            npc.value = Item.buyPrice(0, 5);
+            npc.value = Item.buyPrice(0, 15);
 
             npc.boss = true;
             music = MusicID.Boss4;
@@ -84,39 +84,39 @@ namespace FargowiltasSouls.NPCs.Champions
                 else
                     return;
 
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 0f, npc.whoAmI, -1f, -1f, npc.target);
                     if (n != Main.maxNPCs)
                     {
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 0f, npc.whoAmI, -1f, 1f, npc.target);
                     if (n != Main.maxNPCs)
                     {
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 0f, npc.whoAmI, 1f, -1f, npc.target);
                     if (n != Main.maxNPCs)
                     {
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                     n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 0f, npc.whoAmI, 1f, 1f, npc.target);
                     if (n != Main.maxNPCs)
                     {
                         Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                         Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                        if (Main.netMode == 2)
-                            NetMessage.SendData(23, -1, -1, null, n);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                 }
             }
@@ -178,7 +178,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             }
                         }
 
-                        if (Main.netMode != 1) //if hands somehow disappear
+                        if (Main.netMode != NetmodeID.MultiplayerClient) //if hands somehow disappear
                         {
                             if (!foundHand[0])
                             {
@@ -187,8 +187,8 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                     Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                    if (Main.netMode == 2)
-                                        NetMessage.SendData(23, -1, -1, null, n);
+                                    if (Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                                 }
                             }
                             if (!foundHand[1])
@@ -198,8 +198,8 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                     Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                    if (Main.netMode == 2)
-                                        NetMessage.SendData(23, -1, -1, null, n);
+                                    if (Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                                 }
                             }
                             if (!foundHand[2])
@@ -209,8 +209,8 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                     Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                    if (Main.netMode == 2)
-                                        NetMessage.SendData(23, -1, -1, null, n);
+                                    if (Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                                 }
                             }
                             if (!foundHand[3])
@@ -220,15 +220,15 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     Main.npc[n].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                     Main.npc[n].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                    if (Main.netMode == 2)
-                                        NetMessage.SendData(23, -1, -1, null, n);
+                                    if (Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                                 }
                             }
                         }
                     }
                     else if (npc.ai[1] == 120)
                     {
-                        Main.PlaySound(15, npc.Center, 0);
+                        Main.PlaySound(SoundID.Roar, npc.Center, 0);
 
                         for (int i = 0; i < Main.maxNPCs; i++) //update ai
                         {
@@ -239,7 +239,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             }
                         }
 
-                        if (Main.netMode != 1) //spawn super hand
+                        if (Main.netMode != NetmodeID.MultiplayerClient) //spawn super hand
                         {
 
                             int n2 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 3f, npc.whoAmI, 1f, 1f, npc.target);
@@ -247,8 +247,8 @@ namespace FargowiltasSouls.NPCs.Champions
                             {
                                 Main.npc[n2].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                 Main.npc[n2].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                if (Main.netMode == 2)
-                                    NetMessage.SendData(23, -1, -1, null, n2);
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n2);
                             }
                         }
                     }
@@ -257,7 +257,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         npc.ai[2] = 0;
 
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Main.PlaySound(SoundID.Item2, npc.Center);
 
@@ -293,7 +293,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             player.velocity.X = player.Center.X < npc.Center.X ? -15f : 15f;
                             player.velocity.Y = -10f;
-                            Main.PlaySound(15, npc.Center, 0);
+                            Main.PlaySound(SoundID.Roar, npc.Center, 0);
                         }
                     }
                     break;
@@ -345,7 +345,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         npc.ai[2] = 0;
                         
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             if (npc.ai[1] < 180) //cross bones
                             {
@@ -432,7 +432,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         Main.PlaySound(SoundID.Item92, npc.Center);
 
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = 0; i < 15; i++)
                             {
@@ -523,7 +523,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         if (npc.ai[1] == 0)
                         {
-                            Main.PlaySound(15, npc.Center, 0);
+                            Main.PlaySound(SoundID.Roar, npc.Center, 0);
                         }
 
                         if (++npc.ai[3] > 10) //spirits
@@ -532,7 +532,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             Main.PlaySound(SoundID.Item8, npc.Center);
 
-                            if (Main.netMode != 1) //vanilla code from desert spirits idfk
+                            if (Main.netMode != NetmodeID.MultiplayerClient) //vanilla code from desert spirits idfk
                             {
                                 Point tileCoordinates1 = npc.Center.ToTileCoordinates();
                                 Point tileCoordinates2 = Main.player[npc.target].Center.ToTileCoordinates();
@@ -572,7 +572,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             npc.ai[2] = 0;
 
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 for (int i = 0; i < 4; i++)
                                 {
@@ -619,9 +619,9 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.localAI[2] = 1;
                         npc.netUpdate = true;
                         
-                        Main.PlaySound(15, npc.Center, 0);
+                        Main.PlaySound(SoundID.Roar, npc.Center, 0);
 
-                        if (Main.netMode != 1) //spawn super hand
+                        if (Main.netMode != NetmodeID.MultiplayerClient) //spawn super hand
                         {
 
                             int n2 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SpiritChampionHand>(), npc.whoAmI, 4f, npc.whoAmI, 1f, 1f, npc.target);
@@ -629,8 +629,8 @@ namespace FargowiltasSouls.NPCs.Champions
                             {
                                 Main.npc[n2].velocity.X = Main.rand.NextFloat(-24f, 24f);
                                 Main.npc[n2].velocity.Y = Main.rand.NextFloat(-24f, 24f);
-                                if (Main.netMode == 2)
-                                    NetMessage.SendData(23, -1, -1, null, n2);
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n2);
                             }
                         }
                     }
@@ -653,7 +653,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.active = true;
                 npc.life = 1;
 
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     npc.TargetClosest(false);
                     npc.ai[0] = -4f;
@@ -718,8 +718,8 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void NPCLoot()
         {
             FargoSoulsWorld.downedChampions[6] = true;
-            if (Main.netMode == 2)
-                NetMessage.SendData(7); //sync world
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.WorldData); //sync world
 
             //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<SpiritForce>());
             int[] drops = {

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -100,7 +101,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     ai0 = 1;
                 else
                     ai0 = 2;
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                     Projectile.NewProjectile(npc.Center, Vector2.UnitY * -10, mod.ProjectileType("MutantPillar"), npc.damage / 3, 0, Main.myPlayer, ai0, npc.whoAmI);
             }
         }
@@ -124,6 +125,11 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 if (npc.frame.Y >= 4 * frameHeight)
                     npc.frame.Y = 0;
             }
+        }
+
+        public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
+        {
+            spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         }
     }
 }

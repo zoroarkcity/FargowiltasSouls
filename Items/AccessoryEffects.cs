@@ -74,7 +74,7 @@ namespace FargowiltasSouls
                         }
                     }
 
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         NetMessage.SendTileSquare(-1, x, y, 1, TileChangeType.None);
                     }
@@ -103,7 +103,7 @@ namespace FargowiltasSouls
                             Main.tile[x, y].frameX = (short)(18 * Main.rand.Next(2, 8));
                         }
                     }
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         NetMessage.SendTileSquare(-1, x, y, 1, TileChangeType.None);
                     }
@@ -114,7 +114,7 @@ namespace FargowiltasSouls
                     Main.tile[x, y].type = 74;
                     Main.tile[x, y].frameX = (short)(18 * Main.rand.Next(9, 17));
 
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         NetMessage.SendTileSquare(-1, x, y, 1, TileChangeType.None);
                     }
@@ -557,7 +557,7 @@ namespace FargowiltasSouls
             {
                 internalTimer++;
                 player.shieldParryTimeLeft = internalTimer;
-                if (player.shieldParryTimeLeft > 20)
+                if (player.shieldParryTimeLeft > 30)
                 {
                     player.shieldParryTimeLeft = 0;
                     internalTimer = 0;
@@ -591,7 +591,7 @@ namespace FargowiltasSouls
             else if (wasHoldingShield)
             {
                 wasHoldingShield = false;
-                player.shield_parry_cooldown = 30;
+                player.shield_parry_cooldown = 120;
                 player.shieldParryTimeLeft = 0;
                 internalTimer = 0;
             }
@@ -604,7 +604,7 @@ namespace FargowiltasSouls
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.JungleSpores) && player.jump > 0 && jungleCD == 0)
             {
                 int dmg = NatureForce ? 50 : 15;
-                Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 62, 0.5f);
+                Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 62, 0.5f);
                 FargoGlobalProjectile.XWay(10, player.Center, ModContent.ProjectileType<SporeBoom>(), 3f, HighestDamageTypeScaling(dmg), 0f);
                 jungleCD = 30;
             }

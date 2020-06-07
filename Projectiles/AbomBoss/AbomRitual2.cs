@@ -9,6 +9,8 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 {
     public class AbomRitual2 : ModProjectile
     {
+        public override string Texture => "Terraria/Projectile_274";
+
         private const float PI = (float)Math.PI;
         private const float rotationPerTick = PI / 57f;
         private const float threshold = 150;

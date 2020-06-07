@@ -25,9 +25,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             target.AddBuff(mod.BuffType("Defenseless"), 1800);
 
-            int buffTime = 300;
+            /*int buffTime = 300;
             target.AddBuff(mod.BuffType("Crippled"), buffTime);
-            target.AddBuff(mod.BuffType("ClippedWings"), buffTime);
+            target.AddBuff(mod.BuffType("ClippedWings"), buffTime);*/
         }
 
         public override void Kill(int timeLeft)
@@ -42,7 +42,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 Main.dust[index2].scale *= 0.9f;
             }
 
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 for (int index = 0; index < 24; ++index)
                 {

@@ -75,7 +75,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire);
 
             /*NPC golem = Main.npc[ai0];
-            if (golem.GetGlobalNPC<NPCs.FargoSoulsGlobalNPC>().Counter == 2 && Main.netMode != 1) //when golem does second stomp, erupt
+            if (golem.GetGlobalNPC<NPCs.FargoSoulsGlobalNPC>().Counter == 2 && Main.netMode != NetmodeID.MultiplayerClient) //when golem does second stomp, erupt
             {
                 Projectile.NewProjectile(projectile.Center, Vector2.UnitY * 8, ProjectileID.GeyserTrap, projectile.damage, 0f, Main.myPlayer);
                 projectile.Kill();
@@ -85,7 +85,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void Kill(int timeLeft)
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
                 Projectile.NewProjectile(projectile.Center, Vector2.UnitY * 8, ProjectileID.GeyserTrap, projectile.damage, 0f, Main.myPlayer);
         }
     }

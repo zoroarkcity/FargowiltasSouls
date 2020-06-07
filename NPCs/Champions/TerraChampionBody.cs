@@ -63,9 +63,9 @@ namespace FargowiltasSouls.NPCs.Champions
             if (!(ai1 > -1 && ai1 < Main.maxNPCs && Main.npc[ai1].active && Main.npc[ai1].ai[0] == npc.whoAmI && Main.npc[ai1].life >= Main.npc[ai1].lifeMax / 10
                 && (Main.npc[ai1].type == ModContent.NPCType<TerraChampion>() || Main.npc[ai1].type == ModContent.NPCType<TerraChampionBody>())))
             {
-                Main.PlaySound(2, npc.Center, 14);
+                Main.PlaySound(SoundID.Item, npc.Center, 14);
 
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < 30; i++)
                     {
@@ -94,8 +94,8 @@ namespace FargowiltasSouls.NPCs.Champions
                     Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<TerraLightningOrb>(), npc.damage / 4, 0f, Main.myPlayer, npc.ai[3]);
 
                     npc.active = false;
-                    if (Main.netMode == 2)
-                        NetMessage.SendData(23, -1, -1, null, npc.whoAmI);
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc.whoAmI);
                 }
                 return;
             }

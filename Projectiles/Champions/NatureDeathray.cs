@@ -42,7 +42,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             }
             if (projectile.localAI[0] == 0f)
             {
-                Main.PlaySound(29, projectile.Center, 104);
+                Main.PlaySound(SoundID.Zombie, projectile.Center, 104);
             }
             float num801 = 1f;
             projectile.localAI[0] += 1f;

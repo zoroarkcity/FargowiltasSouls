@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             if (++projectile.localAI[0] > projectile.ai[1])
                 projectile.Kill();
 
-            /*if (projectile.localAI[0] == (int)projectile.ai[1] / 2 && Main.netMode != 1)
+            /*if (projectile.localAI[0] == (int)projectile.ai[1] / 2 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity).RotatedBy(Math.PI / 2) * 14, ProjectileID.CursedFlameHostile, projectile.damage, 0, Main.myPlayer);
                 Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity).RotatedBy(Math.PI / 2) * -14, ProjectileID.CursedFlameHostile, projectile.damage, 0, Main.myPlayer);

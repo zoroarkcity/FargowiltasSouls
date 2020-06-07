@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
@@ -35,16 +36,16 @@ namespace FargowiltasSouls.Items.Misc
         {
             FargoSoulsWorld.AngryMutant = !FargoSoulsWorld.AngryMutant;
             string text = FargoSoulsWorld.AngryMutant ? "Mutant is angered!" : "Mutant is calm.";
-            if (Main.netMode == 0)
+            if (Main.netMode == NetmodeID.SinglePlayer)
             {
                 Main.NewText(text, 175, 75, 255);
             }
-            else if (Main.netMode == 2)
+            else if (Main.netMode == NetmodeID.Server)
             {
                 NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), new Color(175, 75, 255));
-                NetMessage.SendData(7); //sync world
+                NetMessage.SendData(MessageID.WorldData); //sync world
             }
-            Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
+            Main.PlaySound(SoundID.Roar, (int)player.position.X, (int)player.position.Y, 0);
             return true;
         }
 

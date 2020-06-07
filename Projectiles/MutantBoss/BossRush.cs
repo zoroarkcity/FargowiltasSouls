@@ -51,8 +51,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                         {
                             Main.dayTime = false;
                             Main.time = 0;
-                            if (Main.netMode == 2)
-                                NetMessage.SendData(7); //sync world
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData); //sync world
                         }
                         break;
 
@@ -71,8 +71,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                         {
                             Main.dayTime = false;
                             Main.time = 0;
-                            if (Main.netMode == 2)
-                                NetMessage.SendData(7); //sync world
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData); //sync world
                         }
                         break;
 
@@ -83,8 +83,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                         {
                             Main.dayTime = false;
                             Main.time = 0;
-                            if (Main.netMode == 2)
-                                NetMessage.SendData(7); //sync world
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData); //sync world
                         }
                         break;
 
@@ -94,8 +94,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                         {
                             Main.dayTime = false;
                             Main.time = 0;
-                            if (Main.netMode == 2)
-                                NetMessage.SendData(7); //sync world
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData); //sync world
                         }
                         break;
 
@@ -124,8 +124,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                         {
                             Main.dayTime = true;
                             Main.time = 27000;
-                            if (Main.netMode == 2)
-                                NetMessage.SendData(7); //sync world
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.WorldData); //sync world
                         }
                         projectile.Kill();
                         break;
@@ -135,18 +135,18 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         private void ManualSpawn(NPC npc, int type)
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type);
                 if (n < 200)
                 {
-                    if (Main.netMode == 0)
+                    if (Main.netMode == NetmodeID.SinglePlayer)
                     {
                         Main.NewText(Main.npc[n].FullName + " has awoken!", 175, 75, 255);
                     }
-                    else if (Main.netMode == 2)
+                    else if (Main.netMode == NetmodeID.Server)
                     {
-                        NetMessage.SendData(23, -1, -1, null, n);
+                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(Main.npc[n].FullName + " has awoken!"), new Color(175, 75, 255));
                     }
                 }

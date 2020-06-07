@@ -38,7 +38,7 @@ namespace FargowiltasSouls.Projectiles.Minion
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(2, (int) projectile.position.X, (int) projectile.position.Y, 14);
+            Main.PlaySound(SoundID.Item, (int) projectile.position.X, (int) projectile.position.Y, 14);
             projectile.position.X = projectile.position.X + projectile.width / 2;
             projectile.position.Y = projectile.position.Y + projectile.height / 2;
             projectile.width = 22;

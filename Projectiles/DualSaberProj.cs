@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles
@@ -29,7 +30,7 @@ namespace FargowiltasSouls.Projectiles
             projectile.soundDelay--;
             if (projectile.soundDelay <= 0)
             {
-                Main.PlaySound(2, (int) projectile.Center.X, (int) projectile.Center.Y,
+                Main.PlaySound(SoundID.Item, (int) projectile.Center.X, (int) projectile.Center.Y,
                     15);
                 projectile.soundDelay = 45;
             }

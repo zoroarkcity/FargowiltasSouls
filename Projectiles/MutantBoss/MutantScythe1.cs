@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void Kill(int timeLeft)
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
                 for (int i = 0; i < 8; i++)
                     Projectile.NewProjectile(projectile.Center, Vector2.UnitX.RotatedBy(Math.PI / 4 * i), mod.ProjectileType("MutantScythe2"), projectile.damage, 0f, projectile.owner);
         }

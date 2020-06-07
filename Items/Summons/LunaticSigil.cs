@@ -34,12 +34,12 @@ namespace FargowiltasSouls.Items.Summons
         {
             if (player.itemAnimation > 0 && player.itemTime == 0)
             {
-                Main.PlaySound(15, player.Center, 0);
-                if (Main.netMode != 1)
+                Main.PlaySound(SoundID.Roar, player.Center, 0);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     int n = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y - 300, NPCID.CultistBoss);
-                    if (n != 200 && Main.netMode == 2)
-                        NetMessage.SendData(23, -1, -1, null, n);
+                    if (n != 200 && Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                 }
                 if (NPC.downedAncientCultist)
                     for (int i = 0; i < 9; i++)

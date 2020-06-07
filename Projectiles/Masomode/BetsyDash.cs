@@ -72,7 +72,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             if (projectile.localAI[0] == 0)
             {
                 projectile.localAI[0] = 1;
-                Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14);
+                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 14);
                 for (int i = 0; i < 30; i++)
                 {
                     int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 87, 0, 0, 0, default, 2.5f);
@@ -89,7 +89,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14);
+            Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 14);
             for (int i = 0; i < 30; i++)
             {
                 int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 87, 0, 0, 0, default, 2.5f);

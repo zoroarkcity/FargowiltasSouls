@@ -161,7 +161,7 @@ Use to teleport to your last death point");
             {
                 player.Teleport(player.lastDeathPostion, 1);
                 player.velocity = Vector2.Zero;
-                if (Main.netMode == 1)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                     NetMessage.SendData(65, -1, -1, null, 0, player.whoAmI, player.lastDeathPostion.X, player.lastDeathPostion.Y, 1);
             }
 

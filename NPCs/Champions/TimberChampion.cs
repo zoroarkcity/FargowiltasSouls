@@ -34,7 +34,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.knockBackResist = 0f;
             npc.lavaImmune = true;
             npc.aiStyle = -1;
-            npc.value = Item.buyPrice(0, 5);
+            npc.value = Item.buyPrice(0, 15);
 
             npc.boss = true;
             music = MusicID.Boss1;
@@ -73,6 +73,75 @@ namespace FargowiltasSouls.NPCs.Champions
             
             switch ((int)npc.ai[0])
             {
+                case -1: //mourning wood movement
+                    {
+                        npc.noTileCollide = true;
+                        npc.noGravity = true;
+
+                        if (Math.Abs(player.Center.X - npc.Center.X) < npc.width / 2)
+                        {
+                            npc.velocity.X *= 0.9f;
+                            if (Math.Abs(npc.velocity.X) < 0.1f)
+                                npc.velocity.X = 0f;
+                        }
+                        else
+                        {
+                            float accel = 4f;
+                            if (npc.direction > 0)
+                                npc.velocity.X = (npc.velocity.X * 20 + accel) / 21;
+                            else
+                                npc.velocity.X = (npc.velocity.X * 20 - accel) / 21;
+                        }
+
+                        bool onPlatforms = false;
+                        for (int i = (int)npc.position.X; i <= npc.position.X + npc.width; i += 16)
+                        {
+                            if (Framing.GetTileSafely(new Vector2(i, npc.position.Y + npc.height + npc.velocity.Y + 1)).type == TileID.Platforms)
+                            {
+                                onPlatforms = true;
+                                break;
+                            }
+                        }
+
+                        bool onCollision = Collision.SolidCollision(npc.position, npc.width, npc.height);
+
+                        if (npc.position.X < player.position.X && npc.position.X + npc.width > player.position.X + player.width
+                            && npc.position.Y + npc.height < player.position.Y + player.height - 16)
+                        {
+                            npc.velocity.Y += 0.5f;
+                        }
+                        else if (onCollision || (onPlatforms && player.position.Y + player.height <= npc.position.Y + npc.height))
+                        {
+                            if (npc.velocity.Y > 0f)
+                                npc.velocity.Y = 0f;
+
+                            if (onCollision)
+                            {
+                                if (npc.velocity.Y > -0.2f)
+                                    npc.velocity.Y -= 0.025f;
+                                else
+                                    npc.velocity.Y -= 0.2f;
+
+                                if (npc.velocity.Y < -4f)
+                                    npc.velocity.Y = -4f;
+                            }
+                        }
+                        else
+                        {
+                            if (npc.velocity.Y < 0f)
+                                npc.velocity.Y = 0f;
+
+                            if (npc.velocity.Y < 0.1f)
+                                npc.velocity.Y += 0.025f;
+                            else
+                                npc.velocity.Y += 0.5f;
+                        }
+
+                        if (npc.velocity.Y > 10f)
+                            npc.velocity.Y = 10f;
+                    }
+                    break;
+
                 case 0: //jump at player
                     npc.noTileCollide = false;
                     npc.noGravity = false;
@@ -84,7 +153,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.localAI[0] == 0 && npc.life < npc.lifeMax * .66f) //spawn palm tree supports
                         {
                             npc.localAI[0] = 1;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<PalmTreeHostile>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                             }
@@ -93,7 +162,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.localAI[1] == 0 && npc.life < npc.lifeMax * .33f) //spawn palm tree supports
                         {
                             npc.localAI[1] = 1;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<PalmTreeHostile>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                             }
@@ -110,12 +179,12 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.velocity = distance;
                         npc.netUpdate = true;
 
-                        if (Main.netMode != 1) //explosive jump
+                        if (Main.netMode != NetmodeID.MultiplayerClient) //explosive jump
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.DD2OgreSmash, npc.damage / 4, 0, Main.myPlayer);
                         }
 
-                        Main.PlaySound(2, (int)npc.position.X, (int)npc.position.Y, 14);
+                        Main.PlaySound(SoundID.Item, (int)npc.position.X, (int)npc.position.Y, 14);
 
                         for (int k = -2; k <= 2; k++) //explosions
                         {
@@ -186,17 +255,12 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             npc.timeLeft = 600;
                         }
+
+                        goto case -1;
                     }
                     break;
 
                 case 1: //acorn sprays
-                    if (Math.Abs(npc.velocity.X) > Math.Abs(npc.velocity.Y))
-                        npc.velocity.X = Math.Abs(npc.velocity.Y) * Math.Sign(npc.velocity.X);
-                    if (npc.velocity.Y == 0)
-                        npc.velocity.X *= 0.99f;
-                    npc.noTileCollide = false;
-                    npc.noGravity = false;
-
                     if (++npc.ai[2] > 35)
                     {
                         npc.ai[2] = 0;
@@ -220,23 +284,16 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.netUpdate = true;
                         npc.TargetClosest();
                     }
-                    break;
+                    goto case -1;
 
                 case 2:
                     goto case 0;
 
                 case 3: //snowball barrage
-                    if (Math.Abs(npc.velocity.X) > Math.Abs(npc.velocity.Y))
-                        npc.velocity.X = Math.Abs(npc.velocity.Y) * Math.Sign(npc.velocity.X);
-                    if (npc.velocity.Y == 0)
-                        npc.velocity.X *= 0.99f;
-                    npc.noTileCollide = false;
-                    npc.noGravity = false;
-
                     if (++npc.ai[2] > 5)
                     {
                         npc.ai[2] = 0;
-                        if (Main.netMode != 1 && npc.ai[1] > 30 && npc.ai[1] < 120)
+                        if (Main.netMode != NetmodeID.MultiplayerClient && npc.ai[1] > 30 && npc.ai[1] < 120)
                         {
                             Vector2 offset;
                             offset.X = Main.rand.NextFloat(0, npc.width / 2) * npc.direction;
@@ -254,23 +311,16 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.netUpdate = true;
                         npc.TargetClosest();
                     }
-                    break;
+                    goto case -1;
 
                 case 4:
                     goto case 0;
 
                 case 5: //spray squirrels
-                    if (Math.Abs(npc.velocity.X) > Math.Abs(npc.velocity.Y))
-                        npc.velocity.X = Math.Abs(npc.velocity.Y) * Math.Sign(npc.velocity.X);
-                    if (npc.velocity.Y == 0)
-                        npc.velocity.X *= 0.99f;
-                    npc.noTileCollide = false;
-                    npc.noGravity = false;
-
                     if (++npc.ai[2] > 6)
                     {
                         npc.ai[2] = 0;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LesserSquirrel>());
                             if (n != Main.maxNPCs)
@@ -278,8 +328,8 @@ namespace FargowiltasSouls.NPCs.Champions
                                 Main.npc[n].velocity.X = Main.rand.NextFloat(-10, 10);
                                 Main.npc[n].velocity.Y = Main.rand.NextFloat(-20, -10);
                                 Main.npc[n].netUpdate = true;
-                                if (Main.netMode == 2)
-                                    NetMessage.SendData(23, -1, -1, null, n);
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                             }
                         }
                     }
@@ -292,7 +342,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.netUpdate = true;
                         npc.TargetClosest();
                     }
-                    break;
+                    goto case -1;
 
                 case 6:
                     goto case 0;
@@ -304,17 +354,10 @@ namespace FargowiltasSouls.NPCs.Champions
                     goto case 0;
 
                 case 9: //grappling hook
-                    if (Math.Abs(npc.velocity.X) > Math.Abs(npc.velocity.Y))
-                        npc.velocity.X = Math.Abs(npc.velocity.Y) * Math.Sign(npc.velocity.X);
-                    if (npc.velocity.Y == 0)
-                        npc.velocity.X *= 0.99f;
-                    npc.noTileCollide = false;
-                    npc.noGravity = false;
-
                     if (npc.ai[2] == 0) //shoot hook
                     {
                         npc.ai[2] = 1;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center) * 16, ModContent.ProjectileType<SquirrelHook>(), 0, 0f, Main.myPlayer, npc.whoAmI);
                         }
@@ -347,7 +390,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     else if (npc.ai[1] == 240) //explode
                     {
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<ShadowflameBlast>(), npc.damage / 2, 0f, Main.myPlayer);
                         }
@@ -360,7 +403,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.netUpdate = true;
                         npc.TargetClosest();
                     }
-                    break;
+                    goto case -1;
 
                 default:
                     npc.ai[0] = 0;
@@ -437,8 +480,8 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void NPCLoot()
         {
             FargoSoulsWorld.downedChampions[0] = true;
-            if (Main.netMode == 2)
-                NetMessage.SendData(7); //sync world
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.WorldData); //sync world
 
             int[] drops = {
                 ModContent.ItemType<WoodEnchant>(),

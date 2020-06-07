@@ -35,7 +35,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.knockBackResist = 0f;
             npc.lavaImmune = true;
             npc.aiStyle = -1;
-            npc.value = Item.buyPrice(0, 5);
+            npc.value = Item.buyPrice(0, 15);
 
             npc.boss = true;
             music = MusicID.Boss5;
@@ -66,7 +66,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 else
                     return;
 
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     if (FargoSoulsWorld.MasochistMode)
                         Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<LifeRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
@@ -90,7 +90,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     if (++npc.ai[1] == 180) //heal up
                     {
-                        Main.PlaySound(15, npc.Center, 2); //arte scream
+                        Main.PlaySound(SoundID.Roar, npc.Center, 2); //arte scream
 
                         int heal = npc.lifeMax - npc.life;
                         npc.life += heal;
@@ -165,7 +165,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.ai[2] -= (float)Math.PI / 4 / 457 * npc.ai[3];
                         if (npc.ai[2] < -(float)Math.PI)
                             npc.ai[2] += (float)Math.PI * 2;
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int max = npc.localAI[2] == 1 ? 5 : 4;
                             for (int i = 0; i < max; i++)
@@ -235,7 +235,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             npc.ai[1] = 0;
                             npc.localAI[0] = npc.localAI[0] == 1 ? -1 : 1; //alternate sides
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<LesserFairy>(), npc.whoAmI, Target: npc.target);
                                 if (n != Main.maxNPCs)
@@ -243,9 +243,9 @@ namespace FargowiltasSouls.NPCs.Champions
                                     Main.npc[n].velocity = 5f * Vector2.UnitX.RotatedBy(Math.PI * (Main.rand.NextDouble() - 0.5));
                                     Main.npc[n].velocity.X *= npc.localAI[0];
 
-                                    if (Main.netMode == 2)
+                                    if (Main.netMode == NetmodeID.Server)
                                     {
-                                        NetMessage.SendData(23, -1, -1, null, n);
+                                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                                     }
                                 }
                             }
@@ -285,7 +285,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         else
                             npc.localAI[0] = 1;
 
-                        if (Main.netMode != 1)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 projTarget = npc.Center;
                             projTarget.X += 1200 * npc.ai[3];
@@ -325,7 +325,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (++npc.ai[3] > (npc.localAI[2] == 1 ? 4 : 7)) //spray fireballs that home down
                         {
                             npc.ai[3] = 0;
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 //spawn anywhere above self
                                 Vector2 target = new Vector2(Main.rand.NextFloat(1000), 0).RotatedBy(Main.rand.NextDouble() * -Math.PI);
@@ -367,7 +367,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.ai[2] = 60;
                         npc.localAI[1] = npc.localAI[1] == 0 ? 1 : 0;
 
-                        if (npc.ai[1] < 360 && Main.netMode != 1)
+                        if (npc.ai[1] < 360 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int type = npc.localAI[1] == 1 ? ModContent.ProjectileType<LifeDeathraySmall>() : ModContent.ProjectileType<LifeDeathray>();
                             int max = npc.localAI[2] == 1 ? 8 : 4;
@@ -409,7 +409,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             Main.PlaySound(SoundID.Item12, npc.Center);
 
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 target = player.Center - npc.Center;
                                 target.X += Main.rand.Next(-75, 76);
@@ -506,8 +506,8 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void NPCLoot()
         {
             FargoSoulsWorld.downedChampions[4] = true;
-            if (Main.netMode == 2)
-                NetMessage.SendData(7); //sync world
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.WorldData); //sync world
 
             //Item.NewItem(npc.position, npc.Size, ModContent.ItemType<LifeForce>());
             int[] drops = {

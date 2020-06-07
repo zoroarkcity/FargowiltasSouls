@@ -2,8 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Enums;
 
 namespace FargowiltasSouls.Projectiles.MutantBoss
 {
@@ -11,6 +11,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
     {
         public MutantGiantDeathray() : base(255, "PhantasmalDeathrayML") { }
         private const float maxTime = 255;
+
+        int dustTimer;
 
         public override void SetStaticDefaults()
         {
@@ -45,7 +47,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             }
             if (projectile.localAI[0] == 0f)
             {
-                Main.PlaySound(29, (int)Main.player[Main.myPlayer].Center.X, (int)Main.player[Main.myPlayer].Center.Y, 104, 1f, 0f);
+                Main.PlaySound(SoundID.Zombie, (int)Main.player[Main.myPlayer].Center.X, (int)Main.player[Main.myPlayer].Center.Y, 104, 1f, 0f);
             }
             float num801 = 10f;
             projectile.localAI[0] += 1f;
@@ -88,7 +90,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             num807 /= num805;
             float amount = 0.5f;
             projectile.localAI[1] = MathHelper.Lerp(projectile.localAI[1], num807, amount);
-            Vector2 vector79 = projectile.Center + projectile.velocity * (projectile.localAI[1] - 14f);
+            /*Vector2 vector79 = projectile.Center + projectile.velocity * (projectile.localAI[1] - 14f);
             for (int num809 = 0; num809 < 2; num809 = num3 + 1)
             {
                 float num810 = projectile.velocity.ToRotation() + ((Main.rand.Next(2) == 1) ? -1f : 1f) * 1.57079637f;
@@ -106,9 +108,33 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 Dust dust = Main.dust[num813];
                 dust.velocity *= 0.5f;
                 Main.dust[num813].velocity.Y = -Math.Abs(Main.dust[num813].velocity.Y);
-            }
+            }*/
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
             //Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
+
+            if (++dustTimer > 30)
+            {
+                dustTimer = 0;
+                const int max = 7;
+                for (int i = 0; i < max; i++)
+                {
+                    const int ring = 64;
+                    Vector2 offset = projectile.velocity * 3000 / max * (i - 0.5f);// (i + (float)dustTimer / 60);
+                    for (int index1 = 0; index1 < ring; ++index1)
+                    {
+                        Vector2 vector2 = (Vector2.UnitX * -projectile.width / 2f + -Vector2.UnitY.RotatedBy(index1 * 3.14159274101257 * 2 / ring)
+                            * new Vector2(8f, 16f)).RotatedBy(projectile.rotation - 1.57079637050629);
+                        int index2 = Dust.NewDust(projectile.Center, 0, 0, 229, 0.0f, 0.0f, 0, new Color(), 1f);
+                        Main.dust[index2].scale = 3f;
+                        Main.dust[index2].noGravity = true;
+                        Main.dust[index2].position = projectile.Center + offset;
+                        //Main.dust[index2].velocity = Vector2.Zero;
+                        Main.dust[index2].velocity = 5f * Vector2.Normalize(projectile.Center - projectile.velocity * 3f - Main.dust[index2].position);
+                        Main.dust[index2].velocity += 5f * projectile.velocity;
+                        Main.dust[index2].velocity += vector2 * 1.5f;
+                    }
+                }
+            }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

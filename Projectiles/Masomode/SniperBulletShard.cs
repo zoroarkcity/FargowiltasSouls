@@ -24,9 +24,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             target.AddBuff(mod.BuffType("Defenseless"), 1800);
 
-            int buffTime = 300;
+            /*int buffTime = 300;
             target.AddBuff(mod.BuffType("Crippled"), buffTime);
-            target.AddBuff(mod.BuffType("ClippedWings"), buffTime);
+            target.AddBuff(mod.BuffType("ClippedWings"), buffTime);*/
         }
     }
 }

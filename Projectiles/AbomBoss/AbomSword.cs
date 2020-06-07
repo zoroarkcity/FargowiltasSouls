@@ -54,7 +54,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             }
             if (projectile.localAI[0] == 0f)
             {
-                Main.PlaySound(29, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
+                Main.PlaySound(SoundID.Zombie, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
             }
             float num801 = 1f;
             projectile.localAI[0] += 1f;
@@ -119,7 +119,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             if (Main.npc[(int)projectile.ai[1]].velocity != Vector2.Zero && --counter < 0)
             {
                 counter = 5;
-                if (Main.netMode != 1) //spawn bonus projs
+                if (Main.netMode != NetmodeID.MultiplayerClient) //spawn bonus projs
                 {
                     Vector2 spawnPos = projectile.Center;
                     Vector2 vel = projectile.velocity.RotatedBy(Math.PI / 2 * Math.Sign(projectile.ai[0]));
@@ -135,7 +135,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             if (!spawnedHandle)
             {
                 spawnedHandle = true;
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<AbomSwordHandle>(), projectile.damage, projectile.knockBack, projectile.owner, (float)Math.PI / 2, projectile.whoAmI);
                     Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<AbomSwordHandle>(), projectile.damage, projectile.knockBack, projectile.owner, -(float)Math.PI / 2, projectile.whoAmI);

@@ -85,7 +85,7 @@ namespace FargowiltasSouls.Items
 
             if (item.magic && player.GetModPlayer<FargoPlayer>().ReverseManaFlow)
             {
-                player.Hurt(PlayerDeathReason.ByCustomReason(player.name + " was destroyed by their own magic."), item.mana + item.damage, 0);
+                player.Hurt(PlayerDeathReason.ByCustomReason(player.name + " was destroyed by their own magic."), item.mana * 2, 0);
                 player.immune = false;
                 player.immuneTime = 0;
             }

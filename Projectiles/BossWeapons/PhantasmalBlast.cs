@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.Buffs.Masomode;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
@@ -72,7 +73,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 600);
+            target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 600);
+            target.immune[projectile.owner] = 1;
         }
 
         public override void Kill(int timeLeft)

@@ -100,7 +100,9 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
             if (player.ownedProjectileCounts[item.shoot] < 1 && player.ownedProjectileCounts[mod.ProjectileType("Dash")] < 1)
             {
-                Projectile.NewProjectile(position.X, position.Y, speedX * 3f, speedY * 3f, mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI);
+                //Vector2 target = (Main.MouseWorld - player.Center) / 37;
+                //Projectile.NewProjectile(position.X, position.Y, target.X, target.Y, mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI);
+                Projectile.NewProjectile(position.X, position.Y, speedX * 4, speedY * 4, mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI);
                 Projectile.NewProjectile(position.X, position.Y, speedX, speedY, item.shoot, damage, knockBack, item.owner, 0f, 1f);
             }
             return false;

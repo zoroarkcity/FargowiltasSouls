@@ -280,9 +280,9 @@ namespace FargowiltasSouls
             //right when day starts
             /*if(/*Main.time == 0 && Main.dayTime && !Main.eclipse && FargoSoulsWorld.masochistMode)
 			{
-					Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0, 1f, 0f);
+					Main.PlaySound(SoundID.Roar, (int)player.position.X, (int)player.position.Y, 0, 1f, 0f);
 					
-					if (Main.netMode == 0)
+					if (Main.netMode == NetmodeID.SinglePlayer)
 					{
 						Main.eclipse = true;
 						//Main.NewText(Lang.misc[20], 50, 255, 130, false);
@@ -298,8 +298,8 @@ namespace FargowiltasSouls
             // if (this.itemTime == 0 && this.itemAnimation > 0 && item.type == 361 && Main.CanStartInvasion(1, true))
             // {
             // this.itemTime = item.useTime;
-            // Main.PlaySound(15, (int)this.position.X, (int)this.position.Y, 0, 1f, 0f);
-            // if (Main.netMode != 1)
+            // Main.PlaySound(SoundID.Roar, (int)this.position.X, (int)this.position.Y, 0, 1f, 0f);
+            // if (Main.netMode != NetmodeID.MultiplayerClient)
             // {
             // if (Main.invasionType == 0)
             // {
@@ -315,8 +315,8 @@ namespace FargowiltasSouls
             // if (this.itemTime == 0 && this.itemAnimation > 0 && item.type == 602 && Main.CanStartInvasion(2, true))
             // {
             // this.itemTime = item.useTime;
-            // Main.PlaySound(15, (int)this.position.X, (int)this.position.Y, 0, 1f, 0f);
-            // if (Main.netMode != 1)
+            // Main.PlaySound(SoundID.Roar, (int)this.position.X, (int)this.position.Y, 0, 1f, 0f);
+            // if (Main.netMode != NetmodeID.MultiplayerClient)
             // {
             // if (Main.invasionType == 0)
             // {
@@ -332,8 +332,8 @@ namespace FargowiltasSouls
             // if (this.itemTime == 0 && this.itemAnimation > 0 && item.type == 1315 && Main.CanStartInvasion(3, true))
             // {
             // this.itemTime = item.useTime;
-            // Main.PlaySound(15, (int)this.position.X, (int)this.position.Y, 0, 1f, 0f);
-            // if (Main.netMode != 1)
+            // Main.PlaySound(SoundID.Roar, (int)this.position.X, (int)this.position.Y, 0, 1f, 0f);
+            // if (Main.netMode != NetmodeID.MultiplayerClient)
             // {
             // if (Main.invasionType == 0)
             // {
@@ -349,8 +349,8 @@ namespace FargowiltasSouls
             // if (this.itemTime == 0 && this.itemAnimation > 0 && item.type == 1844 && !Main.dayTime && !Main.pumpkinMoon && !Main.snowMoon && !DD2Event.Ongoing)
             // {
             // this.itemTime = item.useTime;
-            // Main.PlaySound(15, (int)this.position.X, (int)this.position.Y, 0, 1f, 0f);
-            // if (Main.netMode != 1)
+            // Main.PlaySound(SoundID.Roar, (int)this.position.X, (int)this.position.Y, 0, 1f, 0f);
+            // if (Main.netMode != NetmodeID.MultiplayerClient)
             // {
             // Main.NewText(Lang.misc[31], 50, 255, 130, false);
             // Main.startPumpkinMoon();
@@ -363,9 +363,9 @@ namespace FargowiltasSouls
 
             // if (this.itemTime == 0 && this.itemAnimation > 0 && item.type == 3601 && NPC.downedGolemBoss && Main.hardMode && !NPC.AnyDanger() && !NPC.AnyoneNearCultists())
             // {
-            // Main.PlaySound(15, (int)this.position.X, (int)this.position.Y, 0, 1f, 0f);
+            // Main.PlaySound(SoundID.Roar, (int)this.position.X, (int)this.position.Y, 0, 1f, 0f);
             // this.itemTime = item.useTime;
-            // if (Main.netMode == 0)
+            // if (Main.netMode == NetmodeID.SinglePlayer)
             // {
             // WorldGen.StartImpendingDoom();
             // }
@@ -377,8 +377,8 @@ namespace FargowiltasSouls
             // if (this.itemTime == 0 && this.itemAnimation > 0 && item.type == 1958 && !Main.dayTime && !Main.pumpkinMoon && !Main.snowMoon && !DD2Event.Ongoing)
             // {
             // this.itemTime = item.useTime;
-            // Main.PlaySound(15, (int)this.position.X, (int)this.position.Y, 0, 1f, 0f);
-            // if (Main.netMode != 1)
+            // Main.PlaySound(SoundID.Roar, (int)this.position.X, (int)this.position.Y, 0, 1f, 0f);
+            // if (Main.netMode != NetmodeID.MultiplayerClient)
             // {
             // Main.NewText(Lang.misc[34], 50, 255, 130, false);
             // Main.startSnowMoon();

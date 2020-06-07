@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
@@ -32,7 +33,7 @@ You probably shouldn't be reading this...");
             if (player.itemAnimation > 0 && player.itemTime == 0)
             {
                 FargoSoulsWorld.skipMutantP1 = 0;
-                Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
+                Main.PlaySound(SoundID.Roar, (int)player.position.X, (int)player.position.Y, 0);
             }
             return true;
         }

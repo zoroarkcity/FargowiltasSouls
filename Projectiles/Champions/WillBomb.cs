@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
+using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.Champions
 {
@@ -50,14 +51,44 @@ namespace FargowiltasSouls.Projectiles.Champions
             target.AddBuff(BuffID.Bleeding, 300);
         }
 
+        private void SpawnSphereRing(int max, float speed, int damage, float rotationModifier)
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient) return;
+            float rotation = 2f * (float)Math.PI / max;
+            Vector2 vel = Vector2.UnitY * speed;
+            int type = ModContent.ProjectileType<WillTyphoon>();
+            for (int i = 0; i < max; i++)
+            {
+                vel = vel.RotatedBy(rotation);
+                Projectile.NewProjectile(projectile.Center, vel, type, damage, 0f, Main.myPlayer, rotationModifier, speed);
+            }
+            Main.PlaySound(SoundID.Item84, projectile.Center);
+        }
+
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(SoundID.Item92, projectile.Center);
 
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (FargoSoulsWorld.MasochistMode)
                     Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<WillRitual>(), 0, 0f, Main.myPlayer, 0f, projectile.ai[1]);
+
+                if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<NPCs.Champions.WillChampion>())
+                    && Main.npc[EModeGlobalNPC.championBoss].ai[0] > -1)
+                {
+                    if (Main.npc[EModeGlobalNPC.championBoss].localAI[2] == 1)
+                    {
+                        SpawnSphereRing(8, 8f, projectile.damage, 2f);
+                        SpawnSphereRing(8, 8f, projectile.damage, -2f);
+                    }
+
+                    if (Main.npc[EModeGlobalNPC.championBoss].localAI[3] == 1)
+                    {
+                        SpawnSphereRing(8, 8f, projectile.damage, 0.5f);
+                        SpawnSphereRing(8, 8f, projectile.damage, -0.5f);
+                    }
+                }
 
                 for (int i = 0; i < 4; i++)
                 {
@@ -71,7 +102,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.height = 250;
             projectile.Center = projectile.position;
 
-            Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14);
+            Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 14);
 
             for (int num615 = 0; num615 < 45; num615++)
             {

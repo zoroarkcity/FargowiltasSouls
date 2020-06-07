@@ -40,9 +40,9 @@ namespace FargowiltasSouls.Items.Summons
                 if (mutant > -1 && Main.npc[mutant].active)
                 {
                     Main.npc[mutant].Transform(mod.NPCType("DeviBoss"));
-                    if (Main.netMode == 0)
+                    if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText("Deviantt has awoken!", 175, 75, 255);
-                    else if (Main.netMode == 2)
+                    else if (Main.netMode == NetmodeID.Server)
                         NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Deviantt has awoken!"), new Color(175, 75, 255));
                 }
                 else

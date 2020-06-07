@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
@@ -52,7 +53,7 @@ You probably shouldn't be reading this...");
                 FargoSoulsWorld.FishronCount = FargoSoulsWorld.MaxCountHM;
                 FargoSoulsWorld.CultistCount = FargoSoulsWorld.MaxCountHM;
                 FargoSoulsWorld.MoonlordCount = FargoSoulsWorld.MaxCountHM;
-                Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0);
+                Main.PlaySound(SoundID.Roar, (int)player.position.X, (int)player.position.Y, 0);
             }
             return true;
         }

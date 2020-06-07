@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
         public override string Texture => "Terraria/Projectile_274";
 
         private const float PI = (float)Math.PI;
-        private const float rotationPerTick = PI / 140f;
+        private const float rotationPerTick = PI / 180f;
         private const float threshold = 1400f;
 
         public override void SetStaticDefaults()
@@ -119,7 +119,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 projectile.netUpdate = true;
             }
 
-            projectile.rotation += 0.5f;
+            projectile.rotation += 1f;
         }
 
         public override bool CanDamage()
@@ -141,16 +141,19 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             {
                 Vector2 drawOffset = new Vector2(threshold * projectile.scale / 2f, 0f).RotatedBy(projectile.ai[0]);
                 drawOffset = drawOffset.RotatedBy(2f * PI / 32f * x);
+                float rotationOffset = 2 * (float)Math.PI / 8 * x;
                 const int max = 4;
                 for (int i = 0; i < max; i++)
                 {
                     Color color27 = color26;
                     color27 *= (float)(max - i) / max;
                     Vector2 value4 = projectile.Center + drawOffset.RotatedBy(rotationPerTick * i);
-                    float num165 = projectile.oldRot[i];
+                    float num165 = projectile.oldRot[i] + rotationOffset;
                     Main.spriteBatch.Draw(texture2D13, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
                 }
-                Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY),
+                    new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, projectile.rotation + rotationOffset, origin2, projectile.scale, 
+                    SpriteEffects.None, 0f);
             }
             return false;
         }

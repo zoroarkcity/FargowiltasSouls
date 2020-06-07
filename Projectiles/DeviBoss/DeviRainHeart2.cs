@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             if (projectile.ai[1] >= 0f && projectile.ai[1] < 200f &&
                 Main.npc[ai1].active && Main.npc[ai1].type == mod.NPCType("DeviBoss"))
             {
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Projectile.NewProjectile(projectile.Center, -Vector2.UnitY, mod.ProjectileType("DeviDeathray"), projectile.damage, projectile.knockBack, projectile.owner);
                     if (Main.player[Main.npc[ai1].target].Center.Y > projectile.Center.Y)

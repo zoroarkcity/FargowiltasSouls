@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
@@ -38,9 +39,9 @@ namespace FargowiltasSouls.Items.Summons
             if (mutant > -1 && Main.npc[mutant].active)
             {
                 Main.npc[mutant].Transform(mod.NPCType("MutantBoss"));
-                if (Main.netMode == 0)
+                if (Main.netMode == NetmodeID.SinglePlayer)
                     Main.NewText("Mutant has awoken!", 175, 75, 255);
-                else if (Main.netMode == 2)
+                else if (Main.netMode == NetmodeID.Server)
                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Mutant has awoken!"), new Color(175, 75, 255));
             }
             else

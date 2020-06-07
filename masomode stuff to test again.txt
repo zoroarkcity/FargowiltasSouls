@@ -33,7 +33,74 @@ beetle ench MURDERED: caps at first beetle level (unnerfed in SOT)
 added sigil of champions
 fixed biocluster tp not working
 fixed betsy dash tooltip
-fixed iron guard not blocking attacks that used alternative cooldowns, but longer cooldown on guard
 piranhas, sharks, arapaima emit dust while jumping
 nerfed nebula ench to cap at level 2
 nerfed solar ench to give less DR
+
+wyverns no longer horde in pre hm
+cultist clones no longer deal contact damage
+increased safe space of rune wizard
+reduced damage of some of mutant's attacks, mainly last stand
+
+nerfed reverse mana flow to only inflict the weapon's mana times two as damage
+nerfed debuffs like HELL, i literally cannot list it
+nerfed wyvern light orb speed
+iron enchantment rework:
+	can block attacks that use alternative cooldowns
+	parry window is 30 ticks (was 20)
+	gives 1 second invul (2 with cross necklace)
+	parry cooldown increases to 2 seconds
+
+mutant clone map icons also turn to face you
+brain p2 rework
+	spams harmless illusions that fly around and be annoying, become opaque as life decreases
+	brain clone moves much slower and doesn't teleport
+wof deathrays dont freeze you
+skeletron and prime have a 3 second windup while entering DG form
+mutant nuke has a visual effect and hitboxes adjusted
+
+removed nerf to moon lord head's max life
+cultist's homing nebula spheres move faster
+reduced speed and homing of chlorophyte bullets
+adjusted rotation offset of abom's phase 2 arena to look a little better
+
+timber champ walks
+changed will arena from fireballs to typhoons
+nature uses two heads to attack at a time
+fixed soul of siblings not giving fishron speed bonus
+
+prime changes:
+	all limbs use prime's contact damage while swiping or spinning
+	reduced prime p2 speed bonus from 33% to 25%
+	reduced spread of p2 rockets
+	fixed(?) swipe limbs desyncing
+	removed flaming sword
+	buffed cannon dark star damage
+	prime shoots rings of dark stars while spinning instead of rockets in p2
+	removed p1 DR, prime skull is always vulnerable
+	increased prime life 20%
+
+rework penetrator:
+	each attack leaves a deathray as well
+	spheres pierce and are much faster
+	spear is on 0 local iframe cooldown, everything else is shared 1frame
+
+pog champ jump slower, less rain timeleft, changed configs
+dusts for some shadow champ attacks
+cosmos champ p3 even more aggressive
+will deathray strike scale increased
+changed mutant ring attacks
+removed poltergeist shooting lost souls
+removed golem DR
+removed selenians chaining rolls when hit
+nerfed fishron's p3 heal from 50% to 33%
+nebula headcrabs always contribute to shield and no longer become floaters after latching
+tried something to make devi's frostballs and rune blasts despawn after their attacks (check in mp)
+removed that one damn bolt terra champ fires during sin wave
+now disabled in temple until golem is killed:
+	-mining traps and pressure plates
+	-dangersense and wire vision
+	-wire cutter and grand design
+
+reduced severity of nerfs
+new mutant background

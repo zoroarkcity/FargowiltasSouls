@@ -50,7 +50,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             }
             if (projectile.localAI[0] == 0f)
             {
-                Main.PlaySound(29, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
+                Main.PlaySound(SoundID.Zombie, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
             }
             float num801 = 1f;
             projectile.localAI[0] += 1f;
@@ -122,9 +122,6 @@ namespace FargowiltasSouls.Projectiles.Deathrays
         {
             target.AddBuff(mod.BuffType("Flipped"), 300);
             target.AddBuff(BuffID.Confused, 300);
-            target.AddBuff(mod.BuffType("ClippedWings"), 300);
-            target.AddBuff(mod.BuffType("Crippled"), 300);
-            target.velocity = target.velocity / 4;
         }
     }
 }
