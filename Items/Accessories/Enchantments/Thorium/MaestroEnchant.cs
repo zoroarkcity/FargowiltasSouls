@@ -80,7 +80,7 @@ Effects of Metronome and Purple Music Player");
             recipe.AddIngredient(ModContent.ItemType<FrenchHorn>());
             recipe.AddIngredient(ModContent.ItemType<SpectralSymphonyPaint>());
 
-            purple music player e
+           // purple music player e
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

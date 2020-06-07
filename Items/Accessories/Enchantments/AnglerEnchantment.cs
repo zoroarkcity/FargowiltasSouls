@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"'As long as they aren't all shoes, you can go home happily'
 Increases fishing skill
 You catch fish almost instantly
-Effects of Angler Tackle Bag"); e
+Effects of Angler Tackle Bag"); //e
             DisplayName.AddTranslation(GameCulture.Chinese, "渔夫魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'只要不全是鞋子, 你可以高高兴兴地回家'

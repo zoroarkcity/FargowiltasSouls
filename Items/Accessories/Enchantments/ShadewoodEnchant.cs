@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"'Surprisingly clean'
 When you take damage, damaging blood flies everywhere
 Enemies getting too close will trigger this and all other on hit effects
-There is a 5 second cooldown for this"); e
+There is a 5 second cooldown for this"); //e
             DisplayName.AddTranslation(GameCulture.Chinese, "阴影木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'出奇的干净'

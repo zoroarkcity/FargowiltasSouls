@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Trawler Soul"); e
+            DisplayName.SetDefault("Trawler Soul"); //e
 
             string tooltip = 
 @"'The fish catch themselves'

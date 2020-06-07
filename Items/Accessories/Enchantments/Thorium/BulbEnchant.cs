@@ -63,7 +63,7 @@ Effects of Bee Booties and Petal Shield, and Kick Petal");
                 player.maxRunSpeed -= 1f;
             }
 
-            kickpetal
+            //kickpetal
         }
 
         public override void AddRecipes()

@@ -62,7 +62,7 @@ Effects of Dart Pouch");
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             modPlayer.AssassinEnchant = true;
 
-            dart pouch effect
+            //dart pouch effect
         }
 
         public override void AddRecipes()

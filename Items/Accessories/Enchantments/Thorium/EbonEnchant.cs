@@ -48,7 +48,7 @@ Effects if Dark Heart");
             //set bonus
             thoriumPlayer.darkAura = true;
 
-            darkheart
+            //darkheart
         }
 
         public override void AddRecipes()

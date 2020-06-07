@@ -18,7 +18,7 @@ Critters will explode 1 second after being released
 Certain critters have extra effects
 //Critters have massively increased defense
 Grants immunity to Guilty
-When any critter dies, it may become an item"); e
+When any critter dies, it may become an item"); //e
             DisplayName.AddTranslation(GameCulture.Chinese, "木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'卑微的开始...'

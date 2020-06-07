@@ -76,9 +76,9 @@ Effects of Crietz, Band of Replenishment, and Fan Letter");
             recipe.AddIngredient(ModContent.ItemType<Crietz>());
             recipe.AddIngredient(ModContent.ItemType<BandofReplenishment>());
 
-            thoriumdaggers
-                thorium paxe
-                purify
+           // thoriumdaggers
+            //    thorium paxe
+            //    purify
 
 
             recipe.AddIngredient(ModContent.ItemType<LastSupperPaint>());

@@ -144,7 +144,7 @@ Effects of Auto Tuner and Metal Music Player");
             thoriumPlayer.accMusicPlayer = true;
             thoriumPlayer.accMP3Brass = true;
 
-            disstrck, mention/fix music player
+            //disstrck, mention/fix music player
         }
 
         public override void AddRecipes()

@@ -14,7 +14,9 @@ Enchants
 
 -Added several missing calamity toggles, some disruptive toggles will start off by default
 
-
+-fixed mutant giving no reward at all outside emode 
+-Slime Rain only needs one Slime Slinger
+-same with nuke fishron
 
 
 

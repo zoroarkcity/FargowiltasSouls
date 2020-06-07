@@ -63,7 +63,7 @@ Effects of Ring of Unity and Waxy Rosin");
             //noble set bonus
             thoriumPlayer.setNoble = true;
 
-            brasscap/waxyrosin
+           // brasscap/waxyrosin
         }
 
         public override void AddRecipes()

@@ -15,7 +15,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             Tooltip.SetDefault(
 @"'Guaranteed to keep you hooked'
 All grappling hooks pull you in and retract twice as fast
-Any hook will periodically fire homing shots at enemies"); e
+Any hook will periodically fire homing shots at enemies"); //e
             DisplayName.AddTranslation(GameCulture.Chinese, "红木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'保证能勾住你'

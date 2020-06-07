@@ -59,7 +59,7 @@ Summons a pet Wyvern");
             modPlayer.AddPet(SoulConfig.Instance.thoriumToggles.WyvernPet, hideVisual, thorium.BuffType("WyvernPetBuff"), thorium.ProjectileType("WyvernPet"));
             modPlayer.DragonEnchant = true;
 
-            discomusicplayer
+           // discomusicplayer
         }
 
         public override void AddRecipes()
@@ -77,7 +77,7 @@ Summons a pet Wyvern");
             recipe.AddIngredient(ModContent.ItemType<EbonyTail>());
             recipe.AddIngredient(ModContent.ItemType<CorrupterBalloon>(), 300);
             //recipe.AddIngredient(ItemID.ClingerStaff);
-            Absinthe Fury
+           // Absinthe Fury
             recipe.AddIngredient(ModContent.ItemType<CloudyChewToy>());
 
             recipe.AddTile(TileID.CrystalBall);

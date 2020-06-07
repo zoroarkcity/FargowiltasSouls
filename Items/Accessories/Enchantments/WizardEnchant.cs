@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().WizardEnchant = true;
+            //player.GetModPlayer<FargoPlayer>().WizardEnchant = true;
         }
 
         public override void AddRecipes()
