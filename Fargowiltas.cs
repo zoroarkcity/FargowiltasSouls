@@ -60,6 +60,7 @@ namespace FargowiltasSouls
         {
             Instance = this;
 
+            SkyManager.Instance["FargowiltasSouls:AbomBoss"] = new AbomSky();
             SkyManager.Instance["FargowiltasSouls:MutantBoss"] = new MutantSky();
             SkyManager.Instance["FargowiltasSouls:MutantBoss2"] = new MutantSky2();
             Filters.Scene["FargowiltasSouls:TimeStop"] = new Filter(

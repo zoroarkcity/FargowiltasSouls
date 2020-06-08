@@ -102,5 +102,7 @@ now disabled in temple until golem is killed:
 	-dangersense and wire vision
 	-wire cutter and grand design
 
-reduced severity of nerfs
+reduced severity of weapon nerfs
 new mutant background
+new abom background
+added full force
