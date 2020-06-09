@@ -877,7 +877,7 @@ namespace FargowiltasSouls
                             ModContent.ItemType<TurtleEnchant>(),
                             ModContent.ItemType<BeetleEnchant>()
                         },
-                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in the Hallow.",
+                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in the Hallow at day.",
                         "Champion of Life fades away...",
                         "FargowiltasSouls/NPCs/Champions/LifeChampion_Still",
                         "FargowiltasSouls/NPCs/Champions/LifeChampion_Head_Boss"
@@ -898,7 +898,7 @@ namespace FargowiltasSouls
                             ModContent.ItemType<ShinobiEnchant>(),
                             ModContent.ItemType<DarkArtistEnchant>()
                         },
-                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] on surface at night.",
+                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in the Corruption or Crimson at night.",
                         "Champion of Shadow fades away...",
                         "FargowiltasSouls/NPCs/Champions/ShadowChampion_Still",
                         "FargowiltasSouls/NPCs/Champions/ShadowChampion_Head_Boss"
