@@ -72,12 +72,15 @@ Effects of Crietz, Band of Replenishment, and Fan Letter");
             recipe.AddIngredient(ModContent.ItemType<ThoriumHelmet>());
             recipe.AddIngredient(ModContent.ItemType<ThoriumMail>());
             recipe.AddIngredient(ModContent.ItemType<ThoriumGreaves>());
-            recipe.AddIngredient(ModContent.ItemType<GrandThoriumHelmet>());
-            recipe.AddIngredient(ModContent.ItemType<GrandThoriumBreastPlate>());
-            recipe.AddIngredient(ModContent.ItemType<GrandThoriumGreaves>());
             recipe.AddIngredient(ModContent.ItemType<JesterEnchant>());
             recipe.AddIngredient(ModContent.ItemType<Crietz>());
             recipe.AddIngredient(ModContent.ItemType<BandofReplenishment>());
+
+           // thoriumdaggers
+            //    thorium paxe
+            //    purify
+
+
             recipe.AddIngredient(ModContent.ItemType<LastSupperPaint>());
 
             recipe.AddTile(TileID.DemonAltar);

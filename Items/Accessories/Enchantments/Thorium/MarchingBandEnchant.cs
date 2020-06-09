@@ -49,6 +49,8 @@ While in combat, a rainbow of damaging symphonic symbols will follow your moveme
                 //marching band set 
                 thoriumPlayer.setMarchingBand = true;
             }
+
+            //fullscore
         }
 
         public override void AddRecipes()

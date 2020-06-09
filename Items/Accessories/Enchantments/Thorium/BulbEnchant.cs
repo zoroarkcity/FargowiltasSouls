@@ -26,7 +26,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             Tooltip.SetDefault(
 @"'Has a surprisingly sweet aroma'
 Your damage has a chance to poison hit enemies with a spore cloud
-Effects of Bee Booties and Petal Shield");
+Effects of Bee Booties and Petal Shield, and Kick Petal");
             DisplayName.AddTranslation(GameCulture.Chinese, "花瓣魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'香气逼人'
@@ -62,6 +62,8 @@ Effects of Bee Booties and Petal Shield");
                 player.moveSpeed -= 0.15f;
                 player.maxRunSpeed -= 1f;
             }
+
+            //kickpetal
         }
 
         public override void AddRecipes()

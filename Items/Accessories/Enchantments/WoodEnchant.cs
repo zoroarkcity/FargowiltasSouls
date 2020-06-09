@@ -14,9 +14,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Wood Enchantment");
             Tooltip.SetDefault(
 @"'Humble beginnings…'
-Critters have massively increased defense
+Critters will explode 1 second after being released
+Certain critters have extra effects
+//Critters have massively increased defense
 Grants immunity to Guilty
-When critters die, they release their souls to aid you");
+When any critter dies, it may become an item"); //e
             DisplayName.AddTranslation(GameCulture.Chinese, "木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'卑微的开始...'
@@ -61,7 +63,7 @@ When critters die, they release their souls to aid you");
             recipe.AddIngredient(ItemID.LivingWoodWand);
             recipe.AddIngredient(ItemID.Bunny);
             recipe.AddRecipeGroup("FargowiltasSouls:AnySquirrel");
-            recipe.AddIngredient(ItemID.Bird);        
+            recipe.AddIngredient(ItemID.Bird);     //any bird   
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

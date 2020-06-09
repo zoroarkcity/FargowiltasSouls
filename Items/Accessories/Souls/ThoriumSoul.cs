@@ -34,8 +34,8 @@ All armor bonuses from Demon Blood, Magma, and Berserker
 All armor bonuses from Tide Turner, Assassin, Pyromancer, and Dream Weaver 
 Effects of Flawless Chrysalis, Bee Booties, Bubble Magnet, and Agnor's Bowl
 Effects of Ice Bound Strider Hide, Ring of Unity, and Mix Tape 
-Effects of Eye of the Storm, Champion's Rebuttal, and Incandescent Spark
-Effects of the Greedy Magnet, Abyssal Shell, and Astro-Beetle Husk
+Effects of Eye of the Storm and Champion's Rebuttal
+Effects of the Abyssal Shell and Astro-Beetle Husk
 Effects of Eye of the Beholder, Crietz, and Mana-Charged Rocketeers 
 Effects of Inner Flame, Crash Boots, Vampire Gland, and Spring Steps
 Effects of Slag Stompers, Demon Blood Badge, and Lich's Gaze

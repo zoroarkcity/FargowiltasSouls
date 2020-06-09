@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             Tooltip.SetDefault(
 @"'Rich with culture'
 Inspiration notes that drop are twice as potent and increase your symphonic damage briefly
-Effects of Ring of Unity and Mix Tape");
+Effects of Ring of Unity and Waxy Rosin");
             DisplayName.AddTranslation(GameCulture.Chinese, "贵族魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'富有, 并且有教养'
@@ -62,6 +62,8 @@ Effects of Ring of Unity and Mix Tape");
 
             //noble set bonus
             thoriumPlayer.setNoble = true;
+
+           // brasscap/waxyrosin
         }
 
         public override void AddRecipes()
