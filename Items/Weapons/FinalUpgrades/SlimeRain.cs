@@ -75,7 +75,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(mod.ItemType("SlimeSword"), 10);
+            recipe.AddIngredient(mod.ItemType("SlimeSword"), 1);
             recipe.AddIngredient(mod.ItemType("Sadism"), 15);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));

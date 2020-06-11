@@ -90,7 +90,7 @@ Effects of Bee Booties, Petal Shield, and Flawless Chrysalis");
             recipe.AddIngredient(ModContent.ItemType<Chrysalis>());
             recipe.AddIngredient(ModContent.ItemType<HiveMind>());
             recipe.AddIngredient(ModContent.ItemType<ButterflyStaff>());
-            recipe.AddIngredient(ModContent.ItemType<HoneyBlade>());
+            //recipe.AddIngredient(ModContent.ItemType<HoneyBlade>());
             recipe.AddIngredient(ModContent.ItemType<MistWeaver>());
 
             recipe.AddTile(TileID.CrystalBall);

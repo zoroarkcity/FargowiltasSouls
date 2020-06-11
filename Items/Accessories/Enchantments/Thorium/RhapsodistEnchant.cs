@@ -86,7 +86,7 @@ These effects needs to recharge for 1 minute");
             recipe.AddIngredient(ModContent.ItemType<RhapsodistBoots>());
             recipe.AddIngredient(ModContent.ItemType<SirensAllure>());
             recipe.AddIngredient(ModContent.ItemType<JingleBells>());
-            recipe.AddIngredient(ModContent.ItemType<TerrariumAutoharp>());
+            //recipe.AddIngredient(ModContent.ItemType<TerrariumAutoharp>()); theset
             recipe.AddIngredient(ModContent.ItemType<Sousaphone>());
             recipe.AddIngredient(ModContent.ItemType<Holophonor>());
             recipe.AddIngredient(ModContent.ItemType<EdgeofImagination>());

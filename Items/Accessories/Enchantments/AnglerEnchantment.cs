@@ -15,7 +15,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             Tooltip.SetDefault(
 @"'As long as they aren't all shoes, you can go home happily'
 Increases fishing skill
-You catch fish almost instantly");
+You catch fish almost instantly
+Effects of Angler Tackle Bag"); //e
             DisplayName.AddTranslation(GameCulture.Chinese, "渔夫魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'只要不全是鞋子, 你可以高高兴兴地回家'
@@ -56,12 +57,12 @@ You catch fish almost instantly");
             recipe.AddIngredient(ItemID.AnglerHat);
             recipe.AddIngredient(ItemID.AnglerVest);
             recipe.AddIngredient(ItemID.AnglerPants);
+            recipe.AddIngredient(ItemID.AnglerTackleBag);
             recipe.AddIngredient(ItemID.WoodFishingPole);
             recipe.AddIngredient(ItemID.ReinforcedFishingPole);
             recipe.AddIngredient(ItemID.FiberglassFishingPole);
             recipe.AddIngredient(ItemID.Rockfish);
             recipe.AddIngredient(ItemID.SawtoothShark);
-            recipe.AddIngredient(ItemID.FrostDaggerfish, 200);
             recipe.AddRecipeGroup("FargowiltasSouls:AnyFishingTrash", 5);
 
             recipe.AddTile(TileID.DemonAltar);

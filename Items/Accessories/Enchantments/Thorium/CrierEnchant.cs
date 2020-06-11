@@ -21,8 +21,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             DisplayName.SetDefault("Crier Enchantment");
             Tooltip.SetDefault(
 @"'Nothing to cry about'
-Your symphonic empowerments will last an additional 3 seconds
-Effects of Music Notes");
+Your symphonic empowerments will last an additional 3 seconds");
             DisplayName.AddTranslation(GameCulture.Chinese, "传迅员魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'没什么可说的'
@@ -46,8 +45,6 @@ Effects of Music Notes");
 
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
             thoriumPlayer.bardBuffDuration += 180;
-            //music notes
-            thoriumPlayer.bardBuffDuration += 120;
         }
 
         public override void AddRecipes()

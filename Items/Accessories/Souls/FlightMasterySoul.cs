@@ -76,29 +76,14 @@ Allows for very long lasting flight");
             recipe.AddIngredient(ItemID.LeafWings);
             recipe.AddIngredient(ItemID.FrozenWings);
             recipe.AddIngredient(ItemID.FlameWings);
-            
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(thorium.ItemType("DridersGrace"));
-                recipe.AddIngredient(thorium.ItemType("TitanWings"));
-                recipe.AddIngredient(ItemID.TatteredFairyWings);
-                recipe.AddIngredient(ItemID.FestiveWings);
-                recipe.AddIngredient(ItemID.BetsyWings);
-                recipe.AddIngredient(ItemID.FishronWings);
-                recipe.AddIngredient(thorium.ItemType("TerrariumWings"));
-                recipe.AddIngredient(thorium.ItemType("PhonicWings"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.TatteredFairyWings);
-                recipe.AddIngredient(ItemID.FestiveWings);
-                recipe.AddIngredient(ItemID.BetsyWings);
-                recipe.AddIngredient(ItemID.FishronWings);
-                recipe.AddIngredient(ItemID.WingsStardust);
-                recipe.AddIngredient(ItemID.WingsVortex);
-                recipe.AddIngredient(ItemID.WingsNebula);
-                recipe.AddIngredient(ItemID.WingsSolar);
-            }
+            recipe.AddIngredient(ItemID.TatteredFairyWings);
+            recipe.AddIngredient(ItemID.FestiveWings);
+            recipe.AddIngredient(ItemID.BetsyWings);
+            recipe.AddIngredient(ItemID.FishronWings);
+            recipe.AddIngredient(ItemID.WingsStardust);
+            recipe.AddIngredient(ItemID.WingsVortex);
+            recipe.AddIngredient(ItemID.WingsNebula);
+            recipe.AddIngredient(ItemID.WingsSolar);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 

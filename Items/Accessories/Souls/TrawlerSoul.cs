@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Trawler Soul");
+            DisplayName.SetDefault("Trawler Soul"); //e
 
             string tooltip = 
 @"'The fish catch themselves'
@@ -75,7 +75,8 @@ Permanent Sonar and Crate Buffs";
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(null, "AnglerEnchantment");
-            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? calamity.ItemType("SupremeBaitTackleBoxFishingStation") : ItemID.AnglerTackleBag);
+
+            //add thing
             
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
