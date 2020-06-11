@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
@@ -208,6 +209,9 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.DelBuff(0);
                     if (++npc.ai[1] > 120)
                     {
+                        if (!SkyManager.Instance["FargowiltasSouls:AbomBoss"].IsActive())
+                            SkyManager.Instance.Activate("FargowiltasSouls:AbomBoss");
+
                         for (int i = 0; i < 5; i++)
                         {
                             int d = Dust.NewDust(npc.position, npc.width, npc.height, 87, 0f, 0f, 0, default(Color), 1.5f);
@@ -776,7 +780,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         }
                         else
                         {
-                            npc.velocity = npc.DirectionTo(player.Center) * 6f;
+                            npc.velocity = npc.DirectionTo(player.Center) * 4f;
                         }
                     }
                     else if (npc.ai[1] == 30 && Main.netMode != NetmodeID.MultiplayerClient)

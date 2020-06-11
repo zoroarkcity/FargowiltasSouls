@@ -36,10 +36,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.lavaImmune = true;
             npc.aiStyle = -1;
             npc.value = Item.buyPrice(0, 15);
-
             npc.boss = true;
-            music = MusicID.Boss1;
-            musicPriority = MusicPriority.BossMedium;
 
             npc.buffImmune[BuffID.Chilled] = true;
             npc.buffImmune[BuffID.OnFire] = true;
@@ -50,6 +47,9 @@ namespace FargowiltasSouls.NPCs.Champions
 
             npc.trapImmune = true;
             npc.scale = 1.5f;
+
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Champions");
+            musicPriority = MusicPriority.BossHigh;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)

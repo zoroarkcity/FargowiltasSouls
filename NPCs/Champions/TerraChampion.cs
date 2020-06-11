@@ -41,12 +41,13 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.value = Item.buyPrice(0, 15);
 
             npc.boss = true;
-            music = MusicID.Boss3;
-            musicPriority = MusicPriority.BossMedium;
 
             for (int i = 0; i < npc.buffImmune.Length; i++)
                 npc.buffImmune[i] = true;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
+
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Champions");
+            musicPriority = MusicPriority.BossHigh;
 
             npc.behindTiles = true;
             npc.trapImmune = true;

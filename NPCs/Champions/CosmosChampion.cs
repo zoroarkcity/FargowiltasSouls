@@ -38,10 +38,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.lavaImmune = true;
             npc.aiStyle = -1;
             npc.value = Item.buyPrice(0, 30);
-
             npc.boss = true;
-            music = MusicID.LunarBoss;
-            musicPriority = MusicPriority.BossMedium;
 
             npc.buffImmune[BuffID.Chilled] = true;
             npc.buffImmune[BuffID.OnFire] = true;
@@ -50,6 +47,9 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.buffImmune[mod.BuffType("ClippedWings")] = true;
             npc.buffImmune[mod.BuffType("TimeFrozen")] = true;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
+
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Champions");
+            musicPriority = MusicPriority.BossHigh;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -1155,7 +1155,7 @@ namespace FargowiltasSouls.NPCs.Champions
             switch((int)npc.ai[0])
             {
                 case -3:
-                    if (npc.ai[2] < 60 || (npc.ai[2] > 150 && npc.ai[2] < 210))
+                    if (npc.ai[2] < 45 || (npc.ai[2] > 90 && npc.ai[2] < 135))
                         npc.frame.Y = frameHeight * 3;
                     else
                         npc.frame.Y = frameHeight;
