@@ -36,4 +36,32 @@ Emode
 
 -Look into meme weapon and enchant nerfs/reworks
 
+
+
+
+
+
+
+
+
+
+
+
+new sprites:
+Fig Branch PAtreon, pain emblem, staff of ocean, vortex magnet
+-Amalgamated Dart Box
+nuke proj (update item)
+rogue essence and soul
+lihzahrd treasure box
+aelous boots (update recipe, and add vanity)
+-time stop debuff (implement)
+-devi energy
+solar flare debuff
+rick painitng
+gold dipping vat
+probes and rainbow slime buffs work?
+plant fiber toggle
+
+
+
 -See the wiki for full details

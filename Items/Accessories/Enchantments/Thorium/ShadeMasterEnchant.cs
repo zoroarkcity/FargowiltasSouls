@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
 using ThoriumMod.Items.ThrownItems;
-using Fargowiltas.Items.Weapons.Thrown;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
 {
@@ -61,7 +60,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments.Thorium
             recipe.AddIngredient(ModContent.ItemType<ShadeMasterGarb>());
             recipe.AddIngredient(ModContent.ItemType<ShadeMasterTreads>());
             recipe.AddIngredient(ModContent.ItemType<ClockWorkBomb>(), 300);
-            recipe.AddIngredient(ModContent.ItemType<KrakenThrown>());
+            //recipe.AddIngredient(ModContent.ItemType<KrakenThrown>());
             recipe.AddIngredient(ModContent.ItemType<BugenkaiShuriken>(), 300);
             recipe.AddIngredient(ModContent.ItemType<ShadeKunai>(), 300);
             recipe.AddIngredient(ModContent.ItemType<Soulslasher>(), 300);
