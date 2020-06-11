@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Projectiles.Pets
 
         public override void SetDefaults()
         {
-            projectile.width = 44;
+            projectile.width = 40;
             projectile.height = 50;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
@@ -47,6 +47,36 @@ namespace FargowiltasSouls.Projectiles.Pets
             {
                 projectile.timeLeft = 2;
             }
+
+            for (int i = 0; i < 2; i++)
+            {
+                int index = Dust.NewDust(projectile.position, (int)(projectile.width * projectile.scale), (int)(projectile.height * projectile.scale),
+                  DustID.Shadowflame, projectile.velocity.X, projectile.velocity.Y, 100, new Color(), 1.5f);
+                Vector2 focus = projectile.position;
+                if (projectile.direction >= 0)
+                    focus.X += projectile.width;
+                focus.Y += projectile.height / 2;
+                Main.dust[index].position = (Main.dust[index].position + focus) / 2f;
+                Main.dust[index].noGravity = true;
+                Main.dust[index].velocity = Main.dust[index].velocity * 0.3f;
+                Main.dust[index].velocity = Main.dust[index].velocity - projectile.velocity * 0.1f;
+            }
+
+            /*float distance = projectile.width * projectile.scale; //aura dust
+            for (int i = 0; i < 10; i++)
+            {
+                Vector2 offset = new Vector2();
+                double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                offset.X += (float)(Math.Sin(angle) * distance);
+                offset.Y += (float)(Math.Cos(angle) * distance);
+                Dust dust = Main.dust[Dust.NewDust(
+                    projectile.Center + projectile.velocity + offset - new Vector2(4, 4), 0, 0,
+                    DustID.Shadowflame, 0, 0, 100, Color.White, 1f)];
+                dust.velocity = projectile.velocity;
+                if (Main.rand.Next(3) == 0)
+                    dust.velocity += Vector2.Normalize(offset) * -3f;
+                dust.noGravity = true;
+            }*/
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
