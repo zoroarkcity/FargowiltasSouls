@@ -3879,8 +3879,6 @@ namespace FargowiltasSouls
                 case ItemID.LastPrism:
                 case ItemID.Tsunami:
                 case ItemID.Phantasm:
-                    return 0.75f;
-                    
                 case ItemID.OnyxBlaster:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.ChainGun:
@@ -3891,10 +3889,8 @@ namespace FargowiltasSouls
                 case ItemID.SpikyBall:
                 case ItemID.SDMG:
                 case ItemID.Xenopopper:
+                case ItemID.NebulaArcanum:
                     return 0.75f;
-
-                case ItemID.SpaceGun:
-                    return NPC.downedBoss2 ? 1f : 2f / 3f;
 
                 default:
                     return 1f;
