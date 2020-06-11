@@ -5,12 +5,12 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Pets
 {
-    public class TheHat : ModItem
+    public class ChibiHat : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Hat");
-            Tooltip.SetDefault("Summons Chibi Devi to provide light\n'Cute! Cute! Cute!'");
+            DisplayName.SetDefault("Chibi Hat");
+            Tooltip.SetDefault("Summons Chibi Devi\n'Cute! Cute! Cute!'");
         }
 
         public override void SetDefaults()

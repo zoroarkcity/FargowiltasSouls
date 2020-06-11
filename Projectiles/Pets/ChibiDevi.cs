@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using Terraria;
@@ -16,13 +17,13 @@ namespace FargowiltasSouls.Projectiles.Pets
             DisplayName.SetDefault("Chibi Devi");
             Main.projFrames[projectile.type] = 6;
             Main.projPet[projectile.type] = true;
-            ProjectileID.Sets.LightPet[projectile.type] = true;
+            //ProjectileID.Sets.LightPet[projectile.type] = true;
         }
 
         public override void SetDefaults()
         {
             projectile.width = 38;
-            projectile.height = 46;
+            projectile.height = 44;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.aiStyle = -1;
@@ -55,9 +56,9 @@ namespace FargowiltasSouls.Projectiles.Pets
                 projectile.timeLeft = 2;
             }
 
-            DelegateMethods.v3_1 = new Vector3(1f, 0.5f, 0.9f) * 0.75f;
+            /*DelegateMethods.v3_1 = new Vector3(1f, 0.5f, 0.9f) * 0.75f;
             Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * 6f, 20f, new Utils.PerLinePoint(DelegateMethods.CastLightOpen));
-            Utils.PlotTileLine(projectile.Left, projectile.Right, 20f, new Utils.PerLinePoint(DelegateMethods.CastLightOpen));
+            Utils.PlotTileLine(projectile.Left, projectile.Right, 20f, new Utils.PerLinePoint(DelegateMethods.CastLightOpen));*/
 
             if (projectile.ai[0] == 1)
             {
@@ -175,6 +176,18 @@ namespace FargowiltasSouls.Projectiles.Pets
                 projectile.velocity.X = cap * Math.Sign(projectile.velocity.X);
             if (Math.Abs(projectile.velocity.Y) > cap)
                 projectile.velocity.Y = cap * Math.Sign(projectile.velocity.Y);
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            Texture2D texture2D13 = Main.projectileTexture[projectile.type];
+            int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
+            int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
+            Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
+            Vector2 origin2 = rectangle.Size() / 2f;
+            SpriteEffects spriteEffects = projectile.spriteDirection < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, spriteEffects, 0f);
+            return false;
         }
     }
 }

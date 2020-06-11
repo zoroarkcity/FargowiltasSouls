@@ -46,6 +46,8 @@ namespace FargowiltasSouls
         //pet
         public bool RoombaPet;
         public bool ChibiDevi;
+        public bool MutantSpawn;
+        public bool BabyAbom;
 
         #region enchantments
         public bool PetsActive = true;
@@ -618,6 +620,8 @@ namespace FargowiltasSouls
 
             RoombaPet = false;
             ChibiDevi = false;
+            MutantSpawn = false;
+            BabyAbom = false;
 
             #region enchantments 
             PetsActive = true;
