@@ -5,7 +5,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -90,7 +89,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 
             recipe.AddIngredient(null, "SlingersEssence");
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
+            /*if (Fargowiltas.Instance.ThoriumLoaded)
             {
                 recipe.AddIngredient(thorium.ItemType("MagnetoGrip"));
                 recipe.AddIngredient(thorium.ItemType("ThrowingGuideVolume3"));
@@ -121,7 +120,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
                 recipe.AddIngredient(fargos.ItemType("PossessedHatchetThrown"));
                 recipe.AddIngredient(fargos.ItemType("TheEyeOfCthulhuThrown"));
                 recipe.AddIngredient(fargos.ItemType("TerrarianThrown"));
-            }
+            }*/
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 

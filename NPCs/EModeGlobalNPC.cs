@@ -5589,7 +5589,7 @@ namespace FargowiltasSouls.NPCs
                         goto case NPCID.BigMimicCrimson;
 
                     case NPCID.IceGolem:
-                        Item.NewItem(npc.Hitbox, ModLoader.GetMod("Fargowiltas").ItemType("IceCrate"));
+                        //Item.NewItem(npc.Hitbox, ModLoader.GetMod("Fargowiltas").ItemType("IceCrate"));
                         if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<FrigidGemstone>());
                         if (Main.rand.Next(20) == 0)
@@ -6052,7 +6052,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.WallofFlesh:
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<PungentEyeball>());
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.HallowedFishingCrate, 5);
-                        npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<ShadowCrate>(), 5);
+                        //npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<ShadowCrate>(), 5);
                         if (!Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantsDiscountCard)
                             npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<MutantsDiscountCard>());
                         break;
