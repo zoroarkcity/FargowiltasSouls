@@ -10,8 +10,13 @@ namespace FargowiltasSouls.Items.Accessories.Essences
     public class SlingersEssence : ModItem
     {
         private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        private readonly Mod fargos = ModLoader.GetMod("Fargowiltas");
         private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
+
+        public override bool Autoload(ref string name)
+        {
+            return false;
+        }
+
 
         public override void SetStaticDefaults()
         {
