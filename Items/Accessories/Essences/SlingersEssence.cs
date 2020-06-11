@@ -64,7 +64,7 @@ namespace FargowiltasSouls.Items.Accessories.Essences
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
+            /*if (Fargowiltas.Instance.ThoriumLoaded)
             {
                 recipe.AddIngredient(thorium.ItemType("NinjaEmblem"));
                 recipe.AddIngredient(fargos.ItemType("WoodYoyoThrown"));
@@ -95,7 +95,7 @@ namespace FargowiltasSouls.Items.Accessories.Essences
                 recipe.AddIngredient(ItemID.BoneGlove);
                 recipe.AddIngredient(fargos.ItemType("BlueMoonThrown"));
                 recipe.AddIngredient(fargos.ItemType("FlamarangThrown"));
-            }
+            }*/
 
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.SetResult(this);
