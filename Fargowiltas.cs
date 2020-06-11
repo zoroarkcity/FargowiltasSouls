@@ -25,6 +25,7 @@ using ThoriumMod.Projectiles.Healer;
 using ThoriumMod.Projectiles.Minions;
 using Fargowiltas.Items.Misc;
 using Fargowiltas.Items.Tiles;
+using Fargowiltas.Items.Explosives;
 
 namespace FargowiltasSouls
 {
