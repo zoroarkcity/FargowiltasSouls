@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Buffs.Pets
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Mutant Spawn");
-            Description.SetDefault("The spawn of Mutant is following you");
+            Description.SetDefault("Mutant Spawn");
             Main.buffNoTimeDisplay[Type] = true;
             Main.vanityPet[Type] = true;
         }

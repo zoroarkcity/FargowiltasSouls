@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Projectiles.Pets
 
         public override void SetDefaults()
         {
-            projectile.width = 38;
+            projectile.width = 22;
             projectile.height = 44;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;

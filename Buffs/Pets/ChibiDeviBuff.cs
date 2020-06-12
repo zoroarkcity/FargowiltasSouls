@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Buffs.Pets
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Chibi Devi");
-            Description.SetDefault("Chibi Devi is following you");
+            Description.SetDefault("She's interested in 'you'");
             Main.buffNoTimeDisplay[Type] = true;
             Main.vanityPet[Type] = true;
         }
