@@ -13,6 +13,7 @@ namespace FargowiltasSouls.Buffs.Pets
             Description.SetDefault("She's interested in 'you'");
             Main.buffNoTimeDisplay[Type] = true;
             Main.vanityPet[Type] = true;
+            Main.lightPet[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex)
