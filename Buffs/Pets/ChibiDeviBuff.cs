@@ -12,7 +12,6 @@ namespace FargowiltasSouls.Buffs.Pets
             DisplayName.SetDefault("Chibi Devi");
             Description.SetDefault("She's interested in 'you'");
             Main.buffNoTimeDisplay[Type] = true;
-            Main.vanityPet[Type] = true;
             Main.lightPet[Type] = true;
         }
 

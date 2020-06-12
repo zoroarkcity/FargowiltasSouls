@@ -56,9 +56,9 @@ namespace FargowiltasSouls.Projectiles.Pets
                 projectile.timeLeft = 2;
             }
 
-            /*DelegateMethods.v3_1 = new Vector3(1f, 0.5f, 0.9f) * 0.75f;
+            DelegateMethods.v3_1 = new Vector3(1f, 0.5f, 0.9f) * 0.75f;
             Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * 6f, 20f, new Utils.PerLinePoint(DelegateMethods.CastLightOpen));
-            Utils.PlotTileLine(projectile.Left, projectile.Right, 20f, new Utils.PerLinePoint(DelegateMethods.CastLightOpen));*/
+            Utils.PlotTileLine(projectile.Left, projectile.Right, 20f, new Utils.PerLinePoint(DelegateMethods.CastLightOpen));
 
             if (projectile.ai[0] == 1)
             {
