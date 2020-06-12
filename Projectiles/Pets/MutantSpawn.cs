@@ -71,7 +71,7 @@ namespace FargowiltasSouls.Projectiles.Pets
                     projectile.position.Y -= projectile.velocity.Y;
             }
 
-            if (player.velocity == Vector2.Zero && projectile.velocity == Vector2.Zero) //run code when not moving
+            if (player.velocity == Vector2.Zero) //run code when not moving
                 BeCompanionCube();
         }
 
