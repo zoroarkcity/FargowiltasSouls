@@ -66,7 +66,7 @@ namespace FargowiltasSouls.Sky
 
                 if (--delay < 0)
                 {
-                    delay = Main.rand.Next(5) + (int)(25f * (1f - lifeIntensity));
+                    delay = Main.rand.Next(5 + (int)(40f * (1f - lifeIntensity)));
                     for (int i = 0; i < 50; i++) //update positions
                     {
                         xPos[i] = Main.rand.Next(Main.screenWidth);
