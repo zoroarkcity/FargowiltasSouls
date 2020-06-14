@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
@@ -107,6 +108,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
             if (npc.HasValidTarget && npc.Distance(player.Center) < 2500 && !Main.dayTime)
                 npc.timeLeft = 600;
+
+            npc.direction = npc.spriteDirection = npc.Center.X < player.Center.X ? 1 : -1;
 
             if (npc.localAI[3] == 1 && npc.life < npc.lifeMax * .66)
             {
@@ -342,11 +345,11 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            for (int i = 0; i < 40; i++)
+                            for (int i = 0; i < 50; i++)
                             {
                                 Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5));
-                                float ai0 = Main.rand.NextFloat(1.03f, 1.06f);
-                                float ai1 = Main.rand.NextFloat(-0.02f, 0.02f);
+                                float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
+                                float ai1 = Main.rand.NextFloat(-0.0075f, 0.0075f);
                                 Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
                             }
                         }
@@ -371,7 +374,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.3f, 24f);
 
-                    if (++npc.ai[2] > 60)
+                    if (++npc.ai[2] > 90 && npc.ai[1] < 330)
                     {
                         npc.ai[2] = 0;
 
@@ -384,7 +387,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
                     }
 
-                    if (++npc.ai[1] > 300)
+                    if (++npc.ai[1] > 420)
                     {
                         npc.TargetClosest();
                         npc.ai[0]++;
@@ -578,14 +581,9 @@ namespace FargowiltasSouls.NPCs.Champions
             }
         }
 
-        public override Color? GetAlpha(Color drawColor)
-        {
-            return Color.White * npc.Opacity;
-        }
-
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture2D13 = Main.npcTexture[npc.type];
+            Texture2D texture2D13 = npc.dontTakeDamage ? mod.GetTexture("NPCs/Champions/ShadowChampion_Dark") : Main.npcTexture[npc.type];
             //int num156 = Main.npcTexture[npc.type].Height / Main.npcFrameCount[npc.type]; //ypos of lower right corner of sprite to draw
             //int y3 = num156 * npc.frame.Y; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = npc.frame;//new Rectangle(0, y3, texture2D13.Width, num156);
@@ -594,7 +592,7 @@ namespace FargowiltasSouls.NPCs.Champions
             Color color26 = lightColor;
             color26 = npc.GetAlpha(color26);
 
-            SpriteEffects effects = npc.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteEffects effects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
             {

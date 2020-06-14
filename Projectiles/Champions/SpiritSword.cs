@@ -59,6 +59,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
                         Main.PlaySound(SoundID.Item1, projectile.Center);
                     }
+                    projectile.ai[1] = Main.rand.Next(2); //now used for deciding platform collision
                 }
             }
             else
@@ -90,7 +91,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             {
                 projectile.velocity = Vector2.Zero;
 
-                Main.PlaySound(0, projectile.Center);
+                Main.PlaySound(SoundID.Dig, projectile.Center);
 
                 for (int i = 0; i < 10; ++i)
                 {
@@ -107,7 +108,7 @@ namespace FargowiltasSouls.Projectiles.Champions
         {
             width = 2;
             height = 2;
-            fallThrough = false;
+            fallThrough = projectile.ai[1] == 0;
             return base.TileCollideStyle(ref width, ref height, ref fallThrough);
         }
 

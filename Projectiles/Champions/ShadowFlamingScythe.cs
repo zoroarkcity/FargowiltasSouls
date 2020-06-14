@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.height = 80;
             projectile.aiStyle = -1;
             projectile.hostile = true;
-            projectile.timeLeft = 300;
+            projectile.timeLeft = 180;
             
             cooldownSlot = 1;
             projectile.light = 0.25f;
@@ -39,14 +39,61 @@ namespace FargowiltasSouls.Projectiles.Champions
                 projectile.hide = false;
                 projectile.rotation = Main.rand.NextFloat((float)Math.PI / 2);
                 projectile.direction = projectile.spriteDirection = Main.rand.Next(2) == 0 ? 1 : -1;
+                Main.PlaySound(SoundID.Item8, projectile.Center);
             }
 
             if (++projectile.localAI[0] > 30 && projectile.localAI[0] < 180)
             {
-                projectile.velocity *= 1.05f;
+                projectile.velocity *= 1.04f;
             }
 
-            projectile.rotation += projectile.velocity.Length() * 0.015f;
+            if (projectile.ai[0] == 0)
+            {
+                if (projectile.localAI[0] == 130)
+                    projectile.Kill();
+            }
+            else
+            {
+                int index = Dust.NewDust(projectile.position, projectile.width, projectile.height,
+                DustID.Fire, projectile.velocity.X, projectile.velocity.Y, 100, new Color(), 1.2f);
+                Main.dust[index].noGravity = true;
+                Main.dust[index].velocity = Main.dust[index].velocity * 0.3f;
+                Main.dust[index].velocity = Main.dust[index].velocity - projectile.velocity * 0.1f;
+
+                if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<NPCs.Champions.ShadowChampion>())
+                    && Main.npc[EModeGlobalNPC.championBoss].HasValidTarget) //home
+                {
+                    float rotation = projectile.velocity.ToRotation();
+                    Vector2 vel = Main.player[Main.npc[EModeGlobalNPC.championBoss].target].Center - projectile.Center;
+                    float targetAngle = vel.ToRotation();
+                    projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, 0.025f));
+                }
+            }
+
+            projectile.rotation += projectile.velocity.Length() * 0.015f * Math.Sign(projectile.velocity.X);
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                for (int i = -1; i <= 1; i++)
+                {
+                    Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(30) * i),
+                        projectile.type, projectile.damage, 0f, projectile.owner, 1);
+                }
+            }
+
+            const int num226 = 36;
+            for (int num227 = 0; num227 < num226; num227++)
+            {
+                Vector2 vector6 = Vector2.UnitX * 10f;
+                vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + projectile.Center;
+                Vector2 vector7 = vector6 - projectile.Center;
+                int num228 = Dust.NewDust(vector6 + vector7, 0, 0, DustID.Fire, 0f, 0f, 0, default(Color), 3f);
+                Main.dust[num228].noGravity = true;
+                Main.dust[num228].velocity = vector7;
+            }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

@@ -9,7 +9,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 {
     public class ShadowClone : ModProjectile
     {
-        public override string Texture => "FargowiltasSouls/NPCs/Champions/ShadowChampion";
+        public override string Texture => "FargowiltasSouls/NPCs/Champions/ShadowChampion_Dark";
 
         public override void SetStaticDefaults()
         {
@@ -35,6 +35,8 @@ namespace FargowiltasSouls.Projectiles.Champions
         public override void AI()
         {
             Player player = Main.player[(int)projectile.ai[0]];
+
+            projectile.direction = projectile.spriteDirection = projectile.Center.X < player.Center.X ? 1 : -1;
 
             for (int i = 0; i < 3; i++)
             {

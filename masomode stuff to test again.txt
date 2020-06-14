@@ -106,3 +106,10 @@ reduced severity of weapon nerfs
 new mutant background
 new abom background
 added full force
+
+spirit champ no regen in last stand
+spirit champ swords 50% chance to stop on platforms
+resprited earth champ crystal bombs
+earth champ fists clench during fireballs to discourage running in p2
+shadow champ sprite
+shadow champ scythes buffed
