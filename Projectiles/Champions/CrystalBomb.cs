@@ -29,6 +29,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             cooldownSlot = 1;
 
             projectile.scale = 2.5f;
+            projectile.tileCollide = false;
         }
 
         public override void AI()
@@ -60,6 +61,9 @@ namespace FargowiltasSouls.Projectiles.Champions
             Main.dust[index3].noGravity = true;
 
             projectile.velocity *= 1.03f;
+
+            if (projectile.Center.Y > projectile.ai[0])
+                projectile.tileCollide = true;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

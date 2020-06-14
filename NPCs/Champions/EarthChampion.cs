@@ -218,7 +218,16 @@ namespace FargowiltasSouls.NPCs.Champions
                     else
                     {
                         targetPos = player.Center;
-                        targetPos.Y -= 350;
+                        for (int i = 0; i < 22; i++) //collision check above player's head
+                        {
+                            targetPos.Y -= 16;
+                            Tile tile = Framing.GetTileSafely(targetPos); //if solid, stay below it
+                            if (tile.active() && !tile.inActive() && Main.tileSolid[tile.type] && !Main.tileSolidTop[tile.type])
+                            {
+                                targetPos.Y += 50 + 16;
+                                break;
+                            }
+                        }
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.2f, 24f, true);
 

@@ -403,7 +403,8 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.localAI[0] = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.UnitY * 2f, ModContent.ProjectileType<CrystalBomb>(), npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitY * 2f, ModContent.ProjectileType<CrystalBomb>(),
+                                npc.damage / 4, 0f, Main.myPlayer, player.position.Y);
                         }
                     }
 
