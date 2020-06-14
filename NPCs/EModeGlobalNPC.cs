@@ -7195,7 +7195,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Golem:
-                        //damage = (int)(damage * 0.8);
+                        damage = (int)(damage * 0.9);
                         break;
 
                     case NPCID.IceTortoise:
@@ -7426,7 +7426,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Golem:
-                        damage = (int)(damage * 0.8);
+                        damage = (int)(damage * 0.9);
                         break;
 
                     case NPCID.GolemFistLeft:

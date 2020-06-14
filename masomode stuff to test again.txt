@@ -113,3 +113,5 @@ resprited earth champ crystal bombs
 earth champ fists clench during fireballs to discourage running in p2
 shadow champ sprite
 shadow champ scythes buffed
+
+nerfed golem regen more but restored 10% DR
