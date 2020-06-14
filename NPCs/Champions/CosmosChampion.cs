@@ -265,9 +265,9 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
                     }
 
-                    if (++npc.ai[2] > 180 || npc.ai[2] == 90)
+                    if (++npc.ai[2] > 200 || npc.ai[2] == 100)
                     {
-                        if (npc.ai[2] > 180)
+                        if (npc.ai[2] > 200)
                             npc.ai[2] = 0;
 
                         npc.netUpdate = true;
@@ -313,7 +313,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             type = 242;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                const int max = 12;
+                                const int max = 11;
                                 for (int i = 0; i < max; i++)
                                 {
                                     Projectile.NewProjectile(npc.Center, 4f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * (i + 0.5)),
@@ -1155,10 +1155,14 @@ namespace FargowiltasSouls.NPCs.Champions
             switch((int)npc.ai[0])
             {
                 case -3:
-                    if (npc.ai[2] < 45 || (npc.ai[2] > 90 && npc.ai[2] < 135))
+                    if (npc.ai[2] < 50 || (npc.ai[2] > 100 && npc.ai[2] < 150))
                         npc.frame.Y = frameHeight * 3;
                     else
                         npc.frame.Y = frameHeight;
+                    break;
+
+                case -2:
+                    npc.frame.Y = frameHeight;
                     break;
 
                 case -1:
