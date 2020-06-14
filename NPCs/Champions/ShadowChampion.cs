@@ -404,7 +404,8 @@ namespace FargowiltasSouls.NPCs.Champions
                 case 7: //dash for tentacles
                     if (++npc.ai[2] == 1)
                     {
-                        npc.velocity = (player.Center - npc.Center) / 30f;
+                        Main.PlaySound(SoundID.NPCHit6, npc.Center);
+                        npc.velocity = (player.Center - npc.Center) / 30f * 1.5f;
                         npc.netUpdate = true;
                     }
                     else if (npc.ai[2] == 31)
@@ -581,9 +582,26 @@ namespace FargowiltasSouls.NPCs.Champions
             }
         }
 
+        public override Color? GetAlpha(Color drawColor)
+        {
+            if (npc.dontTakeDamage)
+                return Color.Black;
+            return null;
+        }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture2D13 = npc.dontTakeDamage ? mod.GetTexture("NPCs/Champions/ShadowChampion_Dark") : Main.npcTexture[npc.type];
+            if (npc.dontTakeDamage)
+            {
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp/*.PointWrap*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+
+                ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(ItemID.VoidDye);
+                shader.Apply(npc, new Terraria.DataStructures.DrawData?());
+            }
+
+            Texture2D texture2D13 = Main.npcTexture[npc.type];
+            Texture2D texture2D14 = mod.GetTexture("NPCs/Champions/ShadowChampion_Trail");
             //int num156 = Main.npcTexture[npc.type].Height / Main.npcFrameCount[npc.type]; //ypos of lower right corner of sprite to draw
             //int y3 = num156 * npc.frame.Y; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = npc.frame;//new Rectangle(0, y3, texture2D13.Width, num156);
@@ -596,14 +614,20 @@ namespace FargowiltasSouls.NPCs.Champions
 
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
             {
-                Color color27 = color26 * 0.5f;
+                Color color27 = Color.White * 0.25f;
                 color27 *= (float)(NPCID.Sets.TrailCacheLength[npc.type] - i) / NPCID.Sets.TrailCacheLength[npc.type];
                 Vector2 value4 = npc.oldPos[i];
                 float num165 = npc.rotation; //npc.oldRot[i];
-                Main.spriteBatch.Draw(texture2D13, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
+                Main.spriteBatch.Draw(texture2D14, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
             }
 
             Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
+
+            if (npc.dontTakeDamage)
+            {
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            }
             return false;
         }
     }

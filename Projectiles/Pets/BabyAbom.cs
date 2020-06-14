@@ -48,6 +48,9 @@ namespace FargowiltasSouls.Projectiles.Pets
                 projectile.timeLeft = 2;
             }
 
+            if (projectile.Distance(player.Center) > 3000)
+                projectile.Center = player.Center;
+
             for (int i = 0; i < 2; i++)
             {
                 int index = Dust.NewDust(projectile.position, (int)(projectile.width * projectile.scale), (int)(projectile.height * projectile.scale),

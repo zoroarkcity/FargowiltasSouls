@@ -16,6 +16,8 @@ namespace FargowiltasSouls.Projectiles.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Flaming Scythe");
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
@@ -42,7 +44,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                 Main.PlaySound(SoundID.Item8, projectile.Center);
             }
 
-            if (++projectile.localAI[0] > 30 && projectile.localAI[0] < 180)
+            if (++projectile.localAI[0] > 30 && projectile.localAI[0] < 130)
             {
                 projectile.velocity *= 1.04f;
             }
@@ -54,19 +56,13 @@ namespace FargowiltasSouls.Projectiles.Champions
             }
             else
             {
-                int index = Dust.NewDust(projectile.position, projectile.width, projectile.height,
-                DustID.Fire, projectile.velocity.X, projectile.velocity.Y, 100, new Color(), 1.2f);
-                Main.dust[index].noGravity = true;
-                Main.dust[index].velocity = Main.dust[index].velocity * 0.3f;
-                Main.dust[index].velocity = Main.dust[index].velocity - projectile.velocity * 0.1f;
-
                 if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<NPCs.Champions.ShadowChampion>())
                     && Main.npc[EModeGlobalNPC.championBoss].HasValidTarget) //home
                 {
                     float rotation = projectile.velocity.ToRotation();
                     Vector2 vel = Main.player[Main.npc[EModeGlobalNPC.championBoss].target].Center - projectile.Center;
                     float targetAngle = vel.ToRotation();
-                    projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, 0.025f));
+                    projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, 0.03f));
                 }
             }
 
@@ -125,13 +121,16 @@ namespace FargowiltasSouls.Projectiles.Champions
 
             SpriteEffects effects = projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+            if (projectile.ai[0] != 0)
             {
-                Color color27 = Color.White * projectile.Opacity * 0.75f * 0.5f;
-                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
-                Vector2 value4 = projectile.oldPos[i];
-                float num165 = projectile.oldRot[i];
-                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, effects, 0f);
+                for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+                {
+                    Color color27 = Color.White * projectile.Opacity * 0.75f * 0.5f;
+                    color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                    Vector2 value4 = projectile.oldPos[i];
+                    float num165 = projectile.oldRot[i];
+                    Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, effects, 0f);
+                }
             }
 
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, effects, 0f);
