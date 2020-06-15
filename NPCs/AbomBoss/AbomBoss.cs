@@ -15,6 +15,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
     [AutoloadBossHead]
     public class AbomBoss : ModNPC
     {
+        public bool playerInvulTriggered;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Abominationn");
@@ -935,6 +937,9 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     Main.dust[d].velocity *= 4f;
                 }
             }
+
+            if (player.immune || player.hurtCooldowns[0] != 0 || player.hurtCooldowns[1] != 0)
+                playerInvulTriggered = true;
         }
 
         private void Aura(float distance, int buff, bool reverse = false, int dustid = DustID.GoldFlame, bool checkDuration = false, bool targetEveryone = true)
@@ -1137,6 +1142,10 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         public override void NPCLoot()
         {
+            //only available if abom hasnt been defeated in world and if it was also a nohit
+            if (!playerInvulTriggered && !FargoSoulsWorld.downedAbom)
+                Item.NewItem(npc.Hitbox, mod.ItemType("StyxGazer"));
+
             FargoSoulsWorld.downedAbom = true;
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData); //sync world
