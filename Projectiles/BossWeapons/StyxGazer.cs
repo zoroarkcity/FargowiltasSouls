@@ -153,10 +153,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
 
             int direction = projectile.velocity.X < 0 ? -1 : 1;
-            Main.player[projectile.owner].phantasmTime = 2;
+            Main.player[projectile.owner].phantasmTime = 17;
             Main.player[projectile.owner].heldProj = projectile.whoAmI;
-            Main.player[projectile.owner].itemTime = 2;
-            Main.player[projectile.owner].itemAnimation = 2;
+            Main.player[projectile.owner].itemTime = 17;
+            Main.player[projectile.owner].itemAnimation = 17;
+            Main.player[projectile.owner].ChangeDir(direction);
             Main.player[projectile.owner].itemRotation = (float)Math.Atan2(projectile.velocity.Y * projectile.direction, projectile.velocity.X * projectile.direction);
         }
 

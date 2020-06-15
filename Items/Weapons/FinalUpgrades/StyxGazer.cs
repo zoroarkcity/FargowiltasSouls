@@ -22,8 +22,8 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
         {
             item.damage = 1700;
             item.useStyle = ItemUseStyleID.SwingThrow;
-            item.useAnimation = 17;
-            item.useTime = 17;
+            item.useAnimation = 22;
+            item.useTime = 22;
             item.shootSpeed = 16f;
             item.knockBack = 14f;
             item.width = 32;
@@ -49,6 +49,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             if (player.altFunctionUse == 2)
             {
                 item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.StyxGazer>();
+                item.useStyle = ItemUseStyleID.HoldingOut;
                 item.magic = true;
                 item.melee = false;
                 item.noUseGraphic = true;
@@ -57,6 +58,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             else
             {
                 item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.StyxScythe>();
+                item.useStyle = ItemUseStyleID.SwingThrow;
                 item.magic = false;
                 item.melee = true;
                 item.noUseGraphic = false;
