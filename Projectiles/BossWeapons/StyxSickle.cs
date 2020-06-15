@@ -13,6 +13,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Styx Sickle");
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
@@ -22,7 +24,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.alpha = 100;
             projectile.friendly = true;
             projectile.magic = true;
-            projectile.timeLeft = 90;
+            projectile.timeLeft = 120;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.aiStyle = -1;
@@ -47,7 +49,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             if (++projectile.localAI[1] == 30)
             {
                 int foundTarget = HomeOnTarget();
-                if (foundTarget != -1)
+                if (foundTarget == -1)
+                {
+                    projectile.timeLeft = 30;
+                }
+                else
                 {
                     NPC n = Main.npc[foundTarget];
                     projectile.velocity = projectile.DirectionTo(n.Center) * 36f;
@@ -58,7 +64,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         private int HomeOnTarget()
         {
             const bool homingCanAimAtWetEnemies = true;
-            const float homingMaximumRangeInPixels = 1000;
+            const float homingMaximumRangeInPixels = 2000;
 
             int selectedTarget = -1;
             for (int i = 0; i < Main.maxNPCs; i++)
@@ -79,6 +85,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             return selectedTarget;
         }
 
+        public override void Kill(int timeLeft)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Shadowflame, 0f, 0f, 0, default(Color), 2f);
+                Main.dust[d].noGravity = true;
+                Main.dust[d].velocity *= 4f;
+            }
+        }
+
         public override Color? GetAlpha(Color lightColor)
         {
             return Color.White;
@@ -92,7 +108,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
 
-            /*Color color26 = lightColor;
+            Color color26 = lightColor;
             color26 = projectile.GetAlpha(color26);
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
@@ -102,7 +118,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Vector2 value4 = projectile.oldPos[i];
                 float num165 = projectile.oldRot[i];
                 Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
-            }*/
+            }
 
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
             return false;

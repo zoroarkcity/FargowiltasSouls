@@ -137,13 +137,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void Kill(int timeLeft)
         {
-            for (int index1 = 0; index1 < 20; ++index1) //put some dust here ig
+            for (int i = 0; i < 10; i++)
             {
-                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Shadowflame, 0.0f, 0.0f, 0, new Color(), 1f);
-                Main.dust[index2].noGravity = true;
-                Main.dust[index2].noLight = true;
-                Main.dust[index2].scale++;
-                Main.dust[index2].velocity *= 4f;
+                int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Shadowflame, 0f, 0f, 0, default(Color), 2.5f);
+                Main.dust[d].noGravity = true;
+                Main.dust[d].velocity *= 4f;
             }
         }
 
