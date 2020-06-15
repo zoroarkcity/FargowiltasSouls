@@ -85,7 +85,7 @@ namespace FargowiltasSouls.Projectiles.Pets
 
                     projectile.direction = projectile.Center.X < Main.MouseWorld.X ? 1 : -1;
 
-                    float distance = 1500;
+                    float distance = 2500;
                     float possibleDist = Main.player[projectile.owner].Distance(Main.MouseWorld) / 2 + 100;
                     if (distance < possibleDist)
                         distance = possibleDist;
@@ -103,8 +103,24 @@ namespace FargowiltasSouls.Projectiles.Pets
                         projectile.ai[1]++;
                         if (projectile.ai[1] > 600)
                         {
-                            bool okToRest = !Collision.SolidCollision(projectile.position, projectile.width, projectile.height)
-                                && Collision.SolidTiles((int)projectile.Center.X / 16, (int)projectile.Center.X / 16, (int)Main.MouseWorld.Y / 16, (int)Main.MouseWorld.Y / 16 + 10);
+                            bool okToRest = !Collision.SolidCollision(projectile.position, projectile.width, projectile.height);
+
+                            if (okToRest)
+                            {
+                                okToRest = false;
+
+                                Vector2 targetPos = new Vector2(projectile.Center.X, projectile.position.Y + projectile.height);
+                                for (int i = 0; i < 10; i++) //collision check below self
+                                {
+                                    targetPos.Y += 16;
+                                    Tile tile = Framing.GetTileSafely(targetPos); //if solid, ok
+                                    if (tile.active() && !tile.inActive() && Main.tileSolid[tile.type])
+                                    {
+                                        okToRest = true;
+                                        break;
+                                    }
+                                }
+                            }
 
                             if (okToRest) //not in solid tiles, but found tiles within a short distance below
                             {
