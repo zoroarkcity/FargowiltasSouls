@@ -46,7 +46,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 }
                 else
                 {
-                    projectile.rotation -= (float)Math.PI / 20 * Main.projectile[ai1].spriteDirection * 1.1f;
+                    projectile.rotation -= (float)Math.PI / 20 * Main.projectile[ai1].spriteDirection * 1f;
                     Vector2 offset = new Vector2(0, -275).RotatedBy(projectile.rotation + (float)Math.PI / 4);
                     projectile.Center = Main.projectile[ai1].Center + offset;
                 }
