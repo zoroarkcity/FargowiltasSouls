@@ -16,6 +16,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
     [AutoloadBossHead]
     public class DeviBoss : ModNPC
     {
+        public bool playerInvulTriggered;
+
         public int[] attackQueue = new int[4];
         public int lastStrongAttack;
 
@@ -1331,6 +1333,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     npc.ai[0] = 0;
                     goto case 0;
             }
+
+            if (player.immune || player.hurtCooldowns[0] != 0 || player.hurtCooldowns[1] != 0)
+                playerInvulTriggered = true;
         }
 
         private void GetNextAttack()
@@ -1600,6 +1605,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
         public override void NPCLoot()
         {
+            if (!playerInvulTriggered && !FargoSoulsWorld.downedDevi)
+                Item.NewItem(npc.Hitbox, mod.ItemType("SparklingLove"));
+
             FargoSoulsWorld.downedDevi = true;
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData); //sync world
