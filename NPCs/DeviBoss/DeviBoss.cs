@@ -837,6 +837,20 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.3f);
 
+                    if (npc.ai[1] == 1) //tp above player
+                    {
+                        TeleportDust();
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            npc.Center = player.Center;
+                            npc.position.X += 500 * (Main.rand.Next(2) == 0 ? -1 : 1);
+                            npc.position.Y -= Main.rand.NextFloat(300, 500);
+                            npc.netUpdate = true;
+                        }
+                        TeleportDust();
+                        Main.PlaySound(SoundID.Item84, npc.Center);
+                    }
+
                     if (++npc.ai[1] < 180)
                     {
                         //warning dust

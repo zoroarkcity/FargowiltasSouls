@@ -52,7 +52,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                 }
 
                 Player player = Main.player[Main.myPlayer];
-                if (player.active && !player.dead)
+                if (player.active && !player.dead && projectile.scale == 2)
                 {
                     float distance = player.Distance(projectile.Center);
                     if (Math.Abs(distance - threshold) < 46f && player.hurtCooldowns[0] == 0 && projectile.alpha == 0 && player.whoAmI == Main.npc[ai1].target)

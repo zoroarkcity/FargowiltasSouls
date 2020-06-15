@@ -115,3 +115,4 @@ shadow champ sprite
 shadow champ scythes buffed
 
 nerfed golem regen more but restored 10% DR
+devi teleports above you for dungeon guardian attack
