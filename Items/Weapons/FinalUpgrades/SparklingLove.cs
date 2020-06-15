@@ -8,13 +8,11 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
 {
-    public class StyxGazer : ModItem
+    public class SparklingLove : ModItem
     {
-        public bool flip;
-
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Styx Gazer");
+            DisplayName.SetDefault("Sparkling Love");
             Tooltip.SetDefault("'Let's keep how you got this a secret'");
         }
 
@@ -22,19 +20,19 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
         {
             item.damage = 1700;
             item.useStyle = ItemUseStyleID.SwingThrow;
-            item.useAnimation = 22;
-            item.useTime = 22;
+            item.useAnimation = 27;
+            item.useTime = 27;
             item.shootSpeed = 16f;
             item.knockBack = 14f;
             item.width = 32;
             item.height = 32;
-            item.scale = 1f;
+            item.scale = 2f;
             item.rare = 11;
             item.UseSound = SoundID.Item1;
-            item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.StyxScythe>();
+            item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.SparklingLove>();
             item.value = Item.sellPrice(0, 70);
-            //item.noMelee = true; //no melee hitbox
-            //item.noUseGraphic = true; //dont draw item
+            item.noMelee = true; //no melee hitbox
+            item.noUseGraphic = true; //dont draw item
             item.melee = true;
             item.autoReuse = true;
         }
@@ -48,21 +46,25 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
         {
             if (player.altFunctionUse == 2)
             {
-                item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.StyxGazer>();
-                item.useStyle = ItemUseStyleID.HoldingOut;
-                item.magic = true;
+                item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.SparklingDevi>();
+                item.useStyle = ItemUseStyleID.SwingThrow;
+                item.summon = true;
                 item.melee = false;
-                item.noUseGraphic = true;
-                item.noMelee = true;
+                item.noUseGraphic = false;
+                item.noMelee = false;
+                item.useAnimation = 61;
+                item.useTime = 61;
             }
             else
             {
-                item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.StyxScythe>();
+                item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.SparklingLove>();
                 item.useStyle = ItemUseStyleID.SwingThrow;
-                item.magic = false;
+                item.summon = false;
                 item.melee = true;
-                item.noUseGraphic = false;
-                item.noMelee = false;
+                item.noUseGraphic = true;
+                item.noMelee = true;
+                item.useAnimation = 27;
+                item.useTime = 27;
             }
             return true;
         }
@@ -73,12 +75,12 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             {
                 if (line2.mod == "Terraria" && line2.Name == "ItemName")
                 {
-                    line2.overrideColor = new Color(255, Main.DiscoG, 0);
+                    line2.overrideColor = new Color(255, 0, Main.DiscoB);
                 }
             }
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        /*public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             flip = !flip;
             Vector2 speed = new Vector2(speedX, speedY);
@@ -98,7 +100,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
                 }
             }
             return false;
-        }
+        }*/
 
         /*public override void AddRecipes()
         {
