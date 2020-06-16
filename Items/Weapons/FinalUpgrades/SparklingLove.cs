@@ -52,8 +52,8 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
                 item.melee = false;
                 item.noUseGraphic = false;
                 item.noMelee = false;
-                item.useAnimation = 61;
-                item.useTime = 61;
+                item.useAnimation = 66;
+                item.useTime = 66;
             }
             else
             {
