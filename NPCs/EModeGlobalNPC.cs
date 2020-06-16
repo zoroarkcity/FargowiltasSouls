@@ -3091,6 +3091,8 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
+                                        Projectile.NewProjectile(Main.player[npc.target].Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i),
+                                            ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, npc.target, -1f);
                                         Projectile.NewProjectile(Main.player[npc.target].Center + 160 * Vector2.UnitY.RotatedBy(Math.PI / 2 * i), Vector2.UnitX.RotatedBy(Math.PI / 2 * i), 
                                             ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, npc.target, -1f);
                                         Projectile.NewProjectile(Main.player[npc.target].Center + -160 * Vector2.UnitY.RotatedBy(Math.PI / 2 * i), Vector2.UnitX.RotatedBy(Math.PI / 2 * i),
