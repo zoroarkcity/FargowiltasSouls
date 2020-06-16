@@ -1100,11 +1100,11 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             }
         }
 
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        /*public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
             damage *= 0.8;
             return true;
-        }
+        }*/
 
         public override bool CheckDead()
         {

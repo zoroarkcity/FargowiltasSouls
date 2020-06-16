@@ -125,3 +125,4 @@ dungeon guardian rework
 icon works on enemies with 2000 or less life (was 1000)
 reduced devi life slightly
 devi has an enrage with other content mods (more hp)
+removed abom dr and mutant has 10% (was 20%)
