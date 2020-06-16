@@ -11,6 +11,8 @@ namespace FargowiltasSouls
     // ReSharper disable once ClassNeverInstantiated.Global
     public class FargoSoulsWorld : ModWorld
     {
+        public static bool SwarmActive;
+
         public static bool downedBetsy;
         private static bool _downedBoss;
 
@@ -272,6 +274,8 @@ namespace FargowiltasSouls
         {
             if (!Main.expertMode && MasochistMode)
                 MasochistMode = false;
+
+            SwarmActive = (bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive");
 
             //Main.NewText(BuilderMode);
 
