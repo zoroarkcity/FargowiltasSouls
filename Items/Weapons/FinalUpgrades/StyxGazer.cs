@@ -15,7 +15,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Styx Gazer");
-            Tooltip.SetDefault("'Let's keep how you got this a secret'");
+            Tooltip.SetDefault("Right click to wield a magic scythe wand sword ray of destruction\n'Let's keep how you got this a secret'");
         }
 
         public override void SetDefaults()
@@ -54,6 +54,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
                 item.melee = false;
                 item.noUseGraphic = true;
                 item.noMelee = true;
+                item.mana = 200;
             }
             else
             {
@@ -63,6 +64,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
                 item.melee = true;
                 item.noUseGraphic = false;
                 item.noMelee = false;
+                item.mana = 0;
             }
             return true;
         }
