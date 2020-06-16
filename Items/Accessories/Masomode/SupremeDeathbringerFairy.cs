@@ -20,7 +20,6 @@ While dashing or running quickly you will create a trail of blood scythes
 Your attacks inflict Venom
 Bees and weak Hornets become friendly
 You have permanent effects of Honey buff
-May attract baby skeleton heads
 Summons 2 Skeletron arms to whack enemies");
             DisplayName.AddTranslation(GameCulture.Chinese, "至高告死精灵");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'霸权不一定能得到保证'

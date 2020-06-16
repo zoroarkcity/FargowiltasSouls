@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 Increases wing time by 200%, armor penetration by 50, and movement speed by 20%
 Increases max life by 100%, damage by 50%, and damage reduction by 10%
 Increases life regen drastically, increases max number of minions and sentries by 10
-Grants gravity control, fastfall, and immunity to knockback, almost all Eternity ist Mode debuffs, and more
+Grants gravity control, fastfall, and immunity to knockback, almost all Eternity Mode debuffs, and more
 Grants autofire to all weapons, modifier protection, and you automatically use mana potions when needed
 Makes armed and magic skeletons less hostile outside the Dungeon
 Your attacks create additional attacks, hearts, and inflict a cocktail of Eternity Mode debuffs

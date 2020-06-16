@@ -122,3 +122,4 @@ dungeon guardian rework
 	projectiles dont instakill
 	removed speed boost
 	actual attack pattern
+icon works on enemies with 2000 or less life (was 1000)
