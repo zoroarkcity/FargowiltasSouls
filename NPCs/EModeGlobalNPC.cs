@@ -105,6 +105,7 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.DungeonGuardian:
                     npc.boss = true;
+                    npc.lifeMax /= 4;
                     break;
 
                 case NPCID.WyvernHead:
@@ -2983,9 +2984,9 @@ namespace FargowiltasSouls.NPCs
                         guardBoss = npc.whoAmI;
                         npc.damage = npc.defDamage;
                         npc.defense = npc.defDefense;
-                        while (npc.buffType[0] != 0)
+                        if (npc.buffType[0] != 0)
                             npc.DelBuff(0);
-                        if (npc.velocity.Length() < 5f)
+                        /*if (npc.velocity.Length() < 5f) //old spam bones and skulls code
                         {
                             npc.velocity.Normalize();
                             npc.velocity *= 5f;
@@ -3014,6 +3015,231 @@ namespace FargowiltasSouls.NPCs
                             speed.Y -= Math.Abs(speed.X) * 0.2f;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<SkeletronBone>(), npc.damage / 4, 0f, Main.myPlayer);
+                        }*/
+                        if (++Counter < 90)
+                        {
+                            if (!masoBool[0] && npc.HasValidTarget)
+                            {
+                                masoBool[0] = true;
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(Main.player[npc.target].Center - Vector2.UnitY * 1500, Vector2.UnitY,
+                                        ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, npc.target, -1f);
+                                }
+                            }
+
+                            if (++Counter2 > 1) //spray bone rain above player
+                            {
+                                Counter2 = 0;
+
+                                Vector2 spawnPos = Main.player[npc.target].Center;
+                                spawnPos.X += Main.rand.NextFloat(-100, 100);
+                                spawnPos.Y -= Main.rand.NextFloat(700, 800);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(spawnPos, Vector2.UnitY * Main.rand.NextFloat(10f, 20f),
+                                        ModContent.ProjectileType<SkeletronBone>(), npc.damage / 20, 0f, Main.myPlayer);
+                                }
+                            }
+                        }
+                        else if (Counter < 220)
+                        {
+                            masoBool[0] = false;
+                            if (!masoBool[1] && Counter2 > 30)
+                            {
+                                masoBool[1] = true;
+                                for (int i = 0; i < 6; i++)
+                                {
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        Projectile.NewProjectile(npc.Center, npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(Math.PI / 3 * i),
+                                            ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, -1f, npc.whoAmI);
+                                    }
+                                }
+                            }
+
+                            if (++Counter2 > 60) //homing skulls
+                            {
+                                Counter2 = 0;
+
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Vector2 speed = Main.player[npc.target].Center - npc.Center;
+                                    speed.X += Main.rand.Next(-20, 21);
+                                    speed.Y += Main.rand.Next(-20, 21);
+                                    speed.Normalize();
+                                    speed *= 3f;
+                                    for (int i = 0; i < 6; i++)
+                                    {
+                                        Projectile.NewProjectile(npc.Center, speed.RotatedBy(Math.PI / 3 * i), 
+                                            ProjectileID.Skull, npc.damage / 20, 0, Main.myPlayer, -1f, 0f);
+                                    }
+                                }
+                            }
+                        }
+                        else if (Counter < 280)
+                        {
+                            //nothing
+                        }
+                        else if (Counter < 410)
+                        {
+                            masoBool[1] = false;
+                            if (!masoBool[0] && Counter2 > 90)
+                            {
+                                masoBool[0] = true;
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        Projectile.NewProjectile(Main.player[npc.target].Center + 160 * Vector2.UnitY.RotatedBy(Math.PI / 2 * i), Vector2.UnitX.RotatedBy(Math.PI / 2 * i), 
+                                            ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, npc.target, -1f);
+                                        Projectile.NewProjectile(Main.player[npc.target].Center + -160 * Vector2.UnitY.RotatedBy(Math.PI / 2 * i), Vector2.UnitX.RotatedBy(Math.PI / 2 * i),
+                                            ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, npc.target, -1f);
+                                    }
+                                }
+                            }
+
+                            if (++Counter2 > 120) //wall of babies from all sides
+                            {
+                                Counter2 = 0;
+
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    for (int i = 0; i < 4; i++)
+                                    {
+                                        for (int j = -2; j <= 2; j++)
+                                        {
+                                            Vector2 spawnPos = new Vector2(1200, 80 * j);
+                                            Vector2 vel = -18 * Vector2.UnitX;
+                                            spawnPos = Main.player[npc.target].Center + spawnPos.RotatedBy(Math.PI / 2 * i);
+                                            vel = vel.RotatedBy(Math.PI / 2 * i);
+                                            Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<Projectiles.Champions.ShadowGuardian>(),
+                                                npc.damage / 20, 0f, Main.myPlayer);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else if (Counter < 540)
+                        {
+                            masoBool[0] = false;
+                            if (!masoBool[1] && Counter2 > 90)
+                            {
+                                masoBool[1] = true;
+                                for (int i = 0; i < 16; i++)
+                                {
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        Projectile.NewProjectile(Main.player[npc.target].Center, Vector2.UnitX.RotatedBy(Math.PI / 8 * i),
+                                            ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, npc.target, -1f);
+                                    }
+                                }
+                            }
+
+                            if (++Counter2 > 120) // ring of guardians
+                            {
+                                Counter2 = 0;
+
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    const int max = 16;
+                                    Vector2 baseOffset = npc.DirectionTo(Main.player[npc.target].Center);
+                                    for (int i = 0; i < max; i++)
+                                    {
+                                        Projectile.NewProjectile(Main.player[npc.target].Center + 1000 * baseOffset.RotatedBy(2 * Math.PI / max * i),
+                                            -10f * baseOffset.RotatedBy(2 * Math.PI / max * i), ModContent.ProjectileType<Projectiles.DeviBoss.DeviGuardian>(),
+                                            npc.damage / 20, 0f, Main.myPlayer);
+                                    }
+                                }
+                            }
+                        }
+                        else if (Counter < 700) //mindless bone spray
+                        {
+                            masoBool[1] = false;
+                            if (!masoBool[0])
+                            {
+                                masoBool[0] = true;
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(npc.Center + new Vector2(-150, -1500), Vector2.UnitY,
+                                        ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, -1f, npc.whoAmI);
+                                    Projectile.NewProjectile(npc.Center + new Vector2(150, -1500), Vector2.UnitY,
+                                        ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, -1f, npc.whoAmI);
+                                }
+                            }
+
+                            if (++Counter2 > 2)
+                            {
+                                Counter2 = 0;
+                                Vector2 speed = new Vector2(Main.rand.Next(-100, 101), Main.rand.Next(-100, 101));
+                                speed.Normalize();
+                                speed *= 6f;
+                                speed += npc.velocity * 1.25f;
+                                speed.Y -= Math.Abs(speed.X) * 0.2f;
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<SkeletronBone>(), npc.damage / 20, 0f, Main.myPlayer);
+                            }
+                        }
+                        else if (Counter < 820) //fuck everywhere except where you're standing
+                        {
+                            masoBool[0] = false;
+                            if (!masoBool[1] && Counter2 > 40)
+                            {
+                                masoBool[1] = true;
+                                for (int i = 0; i < 4; i++) //from the cardinals
+                                {
+                                    Vector2 spawnPos = Main.player[npc.target].Center + 1000 * Vector2.UnitX.RotatedBy(Math.PI / 2 * i);
+                                    for (int j = -1; j <= 1; j++) //to both sides
+                                    {
+                                        if (j == 0)
+                                            continue;
+
+                                        Vector2 baseVel = Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(15) * j);
+                                        for (int k = 0; k < 7; k++) //a fan of skulls
+                                        {
+                                            if (k % 2 == 1) //only draw every other ray
+                                                continue;
+
+                                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                            {
+                                                Projectile.NewProjectile(spawnPos, baseVel.RotatedBy(MathHelper.ToRadians(10) * j * k),
+                                                    ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, npc.target, -1f);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (++Counter2 > 70)
+                            {
+                                Counter2 = 0;
+                                for (int i = 0; i < 4; i++) //from the cardinals
+                                {
+                                    Vector2 spawnPos = Main.player[npc.target].Center + 1000 * Vector2.UnitX.RotatedBy(Math.PI / 2 * i);
+                                    for (int j = -1; j <= 1; j++) //to both sides
+                                    {
+                                        if (j == 0)
+                                            continue;
+
+                                        Vector2 baseVel = 22f * Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(15) * j);
+                                        for (int k = 0; k < 7; k++) //a fan of skulls
+                                        {
+                                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                            {
+                                                Projectile.NewProjectile(spawnPos, baseVel.RotatedBy(MathHelper.ToRadians(10) * j * k),
+                                                    ModContent.ProjectileType<Projectiles.Champions.ShadowGuardian>(),
+                                                    npc.damage / 20, 0f, Main.myPlayer);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            masoBool[0] = false;
+                            masoBool[1] = false;
+                            Counter = 0;
                         }
                         break;
 
@@ -6222,7 +6448,7 @@ namespace FargowiltasSouls.NPCs
                     case 278:
                     case 279:
                     case 280:
-                        if (Main.netMode != NetmodeID.MultiplayerClient && Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().NecromanticBrew)
+                        /*if (Main.netMode != NetmodeID.MultiplayerClient && Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().NecromanticBrew)
                         {
                             int chance = (bool)ModLoader.GetMod("Fargowiltas").Call("GetDownedEnemy", "babyGuardian") ? 100 : 10;
                             if (Main.rand.Next(chance) == 0)
@@ -6231,7 +6457,7 @@ namespace FargowiltasSouls.NPCs
                                 if (n < 200 && Main.netMode == NetmodeID.Server)
                                     NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                             }
-                        }
+                        }*/
                         break;
 
                     case NPCID.DungeonSlime:

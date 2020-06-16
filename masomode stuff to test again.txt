@@ -116,3 +116,9 @@ shadow champ scythes buffed
 
 nerfed golem regen more but restored 10% DR
 devi teleports above you for dungeon guardian attack
+
+dungeon guardian rework
+	75% less hp
+	projectiles dont instakill
+	removed speed boost
+	actual attack pattern

@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.DeviBoss
 {
@@ -65,6 +66,8 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
         {
             target.AddBuff(mod.BuffType("Defenseless"), 300);
             target.AddBuff(mod.BuffType("Lethargic"), 300);
+            if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.guardBoss, NPCID.DungeonGuardian))
+                target.AddBuff(mod.BuffType("MarkedForDeath"), 300);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

@@ -1507,11 +1507,11 @@ namespace FargowiltasSouls.Projectiles
                             target.AddBuff(BuffID.Cursed, 60);
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.guardBoss, NPCID.DungeonGuardian))
                         {
-                            target.AddBuff(ModContent.BuffType<GodEater>(), 420);
+                            target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 300);
+                            /*target.AddBuff(ModContent.BuffType<GodEater>(), 420);
                             target.AddBuff(ModContent.BuffType<FlamesoftheUniverse>(), 420);
-                            target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 420);
                             target.immune = false;
-                            target.immuneTime = 0;
+                            target.immuneTime = 0;*/
                         }
                         break;
 

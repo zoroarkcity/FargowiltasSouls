@@ -29,12 +29,12 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.guardBoss, NPCID.DungeonGuardian))
             {
-                target.AddBuff(mod.BuffType("GodEater"), 420);
+                target.AddBuff(mod.BuffType("MarkedforDeath"), 300);
+                /*target.AddBuff(mod.BuffType("GodEater"), 420);
                 target.AddBuff(mod.BuffType("FlamesoftheUniverse"), 420);
-                target.AddBuff(mod.BuffType("MarkedforDeath"), 420);
                 target.immune = false;
                 target.immuneTime = 0;
-                target.hurtCooldowns[1] = 0;
+                target.hurtCooldowns[1] = 0;*/
             }
             target.AddBuff(mod.BuffType("Lethargic"), 300);
         }
