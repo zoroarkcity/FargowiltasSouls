@@ -3167,9 +3167,9 @@ namespace FargowiltasSouls.NPCs
                                     {
                                         Projectile.NewProjectile(npc.Center + new Vector2(0, -1500), Vector2.UnitY,
                                             ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, -1f, npc.whoAmI);
-                                        Projectile.NewProjectile(npc.Center + new Vector2(-150, -1500), Vector2.UnitY,
+                                        Projectile.NewProjectile(npc.Center + new Vector2(-200, -1500), Vector2.UnitY,
                                             ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, -1f, npc.whoAmI);
-                                        Projectile.NewProjectile(npc.Center + new Vector2(150, -1500), Vector2.UnitY,
+                                        Projectile.NewProjectile(npc.Center + new Vector2(200, -1500), Vector2.UnitY,
                                             ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, -1f, npc.whoAmI);
                                     }
                                 }

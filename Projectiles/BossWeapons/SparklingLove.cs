@@ -59,6 +59,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 {
                     projectile.ai[0] = 1;
                     projectile.netUpdate = true;
+
+                    if (projectile.localAI[1] == 0)
+                        projectile.localAI[1] = 1;
                 }
             }
             else
@@ -69,7 +72,19 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 if (projectile.Distance(Main.player[projectile.owner].Center) <= projectile.velocity.Length())
                     projectile.Kill();
             }
-            
+
+            if (projectile.localAI[1] == 1 && projectile.owner == Main.myPlayer)
+            {
+                projectile.localAI[1] = 2;
+                Main.PlaySound(SoundID.Item21, projectile.Center);
+                for (int i = 0; i < 8; i++)
+                {
+                    Projectile.NewProjectile(projectile.Center, 14f * Vector2.Normalize(projectile.velocity).RotatedBy(Math.PI / 4 * i),
+                        ModContent.ProjectileType<SparklingLoveHeart>(), projectile.damage, projectile.knockBack,
+                        projectile.owner, -1, 45);
+                }
+            }
+
             projectile.rotation += projectile.direction * -0.4f;
 
             for (int i = 0; i < 2; i++)
@@ -82,6 +97,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            if (projectile.localAI[1] == 0)
+                projectile.localAI[1] = 1;
+
             target.AddBuff(BuffID.Lovestruck, 300);
             target.immune[projectile.owner] = 6;
         }

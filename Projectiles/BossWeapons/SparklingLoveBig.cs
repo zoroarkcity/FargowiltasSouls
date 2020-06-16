@@ -129,6 +129,10 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     float rotation = speed.ToRotation() + (float)Math.PI / 2;
                     Projectile.NewProjectile(projectile.Center, speed, ModContent.ProjectileType<SparklingLoveEnergyHeart>(),
                         projectile.damage, projectile.knockBack, projectile.owner, rotation, acceleration);
+
+                    Projectile.NewProjectile(projectile.Center, 14f * Vector2.UnitY.RotatedBy(2 * Math.PI / max * i),
+                        ModContent.ProjectileType<SparklingLoveHeart2>(), projectile.damage, projectile.knockBack,
+                        projectile.owner, -1, 45);
                 }
             }
         }
