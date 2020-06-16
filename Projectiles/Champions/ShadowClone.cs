@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override bool CanDamage()
         {
-            return projectile.ai[0] < 0;
+            return projectile.ai[1] < 0;
         }
 
         public override void AI()
