@@ -44,14 +44,14 @@ namespace FargowiltasSouls.Projectiles.Champions
                 Main.PlaySound(SoundID.Item8, projectile.Center);
             }
 
-            if (++projectile.localAI[0] > 30 && projectile.localAI[0] < 130)
+            if (++projectile.localAI[0] < 160)
             {
-                projectile.velocity *= 1.04f;
+                projectile.velocity *= 1.025f;
             }
 
             if (projectile.ai[0] == 0)
             {
-                if (projectile.localAI[0] == 130)
+                if (projectile.localAI[0] == 160)
                     projectile.Kill();
             }
             else
@@ -62,7 +62,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                     float rotation = projectile.velocity.ToRotation();
                     Vector2 vel = Main.player[Main.npc[EModeGlobalNPC.championBoss].target].Center - projectile.Center;
                     float targetAngle = vel.ToRotation();
-                    projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, 0.03f));
+                    projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, 0.035f));
                 }
             }
 

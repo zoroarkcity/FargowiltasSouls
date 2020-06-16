@@ -288,7 +288,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     //warning dust
                     Main.dust[Dust.NewDust(npc.Center, 0, 0, DustID.Fire, 0f, 0f, 0, default(Color), 2f)].velocity *= 7f;
 
-                    if (++npc.ai[2] > 4 && npc.ai[1] > 120)
+                    if (++npc.ai[2] > 5 && npc.ai[1] > 120)
                     {
                         npc.ai[2] = 0;
 
@@ -301,7 +301,8 @@ namespace FargowiltasSouls.NPCs.Champions
                                 if (i == 0)
                                     continue;
 
-                                Vector2 spawnPos = player.Center + Vector2.UnitX * 1000 * i;
+                                //p2 fires from above/below, others fire from sides
+                                Vector2 spawnPos = player.Center + i * (npc.localAI[3] == 2 ? Vector2.UnitY * 1000 : Vector2.UnitX * 1000);
 
                                 for (int j = -1; j <= 1; j++) //three angles
                                 {
@@ -309,6 +310,13 @@ namespace FargowiltasSouls.NPCs.Champions
                                     vel = vel.RotatedBy(MathHelper.ToRadians(25) * j); //offset between three streams
                                     vel = vel.RotatedBy(MathHelper.ToRadians(5) * (Main.rand.NextDouble() - 0.5)); //random variation
                                     Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<ShadowGuardian>(), npc.damage / 4, 0f, Main.myPlayer);
+                                }
+
+                                if (npc.localAI[3] == 3) //p3 also spawns one stream from above/below
+                                {
+                                    Vector2 wallSpawn = player.Center + i * Vector2.UnitY * 1000;
+                                    Projectile.NewProjectile(wallSpawn, Main.rand.NextFloat(20, 25f) * Vector2.Normalize(player.Center - wallSpawn),
+                                        ModContent.ProjectileType<ShadowGuardian>(), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -337,6 +345,9 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.1f, 24f);
 
+                    if (npc.localAI[3] == 2)
+                        npc.ai[2]++;
+
                     if (++npc.ai[2] > 60)
                     {
                         npc.ai[2] = 0;
@@ -345,12 +356,32 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            for (int i = 0; i < 50; i++)
+                            if (npc.localAI[3] == 3) //p3, fire them to both sides
                             {
-                                Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5));
-                                float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
-                                float ai1 = Main.rand.NextFloat(-0.0075f, 0.0075f);
-                                Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
+                                for (int j = -1; j <= 1; j++)
+                                {
+                                    if (j == 0)
+                                        continue;
+
+                                    for (int i = 0; i < 30; i++)
+                                    {
+                                        Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5) + Math.PI / 4 * j);
+                                        float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
+                                        float ai1 = Main.rand.NextFloat(0.05f);
+                                        Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 0; i < 40; i++)
+                                {
+                                    Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5));
+                                    float max = 0.0075f;
+                                    float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
+                                    float ai1 = Main.rand.NextFloat(-max, max);
+                                    Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
+                                }
                             }
                         }
                     }
@@ -374,7 +405,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.3f, 24f);
 
-                    if (++npc.ai[2] > 90 && npc.ai[1] < 330)
+                    if (++npc.ai[2] > (npc.localAI[3] > 1 ? 90 : 120) && npc.ai[1] < 330) //fire a little faster depending on phase
                     {
                         npc.ai[2] = 0;
 
@@ -383,11 +414,16 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 vel = (player.Center - npc.Center) / 30;
+                            if (npc.localAI[3] == 3) //p3 fires them to both sides instead
+                            {
+                                vel = vel.RotatedBy(Math.PI / 2) * 0.75f;
+                                Projectile.NewProjectile(npc.Center, -vel, ModContent.ProjectileType<Projectiles.Champions.ShadowOrb>(), npc.damage / 4, 0f, Main.myPlayer);
+                            }
                             Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<Projectiles.Champions.ShadowOrb>(), npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
 
-                    if (++npc.ai[1] > 420)
+                    if (++npc.ai[1] > (npc.localAI[3] == 3 ? 450 : 420))
                     {
                         npc.TargetClosest();
                         npc.ai[0]++;
@@ -405,7 +441,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (++npc.ai[2] == 1)
                     {
                         Main.PlaySound(SoundID.NPCHit6, npc.Center);
-                        npc.velocity = (player.Center - npc.Center) / 30f * 1.5f;
+                        npc.velocity = (player.Center - npc.Center) / 30f * (1f + npc.localAI[3] / 3f * 0.75f);
                         npc.netUpdate = true;
                     }
                     else if (npc.ai[2] == 31)
@@ -462,10 +498,15 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             for (int i = 0; i < 10; i++)
                             {
-                                Vector2 spawnPos = player.Center + Main.rand.NextFloat(500, 700) * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * 2 * Math.PI);
-                                Vector2 vel = npc.velocity.RotatedBy(Main.rand.NextDouble() * Math.PI * 2);
-                                Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<ShadowClone>(),
-                                    npc.damage / 4, 0f, Main.myPlayer, npc.target, 60 + 30 * i);
+                                if (npc.localAI[3] == 1 && i % 2 == 0) //dont do half of them in p1
+                                    continue;
+                                for (int j = 0; j < (npc.localAI[3] == 3 ? 2 : 1); j++) //do twice as many in p3
+                                {
+                                    Vector2 spawnPos = player.Center + Main.rand.NextFloat(500, 700) * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * 2 * Math.PI);
+                                    Vector2 vel = npc.velocity.RotatedBy(Main.rand.NextDouble() * Math.PI * 2);
+                                    Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<ShadowClone>(),
+                                        npc.damage / 4, 0f, Main.myPlayer, npc.target, 60 + 30 * i);
+                                }
                             }
                         }
                     }
