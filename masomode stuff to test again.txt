@@ -123,3 +123,5 @@ dungeon guardian rework
 	removed speed boost
 	actual attack pattern
 icon works on enemies with 2000 or less life (was 1000)
+reduced devi life slightly
+devi has an enrage with other content mods (more hp)

@@ -41,7 +41,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             npc.height = 120;
             npc.damage = 64;
             npc.defense = 10;
-            npc.lifeMax = 7000;
+            npc.lifeMax = 6000;
             npc.HitSound = SoundID.NPCHit9;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -65,6 +65,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             musicPriority = (MusicPriority)10;
 
             npc.value = Item.buyPrice(0, 5);
+
+            if (ContentModLoaded)
+                npc.lifeMax = (int)(npc.lifeMax * 1.5);
         }
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
