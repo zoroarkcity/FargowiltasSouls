@@ -27,9 +27,9 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 110;
             npc.height = 110;
-            npc.damage = 130;
+            npc.damage = 115;
             npc.defense = 60;
-            npc.lifeMax = 320000;
+            npc.lifeMax = 330000;
             npc.HitSound = SoundID.NPCHit5;
             npc.DeathSound = SoundID.NPCDeath7;
             npc.noGravity = true;
@@ -309,6 +309,8 @@ namespace FargowiltasSouls.NPCs.Champions
                                     Vector2 vel = Main.rand.NextFloat(20f, 25f) * Vector2.Normalize(player.Center - spawnPos);
                                     vel = vel.RotatedBy(MathHelper.ToRadians(25) * j); //offset between three streams
                                     vel = vel.RotatedBy(MathHelper.ToRadians(5) * (Main.rand.NextDouble() - 0.5)); //random variation
+                                    if (j != 0)
+                                        vel *= 1.75f;
                                     Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<ShadowGuardian>(), npc.damage / 4, 0f, Main.myPlayer);
                                 }
 
@@ -341,7 +343,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     goto case 0;
 
                 case 3: //curving flamebursts
-                    targetPos = player.Center + npc.DirectionFrom(player.Center) * 400f;
+                    targetPos = player.Center + npc.DirectionFrom(player.Center) * 600f;
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.1f, 24f);
 
@@ -365,9 +367,9 @@ namespace FargowiltasSouls.NPCs.Champions
 
                                     for (int i = 0; i < 30; i++)
                                     {
-                                        Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5) + Math.PI / 4 * j);
+                                        Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5) + Math.PI / 2 * j);
                                         float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
-                                        float ai1 = Main.rand.NextFloat(0.05f);
+                                        float ai1 = Main.rand.NextFloat(0.06f);
                                         Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
                                     }
                                 }

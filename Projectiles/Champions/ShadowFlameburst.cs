@@ -41,6 +41,12 @@ namespace FargowiltasSouls.Projectiles.Champions
                 }
             }
 
+            if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<NPCs.Champions.ShadowChampion>())
+                && Main.npc[EModeGlobalNPC.championBoss].localAI[3] > 1)
+            {
+                projectile.tileCollide = false;
+            }
+
             if (++projectile.localAI[0] > 30 && projectile.localAI[0] < 120)
             {
                 projectile.velocity *= projectile.ai[0];
