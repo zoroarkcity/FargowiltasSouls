@@ -89,6 +89,8 @@ namespace FargowiltasSouls
 
             for (int i = 0; i < downedChampions.Length; i++)
                 downedChampions[i] = false;
+
+            SwarmActive = false;
         }
 
         public override TagCompound Save()
