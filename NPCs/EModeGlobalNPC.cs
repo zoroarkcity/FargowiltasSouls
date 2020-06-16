@@ -3165,6 +3165,8 @@ namespace FargowiltasSouls.NPCs
                                     masoBool[0] = true;
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
+                                        Projectile.NewProjectile(npc.Center + new Vector2(0, -1500), Vector2.UnitY,
+                                            ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, -1f, npc.whoAmI);
                                         Projectile.NewProjectile(npc.Center + new Vector2(-150, -1500), Vector2.UnitY,
                                             ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, -1f, npc.whoAmI);
                                         Projectile.NewProjectile(npc.Center + new Vector2(150, -1500), Vector2.UnitY,
