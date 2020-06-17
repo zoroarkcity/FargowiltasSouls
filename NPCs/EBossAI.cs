@@ -755,7 +755,7 @@ namespace FargowiltasSouls.NPCs
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Projectile.NewProjectile(npc.Center, baseVel.RotatedBy(MathHelper.ToRadians(8) * j * k),
-                                        ModContent.ProjectileType<SkeletronGuardian2>(), 0, 0f, Main.myPlayer);
+                                        ModContent.ProjectileType<SkeletronGuardian2>(), npc.damage / 5, 0f, Main.myPlayer);
                                 }
                             }
                         }
