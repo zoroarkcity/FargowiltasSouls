@@ -724,7 +724,7 @@ namespace FargowiltasSouls.NPCs
 
                     if (Main.netMode != NetmodeID.MultiplayerClient) //spray of baby guardian missiles
                     {
-                        for (int i = 0; i < 10; i++)
+                        for (int i = 0; i < 15; i++)
                         {
                             float speed = Main.rand.NextFloat(4f, 8f);
                             Vector2 velocity = speed * npc.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * (Main.rand.NextDouble() - 0.5));
@@ -750,11 +750,11 @@ namespace FargowiltasSouls.NPCs
                                 continue;
 
                             Vector2 baseVel = npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.ToRadians(25) * j);
-                            for (int k = 0; k < 14; k++) //a fan of skulls
+                            for (int k = 0; k < 10; k++) //a fan of skulls
                             {
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(npc.Center, baseVel.RotatedBy(MathHelper.ToRadians(6) * j * k),
+                                    Projectile.NewProjectile(npc.Center, baseVel.RotatedBy(MathHelper.ToRadians(8) * j * k),
                                         ModContent.ProjectileType<SkeletronGuardian2>(), npc.damage / 5, 0f, Main.myPlayer);
                                 }
                             }
