@@ -32,7 +32,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.ignoreWater = true;
             projectile.aiStyle = -1;
             projectile.netImportant = true;
-            projectile.timeLeft = 120;
+            projectile.timeLeft = 115;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
         }
 
         public override void AI()
@@ -64,7 +65,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 {
                     targetPos = Main.npc[target].Center;
                     projectile.direction = projectile.spriteDirection = projectile.Center.X > targetPos.X ? 1 : -1;
-                    targetPos += Vector2.UnitX * 450 * projectile.direction;
+                    targetPos.X += 500 * projectile.direction;
+                    targetPos.Y -= 200;
                 }
                 else
                 {
@@ -75,7 +77,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 if (projectile.Distance(targetPos) > 50)
                     Movement(targetPos, 1f);
             }
-            else if (projectile.ai[0] == 100)
+            else if (projectile.ai[0] == 99 || projectile.ai[0] == 100)
             {
                 projectile.netUpdate = true;
 
@@ -94,8 +96,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                     projectile.direction = projectile.spriteDirection = projectile.Center.X > targetPos.X ? 1 : -1;
 
-                    targetPos += Vector2.UnitX * 75 * projectile.direction;
-                    projectile.velocity = (targetPos - projectile.Center) / projectile.timeLeft;
+                    targetPos.X += 275 * projectile.direction;
+
+                    if (projectile.ai[0] == 100)
+                    {
+                        projectile.velocity = (targetPos - projectile.Center) / projectile.timeLeft;
+
+                        projectile.position += projectile.velocity; //makes sure the offset is right
+                    }
                 }
             }
 

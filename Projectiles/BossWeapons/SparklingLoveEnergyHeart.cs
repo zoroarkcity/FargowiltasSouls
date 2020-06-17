@@ -27,6 +27,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             
             projectile.timeLeft = 90;
             projectile.extraUpdates = 1;
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
         }
 
         public override void AI()

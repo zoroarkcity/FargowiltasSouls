@@ -26,10 +26,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.minion = true;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
-            projectile.timeLeft = 70;
+            projectile.timeLeft = 65;
             projectile.aiStyle = -1;
             projectile.scale = 4f;
             projectile.penetrate = -1;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
         }
 
         public override void AI()
@@ -38,20 +39,22 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             int ai1 = (int)projectile.ai[1];
             if (ai1 > -1 && ai1 < Main.maxProjectiles && Main.projectile[ai1].active && Main.projectile[ai1].type == ModContent.ProjectileType<SparklingDevi>())
             {
-                if (projectile.timeLeft > 20)
+                if (projectile.timeLeft > 15)
                 {
                     Vector2 offset = new Vector2(0, -275).RotatedBy(Math.PI / 4 * Main.projectile[ai1].spriteDirection);
                     projectile.Center = Main.projectile[ai1].Center + offset;
                     projectile.rotation = (float)Math.PI / 4 * Main.projectile[ai1].spriteDirection - (float)Math.PI / 4;
                 }
-                else
+                else //swinging down
                 {
-                    projectile.rotation -= (float)Math.PI / 20 * Main.projectile[ai1].spriteDirection * 1f;
+                    projectile.rotation -= (float)Math.PI / 15 * Main.projectile[ai1].spriteDirection * 0.75f;
                     Vector2 offset = new Vector2(0, -275).RotatedBy(projectile.rotation + (float)Math.PI / 4);
                     projectile.Center = Main.projectile[ai1].Center + offset;
                 }
 
                 projectile.spriteDirection = -Main.projectile[ai1].spriteDirection;
+
+                projectile.localAI[1] = Main.projectile[ai1].velocity.ToRotation();
 
                 if (projectile.localAI[0] == 0)
                 {
@@ -123,14 +126,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 int max = (int)modifier + 3;
                 for (int i = 0; i < max; i++)
                 {
-                    Vector2 target = 600 * -Vector2.UnitY.RotatedBy(2 * Math.PI / max * i);
+                    Vector2 target = 600 * -Vector2.UnitY.RotatedBy(2 * Math.PI / max * i + projectile.localAI[1]);
                     Vector2 speed = 2 * target / 90;
                     float acceleration = -speed.Length() / 90;
                     float rotation = speed.ToRotation() + (float)Math.PI / 2;
                     Projectile.NewProjectile(projectile.Center, speed, ModContent.ProjectileType<SparklingLoveEnergyHeart>(),
                         projectile.damage, projectile.knockBack, projectile.owner, rotation, acceleration);
 
-                    Projectile.NewProjectile(projectile.Center, 14f * Vector2.UnitY.RotatedBy(2 * Math.PI / max * i),
+                    Projectile.NewProjectile(projectile.Center, 14f * Vector2.UnitY.RotatedBy(2 * Math.PI / max * (i + 0.5) + projectile.localAI[1]),
                         ModContent.ProjectileType<SparklingLoveHeart2>(), projectile.damage, projectile.knockBack,
                         projectile.owner, -1, 45);
                 }
