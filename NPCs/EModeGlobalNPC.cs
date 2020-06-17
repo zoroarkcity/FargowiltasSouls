@@ -6912,14 +6912,14 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.SkeletronHand:
-                        NPC head = Main.npc[(int)npc.ai[1]];
+                        /*NPC head = Main.npc[(int)npc.ai[1]];
                         if (head.active && head.type == NPCID.SkeletronHead && head.GetGlobalNPC<EModeGlobalNPC>().Counter == 0)
                         {
                             if (npc.ai[0] == 1f)
                                 head.GetGlobalNPC<EModeGlobalNPC>().Counter = 1;
                             else
                                 head.GetGlobalNPC<EModeGlobalNPC>().Counter = 2;
-                        }
+                        }*/
                         break;
 
                     case NPCID.GoblinSummoner:

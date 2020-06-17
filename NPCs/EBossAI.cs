@@ -649,7 +649,7 @@ namespace FargowiltasSouls.NPCs
                 if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.downedBoss3)
                     Item.NewItem(npc.Hitbox, ModContent.ItemType<BloodiedSkull>());
             }
-            if (Counter != 0)
+            /*if (Counter != 0)
             {
                 Timer++;
 
@@ -693,7 +693,7 @@ namespace FargowiltasSouls.NPCs
                         Counter = 0;
                     }
                 }
-            }
+            }*/
 
             if (npc.ai[1] == 1f || npc.ai[1] == 2f) //spinning or DG mode
             {
@@ -712,6 +712,52 @@ namespace FargowiltasSouls.NPCs
                             vel += npc.velocity * (1f - ratio);
                             vel.Y -= Math.Abs(vel.X) * 0.2f;
                             Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<SkeletronBone>(), npc.defDamage / 9 * 2, 0f, Main.myPlayer);
+                        }
+                    }
+                }
+
+                if (npc.life < npc.lifeMax * .75 && npc.ai[1] == 1f && --Counter < 0)
+                {
+                    Counter = 240;
+
+                    Main.PlaySound(SoundID.ForceRoar, npc.Center, -1);
+
+                    if (Main.netMode != NetmodeID.MultiplayerClient) //spray of baby guardian missiles
+                    {
+                        for (int i = 0; i < 10; i++)
+                        {
+                            float speed = Main.rand.NextFloat(8f, 12f);
+                            Vector2 velocity = speed * npc.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * (Main.rand.NextDouble() - 0.5));
+                            float ai1 = speed / Main.rand.NextFloat(60f, 90f);
+                            Projectile.NewProjectile(npc.Center, velocity, ModContent.ProjectileType<SkeletronGuardian>(), npc.damage / 5, 0f, Main.myPlayer, 0f, ai1);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (npc.life < npc.lifeMax * .75 && --Counter < 0)
+                {
+                    Counter = 240;
+
+                    Main.PlaySound(SoundID.ForceRoar, npc.Center, -1);
+
+                    if (Main.netMode != NetmodeID.MultiplayerClient) //V spray of baby guardians
+                    {
+                        for (int j = -1; j <= 1; j++) //to both sides
+                        {
+                            if (j == 0)
+                                continue;
+
+                            Vector2 baseVel = npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.ToRadians(25) * j);
+                            for (int k = 0; k < 10; k++) //a fan of skulls
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(npc.Center, baseVel.RotatedBy(MathHelper.ToRadians(8) * j * k),
+                                        ModContent.ProjectileType<SkeletronGuardian2>(), 0, 0f, Main.myPlayer);
+                                }
+                            }
                         }
                     }
                 }

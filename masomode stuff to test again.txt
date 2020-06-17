@@ -127,3 +127,4 @@ reduced devi life slightly
 devi has an enrage with other content mods (more hp)
 removed abom dr and mutant has 10% (was 20%)
 emode ai is disabled during swarms
+skeletron p2 at 75%, shoots massive spreads of baby guardians and accelerating homing bursts
