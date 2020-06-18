@@ -28,6 +28,8 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.tileCollide = false;
             
             cooldownSlot = 1;
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
         public override void AI()

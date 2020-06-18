@@ -29,6 +29,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.ignoreWater = true;
             projectile.hide = true;
             projectile.extraUpdates = 1;
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

@@ -811,7 +811,7 @@ namespace FargowiltasSouls.NPCs
                 }
             }
 
-            if (Main.npc[(int)npc.ai[1]].ai[1] == 1f || Main.npc[(int)npc.ai[1]].ai[1] == 2f) //spinning or DG mode
+            /*if (Main.npc[(int)npc.ai[1]].ai[1] == 1f || Main.npc[(int)npc.ai[1]].ai[1] == 2f) //spinning or DG mode
             {
                 if (!masoBool[0])
                 {
@@ -836,7 +836,7 @@ namespace FargowiltasSouls.NPCs
             else
             {
                 masoBool[0] = false;
-            }
+            }*/
         }
 
         public void WallOfFleshAI(NPC npc)

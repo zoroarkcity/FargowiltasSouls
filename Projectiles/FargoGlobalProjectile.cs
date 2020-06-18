@@ -66,6 +66,7 @@ namespace FargowiltasSouls.Projectiles
         public bool TimeFreezeCheck;
         public bool HasKillCooldown;
         public bool ImmuneToMutantBomb;
+        public bool ImmuneToGuttedHeart;
 
         public bool masobool;
 
@@ -77,6 +78,11 @@ namespace FargowiltasSouls.Projectiles
             {
                 switch (projectile.type)
                 {
+                    case ProjectileID.PhantasmalDeathray:
+                    case ProjectileID.SaucerDeathray:
+                        ImmuneToGuttedHeart = true;
+                        break;
+
                     case ProjectileID.ChlorophyteBullet:
                         projectile.extraUpdates = 1;
                         break;

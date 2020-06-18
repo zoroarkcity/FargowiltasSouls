@@ -105,7 +105,7 @@ namespace FargowiltasSouls.NPCs
 
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            damage *= 10;
+            damage *= 8;
         }
 
         public override bool? CanBeHitByProjectile(Projectile projectile)
@@ -123,7 +123,9 @@ namespace FargowiltasSouls.NPCs
 
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
         {
-            projectile.timeLeft = 0;
+            if (!projectile.GetGlobalProjectile<Projectiles.FargoGlobalProjectile>().ImmuneToGuttedHeart
+                && !projectile.GetGlobalProjectile<Projectiles.FargoGlobalProjectile>().ImmuneToMutantBomb)
+                projectile.timeLeft = 0;
         }
 
         public override void HitEffect(int hitDirection, double damage)

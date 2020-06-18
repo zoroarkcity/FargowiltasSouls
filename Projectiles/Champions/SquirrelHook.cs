@@ -26,6 +26,8 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.penetrate = -1;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
         }
 
         public override void AI()
