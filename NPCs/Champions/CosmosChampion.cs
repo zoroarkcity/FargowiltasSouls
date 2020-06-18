@@ -457,6 +457,19 @@ namespace FargowiltasSouls.NPCs.Champions
                     targetPos.X += 600 * (npc.Center.X < targetPos.X ? -1 : 1);
                     Movement(targetPos, 0.8f, 32f);
 
+                    if (--npc.ai[2] < 0)
+                    {
+                        npc.ai[2] = Main.rand.Next(5);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Vector2 spawnPos = npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height));
+                            int type = Main.rand.Next(3) == 0 ?
+                                ModContent.ProjectileType<Projectiles.MutantBoss.MutantBomb>()
+                                : ModContent.ProjectileType<Projectiles.BossWeapons.PhantasmalBlast>();
+                            Projectile.NewProjectile(spawnPos, Vector2.Zero, type, 0, 0f, Main.myPlayer);
+                        }
+                    }
+
                     if (++npc.ai[1] > 150)
                     {
                         const int num226 = 80;
@@ -479,7 +492,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     break;
 
-                case -1:
+                case -1: //phase 2 transition
                     npc.rotation = 0;
                     npc.dontTakeDamage = true;
 
@@ -1297,7 +1310,14 @@ namespace FargowiltasSouls.NPCs.Champions
 
             //Item.NewItem(npc.position, npc.Size, ModLoader.GetMod("Fargowiltas").ItemType("CrucibleCosmos"));
 
-            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.MutantBoss.MutantBomb>(), 0, 0f, Main.myPlayer);
+            for (int i = 0; i < 10; i++)
+            {
+                Vector2 spawnPos = npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height));
+                int type = Main.rand.Next(3) == 0 ?
+                    ModContent.ProjectileType<Projectiles.MutantBoss.MutantBomb>()
+                    : ModContent.ProjectileType<Projectiles.BossWeapons.PhantasmalBlast>();
+                Projectile.NewProjectile(spawnPos, Vector2.Zero, type, 0, 0f, Main.myPlayer);
+            }
         }
 
         public override Color? GetAlpha(Color drawColor)

@@ -42,6 +42,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 projectile.rotation = Main.rand.NextFloat(0, 2 * (float)Math.PI);
                 projectile.hide = false;
 
+                Main.PlaySound(SoundID.Item21, projectile.Center);
+
                 for (int i = 0; i < 50; i++)
                 {
                     Vector2 pos = new Vector2(projectile.Center.X + Main.rand.Next(-20, 20), projectile.Center.Y + Main.rand.Next(-20, 20));

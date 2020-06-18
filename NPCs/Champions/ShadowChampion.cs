@@ -292,8 +292,6 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         npc.ai[2] = 0;
 
-                        Main.PlaySound(SoundID.Item21, npc.Center);
-
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = -1; i <= 1; i++) //on both sides

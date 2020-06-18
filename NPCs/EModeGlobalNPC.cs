@@ -3032,6 +3032,8 @@ namespace FargowiltasSouls.NPCs
 
                                 if (++Counter2 > 1) //spray bone rain above player
                                 {
+                                    Main.PlaySound(SoundID.Item1, npc.Center);
+
                                     Counter2 = 0;
 
                                     Vector2 spawnPos = Main.player[npc.target].Center;
@@ -3176,6 +3178,8 @@ namespace FargowiltasSouls.NPCs
 
                                 if (++Counter2 > 2)
                                 {
+                                    Main.PlaySound(SoundID.Item1, npc.Center);
+
                                     Counter2 = 0;
                                     Vector2 speed = new Vector2(Main.rand.Next(-100, 101), Main.rand.Next(-100, 101));
                                     speed.Normalize();
