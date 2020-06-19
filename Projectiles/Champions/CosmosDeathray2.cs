@@ -46,7 +46,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             }
             if (projectile.localAI[0] == 0f)
             {
-                Main.PlaySound(SoundID.Zombie, projectile.Center, 104);
+                Main.PlaySound(SoundID.Zombie, projectile.Center + 3000 * projectile.velocity, 104);
             }
             float num801 = 3f;
             projectile.localAI[0] += 1f;
@@ -78,7 +78,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             float[] array3 = new float[(int)num805];
             //Collision.LaserScan(samplingPoint, projectile.velocity, num806 * projectile.scale, 3000f, array3);
             for (int i = 0; i < array3.Length; i++)
-                array3[i] = 3000f;
+                array3[i] = 6000f;
             float num807 = 0f;
             int num3;
             for (int num808 = 0; num808 < array3.Length; num808 = num3 + 1)
@@ -113,9 +113,9 @@ namespace FargowiltasSouls.Projectiles.Champions
 
             projectile.position -= projectile.velocity;
 
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < 80; i++)
             {
-                int d = Dust.NewDust(projectile.position + projectile.velocity * Main.rand.NextFloat(3000), projectile.width, projectile.height, 229, 0f, 0f, 0, default(Color), 1.5f);
+                int d = Dust.NewDust(projectile.position + projectile.velocity * Main.rand.NextFloat(6000), projectile.width, projectile.height, 229, 0f, 0f, 0, default(Color), 1.5f);
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity *= 6f;
             }

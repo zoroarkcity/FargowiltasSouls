@@ -581,8 +581,10 @@ namespace FargowiltasSouls.NPCs.Champions
                                         offset.X *= -1f;
                                     offset = offset.RotatedBy(npc.DirectionTo(player.Center).ToRotation());
 
-                                    Projectile.NewProjectile(npc.Center + offset, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(npc.Center + offset, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    int modifier = Math.Sign(npc.Center.Y - player.Center.Y);
+                                    Projectile.NewProjectile(npc.Center + offset + 3000 * npc.DirectionFrom(player.Center) * modifier, 
+                                        npc.DirectionTo(player.Center) * modifier, 
+                                        ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
                             else
@@ -728,8 +730,9 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                int modifier = Math.Sign(npc.Center.Y - player.Center.Y);
+                                Projectile.NewProjectile(npc.Center + 3000 * npc.DirectionFrom(player.Center) * modifier, npc.DirectionTo(player.Center) * modifier,
+                                    ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -840,8 +843,9 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                int modifier = Math.Sign(npc.Center.Y - player.Center.Y);
+                                Projectile.NewProjectile(npc.Center + 3000 * npc.DirectionFrom(player.Center) * modifier, npc.DirectionTo(player.Center) * modifier,
+                                    ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -956,8 +960,9 @@ namespace FargowiltasSouls.NPCs.Champions
                                             offset.X *= -1f;
                                         offset = offset.RotatedBy(npc.DirectionTo(player.Center).ToRotation());
 
-                                        Projectile.NewProjectile(npc.Center + offset, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
-                                        Projectile.NewProjectile(npc.Center + offset, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
+                                        int modifier = Math.Sign(npc.Center.Y - player.Center.Y);
+                                        Projectile.NewProjectile(npc.Center + offset + 3000 * npc.DirectionFrom(player.Center) * modifier, npc.DirectionTo(player.Center) * modifier,
+                                            ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
                                     }
                                 }
                                 else
@@ -1003,8 +1008,9 @@ namespace FargowiltasSouls.NPCs.Champions
 
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(npc.Center, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    int modifier = Math.Sign(npc.Center.Y - player.Center.Y);
+                                    Projectile.NewProjectile(npc.Center + 3000 * npc.DirectionFrom(player.Center) * modifier, npc.DirectionTo(player.Center) * modifier,
+                                        ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
                         }
