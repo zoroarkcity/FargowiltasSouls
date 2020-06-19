@@ -68,12 +68,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 projectile.Kill();
                 return;
             }
-            projectile.scale = num801;
-            /*projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 2.5f * num801;
+            //projectile.scale = num801;
+            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 2.5f * num801;
             if (projectile.scale > num801)
             {
                 projectile.scale = num801;
-            }*/
+            }
             //float num804 = projectile.velocity.ToRotation();
             //num804 += projectile.ai[0];
             //projectile.rotation = num804 - 1.57079637f;
@@ -103,7 +103,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             num807 /= num805;
             float amount = 0.5f;
             projectile.localAI[1] = MathHelper.Lerp(projectile.localAI[1], num807, amount);
-            Vector2 vector79 = projectile.Center + projectile.velocity * (projectile.localAI[1] - 14f);
+            /*Vector2 vector79 = projectile.Center + projectile.velocity * (projectile.localAI[1] - 14f);
             for (int num809 = 0; num809 < 2; num809 = num3 + 1)
             {
                 float num810 = projectile.velocity.ToRotation() + ((Main.rand.Next(2) == 1) ? -1f : 1f) * 1.57079637f;
@@ -121,12 +121,21 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Dust dust = Main.dust[num813];
                 dust.velocity *= 0.5f;
                 Main.dust[num813].velocity.Y = -Math.Abs(Main.dust[num813].velocity.Y);
-            }
+            }*/
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
             //Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
 
             projectile.position -= projectile.velocity;
             projectile.rotation = projectile.velocity.ToRotation() - 1.57079637f;
+
+            const int increment = 100;
+            for (int i = 0; i < array3[0]; i += increment)
+            {
+                int d = Dust.NewDust(projectile.position + projectile.velocity * (i + Main.rand.NextFloat(-increment, increment)),
+                    projectile.width, projectile.height, 229, 0f, 0f, 0, default(Color), 1.5f);
+                Main.dust[d].noGravity = true;
+                Main.dust[d].velocity *= 4.5f;
+            }
         }
         
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

@@ -71,12 +71,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                         Main.projectile[p].thrown = true;
                     }
                     
-                    Vector2 vel = baseVel.RotatedByRandom(Math.PI / 4);
+                    /*Vector2 vel = baseVel.RotatedByRandom(Math.PI / 4);
                     Projectile.NewProjectile(projectile.Center, 8f * vel, ModContent.ProjectileType<HentaiSpearArc>(), 
                         projectile.damage, projectile.knockBack / 2, projectile.owner, vel.ToRotation(), projectile.timeLeft / projectile.MaxUpdates);
                     vel = -baseVel.RotatedByRandom(Math.PI / 4);
                     Projectile.NewProjectile(projectile.Center, 8f * vel, ModContent.ProjectileType<HentaiSpearArc>(),
-                        projectile.damage, projectile.knockBack / 2, projectile.owner, vel.ToRotation(), projectile.timeLeft / projectile.MaxUpdates);
+                        projectile.damage, projectile.knockBack / 2, projectile.owner, vel.ToRotation(), projectile.timeLeft / projectile.MaxUpdates);*/
                 }
             }
 
