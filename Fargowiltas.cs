@@ -1001,7 +1001,7 @@ namespace FargowiltasSouls
 
 			        bossChecklist.Call(
                         "AddBoss",
-                        9999.99f,
+                        20.0f,
                         ModContent.NPCType<NPCs.MutantBoss.MutantBoss>(),
 			            this,
 			            "Mutant",
