@@ -463,9 +463,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 spawnPos = npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height));
-                            int type = Main.rand.Next(3) == 0 ?
-                                ModContent.ProjectileType<Projectiles.MutantBoss.MutantBomb>()
-                                : ModContent.ProjectileType<Projectiles.BossWeapons.PhantasmalBlast>();
+                            int type = ModContent.ProjectileType<Projectiles.BossWeapons.PhantasmalBlast>();
                             Projectile.NewProjectile(spawnPos, Vector2.Zero, type, 0, 0f, Main.myPlayer);
                         }
                     }
@@ -1313,9 +1311,7 @@ namespace FargowiltasSouls.NPCs.Champions
             for (int i = 0; i < 10; i++)
             {
                 Vector2 spawnPos = npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height));
-                int type = Main.rand.Next(3) == 0 ?
-                    ModContent.ProjectileType<Projectiles.MutantBoss.MutantBomb>()
-                    : ModContent.ProjectileType<Projectiles.BossWeapons.PhantasmalBlast>();
+                int type = ModContent.ProjectileType<Projectiles.BossWeapons.PhantasmalBlast>();
                 Projectile.NewProjectile(spawnPos, Vector2.Zero, type, 0, 0f, Main.myPlayer);
             }
         }

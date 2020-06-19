@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Penetrator");
-            Tooltip.SetDefault("Right click to throw\n'The reward for slaughtering many...'");
+            Tooltip.SetDefault("Right click to sunder reality\n'The reward for slaughtering many...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "洞察者");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励...'");
         }
@@ -94,7 +94,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             if (player.altFunctionUse == 2) //right click
             {
-                damage /= 4;
+                //damage /= 4;
                 return true;
             }
 

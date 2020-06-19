@@ -48,13 +48,17 @@ namespace FargowiltasSouls.Projectiles
                 projectile.localAI[0] = 0;
 
                 int foundTarget = HomeOnTarget();
-                if (foundTarget != -1)
+                if (foundTarget == -1)
+                {
+                    projectile.Kill();
+                }
+                else
                 {
                     NPC n = Main.npc[foundTarget];
                     projectile.velocity = projectile.DirectionTo(n.Center) * 32f;
                 }
             }
-
+            
             if (projectile.alpha > 0)
             {
                 projectile.alpha -= 20;
@@ -89,12 +93,13 @@ namespace FargowiltasSouls.Projectiles
         {
             target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 600);
             target.immune[projectile.owner] = 1;
+            projectile.timeLeft = 0;
         }
 
         private int HomeOnTarget()
         {
             const bool homingCanAimAtWetEnemies = true;
-            const float homingMaximumRangeInPixels = 1000;
+            const float homingMaximumRangeInPixels = 1500;
 
             int selectedTarget = -1;
             for (int i = 0; i < Main.maxNPCs; i++)

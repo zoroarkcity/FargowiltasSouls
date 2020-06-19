@@ -58,7 +58,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
             if (projectile.localAI[0] == 0f)
             {
-                Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 6, 1f, 0.0f);
+                Main.PlaySound(SoundID.Item12, projectile.Center);
+                //Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 6, 1f, 0.0f);
             }
             float num801 = .5f;
             projectile.localAI[0] += 1f;
@@ -67,11 +68,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 projectile.Kill();
                 return;
             }
-            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 2.5f * num801;
+            projectile.scale = num801;
+            /*projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 2.5f * num801;
             if (projectile.scale > num801)
             {
                 projectile.scale = num801;
-            }
+            }*/
             //float num804 = projectile.velocity.ToRotation();
             //num804 += projectile.ai[0];
             //projectile.rotation = num804 - 1.57079637f;
@@ -90,7 +92,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             float[] array3 = new float[(int)num805];
             //Collision.LaserScan(samplingPoint, projectile.velocity, num806 * projectile.scale, 3000f, array3);
             for (int i = 0; i < array3.Length; i++)
-                array3[i] = 3000;
+                array3[i] = projectile.localAI[0] * projectile.ai[1];
             float num807 = 0f;
             int num3;
             for (int num808 = 0; num808 < array3.Length; num808 = num3 + 1)

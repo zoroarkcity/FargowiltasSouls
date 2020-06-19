@@ -30,7 +30,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.penetrate = -1;
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 0;
-            projectile.scale = 2f;
+            projectile.scale = 1f;
             projectile.alpha = 0;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
         }
@@ -63,6 +63,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 projectile.localAI[0] = 1f;
                 Main.PlaySound(SoundID.Item88, projectile.Center);
+                projectile.scale = Main.rand.NextFloat(1f, 3f);
             }
         }
 

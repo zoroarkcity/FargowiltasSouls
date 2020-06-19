@@ -136,7 +136,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             target.AddBuff(BuffID.ShadowFlame, 300);
             target.AddBuff(ModContent.BuffType<Buffs.Masomode.MutantNibble>(), 300);
-            target.immune[projectile.owner] = 6;
+            target.immune[projectile.owner] = 3;
         }
     }
 }
