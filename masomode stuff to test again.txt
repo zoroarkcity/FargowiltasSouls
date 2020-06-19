@@ -132,3 +132,4 @@ skeletron p2 at 75%, shoots massive spreads of baby guardians and accelerating h
 all deathrays and certain other major attacks are immune to gutted heart
 fixed iron ench allowing you to quick cancel right click weapons
 penetrator right click buffed drastically
+more stuff to fix twins dying after you die

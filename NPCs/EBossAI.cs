@@ -1169,7 +1169,7 @@ namespace FargowiltasSouls.NPCs
 
             npc.dontTakeDamage = npc.life == 1;
             //become vulnerable again when both twins at 1hp
-            if (npc.dontTakeDamage && npc.HasPlayerTarget && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
+            if (npc.dontTakeDamage && npc.HasValidTarget && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
                 npc.dontTakeDamage = false;
 
             if (npc.ai[0] < 4f) //going to phase 3
@@ -1228,10 +1228,6 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
                 SharkCount = 253;
-
-                //become vulnerable again when both twins at 1hp
-                if (npc.dontTakeDamage && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
-                    npc.dontTakeDamage = false;
 
                 //2*pi * (# of full circles) / (seconds to finish rotation) / (ticks per sec)
                 const float rotationInterval = 2f * (float)Math.PI * 1f / 4f / 60f;
@@ -1448,7 +1444,7 @@ namespace FargowiltasSouls.NPCs
 
             npc.dontTakeDamage = npc.life == 1;
             //become vulnerable again when both twins at 1hp
-            if (npc.dontTakeDamage && npc.HasPlayerTarget && (!BossIsAlive(ref retiBoss, NPCID.Retinazer) || Main.npc[retiBoss].life == 1))
+            if (npc.dontTakeDamage && npc.HasValidTarget && (!BossIsAlive(ref retiBoss, NPCID.Retinazer) || Main.npc[retiBoss].life == 1))
                 npc.dontTakeDamage = false;
 
             if (npc.ai[0] < 4f)
