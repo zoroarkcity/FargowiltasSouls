@@ -130,3 +130,4 @@ emode ai is disabled during swarms
 skeletron p2 at 75%, shoots massive spreads of baby guardians and accelerating homing bursts
 
 all deathrays and certain other major attacks are immune to gutted heart
+fixed iron ench allowing you to quick cancel right click weapons
