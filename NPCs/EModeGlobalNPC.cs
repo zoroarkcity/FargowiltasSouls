@@ -7917,8 +7917,10 @@ namespace FargowiltasSouls.NPCs
 
         private bool StealFromInventory(Player target, ref Item item)
         {
-            if (!item.IsAir)
+            if (target.GetModPlayer<FargoPlayer>().StealingCooldown <= 0 && !item.IsAir)
             {
+                target.GetModPlayer<FargoPlayer>().StealingCooldown = 300;
+
                 int i = Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, item.type, 1, false, 0, false, false);
                 Main.item[i].netDefaults(item.netID);
                 Main.item[i].Prefix(item.prefix);

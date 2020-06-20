@@ -363,6 +363,7 @@ namespace FargowiltasSouls
         public bool Mash;
         public bool[] MashPressed = new bool[4];
         public int MashCounter;
+        public int StealingCooldown;
 
         public int MasomodeCrystalTimer = 0;
         public int MasomodeFreezeTimer = 0;
@@ -1325,6 +1326,9 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (StealingCooldown > 0)
+                StealingCooldown--;
+
             if (FargoSoulsWorld.MasochistMode && !NPC.downedGolemBoss)
             {
                 if (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe)
