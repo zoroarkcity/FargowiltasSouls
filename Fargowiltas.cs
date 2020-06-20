@@ -560,7 +560,12 @@ namespace FargowiltasSouls
                         return FargoSoulsWorld.downedMutant;
 
                     case "DownedAbom":
+                    case "DownedAbominationn":
                         return FargoSoulsWorld.downedAbom;
+
+                    case "DownedDevi":
+                    case "DownedDeviantt":
+                        return FargoSoulsWorld.downedDevi;
 
                     case "DownedFishronEX":
                         return FargoSoulsWorld.downedFishronEX;
