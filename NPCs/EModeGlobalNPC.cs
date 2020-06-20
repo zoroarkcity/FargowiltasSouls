@@ -898,7 +898,7 @@ namespace FargowiltasSouls.NPCs
 
                         case NPCID.Bee:
                         case NPCID.BeeSmall:
-                            if (Main.rand.Next(3) == 0)
+                            if (Main.rand.Next(5) == 0)
                                 switch ((Main.hardMode && !BossIsAlive(ref beeBoss, NPCID.QueenBee)) ? Main.rand.Next(16, 21) : Main.rand.Next(16))
                                 {
                                     case 0: npc.Transform(NPCID.Hornet); break;
@@ -931,7 +931,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.HornetLeafy:
                         case NPCID.HornetSpikey:
                         case NPCID.HornetStingy:
-                            if (Main.hardMode && !BossIsAlive(ref beeBoss, NPCID.QueenBee))
+                            /*if (Main.hardMode && !BossIsAlive(ref beeBoss, NPCID.QueenBee))
                                 switch (Main.rand.Next(5))
                                 {
                                     case 0: npc.Transform(NPCID.MossHornet); break;
@@ -939,7 +939,7 @@ namespace FargowiltasSouls.NPCs
                                     case 2: npc.Transform(NPCID.GiantMossHornet); break;
                                     case 3: npc.Transform(NPCID.LittleMossHornet); break;
                                     case 4: npc.Transform(NPCID.TinyMossHornet); break;
-                                }
+                                }*/
                             break;
 
                         case NPCID.MeteorHead:
