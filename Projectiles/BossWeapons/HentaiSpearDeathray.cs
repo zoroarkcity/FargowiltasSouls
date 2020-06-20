@@ -131,7 +131,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             const int increment = 100;
             for (int i = 0; i < array3[0]; i += increment)
             {
-                int d = Dust.NewDust(projectile.position + projectile.velocity * (i + Main.rand.NextFloat(-increment, increment)),
+                float offset = i + Main.rand.NextFloat(-increment, increment);
+                if (offset < 0)
+                    offset = 0;
+                if (offset > array3[0])
+                    offset = array3[0];
+                int d = Dust.NewDust(projectile.position + projectile.velocity * offset,
                     projectile.width, projectile.height, 229, 0f, 0f, 0, default(Color), 1.5f);
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity *= 4.5f;
