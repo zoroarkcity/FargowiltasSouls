@@ -1340,21 +1340,23 @@ namespace FargowiltasSouls.NPCs.Champions
 
             SpriteEffects effects = npc.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
+            Texture2D texture2D14 = mod.GetTexture("NPCs/Champions/CosmosChampion_Glow");
+
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
             {
                 Color color27 = color26 * 0.5f;
                 color27 *= (float)(NPCID.Sets.TrailCacheLength[npc.type] - i) / NPCID.Sets.TrailCacheLength[npc.type];
                 Vector2 value4 = npc.oldPos[i];
                 float num165 = npc.rotation; //npc.oldRot[i];
-                Main.spriteBatch.Draw(texture2D13, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
+                Main.spriteBatch.Draw(npc.localAI[2] != 0 ? texture2D14 : texture2D13, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
             }
 
-            if (npc.localAI[2] != 0) //draw glow around it
+            /*if (npc.localAI[2] != 0) //draw glow around it
             {
                 Texture2D texture2D14 = mod.GetTexture("NPCs/Champions/CosmosChampion_Glow");
                 float scale = (Main.mouseTextColor / 200f - 0.35f) * 0.4f + 0.8f;
                 Main.spriteBatch.Draw(texture2D14, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White * npc.Opacity, npc.rotation, origin2, scale, effects, 0f);
-            }
+            }*/
 
             Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
             return false;
