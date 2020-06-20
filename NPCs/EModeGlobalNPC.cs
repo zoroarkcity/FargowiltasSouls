@@ -4467,8 +4467,12 @@ namespace FargowiltasSouls.NPCs
                         if (target.whoAmI == Main.myPlayer && !target.GetModPlayer<FargoPlayer>().SecurityWallet && Main.rand.Next(2) == 0)
                         {
                             //try stealing mouse item, then selected item
-                            if (!StealFromInventory(target, ref Main.mouseItem))
-                                StealFromInventory(target, ref target.inventory[target.selectedItem]);
+                            bool stolen = StealFromInventory(target, ref Main.mouseItem);
+                            if (!stolen)
+                                stolen = StealFromInventory(target, ref target.inventory[target.selectedItem]);
+                            
+                            if (stolen)
+                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
 
                             /*byte extraTries = 30;
                             for (int i = 0; i < 3; i++)
@@ -4484,7 +4488,7 @@ namespace FargowiltasSouls.NPCs
                         }
                         target.AddBuff(ModContent.BuffType<Midas>(), 600);
                         if (Main.hardMode)
-                            target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
+                            target.AddBuff(BuffID.ShadowFlame, 300);
                         break;
 
                     case NPCID.PirateCaptain:
@@ -4493,14 +4497,24 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.PirateDeadeye:
                     case NPCID.PirateShipCannon:
                     case NPCID.PirateDeckhand:
+                        if (target.whoAmI == Main.myPlayer && !target.GetModPlayer<FargoPlayer>().SecurityWallet && Main.rand.Next(2) == 0)
+                        {
+                            //try stealing mouse item, then selected item
+                            bool stolen = StealFromInventory(target, ref Main.mouseItem);
+                            if (!stolen)
+                                stolen = StealFromInventory(target, ref target.inventory[target.selectedItem]);
+                            if (stolen)
+                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
+                        }
+
                         target.AddBuff(ModContent.BuffType<Midas>(), 600);
-                        target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
+                        //target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
                         break;
 
                     case NPCID.Parrot:
                         target.AddBuff(ModContent.BuffType<Buffs.Masomode.SqueakyToy>(), 120);
                         target.AddBuff(ModContent.BuffType<Midas>(), 600);
-                        target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
+                        //target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
                         break;
 
                     case NPCID.GoblinPeon:
@@ -4510,7 +4524,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.GoblinSummoner:
                     case NPCID.GoblinScout:
                         if (Main.hardMode)
-                            target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
+                            target.AddBuff(BuffID.ShadowFlame, 300);
                         break;
 
                     case NPCID.ScutlixRider:
@@ -4524,12 +4538,12 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.MartianWalker:
                     case NPCID.MartianTurret:
                         target.AddBuff(BuffID.Electrified, 300);
-                        target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
+                        //target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
                         break;
 
                     case NPCID.Scutlix:
                         target.AddBuff(ModContent.BuffType<Buffs.Masomode.SqueakyToy>(), 180);
-                        target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
+                        //target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
                         break;
 
                     case NPCID.Zombie:
@@ -4676,17 +4690,24 @@ namespace FargowiltasSouls.NPCs
                         if (target.whoAmI == Main.myPlayer && !target.GetModPlayer<FargoPlayer>().SecurityWallet)
                         {
                             //try stealing mouse item, then selected item
-                            if (!StealFromInventory(target, ref Main.mouseItem))
-                                StealFromInventory(target, ref target.inventory[target.selectedItem]);
-
+                            bool stolen = StealFromInventory(target, ref Main.mouseItem);
+                            if (!stolen)
+                                stolen = StealFromInventory(target, ref target.inventory[target.selectedItem]);
+                            
                             for (int i = 0; i < 15; i++)
                             {
                                 int toss = Main.rand.Next(3, 8 + target.extraAccessorySlots); //pick random accessory slot
                                 if (Main.rand.Next(3) == 0 && target.armor[toss + 10].stack > 0) //chance to pick vanity slot if accessory is there
                                     toss += 10;
                                 if (StealFromInventory(target, ref target.armor[toss]))
+                                {
+                                    stolen = true;
                                     break;
+                                }
                             }
+
+                            if (stolen)
+                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
                         }
                         break;
 
@@ -4694,15 +4715,20 @@ namespace FargowiltasSouls.NPCs
                         target.AddBuff(ModContent.BuffType<ClippedWings>(), 300);
                         if (target.whoAmI == Main.myPlayer && !target.GetModPlayer<FargoPlayer>().SecurityWallet)
                         {
+                            bool stolen = false;
                             for (int j = 0; j < target.inventory.Length; j++)
                             {
                                 Item item = target.inventory[j];
                                 if (item.healLife > 0)
                                 {
-                                    StealFromInventory(target, ref target.inventory[j]);
+                                    if (StealFromInventory(target, ref target.inventory[j]))
+                                        stolen = true;
                                     break;
                                 }
                             }
+
+                            if (stolen)
+                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
                         }
                         break;
 
@@ -4710,15 +4736,19 @@ namespace FargowiltasSouls.NPCs
                         target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
                         if (target.whoAmI == Main.myPlayer && !target.GetModPlayer<FargoPlayer>().SecurityWallet)
                         {
+                            bool stolen = false;
                             for (int j = 0; j < target.inventory.Length; j++)
                             {
                                 Item item = target.inventory[j];
 
                                 if (item.type == ItemID.SoulofFlight || item.type == ItemID.SoulofFright || item.type == ItemID.SoulofLight || item.type == ItemID.SoulofMight || item.type == ItemID.SoulofNight || item.type == ItemID.SoulofSight)
                                 {
-                                    StealFromInventory(target, ref target.inventory[j]);
+                                    if (StealFromInventory(target, ref target.inventory[j]))
+                                        stolen = true;
                                 }
                             }
+                            if (stolen)
+                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
                         }
                         break;
 
@@ -4731,9 +4761,19 @@ namespace FargowiltasSouls.NPCs
                         target.AddBuff(BuffID.Blackout, 300);
                         target.AddBuff(BuffID.NoBuilding, 300);
                         if (target.whoAmI == Main.myPlayer && !target.GetModPlayer<FargoPlayer>().SecurityWallet)
+                        {
+                            bool stolen = false;
                             for (int i = 0; i < 59; i++)
+                            {
                                 if (target.inventory[i].pick != 0 || target.inventory[i].hammer != 0 || target.inventory[i].axe != 0)
-                                    StealFromInventory(target, ref target.inventory[i]);
+                                {
+                                    if (StealFromInventory(target, ref target.inventory[i]))
+                                        stolen = true;
+                                }
+                            }
+                            if (stolen)
+                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
+                        }
                         break;
 
                     case NPCID.Golem:

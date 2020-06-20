@@ -133,3 +133,7 @@ all deathrays and certain other major attacks are immune to gutted heart
 fixed iron ench allowing you to quick cancel right click weapons
 penetrator right click buffed drastically
 more stuff to fix twins dying after you die
+
+removed living wasteland from most events
+pirates can steal your items on contact now
+having items stolen causes text in chat
