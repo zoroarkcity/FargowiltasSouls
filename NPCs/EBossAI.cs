@@ -1167,7 +1167,9 @@ namespace FargowiltasSouls.NPCs
                 npc.netUpdate = true;
             }
 
-            npc.dontTakeDamage = npc.life == 1;
+            npc.dontTakeDamage = npc.life == 1 || !npc.HasValidTarget;
+            if (npc.life > 1 && npc.HasValidTarget)
+                npc.dontTakeDamage = false;
             //become vulnerable again when both twins at 1hp
             if (npc.dontTakeDamage && npc.HasValidTarget && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
                 npc.dontTakeDamage = false;
@@ -1442,7 +1444,9 @@ namespace FargowiltasSouls.NPCs
                 npc.netUpdate = true;
             }
 
-            npc.dontTakeDamage = npc.life == 1;
+            npc.dontTakeDamage = npc.life == 1 || !npc.HasValidTarget;
+            if (npc.life > 1 && npc.HasValidTarget)
+                npc.dontTakeDamage = false;
             //become vulnerable again when both twins at 1hp
             if (npc.dontTakeDamage && npc.HasValidTarget && (!BossIsAlive(ref retiBoss, NPCID.Retinazer) || Main.npc[retiBoss].life == 1))
                 npc.dontTakeDamage = false;
