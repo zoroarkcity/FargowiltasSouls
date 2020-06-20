@@ -3414,7 +3414,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.MossHornet:
                             if (npc.HasPlayerTarget)
                             {
-                                bool shouldNotTileCollide = Main.player[npc.target].active && !Main.player[npc.target].dead
+                                bool shouldNotTileCollide = npc.HasValidTarget
                                     && Main.player[npc.target].GetModPlayer<FargoPlayer>().Swarming
                                     && !Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0);
                                 if (shouldNotTileCollide)
@@ -3422,6 +3422,11 @@ namespace FargowiltasSouls.NPCs
                                 else if (npc.noTileCollide && !Collision.SolidCollision(npc.position, npc.width, npc.height)) //still intangible, but should stop, and isnt on tiles
                                     npc.noTileCollide = false;
 
+                                if (npc.noTileCollide || (npc.HasValidTarget && Main.player[npc.target].GetModPlayer<FargoPlayer>().Swarming))
+                                {
+                                    int d = Dust.NewDust(npc.position, npc.width, npc.height, 44, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
+                                    Main.dust[d].noGravity = true;
+                                }
                             }
                             break;
 
@@ -4377,11 +4382,13 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.Bee:
                     case NPCID.BeeSmall:
-                    case NPCID.BigMossHornet:
-                    case NPCID.GiantMossHornet:
-                    case NPCID.LittleMossHornet:
                     case NPCID.MossHornet:
-                    case NPCID.TinyMossHornet:
+                    case NPCID.Hornet:
+                    case NPCID.HornetFatty:
+                    case NPCID.HornetHoney:
+                    case NPCID.HornetLeafy:
+                    case NPCID.HornetSpikey:
+                    case NPCID.HornetStingy:
                         target.AddBuff(ModContent.BuffType<Infested>(), 300);
                         target.AddBuff(ModContent.BuffType<Swarming>(), 600);
                         break;

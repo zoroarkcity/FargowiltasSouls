@@ -139,3 +139,4 @@ pirates can steal your items on contact now
 having items stolen causes text in chat
 lowered chance of bees becoming hornets
 pre hm hornets continue to exist in hm again
+hornets glow while swarming at you
