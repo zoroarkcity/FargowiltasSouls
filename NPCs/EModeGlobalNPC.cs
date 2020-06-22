@@ -92,7 +92,7 @@ namespace FargowiltasSouls.NPCs
                     break;
 
                 case NPCID.GoblinWarrior:
-                    npc.knockBackResist = 0;
+                    npc.knockBackResist /= 10;
                     break;
 
                 case NPCID.Plantera:
@@ -3450,6 +3450,13 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.GoblinSorcerer:
+                            if (!masoBool[0])
+                            {
+                                masoBool[0] = true;
+                                if (!Main.hardMode && NPC.CountNPCS(npc.type) > 2)
+                                    npc.Transform(NPCID.GoblinPeon);
+                            }
+
                             if (npc.HasPlayerTarget && (!Main.player[npc.target].active || Main.player[npc.target].dead))
                             {
                                 npc.TargetClosest();
@@ -3461,7 +3468,7 @@ namespace FargowiltasSouls.NPCs
                             goto case NPCID.DarkCaster;
 
                         case NPCID.GoblinThief:
-                            npc.position.X += npc.velocity.X;
+                            npc.position.X += npc.velocity.X / 2f;
                             goto case NPCID.GoblinArcher;
 
                         case NPCID.VileSpit:

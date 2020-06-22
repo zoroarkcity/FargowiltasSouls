@@ -142,3 +142,6 @@ pre hm hornets continue to exist in hm again
 hornets glow while swarming at you
 
 item stealing has a 5sec cooldown
+goblin thief speed nerfed
+goblin warriors take a small amount of knockback
+goblin sorcerors capped at 2 alive at a time until post-eye or hm
