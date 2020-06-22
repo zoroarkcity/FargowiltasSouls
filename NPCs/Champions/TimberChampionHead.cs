@@ -318,7 +318,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 case 12: //noah snowballs
                     targetPos = player.Center;
                     targetPos.Y -= 200;
-                    Movement(targetPos, 0.3f, 24f);
+                    Movement(targetPos, 0.3f, 32f);
 
                     if (npc.ai[1] > 90)
                     {
