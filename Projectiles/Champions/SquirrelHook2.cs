@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.Champions
 {
-    public class SquirrelHook : ModProjectile
+    public class SquirrelHook2 : ModProjectile
     {
         public override string Texture => "Terraria/Projectile_13";
 
@@ -21,73 +21,83 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.width = 18;
             projectile.height = 18;
             projectile.aiStyle = -1;
-            projectile.timeLeft = 240;
+            projectile.timeLeft = 420;
             projectile.hostile = true;
             projectile.penetrate = -1;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
 
-            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
+        }
+
+        public override bool CanDamage()
+        {
+            return projectile.ai[1] == 1;
         }
 
         public override void AI()
         {
             if (!(projectile.ai[0] > -1 && projectile.ai[0] < Main.maxNPCs && Main.npc[(int)projectile.ai[0]].active
-                && Main.npc[(int)projectile.ai[0]].type == ModContent.NPCType<NPCs.Champions.TimberChampion>()))
+                && Main.npc[(int)projectile.ai[0]].type == ModContent.NPCType<NPCs.Champions.TimberChampionHead>()
+                && (Main.npc[(int)projectile.ai[0]].ai[0] == 7 || Main.npc[(int)projectile.ai[0]].ai[0] == 8)))
             {
                 projectile.Kill();
                 return;
             }
 
             NPC npc = Main.npc[(int)projectile.ai[0]];
-            Player player = Main.player[npc.target];
 
-            const float speed = 24f;
-
-            if (!npc.HasValidTarget)
+            if (npc.ai[0] == 8) //deal damage
             {
-                projectile.velocity = projectile.DirectionTo(npc.Center) * speed;
-                projectile.ai[1] = 0;
-                return;
-            }
+                projectile.ai[1] = 1;
+                projectile.localAI[0] = npc.Center.X;
+                projectile.localAI[1] = npc.Center.Y;
 
-            if (projectile.ai[1] == 0)
-            {
-                projectile.velocity = projectile.DirectionTo(player.Center) * speed + player.velocity / 4f;
-                projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2;
-
-                if (projectile.Distance(player.Center) < speed) //in range
+                const int increment = 100; //dust
+                int distance = (int)projectile.Distance(npc.Center);
+                Vector2 direction = projectile.DirectionTo(npc.Center);
+                for (int i = 0; i < distance; i += increment)
                 {
-                    projectile.ai[1] = 1;
-                    projectile.netUpdate = true;
+                    float offset = i + Main.rand.NextFloat(-increment, increment);
+                    if (offset < 0)
+                        offset = 0;
+                    if (offset > distance)
+                        offset = distance;
+                    int d = Dust.NewDust(projectile.Center + direction * offset,
+                        projectile.width, projectile.height, 92, 0f, 0f, 0, default(Color), 1.5f);
+                    Main.dust[d].noGravity = true;
                 }
             }
-            else
+
+            if (projectile.Distance(npc.Center) > 1500 + npc.Distance(Main.player[npc.target].Center))
+                projectile.velocity = Vector2.Zero;
+
+            if (!projectile.tileCollide && !Collision.SolidCollision(projectile.position, projectile.width, projectile.height))
+                projectile.tileCollide = true;
+
+            projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2;
+        }
+
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            if (projectile.ai[1] == 1)
             {
-                projectile.rotation = npc.DirectionTo(player.Center).ToRotation() + (float)Math.PI / 2;
-
-                if (projectile.Distance(player.Center) > 64) //out of range somehow
-                {
-                    projectile.ai[1] = 0;
-                    projectile.netUpdate = true;
-                }
-                else
-                {
-                    float dragSpeed = projectile.Distance(npc.Center) / 50;
-                    
-                    player.position += projectile.DirectionTo(npc.Center) * dragSpeed;
-                    projectile.Center = player.Center - player.velocity;
-
-                    if (projectile.timeLeft == 1)
-                        player.velocity /= 3;
-                }
+                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(),
+                    new Vector2(projectile.localAI[0], projectile.localAI[1]), projectile.Center);
             }
+            return false;
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            projectile.velocity = Vector2.Zero;
+            return false;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             if (projectile.ai[0] > -1 && projectile.ai[0] < Main.maxNPCs && Main.npc[(int)projectile.ai[0]].active
-                && Main.npc[(int)projectile.ai[0]].type == ModContent.NPCType<NPCs.Champions.TimberChampion>())
+                && Main.npc[(int)projectile.ai[0]].type == ModContent.NPCType<NPCs.Champions.TimberChampionHead>())
             {
                 Texture2D texture = Main.chainTexture;
                 Vector2 position = projectile.Center;

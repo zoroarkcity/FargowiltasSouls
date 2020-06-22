@@ -73,7 +73,7 @@ namespace FargowiltasSouls.NPCs.Champions
             
             switch ((int)npc.ai[0])
             {
-                case 0:
+                case 0: //laser rain
                     if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f) //despawn code
                     {
                         npc.TargetClosest(false);
@@ -93,7 +93,251 @@ namespace FargowiltasSouls.NPCs.Champions
                             Movement(targetPos, 0.2f, 24f);
                     }
 
-                    if (++npc.ai[1] > 60)
+                    if (++npc.ai[1] > 30)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 1: //laser rain
+                    if (npc.ai[1] == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Projectile.NewProjectile(npc.Center, (player.Center - npc.Center) / 120,
+                            ModContent.ProjectileType<TimberSquirrel>(), npc.damage / 4, 0f, Main.myPlayer);
+                    }
+
+                    if (++npc.ai[1] < 120)
+                    {
+                        targetPos = player.Center;
+                        targetPos.Y -= 300;
+
+                        if (npc.Distance(targetPos) > 50)
+                            Movement(targetPos, 0.25f, 24f);
+
+                        /*for (int i = 0; i < 5; i++) //warning dust
+                        {
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, 16, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default, 1.5f);
+                            Main.dust[d].velocity *= 3f;
+                            Main.dust[d].noGravity = true;
+                        }*/
+                    }
+                    else if (npc.ai[1] == 120)
+                    {
+                        Main.PlaySound(SoundID.Roar, npc.Center, 0);
+                        npc.netUpdate = true;
+                    }
+                    else if (npc.ai[1] < 270) //spam lasers everywhere
+                    {
+                        npc.velocity *= 0.9f;
+                        
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            for (int i = 0; i < 3; i++)
+                            {
+                                Vector2 spawnPos = player.Center;
+                                spawnPos.X += Main.rand.NextFloat(-1000, 1000);
+                                spawnPos.Y -= Main.rand.NextFloat(600, 800);
+                                Vector2 speed = Main.rand.NextFloat(7.5f, 12.5f) * Vector2.UnitY;
+                                Projectile.NewProjectile(spawnPos, speed, ModContent.ProjectileType<TimberLaser>(), 
+                                    npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 100f);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 2:
+                    goto case 0;
+
+                case 3: //shoot acorns
+                    targetPos = player.Center;
+                    targetPos.X += npc.Center.X < player.Center.X ? -400 : 400;
+                    targetPos.Y -= 200;
+                    if (npc.Distance(targetPos) > 50)
+                        Movement(targetPos, 0.25f, 24f);
+
+                    if (++npc.ai[2] > 35) //acorn
+                    {
+                        npc.ai[2] = 0;
+                        const float gravity = 0.2f;
+                        float time = 45f;
+                        Vector2 distance = player.Center - npc.Center;// + player.velocity * 30f;
+                        distance.X = distance.X / time;
+                        distance.Y = distance.Y / time - 0.5f * gravity * time;
+                        for (int i = 0; i < 20; i++)
+                        {
+                            Projectile.NewProjectile(npc.Center, distance + Main.rand.NextVector2Square(-0.5f, 0.5f) * 3,
+                                ModContent.ProjectileType<Acorn>(), npc.damage / 4, 0f, Main.myPlayer);
+                        }
+                    }
+
+                    if (++npc.ai[1] > 200)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 4:
+                    goto case 0;
+
+                case 5: //trees that shoot acorns
+                    targetPos = player.Center + npc.DirectionFrom(player.Center) * 300;
+                    if (targetPos.Y > player.position.Y - 100)
+                        targetPos.Y = player.position.Y - 100;
+                    if (npc.Distance(targetPos) > 50)
+                        Movement(targetPos, 0.3f, 24f);
+
+                    if (--npc.ai[2] < 0)
+                    {
+                        npc.ai[2] = 65;
+                        
+                        for (int i = 0; i < 5; i++) //spawn trees
+                        {
+                            Vector2 spawnPos = player.Center;
+                            spawnPos.X += Main.rand.NextFloat(-1500, 1500) + player.velocity.X * 30;
+                            spawnPos.Y -= Main.rand.NextFloat(300);
+                            for (int j = 0; j < 100; j++) //go down until solid tile found
+                            {
+                                Tile tile = Main.tile[(int)spawnPos.X / 16, (int)spawnPos.Y / 16];
+                                if (tile == null)
+                                    tile = new Tile();
+                                if (tile.nactive() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type]))
+                                    break;
+                                spawnPos.Y += 16;
+                            }
+                            for (int j = 0; j < 50; j++) //go up until non-solid tile found
+                            {
+                                Tile tile = Main.tile[(int)spawnPos.X / 16, (int)spawnPos.Y / 16];
+                                if (tile == null)
+                                    tile = new Tile();
+                                if (!(tile.nactive() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type])))
+                                    break;
+                                spawnPos.Y -= 16;
+                            }
+                            spawnPos.Y -= 152; //offset for height of tree
+                            Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<TimberTree>(), npc.damage / 4, 0f, Main.myPlayer);
+                        }
+                    }
+
+                    if (++npc.ai[1] > 300)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 6:
+                    goto case 0;
+
+                case 7: //chains
+                    targetPos = player.Center + npc.DirectionFrom(player.Center) * 150;
+                    Movement(targetPos, 0.3f, 24f);
+
+                    if (npc.ai[1] < 240)
+                    {
+                        if (++npc.ai[2] > 8)
+                        {
+                            npc.ai[2] = 0;
+
+                            Main.PlaySound(SoundID.Item92, npc.Center);
+
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Vector2 speed = 32f * npc.DirectionTo(player.Center).RotatedByRandom(Math.PI / 2);
+                                Projectile.NewProjectile(npc.Center, speed,
+                                    ModContent.ProjectileType<SquirrelHook2>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        npc.velocity *= 0.9f;
+                    }
+
+                    if (++npc.ai[1] > 300)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 8: //electrify chains
+                    npc.velocity = Vector2.Zero;
+
+                    if (npc.ai[1] == 0)
+                    {
+                        Main.PlaySound(SoundID.Roar, npc.Center, 0);
+                    }
+
+                    if (++npc.ai[1] > 120)
+                    {
+                        npc.TargetClosest();
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case 9:
+                    goto case 0;
+
+                case 10:
+                    goto case 3;
+
+                case 11:
+                    goto case 0;
+
+                case 12: //noah snowballs
+                    targetPos = player.Center;
+                    targetPos.Y -= 200;
+                    Movement(targetPos, 0.3f, 24f);
+
+                    if (npc.ai[1] > 90)
+                    {
+                        if (++npc.ai[2] > 5)
+                        {
+                            npc.ai[2] = 0;
+
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                for (int i = -2; i <= 2; i++)
+                                {
+                                    Vector2 speed = new Vector2(5f * i, -20f);
+                                    Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<Snowball2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                }
+                            }
+                        }
+                    }
+
+                    if (++npc.ai[1] > 360)
                     {
                         npc.TargetClosest();
                         npc.ai[0]++;
