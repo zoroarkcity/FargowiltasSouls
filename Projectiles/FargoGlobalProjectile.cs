@@ -1854,9 +1854,9 @@ namespace FargowiltasSouls.Projectiles
         {
             if (FargoSoulsWorld.MasochistMode && projectile.owner == Main.myPlayer && HasKillCooldown)
             {
-                if (Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer <= 0)
+                if (Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer <= 60)
                 {
-                    Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer = 15;
+                    Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer += 12;
                     return true;
                 }
                 else
