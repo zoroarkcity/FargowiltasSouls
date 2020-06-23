@@ -73,38 +73,10 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     projectile.Kill();
             }
 
-            if (projectile.localAI[1] == 1 && projectile.owner == Main.myPlayer)
+            if (projectile.localAI[1] == 1)
             {
                 projectile.localAI[1] = 2;
-                Main.PlaySound(SoundID.Item21, projectile.Center);
-                for (int i = 0; i < 8; i++)
-                {
-                    Projectile.NewProjectile(projectile.Center, 14f * Vector2.Normalize(projectile.velocity).RotatedBy(Math.PI / 4 * (i + 0.5)),
-                        ModContent.ProjectileType<SparklingLoveHeart>(), projectile.damage, projectile.knockBack,
-                        projectile.owner, -1, 45);
-                }
-
-                for (int index1 = 0; index1 < 20; ++index1)
-                {
-                    int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 272, 0f, 0f, 100, new Color(), 2f);
-                    Main.dust[index2].noGravity = true;
-                    Main.dust[index2].velocity *= 7f * projectile.scale;
-                    Main.dust[index2].noLight = true;
-                    int index3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 272, 0f, 0f, 100, new Color(), 1f);
-                    Main.dust[index3].velocity *= 4f * projectile.scale;
-                    Main.dust[index3].noGravity = true;
-                    Main.dust[index3].noLight = true;
-                }
-
-                for (int i = 0; i < 60; i++) //warning dust ring
-                {
-                    Vector2 vector6 = Vector2.UnitY * 5f * projectile.scale;
-                    vector6 = vector6.RotatedBy((i - (60 / 2 - 1)) * 6.28318548f / 60) + projectile.Center;
-                    Vector2 vector7 = vector6 - projectile.Center;
-                    int d = Dust.NewDust(vector6 + vector7, 0, 0, 86, 0f, 0f, 0, default(Color), 2.5f);
-                    Main.dust[d].noGravity = true;
-                    Main.dust[d].velocity = vector7;
-                }
+                HeartBurst(projectile.Center);
             }
 
             projectile.rotation += projectile.direction * -0.4f;
@@ -117,10 +89,49 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
         }
 
+        private void HeartBurst(Vector2 spawnPos)
+        {
+            if (projectile.owner != Main.myPlayer)
+                return;
+
+            Main.PlaySound(SoundID.Item21, spawnPos);
+            for (int i = 0; i < 8; i++)
+            {
+                Projectile.NewProjectile(spawnPos, 14f * Vector2.Normalize(projectile.velocity).RotatedBy(Math.PI / 4 * (i + 0.5)),
+                    ModContent.ProjectileType<SparklingLoveHeart>(), projectile.damage, projectile.knockBack,
+                    projectile.owner, -1, 45);
+            }
+
+            for (int index1 = 0; index1 < 20; ++index1)
+            {
+                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 272, 0f, 0f, 100, new Color(), 2f);
+                Main.dust[index2].noGravity = true;
+                Main.dust[index2].velocity *= 7f * projectile.scale;
+                Main.dust[index2].noLight = true;
+                int index3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 272, 0f, 0f, 100, new Color(), 1f);
+                Main.dust[index3].velocity *= 4f * projectile.scale;
+                Main.dust[index3].noGravity = true;
+                Main.dust[index3].noLight = true;
+            }
+
+            for (int i = 0; i < 60; i++) //warning dust ring
+            {
+                Vector2 vector6 = Vector2.UnitY * 5f * projectile.scale;
+                vector6 = vector6.RotatedBy((i - (60 / 2 - 1)) * 6.28318548f / 60) + spawnPos;
+                Vector2 vector7 = vector6 - spawnPos;
+                int d = Dust.NewDust(vector6 + vector7, 0, 0, 86, 0f, 0f, 0, default(Color), 2.5f);
+                Main.dust[d].noGravity = true;
+                Main.dust[d].velocity = vector7;
+            }
+        }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             if (projectile.localAI[1] == 0)
-                projectile.localAI[1] = 1;
+            {
+                projectile.localAI[1] = 2;
+                HeartBurst(target.Center);
+            }
 
             target.AddBuff(BuffID.Lovestruck, 300);
             target.immune[projectile.owner] = 6;
