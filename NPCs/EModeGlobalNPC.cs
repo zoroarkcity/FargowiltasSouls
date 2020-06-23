@@ -441,7 +441,7 @@ namespace FargowiltasSouls.NPCs
                     break;
 
                 case NPCID.CultistBoss:
-                    npc.lifeMax = (int)(npc.lifeMax * 1.5);
+                    npc.lifeMax *= 2;
                     Timer = 0;
                     break;
                 case NPCID.CultistBossClone:
@@ -1140,6 +1140,18 @@ namespace FargowiltasSouls.NPCs
 
                         case NPCID.CultistBoss:
                             CultistAI(npc);
+                            break;
+
+                        case NPCID.CultistBossClone:
+                            if (!masoBool[0] && ++Counter > 15)
+                            {
+                                masoBool[0] = true;
+                                Counter = 0;
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<CultistCloneHitbox>(), 0, npc.whoAmI, npc.ai[3]);
+                                }
+                            }
                             break;
 
                         case NPCID.AncientDoom:

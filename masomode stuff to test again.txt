@@ -145,3 +145,4 @@ item stealing has a 5sec cooldown
 goblin thief speed nerfed
 goblin warriors take a small amount of knockback
 goblin sorcerors capped at 2 alive at a time until post-eye or hm
+cultist clones all share cultist boss hitbox (piercing should not really work)
