@@ -716,9 +716,12 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
 
+                if (Counter > 180)
+                    Counter = 180;
+
                 if (npc.life < npc.lifeMax * .75 && npc.ai[1] == 1f && --Counter < 0)
                 {
-                    Counter = 240;
+                    Counter = 180;
 
                     Main.PlaySound(SoundID.ForceRoar, npc.Center, -1);
 
