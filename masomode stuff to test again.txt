@@ -147,3 +147,4 @@ goblin warriors take a small amount of knockback
 goblin sorcerors capped at 2 alive at a time until post-eye or hm
 cultist clones all share cultist boss hitbox (piercing should not really work)
 changed crystal bullet/holy arrow nerf slightly
+lihzahrds no longer drop hostile spiky balls to compensate for temple buff

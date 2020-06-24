@@ -6977,8 +6977,8 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.Lihzahrd:
                     case NPCID.LihzahrdCrawler:
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                            Projectile.NewProjectile(npc.Center, Vector2.UnitY * -6, ProjectileID.SpikyBallTrap, 30, 0f, Main.myPlayer);
+                        /*if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitY * -6, ProjectileID.SpikyBallTrap, 30, 0f, Main.myPlayer);*/
                         break;
 
                     case NPCID.SkeletronHand:
