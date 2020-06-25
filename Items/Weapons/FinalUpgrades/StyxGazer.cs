@@ -15,7 +15,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Styx Gazer");
-            Tooltip.SetDefault("Right click to wield a magic scythe wand sword ray of destruction\n'Let's keep how you got this a secret'");
+            Tooltip.SetDefault("Cheat weapon\nRight click to wield a magic scythe wand sword ray of destruction\n'Let's keep how you got this a secret'");
         }
 
         public override void SetDefaults()
