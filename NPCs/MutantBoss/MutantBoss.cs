@@ -901,7 +901,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 Main.projectile[i].Kill();
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            ritualProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                         Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         for (int i = 0; i < 50; i++)
@@ -1914,11 +1914,6 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             npc.localAI[3] = 2;
             if (Main.netMode != NetmodeID.MultiplayerClient && npc.ai[0] > -1)
             {
-                if (npc.ai[0] < 11 && Main.netMode != NetmodeID.MultiplayerClient && Main.expertMode)
-                {
-                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual>(), npc.damage, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                    //Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual5>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                }
                 npc.ai[0] = FargoSoulsWorld.MasochistMode ? -1 : -6;
                 npc.ai[1] = 0;
                 npc.dontTakeDamage = true;
