@@ -12,7 +12,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
     public class SparklingLoveHeart2 : SparklingLoveHeart
     {
         public override string Texture => "FargowiltasSouls/Projectiles/Masomode/FakeHeart";
-        
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            projectile.melee = false;
+            projectile.minion = true;
+        }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffID.Lovestruck, 300);
