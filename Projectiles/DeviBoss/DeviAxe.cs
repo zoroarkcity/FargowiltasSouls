@@ -27,11 +27,6 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
         }
 
-        public override bool? CanHitNPC(NPC target)
-        {
-            return false;
-        }
-
         public override void AI()
         {
             //the important part

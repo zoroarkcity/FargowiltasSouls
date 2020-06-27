@@ -38,11 +38,6 @@ namespace FargowiltasSouls.Projectiles.Champions
             return projectile.Distance(target.Center) < projectile.width;
         }
 
-        public override bool? CanHitNPC(NPC target)
-        {
-            return false;
-        }
-
         public override void AI()
         {
             const int time = 360;

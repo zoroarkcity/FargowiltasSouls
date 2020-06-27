@@ -42,7 +42,6 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             npc.lavaImmune = true;
             npc.aiStyle = -1;
             npc.netAlways = true;
-            npc.hide = true;
             npc.buffImmune[BuffID.Chilled] = true;
             npc.buffImmune[BuffID.OnFire] = true;
             npc.buffImmune[BuffID.Suffocation] = true;
@@ -148,10 +147,6 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 projectile.stepSpeed = 1f;
                                 projectile.ai[1] = npc.whoAmI;
                             }
-                            else if (Main.netMode == NetmodeID.Server)
-                            {
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.MutantBoss.MutantBoss>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
-                            }
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual5>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
@@ -192,6 +187,16 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         Main.dust[d].noLight = true;
                         Main.dust[d].velocity *= 12f;
                     }
+                    if (--npc.localAI[0] < 0)
+                    {
+                        npc.localAI[0] = Main.rand.Next(5);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Vector2 spawnPos = npc.Center + Main.rand.NextVector2Circular(240, 240);
+                            int type = ModContent.ProjectileType<Projectiles.BossWeapons.PhantasmalBlast>();
+                            Projectile.NewProjectile(spawnPos, Vector2.Zero, type, 0, 0f, Main.myPlayer);
+                        }
+                    }
                     if (++npc.alpha > 255)
                     {
                         npc.alpha = 255;
@@ -224,6 +229,16 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Projectile.NewProjectile(npc.Center, Vector2.UnitY * -1, ModContent.ProjectileType<MutantGiantDeathray>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
                         //EdgyBossText("I have not a single regret in my existence!");
                     }
+                    if (--npc.localAI[0] < 0)
+                    {
+                        npc.localAI[0] = Main.rand.Next(15);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Vector2 spawnPos = npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height));
+                            int type = ModContent.ProjectileType<Projectiles.BossWeapons.PhantasmalBlast>();
+                            Projectile.NewProjectile(spawnPos, Vector2.Zero, type, 0, 0f, Main.myPlayer);
+                        }
+                    }
                     for (int i = 0; i < 5; i++)
                     {
                         int d = Dust.NewDust(npc.position, npc.width, npc.height, 229, 0f, 0f, 0, default(Color), 1.5f);
@@ -237,6 +252,16 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (!AliveCheck(player))
                         break;
                     npc.velocity = Vector2.Zero;
+                    if (--npc.localAI[0] < 0)
+                    {
+                        npc.localAI[0] = Main.rand.Next(30);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Vector2 spawnPos = npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height));
+                            int type = ModContent.ProjectileType<Projectiles.BossWeapons.PhantasmalBlast>();
+                            Projectile.NewProjectile(spawnPos, Vector2.Zero, type, 0, 0f, Main.myPlayer);
+                        }
+                    }
                     if (++npc.ai[1] > 120)
                     {
                         npc.ai[1] = 0;
@@ -1924,6 +1949,21 @@ namespace FargowiltasSouls.NPCs.MutantBoss
         public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
         {
             spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            Texture2D texture2D13 = Main.npcTexture[npc.type];
+            Rectangle rectangle = npc.frame;
+            Vector2 origin2 = rectangle.Size() / 2f;
+
+            Color color26 = lightColor;
+            color26 = npc.GetAlpha(color26);
+
+            SpriteEffects effects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
+            return false;
         }
     }
 }

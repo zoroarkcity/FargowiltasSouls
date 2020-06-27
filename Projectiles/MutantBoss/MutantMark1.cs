@@ -27,17 +27,15 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.aiStyle = -1;
             projectile.scale = 0.5f;
             projectile.alpha = 0;
+            projectile.penetrate = -1;
             cooldownSlot = 1;
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
         public override bool CanHitPlayer(Player target)
         {
             return target.hurtCooldowns[1] == 0;
-        }
-
-        public override bool? CanHitNPC(NPC target)
-        {
-            return false;
         }
 
         public override void AI()

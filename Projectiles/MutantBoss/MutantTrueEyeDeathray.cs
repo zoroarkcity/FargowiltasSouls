@@ -17,11 +17,6 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             DisplayName.SetDefault("Phantasmal Deathray");
         }
 
-        public override bool? CanHitNPC(NPC target)
-        {
-            return false;
-        }
-
         public override bool CanHitPlayer(Player target)
         {
             return target.hurtCooldowns[1] == 0;

@@ -1013,22 +1013,25 @@ namespace FargowiltasSouls.NPCs
                 if (RegenTimer > 0)
                     RegenTimer--;
 
-                if (npc.position.Y / 16 < Main.worldSurface * 0.35f) //enemy in space
-                    npc.AddBuff(BuffID.Suffocation, 2);
-                else if (npc.position.Y / 16 > Main.maxTilesY - 200) //enemy in hell
-                    npc.AddBuff(BuffID.OnFire, 2);
-
-                if (npc.wet && !npc.noTileCollide && !isWaterEnemy && npc.HasPlayerTarget)
+                if (!npc.dontTakeDamage)
                 {
-                    npc.AddBuff(ModContent.BuffType<Lethargic>(), 2);
-                    if (Main.player[npc.target].ZoneCorrupt)
-                        npc.AddBuff(BuffID.CursedInferno, 2);
-                    if (Main.player[npc.target].ZoneCrimson)
-                        npc.AddBuff(BuffID.Ichor, 2);
-                    if (Main.player[npc.target].ZoneHoly)
-                        npc.AddBuff(BuffID.Confused, 2);
-                    if (Main.player[npc.target].ZoneJungle)
-                        npc.AddBuff(BuffID.Poisoned, 2);
+                    if (npc.position.Y / 16 < Main.worldSurface * 0.35f) //enemy in space
+                        npc.AddBuff(BuffID.Suffocation, 2);
+                    else if (npc.position.Y / 16 > Main.maxTilesY - 200) //enemy in hell
+                        npc.AddBuff(BuffID.OnFire, 2);
+
+                    if (npc.wet && !npc.noTileCollide && !isWaterEnemy && npc.HasPlayerTarget)
+                    {
+                        npc.AddBuff(ModContent.BuffType<Lethargic>(), 2);
+                        if (Main.player[npc.target].ZoneCorrupt)
+                            npc.AddBuff(BuffID.CursedInferno, 2);
+                        if (Main.player[npc.target].ZoneCrimson)
+                            npc.AddBuff(BuffID.Ichor, 2);
+                        if (Main.player[npc.target].ZoneHoly)
+                            npc.AddBuff(BuffID.Confused, 2);
+                        if (Main.player[npc.target].ZoneJungle)
+                            npc.AddBuff(BuffID.Poisoned, 2);
+                    }
                 }
 
                 if (!FargoSoulsWorld.SwarmActive)

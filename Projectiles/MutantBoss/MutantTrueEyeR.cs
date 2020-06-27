@@ -29,11 +29,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             cooldownSlot = 1;
-        }
 
-        public override bool? CanHitNPC(NPC target)
-        {
-            return false;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
         public override bool CanHitPlayer(Player target)

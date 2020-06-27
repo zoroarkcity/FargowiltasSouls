@@ -66,7 +66,7 @@ namespace FargowiltasSouls.Sky
 
                 if (--delay < 0)
                 {
-                    delay = Main.rand.Next(5 + (int)(40f * (1f - lifeIntensity)));
+                    delay = Main.rand.Next(5 + (int)(85f * (1f - lifeIntensity)));
                     for (int i = 0; i < 50; i++) //update positions
                     {
                         xPos[i] = Main.rand.Next(Main.screenWidth);
@@ -76,7 +76,7 @@ namespace FargowiltasSouls.Sky
 
                 for (int i = 0; i < 50; i++) //static on screen
                 {
-                    int width = Main.rand.Next(50, 251);
+                    int width = Main.rand.Next(3, 251);
                     spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantStatic"),
                     new Rectangle(xPos[i] - width / 2, yPos[i], width, 3),
                     Color.White * lifeIntensity * 0.75f);

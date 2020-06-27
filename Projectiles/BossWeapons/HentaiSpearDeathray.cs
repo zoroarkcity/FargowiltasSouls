@@ -28,6 +28,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.friendly = true;
             projectile.melee = true;
 
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+
             projectile.hide = true;
         }
 

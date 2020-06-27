@@ -38,18 +38,13 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 projectile.alpha = Main.npc[ai1].alpha;
                 projectile.direction = projectile.spriteDirection = Main.npc[ai1].direction;
                 projectile.timeLeft = 2;
+
+                projectile.frame = (int)(Main.npc[ai1].frame.Y / (float)(Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]));
             }
             else
             {
                 projectile.Kill();
                 return;
-            }
-
-            if (++projectile.frameCounter > 4)
-            {
-                projectile.frameCounter = 0;
-                if (++projectile.frame >= 4)
-                    projectile.frame = 0;
             }
         }
 
