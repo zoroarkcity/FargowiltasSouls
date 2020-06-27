@@ -54,6 +54,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
                 item.noMelee = false;
                 item.useAnimation = 66;
                 item.useTime = 66;
+                item.mana = 100;
             }
             else
             {
@@ -65,6 +66,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
                 item.noMelee = true;
                 item.useAnimation = 27;
                 item.useTime = 27;
+                item.mana = 0;
             }
             return true;
         }
