@@ -16,6 +16,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
     public class AbomBoss : ModNPC
     {
         public bool playerInvulTriggered;
+        public int ritualProj, ringProj, spriteProj;
 
         public override void SetStaticDefaults()
         {
@@ -86,6 +87,11 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.localAI[3] = reader.ReadSingle();
         }
 
+        private bool ProjectileExists(int id, int type)
+        {
+            return id > -1 && id < Main.maxProjectiles && Main.projectile[id].active && Main.projectile[id].type == type;
+        }
+
         public override void AI()
         {
             EModeGlobalNPC.abomBoss = npc.whoAmI;
@@ -99,7 +105,24 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 {
                     npc.localAI[3] = 1;
                     Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                }
+            }
+            else if (npc.localAI[3] == 1)
+            {
+                Aura(2000f, ModContent.BuffType<Buffs.Masomode.GodEater>(), true, 86, false, false);
+            }
+
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                if (npc.localAI[3] == 2 && !ProjectileExists(ritualProj, ModContent.ProjectileType<AbomRitual>()))
+                    ritualProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<AbomRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+
+                if (!ProjectileExists(ringProj, ModContent.ProjectileType<AbomRitual2>()))
+                    ringProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<AbomRitual2>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
+
+                if (!ProjectileExists(spriteProj, ModContent.ProjectileType<Projectiles.AbomBoss.AbomBoss>()))
+                {
+                    if (Main.netMode == NetmodeID.SinglePlayer)
                     {
                         int number = 0;
                         for (int index = 999; index >= 0; --index)
@@ -127,20 +150,15 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                                 projectile.stepSpeed = 1f;
                                 projectile.ai[1] = npc.whoAmI;
 
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<AbomRitual2>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                            }
-                            else if (Main.netMode == NetmodeID.Server)
-                            {
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<AbomRitual2>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.AbomBoss.AbomBoss>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
+                                spriteProj = number;
                             }
                         }
                     }
+                    else //server
+                    {
+                        Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.AbomBoss.AbomBoss>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
+                    }
                 }
-            }
-            else if (npc.localAI[3] == 1)
-            {
-                Aura(2000f, ModContent.BuffType<Buffs.Masomode.GodEater>(), true, 86, false, false);
             }
 
             if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
@@ -150,7 +168,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             }
 
             Player player = Main.player[npc.target];
-            npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
+            npc.direction = npc.spriteDirection = npc.Center.X < player.Center.X ? 1 : -1;
             Vector2 targetPos;
             float speedModifier;
             switch ((int)npc.ai[0])

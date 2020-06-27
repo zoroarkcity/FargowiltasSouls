@@ -152,4 +152,4 @@ lihzahrds no longer drop hostile spiky balls to compensate for temple buff
 mutant draws behind his held weapons now
 pungent eyeball and true eye minions are drawn behind their deathrays
 removed the old bandaid solution of creepers blocking strong attacks by making those attacks intangible to npcs
-fixed bug where devi, abom, mutant become invisible when they go OOB and come back (this still removes their visual effects doe)
+fixed bug where devi, abom, mutant become invisible when they go OOB and come back(?) (TEST IN MP)

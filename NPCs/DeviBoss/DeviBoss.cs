@@ -21,6 +21,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
         public int[] attackQueue = new int[4];
         public int lastStrongAttack;
 
+        public int ringProj, spriteProj;
+
         private bool ContentModLoaded => Fargowiltas.Instance.CalamityLoaded || Fargowiltas.Instance.ThoriumLoaded
             || Fargowiltas.Instance.SoALoaded || Fargowiltas.Instance.MasomodeEXLoaded;
 
@@ -105,6 +107,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             attackQueue[3] = reader.ReadInt32();
         }
 
+        private bool ProjectileExists(int id, int type)
+        {
+            return id > -1 && id < Main.maxProjectiles && Main.projectile[id].active && Main.projectile[id].type == type;
+        }
+
         public override void AI()
         {
             EModeGlobalNPC.deviBoss = npc.whoAmI;
@@ -125,8 +132,26 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         RefreshAttackQueue();
                     } while (attackQueue[0] == 3 || attackQueue[0] == 5 || attackQueue[0] == 9 || attackQueue[0] == 10);
                     //don't start with wyvern, mage spam, frostballs, baby guardian
-                    
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                }
+            }
+            /*else if (npc.localAI[3] == 1)
+            {
+                Aura(2000f, mod.BuffType("GodEater"), true, 86);
+            }*/
+            else if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
+            {
+                if (FargoSoulsWorld.MasochistMode)
+                    Main.player[Main.myPlayer].AddBuff(mod.BuffType("DeviPresence"), 2);
+            }
+
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                if (!ProjectileExists(ringProj, ModContent.ProjectileType<DeviRitual2>()))
+                    ringProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual2>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
+
+                if (!ProjectileExists(spriteProj, ModContent.ProjectileType<Projectiles.DeviBoss.DeviBoss>()))
+                {
+                    if (Main.netMode == NetmodeID.SinglePlayer)
                     {
                         int number = 0;
                         for (int index = 999; index >= 0; --index)
@@ -154,31 +179,21 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 projectile.stepSpeed = 1f;
                                 projectile.ai[1] = npc.whoAmI;
 
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual2>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                            }
-                            else if (Main.netMode == NetmodeID.Server)
-                            {
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual2>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.DeviBoss.DeviBoss>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
+                                spriteProj = number;
                             }
                         }
                     }
+                    else //server
+                    {
+                        Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.DeviBoss.DeviBoss>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
+                    }
                 }
-            }
-            /*else if (npc.localAI[3] == 1)
-            {
-                Aura(2000f, mod.BuffType("GodEater"), true, 86);
-            }*/
-            else if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
-            {
-                if (FargoSoulsWorld.MasochistMode)
-                    Main.player[Main.myPlayer].AddBuff(mod.BuffType("DeviPresence"), 2);
             }
 
             int projectileDamage = npc.damage / (npc.localAI[3] > 1 ? 4 : 5);
 
             Player player = Main.player[npc.target];
-            npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
+            npc.direction = npc.spriteDirection = npc.Center.X < player.Center.X ? 1 : -1;
             Vector2 targetPos;
             switch ((int)npc.ai[0])
             {

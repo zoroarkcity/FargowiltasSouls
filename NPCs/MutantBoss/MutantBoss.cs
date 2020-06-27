@@ -18,6 +18,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
     [AutoloadBossHead]
     public class MutantBoss : ModNPC
     {
+        public int ritualProj, spriteProj, ringProj;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mutant");
@@ -99,6 +101,11 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             npc.localAI[2] = reader.ReadSingle();
         }
 
+        private bool ProjectileExists(int id, int type)
+        {
+            return id > -1 && id < Main.maxProjectiles && Main.projectile[id].active && Main.projectile[id].type == type;
+        }
+
         public override void AI()
         {
             EModeGlobalNPC.mutantBoss = npc.whoAmI;
@@ -120,37 +127,6 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
                         if (FargoSoulsWorld.downedAbom && (Fargowiltas.Instance.MasomodeEXLoaded || FargoSoulsWorld.AngryMutant))// || Fargowiltas.Instance.CalamityLoaded))
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<BossRush>(), 0, 0f, Main.myPlayer, npc.whoAmI);
-
-                        int number = 0;
-                        for (int index = 999; index >= 0; --index)
-                        {
-                            if (!Main.projectile[index].active)
-                            {
-                                number = index;
-                                break;
-                            }
-                        }
-                        if (number >= 0)
-                        {
-                            if (Main.netMode == NetmodeID.SinglePlayer)
-                            {
-                                Projectile projectile = Main.projectile[number];
-                                projectile.SetDefaults(ModContent.ProjectileType<Projectiles.MutantBoss.MutantBoss>());
-                                projectile.Center = npc.Center;
-                                projectile.owner = Main.myPlayer;
-                                projectile.velocity.X = 0;
-                                projectile.velocity.Y = 0;
-                                projectile.damage = 0;
-                                projectile.knockBack = 0f;
-                                projectile.identity = number;
-                                projectile.gfxOffY = 0f;
-                                projectile.stepSpeed = 1f;
-                                projectile.ai[1] = npc.whoAmI;
-                            }
-
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual5>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                        }
                     }
                 }
             }
@@ -171,8 +147,54 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 }
             }
 
+            if (Main.netMode != NetmodeID.MultiplayerClient) //checks for needed projs
+            {
+                if ((npc.ai[0] < 0 || npc.ai[0] > 10) && !ProjectileExists(ritualProj, ModContent.ProjectileType<MutantRitual>()))
+                    ritualProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+
+                if (!ProjectileExists(ringProj, ModContent.ProjectileType<MutantRitual5>()))
+                    ringProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual5>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
+
+                if (!ProjectileExists(spriteProj, ModContent.ProjectileType<Projectiles.MutantBoss.MutantBoss>()))
+                {
+                    if (Main.netMode == NetmodeID.SinglePlayer)
+                    {
+                        int number = 0;
+                        for (int index = 999; index >= 0; --index)
+                        {
+                            if (!Main.projectile[index].active)
+                            {
+                                number = index;
+                                break;
+                            }
+                        }
+                        if (number >= 0)
+                        {
+                            Projectile projectile = Main.projectile[number];
+                            projectile.SetDefaults(ModContent.ProjectileType<Projectiles.MutantBoss.MutantBoss>());
+                            projectile.Center = npc.Center;
+                            projectile.owner = Main.myPlayer;
+                            projectile.velocity.X = 0;
+                            projectile.velocity.Y = 0;
+                            projectile.damage = 0;
+                            projectile.knockBack = 0f;
+                            projectile.identity = number;
+                            projectile.gfxOffY = 0f;
+                            projectile.stepSpeed = 1f;
+                            projectile.ai[1] = npc.whoAmI;
+
+                            spriteProj = number;
+                        }
+                    }
+                    else //server
+                    {
+                        spriteProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.MutantBoss.MutantBoss>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                    }
+                }
+            }
+
             Player player = Main.player[npc.target];
-            npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
+            npc.direction = npc.spriteDirection = npc.Center.X < player.Center.X ? 1 : -1;
             Vector2 targetPos;
             float speedModifier;
             switch ((int)npc.ai[0])
