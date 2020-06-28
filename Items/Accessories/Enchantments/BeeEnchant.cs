@@ -58,21 +58,25 @@ Mega Bees ignore most enemy defense, immune frames, and last twice as long
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().BeeEffect(hideVisual);
+            player.GetModPlayer<FargoPlayer>().BeeEffect(hideVisual); //add effect
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
+
             recipe.AddIngredient(ItemID.BeeHeadgear);
             recipe.AddIngredient(ItemID.BeeBreastplate);
             recipe.AddIngredient(ItemID.BeeGreaves);
             recipe.AddIngredient(ItemID.HiveBackpack);
+            //stinger necklace
             recipe.AddIngredient(ItemID.BeeGun);
-            recipe.AddIngredient(ItemID.WaspGun);
+            //beenades
+            //honey bomb
+            //honey fin
             recipe.AddIngredient(ItemID.Nectar);
             
-            recipe.AddTile(TileID.CrystalBall);
+            recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

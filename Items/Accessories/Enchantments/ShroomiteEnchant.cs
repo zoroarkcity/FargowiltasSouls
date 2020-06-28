@@ -63,8 +63,11 @@ Summons a pet Truffle";
             recipe.AddRecipeGroup("FargowiltasSouls:AnyShroomHead");
             recipe.AddIngredient(ItemID.ShroomiteBreastplate);
             recipe.AddIngredient(ItemID.ShroomiteLeggings);
+            //shroomite digging
+            //hammush
             recipe.AddIngredient(ItemID.MushroomSpear);
             recipe.AddIngredient(ItemID.Uzi);
+            //venus magnum
             recipe.AddIngredient(ItemID.TacticalShotgun);
             recipe.AddIngredient(ItemID.StrangeGlowingMushroom);
             

@@ -42,21 +42,22 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             //player.GetModPlayer<FargoPlayer>().WizardEnchant = true;
+            //add pet
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            //recipe.AddIngredient(ItemID.WizardHat);
-            //magic hat
-            //amethyst robe
-            //topaz robe
-            //sapphire robe
-            //emerald robe
-            //ruby robe
-            //diamond robe
-            //gypsy robe
-            //rare enchantment
+
+            recipe.AddIngredient(ItemID.WizardHat);
+            recipe.AddIngredient(ItemID.AmethystRobe);
+            recipe.AddIngredient(ItemID.TopazRobe);
+            recipe.AddIngredient(ItemID.SapphireRobe);
+            recipe.AddIngredient(ItemID.RubyRobe);
+            recipe.AddIngredient(ItemID.DiamondRobe);
+            //amber robe
+            recipe.AddIngredient(ItemID.RareEnchantment);
+            recipe.AddIngredient(ItemID.UnluckyYarn);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

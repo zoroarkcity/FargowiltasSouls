@@ -69,9 +69,9 @@ namespace FargowiltasSouls.Items.Accessories.Souls
         {
             //throw speed
             player.GetModPlayer<FargoPlayer>().ThrowSoul = true;
-            player.thrownDamage += 0.3f;
-            player.thrownCrit += 15;
-            player.thrownVelocity += 0.15f;
+            //player.thrownDamage += 0.3f;
+            //player.thrownCrit += 15;
+            //player.thrownVelocity += 0.15f;
 
             if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
         }

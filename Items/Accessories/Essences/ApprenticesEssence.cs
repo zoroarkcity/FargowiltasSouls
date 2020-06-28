@@ -83,10 +83,11 @@ Increases your maximum mana by 50");
                 recipe.AddIngredient(ItemID.CrimsonRod);
                 recipe.AddIngredient(ItemID.WaterBolt);
                 recipe.AddIngredient(ItemID.BookofSkulls);
-                recipe.AddIngredient(ItemID.MagicMissile);
+                recipe.AddIngredient(ItemID.AquaScepter);
                 recipe.AddIngredient(ItemID.Flamelash);
                 recipe.AddIngredient(ItemID.DemonScythe);
-                recipe.AddIngredient(ItemID.AquaScepter);
+                //gray zapinator
+                
             }
 
             recipe.AddTile(TileID.TinkerersWorkbench);

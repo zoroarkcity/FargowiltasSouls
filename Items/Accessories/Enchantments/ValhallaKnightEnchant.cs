@@ -62,8 +62,11 @@ Summons a pet Dragon");
             recipe.AddIngredient(ItemID.SquireAltHead);
             recipe.AddIngredient(ItemID.SquireAltShirt);
             recipe.AddIngredient(ItemID.SquireAltPants);
+            //viking helmet
             recipe.AddIngredient(null, "SquireEnchant");
             recipe.AddIngredient(ItemID.ShinyStone);
+            //starlight
+            //shadow lance
             recipe.AddIngredient(ItemID.DD2SquireBetsySword);
             recipe.AddIngredient(ItemID.DD2PetDragon);
             

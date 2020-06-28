@@ -61,13 +61,17 @@ Effects of Guide to Plant Fiber Cordage";
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
+
             recipe.AddIngredient(ItemID.JungleHat);
             recipe.AddIngredient(ItemID.JungleShirt);
             recipe.AddIngredient(ItemID.JunglePants);
             recipe.AddIngredient(ItemID.CordageGuide);
-            recipe.AddIngredient(ItemID.JungleRose);
             recipe.AddIngredient(ItemID.ThornChakram);
+            //snapthorn
+            //staff of regrowth
+            recipe.AddIngredient(ItemID.JungleRose);
             recipe.AddIngredient(ItemID.Buggy);
+            //panda pet
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

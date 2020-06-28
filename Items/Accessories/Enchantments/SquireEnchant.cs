@@ -50,8 +50,11 @@ Ballista pierces more targets and panics when you take damage");
             recipe.AddIngredient(ItemID.SquireGreaves);
             recipe.AddIngredient(ItemID.SquireShield);
             recipe.AddIngredient(ItemID.DD2BallistraTowerT2Popper);
-            recipe.AddIngredient(ItemID.DD2SquireDemonSword);
+            //rally
+            //lance
             recipe.AddIngredient(ItemID.RedPhasesaber);
+            recipe.AddIngredient(ItemID.DD2SquireDemonSword);
+            //light discs
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

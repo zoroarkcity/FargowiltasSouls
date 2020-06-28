@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Pearlwood Enchantment");
             Tooltip.SetDefault(
 @"'Too little, too late…'
-Projectiles may spawn a rainbow star when they hit something"); //e
+Projectiles may spawn a star when they hit something"); 
             DisplayName.AddTranslation(GameCulture.Chinese, "珍珠木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'为时已晚'
@@ -54,10 +54,13 @@ Projectiles may spawn a rainbow star when they hit something"); //e
             recipe.AddIngredient(ItemID.PearlwoodHelmet);
             recipe.AddIngredient(ItemID.PearlwoodBreastplate);
             recipe.AddIngredient(ItemID.PearlwoodGreaves);
+            //pearlwood sword
             recipe.AddIngredient(ItemID.UnicornonaStick);
+            //dragonfruit or starfruit
             recipe.AddIngredient(ItemID.LightningBug);
             recipe.AddIngredient(ItemID.Prismite);
             recipe.AddIngredient(ItemID.TheLandofDeceivingLooks);
+            //butterfly pet
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

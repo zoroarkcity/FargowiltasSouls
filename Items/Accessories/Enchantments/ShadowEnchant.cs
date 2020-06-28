@@ -60,7 +60,10 @@ Summons a pet Eater of Souls and Shadow Orb");
             recipe.AddIngredient(ItemID.ShadowScalemail);
             recipe.AddIngredient(ItemID.ShadowGreaves);
             recipe.AddIngredient(ItemID.WarAxeoftheNight);
+            //ball o hurt
+            //demon bow
             recipe.AddIngredient(ItemID.PurpleClubberfish);
+            //fisher of souls
             recipe.AddIngredient(ItemID.EatersBone);
             recipe.AddIngredient(ItemID.ShadowOrb);
             

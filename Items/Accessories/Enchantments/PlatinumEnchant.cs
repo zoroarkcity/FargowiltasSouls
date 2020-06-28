@@ -62,9 +62,12 @@ If the enemy has Midas, the chance and bonus is doubled";
             recipe.AddIngredient(ItemID.PlatinumChainmail);
             recipe.AddIngredient(ItemID.PlatinumGreaves);
             recipe.AddIngredient(ItemID.PlatinumCrown);
-            recipe.AddIngredient(ItemID.DiamondRing);
+            //diamond staff
+            //white phase saber
             recipe.AddIngredient(ItemID.TaxCollectorsStickOfDoom);
             recipe.AddIngredient(ItemID.BeamSword);
+            recipe.AddIngredient(ItemID.DiamondRing);
+            //diamond squirrel
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

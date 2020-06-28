@@ -44,10 +44,13 @@ At maximum size, water will turn into lightning bolts");
             recipe.AddIngredient(ItemID.RainHat);
             recipe.AddIngredient(ItemID.RainCoat);
             recipe.AddIngredient(ItemID.UmbrellaHat);
+            //inner tube
             recipe.AddIngredient(ItemID.Umbrella);
+            //tragic umbrella
             recipe.AddIngredient(ItemID.NimbusRod);
             recipe.AddIngredient(ItemID.WaterGun);
-            recipe.AddIngredient(ItemID.RainCloud, 25);
+            recipe.AddIngredient(ItemID.RainbowBrick, 50);
+            //volt bunny pet
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

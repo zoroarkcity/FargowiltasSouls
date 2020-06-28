@@ -72,7 +72,7 @@ Summons a pet Gato and Black Cat";
             //monk dash mayhem
             modPlayer.MonkEffect();
             //ninja, smoke bombs, pet
-            modPlayer.NinjaEffect(hideVisual);
+            modPlayer.NinjaEffect(hideVisual); //destroy
         }
 
         public override void AddRecipes()
@@ -81,9 +81,12 @@ Summons a pet Gato and Black Cat";
             recipe.AddIngredient(ItemID.MonkAltHead);
             recipe.AddIngredient(ItemID.MonkAltShirt);
             recipe.AddIngredient(ItemID.MonkAltPants);
-            recipe.AddIngredient(null, "NinjaEnchant");
             recipe.AddIngredient(null, "MonkEnchant");
             recipe.AddIngredient(ItemID.MasterNinjaGear);
+            //chain guiottine
+            //code 2
+            //flower pow
+            //stynger
             recipe.AddIngredient(ItemID.DD2PetGato);
             
             recipe.AddTile(TileID.CrystalBall);

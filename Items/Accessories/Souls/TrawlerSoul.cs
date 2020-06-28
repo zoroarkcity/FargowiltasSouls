@@ -17,15 +17,15 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Trawler Soul"); //e
+            DisplayName.SetDefault("Trawler Soul"); 
 
-            string tooltip = 
+            string tooltip =
 @"'The fish catch themselves'
 Increases fishing skill substantially
 All fishing rods will have 10 extra lures
-Fishing line will never break
-Decreases chance of bait consumption
-Permanent Sonar and Crate Buffs";
+You catch fish almost instantly
+Permanent Sonar and Crate Buffs
+Effects of Angler Tackle Bag";
             string tooltip_ch =
 @"'让鱼自己抓自己'
 极大提升钓鱼能力
@@ -33,12 +33,6 @@ Permanent Sonar and Crate Buffs";
 钓鱼线永不破坏
 减少鱼饵消耗几率
 永久声呐和板条箱Buff";
-
-            if (thorium != null)
-            {
-                tooltip += "\nAllows any fishing pole to catch loot in lava";
-                tooltip_ch += "\n任何钓鱼环境都能获得岩浆环境的渔获";
-            }
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "捕鱼之魂");
@@ -76,24 +70,13 @@ Permanent Sonar and Crate Buffs";
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(null, "AnglerEnchantment");
 
-            //add thing
-            
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(thorium.ItemType("MagmaBoundFishingLine"));
-                recipe.AddIngredient(thorium.ItemType("AquaticSonarDevice"));
-                recipe.AddIngredient(thorium.ItemType("CartlidgedCatcher"));
-                recipe.AddIngredient(thorium.ItemType("TerrariumFisher"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.SittingDucksFishingRod);
-                recipe.AddIngredient(ItemID.GoldenFishingRod);
-            }
-
+            //add lavaproof fishing hook
+            //engineer rod
+            recipe.AddIngredient(ItemID.SittingDucksFishingRod);
+            //hotline fishing
+            recipe.AddIngredient(ItemID.GoldenFishingRod);
             recipe.AddIngredient(ItemID.GoldenCarp);
             recipe.AddIngredient(ItemID.ReaverShark);
-            recipe.AddIngredient(ItemID.Toxikarp);
             recipe.AddIngredient(ItemID.Bladetongue);
             recipe.AddIngredient(ItemID.ObsidianSwordfish);
             recipe.AddIngredient(ItemID.FuzzyCarrot);

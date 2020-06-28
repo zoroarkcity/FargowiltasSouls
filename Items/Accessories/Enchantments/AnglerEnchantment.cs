@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"'As long as they aren't all shoes, you can go home happily'
 Increases fishing skill
 You catch fish almost instantly
-Effects of Angler Tackle Bag"); //e
+Effects of Angler Tackle Bag"); 
             DisplayName.AddTranslation(GameCulture.Chinese, "渔夫魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'只要不全是鞋子, 你可以高高兴兴地回家'
@@ -49,6 +49,12 @@ Effects of Angler Tackle Bag"); //e
         {
             player.GetModPlayer<FargoPlayer>().FishSoul1 = true;
             player.fishingSkill += 10;
+
+            //tackle bag
+            player.accFishingLine = true;
+            player.accTackleBox = true;
+
+            //absorb increase enemy catching?
         }
 
         public override void AddRecipes()
@@ -60,9 +66,9 @@ Effects of Angler Tackle Bag"); //e
             recipe.AddIngredient(ItemID.AnglerTackleBag);
             recipe.AddIngredient(ItemID.WoodFishingPole);
             recipe.AddIngredient(ItemID.ReinforcedFishingPole);
+            //scarab rod
             recipe.AddIngredient(ItemID.FiberglassFishingPole);
-            recipe.AddIngredient(ItemID.Rockfish);
-            recipe.AddIngredient(ItemID.SawtoothShark);
+            //chum caster
             recipe.AddRecipeGroup("FargowiltasSouls:AnyFishingTrash", 5);
 
             recipe.AddTile(TileID.DemonAltar);

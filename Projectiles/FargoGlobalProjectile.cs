@@ -12,6 +12,7 @@ using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Minions;
 using FargowiltasSouls.Projectiles.Souls;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -48,7 +49,6 @@ namespace FargowiltasSouls.Projectiles
         private bool tungstenProjectile = false;
         private bool tikiMinion = false;
         private int tikiTimer = 300;
-        public bool rainbowTrail = false;
         private int rainbowCounter = 0;
         public bool Rainbow = false;
         public int GrazeCD;
@@ -336,30 +336,6 @@ namespace FargowiltasSouls.Projectiles
                     projectile.localAI[0] = 0f;
                 }
 
-                if (rainbowTrail)
-                {
-                    rainbowCounter++;
-
-                    if (rainbowCounter >= 5)
-                    {
-                        //rainbowCounter = 0;
-                        if (player.whoAmI == Main.myPlayer)
-                        {
-                            int direction = projectile.velocity.X > 0 ? 1 : -1;
-                            int p = Projectile.NewProjectile(projectile.Center, projectile.velocity, ProjectileID.RainbowBack, 30, 0, Main.myPlayer);
-                            Projectile proj = Main.projectile[p];
-                            proj.GetGlobalProjectile<FargoGlobalProjectile>().Rainbow = true;
-                            proj.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
-
-                            p = Projectile.NewProjectile(projectile.Center + (projectile.velocity / 2), projectile.velocity, ProjectileID.RainbowBack, 30, 0, Main.myPlayer);
-                            proj = Main.projectile[p];
-                            proj.GetGlobalProjectile<FargoGlobalProjectile>().Rainbow = true;
-                            proj.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
-                        }
-                    }
-                }
-
-
                 if (projectile.friendly && !projectile.hostile)
                 {
                     if (modPlayer.ForbiddenEnchant && projectile.damage > 0 && projectile.type != ProjectileID.SandnadoFriendly && !stormBoosted)
@@ -428,26 +404,6 @@ namespace FargowiltasSouls.Projectiles
                             projs[i].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
                         }
                     }
-                }
-
-                //hook AI
-                if (modPlayer.MahoganyEnchant && projectile.aiStyle == 7 && (player.ZoneJungle || modPlayer.WoodForce) && counter >= 60
-                    && SoulConfig.Instance.GetValue(SoulConfig.Instance.MahoganyHook))
-                {
-                    for (int i = 0; i < Main.maxNPCs; i++)
-                    {
-                        NPC n = Main.npc[i];
-
-                        if (n.CanBeChasedBy(projectile) && Vector2.Distance(n.Center, projectile.Center) < 400)
-                        {
-                            Vector2 velocity = Vector2.Normalize(n.Center - projectile.Center) * 5;
-
-                            Projectile.NewProjectile(projectile.Center, velocity, ProjectileID.ChlorophyteBullet, 15, 1, Main.myPlayer);
-                            break;
-                        }
-                    }
-
-                    counter = 0;
                 }
             }
 
@@ -1346,43 +1302,6 @@ namespace FargowiltasSouls.Projectiles
             {
                 projectile.active = false;
             }
-
-            /*if (modPlayer.PearlEnchant && SoulConfig.Instance.GetValue("Pearlwood Rain") && projectile.type != ProjectileID.HallowStar)
-            {
-                //holy stars
-                Main.PlaySound(SoundID.Item10, projectile.position);
-                for (int num479 = 0; num479 < 10; num479++)
-                {
-                    Dust.NewDust(projectile.position, projectile.width, projectile.height, 58, projectile.velocity.X * 0.1f, projectile.velocity.Y * 0.1f, 150, default(Color), 1.2f);
-                }
-                for (int num480 = 0; num480 < 3; num480++)
-                {
-                    Gore.NewGore(projectile.position, new Vector2(projectile.velocity.X * 0.05f, projectile.velocity.Y * 0.05f), Main.rand.Next(16, 18), 1f);
-                }
-                float x = projectile.position.X + (float)Main.rand.Next(-400, 400);
-                float y = projectile.position.Y - (float)Main.rand.Next(600, 900);
-                Vector2 vector12 = new Vector2(x, y);
-                float num483 = projectile.position.X + (float)(projectile.width / 2) - vector12.X;
-                float num484 = projectile.position.Y + (float)(projectile.height / 2) - vector12.Y;
-                int num485 = 22;
-                float num486 = (float)Math.Sqrt((double)(num483 * num483 + num484 * num484));
-                num486 = (float)num485 / num486;
-                num483 *= num486;
-                num484 *= num486;
-                int num487 = projectile.damage;
-                int num488 = Projectile.NewProjectile(x, y, num483, num484, 92, num487, projectile.knockBack, projectile.owner, 0f, 0f);
-                if (num488 != 1000)
-                    Main.projectile[num488].ai[1] = projectile.position.Y;
-                //Main.projectile[num488].ai[0] = 1f;
-
-                //Main.projectile[num488].localNPCHitCooldown = 2;
-                //Main.projectile[num488].usesLocalNPCImmunity = true;
-
-                if (player.ZoneHoly || modPlayer.WoodForce)
-                {
-                    Main.projectile[num488].GetGlobalProjectile<FargoGlobalProjectile>().rainbowTrail = true;
-                }
-            }*/
 
             return true;
         }

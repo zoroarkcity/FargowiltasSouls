@@ -1,29 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using FargowiltasSouls.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent.Events;
 using Terraria.Graphics.Shaders;
-using Terraria.Localization;
 using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
-using FargowiltasSouls.Items.Accessories.Masomode;
 using FargowiltasSouls.Items.Misc;
 using FargowiltasSouls.Items.Weapons.BossDrops;
-using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.NPCs.Critters;
-using FargowiltasSouls.Projectiles.Deathrays;
-using FargowiltasSouls.Items.Summons;
-using FargowiltasSouls.Projectiles.MutantBoss;
 using FargowiltasSouls.Projectiles.Souls;
-using Fargowiltas.NPCs;
-using FargowiltasSouls.Items.Tiles;
-using FargowiltasSouls.Items.Patreon;
-using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Buffs.Souls;
 
 namespace FargowiltasSouls.NPCs
@@ -44,7 +29,6 @@ namespace FargowiltasSouls.NPCs
         public bool Shock;
         public bool Rotting;
         public bool LeadPoison;
-        public bool SqueakyToy;
         public bool SolarFlare;
         public bool TimeFrozen;
         public bool HellFire;
@@ -64,6 +48,8 @@ namespace FargowiltasSouls.NPCs
         public bool Villain;
         public bool Lethargic;
         public int LethargicCounter;
+        public bool ExplosiveCritter = false;
+        private int critterCounter = 120;
 
         private int valhallaPlayer;
         private int valhallaCounter = 0;
@@ -80,7 +66,6 @@ namespace FargowiltasSouls.NPCs
             Shock = false;
             Rotting = false;
             LeadPoison = false;
-            SqueakyToy = false;
             SolarFlare = false;
             HellFire = false;
             Infested = false;
@@ -133,10 +118,14 @@ namespace FargowiltasSouls.NPCs
                 }
 
                 //critters
-                if (Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().WoodEnchant && npc.damage == 0 && !npc.townNPC && npc.lifeMax == 5)
+                if (npc.damage == 0 && !npc.townNPC && npc.lifeMax == 5)
                 {
-                    npc.defense = 9999;
-                    npc.defDefense = 9999;
+                    Player player = Main.player[Main.myPlayer];
+
+                    if ( npc.releaseOwner == player.whoAmI && player.GetModPlayer<FargoPlayer>().WoodEnchant)
+                    {
+                        ExplosiveCritter = true;
+                    }
                 }
 
                 FirstTick = true;
@@ -151,6 +140,18 @@ namespace FargowiltasSouls.NPCs
             if (valhallaCounter > 0)
             {
                 valhallaCounter--;
+            }
+
+            if (ExplosiveCritter)
+            {
+                critterCounter--;
+
+                if (critterCounter <= 0)
+                {
+                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<ExplosionSmall>(), 25, 4, npc.releaseOwner);
+                    //gold critters make coin value go up of hit enemy, millions of other effects eeech
+                }
+                
             }
             
             return true;
@@ -530,8 +531,6 @@ namespace FargowiltasSouls.NPCs
             }
         }
 
-        
-
         private bool firstLoot = true;
         private bool firstIconLoot = true;
 
@@ -596,9 +595,20 @@ namespace FargowiltasSouls.NPCs
 
             firstLoot = false;
 
+            //patreon gang
             if (npc.type == NPCID.Golem && Main.rand.Next(10) == 0)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<ComputationOrb>());
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<Patreon.Daawnz.ComputationOrb>());
+            }
+
+            if (npc.type == NPCID.Squid && Main.rand.Next(50) == 0)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<Patreon.Sam.SquidwardDoor>());
+            }
+
+            if (npc.type == NPCID.KingSlime && FargoSoulsWorld.MasochistMode && Main.rand.Next(100) == 0)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<Patreon.Catsounds.MedallionoftheFallenKing>());
             }
 
             switch (npc.type) //cracked gem
@@ -734,11 +744,6 @@ namespace FargowiltasSouls.NPCs
                 return false;
             }*/
 
-            if (modPlayer.WoodEnchant && npc.damage == 0 && !npc.townNPC && npc.lifeMax == 5)
-            {
-                Projectile.NewProjectile(npc.Center, new Vector2(0, -4), ProjectileID.LostSoulFriendly, 20, 0, Main.myPlayer);
-            }
-
             if (Needles && npc.lifeMax > 1 && Main.rand.Next(2) == 0)
             {
                 int dmg = 15;
@@ -803,10 +808,9 @@ namespace FargowiltasSouls.NPCs
             if (target.HasBuff(ModContent.BuffType<ShellHide>()))
                 damage *= 2;
 
-            if (SqueakyToy)
+            if (npc.type == NPCID.Wolf && damage > target.statLife)
             {
-                damage = 1;
-                modPlayer.Squeak(target.Center);
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<Patreon.ParadoxWolf.ParadoxWolfSoul>());
             }
         }
 
@@ -931,7 +935,7 @@ namespace FargowiltasSouls.NPCs
         {
             if (type == NPCID.Steampunker)
             {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<RoombaPet>());
+                shop.item[nextSlot].SetDefaults(ModContent.ItemType<Patreon.Gittle.RoombaPet>());
                 shop.item[nextSlot].value = 50000;
                 nextSlot++;
             }

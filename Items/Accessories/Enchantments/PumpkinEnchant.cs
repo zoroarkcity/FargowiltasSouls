@@ -61,7 +61,10 @@ Summons a pet Squashling");
             recipe.AddIngredient(ItemID.PumpkinLeggings);
             recipe.AddIngredient(ItemID.MolotovCocktail, 50);
             recipe.AddIngredient(ItemID.Sickle);
+            //rotten eggs
+            //bat hook
             recipe.AddIngredient(ItemID.PumpkinPie);
+            //jack o lantern
             recipe.AddIngredient(ItemID.MagicalPumpkinSeed);
             
             recipe.AddTile(TileID.DemonAltar);

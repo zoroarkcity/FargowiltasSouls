@@ -66,7 +66,11 @@ Your minions can now crit with a 20% chance
             recipe.AddIngredient(ItemID.SpiderGreaves);
             recipe.AddIngredient(ItemID.SpiderStaff);
             recipe.AddIngredient(ItemID.QueenSpiderStaff);
+            //bananarangs
             recipe.AddIngredient(ItemID.WebSlinger);
+            //web rope coil
+            //rainbow string
+            //fried egg
             recipe.AddIngredient(ItemID.SpiderEgg);
             
             recipe.AddTile(TileID.CrystalBall);

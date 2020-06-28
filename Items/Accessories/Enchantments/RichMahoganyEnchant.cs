@@ -14,8 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Rich Mahogany Enchantment");
             Tooltip.SetDefault(
 @"'Guaranteed to keep you hooked'
-All grappling hooks pull you in and retract twice as fast
-Any hook will periodically fire homing shots at enemies"); //e
+All grappling hooks pull you in and retract twice as fast"); 
             DisplayName.AddTranslation(GameCulture.Chinese, "红木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'保证能勾住你'
@@ -52,10 +51,14 @@ Any hook will periodically fire homing shots at enemies"); //e
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
+
             recipe.AddIngredient(ItemID.RichMahoganyHelmet);
             recipe.AddIngredient(ItemID.RichMahoganyBreastplate);
             recipe.AddIngredient(ItemID.RichMahoganyGreaves);
+            //rich mahog sword
             recipe.AddIngredient(ItemID.IvyWhip);
+            //grappling hook
+            //mango/pineapple
             recipe.AddIngredient(ItemID.Frog);
             recipe.AddIngredient(ItemID.NeonTetra);
             recipe.AddIngredient(ItemID.DoNotStepontheGrass);

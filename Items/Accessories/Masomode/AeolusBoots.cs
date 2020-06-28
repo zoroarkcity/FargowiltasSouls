@@ -35,13 +35,18 @@ Increases jump height and negates fall damage");
             player.doubleJumpFart = true;
             player.jumpBoost = true;
             player.noFallDmg = true;
+
+            //add effects
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
             
-            recipe.AddIngredient(ItemID.FrostsparkBoots);
+            recipe.AddIngredient(ItemID.FrostsparkBoots); //terraspark
+            //amphibian
+            //fairy boots
+            //dunerider
             recipe.AddIngredient(ItemID.BalloonHorseshoeFart);
             recipe.AddIngredient(mod.ItemType("EurusSock"));
             recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 10);

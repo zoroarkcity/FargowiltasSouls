@@ -294,19 +294,19 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
             
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
-                recipe.AddIngredient(null, "GuardianAngelsSoul");
-                recipe.AddIngredient(null, "BardSoul");
+                //recipe.AddIngredient(null, "GuardianAngelsSoul");
+                //recipe.AddIngredient(null, "BardSoul");
                 //recipe.AddIngredient(thorium.ItemType("TheRing"));              
             }
 
             if (Fargowiltas.Instance.CalamityLoaded)
             {
-                recipe.AddIngredient(null, "RogueSoul");
+                //recipe.AddIngredient(null, "RogueSoul");
             }
 
             if (Fargowiltas.Instance.DBZMODLoaded)
             {
-                recipe.AddIngredient(null, "KiSoul");
+                //recipe.AddIngredient(null, "KiSoul");
             }
 
             recipe.AddIngredient(null, "MutantScale", 10);

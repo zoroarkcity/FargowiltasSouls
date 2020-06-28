@@ -1,11 +1,11 @@
 using Terraria;
 using Terraria.ModLoader;
-using static Terraria.ID.ItemID;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using CalamityMod.CalPlayer;
 using Fargowiltas.Items.Tiles;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -77,6 +77,7 @@ Increases your maximum mana by 200
             player.statManaMax2 += 200;
             //accessorys
             player.manaFlower = true;
+            //add mana cloak
             player.manaMagnet = true;
             player.magicCuffs = true;
 
@@ -94,33 +95,34 @@ Increases your maximum mana by 200
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddIngredient(null, "ApprenticesEssence");
-            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? calamity.ItemType("EtherealTalisman") : ManaFlower);
+            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? calamity.ItemType("EtherealTalisman") : ItemID.ManaFlower); //mana cloak
 
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
-                recipe.AddIngredient(CelestialCuffs);
-                recipe.AddIngredient(MedusaHead);
+                recipe.AddIngredient(ItemID.CelestialCuffs);
+                recipe.AddIngredient(ItemID.MedusaHead);
+                //blood thorn
                 recipe.AddIngredient(thorium.ItemType("TwinsIre"));
                 recipe.AddIngredient(thorium.ItemType("TerraStaff"));
-                recipe.AddIngredient(RainbowGun);
-                recipe.AddIngredient(thorium.ItemType("SpectrelBlade"));
+                recipe.AddIngredient(ItemID.RainbowGun);
             }
             else
             {
-                recipe.AddIngredient(WizardHat);
-                recipe.AddIngredient(CelestialCuffs);
-                recipe.AddIngredient(CelestialEmblem);
-                recipe.AddIngredient(MedusaHead);
-                recipe.AddIngredient(GoldenShower);
-                recipe.AddIngredient(RainbowGun);
+                recipe.AddIngredient(ItemID.CelestialCuffs);
+                recipe.AddIngredient(ItemID.CelestialEmblem);
+                recipe.AddIngredient(ItemID.MedusaHead);
+                //blood thorn
+                //magnet sphere
+                recipe.AddIngredient(ItemID.RainbowGun);
             }
 
-            recipe.AddIngredient(MagnetSphere);
-            recipe.AddIngredient(ApprenticeStaffT3);
-            recipe.AddIngredient(RazorbladeTyphoon);
-            recipe.AddIngredient(BlizzardStaff);
-            recipe.AddIngredient(LaserMachinegun);
-            recipe.AddIngredient(LastPrism);
+            recipe.AddIngredient(ItemID.ApprenticeStaffT3);
+            //stellar tune
+            recipe.AddIngredient(ItemID.RazorbladeTyphoon);
+            
+            recipe.AddIngredient(ItemID.BlizzardStaff);
+            recipe.AddIngredient(ItemID.LaserMachinegun);
+            recipe.AddIngredient(ItemID.LastPrism);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 

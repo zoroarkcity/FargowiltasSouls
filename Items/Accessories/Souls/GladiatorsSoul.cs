@@ -1,11 +1,11 @@
 using Terraria;
 using Terraria.ModLoader;
-using static Terraria.ID.ItemID;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using CalamityMod.CalPlayer;
 using Terraria.Localization;
 using Fargowiltas.Items.Tiles;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -83,6 +83,8 @@ Increased melee knockback
             player.yoyoGlove = true;
             player.yoyoString = true;
 
+            //berserker glove effect, auto swing thing
+
             if (Fargowiltas.Instance.CalamityLoaded) Calamity(player);
         }
 
@@ -90,10 +92,6 @@ Increased melee knockback
         {
             CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
             modPlayer.eGauntlet = true;
-            //removing the extra boosts it adds because meme calamity
-            player.meleeDamage -= .15f;
-            player.meleeSpeed -= .15f;
-            player.meleeCrit -= 5;
         }
 
         public override void AddRecipes()
@@ -101,33 +99,19 @@ Increased melee knockback
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddIngredient(null, "BarbariansEssence");
-            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? calamity.ItemType("ElementalGauntlet") : FireGauntlet);
-            recipe.AddIngredient(YoyoBag);
-            recipe.AddIngredient(Arkhalis);
-
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(KOCannon);
-                recipe.AddIngredient(IceSickle);
-                recipe.AddIngredient(thorium.ItemType("PrimesFury"));
-                recipe.AddIngredient(TerraBlade);
-                recipe.AddIngredient(ScourgeoftheCorruptor);
-                recipe.AddIngredient(MonkStaffT3);
-            }
-            else
-            {
-                recipe.AddIngredient(IceSickle);
-                recipe.AddIngredient(TerraBlade);
-                recipe.AddIngredient(ScourgeoftheCorruptor);
-                recipe.AddIngredient(Kraken);
-                recipe.AddIngredient(Flairon);
-                recipe.AddIngredient(MonkStaffT3);
-            }
-
-            recipe.AddIngredient(TheHorsemansBlade);
-            recipe.AddIngredient(NorthPole);
-            recipe.AddIngredient(InfluxWaver);
-            recipe.AddIngredient(Meowmere);
+            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? calamity.ItemType("ElementalGauntlet") : ItemID.FireGauntlet);
+            //berserkers glove
+            recipe.AddIngredient(ItemID.YoyoBag);
+            recipe.AddIngredient(ItemID.KOCannon);
+            recipe.AddIngredient(ItemID.IceSickle);
+            //drippler crippler
+            //
+            recipe.AddIngredient(ItemID.ScourgeoftheCorruptor); 
+            recipe.AddIngredient(ItemID.Kraken);
+            recipe.AddIngredient(ItemID.Flairon);
+            recipe.AddIngredient(ItemID.MonkStaffT3);
+            recipe.AddIngredient(ItemID.NorthPole);
+            //zenith
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 

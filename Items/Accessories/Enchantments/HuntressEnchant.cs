@@ -45,8 +45,11 @@ Set oiled enemies on fire for extra damage");
             recipe.AddIngredient(ItemID.HuntressPants);
             recipe.AddIngredient(ItemID.HuntressBuckler);
             recipe.AddIngredient(ItemID.DD2ExplosiveTrapT2Popper);
-            recipe.AddIngredient(ItemID.DD2PhoenixBow);
+            //tendon bow
             recipe.AddIngredient(ItemID.DaedalusStormbow);
+            //shadiwflame bow
+            recipe.AddIngredient(ItemID.DD2PhoenixBow);
+            //dog pet
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

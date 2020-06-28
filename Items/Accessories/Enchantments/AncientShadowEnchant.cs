@@ -48,7 +48,10 @@ Summons a pet Eater of Souls and Shadow Orb");
             recipe.AddIngredient(ItemID.AncientNecroHelmet);
             recipe.AddIngredient(ItemID.AncientGoldHelmet);
             recipe.AddIngredient(null, "ShadowEnchant");
-            recipe.AddIngredient(ItemID.ShadowFlameBow);
+            recipe.AddIngredient(ItemID.ShadowFlameKnife);
+            recipe.AddIngredient(ItemID.ShadowFlameHexDoll);
+            //dart rifle
+            //toxicarp
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

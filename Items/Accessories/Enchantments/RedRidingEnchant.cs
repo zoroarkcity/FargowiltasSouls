@@ -68,8 +68,11 @@ Summons a pet Puppy");
             recipe.AddIngredient(ItemID.HuntressAltPants);
             recipe.AddIngredient(null, "HuntressEnchant");
             recipe.AddIngredient(ItemID.CelestialShell);
+            //candy corn rifle
+            //celebration
+            //eventide
             recipe.AddIngredient(ItemID.DD2BetsyBow);
-            recipe.AddIngredient(ItemID.DogWhistle);
+            recipe.AddIngredient(ItemID.DogWhistle); //werewolf pet
             
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

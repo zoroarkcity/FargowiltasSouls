@@ -733,17 +733,17 @@ Additionally grants:");
             recipe.AddIngredient(null, "MasochistSoul");
 
             if (Fargowiltas.Instance.ThoriumLoaded)
-                recipe.AddIngredient(null, "ThoriumSoul");
+                //recipe.AddIngredient(null, "ThoriumSoul");
 
             if (Fargowiltas.Instance.CalamityLoaded)
             {
-                recipe.AddIngredient(null, "CalamitySoul");
-                recipe.AddIngredient(calamity.ItemType("Rock"));
+                //recipe.AddIngredient(null, "CalamitySoul");
+                //recipe.AddIngredient(calamity.ItemType("Rock"));
             }
 
             if (Fargowiltas.Instance.SoALoaded)
             {
-                recipe.AddIngredient(null, "SoASoul");
+                //recipe.AddIngredient(null, "SoASoul");
             }
 
             recipe.AddIngredient(null, "Sadism", 30);

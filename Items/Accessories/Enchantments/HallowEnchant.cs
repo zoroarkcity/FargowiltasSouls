@@ -51,19 +51,22 @@ Summons a magical fairy");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().HallowEffect(hideVisual, 80);
+            player.GetModPlayer<FargoPlayer>().HallowEffect(hideVisual, 80); //new effect
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
             
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyHallowHead");
+            recipe.AddRecipeGroup("FargowiltasSouls:AnyHallowHead"); //add summon helm here
             recipe.AddIngredient(ItemID.HallowedPlateMail);
             recipe.AddIngredient(ItemID.HallowedGreaves);
-            recipe.AddIngredient(null, "SilverEnchant");
-            recipe.AddIngredient(ItemID.Excalibur);
+            //exotic scimitar
             recipe.AddIngredient(ItemID.Gungnir);
+            //hallow lance
+            //hallowed repeater
+            //any caught fairy
+            //any horse mount
             recipe.AddIngredient(ItemID.FairyBell);
             
             recipe.AddTile(TileID.CrystalBall);

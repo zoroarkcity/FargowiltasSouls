@@ -87,27 +87,28 @@ Summons a pet Magic Lantern");
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            modPlayer.WorldShaperSoul(hideVisual);
+            modPlayer.WorldShaperSoul(hideVisual); //add the pet
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(null, Fargowiltas.Instance.ThoriumLoaded ? "GeodeEnchant" : "MinerEnchant");
+            //recipe.AddIngredient(null, Fargowiltas.Instance.ThoriumLoaded ? "GeodeEnchant" : "MinerEnchant");
+            recipe.AddIngredient(null, "MinerEnchant");
             recipe.AddIngredient(Toolbelt);
             recipe.AddIngredient(Toolbox);
             recipe.AddIngredient(ArchitectGizmoPack);
             recipe.AddIngredient(ActuationAccessory);
             recipe.AddIngredient(LaserRuler);
             recipe.AddIngredient(RoyalGel);
-            recipe.AddIngredient(PutridScent);
             recipe.AddIngredient(CellPhone);
             recipe.AddIngredient(GravityGlobe);
-            recipe.AddIngredient(BonePickaxe);
+            //haemoraxe
             recipe.AddRecipeGroup("FargowiltasSouls:AnyDrax");
             recipe.AddIngredient(ShroomiteDiggingClaw);
             recipe.AddIngredient(DrillContainmentUnit);
+            //dynamite kitten pet
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 

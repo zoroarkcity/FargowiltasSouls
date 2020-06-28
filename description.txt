@@ -1,10 +1,26 @@
 NEW UPDATE - V 1.3.3
 
+All enchant and soul recipes changed drastically
+
+
+
 Enchants
--Angler Enchant lost Frost Daggerfish, gained Angler Tackle Bag and its effects (add the effects still, and new item to trawler)
+-Removed dev items from Soa enchants
+-DESTROYED MODDED ENCHANTS (for now)
+-thorium effects all in their own file
+
+-Angler Enchant lost Frost Daggerfish, gained Angler Tackle Bag and its effects 
 -Wood bois
 
 -Wood Enchantments no longer gain bonuses in certain biomes, they always have the old buffed effect or a slightly weaker version of it
+
+-Palmwood sentry attack rate up, no longer gains bonus in desert
+-Pearlwood stars no longer have rainbow trails in the hallow
+-Ebonwood aura has increased range, no lnager gains bonus in corruption
+-Boreal always shoots 3 snowballs, no bonus in the snow biome
+-Rich Mahogany hooks will no longer shoot at enemies in the jungle
+-Shadewood has proximity on hit effects everywhere, no bonus in crimson
+-Wood now makes critters self destruct shortly after releasing them, no more souls, takes any bird in recipe
 
 
 -Updated several Thorium Enchantments with missing or extra accessory effects: Crier
@@ -22,7 +38,7 @@ Enchants
 
 Souls
 -Added Aelous Boots to Supersonic Soul, Removed Frostspark and Green Horseshoe Balloon, Added Pink Horseshoe Balloon
--Removed all Thorium wings from Flight Mastery Soul
+-Removed all Thorium wings from Flight Mastery Soul, and froom trawler, berserker soul
 
 -Updated some calamity support tooltips
 
@@ -43,7 +59,12 @@ Emode
 -Removed Slinger's Essence and Olympians Soul for now
 
 
+Weapons
+The Landlside is now the Rockslide
+-Landlside EX is now the Landlside
 
+-Slime Kings Slasher fires a slime ball every swing instead of every 4
+-Fish Stick sharks aim for the target they hit not the fish stick that threw, they no longer pierce, they deal summon damage actually
 
 
 
@@ -61,6 +82,14 @@ rick painitng
 gold dipping vat
 probes and rainbow slime buffs work?
 plant fiber toggle
+
+PATREON
+-Added announcment for unique patreon player effects
+-Added tooltip to Computation Orb
+-Added Fig Branch (update to 1.4 dove and fledgling wing player effect)
+-Added Squidward Door
+-Added Medallion of the Fallen King (get new frames and finish extra attacks)
+-Added Paradox Wolf Soul
 
 
 

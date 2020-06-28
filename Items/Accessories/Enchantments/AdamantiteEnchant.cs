@@ -58,8 +58,11 @@ Any secondary projectiles may also split");
             recipe.AddRecipeGroup("FargowiltasSouls:AnyAdamHead");
             recipe.AddIngredient(ItemID.AdamantiteBreastplate);
             recipe.AddIngredient(ItemID.AdamantiteLeggings);
+            //adamantite sword
             recipe.AddIngredient(ItemID.AdamantiteGlaive);
+            //trident
             recipe.AddIngredient(ItemID.TitaniumTrident);
+            //seedler
             recipe.AddIngredient(ItemID.CrystalSerpent);
             recipe.AddIngredient(ItemID.VenomStaff);
             

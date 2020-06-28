@@ -57,7 +57,7 @@ Summons a pet Penguin and Snowman";
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().FrostEffect(50, hideVisual);
+            player.GetModPlayer<FargoPlayer>().FrostEffect(50, hideVisual); //add grinch, kill fish
         }
 
         public override void AddRecipes()
@@ -66,10 +66,13 @@ Summons a pet Penguin and Snowman";
             recipe.AddIngredient(ItemID.FrostHelmet);
             recipe.AddIngredient(ItemID.FrostBreastplate);
             recipe.AddIngredient(ItemID.FrostLeggings);
+            //snow enchant
             recipe.AddIngredient(ItemID.Frostbrand);
             recipe.AddIngredient(ItemID.IceBow);
-            recipe.AddIngredient(ItemID.Fish);
+            //frost staff
+            //coolwhip
             recipe.AddIngredient(ItemID.ToySled);
+            //grinch pet
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

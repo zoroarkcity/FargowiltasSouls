@@ -60,9 +60,9 @@ namespace FargowiltasSouls.Items.Accessories.Essences
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.thrownDamage += 0.18f;
-            player.thrownCrit += 5;
-            player.thrownVelocity += 0.05f;
+            //player.thrownDamage += 0.18f;
+            //player.thrownCrit += 5;
+            //player.thrownVelocity += 0.05f;
         }
 
         public override void AddRecipes()

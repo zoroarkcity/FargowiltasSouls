@@ -8,7 +8,6 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
     public class SlimeKingsSlasher : ModItem
     {
-        private static int shoot;
 
         public override void SetStaticDefaults()
         {
@@ -38,10 +37,6 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockback)
         {
-            shoot++;
-            if (shoot % 4 != 0) return false;
-
-            shoot = 0;
             return true;
         }
 

@@ -16,9 +16,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"'Humble beginnings…'
 Critters will explode 1 second after being released
 Certain critters have extra effects
-//Critters have massively increased defense
 Grants immunity to Guilty
-When any critter dies, it may become an item"); //e
+Effects of Critter guide tm"); 
             DisplayName.AddTranslation(GameCulture.Chinese, "木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'卑微的开始...'
@@ -60,10 +59,13 @@ When any critter dies, it may become an item"); //e
             recipe.AddIngredient(ItemID.WoodHelmet);
             recipe.AddIngredient(ItemID.WoodBreastplate);
             recipe.AddIngredient(ItemID.WoodGreaves);
+            //guide to critter companionship
+            //stepstool
             recipe.AddIngredient(ItemID.LivingWoodWand);
             recipe.AddIngredient(ItemID.Bunny);
-            recipe.AddRecipeGroup("FargowiltasSouls:AnySquirrel");
-            recipe.AddIngredient(ItemID.Bird);     //any bird   
+            recipe.AddRecipeGroup("FargowiltasSouls:AnySquirrel"); //squirrel hook
+            recipe.AddRecipeGroup("FargowiltasSouls:AnyBird"); 
+            //sugar glider pet
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

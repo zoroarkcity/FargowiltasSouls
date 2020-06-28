@@ -38,12 +38,10 @@ Hold DOWN and JUMP to hover");
             player.meleeDamage += damageUp;
             player.rangedDamage += damageUp;
             player.magicDamage += damageUp;
-            player.thrownDamage += damageUp;
             player.minionDamage += damageUp;
             player.meleeCrit += critUp;
             player.rangedCrit += critUp;
             player.magicCrit += critUp;
-            player.thrownCrit += critUp;
 
             player.moveSpeed += 0.4f;
             player.meleeSpeed += 0.4f;

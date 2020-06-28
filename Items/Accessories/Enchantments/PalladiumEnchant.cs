@@ -60,7 +60,10 @@ Greatly increases life regeneration after striking an enemy ");
             recipe.AddIngredient(ItemID.PalladiumSword);
             recipe.AddIngredient(ItemID.PalladiumRepeater);
             recipe.AddIngredient(ItemID.SoulDrain);
+            //sanguine staff
+            //vampire knoves
             recipe.AddIngredient(ItemID.HeartLantern, 5);
+            //underground reward painting
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
