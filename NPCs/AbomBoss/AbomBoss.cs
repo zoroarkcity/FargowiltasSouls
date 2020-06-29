@@ -442,19 +442,13 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.localAI[0] = 0;
                     break;
 
-                case 5: //mutant scythe 8way (p2 also shoots flaming scythes)
+                case 5: //modified mutant scythe 8way
                     if (!AliveCheck(player) || Phase2Check())
                         break;
-                    targetPos = player.Center;
-                    if (npc.localAI[3] > 1)
-                        targetPos += player.DirectionTo(npc.Center) * 400;
-                    else
-                        targetPos.X += 500 * (npc.Center.X < targetPos.X ? -1 : 1);
-                    if (npc.Distance(targetPos) > 50)
-                    {
-                        Movement(targetPos, 0.5f);
-                    }
-                    if (++npc.ai[1] > 60)
+
+                    npc.velocity = npc.DirectionTo(player.Center) * 3f;
+
+                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 60 : 75))
                     {
                         npc.ai[1] = 0;
                         if (++npc.ai[2] > 3)
@@ -465,10 +459,18 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         }
                         else
                         {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            if (Main.netMode != NetmodeID.MultiplayerClient) //aim at player in p2
                             {
-                                for (int i = 0; i < 8; i++)
-                                    Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 4 * i) * 10f, ModContent.ProjectileType<Projectiles.MutantBoss.MutantScythe1>(), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
+                                float baseRot = npc.localAI[3] > 1 ? npc.DirectionTo(player.Center).ToRotation() : 0;
+                                float baseSpeed = 1000f / 90f;
+
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    Projectile.NewProjectile(npc.Center, new Vector2(baseSpeed, 0).RotatedBy(baseRot + Math.PI / 2 * i),
+                                          ModContent.ProjectileType<AbomSickleSplit1>(), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
+                                    Projectile.NewProjectile(npc.Center, new Vector2(baseSpeed, baseSpeed).RotatedBy(baseRot + Math.PI / 2 * i),
+                                          ModContent.ProjectileType<AbomSickleSplit1>(), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
+                                }
                             }
                             Main.PlaySound(SoundID.ForceRoar, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f);
                         }
