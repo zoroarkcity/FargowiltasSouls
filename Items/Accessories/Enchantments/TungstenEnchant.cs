@@ -66,6 +66,9 @@ Projectiles still have the same tile collision hitbox";
             recipe.AddIngredient(ItemID.TungstenHelmet);
             recipe.AddIngredient(ItemID.TungstenChainmail);
             recipe.AddIngredient(ItemID.TungstenGreaves);
+            //tungsten sword
+            //ruler
+            //candy cane sword
             recipe.AddIngredient(ItemID.GreenPhaseblade);
             recipe.AddIngredient(ItemID.EmeraldStaff);
             recipe.AddIngredient(ItemID.Snail);

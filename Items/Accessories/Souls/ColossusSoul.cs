@@ -81,6 +81,7 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell";
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            //any new effects, brain of confusion
             modPlayer.ColossusSoul(100, 0.15f, 5, hideVisual);
         }
 
@@ -96,7 +97,7 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell";
             recipe.AddIngredient(ItemID.BeeCloak);
             recipe.AddIngredient(ItemID.SweetheartNecklace);
             recipe.AddIngredient(ItemID.StarVeil);
-            recipe.AddIngredient(ItemID.FleshKnuckles);
+            recipe.AddIngredient(ItemID.FleshKnuckles); //hero shield
             recipe.AddIngredient(ItemID.SporeSac);
 
             if (Fargowiltas.Instance.ThoriumLoaded)
@@ -113,8 +114,8 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell";
             
             if(!Fargowiltas.Instance.ThoriumLoaded && !Fargowiltas.Instance.CalamityLoaded)
             {
-                recipe.AddIngredient(ItemID.FrozenTurtleShell);
-                recipe.AddIngredient(ItemID.PaladinsShield);
+                recipe.AddIngredient(ItemID.FrozenTurtleShell); //frozen shield
+                //recipe.AddIngredient(ItemID.PaladinsShield);
                 recipe.AddIngredient(ItemID.AnkhShield);
             }
 

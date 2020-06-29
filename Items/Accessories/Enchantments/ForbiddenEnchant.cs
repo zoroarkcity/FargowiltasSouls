@@ -10,8 +10,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class ForbiddenEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Forbidden Enchantment");
@@ -62,10 +60,13 @@ Any projectiles shot through your storm gain 50% damage";
             recipe.AddIngredient(ItemID.AncientBattleArmorHat);
             recipe.AddIngredient(ItemID.AncientBattleArmorShirt);
             recipe.AddIngredient(ItemID.AncientBattleArmorPants);
-            recipe.AddIngredient(ItemID.SpiritFlame);
-            recipe.AddIngredient(ItemID.RainbowRod);
+            //sun mask/moon mask
             recipe.AddIngredient(ItemID.DjinnsCurse);
+            recipe.AddIngredient(ItemID.SpiritFlame);
+            //sky fracture
+            recipe.AddIngredient(ItemID.RainbowRod);
             recipe.AddIngredient(ItemID.Scorpion);
+            //fennec fox pet
             
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

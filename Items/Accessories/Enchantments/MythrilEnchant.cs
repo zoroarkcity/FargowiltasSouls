@@ -58,6 +58,9 @@ Taking damage temporarily removes this weapon use speed increase");
             recipe.AddRecipeGroup("FargowiltasSouls:AnyMythrilHead");
             recipe.AddIngredient(ItemID.MythrilChainmail);
             recipe.AddIngredient(ItemID.MythrilGreaves);
+            //mythril sword
+            //mythril repeater
+            //flintlock pistol
             recipe.AddIngredient(ItemID.LaserRifle);
             recipe.AddIngredient(ItemID.ClockworkAssaultRifle);
             recipe.AddIngredient(ItemID.Gatligator);

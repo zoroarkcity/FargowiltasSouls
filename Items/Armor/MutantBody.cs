@@ -40,12 +40,10 @@ Drastically increases life regen");
             player.meleeDamage += damageUp;
             player.rangedDamage += damageUp;
             player.magicDamage += damageUp;
-            player.thrownDamage += damageUp;
             player.minionDamage += damageUp;
             player.meleeCrit += critUp;
             player.rangedCrit += critUp;
             player.magicCrit += critUp;
-            player.thrownCrit += critUp;
 
             player.statLifeMax2 += 200;
             player.statManaMax2 += 200;

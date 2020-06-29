@@ -58,7 +58,10 @@ Summons a pet Skeletron Head");
             recipe.AddIngredient(ItemID.NecroBreastplate);
             recipe.AddIngredient(ItemID.NecroGreaves);
             recipe.AddIngredient(ItemID.BoneSword);
+            //bone glove
             recipe.AddIngredient(ItemID.Marrow);
+            //quad barrel shotgun
+            //maggot
             recipe.AddIngredient(ItemID.TheGuardiansGaze);
             recipe.AddIngredient(ItemID.BoneKey);
             

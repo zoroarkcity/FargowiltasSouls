@@ -124,10 +124,13 @@ Increased minion knockback";
             }
             else
             {
+                //blade staff
                 recipe.AddIngredient(ItemID.PirateStaff);
                 recipe.AddIngredient(ItemID.OpticStaff);
                 recipe.AddIngredient(ItemID.DeadlySphereStaff);
+                //desert tiger staff
                 recipe.AddIngredient(ItemID.StaffoftheFrostHydra);
+                //mourningstar?
                 recipe.AddIngredient(ItemID.DD2BallistraTowerT3Popper);
                 recipe.AddIngredient(ItemID.DD2ExplosiveTrapT3Popper);
                 recipe.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
@@ -136,8 +139,6 @@ Increased minion knockback";
                 recipe.AddIngredient(ItemID.RavenStaff);
                 recipe.AddIngredient(ItemID.XenoStaff);
             }
-
-            recipe.AddIngredient(ItemID.MoonlordTurretStaff);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 

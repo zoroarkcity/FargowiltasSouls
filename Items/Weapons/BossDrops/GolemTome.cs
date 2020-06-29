@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Landslide");
+            DisplayName.SetDefault("The Rockslide");
             Tooltip.SetDefault("'The crumbling remains of a defeated foe..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "山崩");
             Tooltip.AddTranslation(GameCulture.Chinese, "'被击败的敌人的破碎残骸'");
@@ -20,22 +20,22 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 
         public override void SetDefaults()
         {
-            item.damage = 70;//
+            item.damage = 70;
             item.magic = true;
             item.width = 24;
             item.height = 28;
-            item.useTime = 12;//
-            item.useAnimation = 12;//
+            item.useTime = 12;
+            item.useAnimation = 12;
             item.useStyle = 5;
             item.noMelee = true;
             item.knockBack = 2;
-            item.value = 100000;//
-            item.rare = 8;//
-            item.mana = 10;//
-            item.UseSound = SoundID.Item21;//
+            item.value = 100000;
+            item.rare = 8;
+            item.mana = 10;
+            item.UseSound = SoundID.Item21;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("GolemGib");
-            item.shootSpeed = 12f;//
+            item.shootSpeed = 12f;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
@@ -89,9 +89,6 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
                 num149 *= num80;
                 float x4 = vector2.X;
                 float y4 = vector2.Y;
-
-                //String gibstring = "GolemGib" + (Main.rand.Next(11) + 1);
-                //int gib = mod.ProjectileType(gibstring);
 
                 Projectile.NewProjectile(position.X, position.Y, num148, num149, mod.ProjectileType("GolemGib"), dmg, kb, Main.myPlayer, 0, Main.rand.Next(1, 12));
             }

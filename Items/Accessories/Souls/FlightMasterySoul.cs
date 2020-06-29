@@ -70,20 +70,20 @@ Allows for very long lasting flight");
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.AngelWings);
+            //soaring insignia
+            //bat wings
+            //fledgling wings
+            recipe.AddIngredient(ItemID.FairyWings);
             recipe.AddIngredient(ItemID.HarpyWings);
             recipe.AddIngredient(ItemID.BoneWings);
-            recipe.AddIngredient(ItemID.LeafWings);
             recipe.AddIngredient(ItemID.FrozenWings);
             recipe.AddIngredient(ItemID.FlameWings);
             recipe.AddIngredient(ItemID.TatteredFairyWings);
             recipe.AddIngredient(ItemID.FestiveWings);
             recipe.AddIngredient(ItemID.BetsyWings);
             recipe.AddIngredient(ItemID.FishronWings);
-            recipe.AddIngredient(ItemID.WingsStardust);
-            recipe.AddIngredient(ItemID.WingsVortex);
-            recipe.AddIngredient(ItemID.WingsNebula);
-            recipe.AddIngredient(ItemID.WingsSolar);
+            //empress wings
+            //celestial starboard
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 

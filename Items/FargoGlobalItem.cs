@@ -110,8 +110,8 @@ namespace FargowiltasSouls.Items
                 {
                     Vector2 vel = Vector2.Normalize(Main.MouseWorld - player.Center) * 17f;
                     int p = Projectile.NewProjectile(player.Center, vel, ProjectileID.SnowBallFriendly, (int)(item.damage * .5f), 1, Main.myPlayer);
-                    if (p != 1000 && (player.ZoneSnow || modPlayer.WoodForce))
-                        FargoGlobalProjectile.SplitProj(Main.projectile[p], 5);
+                    if (p != 1000)
+                        FargoGlobalProjectile.SplitProj(Main.projectile[p], 3);
                 }
 
                 if (modPlayer.CelestialRune && SoulConfig.Instance.GetValue(SoulConfig.Instance.CelestialRune))
@@ -138,7 +138,7 @@ namespace FargowiltasSouls.Items
                     }
                     if (item.thrown) //ancient vision
                     {
-                        Projectile.NewProjectile(position, velocity * 16f, ModContent.ProjectileType<CelestialRuneAncientVision>(), (int)(50f * player.thrownDamage), 0, player.whoAmI);
+                        Projectile.NewProjectile(position, velocity * 16f, ModContent.ProjectileType<CelestialRuneAncientVision>(), (int)(50f * player.magicDamage), 0, player.whoAmI);
                     }
                 }
 

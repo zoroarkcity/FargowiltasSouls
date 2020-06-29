@@ -53,19 +53,23 @@ Summons a pet Magic Lantern");
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<FargoPlayer>().MinerEffect(hideVisual, .5f);
+            //add effects
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.MiningHelmet);
+            recipe.AddIngredient(ItemID.MiningHelmet); //ultrabright helmet
             recipe.AddIngredient(ItemID.MiningShirt);
             recipe.AddIngredient(ItemID.MiningPants);
+            //ancient chisel
             recipe.AddIngredient(ItemID.CopperPickaxe);
             recipe.AddIngredient(ItemID.CnadyCanePickaxe);
             recipe.AddIngredient(ItemID.GoldPickaxe);
             recipe.AddIngredient(ItemID.MoltenPickaxe);
+            //gem critter? or minecart
             recipe.AddIngredient(ItemID.MagicLantern);
+            
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

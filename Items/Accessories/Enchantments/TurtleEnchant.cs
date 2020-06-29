@@ -68,7 +68,10 @@ Summons a pet Lizard and Turtle"); //shell hide no happen with SoE
             recipe.AddIngredient(ItemID.TurtleScaleMail);
             recipe.AddIngredient(ItemID.TurtleLeggings);
             recipe.AddIngredient(null, "CactusEnchant");
+            //chloro saber
             recipe.AddIngredient(ItemID.ChlorophytePartisan);
+            //Yelets
+            //jungle turtle
             recipe.AddIngredient(ItemID.Seaweed);
             recipe.AddIngredient(ItemID.LizardEgg);
             

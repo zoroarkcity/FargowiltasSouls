@@ -54,11 +54,15 @@ Summons a pet Minotaur");
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
+
             recipe.AddIngredient(ItemID.GladiatorHelmet);
             recipe.AddIngredient(ItemID.GladiatorBreastplate);
             recipe.AddIngredient(ItemID.GladiatorLeggings);
+            //gladius
             recipe.AddIngredient(ItemID.Javelin, 300);
             recipe.AddIngredient(ItemID.BoneJavelin, 300);
+            //spear
+            //storm spear
             recipe.AddIngredient(ItemID.AngelStatue);
             recipe.AddIngredient(ItemID.TartarSauce);
  

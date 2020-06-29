@@ -61,12 +61,16 @@ Getting hit drops your crit back down";
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
+
             recipe.AddIngredient(ItemID.TinHelmet);
             recipe.AddIngredient(ItemID.TinChainmail);
             recipe.AddIngredient(ItemID.TinGreaves);
+            //tin sword
             recipe.AddIngredient(ItemID.TinBow);
             recipe.AddIngredient(ItemID.TopazStaff);
             recipe.AddIngredient(ItemID.YellowPhaseblade);
+            //lemon
+            //some unused butterfly
             recipe.AddIngredient(ItemID.Daylight);
 
             recipe.AddTile(TileID.DemonAltar);

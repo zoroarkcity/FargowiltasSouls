@@ -58,37 +58,36 @@ namespace FargowiltasSouls.Items.Accessories.Essences
         {
             ModRecipe recipe = new ModRecipe(mod);
 
+            //consider 10 materials for all?
+
+            recipe.AddIngredient(ItemID.WarriorEmblem);
+            recipe.AddIngredient(ItemID.ZombieArm);
+            //bloody machete
+            //recipe.AddIngredient(ItemID.Trident);
+            recipe.AddIngredient(ItemID.ChainKnife); //flaming mace
+
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
-                //just thorium
-                recipe.AddIngredient(ItemID.WarriorEmblem);
-                recipe.AddIngredient(ItemID.ZombieArm);
-                recipe.AddIngredient(ItemID.Trident);
-                recipe.AddIngredient(ItemID.ChainKnife);
                 recipe.AddIngredient(thorium.ItemType("RedHourglass"));
                 recipe.AddIngredient(ItemID.StylistKilLaKillScissorsIWish);
                 recipe.AddIngredient(ItemID.IceBlade);
                 recipe.AddIngredient(ItemID.FalconBlade);
-                recipe.AddIngredient(ItemID.Starfury);
                 recipe.AddIngredient(thorium.ItemType("DrenchedDirk"));
                 recipe.AddIngredient(thorium.ItemType("Whip"));
-                recipe.AddIngredient(ItemID.BeeKeeper);
                 recipe.AddIngredient(thorium.ItemType("EnergyStormPartisan"));
                 recipe.AddRecipeGroup("FargowiltasSouls:AnyThoriumYoyo");
             }
             else
             {
-                //no others
-                recipe.AddIngredient(ItemID.WarriorEmblem);
-                recipe.AddIngredient(ItemID.ZombieArm);
-                recipe.AddIngredient(ItemID.Trident);
-                recipe.AddIngredient(ItemID.ChainKnife);
                 recipe.AddIngredient(ItemID.StylistKilLaKillScissorsIWish);
                 recipe.AddIngredient(ItemID.IceBlade);
+                //shroomerang
                 recipe.AddIngredient(ItemID.FalconBlade);
-                recipe.AddIngredient(ItemID.Starfury);
-                recipe.AddIngredient(ItemID.BeeKeeper);
-                recipe.AddIngredient(ItemID.Cascade);
+                //amazon
+                //combat wrench
+                //blue moon
+                recipe.AddIngredient(ItemID.Flamarang);
+                //terragrim -  make recipe phm
             }
 
             recipe.AddTile(TileID.TinkerersWorkbench);

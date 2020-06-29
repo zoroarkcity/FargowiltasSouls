@@ -41,6 +41,9 @@ Flameburst field of view and range are dramatically increased");
             recipe.AddIngredient(ItemID.ApprenticeTrousers);
             recipe.AddIngredient(ItemID.ApprenticeScarf);
             recipe.AddIngredient(ItemID.DD2FlameburstTowerT2Popper);
+            //magic missile
+            //ice rod
+            //golden shower
             recipe.AddIngredient(ItemID.BookStaff);
             recipe.AddIngredient(ItemID.ClingerStaff);
 

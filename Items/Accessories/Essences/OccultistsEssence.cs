@@ -75,15 +75,20 @@ Increases your max number of sentries by 1");
             }
             else
             {
-                //1.4 help me
+                
                 recipe.AddIngredient(ItemID.SummonerEmblem);
+                //finch staff
                 recipe.AddIngredient(ItemID.SlimeStaff);
+                //vampire frog staff
                 recipe.AddIngredient(ItemID.HornetStaff);
                 recipe.AddIngredient(ItemID.ImpStaff);
                 recipe.AddIngredient(ItemID.DD2BallistraTowerT1Popper);
                 recipe.AddIngredient(ItemID.DD2ExplosiveTrapT1Popper);
                 recipe.AddIngredient(ItemID.DD2FlameburstTowerT1Popper);
                 recipe.AddIngredient(ItemID.DD2LightningAuraT1Popper);
+                //firecracker
+
+            //summon variants?
             }
 
             recipe.AddTile(TileID.TinkerersWorkbench);

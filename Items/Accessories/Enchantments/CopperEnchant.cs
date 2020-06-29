@@ -66,9 +66,12 @@ Attacks that cause Wet cannot proc the lightning";
             recipe.AddIngredient(ItemID.CopperGreaves);
             recipe.AddIngredient(ItemID.CopperShortsword);
             recipe.AddIngredient(ItemID.AmethystStaff);
-            recipe.AddIngredient(ItemID.FirstEncounter);
-            //recipe.AddIngredient(ItemID.PurplePhaseblade);
+            recipe.AddIngredient(ItemID.PurplePhaseblade);
+            //thunder zapper
             recipe.AddIngredient(ItemID.Wire, 20);
+            //daybloom
+            recipe.AddIngredient(ItemID.FirstEncounter);
+            
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

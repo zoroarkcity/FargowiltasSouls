@@ -61,12 +61,13 @@ Summons a pet Flickerwick";
             recipe.AddIngredient(ItemID.ApprenticeAltShirt);
             recipe.AddIngredient(ItemID.ApprenticeAltPants);
             recipe.AddIngredient(null, "ApprenticeEnchant");
-            //recipe.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
-            recipe.AddIngredient(ItemID.ShadowFlameHexDoll);
+            recipe.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
+            recipe.AddIngredient(ItemID.ShadowbeamStaff);
             recipe.AddIngredient(ItemID.InfernoFork);
+            //Razorpine
+            //staff of earth
             recipe.AddIngredient(ItemID.DD2PetGhost);
 
-            //betsy wrath?
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

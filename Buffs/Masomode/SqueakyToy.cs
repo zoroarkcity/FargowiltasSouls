@@ -24,10 +24,5 @@ namespace FargowiltasSouls.Buffs.Masomode
             //all attacks do one damage and make squeaky noises
             player.GetModPlayer<FargoPlayer>().SqueakyToy = true;
         }
-
-        public override void Update(NPC npc, ref int buffIndex)
-        {
-            npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SqueakyToy = true;
-        }
     }
 }

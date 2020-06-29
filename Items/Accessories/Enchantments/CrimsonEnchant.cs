@@ -56,9 +56,12 @@ Summons a pet Face Monster and Crimson Heart");
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.CrimsonHelmet);
             recipe.AddIngredient(ItemID.CrimsonScalemail);
-            recipe.AddIngredient(ItemID.CrimsonGreaves);            
-            recipe.AddIngredient(ItemID.TheUndertaker);
+            recipe.AddIngredient(ItemID.CrimsonGreaves);
+            //blood axe tging
             recipe.AddIngredient(ItemID.TheMeatball);
+            recipe.AddIngredient(ItemID.TheUndertaker);
+            //blood rain bow
+            //flesh catcher rod
             recipe.AddIngredient(ItemID.BoneRattle);
             recipe.AddIngredient(ItemID.CrimsonHeart);
             

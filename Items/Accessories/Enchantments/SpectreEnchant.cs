@@ -66,9 +66,12 @@ Summons a pet Wisp";
             recipe.AddRecipeGroup("FargowiltasSouls:AnySpectreHead");
             recipe.AddIngredient(ItemID.SpectreRobe);
             recipe.AddIngredient(ItemID.SpectrePants);
+            //spectre wings
+            recipe.AddIngredient(ItemID.UnholyTrident);
+            //nettle burst
             recipe.AddIngredient(ItemID.Keybrand);
             recipe.AddIngredient(ItemID.SpectreStaff);
-            recipe.AddIngredient(ItemID.UnholyTrident);
+            //bat scepter
             recipe.AddIngredient(ItemID.WispinaBottle);
 
             recipe.AddTile(TileID.CrystalBall);

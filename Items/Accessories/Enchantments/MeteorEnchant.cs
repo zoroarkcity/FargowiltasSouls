@@ -57,13 +57,17 @@ A meteor shower initiates every few seconds while attacking";
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
+
             recipe.AddIngredient(ItemID.MeteorHelmet);
             recipe.AddIngredient(ItemID.MeteorSuit);
             recipe.AddIngredient(ItemID.MeteorLeggings);
+            //meteor hamaxe
             recipe.AddIngredient(ItemID.SpaceGun);
-            recipe.AddIngredient(ItemID.StarCannon);
+            //orange zapinator, add recipe
+            recipe.AddIngredient(ItemID.StarCannon); //super star shooter, add recipe
             recipe.AddIngredient(ItemID.MeteorStaff);
             recipe.AddIngredient(ItemID.PlaceAbovetheClouds);
+            //harpy pet
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

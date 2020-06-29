@@ -60,13 +60,17 @@ Summons a sword familiar that scales with minion damage";
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
+
             recipe.AddIngredient(ItemID.SilverHelmet);
             recipe.AddIngredient(ItemID.SilverChainmail);
             recipe.AddIngredient(ItemID.SilverGreaves);
             recipe.AddIngredient(ItemID.SilverBroadsword);
+            //silver bow
             recipe.AddIngredient(ItemID.SapphireStaff);
             recipe.AddIngredient(ItemID.BluePhaseblade);
+            //leather whip
             recipe.AddIngredient(ItemID.TreeNymphButterfly);
+            //roasted duck
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

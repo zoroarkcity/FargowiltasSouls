@@ -60,7 +60,10 @@ Enemies may explode into needles on death");
             recipe.AddIngredient(ItemID.CactusLeggings);
             recipe.AddIngredient(ItemID.CactusSword);
             recipe.AddIngredient(ItemID.Sandgun);
+            recipe.AddIngredient(ItemID.Waterleaf);
             recipe.AddIngredient(ItemID.PinkPricklyPear);
+            //any dragonfly
+            // flounder
             recipe.AddIngredient(ItemID.SecretoftheSands);
             
             recipe.AddTile(TileID.DemonAltar);

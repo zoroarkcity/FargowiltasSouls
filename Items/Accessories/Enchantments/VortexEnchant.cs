@@ -59,8 +59,11 @@ Summons a pet Companion Cube");
             recipe.AddIngredient(ItemID.VortexHelmet);
             recipe.AddIngredient(ItemID.VortexBreastplate);
             recipe.AddIngredient(ItemID.VortexLeggings);
+            //vortex wings
             recipe.AddIngredient(ItemID.VortexBeater);
             recipe.AddIngredient(ItemID.Phantasm);
+            //chain gun
+            //electrosphere launcher
             recipe.AddIngredient(ItemID.SDMG);
             recipe.AddIngredient(ItemID.CompanionCube);
 

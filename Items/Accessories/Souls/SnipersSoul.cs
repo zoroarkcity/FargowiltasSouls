@@ -75,6 +75,8 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             player.rangedDamage += .3f;
             player.rangedCrit += 15;
 
+            //add new effects
+
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SniperScope))
             {
                 player.scope = true;
@@ -94,17 +96,17 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddIngredient(null, "SharpshootersEssence");
-            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? calamity.ItemType("ElementalQuiver") : ItemID.MagicQuiver);
+            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? calamity.ItemType("ElementalQuiver") : ItemID.MagicQuiver); //molten quiver
+            recipe.AddIngredient(ItemID.SniperScope); //recon scope
 
             if (Fargowiltas.Instance.ThoriumLoaded)
             {
-                recipe.AddIngredient(thorium.ItemType("SpineBuster"));
                 recipe.AddIngredient(thorium.ItemType("DestroyersRage"));
                 recipe.AddIngredient(thorium.ItemType("TerraBow"));
             }
             else
             {
-                recipe.AddIngredient(ItemID.SniperScope);
+                
                 recipe.AddIngredient(ItemID.DartPistol);
                 recipe.AddIngredient(ItemID.Megashark);
             }
@@ -117,7 +119,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             recipe.AddIngredient(ItemID.StakeLauncher);
             recipe.AddIngredient(ItemID.EldMelter);
             recipe.AddIngredient(ItemID.Xenopopper);
-            recipe.AddIngredient(ItemID.FireworksLauncher);
+            recipe.AddIngredient(ItemID.FireworksLauncher); //celebration mk 2
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 

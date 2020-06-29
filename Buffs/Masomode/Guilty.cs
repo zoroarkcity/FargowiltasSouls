@@ -24,7 +24,6 @@ namespace FargowiltasSouls.Buffs.Masomode
             player.rangedDamage -= 0.25f;
             player.magicDamage -= 0.25f;
             player.minionDamage -= 0.25f;
-            player.thrownDamage -= 0.25f;
         }
     }
 }

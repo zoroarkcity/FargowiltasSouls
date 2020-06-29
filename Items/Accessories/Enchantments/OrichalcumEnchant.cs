@@ -58,9 +58,12 @@ Spawns 6 fireballs to rotate around you");
             recipe.AddIngredient(ItemID.OrichalcumBreastplate);
             recipe.AddIngredient(ItemID.OrichalcumLeggings);
             recipe.AddIngredient(ItemID.OrichalcumWaraxe);
+            //ori sword
+            //flare gun
             recipe.AddIngredient(ItemID.FlowerofFire);
             recipe.AddIngredient(ItemID.FlowerofFrost);
             recipe.AddIngredient(ItemID.CursedFlames);
+            //flamethrower
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

@@ -20,6 +20,9 @@
     <Reference Include="Fargowiltas">
       <HintPath>..\folder for wip\Fargowiltas.XNA.dll</HintPath>
     </Reference>
+    <Reference Include="SacredTools">
+      <HintPath>..\folder for wip\SacredTools\SacredTools.dll</HintPath>
+    </Reference>
     <Reference Include="ThoriumMod">
       <HintPath>..\folder for wip\ThoriumMod.XNA.dll</HintPath>
     </Reference>

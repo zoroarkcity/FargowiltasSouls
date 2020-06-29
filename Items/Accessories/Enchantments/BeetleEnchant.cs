@@ -68,6 +68,9 @@ Increases flight time by 50%";
             recipe.AddIngredient(ItemID.BeeWings);
             recipe.AddIngredient(ItemID.ButterflyWings);
             recipe.AddIngredient(ItemID.MothronWings);
+            //breaker blade
+            //amarok
+            //beetle minecart
               
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

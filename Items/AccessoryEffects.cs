@@ -1539,11 +1539,6 @@ namespace FargowiltasSouls
             player.accFishingLine = true;
             player.accTackleBox = true;
             player.accFishFinder = true;
-
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                thorium.GetItem("MagmaBoundFishingLine").UpdateAccessory(player, hideVisual);
-            }
         }
 
         public void WorldShaperSoul(bool hideVisual)

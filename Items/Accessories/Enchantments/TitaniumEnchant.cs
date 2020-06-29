@@ -46,7 +46,7 @@ Briefly become invulnerable after striking an enemy");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().TitaniumEffect();
+            player.GetModPlayer<FargoPlayer>().TitaniumEffect(); //new set bonus
         }
 
         public override void AddRecipes()
@@ -55,6 +55,9 @@ Briefly become invulnerable after striking an enemy");
             recipe.AddRecipeGroup("FargowiltasSouls:AnyTitaHead");
             recipe.AddIngredient(ItemID.TitaniumBreastplate);
             recipe.AddIngredient(ItemID.TitaniumLeggings);
+            //titanium drill
+            //titanium sword
+            //rockfish
             recipe.AddIngredient(ItemID.Cutlass);
             recipe.AddIngredient(ItemID.SlapHand);
             recipe.AddIngredient(ItemID.Anchor);

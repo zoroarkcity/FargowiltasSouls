@@ -38,12 +38,7 @@ namespace FargowiltasSouls.Projectiles.Minions
 
             projectile.ai[1] += 1f;
 
-            int attackRate = 60;
-
-            if (player.ZoneDesert || player.ZoneBeach)
-            {
-                attackRate = 30;
-            }
+            int attackRate = 45;
 
             if (projectile.ai[1] >= attackRate)
             {

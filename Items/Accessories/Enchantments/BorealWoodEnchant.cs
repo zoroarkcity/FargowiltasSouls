@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Boreal Wood Enchantment");
             Tooltip.SetDefault(
 @"'The cooler wood'
-Attacks will periodically be accompanied by several snowballs"); //e
+Attacks will periodically be accompanied by several snowballs"); 
             DisplayName.AddTranslation(GameCulture.Chinese, "针叶木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'冷木'
@@ -55,10 +55,13 @@ Attacks will periodically be accompanied by several snowballs"); //e
             recipe.AddIngredient(ItemID.BorealWoodHelmet);
             recipe.AddIngredient(ItemID.BorealWoodBreastplate);
             recipe.AddIngredient(ItemID.BorealWoodGreaves);
+            recipe.AddIngredient(ItemID.BorealWoodSword);
+            recipe.AddIngredient(ItemID.BorealWoodBow);
             recipe.AddIngredient(ItemID.Snowball, 300);
+            recipe.AddIngredient(ItemID.Shiverthorn);
+            //cherry/plum
             recipe.AddIngredient(ItemID.Penguin);
             recipe.AddIngredient(ItemID.ColdWatersintheWhiteLand);
-            recipe.AddIngredient(ItemID.Shiverthorn);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

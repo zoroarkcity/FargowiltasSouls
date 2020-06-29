@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Ebonwood Enchantment");
             Tooltip.SetDefault(
 @"'Untapped potential'
-You have an aura of Shadowflame"); //e
+You have an aura of Shadowflame");
             DisplayName.AddTranslation(GameCulture.Chinese, "乌木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'未开发的潜力'
@@ -56,8 +56,11 @@ You have an aura of Shadowflame"); //e
             recipe.AddIngredient(ItemID.EbonwoodBreastplate);
             recipe.AddIngredient(ItemID.EbonwoodGreaves);
             recipe.AddIngredient(ItemID.EbonwoodSword);
-            recipe.AddIngredient(ItemID.Ebonkoi);
+            recipe.AddIngredient(ItemID.EbonwoodBow);
+            recipe.AddIngredient(ItemID.Deathweed);
             recipe.AddIngredient(ItemID.VileMushroom);
+            //elderberry/blackcurrant
+            recipe.AddIngredient(ItemID.Ebonkoi);
             recipe.AddIngredient(ItemID.LightlessChasms);
 
             recipe.AddTile(TileID.DemonAltar);

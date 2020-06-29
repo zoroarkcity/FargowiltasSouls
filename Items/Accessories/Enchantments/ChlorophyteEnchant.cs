@@ -64,7 +64,7 @@ Summons a pet Seedling";
             modPlayer.ChloroEffect(hideVisual, 100);
             //herb double and bulb effect with thorium
             modPlayer.ChloroEnchant = true;
-            modPlayer.FlowerBoots();
+            //modPlayer.FlowerBoots();
             modPlayer.JungleEffect();
         }
 
@@ -75,9 +75,12 @@ Summons a pet Seedling";
             recipe.AddIngredient(ItemID.ChlorophytePlateMail);
             recipe.AddIngredient(ItemID.ChlorophyteGreaves);
             recipe.AddIngredient(null, "JungleEnchant");
-            recipe.AddIngredient(ItemID.FlowerBoots);
-            recipe.AddIngredient(ItemID.StaffofRegrowth);
+            //chloro warhammer
+            //chloro claymore
+            //wasp gun
+            //grape juice
             recipe.AddIngredient(ItemID.Seedling);
+            //plantero pet
             
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

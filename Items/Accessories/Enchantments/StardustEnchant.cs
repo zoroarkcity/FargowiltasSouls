@@ -61,10 +61,13 @@ There is a 60 second cooldown for this effect, a sound effect plays when it's ba
             recipe.AddIngredient(ItemID.StardustHelmet);
             recipe.AddIngredient(ItemID.StardustBreastplate);
             recipe.AddIngredient(ItemID.StardustLeggings);
+            //stardust wings
             recipe.AddIngredient(ItemID.StardustPickaxe);
             recipe.AddIngredient(ItemID.StardustCellStaff);
             recipe.AddIngredient(ItemID.StardustDragonStaff);
             recipe.AddIngredient(ItemID.RainbowCrystalStaff);
+            //MoonlordTurretStaff
+            //estee pet
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

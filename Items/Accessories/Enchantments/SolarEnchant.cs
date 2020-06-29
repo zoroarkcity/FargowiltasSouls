@@ -62,10 +62,13 @@ Melee attacks may inflict the Solar Flare debuff");
             recipe.AddIngredient(ItemID.SolarFlareHelmet);
             recipe.AddIngredient(ItemID.SolarFlareBreastplate);
             recipe.AddIngredient(ItemID.SolarFlareLeggings);
+            //solar wings
             recipe.AddIngredient(ItemID.HelFire);
+            //golem fist
+            //xmas tree sword
             recipe.AddIngredient(ItemID.SolarEruption);
             recipe.AddIngredient(ItemID.DayBreak);
-            recipe.AddIngredient(ItemID.StarWrath);
+            recipe.AddIngredient(ItemID.StarWrath); //terrarian
 
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);

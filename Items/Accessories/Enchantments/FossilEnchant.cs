@@ -56,12 +56,16 @@ Summons a pet Baby Dino");
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
+
             recipe.AddIngredient(ItemID.FossilHelm);
             recipe.AddIngredient(ItemID.FossilShirt);
             recipe.AddIngredient(ItemID.FossilPants);
-            recipe.AddIngredient(ItemID.AntlionClaw);
+            //fossil pick
+            recipe.AddIngredient(ItemID.BoneDagger, 300);
             recipe.AddIngredient(ItemID.AmberStaff);
-            recipe.AddIngredient(ItemID.BoneDagger, 300);            
+            recipe.AddIngredient(ItemID.AntlionClaw);
+            //orange phaseblade
+            //snake charmers flute    
             recipe.AddIngredient(ItemID.AmberMosquito);
             
             recipe.AddTile(TileID.DemonAltar);

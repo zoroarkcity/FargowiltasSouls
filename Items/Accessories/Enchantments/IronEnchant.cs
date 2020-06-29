@@ -83,8 +83,11 @@ You attract items from a larger range";
             recipe.AddIngredient(ItemID.IronChainmail);
             recipe.AddIngredient(ItemID.IronGreaves);
             recipe.AddIngredient(ItemID.EoCShield);
+            //treasure magnet
+            //empty bucket
             recipe.AddIngredient(ItemID.IronBroadsword);
-            recipe.AddIngredient(ItemID.IronAnvil);
+            recipe.AddIngredient(ItemID.IronBow);
+            //apricot (high in iron pog)
             recipe.AddIngredient(ItemID.ZebraSwallowtailButterfly);
 
             recipe.AddTile(TileID.DemonAltar);

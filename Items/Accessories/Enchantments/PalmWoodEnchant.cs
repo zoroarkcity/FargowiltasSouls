@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Palm Wood Enchantment");
             Tooltip.SetDefault(
 @"'Alarmingly calm'
-Double tap down to spawn a palm tree sentry that throws nuts at enemies");// e
+Double tap down to spawn a palm tree sentry that throws nuts at enemies");
             DisplayName.AddTranslation(GameCulture.Chinese, "棕榈木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'出奇的平静'
@@ -55,10 +55,13 @@ Double tap down to spawn a palm tree sentry that throws nuts at enemies");// e
             recipe.AddIngredient(ItemID.PalmWoodHelmet);
             recipe.AddIngredient(ItemID.PalmWoodBreastplate);
             recipe.AddIngredient(ItemID.PalmWoodGreaves);
+            //palmwood sword
             recipe.AddIngredient(ItemID.BreathingReed);
-            recipe.AddIngredient(ItemID.Tuna);
-            recipe.AddIngredient(ItemID.Seashell);
             recipe.AddIngredient(ItemID.BlackInk);
+            //coconut
+            //seagull
+            recipe.AddIngredient(ItemID.Tuna);
+            //shark pet
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

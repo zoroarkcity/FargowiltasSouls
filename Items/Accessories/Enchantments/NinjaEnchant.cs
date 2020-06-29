@@ -56,7 +56,7 @@ Summons a pet Black Cat");
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().NinjaEffect(hideVisual);
+            player.GetModPlayer<FargoPlayer>().NinjaEffect(hideVisual); //move pet
         }
 
         public override void AddRecipes()
@@ -65,10 +65,13 @@ Summons a pet Black Cat");
             recipe.AddIngredient(ItemID.NinjaHood);
             recipe.AddIngredient(ItemID.NinjaShirt);
             recipe.AddIngredient(ItemID.NinjaPants);
+            //katana
+            //chain knife
             recipe.AddIngredient(ItemID.Shuriken, 300);
+            //throwing knives
             recipe.AddIngredient(ItemID.SmokeBomb, 50);
+            //slime hook
             recipe.AddIngredient(ItemID.SlimySaddle);
-            recipe.AddIngredient(ItemID.UnluckyYarn);
             
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

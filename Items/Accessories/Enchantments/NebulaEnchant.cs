@@ -56,9 +56,12 @@ Buff booster stacking capped at 2");
             recipe.AddIngredient(ItemID.NebulaHelmet);
             recipe.AddIngredient(ItemID.NebulaBreastplate);
             recipe.AddIngredient(ItemID.NebulaLeggings);
-            recipe.AddIngredient(ItemID.ShadowbeamStaff);
+            //nebula wings
             recipe.AddIngredient(ItemID.NebulaArcanum);
             recipe.AddIngredient(ItemID.NebulaBlaze);
+            //LeafBlower
+            //bubble gun
+            //chaarged blaster cannon
             recipe.AddIngredient(ItemID.LunarFlareBook);
 
             recipe.AddTile(TileID.LunarCraftingStation);

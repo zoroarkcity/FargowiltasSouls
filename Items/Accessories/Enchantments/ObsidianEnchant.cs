@@ -57,10 +57,13 @@ While standing in lava, you gain 20 armor penetration, 15% attack speed, and you
             recipe.AddIngredient(ItemID.ObsidianHelm);
             recipe.AddIngredient(ItemID.ObsidianShirt);
             recipe.AddIngredient(ItemID.ObsidianPants);
-            recipe.AddIngredient(ItemID.ObsidianRose);
+            recipe.AddIngredient(ItemID.ObsidianRose); //molten skull rose
             recipe.AddIngredient(ItemID.ObsidianHorseshoe);
-            recipe.AddIngredient(ItemID.SharkToothNecklace);
+            //cascade?
             recipe.AddIngredient(ItemID.Fireblossom);
+            //magma snail
+            //obsidifsh
+            //mimic pet
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

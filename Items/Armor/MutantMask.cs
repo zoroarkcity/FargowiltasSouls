@@ -40,12 +40,10 @@ Increases max number of minions and sentries by 10
             player.meleeDamage += damageUp;
             player.rangedDamage += damageUp;
             player.magicDamage += damageUp;
-            player.thrownDamage += damageUp;
             player.minionDamage += damageUp;
             player.meleeCrit += critUp;
             player.rangedCrit += critUp;
             player.magicCrit += critUp;
-            player.thrownCrit += critUp;
 
             player.maxMinions += 10;
             player.maxTurrets += 10;
