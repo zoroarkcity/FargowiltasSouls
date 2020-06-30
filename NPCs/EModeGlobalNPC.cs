@@ -320,9 +320,6 @@ namespace FargowiltasSouls.NPCs
                     break;
 
                 case NPCID.Mimic:
-                    npc.value /= 4;
-                    goto case NPCID.Medusa;
-
                 case NPCID.Medusa:
                 case NPCID.PigronCorruption:
                 case NPCID.PigronCrimson:
@@ -457,14 +454,9 @@ namespace FargowiltasSouls.NPCs
                     masoBool[0] = BossIsAlive(ref moonBoss, NPCID.MoonLordCore);
                     break;
 
-                case NPCID.QueenBee:
-                    npc.value /= 2;
-                    break;
-
                 case NPCID.MoonLordCore:
                     isMasoML = true;
                     masoStateML = 0;
-                    npc.value += Item.buyPrice(0, 20);
                     break;
 
                 case NPCID.MoonLordHead:

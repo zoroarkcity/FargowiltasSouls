@@ -154,3 +154,4 @@ pungent eyeball and true eye minions are drawn behind their deathrays
 removed the old bandaid solution of creepers blocking strong attacks by making those attacks intangible to npcs
 fixed bug where devi, abom, mutant become invisible when they go OOB and come back(?) (TEST IN MP)
 changed abom's 8 sickle spread attack to be different from mutant
+removed emode money drop changes (qb, ml, mimic)
