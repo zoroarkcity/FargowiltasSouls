@@ -165,16 +165,17 @@ namespace FargowiltasSouls.NPCs.Champions
                 case 3: //shoot acorns
                     targetPos = player.Center;
                     targetPos.X += npc.Center.X < player.Center.X ? -400 : 400;
-                    targetPos.Y -= 200;
+                    targetPos.Y -= 100;
                     if (npc.Distance(targetPos) > 50)
-                        Movement(targetPos, 0.25f, 24f);
+                        Movement(targetPos, 0.25f, 32f);
 
                     if (++npc.ai[2] > 35) //acorn
                     {
                         npc.ai[2] = 0;
                         const float gravity = 0.2f;
-                        float time = 45f;
+                        float time = 40f;
                         Vector2 distance = player.Center - npc.Center;// + player.velocity * 30f;
+                        distance.X += player.velocity.X * 40;
                         distance.X = distance.X / time;
                         distance.Y = distance.Y / time - 0.5f * gravity * time;
                         for (int i = 0; i < 20; i++)
@@ -212,7 +213,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         for (int i = 0; i < 5; i++) //spawn trees
                         {
                             Vector2 spawnPos = player.Center;
-                            spawnPos.X += Main.rand.NextFloat(-1500, 1500) + player.velocity.X * 30;
+                            spawnPos.X += Main.rand.NextFloat(-1500, 1500) + player.velocity.X * 75;
                             spawnPos.Y -= Main.rand.NextFloat(300);
                             for (int j = 0; j < 100; j++) //go down until solid tile found
                             {
@@ -233,7 +234,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 spawnPos.Y -= 16;
                             }
                             spawnPos.Y -= 152; //offset for height of tree
-                            Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<TimberTree>(), npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<TimberTree>(), npc.damage / 4, 0f, Main.myPlayer, npc.target);
                         }
                     }
 
@@ -317,8 +318,10 @@ namespace FargowiltasSouls.NPCs.Champions
 
                 case 12: //noah snowballs
                     targetPos = player.Center;
+                    targetPos.X += player.velocity.X * 30f;
                     targetPos.Y -= 200;
-                    Movement(targetPos, 0.3f, 32f);
+                    if (npc.Distance(targetPos) > 30)
+                        Movement(targetPos, 0.45f, 32f);
 
                     if (npc.ai[1] > 90)
                     {
@@ -331,7 +334,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 for (int i = -2; i <= 2; i++)
                                 {
                                     Vector2 speed = new Vector2(5f * i, -20f);
-                                    Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<Snowball2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<Snowball2>(), npc.damage / 4, 0f, Main.myPlayer, npc.target);
                                 }
                             }
                         }

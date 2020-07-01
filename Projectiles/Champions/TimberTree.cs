@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.height = 304;
             projectile.aiStyle = -1;
             projectile.hostile = true;
-            projectile.timeLeft = 120;
+            projectile.timeLeft = 75;
             projectile.ignoreWater = true;
             projectile.tileCollide = true;
             projectile.alpha = 255;
@@ -89,6 +89,10 @@ namespace FargowiltasSouls.Projectiles.Champions
                         if (distance.Y > minimumY)
                             distance.Y = minimumY;
                         distance += Main.rand.NextVector2Square(-0.5f, 0.5f) * 2;
+
+                        if (Math.Abs(Main.player[(int)projectile.ai[0]].velocity.X) > 9f)
+                            distance.X += Main.player[(int)projectile.ai[0]].velocity.X * 0.75f;
+
                         Projectile.NewProjectile(spawnPos, distance, ModContent.ProjectileType<Acorn>(), projectile.damage, projectile.knockBack, projectile.owner);
                     }
                 }
