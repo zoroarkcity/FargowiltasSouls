@@ -214,12 +214,14 @@ namespace FargowiltasSouls
             return !TileIsNull(x, y) && tile.active() && Main.tileSolid[tile.type] && !Main.tileSolidTop[tile.type] && !tile.halfBrick()
                 && tile.slope() == 0 && !tile.inActive();
         }
-        
-        public override bool CanExplode(int i, int j, int type)
+
+        public override void RightClick(int i, int j, int type)
         {
-            if (type == TileID.Meteorite && FargoSoulsWorld.MasochistMode && !NPC.downedBoss3)
-                return false;
-            return true;
+            if (type == TileID.LihzahrdAltar && Collision.CanHit(new Vector2(i * 16 + 8, j * 16 + 8), 0, 0, Main.LocalPlayer.Center, 0, 0))
+            {
+                Main.LocalPlayer.AddBuff(mod.BuffType("LihzahrdBlessing"), 60 * 60 * 10); //10mins
+                Main.PlaySound(SoundID.Item9, Main.LocalPlayer.Center);
+            }
         }
 
         public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)

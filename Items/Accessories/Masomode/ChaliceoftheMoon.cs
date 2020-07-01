@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         {
             DisplayName.SetDefault("Chalice of the Moon");
             Tooltip.SetDefault(@"'The moon smiles'
-Grants immunity to Venom, Ivy Venom, Burning, Fused, Low Ground, and Marked for Death
+Grants immunity to Venom, Ivy Venom, Burning, Fused, Lihzahrd Curse, Low Ground, and Marked for Death
 Grants immunity to Swarming, Atrophied, Jammed, Reverse Mana Flow, and Antisocial
 Increases life regeneration
 Press down in the air to fastfall
@@ -57,6 +57,7 @@ Summons a friendly Cultist and plant to fight at your side");
             //lihzahrd treasure
             player.buffImmune[BuffID.Burning] = true;
             player.buffImmune[mod.BuffType("Fused")] = true;
+            player.buffImmune[mod.BuffType("LihzahrdCurse")] = true;
             player.buffImmune[mod.BuffType("LowGround")] = true;
             fargoPlayer.LihzahrdTreasureBox = true;
 

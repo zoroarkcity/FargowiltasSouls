@@ -324,6 +324,7 @@ namespace FargowiltasSouls
         public bool[] MashPressed = new bool[4];
         public int MashCounter;
         public int StealingCooldown;
+        public bool LihzahrdCurse;
 
         public int MasomodeCrystalTimer = 0;
         public int MasomodeFreezeTimer = 0;
@@ -787,6 +788,7 @@ namespace FargowiltasSouls
             Swarming = false;
             LowGround = false;
             Flipped = false;
+            LihzahrdCurse = false;
 
             if (!Mash && MashCounter > 0)
             {
@@ -914,8 +916,14 @@ namespace FargowiltasSouls
                         player.AddBuff(BuffID.OnFire, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
                 }
 
-                if (player.ZoneJungle && player.wet && !MutantAntibodies)
-                    player.AddBuff(BuffID.Poisoned, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
+                if (player.ZoneJungle)
+                {
+                    if (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe)
+                        player.AddBuff(ModContent.BuffType<LihzahrdCurse>(), 2);
+
+                    if (player.wet && !MutantAntibodies)
+                        player.AddBuff(BuffID.Poisoned, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
+                }
 
                 if (player.ZoneSnow)
                 {
@@ -1258,13 +1266,10 @@ namespace FargowiltasSouls
             if (StealingCooldown > 0)
                 StealingCooldown--;
 
-            if (FargoSoulsWorld.MasochistMode && !NPC.downedGolemBoss)
+            if (LihzahrdCurse)
             {
-                if (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe)
-                {
-                    player.dangerSense = false;
-                    player.InfoAccMechShowWires = false;
-                }
+                player.dangerSense = false;
+                player.InfoAccMechShowWires = false;
                 if ((player.HeldItem.type == ItemID.WireCutter || player.HeldItem.type == ItemID.WireKite)
                     && (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe
                     || Framing.GetTileSafely(Main.MouseWorld).wall == WallID.LihzahrdBrickUnsafe))
