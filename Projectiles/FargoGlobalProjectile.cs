@@ -863,7 +863,7 @@ namespace FargowiltasSouls.Projectiles
                     {
                         projectile.damage = Main.npc[EModeGlobalNPC.championBoss].damage / 4;
                     }
-                    else if (FargoSoulsWorld.MasochistMode && projectile.timeLeft == 1199 && Main.netMode != NetmodeID.MultiplayerClient)
+                    else if (FargoSoulsWorld.MasochistMode && projectile.timeLeft == 1199 && NPC.CountNPCS(NPCID.SandShark) < 10 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int n = NPC.NewNPC((int)projectile.Center.X, (int)projectile.Center.Y, NPCID.SandShark);
                         if (n < 200)

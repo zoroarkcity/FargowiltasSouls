@@ -160,3 +160,4 @@ removed meteorite blast resistance  (no longer needed with 1.4)
 lihzahrd curse debuff handles disabling wires in temple
 lihzahrd treasure box gives immunity to lihzahrd curse
 right click lihzahrd altar for 10min lihzahrd blessing (immunity to curse)
+capped number of sand sharks spawned by sand ele
