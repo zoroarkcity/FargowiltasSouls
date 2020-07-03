@@ -36,9 +36,10 @@ namespace FargowiltasSouls
         public bool BrainMinion;
         public bool EaterMinion;
         public bool BigBrainMinion;
+        public bool DukeFishron;
 
         //pet
-        
+
         public bool ChibiDevi;
         public bool MutantSpawn;
         public bool BabyAbom;
@@ -578,6 +579,7 @@ namespace FargowiltasSouls
             BrainMinion = false;
             EaterMinion = false;
             BigBrainMinion = false;
+            DukeFishron = false;
 
             ChibiDevi = false;
             MutantSpawn = false;

@@ -1165,6 +1165,9 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             if (!playerInvulTriggered && !FargoSoulsWorld.downedAbom)
                 Item.NewItem(npc.Hitbox, mod.ItemType("StyxGazer"));
 
+            if (Main.rand.Next(100) < 3)
+                Item.NewItem(npc.Hitbox, mod.ItemType("StaffOfUnleashedOcean"));
+
             FargoSoulsWorld.downedAbom = true;
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData); //sync world
