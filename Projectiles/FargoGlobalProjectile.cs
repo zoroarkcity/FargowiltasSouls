@@ -690,7 +690,7 @@ namespace FargowiltasSouls.Projectiles
                 case ProjectileID.PhantasmalBolt:
                     if (FargoSoulsWorld.MasochistMode)
                     {
-                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore))
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore) && !FargoSoulsWorld.SwarmActive)
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
@@ -709,7 +709,7 @@ namespace FargowiltasSouls.Projectiles
                 case ProjectileID.DeathLaser:
                     if (FargoSoulsWorld.MasochistMode)
                     {
-                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.retiBoss, NPCID.Retinazer))
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.retiBoss, NPCID.Retinazer) && !FargoSoulsWorld.SwarmActive)
                         {
                             if (!masobool)
                             {
@@ -731,7 +731,7 @@ namespace FargowiltasSouls.Projectiles
                 case ProjectileID.EyeBeam:
                     if (FargoSoulsWorld.MasochistMode)
                     {
-                        if (EModeGlobalNPC.BossIsAlive(ref NPC.golemBoss, NPCID.Golem))
+                        if (EModeGlobalNPC.BossIsAlive(ref NPC.golemBoss, NPCID.Golem) && !FargoSoulsWorld.SwarmActive)
                         {
                             if (!masobool)
                             {
@@ -762,21 +762,28 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case ProjectileID.CultistRitual:
-                    if (FargoSoulsWorld.MasochistMode)
+                    if (FargoSoulsWorld.MasochistMode && !FargoSoulsWorld.SwarmActive)
                     {
+                        if (projectile.ai[1] > -1 && projectile.ai[1] < Main.maxNPCs 
+                            && Main.npc[(int)projectile.ai[1]].ai[3] == -1f && Main.npc[(int)projectile.ai[1]].ai[0] == 5)
+                        {
+                            projectile.Center = Main.player[Main.npc[(int)projectile.ai[1]].target].Center;
+                        }
+
                         if (!masobool) //MP sync data to server
                         {
                             masobool = true;
-                            if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss))
+
+                            if (projectile.ai[1] > -1 && projectile.ai[1] < Main.maxNPCs)
                             {
-                                NPC cultist = Main.npc[EModeGlobalNPC.cultBoss];
+                                NPC cultist = Main.npc[(int)projectile.ai[1]];
                                 if (Main.netMode == NetmodeID.MultiplayerClient)
                                 {
                                     EModeGlobalNPC fargoCultist = cultist.GetGlobalNPC<EModeGlobalNPC>();
 
                                     var netMessage = mod.GetPacket();
                                     netMessage.Write((byte)10);
-                                    netMessage.Write((byte)EModeGlobalNPC.cultBoss);
+                                    netMessage.Write((byte)projectile.ai[1]);
                                     netMessage.Write(fargoCultist.Counter);
                                     netMessage.Write(fargoCultist.Counter2);
                                     netMessage.Write(fargoCultist.Timer);
@@ -790,25 +797,33 @@ namespace FargowiltasSouls.Projectiles
                                 }
                                 else //refresh ritual
                                 {
-                                    for (int i = 0; i < 1000; i++)
+                                    for (int i = 0; i < Main.maxProjectiles; i++)
+                                    {
                                         if (Main.projectile[i].active && Main.projectile[i].type == ModContent.ProjectileType<CultistRitual>())
                                         {
                                             Main.projectile[i].Kill();
                                             break;
                                         }
-                                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<CultistRitual>(), 0, 0f, Main.myPlayer);
+                                    }
+                                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<CultistRitual>(), 0, 0f, Main.myPlayer, 0f, projectile.whoAmI);
                                 }
+                            }
+
+                            for (int i = 0; i < Main.maxProjectiles; i++) //purge spectre mask bolts
+                            {
+                                if (Main.projectile[i].active && Main.projectile[i].type == ProjectileID.SpectreWrath)
+                                    Main.projectile[i].Kill();
                             }
                         }
 
-                        if (projectile.ai[0] > 120f && projectile.ai[0] < 299f) //instant ritual
+                        /*if (projectile.ai[0] > 120f && projectile.ai[0] < 299f) //instant ritual
                         {
                             projectile.ai[0] = 299f;
-                            if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss))
+                            if (projectile.ai[1] > -1 && projectile.ai[1] < Main.maxNPCs) //pillar dunk
                             {
                                 float ai0 = Main.rand.Next(4);
 
-                                NPC cultist = Main.npc[EModeGlobalNPC.cultBoss];
+                                NPC cultist = Main.npc[(int)projectile.ai[1]];
                                 EModeGlobalNPC fargoCultist = cultist.GetGlobalNPC<EModeGlobalNPC>();
                                 int[] weight = new int[4];
                                 weight[0] = fargoCultist.Counter;
@@ -830,12 +845,12 @@ namespace FargowiltasSouls.Projectiles
                                     Projectile.NewProjectile(projectile.Center, Vector2.UnitY * -10f, ModContent.ProjectileType<CelestialPillar>(),
                                         (int)(75 * (1 + FargoSoulsWorld.CultistCount * .0125)), 0f, Main.myPlayer, ai0);
                             }
-                        }
+                        }*/
                     }
                     break;
 
                 case ProjectileID.MoonLeech:
-                    if (FargoSoulsWorld.MasochistMode && projectile.ai[0] > 0f)
+                    if (FargoSoulsWorld.MasochistMode && projectile.ai[0] > 0f && !FargoSoulsWorld.SwarmActive)
                     {
                         Vector2 distance = Main.player[(int)projectile.ai[1]].Center - projectile.Center - projectile.velocity;
                         if (distance != Vector2.Zero)
@@ -908,7 +923,7 @@ namespace FargowiltasSouls.Projectiles
                 case ProjectileID.PhantasmalEye:
                     if (FargoSoulsWorld.MasochistMode)
                     {
-                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore))
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore) && !FargoSoulsWorld.SwarmActive)
                         {
                             if (projectile.ai[0] == 2) //diving down and homing
                             {
@@ -924,7 +939,7 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case ProjectileID.PhantasmalSphere:
-                    if (FargoSoulsWorld.MasochistMode)
+                    if (FargoSoulsWorld.MasochistMode && !FargoSoulsWorld.SwarmActive)
                     {
                         if (!masobool)
                         {
@@ -951,7 +966,7 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case ProjectileID.BombSkeletronPrime: //needs to be set every tick
-                    if (FargoSoulsWorld.MasochistMode)
+                    if (FargoSoulsWorld.MasochistMode && !FargoSoulsWorld.SwarmActive)
                         projectile.damage = (int)(40 * (1 + FargoSoulsWorld.PrimeCount * .0125));
                     break;
 
@@ -1115,6 +1130,11 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
             }
+        }
+
+        public static void PrintAI(Projectile projectile)
+        {
+            Main.NewText(projectile.ai[0].ToString() + " " + projectile.ai[1].ToString() + " " + projectile.localAI[0].ToString() + " " + projectile.localAI[1].ToString());
         }
 
         public override void PostAI(Projectile projectile)

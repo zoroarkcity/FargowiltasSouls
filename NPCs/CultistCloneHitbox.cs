@@ -59,6 +59,8 @@ namespace FargowiltasSouls.NPCs
             else
                 npc.immune[Main.myPlayer] = Main.npc[ai1].immune[Main.myPlayer];
             npc.dontTakeDamage = Main.npc[ai1].dontTakeDamage;
+            if (Main.npc[ai1].ai[3] == -1)
+                npc.dontTakeDamage = true;
         }
 
         public override bool CheckDead()

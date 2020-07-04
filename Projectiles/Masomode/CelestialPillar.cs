@@ -35,6 +35,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
+        public override bool CanDamage()
+        {
+            return projectile.alpha == 0;
+        }
+
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(target);
@@ -84,7 +89,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                         projectile.velocity = Main.player[target].Center - projectile.Center;
                         float distance = projectile.velocity.Length();
                         projectile.velocity.Normalize();
-                        const float speed = 32f;
+                        const float speed = 24f;
                         projectile.velocity *= speed;
                         projectile.timeLeft = (int)(distance / speed);
                         projectile.netUpdate = true;
@@ -190,6 +195,17 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     for (int i = 0; i < max; i++)
                         Projectile.NewProjectile(projectile.Center, speed.RotatedBy(rotationInterval * i),
                             mod.ProjectileType("CelestialFragment"), projectile.damage / 3, 0f, Main.myPlayer, projectile.ai[0]);
+                }
+
+                if (NPC.CountNPCS(NPCID.AncientCultistSquidhead) < 4)
+                {
+                    int n = NPC.NewNPC((int)projectile.Center.X, (int)projectile.Center.Y, NPCID.AncientCultistSquidhead);
+                    if (n != Main.maxNPCs)
+                    {
+                        Main.npc[n].velocity = projectile.velocity;
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                    }
                 }
             }
         }

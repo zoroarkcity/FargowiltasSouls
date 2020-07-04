@@ -773,9 +773,9 @@ namespace FargowiltasSouls.NPCs
 
                 if (!Main.dayTime)
                 {
-                    if (++Counter2 < 180)
+                    if (++Counter2 < 120)
                     {
-                        npc.position -= npc.velocity * (180 - Counter2) / 180;
+                        npc.position -= npc.velocity * (120 - Counter2) / 120;
                     }
                 }
             }
@@ -2056,9 +2056,9 @@ namespace FargowiltasSouls.NPCs
                     {
                         npc.position -= npc.velocity * 0.1f;
 
-                        if (++Counter2 < 180)
+                        if (++Counter2 < 120)
                         {
-                            npc.position -= npc.velocity * (180 - Counter2) / 180 * 0.9f;
+                            npc.position -= npc.velocity * (120 - Counter2) / 120 * 0.9f;
                         }
                     }
                 }
@@ -3481,7 +3481,10 @@ namespace FargowiltasSouls.NPCs
                     Item.NewItem(npc.Hitbox, ModContent.ItemType<LunaticSigil>());
             }
 
-            Timer++;
+            if (Main.LocalPlayer.active && !Main.LocalPlayer.dead && npc.Distance(Main.LocalPlayer.Center) < 3000)
+                Main.LocalPlayer.AddBuff(BuffID.ChaosState, 2);
+
+            /*Timer++;
             if (Timer >= 1200)
             {
                 Timer = 0;
@@ -3492,14 +3495,25 @@ namespace FargowiltasSouls.NPCs
                     if (n != 200 && Main.netMode == NetmodeID.Server)
                         NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                 }
-            }
+            }*/
+
+            PrintAI(npc);
 
             if (npc.ai[3] == -1f)
             {
-                if (npc.ai[1] >= 120f && npc.ai[1] < 419f) //skip summoning ritual LMAO
+                /*if (npc.ai[1] >= 120f && npc.ai[1] < 419f) //skip summoning ritual LMAO
                 {
                     npc.ai[1] = 419f;
                     npc.netUpdate = true;
+                }*/
+
+                if (npc.ai[0] == 5)
+                {
+                    int ritual = (int)npc.ai[2];
+                    if (Main.projectile[ritual].active && Main.projectile[ritual].type == ProjectileID.CultistRitual)
+                    {
+                        npc.Center = Main.projectile[ritual].Center - 180f * Vector2.UnitY;
+                    }
                 }
             }
             else

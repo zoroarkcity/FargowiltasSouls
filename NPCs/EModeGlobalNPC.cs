@@ -1138,13 +1138,62 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.CultistBossClone:
-                            if (!masoBool[0] && ++Counter > 15)
+                            /*if (!masoBool[0] && ++Counter > 15)
                             {
                                 masoBool[0] = true;
                                 Counter = 0;
-                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                if (Main.netMode != NetmodeID.MultiplayerClient) //my hitbox
                                 {
                                     int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<CultistCloneHitbox>(), 0, npc.whoAmI, npc.ai[3]);
+                                    if (n != Main.maxNPCs && Main.netMode != NetmodeID.MultiplayerClient)
+                                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                                }
+                            }*/
+                            if (npc.ai[3] > -1 && npc.ai[3] < Main.maxNPCs)
+                            {
+                                int cultist = (int)npc.ai[3];
+                                if (Main.npc[cultist].active && Main.npc[cultist].type == NPCID.CultistBoss && Main.npc[cultist].ai[2] > -1 && Main.npc[cultist].ai[2] < Main.maxProjectiles)
+                                {
+                                    if (Main.npc[cultist].ai[3] == -1 && Main.npc[cultist].ai[0] == 5)
+                                    {
+                                        if (!masoBool[1]) //find number of cultists and which cultist this is
+                                        {
+                                            masoBool[1] = true;
+                                            Counter = 1; //accounts for cultist boss
+                                            for (int i = 0; i < Main.maxNPCs; i++)
+                                            {
+                                                if (Main.npc[i].active && Main.npc[i].type == npc.type && Main.npc[i].ai[3] == npc.ai[3])
+                                                {
+                                                    if (i == npc.whoAmI)
+                                                        Counter2 = Counter; //stores which one this is
+                                                    Counter++; //stores total number of cultists
+                                                }
+                                            }
+                                        }
+
+                                        int cultists = 1; //accounts for cultist boss
+                                        for (int i = 0; i < Main.maxNPCs; i++)
+                                        {
+                                            if (Main.npc[i].active && Main.npc[i].type == npc.type && Main.npc[i].ai[3] == npc.ai[3])
+                                            {
+                                                if (i == npc.whoAmI) //store which one this is
+                                                    break;
+                                                cultists++;
+                                            }
+                                        }
+                                        Counter2 = cultists;
+
+                                        int ritual = (int)Main.npc[cultist].ai[2];
+                                        if (Main.projectile[ritual].active && Main.projectile[ritual].type == ProjectileID.CultistRitual)
+                                        {
+                                            Vector2 offset = Main.npc[cultist].Center - Main.projectile[ritual].Center;
+                                            npc.Center = Main.projectile[ritual].Center + offset.RotatedBy(2 * Math.PI / Counter * Counter2);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        masoBool[1] = false;
+                                    }
                                 }
                             }
                             break;
@@ -2661,9 +2710,7 @@ namespace FargowiltasSouls.NPCs
                             if (Counter >= 20 && npc.velocity.X != 0)
                             {
                                 Counter = 0;
-                                int p = Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.MolotovFire, (int)(npc.damage / 2), 1f, Main.myPlayer);
-                                Main.projectile[p].hostile = true;
-                                Main.projectile[p].friendly = false;
+                                Projectile.NewProjectile(npc.Center.X, npc.position.Y, Main.rand.Next(-3, 4), Main.rand.Next(-4, 0), Main.rand.Next(326, 329), npc.damage / 5, 0f, Main.myPlayer);
                             }
                             break;
 
@@ -6798,6 +6845,18 @@ namespace FargowiltasSouls.NPCs
                                 NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Skeletron Prime has entered Dungeon Guardian form!"), new Color(175, 75, 255));
                             else if (Main.netMode == NetmodeID.SinglePlayer)
                                 Main.NewText("Skeletron Prime has entered Dungeon Guardian form!", 175, 75, 255);
+
+                            for (int i = 0; i < Main.maxNPCs; i++) //kill limbs while going dg
+                            {
+                                if (Main.npc[i].active && 
+                                    (Main.npc[i].type == NPCID.PrimeCannon || Main.npc[i].type == NPCID.PrimeLaser || Main.npc[i].type == NPCID.PrimeSaw || Main.npc[i].type == NPCID.PrimeVice)
+                                    && Main.npc[i].ai[1] == npc.whoAmI)
+                                {
+                                    Main.npc[i].life = 0;
+                                    Main.npc[i].HitEffect();
+                                    Main.npc[i].checkDead();
+                                }
+                            }
                             return false;
                         }
                         else if (FargoSoulsWorld.PrimeCount < FargoSoulsWorld.MaxCountHM && !FargoSoulsWorld.NoMasoBossScaling)
