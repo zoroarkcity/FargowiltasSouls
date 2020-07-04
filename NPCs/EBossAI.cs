@@ -677,7 +677,7 @@ namespace FargowiltasSouls.NPCs
         {
             skeleBoss = npc.whoAmI;
 
-            if (Counter != 0)
+            /*if (Counter != 0)
             {
                 Timer++;
 
