@@ -81,10 +81,6 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool ShadewoodEffect;
 
-        [Label("$Mods.FargowiltasSouls.ShadeOnHitConfig")]
-        [DefaultValue(true)]
-        public bool ShadewoodOnHitEffect;
-
         [Label("$Mods.FargowiltasSouls.MahoganyConfig")]
         [DefaultValue(true)]
         public bool MahoganyHook;
@@ -150,6 +146,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.TungstenConfig")]
         [DefaultValue(true)]
         public bool TungstenSize;
+
+        [Label("$Mods.FargowiltasSouls.ObsidianConfig")]
+        [DefaultValue(true)]
+        public bool ObsidianExplosion;
 
         [Header("$Mods.FargowiltasSouls.WillHeader")]
         [Label("$Mods.FargowiltasSouls.GladiatorConfig")]
@@ -496,6 +496,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.MeleeConfig")]
         [DefaultValue(true)]
         public bool BerserkerAttackSpeed;
+
+        [Label("$Mods.FargowiltasSouls.MagmaStoneConfig")]
+        [DefaultValue(true)]
+        public bool MagmaStone;
 
         [Label("$Mods.FargowiltasSouls.SniperConfig")]
         [DefaultValue(true)]

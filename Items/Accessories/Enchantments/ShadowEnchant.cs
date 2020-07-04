@@ -15,10 +15,10 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Shadow Enchantment");
             Tooltip.SetDefault(
-@"'You feel your body slip into the deepest of shadows'
-Your attacks may inflict Darkness on enemies
+@"Your attacks may inflict Darkness on enemies
 Darkened enemies occasionally fire shadowflame tentacles at other enemies
-Summons a pet Eater of Souls and Shadow Orb");
+Summons a pet Eater of Souls and Shadow Orb
+'You feel your body slip into the deepest of shadows'");
             DisplayName.AddTranslation(GameCulture.Chinese, "暗影魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'你感觉身体陷入了最深的阴影中'

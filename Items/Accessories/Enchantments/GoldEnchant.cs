@@ -16,12 +16,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Gold Enchantment");
 
             string tooltip =
-@"'Gold makes the world go round'
-Your attacks inflict Midas
+@"Your attacks inflict Midas
 Press the Gold hotkey to be encased in a Golden Shell
 You will not be able to move or attack, but will be immune to all damage
 Effects of Greedy Ring
-Summons a pet Parrot";
+Summons a pet Parrot
+'Gold makes the world go round'";
             string tooltip_ch =
 @"'黄金使世界运转'
 攻击造成点金手效果

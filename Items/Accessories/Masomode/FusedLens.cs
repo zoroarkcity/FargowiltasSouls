@@ -10,9 +10,9 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fused Lens");
-            Tooltip.SetDefault(@"'Too melted to improve vision'
-Grants immunity to Cursed Inferno and Ichor
-Your attacks inflict Cursed Inferno and Ichor");
+            Tooltip.SetDefault(@"Grants immunity to Cursed Inferno and Ichor
+Your attacks inflict Cursed Inferno and Ichor
+'Too melted to improve vision'");
             DisplayName.AddTranslation(GameCulture.Chinese, "融合晶状体");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'融化过度,无法改善视力'
 免疫诅咒地狱和脓液

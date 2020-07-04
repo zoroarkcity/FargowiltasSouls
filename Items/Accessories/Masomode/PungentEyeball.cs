@@ -10,10 +10,10 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pungent Eyeball");
-            Tooltip.SetDefault(@"'It's fermenting'
-Grants immunity to Blackout and Obstructed
+            Tooltip.SetDefault(@"Grants immunity to Blackout and Obstructed
 Increases your max number of minions by 2
-Increases your max number of sentries by 2");
+Increases your max number of sentries by 2
+'It's fermenting'");
             DisplayName.AddTranslation(GameCulture.Chinese, "辛辣的眼球");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'它在发酵'
 免疫致盲和阻塞

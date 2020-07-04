@@ -9,9 +9,9 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Reinforced Plating");
-            Tooltip.SetDefault(@"'The sturdiest piece of a defeated foe'
-Grants immunity to Defenseless, Stunned, and knockback
-Reduces damage taken by 10%");
+            Tooltip.SetDefault(@"Grants immunity to Defenseless, Stunned, and knockback
+Reduces damage taken by 10%
+'The sturdiest piece of a defeated foe'");
             DisplayName.AddTranslation(GameCulture.Chinese, "强化钢板");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'被打败的敌人最坚强的一面'
 免疫毫无防御,昏迷和击退

@@ -9,10 +9,10 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sinister Icon");
-            Tooltip.SetDefault(@"'Most definitely not alive'
-Prevents Eternity Mode-induced natural boss spawns
+            Tooltip.SetDefault(@"Prevents Eternity Mode-induced natural boss spawns
 Increases spawn rate
-Enemies with 2000 or less max life will drop doubled loot but zero coins");
+Enemies with 2000 or less max life will drop doubled loot but zero coins
+'Most definitely not alive'");
 /*Graze projectiles to gain up to 30% increased crit damage
 Crit damage bonus decreases over time and is fully lost on hit");*/
             DisplayName.AddTranslation(GameCulture.Chinese, "邪恶画像");

@@ -9,9 +9,9 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dragon's Fang");
-            Tooltip.SetDefault(@"'Warm to the touch'
-Grants immunity to Clipped Wings and Crippled
-Your attacks have a 10% chance to inflict Clipped Wings on non-boss enemies");
+            Tooltip.SetDefault(@"Grants immunity to Clipped Wings and Crippled
+Your attacks have a 10% chance to inflict Clipped Wings on non-boss enemies
+'Warm to the touch'");
             DisplayName.AddTranslation(GameCulture.Chinese, "龙牙");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'触感温暖'
 免疫剪除羽翼和残疾

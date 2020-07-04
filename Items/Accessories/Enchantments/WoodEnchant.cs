@@ -13,11 +13,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Wood Enchantment");
             Tooltip.SetDefault(
-@"'Humble beginnings…'
-Critters will explode 1 second after being released
+@"Critters will explode 1 second after being released
 Certain critters have extra effects
 Grants immunity to Guilty
-Effects of Critter guide tm"); 
+Effects of Critter guide tm
+'Humble beginnings…'"); 
             DisplayName.AddTranslation(GameCulture.Chinese, "木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'卑微的开始...'

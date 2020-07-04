@@ -15,13 +15,13 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Red Riding Enchantment");
             Tooltip.SetDefault(
-@"'Big Bad Red Riding Hood'
-Double tap down to create a localized rain of arrows at the cursor's position for a few seconds
+@"Double tap down to create a rain of arrows that follows the cursor's position for a few seconds
 The arrow type and damage is based on your first ammo slot
-This has a cooldown of 15 seconds
+This has a cooldown of 5 seconds
 Greatly enhances Explosive Traps effectiveness
 Effects of Celestial Shell
-Summons a pet Puppy");
+Summons a pet Puppy
+'Big Bad Red Riding Hood'");
             DisplayName.AddTranslation(GameCulture.Chinese, "红色游侠魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'大坏红帽'

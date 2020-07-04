@@ -7,15 +7,13 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class AncientCobaltEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ancient Cobalt Enchantment");
             Tooltip.SetDefault(
-@"'The jungle of old empowers you'
-20% chance for your projectiles to explode into stingers
-This can only happen once every second");
+@"20% chance for your projectiles to explode into stingers
+This can only happen once every second
+'The jungle of old empowers you'");
         }
 
         public override void SetDefaults()

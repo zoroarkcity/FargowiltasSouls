@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
     {
         public override string Texture => "Terraria/Projectile_238";
 
-        private int[] wetProj = { ProjectileID.Kraken, ProjectileID.Trident, ProjectileID.Flairon, ProjectileID.FlaironBubble, ProjectileID.WaterStream, ProjectileID.WaterBolt, ProjectileID.RainNimbus, ProjectileID.Bubble, ProjectileID.WaterGun };
+        private int timer = 60;
 
         public override void SetStaticDefaults()
         {
@@ -32,7 +32,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             Player player = Main.player[projectile.owner];
 
-            if (projectile.timeLeft < 540)
+            if (--timer <= 0)
             {
                 projectile.velocity = Vector2.Zero;
             }
@@ -41,11 +41,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
             {
                 Projectile proj = Main.projectile[i];
 
-                if (proj.active && proj.owner == player.whoAmI && Array.IndexOf(wetProj, proj.type) > -1 && proj.Hitbox.Intersects(projectile.Hitbox))
+                if (proj.active && proj.owner == player.whoAmI && proj.type != projectile.type && proj.type != ProjectileID.RainFriendly && proj.Hitbox.Intersects(projectile.Hitbox))
                 {
                     if (projectile.scale < 3f)
                     {
-                        projectile.scale *= 1.05f;
+                        projectile.scale *= 1.1f;
                         projectile.timeLeft += 60;
                     }
                     else
@@ -55,7 +55,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
                         Vector2 vector2_3 = rotationVector2 * 8f;
                         float ai_1 = Main.rand.Next(80);
-                        Projectile.NewProjectile(projectile.Center.X - vector2_3.X, projectile.Center.Y - vector2_3.Y, vector2_3.X, vector2_3.Y,
+                        Projectile.NewProjectile(projectile.Center.X + vector2_3.X * 5, projectile.Center.Y + vector2_3.Y * 5, vector2_3.X, vector2_3.Y,
                             mod.ProjectileType("LightningArc"), projectile.damage * 2, projectile.knockBack, projectile.owner,
                             rotationVector2.ToRotation(), ai_1);
 
@@ -97,7 +97,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
                 int num414 = (int)(projectile.Center.X + (float)Main.rand.Next((int)(-20 * projectile.scale), (int)(20 * projectile.scale)));
                 int num415 = (int)(projectile.position.Y + (float)projectile.height + 4f);
-                Projectile.NewProjectile((float)num414, (float)num415, 0f, 5f, 239, projectile.damage / 2, 0f, projectile.owner, 0f, 0f);
+                int p = Projectile.NewProjectile((float)num414, (float)num415, 0f, 5f, ProjectileID.RainFriendly, projectile.damage, 0f, projectile.owner, 0f, 0f);
+                Main.projectile[p].penetrate = 1;
             }
         }
     }

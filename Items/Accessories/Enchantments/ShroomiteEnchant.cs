@@ -16,10 +16,10 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Shroomite Enchantment");
 
             string tooltip =
-@"'Made with real shrooms!'
-Not moving puts you in stealth
-While in stealth, crits deal 3x damage
-Summons a pet Truffle";
+@"Not moving puts you in stealth
+While in stealth, all attacks gain trails of mushrooms
+Summons a pet Truffle
+'Made with real shrooms!'";
             string tooltip_ch =
 @"'真的是用蘑菇做的!'
 站立不动时潜行

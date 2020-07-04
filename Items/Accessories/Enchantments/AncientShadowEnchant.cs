@@ -7,18 +7,16 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class AncientShadowEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ancient Shadow Enchantment");
             Tooltip.SetDefault(
-@"'Archaic, yet functional'
-Two Shadow Orbs will orbit around you
+@"Two Shadow Orbs will orbit around you
 Attacking a Shadow Orb will cause it to release a burst of homing shadow energy
 After being struck, a Shadow Orb cannot be hit for 5 seconds
 Your attacks may inflict Darkness
-Summons a pet Eater of Souls and Shadow Orb");
+Summons a pet Eater of Souls and Shadow Orb
+'Archaic, yet functional'");
         }
 
         public override void SetDefaults()

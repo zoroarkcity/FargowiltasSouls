@@ -31,7 +31,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.rare = 5;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("FishStickProj");
-            item.shootSpeed = 20f;
+            item.shootSpeed = 25f;
             item.noUseGraphic = true;
         }
     }

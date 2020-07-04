@@ -9,15 +9,13 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class AdamantiteEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Adamantite Enchantment");
             Tooltip.SetDefault(
-@"'Who needs to aim?'
-Every 8th projectile you shoot will split into 3
-Any secondary projectiles may also split"); 
+@"Every 8th projectile you shoot will split into 3
+Any secondary projectiles may also split
+'Who needs to aim?'"); 
             DisplayName.AddTranslation(GameCulture.Chinese, "精金魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'谁需要瞄准?'

@@ -17,9 +17,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Silver Enchantment");
 
-            string tooltip = 
-@"'Have you power enough to wield me?'
-Summons a sword familiar that scales with minion damage";
+            string tooltip =
+@"Summons a sword familiar that scales with minion damage
+'Have you power enough to wield me?'";
             string tooltip_ch =
 @"'你有足够的力量驾驭我吗?'
 召唤一柄剑";

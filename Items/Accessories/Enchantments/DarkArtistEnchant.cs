@@ -16,11 +16,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Dark Artist Enchantment");
 
             string tooltip =
-@"'The shadows hold more than they seem'
-Summons a Flameburst minion that will fire after charging up
+@"Summons a Flameburst minion that will fire after charging up
 While attacking, Flameburst shots manifest themselves from your shadows
 Greatly enhances Flameburst effectiveness
-Summons a pet Flickerwick";
+Summons a pet Flickerwick
+'The shadows hold more than they seem'";
 
             Tooltip.SetDefault(tooltip); 
             DisplayName.AddTranslation(GameCulture.Chinese, "暗黑艺术家魔石");

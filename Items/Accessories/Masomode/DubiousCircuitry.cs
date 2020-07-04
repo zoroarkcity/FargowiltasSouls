@@ -10,12 +10,12 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dubious Circuitry");
-            Tooltip.SetDefault(@"'Malware probably not included'
-Grants immunity to Cursed Inferno, Ichor, Lightning Rod, Defenseless, Stunned, and knockback
+            Tooltip.SetDefault(@"Grants immunity to Cursed Inferno, Ichor, Lightning Rod, Defenseless, Stunned, and knockback
 Your attacks inflict Cursed Inferno and Ichor
 Your attacks have a small chance to inflict Lightning Rod
 Two friendly probes fight by your side
-Reduces damage taken by 6%");
+Reduces damage taken by 6%
+'Malware probably not included'");
             DisplayName.AddTranslation(GameCulture.Chinese, "可疑电路");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'里面也许没有恶意软件'
 免疫诅咒地狱,脓液,避雷针,毫无防御,昏迷和击退

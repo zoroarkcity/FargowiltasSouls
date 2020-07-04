@@ -10,10 +10,10 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Magical Bulb");
-            Tooltip.SetDefault(@"'Matricide?'
-Grants immunity to Venom, Ivy Venom, and Swarming
+            Tooltip.SetDefault(@"Grants immunity to Venom, Ivy Venom, and Swarming
 Increases life regeneration
-Attracts a legendary plant's offspring which flourishes in combat");
+Attracts a legendary plant's offspring which flourishes in combat
+'Matricide?'");
             DisplayName.AddTranslation(GameCulture.Chinese, "魔法球茎");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'杀妈?'
 免疫毒液, 常春藤毒和蜂群

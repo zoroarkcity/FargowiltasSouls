@@ -9,26 +9,20 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class BeeEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        public int timer;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bee Enchantment");
 
-            string tooltip = 
-@"'According to all known laws of aviation, there is no way a bee should be able to fly'
-50% chance for any friendly bee to become a Mega Bee
+            string tooltip =
+@"50% chance for any friendly bee to become a Mega Bee
 Mega Bees ignore most enemy defense, immune frames, and last twice as long
-";
-            string tooltip_ch = 
+Summons a pet Baby Hornet
+'According to all known laws of aviation, there is no way a bee should be able to fly'";
+            string tooltip_ch =
 @"'根据目前所知的所有航空原理, 蜜蜂应该根本不可能会飞'
 50%概率使友善的蜜蜂成为巨型蜜蜂
 巨型蜜蜂忽略大多数敌人的防御, 无敌帧, 并持续双倍的时间
-";
-
-            tooltip += "Summons a pet Baby Hornet";
-            tooltip_ch += "召唤一只小黄蜂";
+召唤一只小黄蜂";
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "蜜蜂魔石");

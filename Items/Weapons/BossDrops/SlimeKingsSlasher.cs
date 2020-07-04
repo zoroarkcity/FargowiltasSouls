@@ -3,12 +3,13 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Fargowiltas.Projectiles;
+using FargowiltasSouls.Projectiles.BossWeapons;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
     public class SlimeKingsSlasher : ModItem
     {
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Slime King's Slasher");
@@ -31,13 +32,17 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.rare = 2;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("SlimeBall");
+            item.shoot = ModContent.ProjectileType<SlimeSpikeFriendly>();
             item.shootSpeed = 8f;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockback)
         {
-            return true;
+            int p = Projectile.NewProjectile(player.Center, new Vector2(speedX, speedY), type, damage, knockback, player.whoAmI);
+
+            FargoGlobalProjectile.SplitProj(Main.projectile[p], Main.rand.Next(3, 6));
+
+            return false;
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)

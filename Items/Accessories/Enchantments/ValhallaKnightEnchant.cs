@@ -15,12 +15,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Valhalla Knight Enchantment");
             Tooltip.SetDefault(
-@"'Valhalla calls'
-Continually attacking an enemy will eventually drastically reduce its immunity frames for 2 seconds
+@"Continually attacking an enemy will eventually drastically reduce its immunity frames for 2 seconds
 There is a 15 second cooldown per enemy
 Greatly enhances Ballista effectiveness
 Effects of Shiny Stone
-Summons a pet Dragon");
+Summons a pet Dragon
+'Valhalla calls'");
             DisplayName.AddTranslation(GameCulture.Chinese, "瓦尔哈拉骑士魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'瓦尔哈拉的呼唤'

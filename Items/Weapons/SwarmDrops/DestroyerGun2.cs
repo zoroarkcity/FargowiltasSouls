@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Destroyer Gun EX");
-            Tooltip.SetDefault("'The reward for slaughtering many...'\nBecomes longer and faster with empty minion slots");
+            Tooltip.SetDefault("Becomes longer and faster with empty minion slots\n'The reward for slaughtering many...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "毁灭者之枪 EX");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励...'");
         }

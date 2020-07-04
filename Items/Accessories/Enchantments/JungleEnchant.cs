@@ -16,10 +16,10 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Jungle Enchantment");
 
             string tooltip =
-@"'The wrath of the jungle dwells within'
-Jumping will release a lingering spore explosion
+@"Jumping will release a lingering spore explosion
 All herb collection is doubled
-Effects of Guide to Plant Fiber Cordage";
+Effects of Guide to Plant Fiber Cordage
+'The wrath of the jungle dwells within'";
 
             string tooltip_ch =
 @"'丛林之怒深藏其中'

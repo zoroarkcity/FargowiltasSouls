@@ -11,11 +11,11 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sands of Time");
-            Tooltip.SetDefault(@"'Whatever you do, don't drop it'
-Works in your inventory
+            Tooltip.SetDefault(@"Works in your inventory
 Grants immunity to Mighty Wind and cactus damage
 You respawn twice as fast when no boss is alive
-Use to teleport to your last death point");
+Use to teleport to your last death point
+'Whatever you do, don't drop it'");
             DisplayName.AddTranslation(GameCulture.Chinese, "时之沙");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'无论你做什么,都不要丢下它'
 放在物品栏中即可生效

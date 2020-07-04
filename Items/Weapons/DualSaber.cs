@@ -8,11 +8,6 @@ namespace FargowiltasSouls.Items.Weapons
 {
     public class DualSaber : ModItem
     {
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dual Saber");

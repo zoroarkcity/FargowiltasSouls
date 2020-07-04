@@ -15,10 +15,10 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Pumpkin Enchantment");
             Tooltip.SetDefault(
-@"'Your sudden pumpkin craving will never be satisfied'
-You leave behind a trail of fire when you walk
+@"You leave behind a trail of fire when you walk
 Eating Pumpkin Pie heals you to full HP and inflicts Potion Sickness for 3 minutes
-Summons a pet Squashling");
+Summons a pet Squashling
+'Your sudden pumpkin craving will never be satisfied'");
             DisplayName.AddTranslation(GameCulture.Chinese, "南瓜魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'你对南瓜的突发渴望永远不会得到满足'

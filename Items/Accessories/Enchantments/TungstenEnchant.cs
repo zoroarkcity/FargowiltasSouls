@@ -18,10 +18,10 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Tungsten Enchantment");
 
             string tooltip =
-@"'Bigger is always better'
-150% increased sword size
+@"150% increased sword size
 100% increased projectile size
-Projectiles still have the same tile collision hitbox";
+Projectiles still have the same tile collision hitbox
+'Bigger is always better'";
             string tooltip_ch =
 @"'大就是好'
 增加150%剑的尺寸

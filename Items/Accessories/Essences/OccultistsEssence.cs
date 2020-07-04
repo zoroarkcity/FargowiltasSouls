@@ -15,10 +15,10 @@ namespace FargowiltasSouls.Items.Accessories.Essences
         {
             DisplayName.SetDefault("Occultist's Essence");
             Tooltip.SetDefault(
-@"'This is only the beginning..'
-18% increased summon damage
+@"18% increased summon damage
 Increases your max number of minions by 1
-Increases your max number of sentries by 1");
+Increases your max number of sentries by 1
+'This is only the beginning..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "术士精华");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'这才刚刚开始..'

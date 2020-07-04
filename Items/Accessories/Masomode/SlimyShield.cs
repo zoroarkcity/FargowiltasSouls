@@ -11,10 +11,10 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Slimy Shield");
-            Tooltip.SetDefault(@"'Torn from the innards of a defeated foe'
-Grants immunity to Slimed
+            Tooltip.SetDefault(@"Grants immunity to Slimed
 15% increased fall speed
-When you land after a jump, slime will fall from the sky over your cursor");
+When you land after a jump, slime will fall from the sky over your cursor
+'Torn from the innards of a defeated foe'");
             DisplayName.AddTranslation(GameCulture.Chinese, "粘液盾");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'从被打败的敌人的内脏中撕裂而来'
 免疫黏糊

@@ -16,17 +16,17 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Iron Enchantment");
 
-            string tooltip = "'Strike while the iron is hot'\n";
-            string tooltip_ch = "'趁热打铁'\n";
-
-            tooltip += 
+            string tooltip =
 @"Allows the player to dash into the enemy
 Right Click to guard with your shield
-You attract items from a larger range";
-            tooltip_ch +=
+You attract items from a larger range
+'Strike while the iron is hot'";
+
+            string tooltip_ch =
 @"允许使用者向敌人冲刺
 右键用盾牌防御
-拾取物品半径增大";
+拾取物品半径增大
+'趁热打铁'";
 
             Tooltip.SetDefault(tooltip); 
             DisplayName.AddTranslation(GameCulture.Chinese, "铁魔石");

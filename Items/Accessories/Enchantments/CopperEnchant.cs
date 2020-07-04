@@ -16,11 +16,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Copper Enchantment");
 
-            string tooltip = 
-@"'Behold'
-Attacks have a chance to shock enemies with lightning
-If an enemy is wet, the chance and damage is increased
-Attacks that cause Wet cannot proc the lightning";
+            string tooltip =
+@"Attacks have a chance to shock enemies with lightning
+'Behold'";
             string tooltip_ch =
 @"'注视'
 攻击有概率用闪电打击敌人

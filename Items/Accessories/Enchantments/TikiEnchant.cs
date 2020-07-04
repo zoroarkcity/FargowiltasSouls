@@ -15,9 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Tiki Enchantment");
             Tooltip.SetDefault(
-@"'Aku Aku!'
-You may continue to summon temporary minions after maxing out on your slots
-Summons a pet Tiki Spirit");
+@"You may continue to summon temporary minions after maxing out on your slots
+Summons a pet Tiki Spirit
+'Aku Aku!'");
             DisplayName.AddTranslation(GameCulture.Chinese, "提基魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'Aku Aku!'

@@ -9,12 +9,12 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Queen's Stinger");
-            Tooltip.SetDefault(@"'Ripped right off of a defeated foe'
-Grants immunity to Infested
+            Tooltip.SetDefault(@"Grants immunity to Infested
 Increases armor penetration by 10
 Your attacks inflict Poisoned
 You have permanent effects of Honey buff
-Bees and weak Hornets become friendly");
+Bees and weak Hornets become friendly
+'Ripped right off of a defeated foe'");
             DisplayName.AddTranslation(GameCulture.Chinese, "女王的毒刺");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'从一个被打败的敌人身上撕下来'
 免疫感染

@@ -10,14 +10,14 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pure Heart");
-            Tooltip.SetDefault(@"'It pulses with vitality'
-Grants immunity to Rotting and Bloodthirsty
+            Tooltip.SetDefault(@"Grants immunity to Rotting and Bloodthirsty
 Grants immunity to biome debuffs
 20% increased movement speed and 20% increased max life
 You spawn mini eaters to seek out enemies every few attacks
 Creepers hover around you blocking some damage
 A new Creeper appears every 15 seconds, and 5 can exist at once
-Creeper respawn speed increases when not moving");
+Creeper respawn speed increases when not moving
+'It pulses with vitality'");
             DisplayName.AddTranslation(GameCulture.Chinese, "纯净之心");
             Tooltip.AddTranslation(GameCulture.Chinese, @"它充满活力地跳动着'
 免疫腐败和嗜血

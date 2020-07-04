@@ -13,8 +13,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Palm Wood Enchantment");
             Tooltip.SetDefault(
-@"'Alarmingly calm'
-Double tap down to spawn a palm tree sentry that throws nuts at enemies");
+@"Double tap down to spawn a palm tree sentry that throws nuts at enemies
+'Alarmingly calm'");
             DisplayName.AddTranslation(GameCulture.Chinese, "棕榈木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'出奇的平静'

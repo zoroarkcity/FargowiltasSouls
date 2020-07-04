@@ -10,11 +10,11 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Aeolus Boots");
-            Tooltip.SetDefault(@"'Run like the wind'
-Allows flight, super fast running, and extra mobility on ice
+            Tooltip.SetDefault(@"Allows flight, super fast running, and extra mobility on ice
 8% increased movement speed
 Allows the holder to double jump
-Increases jump height and negates fall damage");
+Increases jump height and negates fall damage
+'Run like the wind'");
         }
 
         public override void SetDefaults()
