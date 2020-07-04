@@ -16,8 +16,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
     [AutoloadBossHead]
     public class DeviBoss : ModNPC
     {
+        public bool playerInvulTriggered;
+
         public int[] attackQueue = new int[4];
         public int lastStrongAttack;
+
+        public int ringProj, spriteProj;
 
         private bool ContentModLoaded => Fargowiltas.Instance.CalamityLoaded || Fargowiltas.Instance.ThoriumLoaded
             || Fargowiltas.Instance.SoALoaded || Fargowiltas.Instance.MasomodeEXLoaded;
@@ -39,7 +43,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             npc.height = 120;
             npc.damage = 64;
             npc.defense = 10;
-            npc.lifeMax = 7000;
+            npc.lifeMax = 6000;
             npc.HitSound = SoundID.NPCHit9;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -49,7 +53,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             npc.lavaImmune = true;
             npc.aiStyle = -1;
             npc.netAlways = true;
-            npc.hide = true;
             npc.buffImmune[BuffID.Chilled] = true;
             npc.buffImmune[BuffID.OnFire] = true;
             npc.buffImmune[BuffID.Suffocation] = true;
@@ -63,6 +66,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             musicPriority = (MusicPriority)10;
 
             npc.value = Item.buyPrice(0, 5);
+
+            if (ContentModLoaded)
+                npc.lifeMax = (int)(npc.lifeMax * 1.5);
         }
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -101,6 +107,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             attackQueue[3] = reader.ReadInt32();
         }
 
+        private bool ProjectileExists(int id, int type)
+        {
+            return id > -1 && id < Main.maxProjectiles && Main.projectile[id].active && Main.projectile[id].type == type;
+        }
+
         public override void AI()
         {
             EModeGlobalNPC.deviBoss = npc.whoAmI;
@@ -121,8 +132,26 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         RefreshAttackQueue();
                     } while (attackQueue[0] == 3 || attackQueue[0] == 5 || attackQueue[0] == 9 || attackQueue[0] == 10);
                     //don't start with wyvern, mage spam, frostballs, baby guardian
-                    
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                }
+            }
+            /*else if (npc.localAI[3] == 1)
+            {
+                Aura(2000f, mod.BuffType("GodEater"), true, 86);
+            }*/
+            else if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
+            {
+                if (FargoSoulsWorld.MasochistMode)
+                    Main.player[Main.myPlayer].AddBuff(mod.BuffType("DeviPresence"), 2);
+            }
+
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                if (!ProjectileExists(ringProj, ModContent.ProjectileType<DeviRitual2>()))
+                    ringProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual2>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
+
+                if (!ProjectileExists(spriteProj, ModContent.ProjectileType<Projectiles.DeviBoss.DeviBoss>()))
+                {
+                    if (Main.netMode == NetmodeID.SinglePlayer)
                     {
                         int number = 0;
                         for (int index = 999; index >= 0; --index)
@@ -150,31 +179,21 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 projectile.stepSpeed = 1f;
                                 projectile.ai[1] = npc.whoAmI;
 
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual2>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                            }
-                            else if (Main.netMode == NetmodeID.Server)
-                            {
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual2>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.DeviBoss.DeviBoss>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
+                                spriteProj = number;
                             }
                         }
                     }
+                    else //server
+                    {
+                        Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.DeviBoss.DeviBoss>(), 0, 0f, Main.myPlayer, 0, npc.whoAmI);
+                    }
                 }
-            }
-            /*else if (npc.localAI[3] == 1)
-            {
-                Aura(2000f, mod.BuffType("GodEater"), true, 86);
-            }*/
-            else if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
-            {
-                if (FargoSoulsWorld.MasochistMode)
-                    Main.player[Main.myPlayer].AddBuff(mod.BuffType("DeviPresence"), 2);
             }
 
             int projectileDamage = npc.damage / (npc.localAI[3] > 1 ? 4 : 5);
 
             Player player = Main.player[npc.target];
-            npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
+            npc.direction = npc.spriteDirection = npc.Center.X < player.Center.X ? 1 : -1;
             Vector2 targetPos;
             switch ((int)npc.ai[0])
             {
@@ -837,6 +856,20 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.3f);
 
+                    if (npc.ai[1] == 1) //tp above player
+                    {
+                        TeleportDust();
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            npc.Center = player.Center;
+                            npc.position.X += 500 * (Main.rand.Next(2) == 0 ? -1 : 1);
+                            npc.position.Y -= Main.rand.NextFloat(300, 500);
+                            npc.netUpdate = true;
+                        }
+                        TeleportDust();
+                        Main.PlaySound(SoundID.Item84, npc.Center);
+                    }
+
                     if (++npc.ai[1] < 180)
                     {
                         //warning dust
@@ -1317,6 +1350,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     npc.ai[0] = 0;
                     goto case 0;
             }
+
+            if (player.immune || player.hurtCooldowns[0] != 0 || player.hurtCooldowns[1] != 0)
+                playerInvulTriggered = true;
         }
 
         private void GetNextAttack()
@@ -1586,6 +1622,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
         public override void NPCLoot()
         {
+            if (!playerInvulTriggered && !FargoSoulsWorld.downedDevi)
+                Item.NewItem(npc.Hitbox, mod.ItemType("SparklingLove"));
+
             FargoSoulsWorld.downedDevi = true;
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData); //sync world
@@ -1620,6 +1659,21 @@ namespace FargowiltasSouls.NPCs.DeviBoss
         public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
         {
             spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            Texture2D texture2D13 = Main.npcTexture[npc.type];
+            Rectangle rectangle = npc.frame;
+            Vector2 origin2 = rectangle.Size() / 2f;
+
+            Color color26 = lightColor;
+            color26 = npc.GetAlpha(color26);
+
+            SpriteEffects effects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
+            return false;
         }
     }
 }

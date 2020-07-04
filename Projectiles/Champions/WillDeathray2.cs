@@ -20,11 +20,6 @@ namespace FargowiltasSouls.Projectiles.Champions
             DisplayName.SetDefault("Will Deathray");
         }
 
-        public override bool? CanHitNPC(NPC target)
-        {
-            return false;
-        }
-
         public override bool CanDamage()
         {
             return projectile.scale == 10f;

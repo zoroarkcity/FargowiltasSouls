@@ -25,11 +25,6 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
         }
 
-        public override bool? CanHitNPC(NPC target)
-        {
-            return false;
-        }
-
         public override void AI()
         {
             Vector2? vector78 = null;
@@ -40,7 +35,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             int ai1 = (int)projectile.ai[1];
             if (Main.npc[ai1].active && Main.npc[ai1].type == mod.NPCType("DeviBoss"))
             {
-                projectile.Center = Main.npc[(int)projectile.ai[1]].Center + projectile.velocity * 250 + Main.rand.NextVector2Circular(15, 15);
+                projectile.Center = Main.npc[(int)projectile.ai[1]].Center + projectile.velocity * 300 + Main.rand.NextVector2Circular(20, 20);
             }
             else
             {

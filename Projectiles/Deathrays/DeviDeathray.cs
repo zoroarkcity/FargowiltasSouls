@@ -19,11 +19,6 @@ namespace FargowiltasSouls.Projectiles.Deathrays
 			DisplayName.SetDefault("Love Ray");
 		}
 
-        public override bool? CanHitNPC(NPC target)
-        {
-            return false;
-        }
-
         public override void AI()
         {
             Vector2? vector78 = null;

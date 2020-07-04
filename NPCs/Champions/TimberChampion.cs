@@ -26,7 +26,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.height = 228;
             npc.damage = 130;
             npc.defense = 50;
-            npc.lifeMax = 320000;
+            npc.lifeMax = 180000;
             npc.HitSound = SoundID.NPCHit7;
             npc.DeathSound = SoundID.NPCDeath1;
             npc.noGravity = false;
@@ -34,7 +34,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.knockBackResist = 0f;
             npc.lavaImmune = true;
             npc.aiStyle = -1;
-            npc.value = Item.buyPrice(0, 15);
+            //npc.value = Item.buyPrice(0, 15);
             npc.boss = true;
 
             npc.buffImmune[BuffID.Chilled] = true;
@@ -466,10 +466,24 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 for (int i = 2; i <= 6; i++)
                 {
+                    if (i == 5) //dont spawn the head gore
+                        continue;
                     Vector2 pos = npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height));
                     Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/TimberGore" + i.ToString()), npc.scale);
                 }
+
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<TimberChampionHead>());
+                    if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
+                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                }
             }
+        }
+
+        public override bool PreNPCLoot()
+        {
+            return false;
         }
 
         public override void BossLoot(ref string name, ref int potionType)
@@ -477,7 +491,7 @@ namespace FargowiltasSouls.NPCs.Champions
             potionType = ItemID.SuperHealingPotion;
         }
 
-        public override void NPCLoot()
+        /*public override void NPCLoot()
         {
             FargoSoulsWorld.downedChampions[0] = true;
             if (Main.netMode == NetmodeID.Server)
@@ -506,7 +520,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 lastDrop = thisDrop;
                 Item.NewItem(npc.position, npc.Size, drops[thisDrop]);
             }
-        }
+        }*/
 
         public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
         {

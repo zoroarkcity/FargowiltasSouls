@@ -32,6 +32,8 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.penetrate = -1;
             projectile.scale = 0.5f;
             cooldownSlot = 1;
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
         public override bool CanDamage()
@@ -42,11 +44,6 @@ namespace FargowiltasSouls.Projectiles.Champions
         public override bool CanHitPlayer(Player target) //round hitbox
         {
             return projectile.Distance(target.Center) < projectile.width / 2 * projectile.scale;
-        }
-
-        public override bool? CanHitNPC(NPC target)
-        {
-            return false;
         }
 
         public override void SendExtraAI(BinaryWriter writer)

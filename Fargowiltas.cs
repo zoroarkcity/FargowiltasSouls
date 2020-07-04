@@ -560,7 +560,12 @@ namespace FargowiltasSouls
                         return FargoSoulsWorld.downedMutant;
 
                     case "DownedAbom":
+                    case "DownedAbominationn":
                         return FargoSoulsWorld.downedAbom;
+
+                    case "DownedDevi":
+                    case "DownedDeviantt":
+                        return FargoSoulsWorld.downedDevi;
 
                     case "DownedFishronEX":
                         return FargoSoulsWorld.downedFishronEX;
@@ -746,6 +751,7 @@ namespace FargowiltasSouls
                 {
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<BabyGuardian>());
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<TimberChampion>());
+                    bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<TimberChampionHead>());
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<EarthChampion>());
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<LifeChampion>());
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<WillChampion>());

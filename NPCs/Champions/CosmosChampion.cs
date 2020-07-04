@@ -265,9 +265,9 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
                     }
 
-                    if (++npc.ai[2] > 180 || npc.ai[2] == 90)
+                    if (++npc.ai[2] > 200 || npc.ai[2] == 100)
                     {
-                        if (npc.ai[2] > 180)
+                        if (npc.ai[2] > 200)
                             npc.ai[2] = 0;
 
                         npc.netUpdate = true;
@@ -313,7 +313,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             type = 242;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                const int max = 12;
+                                const int max = 11;
                                 for (int i = 0; i < max; i++)
                                 {
                                     Projectile.NewProjectile(npc.Center, 4f * npc.DirectionTo(player.Center).RotatedBy(2 * Math.PI / max * (i + 0.5)),
@@ -457,6 +457,17 @@ namespace FargowiltasSouls.NPCs.Champions
                     targetPos.X += 600 * (npc.Center.X < targetPos.X ? -1 : 1);
                     Movement(targetPos, 0.8f, 32f);
 
+                    if (--npc.ai[2] < 0)
+                    {
+                        npc.ai[2] = Main.rand.Next(5);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Vector2 spawnPos = npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height));
+                            int type = ModContent.ProjectileType<Projectiles.BossWeapons.PhantasmalBlast>();
+                            Projectile.NewProjectile(spawnPos, Vector2.Zero, type, 0, 0f, Main.myPlayer);
+                        }
+                    }
+
                     if (++npc.ai[1] > 150)
                     {
                         const int num226 = 80;
@@ -479,7 +490,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     break;
 
-                case -1:
+                case -1: //phase 2 transition
                     npc.rotation = 0;
                     npc.dontTakeDamage = true;
 
@@ -570,8 +581,10 @@ namespace FargowiltasSouls.NPCs.Champions
                                         offset.X *= -1f;
                                     offset = offset.RotatedBy(npc.DirectionTo(player.Center).ToRotation());
 
-                                    Projectile.NewProjectile(npc.Center + offset, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(npc.Center + offset, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    int modifier = Math.Sign(npc.Center.Y - player.Center.Y);
+                                    Projectile.NewProjectile(npc.Center + offset + 3000 * npc.DirectionFrom(player.Center) * modifier, 
+                                        npc.DirectionTo(player.Center) * modifier, 
+                                        ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
                             else
@@ -717,8 +730,9 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                int modifier = Math.Sign(npc.Center.Y - player.Center.Y);
+                                Projectile.NewProjectile(npc.Center + 3000 * npc.DirectionFrom(player.Center) * modifier, npc.DirectionTo(player.Center) * modifier,
+                                    ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -829,8 +843,9 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                int modifier = Math.Sign(npc.Center.Y - player.Center.Y);
+                                Projectile.NewProjectile(npc.Center + 3000 * npc.DirectionFrom(player.Center) * modifier, npc.DirectionTo(player.Center) * modifier,
+                                    ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -945,8 +960,9 @@ namespace FargowiltasSouls.NPCs.Champions
                                             offset.X *= -1f;
                                         offset = offset.RotatedBy(npc.DirectionTo(player.Center).ToRotation());
 
-                                        Projectile.NewProjectile(npc.Center + offset, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
-                                        Projectile.NewProjectile(npc.Center + offset, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
+                                        int modifier = Math.Sign(npc.Center.Y - player.Center.Y);
+                                        Projectile.NewProjectile(npc.Center + offset + 3000 * npc.DirectionFrom(player.Center) * modifier, npc.DirectionTo(player.Center) * modifier,
+                                            ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
                                     }
                                 }
                                 else
@@ -992,8 +1008,9 @@ namespace FargowiltasSouls.NPCs.Champions
 
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(npc.Center, -npc.DirectionTo(player.Center), ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    int modifier = Math.Sign(npc.Center.Y - player.Center.Y);
+                                    Projectile.NewProjectile(npc.Center + 3000 * npc.DirectionFrom(player.Center) * modifier, npc.DirectionTo(player.Center) * modifier,
+                                        ModContent.ProjectileType<CosmosDeathray2>(), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -1155,10 +1172,14 @@ namespace FargowiltasSouls.NPCs.Champions
             switch((int)npc.ai[0])
             {
                 case -3:
-                    if (npc.ai[2] < 45 || (npc.ai[2] > 90 && npc.ai[2] < 135))
+                    if (npc.ai[2] < 50 || (npc.ai[2] > 100 && npc.ai[2] < 150))
                         npc.frame.Y = frameHeight * 3;
                     else
                         npc.frame.Y = frameHeight;
+                    break;
+
+                case -2:
+                    npc.frame.Y = frameHeight;
                     break;
 
                 case -1:
@@ -1293,7 +1314,12 @@ namespace FargowiltasSouls.NPCs.Champions
 
             //Item.NewItem(npc.position, npc.Size, ModLoader.GetMod("Fargowiltas").ItemType("CrucibleCosmos"));
 
-            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.MutantBoss.MutantBomb>(), 0, 0f, Main.myPlayer);
+            for (int i = 0; i < 10; i++)
+            {
+                Vector2 spawnPos = npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height));
+                int type = ModContent.ProjectileType<Projectiles.BossWeapons.PhantasmalBlast>();
+                Projectile.NewProjectile(spawnPos, Vector2.Zero, type, 0, 0f, Main.myPlayer);
+            }
         }
 
         public override Color? GetAlpha(Color drawColor)
@@ -1314,21 +1340,23 @@ namespace FargowiltasSouls.NPCs.Champions
 
             SpriteEffects effects = npc.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
+            Texture2D texture2D14 = mod.GetTexture("NPCs/Champions/CosmosChampion_Glow");
+
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
             {
                 Color color27 = color26 * 0.5f;
                 color27 *= (float)(NPCID.Sets.TrailCacheLength[npc.type] - i) / NPCID.Sets.TrailCacheLength[npc.type];
                 Vector2 value4 = npc.oldPos[i];
                 float num165 = npc.rotation; //npc.oldRot[i];
-                Main.spriteBatch.Draw(texture2D13, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
+                Main.spriteBatch.Draw(npc.localAI[2] != 0 ? texture2D14 : texture2D13, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
             }
 
-            if (npc.localAI[2] != 0) //draw glow around it
+            /*if (npc.localAI[2] != 0) //draw glow around it
             {
                 Texture2D texture2D14 = mod.GetTexture("NPCs/Champions/CosmosChampion_Glow");
                 float scale = (Main.mouseTextColor / 200f - 0.35f) * 0.4f + 0.8f;
                 Main.spriteBatch.Draw(texture2D14, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White * npc.Opacity, npc.rotation, origin2, scale, effects, 0f);
-            }
+            }*/
 
             Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
             return false;

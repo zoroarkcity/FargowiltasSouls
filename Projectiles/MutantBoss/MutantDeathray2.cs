@@ -23,11 +23,6 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             return projectile.scale >= .7f;
         }
 
-        public override bool? CanHitNPC(NPC target)
-        {
-            return false;
-        }
-
         public override bool CanHitPlayer(Player target)
         {
             return target.hurtCooldowns[1] == 0;

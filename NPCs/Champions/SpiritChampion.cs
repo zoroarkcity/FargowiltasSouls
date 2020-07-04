@@ -272,6 +272,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (++npc.ai[1] > 600)
                     {
                         npc.dontTakeDamage = false;
+                        npc.GetGlobalNPC<EModeGlobalNPC>().RegenTimer = 2; //dont regen
                     }
                     break;
 

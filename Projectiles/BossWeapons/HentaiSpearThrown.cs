@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -48,19 +49,36 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
             Main.dust[dustId3].noGravity = true;
 
-            /*if (--projectile.localAI[0] < 0)
+            if (--projectile.localAI[0] < 0)
             {
                 projectile.localAI[0] = 3;
                 if (projectile.owner == Main.myPlayer)
                 {
-                    int p = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack / 2, projectile.owner);
+                    Vector2 baseVel = Vector2.Normalize(projectile.velocity).RotatedBy(Math.PI / 2);
+
+                    int p = Projectile.NewProjectile(projectile.Center, 16f * baseVel, 
+                        ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack / 2, projectile.owner, 1f);
                     if (p != Main.maxProjectiles)
                     {
                         Main.projectile[p].melee = false;
                         Main.projectile[p].thrown = true;
                     }
+                    p = Projectile.NewProjectile(projectile.Center, 16f * -baseVel,
+                        ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack / 2, projectile.owner, 1f);
+                    if (p != Main.maxProjectiles)
+                    {
+                        Main.projectile[p].melee = false;
+                        Main.projectile[p].thrown = true;
+                    }
+                    
+                    /*Vector2 vel = baseVel.RotatedByRandom(Math.PI / 4);
+                    Projectile.NewProjectile(projectile.Center, 8f * vel, ModContent.ProjectileType<HentaiSpearArc>(), 
+                        projectile.damage, projectile.knockBack / 2, projectile.owner, vel.ToRotation(), projectile.timeLeft / projectile.MaxUpdates);
+                    vel = -baseVel.RotatedByRandom(Math.PI / 4);
+                    Projectile.NewProjectile(projectile.Center, 8f * vel, ModContent.ProjectileType<HentaiSpearArc>(),
+                        projectile.damage, projectile.knockBack / 2, projectile.owner, vel.ToRotation(), projectile.timeLeft / projectile.MaxUpdates);*/
                 }
-            }*/
+            }
 
             if (projectile.localAI[1] == 0f)
             {
@@ -69,7 +87,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 if (projectile.owner == Main.myPlayer)
                 {
                     int p = Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity), 
-                        ModContent.ProjectileType<HentaiSpearDeathray>(), projectile.damage, projectile.knockBack, projectile.owner);
+                        ModContent.ProjectileType<HentaiSpearDeathray>(), projectile.damage, projectile.knockBack, 
+                        projectile.owner, 0f, projectile.velocity.Length() * projectile.MaxUpdates);
                     if (p != Main.maxProjectiles)
                     {
                         Main.projectile[p].melee = false;

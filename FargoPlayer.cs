@@ -36,9 +36,10 @@ namespace FargowiltasSouls
         public bool BrainMinion;
         public bool EaterMinion;
         public bool BigBrainMinion;
+        public bool DukeFishron;
 
         //pet
-        
+
         public bool ChibiDevi;
         public bool MutantSpawn;
         public bool BabyAbom;
@@ -317,6 +318,8 @@ namespace FargowiltasSouls
         public bool Mash;
         public bool[] MashPressed = new bool[4];
         public int MashCounter;
+        public int StealingCooldown;
+        public bool LihzahrdCurse;
 
         public int MasomodeCrystalTimer = 0;
         public int MasomodeFreezeTimer = 0;
@@ -568,6 +571,7 @@ namespace FargowiltasSouls
             BrainMinion = false;
             EaterMinion = false;
             BigBrainMinion = false;
+            DukeFishron = false;
 
             ChibiDevi = false;
             MutantSpawn = false;
@@ -777,6 +781,7 @@ namespace FargowiltasSouls
             Swarming = false;
             LowGround = false;
             Flipped = false;
+            LihzahrdCurse = false;
 
             if (!Mash && MashCounter > 0)
             {
@@ -903,8 +908,14 @@ namespace FargowiltasSouls
                         player.AddBuff(BuffID.OnFire, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
                 }
 
-                if (player.ZoneJungle && player.wet && !MutantAntibodies)
-                    player.AddBuff(BuffID.Poisoned, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
+                if (player.ZoneJungle)
+                {
+                    if (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe)
+                        player.AddBuff(ModContent.BuffType<LihzahrdCurse>(), 2);
+
+                    if (player.wet && !MutantAntibodies)
+                        player.AddBuff(BuffID.Poisoned, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
+                }
 
                 if (player.ZoneSnow)
                 {
@@ -1244,20 +1255,20 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
-            if (FargoSoulsWorld.MasochistMode && !NPC.downedGolemBoss)
+            if (StealingCooldown > 0)
+                StealingCooldown--;
+
+            if (LihzahrdCurse)
             {
-                if (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe)
-                {
-                    player.dangerSense = false;
-                    player.InfoAccMechShowWires = false;
-                }
-                if ((player.HeldItem.type == ItemID.WireCutter || player.HeldItem.type == ItemID.WireKite)
-                    && (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe
-                    || Framing.GetTileSafely(Main.MouseWorld).wall == WallID.LihzahrdBrickUnsafe))
-                {
-                    player.controlUseItem = false;
-                }
+                player.dangerSense = false;
+                player.InfoAccMechShowWires = false;
             }
+
+            if ((player.HeldItem.type == ItemID.WireCutter || player.HeldItem.type == ItemID.WireKite)
+                && (LihzahrdCurse || !player.buffImmune[ModContent.BuffType<LihzahrdCurse>()])
+                && (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe
+                || Framing.GetTileSafely(Main.MouseWorld).wall == WallID.LihzahrdBrickUnsafe))
+                player.controlUseItem = false;
 
             if (Solar)
             {
@@ -2770,6 +2781,11 @@ namespace FargowiltasSouls
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
+            if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, ModContent.NPCType<NPCs.DeviBoss.DeviBoss>()))
+            {
+                ((NPCs.DeviBoss.DeviBoss)Main.npc[EModeGlobalNPC.deviBoss].modNPC).playerInvulTriggered = true;
+            }
+
             if (FargoSoulsWorld.MasochistMode && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore)
                 && player.Distance(Main.npc[EModeGlobalNPC.moonBoss].Center) < 2500)
             {
@@ -3272,8 +3288,6 @@ namespace FargowiltasSouls
                 case ItemID.LastPrism:
                 case ItemID.Tsunami:
                 case ItemID.Phantasm:
-                    return 0.75f;
-                    
                 case ItemID.OnyxBlaster:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.ChainGun:
@@ -3284,10 +3298,8 @@ namespace FargowiltasSouls
                 case ItemID.SpikyBall:
                 case ItemID.SDMG:
                 case ItemID.Xenopopper:
+                case ItemID.NebulaArcanum:
                     return 0.75f;
-
-                case ItemID.SpaceGun:
-                    return NPC.downedBoss2 ? 1f : 2f / 3f;
 
                 default:
                     return 1f;

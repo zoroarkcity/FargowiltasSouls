@@ -19,11 +19,6 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
 			DisplayName.SetDefault("Abominable Deathray");
 		}
 
-        public override bool? CanHitNPC(NPC target)
-        {
-            return false;
-        }
-
         public override void AI()
         {
             Vector2? vector78 = null;

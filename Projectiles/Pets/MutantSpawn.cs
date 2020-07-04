@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Projectiles.Pets
 
         public override void SetDefaults()
         {
-            projectile.width = 50;
+            projectile.width = 30;
             projectile.height = 36;
             projectile.ignoreWater = true;
             projectile.aiStyle = 26;
@@ -33,6 +33,16 @@ namespace FargowiltasSouls.Projectiles.Pets
             projectile.friendly = true;
 
             projectile.extraUpdates = 1;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(notlocalai1);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            notlocalai1 = reader.ReadSingle();
         }
 
         public override bool PreAI()
@@ -61,7 +71,7 @@ namespace FargowiltasSouls.Projectiles.Pets
                     projectile.position.Y -= projectile.velocity.Y;
             }
 
-            if (player.velocity.X == 0 && player.velocity.Y == 0) //run code when not moving
+            if (player.velocity == Vector2.Zero) //run code when not moving
                 BeCompanionCube();
         }
 
@@ -83,29 +93,47 @@ namespace FargowiltasSouls.Projectiles.Pets
                 notlocalai1 -= 1;
             }
 
-            notlocalai1 = MathHelper.Clamp(notlocalai1, -3600f, 120f);
+            notlocalai1 = MathHelper.Clamp(notlocalai1, -3600f, 600);
 
             if (notlocalai1 > Main.rand.Next(300, 600) && !player.immune)
             {
                 notlocalai1 = Main.rand.Next(30) * -10 - 300;
-                Main.PlaySound(SoundID.Item1, projectile.Center);
-                player.Hurt(Terraria.DataStructures.PlayerDeathReason.ByOther(6), 777, 0, false, false, false, -1);
-                player.immune = false;
-                player.immuneTime = 0;
 
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                switch (Main.rand.Next(3))
                 {
-                    int n = NPC.NewNPC((int)projectile.Center.X, (int)projectile.Center.Y, ModContent.NPCType<NPCs.MutantBoss.MutantBoss>());
-                    if (Main.netMode == NetmodeID.Server)
-                    {
-                        NetMessage.BroadcastChatMessage(Terraria.Localization.NetworkText.FromLiteral("Mutant has awoken!"), new Color(175, 75, 255));
-                        if (n != Main.maxNPCs)
-                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
-                    }
-                    else
-                    {
-                        Main.NewText("Mutant has awoken!", 175, 75, 255);
-                    }
+                    case 0: //stab
+                        if (projectile.owner == Main.myPlayer)
+                        {
+                            Main.PlaySound(SoundID.Item1, projectile.Center);
+                            player.Hurt(Terraria.DataStructures.PlayerDeathReason.ByOther(6), 777, 0, false, false, false, -1);
+                            player.immune = false;
+                            player.immuneTime = 0;
+                        }
+                        break;
+
+                    case 1: //spawn mutant
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int n = NPC.NewNPC((int)projectile.Center.X, (int)projectile.Center.Y, ModContent.NPCType<NPCs.MutantBoss.MutantBoss>());
+                            if (Main.netMode == NetmodeID.Server)
+                            {
+                                NetMessage.BroadcastChatMessage(Terraria.Localization.NetworkText.FromLiteral("Mutant has awoken!"), new Color(175, 75, 255));
+                                if (n != Main.maxNPCs)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                            }
+                            else
+                            {
+                                Main.NewText("Mutant has awoken!", 175, 75, 255);
+                            }
+                        }
+                        break;
+
+                    default:
+                        if (projectile.owner == Main.myPlayer)
+                        {
+                            CombatText.NewText(projectile.Hitbox, Color.LimeGreen, "You think you're safe?");
+                        }
+                        break;
                 }
             }
         }

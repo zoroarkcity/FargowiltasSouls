@@ -26,6 +26,8 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.penetrate = -1;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
         }
 
         public override void AI()
@@ -52,6 +54,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             if (projectile.ai[1] == 0)
             {
                 projectile.velocity = projectile.DirectionTo(player.Center) * speed + player.velocity / 4f;
+                projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2;
 
                 if (projectile.Distance(player.Center) < speed) //in range
                 {
@@ -61,6 +64,8 @@ namespace FargowiltasSouls.Projectiles.Champions
             }
             else
             {
+                projectile.rotation = npc.DirectionTo(player.Center).ToRotation() + (float)Math.PI / 2;
+
                 if (projectile.Distance(player.Center) > 64) //out of range somehow
                 {
                     projectile.ai[1] = 0;
@@ -71,7 +76,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                     float dragSpeed = projectile.Distance(npc.Center) / 50;
                     
                     player.position += projectile.DirectionTo(npc.Center) * dragSpeed;
-                    projectile.Center = player.Center;
+                    projectile.Center = player.Center - player.velocity;
 
                     if (projectile.timeLeft == 1)
                         player.velocity /= 3;

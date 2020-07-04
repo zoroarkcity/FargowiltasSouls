@@ -106,3 +106,58 @@ reduced severity of weapon nerfs
 new mutant background
 new abom background
 added full force
+
+spirit champ no regen in last stand
+spirit champ swords 50% chance to stop on platforms
+resprited earth champ crystal bombs
+earth champ fists clench during fireballs to discourage running in p2
+shadow champ sprite
+shadow champ scythes buffed
+
+nerfed golem regen more but restored 10% DR
+devi teleports above you for dungeon guardian attack
+
+dungeon guardian rework
+	75% less hp
+	projectiles dont instakill
+	removed speed boost
+	actual attack pattern
+icon works on enemies with 2000 or less life (was 1000)
+reduced devi life slightly
+devi has an enrage with other content mods (more hp)
+removed abom dr and mutant has 10% (was 20%)
+emode ai is disabled during swarms
+skeletron p2 at 75%, shoots massive spreads of baby guardians and accelerating homing bursts
+
+all deathrays and certain other major attacks are immune to gutted heart
+fixed iron ench allowing you to quick cancel right click weapons
+penetrator right click buffed drastically
+more stuff to fix twins dying after you die
+
+removed living wasteland from most events
+pirates can steal your items on contact now
+having items stolen causes text in chat
+lowered chance of bees becoming hornets
+pre hm hornets continue to exist in hm again
+hornets glow while swarming at you
+
+item stealing has a 5sec cooldown
+goblin thief speed nerfed
+goblin warriors take a small amount of knockback
+goblin sorcerors capped at 2 alive at a time until post-eye or hm
+cultist clones all share cultist boss hitbox (piercing should not really work)
+changed crystal bullet/holy arrow nerf slightly
+lihzahrds no longer drop hostile spiky balls to compensate for temple buff
+
+mutant draws behind his held weapons now
+pungent eyeball and true eye minions are drawn behind their deathrays
+removed the old bandaid solution of creepers blocking strong attacks by making those attacks intangible to npcs
+fixed bug where devi, abom, mutant become invisible when they go OOB and come back(?) (TEST IN MP)
+changed abom's 8 sickle spread attack to be different from mutant
+
+removed emode money drop changes (qb, ml, mimic)
+removed meteorite blast resistance  (no longer needed with 1.4)
+lihzahrd curse debuff handles disabling wires in temple
+lihzahrd treasure box gives immunity to lihzahrd curse
+right click lihzahrd altar for 10min lihzahrd blessing (immunity to curse)
+capped number of sand sharks spawned by sand ele

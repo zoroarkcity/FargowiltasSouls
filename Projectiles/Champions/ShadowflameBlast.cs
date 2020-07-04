@@ -29,6 +29,8 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.hide = true;
             projectile.extraUpdates = 1;
             cooldownSlot = 1;
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
         public override bool CanHitPlayer(Player target)

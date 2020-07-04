@@ -57,6 +57,7 @@ Summons a friendly Cultist and plant to fight at your side
             //lihzahrd treasure
             player.buffImmune[BuffID.Burning] = true;
             player.buffImmune[mod.BuffType("Fused")] = true;
+            player.buffImmune[mod.BuffType("LihzahrdCurse")] = true;
             player.buffImmune[mod.BuffType("LowGround")] = true;
             fargoPlayer.LihzahrdTreasureBox = true;
 

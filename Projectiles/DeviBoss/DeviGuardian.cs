@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.DeviBoss
 {
@@ -39,6 +40,8 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
                 projectile.rotation = Main.rand.NextFloat(0, 2 * (float)Math.PI);
                 projectile.hide = false;
 
+                Main.PlaySound(SoundID.Item21, projectile.Center);
+
                 for (int i = 0; i < 50; i++)
                 {
                     Vector2 pos = new Vector2(projectile.Center.X + Main.rand.Next(-20, 20), projectile.Center.Y + Main.rand.Next(-20, 20));
@@ -65,6 +68,8 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
         {
             target.AddBuff(mod.BuffType("Defenseless"), 300);
             target.AddBuff(mod.BuffType("Lethargic"), 300);
+            if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.guardBoss, NPCID.DungeonGuardian))
+                target.AddBuff(mod.BuffType("MarkedForDeath"), 300);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

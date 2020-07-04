@@ -1,0 +1,176 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace FargowiltasSouls.Projectiles.BossWeapons
+{
+    public class SparklingLoveBig : ModProjectile
+    {
+        public override string Texture => "FargowiltasSouls/Items/Weapons/FinalUpgrades/SparklingLove";
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Sparkling Love");
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+        }
+
+        public override void SetDefaults()
+        {
+            projectile.width = 90;
+            projectile.height = 90;
+            projectile.friendly = true;
+            projectile.minion = true;
+            projectile.ignoreWater = true;
+            projectile.tileCollide = false;
+            projectile.timeLeft = 65;
+            projectile.aiStyle = -1;
+            projectile.scale = 4f;
+            projectile.penetrate = -1;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+        }
+
+        public override void AI()
+        {
+            //the important part
+            int ai1 = (int)projectile.ai[1];
+            if (ai1 > -1 && ai1 < Main.maxProjectiles && Main.projectile[ai1].active && Main.projectile[ai1].type == ModContent.ProjectileType<SparklingDevi>())
+            {
+                if (projectile.timeLeft > 15)
+                {
+                    Vector2 offset = new Vector2(0, -275).RotatedBy(Math.PI / 4 * Main.projectile[ai1].spriteDirection);
+                    projectile.Center = Main.projectile[ai1].Center + offset;
+                    projectile.rotation = (float)Math.PI / 4 * Main.projectile[ai1].spriteDirection - (float)Math.PI / 4;
+                }
+                else //swinging down
+                {
+                    projectile.rotation -= (float)Math.PI / 15 * Main.projectile[ai1].spriteDirection * 0.75f;
+                    Vector2 offset = new Vector2(0, -275).RotatedBy(projectile.rotation + (float)Math.PI / 4);
+                    projectile.Center = Main.projectile[ai1].Center + offset;
+                }
+
+                projectile.spriteDirection = -Main.projectile[ai1].spriteDirection;
+
+                projectile.localAI[1] = Main.projectile[ai1].velocity.ToRotation();
+
+                if (projectile.localAI[0] == 0)
+                {
+                    projectile.localAI[0] = 1;
+                    MakeDust();
+                    Main.PlaySound(SoundID.Item92, projectile.Center);
+                }
+            }
+            else
+            {
+                projectile.Kill();
+                return;
+            }
+        }
+
+        private void MakeDust()
+        {
+            for (int index1 = 0; index1 < 50; ++index1)
+            {
+                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 272, 0f, 0f, 100, new Color(), 2f);
+                Main.dust[index2].noGravity = true;
+                Main.dust[index2].velocity *= 7f * projectile.scale;
+                Main.dust[index2].noLight = true;
+                int index3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 272, 0f, 0f, 100, new Color(), 1f);
+                Main.dust[index3].velocity *= 4f * projectile.scale;
+                Main.dust[index3].noGravity = true;
+                Main.dust[index3].noLight = true;
+            }
+
+            for (int i = 0; i < 160; i++) //warning dust ring
+            {
+                Vector2 vector6 = Vector2.UnitY * 15f * projectile.scale;
+                vector6 = vector6.RotatedBy((i - (80 / 2 - 1)) * 6.28318548f / 80) + projectile.Center;
+                Vector2 vector7 = vector6 - projectile.Center;
+                int d = Dust.NewDust(vector6 + vector7, 0, 0, 86, 0f, 0f, 0, default(Color), 2.5f);
+                Main.dust[d].noGravity = true;
+                Main.dust[d].velocity = vector7;
+            }
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.immune[projectile.owner] = 1;
+            target.AddBuff(BuffID.Lovestruck, 300);
+        }
+
+        public override void Kill(int timeleft)
+        {
+            Main.PlaySound(SoundID.NPCKilled, projectile.Center, 6);
+            Main.PlaySound(SoundID.Item92, projectile.Center);
+
+            MakeDust();
+
+            if (projectile.owner == Main.myPlayer)
+            {
+                float minionSlotsUsed = 0;
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    if (Main.projectile[i].active && !Main.projectile[i].hostile && Main.projectile[i].owner == projectile.owner && Main.projectile[i].minion)
+                        minionSlotsUsed += Main.projectile[i].minionSlots;
+                }
+
+                float modifier = Main.player[projectile.owner].maxMinions - minionSlotsUsed;
+                if (modifier < 0)
+                    modifier = 0;
+                if (modifier > 5)
+                    modifier = 5;
+
+                int max = (int)modifier + 3;
+                for (int i = 0; i < max; i++)
+                {
+                    Vector2 target = 600 * -Vector2.UnitY.RotatedBy(2 * Math.PI / max * i + projectile.localAI[1]);
+                    Vector2 speed = 2 * target / 90;
+                    float acceleration = -speed.Length() / 90;
+                    float rotation = speed.ToRotation() + (float)Math.PI / 2;
+                    Projectile.NewProjectile(projectile.Center, speed, ModContent.ProjectileType<SparklingLoveEnergyHeart>(),
+                        projectile.damage, projectile.knockBack, projectile.owner, rotation, acceleration);
+
+                    Projectile.NewProjectile(projectile.Center, 14f * Vector2.UnitY.RotatedBy(2 * Math.PI / max * (i + 0.5) + projectile.localAI[1]),
+                        ModContent.ProjectileType<SparklingLoveHeart2>(), projectile.damage, projectile.knockBack,
+                        projectile.owner, -1, 45);
+                }
+            }
+        }
+
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White * projectile.Opacity;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            Texture2D texture2D13 = Main.projectileTexture[projectile.type];
+            int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
+            int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
+            Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
+            Vector2 origin2 = rectangle.Size() / 2f;
+
+            SpriteEffects effects = projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Color color26 = lightColor;
+            color26 = projectile.GetAlpha(color26);
+
+            float rotationOffset = projectile.spriteDirection > 0 ? 0 : (float)Math.PI / 2;
+
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+            {
+                Color color27 = color26 * 0.5f;
+                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                Vector2 value4 = projectile.oldPos[i];
+                float num165 = projectile.oldRot[i];
+                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165 + rotationOffset, origin2, projectile.scale, effects, 0f);
+            }
+
+            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation + rotationOffset, origin2, projectile.scale, effects, 0f);
+            return false;
+        }
+    }
+}

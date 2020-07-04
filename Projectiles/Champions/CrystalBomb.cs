@@ -16,8 +16,8 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void SetDefaults()
         {
-            projectile.width = 80;
-            projectile.height = 80;
+            projectile.width = 30;
+            projectile.height = 30;
             projectile.aiStyle = -1;
             projectile.hostile = true;
             projectile.timeLeft = 600;
@@ -27,6 +27,9 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.alpha = 255;
             projectile.hide = true;
             cooldownSlot = 1;
+
+            projectile.scale = 2.5f;
+            projectile.tileCollide = false;
         }
 
         public override void AI()
@@ -41,7 +44,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             if (--projectile.localAI[1] < 0)
             {
                 projectile.localAI[1] = 60;
-                Main.PlaySound(SoundID.Item120, projectile.position);
+                Main.PlaySound(SoundID.Item27, projectile.position);
             }
 
             projectile.alpha -= 10;
@@ -58,6 +61,9 @@ namespace FargowiltasSouls.Projectiles.Champions
             Main.dust[index3].noGravity = true;
 
             projectile.velocity *= 1.03f;
+
+            if (projectile.Center.Y > projectile.ai[0])
+                projectile.tileCollide = true;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -69,7 +75,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(0, (int)projectile.position.X, (int)projectile.position.Y);
+            Main.PlaySound(SoundID.Item27, projectile.position);
 
             for (int index1 = 0; index1 < 40; ++index1)
             {

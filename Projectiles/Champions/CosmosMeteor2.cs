@@ -39,11 +39,6 @@ namespace FargowiltasSouls.Projectiles.Champions
             return projectile.Distance(target.Center) < projectile.width * projectile.scale;
         }
 
-        public override bool? CanHitNPC(NPC target)
-        {
-            return false;
-        }
-
         public override void AI()
         {
             if (projectile.localAI[0] == 0)
@@ -67,7 +62,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.timeLeft = 2;
             
             const float maxAmplitude = 850;
-            float offset = Math.Abs(maxAmplitude * (float)Math.Sin(Main.npc[ai1].ai[2] * 2 * (float)Math.PI / 180));
+            float offset = Math.Abs(maxAmplitude * (float)Math.Sin(Main.npc[ai1].ai[2] * 2 * (float)Math.PI / 200));
             offset += 150;
             projectile.rotation += 0.01f;
             projectile.Center = Main.npc[ai1].Center + offset * projectile.rotation.ToRotationVector2();

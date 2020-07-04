@@ -721,7 +721,7 @@ namespace FargowiltasSouls.NPCs
                         Counter = 0;
                     }
                 }
-            }
+            }*/
 
             if (npc.ai[1] == 1f || npc.ai[1] == 2f) //spinning or DG mode
             {
@@ -740,6 +740,55 @@ namespace FargowiltasSouls.NPCs
                             vel += npc.velocity * (1f - ratio);
                             vel.Y -= Math.Abs(vel.X) * 0.2f;
                             Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<SkeletronBone>(), npc.defDamage / 9 * 2, 0f, Main.myPlayer);
+                        }
+                    }
+                }
+
+                if (Counter > 180)
+                    Counter = 180;
+
+                if (npc.life < npc.lifeMax * .75 && npc.ai[1] == 1f && --Counter < 0)
+                {
+                    Counter = 180;
+
+                    Main.PlaySound(SoundID.ForceRoar, npc.Center, -1);
+
+                    if (Main.netMode != NetmodeID.MultiplayerClient) //spray of baby guardian missiles
+                    {
+                        for (int i = 0; i < 15; i++)
+                        {
+                            float speed = Main.rand.NextFloat(4f, 8f);
+                            Vector2 velocity = speed * npc.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * (Main.rand.NextDouble() - 0.5));
+                            float ai1 = speed / Main.rand.NextFloat(60f, 90f);
+                            Projectile.NewProjectile(npc.Center, velocity, ModContent.ProjectileType<SkeletronGuardian>(), npc.damage / 5, 0f, Main.myPlayer, 0f, ai1);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (npc.life < npc.lifeMax * .75 && --Counter < 0)
+                {
+                    Counter = 240;
+
+                    Main.PlaySound(SoundID.ForceRoar, npc.Center, -1);
+
+                    if (Main.netMode != NetmodeID.MultiplayerClient) //V spray of baby guardians
+                    {
+                        for (int j = -1; j <= 1; j++) //to both sides
+                        {
+                            if (j == 0)
+                                continue;
+
+                            Vector2 baseVel = npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.ToRadians(25) * j);
+                            for (int k = 0; k < 10; k++) //a fan of skulls
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(npc.Center, baseVel.RotatedBy(MathHelper.ToRadians(8) * j * k),
+                                        ModContent.ProjectileType<SkeletronGuardian2>(), npc.damage / 5, 0f, Main.myPlayer);
+                                }
+                            }
                         }
                     }
                 }
@@ -799,7 +848,7 @@ namespace FargowiltasSouls.NPCs
                 }
             }
 
-            if (Main.npc[(int)npc.ai[1]].ai[1] == 1f || Main.npc[(int)npc.ai[1]].ai[1] == 2f) //spinning or DG mode
+            /*if (Main.npc[(int)npc.ai[1]].ai[1] == 1f || Main.npc[(int)npc.ai[1]].ai[1] == 2f) //spinning or DG mode
             {
                 if (!masoBool[0])
                 {
@@ -824,7 +873,7 @@ namespace FargowiltasSouls.NPCs
             else
             {
                 masoBool[0] = false;
-            }
+            }*/
         }
 
         public void WallOfFleshAI(NPC npc)
@@ -1155,9 +1204,11 @@ namespace FargowiltasSouls.NPCs
                 npc.netUpdate = true;
             }
 
-            npc.dontTakeDamage = npc.life == 1;
+            npc.dontTakeDamage = npc.life == 1 || !npc.HasValidTarget;
+            if (npc.life > 1 && npc.HasValidTarget)
+                npc.dontTakeDamage = false;
             //become vulnerable again when both twins at 1hp
-            if (npc.dontTakeDamage && npc.HasPlayerTarget && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
+            if (npc.dontTakeDamage && npc.HasValidTarget && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
                 npc.dontTakeDamage = false;
 
             if (npc.ai[0] < 4f) //going to phase 3
@@ -1216,10 +1267,6 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
                 SharkCount = 253;
-
-                //become vulnerable again when both twins at 1hp
-                if (npc.dontTakeDamage && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
-                    npc.dontTakeDamage = false;
 
                 //2*pi * (# of full circles) / (seconds to finish rotation) / (ticks per sec)
                 const float rotationInterval = 2f * (float)Math.PI * 1f / 4f / 60f;
@@ -1440,9 +1487,11 @@ namespace FargowiltasSouls.NPCs
                 npc.netUpdate = true;
             }
 
-            npc.dontTakeDamage = npc.life == 1;
+            npc.dontTakeDamage = npc.life == 1 || !npc.HasValidTarget;
+            if (npc.life > 1 && npc.HasValidTarget)
+                npc.dontTakeDamage = false;
             //become vulnerable again when both twins at 1hp
-            if (npc.dontTakeDamage && npc.HasPlayerTarget && (!BossIsAlive(ref retiBoss, NPCID.Retinazer) || Main.npc[retiBoss].life == 1))
+            if (npc.dontTakeDamage && npc.HasValidTarget && (!BossIsAlive(ref retiBoss, NPCID.Retinazer) || Main.npc[retiBoss].life == 1))
                 npc.dontTakeDamage = false;
 
             if (npc.ai[0] < 4f)
@@ -2857,14 +2906,14 @@ namespace FargowiltasSouls.NPCs
 
             if (!npc.dontTakeDamage)
             {
-                npc.life += 4; //healing stuff
+                npc.life += 3; //healing stuff
                 if (npc.life > npc.lifeMax)
                     npc.life = npc.lifeMax;
                 Timer++;
                 if (Timer >= 75)
                 {
                     Timer = Main.rand.Next(30);
-                    CombatText.NewText(npc.Hitbox, CombatText.HealLife, 240);
+                    CombatText.NewText(npc.Hitbox, CombatText.HealLife, 180);
                 }
             }
 
@@ -2915,7 +2964,7 @@ namespace FargowiltasSouls.NPCs
             if (npc.type == NPCID.GolemHead)
             {
                 npc.dontTakeDamage = false;
-                npc.life += 4;
+                npc.life += 3;
                 if (npc.life > npc.lifeMax)
                     npc.life = npc.lifeMax;
 
@@ -2923,7 +2972,7 @@ namespace FargowiltasSouls.NPCs
                 if (Timer >= 75)
                 {
                     Timer = Main.rand.Next(30);
-                    CombatText.NewText(npc.Hitbox, CombatText.HealLife, 240);
+                    CombatText.NewText(npc.Hitbox, CombatText.HealLife, 180);
                 }
             }
             //detatched head

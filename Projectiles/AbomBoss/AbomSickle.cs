@@ -81,7 +81,6 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             {
                 target.AddBuff(mod.BuffType("AbomFang"), 300);
                 target.AddBuff(mod.BuffType("Berserked"), 120);
-                target.AddBuff(BuffID.Cursed, 120);
             }
             target.AddBuff(BuffID.Bleeding, 600);
         }

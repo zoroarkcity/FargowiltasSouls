@@ -85,6 +85,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.defense = head.defense;
             npc.defDefense = head.defDefense;
             npc.target = head.target;
+            npc.dontTakeDamage = head.dontTakeDamage;
 
             npc.life = npc.lifeMax;
 
@@ -330,13 +331,19 @@ namespace FargowiltasSouls.NPCs.Champions
 
                 case 8: //wait while head does fireballs
                     npc.noTileCollide = true;
-
-                    targetPos = head.Center;
-                    targetPos.Y += 250;
-                    targetPos.X += 300 * -npc.ai[3];
-                    Movement(targetPos, 0.8f, 32f);
+                    
+                    targetPos.X = head.Center.X + 350 * -npc.ai[3];
+                    targetPos.Y = player.Center.Y;
+                    if (npc.Distance(targetPos) > 50)
+                        Movement(targetPos, 0.8f, 32f);
 
                     npc.rotation = 0;
+
+                    if (++npc.localAI[0] > 120 && head.localAI[2] == 1)
+                    {
+                        npc.localAI[3] = 1;
+                        npc.rotation = npc.DirectionTo(player.Center).ToRotation() - (float)Math.PI / 2;
+                    }
 
                     if (npc.ai[1] > 60) //grace period over, if head reverts back then leave this state
                     {
@@ -344,6 +351,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             npc.ai[0]++;
                             npc.ai[1] = 0;
+                            npc.localAI[0] = 0;
                             npc.netUpdate = true;
                         }
                     }
@@ -395,7 +403,8 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.localAI[0] = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.UnitY * 2f, ModContent.ProjectileType<CrystalBomb>(), npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitY * 2f, ModContent.ProjectileType<CrystalBomb>(),
+                                npc.damage / 4, 0f, Main.myPlayer, player.position.Y);
                         }
                     }
 
@@ -505,9 +514,16 @@ namespace FargowiltasSouls.NPCs.Champions
                 Main.spriteBatch.Draw(texture2D13, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
             }
 
-            Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
-
             Texture2D glowmask = ModContent.GetTexture("FargowiltasSouls/NPCs/Champions/EarthChampionHand_Glow");
+
+            if (npc.dontTakeDamage)
+            {
+                Vector2 offset = Vector2.UnitX * Main.rand.NextFloat(-180, 180);
+                Main.spriteBatch.Draw(texture2D13, npc.Center + offset - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor) * 0.5f, npc.rotation, origin2, npc.scale, effects, 0f);
+                Main.spriteBatch.Draw(glowmask, npc.Center + offset - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor) * 0.5f, npc.rotation, origin2, npc.scale, effects, 0f);
+            }
+
+            Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
             Main.spriteBatch.Draw(glowmask, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, npc.rotation, origin2, npc.scale, effects, 0f);
             return false;
         }

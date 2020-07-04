@@ -67,6 +67,7 @@ namespace FargowiltasSouls.Projectiles
         public bool TimeFreezeCheck;
         public bool HasKillCooldown;
         public bool ImmuneToMutantBomb;
+        public bool ImmuneToGuttedHeart;
 
         public bool masobool;
 
@@ -78,6 +79,11 @@ namespace FargowiltasSouls.Projectiles
             {
                 switch (projectile.type)
                 {
+                    case ProjectileID.PhantasmalDeathray:
+                    case ProjectileID.SaucerDeathray:
+                        ImmuneToGuttedHeart = true;
+                        break;
+
                     case ProjectileID.ChlorophyteBullet:
                         projectile.extraUpdates = 1;
                         break;
@@ -856,7 +862,7 @@ namespace FargowiltasSouls.Projectiles
                     {
                         projectile.damage = Main.npc[EModeGlobalNPC.championBoss].damage / 4;
                     }
-                    else if (FargoSoulsWorld.MasochistMode && projectile.timeLeft == 1199 && Main.netMode != NetmodeID.MultiplayerClient)
+                    else if (FargoSoulsWorld.MasochistMode && projectile.timeLeft == 1199 && NPC.CountNPCS(NPCID.SandShark) < 10 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int n = NPC.NewNPC((int)projectile.Center.X, (int)projectile.Center.Y, NPCID.SandShark);
                         if (n < 200)
@@ -1425,11 +1431,11 @@ namespace FargowiltasSouls.Projectiles
                             target.AddBuff(BuffID.Cursed, 60);
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.guardBoss, NPCID.DungeonGuardian))
                         {
-                            target.AddBuff(ModContent.BuffType<GodEater>(), 420);
+                            target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 300);
+                            /*target.AddBuff(ModContent.BuffType<GodEater>(), 420);
                             target.AddBuff(ModContent.BuffType<FlamesoftheUniverse>(), 420);
-                            target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 420);
                             target.immune = false;
-                            target.immuneTime = 0;
+                            target.immuneTime = 0;*/
                         }
                         break;
 
@@ -1767,9 +1773,9 @@ namespace FargowiltasSouls.Projectiles
         {
             if (FargoSoulsWorld.MasochistMode && projectile.owner == Main.myPlayer && HasKillCooldown)
             {
-                if (Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer <= 0)
+                if (Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer <= 60)
                 {
-                    Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer = 15;
+                    Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer += 12;
                     return true;
                 }
                 else

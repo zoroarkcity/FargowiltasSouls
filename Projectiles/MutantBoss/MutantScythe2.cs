@@ -17,8 +17,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void SetDefaults()
         {
-            projectile.width = 48;
-            projectile.height = 48;
+            projectile.width = 40;
+            projectile.height = 40;
             projectile.alpha = 100;
             projectile.light = 0.2f;
             projectile.hostile = true;
@@ -53,16 +53,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            if (NPCs.EModeGlobalNPC.BossIsAlive(ref NPCs.EModeGlobalNPC.mutantBoss, mod.NPCType("MutantBoss")))
-            {
-                if (FargoSoulsWorld.MasochistMode)
-                    target.AddBuff(mod.BuffType("MutantFang"), 180);
-            }
             if (FargoSoulsWorld.MasochistMode)
-            {
-                target.AddBuff(mod.BuffType("AbomFang"), 300);
-                target.AddBuff(mod.BuffType("Shadowflame"), 300);
-            }
+                target.AddBuff(mod.BuffType("MutantFang"), 180);
             target.AddBuff(BuffID.Bleeding, 600);
         }
 

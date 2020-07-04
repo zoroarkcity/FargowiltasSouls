@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -26,6 +27,15 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.hostile = false;
             projectile.friendly = true;
             projectile.melee = true;
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+
+            projectile.hide = true;
+        }
+
+        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+        {
+            drawCacheProjsBehindProjectiles.Add(index);
         }
 
         public override void AI()
@@ -50,7 +60,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
             if (projectile.localAI[0] == 0f)
             {
-                Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 6, 1f, 0.0f);
+                Main.PlaySound(SoundID.Item12, projectile.Center);
+                //Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 6, 1f, 0.0f);
             }
             float num801 = .5f;
             projectile.localAI[0] += 1f;
@@ -59,6 +70,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 projectile.Kill();
                 return;
             }
+            //projectile.scale = num801;
             projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 2.5f * num801;
             if (projectile.scale > num801)
             {
@@ -82,7 +94,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             float[] array3 = new float[(int)num805];
             //Collision.LaserScan(samplingPoint, projectile.velocity, num806 * projectile.scale, 3000f, array3);
             for (int i = 0; i < array3.Length; i++)
-                array3[i] = 3000;
+                array3[i] = projectile.localAI[0] * projectile.ai[1];
             float num807 = 0f;
             int num3;
             for (int num808 = 0; num808 < array3.Length; num808 = num3 + 1)
@@ -93,7 +105,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             num807 /= num805;
             float amount = 0.5f;
             projectile.localAI[1] = MathHelper.Lerp(projectile.localAI[1], num807, amount);
-            Vector2 vector79 = projectile.Center + projectile.velocity * (projectile.localAI[1] - 14f);
+            /*Vector2 vector79 = projectile.Center + projectile.velocity * (projectile.localAI[1] - 14f);
             for (int num809 = 0; num809 < 2; num809 = num3 + 1)
             {
                 float num810 = projectile.velocity.ToRotation() + ((Main.rand.Next(2) == 1) ? -1f : 1f) * 1.57079637f;
@@ -111,12 +123,26 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Dust dust = Main.dust[num813];
                 dust.velocity *= 0.5f;
                 Main.dust[num813].velocity.Y = -Math.Abs(Main.dust[num813].velocity.Y);
-            }
+            }*/
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
             //Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
 
             projectile.position -= projectile.velocity;
             projectile.rotation = projectile.velocity.ToRotation() - 1.57079637f;
+
+            const int increment = 100;
+            for (int i = 0; i < array3[0]; i += increment)
+            {
+                float offset = i + Main.rand.NextFloat(-increment, increment);
+                if (offset < 0)
+                    offset = 0;
+                if (offset > array3[0])
+                    offset = array3[0];
+                int d = Dust.NewDust(projectile.position + projectile.velocity * offset,
+                    projectile.width, projectile.height, 229, 0f, 0f, 0, default(Color), 1.5f);
+                Main.dust[d].noGravity = true;
+                Main.dust[d].velocity *= 4.5f;
+            }
         }
         
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

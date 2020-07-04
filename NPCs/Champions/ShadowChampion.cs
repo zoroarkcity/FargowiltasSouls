@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
@@ -26,9 +27,9 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 110;
             npc.height = 110;
-            npc.damage = 130;
+            npc.damage = 115;
             npc.defense = 60;
-            npc.lifeMax = 320000;
+            npc.lifeMax = 330000;
             npc.HitSound = SoundID.NPCHit5;
             npc.DeathSound = SoundID.NPCDeath7;
             npc.noGravity = true;
@@ -107,6 +108,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
             if (npc.HasValidTarget && npc.Distance(player.Center) < 2500 && !Main.dayTime)
                 npc.timeLeft = 600;
+
+            npc.direction = npc.spriteDirection = npc.Center.X < player.Center.X ? 1 : -1;
 
             if (npc.localAI[3] == 1 && npc.life < npc.lifeMax * .66)
             {
@@ -285,11 +288,9 @@ namespace FargowiltasSouls.NPCs.Champions
                     //warning dust
                     Main.dust[Dust.NewDust(npc.Center, 0, 0, DustID.Fire, 0f, 0f, 0, default(Color), 2f)].velocity *= 7f;
 
-                    if (++npc.ai[2] > 4 && npc.ai[1] > 120)
+                    if (++npc.ai[2] > 5 && npc.ai[1] > 120)
                     {
                         npc.ai[2] = 0;
-
-                        Main.PlaySound(SoundID.Item21, npc.Center);
 
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
@@ -298,14 +299,24 @@ namespace FargowiltasSouls.NPCs.Champions
                                 if (i == 0)
                                     continue;
 
-                                Vector2 spawnPos = player.Center + Vector2.UnitX * 1000 * i;
+                                //p2 fires from above/below, others fire from sides
+                                Vector2 spawnPos = player.Center + i * (npc.localAI[3] == 2 ? Vector2.UnitY * 1000 : Vector2.UnitX * 1000);
 
                                 for (int j = -1; j <= 1; j++) //three angles
                                 {
                                     Vector2 vel = Main.rand.NextFloat(20f, 25f) * Vector2.Normalize(player.Center - spawnPos);
                                     vel = vel.RotatedBy(MathHelper.ToRadians(25) * j); //offset between three streams
                                     vel = vel.RotatedBy(MathHelper.ToRadians(5) * (Main.rand.NextDouble() - 0.5)); //random variation
+                                    if (j != 0)
+                                        vel *= 1.75f;
                                     Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<ShadowGuardian>(), npc.damage / 4, 0f, Main.myPlayer);
+                                }
+
+                                if (npc.localAI[3] == 3) //p3 also spawns one stream from above/below
+                                {
+                                    Vector2 wallSpawn = player.Center + i * Vector2.UnitY * 1000;
+                                    Projectile.NewProjectile(wallSpawn, Main.rand.NextFloat(20, 25f) * Vector2.Normalize(player.Center - wallSpawn),
+                                        ModContent.ProjectileType<ShadowGuardian>(), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -330,9 +341,12 @@ namespace FargowiltasSouls.NPCs.Champions
                     goto case 0;
 
                 case 3: //curving flamebursts
-                    targetPos = player.Center + npc.DirectionFrom(player.Center) * 400f;
+                    targetPos = player.Center + npc.DirectionFrom(player.Center) * 600f;
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.1f, 24f);
+
+                    if (npc.localAI[3] == 2)
+                        npc.ai[2]++;
 
                     if (++npc.ai[2] > 60)
                     {
@@ -342,12 +356,32 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            for (int i = 0; i < 40; i++)
+                            if (npc.localAI[3] == 3) //p3, fire them to both sides
                             {
-                                Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5));
-                                float ai0 = Main.rand.NextFloat(1.03f, 1.06f);
-                                float ai1 = Main.rand.NextFloat(-0.02f, 0.02f);
-                                Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
+                                for (int j = -1; j <= 1; j++)
+                                {
+                                    if (j == 0)
+                                        continue;
+
+                                    for (int i = 0; i < 30; i++)
+                                    {
+                                        Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5) + Math.PI / 2 * j);
+                                        float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
+                                        float ai1 = Main.rand.NextFloat(0.06f);
+                                        Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 0; i < 40; i++)
+                                {
+                                    Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5));
+                                    float max = 0.0075f;
+                                    float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
+                                    float ai1 = Main.rand.NextFloat(-max, max);
+                                    Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
+                                }
                             }
                         }
                     }
@@ -371,7 +405,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.3f, 24f);
 
-                    if (++npc.ai[2] > 60)
+                    if (++npc.ai[2] > (npc.localAI[3] > 1 ? 90 : 120) && npc.ai[1] < 330) //fire a little faster depending on phase
                     {
                         npc.ai[2] = 0;
 
@@ -380,11 +414,16 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 vel = (player.Center - npc.Center) / 30;
+                            if (npc.localAI[3] == 3) //p3 fires them to both sides instead
+                            {
+                                vel = vel.RotatedBy(Math.PI / 2) * 0.75f;
+                                Projectile.NewProjectile(npc.Center, -vel, ModContent.ProjectileType<Projectiles.Champions.ShadowOrb>(), npc.damage / 4, 0f, Main.myPlayer);
+                            }
                             Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<Projectiles.Champions.ShadowOrb>(), npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
 
-                    if (++npc.ai[1] > 300)
+                    if (++npc.ai[1] > (npc.localAI[3] == 3 ? 450 : 420))
                     {
                         npc.TargetClosest();
                         npc.ai[0]++;
@@ -401,7 +440,8 @@ namespace FargowiltasSouls.NPCs.Champions
                 case 7: //dash for tentacles
                     if (++npc.ai[2] == 1)
                     {
-                        npc.velocity = (player.Center - npc.Center) / 30f;
+                        Main.PlaySound(SoundID.NPCHit6, npc.Center);
+                        npc.velocity = (player.Center - npc.Center) / 30f * (1f + npc.localAI[3] / 3f * 0.75f);
                         npc.netUpdate = true;
                     }
                     else if (npc.ai[2] == 31)
@@ -458,10 +498,15 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             for (int i = 0; i < 10; i++)
                             {
-                                Vector2 spawnPos = player.Center + Main.rand.NextFloat(500, 700) * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * 2 * Math.PI);
-                                Vector2 vel = npc.velocity.RotatedBy(Main.rand.NextDouble() * Math.PI * 2);
-                                Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<ShadowClone>(),
-                                    npc.damage / 4, 0f, Main.myPlayer, npc.target, 60 + 30 * i);
+                                if (npc.localAI[3] == 1 && i % 2 == 0) //dont do half of them in p1
+                                    continue;
+                                for (int j = 0; j < (npc.localAI[3] == 3 ? 2 : 1); j++) //do twice as many in p3
+                                {
+                                    Vector2 spawnPos = player.Center + Main.rand.NextFloat(500, 700) * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * 2 * Math.PI);
+                                    Vector2 vel = npc.velocity.RotatedBy(Main.rand.NextDouble() * Math.PI * 2);
+                                    Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<ShadowClone>(),
+                                        npc.damage / 4, 0f, Main.myPlayer, npc.target, 60 + 30 * i);
+                                }
                             }
                         }
                     }
@@ -580,12 +625,24 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override Color? GetAlpha(Color drawColor)
         {
-            return Color.White * npc.Opacity;
+            if (npc.dontTakeDamage)
+                return Color.Black;
+            return null;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
+            if (npc.dontTakeDamage)
+            {
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp/*.PointWrap*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+
+                ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(ItemID.VoidDye);
+                shader.Apply(npc, new Terraria.DataStructures.DrawData?());
+            }
+
             Texture2D texture2D13 = Main.npcTexture[npc.type];
+            Texture2D texture2D14 = mod.GetTexture("NPCs/Champions/ShadowChampion_Trail");
             //int num156 = Main.npcTexture[npc.type].Height / Main.npcFrameCount[npc.type]; //ypos of lower right corner of sprite to draw
             //int y3 = num156 * npc.frame.Y; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = npc.frame;//new Rectangle(0, y3, texture2D13.Width, num156);
@@ -594,18 +651,24 @@ namespace FargowiltasSouls.NPCs.Champions
             Color color26 = lightColor;
             color26 = npc.GetAlpha(color26);
 
-            SpriteEffects effects = npc.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteEffects effects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
             {
-                Color color27 = color26 * 0.5f;
+                Color color27 = Color.White * 0.25f;
                 color27 *= (float)(NPCID.Sets.TrailCacheLength[npc.type] - i) / NPCID.Sets.TrailCacheLength[npc.type];
                 Vector2 value4 = npc.oldPos[i];
                 float num165 = npc.rotation; //npc.oldRot[i];
-                Main.spriteBatch.Draw(texture2D13, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
+                Main.spriteBatch.Draw(texture2D14, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
             }
 
             Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
+
+            if (npc.dontTakeDamage)
+            {
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            }
             return false;
         }
     }

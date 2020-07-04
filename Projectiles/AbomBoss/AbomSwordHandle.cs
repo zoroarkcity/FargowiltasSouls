@@ -26,11 +26,6 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
         }
 
-        public override bool? CanHitNPC(NPC target)
-        {
-            return false;
-        }
-
         public override void AI()
         {
             Vector2? vector78 = null;

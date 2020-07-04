@@ -96,19 +96,27 @@ namespace FargowiltasSouls.NPCs.Champions
             if (npc.HasValidTarget && npc.Distance(player.Center) < 2500 && player.ZoneUnderworldHeight)
                 npc.timeLeft = 600;
 
+            npc.dontTakeDamage = false;
+
             switch ((int)npc.ai[0])
             {
                 case -1:
                     npc.localAI[2] = 1;
 
-                    if (++npc.ai[1] < 120)
+                    //npc.dontTakeDamage = true;
+                    npc.ai[1]++;
+
+                    npc.velocity *= 0.95f;
+
+                    /*if (npc.ai[1] < 120)
                     {
                         targetPos = player.Center;
                         targetPos.Y -= 375;
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.6f, 24f, true);
                     }
-                    else if (npc.ai[1] == 120) //begin healing
+                    else*/
+                    if (npc.ai[1] == 120) //begin healing
                     {
                         Main.PlaySound(SoundID.NPCDeath10, npc.Center);
 
@@ -210,7 +218,16 @@ namespace FargowiltasSouls.NPCs.Champions
                     else
                     {
                         targetPos = player.Center;
-                        targetPos.Y -= 350;
+                        for (int i = 0; i < 22; i++) //collision check above player's head
+                        {
+                            targetPos.Y -= 16;
+                            Tile tile = Framing.GetTileSafely(targetPos); //if solid, stay below it
+                            if (tile.active() && !tile.inActive() && Main.tileSolid[tile.type] && !Main.tileSolidTop[tile.type])
+                            {
+                                targetPos.Y += 50 + 16;
+                                break;
+                            }
+                        }
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.2f, 24f, true);
 
@@ -372,8 +389,16 @@ namespace FargowiltasSouls.NPCs.Champions
                 Main.spriteBatch.Draw(texture2D13, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
             }
 
-            Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
             Texture2D glowmask = ModContent.GetTexture("FargowiltasSouls/NPCs/Champions/EarthChampion_Glow");
+
+            if (npc.dontTakeDamage)
+            {
+                Vector2 offset = Vector2.UnitX * Main.rand.NextFloat(-180, 180);
+                Main.spriteBatch.Draw(texture2D13, npc.Center + offset - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor) * 0.5f, npc.rotation, origin2, npc.scale, effects, 0f);
+                Main.spriteBatch.Draw(glowmask, npc.Center + offset - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor) * 0.5f, npc.rotation, origin2, npc.scale, effects, 0f);
+            }
+
+            Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
             Main.spriteBatch.Draw(glowmask, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, npc.rotation, origin2, npc.scale, effects, 0f);
             return false;
         }

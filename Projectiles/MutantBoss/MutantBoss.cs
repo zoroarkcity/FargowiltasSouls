@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,6 +32,12 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
         }
 
+        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+        {
+            if (projectile.hide)
+                drawCacheProjsBehindProjectiles.Add(index);
+        }
+
         public override void AI()
         {
             int ai1 = (int)projectile.ai[1];
@@ -42,18 +49,37 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 projectile.direction = projectile.spriteDirection = Main.npc[ai1].direction;
                 projectile.timeLeft = 2;
                 auraTrail = DisplayAura(Main.npc[ai1]);
+
+                switch((int)Main.npc[ai1].ai[0]) //draw behind whenever holding a weapon
+                {
+                    case 0:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 13:
+                    case 14:
+                    case 15:
+                    case 21:
+                    case 22:
+                    case 23:
+                    case 25:
+                    case 35:
+                    case 38:
+                    case 40:
+                        projectile.hide = true;
+                        break;
+
+                    default:
+                        projectile.hide = false;
+                        break;
+                }
+
+                projectile.frame = (int)(Main.npc[ai1].frame.Y / (float)(Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]));
             }
             else
             {
                 projectile.Kill();
                 return;
-            }
-
-            if (++projectile.frameCounter > 4)
-            {
-                projectile.frameCounter = 0;
-                if (++projectile.frame >= 4)
-                    projectile.frame = 0;
             }
         }
 

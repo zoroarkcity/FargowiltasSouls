@@ -24,6 +24,8 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.alpha = 255;
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
         public override bool CanDamage()
@@ -36,11 +38,6 @@ namespace FargowiltasSouls.Projectiles.Champions
             return projectile.Distance(target.Center) < projectile.width;
         }
 
-        public override bool? CanHitNPC(NPC target)
-        {
-            return false;
-        }
-
         public override void AI()
         {
             const int time = 360;
@@ -49,7 +46,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             void Suck()
             {
                 Player player = Main.LocalPlayer;
-                if (player.active && !player.dead && !player.ghost && projectile.Distance(player.Center) < 3000)
+                if (player.active && !player.dead && !player.ghost && projectile.Center != player.Center && projectile.Distance(player.Center) < 3000)
                 {
                     float dragSpeed = projectile.Distance(player.Center) / 45;
                     player.position += projectile.DirectionFrom(player.Center) * dragSpeed;
@@ -113,7 +110,8 @@ namespace FargowiltasSouls.Projectiles.Champions
                 int p = Player.FindClosest(projectile.Center, 0, 0);
                 if (p != -1)
                 {
-                    projectile.localAI[1] = projectile.DirectionTo(Main.player[p].Center).ToRotation();
+                    projectile.localAI[1] =
+                        projectile.Center == Main.player[p].Center ? 0 : projectile.DirectionTo(Main.player[p].Center).ToRotation();
                     projectile.localAI[1] += (float)Math.PI * 2 / 3 / 2;
                 }
             }

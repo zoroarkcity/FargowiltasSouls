@@ -48,6 +48,8 @@ namespace FargowiltasSouls.Projectiles.Deathrays
                     }
                     return false;
                 };
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
         public override void PostAI()
