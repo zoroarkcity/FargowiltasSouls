@@ -13,8 +13,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Boreal Wood Enchantment");
             Tooltip.SetDefault(
-@"'The cooler wood'
-Attacks will periodically be accompanied by several snowballs"); 
+@"Attacks will periodically be accompanied by several snowballs
+'The cooler wood'"); 
             DisplayName.AddTranslation(GameCulture.Chinese, "针叶木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'冷木'

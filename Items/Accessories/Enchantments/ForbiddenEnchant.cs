@@ -15,9 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Forbidden Enchantment");
 
             string tooltip =
-@"'Walk like an Egyptian'
-Double tap down to call an ancient storm to the cursor location
-Any projectiles shot through your storm gain 50% damage";
+@"Double tap down to call an ancient storm to the cursor location
+Any projectiles shot through your storm gain 50% damage
+'Walk like an Egyptian'";
             string tooltip_ch =
 @"'走路像个埃及人Z(￣ｰ￣)Z'
 双击'下'键可召唤一个远古风暴到光标位置

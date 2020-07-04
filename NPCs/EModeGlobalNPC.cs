@@ -4092,6 +4092,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.EyeofCthulhu:
                     case NPCID.WanderingEye:
+                        target.AddBuff(BuffID.Obstructed, 60);
                         target.AddBuff(ModContent.BuffType<Berserked>(), 300);
                         break;
 
@@ -4104,6 +4105,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.DialatedEye:
                     case NPCID.GreenEye:
                     case NPCID.PurpleEye:
+                        target.AddBuff(BuffID.Obstructed, 60);
                         target.AddBuff(ModContent.BuffType<Berserked>(), 120);
                         break;
 
@@ -4229,9 +4231,9 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.BlazingWheel:
-                        target.AddBuff(BuffID.OnFire, 180);
+                        target.AddBuff(BuffID.OnFire, 300);
                         if (masoBool[0])
-                            target.AddBuff(BuffID.Burning, 240);
+                            target.AddBuff(BuffID.Burning, 300);
                         break;
 
                     case NPCID.Shark:
@@ -4648,8 +4650,8 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.Lihzahrd:
                     case NPCID.LihzahrdCrawler:
-                        //target.AddBuff(ModContent.BuffType<Infested>(), 300);
-                        target.AddBuff(ModContent.BuffType<Bloodthirsty>(), 120);
+                        target.AddBuff(ModContent.BuffType<Infested>(), 300);
+                        //target.AddBuff(ModContent.BuffType<Bloodthirsty>(), 120);
                         break;
 
                     case NPCID.CultistDragonHead:
@@ -5003,7 +5005,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.WyvernBody3:
                     case NPCID.WyvernLegs:
                     case NPCID.WyvernTail:
-                        target.AddBuff(ModContent.BuffType<Purified>(), 300);
+                        target.AddBuff(ModContent.BuffType<Crippled>(), 240);
+                        target.AddBuff(ModContent.BuffType<ClippedWings>(), 240);
                         break;
 
                     case NPCID.DuneSplicerHead:
@@ -5987,7 +5990,7 @@ namespace FargowiltasSouls.NPCs
                         Item.NewItem(npc.Hitbox, ItemID.GoodieBag, Main.rand.Next(5) + 1);
                         if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.BladedGlove);
-                        if (Main.pumpkinMoon && Main.rand.Next(5) == 0)
+                        if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<PumpkingsCape>());
 
                         break;
@@ -5999,7 +6002,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.IceQueen:
                         Item.NewItem(npc.Hitbox, ItemID.Present, Main.rand.Next(5) + 1);
-                        if (Main.snowMoon && Main.rand.Next(5) == 0)
+                        if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<IceQueensCrown>());
                         break;
 

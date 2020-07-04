@@ -10,9 +10,9 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Saucer Control Console");
-            Tooltip.SetDefault(@"'Just keep it in airplane mode'
-Grants immunity to Electrified
-Summons a friendly Mini Saucer");
+            Tooltip.SetDefault(@"Grants immunity to Electrified
+Summons a friendly Mini Saucer
+'Just keep it in airplane mode'");
             DisplayName.AddTranslation(GameCulture.Chinese, "飞碟控制台");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'保持在飞行模式'
 免疫带电

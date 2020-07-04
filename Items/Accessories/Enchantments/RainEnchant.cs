@@ -13,11 +13,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Rain Enchantment");
             Tooltip.SetDefault(
-@"'Come again some other day'
-Grants immunity to Wet
+@"Grants immunity to Wet
 A miniature storm will appear after heavily damaging enemies
-Shooting it with any kind of water will make it grow
-At maximum size, water will turn into lightning bolts");
+Shooting it will make it grow
+At maximum size, attacks will turn into lightning bolts
+'Come again some other day'");
             DisplayName.AddTranslation(GameCulture.Chinese, "云雨魔石");
         }
 

@@ -15,9 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Cobalt Enchantment");
             Tooltip.SetDefault(
-@"'I can't believe it's not Palladium' 
-25% chance for your projectiles to explode into shards
-This can only happen once every second");
+@"25% chance for your projectiles to explode into shards
+This can only happen once every second
+'I can't believe it's not Palladium'");
             DisplayName.AddTranslation(GameCulture.Chinese, "钴蓝魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'真不敢相信这不是钯金'

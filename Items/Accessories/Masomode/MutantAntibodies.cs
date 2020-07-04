@@ -10,11 +10,11 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mutant Antibodies");
-            Tooltip.SetDefault(@"'Healthy drug recommended by 0 out of 10 doctors'
-Grants immunity to Wet, Feral Bite, Mutant Nibble, and Oceanic Maul
+            Tooltip.SetDefault(@"Grants immunity to Wet, Feral Bite, Mutant Nibble, and Oceanic Maul
 Grants immunity to most debuffs caused by entering water
 Grants effects of Wet debuff while riding Cute Fishron
-Increases damage by 20%");
+Increases damage by 20%
+'Healthy drug recommended by 0 out of 10 doctors'");
             DisplayName.AddTranslation(GameCulture.Chinese, "突变抗体");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'推荐健康药物指数: 0/10'
 免疫潮湿,野性咬噬和突变啃啄

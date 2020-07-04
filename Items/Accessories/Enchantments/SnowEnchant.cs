@@ -11,8 +11,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Snow Enchantment");
             Tooltip.SetDefault(
-@"'It's Burning Cold Outside'
-You have a small area around you that Frostburns enemies and slows projectiles");
+@"You have a small area around you that Frostburns enemies and slows projectiles
+'It's Burning Cold Outside'");
         }
 
         public override void SetDefaults()
@@ -21,13 +21,13 @@ You have a small area around you that Frostburns enemies and slows projectiles")
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 7;
-            item.value = 100000;
+            item.rare = 1;
+            item.value = 50000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().EskimoEnchant = true; //add fish pet
+            player.GetModPlayer<FargoPlayer>().SnowEffect(); //add fish pet
         }
 
         public override void AddRecipes()

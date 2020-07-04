@@ -15,9 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Orichalcum Enchantment");
             Tooltip.SetDefault(
-@"'Nature blesses you' 
-Flower petals will cause extra damage to your target 
-Spawns 6 fireballs to rotate around you");
+@"Flower petals will cause extra damage to your target 
+Spawns 6 fireballs to rotate around you
+'Nature blesses you'");
             DisplayName.AddTranslation(GameCulture.Chinese, "山铜魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'自然祝福着你'

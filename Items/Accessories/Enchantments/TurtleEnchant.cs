@@ -15,12 +15,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Turtle Enchantment");
             Tooltip.SetDefault(
-@"'You suddenly have the urge to hide in a shell'
-When standing still and not attacking, you gain the Shell Hide buff
+@"When standing still and not attacking, you gain the Shell Hide buff
 Shell Hide protects you from all projectiles, but increases contact damage
 100% of contact damage is reflected
 Enemies may explode into needles on death
-Summons a pet Lizard and Turtle"); //shell hide no happen with SoE
+Summons a pet Lizard and Turtle
+'You suddenly have the urge to hide in a shell'"); //shell hide no happen with SoE
             DisplayName.AddTranslation(GameCulture.Chinese, "乌龟魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'你突然有一种想躲进壳里的冲动'

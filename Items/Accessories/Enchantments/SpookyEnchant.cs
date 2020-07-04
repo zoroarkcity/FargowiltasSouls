@@ -15,9 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Spooky Enchantment");
             Tooltip.SetDefault(
-@"'Melting souls since 1902'
-All of your minions may occasionally spew massive scythes everywhere
-Summons a pet Cursed Sapling and Eyeball Spring");
+@"All of your minions may occasionally spew massive scythes everywhere
+Summons a pet Cursed Sapling and Eyeball Spring
+'Melting souls since 1902'");
             DisplayName.AddTranslation(GameCulture.Chinese, "阴森魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"自1902年以来融化的灵魂

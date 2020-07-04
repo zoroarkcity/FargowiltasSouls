@@ -76,7 +76,11 @@ Increased melee knockback
             player.meleeCrit += 15;
 
             //gauntlet
-            player.magmaStone = true;
+            if (SoulConfig.Instance.MagmaStone)
+            {
+                player.magmaStone = true;
+            }
+            
             player.kbGlove = true;
             //yoyo bag
             player.counterWeight = 556 + Main.rand.Next(6);

@@ -15,10 +15,10 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Molten Enchantment");
             Tooltip.SetDefault(
-@"'They shall know the fury of hell.' 
-Nearby enemies are ignited
+@"Nearby enemies are ignited
 The closer they are to you the more damage they take
-When you are hurt, you violently explode to damage nearby enemies");
+When you are hurt, you violently explode to damage nearby enemies
+'They shall know the fury of hell' ");
             DisplayName.AddTranslation(GameCulture.Chinese, "熔融魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"他们将感受到地狱的愤怒.'

@@ -9,17 +9,15 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class AncientHallowEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ancient Hallowed Enchantment");
 
             Tooltip.SetDefault(
-@"'Hallowed be your sword and shield'
-You gain a shield that can reflect projectiles
+@"You gain a shield that can reflect projectiles
 Summons an Enchanted Sword familiar that scales with minion damage
-Summons a magical fairy");
+Summons a magical fairy
+'Hallowed be your sword and shield'");
             DisplayName.AddTranslation(GameCulture.Chinese, "神圣魔石");
             Tooltip.AddTranslation(GameCulture.Chinese,
 @"'愿人都尊你的剑与盾为圣'

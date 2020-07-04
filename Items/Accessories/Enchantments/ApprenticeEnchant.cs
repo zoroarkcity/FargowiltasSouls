@@ -7,15 +7,13 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class ApprenticeEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Apprentice Enchantment");
             Tooltip.SetDefault(
-@"'A long way to perfection'
-While attacking, Flameburst shots manifest themselves from your shadows
-Flameburst field of view and range are dramatically increased");
+@"While attacking, Flameburst shots manifest themselves from your shadows
+Flameburst field of view and range are dramatically increased
+'A long way to perfection'");
         }
 
         public override void SetDefaults()

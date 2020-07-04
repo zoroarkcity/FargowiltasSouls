@@ -15,9 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Necro Enchantment");
             Tooltip.SetDefault(
-@"'Welcome to the bone zone' 
-A Dungeon Guardian will occasionally annihilate a foe when struck by any attack
-Summons a pet Skeletron Head");
+@"A Dungeon Guardian will occasionally annihilate a foe when struck by any attack
+Summons a pet Skeletron Head
+'Welcome to the bone zone'");
             DisplayName.AddTranslation(GameCulture.Chinese, "死灵魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'欢迎来到骸骨领域'

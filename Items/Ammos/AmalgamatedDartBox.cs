@@ -17,9 +17,7 @@ namespace FargowiltasSouls.Items.Ammos
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Amalgamated Dart Box");
-            Tooltip.SetDefault("Bounces several times\n" +
-                "Each impact explodes, summons falling stars, and fires laser arrows\n" +
-                "Inflicts several debuffs");
+            Tooltip.SetDefault("");
         }
 
         public override void SetDefaults()

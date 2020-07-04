@@ -10,9 +10,9 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tribal Charm");
-            Tooltip.SetDefault(@"'An idol of the ancient jungle dwellers'
-Grants immunity to Webbed and Purified
-Grants autofire to all weapons");
+            Tooltip.SetDefault(@"Grants immunity to Webbed and Purified
+Grants autofire to all weapons
+'An idol of the ancient jungle dwellers'");
             DisplayName.AddTranslation(GameCulture.Chinese, "部落挂坠");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'远古丛林居民的偶像'
 免疫织网和净化

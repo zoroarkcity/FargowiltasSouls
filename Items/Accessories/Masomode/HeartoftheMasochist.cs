@@ -12,8 +12,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Heart of the Eternal");
-            Tooltip.SetDefault(@"'Warm, beating, and no body needed'
-Grants immunity to Living Wasteland, Frozen, Oozed, Withered Weapon, and Withered Armor
+            Tooltip.SetDefault(@"Grants immunity to Living Wasteland, Frozen, Oozed, Withered Weapon, and Withered Armor
 Grants immunity to Feral Bite, Mutant Nibble, Flipped, Unstable, Distorted, and Curse of the Moon
 Grants immunity to Wet, Electrified, Oceanic Maul, Moon Leech, Nullification Curse, and water debuffs
 Increases damage, critical strike chance, and damage reduction by 10%, 
@@ -22,7 +21,8 @@ You may periodically fire additional attacks depending on weapon type
 Your critical strikes inflict Rotting and Betsy's Curse
 Press the Fireball Dash key to perform a short invincible dash
 Grants effects of Wet debuff while riding Cute Fishron and gravity control
-Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu");
+Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu
+'Warm, beating, and no body needed'");
             DisplayName.AddTranslation(GameCulture.Chinese, "受虐者之心");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'大多数情况下已经不用受苦了'
 免疫人形废土,冻结,渗入,枯萎武器和枯萎盔甲

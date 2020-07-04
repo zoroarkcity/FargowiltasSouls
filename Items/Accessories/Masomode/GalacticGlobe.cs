@@ -10,12 +10,12 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Galactic Globe");
-            Tooltip.SetDefault(@"'Always watching'
-Grants immunity to Flipped, Unstable, Distorted, and Curse of the Moon
+            Tooltip.SetDefault(@"Grants immunity to Flipped, Unstable, Distorted, and Curse of the Moon
 Allows the holder to control gravity
 Stabilizes gravity in space and in liquids
 Summons the true eyes of Cthulhu to protect you
-Increases flight time by 100%");
+Increases flight time by 100%
+'Always watching'");
             DisplayName.AddTranslation(GameCulture.Chinese, "银河球");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'时刻注视'
 免疫翻转,不稳定,扭曲和混沌

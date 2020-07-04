@@ -15,10 +15,10 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Solar Enchantment");
             Tooltip.SetDefault(
-@"'Too hot to handle' 
-Solar shield allows you to dash through enemies
+@"Solar shield allows you to dash through enemies
 Solar shield is not depleted on hit, but has reduced damage reduction
-Melee attacks may inflict the Solar Flare debuff");
+Melee attacks may inflict the Solar Flare debuff
+'Too hot to handle'");
             DisplayName.AddTranslation(GameCulture.Chinese, "日耀魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'太烫了'

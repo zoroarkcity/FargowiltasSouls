@@ -258,32 +258,29 @@ namespace FargowiltasSouls
         public void CopperEffect(NPC target)
         {
             int dmg = 20;
-            int chance = 20;
-
-            if (target.FindBuffIndex(BuffID.Wet) != -1 || target.wet)
-            {
-                dmg *= 3;
-                chance /= 5;
-            }
+            int maxTargets = 5;
+            int cdLength = 300;
 
             if (TerraForce)
             {
-                dmg *= 2;
+                dmg = 100;
+                maxTargets = 50;
+                cdLength = 120;
             }
 
-            if (Main.rand.Next(chance) == 0)
+            if (Main.rand.Next(5) == 0)
             {
                 float closestDist = 500f;
                 NPC closestNPC;
 
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < maxTargets; i++)
                 {
                     closestNPC = null;
 
                     for (int j = 0; j < 200; j++)
                     {
                         NPC npc = Main.npc[j];
-                        if (npc.active && npc != target && !npc.HasBuff(ModContent.BuffType<Shock>()) && npc.Distance(target.Center) < closestDist && npc.Distance(target.Center) >= 50)
+                        if (npc.active && npc != target && !npc.HasBuff(ModContent.BuffType<Shock>()) && npc.Distance(target.Center) < closestDist )
                         {
                             closestNPC = npc;
                             break;
@@ -296,7 +293,7 @@ namespace FargowiltasSouls
                         float ai2 = Main.rand.Next(100);
                         Vector2 velocity = Vector2.Normalize(ai) * 20;
 
-                        Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(target.Center, velocity, ModContent.ProjectileType<LightningArc>(), HighestDamageTypeScaling(dmg), 0f, player.whoAmI, ai.ToRotation(), ai2);
+                        Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(target.Center, velocity, ModContent.ProjectileType<CopperLightning>(), HighestDamageTypeScaling(dmg), 0f, player.whoAmI, ai.ToRotation(), ai2);
                         target.AddBuff(ModContent.BuffType<Shock>(), 60);
                     }
                     else
@@ -307,7 +304,7 @@ namespace FargowiltasSouls
                     target = closestNPC;
                 }
 
-                copperCD = 300;
+                copperCD = cdLength;
             }
         }
 
@@ -331,8 +328,6 @@ namespace FargowiltasSouls
             //spawn tower boi
             if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<FlameburstMinion>()] < 1)
                 Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<FlameburstMinion>(), 0, 0f, player.whoAmI);
-
-
 
             AddPet(SoulConfig.Instance.FlickerwickPet, hideVisual, BuffID.PetDD2Ghost, ProjectileID.DD2PetGhost);
         }
@@ -704,33 +699,40 @@ namespace FargowiltasSouls
                 Lighting.AddLight((int)(player.Center.X / 16f), (int)(player.Center.Y / 16f), 0.65f, 0.4f, 0.1f);
                 int buff = BuffID.OnFire;
                 float distance = 200f;
-                bool doDmg = player.infernoCounter % 60 == 0;
-                int damage = (int)(dmg * player.meleeDamage);
+                
+                int damage = HighestDamageTypeScaling(dmg);
+                int dmgRate = 60;
 
                 if (player.whoAmI == Main.myPlayer)
                 {
                     for (int i = 0; i < 200; i++)
                     {
                         NPC npc = Main.npc[i];
-                        if (npc.active && !npc.friendly && npc.damage > 0 && !npc.dontTakeDamage)
+                        if (npc.active && !npc.friendly && !npc.dontTakeDamage)
                         {
                             if (Vector2.Distance(player.Center, npc.Center) <= distance)
                             {
+                                Main.NewText(Vector2.Distance(player.Center, npc.Center));
+
                                 if (npc.FindBuffIndex(buff) == -1)
                                 {
                                     npc.AddBuff(buff, 120);
                                 }
 
-                                if (Vector2.Distance(player.Center, npc.Center) <= distance / 4)
+                                if (Vector2.Distance(player.Center, npc.Center) <= 50)
                                 {
-                                    damage *= 4;
+                                    dmgRate /= 10;
                                 }
-                                else if (Vector2.Distance(player.Center, npc.Center) <= distance / 2)
+                                else if (Vector2.Distance(player.Center, npc.Center) <= 100)
                                 {
-                                    damage *= 2;
+                                    dmgRate /= 5;
+                                }
+                                else if (Vector2.Distance(player.Center, npc.Center) <= 150)
+                                {
+                                    dmgRate /= 2;
                                 }
 
-                                if (doDmg)
+                                if (player.infernoCounter % dmgRate == 0)
                                 {
                                     player.ApplyDamageToNPC(npc, damage, 0f, 0, false);
                                 }
@@ -774,22 +776,17 @@ namespace FargowiltasSouls
             player.buffImmune[BuffID.OnFire] = true;
             player.fireWalk = true;
 
-            if (TerraForce)
-            {
-                player.lavaImmune = true;
-            }
-            else
-            {
-                player.lavaMax += 300;
-            }
+            player.lavaImmune = true;
 
-            player.noFallDmg = true;
+            //that new acc effect e
 
             //in lava effects
-            if (player.lavaWet && !TerrariaSoul)
+            if (player.lavaWet)
             {
-                player.armorPenetration += 20;
-                AttackSpeed += .15f;
+                player.gravity = Player.defaultGravity;
+                player.ignoreWater = true;
+                player.accFlipper = true;
+
                 ObsidianEnchant = true;
             }
         }
@@ -1101,14 +1098,6 @@ namespace FargowiltasSouls
                     }
                 }
             }
-
-            if (FreezeCD != 0 && !FreezeTime)
-            {
-                FreezeCD--;
-
-                if (FreezeCD == 0)
-                    Main.PlaySound(SoundID.MaxMana, player.Center);
-            }
         }
 
         public void TikiEffect(bool hideVisual)
@@ -1231,6 +1220,37 @@ namespace FargowiltasSouls
             }
         }
 
+        public void ShadewoodEffect()
+        {
+            if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.EbonwoodAura))
+                return;
+
+            int dist = 200;
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (npc.active && !npc.friendly && npc.lifeMax > 1 && npc.Distance(player.Center) < dist)
+                    npc.AddBuff(ModContent.BuffType<SuperBleed>(), 2);
+            }
+
+            for (int i = 0; i < 20; i++)
+            {
+                Vector2 offset = new Vector2();
+                double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                offset.X += (float)(Math.Sin(angle) * dist);
+                offset.Y += (float)(Math.Cos(angle) * dist);
+                Dust dust = Main.dust[Dust.NewDust(
+                    player.Center + offset - new Vector2(4, 4), 0, 0,
+                    DustID.Blood, 0, 0, 100, Color.White, 1f
+                    )];
+                dust.velocity = player.velocity;
+                if (Main.rand.Next(3) == 0)
+                    dust.velocity += Vector2.Normalize(offset) * -5f;
+                dust.noGravity = true;
+            }
+        }
+
         public void PalmEffect()
         {
             PalmEnchant = true;
@@ -1298,39 +1318,30 @@ namespace FargowiltasSouls
         {
             player.setHuntressT2 = true;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.HuntressAbility) && (player.controlDown && player.releaseDown))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.HuntressAbility && !player.HasBuff(ModContent.BuffType<HuntressCD>())) && (player.controlDown && player.releaseDown))
             {
                 if (player.doubleTapCardinalTimer[0] > 0 && player.doubleTapCardinalTimer[0] != 15)
                 {
                     Vector2 mouse = Main.MouseWorld;
 
-                    if (huntressCD == 0)
+                    //find arrow type to use, for red riding only
+                    Item firstAmmo = player.inventory[54];
+                    int arrowType = firstAmmo.shoot;
+                    int damage = HighestDamageTypeScaling(firstAmmo.damage);
+
+                    if (firstAmmo.ammo != AmmoID.Arrow)
                     {
-                        //find arrow type to use, for red riding only
-                        Item firstAmmo = player.inventory[54];
-                        int arrowType = firstAmmo.shoot;
-                        int damage = HighestDamageTypeScaling(firstAmmo.damage);
-
-                        if (!RedEnchant || firstAmmo.ammo != AmmoID.Arrow)
-                        {
-                            arrowType = ProjectileID.WoodenArrowFriendly;
-                            damage = HighestDamageTypeScaling(5); //wooden arrow dmg
-                        }
-
-                        int heatray = Projectile.NewProjectile(player.Center, new Vector2(0, -6f), ProjectileID.HeatRay, 0, 0, Main.myPlayer);
-                        Main.projectile[heatray].tileCollide = false;
-                        //proj spawns arrows all around it until it dies
-                        Projectile.NewProjectile(mouse.X, player.Center.Y - 500, 0f, 0f, ModContent.ProjectileType<ArrowRain>(), 50, 0f, player.whoAmI, arrowType, player.direction);
-
-                        huntressCD = 900;
-                        player.AddBuff(ModContent.BuffType<HuntressCD>(), 900);
+                        arrowType = ProjectileID.WoodenArrowFriendly;
+                        damage = HighestDamageTypeScaling(5); //wooden arrow dmg
                     }
-                }
-            }
 
-            if (huntressCD != 0)
-            {
-                huntressCD--;
+                    int heatray = Projectile.NewProjectile(player.Center, new Vector2(0, -6f), ProjectileID.HeatRay, 0, 0, Main.myPlayer);
+                    Main.projectile[heatray].tileCollide = false;
+                    //proj spawns arrows all around it until it dies
+                    Projectile.NewProjectile(mouse.X, player.Center.Y - 500, 0f, 0f, ModContent.ProjectileType<ArrowRain>(), 50, 0f, player.whoAmI, arrowType, player.direction);
+
+                    player.AddBuff(ModContent.BuffType<HuntressCD>(), RedEnchant ? 300 : 600);
+                }
             }
         }
 
@@ -1339,11 +1350,11 @@ namespace FargowiltasSouls
             player.setMonkT2 = true;
             MonkEnchant = true;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MonkDash) && IsStandingStill && !player.mount.Active && !player.HasBuff(ModContent.BuffType<MonkBuff>()))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MonkDash) && !player.controlUseItem && !player.mount.Active && !player.HasBuff(ModContent.BuffType<MonkBuff>()))
             {
                 monkTimer++;
 
-                if (monkTimer >= 60)
+                if (monkTimer >= 120)
                 {
                     player.AddBuff(ModContent.BuffType<MonkBuff>(), 2);
                     monkTimer = 0;
@@ -1361,8 +1372,10 @@ namespace FargowiltasSouls
             }
         }
 
-        public void EskimoEffect()
+        public void SnowEffect()
         {
+            SnowEnchant = true;
+
 
         }
 

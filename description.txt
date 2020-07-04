@@ -1,7 +1,7 @@
 NEW UPDATE - V 1.3.3
 
 All enchant and soul recipes changed drastically
-
+-Moved flavor text to the bottom for all items like it is in vanilla
 
 
 Enchants
@@ -21,6 +21,23 @@ Enchants
 -Rich Mahogany hooks will no longer shoot at enemies in the jungle
 -Shadewood has proximity on hit effects everywhere, no bonus in crimson
 -Wood now makes critters self destruct shortly after releasing them, no more souls, takes any bird in recipe
+
+-Copper lightning is smaller visually, there's no more bonus if the enemy is wet, the chance for the lightning is 4x higher, with Terra Force the effect can hit 10x as many targets, deals 5x damage and has a cooldown less than half
+-Ninja Enchant will now teleport you correctly onto platforms making it much better to use probably. First Strike no longer multiplies projectiles and the next attack will deal 3x damage, same as melee
+-Monk Enchant dash now charges when not attacking, instead of standing still. Charge time doubled
+-Rain Enchant - Halved the amount of damage you have to deal to spawn a rain cloud, rain drops have full damage of the projectile that spawned it, lightning has 2x damage. Any projectiles will affect the cloud, not just 'wet projectiles'. Lightning spawns at the edge of the cloud instead of the center. The cloud will not rise higher than intended now
+-Gold Enchant now has a cooldown debuff
+-Stardust Enchant now has a cooldown debuff. When it runs out, a dust ring appears around your stardust guardian
+-Huntress Enchant can now rain whatever arrow type is in your first slot like Red Riding could, arrow rain lasts much longer, fall faster, and covers a slighlty wider area, decreased cooldown to 10 seconds
+-Red Riding Enchant's arrows now follow the cursor, fires the double the arrows of Huntress, has a half the CD of Huntress (you can almost always have arrow rain active)
+-Molten Enchant aura damage scales with highest damage type instead of just melee damage. Old aura damage: 20 damage up to 80 damage when enemies are very close to you proccing once per second. New: always 20 damage, but the speed of the damage dealt will be increased as enemies get closer up to 10 procs per second (200 damage)
+-Obsidian Enchant rework: You have normal gravity and movement in lava, you can swim in lava. While in lava attacks spawn iframe ignoring explosions on hit
+-Shadewood rework: Now gives you an aura similar to ebonwood. While in the aura, enemies will spill out blood when attacked
+-Shroomite Enchant rework: While in stealth all attacks gain a trail of mushrooms. Swords and projectiles
+-Vortex Enchant
+-Squire Enchant rework:
+-Valhalla Enchant
+-Tin Enchant
 
 
 -Updated several Thorium Enchantments with missing or extra accessory effects: Crier
@@ -45,6 +62,11 @@ Souls
 Emode
 -Updated  lava slime jump (tm)
 -Hallowed Cactus inflict Flipped instead of Confused
+-Pumpking and Ice Queen can drop their items outside ofthe event
+-Removed Plantera's Fruit, Bloodied Skull, Lunatic Sigil, Fleshier Doll
+-These bosses drop the mutant mod summon instead
+-All bosses will drop a summon when they spawn until they are defetaed in emode
+-Added magma stone toggle
 
 
 
@@ -63,8 +85,8 @@ Weapons
 The Landlside is now the Rockslide
 -Landlside EX is now the Landlside
 
--Slime Kings Slasher fires a slime ball every swing instead of every 4
--Fish Stick sharks aim for the target they hit not the fish stick that threw, they no longer pierce, they deal summon damage actually
+-Slime Kings Slasher fires several slime spikes per swing now
+-Fish Stick sharks aim for the target they hit not the fish stick that threw, they no longer pierce, they deal summon damage actually, they move faster
 
 
 

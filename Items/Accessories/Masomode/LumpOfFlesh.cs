@@ -10,14 +10,14 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lump of Flesh");
-            Tooltip.SetDefault(@"'It's growing'
-Grants immunity to Blackout, Obstructed, and Dazed
+            Tooltip.SetDefault(@"Grants immunity to Blackout, Obstructed, and Dazed
 Increases minion damage by 16% but slightly decreases defense
 Increases your max number of minions by 2
 Increases your max number of sentries by 2
 The pungent eyeball charges energy to fire a laser as you attack
 Enemies are less likely to target you
-Makes armed and magic skeletons less hostile outside the Dungeon");
+Makes armed and magic skeletons less hostile outside the Dungeon
+'It's growing'");
             DisplayName.AddTranslation(GameCulture.Chinese, "肉团");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'它在增长'
 免疫致盲,阻塞和眩晕

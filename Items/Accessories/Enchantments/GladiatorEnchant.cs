@@ -15,9 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Gladiator Enchantment");
             Tooltip.SetDefault(
-@"'Are you not entertained?'
-Spears will rain down on struck enemies 
-Summons a pet Minotaur");
+@"Spears will rain down on struck enemies 
+Summons a pet Minotaur
+'Are you not entertained?'");
             DisplayName.AddTranslation(GameCulture.Chinese, "角斗士魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'你难道不高兴吗?'

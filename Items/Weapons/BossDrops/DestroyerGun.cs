@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Destroyer Gun");
-            Tooltip.SetDefault("'An old foe beaten into submission..'\nBecomes longer and faster with empty minion slots");
+            Tooltip.SetDefault("Becomes longer and faster with empty minion slots\n'An old foe beaten into submission..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "毁灭者之枪");
             Tooltip.AddTranslation(GameCulture.Chinese, "'一个被迫屈服的老对手..'");
         }

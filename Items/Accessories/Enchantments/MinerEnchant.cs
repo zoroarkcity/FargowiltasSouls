@@ -15,11 +15,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Miner Enchantment");
             Tooltip.SetDefault(
-@"'The planet trembles with each swing of your pick'
-50% increased mining speed
+@"50% increased mining speed
 Shows the location of enemies, traps, and treasures
 Light is emitted from the player
-Summons a pet Magic Lantern");
+Summons a pet Magic Lantern
+'The planet trembles with each swing of your pick'");
             DisplayName.AddTranslation(GameCulture.Chinese, "矿工魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'你每挥一下镐子, 行星都会震动'

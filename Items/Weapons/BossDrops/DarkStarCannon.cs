@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dark Star Cannon");
-            Tooltip.SetDefault("'Modified from the arm of a defeated foe..'\n95% chance to not consume ammo");
+            Tooltip.SetDefault("95% chance to not consume ammo\n'Modified from the arm of a defeated foe..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "暗星炮");
             Tooltip.AddTranslation(GameCulture.Chinese, "'由一个被击败的敌人的武器改装而来..'");
         }

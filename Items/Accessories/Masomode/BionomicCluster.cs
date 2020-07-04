@@ -11,8 +11,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bionomic Cluster");
-            Tooltip.SetDefault(@"'The amalgamate born of a thousand common enemies'
-Grants immunity to Frostburn, Shadowflame, Squeaky Toy, Guilty, Mighty Wind, and Suffocation
+            Tooltip.SetDefault(@"Grants immunity to Frostburn, Shadowflame, Squeaky Toy, Guilty, Mighty Wind, and Suffocation
 Grants immunity to Flames of the Universe, Clipped Wings, Crippled, Webbed, and Purified
 Grants immunity to Lovestruck, Stinky, Midas, Hexed, cactus damage, and enemies that steal items
 Your attacks can inflict Clipped Wings, spawn Frostfireballs, and produce hearts
@@ -22,7 +21,8 @@ Attacks have a chance to squeak and deal 1 damage to you
 You erupt into Shadowflame tentacles when injured
 Certain enemies will drop potions when defeated and 50% discount on reforges
 Summons a friendly rainbow slime
-Use to teleport to your last death point");
+Use to teleport to your last death point
+'The amalgamate born of a thousand common enemies'");
             DisplayName.AddTranslation(GameCulture.Chinese, "生态集群");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'由上千普通敌人融合而成'
 免疫寒焰,暗影烈焰,吱吱响的玩具,内疚,强风和窒息

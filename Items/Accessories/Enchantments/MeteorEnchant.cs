@@ -15,9 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Meteor Enchantment");
 
-            string tooltip = 
-@"'Cosmic power builds your destructive prowess'
-A meteor shower initiates every few seconds while attacking";
+            string tooltip =
+@"A meteor shower initiates every few seconds while attacking
+'Cosmic power builds your destructive prowess'";
             string tooltip_ch =
 @"'宇宙之力构建你的毁灭力量'
 攻击时,每隔几秒爆发一次流星雨";
