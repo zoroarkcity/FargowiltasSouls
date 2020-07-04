@@ -11,8 +11,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Supreme Deathbringer Fairy");
-            Tooltip.SetDefault(@"'Supremacy not necessarily guaranteed'
-Grants immunity to Slimed, Berserked, Lethargic, and Infested
+            Tooltip.SetDefault(@"Grants immunity to Slimed, Berserked, Lethargic, and Infested
 Increases damage by 10% and armor penetration by 10
 15% increased fall speed
 When you land after a jump, slime will fall from the sky over your cursor
@@ -21,7 +20,8 @@ Your attacks inflict Venom
 Bees and weak Hornets become friendly
 You have permanent effects of Honey buff
 May attract baby skeleton heads
-Summons 2 Skeletron arms to whack enemies");
+Summons 2 Skeletron arms to whack enemies
+'Supremacy not necessarily guaranteed'");
             DisplayName.AddTranslation(GameCulture.Chinese, "至高告死精灵");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'霸权不一定能得到保证'
 免疫黏糊, 狂暴, 昏昏欲睡和感染

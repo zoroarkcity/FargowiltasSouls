@@ -9,10 +9,10 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Celestial Rune");
-            Tooltip.SetDefault(@"'A fallen enemy's spells, repurposed'
-Grants immunity to Marked for Death
+            Tooltip.SetDefault(@"Grants immunity to Marked for Death
 You may periodically fire additional attacks depending on weapon type
-Taking damage creates a friendly Ancient Vision to attack enemies"); 
+Taking damage creates a friendly Ancient Vision to attack enemies
+'A fallen enemy's spells, repurposed'"); 
             DisplayName.AddTranslation(GameCulture.Chinese, "天界符文");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'堕落的敌人的咒语,被改换用途'
 免疫死亡标记和着魔

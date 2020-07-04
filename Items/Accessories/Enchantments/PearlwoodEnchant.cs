@@ -13,8 +13,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Pearlwood Enchantment");
             Tooltip.SetDefault(
-@"'Too little, too late…'
-Projectiles may spawn a star when they hit something"); 
+@"Projectiles may spawn a star when they hit something
+'Too little, too late…'"); 
             DisplayName.AddTranslation(GameCulture.Chinese, "珍珠木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'为时已晚'

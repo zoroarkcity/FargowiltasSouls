@@ -11,10 +11,10 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Agitating Lens");
-            Tooltip.SetDefault(@"'The irritable remnant of a defeated foe'
-Grants immunity to Berserked
+            Tooltip.SetDefault(@"Grants immunity to Berserked
 10% increased damage when below half HP
-While dashing or running quickly you will create a trail of demon scythes");
+While dashing or running quickly you will create a trail of demon scythes
+'The irritable remnant of a defeated foe'");
             DisplayName.AddTranslation(GameCulture.Chinese, "躁动晶状体");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'被打败的敌人的躁动残渣'
 免疫狂暴

@@ -10,11 +10,11 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lihzahrd Treasure Box");
-            Tooltip.SetDefault(@"'Too many booby traps to open'
-Grants immunity to Burning, Fused, and Low Ground
+            Tooltip.SetDefault(@"Grants immunity to Burning, Fused, and Low Ground
 You erupt into spiky balls when injured
 Press down in the air to fastfall
-Fastfall will create a fiery eruption on impact after falling a certain distance");
+Fastfall will create a fiery eruption on impact after falling a certain distance
+'Too many booby traps to open'");
             DisplayName.AddTranslation(GameCulture.Chinese, "神庙蜥蜴宝藏盒");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'陷阱太多,打不开'
 免疫燃烧和导火线

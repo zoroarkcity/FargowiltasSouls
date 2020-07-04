@@ -10,11 +10,11 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pumpking's Cape");
-            Tooltip.SetDefault(@"'Somehow, it's the right size'
-Grants immunity to Living Wasteland
+            Tooltip.SetDefault(@"Grants immunity to Living Wasteland
 Increases damage and critical strike chance by 5%
 Your critical strikes inflict Rotting
-You may periodically fire additional attacks depending on weapon type");
+You may periodically fire additional attacks depending on weapon type
+'Somehow, it's the right size'");
             DisplayName.AddTranslation(GameCulture.Chinese, "南瓜王的披肩");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'不知怎么的,它的尺寸正好合适'
 免疫人形废土

@@ -10,10 +10,10 @@ namespace FargowiltasSouls.Items.Misc
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ordinary Carrot");
-            Tooltip.SetDefault(@"'Plucked from the face of a defeated foe'
-Increases night vision
+            Tooltip.SetDefault(@"Increases night vision
 Minor improvements to all stats
-1 minute duration");
+1 minute duration
+'Plucked from the face of a defeated foe'");
             DisplayName.AddTranslation(GameCulture.Chinese, "普通的胡萝卜");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'从被打败的敌人的脸上拔下来的'

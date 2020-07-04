@@ -13,8 +13,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Wizard Enchantment");
             Tooltip.SetDefault(
-@"'I'm a what?'
-");
+@"
+'I'm a what?'");
 
         }
 

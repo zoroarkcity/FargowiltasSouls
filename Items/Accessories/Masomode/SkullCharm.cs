@@ -10,11 +10,11 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skull Charm");
-            Tooltip.SetDefault(@"'No longer in the zone'
-Grants immunity to Dazed
+            Tooltip.SetDefault(@"Grants immunity to Dazed
 Increases damage taken and dealt by 10%
 Enemies are less likely to target you
-Makes armed and magic skeletons less hostile outside the Dungeon");
+Makes armed and magic skeletons less hostile outside the Dungeon
+'No longer in the zone'");
             DisplayName.AddTranslation(GameCulture.Chinese, "头骨挂坠");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'不在这个区域了'
 免疫眩晕

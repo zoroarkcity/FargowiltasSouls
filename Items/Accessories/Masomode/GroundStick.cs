@@ -9,10 +9,10 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Remote Control");
-            Tooltip.SetDefault(@"'A defeated foe's segment with an antenna glued on'
-Grants immunity to Lightning Rod
+            Tooltip.SetDefault(@"Grants immunity to Lightning Rod
 Your attacks have a small chance to inflict Lightning Rod
-Two friendly probes fight by your side");
+Two friendly probes fight by your side
+'A defeated foe's segment with an antenna glued on'");
             DisplayName.AddTranslation(GameCulture.Chinese, "遥控装置");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'被击败敌人的残片,上面粘着天线'
 免疫避雷针

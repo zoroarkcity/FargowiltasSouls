@@ -21,10 +21,10 @@ namespace FargowiltasSouls.Items.Accessories.Essences
         {
             DisplayName.SetDefault("Musician's Essence");
             Tooltip.SetDefault(
-@"'This is only the beginning..'
-18% increased symphonic damage
+@"18% increased symphonic damage
 5% increased symphonic playing speed
-5% increased symphonic critical strike chance");
+5% increased symphonic critical strike chance
+'This is only the beginning..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "音乐家精华");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"''这才刚刚开始..''

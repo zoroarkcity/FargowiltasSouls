@@ -15,9 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Mythril Enchantment");
             Tooltip.SetDefault(
-@"'You feel the knowledge of your weapons seep into your mind'
-20% increased weapon use speed
-Taking damage temporarily removes this weapon use speed increase");
+@"20% increased weapon use speed
+Taking damage temporarily removes this weapon use speed increase
+'You feel the knowledge of your weapons seep into your mind'");
             DisplayName.AddTranslation(GameCulture.Chinese, "秘银魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"你感觉你对武器的知识渗透到脑海中'

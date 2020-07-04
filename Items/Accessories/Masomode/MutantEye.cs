@@ -11,14 +11,14 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mutant Eye");
-            Tooltip.SetDefault(@"'Only a little suspicious'
-Grants immunity to Mutant Fang
+            Tooltip.SetDefault(@"Grants immunity to Mutant Fang
 50% increased graze bonus critical damage cap
 Increases critical damage gained per graze
 Increases Spectral Abominationn respawn rate and damage
 Reduces Abominable Rebirth duration
 Press the Mutant Bomb key to unleash a wave of spheres and destroy most hostile projectiles
-Mutant Bomb has a 60 second cooldown");
+Mutant Bomb has a 60 second cooldown
+'Only a little suspicious'");
         }
 
         public override void SetDefaults()

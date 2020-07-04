@@ -18,9 +18,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Lead Enchantment");
 
             string tooltip =
-@"'Not recommended for eating'
-Attacks may inflict enemies with Lead Poisoning
-Lead Poisoning deals damage over time and spreads to nearby enemies";
+@"Attacks may inflict enemies with Lead Poisoning
+Lead Poisoning deals damage over time and spreads to nearby enemies
+'Not recommended for eating'";
             string tooltip_ch =
 @"'不建议食用'
 攻击概率使敌人铅中毒

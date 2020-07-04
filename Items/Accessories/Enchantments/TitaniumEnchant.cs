@@ -15,8 +15,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Titanium Enchantment");
             Tooltip.SetDefault(
-@"'Hit me with your best shot' 
-Briefly become invulnerable after striking an enemy");
+@"Briefly become invulnerable after striking an enemy
+'Hit me with your best shot'");
             DisplayName.AddTranslation(GameCulture.Chinese, "钛金魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'Hit Me With Your Best Shot(歌名)'

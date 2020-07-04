@@ -26,10 +26,5 @@ namespace FargowiltasSouls.Buffs.Souls
         {
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SBleed = true;
         }
-
-        public override void Update(Player player, ref int buffIndex)
-        {
-            player.GetModPlayer<FargoPlayer>().SuperBleed = true;
-        }
     }
 }

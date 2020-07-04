@@ -22,11 +22,11 @@ namespace FargowiltasSouls.Items.Accessories.Essences
         {
             DisplayName.SetDefault("Slinger's Essence");
 
-            string tooltip = 
-@"'This is only the beginning..'
-18% increased throwing damage
+            string tooltip =
+@"18% increased throwing damage
 5% increased throwing critical chance
-5% increased throwing velocity";
+5% increased throwing velocity
+'This is only the beginning..'";
             string tooltip_ch =
 @"'这才刚刚开始..'
 增加18%投掷伤害

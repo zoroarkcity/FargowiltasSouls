@@ -16,9 +16,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Platinum Enchantment");
 
-            string tooltip = @"'Its value is immeasurable'
-10% chance for enemies to drop 4x loot
-If the enemy has Midas, the chance and bonus is doubled";
+            string tooltip = @"10% chance for enemies to drop 4x loot
+If the enemy has Midas, the chance and bonus is doubled
+'Its value is immeasurable'";
             string tooltip_ch = @"'价值不可估量'
 敌人10%概率4倍掉落
 如果敌人带有点金手状态,概率和加成翻倍";

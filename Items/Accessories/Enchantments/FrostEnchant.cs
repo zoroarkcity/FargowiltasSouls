@@ -16,11 +16,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Frost Enchantment");
             
             string tooltip =
-@"'Let's coat the world in a deep freeze' 
-Icicles will start to appear around you
+@"Icicles will start to appear around you
 When there are three, attacking will launch them towards the cursor
 Your attacks inflict Frostburn
-Summons a pet Penguin and Snowman";
+Summons a pet Penguin and Snowman
+'Let's coat the world in a deep freeze'";
 
             string tooltip_ch =
 @"'让我们给世界披上一层厚厚的冰衣'

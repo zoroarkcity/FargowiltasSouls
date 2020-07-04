@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using FargowiltasSouls.Projectiles;
 
 namespace FargowiltasSouls.Items.Misc
 {
@@ -31,7 +32,7 @@ namespace FargowiltasSouls.Items.Misc
             item.value = Item.buyPrice(0, 0, 3);
             item.noUseGraphic = true;
             item.noMelee = true;
-            item.shoot = mod.ProjectileType("NukeProj");
+            item.shoot = ModContent.ProjectileType<NukeProj>();
             item.shootSpeed = 5f;
         }
 

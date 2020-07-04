@@ -11,6 +11,9 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Projectiles.MutantBoss;
+using Fargowiltas.Items.Summons.Mutant;
+using Fargowiltas.Items.Summons;
+using Fargowiltas.Items.Summons.VanillaCopy;
 
 namespace FargowiltasSouls.NPCs
 {
@@ -171,6 +174,12 @@ namespace FargowiltasSouls.NPCs
                     }
                 }*/
             }
+
+            //drop summon
+            if (!NPC.downedSlimeKing && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<SlimyCrown>());
+            }
         }
 
         public void EyeOfCthulhuAI(NPC npc)
@@ -305,6 +314,12 @@ namespace FargowiltasSouls.NPCs
                 npc.alpha = 0;
                 npc.dontTakeDamage = false;
             }
+
+            //drop summon
+            if (!NPC.downedBoss1 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<SuspiciousEye>());
+            }
         }
 
         public void EaterOfWorldsAI(NPC npc)
@@ -320,6 +335,12 @@ namespace FargowiltasSouls.NPCs
                     Vector2 velocity = new Vector2(5f, 0f).RotatedBy(npc.rotation - Math.PI / 2.0 + MathHelper.ToRadians(Main.rand.Next(-15, 16)));
                     Projectile.NewProjectile(npc.Center, velocity, ProjectileID.EyeFire, npc.damage / 6, 0f, Main.myPlayer);
                 }
+            }
+
+            //drop summon
+            if (!NPC.downedBoss2 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<WormyFood>());
             }
         }
 
@@ -468,6 +489,12 @@ namespace FargowiltasSouls.NPCs
                         Projectile.NewProjectile(spawn, speed, ModContent.ProjectileType<BrainIllusionProj>(), 0, 0f, Main.myPlayer, npc.whoAmI);
                     }
                 }
+            }
+
+            //drop summon
+            if (!NPC.downedBoss2 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<GoreySpine>());
             }
         }
 
@@ -637,18 +664,19 @@ namespace FargowiltasSouls.NPCs
                 }
             }
 
+            //drop summon
+            if (!NPC.downedQueenBee && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<Abeemination2>());
+            }
+
             return true;
         }
 
         public void SkeletronAI(NPC npc)
         {
             skeleBoss = npc.whoAmI;
-            if (!masoBool[0])
-            {
-                masoBool[0] = true;
-                if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.downedBoss3)
-                    Item.NewItem(npc.Hitbox, ModContent.ItemType<BloodiedSkull>());
-            }
+
             if (Counter != 0)
             {
                 Timer++;
@@ -729,6 +757,12 @@ namespace FargowiltasSouls.NPCs
                         npc.position -= npc.velocity * (180 - Counter2) / 180;
                     }
                 }
+            }
+
+            //drop summon
+            if (!NPC.downedBoss3 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<SuspiciousSkull>());
             }
         }
 
@@ -935,12 +969,6 @@ namespace FargowiltasSouls.NPCs
                 if (Main.player[npc.target].dead || Vector2.Distance(npc.Center, Main.player[npc.target].Center) > 3000)
                 {
                     npc.position.X += 60 * Math.Sign(npc.velocity.X); //move faster to despawn
-                    if (!masoBool[3]) //drop a resummon
-                    {
-                        masoBool[3] = true;
-                        if (Main.netMode != NetmodeID.MultiplayerClient && !Main.hardMode)
-                            Item.NewItem(npc.Hitbox, ModContent.ItemType<FleshierDoll>());
-                    }
                 }
                 else if (Math.Abs(npc.velocity.X) > 6f)
                 {
@@ -990,6 +1018,12 @@ namespace FargowiltasSouls.NPCs
                     masoBool[3] = true;
                     Main.PlaySound(SoundID.Roar, (int)npc.position.X, (int)npc.position.Y, 0);
                 }
+            }
+
+            //drop summon
+            if (!Main.hardMode && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<FleshyDoll>());
             }
         }
 
@@ -1378,6 +1412,12 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
             }*/
+
+            //drop summon
+            if (!NPC.downedMechBoss2 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<MechEye>());
+            }
 
             return true;
         }
@@ -1784,6 +1824,12 @@ namespace FargowiltasSouls.NPCs
                 }
             }
 
+            //drop summon
+            if (!NPC.downedMechBoss1 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<MechWorm>());
+            }
+
             return true;
         }
 
@@ -2169,6 +2215,12 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
             }
+
+            //drop summon
+            if (!NPC.downedMechBoss3 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<MechSkull>());
+            }
         }
 
         public bool PrimeLimbAI(NPC npc)
@@ -2415,13 +2467,7 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
             }
-            if (!NPC.downedPlantBoss && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !masoBool[1]
-                && Collision.CanHit(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
-            {
-                masoBool[1] = true;
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<PlanterasFruit>());
-            }
-
+            
             if (npc.life <= npc.lifeMax / 2) //phase 2
             {
                 //Aura(npc, 700, ModContent.BuffType<IvyVenom>(), true, 188);
@@ -2535,6 +2581,12 @@ namespace FargowiltasSouls.NPCs
                     npc.lifeRegen = 0;
                     RegenTimer = 2;
                 }
+            }
+
+            //drop summon
+            if (!NPC.downedPlantBoss && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<PlanterasFruit>());
             }
         }
 
@@ -2814,6 +2866,12 @@ namespace FargowiltasSouls.NPCs
                     Timer = Main.rand.Next(30);
                     CombatText.NewText(npc.Hitbox, CombatText.HealLife, 240);
                 }
+            }
+
+            //drop summon
+            if (!NPC.downedGolemBoss && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<LihzahrdPowerCell2>());
             }
         }
 
@@ -3419,18 +3477,17 @@ namespace FargowiltasSouls.NPCs
                         break;
                 }
             }
+
+            //drop summon
+            if (!NPC.downedFishron && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<TruffleWorm2>());
+            }
         }
 
         public void CultistAI(NPC npc)
         {
             cultBoss = npc.whoAmI;
-
-            if (!masoBool[0])
-            {
-                masoBool[0] = true;
-                if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.downedAncientCultist)
-                    Item.NewItem(npc.Hitbox, ModContent.ItemType<LunaticSigil>());
-            }
 
             Timer++;
             if (Timer >= 1200)
@@ -3567,6 +3624,12 @@ namespace FargowiltasSouls.NPCs
                     default:
                         break;
                 }
+            }
+
+            //drop summon
+            if (!NPC.downedAncientCultist && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<CultistSummon>());
             }
         }
 
@@ -3903,6 +3966,12 @@ namespace FargowiltasSouls.NPCs
                 case 2: Main.monolithType = 1; break;
                 case 3: Main.monolithType = 2; break;
                 default: break;
+            }
+
+            //drop summon
+            if (!NPC.downedMoonlord && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<CelestialSigil2>());
             }
         }
 

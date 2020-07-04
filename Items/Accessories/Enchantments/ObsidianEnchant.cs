@@ -15,14 +15,13 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Obsidian Enchantment");
             Tooltip.SetDefault(
-@"'The earth calls'
-Grants immunity to fire, fall damage, and 5 seconds of lava immunity
-While standing in lava, you gain 20 armor penetration, 15% attack speed, and your attacks ignite enemies");
+@"Grants immunity to fire and lava
+You have normal movement and can swim in lava
+While standing in lava, your attacks spawn explosions
+Effects of Molten Skull Rose 
+'The earth calls'");
             DisplayName.AddTranslation(GameCulture.Chinese, "黑曜石魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
-@"'大地在呼唤'
-免疫火焰,掉落伤害,获得5秒岩浆免疫
-在岩浆中时,获得20点护甲穿透,15%攻击速度,攻击会点燃敌人");
+
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)
@@ -48,7 +47,7 @@ While standing in lava, you gain 20 armor penetration, 15% attack speed, and you
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().ObsidianEffect();
+            player.GetModPlayer<FargoPlayer>().ObsidianEffect(); //add effect
         }
 
         public override void AddRecipes()

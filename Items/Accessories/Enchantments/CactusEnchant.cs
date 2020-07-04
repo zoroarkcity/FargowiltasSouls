@@ -15,9 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Cactus Enchantment");
             Tooltip.SetDefault(
-@"'It's the quenchiest!' 
-25% of contact damage is reflected
-Enemies may explode into needles on death");
+@"25% of contact damage is reflected
+Enemies may explode into needles on death
+'It's the quenchiest!'");
             DisplayName.AddTranslation(GameCulture.Chinese, "仙人掌魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'太解渴了!'

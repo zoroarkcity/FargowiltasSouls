@@ -54,7 +54,6 @@ namespace FargowiltasSouls
         public bool StardustEnchant;
         public bool FreezeTime = false;
         private int freezeLength = 300;
-        public int FreezeCD = 0;
         public bool MythrilEnchant;
         public bool FossilEnchant;
         public bool FossilBones = false;
@@ -102,7 +101,6 @@ namespace FargowiltasSouls
         private int gladCount = 0;
         public bool GoldEnchant;
         public bool GoldShell;
-        private int goldCD = 0;
         private int goldHP;
         public bool CactusEnchant;
         public bool ForbiddenEnchant;
@@ -114,6 +112,7 @@ namespace FargowiltasSouls
         public bool NecroEnchant;
         private int necroCD;
         public bool ObsidianEnchant;
+        private int obsidianCD = 0;
         public bool TinEnchant;
         public int TinCrit = 4;
         public bool TikiEnchant;
@@ -134,8 +133,6 @@ namespace FargowiltasSouls
         public bool WoodEnchant;
         public bool PalmEnchant;
         public bool ShadeEnchant;
-        private int shadeCD = 0;
-        public bool SuperBleed;
         public bool PearlEnchant;
 
         public bool RainEnchant;
@@ -146,11 +143,10 @@ namespace FargowiltasSouls
         public bool SquireEnchant;
         public bool ApprenticeEnchant;
         public bool HuntressEnchant;
-        private int huntressCD = 0;
         public bool MonkEnchant;
         public int MonkDashing = 0;
         private int monkTimer;
-        public bool EskimoEnchant;
+        public bool SnowEnchant;
 
         public bool Solar;
         public bool Nebula;
@@ -180,8 +176,6 @@ namespace FargowiltasSouls
         public bool DemonShadeEnchant;
         public bool SulphurEnchant;
         public bool FathomEnchant;
-
-        private int[] wetProj = { ProjectileID.Kraken, ProjectileID.Trident, ProjectileID.Flairon, ProjectileID.FlaironBubble, ProjectileID.WaterStream, ProjectileID.WaterBolt, ProjectileID.RainNimbus, ProjectileID.Bubble, ProjectileID.WaterGun };
 
         #endregion
 
@@ -440,18 +434,16 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (Fargowiltas.FreezeKey.JustPressed && StardustEnchant && FreezeCD == 0)
+            if (Fargowiltas.FreezeKey.JustPressed && StardustEnchant && !player.HasBuff(ModContent.BuffType<TimeStopCD>()))
             {
+                player.AddBuff(ModContent.BuffType<TimeStopCD>(), 3600);
                 FreezeTime = true;
-                FreezeCD = 3600; 
-
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/ZaWarudo").WithVolume(1f).WithPitchVariance(.5f), player.Center);
             }
 
-            if (Fargowiltas.GoldKey.JustPressed && GoldEnchant && goldCD == 0)
+            if (Fargowiltas.GoldKey.JustPressed && GoldEnchant && !player.HasBuff(ModContent.BuffType<GoldenStasisCD>()))
             {
                 player.AddBuff(ModContent.BuffType<GoldenStasis>(), 600);
-                goldCD = 3600;
                 goldHP = player.statLife;
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Zhonyas").WithVolume(1f), player.Center);
             }
@@ -641,7 +633,6 @@ namespace FargowiltasSouls
             WoodEnchant = false;
             PalmEnchant = false;
             ShadeEnchant = false;
-            SuperBleed = false;
             PearlEnchant = false;
 
             RainEnchant = false;
@@ -651,7 +642,7 @@ namespace FargowiltasSouls
             ApprenticeEnchant = false;
             HuntressEnchant = false;
             MonkEnchant = false;
-            EskimoEnchant = false;
+            SnowEnchant = false;
 
             Solar = false;
             Nebula = false;
@@ -844,7 +835,6 @@ namespace FargowiltasSouls
             OceanicMaul = false;
             DeathMarked = false;
             Midas = false;
-            SuperBleed = false;
             Bloodthirsty = false;
             SinisterIcon = false;
             SinisterIconDrops = false;
@@ -1134,8 +1124,8 @@ namespace FargowiltasSouls
             if (CopperEnchant && copperCD > 0)
                 copperCD--;
 
-            if (GoldEnchant && goldCD > 0)
-                goldCD--;
+            if (ObsidianEnchant && obsidianCD > 0)
+                obsidianCD--;
 
             if (GoldShell)
             {
@@ -1476,26 +1466,6 @@ namespace FargowiltasSouls
                 {
                     smokeBombCD--;
                 }
-            }
-
-            if (ShadeEnchant && shadeCD == 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.ShadewoodOnHitEffect))
-            {
-                for (int i = 0; i < Main.maxNPCs; i++)
-                {
-                    NPC npc = Main.npc[i];
-
-                    if (!npc.friendly && npc.type != NPCID.TargetDummy && Vector2.Distance(player.Center, npc.Center) <= 50)
-                    {
-                        shadeCD = 300;
-                        player.Hurt(PlayerDeathReason.ByNPC(npc.type), 0, 0);
-                        break;
-                    }
-                }
-            }
-
-            if (shadeCD != 0)
-            {
-                shadeCD--;
             }
 
             if (Atrophied)
@@ -2104,6 +2074,13 @@ namespace FargowiltasSouls
                 return;
             }
 
+            if (FirstStrike)
+            {
+                crit = true;
+                damage = (int)(damage * 1.5f);
+                player.ClearBuff(ModContent.BuffType<FirstStrike>());
+            }
+
             if (proj.minion && Asocial)
             {
                 damage = 0;
@@ -2200,11 +2177,6 @@ namespace FargowiltasSouls
                 return;
 
             OnHitNPCEither(target, damage, knockback, crit, proj.type);
-
-            if (Array.IndexOf(wetProj, proj.type) > -1)
-            {
-                target.AddBuff(BuffID.Wet, 180, true);
-            }
                 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SpectreOrbs) && !target.immortal)
             {
@@ -2369,6 +2341,20 @@ namespace FargowiltasSouls
                 CopperEffect(target);
             }
 
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ObsidianExplosion) && ObsidianEnchant && obsidianCD == 0)
+            {
+                Projectile.NewProjectile(target.Center, Vector2.Zero, ModContent.ProjectileType<ExplosionSmall>(), damage, 0, player.whoAmI);
+                obsidianCD = 30;
+            }
+
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShadewoodEffect) && target.HasBuff(ModContent.BuffType<SuperBleed>()) && projectile != ModContent.ProjectileType<SuperBlood>())
+            {
+                for(int i = 0; i < Main.rand.Next(3, 6); i++)
+                {
+                    Projectile.NewProjectile(target.Center.X, target.Center.Y - 20, 0f + Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5), ModContent.ProjectileType<SuperBlood>(), 20, 0f, Main.myPlayer);
+                }
+            }
+
             if (DevianttHearts && DevianttHeartsCD <= 0)
             {
                 DevianttHeartsCD = MutantEye ? 300 : 600;
@@ -2462,10 +2448,10 @@ namespace FargowiltasSouls
             {
                 rainDamage += damage;
 
-                if(rainDamage > 1000)
+                if(rainDamage > 500)
                 {
-                    Projectile.NewProjectile(target.Center, new Vector2(0, -2f), ModContent.ProjectileType<RainCloud>(), damage / 2, 0, Main.myPlayer);
-                    rainDamage = -500;
+                    Projectile.NewProjectile(target.Center, new Vector2(0, -2f), ModContent.ProjectileType<RainCloud>(), damage, 0, Main.myPlayer);
+                    rainDamage = 0;
                 }
             }
 
@@ -2591,9 +2577,6 @@ namespace FargowiltasSouls
 
                 if (FrostEnchant)
                     target.AddBuff(BuffID.Frostburn, 300);
-
-                if (ObsidianEnchant)
-                    target.AddBuff(BuffID.OnFire, 600);
 
                 if (LeadEnchant && Main.rand.Next(5) == 0)
                     target.AddBuff(ModContent.BuffType<LeadPoison>(), 30);
@@ -2722,6 +2705,69 @@ namespace FargowiltasSouls
             if (Fargowiltas.Instance.ThoriumLoaded) ThoriumHitNPC(target, item, crit);
         }
 
+        public override void MeleeEffects(Item item, Rectangle hitbox)
+        {
+            if (ShroomEnchant && (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.1) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.3) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.5) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.7) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.9)))
+            {
+                float num340 = 0f;
+                float num341 = 0f;
+                float num342 = 0f;
+                float num343 = 0f;
+                if (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.9))
+                {
+                    num340 = -7f;
+                }
+                if (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.7))
+                {
+                    num340 = -6f;
+                    num341 = 2f;
+                }
+                if (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.5))
+                {
+                    num340 = -4f;
+                    num341 = 4f;
+                }
+                if (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.3))
+                {
+                    num340 = -2f;
+                    num341 = 6f;
+                }
+                if (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.1))
+                {
+                    num341 = 7f;
+                }
+                if (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.7))
+                {
+                    num343 = 26f;
+                }
+                if (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.3))
+                {
+                    num343 -= 4f;
+                    num342 -= 20f;
+                }
+                if (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.1))
+                {
+                    num342 += 6f;
+                }
+                if (player.direction == -1)
+                {
+                    if (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.9))
+                    {
+                        num343 -= 8f;
+                    }
+                    if (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.7))
+                    {
+                        num343 -= 6f;
+                    }
+                }
+                num340 *= 1.5f;
+                num341 *= 1.5f;
+                num343 *= (float)player.direction;
+                num342 *= player.gravDir;
+                Projectile.NewProjectile((float)(hitbox.X + hitbox.Width / 2) + num343, (float)(hitbox.Y + hitbox.Height / 2) + num342, (float)player.direction * num341, num340 * player.gravDir, 131, item.damage / 2, 0f, player.whoAmI, 0f, 0f);
+            }
+        }
+
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
             if (FargoSoulsWorld.MasochistMode && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore)
@@ -2764,13 +2810,7 @@ namespace FargowiltasSouls
                 player.AddBuff(ModContent.BuffType<DisruptedFocus>(), 300);
             }
 
-            if (ShadeEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ShadewoodEffect))
-            {
-                for (int i = 0; i < 10; i++)
-                    Projectile.NewProjectile(player.Center.X, player.Center.Y - 40, Main.rand.Next(-5, 6), Main.rand.Next(-6, -2), ModContent.ProjectileType<SuperBlood>(), 5, 0f, Main.myPlayer);
-            }
-
-            if(TinEnchant && shadeCD != 300)
+            if(TinEnchant)
             {
                 if(Eternity)
                 {

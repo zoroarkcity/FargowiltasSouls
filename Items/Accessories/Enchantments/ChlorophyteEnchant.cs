@@ -16,12 +16,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Chlorophyte Enchantment");
 
             string tooltip =
-@"'The jungle's essence crystallizes around you'
-Summons a ring of leaf crystals to shoot at nearby enemies
+@"Summons a ring of leaf crystals to shoot at nearby enemies
 Jumping will release a lingering spore explosion
 All herb collection is doubled
 Effects of Flower Boots
-Summons a pet Seedling";
+Summons a pet Seedling
+'The jungle's essence crystallizes around you'";
 
             string tooltip_ch =
 @"'丛林的精华凝结在你周围'

@@ -52,6 +52,7 @@ namespace FargowiltasSouls.Projectiles
         private int rainbowCounter = 0;
         public bool Rainbow = false;
         public int GrazeCD;
+        public int shroomiteMushroomCD = 0;
 
         public Func<Projectile, bool> GrazeCheck = projectile => projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + 100 && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0);
 
@@ -191,21 +192,6 @@ namespace FargowiltasSouls.Projectiles
                         }
                     }
 
-
-
-                    if (!townNPCProj && modPlayer.FirstStrike && projectile.friendly && !Rotate && projectile.damage > 0 && !projectile.minion && projectile.aiStyle != 19 && projectile.aiStyle != 99 && CanSplit && Array.IndexOf(noSplit, projectile.type) <= -1)
-                    {
-                        Projectile p = NewProjectileDirectSafe(projectile.position + projectile.velocity * 2, projectile.velocity, projectile.type, projectile.damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1]);
-                        p.GetGlobalProjectile<FargoGlobalProjectile>().firstTick = false;
-                        p.Opacity *= .75f;
-
-                        p = NewProjectileDirectSafe(projectile.position - projectile.velocity * 2, projectile.velocity, projectile.type, projectile.damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1]);
-                        p.GetGlobalProjectile<FargoGlobalProjectile>().firstTick = false;
-                        p.Opacity *= .75f;
-
-                        player.ClearBuff(ModContent.BuffType<FirstStrike>());
-                    }
-
                     if (modPlayer.TungstenEnchant && !townNPCProj && projectile.damage != 0 && !projectile.trap && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && projectile.friendly && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenSize, false))
                     {
                         projectile.position = projectile.Center;
@@ -331,6 +317,7 @@ namespace FargowiltasSouls.Projectiles
                     }
                 }
 
+                //prob change in 1.4
                 if (modPlayer.StardustEnchant && projectile.type == ProjectileID.StardustGuardian)
                 {
                     projectile.localAI[0] = 0f;
@@ -390,7 +377,19 @@ namespace FargowiltasSouls.Projectiles
                         projectile.Kill();
                     }
 
-                    if (modPlayer.SpookyEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.SpookyScythes) && projectile.owner == Main.myPlayer
+                    if (modPlayer.ShroomEnchant && modPlayer.IsStandingStill && projectile.damage > 0 && projectile.velocity.Length() > 1 && projectile.minionSlots == 0 && projectile.type != ProjectileID.Mushroom)
+                    {
+                        if (shroomiteMushroomCD <= 0)
+                        {
+                            shroomiteMushroomCD = 6;
+
+                            int p = Projectile.NewProjectile(projectile.position.X + (float)(projectile.width / 2), projectile.position.Y + (float)(projectile.height / 2), projectile.velocity.X, projectile.velocity.Y, 131, projectile.damage / 3, 0f, projectile.owner, 0f, 0f);
+                            //Main.projectile[p].timeLeft = 15;
+                        }
+                        shroomiteMushroomCD--;
+                    }
+
+                    if (modPlayer.SpookyEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.SpookyScythes) 
                         && projectile.minion && projectile.minionSlots > 0
                         && counter % 60 == 0 && Main.rand.Next(8 + Main.player[projectile.owner].maxMinions) == 0)
                     {
@@ -1256,7 +1255,7 @@ namespace FargowiltasSouls.Projectiles
                 var teleportPos = new Vector2();
 
                 teleportPos.X = projectile.position.X;
-                teleportPos.Y = projectile.position.Y;
+                teleportPos.Y = projectile.position.Y - 30;
 
                 //spiral out to find a save spot
                 int count = 0;
@@ -1505,7 +1504,8 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.RuneBlast:
-                        target.AddBuff(ModContent.BuffType<Hexed>(), 240);
+                        target.AddBuff(ModContent.BuffType<FlamesoftheUniverse>(), 60);
+                        //target.AddBuff(ModContent.BuffType<Hexed>(), 240);
                         if (!EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
                             target.AddBuff(BuffID.Suffocation, 240);
                         break;

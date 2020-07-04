@@ -10,9 +10,9 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frigid Gemstone");
-            Tooltip.SetDefault(@"'A shard of ancient magical ice'
-Grants immunity to Frostburn
-Your attacks summon Frostfireballs to attack your enemies");
+            Tooltip.SetDefault(@"Grants immunity to Frostburn
+Your attacks summon Frostfireballs to attack your enemies
+'A shard of ancient magical ice'");
             DisplayName.AddTranslation(GameCulture.Chinese, "寒玉");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'一块古老的魔法冰碎片'
 免疫寒焰

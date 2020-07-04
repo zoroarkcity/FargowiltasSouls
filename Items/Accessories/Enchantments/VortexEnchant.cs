@@ -15,10 +15,10 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Vortex Enchantment");
             Tooltip.SetDefault(
-@"'Tear into reality'
-Double tap down to toggle stealth, reducing chance for enemies to target you but slowing movement
+@"Double tap down to toggle stealth, reducing chance for enemies to target you but slowing movement
 You also spawn a vortex to draw in and massively damage enemies when you enter stealth
-Summons a pet Companion Cube");
+Summons a pet Companion Cube
+'Tear into reality'");
             DisplayName.AddTranslation(GameCulture.Chinese, "星旋魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'撕裂现实'

@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 {
                     if (Main.rand.Next(2) == 0)
                     {
-                        Vector2 velocity = Vector2.Normalize(target.Center - x.Center) * 10;
+                        Vector2 velocity = Vector2.Normalize(target.Center - x.Center) * 20;
                         int shark = Projectile.NewProjectile(x.Center, velocity, ProjectileID.MiniSharkron, projectile.damage, projectile.knockBack, projectile.owner);
                         if (shark < 1000)
                         {

@@ -16,14 +16,14 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Shinobi Infiltrator Enchantment");
 
             string tooltip =
-@"'Village Hidden in the Wall'
-Dash into any walls, to teleport through them to the next opening
+@"Dash into any walls, to teleport through them to the next opening
 Stand still to gain a single use monk dash
 Throw a smoke bomb to teleport to it and gain the First Strike Buff
 Using the Rod of Discord will also grant this buff
 Greatly enhances Lightning Aura effectiveness
 Effects of Master Ninja Gear
-Summons a pet Gato and Black Cat";
+Summons a pet Gato and Black Cat
+'Village Hidden in the Wall'";
             string tooltip_ch =
 @"'藏在墙中的村庄'
 冲进墙壁时,会直接穿过去

@@ -10,11 +10,11 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mystic Skull");
-            Tooltip.SetDefault(@"'The quietly muttering head of a defeated foe'
-Works in your inventory
+            Tooltip.SetDefault(@"Works in your inventory
 Grants immunity to Suffocation
 10% reduced magic damage
-Automatically use mana potions when needed");
+Automatically use mana potions when needed
+'The quietly muttering head of a defeated foe'");
             DisplayName.AddTranslation(GameCulture.Chinese, "神秘头骨");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'被打败敌人的喃喃自语的脑袋'
 放在物品栏中即可生效

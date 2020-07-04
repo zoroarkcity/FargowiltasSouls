@@ -205,6 +205,24 @@ namespace FargowiltasSouls.NPCs
                 }
             }
 
+            if (SBleed)
+            {
+                if (Main.rand.Next(4) < 3)
+                {
+                    int dust = Dust.NewDust(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.Blood, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100);
+                    Main.dust[dust].noGravity = true;
+                    Main.dust[dust].shader = GameShaders.Armor.GetSecondaryShader(56, Main.LocalPlayer);
+
+                    Dust expr_1CCF_cp_0 = Main.dust[dust];
+                    expr_1CCF_cp_0.velocity.Y = expr_1CCF_cp_0.velocity.Y - 0.5f;
+                    if (Main.rand.Next(4) == 0)
+                    {
+                        Main.dust[dust].noGravity = false;
+                        Main.dust[dust].scale *= 0.5f;
+                    }
+                }
+            }
+
             /*if (Infested)
             {
                 if (Main.rand.Next(4) < 3)
@@ -318,29 +336,6 @@ namespace FargowiltasSouls.NPCs
         {
             Player player = Main.player[Main.myPlayer];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            int dmg;
-
-            //20 dps
-            if (SBleed)
-            {
-                if (npc.lifeRegen > 0)
-                {
-                    npc.lifeRegen = 0;
-                }
-                npc.lifeRegen -= 40;
-                if (damage < 20)
-                {
-                    damage = 20;
-                }
-
-                if (Main.rand.Next(4) == 0)
-                {
-                    dmg = 20;
-                    int p = Projectile.NewProjectile(npc.Center.X, npc.Center.Y - 40, 0f + Main.rand.Next(-5, 5), -5f, ModContent.ProjectileType<SuperBlood>(), dmg, 0f, Main.myPlayer);
-                    if (p < 1000)
-                        Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
-                }
-            }
 
             if (Rotting)
             {

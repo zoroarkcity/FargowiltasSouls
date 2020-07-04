@@ -9,9 +9,9 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Concentrated Rainbow Matter");
-            Tooltip.SetDefault(@"'Taste the rainbow'
-Grants immunity to Flames of the Universe
-Summons a baby rainbow slime");
+            Tooltip.SetDefault(@"Grants immunity to Flames of the Universe
+Summons a baby rainbow slime
+'Taste the rainbow'");
             DisplayName.AddTranslation(GameCulture.Chinese, "浓缩彩虹物质");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'品尝彩虹'
 免疫宇宙之火

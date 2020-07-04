@@ -17,10 +17,10 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Spectre Enchantment");
 
             string tooltip =
-@"'Their lifeforce will be their undoing'
-Damage has a chance to spawn damaging orbs
+@"Damage has a chance to spawn damaging orbs
 If you crit, you might also get a healing orb
-Summons a pet Wisp";
+Summons a pet Wisp
+'Their lifeforce will be their undoing'";
 
             string tooltip_ch =
 @"'他们的生命力将毁灭自己'

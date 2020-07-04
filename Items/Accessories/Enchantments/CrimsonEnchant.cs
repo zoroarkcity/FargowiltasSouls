@@ -15,9 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Crimson Enchantment");
             Tooltip.SetDefault(
-@"'The blood of your enemy is your rebirth'
-Greatly increases life regen
-Summons a pet Face Monster and Crimson Heart");
+@"Greatly increases life regen
+Summons a pet Face Monster and Crimson Heart
+'The blood of your enemy is your rebirth'");
             DisplayName.AddTranslation(GameCulture.Chinese, "血腥魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'你从敌人的血中重生'

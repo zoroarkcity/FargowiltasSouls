@@ -10,15 +10,15 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Chalice of the Moon");
-            Tooltip.SetDefault(@"'The moon smiles'
-Grants immunity to Venom, Ivy Venom, Burning, Fused, Low Ground, and Marked for Death
+            Tooltip.SetDefault(@"Grants immunity to Venom, Ivy Venom, Burning, Fused, Low Ground, and Marked for Death
 Grants immunity to Swarming, Atrophied, Jammed, Reverse Mana Flow, and Antisocial
 Increases life regeneration
 Press down in the air to fastfall
 Fastfall will create a fiery eruption on impact after falling a certain distance
 You periodically fire additional attacks depending on weapon type
 You erupt into spiky balls and Ancient Visions when injured
-Summons a friendly Cultist and plant to fight at your side");
+Summons a friendly Cultist and plant to fight at your side
+'The moon smiles'");
             DisplayName.AddTranslation(GameCulture.Chinese, "月之杯");
             Tooltip.AddTranslation(GameCulture.Chinese, @"月亮的微笑
 免疫毒液, 常春藤毒, 燃烧, 导火线, 死亡标记和着迷

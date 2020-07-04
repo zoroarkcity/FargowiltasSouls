@@ -25,10 +25,10 @@ namespace FargowiltasSouls.Items.Accessories.Essences
         {
             DisplayName.SetDefault("Outlaw's Essence");
             Tooltip.SetDefault(
-@"'This is only the beginning..'
-18% increased rogue damage
+@"18% increased rogue damage
 5% increased rogue velocity
-5% increased rogue critical strike chance");
+5% increased rogue critical strike chance
+'This is only the beginning..'");
         }
 
         /*public override void ModifyTooltips(List<TooltipLine> list)

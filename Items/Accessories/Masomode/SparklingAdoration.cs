@@ -10,11 +10,11 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sparkling Adoration");
-            Tooltip.SetDefault(@"'With all of your emotion!'
-Grants immunity to Lovestruck
+            Tooltip.SetDefault(@"Grants immunity to Lovestruck
 Graze projectiles to gain up to 30% increased critical damage
 Critical damage bonus decreases over time and is fully lost on hit
-Critical strikes periodically summon life-draining hearts");
+Critical strikes periodically summon life-draining hearts
+'With all of your emotion!'");
         }
 
         public override void SetDefaults()

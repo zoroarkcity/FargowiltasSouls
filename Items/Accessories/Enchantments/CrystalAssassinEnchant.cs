@@ -15,8 +15,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Crystal Assassin Enchantment");
 
             string tooltip =
-@"''
-Effects of Volatile Gel";
+@"Effects of Volatile Gel
+''";
 
             Tooltip.SetDefault(tooltip);
         }

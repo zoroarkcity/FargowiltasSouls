@@ -16,9 +16,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Beetle Enchantment");
 
             string tooltip =
-@"'The unseen life of dung courses through your veins'
-Beetles protect you from damage, up to 15% damage reduction only
-Increases flight time by 50%";
+@"Beetles protect you from damage, up to 15% damage reduction only
+Increases flight time by 50%
+'The unseen life of dung courses through your veins'";
             string tooltip_ch = 
 @"'你的血管里流淌着看不见的粪便生命'
 甲虫保护你免受伤害
