@@ -92,6 +92,16 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 }
             }
 
+            int ai1 = (int)projectile.ai[1];
+            if (ai1 > -1 && ai1 < Main.maxProjectiles && Main.projectile[ai1].active && Main.projectile[ai1].type == ProjectileID.CultistRitual)
+            {
+                projectile.Center = Main.projectile[ai1].Center;
+            }
+            else
+            {
+                projectile.ai[1] = -1;
+            }
+
             projectile.timeLeft = 2;
             projectile.scale = (1f - projectile.alpha / 255f) * 2f;
             projectile.ai[0] -= rotationPerTick;
