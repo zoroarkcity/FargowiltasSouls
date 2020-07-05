@@ -160,4 +160,16 @@ removed meteorite blast resistance  (no longer needed with 1.4)
 lihzahrd curse debuff handles disabling wires in temple
 lihzahrd treasure box gives immunity to lihzahrd curse
 right click lihzahrd altar for 10min lihzahrd blessing (immunity to curse)
+
 capped number of sand sharks spawned by sand ele
+fixed hoppin jack greek fire doing 320 damage
+prime limbs die when dg form activated
+shortened windup on dg forms to 2 seconds (was 3)
+ancient visions now spawn alongside phantasmal dragons
+pillar deals no damage until fully opaque
+reduced speed of pillar in flight
+ritual purges all spectre orbs from spectre mask/ench
+cultist inflicts permanent chaos state
+ritual spins around you
+removed cultist clone hurtboxes
+cultist has no contact damage on first dash

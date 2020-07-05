@@ -1288,9 +1288,9 @@ namespace FargowiltasSouls
                     fargoNPC.masoBool[1] = reader.ReadBoolean();
                     fargoNPC.masoBool[2] = reader.ReadBoolean();
                     fargoNPC.masoBool[3] = reader.ReadBoolean();
-                    fargoNPC.Counter = reader.ReadInt32();
-                    fargoNPC.Counter2 = reader.ReadInt32();
-                    fargoNPC.Timer = reader.ReadInt32();
+                    fargoNPC.Counter[0] = reader.ReadInt32();
+                    fargoNPC.Counter[1] = reader.ReadInt32();
+                    fargoNPC.Counter[2] = reader.ReadInt32();
                     break;
 
                 case 3: //rainbow slime/paladin, MP clients syncing to server
@@ -1311,7 +1311,7 @@ namespace FargowiltasSouls
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         int ML = reader.ReadByte();
-                        Main.npc[ML].GetGlobalNPC<EModeGlobalNPC>().Counter = reader.ReadInt32();
+                        Main.npc[ML].GetGlobalNPC<EModeGlobalNPC>().Counter[0] = reader.ReadInt32();
                         EModeGlobalNPC.masoStateML = reader.ReadByte();
                     }
                     break;
@@ -1321,7 +1321,7 @@ namespace FargowiltasSouls
                     {
                         int reti = reader.ReadByte();
                         Main.npc[reti].GetGlobalNPC<EModeGlobalNPC>().masoBool[2] = reader.ReadBoolean();
-                        Main.npc[reti].GetGlobalNPC<EModeGlobalNPC>().Counter = reader.ReadInt32();
+                        Main.npc[reti].GetGlobalNPC<EModeGlobalNPC>().Counter[0] = reader.ReadInt32();
                     }
                     break;
 
@@ -1337,8 +1337,8 @@ namespace FargowiltasSouls
                     if (Main.netMode == NetmodeID.Server)
                     {
                         int caster = reader.ReadByte();
-                        if (Main.npc[caster].GetGlobalNPC<EModeGlobalNPC>().Counter2 == 0)
-                            Main.npc[caster].GetGlobalNPC<EModeGlobalNPC>().Counter2 = reader.ReadInt32();
+                        if (Main.npc[caster].GetGlobalNPC<EModeGlobalNPC>().Counter[1] == 0)
+                            Main.npc[caster].GetGlobalNPC<EModeGlobalNPC>().Counter[1] = reader.ReadInt32();
                     }
                     break;
 
@@ -1346,7 +1346,7 @@ namespace FargowiltasSouls
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
                         int caster = reader.ReadByte();
-                        Main.npc[caster].GetGlobalNPC<EModeGlobalNPC>().Counter2 = 0;
+                        Main.npc[caster].GetGlobalNPC<EModeGlobalNPC>().Counter[1] = 0;
                     }
                     break;
 
@@ -1363,9 +1363,9 @@ namespace FargowiltasSouls
                     {
                         int cult = reader.ReadByte();
                         EModeGlobalNPC cultNPC = Main.npc[cult].GetGlobalNPC<EModeGlobalNPC>();
-                        cultNPC.Counter += reader.ReadInt32();
-                        cultNPC.Counter2 += reader.ReadInt32();
-                        cultNPC.Timer += reader.ReadInt32();
+                        cultNPC.Counter[0] += reader.ReadInt32();
+                        cultNPC.Counter[1] += reader.ReadInt32();
+                        cultNPC.Counter[2] += reader.ReadInt32();
                         Main.npc[cult].localAI[3] += reader.ReadSingle();
                     }
                     break;
@@ -1393,7 +1393,7 @@ namespace FargowiltasSouls
                         int n = reader.ReadByte();
                         EModeGlobalNPC limb = Main.npc[n].GetGlobalNPC<EModeGlobalNPC>();
                         limb.masoBool[2] = reader.ReadBoolean();
-                        limb.Counter = reader.ReadInt32();
+                        limb.Counter[0] = reader.ReadInt32();
                         Main.npc[n].localAI[3] = reader.ReadSingle();
                     }
                     break;
@@ -1403,8 +1403,8 @@ namespace FargowiltasSouls
                     {
                         int n = reader.ReadByte();
                         EModeGlobalNPC limb = Main.npc[n].GetGlobalNPC<EModeGlobalNPC>();
-                        limb.Counter = reader.ReadInt32();
-                        limb.Counter2 = reader.ReadInt32();
+                        limb.Counter[0] = reader.ReadInt32();
+                        limb.Counter[1] = reader.ReadInt32();
                     }
                     break;
                     
@@ -1413,6 +1413,16 @@ namespace FargowiltasSouls
                     {
                         Player player = Main.player[reader.ReadByte()];
                         DropDevianttsGift(player);
+                    }
+                    break;
+
+                case 15: //sync npc counter array
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        int n = reader.ReadByte();
+                        EModeGlobalNPC eNPC = Main.npc[n].GetGlobalNPC<EModeGlobalNPC>();
+                        for (int i = 0; i < eNPC.Counter.Length; i++)
+                            eNPC.Counter[i] = reader.ReadInt32();
                     }
                     break;
 

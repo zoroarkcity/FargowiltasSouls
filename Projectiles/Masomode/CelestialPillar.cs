@@ -35,6 +35,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
+        public override bool CanDamage()
+        {
+            return projectile.alpha == 0;
+        }
+
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(target);
@@ -84,7 +89,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                         projectile.velocity = Main.player[target].Center - projectile.Center;
                         float distance = projectile.velocity.Length();
                         projectile.velocity.Normalize();
-                        const float speed = 32f;
+                        const float speed = 28f;
                         projectile.velocity *= speed;
                         projectile.timeLeft = (int)(distance / speed);
                         projectile.netUpdate = true;
@@ -182,7 +187,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                const int max = 24;
+                const int max = 22;
                 const float rotationInterval = 2f * (float)Math.PI / max;
                 for (int j = 0; j < 4; j++)
                 {
