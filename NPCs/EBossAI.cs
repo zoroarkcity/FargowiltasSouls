@@ -3557,6 +3557,8 @@ namespace FargowiltasSouls.NPCs
 
             //PrintAI(npc);
 
+            npc.damage = npc.defDamage;
+
             if (npc.ai[3] == -1f)
             {
                 if (Fargowiltas.Instance.MasomodeEXLoaded && npc.ai[1] >= 120f && npc.ai[1] < 419f) //skip summoning ritual LMAO
@@ -3602,6 +3604,10 @@ namespace FargowiltasSouls.NPCs
                             npc.ai[3] = 11f;
                             npc.netUpdate = true;
                         }
+                        break;
+
+                    case 0:
+                        npc.damage = 0;
                         break;
 
                     case 2:

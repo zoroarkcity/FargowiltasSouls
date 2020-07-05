@@ -172,3 +172,4 @@ ritual purges all spectre orbs from spectre mask/ench
 cultist inflicts permanent chaos state
 ritual spins around you
 removed cultist clone hurtboxes
+cultist has no contact damage on first dash
