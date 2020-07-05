@@ -171,4 +171,4 @@ reduced speed of pillar in flight
 ritual purges all spectre orbs from spectre mask/ench
 cultist inflicts permanent chaos state
 ritual spins around you
-removed cultist clone hurtboxes for now tbh
+removed cultist clone hurtboxes
