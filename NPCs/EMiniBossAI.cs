@@ -37,9 +37,9 @@ namespace FargowiltasSouls.NPCs
             Aura(npc, 150, BuffID.Suffocation, false, 119);
             if (npc.Distance(Main.player[Main.myPlayer].Center) < 150)
                 Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<Hexed>(), 2);
-            if (++Counter > 300)
+            if (++Counter[0] > 300)
             {
-                Counter = 0;
+                Counter[0] = 0;
                 if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                 {
                     Vector2 vel = npc.DirectionFrom(Main.player[npc.target].Center) * 8f;
@@ -58,7 +58,7 @@ namespace FargowiltasSouls.NPCs
         {
             if (masoBool[0]) //small rainbow slime
             {
-                if (!masoBool[1] && ++Counter > 15)
+                if (!masoBool[1] && ++Counter[0] > 15)
                 {
                     masoBool[1] = true;
                     if (Main.netMode == NetmodeID.Server) //MP sync

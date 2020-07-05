@@ -783,15 +783,15 @@ namespace FargowiltasSouls.Projectiles
                                     var netMessage = mod.GetPacket();
                                     netMessage.Write((byte)10);
                                     netMessage.Write((byte)projectile.ai[1]);
-                                    netMessage.Write(fargoCultist.Counter);
-                                    netMessage.Write(fargoCultist.Counter2);
-                                    netMessage.Write(fargoCultist.Timer);
+                                    netMessage.Write(fargoCultist.Counter[0]);
+                                    netMessage.Write(fargoCultist.Counter[1]);
+                                    netMessage.Write(fargoCultist.Counter[2]);
                                     netMessage.Write(cultist.localAI[3]);
                                     netMessage.Send();
 
-                                    fargoCultist.Counter = 0; //clear client side data now
-                                    fargoCultist.Counter2 = 0;
-                                    fargoCultist.Timer = 0;
+                                    fargoCultist.Counter[0] = 0; //clear client side data now
+                                    fargoCultist.Counter[1] = 0;
+                                    fargoCultist.Counter[2] = 0;
                                     cultist.localAI[3] = 0f;
                                 }
                                 else //refresh ritual
@@ -815,23 +815,49 @@ namespace FargowiltasSouls.Projectiles
                             }
                         }
 
-                        /*if (projectile.ai[0] > 120f && projectile.ai[0] < 299f) //instant ritual
-                        {
+                        if (Fargowiltas.Instance.MasomodeEXLoaded && projectile.ai[0] > 120f && projectile.ai[0] < 299f)
                             projectile.ai[0] = 299f;
-                            if (projectile.ai[1] > -1 && projectile.ai[1] < Main.maxNPCs) //pillar dunk
+
+                        bool dunk = false;
+
+                        if (projectile.ai[1] == -1)
+                        {
+                            if (counter == 5)
+                                dunk = true;
+                        }
+                        else
+                        {
+                            counter = 0;
+                            if (projectile.ai[0] == 299f)
+                                dunk = true;
+                        }
+
+                        if (dunk) //pillar dunk
+                        {
+                            int cult = -1;
+                            for (int i = 0; i < Main.maxNPCs; i++)
+                            {
+                                if (Main.npc[i].active && Main.npc[i].type == NPCID.CultistBoss && Main.npc[i].ai[2] == projectile.whoAmI)
+                                {
+                                    cult = i;
+                                    break;
+                                }
+                            }
+
+                            if (cult != -1)
                             {
                                 float ai0 = Main.rand.Next(4);
 
-                                NPC cultist = Main.npc[(int)projectile.ai[1]];
+                                NPC cultist = Main.npc[cult];
                                 EModeGlobalNPC fargoCultist = cultist.GetGlobalNPC<EModeGlobalNPC>();
                                 int[] weight = new int[4];
-                                weight[0] = fargoCultist.Counter;
-                                weight[1] = fargoCultist.Counter2;
-                                weight[2] = fargoCultist.Timer;
+                                weight[0] = fargoCultist.Counter[0];
+                                weight[1] = fargoCultist.Counter[1];
+                                weight[2] = fargoCultist.Counter[2];
                                 weight[3] = (int)cultist.localAI[3];
-                                fargoCultist.Counter = 0;
-                                fargoCultist.Counter2 = 0;
-                                fargoCultist.Timer = 0;
+                                fargoCultist.Counter[0] = 0;
+                                fargoCultist.Counter[1] = 0;
+                                fargoCultist.Counter[2] = 0;
                                 cultist.localAI[3] = 0f;
                                 int max = 0;
                                 for (int i = 1; i < 4; i++)
@@ -844,7 +870,7 @@ namespace FargowiltasSouls.Projectiles
                                     Projectile.NewProjectile(projectile.Center, Vector2.UnitY * -10f, ModContent.ProjectileType<CelestialPillar>(),
                                         (int)(75 * (1 + FargoSoulsWorld.CultistCount * .0125)), 0f, Main.myPlayer, ai0);
                             }
-                        }*/
+                        }
                     }
                     break;
 
