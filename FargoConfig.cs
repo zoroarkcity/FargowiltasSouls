@@ -234,6 +234,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool ShroomiteStealth;
 
+        [Label("$Mods.FargowiltasSouls.ShroomiteShroomConfig")]
+        [DefaultValue(true)]
+        public bool ShroomiteShrooms;
+
         [Header("$Mods.FargowiltasSouls.ShadowHeader")]
         [Label("$Mods.FargowiltasSouls.DarkArtConfig")]
         [DefaultValue(true)]
