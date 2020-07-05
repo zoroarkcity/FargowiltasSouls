@@ -701,7 +701,7 @@ namespace FargowiltasSouls
                 float distance = 200f;
                 
                 int damage = HighestDamageTypeScaling(dmg);
-                int dmgRate = 60;
+                
 
                 if (player.whoAmI == Main.myPlayer)
                 {
@@ -712,7 +712,7 @@ namespace FargowiltasSouls
                         {
                             if (Vector2.Distance(player.Center, npc.Center) <= distance)
                             {
-                                Main.NewText(Vector2.Distance(player.Center, npc.Center));
+                                int dmgRate = 60;
 
                                 if (npc.FindBuffIndex(buff) == -1)
                                 {

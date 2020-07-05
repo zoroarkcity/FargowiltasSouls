@@ -2184,7 +2184,7 @@ namespace FargowiltasSouls
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
         {
-            if (target.friendly)
+            if (target.friendly || target.type == NPCID.TargetDummy)
                 return;
 
             OnHitNPCEither(target, damage, knockback, crit, proj.type);
@@ -2718,7 +2718,7 @@ namespace FargowiltasSouls
 
         public override void MeleeEffects(Item item, Rectangle hitbox)
         {
-            if (ShroomEnchant && (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.1) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.3) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.5) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.7) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.9)))
+            if (ShroomEnchant && SoulConfig.Instance.ShroomiteShrooms && IsStandingStill && !item.noMelee && (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.1) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.3) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.5) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.7) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.9)))
             {
                 float num340 = 0f;
                 float num341 = 0f;

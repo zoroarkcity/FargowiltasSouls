@@ -383,13 +383,13 @@ namespace FargowiltasSouls.Projectiles
                         projectile.Kill();
                     }
 
-                    if (modPlayer.ShroomEnchant && modPlayer.IsStandingStill && projectile.damage > 0 && projectile.velocity.Length() > 1 && projectile.minionSlots == 0 && projectile.type != ProjectileID.Mushroom)
+                    if (modPlayer.ShroomEnchant && SoulConfig.Instance.ShroomiteShrooms && modPlayer.IsStandingStill && projectile.damage > 0 && !townNPCProj && projectile.velocity.Length() > 1 && projectile.minionSlots == 0 && projectile.type != ProjectileID.Mushroom)
                     {
                         if (shroomiteMushroomCD <= 0)
                         {
-                            shroomiteMushroomCD = 6;
+                            shroomiteMushroomCD = 10;
 
-                            int p = Projectile.NewProjectile(projectile.position.X + (float)(projectile.width / 2), projectile.position.Y + (float)(projectile.height / 2), projectile.velocity.X, projectile.velocity.Y, 131, projectile.damage / 3, 0f, projectile.owner, 0f, 0f);
+                            int p = Projectile.NewProjectile(projectile.position.X + (float)(projectile.width / 2), projectile.position.Y + (float)(projectile.height / 2), projectile.velocity.X, projectile.velocity.Y, 131, projectile.damage / 5, 0f, projectile.owner, 0f, 0f);
                             //Main.projectile[p].timeLeft = 15;
                         }
                         shroomiteMushroomCD--;
@@ -1345,6 +1345,8 @@ namespace FargowiltasSouls.Projectiles
                     NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, teleportPos.X, teleportPos.Y, 1);
 
                     player.AddBuff(ModContent.BuffType<FirstStrike>(), 60);
+
+                    projectile.timeLeft = 120;
                 }
             }
 

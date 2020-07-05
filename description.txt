@@ -1,5 +1,23 @@
 NEW UPDATE - V 1.3.3
 
+
+
+new in beta
+-Added shroomite toggle, shrooms last less time, shrooms are less frequent, shrooms deal less damage, town npc attacks dont get shrooms, non melee weapons wont release shrooms when swung
+-Ninja smoke bombs disappear shortly after teleporting
+-Pearlwood and basically everything else wont work on target dummies
+-Molten debug text gone, softlock fixed
+
+
+
+
+
+
+
+
+
+
+
 All enchant and soul recipes changed drastically
 -Moved flavor text to the bottom for all items like it is in vanilla
 
@@ -19,9 +37,7 @@ Enchants
 -Ebonwood aura has increased range, no lnager gains bonus in corruption
 -Boreal always shoots 3 snowballs, no bonus in the snow biome
 -Rich Mahogany hooks will no longer shoot at enemies in the jungle
--Shadewood has proximity on hit effects everywhere, no bonus in crimson
--Wood now makes critters self destruct shortly after releasing them, no more souls, takes any bird in recipe
-
+-Wood now makes critters self destruct shortly after releasing them, no more souls, takes any bird in recipe (special effects for certain critters coming soon)
 -Copper lightning is smaller visually, there's no more bonus if the enemy is wet, the chance for the lightning is 4x higher, with Terra Force the effect can hit 10x as many targets, deals 5x damage and has a cooldown less than half
 -Ninja Enchant will now teleport you correctly onto platforms making it much better to use probably. First Strike no longer multiplies projectiles and the next attack will deal 3x damage, same as melee
 -Monk Enchant dash now charges when not attacking, instead of standing still. Charge time doubled
@@ -82,9 +98,8 @@ Emode
 
 
 Weapons
-The Landlside is now the Rockslide
+-The Landlside is now the Rockslide
 -Landlside EX is now the Landlside
-
 -Slime Kings Slasher fires several slime spikes per swing now
 -Fish Stick sharks aim for the target they hit not the fish stick that threw, they no longer pierce, they deal summon damage actually, they move faster
 
