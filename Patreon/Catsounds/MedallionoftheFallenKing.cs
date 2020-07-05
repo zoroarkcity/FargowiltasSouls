@@ -9,8 +9,7 @@ namespace FargowiltasSouls.Patreon.Catsounds
         {
             DisplayName.SetDefault("Medallion of the Fallen King");
             Tooltip.SetDefault(
-@"Spawns a King Slime Minion that scales with summon damage
-King Slime Minion uses custom immunity frames and shoots out slime spikes similar to Masochist Mode King Slime");
+@"Spawns a King Slime Minion that scales with summon damage");
         }
 
         public override void SetDefaults()
