@@ -173,3 +173,6 @@ cultist inflicts permanent chaos state
 ritual spins around you
 removed cultist clone hurtboxes
 cultist has no contact damage on first dash
+ritual purges nebula spheres
+reduced cultist life to 60k again
+faster spin below 50% life

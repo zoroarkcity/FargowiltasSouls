@@ -3586,7 +3586,7 @@ namespace FargowiltasSouls.NPCs
                     int ritual = (int)npc.ai[2];
                     if (Main.projectile[ritual].active && Main.projectile[ritual].type == ProjectileID.CultistRitual)
                     {
-                        Counter[3]++;
+                        Counter[3] += npc.life < npc.lifeMax / 2 ? -2 : 1;
                         npc.Center = Main.projectile[ritual].Center + 180f * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Counter[3]));
                     }
                 }
