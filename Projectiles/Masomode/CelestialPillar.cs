@@ -187,7 +187,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                const int max = 24;
+                const int max = 22;
                 const float rotationInterval = 2f * (float)Math.PI / max;
                 for (int j = 0; j < 4; j++)
                 {
