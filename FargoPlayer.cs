@@ -1805,6 +1805,20 @@ namespace FargowiltasSouls
                 AttackSpeed += .2f;
             }
 
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                switch(item.type)
+                {
+                    case ItemID.Razorpine:
+                    case ItemID.BlizzardStaff:
+                        AttackSpeed -= 0.25f;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
             //checks so weapons dont break
             while (useTime / AttackSpeed < 1)
             {
