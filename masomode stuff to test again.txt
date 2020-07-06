@@ -176,3 +176,7 @@ cultist has no contact damage on first dash
 ritual purges nebula spheres
 reduced cultist life to 60k again
 faster spin below 50% life
+
+polished lihzahrd curse
+nerfed derpling aura
+more mutant tier changes
