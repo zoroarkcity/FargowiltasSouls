@@ -3276,12 +3276,13 @@ namespace FargowiltasSouls
                 case ItemID.DaedalusStormbow:
                 case ItemID.StarCannon:
                 case ItemID.DD2BetsyBow:
+                case ItemID.Razorpine:
+                case ItemID.BlizzardStaff:
                     return 2f / 3f;
 
                 case ItemID.Uzi:
                 case ItemID.Megashark:
                 case ItemID.ChlorophyteShotbow:
-                case ItemID.Razorpine:
                 case ItemID.SnowmanCannon:
                 case ItemID.BeesKnees:
                 case ItemID.PhoenixBlaster:
