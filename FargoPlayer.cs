@@ -1805,20 +1805,6 @@ namespace FargowiltasSouls
                 AttackSpeed += .2f;
             }
 
-            if (FargoSoulsWorld.MasochistMode)
-            {
-                switch(item.type)
-                {
-                    case ItemID.Razorpine:
-                    case ItemID.BlizzardStaff:
-                        AttackSpeed -= 0.25f;
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-
             //checks so weapons dont break
             while (useTime / AttackSpeed < 1)
             {
@@ -3283,7 +3269,7 @@ namespace FargowiltasSouls
                 mult *= MasoItemNerfs(item.type);
         }
 
-        private static float MasoItemNerfs(int type)
+        private float MasoItemNerfs(int type)
         {
             switch (type)
             {
@@ -3294,6 +3280,9 @@ namespace FargowiltasSouls
 
                 case ItemID.Razorpine:
                 case ItemID.BlizzardStaff:
+                    AttackSpeed -= 0.25f;
+                    return 0.75f;
+
                 case ItemID.Uzi:
                 case ItemID.Megashark:
                 case ItemID.ChlorophyteShotbow:
