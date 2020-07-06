@@ -22,9 +22,10 @@ namespace FargowiltasSouls.Buffs.Masomode
         {
             //causes player to constantly use weapon
             //seemed to have strange interactions with stunning debuffs like frozen or stoned...
-            player.HeldItem.autoReuse = true;
+            player.GetModPlayer<FargoPlayer>().Berserked = true;
             player.controlUseItem = true;
             player.releaseUseItem = true;
+            //player.HeldItem.autoReuse = true;
         }
     }
 }

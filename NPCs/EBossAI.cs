@@ -3627,13 +3627,16 @@ namespace FargowiltasSouls.NPCs
                     int ritual = (int)npc.ai[2];
                     if (Main.projectile[ritual].active && Main.projectile[ritual].type == ProjectileID.CultistRitual)
                     {
-                        Counter[3]++;
+                        Counter[3] += npc.life < npc.lifeMax / 2 ? -2 : 1;
                         npc.Center = Main.projectile[ritual].Center + 180f * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Counter[3]));
                     }
                 }
             }
             else
             {
+                if (npc.ai[3] == 0)
+                    npc.damage = 0;
+
                 int damage = (int)(75 * (1 + FargoSoulsWorld.CultistCount * .0125)); //necessary because calameme
                 switch ((int)npc.ai[0])
                 {
@@ -3645,10 +3648,6 @@ namespace FargowiltasSouls.NPCs
                             npc.ai[3] = 11f;
                             npc.netUpdate = true;
                         }
-                        break;
-
-                    case 0:
-                        npc.damage = 0;
                         break;
 
                     case 2:

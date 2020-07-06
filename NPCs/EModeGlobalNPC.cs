@@ -438,7 +438,7 @@ namespace FargowiltasSouls.NPCs
                     break;
 
                 case NPCID.CultistBoss:
-                    npc.lifeMax *= 2;
+                    npc.lifeMax = (int)(npc.lifeMax * 1.5);
                     Counter[2] = 0;
                     break;
                 case NPCID.CultistBossClone:
@@ -1351,7 +1351,7 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.Derpling:
-                            Aura(npc, 1000, BuffID.Confused, false, 15, true);
+                            Aura(npc, 750, BuffID.Confused, false, 15, true);
                             break;
 
                         case NPCID.Crimera:

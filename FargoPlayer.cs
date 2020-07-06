@@ -321,6 +321,7 @@ namespace FargowiltasSouls
         public int MashCounter;
         public int StealingCooldown;
         public bool LihzahrdCurse;
+        public bool Berserked;
 
         public int MasomodeCrystalTimer = 0;
         public int MasomodeFreezeTimer = 0;
@@ -783,6 +784,7 @@ namespace FargowiltasSouls
             LowGround = false;
             Flipped = false;
             LihzahrdCurse = false;
+            Berserked = false;
 
             if (!Mash && MashCounter > 0)
             {
@@ -1268,11 +1270,11 @@ namespace FargowiltasSouls
                 player.InfoAccMechShowWires = false;
             }
 
-            if ((player.HeldItem.type == ItemID.WireCutter || player.HeldItem.type == ItemID.WireKite)
+            /*if ((player.HeldItem.type == ItemID.WireCutter || player.HeldItem.type == ItemID.WireKite)
                 && (LihzahrdCurse || !player.buffImmune[ModContent.BuffType<LihzahrdCurse>()])
                 && (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe
                 || Framing.GetTileSafely(Main.MouseWorld).wall == WallID.LihzahrdBrickUnsafe))
-                player.controlUseItem = false;
+                player.controlUseItem = false;*/
 
             if (Solar)
             {
@@ -3250,11 +3252,11 @@ namespace FargowiltasSouls
 
         public override bool PreItemCheck()
         {
-            if (TribalCharm && SoulConfig.Instance.TribalCharm && player.HeldItem.type != ItemID.RodofDiscord)
+            if (Berserked || (TribalCharm && SoulConfig.Instance.TribalCharm && player.HeldItem.type != ItemID.RodofDiscord))
             {
                 TribalAutoFire = player.HeldItem.autoReuse;
                 player.HeldItem.autoReuse = true;
-            }
+            }    
 
             /*if (FargoSoulsWorld.MasochistMode) //maso item nerfs
             {
@@ -3267,7 +3269,7 @@ namespace FargowiltasSouls
 
         public override void PostItemCheck()
         {
-            if (TribalCharm && SoulConfig.Instance.TribalCharm && player.HeldItem.type != ItemID.RodofDiscord)
+            if (Berserked || (TribalCharm && SoulConfig.Instance.TribalCharm && player.HeldItem.type != ItemID.RodofDiscord))
             {
                 player.HeldItem.autoReuse = TribalAutoFire;
             }
@@ -3284,7 +3286,7 @@ namespace FargowiltasSouls
                 mult *= MasoItemNerfs(item.type);
         }
 
-        private static float MasoItemNerfs(int type)
+        private float MasoItemNerfs(int type)
         {
             switch (type)
             {
@@ -3293,10 +3295,14 @@ namespace FargowiltasSouls
                 case ItemID.DD2BetsyBow:
                     return 2f / 3f;
 
+                case ItemID.Razorpine:
+                case ItemID.BlizzardStaff:
+                    AttackSpeed -= 0.25f;
+                    return 0.75f;
+
                 case ItemID.Uzi:
                 case ItemID.Megashark:
                 case ItemID.ChlorophyteShotbow:
-                case ItemID.Razorpine:
                 case ItemID.SnowmanCannon:
                 case ItemID.BeesKnees:
                 case ItemID.PhoenixBlaster:

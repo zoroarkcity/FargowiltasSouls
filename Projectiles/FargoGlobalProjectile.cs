@@ -673,8 +673,11 @@ namespace FargowiltasSouls.Projectiles
                 case ProjectileID.WireKite:
                     if (FargoSoulsWorld.MasochistMode)
                     {
-                        if (!NPC.downedGolemBoss && Framing.GetTileSafely(projectile.Center).wall == WallID.LihzahrdBrickUnsafe)
+                        if (Main.player[projectile.owner].GetModPlayer<FargoPlayer>().LihzahrdCurse
+                            && Framing.GetTileSafely(projectile.Center).wall == WallID.LihzahrdBrickUnsafe)
+                        {
                             projectile.Kill();
+                        }
                     }
                     break;
 
@@ -682,7 +685,7 @@ namespace FargowiltasSouls.Projectiles
                     if (FargoSoulsWorld.MasochistMode)
                     {
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss))
-                            projectile.position += projectile.velocity / 2;
+                            projectile.position += projectile.velocity / 4;
                     }
                     break;
 
@@ -808,9 +811,9 @@ namespace FargowiltasSouls.Projectiles
                                 }
                             }
 
-                            for (int i = 0; i < Main.maxProjectiles; i++) //purge spectre mask bolts
+                            for (int i = 0; i < Main.maxProjectiles; i++) //purge spectre mask bolts and homing nebula spheres
                             {
-                                if (Main.projectile[i].active && Main.projectile[i].type == ProjectileID.SpectreWrath)
+                                if (Main.projectile[i].active && (Main.projectile[i].type == ProjectileID.SpectreWrath || Main.projectile[i].type == ProjectileID.NebulaSphere))
                                     Main.projectile[i].Kill();
                             }
                         }
