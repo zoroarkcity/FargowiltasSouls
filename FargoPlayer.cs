@@ -320,6 +320,7 @@ namespace FargowiltasSouls
         public int MashCounter;
         public int StealingCooldown;
         public bool LihzahrdCurse;
+        public bool Berserked;
 
         public int MasomodeCrystalTimer = 0;
         public int MasomodeFreezeTimer = 0;
@@ -782,6 +783,7 @@ namespace FargowiltasSouls
             LowGround = false;
             Flipped = false;
             LihzahrdCurse = false;
+            Berserked = false;
 
             if (!Mash && MashCounter > 0)
             {
@@ -3235,11 +3237,11 @@ namespace FargowiltasSouls
 
         public override bool PreItemCheck()
         {
-            if (TribalCharm && SoulConfig.Instance.TribalCharm && player.HeldItem.type != ItemID.RodofDiscord)
+            if (Berserked || (TribalCharm && SoulConfig.Instance.TribalCharm && player.HeldItem.type != ItemID.RodofDiscord))
             {
                 TribalAutoFire = player.HeldItem.autoReuse;
                 player.HeldItem.autoReuse = true;
-            }
+            }    
 
             /*if (FargoSoulsWorld.MasochistMode) //maso item nerfs
             {
@@ -3252,7 +3254,7 @@ namespace FargowiltasSouls
 
         public override void PostItemCheck()
         {
-            if (TribalCharm && SoulConfig.Instance.TribalCharm && player.HeldItem.type != ItemID.RodofDiscord)
+            if (Berserked || (TribalCharm && SoulConfig.Instance.TribalCharm && player.HeldItem.type != ItemID.RodofDiscord))
             {
                 player.HeldItem.autoReuse = TribalAutoFire;
             }
