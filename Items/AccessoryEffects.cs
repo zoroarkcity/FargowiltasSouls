@@ -1184,6 +1184,8 @@ namespace FargowiltasSouls
                 player.aggro -= 1200;
                 player.setVortex = true;
                 player.stealth = 0f;
+
+
             }
 
             AddPet(SoulConfig.Instance.CompanionCubePet, hideVisual, BuffID.CompanionCube, ProjectileID.CompanionCube);
@@ -1222,7 +1224,7 @@ namespace FargowiltasSouls
 
         public void ShadewoodEffect()
         {
-            if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.EbonwoodAura))
+            if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.ShadewoodEffect))
                 return;
 
             int dist = 200;

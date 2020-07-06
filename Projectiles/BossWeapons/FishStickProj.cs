@@ -38,10 +38,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             Player player = Main.player[projectile.owner];
 
-            if (player.ownedProjectileCounts[mod.ProjectileType("Whirlpool")] < 1)
-                Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("Whirlpool"), projectile.damage, 0f, projectile.owner, 16, 11);
+            int bonusMinions = player.maxMinions > 5 ? 5 : player.maxMinions;
+
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<Whirlpool>()] < 1)
+                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Whirlpool>(), projectile.damage, 0f, projectile.owner, 16, 6 + bonusMinions);
             else
-                Main.projectile.Where(x => x.active && x.type == mod.ProjectileType("Whirlpool")).ToList().ForEach(x =>
+                Main.projectile.Where(x => x.active && x.type == ModContent.ProjectileType<Whirlpool>()).ToList().ForEach(x =>
                 {
                     if (Main.rand.Next(2) == 0)
                     {
@@ -51,11 +53,19 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                         {
                             Main.projectile[shark].tileCollide = false;
                             Main.projectile[shark].timeLeft = 120;
-                            Main.projectile[shark].penetrate = 1;
+                            Main.projectile[shark].penetrate = 2;
                             Main.projectile[shark].minion = true;
                         }
                     }
                 });
+        }
+
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        {
+            width /= 2;
+            height /= 2;
+
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
         }
 
         public override void Kill(int timeLeft)

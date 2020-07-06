@@ -19,6 +19,8 @@ namespace FargowiltasSouls.NPCs
 {
     public partial class EModeGlobalNPC
     {
+        private bool droppedSummon = false;
+
         public void KingSlimeAI(NPC npc)
         {
             slimeBoss = npc.whoAmI;
@@ -176,9 +178,12 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedSlimeKing && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!NPC.downedSlimeKing && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<SlimyCrown>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<SlimyCrown>());
+                droppedSummon = true;
             }
         }
 
@@ -316,9 +321,12 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedBoss1 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!NPC.downedBoss1 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<SuspiciousEye>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<SuspiciousEye>());
+                droppedSummon = true;
             }
         }
 
@@ -338,9 +346,12 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedBoss2 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!NPC.downedBoss2 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<WormyFood>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<WormyFood>());
+                droppedSummon = true;
             }
         }
 
@@ -492,9 +503,12 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedBoss2 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!NPC.downedBoss2 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<GoreySpine>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<GoreySpine>());
+                droppedSummon = true;
             }
         }
 
@@ -665,9 +679,12 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedQueenBee && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!NPC.downedQueenBee && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<Abeemination2>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<Abeemination2>());
+                droppedSummon = true;
             }
 
             return true;
@@ -809,9 +826,12 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedBoss3 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!NPC.downedBoss3 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<SuspiciousSkull>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<SuspiciousSkull>());
+                droppedSummon = true;
             }
         }
 
@@ -1070,9 +1090,12 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!Main.hardMode && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!Main.hardMode && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<FleshyDoll>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<FleshyDoll>());
+                droppedSummon = true;
             }
         }
 
@@ -1461,9 +1484,12 @@ namespace FargowiltasSouls.NPCs
             }*/
 
             //drop summon
-            if (!NPC.downedMechBoss2 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!NPC.downedMechBoss2 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<MechEye>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<MechEye>());
+                droppedSummon = true;
             }
 
             return true;
@@ -1874,9 +1900,12 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedMechBoss1 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!NPC.downedMechBoss1 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<MechWorm>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<MechWorm>());
+                droppedSummon = true;
             }
 
             return true;
@@ -2266,9 +2295,12 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedMechBoss3 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!NPC.downedMechBoss3 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<MechSkull>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<MechSkull>());
+                droppedSummon = true;
             }
         }
 
@@ -2633,9 +2665,12 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedPlantBoss && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!NPC.downedPlantBoss && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<PlanterasFruit>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<PlanterasFruit>());
+                droppedSummon = true;
             }
         }
 
@@ -2918,9 +2953,12 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedGolemBoss && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!NPC.downedGolemBoss && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<LihzahrdPowerCell2>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<LihzahrdPowerCell2>());
+                droppedSummon = true;
             }
         }
 
@@ -3528,9 +3566,12 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedFishron && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!NPC.downedFishron && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<TruffleWorm2>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<TruffleWorm2>());
+                droppedSummon = true;
             }
         }
 
@@ -3712,9 +3753,12 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedAncientCultist && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!NPC.downedAncientCultist && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<CultistSummon>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<CultistSummon>());
+                droppedSummon = true;
             }
         }
 
@@ -4054,9 +4098,12 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedMoonlord && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !FirstTick)
+            if (!NPC.downedMoonlord && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(npc.Hitbox, ModContent.ItemType<CelestialSigil2>());
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<CelestialSigil2>());
+                droppedSummon = true;
             }
         }
 

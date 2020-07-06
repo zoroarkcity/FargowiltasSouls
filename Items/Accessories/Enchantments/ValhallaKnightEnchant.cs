@@ -15,8 +15,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Valhalla Knight Enchantment");
             Tooltip.SetDefault(
-@"Continually attacking an enemy will eventually drastically reduce its immunity frames for 2 seconds
-There is a 15 second cooldown per enemy
+@"Continually attacking an enemy will grant you the Power of Valhalla buff
+You will drastically reduce enemy immunity frames during this time
 Greatly enhances Ballista effectiveness
 Effects of Shiny Stone
 Summons a pet Dragon

@@ -13,8 +13,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Squire Enchantment");
             Tooltip.SetDefault(
-@"Continually attacking an enemy will eventually remove its knockback immunity for 2 seconds
-There is a 15 second cooldown per enemy
+@"Continually attacking an enemy will grant you the Power of Squire
+You will reduce enemy immunity frames during this time
 Ballista pierces more targets and panics when you take damage
 'Squire, will you hurry?'");
             DisplayName.AddTranslation(GameCulture.Chinese, "精金魔石");

@@ -3,10 +3,15 @@ NEW UPDATE - V 1.3.3
 
 
 new in beta
--Added shroomite toggle, shrooms last less time, shrooms are less frequent, shrooms deal less damage, town npc attacks dont get shrooms, non melee weapons wont release shrooms when swung
--Ninja smoke bombs disappear shortly after teleporting
--Pearlwood and basically everything else wont work on target dummies
--Molten debug text gone, softlock fixed
+-Shadewood toggle actually works right
+-Free Summons actually work, test or die
+-Tin Crits now have a cooldown: 2 seconds between crit gains, 1 second in Terra Force, half a second in SoT, no limit in SoE
+-Fixed Fish Stick rarity
+-Fish Stick has a smaller tile hitbox because it looked dumb
+-Fish Stick's tornado height scales with minion slots up to 5
+-Fish Stick sharks now pierce 
+-Valhalla Knight Enchantment rework: Now grants a buff after continually attacking an enemy that makes you reduce iframes of all enemies for some time. Buff now lasts 5 seconds, effect was 2 seconds before. The cooldown is removed, was 15 seconds. iframes will no longer be reset if they were already low enough
+-Squire Enchantment rework: Effect is now a weaker version of Valhalla Knight, less than half as good
 
 
 
@@ -26,6 +31,8 @@ Enchants
 -Removed dev items from Soa enchants
 -DESTROYED MODDED ENCHANTS (for now)
 -thorium effects all in their own file
+-Ninja smoke bombs disappear shortly after teleporting
+-Pearlwood and basically everything else wont work on target dummies
 
 -Angler Enchant lost Frost Daggerfish, gained Angler Tackle Bag and its effects 
 -Wood bois
