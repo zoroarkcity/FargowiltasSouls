@@ -673,8 +673,11 @@ namespace FargowiltasSouls.Projectiles
                 case ProjectileID.WireKite:
                     if (FargoSoulsWorld.MasochistMode)
                     {
-                        if (!NPC.downedGolemBoss && Framing.GetTileSafely(projectile.Center).wall == WallID.LihzahrdBrickUnsafe)
+                        if (Main.player[projectile.owner].GetModPlayer<FargoPlayer>().LihzahrdCurse
+                            && Framing.GetTileSafely(projectile.Center).wall == WallID.LihzahrdBrickUnsafe)
+                        {
                             projectile.Kill();
+                        }
                     }
                     break;
 

@@ -1264,11 +1264,11 @@ namespace FargowiltasSouls
                 player.InfoAccMechShowWires = false;
             }
 
-            if ((player.HeldItem.type == ItemID.WireCutter || player.HeldItem.type == ItemID.WireKite)
+            /*if ((player.HeldItem.type == ItemID.WireCutter || player.HeldItem.type == ItemID.WireKite)
                 && (LihzahrdCurse || !player.buffImmune[ModContent.BuffType<LihzahrdCurse>()])
                 && (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe
                 || Framing.GetTileSafely(Main.MouseWorld).wall == WallID.LihzahrdBrickUnsafe))
-                player.controlUseItem = false;
+                player.controlUseItem = false;*/
 
             if (Solar)
             {

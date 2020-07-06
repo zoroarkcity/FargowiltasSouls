@@ -81,6 +81,23 @@ namespace FargowiltasSouls.Items
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                if (item.type == ItemID.RodofDiscord && 
+                    (modPlayer.LihzahrdCurse || 
+                    (Framing.GetTileSafely(Main.MouseWorld).wall == WallID.LihzahrdBrickUnsafe 
+                    && !player.buffImmune[ModContent.BuffType<Buffs.Masomode.LihzahrdCurse>()])))
+                {
+                    return false;
+                }
+
+                if (modPlayer.LihzahrdCurse &&
+                    (item.type == ItemID.WireKite || item.type == ItemID.WireCutter))
+                {
+                    return false;
+                }
+            }
+
             if (item.type == ItemID.PumpkinPie && player.statLife != player.statLifeMax2 && player.potionDelay > 0) return false;
 
             if (item.magic && player.GetModPlayer<FargoPlayer>().ReverseManaFlow)
