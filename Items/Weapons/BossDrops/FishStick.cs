@@ -1,6 +1,7 @@
 ﻿using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using FargowiltasSouls.Projectiles.BossWeapons;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
@@ -28,9 +29,9 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.knockBack = 1.5f;
             item.UseSound = SoundID.Item1;
             item.value = 50000;
-            item.rare = 5;
+            item.rare = 8;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("FishStickProj");
+            item.shoot = ModContent.ProjectileType<FishStickProj>();
             item.shootSpeed = 25f;
             item.noUseGraphic = true;
         }

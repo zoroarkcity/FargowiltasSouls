@@ -115,6 +115,7 @@ namespace FargowiltasSouls
         public bool ObsidianEnchant;
         private int obsidianCD = 0;
         public bool TinEnchant;
+        private int tinCD = 0;
         public int TinCrit = 4;
         public bool TikiEnchant;
         public bool TikiMinion;
@@ -1102,6 +1103,9 @@ namespace FargowiltasSouls
                 TinCrit = 25;
             else if (TerraForce && TinCrit < 10)
                 TinCrit = 10;
+
+            if (tinCD > 0)
+                tinCD--;
 
             if(OriSpawn && !OriEnchant)
                 OriSpawn = false;
@@ -2471,59 +2475,70 @@ namespace FargowiltasSouls
             if (SolarEnchant && !TerrariaSoul && Main.rand.Next(4) == 0)
                 target.AddBuff(ModContent.BuffType<SolarFlare>(), 300);
 
-            if (Eternity)
+            if (tinCD == 0)
             {
-                if (crit && TinCrit < 100)
+                if (Eternity)
                 {
-                    TinCrit += 10;
-                }
-                else if (TinCrit >= 100)
-                {
-                    if (damage / 10 > 0 && !player.moonLeech)
+                    if (crit && TinCrit < 100)
                     {
-                        player.statLife += damage / 10;
-                        player.HealEffect(damage / 10);
-                        int max = MutantNibble ? StatLifePrevious : player.statLifeMax2;
-                        if (player.statLife > max)
-                            player.statLife = max;
+                        TinCrit += 10;
                     }
-
-                    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.EternityStacking, false))
+                    else if (TinCrit >= 100)
                     {
-                        eternityDamage += .1f;
-                    }
-                }
-            }
-            else if (TerrariaSoul)
-            {
-                if (crit && TinCrit < 100)
-                {
-                    TinCrit += 5;
-                }
-                else if (TinCrit >= 100)
-                {
-                    if (HealTimer <= 0 && damage / 25 > 0)
-                    {
-                        if (!player.moonLeech)
+                        if (damage / 10 > 0 && !player.moonLeech)
                         {
-                            player.statLife += damage / 25;
-                            player.HealEffect(damage / 25);
+                            player.statLife += damage / 10;
+                            player.HealEffect(damage / 10);
+                            int max = MutantNibble ? StatLifePrevious : player.statLifeMax2;
+                            if (player.statLife > max)
+                                player.statLife = max;
                         }
-                        HealTimer = 10;
+
+                        if (SoulConfig.Instance.GetValue(SoulConfig.Instance.EternityStacking, false))
+                        {
+                            eternityDamage += .1f;
+                        }
+                    }
+                }
+                else if (TerrariaSoul)
+                {
+                    if (crit && TinCrit < 100)
+                    {
+                        TinCrit += 5;
+                        tinCD = 30;
+                    }
+                    else if (TinCrit >= 100)
+                    {
+                        if (HealTimer <= 0 && damage / 25 > 0)
+                        {
+                            if (!player.moonLeech)
+                            {
+                                player.statLife += damage / 25;
+                                player.HealEffect(damage / 25);
+                            }
+                            HealTimer = 10;
+                        }
+                        else
+                        {
+                            HealTimer--;
+                        }
+                    }
+                }
+                else if (TinEnchant && crit && TinCrit < 100)
+                {
+                    if (TerraForce)
+                    {
+                        TinCrit += 5;
+                        tinCD = 60;
                     }
                     else
                     {
-                        HealTimer--;
+                        TinCrit += 4;
+                        tinCD = 120;
                     }
                 }
             }
-            else if (TinEnchant && crit && TinCrit < 100)
-            {
-                if (TerraForce)
-                    TinCrit += 5;
-                else
-                    TinCrit += 4;
-            }
+            
 
             if (PalladEnchant && !TerrariaSoul && palladiumCD == 0 && !target.immortal && !player.moonLeech)
             {

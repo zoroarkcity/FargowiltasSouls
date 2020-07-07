@@ -51,10 +51,7 @@ namespace FargowiltasSouls.NPCs
         public bool ExplosiveCritter = false;
         private int critterCounter = 120;
 
-        private int valhallaPlayer;
-        private int valhallaCounter = 0;
         private int squireCounter = 0;
-        public float originalKB;
         public bool SpecialEnchantImmune;
 
         public static bool Revengeance => CalamityMod.World.CalamityWorld.revenge;
@@ -137,11 +134,6 @@ namespace FargowiltasSouls.NPCs
                 return false;
             }
 
-            if (valhallaCounter > 0)
-            {
-                valhallaCounter--;
-            }
-
             if (ExplosiveCritter)
             {
                 critterCounter--;
@@ -155,17 +147,6 @@ namespace FargowiltasSouls.NPCs
             }
             
             return true;
-        }
-
-        public override Color? GetAlpha(NPC npc, Color drawColor)
-        {
-            if (valhallaCounter > 900)
-            {
-                drawColor = Color.SandyBrown;
-                return drawColor;
-            }
-
-            return null;
         }
 
         public override void DrawEffects(NPC npc, ref Color drawColor)
@@ -852,28 +833,22 @@ namespace FargowiltasSouls.NPCs
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (modPlayer.ValhallaEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaEffect)
-                 && valhallaCounter == 0)
+            if ((modPlayer.SquireEnchant || modPlayer.ValhallaEnchant) && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaEffect)
+                 && !(player.HasBuff(ModContent.BuffType<ValhallaBuff>()) || player.HasBuff(ModContent.BuffType<SquireBuff>())))
             {
                 squireCounter += 5;
 
                 if (squireCounter >= 100)
                 {
-                    valhallaCounter = 1020;
-                    valhallaPlayer = player.whoAmI;
-                    squireCounter = 0;
-                }
-            }
-            else if (modPlayer.SquireEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.SquireKB)
-                 && !npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune && npc.knockBackResist < 1 && !npc.HasBuff(ModContent.BuffType<SquireKBDebuff>()))
-            {
-                squireCounter += 5;
+                    if (modPlayer.ValhallaEnchant)
+                    {
+                        player.AddBuff(ModContent.BuffType<ValhallaBuff>(), 300);
+                    }
+                    else if (modPlayer.SquireEnchant)
+                    {
+                        player.AddBuff(ModContent.BuffType<SquireBuff>(), 300);
+                    }
 
-                if (squireCounter >= 100)
-                {
-                    originalKB = npc.knockBackResist;
-                    npc.knockBackResist = 1f;
-                    npc.AddBuff(ModContent.BuffType<SquireKBDebuff>(), 1020);
                     squireCounter = 0;
                 }
             }
@@ -881,37 +856,36 @@ namespace FargowiltasSouls.NPCs
 
         public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
-            FargoPlayer modPlayer = Main.player[projectile.owner].GetModPlayer<FargoPlayer>();
+            Player player = Main.player[projectile.owner];
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (modPlayer.ValhallaEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaEffect))
+            if ((modPlayer.SquireEnchant || modPlayer.ValhallaEnchant) && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaEffect))
             {
-                if (valhallaCounter == 0)
+                if (player.HasBuff(ModContent.BuffType<ValhallaBuff>()) && npc.immune[projectile.owner] > 2)
+                {
+                    npc.immune[projectile.owner] = 2;
+                }
+                else if (player.HasBuff(ModContent.BuffType<SquireBuff>()) && npc.immune[projectile.owner] > 5)
+                {
+                    npc.immune[projectile.owner] = 5;
+                }
+                else
                 {
                     squireCounter++;
 
                     if (squireCounter >= 100)
                     {
-                        valhallaCounter = 1020;
-                        valhallaPlayer = projectile.owner;
+                        if (modPlayer.ValhallaEnchant)
+                        {
+                            player.AddBuff(ModContent.BuffType<ValhallaBuff>(), 300);
+                        }
+                        else if (modPlayer.SquireEnchant)
+                        {
+                            player.AddBuff(ModContent.BuffType<SquireBuff>(), 300);
+                        }
+
                         squireCounter = 0;
                     }
-                }
-                else if (valhallaCounter > 900)
-                {
-                    npc.immune[valhallaPlayer] = 2;
-                }
-            }
-            else if (modPlayer.SquireEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.SquireKB)
-                 && !npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune && npc.knockBackResist < 1 && !npc.HasBuff(ModContent.BuffType<SquireKBDebuff>()))
-            {
-                squireCounter++;
-
-                if (squireCounter >= 100)
-                {
-                    originalKB = npc.knockBackResist;
-                    npc.knockBackResist = 1f;
-                    npc.AddBuff(ModContent.BuffType<SquireKBDebuff>(), 1020);
-                    squireCounter = 0;
                 }
             }
         }
