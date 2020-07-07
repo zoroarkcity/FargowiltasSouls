@@ -184,3 +184,4 @@ nerfs to razorpine and blizzard staff fire rate
 
 FINALLY fixed berserked giving autofire (rip)
 mutant sky turns off as it should if mutant is defeated/despawns in p2 and a new p1 mutant spawns before sky fades
+lihzahrd blessing gives reduced spawn rates in temple

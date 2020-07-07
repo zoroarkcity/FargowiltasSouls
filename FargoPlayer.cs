@@ -321,6 +321,7 @@ namespace FargowiltasSouls
         public int MashCounter;
         public int StealingCooldown;
         public bool LihzahrdCurse;
+        public bool LihzahrdBlessing;
         public bool Berserked;
 
         public int MasomodeCrystalTimer = 0;
@@ -784,6 +785,7 @@ namespace FargowiltasSouls
             LowGround = false;
             Flipped = false;
             LihzahrdCurse = false;
+            LihzahrdBlessing = false;
             Berserked = false;
 
             if (!Mash && MashCounter > 0)
