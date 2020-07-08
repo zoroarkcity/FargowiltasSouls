@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
@@ -9,7 +10,7 @@ namespace FargowiltasSouls.Buffs.Masomode
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Lihzahrd Blessing");
-            Description.SetDefault("Wires enabled in Jungle Temple");
+            Description.SetDefault("Wires enabled and reduced spawn rates in Jungle Temple");
             canBeCleared = true;
         }
 
@@ -22,6 +23,12 @@ namespace FargowiltasSouls.Buffs.Masomode
         public override void Update(Player player, ref int buffIndex)
         {
             player.buffImmune[ModContent.BuffType<LihzahrdCurse>()] = true;
+            if (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe)
+            {
+                player.sunflower = true;
+                player.ZonePeaceCandle = true;
+                player.calmed = true;
+            }
         }
     }
 }

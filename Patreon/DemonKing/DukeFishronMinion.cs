@@ -253,7 +253,7 @@ namespace FargowiltasSouls.Patreon.DemonKing
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 5;
+            target.immune[projectile.owner] = 6;
             target.AddBuff(mod.BuffType("MutantNibble"), 900);
 
             if (projectile.localAI[1] <= 0)
