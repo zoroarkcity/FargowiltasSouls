@@ -168,10 +168,6 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool ValhallaEffect;
 
-        [Label("$Mods.FargowiltasSouls.SquireConfig")]
-        [DefaultValue(true)]
-        public bool SquireKB;
-
         [Label("$Mods.FargowiltasSouls.SquirePanicConfig")]
         [DefaultValue(true)]
         public bool SquirePanic;

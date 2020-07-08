@@ -51,6 +51,11 @@ namespace FargowiltasSouls.NPCs
         public bool ExplosiveCritter = false;
         private int critterCounter = 120;
 
+        public int frostCount = 0;
+        public int frostCD = 0;
+        public bool Chilled = false;
+        
+
         private int squireCounter = 0;
         public bool SpecialEnchantImmune;
 
@@ -74,6 +79,7 @@ namespace FargowiltasSouls.NPCs
             MutantNibble = false;
             GodEater = false;
             Suffocation = false;
+            Chilled = false;
         }
 
         public override bool PreAI(NPC npc)
@@ -144,6 +150,16 @@ namespace FargowiltasSouls.NPCs
                     //gold critters make coin value go up of hit enemy, millions of other effects eeech
                 }
                 
+            }
+
+            if (frostCD > 0)
+            {
+                frostCD--;
+
+                if (frostCD == 0)
+                {
+                    frostCount = 0;
+                }
             }
             
             return true;
@@ -311,6 +327,33 @@ namespace FargowiltasSouls.NPCs
                 }
                 Lighting.AddLight(npc.position, 0.15f, 0.03f, 0.09f);
             }
+
+            if (Chilled)
+            {
+                int d = Dust.NewDust(npc.Center, 0, 0, 15, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
+                Main.dust[d].noGravity = true;
+                Main.dust[d].velocity *= 3f;
+                Main.dust[d].scale += 0.5f;
+
+                if (Main.rand.Next(4) < 3)
+                {
+                    d = Dust.NewDust(npc.position, npc.width, npc.height, 15, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f);
+                    Main.dust[d].noGravity = true;
+                    Main.dust[d].velocity.Y -= 1f;
+                    Main.dust[d].velocity *= 2f;
+                }
+            }
+        }
+
+        public override Color? GetAlpha(NPC npc, Color drawColor)
+        {
+            if (Chilled)
+            {
+                drawColor = Color.LightBlue;
+                return drawColor;
+            }
+
+            return null;
         }
 
         public override void UpdateLifeRegen(NPC npc, ref int damage)
@@ -355,16 +398,18 @@ namespace FargowiltasSouls.NPCs
                 }
             }
 
-            //.5% dps
+            //100 dps
             if (HellFire)
             {
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
 
-                npc.lifeRegen -= npc.lifeMax / 100;
+                npc.lifeRegen -= 200;
 
-                if (damage < npc.lifeMax / 1000)
-                    damage = npc.lifeMax / 1000;
+                if (damage < 20)
+                {
+                    damage = 20;
+                }
             }
 
             if (Infested)
@@ -461,6 +506,12 @@ namespace FargowiltasSouls.NPCs
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
                 npc.lifeRegen -= 40;
+            }
+
+            if (modPlayer.OriEnchant && npc.lifeRegen < 0)
+            {
+                npc.lifeRegen *= 5;
+                damage *= 5;
             }
         }
 
@@ -757,6 +808,11 @@ namespace FargowiltasSouls.NPCs
             {
                 Needles = true;
             }
+
+            if (Chilled)
+            {
+                damage =  (int)(damage * 1.2f);
+            }
         }
 
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -774,6 +830,11 @@ namespace FargowiltasSouls.NPCs
             if (modPlayer.SpiderEnchant && projectile.minion && Main.rand.Next(101) <= modPlayer.SummonCrit)
             {
                 crit = true;
+            }
+
+            if (Chilled)
+            {
+                damage = (int)(damage * 1.2f);
             }
         }
 

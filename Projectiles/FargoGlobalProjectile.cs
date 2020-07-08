@@ -38,21 +38,24 @@ namespace FargowiltasSouls.Projectiles
 
         private bool townNPCProj = false;
         private int counter;
+        public bool IsRecolor = false;
+        private int rainbowCounter = 0;
+        public bool Rainbow = false;
+        public int GrazeCD;
+
+        //enchants
         public bool CanSplit = true;
         private int numSplits = 1;
         private static int adamantiteCD = 0;
-        private int numSpeedups = 3;
         private bool ninjaTele;
-        public bool IsRecolor = false;
         private bool stormBoosted = false;
         private int stormTimer;
         private bool tungstenProjectile = false;
         private bool tikiMinion = false;
         private int tikiTimer = 300;
-        private int rainbowCounter = 0;
-        public bool Rainbow = false;
-        public int GrazeCD;
         public int shroomiteMushroomCD = 0;
+        private int spookyCD = 0;
+        public bool FrostFreeze = false;
 
         public Func<Projectile, bool> GrazeCheck = projectile => projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + 100 && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0);
 
@@ -183,6 +186,11 @@ namespace FargowiltasSouls.Projectiles
             Player player = Main.player[Main.myPlayer];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             counter++;
+
+            if (spookyCD > 0)
+            {
+                spookyCD--;
+            }
 
             if (projectile.owner == Main.myPlayer)
             {
@@ -371,9 +379,7 @@ namespace FargowiltasSouls.Projectiles
                     if (modPlayer.Jammed && projectile.ranged && projectile.type != ProjectileID.ConfettiGun)
                     {
                         Projectile.NewProjectile(projectile.Center, projectile.velocity, ProjectileID.ConfettiGun, 0, 0f);
-                        projectile.damage = 0;
-                        projectile.position = new Vector2(Main.maxTilesX);
-                        projectile.Kill();
+                        projectile.active = false;
                     }
 
                     if (modPlayer.Atrophied && projectile.thrown)
@@ -396,18 +402,37 @@ namespace FargowiltasSouls.Projectiles
                     }
 
                     if (modPlayer.SpookyEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.SpookyScythes) 
-                        && projectile.minion && projectile.minionSlots > 0
-                        && counter % 60 == 0 && Main.rand.Next(8 + Main.player[projectile.owner].maxMinions) == 0)
+                        && projectile.minion && projectile.minionSlots > 0 && spookyCD == 0)
                     {
-                        Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 62);
-                        Projectile[] projs = XWay(8, projectile.Center, ModContent.ProjectileType<SpookyScythe>(), 5, projectile.damage / 2, 2f);
-                        counter = 0;
-
-                        for (int i = 0; i < 8; i++)
+                        float minDistance = 500f;
+                        int npcIndex = -1;
+                        for (int i = 0; i < 200; i++)
                         {
-                            if (projs[i] == null) continue;
-                            projs[i].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                            NPC target = Main.npc[npcIndex];
+
+                            if (target.active && Vector2.Distance(projectile.Center, target.Center) < minDistance && Main.npc[i].CanBeChasedBy(projectile, false))
+                            {
+                                npcIndex = i;
+                                minDistance = Vector2.Distance(projectile.Center, target.Center);
+                            }
                         }
+
+                        if (npcIndex != -1)
+                        {
+                            NPC target = Main.npc[npcIndex];
+
+                            if (Collision.CanHit(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height))
+                            {
+                                Vector2 velocity = Vector2.Normalize(target.Center - projectile.Center) * 20;
+
+                                int p = Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<SpookyScythe>(), projectile.damage, 2, projectile.owner);
+
+                                Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 62);
+
+                                spookyCD = 30 + Main.rand.Next(player.maxMinions * 5);
+                            }
+                        }
+
                     }
                 }
             }
@@ -1270,6 +1295,33 @@ namespace FargowiltasSouls.Projectiles
 
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
         {
+            if (FrostFreeze)
+            {
+                FargoSoulsGlobalNPC globalNPC = target.GetGlobalNPC<FargoSoulsGlobalNPC>();
+
+                globalNPC.frostCount++;
+
+                if (globalNPC.frostCD == 0)
+                {
+                    globalNPC.frostCD = 30;
+                }
+
+                if (globalNPC.frostCount > 10)
+                {
+                    if (!target.HasBuff(ModContent.BuffType<TimeFrozen>()))
+                    {
+                        target.AddBuff(ModContent.BuffType<TimeFrozen>(), 60);
+                        target.AddBuff(BuffID.Chilled, 300);
+                    }
+                    else
+                    {
+                        //full 30 icicles means 2 extra seconds of freeze pog
+                        target.AddBuff(ModContent.BuffType<TimeFrozen>(), 3);
+                    }
+                    
+                }
+            }
+
             if (Fargowiltas.Instance.ThoriumLoaded) ThoriumOnHit(projectile, crit);
         }
 

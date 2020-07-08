@@ -11,10 +11,6 @@ namespace FargowiltasSouls.Buffs
         {
             switch(type)
             {
-                /*case BuffID.ShadowFlame:
-                    player.GetModPlayer<FargoPlayer>().Shadowflame = true;
-                    break;*/
-
                 case BuffID.Slimed:
                     Main.buffNoTimeDisplay[type] = false;
                     if (FargoSoulsWorld.MasochistMode)
@@ -39,9 +35,7 @@ namespace FargowiltasSouls.Buffs
             switch(type)
             {
                 case BuffID.Chilled:
-                    npc.color = Colors.RarityBlue;
-                    if (!npc.boss)
-                        npc.position -= npc.velocity / 2;
+                    npc.GetGlobalNPC<NPCs.FargoSoulsGlobalNPC>().Chilled = true;
                     break;
 
                 case BuffID.Darkness:

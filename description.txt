@@ -3,16 +3,14 @@ NEW UPDATE - V 1.3.3
 
 
 new in beta
--Shadewood toggle actually works right
--Free Summons actually work, test or die
--Tin Crits now have a cooldown: 2 seconds between crit gains, 1 second in Terra Force, half a second in SoT, no limit in SoE
--Fixed Fish Stick rarity
--Fish Stick has a smaller tile hitbox because it looked dumb
--Fish Stick's tornado height scales with minion slots up to 5
--Fish Stick sharks now pierce 
--Valhalla Knight Enchantment rework: Now grants a buff after continually attacking an enemy that makes you reduce iframes of all enemies for some time. Buff now lasts 5 seconds, effect was 2 seconds before. The cooldown is removed, was 15 seconds. iframes will no longer be reset if they were already low enough
--Squire Enchantment rework: Effect is now a weaker version of Valhalla Knight, less than half as good
+-Spooky Enchant rework: Now makes all minions directly attack with scythes instead of throwing them out randomly. The scythe no longer has infinite pierce and will die shortly after hitting the first enemy, it has special immune frames, Scythes no longer split into smaller scythes, scythes are much smaller
+-Gladiator Enchantment spears fall twice aa fast and deal half as much damage
+-Frost Enchantment rework: The icicles move twice as fast when launched. Damage now scales. Icicles rotate slower. Max icicles increased from 3 to 30. Icicles are launched when you attack no matter how many there are, if you keep attacking you will just keep firing one at a time. The longer you don't attack the faster they spawn. If 10 or more connect with an enemy, the enemy, bosses included, is frozen for one second and they take 20% increased damage from you for 5 seconds. The more icicles that hit, the longer the freeze
+-Vortex Enchantment rework: Vortex damage now scales. The vortex lasts much longer. The Vortex now additionally pulls in all projectiles. The suck range is much larger. While stealthed your projectiles will not be sucked in. When the vortex runs out any non boss nearby is wiped from existence. The cooldown to spawn a void is much longer.
+-Orichalcum Enchantment rework: No longer spawns fireballs. Petals inflict On Fire, Cursed Inferno, Shadowflame, or Frostburn on hit. All DoTs deal 5x damage. Petals reset iframes.
+-Hell Zone inflicts Hell Fire again, REEEEEE (Hell Fire no longer deals percent based damage)
 
+-Jammed no longer teleports projectiles to the corner of the map
 
 
 
@@ -33,6 +31,9 @@ Enchants
 -thorium effects all in their own file
 -Ninja smoke bombs disappear shortly after teleporting
 -Pearlwood and basically everything else wont work on target dummies
+-Tin Crits now have a cooldown: 2 seconds between crit gains, 1 second in Terra Force, half a second in SoT, no limit in SoE
+-Valhalla Knight Enchantment rework: Now grants a buff after continually attacking an enemy that makes you reduce iframes of all enemies for some time. Buff now lasts 5 seconds, effect was 2 seconds before. The cooldown is removed, was 15 seconds. iframes will no longer be reset if they were already low enough
+-Squire Enchantment rework: Effect is now a weaker version of Valhalla Knight, less than half as good
 
 -Angler Enchant lost Frost Daggerfish, gained Angler Tackle Bag and its effects 
 -Wood bois
@@ -109,6 +110,10 @@ Weapons
 -Landlside EX is now the Landlside
 -Slime Kings Slasher fires several slime spikes per swing now
 -Fish Stick sharks aim for the target they hit not the fish stick that threw, they no longer pierce, they deal summon damage actually, they move faster
+-Fixed Fish Stick rarity
+-Fish Stick has a smaller tile hitbox because it looked dumb
+-Fish Stick's tornado height scales with minion slots up to 5
+-Fish Stick sharks now pierce 
 
 
 
