@@ -198,6 +198,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 target.AddBuff(mod.BuffType("MutantFang"), 180);
             }
             target.AddBuff(mod.BuffType("CurseoftheMoon"), 600);
+            target.ClearBuff(mod.BuffType("GoldenStasis"));
             
             if (Fargowiltas.Instance.MasomodeEXLoaded)
                 target.AddBuff(ModLoader.GetMod("MasomodeEX").BuffType("MutantJudgement"), 3600);

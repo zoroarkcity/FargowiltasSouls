@@ -310,7 +310,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.ai[3]),
-                                ModContent.ProjectileType<MutantGiantDeathray2>(), npc.damage / 8, 0f, Main.myPlayer, 0, npc.whoAmI);
+                                ModContent.ProjectileType<MutantGiantDeathray2>(), npc.damage / 6, 0f, Main.myPlayer, 0, npc.whoAmI);
                         }
                     }
                     for (int i = 0; i < 5; i++)
