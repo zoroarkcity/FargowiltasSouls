@@ -408,7 +408,7 @@ namespace FargowiltasSouls.Projectiles
                         int npcIndex = -1;
                         for (int i = 0; i < 200; i++)
                         {
-                            NPC target = Main.npc[npcIndex];
+                            NPC target = Main.npc[i];
 
                             if (target.active && Vector2.Distance(projectile.Center, target.Center) < minDistance && Main.npc[i].CanBeChasedBy(projectile, false))
                             {

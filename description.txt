@@ -3,13 +3,58 @@ NEW UPDATE - V 1.3.3
 
 
 new in beta
--Spooky Enchant rework: Now makes all minions directly attack with scythes instead of throwing them out randomly. The scythe no longer has infinite pierce and will die shortly after hitting the first enemy, it has special immune frames, Scythes no longer split into smaller scythes, scythes are much smaller
--Gladiator Enchantment spears fall twice aa fast and deal half as much damage
--Frost Enchantment rework: The icicles move twice as fast when launched. Damage now scales. Icicles rotate slower. Max icicles increased from 3 to 30. Icicles are launched when you attack no matter how many there are, if you keep attacking you will just keep firing one at a time. The longer you don't attack the faster they spawn. If 10 or more connect with an enemy, the enemy, bosses included, is frozen for one second and they take 20% increased damage from you for 5 seconds. The more icicles that hit, the longer the freeze
--Vortex Enchantment rework: Vortex damage now scales. The vortex lasts much longer. The Vortex now additionally pulls in all projectiles. The suck range is much larger. While stealthed your projectiles will not be sucked in. When the vortex runs out any non boss nearby is wiped from existence. The cooldown to spawn a void is much longer.
--Orichalcum Enchantment rework: No longer spawns fireballs. Petals inflict On Fire, Cursed Inferno, Shadowflame, or Frostburn on hit. All DoTs deal 5x damage. Petals reset iframes.
--Hell Zone inflicts Hell Fire again, REEEEEE (Hell Fire no longer deals percent based damage)
+-Sand Sharks and Ghouls can spawn in as any variant
+-Creatures from the Deep can spawn at the Ocean at night Hardmode
+-Town NPCs will become a zombie if killed by a zombie
+-Red, Yellow, Black, and Spiked slimes will spawn during the Slime Rain. Pinky as well rarely
+-Rainbow Slimes spawn a Pinky, Gastropod, Crimson, and Corrupt Slime on death
+-All Slimes will always be hostile
+-Raincoat Zombies now swim across water
+-Slimed Zombies may spawn a Blue Slime on death
+-Armored Skeletons fire sword beams
+-Vultires shoot feathers twice as often
+-Servants of Cthulhu have less bonus HP: 5x -> 2x. They move much faster tho
+-Umbrella Slimes fall slowly through the air on their umbrella
+-Wraiths fly instead of hover
+-Flying Fish shoot water streams at you
+-Lac Beetles have an aura that gives nearby enemies 25% DR
+-Cochineal Beetle have an aura that gives nearby enemies 25% more damage
+-Cyan Beetle have an aura that gives nearby enemies the ability to Freeze you
+-Ice Bats no longer inflict Frozen
+-Eater of Souls and Harpies only go through walls when they can't reach you
 
+
+
+
+
+
+-Mother Slime births a Baby Slime every few seconds
+-Diabolists now create an explosion whenever  teleporting away.
+-Small meteor projectiles will fall from the sky at night post-EoW/BoC in a meteor biome. These will explode on impact and spawn a Meteor Head that is guaranteed to drop 1 meteorite in phm only
+-A beehive may spawn when a tree is cut down in the jungle
+-Blazing wheels are 50% larger
+-Desert Spirit spawns in any desert
+-Any critters not placed by the player will become evil instantly at night
+-Ichor stickers explode into ichor
+-Armored bones can replace each other
+-Unicorns only leave rainbows when travelling certain speed or jumping
+-Hell Armored Bones can spawn in the Underworld, and are immune to/can swim in lava
+-Mothron lays eggs much more often
+-Demons spawn during new moons post-EoC
+-Blue and White Cultist Archers will sometimes stop and shoot a single Ancient Light projectile
+-Pirate Captains now only shoot bullets above 50% HP, but only shoot cannonballs below
+-Ice Elementals can spawn during the Frost Legion
+-Undead miners throw grenades
+-Giant Shellies spew spikes out if attacked while spinning, no more thorns effect if you get them with melee
+-Icy Merman attack twice as fast in water
+-Antlions can now move, They will try to move to the lowest location nearby, (a pit)
+-Antlions shoot faster and can fire at any angle
+-Derplings are much smaller, (because apparently they're fleas), aura is much smaller, aura is bleeding instead of confused, and they drain life while youre inside
+-Harpies fire rings of feathers
+-Plant enemies can extend farther, Man Eaters and Angry Trappers lunge for you
+
+
+-Hell Zone inflicts Hell Fire again, REEEEEE (Hell Fire no longer deals percent based damage)
 -Jammed no longer teleports projectiles to the corner of the map
 
 
@@ -58,10 +103,12 @@ Enchants
 -Obsidian Enchant rework: You have normal gravity and movement in lava, you can swim in lava. While in lava attacks spawn iframe ignoring explosions on hit
 -Shadewood rework: Now gives you an aura similar to ebonwood. While in the aura, enemies will spill out blood when attacked
 -Shroomite Enchant rework: While in stealth all attacks gain a trail of mushrooms. Swords and projectiles
--Vortex Enchant
--Squire Enchant rework:
--Valhalla Enchant
--Tin Enchant
+-Spooky Enchant rework: Now makes all minions directly attack with scythes instead of throwing them out randomly. The scythe no longer has infinite pierce and will die shortly after hitting the first enemy, it has special immune frames, Scythes no longer split into smaller scythes, scythes are much smaller
+-Gladiator Enchantment spears fall twice as fast and deal half as much damage
+-Frost Enchantment rework: The icicles move twice as fast when launched. Damage now scales. Icicles rotate slower. Max icicles increased from 3 to 30. Icicles are launched when you attack no matter how many there are, if you keep attacking you will just keep firing one at a time. The longer you don't attack the faster they spawn. If 10 or more connect with an enemy, the enemy, bosses included, is frozen for one second and they take 20% increased damage from you for 5 seconds. The more icicles that hit, the longer the freeze
+-Vortex Enchantment rework: Vortex damage now scales. The vortex lasts much longer. The Vortex now additionally pulls in all projectiles. The suck range is much larger. While stealthed your projectiles will not be sucked in. When the vortex runs out any non boss nearby is wiped from existence. The cooldown to spawn a void is much longer.
+-Orichalcum Enchantment rework: No longer spawns fireballs. Petals inflict On Fire, Cursed Inferno, Shadowflame, or Frostburn on hit. All DoTs deal 5x damage. Petals reset iframes.
+
 
 
 -Updated several Thorium Enchantments with missing or extra accessory effects: Crier
