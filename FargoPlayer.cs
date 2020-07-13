@@ -75,7 +75,6 @@ namespace FargowiltasSouls
         public bool FrostEnchant;
         public int IcicleCount = 0;
         private int icicleCD = 0;
-        private Projectile[] icicles = new Projectile[3];
         public bool PalladEnchant;
         private int palladiumCD = 0;
         public bool OriEnchant;
@@ -2192,7 +2191,7 @@ namespace FargowiltasSouls
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
         {
-            if (target.friendly || target.type == NPCID.TargetDummy)
+            if (target.type == NPCID.TargetDummy)
                 return;
 
             OnHitNPCEither(target, damage, knockback, crit, proj.type);
@@ -2350,6 +2349,16 @@ namespace FargowiltasSouls
                 Projectile.NewProjectile(spawn, vel, ModContent.ProjectileType<Shadowfrostfireball>(), dam, 6f, player.whoAmI, target.whoAmI);
             }
 
+            if (OriEnchant && proj.type == ProjectileID.FlowerPetal)
+            {
+                int[] fireDebuffs = { BuffID.OnFire, BuffID.CursedInferno, BuffID.Frostburn, BuffID.ShadowFlame};
+                int debuff = Main.rand.Next(4);
+
+                target.AddBuff(fireDebuffs[debuff], 300);
+                target.immune[proj.owner] = 2;
+            }
+
+
             if (Fargowiltas.Instance.ThoriumLoaded) ThoriumHitProj(proj, target, damage, crit);
         }
 
@@ -2455,9 +2464,10 @@ namespace FargowiltasSouls
                     Vector2 speed = target.Center - spawn;
                     speed.Normalize();
                     speed *= 15f;
-                    int p = Projectile.NewProjectile(spawn, speed, ProjectileID.JavelinFriendly, damage / 2, 1f, Main.myPlayer);
+                    int p = Projectile.NewProjectile(spawn, speed, ProjectileID.JavelinFriendly, damage / 4, 1f, Main.myPlayer);
                     Main.projectile[p].tileCollide = false;
                     Main.projectile[p].penetrate = 1;
+                    Main.projectile[p].extraUpdates = 2;
                 }
 
                 gladCount = WillForce ? 30 : 60;

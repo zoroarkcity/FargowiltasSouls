@@ -49,11 +49,11 @@ namespace FargowiltasSouls.Projectiles.Souls
                 //rotation mumbo jumbo
                 float distanceFromPlayer = 32;
 
-                projectile.position = player.Center + new Vector2(distanceFromPlayer, 0f).RotatedBy(projectile.ai[1]);
+                projectile.position = player.Center + new Vector2(distanceFromPlayer, 0f).RotatedBy(projectile.ai[1]); 
                 projectile.position.X -= projectile.width / 2;
                 projectile.position.Y -= projectile.height / 2;
 
-                float rotation = .07f;
+                float rotation = (float)Math.PI / 60;
                 projectile.ai[1] += rotation;
                 if (projectile.ai[1] > (float)Math.PI)
                 {

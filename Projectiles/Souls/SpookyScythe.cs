@@ -19,10 +19,18 @@ namespace FargowiltasSouls.Projectiles.Souls
             projectile.aiStyle = 0;
             projectile.friendly = true;
             projectile.minion = true;
-            projectile.penetrate = -1;
+            projectile.penetrate = 10;
             projectile.timeLeft = 50;
             aiType = ProjectileID.CrystalBullet;
             projectile.tileCollide = false;
+            projectile.scale *= .5f;
+
+            //this deals more dmg generally but e
+            projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = -1;
+
+            //projectile.usesIDStaticNPCImmunity = true;
+            //projectile.idStaticNPCHitCooldown = 10;
         }
 
         public override void AI()
@@ -36,6 +44,11 @@ namespace FargowiltasSouls.Projectiles.Souls
             Main.dust[dustId3].noGravity = true;
 
             projectile.rotation += 0.4f;
+
+            if (projectile.penetrate < 10)
+            {
+                projectile.timeLeft = 10;
+            }
         }
 
         public override void Kill(int timeLeft)
@@ -49,14 +62,14 @@ namespace FargowiltasSouls.Projectiles.Souls
                 Main.dust[num490].scale *= 0.9f;
             }
 
-            for (int i = 0; i < 3; i++)
+            /*for (int i = 0; i < 3; i++)
             {
                 float x = -projectile.velocity.X * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
                 float y = -projectile.velocity.Y * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
                 int p = Projectile.NewProjectile(projectile.position.X + x, projectile.position.Y + y, x, y, 45, (int) (projectile.damage * 0.5), 0f, projectile.owner);
 
                 Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
-            }
+            } */
         }
     }
 }

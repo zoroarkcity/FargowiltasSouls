@@ -401,16 +401,41 @@ namespace FargowiltasSouls
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.FrostIcicles))
             {
-                if (icicleCD == 0 && IcicleCount < 3 && player.ownedProjectileCounts[ModContent.ProjectileType<FrostIcicle>()] < 3)
+                if (icicleCD == 0 && IcicleCount < 30 && player.ownedProjectileCounts[ModContent.ProjectileType<FrostIcicle>()] < 30)
                 {
-                    Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, ModContent.ProjectileType<FrostIcicle>(), 0, 0, player.whoAmI, 2.5f);
+                    IcicleCount++;
 
-                    if (p != null)
+                    //kill all current ones
+                    for (int i = 0; i < Main.maxProjectiles; i++)
                     {
-                        icicles[IcicleCount] = p;
-                        IcicleCount++;
+                        Projectile proj = Main.projectile[i];
+
+                        if (proj.active && proj.type == ModContent.ProjectileType<FrostIcicle>() && proj.owner == player.whoAmI)
+                        {
+                            proj.active = false;
+                        }
                     }
-                    icicleCD = 30;
+
+                    //respawn in formation
+                    for (int i = 0; i < IcicleCount; i++)
+                    {
+                        float radians = (360f / (float)IcicleCount) * i * (float)(Math.PI / 180);
+                        Projectile fireball = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, ModContent.ProjectileType<FrostIcicle>(), 0, 0f, player.whoAmI, 5, radians);
+                    }
+
+                    //dust
+                    for (int j = 0; j < 20; j++)
+                    {
+                        Vector2 vector6 = Vector2.UnitY * 5f;
+                        vector6 = vector6.RotatedBy((j - (20 / 2 - 1)) * 6.28318548f / 20) + player.Center;
+                        Vector2 vector7 = vector6 - player.Center;
+                        int d = Dust.NewDust(vector6 + vector7, 0, 0, 15);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity = vector7;
+                        Main.dust[d].scale = 1.5f;
+                    }
+
+                    icicleCD = 120 - (IcicleCount * 4);
                 }
 
                 if (icicleCD != 0)
@@ -418,16 +443,22 @@ namespace FargowiltasSouls
                     icicleCD--;
                 }
 
-                if (IcicleCount == 3 && player.controlUseItem && player.HeldItem.damage > 0)
+                if (IcicleCount >= 1 && player.controlUseItem && player.HeldItem.damage > 0)
                 {
-                    for (int i = 0; i < icicles.Length; i++)
+                    for (int i = 0; i < Main.maxProjectiles; i++)
                     {
-                        Vector2 vel = (Main.MouseWorld - icicles[i].Center).SafeNormalize(-Vector2.UnitY) * 5;
+                        Projectile proj = Main.projectile[i];
 
-                        int p = Projectile.NewProjectile(icicles[i].Center, vel, ProjectileID.Blizzard, dmg, 1f, player.whoAmI);
-                        icicles[i].Kill();
+                        if (proj.active && proj.type == ModContent.ProjectileType<FrostIcicle>() && proj.owner == player.whoAmI)
+                        {
+                            Vector2 vel = (Main.MouseWorld - proj.Center).SafeNormalize(-Vector2.UnitY) * 10;
 
-                        Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                            int p = Projectile.NewProjectile(proj.Center, vel, ProjectileID.Blizzard, HighestDamageTypeScaling(dmg), 1f, player.whoAmI);
+                            proj.Kill();
+
+                            Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                            Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().FrostFreeze = true;
+                        }
                     }
 
                     IcicleCount = 0;
@@ -799,7 +830,7 @@ namespace FargowiltasSouls
 
             OriEnchant = true;
 
-            int ballAmt = 6;
+            /*int ballAmt = 6;
 
             if (Eternity)
                 ballAmt = 30;
@@ -816,7 +847,7 @@ namespace FargowiltasSouls
                 }
 
                 OriSpawn = true;
-            }
+            }*/
         }
 
         public void PalladiumEffect()
@@ -1164,10 +1195,10 @@ namespace FargowiltasSouls
                     VortexStealth = !VortexStealth;
                     if (SoulConfig.Instance.GetValue(SoulConfig.Instance.VortexVoid) && vortexCD == 0 && VortexStealth)
                     {
-                        int p = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<Projectiles.Void>(), 60, 5f, player.whoAmI);
+                        int p = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<Projectiles.Void>(),  HighestDamageTypeScaling(60), 5f, player.whoAmI);
 
                         Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
-                        vortexCD = 1200;
+                        vortexCD = 3600;
                     }
                 }
             }

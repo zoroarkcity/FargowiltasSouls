@@ -17,7 +17,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             
             string tooltip =
 @"Icicles will start to appear around you
-When there are three, attacking will launch them towards the cursor
+Attacking will launch them towards the cursor
+When 10 or more hit an enemy, they are frozen solid and take 20% extra damage for 5 seconds
 Your attacks inflict Frostburn
 Summons a pet Penguin and Snowman
 'Let's coat the world in a deep freeze'";

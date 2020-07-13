@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Buffs.Souls;
+using Microsoft.Xna.Framework;
 using System;
 using System.IO;
 using Terraria;
@@ -190,12 +191,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 5;
-            //target.AddBuff(ModContent.\1Type<\2>\(\), 300);
-        }
-
-        public override void OnHitPvp(Player target, int damage, bool crit)
-        {
-            //target.AddBuff(ModContent.\1Type<\2>\(\), 300);
+            target.AddBuff(ModContent.BuffType<HellFire>(), 300);
         }
     }
 }

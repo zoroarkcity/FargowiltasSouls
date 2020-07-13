@@ -1,11 +1,3 @@
-Do this before update @ self ech
-
-obsidian post skele
-eater immune to clipped wings
-pirate stealing money not working right?
-
-carpet toggle
-
 
 Spawns
 -HM Headless Horsemen????
@@ -13,91 +5,14 @@ Spawns
 -mummies spawn in pyramids always 
 -hellhound in hell?
 
-AI
--icy merman shoots twice as fast if he’s in water (also dust ofc)
--Paladins can throw hammers without having to not be currently attacked
-
 MISC
 -1/20 every night for either moon, post plant or sooner? message displays one minute before they start. 
 -fire imp - explosion of burning spheres when they teleport?
 
 
-
 NOT THIS UPDATE
-can you move with gold enchant?
 crucible accept fossils?
 penetrator glow mask and crucible glow mask
-top hat squirrel terrarium
-add deaths meme idea from doc
-add cats king slime minion
 -add dust to wings
--world shaper makes block use time 1
--soe stacking rework
 
 FOr MUtANT mod
-
-Antisocial          4
-Atrophied           4
-Berserked           10
-Blackout            6
-Bleeding            11
-Bloodthirsty        5
-BrokenArmor         10
-Burning             9
-Chilled             7
-ClippedWings        15
-Confused            7
-Crippled            8
-Cursed              7
-CursedInferno       6
-CurseoftheMoon      7
-Darkness            6
-Dazed               5
-Defenseless         17
-Electrified         5
-FlamesoftheUniverse 7
-Flipped             8
-Frostburn           7
-Frozen              6
-Fused               5
-GodEater            3
-Guilty              1
-Hexed               9
-Ichor               6
-Infested            17
-Jammed              4
-Lethargic           9
-LightningRod        7
-LivingWasteland     12
-Lovestruck          2
-MarkedforDeath      13
-Midas               4
-MutantNibble        8
-NoBuilding          1
-Obstructed          6
-OceanicMaul         5
-OgreSpit            4
-Oiled               1
-OnFire              18
-Poisoned            10
-Purified            7
-Rabies              22
-ReverseManaFlow     4
-Rotting             13
-ShadowFlame         13
-Silenced            6
-Slimed              18
-Slow                6
-SqueakyToy          8
-Stinky              2
-Stoned              3
-Stunned             8
-Suffocation         4
-Unstable            7
-Venom               8
-VortexDebuff        4
-Weak                6
-Webbed              2
-Wet                 1
-WitheredArmor       4
-WitheredWeapon      5
