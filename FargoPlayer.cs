@@ -3309,8 +3309,8 @@ namespace FargowiltasSouls
 
                 case ItemID.Razorpine:
                 case ItemID.BlizzardStaff:
-                    AttackSpeed -= 0.25f;
-                    return 0.75f;
+                    AttackSpeed -= 2f / 3f;
+                    return 2f / 3f;
 
                 case ItemID.Uzi:
                 case ItemID.Megashark:
