@@ -2067,7 +2067,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (Hexed)
+            if (Hexed || (ReverseManaFlow && proj.magic))
             {
                 target.life += damage;
                 target.HealEffect(damage);
@@ -2133,7 +2133,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (Hexed)
+            if (Hexed || (ReverseManaFlow && item.magic))
             {
                 target.life += damage;
                 target.HealEffect(damage);

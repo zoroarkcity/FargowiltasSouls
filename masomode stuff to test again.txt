@@ -189,3 +189,4 @@ razorpine and blizzard staff are -33% damage -66% speed
 removed pumpking spraying greek fire constantly
 pumpking now shoots large rings of homing scythes
 ice queen shoots rings of waves while spinning and uses super flockos otherwise
+reverse mana flow does more damage and has hexed effect on magic weapons
