@@ -107,7 +107,7 @@ namespace FargowiltasSouls.Patreon.DemonKing
                 {
                     if (projectile.ai[0] >= 0 && Main.npc[ai0].CanBeChasedBy()) //has target
                     {
-                        projectile.velocity = Main.npc[ai0].Center - projectile.Center;
+                        projectile.velocity = Main.npc[ai0].Center - projectile.Center + Main.npc[ai0].velocity * 10f;
                         projectile.velocity.Normalize();
                         projectile.velocity *= 27f;
                         projectile.rotation = projectile.velocity.ToRotation();
@@ -132,6 +132,9 @@ namespace FargowiltasSouls.Patreon.DemonKing
                 }
                 else //regular movement
                 {
+                    if (projectile.localAI[0] == 0)
+                        projectile.localAI[0] = Main.rand.Next(10);
+
                     if (projectile.ai[0] >= 0 && Main.npc[ai0].CanBeChasedBy()) //has target
                     {
                         moveSpeed *= 1.5f;
@@ -253,7 +256,7 @@ namespace FargowiltasSouls.Patreon.DemonKing
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 6;
+            target.immune[projectile.owner] = 8;
             target.AddBuff(mod.BuffType("MutantNibble"), 900);
 
             if (projectile.localAI[1] <= 0)
