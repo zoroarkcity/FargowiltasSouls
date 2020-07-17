@@ -2067,7 +2067,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (Hexed)
+            if (Hexed || (ReverseManaFlow && proj.magic))
             {
                 target.life += damage;
                 target.HealEffect(damage);
@@ -2133,7 +2133,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (Hexed)
+            if (Hexed || (ReverseManaFlow && item.magic))
             {
                 target.life += damage;
                 target.HealEffect(damage);
@@ -3309,8 +3309,8 @@ namespace FargowiltasSouls
 
                 case ItemID.Razorpine:
                 case ItemID.BlizzardStaff:
-                    AttackSpeed -= 0.25f;
-                    return 0.75f;
+                    AttackSpeed -= 2f / 3f;
+                    return 2f / 3f;
 
                 case ItemID.Uzi:
                 case ItemID.Megashark:

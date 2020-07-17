@@ -2185,7 +2185,27 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.Pumpking:
-                            if (++Counter[2] >= 12)
+                            if (++Counter[0] > 300)
+                            {
+                                Counter[0] = 0;
+                                if (npc.whoAmI == NPC.FindFirstNPC(NPCID.Pumpking) && Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    for (int j = -1; j <= 1; j++) //fire these to either side of target
+                                    {
+                                        if (j == 0)
+                                            continue;
+
+                                        for (int i = 0; i < 20; i++)
+                                        {
+                                            Vector2 vel = npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5) + Math.PI / 2 * j);
+                                            float ai0 = Main.rand.NextFloat(1.04f, 1.05f);
+                                            float ai1 = Main.rand.NextFloat(0.03f);
+                                            Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<PumpkingFlamingScythe>(), npc.damage / 2, 0f, Main.myPlayer, ai0, ai1);
+                                        }
+                                    }
+                                }
+                            }
+                            /*if (++Counter[2] >= 12)
                             {
                                 Counter[2] = 0;
                                 int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
@@ -2196,7 +2216,7 @@ namespace FargowiltasSouls.NPCs
                                     if (Math.Abs(distance.X) < npc.width && Main.netMode != NetmodeID.MultiplayerClient) //flame rain if player roughly below me
                                         Projectile.NewProjectile(npc.Center.X, npc.position.Y, Main.rand.Next(-3, 4), Main.rand.Next(-4, 0), Main.rand.Next(326, 329), npc.damage / 5, 0f, Main.myPlayer);
                                 }
-                            }
+                            }*/
                             break;
 
                         case NPCID.SolarCorite:
@@ -2214,7 +2234,7 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.IceQueen:
-                            Counter[0]++;
+                            /*Counter[0]++;
 
                             short countCap = 14;
                             if (npc.life < npc.lifeMax * 3 / 4)
@@ -2247,6 +2267,37 @@ namespace FargowiltasSouls.NPCs
                                 spawn += speed * 4f;
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                     Projectile.NewProjectile(spawn, speed, ProjectileID.FrostShard, 30, 0f, Main.myPlayer);
+                            }*/
+
+                            if (npc.ai[0] == 2) //stationary, spinning
+                            {
+                                if (++Counter[2] > 60)
+                                {
+                                    Counter[2] = 0;
+                                    if (npc.whoAmI == NPC.FindFirstNPC(npc.type) && Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        for (int i = 0; i < 16; i++)
+                                        {
+                                            Projectile.NewProjectile(npc.Center, 9f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(Math.PI / 8 * i),
+                                                ProjectileID.FrostWave, npc.damage / 5, 0f, Main.myPlayer);
+                                        }
+                                    }
+                                }
+
+                                masoBool[0] = false;
+                            }
+                            else
+                            {
+                                if (!masoBool[0])
+                                {
+                                    masoBool[0] = true;
+                                    if (npc.whoAmI == NPC.FindFirstNPC(npc.type) && Main.netMode != NetmodeID.MultiplayerClient)
+                                    {
+                                        Vector2 speed = new Vector2(Main.rand.NextFloat(40f), Main.rand.NextFloat(-20f, 20f));
+                                        Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<QueenFlocko>(), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI, -1);
+                                        Projectile.NewProjectile(npc.Center, -speed, ModContent.ProjectileType<QueenFlocko>(), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI, 1);
+                                    }
+                                }
                             }
                             break;
 

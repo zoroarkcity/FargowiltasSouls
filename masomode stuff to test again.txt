@@ -185,3 +185,8 @@ nerfs to razorpine and blizzard staff fire rate
 FINALLY fixed berserked giving autofire (rip)
 mutant sky turns off as it should if mutant is defeated/despawns in p2 and a new p1 mutant spawns before sky fades
 lihzahrd blessing gives reduced spawn rates in temple
+razorpine and blizzard staff are -33% damage -66% speed
+removed pumpking spraying greek fire constantly
+pumpking now shoots large rings of homing scythes
+ice queen shoots rings of waves while spinning and uses super flockos otherwise
+reverse mana flow does more damage and has hexed effect on magic weapons

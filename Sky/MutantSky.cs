@@ -23,7 +23,8 @@ namespace FargowiltasSouls.Sky
         {
             const float increment = 0.01f;
             if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>())
-                && (Main.npc[EModeGlobalNPC.mutantBoss].ai[0] < 0 || Main.npc[EModeGlobalNPC.mutantBoss].ai[0] > 9))
+                && (Main.npc[EModeGlobalNPC.mutantBoss].ai[0] < 0 || Main.npc[EModeGlobalNPC.mutantBoss].ai[0] > 10 
+                || (Main.npc[EModeGlobalNPC.mutantBoss].ai[0] == 10 && Main.npc[EModeGlobalNPC.mutantBoss].ai[1] > 120)))
             {
                 intensity += increment;
                 if (intensity > 1f)
