@@ -191,11 +191,11 @@ namespace FargowiltasSouls.NPCs
         {
             eyeBoss = npc.whoAmI;
 
-            Counter[0]++;
+            /*Counter[0]++;
             if (Counter[0] >= 600)
             {
                 Counter[0] = 0;
-                if (npc.life <= npc.lifeMax * 0.65 && NPC.CountNPCS(NPCID.ServantofCthulhu) < 12 && Main.netMode != NetmodeID.MultiplayerClient)
+                if (npc.life <= npc.lifeMax * 0.65 && NPC.CountNPCS(NPCID.ServantofCthulhu) < 6 && Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Vector2 vel = new Vector2(2, 2);
                     for (int i = 0; i < 4; i++)
@@ -209,7 +209,7 @@ namespace FargowiltasSouls.NPCs
                         }
                     }
                 }
-            }
+            }*/
 
             if (npc.life < npc.lifeMax / 2)
             {
