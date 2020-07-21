@@ -412,9 +412,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 Vector2 pos = npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height));
                 Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/TimberGore1"), npc.scale);
                 pos = npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height));
-                Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/TimberGore4"), npc.scale);
-                pos = npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height));
-                Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/TimberGore5"), npc.scale);
+                Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/TimberGore2"), npc.scale);
             }
         }
 

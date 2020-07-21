@@ -486,10 +486,8 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             if (npc.life <= 0)
             {
-                for (int i = 2; i <= 6; i++)
+                for (int i = 3; i <= 10; i++)
                 {
-                    if (i == 5) //dont spawn the head gore
-                        continue;
                     Vector2 pos = npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height));
                     Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/TimberGore" + i.ToString()), npc.scale);
                 }
