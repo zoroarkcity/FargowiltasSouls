@@ -19,6 +19,7 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Spirit");
+            Main.npcFrameCount[npc.type] = 2;
             NPCID.Sets.TrailCacheLength[npc.type] = 6;
             NPCID.Sets.TrailingMode[npc.type] = 1;
         }
@@ -714,6 +715,25 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = ItemID.SuperHealingPotion;
+        }
+
+        public override void FindFrame(int frameHeight)
+        {
+            switch ((int)npc.ai[0])
+            {
+                case -4: //eyes closed
+                case 0:
+                case 2:
+                case 4:
+                case 6:
+                case 8:
+                    npc.frame.Y = frameHeight;
+                    break;
+
+                default: //eyes open
+                    npc.frame.Y = 0;
+                    break;
+            }
         }
 
         public override void NPCLoot()

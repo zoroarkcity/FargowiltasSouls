@@ -17,13 +17,13 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Timber");
-            Main.npcFrameCount[npc.type] = 6;
+            Main.npcFrameCount[npc.type] = 8;
         }
 
         public override void SetDefaults()
         {
-            npc.width = 160;
-            npc.height = 228;
+            npc.width = 120;
+            npc.height = 234;
             npc.damage = 130;
             npc.defense = 50;
             npc.lifeMax = 180000;
@@ -445,12 +445,34 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void FindFrame(int frameHeight)
         {
-            if (++npc.frameCounter > 6)
+            switch ((int)npc.ai[0])
             {
-                npc.frameCounter = 0;
-                npc.frame.Y += frameHeight;
-                if (npc.frame.Y >= frameHeight * Main.npcFrameCount[npc.type])
-                    npc.frame.Y = 0;
+                case 0:
+                case 2:
+                case 4:
+                case 6:
+                case 8:
+                    if (npc.ai[1] <= 60)
+                        npc.frame.Y = frameHeight * 6; //crouching for jump
+                    else
+                        npc.frame.Y = frameHeight * 7; //jumping
+                    break;
+
+                default:
+                    if (++npc.frameCounter > 5) //walking animation
+                    {
+                        npc.frameCounter = 0;
+                        npc.frame.Y += frameHeight;
+                    }
+                    if (npc.frame.Y >= frameHeight * 6)
+                        npc.frame.Y = 0;
+
+                    if (npc.velocity.X == 0)
+                        npc.frame.Y = frameHeight; //stationary sprite if standing still
+
+                    if (npc.velocity.Y > 4)
+                        npc.frame.Y = frameHeight * 7; //jumping
+                    break;
             }
         }
 
@@ -464,10 +486,8 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             if (npc.life <= 0)
             {
-                for (int i = 2; i <= 6; i++)
+                for (int i = 3; i <= 10; i++)
                 {
-                    if (i == 5) //dont spawn the head gore
-                        continue;
                     Vector2 pos = npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height));
                     Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/TimberGore" + i.ToString()), npc.scale);
                 }
