@@ -204,13 +204,14 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.rotation += (float)Math.PI;
 
             //dust tendrils connecting hands to base
-            Vector2 headOffset = npc.Center - head.Center;
+            Vector2 dustHead = head.Center + head.DirectionTo(npc.Center) * 50;
+            Vector2 headOffset = npc.Center - dustHead;
             for (int i = 0; i < headOffset.Length(); i+= 16)
             {
                 if (Main.rand.Next(2) == 0)
                     continue;
 
-                int d = Dust.NewDust(head.Center + Vector2.Normalize(headOffset) * i, 0, 0, 54,
+                int d = Dust.NewDust(dustHead+ Vector2.Normalize(headOffset) * i, 0, 0, 54,
                     head.velocity.X * 0.4f, head.velocity.Y * 0.4f, 0, default(Color), 1.5f);
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity *= 3f;
