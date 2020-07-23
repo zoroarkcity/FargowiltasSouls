@@ -200,3 +200,4 @@ sprites:
 	lump of flesh
 	sparkling adoration
 	big brain minion
+	frigid gemstone
