@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Big Brain Proj");
-            Main.projFrames[projectile.type] = 11;
+            Main.projFrames[projectile.type] = 12;
             ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
             ProjectileID.Sets.Homing[projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
@@ -21,8 +21,8 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override void SetDefaults()
         {
             projectile.netImportant = true;
-            projectile.width = 74;
-            projectile.height = 70;
+            projectile.width = 110;
+            projectile.height = 110;
             projectile.friendly = true;
             projectile.minion = true;
             projectile.minionSlots = 2;
@@ -30,8 +30,6 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.timeLeft = 60;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
-
-            projectile.scale = 1.5f;
         }
 
         public override void AI()
@@ -95,10 +93,10 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.rotation = projectile.velocity.X * 0.02f;
 
             projectile.frameCounter++;
-            if (projectile.frameCounter >= 8)
+            if (projectile.frameCounter >= 5)
             {
                 projectile.frameCounter = 0;
-                projectile.frame = (projectile.frame + 1) % 11;
+                projectile.frame = (projectile.frame + 1) % 12;
             }
         }
 
