@@ -3758,8 +3758,8 @@ namespace FargowiltasSouls.NPCs
 
                         case NPCID.DD2WitherBeastT2:
                         case NPCID.DD2WitherBeastT3:
-                            Aura(npc, 300, BuffID.WitheredArmor, true, 119);
-                            Aura(npc, 300, BuffID.WitheredWeapon, true, 14);
+                            Aura(npc, 300, BuffID.WitheredArmor, false, 119);
+                            Aura(npc, 300, BuffID.WitheredWeapon, false, 14);
                             break;
 
                         case NPCID.DD2DarkMageT1:

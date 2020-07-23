@@ -350,8 +350,14 @@ namespace FargowiltasSouls.NPCs
             {
                 Player player = Main.player[npc.target];
 
-                Item.NewItem(player.Hitbox, ModContent.ItemType<WormyFood>());
-                droppedSummon = true;
+                //eater meme
+                if (player.GetModPlayer<FargoPlayer>().FreeEaterSummon)
+                {
+                    player.GetModPlayer<FargoPlayer>().FreeEaterSummon = false;
+
+                    Item.NewItem(player.Hitbox, ModContent.ItemType<WormyFood>());
+                    droppedSummon = true;
+                } 
             }
         }
 

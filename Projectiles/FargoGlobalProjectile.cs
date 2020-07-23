@@ -389,14 +389,13 @@ namespace FargowiltasSouls.Projectiles
                         projectile.Kill();
                     }
 
-                    if (modPlayer.ShroomEnchant && SoulConfig.Instance.ShroomiteShrooms && modPlayer.IsStandingStill && projectile.damage > 0 && !townNPCProj && projectile.velocity.Length() > 1 && projectile.minionSlots == 0 && projectile.type != ProjectileID.Mushroom)
+                    if (modPlayer.ShroomEnchant && SoulConfig.Instance.ShroomiteShrooms && modPlayer.IsStandingStill && projectile.damage > 0 && !townNPCProj && projectile.velocity.Length() > 1 && projectile.minionSlots == 0 && projectile.type != ModContent.ProjectileType<ShroomiteShroom>())
                     {
                         if (shroomiteMushroomCD <= 0)
                         {
                             shroomiteMushroomCD = 10;
 
-                            int p = Projectile.NewProjectile(projectile.position.X + (float)(projectile.width / 2), projectile.position.Y + (float)(projectile.height / 2), projectile.velocity.X, projectile.velocity.Y, 131, projectile.damage / 5, 0f, projectile.owner, 0f, 0f);
-                            //Main.projectile[p].timeLeft = 15;
+                            int p = Projectile.NewProjectile(projectile.position.X + (float)(projectile.width / 2), projectile.position.Y + (float)(projectile.height / 2), projectile.velocity.X, projectile.velocity.Y, ModContent.ProjectileType<ShroomiteShroom>(), projectile.damage / 5, 0f, projectile.owner, 0f, 0f);
                         }
                         shroomiteMushroomCD--;
                     }
@@ -427,7 +426,7 @@ namespace FargowiltasSouls.Projectiles
 
                                 int p = Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<SpookyScythe>(), projectile.damage, 2, projectile.owner);
 
-                                Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 62);
+                                Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 62, 0.5f);
 
                                 spookyCD = 30 + Main.rand.Next(player.maxMinions * 5);
                             }

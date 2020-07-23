@@ -420,7 +420,7 @@ namespace FargowiltasSouls
                     for (int i = 0; i < IcicleCount; i++)
                     {
                         float radians = (360f / (float)IcicleCount) * i * (float)(Math.PI / 180);
-                        Projectile fireball = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, ModContent.ProjectileType<FrostIcicle>(), 0, 0f, player.whoAmI, 5, radians);
+                        Projectile frost = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, ModContent.ProjectileType<FrostIcicle>(), 0, 0f, player.whoAmI, 5, radians);
                     }
 
                     //dust

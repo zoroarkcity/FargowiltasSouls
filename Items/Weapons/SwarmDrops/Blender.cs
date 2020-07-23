@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Fargowiltas.Items.Tiles;
+using FargowiltasSouls.Projectiles.BossWeapons;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
@@ -28,7 +29,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 			item.melee = true;
 			item.channel = true;
 			item.noMelee = true;
-			item.shoot = mod.ProjectileType("BlenderProj");
+            item.shoot = ModContent.ProjectileType<BlenderProj>();
 			item.useAnimation = 25;
 			item.useTime = 25;
 			item.shootSpeed = 16f;

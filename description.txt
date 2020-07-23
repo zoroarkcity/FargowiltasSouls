@@ -3,6 +3,19 @@ NEW UPDATE - V 1.3.3
 
 
 new in beta
+-Shroomite Enchantment shrooms last half the time
+-Spooky Enchant scythes are quieter and have smaller dust
+-Tin Enchant CDs halved to 1 seconds between crit gains, half a second in Terra Force, quarter of a second in SoT, no limit in SoE
+-Fixed being able to cancel Gold Enchant buff then never get a CD lol
+-Vortex Enchantment vortex has infinite pierce, destroys things sooner but they must be actually in the void to be destroyed, no longer destroys minions
+-Reduced Galactic Reformer cost to 500 dynamite from 999
+-Reduced Universal Collapse cost to 100 Galactic reformers from 999
+-Blender's extra yoyos circle around the main one instead of spazzing out
+-Rockeater eaters deal ranged damage and not melee
+-The Twins extra projectiles deal melee damage correctly
+-Bone Zone's shadow skull deals ranged damage. Bone Zone fires a shadow skull every 3 shots instead of randomly
+-RockSlide explosions deal magic damage correctly
+-Slime King's Slasher spikes deal melee damage correctly, travel faster but disappear sooner
 -Sand Sharks and Ghouls can spawn in as any variant
 -Creatures from the Deep can spawn at the Ocean at night Hardmode
 -Town NPCs will become a zombie if killed by a zombie
@@ -22,12 +35,20 @@ new in beta
 -Cyan Beetle have an aura that gives nearby enemies the ability to Freeze you
 -Ice Bats no longer inflict Frozen
 -Eater of Souls and Harpies only go through walls when they can't reach you
+-Wither Beast auras are now regular and not reversed
+-Fake Hearts are slightly off color
+-Hopefully fixed EoW giving a million free summons
 
 
 
 
 
 
+
+
+-Parrots spawn in the sky
+-mummies spawn in pyramids always 
+-hellhound in hell?
 -Mother Slime births a Baby Slime every few seconds
 -Diabolists now create an explosion whenever  teleporting away.
 -Small meteor projectiles will fall from the sky at night post-EoW/BoC in a meteor biome. These will explode on impact and spawn a Meteor Head that is guaranteed to drop 1 meteorite in phm only
@@ -76,7 +97,7 @@ Enchants
 -thorium effects all in their own file
 -Ninja smoke bombs disappear shortly after teleporting
 -Pearlwood and basically everything else wont work on target dummies
--Tin Crits now have a cooldown: 2 seconds between crit gains, 1 second in Terra Force, half a second in SoT, no limit in SoE
+-Tin Crits now have a cooldown: 1 seconds between crit gains, half a second in Terra Force, quarter of a second in SoT, no limit in SoE
 -Valhalla Knight Enchantment rework: Now grants a buff after continually attacking an enemy that makes you reduce iframes of all enemies for some time. Buff now lasts 5 seconds, effect was 2 seconds before. The cooldown is removed, was 15 seconds. iframes will no longer be reset if they were already low enough
 -Squire Enchantment rework: Effect is now a weaker version of Valhalla Knight, less than half as good
 
@@ -153,6 +174,7 @@ Emode
 
 
 Weapons
+-Blender visual update
 -The Landlside is now the Rockslide
 -Landlside EX is now the Landlside
 -Slime Kings Slasher fires several slime spikes per swing now

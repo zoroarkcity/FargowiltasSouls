@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using System;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -6,7 +8,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 {
     internal class BlenderProj : ModProjectile
     {
-        public int Counter = 0;
+        public bool yoyosSpawned = false;
 
         public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/DicerProj";
 
@@ -23,8 +25,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetDefaults()
         {
             projectile.CloneDefaults(ProjectileID.Kraken);
-            projectile.width = 19;
-            projectile.height = 19;
+            projectile.width = 30;
+            projectile.height = 30;
             //yoyo ai
             projectile.aiStyle = 99;
             projectile.friendly = true;
@@ -37,11 +39,17 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void AI()
         {
-            if (Counter < 5)
+            if (!yoyosSpawned)
             {
-                int type = mod.ProjectileType("BlenderProj2");
-                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 5f, type, (int)(projectile.damage * 0.5f), 2, projectile.owner);
-                Counter++;
+                int maxYoyos = 5;
+                for (int i = 0; i < maxYoyos; i++)
+                {
+                    float radians = (360f / (float)maxYoyos) * i * (float)(Math.PI / 180);
+                    Projectile yoyo = FargoGlobalProjectile.NewProjectileDirectSafe(projectile.Center, Vector2.Zero, ModContent.ProjectileType<BlenderProj2>(), (int)(projectile.damage * 0.5f), 2, projectile.owner, 5, radians);
+                    yoyo.localAI[0] = projectile.whoAmI;
+                }
+
+                yoyosSpawned = true;
             }
         }
 

@@ -3,11 +3,14 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using FargowiltasSouls.Projectiles.BossWeapons;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
     public class Bonezone : ModItem
     {
+        int counter = 1;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Bone Zone");
@@ -44,15 +47,22 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            int rand = Main.rand.Next(3);
-            int shoot = 0;
+            int shoot;
 
-            if (rand == 0)
+            if (counter > 2)
+            {
                 shoot = ProjectileID.ClothiersCurse;
+                counter = 0;
+            }
             else
-                shoot = mod.ProjectileType("Bonez");
+            {
+                shoot = ModContent.ProjectileType<Bonez>() ;
+            }
 
-            Projectile.NewProjectile(position.X, position.Y, speedX, speedY, shoot, damage, knockBack, player.whoAmI);
+            int p = Projectile.NewProjectile(position.X, position.Y, speedX, speedY, shoot, damage, knockBack, player.whoAmI);
+            Main.projectile[p].ranged = true;
+
+            counter++;
 
             return false;
         }

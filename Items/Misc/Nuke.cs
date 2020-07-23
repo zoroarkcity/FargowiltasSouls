@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Items.Misc
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Dynamite, 999);
+            recipe.AddIngredient(ItemID.Dynamite, 500);
             recipe.AddTile(TileID.Hellforge);
             recipe.SetResult(this);
             recipe.AddRecipe();

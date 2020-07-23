@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Patreon.Daawnz
             DisplayName.SetDefault("Computation Orb");
             Tooltip.SetDefault(
 @"'Within the core, a spark of hope remains.'
-Non -magic/summon attacks deal 25% extra damage but are affected by Mana Sickness
+Non-magic/summon attacks deal 25% extra damage but are affected by Mana Sickness
 Non-magic/summon weapons require 10 mana to use");
             DisplayName.AddTranslation(GameCulture.Chinese, "演算宝珠");
             Tooltip.AddTranslation(GameCulture.Chinese, 

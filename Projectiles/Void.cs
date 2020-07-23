@@ -26,14 +26,12 @@ namespace FargowiltasSouls.Projectiles
             projectile.scale = 1f;
             projectile.friendly = true;
             projectile.ranged = true;
-            projectile.penetrate = 50;
+            projectile.penetrate = -1;
             projectile.timeLeft = 600;
             projectile.tileCollide = false;
             aiType = ProjectileID.Bullet;
 
         }
-
-        
 
         public override void AI()
         {
@@ -127,7 +125,7 @@ namespace FargowiltasSouls.Projectiles
                         Vector2 dir = projectile.position - npc.Center;
                         npc.velocity = dir.SafeNormalize(Vector2.Zero) * 8;
 
-                        if (projectile.timeLeft <= 10)
+                        if (projectile.timeLeft <= 30 && distance < minDist / 4)
                         {
                             npc.active = false;
                         }
@@ -146,7 +144,7 @@ namespace FargowiltasSouls.Projectiles
                         Vector2 dir = projectile.position - proj.Center;
                         proj.velocity = dir.SafeNormalize(Vector2.Zero) * 8;
 
-                        if (projectile.timeLeft <= 10)
+                        if (projectile.timeLeft <= 30 && distance < minDist / 4 && proj.minionSlots == 0)
                         {
                             proj.active = false;
                         }

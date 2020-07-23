@@ -29,6 +29,9 @@ namespace FargowiltasSouls
         public float AttackSpeed;
         public float wingTimeModifier;
 
+        public bool FreeEaterSummon = true;
+
+
         public bool Wood;
         public bool QueenStinger;
 
@@ -449,6 +452,9 @@ namespace FargowiltasSouls
             if (Fargowiltas.GoldKey.JustPressed && GoldEnchant && !player.HasBuff(ModContent.BuffType<GoldenStasisCD>()))
             {
                 player.AddBuff(ModContent.BuffType<GoldenStasis>(), 600);
+                player.AddBuff(ModContent.BuffType<GoldenStasisCD>(), 3600);
+
+
                 goldHP = player.statLife;
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Zhonyas").WithVolume(1f), player.Center);
             }
@@ -800,6 +806,7 @@ namespace FargowiltasSouls
                 player.respawnTimer -= Eternity ? 6 : 1;
 
             wingTimeModifier = 1f;
+            FreeEaterSummon = true;
 
             //debuffs
             Hexed = false;
@@ -2517,7 +2524,7 @@ namespace FargowiltasSouls
                     if (crit && TinCrit < 100)
                     {
                         TinCrit += 5;
-                        tinCD = 30;
+                        tinCD = 15;
                     }
                     else if (TinCrit >= 100)
                     {
@@ -2541,12 +2548,12 @@ namespace FargowiltasSouls
                     if (TerraForce)
                     {
                         TinCrit += 5;
-                        tinCD = 60;
+                        tinCD = 30;
                     }
                     else
                     {
                         TinCrit += 4;
-                        tinCD = 120;
+                        tinCD = 60;
                     }
                 }
             }
