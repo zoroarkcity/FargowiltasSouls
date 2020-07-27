@@ -190,3 +190,14 @@ removed pumpking spraying greek fire constantly
 pumpking now shoots large rings of homing scythes
 ice queen shoots rings of waves while spinning and uses super flockos otherwise
 reverse mana flow does more damage and has hexed effect on magic weapons
+sprites:
+	sans golem
+	brain minion icon
+	deviantt presence icon
+	plantera's child icon
+	big brain icon
+	pungent eyeball
+	lump of flesh
+	sparkling adoration
+	big brain minion
+	frigid gemstone
