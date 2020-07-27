@@ -127,7 +127,7 @@ Not consumed on use");
                         NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<ShadowChampion>());
                 }
                 else if (!player.ZoneHoly && !player.ZoneCorrupt && !player.ZoneCrimson 
-                    && !player.ZoneDesert && !player.ZoneSnow && !player.ZoneJungle) //purity
+                    && !player.ZoneDesert && !player.ZoneSnow && !player.ZoneJungle && Main.dayTime) //purity day
                 {
                     if (player.altFunctionUse == 2)
                         Main.NewText("You are surrounded by the rustling of trees...", color);
