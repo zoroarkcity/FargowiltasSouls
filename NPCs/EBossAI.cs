@@ -593,7 +593,6 @@ namespace FargowiltasSouls.NPCs
             if (NPC.AnyNPCs(ModContent.NPCType<RoyalSubject>()))
             {
                 npc.ai[0] = 3; //always shoot stingers mode
-                RegenTimer = 480;
             }
 
             //only while stationary mode
@@ -1217,9 +1216,6 @@ namespace FargowiltasSouls.NPCs
 
         public bool RetinazerAI(NPC npc)
         {
-            if (npc.life == 1)
-                RegenTimer = 2;
-
             retiBoss = npc.whoAmI;
             bool spazAlive = BossIsAlive(ref spazBoss, NPCID.Spazmatism);
 
@@ -1503,9 +1499,6 @@ namespace FargowiltasSouls.NPCs
 
         public void SpazmatismAI(NPC npc)
         {
-            if (npc.life == 1)
-                RegenTimer = 2;
-
             spazBoss = npc.whoAmI;
             bool retiAlive = BossIsAlive(ref retiBoss, NPCID.Retinazer);
 
@@ -1576,7 +1569,6 @@ namespace FargowiltasSouls.NPCs
                                 Speed *= 12f;
                                 Damage = 25;
                             }
-                            Damage = (int)(Damage * (1 + FargoSoulsWorld.TwinsCount * .0125));
                             Projectile.NewProjectile(npc.Center + Speed * 4f, Speed, ProjectileID.CursedFlameHostile, Damage, 0f, Main.myPlayer);
                         }
                     }
@@ -1667,7 +1659,6 @@ namespace FargowiltasSouls.NPCs
                     if (npc.HasPlayerTarget)
                         Main.PlaySound(SoundID.Roar, (int)Main.player[npc.target].position.X, (int)Main.player[npc.target].position.Y, 0);
                 }
-                RegenTimer = 2;
             }
             else
             {
@@ -2651,22 +2642,11 @@ namespace FargowiltasSouls.NPCs
                         npc.defense *= 2;
                         Counter[0]++;
                         SharkCount = 1;
-
-                        if (RegenTimer > 120)
-                            RegenTimer = 120;
                     }
                 }
                 else
                 {
                     npc.position -= npc.velocity * 0.1f;
-                }
-
-                //dont regen above half, this avoids exiting phase 2 by healing
-                if (RegenTimer <= 2 && npc.life + 1 + npc.lifeMax / 25 >= npc.lifeMax / 2)
-                {
-                    npc.life = npc.lifeMax / 2;
-                    npc.lifeRegen = 0;
-                    RegenTimer = 2;
                 }
             }
 
@@ -3643,7 +3623,7 @@ namespace FargowiltasSouls.NPCs
                 if (npc.ai[3] == 0)
                     npc.damage = 0;
 
-                int damage = (int)(75 * (1 + FargoSoulsWorld.CultistCount * .0125)); //necessary because calameme
+                int damage = 75; //necessary because calameme
                 switch ((int)npc.ai[0])
                 {
                     case -1:
@@ -3813,7 +3793,6 @@ namespace FargowiltasSouls.NPCs
         public void MoonLordCoreAI(NPC npc)
         {
             moonBoss = npc.whoAmI;
-            RegenTimer = 2;
             //npc.defense = masoStateML >= 0 && masoStateML <= 3 ? 0 : npc.defDefense;
 
             if (!masoBool[3])
@@ -3822,7 +3801,7 @@ namespace FargowiltasSouls.NPCs
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<LunarRitual>(),
-                          (int)(100.0 * (1.0 + FargoSoulsWorld.MoonlordCount * .0125)), 0f, Main.myPlayer, 0f, npc.whoAmI);
+                          100, 0f, Main.myPlayer, 0f, npc.whoAmI);
                     Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<FragmentRitual>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
                 }
             }
@@ -3871,7 +3850,7 @@ namespace FargowiltasSouls.NPCs
 
                                     if (bodyPart.active)
                                     {
-                                        int damage = (int)(25 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
+                                        int damage = 25;
                                         for (int j = -3; j <= 3; j++)
                                         {
                                             Projectile.NewProjectile(bodyPart.Center,
@@ -3936,7 +3915,7 @@ namespace FargowiltasSouls.NPCs
                                         ((i == 2 && bodyPart.type == NPCID.MoonLordHead) ||
                                         bodyPart.type == NPCID.MoonLordHand))
                                     {
-                                        int damage = (int)(35 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
+                                        int damage = 35;
                                         const int max = 8;
                                         for (int j = 0; j < max; j++)
                                         {
@@ -3994,7 +3973,7 @@ namespace FargowiltasSouls.NPCs
                                     const int max = 3;
                                     const int speed = 9;
                                     const float rotationModifier = 0.5f;
-                                    int damage = (int)(40 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
+                                    int damage = 40;
                                     float rotation = 2f * (float)Math.PI / max;
                                     Vector2 vel = Vector2.UnitY * speed;
                                     int type = ModContent.ProjectileType<MutantSphereRing>();
@@ -4114,7 +4093,6 @@ namespace FargowiltasSouls.NPCs
 
         public void MoonLordSocketAI(NPC npc)
         {
-            RegenTimer = 2;
             //npc.defense = masoStateML >= 0 && masoStateML <= 3 ? 0 : npc.defDefense;
 
             if (npc.ai[0] == -2f) //eye socket is empty
@@ -4174,7 +4152,7 @@ namespace FargowiltasSouls.NPCs
                                 if (difference < 0f)
                                     rotationDirection *= -1f;
                                 Vector2 speed = Vector2.UnitX.RotatedBy(npc.localAI[0]);
-                                int damage = (int)(60 * (1 + FargoSoulsWorld.MoonlordCount * .0125));
+                                int damage = 60;
                                 Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<PhantasmalDeathrayML>(), damage, 0f, Main.myPlayer, rotationDirection, npc.whoAmI);
                             }
                         }

@@ -2754,8 +2754,9 @@ namespace FargowiltasSouls
 
         public override void MeleeEffects(Item item, Rectangle hitbox)
         {
-            if (ShroomEnchant && SoulConfig.Instance.ShroomiteShrooms && IsStandingStill && !item.noMelee && (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.1) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.3) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.5) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.7) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.9)))
+            if (ShroomEnchant && SoulConfig.Instance.ShroomiteShrooms && player.stealth == 0 && !item.noMelee && (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.1) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.3) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.5) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.7) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.9)))
             {
+                //hellish code from hammush
                 float num340 = 0f;
                 float num341 = 0f;
                 float num342 = 0f;
@@ -2811,7 +2812,7 @@ namespace FargowiltasSouls
                 num341 *= 1.5f;
                 num343 *= (float)player.direction;
                 num342 *= player.gravDir;
-                Projectile.NewProjectile((float)(hitbox.X + hitbox.Width / 2) + num343, (float)(hitbox.Y + hitbox.Height / 2) + num342, (float)player.direction * num341, num340 * player.gravDir, 131, item.damage / 2, 0f, player.whoAmI, 0f, 0f);
+                Projectile.NewProjectile((float)(hitbox.X + hitbox.Width / 2) + num343, (float)(hitbox.Y + hitbox.Height / 2) + num342, (float)player.direction * num341, num340 * player.gravDir, ModContent.ProjectileType<ShroomiteShroom>(), item.damage / 2, 0f, player.whoAmI, 0f, 0f);
             }
         }
 

@@ -38,7 +38,6 @@ namespace FargowiltasSouls.NPCs
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.damage = (int)(90 * (1 + FargoSoulsWorld.PlanteraCount * .0125));
             npc.lifeMax = 9999;
             npc.life = 9999;
         }
@@ -80,7 +79,6 @@ namespace FargowiltasSouls.NPCs
                                 damage = damage * 2;
                             else if (Main.expertMode)
                                 damage = damage * 9 / 10;
-                            damage = (int)(damage * (1 + FargoSoulsWorld.PlanteraCount * .0125));
                             Projectile.NewProjectile(npc.Center, distance, mod.ProjectileType("CrystalLeafShot"), damage, 0f, Main.myPlayer);
                         }
                         for (int index1 = 0; index1 < 30; ++index1)
