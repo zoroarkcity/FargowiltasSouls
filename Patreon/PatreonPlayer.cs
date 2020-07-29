@@ -48,7 +48,7 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
-            if (player.name == "gittle" || player.name == "gittle lirl")
+            if (player.name == "iverhcamer")
             {
                 Gittle = true;
                 player.pickSpeed -= .15f;

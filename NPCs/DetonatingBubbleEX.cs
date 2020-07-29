@@ -37,15 +37,6 @@ namespace FargowiltasSouls.NPCs
             npc.buffImmune[BuffID.Suffocation] = true;
         }
 
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
-        {
-            if (FargoSoulsWorld.downedFishronEX || !EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.fishBossEX, NPCID.DukeFishron))
-            {
-                npc.lifeMax = (int)(npc.lifeMax * (1 + FargoSoulsWorld.FishronCount * .025));
-                npc.damage = (int)(npc.damage * (1 + FargoSoulsWorld.FishronCount * .0125));
-            }
-        }
-
         public override void AI()
         {
             if (npc.buffTime[0] != 0)

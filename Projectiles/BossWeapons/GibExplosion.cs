@@ -18,6 +18,7 @@ namespace FargowiltasSouls.Projectiles
 
         public override void SetDefaults()
         {
+            projectile.magic = true;
             projectile.width = 80;
             projectile.height = 80;
             projectile.aiStyle = 0;

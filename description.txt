@@ -3,25 +3,27 @@ NEW UPDATE - V 1.3.3
 
 
 new in beta
--Sand Sharks and Ghouls can spawn in as any variant
--Creatures from the Deep can spawn at the Ocean at night Hardmode
--Town NPCs will become a zombie if killed by a zombie
--Red, Yellow, Black, and Spiked slimes will spawn during the Slime Rain. Pinky as well rarely
--Rainbow Slimes spawn a Pinky, Gastropod, Crimson, and Corrupt Slime on death
--All Slimes will always be hostile
--Raincoat Zombies now swim across water
--Slimed Zombies may spawn a Blue Slime on death
--Armored Skeletons fire sword beams
--Vultires shoot feathers twice as often
--Servants of Cthulhu have less bonus HP: 5x -> 2x. They move much faster tho
--Umbrella Slimes fall slowly through the air on their umbrella
--Wraiths fly instead of hover
--Flying Fish shoot water streams at you
--Lac Beetles have an aura that gives nearby enemies 25% DR
--Cochineal Beetle have an aura that gives nearby enemies 25% more damage
--Cyan Beetle have an aura that gives nearby enemies the ability to Freeze you
--Ice Bats no longer inflict Frozen
--Eater of Souls and Harpies only go through walls when they can't reach you
+-Shroomite mushrooms now only spawn when actually in full stealth (no longer works on mounts, takes a second or 2 to actiavte after standing still)
+
+-Destroyed eternity passive regen and boss scaling once and for all
+-Pinky is much rarer in Slime Rains
+-Flying Fish deal less damage
+-Armored bones can replace each other
+-Derplings are much smaller, aura is much smaller, aura is bleeding instead of confused, and they drain life while you're inside
+-Harpies fire rings of feathers
+-Pinky bounces constantly
+-Antlions shoot faster, with greater velocity, and from a wider angle, and their attacks no longer drop sand blocks
+
+
+
+-Plant enemies can extend farther, Man Eaters and Angry Trappers lunge for you
+-Unicorns only leave rainbows when travelling certain speed or jumping
+-Giant Shellies spew spikes out if attacked while spinning, no more thorns effect if you get them with melee
+-Parrots spawn in the sky in hard mode
+-hellhound in hell? e
+-Ichor stickers explode into ichor
+
+
 
 
 
@@ -29,33 +31,19 @@ new in beta
 
 
 -Mother Slime births a Baby Slime every few seconds
--Diabolists now create an explosion whenever  teleporting away.
--Small meteor projectiles will fall from the sky at night post-EoW/BoC in a meteor biome. These will explode on impact and spawn a Meteor Head that is guaranteed to drop 1 meteorite in phm only
 -A beehive may spawn when a tree is cut down in the jungle
 -Blazing wheels are 50% larger
 -Desert Spirit spawns in any desert
 -Any critters not placed by the player will become evil instantly at night
--Ichor stickers explode into ichor
--Armored bones can replace each other
--Unicorns only leave rainbows when travelling certain speed or jumping
--Hell Armored Bones can spawn in the Underworld, and are immune to/can swim in lava
 -Mothron lays eggs much more often
 -Demons spawn during new moons post-EoC
 -Blue and White Cultist Archers will sometimes stop and shoot a single Ancient Light projectile
 -Pirate Captains now only shoot bullets above 50% HP, but only shoot cannonballs below
 -Ice Elementals can spawn during the Frost Legion
 -Undead miners throw grenades
--Giant Shellies spew spikes out if attacked while spinning, no more thorns effect if you get them with melee
 -Icy Merman attack twice as fast in water
 -Antlions can now move, They will try to move to the lowest location nearby, (a pit)
 -Antlions shoot faster and can fire at any angle
--Derplings are much smaller, (because apparently they're fleas), aura is much smaller, aura is bleeding instead of confused, and they drain life while youre inside
--Harpies fire rings of feathers
--Plant enemies can extend farther, Man Eaters and Angry Trappers lunge for you
-
-
--Hell Zone inflicts Hell Fire again, REEEEEE (Hell Fire no longer deals percent based damage)
--Jammed no longer teleports projectiles to the corner of the map
 
 
 
@@ -66,17 +54,18 @@ new in beta
 
 
 
-All enchant and soul recipes changed drastically
+Items
+
 -Moved flavor text to the bottom for all items like it is in vanilla
 
-
 Enchants
+-All enchant and soul recipes changed drastically
 -Removed dev items from Soa enchants
 -DESTROYED MODDED ENCHANTS (for now)
 -thorium effects all in their own file
 -Ninja smoke bombs disappear shortly after teleporting
 -Pearlwood and basically everything else wont work on target dummies
--Tin Crits now have a cooldown: 2 seconds between crit gains, 1 second in Terra Force, half a second in SoT, no limit in SoE
+-Tin Crits now have a cooldown: 1 seconds between crit gains, half a second in Terra Force, quarter of a second in SoT, no limit in SoE
 -Valhalla Knight Enchantment rework: Now grants a buff after continually attacking an enemy that makes you reduce iframes of all enemies for some time. Buff now lasts 5 seconds, effect was 2 seconds before. The cooldown is removed, was 15 seconds. iframes will no longer be reset if they were already low enough
 -Squire Enchantment rework: Effect is now a weaker version of Valhalla Knight, less than half as good
 
@@ -130,6 +119,9 @@ Souls
 
 -Updated some calamity support tooltips
 
+-Reduced Galactic Reformer cost to 500 dynamite from 999
+-Reduced Universal Collapse cost to 100 Galactic reformers from 999
+
 Emode
 -Updated  lava slime jump (tm)
 -Hallowed Cactus inflict Flipped instead of Confused
@@ -138,7 +130,28 @@ Emode
 -These bosses drop the mutant mod summon instead
 -All bosses will drop a summon when they spawn until they are defetaed in emode
 -Added magma stone toggle
-
+-Sand Sharks and Ghouls can spawn in as any variant
+-Creatures from the Deep can spawn at the Ocean at night Hardmode
+-Town NPCs will become a zombie if killed by a zombie
+-Red, Yellow, Black, and Spiked slimes will spawn during the Slime Rain. Pinky as well rarely
+-Rainbow Slimes spawn a Pinky, Gastropod, Crimson, and Corrupt Slime on death
+-All Slimes will always be hostile
+-Raincoat Zombies now swim across water
+-Slimed Zombies may spawn a Blue Slime on death
+-Armored Skeletons fire sword beams
+-Vultires shoot feathers twice as often
+-Servants of Cthulhu have less bonus HP: 5x -> 2x. They move much faster tho
+-Umbrella Slimes fall slowly through the air on their umbrella
+-Wraiths fly instead of hover
+-Flying Fish shoot water streams at you
+-Lac Beetles have an aura that gives nearby enemies 25% DR
+-Cochineal Beetle have an aura that gives nearby enemies 25% more damage
+-Cyan Beetle have an aura that gives nearby enemies the ability to Freeze you
+-Ice Bats no longer inflict Frozen
+-Eater of Souls and Harpies only go through walls when they can't reach you
+-Wither Beast auras are now regular and not reversed
+-Fake Hearts are slightly off color
+-Jammed no longer teleports projectiles to the corner of the map
 
 
 -Removed Apoth support in SoE
@@ -153,6 +166,13 @@ Emode
 
 
 Weapons
+-Hell Zone inflicts Hell Fire again, REEEEEE (Hell Fire no longer deals percent based damage)
+-Blender's extra yoyos circle around the main one instead of spazzing out
+-Rockeater eaters deal ranged damage and not melee
+-The Twins extra projectiles deal melee damage correctly
+-Bone Zone's shadow skull deals ranged damage. Bone Zone fires a shadow skull every 3 shots instead of randomly
+-RockSlide explosions deal magic damage correctly
+-Slime King's Slasher spikes deal melee damage correctly, travel faster but disappear sooner
 -The Landlside is now the Rockslide
 -Landlside EX is now the Landlside
 -Slime Kings Slasher fires several slime spikes per swing now

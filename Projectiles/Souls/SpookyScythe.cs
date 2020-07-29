@@ -37,10 +37,10 @@ namespace FargowiltasSouls.Projectiles.Souls
         {
             //dust!
             int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width, projectile.height + 5, 55, projectile.velocity.X * 0.2f,
-                projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
+                projectile.velocity.Y * 0.2f, 100, default(Color), 1f);
             Main.dust[dustId].noGravity = true;
             int dustId3 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width, projectile.height + 5, 55, projectile.velocity.X * 0.2f,
-                projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
+                projectile.velocity.Y * 0.2f, 100, default(Color), 1f);
             Main.dust[dustId3].noGravity = true;
 
             projectile.rotation += 0.4f;

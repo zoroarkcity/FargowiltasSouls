@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using System;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,23 +12,10 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/DicerProj";
 
-        public override void SetStaticDefaults()
-        {
-            // Vanilla values range from 3f(Wood) to 16f(Chik), and defaults to -1f. Leaving as -1 will make the time infinite.
-            ProjectileID.Sets.YoyosLifeTimeMultiplier[projectile.type] = -1f;
-            // Vanilla values range from 130f(Wood) to 400f(Terrarian), and defaults to 200f
-            ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 600f;
-            // Vanilla values range from 9f(Wood) to 17.5f(Terrarian), and defaults to 10f
-            ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 17.5f;
-        }
-
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(ProjectileID.Kraken);
             projectile.width = 30;
             projectile.height = 30;
-            //yoyo ai
-            projectile.aiStyle = 99;
             projectile.friendly = true;
             projectile.penetrate = -1;
             projectile.melee = true;
@@ -37,6 +26,39 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void AI()
         {
+            Projectile proj = Main.projectile[(int)projectile.localAI[0]];
+
+            projectile.timeLeft++;
+            projectile.rotation += 0.2f;
+
+            if (!proj.active || proj.type != ModContent.ProjectileType<BlenderProj>())
+            {
+                projectile.Kill();
+                return;
+            }
+
+            if (projectile.owner == Main.myPlayer)
+            {
+                //rotation mumbo jumbo
+                float distanceFromPlayer = 32;
+
+                projectile.position = proj.Center + new Vector2(distanceFromPlayer, 0f).RotatedBy(projectile.ai[1]);
+                projectile.position.X -= projectile.width / 2;
+                projectile.position.Y -= projectile.height / 2;
+
+                float rotation = (float)Math.PI / 20;
+                projectile.ai[1] += rotation;
+                if (projectile.ai[1] > (float)Math.PI)
+                {
+                    projectile.ai[1] -= 2f * (float)Math.PI;
+                    projectile.netUpdate = true;
+                }
+
+                projectile.rotation = (Main.MouseWorld - projectile.Center).ToRotation() - 5;
+            }
+
+
+
             if (++Counter > 60)
             {
                 Counter = 0;

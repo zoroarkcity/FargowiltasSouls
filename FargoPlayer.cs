@@ -29,6 +29,9 @@ namespace FargowiltasSouls
         public float AttackSpeed;
         public float wingTimeModifier;
 
+        public bool FreeEaterSummon = true;
+
+
         public bool Wood;
         public bool QueenStinger;
 
@@ -449,6 +452,9 @@ namespace FargowiltasSouls
             if (Fargowiltas.GoldKey.JustPressed && GoldEnchant && !player.HasBuff(ModContent.BuffType<GoldenStasisCD>()))
             {
                 player.AddBuff(ModContent.BuffType<GoldenStasis>(), 600);
+                player.AddBuff(ModContent.BuffType<GoldenStasisCD>(), 3600);
+
+
                 goldHP = player.statLife;
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Zhonyas").WithVolume(1f), player.Center);
             }
@@ -800,6 +806,7 @@ namespace FargowiltasSouls
                 player.respawnTimer -= Eternity ? 6 : 1;
 
             wingTimeModifier = 1f;
+            FreeEaterSummon = true;
 
             //debuffs
             Hexed = false;
@@ -2517,7 +2524,7 @@ namespace FargowiltasSouls
                     if (crit && TinCrit < 100)
                     {
                         TinCrit += 5;
-                        tinCD = 30;
+                        tinCD = 15;
                     }
                     else if (TinCrit >= 100)
                     {
@@ -2541,12 +2548,12 @@ namespace FargowiltasSouls
                     if (TerraForce)
                     {
                         TinCrit += 5;
-                        tinCD = 60;
+                        tinCD = 30;
                     }
                     else
                     {
                         TinCrit += 4;
-                        tinCD = 120;
+                        tinCD = 60;
                     }
                 }
             }
@@ -2747,8 +2754,9 @@ namespace FargowiltasSouls
 
         public override void MeleeEffects(Item item, Rectangle hitbox)
         {
-            if (ShroomEnchant && SoulConfig.Instance.ShroomiteShrooms && IsStandingStill && !item.noMelee && (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.1) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.3) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.5) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.7) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.9)))
+            if (ShroomEnchant && SoulConfig.Instance.ShroomiteShrooms && player.stealth == 0 && !item.noMelee && (player.itemAnimation == (int)((double)player.itemAnimationMax * 0.1) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.3) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.5) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.7) || player.itemAnimation == (int)((double)player.itemAnimationMax * 0.9)))
             {
+                //hellish code from hammush
                 float num340 = 0f;
                 float num341 = 0f;
                 float num342 = 0f;
@@ -2804,7 +2812,7 @@ namespace FargowiltasSouls
                 num341 *= 1.5f;
                 num343 *= (float)player.direction;
                 num342 *= player.gravDir;
-                Projectile.NewProjectile((float)(hitbox.X + hitbox.Width / 2) + num343, (float)(hitbox.Y + hitbox.Height / 2) + num342, (float)player.direction * num341, num340 * player.gravDir, 131, item.damage / 2, 0f, player.whoAmI, 0f, 0f);
+                Projectile.NewProjectile((float)(hitbox.X + hitbox.Width / 2) + num343, (float)(hitbox.Y + hitbox.Height / 2) + num342, (float)player.direction * num341, num340 * player.gravDir, ModContent.ProjectileType<ShroomiteShroom>(), item.damage / 2, 0f, player.whoAmI, 0f, 0f);
             }
         }
 

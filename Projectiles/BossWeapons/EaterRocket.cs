@@ -66,7 +66,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             if (projectile.ai[1] == 1)
             {
                 for (int i = 0; i < 5; i++)
-                    Projectile.NewProjectile(projectile.Center, new Vector2(Main.rand.Next(-10, 10), Main.rand.Next(-10, 10)), ProjectileID.TinyEater, projectile.damage / 4, 1f, Main.myPlayer);
+                {
+                    int p = Projectile.NewProjectile(projectile.Center, new Vector2(Main.rand.Next(-10, 10), Main.rand.Next(-10, 10)), ProjectileID.TinyEater, projectile.damage / 4, 1f, Main.myPlayer);
+                    Main.projectile[p].melee = false;
+                    Main.projectile[p].ranged = true;
+                }
+                    
             }
         }
 

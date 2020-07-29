@@ -26,21 +26,6 @@ namespace FargowiltasSouls
         public static bool downedAbom;
         public static bool downedMutant;
         public static bool AngryMutant;
-        public static int EyeCount;
-        public static int SlimeCount;
-        public static int EaterCount;
-        public static int BrainCount;
-        public static int BeeCount;
-        public static int SkeletronCount;
-        public static int WallCount;
-        public static int DestroyerCount;
-        public static int PrimeCount;
-        public static int TwinsCount;
-        public static int PlanteraCount;
-        public static int GolemCount;
-        public static int FishronCount;
-        public static int CultistCount;
-        public static int MoonlordCount;
 
         public static bool downedMM;
         public static bool forceMeteor;
@@ -65,21 +50,6 @@ namespace FargowiltasSouls
             downedAbom = false;
             downedMutant = false;
             AngryMutant = false;
-            EyeCount = 0;
-            SlimeCount = 0;
-            EaterCount = 0;
-            BrainCount = 0;
-            BeeCount = 0;
-            SkeletronCount = 0;
-            WallCount = 0;
-            DestroyerCount = 0;
-            PrimeCount = 0;
-            TwinsCount = 0;
-            PlanteraCount = 0;
-            GolemCount = 0;
-            FishronCount = 0;
-            CultistCount = 0;
-            MoonlordCount = 0;
 
             forceMeteor = true;
             skipMutantP1 = 0;
@@ -95,24 +65,6 @@ namespace FargowiltasSouls
 
         public override TagCompound Save()
         {
-            List<int> count = new List<int>
-            {
-                EyeCount,
-                SlimeCount,
-                EaterCount,
-                BrainCount,
-                BeeCount,
-                SkeletronCount,
-                WallCount,
-                DestroyerCount,
-                PrimeCount,
-                TwinsCount,
-                PlanteraCount,
-                GolemCount,
-                FishronCount,
-                CultistCount,
-                MoonlordCount
-            };
 
             List<string> downed = new List<string>();
             if (downedBetsy) downed.Add("betsy");
@@ -136,32 +88,12 @@ namespace FargowiltasSouls
 
             return new TagCompound
             {
-                {"downed", downed}, {"count", count}, {"mutantP1", skipMutantP1}
+                {"downed", downed}, {"mutantP1", skipMutantP1}
             };
         }
 
         public override void Load(TagCompound tag)
         {
-            if (tag.ContainsKey("count"))
-            {
-                IList<int> count = tag.GetList<int>("count");
-                EyeCount = count[0];
-                SlimeCount = count[1];
-                EaterCount = count[2];
-                BrainCount = count[3];
-                BeeCount = count[4];
-                SkeletronCount = count[5];
-                WallCount = count[6];
-                DestroyerCount = count[7];
-                PrimeCount = count[8];
-                TwinsCount = count[9];
-                PlanteraCount = count[10];
-                GolemCount = count[11];
-                FishronCount = count[12];
-                CultistCount = count[13];
-                MoonlordCount = count[14];
-            }
-
             IList<string> downed = tag.GetList<string>("downed");
             downedBetsy = downed.Contains("betsy");
             _downedBoss = downed.Contains("boss");
@@ -187,21 +119,6 @@ namespace FargowiltasSouls
 
         public override void NetReceive(BinaryReader reader)
         {
-            EyeCount = reader.ReadInt32();
-            SlimeCount = reader.ReadInt32();
-            EaterCount = reader.ReadInt32();
-            BrainCount = reader.ReadInt32();
-            BeeCount = reader.ReadInt32();
-            SkeletronCount = reader.ReadInt32();
-            WallCount = reader.ReadInt32();
-            DestroyerCount = reader.ReadInt32();
-            PrimeCount = reader.ReadInt32();
-            TwinsCount = reader.ReadInt32();
-            PlanteraCount = reader.ReadInt32();
-            GolemCount = reader.ReadInt32();
-            FishronCount = reader.ReadInt32();
-            CultistCount = reader.ReadInt32();
-            MoonlordCount = reader.ReadInt32();
             skipMutantP1 = reader.ReadInt32();
 
             BitsByte flags = reader.ReadByte();
@@ -227,21 +144,6 @@ namespace FargowiltasSouls
 
         public override void NetSend(BinaryWriter writer)
         {
-            writer.Write(EyeCount);
-            writer.Write(SlimeCount);
-            writer.Write(EaterCount);
-            writer.Write(BrainCount);
-            writer.Write(BeeCount);
-            writer.Write(SkeletronCount);
-            writer.Write(WallCount);
-            writer.Write(DestroyerCount);
-            writer.Write(PrimeCount);
-            writer.Write(TwinsCount);
-            writer.Write(PlanteraCount);
-            writer.Write(GolemCount);
-            writer.Write(FishronCount);
-            writer.Write(CultistCount);
-            writer.Write(MoonlordCount);
             writer.Write(skipMutantP1);
 
             BitsByte flags = new BitsByte
