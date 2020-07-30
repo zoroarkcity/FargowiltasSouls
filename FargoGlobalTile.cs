@@ -235,13 +235,15 @@ namespace FargowiltasSouls
             return true;
         }
 
+
+
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-            switch(type)
+            if (FargoSoulsWorld.MasochistMode)
             {
-                case TileID.ShadowOrbs:
-                    if (FargoSoulsWorld.MasochistMode)
-                    {
+                switch (type)
+                {
+                    case TileID.ShadowOrbs:
                         //if (!WorldGen.shadowOrbSmashed && !NPC.downedGoblins) FargoSoulsWorld.forceMeteor = true;
                         if (Main.invasionType == 0 && !NPC.downedGoblins && WorldGen.shadowOrbSmashed) //force goblins
                         {
@@ -259,33 +261,44 @@ namespace FargowiltasSouls
                                 }
                             }
                         }
-                    }
-                    break;
+                        break;
 
-                case TileID.DemonAltar:
-                    if (FargoSoulsWorld.MasochistMode && Main.hardMode && Main.invasionType == 0 && !NPC.downedPirates && WorldGen.altarCount > 2)
-                    {
-                        int p = Player.FindClosest(new Vector2(i * 16, j * 16), 0, 0);
-                        if (p != -1 && Main.player[p].statLifeMax2 >= 200)
+                    case TileID.DemonAltar:
+                        if (Main.hardMode && Main.invasionType == 0 && !NPC.downedPirates && WorldGen.altarCount > 2)
                         {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            int p = Player.FindClosest(new Vector2(i * 16, j * 16), 0, 0);
+                            if (p != -1 && Main.player[p].statLifeMax2 >= 200)
                             {
-                                Main.invasionDelay = 0;
-                                Main.StartInvasion(3);
-                            }
-                            else
-                            {
-                                NetMessage.SendData(61, -1, -1, null, p, -1f);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Main.invasionDelay = 0;
+                                    Main.StartInvasion(3);
+                                }
+                                else
+                                {
+                                    NetMessage.SendData(61, -1, -1, null, p, -1f);
+                                }
                             }
                         }
-                    }
-                    break;
+                        break;
 
-                
+                    /*case TileID.Trees:
+                        Player player = Main.player[Main.myPlayer];
 
-                default:
-                    break;
+                        if (player.ZoneJungle && player.ownedProjectileCounts[ProjectileID.BeeHive] == 0)
+                        {
+                            Projectile.NewProjectile(new Vector2(i * 16, j * 16), Vector2.Zero, ProjectileID.BeeHive, 0, 0, player.whoAmI);
+                        }
+
+                        break;*/
+
+                    default:
+                        break;
+                }
             }
+
+
+            
         }
     }
 }

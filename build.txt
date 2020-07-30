@@ -1,5 +1,5 @@
 author = Fargowilta and Terry N. Muse 
-version = 1.3.2.4
+version = 1.4
 displayName = Fargo's Souls Mod
 homepage = http://forums.terraria.org/index.php?threads/fargos-mutant-mod-summons-and-souls.42291/
 weakReferences = ThoriumMod@1.6.2.0, CalamityMod@1.4.2.107, DBZMOD@1.0.9.4, SacredTools@1.1.0.8
@@ -7,5 +7,5 @@ buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*, lib\*, .git\*
 languageVersion = 6
 hideCode = true
 hideResources = true
-modReferences = Fargowiltas@2.1.2
+modReferences = Fargowiltas@2.2.2
 sortAfter = ThoriumMod, CalamityMod, SacredTools, DBZMOD

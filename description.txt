@@ -1,54 +1,18 @@
-NEW UPDATE - V 1.3.3
+NEW UPDATE - V 1.4
 
 
 
 new in beta
--Shroomite mushrooms now only spawn when actually in full stealth (no longer works on mounts, takes a second or 2 to actiavte after standing still)
-
--Destroyed eternity passive regen and boss scaling once and for all
--Pinky is much rarer in Slime Rains
--Flying Fish deal less damage
--Armored bones can replace each other
--Derplings are much smaller, aura is much smaller, aura is bleeding instead of confused, and they drain life while you're inside
--Harpies fire rings of feathers
--Pinky bounces constantly
--Antlions shoot faster, with greater velocity, and from a wider angle, and their attacks no longer drop sand blocks
-
-
-
--Plant enemies can extend farther, Man Eaters and Angry Trappers lunge for you
--Unicorns only leave rainbows when travelling certain speed or jumping
--Giant Shellies spew spikes out if attacked while spinning, no more thorns effect if you get them with melee
--Parrots spawn in the sky in hard mode
--hellhound in hell? e
--Ichor stickers explode into ichor
-
-
-
-
-
-
-
-
--Mother Slime births a Baby Slime every few seconds
--A beehive may spawn when a tree is cut down in the jungle
+-Souls beta now requires mutant beta 
+Version number is now 1.4 POG
+-Moved parrot spawning to the surface jungle during the day
+-Derplings can actually kill you and absorb less life each time
+-Fixed issues with the Shoot method that made the Flying Fish attack from further away than intended. Will also affect several other enemies but probably not too noticeable 
 -Blazing wheels are 50% larger
--Desert Spirit spawns in any desert
--Any critters not placed by the player will become evil instantly at night
--Mothron lays eggs much more often
--Demons spawn during new moons post-EoC
--Blue and White Cultist Archers will sometimes stop and shoot a single Ancient Light projectile
--Pirate Captains now only shoot bullets above 50% HP, but only shoot cannonballs below
--Ice Elementals can spawn during the Frost Legion
--Undead miners throw grenades
--Icy Merman attack twice as fast in water
--Antlions can now move, They will try to move to the lowest location nearby, (a pit)
--Antlions shoot faster and can fire at any angle
-
-
-
-
-
+-Desert Spirits spawns in non corrupt deserts
+-Unicorns only leave rainbows when travelling at max speed, should look a bit better
+-Mothron always spawns with 2 babies at its side
+-Snatchers, Man Eaters,  and Angry Trappers lunge for you
 
 
 
@@ -152,6 +116,16 @@ Emode
 -Wither Beast auras are now regular and not reversed
 -Fake Hearts are slightly off color
 -Jammed no longer teleports projectiles to the corner of the map
+-Destroyed eternity passive regen and boss scaling once and for all
+-Pinky is much rarer in Slime Rains
+-Armored bones can replace each other
+-Derplings are much smaller, aura is much smaller, aura is bleeding instead of confused, and they drain life while you're inside
+-Harpies fire rings of feathers
+-Pinky bounces constantly
+-Antlions shoot faster, with greater velocity, and from a wider angle, and their attacks no longer drop sand blocks
+-Parrots spawn in the sky in hard mode
+-Giant Shellies spew spikes out if attacked while spinning, no more thorns effect if you get them with melee
+-Ichor stickers explode into ichor
 
 
 -Removed Apoth support in SoE
