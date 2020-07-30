@@ -2198,7 +2198,7 @@ namespace FargowiltasSouls
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
         {
-            if (target.type == NPCID.TargetDummy)
+            if (target.type == NPCID.TargetDummy || target.townNPC)
                 return;
 
             OnHitNPCEither(target, damage, knockback, crit, proj.type);
@@ -2646,7 +2646,7 @@ namespace FargowiltasSouls
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
         {
-            if (target.friendly)
+            if (target.type == NPCID.TargetDummy || target.townNPC)
                 return;
 
             OnHitNPCEither(target, damage, knockback, crit);
