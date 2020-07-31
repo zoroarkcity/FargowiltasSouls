@@ -345,6 +345,10 @@ namespace FargowiltasSouls.NPCs
                     npc.scale *= .4f;
                     break;
 
+                case NPCID.BlazingWheel:
+                    npc.scale *= 1.5f;
+                    break;
+
                 #region maso bosses
                 case NPCID.ServantofCthulhu:
                     npc.lifeMax *= 2;
@@ -843,6 +847,11 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.HellArmoredBonesSword:
                             if (Main.rand.Next(5) == 0)
                                 npc.Transform(Main.rand.Next(NPCID.RustyArmoredBonesAxe, NPCID.HellArmoredBonesSword + 1));
+                            break;
+
+                        case NPCID.Mothron:
+                            NPC.NewNPC((int)npc.Center.X - 100, (int)npc.Center.Y, NPCID.MothronSpawn);
+                            NPC.NewNPC((int)npc.Center.X + 100, (int)npc.Center.Y, NPCID.MothronSpawn);
                             break;
 
                         case NPCID.BlueSlime:
@@ -1356,7 +1365,14 @@ namespace FargowiltasSouls.NPCs
 
                         case NPCID.Snatcher:
                         case NPCID.ManEater:
-                            npc.ai[2] += 1f;
+
+                            if (++Counter[0] > 60 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 1000)
+                            {
+                                Player target = Main.player[npc.target];
+                                Vector2 velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 15;
+                                npc.velocity = velocity;
+                                Counter[0] = 0;
+                            }
 
                             if (npc.HasValidTarget && Main.player[npc.target].statLife < 100)
                                 SharkCount = 2;
@@ -1365,6 +1381,14 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.AngryTrapper:
+                            if (++Counter[0] > 60 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 1500)
+                            {
+                                Player target = Main.player[npc.target];
+                                Vector2 velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 15;
+                                npc.velocity = velocity;
+                                Counter[0] = 0;
+                            }
+
                             if (npc.HasValidTarget && Main.player[npc.target].statLife < 180)
                                 SharkCount = 2;
                             else
@@ -1386,14 +1410,20 @@ namespace FargowiltasSouls.NPCs
 
                                 if (Counter[0] > 10)
                                 {
-                                    Main.player[Main.myPlayer].statLife -= 10;
+                                    Player target = Main.player[Main.myPlayer];
+                                    target.statLife -= 5;
+
+                                    if (target.statLife < 0)
+                                    {
+                                        target.KillMe(PlayerDeathReason.ByCustomReason(target.name + " sucked dry."), 999, 0);
+                                    }
 
                                     if (npc.life < npc.lifeMax)
                                     {
-                                        npc.life += 10;
+                                        npc.life += 5;
                                     }
 
-                                    npc.HealEffect(10);
+                                    npc.HealEffect(5);
 
                                     Counter[0] = 0;
                                 }
@@ -1491,19 +1521,6 @@ namespace FargowiltasSouls.NPCs
                                 npc.ai[0] = -2000;
                             }
                             break;
-
-                        case NPCID.Hellhound:
-                            if (npc.lavaWet)
-                            {
-                                //slime ai
-                                npc.aiStyle = 1;
-                                npc.position += npc.velocity;
-                            }
-                            else
-                            {
-                                npc.aiStyle = 26;
-                            }
-                            break;
                         
                         case NPCID.ZombieRaincoat:
                             if (npc.wet)
@@ -1529,7 +1546,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.FlyingFish:
                             Counter[0]++;
                             if (Counter[0] >= 30)
-                                Shoot(npc, 0, 100, 10, ProjectileID.WaterStream, npc.damage / 4, 1, false, true);
+                                Shoot(npc, 0, 250, 10, ProjectileID.WaterStream, npc.damage / 4, 1, false, true);
                             break;
 
                         case NPCID.ArmoredSkeleton:
@@ -2944,26 +2961,47 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.Unicorn:
-                            Counter[0]++;
+
+                            if (Math.Abs(npc.velocity.X) >= 3f)
+                            {
+                                //spawn rainbows in mid jump only
+                                if (Counter[0]++ >= 3)
+                                {
+                                    int direction = npc.velocity.X > 0 ? 1 : -1;
+                                    int p = Projectile.NewProjectile(new Vector2(npc.Center.X - direction * (npc.width / 2), npc.Center.Y), npc.velocity, ProjectileID.RainbowBack, npc.damage / 3, 1);
+                                    if (p < 1000)
+                                    {
+                                        Main.projectile[p].friendly = false;
+                                        Main.projectile[p].hostile = true;
+                                        Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().Rainbow = true;
+                                    }
+
+                                    Counter[0] = 0;
+                                }
+                            }
 
                             //jump initiated
-                            if (npc.velocity.Y <= -6 && !masoBool[0])
+                           /* if (npc.velocity.Y <= -6 && !masoBool[0])
                             {
                                 masoBool[0] = true;
                                 Counter[1] = 20;
                             }
 
                             //spawn rainbows in mid jump only
-                            if (Counter[1] > 0 && Counter[0] >= 3)
+                            if (Counter[1] > 0 && Counter[0]++ >= 3)
                             {
-                                int direction = npc.velocity.X > 0 ? 1 : -1;
-                                int p = Projectile.NewProjectile(new Vector2(npc.Center.X - direction * (npc.width / 2), npc.Center.Y), npc.velocity, ProjectileID.RainbowBack, npc.damage / 3, 1);
-                                if (p < 1000)
+                                if (npc.velocity.Length() > 3)
                                 {
-                                    Main.projectile[p].friendly = false;
-                                    Main.projectile[p].hostile = true;
-                                    Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().Rainbow = true;
+                                    int direction = npc.velocity.X > 0 ? 1 : -1;
+                                    int p = Projectile.NewProjectile(new Vector2(npc.Center.X - direction * (npc.width / 2), npc.Center.Y), npc.velocity, ProjectileID.RainbowBack, npc.damage / 3, 1);
+                                    if (p < 1000)
+                                    {
+                                        Main.projectile[p].friendly = false;
+                                        Main.projectile[p].hostile = true;
+                                        Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().Rainbow = true;
+                                    }
                                 }
+                                
                                 Counter[0] = 0;
                                 Counter[1]--;
 
@@ -2971,7 +3009,7 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     masoBool[0] = false;
                                 }
-                            }
+                            }*/
                             break;
 
                         case NPCID.Reaper:
@@ -4072,6 +4110,8 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.Mothron:
+                       
+
                             if (--Counter[0] < 0)
                             {
                                 Counter[0] = 20 + (int)(100f * npc.life / npc.lifeMax);
@@ -5561,6 +5601,10 @@ namespace FargowiltasSouls.NPCs
 
                                 if (NPC.downedMechBossAny && (noBiome || dungeon))
                                     pool[NPCID.CultistArcherWhite] = .025f;
+
+                                if(jungle)
+                                    pool[NPCID.Parrot] = .05f;
+
                             }
                         }
                         else //night
@@ -5750,6 +5794,11 @@ namespace FargowiltasSouls.NPCs
                     }
                     else if (wideUnderground)
                     {
+                        if (desert && !corruption && !crimson)
+                        {
+                            pool[NPCID.DesertDjinn] = .05f;
+                        }
+
                         if (nearLava)
                         {
                             pool[NPCID.FireImp] = .02f;
@@ -5842,8 +5891,6 @@ namespace FargowiltasSouls.NPCs
                         if (normalSpawn && !AnyBossAlive())
                         {
                             pool[NPCID.AngryNimbus] = .05f;
-                            pool[NPCID.Parrot] = .05f;
-
 
                             if (NPC.downedGolemBoss)
                             {
@@ -8827,7 +8874,7 @@ namespace FargowiltasSouls.NPCs
             if (player.active && !player.dead && npc.direction == (Math.Sign(player.position.X - npc.position.X)) || Stop > 0)
             {
                 //start the pause
-                if (delay != 0 && Stop == 0)
+                if (delay != 0 && Stop == 0 && npc.Distance(player.Center) < distance)
                 {
                     Stop = delay;
 
@@ -8850,27 +8897,31 @@ namespace FargowiltasSouls.NPCs
                 //half way through start attack
                 else if (delay == 0 || Stop == delay / 2)
                 {
-                    Vector2 velocity = Vector2.Normalize(player.Center - npc.Center) * speed;
-                    if (npc.Distance(player.Center) < distance)
-                        velocity = Vector2.Normalize(player.Center - npc.Center) * speed;
-                    else //player too far away now, just shoot straight ahead
-                        velocity = new Vector2(npc.direction * speed, 0);
+                    Vector2 velocity = Vector2.Zero;
 
-                    int p = Projectile.NewProjectile(npc.Center, velocity, proj, dmg, kb, Main.myPlayer);
-                    if (p < 1000)
+                    if (npc.Distance(player.Center) < distance || delay != 0)
                     {
-                        if (recolor)
-                            Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().IsRecolor = true;
-                        if (hostile)
-                        {
-                            Main.projectile[p].friendly = false;
-                            Main.projectile[p].hostile = true;
-                        }
+                        velocity = Vector2.Normalize(player.Center - npc.Center) * speed;
                     }
-                    Counter[0] = 0;
+
+                    if (velocity != Vector2.Zero)
+                    {
+                        int p = Projectile.NewProjectile(npc.Center, velocity, proj, dmg, kb, Main.myPlayer);
+                        if (p < 1000)
+                        {
+                            if (recolor)
+                                Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().IsRecolor = true;
+                            if (hostile)
+                            {
+                                Main.projectile[p].friendly = false;
+                                Main.projectile[p].hostile = true;
+                            }
+                        }
+
+                        Counter[0] = 0;
+                    } 
                 }
             }
-
         }
 
         private void CustomReflect(NPC npc, int dustID, int ratio = 1)
