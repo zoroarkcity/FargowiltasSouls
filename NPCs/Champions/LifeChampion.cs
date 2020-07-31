@@ -51,8 +51,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            cooldownSlot = 1;
-            return true;
+            //cooldownSlot = 1;
+            return false;
         }
 
         public override void AI()
@@ -132,9 +132,9 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     
                     targetPos = player.Center;
-                    targetPos.Y -= 300;
+                    targetPos.Y -= 275;
                     if (npc.Distance(targetPos) > 50)
-                        Movement(targetPos, 0.16f, 24f, true);
+                        Movement(targetPos, 0.18f, 24f, true);
 
                     if (++npc.ai[1] > 180)
                     {
@@ -253,7 +253,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         if (npc.Center.Y < player.Center.Y - 600) //dash ended
                         {
-                            npc.velocity.Y = 0f;
+                            npc.velocity.Y *= -0.25f;
                             npc.localAI[0] = 0f;
 
                             npc.TargetClosest();
@@ -357,7 +357,10 @@ namespace FargowiltasSouls.NPCs.Champions
                 case 7:
                     goto case 0;
 
-                case 8: //deathray spin
+                case 8:
+                    goto case 2;
+
+                case 9: //deathray spin
                     npc.velocity *= 0.95f;
 
                     npc.ai[3] +=  (float)Math.PI * 2 / (npc.localAI[2] == 1 ? -300 : 360);
@@ -370,7 +373,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.ai[1] < 360 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int type = npc.localAI[1] == 1 ? ModContent.ProjectileType<LifeDeathraySmall>() : ModContent.ProjectileType<LifeDeathray>();
-                            int max = npc.localAI[2] == 1 ? 8 : 4;
+                            int max = npc.localAI[2] == 1 ? 6 : 4;
                             for (int i = 0; i < max; i++)
                             {
                                 float offset = (float)Math.PI * 2 / max * i;
@@ -391,9 +394,6 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.netUpdate = true;
                     }
                     break;
-
-                case 9:
-                    goto case 2;
 
                 case 10:
                     goto case 0;
