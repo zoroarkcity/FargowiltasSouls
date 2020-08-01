@@ -720,10 +720,10 @@ namespace FargowiltasSouls.Projectiles
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                for (int i = -1; i <= 1; i++)
+                                for (int i = -2; i <= 2; i++)
                                 {
                                     Projectile.NewProjectile(projectile.Center,
-                                        Vector2.Normalize(projectile.velocity).RotatedBy(MathHelper.ToRadians(5 * i)),
+                                        1.5f * Vector2.Normalize(projectile.velocity).RotatedBy(MathHelper.ToRadians(5 * i)),
                                         ModContent.ProjectileType<PhantasmalBolt2>(), projectile.damage, 0f, Main.myPlayer);
                                 }
                                 projectile.Kill();

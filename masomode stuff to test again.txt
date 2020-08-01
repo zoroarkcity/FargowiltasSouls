@@ -201,3 +201,6 @@ sprites:
 	sparkling adoration
 	big brain minion
 	frigid gemstone
+nerfed ml move speed to the ground
+adjusted ml's homing bolts
+life champ ray spin adjusted

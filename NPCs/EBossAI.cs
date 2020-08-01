@@ -3812,7 +3812,7 @@ namespace FargowiltasSouls.NPCs
             if (Main.player[Main.myPlayer].active && !Main.player[Main.myPlayer].dead && masoStateML >= 0 && masoStateML <= 3)
                 Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<NullificationCurse>(), 2);
 
-            npc.position -= npc.velocity / 3; //SLOW DOWN
+            npc.position -= npc.velocity * 2f / 3f; //SLOW DOWN
 
             /*if (!masoBool[0])
             {
@@ -3920,7 +3920,7 @@ namespace FargowiltasSouls.NPCs
                                         for (int j = 0; j < max; j++)
                                         {
                                             Projectile.NewProjectile(bodyPart.Center,
-                                                2.5f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * 2 / max * j),
+                                                3f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * 2 / max * j),
                                                 ProjectileID.NebulaLaser, damage, 0f, Main.myPlayer);
                                         }
 
