@@ -10,16 +10,14 @@ namespace FargowiltasSouls.Projectiles.Masomode
 {
     public class FragmentRitual : ModProjectile
     {
-        public override string Texture => "FargowiltasSouls/Projectiles/Masomode/CelestialFragment";
-
         private const float PI = (float)Math.PI;
         private const float rotationPerTick = PI / 140f;
-        private const float threshold = 700f;
+        private const float threshold = 600f;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lunar Ritual");
-            Main.projFrames[projectile.type] = 4;
+            Main.projFrames[projectile.type] = 5;
         }
 
         public override void SetDefaults()
@@ -55,7 +53,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
 
             projectile.timeLeft = 2;
-            projectile.scale = (1f - projectile.alpha / 255f) * 1.25f + (Main.mouseTextColor / 200f - 0.35f) * 0.2f; //throbbing
+            projectile.scale = (1f - projectile.alpha / 255f) * 1.5f + (Main.mouseTextColor / 200f - 0.35f) * 0.25f; //throbbing
             if (projectile.scale < 0.1f) //clamp scale
                 projectile.scale = 0.1f;
             projectile.ai[0] += rotationPerTick;
@@ -66,7 +64,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
             projectile.rotation = projectile.ai[0];
 
-            projectile.hide = NPCs.EModeGlobalNPC.masoStateML == 4;
+            projectile.hide = Main.npc[ai1].ai[0] == 2f; //hide when ml is dead
+
+            projectile.localAI[0] = Main.npc[ai1].GetGlobalNPC<NPCs.EModeGlobalNPC>().Counter[0] / 112.5f; //number to hide
+            projectile.localAI[0] /= 4f;
+            projectile.localAI[0]--;
 
             switch (NPCs.EModeGlobalNPC.masoStateML) //match ML vulnerability to fragment
             {
@@ -74,8 +76,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 case 1: projectile.frame = 2; break;
                 case 2: projectile.frame = 0; break;
                 case 3: projectile.frame = 3; break;
-                default:
-                    break;
+                default: projectile.frame = 4; break;
             }
             /*projectile.frameCounter++;
             if (projectile.frameCounter >= 6)
@@ -102,9 +103,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
             Color color26 = projectile.GetAlpha(lightColor);
 
-            const int max = 16;
+            const int max = 24;
             for (int x = 0; x < max; x++)
             {
+                if (x % 4 < projectile.localAI[0])
+                    continue;
                 Vector2 drawOffset = new Vector2(threshold * projectile.scale / 2f, 0f).RotatedBy(projectile.ai[0]);
                 drawOffset = drawOffset.RotatedBy(2f * PI / max * x);
                 /*const int max = 4;

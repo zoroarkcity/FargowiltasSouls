@@ -3855,7 +3855,7 @@ namespace FargowiltasSouls.NPCs
                                         {
                                             Projectile.NewProjectile(bodyPart.Center,
                                                 6f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI / 2 / 3 * j),
-                                                ProjectileID.CultistBossFireBall, damage, 0f, Main.myPlayer);
+                                                ModContent.ProjectileType<MoonLordFireball>(), damage, 0f, Main.myPlayer, 20, 20 + 60);
                                         }
                                     }
                                 }

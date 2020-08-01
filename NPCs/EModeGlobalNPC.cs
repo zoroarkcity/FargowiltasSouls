@@ -6765,6 +6765,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.MoonLordCore:
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<GalacticGlobe>());
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LunarOre, 100);
                         //npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<LunarCrystal>(), Main.rand.Next(10) + 5);
                         break;
 

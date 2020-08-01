@@ -203,4 +203,9 @@ sprites:
 	frigid gemstone
 nerfed ml move speed to the ground
 adjusted ml's homing bolts
+ml spheres slower accel and laser telegraph
+ml fireballs pause and then shoot
+ml drops more luminite in emode
+ml fragment ring counts down to phase change
 life champ ray spin adjusted
+changed deviantt medusa telegraph
