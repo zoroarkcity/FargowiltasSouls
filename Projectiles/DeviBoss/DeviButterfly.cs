@@ -9,13 +9,15 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 {
     public class DeviButterfly : ModProjectile
     {
+        public override string Texture => "Terraria/NPC_205";
+
         public bool drawLoaded;
         public int drawBase;
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Butterfly");
-            Main.projFrames[projectile.type] = 24;
+            DisplayName.SetDefault("Moth");
+            Main.projFrames[projectile.type] = Main.npcFrameCount[NPCID.Moth];//24;
         }
 
         public override void SetDefaults()
@@ -28,7 +30,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             projectile.penetrate = -1;
             projectile.tileCollide = false;
 
-            projectile.scale = 2f;
+            //projectile.scale = 2f;
             projectile.hide = true;
         }
 
@@ -113,7 +115,19 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
             projectile.direction = projectile.spriteDirection = Math.Sign(projectile.velocity.X);
 
-            if (projectile.frame < drawBase)
+            projectile.frameCounter++;
+            if (projectile.frameCounter < 4)
+                projectile.frame = 0;
+            else if (projectile.frameCounter < 8)
+                projectile.frame = 1;
+            else if (projectile.frameCounter < 12)
+                projectile.frame = 2;
+            else if (projectile.frameCounter < 16)
+                projectile.frame = 1;
+            else
+                projectile.frameCounter = 0;
+
+            /*if (projectile.frame < drawBase)
                 projectile.frame = drawBase;
 
             if (++projectile.frameCounter > 6)
@@ -122,7 +136,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
                 if (++projectile.frame >= drawBase + 3)
                     projectile.frame = drawBase;
-            }
+            }*/
         }
 
         public override bool CanDamage()
