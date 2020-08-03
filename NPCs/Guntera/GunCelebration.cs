@@ -76,6 +76,9 @@ namespace FargowiltasSouls.NPCs.Guntera
             if (npc.rotation < bottom)
                 npc.rotation += (float)Math.PI * 2;
 
+            npc.damage = npc.defDamage;
+            npc.defense = npc.defDefense;
+
             npc.localAI[1]++;
             if (npc.life < npc.lifeMax * 0.9 || Main.npc[ai0].life < Main.npc[ai0].lifeMax * 0.9)
                 npc.localAI[1]++;
@@ -92,7 +95,11 @@ namespace FargowiltasSouls.NPCs.Guntera
             if (npc.life < npc.lifeMax * 0.5 || Main.npc[ai0].life < Main.npc[ai0].lifeMax * 0.5)
                 npc.localAI[1]++;
             if (!Main.player[npc.target].ZoneJungle || (double)Main.player[npc.target].position.Y < Main.worldSurface * 16.0 || Main.player[npc.target].position.Y > (double)((Main.maxTilesY - 200) * 16))
+            {
                 npc.localAI[1] += 3;
+                npc.damage = npc.defDamage * 10;
+                npc.defense = npc.defDefense * 10;
+            }
 
             if (npc.localAI[1] > 80)
             {
@@ -111,6 +118,11 @@ namespace FargowiltasSouls.NPCs.Guntera
                         npc.Distance(Main.player[npc.target].Center) / speedModifier);
                 }
             }
+        }
+
+        public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+        {
+            projectile.timeLeft = 0;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

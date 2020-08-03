@@ -80,12 +80,17 @@ namespace FargowiltasSouls.NPCs.Guntera
             bool flag1 = false;
             bool flag2 = false;
 
+            npc.damage = npc.defDamage;
+            npc.defense = npc.defDefense;
+
             if (Main.player[Main.npc[ai3].target].dead)
                 flag2 = true;
             if (((ai3 != -1 && !Main.player[Main.npc[ai3].target].ZoneJungle || (double)Main.player[Main.npc[ai3].target].position.Y < Main.worldSurface * 16.0 ? 1 : (Main.player[Main.npc[ai3].target].position.Y > (double)((Main.maxTilesY - 200) * 16) ? 1 : 0)) | (flag2 ? 1 : 0)) != 0)
             {
                 npc.localAI[0] -= 4f;
                 flag1 = true;
+                npc.damage = npc.defDamage * 10;
+                npc.defense = npc.defDefense * 10;
             }
             if (Main.netMode == 1)
             {

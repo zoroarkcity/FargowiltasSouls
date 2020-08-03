@@ -25,7 +25,7 @@ namespace FargowiltasSouls.NPCs.Guntera
             npc.height = 24;
             npc.damage = 400;
             npc.defense = 100;
-            npc.lifeMax = 15000;
+            npc.lifeMax = 1500000;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
             npc.noGravity = true;
@@ -39,6 +39,12 @@ namespace FargowiltasSouls.NPCs.Guntera
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
         }
 
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            cooldownSlot = 0;
+            return true;
+        }
+
         public override void AI()
         {
             npc.timeLeft = 60;
@@ -49,6 +55,11 @@ namespace FargowiltasSouls.NPCs.Guntera
                 npc.active = false;
                 return;
             }
+
+            npc.position += Main.npc[ai2].velocity;
+
+            npc.damage = npc.defDamage;
+            npc.defense = npc.defDefense;
 
             int ai3 = (int)npc.ai[3];
             if (Main.netMode != 1)
@@ -136,6 +147,46 @@ namespace FargowiltasSouls.NPCs.Guntera
                 return;
             npc.spriteDirection = -1;
             npc.rotation = (float)Math.Atan2((double)num12, (double)num11) + 3.14f;
+
+            if (!Main.player[npc.target].ZoneJungle || (double)Main.player[npc.target].position.Y < Main.worldSurface * 16.0 || Main.player[npc.target].position.Y > (double)((Main.maxTilesY - 200) * 16))
+            {
+                npc.damage = npc.defDamage * 10;
+                npc.defense = npc.defDefense * 10;
+            }
+
+            npc.localAI[1]++;
+            if (npc.life < npc.lifeMax * 0.9 || Main.npc[ai2].life < Main.npc[ai2].lifeMax * 0.9)
+                npc.localAI[1]++;
+            npc.localAI[1]++;
+            if (npc.life < npc.lifeMax * 0.8 || Main.npc[ai2].life < Main.npc[ai2].lifeMax * 0.8)
+                npc.localAI[1]++;
+            npc.localAI[1]++;
+            if (npc.life < npc.lifeMax * 0.7 || Main.npc[ai2].life < Main.npc[ai2].lifeMax * 0.7)
+                npc.localAI[1]++;
+            npc.localAI[1]++;
+            if (npc.life < npc.lifeMax * 0.6 || Main.npc[ai2].life < Main.npc[ai2].lifeMax * 0.6)
+                npc.localAI[1]++;
+            npc.localAI[1]++;
+            if (npc.life < npc.lifeMax * 0.5 || Main.npc[ai2].life < Main.npc[ai2].lifeMax * 0.5)
+                npc.localAI[1]++;
+            if (!Main.player[npc.target].ZoneJungle || (double)Main.player[npc.target].position.Y < Main.worldSurface * 16.0 || Main.player[npc.target].position.Y > (double)((Main.maxTilesY - 200) * 16))
+            {
+                npc.localAI[1] += 3;
+                npc.damage = npc.defDamage * 10;
+                npc.defense = npc.defDefense * 10;
+            }
+
+            if (npc.localAI[1] > 80)
+            {
+                npc.localAI[1] = Main.rand.Next(-20, 20);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    float speedModifier = Main.rand.NextFloat(2, 20f);
+                    Projectile.NewProjectile(npc.Center, npc.DirectionTo(Main.player[npc.target].Center) * speedModifier,
+                        ModContent.ProjectileType<GunteraBullet>(), npc.damage / 4, 0f, Main.myPlayer,
+                        npc.Distance(Main.player[npc.target].Center) / speedModifier);
+                }
+            }
         }
 
         public override void FindFrame(int frameHeight)

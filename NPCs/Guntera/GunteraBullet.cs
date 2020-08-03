@@ -23,6 +23,7 @@ namespace FargowiltasSouls.NPCs.Guntera
             projectile.light = 0.5f;
             projectile.scale = 1.2f;
             projectile.extraUpdates = 1;
+            cooldownSlot = 1;
         }
 
         public override void AI()

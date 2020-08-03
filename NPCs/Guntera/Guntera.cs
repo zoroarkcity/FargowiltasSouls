@@ -62,6 +62,9 @@ namespace FargowiltasSouls.NPCs.Guntera
                 NetMessage.SendData(MessageID.SyncNPC, number: npc.whoAmI);
             }
 
+            npc.damage = npc.defDamage;
+            npc.defense = npc.defDefense;
+
             if (npc.localAI[1] == 0 && npc.life < npc.lifeMax * 0.4f)
             {
                 npc.localAI[1] = 1;
@@ -183,6 +186,9 @@ namespace FargowiltasSouls.NPCs.Guntera
                 flag1 = true;
                 num5 += 8f;
                 num6 = 0.15f;
+
+                npc.damage = npc.defDamage * 10;
+                npc.defense = npc.defDefense * 10;
             }
             if (Main.expertMode)
             {
