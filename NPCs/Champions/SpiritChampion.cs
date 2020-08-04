@@ -649,7 +649,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override bool CheckDead()
         {
-            if (npc.ai[0] != -3f)
+            if (npc.ai[0] != -3f && FargoSoulsWorld.MasochistMode)
             {
                 npc.active = true;
                 npc.life = 1;

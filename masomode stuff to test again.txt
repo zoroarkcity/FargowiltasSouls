@@ -210,3 +210,5 @@ ml fragment ring counts down to phase change
 life champ ray spin adjusted
 changed deviantt medusa telegraph
 champion of nature sprite and enrage
+cosmos, timber, terra, shadow, spirit final phase are emode only
+nature, spirit, will arenas are emode only

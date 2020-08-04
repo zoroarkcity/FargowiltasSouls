@@ -492,7 +492,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/TimberGore" + i.ToString()), npc.scale);
                 }
 
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (Main.netMode != NetmodeID.MultiplayerClient && FargoSoulsWorld.MasochistMode)
                 {
                     int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<TimberChampionHead>());
                     if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
@@ -503,7 +503,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override bool PreNPCLoot()
         {
-            return false;
+            return !FargoSoulsWorld.MasochistMode;
         }
 
         public override void BossLoot(ref string name, ref int potionType)
@@ -511,7 +511,7 @@ namespace FargowiltasSouls.NPCs.Champions
             potionType = ItemID.SuperHealingPotion;
         }
 
-        /*public override void NPCLoot()
+        public override void NPCLoot()
         {
             FargoSoulsWorld.downedChampions[0] = true;
             if (Main.netMode == NetmodeID.Server)
@@ -540,7 +540,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 lastDrop = thisDrop;
                 Item.NewItem(npc.position, npc.Size, drops[thisDrop]);
             }
-        }*/
+        }
 
         public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
         {

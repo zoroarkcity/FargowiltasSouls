@@ -465,6 +465,8 @@ namespace FargowiltasSouls.NPCs.Champions
             frameModifier += 3;*/
 
             npc.frame.Y = 0;
+            if (!npc.HasValidTarget)
+                npc.frame.Y = frameHeight * 3;
 
             switch ((int)npc.ai[0])
             {

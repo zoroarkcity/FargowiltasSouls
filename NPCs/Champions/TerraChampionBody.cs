@@ -49,6 +49,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
             npc.scale *= 1.25f;
             npc.trapImmune = true;
+            npc.dontCountMe = true;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)

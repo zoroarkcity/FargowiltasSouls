@@ -124,7 +124,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 }
             }
 
-            if (npc.localAI[2] < 2 && npc.ai[0] != -2 && npc.life < npc.lifeMax * .2)
+            if (FargoSoulsWorld.MasochistMode && npc.localAI[2] < 2 && npc.ai[0] != -2 && npc.life < npc.lifeMax * .2)
             {
                 npc.ai[0] = -2;
                 npc.ai[1] = 0;

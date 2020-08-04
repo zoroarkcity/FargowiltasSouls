@@ -191,9 +191,9 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.noTileCollide = true;
                         npc.noGravity = true;
 
-                        if (Math.Abs(player.Center.X - npc.Center.X) < npc.width / 2)
+                        if (npc.position.X < player.Center.X && player.Center.X < npc.position.X + npc.width)
                         {
-                            npc.velocity.X *= 0.9f;
+                            npc.velocity.X *= 0.92f;
                             if (Math.Abs(npc.velocity.X) < 0.1f)
                                 npc.velocity.X = 0f;
                         }
@@ -209,7 +209,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 if (Math.Abs(npc.velocity.X) > 2)
                                     npc.velocity.X *= 0.97f;
                             }*/
-                            if (npc.direction > 0)
+                            if (player.Center.X > npc.Center.X)
                                 npc.velocity.X = (npc.velocity.X * 20 + accel) / 21;
                             else
                                 npc.velocity.X = (npc.velocity.X * 20 - accel) / 21;
@@ -523,14 +523,25 @@ namespace FargowiltasSouls.NPCs.Champions
                     goto case 0;
             }
 
-            if (npc.HasValidTarget && npc.Distance(player.Center) > 1400 && Vector2.Distance(npc.Center, player.Center) < 3000f 
-                && player.Center.Y > Main.worldSurface * 16 && !player.ZoneUnderworldHeight && npc.ai[0] > 1 && npc.ai[0] != 9) //enrage
+            if (FargoSoulsWorld.MasochistMode)
             {
-                npc.ai[0] = 1;
-                npc.ai[1] = 0;
-                npc.ai[2] = 0;
-                npc.ai[3] = 1; //marks enrage jump
-                npc.netUpdate = true;
+                if (npc.HasValidTarget && npc.Distance(player.Center) > 1400 && Vector2.Distance(npc.Center, player.Center) < 3000f
+                  && player.Center.Y > Main.worldSurface * 16 && !player.ZoneUnderworldHeight && npc.ai[0] > 1 && npc.ai[0] != 9) //enrage
+                {
+                    npc.ai[0] = 1;
+                    npc.ai[1] = 0;
+                    npc.ai[2] = 0;
+                    npc.ai[3] = 1; //marks enrage jump
+                    npc.netUpdate = true;
+                }
+
+                Vector2 dustOffset = Vector2.Normalize(player.Center - npc.Center) * 1400;
+                for (int i = 0; i < 20; i++) //dust ring for enrage range
+                {
+                    int d = Dust.NewDust(npc.Center + dustOffset.RotatedByRandom(2 * Math.PI), 0, 0, 59, Scale: 2f);
+                    Main.dust[d].velocity = npc.velocity;
+                    Main.dust[d].noGravity = true;
+                }
             }
         }
 
@@ -570,8 +581,8 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             if (npc.velocity == Vector2.Zero)
             {
-                if (npc.frame.Y < frameHeight * 7)
-                    npc.frame.Y = frameHeight * 7;
+                if (npc.frame.Y < frameHeight * 8)
+                    npc.frame.Y = frameHeight * 8;
 
                 if (++npc.frameCounter > 5)
                 {
@@ -580,7 +591,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 }
 
                 if (npc.frame.Y >= Main.npcFrameCount[npc.type] * frameHeight)
-                    npc.frame.Y = frameHeight * 7;
+                    npc.frame.Y = frameHeight * 8;
             }
             else
             {

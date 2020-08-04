@@ -125,7 +125,7 @@ namespace FargowiltasSouls.NPCs.Champions
             if (npc.HasValidTarget && player.Center.Y >= Main.worldSurface * 16 && !player.ZoneUnderworldHeight)
                 npc.timeLeft = 600;
 
-            if (npc.ai[1] != -1 && npc.life < npc.lifeMax / 10)
+            if (FargoSoulsWorld.MasochistMode && npc.ai[1] != -1 && npc.life < npc.lifeMax / 10)
             {
                 Main.PlaySound(SoundID.ForceRoar, player.Center, -1);
                 npc.life = npc.lifeMax / 10;
@@ -158,11 +158,11 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     npc.rotation = npc.DirectionTo(player.Center).ToRotation();
 
-                    if (++npc.localAI[0] > 40)
+                    if (++npc.localAI[0] > 50)
                     {
                         npc.localAI[0] = 0;
 
-                        if (npc.localAI[1] > 30 && npc.localAI[1] < 330) //dont shoot while orb is exploding
+                        if (npc.localAI[1] > 120) //dont shoot while orb is exploding
                         {
                             Main.PlaySound(SoundID.Item12, npc.Center);
 
