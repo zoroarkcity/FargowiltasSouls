@@ -124,10 +124,10 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     if (--npc.localAI[0] < 0)
                     {
-                        npc.localAI[0] = 53;
+                        npc.localAI[0] = 47;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            int max = 12;
+                            int max = 14;
                             float rotation = Main.rand.NextFloat((float)Math.PI * 2);
                             for (int i = 0; i < max; i++)
                             {
