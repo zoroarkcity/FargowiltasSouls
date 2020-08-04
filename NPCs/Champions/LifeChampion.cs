@@ -51,8 +51,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            //cooldownSlot = 1;
-            return false;
+            cooldownSlot = 1;
+            return true;
         }
 
         public override void AI()
@@ -83,10 +83,104 @@ namespace FargowiltasSouls.NPCs.Champions
 
             switch ((int)npc.ai[0])
             {
-                case -1: //heal
-                    npc.localAI[2] = 1;
+                case -3: //final phase
+                    if (!Main.dayTime || !player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f) //despawn code
+                    {
+                        npc.TargetClosest(false);
+                        if (npc.timeLeft > 30)
+                            npc.timeLeft = 30;
 
+                        npc.noTileCollide = true;
+                        npc.noGravity = true;
+                        npc.velocity.Y -= 1f;
+
+                        break;
+                    }
+
+                    npc.velocity = Vector2.Zero;
+
+                    npc.ai[1] -= (float)Math.PI * 2 / 447;
+                    npc.ai[3] += (float)Math.PI * 2 / 447; //spin deathrays both ways
+
+                    if (--npc.ai[2] < 0)
+                    {
+                        npc.localAI[1] = npc.localAI[1] == 0 ? 1 : 0;
+                        npc.ai[2] = npc.localAI[1] == 1 ? 90 : 30;
+
+                        if (npc.ai[1] < 360 && Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int type = npc.localAI[1] == 1 ? ModContent.ProjectileType<LifeDeathraySmall2>() : ModContent.ProjectileType<LifeDeathray2>();
+                            int max = 3;
+                            for (int i = 0; i < max; i++)
+                            {
+                                float offset = (float)Math.PI * 2 / max * i;
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.ai[3] + offset),
+                                    type, npc.damage / 4, 0f, Main.myPlayer, (float)Math.PI * 2 / 447, npc.whoAmI);
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(npc.ai[1] + offset),
+                                    type, npc.damage / 4, 0f, Main.myPlayer, -(float)Math.PI * 2 / 447, npc.whoAmI);
+                            }
+                        }
+                    }
+
+                    if (--npc.localAI[0] < 0)
+                    {
+                        npc.localAI[0] = 53;
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int max = 12;
+                            float rotation = Main.rand.NextFloat((float)Math.PI * 2);
+                            for (int i = 0; i < max; i++)
+                            {
+                                Projectile.NewProjectile(npc.Center, new Vector2(4f, 0).RotatedBy(rotation + Math.PI / max * 2 * i),
+                                    ModContent.ProjectileType<ChampionBee>(), npc.damage / 4, 0f, Main.myPlayer);
+                            }
+                        }
+                    }
+                    break;
+
+                case -2: //final phase transition
                     npc.velocity *= 0.97f;
+
+                    if (npc.ai[1] > 180)
+                    {
+                        npc.localAI[0] = 0;
+                        npc.localAI[2] = 2;
+                    }
+
+                    if (++npc.ai[1] == 180) //heal up
+                    {
+                        Main.PlaySound(SoundID.Roar, npc.Center, 2); //arte scream
+
+                        int heal = npc.lifeMax / 3 - npc.life;
+                        npc.life += heal;
+                        CombatText.NewText(npc.Hitbox, CombatText.HealLife, heal);
+
+                        const int num226 = 80;
+                        for (int num227 = 0; num227 < num226; num227++)
+                        {
+                            Vector2 vector6 = Vector2.UnitX * 40f;
+                            vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + npc.Center;
+                            Vector2 vector7 = vector6 - npc.Center;
+                            int num228 = Dust.NewDust(vector6 + vector7, 0, 0, 174, 0f, 0f, 0, default(Color), 3f);
+                            Main.dust[num228].noGravity = true;
+                            Main.dust[num228].velocity = vector7;
+                        }
+                    }
+                    else if (npc.ai[1] > 240)
+                    {
+                        npc.ai[0] = -3;
+                        npc.ai[1] = npc.DirectionTo(player.Center).ToRotation();
+                        npc.ai[2] = 0;
+                        npc.ai[3] = npc.DirectionTo(player.Center).ToRotation();
+                        npc.netUpdate = true;
+                    }
+                    break;
+
+                case -1: //heal
+                    npc.velocity *= 0.97f;
+
+                    if (npc.ai[1] > 180)
+                        npc.localAI[2] = 1;
 
                     if (++npc.ai[1] == 180) //heal up
                     {
@@ -118,7 +212,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case 0: //float over player
-                    if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f) //despawn code
+                    if (!Main.dayTime || !player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f) //despawn code
                     {
                         npc.TargetClosest(false);
                         if (npc.timeLeft > 30)
@@ -136,7 +230,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.18f, 24f, true);
 
-                    if (++npc.ai[1] > 180)
+                    if (++npc.ai[1] > 150)
                     {
                         npc.TargetClosest();
                         npc.ai[0]++;
@@ -146,13 +240,23 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.netUpdate = true;
                     }
 
-                    if (npc.localAI[2] == 0 && npc.life < npc.lifeMax / 2)
+                    if (npc.localAI[2] == 0 && npc.life < npc.lifeMax / 3)
                     {
                         float buffer = npc.ai[0];
                         npc.ai[0] = -1;
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = buffer;
+                        npc.netUpdate = true;
+                    }
+
+                    if (npc.localAI[2] == 1 && npc.life < npc.lifeMax / 3 && FargoSoulsWorld.MasochistMode)
+                    {
+                        npc.ai[0] = -2;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
                     }
                     break;
 
@@ -489,6 +593,13 @@ namespace FargowiltasSouls.NPCs.Champions
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
             damage /= 10;
+            if ((npc.localAI[2] == 0 && npc.life < npc.lifeMax / 3)
+                || (npc.localAI[2] == 1 && npc.life < npc.lifeMax / 3 && FargoSoulsWorld.MasochistMode))
+            {
+                damage = 1;
+                crit = false;
+                return false;
+            }
             return true;
         }
 
