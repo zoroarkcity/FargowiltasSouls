@@ -17,15 +17,13 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Nature");
-            Main.npcFrameCount[npc.type] = 6;
-            NPCID.Sets.TrailCacheLength[npc.type] = 6;
-            NPCID.Sets.TrailingMode[npc.type] = 1;
+            Main.npcFrameCount[npc.type] = 4;
         }
 
         public override void SetDefaults()
         {
-            npc.width = 100;
-            npc.height = 100;
+            npc.width = 80;
+            npc.height = 80;
             npc.damage = 130;
             npc.defense = 150;
             npc.lifeMax = 700000;
@@ -84,7 +82,10 @@ namespace FargowiltasSouls.NPCs.Champions
             Player player = Main.player[npc.target];
             Vector2 targetPos;
 
-            npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
+            if (player.Center.X < npc.position.X)
+                npc.direction = npc.spriteDirection = -1;
+            else if (player.Center.X > npc.position.X + npc.width)
+                npc.direction = npc.spriteDirection = 1;
             npc.rotation = 0;
             
             switch ((int)npc.ai[0])
@@ -333,7 +334,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 speed *= 14f;
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(npc.Center + speed * 5, speed,
+                                    Projectile.NewProjectile(npc.Center + speed * 5 + Vector2.UnitY * 10, speed,
                                         ModContent.ProjectileType<NatureBullet>(), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
@@ -397,6 +398,11 @@ namespace FargowiltasSouls.NPCs.Champions
                     npc.ai[0] = 0;
                     goto case 0;
             }
+
+            if (npc.Distance(body.Center) > 1400) //try to prevent going too far from body, will cause neck to disappear
+            {
+                npc.Center = body.Center + body.DirectionTo(npc.Center) * 1400f;
+            }
         }
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
@@ -453,16 +459,52 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void FindFrame(int frameHeight)
         {
-            int frameModifier = (int)npc.ai[3];
+            /*int frameModifier = (int)npc.ai[3];
             if (frameModifier > 0)
                 frameModifier--;
-            frameModifier += 3;
+            frameModifier += 3;*/
 
-            npc.frame.Y = frameHeight * frameModifier;
-            if (npc.frame.Y < 0)
-                npc.frame.Y = 0;
-            if (npc.frame.Y >= frameHeight * Main.npcFrameCount[npc.type])
-                npc.frame.Y = frameHeight * (Main.npcFrameCount[npc.type] - 1);
+            npc.frame.Y = 0;
+
+            switch ((int)npc.ai[0])
+            {
+                case -3: //crimson
+                    if (npc.ai[2] > 60) //ichor periodically
+                        npc.frame.Y = frameHeight;
+                    break;
+
+                case -2: //molten
+                    if (npc.localAI[0] > 240) //stay near
+                        npc.frame.Y = frameHeight * 2;
+                    break;
+
+                case -1: //rain
+                    if (npc.localAI[1] < 20)
+                        npc.frame.Y = frameHeight;
+                    break;
+
+                case 1: //frost
+                    if (npc.ai[2] > 30)
+                        npc.frame.Y = frameHeight;
+                    break;
+
+                case 2: //chlorophyte
+                    npc.frame.Y = frameHeight * 2;
+                    break;
+
+                case 3: //shroomite
+                    if (npc.ai[2] < 20 && npc.localAI[0] > 60)
+                        npc.frame.Y = frameHeight;
+                    break;
+
+                case 4: //deathrays
+                    if (npc.ai[2] > 90)
+                        npc.frame.Y = frameHeight * 2;
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
@@ -472,39 +514,6 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            if (npc.ai[1] > -1 && npc.ai[1] < Main.maxNPCs && Main.npc[(int)npc.ai[1]].active
-                && Main.npc[(int)npc.ai[1]].type == ModContent.NPCType<NatureChampion>())
-            {
-                Texture2D texture = Main.chainTexture;
-                Vector2 position = npc.Center;
-                Vector2 mountedCenter = Main.npc[(int)npc.ai[1]].Center;
-                Rectangle? sourceRectangle = new Rectangle?();
-                Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-                float num1 = texture.Height;
-                Vector2 vector24 = mountedCenter - position;
-                float rotation = (float)Math.Atan2(vector24.Y, vector24.X) - 1.57f;
-                bool flag = true;
-                if (float.IsNaN(position.X) && float.IsNaN(position.Y))
-                    flag = false;
-                if (float.IsNaN(vector24.X) && float.IsNaN(vector24.Y))
-                    flag = false;
-                while (flag)
-                    if (vector24.Length() < num1 + 1.0)
-                    {
-                        flag = false;
-                    }
-                    else
-                    {
-                        Vector2 vector21 = vector24;
-                        vector21.Normalize();
-                        position += vector21 * num1;
-                        vector24 = mountedCenter - position;
-                        Color color2 = Lighting.GetColor((int)position.X / 16, (int)(position.Y / 16.0));
-                        color2 = npc.GetAlpha(color2);
-                        Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0.0f);
-                    }
-            }
-
             Texture2D texture2D13 = Main.npcTexture[npc.type];
             //int num156 = Main.npcTexture[npc.type].Height / Main.npcFrameCount[npc.type]; //ypos of lower right corner of sprite to draw
             //int y3 = num156 * npc.frame.Y; //ypos of upper left corner of sprite to draw
@@ -516,16 +525,16 @@ namespace FargowiltasSouls.NPCs.Champions
 
             SpriteEffects effects = npc.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
-            {
-                Color color27 = color26 * 0.5f;
-                color27 *= (float)(NPCID.Sets.TrailCacheLength[npc.type] - i) / NPCID.Sets.TrailCacheLength[npc.type];
-                Vector2 value4 = npc.oldPos[i];
-                float num165 = npc.rotation; //npc.oldRot[i];
-                Main.spriteBatch.Draw(texture2D13, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
-            }
+            int glow = (int)npc.ai[3];
+            if (glow > 0)
+                glow--;
+            glow += 3;
+            Texture2D texture2D14 = mod.GetTexture("NPCs/Champions/NatureChampionHead_Glow" + glow.ToString());
 
+            float scale = (Main.mouseTextColor / 200f - 0.35f) * 0.4f + 0.8f;
+            Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor) * 0.5f, npc.rotation, origin2, npc.scale * scale, effects, 0f);
             Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
+            Main.spriteBatch.Draw(texture2D14, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, npc.rotation, origin2, npc.scale, effects, 0f);
             return false;
         }
     }

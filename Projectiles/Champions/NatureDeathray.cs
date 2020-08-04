@@ -111,8 +111,13 @@ namespace FargowiltasSouls.Projectiles.Champions
             Main.npc[(int)projectile.ai[1]].direction = Main.npc[(int)projectile.ai[1]].spriteDirection = projectile.velocity.X > 0 ? 1 : -1;
             if (projectile.velocity.X < 0)
             {
-                Main.npc[(int)projectile.ai[1]].rotation += (float)Math.PI;
+                Main.npc[(int)projectile.ai[1]].rotation += (float)Math.PI * 1.25f;
             }
+            else
+            {
+                Main.npc[(int)projectile.ai[1]].rotation -= (float)Math.PI * .25f;
+            }
+            projectile.position += new Vector2(14 * Main.npc[(int)projectile.ai[1]].spriteDirection, 28).RotatedBy(Main.npc[(int)projectile.ai[1]].rotation);
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
