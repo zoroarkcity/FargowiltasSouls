@@ -101,8 +101,17 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             target.AddBuff(BuffID.Lovestruck, 300);
         }
 
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            damage *= 3;
+            crit = true;
+        }
+
         public override void Kill(int timeleft)
         {
+            if (!Main.dedServ && Main.LocalPlayer.active)
+                Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 30;
+
             Main.PlaySound(SoundID.NPCKilled, projectile.Center, 6);
             Main.PlaySound(SoundID.Item92, projectile.Center);
 

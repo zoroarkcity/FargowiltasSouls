@@ -44,7 +44,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             {
                 projectile.localAI[0] = 1;
                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                    Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity), mod.ProjectileType("MutantDeathraySmall"), projectile.damage, 0f, projectile.owner);
+                    Projectile.NewProjectile(projectile.Center + projectile.velocity * projectile.timeLeft, Vector2.Normalize(projectile.velocity), mod.ProjectileType("MutantDeathraySmall"), projectile.damage, 0f, projectile.owner);
             }
             //projectile.velocity *= 0.96f;
 

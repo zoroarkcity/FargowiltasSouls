@@ -826,6 +826,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
                             if (++npc.ai[1] > 35)
                             {
+                                if (!Main.dedServ && Main.LocalPlayer.active)
+                                    Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 30;
+
                                 npc.ai[0] = 0;
                                 npc.ai[1] = 0;
                                 npc.ai[2] = 0;

@@ -30,7 +30,7 @@ namespace FargowiltasSouls
         public float wingTimeModifier;
 
         public bool FreeEaterSummon = true;
-
+        public int Screenshake;
 
         public bool Wood;
         public bool QueenStinger;
@@ -569,6 +569,8 @@ namespace FargowiltasSouls
             }
 
             AttackSpeed = 1f;
+            if (Screenshake > 0)
+                Screenshake--;
 
             Wood = false;
 
@@ -807,6 +809,8 @@ namespace FargowiltasSouls
 
             wingTimeModifier = 1f;
             FreeEaterSummon = true;
+            if (Screenshake > 0)
+                Screenshake--;
 
             //debuffs
             Hexed = false;
@@ -3424,6 +3428,12 @@ namespace FargowiltasSouls
             if (BetsyDashing) //dont draw player during betsy dash
                 while (layers.Count > 0)
                     layers.RemoveAt(0);
+        }
+
+        public override void ModifyScreenPosition()
+        {
+            if (Screenshake > 0)
+                Main.screenPosition += Main.rand.NextVector2Circular(7, 7);
         }
     }
 }
