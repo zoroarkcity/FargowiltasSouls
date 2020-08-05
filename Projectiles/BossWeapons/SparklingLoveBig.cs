@@ -103,8 +103,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            damage *= 3;
-            crit = true;
+            if (projectile.timeLeft < 15)
+            {
+                damage *= 3;
+                crit = true;
+            }
         }
 
         public override void Kill(int timeleft)

@@ -111,7 +111,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
             npc.direction = npc.spriteDirection = npc.Center.X < player.Center.X ? 1 : -1;
 
-            if (npc.localAI[3] == 1 && npc.life < npc.lifeMax * (FargoSoulsWorld.MasochistMode ? 0.5 : .66))
+            if (npc.localAI[3] == 1 && npc.life < npc.lifeMax * (FargoSoulsWorld.MasochistMode ? 0.66 : .5))
             {
                 npc.localAI[3] = 2;
                 npc.dontTakeDamage = true;

@@ -171,6 +171,9 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         npc.ai[1] = 1;
 
+                        if (!Main.dedServ && Main.LocalPlayer.active)
+                            Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 30;
+
                         Main.PlaySound(SoundID.Roar, npc.Center, 0);
 
                         if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -273,6 +276,9 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.netUpdate = true;
 
                         Main.PlaySound(SoundID.Item92, npc.Center);
+
+                        if (!Main.dedServ && Main.LocalPlayer.active)
+                            Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 30;
 
                         int type; //for dust
 
