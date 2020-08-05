@@ -222,3 +222,4 @@ abom deathray run screenshakes
 cosmos p3 screenshakes
 penetrator right click is now ranged damage
 mutant armour resprite
+mutant nuke screenshakes

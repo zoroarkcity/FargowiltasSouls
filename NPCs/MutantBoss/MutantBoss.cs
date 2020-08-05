@@ -1471,21 +1471,27 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         break;
                     npc.velocity.Normalize();
                     npc.velocity *= 2f;
-                    if (npc.ai[1] > 180 && Main.netMode != NetmodeID.MultiplayerClient)
+                    if (npc.ai[1] > 180)
                     {
-                        Vector2 safeZone = npc.Center;
-                        safeZone.Y -= 100;
-                        const float safeRange = 150 + 200;
-                        for (int i = 0; i < 3; i++)
+                        if (!Main.dedServ && Main.LocalPlayer.active)
+                            Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 2;
+
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Vector2 spawnPos = npc.Center + Main.rand.NextVector2Circular(1200, 1200);
-                            if (Vector2.Distance(safeZone, spawnPos) < safeRange)
+                            Vector2 safeZone = npc.Center;
+                            safeZone.Y -= 100;
+                            const float safeRange = 150 + 200;
+                            for (int i = 0; i < 3; i++)
                             {
-                                Vector2 directionOut = spawnPos - safeZone;
-                                directionOut.Normalize();
-                                spawnPos = safeZone + directionOut * Main.rand.NextFloat(safeRange, 1200);
+                                Vector2 spawnPos = npc.Center + Main.rand.NextVector2Circular(1200, 1200);
+                                if (Vector2.Distance(safeZone, spawnPos) < safeRange)
+                                {
+                                    Vector2 directionOut = spawnPos - safeZone;
+                                    directionOut.Normalize();
+                                    spawnPos = safeZone + directionOut * Main.rand.NextFloat(safeRange, 1200);
+                                }
+                                Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<MutantBomb>(), npc.damage / 4, 0f, Main.myPlayer);
                             }
-                            Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<MutantBomb>(), npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
                     if (++npc.ai[1] > 360)
