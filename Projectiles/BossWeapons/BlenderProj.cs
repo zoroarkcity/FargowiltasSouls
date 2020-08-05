@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 for (int i = 0; i < maxYoyos; i++)
                 {
                     float radians = (360f / (float)maxYoyos) * i * (float)(Math.PI / 180);
-                    Projectile yoyo = FargoGlobalProjectile.NewProjectileDirectSafe(projectile.Center, Vector2.Zero, ModContent.ProjectileType<BlenderProj2>(), (int)(projectile.damage * 0.5f), 2, projectile.owner, 5, radians);
+                    Projectile yoyo = FargoGlobalProjectile.NewProjectileDirectSafe(projectile.Center, Vector2.Zero, ModContent.ProjectileType<BlenderProj2>(), projectile.damage, projectile.knockBack, projectile.owner, 5, radians);
                     yoyo.localAI[0] = projectile.whoAmI;
                 }
 
@@ -61,6 +61,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Main.dust[dustIndex].noGravity = true;
                 Main.dust[dustIndex].scale = 1.6f;
             }*/
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.immune[projectile.owner] = 6;
         }
     }
 }
