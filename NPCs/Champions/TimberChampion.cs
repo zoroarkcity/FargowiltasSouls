@@ -494,7 +494,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                 if (Main.netMode != NetmodeID.MultiplayerClient && FargoSoulsWorld.MasochistMode)
                 {
-                    int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<TimberChampionHead>());
+                    int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<TimberChampionHead>(), npc.whoAmI, Target: npc.target);
                     if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
                         NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                 }

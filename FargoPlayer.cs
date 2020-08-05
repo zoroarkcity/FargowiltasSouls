@@ -501,6 +501,9 @@ namespace FargowiltasSouls
             {
                 MutantEyeCD = 3600;
 
+                if (!Main.dedServ && Main.LocalPlayer.active)
+                    Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 30;
+
                 const int invulTime = 90;
                 player.immune = true;
                 player.immuneTime = invulTime;

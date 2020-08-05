@@ -223,3 +223,9 @@ cosmos p3 screenshakes
 penetrator right click is now ranged damage
 mutant armour resprite
 mutant nuke screenshakes
+mutant eye screenshakes
+mutant boss resprite
+abom boss resprite
+devi boss resprite
+devi minion (sparkling love right click) resprite
+abom minion (true mutant armour) resprite
