@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using FargowiltasSouls.Items.Accessories.Enchantments;
+using FargowiltasSouls.Items.Armor;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
 using System.IO;
@@ -1317,6 +1318,15 @@ namespace FargowiltasSouls.NPCs.Champions
                 lastDrop = thisDrop;
                 Item.NewItem(npc.position, npc.Size, drops[thisDrop]);
             }
+
+            int armour;
+            switch(Main.rand.Next(3))
+            {
+                case 0: armour = ModContent.ItemType<EridanusHood>(); break;
+                case 1: armour = ModContent.ItemType<EridanusBattleplate>(); break;
+                default: armour = ModContent.ItemType<EridanusLegwear>(); break;
+            }
+            Item.NewItem(npc.position, npc.Size, armour);
 
             //Item.NewItem(npc.position, npc.Size, ModLoader.GetMod("Fargowiltas").ItemType("CrucibleCosmos"));
 

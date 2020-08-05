@@ -68,7 +68,7 @@ namespace FargowiltasSouls.NPCs.Champions
             EModeGlobalNPC.championBoss = npc.whoAmI;
 
             Player player = Main.player[npc.target];
-            npc.direction = npc.spriteDirection = npc.position.X < player.position.X ? 1 : -1;
+            npc.direction = npc.spriteDirection = npc.Center.X < player.position.X ? 1 : -1;
             Vector2 targetPos;
             
             switch ((int)npc.ai[0])
