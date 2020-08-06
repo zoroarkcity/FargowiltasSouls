@@ -81,7 +81,7 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 npc.TargetClosest(false);
                 Movement(Main.player[npc.target].Center, 0.8f, 32f);
-                if (npc.Distance(Main.player[npc.target].Center) < 2000)
+                if (npc.Distance(Main.player[npc.target].Center) < 1500)
                     npc.localAI[3] = 1;
                 else
                     return;

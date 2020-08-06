@@ -60,7 +60,7 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 npc.TargetClosest(false);
                 Movement(Main.player[npc.target].Center, 0.8f, 32f);
-                if (npc.Distance(Main.player[npc.target].Center) < 2000)
+                if (npc.Distance(Main.player[npc.target].Center) < 1500)
                     npc.localAI[2] = 1;
                 else
                     return;
@@ -177,6 +177,9 @@ namespace FargowiltasSouls.NPCs.Champions
                         distance.X = distance.X / time;
                         distance.Y = distance.Y / time - 0.5f * gravity * time;
                         npc.velocity = distance;
+
+                        npc.noTileCollide = true;
+                        npc.noGravity = true;
                         npc.netUpdate = true;
 
                         if (Main.netMode != NetmodeID.MultiplayerClient) //explosive jump

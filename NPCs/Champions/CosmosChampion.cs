@@ -86,7 +86,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             if (npc.localAI[3] == 0) //just spawned
             {
-                if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 2000)
+                if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 1500)
                     npc.localAI[3] = 1;
                 npc.TargetClosest(false);
             }
@@ -155,7 +155,7 @@ namespace FargowiltasSouls.NPCs.Champions
             switch ((int)npc.ai[0])
             {
                 case -3: //final phase
-                    if ((!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f)) //despawn code
+                    if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f) //despawn code
                     {
                         npc.TargetClosest(false);
                         if (npc.timeLeft > 30)

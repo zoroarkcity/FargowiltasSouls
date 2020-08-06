@@ -254,7 +254,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
                     }
 
-                    if (++npc.ai[2] > 60) //bone spray
+                    if (++npc.ai[2] > 85) //bone spray
                     {
                         npc.ai[2] = 0;
 
@@ -269,7 +269,27 @@ namespace FargowiltasSouls.NPCs.Champions
                             }
                         }
                     }
-                    
+
+                    if (++npc.ai[3] > 110)
+                    {
+                        npc.ai[3] = 0;
+                        if (Main.netMode != NetmodeID.MultiplayerClient) //sandnado
+                        {
+                            Vector2 target = player.Center;
+                            target.Y -= 150;
+                            Projectile.NewProjectile(target, Vector2.Zero, ProjectileID.SandnadoHostileMark, 0, 0f, Main.myPlayer);
+
+                            int length = (int)npc.Distance(target) / 10;
+                            Vector2 offset = npc.DirectionTo(target) * 10f;
+                            for (int i = 0; i < length; i++) //dust warning line for sandnado
+                            {
+                                int d = Dust.NewDust(npc.Center + offset * i, 0, 0, 269, 0f, 0f, 0, new Color());
+                                Main.dust[d].noLight = true;
+                                Main.dust[d].scale = 1.25f;
+                            }
+                        }
+                    }
+
                     if (++npc.ai[1] > 600)
                     {
                         npc.dontTakeDamage = false;
