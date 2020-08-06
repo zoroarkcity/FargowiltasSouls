@@ -70,7 +70,7 @@ namespace FargowiltasSouls.NPCs.Champions
             Player player = Main.player[npc.target];
             npc.direction = npc.spriteDirection = npc.Center.X < player.position.X ? 1 : -1;
             Vector2 targetPos;
-            
+
             switch ((int)npc.ai[0])
             {
                 case 0: //laser rain
@@ -111,14 +111,21 @@ namespace FargowiltasSouls.NPCs.Champions
                             ModContent.ProjectileType<TimberSquirrel>(), npc.damage / 4, 0f, Main.myPlayer);
                     }
 
-                    if (++npc.ai[1] < 120)
+                    if (npc.ai[1] > 90)
+                    {
+                        npc.velocity *= 0.9f;
+                    }
+                    else
                     {
                         targetPos = player.Center;
                         targetPos.Y -= 300;
 
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.25f, 24f);
+                    }
 
+                    if (++npc.ai[1] < 120)
+                    {
                         /*for (int i = 0; i < 5; i++) //warning dust
                         {
                             int d = Dust.NewDust(npc.position, npc.width, npc.height, 16, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default, 1.5f);
@@ -133,8 +140,6 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     else if (npc.ai[1] < 270) //spam lasers everywhere
                     {
-                        npc.velocity *= 0.9f;
-                        
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = 0; i < 3; i++)

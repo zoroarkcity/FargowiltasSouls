@@ -229,6 +229,8 @@ namespace FargowiltasSouls.NPCs.Champions
                     targetPos.Y -= 275;
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.18f, 24f, true);
+                    if (npc.Distance(player.Center) < 200) //try to avoid contact damage
+                        Movement(targetPos, 0.24f, 24f, true);
 
                     if (++npc.ai[1] > 150)
                     {
