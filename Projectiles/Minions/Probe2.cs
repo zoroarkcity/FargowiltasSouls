@@ -52,7 +52,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             {
                 NPC npc = Main.npc[(int)projectile.ai[1]];
                 projectile.rotation = (npc.Center - projectile.Center).ToRotation();
-                if (npc.CanBeChasedBy())
+                if (npc.CanBeChasedBy() && Collision.CanHitLine(npc.Center, 0, 0, projectile.Center, 0, 0))
                 {
                     if (--projectile.localAI[0] < 0f)
                     {
