@@ -2606,11 +2606,14 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
 
-                if (++Counter[2] > 90)
+                if (++Counter[2] > 85)
                 {
                     Counter[2] = 0;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                        Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DicerPlantera>(), npc.damage / 5, 0f, Main.myPlayer, 120, 300);
+                    {
+                        Projectile.NewProjectile(npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height)),
+                            Vector2.Zero, ModContent.ProjectileType<DicerPlantera>(), npc.damage / 5, 0f, Main.myPlayer, 120);//, 300);
+                    }
                 }
 
                 /*Timer++;
@@ -2640,13 +2643,14 @@ namespace FargowiltasSouls.NPCs
                     if (Main.player[npc.target].venom)
                     {
                         npc.defense *= 2;
-                        Counter[0]++;
+                        //Counter[0]++;
                         SharkCount = 1;
                     }
+                    npc.position -= npc.velocity * 0.1f;
                 }
                 else
                 {
-                    npc.position -= npc.velocity * 0.1f;
+                    npc.position -= npc.velocity / 3;
                 }
             }
 
@@ -2917,13 +2921,13 @@ namespace FargowiltasSouls.NPCs
                 }
             }*/
 
-            if (Fargowiltas.Instance.CalamityLoaded && Revengeance)
+            /*if (Fargowiltas.Instance.CalamityLoaded && Revengeance)
             {
                 if (masoBool[1])
                     npc.dontTakeDamage = false;
                 else
                     masoBool[1] = !NPC.AnyNPCs(NPCID.GolemHead);
-            }
+            }*/
 
             if (!npc.dontTakeDamage)
             {
