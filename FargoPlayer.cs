@@ -34,6 +34,8 @@ namespace FargowiltasSouls
 
         public bool Wood;
         public bool QueenStinger;
+        public bool EridanusEmpower;
+        public int EridanusTimer;
 
         //minions
         public bool BrainMinion;
@@ -580,6 +582,7 @@ namespace FargowiltasSouls
             wingTimeModifier = 1f;
 
             QueenStinger = false;
+            EridanusEmpower = false;
 
             BrainMinion = false;
             EaterMinion = false;
@@ -814,6 +817,9 @@ namespace FargowiltasSouls
             FreeEaterSummon = true;
             if (Screenshake > 0)
                 Screenshake--;
+
+            EridanusEmpower = false;
+            EridanusTimer = 0;
 
             //debuffs
             Hexed = false;

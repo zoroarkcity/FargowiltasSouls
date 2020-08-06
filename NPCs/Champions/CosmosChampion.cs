@@ -1322,7 +1322,7 @@ namespace FargowiltasSouls.NPCs.Champions
             int armour;
             switch(Main.rand.Next(3))
             {
-                case 0: armour = ModContent.ItemType<EridanusHood>(); break;
+                case 0: armour = ModContent.ItemType<EridanusHat>(); break;
                 case 1: armour = ModContent.ItemType<EridanusBattleplate>(); break;
                 default: armour = ModContent.ItemType<EridanusLegwear>(); break;
             }

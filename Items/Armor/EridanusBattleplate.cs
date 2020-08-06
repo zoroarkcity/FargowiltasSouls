@@ -10,7 +10,9 @@ namespace FargowiltasSouls.Items.Armor
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eridanus Battleplate");
-            Tooltip.SetDefault(@"top text");
+            Tooltip.SetDefault(@"10% increased damage
+10% increased critical strike chance
+Grants life regeneration");
         }
 
         public override void SetDefaults()
@@ -19,12 +21,14 @@ namespace FargowiltasSouls.Items.Armor
             item.height = 18;
             item.rare = 11;
             item.value = Item.sellPrice(0, 20);
-            item.defense = 0;
+            item.defense = 40;
         }
 
         public override void UpdateEquip(Player player)
         {
-            
+            player.GetModPlayer<FargoPlayer>().AllDamageUp(0.1f);
+            player.GetModPlayer<FargoPlayer>().AllCritUp(10);
+            player.lifeRegen += 4;
         }
     }
 }

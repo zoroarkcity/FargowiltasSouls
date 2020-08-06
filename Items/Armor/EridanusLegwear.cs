@@ -10,7 +10,9 @@ namespace FargowiltasSouls.Items.Armor
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eridanus Legwear");
-            Tooltip.SetDefault(@"top text");
+            Tooltip.SetDefault(@"5% increased damage
+5% increased critical strike chance
+10% increased movement speed");
         }
 
         public override void SetDefaults()
@@ -19,12 +21,14 @@ namespace FargowiltasSouls.Items.Armor
             item.height = 18;
             item.rare = 11;
             item.value = Item.sellPrice(0, 14);
-            item.defense = 0;
+            item.defense = 20;
         }
 
         public override void UpdateEquip(Player player)
         {
-            
+            player.GetModPlayer<FargoPlayer>().AllDamageUp(0.05f);
+            player.GetModPlayer<FargoPlayer>().AllCritUp(5);
+            player.moveSpeed += 0.1f;
         }
     }
 }
