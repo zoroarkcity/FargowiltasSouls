@@ -51,7 +51,7 @@ The empowered class changes every 20 seconds";
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.EridanusEmpower = true;
 
-            if (fargoPlayer.EridanusTimer % (60 * 20) == 0) //make dust whenever changing classes
+            if (fargoPlayer.EridanusTimer % (60 * 20) == 1) //make dust whenever changing classes
             {
                 Main.PlaySound(SoundID.Item4, player.Center);
 

@@ -66,7 +66,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             }
             
             //handle countdown between phase changes
-            projectile.localAI[0] = Main.player[projectile.owner].GetModPlayer<FargoPlayer>().EridanusTimer % (60f * 20f) / (60f * 20f) * 4f - 1f;
+            projectile.localAI[0] = Main.player[projectile.owner].GetModPlayer<FargoPlayer>().EridanusTimer % (60f * 20f) / (60f * 20f) * 12f - 1f;
         }
 
         public override bool CanDamage()
@@ -84,13 +84,13 @@ namespace FargowiltasSouls.Projectiles.Minions
 
             Color color26 = projectile.GetAlpha(lightColor);
 
-            const int max = 16;
+            const int max = 12;
             for (int x = 0; x < max; x++)
             {
-                if (x % 4 < projectile.localAI[0])
+                if (x < projectile.localAI[0])
                     continue;
-                Vector2 drawOffset = new Vector2(threshold * projectile.scale, 0f).RotatedBy(projectile.ai[0]);
-                drawOffset = drawOffset.RotatedBy(2f * PI / max * x);
+                Vector2 drawOffset = new Vector2(0f, -threshold * projectile.scale);//.RotatedBy(projectile.ai[0]);
+                drawOffset = drawOffset.RotatedBy(2f * PI / max * (x + 1));
                 Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
             }
             return false;
