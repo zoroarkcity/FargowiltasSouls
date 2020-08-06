@@ -235,7 +235,16 @@ namespace FargowiltasSouls
             return true;
         }
 
-
+        public override bool CanExplode(int i, int j, int type)
+        {
+            if (FargoSoulsWorld.MasochistMode && !NPC.downedGolemBoss
+                && Framing.GetTileSafely(i, j).wall == WallID.LihzahrdBrickUnsafe
+                && (type == TileID.Traps || type == TileID.PressurePlates))
+            {
+                return false;
+            }
+            return true;
+        }
 
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
         {

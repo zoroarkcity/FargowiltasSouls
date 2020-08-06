@@ -230,3 +230,4 @@ devi boss resprite
 devi minion (sparkling love right click) resprite
 abom minion (true mutant armour) resprite
 reworked blender internal mechanics (all projs piercing)
+fixed bombs working on lihzahrd traps pre-golem?
