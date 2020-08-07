@@ -383,7 +383,7 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.SkeletronPrime:
                     Counter[2] = 0;
                     npc.trapImmune = true;
-                    npc.lifeMax = (int)(npc.lifeMax * 1.2);
+                    npc.lifeMax = (int)(npc.lifeMax * 1.5);
                     break;
                 case NPCID.PrimeCannon:
                 case NPCID.PrimeLaser:
