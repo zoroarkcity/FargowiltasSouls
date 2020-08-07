@@ -6250,10 +6250,10 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.GoblinWarrior:
                         if (NPC.downedGoblins)
                         {
-                            if (FargoSoulsWorld.forceMeteor)
+                            if (FargoSoulsWorld.firstGoblins)
                             {
-                                FargoSoulsWorld.forceMeteor = false;
-                                WorldGen.dropMeteor();
+                                FargoSoulsWorld.firstGoblins = false;
+                                //WorldGen.dropMeteor();
                                 if (!NPC.AnyNPCs(ModContent.NPCType<Abominationn>()))
                                 {
                                     int p = Player.FindClosest(npc.Center, 0, 0);
@@ -6262,10 +6262,10 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
                         }
-                        else
+                        /*else
                         {
                             Item.NewItem(npc.Hitbox, ItemID.SpikyBall, 10);
-                        }
+                        }*/
                         break;
 
                     case NPCID.GoblinSummoner:

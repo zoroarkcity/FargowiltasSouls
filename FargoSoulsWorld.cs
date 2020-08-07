@@ -28,7 +28,7 @@ namespace FargowiltasSouls
         public static bool AngryMutant;
 
         public static bool downedMM;
-        public static bool forceMeteor;
+        public static bool firstGoblins;
         public static int skipMutantP1;
 
         public static bool NoMasoBossScaling = true;
@@ -51,7 +51,7 @@ namespace FargowiltasSouls
             downedMutant = false;
             AngryMutant = false;
 
-            forceMeteor = true;
+            firstGoblins = true;
             skipMutantP1 = 0;
 
             NoMasoBossScaling = true;
@@ -76,7 +76,7 @@ namespace FargowiltasSouls
             if (downedMutant) downed.Add("downedMutant");
             if (AngryMutant) downed.Add("AngryMutant");
             if (downedMM) downed.Add("downedMadhouse");
-            if (forceMeteor) downed.Add("forceMeteor");
+            if (firstGoblins) downed.Add("forceMeteor");
             if (NoMasoBossScaling) downed.Add("NoMasoBossScaling");
             if (ReceivedTerraStorage) downed.Add("ReceivedTerraStorage");
             
@@ -104,7 +104,7 @@ namespace FargowiltasSouls
             downedMutant = downed.Contains("downedMutant");
             AngryMutant = downed.Contains("AngryMutant");
             downedMM = downed.Contains("downedMadhouse");
-            forceMeteor = downed.Contains("forceMeteor");
+            firstGoblins = downed.Contains("forceMeteor");
             NoMasoBossScaling = downed.Contains("NoMasoBossScaling");
             ReceivedTerraStorage = downed.Contains("ReceivedTerraStorage");
 
@@ -131,7 +131,7 @@ namespace FargowiltasSouls
             downedMutant = flags[6];
             AngryMutant = flags[7];
             downedMM = flags[8];
-            forceMeteor = flags[9];
+            firstGoblins = flags[9];
             NoMasoBossScaling = flags[10];
             ReceivedTerraStorage = flags[11];
 
@@ -157,7 +157,7 @@ namespace FargowiltasSouls
                 [6] = downedMutant,
                 [7] = AngryMutant,
                 [8] = downedMM,
-                [9] = forceMeteor,
+                [9] = firstGoblins,
                 [10] = NoMasoBossScaling,
                 [11] = ReceivedTerraStorage,
                 [12] = downedChampions[0],
