@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
     public class Blender : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Weapons/BossDrops/Dicer";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Blender");

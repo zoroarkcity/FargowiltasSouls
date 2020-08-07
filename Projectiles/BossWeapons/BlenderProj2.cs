@@ -9,9 +9,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
     internal class BlenderProj2 : ModProjectile
     {
         public int Counter = 0;
-
-        public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/DicerProj";
-
+        
         public override void SetDefaults()
         {
             projectile.width = 30;

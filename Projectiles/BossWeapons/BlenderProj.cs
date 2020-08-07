@@ -10,8 +10,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
     {
         public bool yoyosSpawned = false;
 
-        public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/DicerProj";
-
         public override void SetStaticDefaults()
         {
             // Vanilla values range from 3f(Wood) to 16f(Chik), and defaults to -1f. Leaving as -1 will make the time infinite.

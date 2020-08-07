@@ -235,3 +235,4 @@ plantera no longer uses predictive crystal shots in p2
 plantera mines reworked: they persist and continually shoot spikes
 goblins no longer drop boosted balls on first invasion
 beating goblins for first time no longer spawns a meteorite
+blender sprites
