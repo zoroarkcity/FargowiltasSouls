@@ -238,3 +238,5 @@ beating goblins for first time no longer spawns a meteorite
 blender sprites
 buffed prime max hp
 nerfed force of earth, now receives disrupted focus on hit (SOT does not)
+lihzahrd blessing granted by having line of sight to altar
+temple traps can now be destroyed if you dont have lihzahrd curse
