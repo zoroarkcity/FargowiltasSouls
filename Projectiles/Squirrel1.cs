@@ -7,7 +7,7 @@ namespace FargowiltasSouls.Projectiles
     {
         public int Counter = 1;
 
-        public override string Texture => "FargowiltasSouls/Items/Weapons/TophatSquirrel";
+        public override string Texture => "FargowiltasSouls/Items/Weapons/Misc/TophatSquirrel";
 
         public override void SetDefaults()
         {

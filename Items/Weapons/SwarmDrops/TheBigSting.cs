@@ -28,7 +28,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.useStyle = 5;
             item.noMelee = true;
             item.knockBack = 1.5f;
-            item.value = 50000;
+            item.value = 500000;
             item.rare = 11;
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.Stinger>();
@@ -83,7 +83,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(null, "HiveStaff");
+            recipe.AddIngredient(null, "TheSmallSting");
             recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerBee"));
             recipe.AddIngredient(ItemID.LunarBar, 10);
             //recipe.AddIngredient(null, "LunarCrystal", 5);

@@ -3,16 +3,78 @@ NEW UPDATE - V 1.4
 
 
 new in beta
--Souls beta now requires mutant beta 
-Version number is now 1.4 POG
--Moved parrot spawning to the surface jungle during the day
--Derplings can actually kill you and absorb less life each time
--Fixed issues with the Shoot method that made the Flying Fish attack from further away than intended. Will also affect several other enemies but probably not too noticeable 
--Blazing wheels are 50% larger
--Desert Spirits spawns in non corrupt deserts
--Unicorns only leave rainbows when travelling at max speed, should look a bit better
--Mothron always spawns with 2 babies at its side
--Snatchers, Man Eaters,  and Angry Trappers lunge for you
+-modded toggles are gone now too
+-nymph's perfume makes you respawn with full health (effect works in inventory)
+-Soul of Eternity now has Bionomic Cluster effects in inventory
+-Removed evil mimics having a chance to swap to the other one
+-Flying Dutchman bullets no longer bounce
+-Big mimic coin guns attack slightly slower, and they no longer fire while they're invincible
+-Added 4 mana crystals to Devi's starter pack
+-Sparkling Adoration gives Immunity to fake hearts
+-shroomite effect doesnt go thru mutant presence
+-updated sprites: big sting, fish stick
+-Reduced man eater and friends range
+-Shelly shoots spikes at the player instead of around itself (when attacked in shell mode)
+-Supersonic Soul's No momentum mode is now less severe and more usable, 5x more momeentum as before (which is still 10xless than normal)
+
+-Dark Star Cannon is now Prime's Laser Cannon, a magic weapon that shoots lasers just like it used to shoot stars ECH
+-Added The Small Sting
+-Queen Bee now drops this, Hive Staff is unobtainable for now
+
+
+
+
+
+
+
+
+todo
+-60 rabies shots for immunity to feral bite or something
+Kill rainbow slime
+timestop isnt a buff or works thru immune
+toggle for extra lures in fish soul, never use bait ever
+
+look over all enchant rcipes again e
+do force upgrades for all
+Apprentice becomes dark artist 
+Dark Artist becomes apprentice but uses epic player shadow copy and they all hold the sentry ??
+adamantite - tighter spread, they dont have full damage
+tungsten - Add a seperate toggle for items and projectiles. Maybe try to make it look better for some things like yoyos
+platinum - No longer synergizes with Midas
+shinobi -  Tele through wall doesn't work right in MP
+chlorophyte - no change??
+put bee back to post plant lol
+cobalt - buff
+tiki - Make it work more consistently, does not confuse free minions, works with worm summons.
+turtle - gets some epic visual of actually being in your shell, after leaving you are debuffed for a bit
+jungle - spores home in slowly
+frost - Absorbs Snow Enchant and Grinch pet
+necro - now usable with DG less dumb
+forbidden - Any Scorpion in recipe ech
+ancient shadow - orbs move slower, or even stay still, actually making you have to aim for them, when hit they go sicko mode, detatch themselves, and pursue enemies, respawn around you a few seconds later in a new location 
+red riding - Add a toggle for werewolf visual, remove Celestial Shell for Moon Charm in recipe
+snow - slows down nearby enemies and proj
+wizard - the pogger enchant class, increases effects of all other enchantments
+Patreon toggle and marker
+Huntress arrow fade in, apprentice works with melee weapons
+Shadow orbs from ancient shadow give off teal light, remove light and draw them in Color.White?
+Sound when orbs struck
+Have a cooldown on jungle spore jump imo
+huntress picks like ammo does normally e
+Kill ori fire config
+maybe a super ring of dust for 10 icicles
+Vortex cd debuff
+Free summon toggle
+Make hornet and imp work with spooky
+fix all toggle names and colors
+recheck eater thru wall meme and all beetle auras
+Rod hot key in gold enchant
+also no full health on revive while a boss is alive
+
+
+
+
+
 
 
 
@@ -126,6 +188,12 @@ Emode
 -Parrots spawn in the sky in hard mode
 -Giant Shellies spew spikes out if attacked while spinning, no more thorns effect if you get them with melee
 -Ichor stickers explode into ichor
+-Moved parrot spawning to the surface jungle during the day
+-Blazing wheels are 50% larger
+-Desert Spirits spawns in non corrupt deserts
+-Unicorns only leave rainbows when travelling at max speed, should look a bit better
+-Mothron always spawns with 2 babies at its side
+-Snatchers, Man Eaters,  and Angry Trappers lunge for you
 
 
 -Removed Apoth support in SoE

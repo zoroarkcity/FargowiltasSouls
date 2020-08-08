@@ -4,9 +4,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
-namespace FargowiltasSouls.NPCs
+namespace FargowiltasSouls.NPCs.EternityMode
 {
-    public class DetonatingBubble : ModNPC
+    public class DetonatingBubbleEX : ModNPC
     {
         public override string Texture => "Terraria/NPC_371";
 
@@ -22,7 +22,7 @@ namespace FargowiltasSouls.NPCs
             npc.width = 36;
             npc.height = 36;
             npc.damage = 100;
-            npc.lifeMax = 1;
+            npc.lifeMax = 5000;//500;
             npc.HitSound = SoundID.NPCHit3;
             npc.DeathSound = SoundID.NPCDeath3;
             npc.noGravity = true;
@@ -31,15 +31,10 @@ namespace FargowiltasSouls.NPCs
             npc.alpha = 255;
             npc.lavaImmune = true;
             npc.buffImmune[BuffID.OnFire] = true;
-            npc.buffImmune[BuffID.Suffocation] = true;
             npc.aiStyle = -1;
             npc.chaseable = false;
-        }
-
-        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
-        {
-            npc.damage = (int)(npc.damage * 0.75);
-            npc.lifeMax = 1;
+            npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
+            npc.buffImmune[BuffID.Suffocation] = true;
         }
 
         public override void AI()
@@ -66,6 +61,17 @@ namespace FargowiltasSouls.NPCs
             }
         }
 
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            cooldownSlot = 1;
+            return true;
+        }
+
+        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+        {
+            return true;
+        }
+
         public override bool CheckDead()
         {
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().Needles = false;
@@ -74,11 +80,13 @@ namespace FargowiltasSouls.NPCs
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.Wet, 420);
-            //target.AddBuff(mod.BuffType("SqueakyToy"), Main.rand.Next(60, 180));
-            target.AddBuff(mod.BuffType("OceanicMaul"), 1800);
-            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.fishBossEX, NPCID.DukeFishron) ? 10 : 50;
-
+            if (target.hurtCooldowns[1] == 0)
+            {
+                target.AddBuff(BuffID.Wet, 420);
+                target.AddBuff(mod.BuffType("Defenseless"), 600);
+                target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;//50;
+                target.AddBuff(mod.BuffType("OceanicMaul"), 1800);
+            }
         }
 
         public override void FindFrame(int frameHeight)

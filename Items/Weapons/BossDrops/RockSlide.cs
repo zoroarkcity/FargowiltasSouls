@@ -8,7 +8,7 @@ using FargowiltasSouls.Projectiles.BossWeapons;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class GolemTome : ModItem
+    public class RockSlide : ModItem
     {
 
         public override void SetStaticDefaults()

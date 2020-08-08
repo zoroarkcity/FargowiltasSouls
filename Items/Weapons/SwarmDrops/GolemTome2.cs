@@ -8,7 +8,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
     public class GolemTome2 : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Weapons/BossDrops/GolemTome";
+        public override string Texture => "FargowiltasSouls/Items/Weapons/BossDrops/RockSlide";
 
         public override void SetStaticDefaults()
         {
@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(null, "GolemTome");
+            recipe.AddIngredient(null, "RockSlide");
             recipe.AddIngredient(null, "MutantScale", 10);
             recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerGolem"));
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));

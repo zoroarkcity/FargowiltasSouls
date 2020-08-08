@@ -11,12 +11,13 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using FargowiltasSouls.Items.Accessories;
+using FargowiltasSouls.Items.Accessories.Masomode;
 using FargowiltasSouls.Items.Accessories.Enchantments;
 using FargowiltasSouls.NPCs.AbomBoss;
 using FargowiltasSouls.NPCs.Champions;
 using FargowiltasSouls.NPCs.DeviBoss;
 using FargowiltasSouls.NPCs.MutantBoss;
+using FargowiltasSouls.NPCs.EternityMode;
 using FargowiltasSouls.Sky;
 using ThoriumMod.Items.Titan;
 using Fargowiltas.Items.Summons.Deviantt;
@@ -663,6 +664,7 @@ namespace FargowiltasSouls
             Item.NewItem(player.Center, ItemID.SilverAxe);
             Item.NewItem(player.Center, ItemID.BugNet);
             Item.NewItem(player.Center, ItemID.LifeCrystal, 4);
+            Item.NewItem(player.Center, ItemID.ManaCrystal, 4);
             Item.NewItem(player.Center, ItemID.RecallPotion, 15);
             if (Main.netMode != 0)
             {

@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using Fargowiltas.Items.Tiles;
 
-namespace FargowiltasSouls.Items.Weapons
+namespace FargowiltasSouls.Items.Weapons.Misc
 {
     public class PandoraTwo : ModItem
     {

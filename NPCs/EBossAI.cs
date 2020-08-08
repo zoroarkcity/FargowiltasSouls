@@ -14,6 +14,7 @@ using FargowiltasSouls.Projectiles.MutantBoss;
 using Fargowiltas.Items.Summons.Mutant;
 using Fargowiltas.Items.Summons;
 using Fargowiltas.Items.Summons.VanillaCopy;
+using FargowiltasSouls.NPCs.EternityMode;
 
 namespace FargowiltasSouls.NPCs
 {

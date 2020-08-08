@@ -75,6 +75,7 @@ Summons the aid of all Eternity Mode bosses to your side");
             player.manaFlower = true;
             fargoPlayer.SecurityWallet = true;
             fargoPlayer.TribalCharm = true;
+            fargoPlayer.NymphsPerfumeRespawn = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -218,6 +219,7 @@ Summons the aid of all Eternity Mode bosses to your side");
             //nymph's perfume
             player.buffImmune[BuffID.Lovestruck] = true;
             player.buffImmune[BuffID.Stinky] = true;
+            fargoPlayer.NymphsPerfumeRespawn = true;
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.NymphPerfume))
             {
                 fargoPlayer.NymphsPerfume = true;

@@ -28,7 +28,7 @@ namespace FargowiltasSouls
                 walletConfig.SetValue(walletToggles, val);
             }
 
-            IEnumerable<FieldInfo> thoriumConfigs = typeof(ThoriumToggles).GetFields(BindingFlags.Public | BindingFlags.Instance).Where(i => i.FieldType == true.GetType());
+            /*IEnumerable<FieldInfo> thoriumConfigs = typeof(ThoriumToggles).GetFields(BindingFlags.Public | BindingFlags.Instance).Where(i => i.FieldType == true.GetType());
             foreach (FieldInfo thoriumConfig in thoriumConfigs)
             {
                 thoriumConfig.SetValue(thoriumToggles, val);
@@ -38,7 +38,7 @@ namespace FargowiltasSouls
             foreach (FieldInfo calamityConfig in calamityConfigs)
             {
                 calamityConfig.SetValue(calamityToggles, val);
-            }
+            }*/
         }
 
         [Label("Toggle All On")]
@@ -700,11 +700,11 @@ namespace FargowiltasSouls
 
         #endregion
 
-        [Label("$Mods.FargowiltasSouls.ThoriumHeader")]
+        /*[Label("$Mods.FargowiltasSouls.ThoriumHeader")]
         public ThoriumToggles thoriumToggles = new ThoriumToggles();
 
         [Label("$Mods.FargowiltasSouls.CalamityHeader")]
-        public CalamityToggles calamityToggles = new CalamityToggles();
+        public CalamityToggles calamityToggles = new CalamityToggles();*/
 
 
         //soa soon tm

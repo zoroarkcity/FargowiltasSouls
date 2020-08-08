@@ -1,6 +1,6 @@
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.NPCs
+namespace FargowiltasSouls.NPCs.EternityMode
 {
     [AutoloadBossHead]
     public class BrainIllusion2 : BrainIllusion

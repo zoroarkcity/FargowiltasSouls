@@ -62,6 +62,7 @@ Use to teleport to your last death point
             player.manaFlower = true;
             fargoPlayer.SecurityWallet = true;
             fargoPlayer.TribalCharm = true;
+            fargoPlayer.NymphsPerfumeRespawn = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -123,6 +124,7 @@ Use to teleport to your last death point
             player.buffImmune[mod.BuffType("Lovestruck")] = true;
             player.buffImmune[mod.BuffType("Hexed")] = true;
             player.buffImmune[BuffID.Stinky] = true;
+            fargoPlayer.NymphsPerfumeRespawn = true;
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.NymphPerfume))
             {
                 fargoPlayer.NymphsPerfume = true;

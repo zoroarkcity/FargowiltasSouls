@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.ID;
 
-namespace FargowiltasSouls.Items.Weapons
+namespace FargowiltasSouls.Items.Weapons.Misc
 {
     public class TophatSquirrel : ModItem
     {

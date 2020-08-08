@@ -19,6 +19,7 @@ using FargowiltasSouls.Items.Weapons.SwarmDrops;
 using FargowiltasSouls.NPCs.MutantBoss;
 
 using FargowiltasSouls.Items.Summons;
+using FargowiltasSouls.NPCs.EternityMode;
 
 namespace FargowiltasSouls
 {
@@ -241,6 +242,7 @@ namespace FargowiltasSouls
         public bool WretchedPouch;
         public int FrigidGemstoneCD;
         public bool NymphsPerfume;
+        public bool NymphsPerfumeRespawn;
         public int NymphsPerfumeCD = 30;
         public bool SqueakyAcc;
         public bool RainbowSlime;
@@ -669,7 +671,7 @@ namespace FargowiltasSouls
             WillForce = false;
             WoodForce = false;
 
-            if (Fargowiltas.Instance.ThoriumLoaded) ThoriumResetEffects();
+            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumResetEffects();
 
             //calamity
             AerospecEnchant = false;
@@ -734,6 +736,7 @@ namespace FargowiltasSouls
             FrigidGemstone = false;
             WretchedPouch = false;
             NymphsPerfume = false;
+            NymphsPerfumeRespawn = false;
             SqueakyAcc = false;
             RainbowSlime = false;
             SkeletronArms = false;
@@ -798,6 +801,14 @@ namespace FargowiltasSouls
                 MashCounter--;
             }
             Mash = false;
+        }
+
+        public override void OnRespawn(Player player)
+        {
+            if (NymphsPerfumeRespawn)
+            {
+                player.statLife = player.statLifeMax2;
+            }
         }
 
         public override void UpdateDead()
@@ -1774,7 +1785,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (Fargowiltas.Instance.ThoriumLoaded) ThoriumPostUpdate();
+            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumPostUpdate();
             
             if (MutantPresence)
             {
@@ -2120,7 +2131,7 @@ namespace FargowiltasSouls
                 crit = false;
             }
 
-            if (Fargowiltas.Instance.ThoriumLoaded) ThoriumModifyProj(proj, target, damage, crit);
+            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumModifyProj(proj, target, damage, crit);
         }
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
@@ -2179,7 +2190,7 @@ namespace FargowiltasSouls
                 crit = false;
             }
 
-            if (Fargowiltas.Instance.ThoriumLoaded) ThoriumModifyNPC(target, item, damage, crit);
+            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumModifyNPC(target, item, damage, crit);
         }
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit)
@@ -2366,7 +2377,7 @@ namespace FargowiltasSouls
             }
 
 
-            if (Fargowiltas.Instance.ThoriumLoaded) ThoriumHitProj(proj, target, damage, crit);
+            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumHitProj(proj, target, damage, crit);
         }
 
         public void OnHitNPCEither(NPC target, int damage, float knockback, bool crit, int projectile = -1)
@@ -2749,7 +2760,7 @@ namespace FargowiltasSouls
                 Projectile.NewProjectile(spawn, vel, ModContent.ProjectileType<Shadowfrostfireball>(), dam, 6f, player.whoAmI, target.whoAmI);
             }
 
-            if (Fargowiltas.Instance.ThoriumLoaded) ThoriumHitNPC(target, item, crit);
+            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumHitNPC(target, item, crit);
         }
 
         public override void MeleeEffects(Item item, Rectangle hitbox)
@@ -3196,23 +3207,23 @@ namespace FargowiltasSouls
             player.rangedDamage += dmg;
             player.minionDamage += dmg;
 
-            if (Fargowiltas.Instance.ThoriumLoaded) ThoriumDamage(dmg);
+            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumDamage(dmg);
 
-            if (Fargowiltas.Instance.CalamityLoaded) CalamityDamage(dmg);
+            //if (Fargowiltas.Instance.CalamityLoaded) CalamityDamage(dmg);
 
-            if (Fargowiltas.Instance.DBZMODLoaded) DBTDamage(dmg);
+            //if (Fargowiltas.Instance.DBZMODLoaded) DBTDamage(dmg);
         }
 
-        private void CalamityDamage(float dmg)
-        {
-            ModLoader.GetMod("CalamityMod").Call("AddRogueDamage", player, dmg);
-        }
+        //private void CalamityDamage(float dmg)
+        //{
+        //    ModLoader.GetMod("CalamityMod").Call("AddRogueDamage", player, dmg);
+        //}
 
-        private void DBTDamage(float dmg)
-        {
-            DBZMOD.MyPlayer dbtPlayer = player.GetModPlayer<DBZMOD.MyPlayer>();
-            dbtPlayer.KiDamage += dmg;
-        }
+        //private void DBTDamage(float dmg)
+        //{
+        //    DBZMOD.MyPlayer dbtPlayer = player.GetModPlayer<DBZMOD.MyPlayer>();
+        //    dbtPlayer.KiDamage += dmg;
+        //}
 
         public void AllCritUp(int crit)
         {
@@ -3220,23 +3231,23 @@ namespace FargowiltasSouls
             player.rangedCrit += crit;
             player.magicCrit += crit;
 
-            if (Fargowiltas.Instance.ThoriumLoaded) ThoriumCrit(crit);
+            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumCrit(crit);
 
-            if (Fargowiltas.Instance.CalamityLoaded) CalamityCrit(crit);
+            //if (Fargowiltas.Instance.CalamityLoaded) CalamityCrit(crit);
 
-            if (Fargowiltas.Instance.DBZMODLoaded) DBTCrit(crit);
+            //if (Fargowiltas.Instance.DBZMODLoaded) DBTCrit(crit);
         }
 
-        private void CalamityCrit(int crit)
-        {
-            ModLoader.GetMod("CalamityMod").Call("AddRogueCrit", player, crit);
-        }
+        //private void CalamityCrit(int crit)
+        //{
+        //    ModLoader.GetMod("CalamityMod").Call("AddRogueCrit", player, crit);
+        //}
 
-        private void DBTCrit(int crit)
-        {
-            DBZMOD.MyPlayer dbtPlayer = player.GetModPlayer<DBZMOD.MyPlayer>();
-            dbtPlayer.kiCrit += crit;
-        }
+        //private void DBTCrit(int crit)
+        //{
+        //    DBZMOD.MyPlayer dbtPlayer = player.GetModPlayer<DBZMOD.MyPlayer>();
+        //    dbtPlayer.kiCrit += crit;
+        //}
 
         public void AllCritEquals(int crit)
         {
@@ -3245,23 +3256,23 @@ namespace FargowiltasSouls
             player.magicCrit = crit;
             SummonCrit = crit;
 
-            if (Fargowiltas.Instance.ThoriumLoaded) ThoriumCritEquals(crit);
+            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumCritEquals(crit);
 
-            if (Fargowiltas.Instance.CalamityLoaded) CalamityCritEquals(crit);
+            //if (Fargowiltas.Instance.CalamityLoaded) CalamityCritEquals(crit);
 
-            if (Fargowiltas.Instance.DBZMODLoaded) DBTCritEquals(crit);
+            //if (Fargowiltas.Instance.DBZMODLoaded) DBTCritEquals(crit);
         }
 
-        private void CalamityCritEquals(int crit)
-        {
-            player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().throwingCrit = crit;
-        }
+        //private void CalamityCritEquals(int crit)
+        //{
+        //    player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().throwingCrit = crit;
+        //}
 
-        private void DBTCritEquals(int crit)
-        {
-            DBZMOD.MyPlayer dbtPlayer = player.GetModPlayer<DBZMOD.MyPlayer>();
-            dbtPlayer.kiCrit = crit;
-        }
+        //private void DBTCritEquals(int crit)
+        //{
+        //    DBZMOD.MyPlayer dbtPlayer = player.GetModPlayer<DBZMOD.MyPlayer>();
+        //    dbtPlayer.kiCrit = crit;
+        //}
 
         public int HighestDamageTypeScaling(int dmg)
         {

@@ -1,7 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Items.Accessories
+namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     [AutoloadEquip(EquipType.Shoes)]
     public class EurusSock : ModItem

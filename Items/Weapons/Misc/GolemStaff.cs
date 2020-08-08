@@ -2,16 +2,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
-namespace FargowiltasSouls.Items.Weapons
+namespace FargowiltasSouls.Items.Weapons.Misc
 {
     public class GolemStaff : ModItem
     {
         public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
-        public override bool Autoload(ref string name)
-        {
-            return false;
-        }
 
         public override void SetStaticDefaults()
         {

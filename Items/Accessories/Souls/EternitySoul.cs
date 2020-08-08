@@ -497,6 +497,15 @@ Additionally grants:");
             player.accThirdEye = true;
             player.accCalendar = true;
             player.accWeatherRadio = true;
+            //bionomic
+            FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
+            player.buffImmune[BuffID.WindPushed] = true;
+            fargoPlayer.SandsofTime = true;
+            player.buffImmune[BuffID.Suffocation] = true;
+            player.manaFlower = true;
+            fargoPlayer.SecurityWallet = true;
+            fargoPlayer.TribalCharm = true;
+            fargoPlayer.NymphsPerfumeRespawn = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -541,172 +550,172 @@ Additionally grants:");
             //MASOCHIST
             mod.GetItem("MasochistSoul").UpdateAccessory(player, hideVisual);
 
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player, hideVisual);
+            //if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player, hideVisual);
 
-            if (Fargowiltas.Instance.CalamityLoaded) Calamity(player, hideVisual);
+            //if (Fargowiltas.Instance.CalamityLoaded) Calamity(player, hideVisual);
 
-            if (Fargowiltas.Instance.DBZMODLoaded) DBT(player);
+            //if (Fargowiltas.Instance.DBZMODLoaded) DBT(player);
 
-            if (Fargowiltas.Instance.SoALoaded) SOA(player, hideVisual);
+            //if (Fargowiltas.Instance.SoALoaded) SOA(player, hideVisual);
         }
 
-        private void Thorium(Player player, bool hideVisual)
-        {
-            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            //phylactery
-            if (!thoriumPlayer.lichPrevent)
-            {
-                player.AddBuff(thorium.BuffType("LichActive"), 60, true);
-            }
-            //crystal scorpion
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.CrystalScorpion))
-            {
-                thoriumPlayer.crystalScorpion = true;
-            }
+        //private void Thorium(Player player, bool hideVisual)
+        //{
+        //    FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+        //    ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
+        //    //phylactery
+        //    if (!thoriumPlayer.lichPrevent)
+        //    {
+        //        player.AddBuff(thorium.BuffType("LichActive"), 60, true);
+        //    }
+        //    //crystal scorpion
+        //    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.CrystalScorpion))
+        //    {
+        //        thoriumPlayer.crystalScorpion = true;
+        //    }
 
-            //THROWING
-            thoriumPlayer.throwGuide2 = true;
-            //dead mans patch
-            thoriumPlayer.deadEyeBool = true;
-            //mermaid canteen
-            thoriumPlayer.throwerExhaustionMax += 1125;
-            thoriumPlayer.canteenCadet = true;
+        //    //THROWING
+        //    thoriumPlayer.throwGuide2 = true;
+        //    //dead mans patch
+        //    thoriumPlayer.deadEyeBool = true;
+        //    //mermaid canteen
+        //    thoriumPlayer.throwerExhaustionMax += 1125;
+        //    thoriumPlayer.canteenCadet = true;
 
-            //HEALER
-            //support stash
-            thoriumPlayer.supportSash = true;
-            thoriumPlayer.quickBelt = true;
-            //saving grace
-            thoriumPlayer.crossHeal = true;
-            thoriumPlayer.healBloom = true;
-            //soul guard
-            thoriumPlayer.graveGoods = true;
-            for (int i = 0; i < 255; i++)
-            {
-                Player player2 = Main.player[i];
-                if (player2.active && player2 != player && Vector2.Distance(player2.Center, player.Center) < 400f)
-                {
-                    player2.AddBuff(thorium.BuffType("AegisAura"), 30, false);
-                }
-            }
-            //archdemon's curse
-            thoriumPlayer.darkAura = true;
-            //archangels heart
-            thoriumPlayer.healBonus += 5;
-            //medical bag
-            thoriumPlayer.medicalAcc = true;
-            //head mirror arrow 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.HeadMirror))
-            {
-                float num = 0f;
-                int num2 = player.whoAmI;
-                for (int i = 0; i < 255; i++)
-                {
-                    if (Main.player[i].active && Main.player[i] != player && !Main.player[i].dead && (Main.player[i].statLifeMax2 - Main.player[i].statLife) > num)
-                    {
-                        num = (Main.player[i].statLifeMax2 - Main.player[i].statLife);
-                        num2 = i;
-                    }
-                }
-                if (player.ownedProjectileCounts[thorium.ProjectileType("HealerSymbol")] < 1)
-                {
-                    Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, thorium.ProjectileType("HealerSymbol"), 0, 0f, player.whoAmI, 0f, 0f);
-                }
-                for (int j = 0; j < 1000; j++)
-                {
-                    Projectile projectile = Main.projectile[j];
-                    if (projectile.active && projectile.owner == player.whoAmI && projectile.type == thorium.ProjectileType("HealerSymbol"))
-                    {
-                        projectile.timeLeft = 2;
-                        projectile.ai[1] = num2;
-                    }
-                }
-            }
-            //BARD
-            thoriumPlayer.bardResourceMax2 = 20; //the max allowed in thorium
-            //epic mouthpiece
-            thoriumPlayer.accWindHoming = true;
-            thoriumPlayer.bardHomingBonus = 5f;
-            //straight mute
-            thoriumPlayer.accBrassMute2 = true;
-            //digital tuner
-            thoriumPlayer.accPercussionTuner2 = true;
-            //guitar pick claw
-            thoriumPlayer.bardBounceBonus = 5;
+        //    //HEALER
+        //    //support stash
+        //    thoriumPlayer.supportSash = true;
+        //    thoriumPlayer.quickBelt = true;
+        //    //saving grace
+        //    thoriumPlayer.crossHeal = true;
+        //    thoriumPlayer.healBloom = true;
+        //    //soul guard
+        //    thoriumPlayer.graveGoods = true;
+        //    for (int i = 0; i < 255; i++)
+        //    {
+        //        Player player2 = Main.player[i];
+        //        if (player2.active && player2 != player && Vector2.Distance(player2.Center, player.Center) < 400f)
+        //        {
+        //            player2.AddBuff(thorium.BuffType("AegisAura"), 30, false);
+        //        }
+        //    }
+        //    //archdemon's curse
+        //    thoriumPlayer.darkAura = true;
+        //    //archangels heart
+        //    thoriumPlayer.healBonus += 5;
+        //    //medical bag
+        //    thoriumPlayer.medicalAcc = true;
+        //    //head mirror arrow 
+        //    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.HeadMirror))
+        //    {
+        //        float num = 0f;
+        //        int num2 = player.whoAmI;
+        //        for (int i = 0; i < 255; i++)
+        //        {
+        //            if (Main.player[i].active && Main.player[i] != player && !Main.player[i].dead && (Main.player[i].statLifeMax2 - Main.player[i].statLife) > num)
+        //            {
+        //                num = (Main.player[i].statLifeMax2 - Main.player[i].statLife);
+        //                num2 = i;
+        //            }
+        //        }
+        //        if (player.ownedProjectileCounts[thorium.ProjectileType("HealerSymbol")] < 1)
+        //        {
+        //            Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, thorium.ProjectileType("HealerSymbol"), 0, 0f, player.whoAmI, 0f, 0f);
+        //        }
+        //        for (int j = 0; j < 1000; j++)
+        //        {
+        //            Projectile projectile = Main.projectile[j];
+        //            if (projectile.active && projectile.owner == player.whoAmI && projectile.type == thorium.ProjectileType("HealerSymbol"))
+        //            {
+        //                projectile.timeLeft = 2;
+        //                projectile.ai[1] = num2;
+        //            }
+        //        }
+        //    }
+        //    //BARD
+        //    thoriumPlayer.bardResourceMax2 = 20; //the max allowed in thorium
+        //    //epic mouthpiece
+        //    thoriumPlayer.accWindHoming = true;
+        //    thoriumPlayer.bardHomingBonus = 5f;
+        //    //straight mute
+        //    thoriumPlayer.accBrassMute2 = true;
+        //    //digital tuner
+        //    thoriumPlayer.accPercussionTuner2 = true;
+        //    //guitar pick claw
+        //    thoriumPlayer.bardBounceBonus = 5;
             
-            //THORIUM SOUL
-            mod.GetItem("ThoriumSoul").UpdateAccessory(player, hideVisual);
-        }
+        //    //THORIUM SOUL
+        //    mod.GetItem("ThoriumSoul").UpdateAccessory(player, hideVisual);
+        //}
 
-        private void Calamity(Player player, bool hideVisual)
-        {
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-            //UNIVERSE
-            //melee
-            modPlayer.eGauntlet = true;
-            //removing the extra boosts it adds because meme calamity
-            player.meleeDamage -= .15f;
-            player.meleeSpeed -= .15f;
-            player.meleeCrit -= 5;
+        //private void Calamity(Player player, bool hideVisual)
+        //{
+        //    CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
+        //    //UNIVERSE
+        //    //melee
+        //    modPlayer.eGauntlet = true;
+        //    //removing the extra boosts it adds because meme calamity
+        //    player.meleeDamage -= .15f;
+        //    player.meleeSpeed -= .15f;
+        //    player.meleeCrit -= 5;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ElementalQuiver))
-            {
-                //range
-                modPlayer.eQuiver = true;
-            }
+        //    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ElementalQuiver))
+        //    {
+        //        //range
+        //        modPlayer.eQuiver = true;
+        //    }
 
-            //magic
-            modPlayer.eTalisman = true;
-            //summon
-            modPlayer.statisBeltOfCurses = true;
-            modPlayer.shadowMinions = true;
-            modPlayer.tearMinions = true;
-            //throw
-            modPlayer.nanotech = true;
-            //DIMENSIONS
-            //tank soul
-            //rampart of dieties
-            modPlayer.dAmulet = true;
-            //becase calamity made it itself for some reason no duplicate
-            player.starCloak = false;
-            //asgardian aegis
-            modPlayer.dashMod = 4;
-            modPlayer.elysianAegis = true;
-            player.buffImmune[calamity.BuffType("BrimstoneFlames")] = true;
-            player.buffImmune[calamity.BuffType("HolyLight")] = true;
-            player.buffImmune[calamity.BuffType("GlacialState")] = true;
-            //celestial tracers
-            modPlayer.IBoots = !hideVisual;
-            modPlayer.elysianFire = !hideVisual;
-            modPlayer.cTracers = true;
-            //TYRANT
-            mod.GetItem("CalamitySoul").UpdateAccessory(player, hideVisual);
-        }
+        //    //magic
+        //    modPlayer.eTalisman = true;
+        //    //summon
+        //    modPlayer.statisBeltOfCurses = true;
+        //    modPlayer.shadowMinions = true;
+        //    modPlayer.tearMinions = true;
+        //    //throw
+        //    modPlayer.nanotech = true;
+        //    //DIMENSIONS
+        //    //tank soul
+        //    //rampart of dieties
+        //    modPlayer.dAmulet = true;
+        //    //becase calamity made it itself for some reason no duplicate
+        //    player.starCloak = false;
+        //    //asgardian aegis
+        //    modPlayer.dashMod = 4;
+        //    modPlayer.elysianAegis = true;
+        //    player.buffImmune[calamity.BuffType("BrimstoneFlames")] = true;
+        //    player.buffImmune[calamity.BuffType("HolyLight")] = true;
+        //    player.buffImmune[calamity.BuffType("GlacialState")] = true;
+        //    //celestial tracers
+        //    modPlayer.IBoots = !hideVisual;
+        //    modPlayer.elysianFire = !hideVisual;
+        //    modPlayer.cTracers = true;
+        //    //TYRANT
+        //    mod.GetItem("CalamitySoul").UpdateAccessory(player, hideVisual);
+        //}
 
-        private void DBT(Player player)
-        {
-            DBZMOD.MyPlayer dbtPlayer = player.GetModPlayer<DBZMOD.MyPlayer>();
+        //private void DBT(Player player)
+        //{
+        //    DBZMOD.MyPlayer dbtPlayer = player.GetModPlayer<DBZMOD.MyPlayer>();
 
-            dbtPlayer.chargeMoveSpeed = Math.Max(dbtPlayer.chargeMoveSpeed, 2f);
-            dbtPlayer.kiKbAddition += 0.4f;
-            dbtPlayer.kiDrainMulti -= 0.5f;
-            dbtPlayer.kiMaxMult += 0.4f;
-            dbtPlayer.kiRegen += 5;
-            dbtPlayer.orbGrabRange += 6;
-            dbtPlayer.orbHealAmount += 150;
-            dbtPlayer.chargeLimitAdd += 8;
-            dbtPlayer.flightSpeedAdd += 0.6f;
-            dbtPlayer.flightUsageAdd += 3;
-            dbtPlayer.zenkaiCharm = true;
-        }
+        //    dbtPlayer.chargeMoveSpeed = Math.Max(dbtPlayer.chargeMoveSpeed, 2f);
+        //    dbtPlayer.kiKbAddition += 0.4f;
+        //    dbtPlayer.kiDrainMulti -= 0.5f;
+        //    dbtPlayer.kiMaxMult += 0.4f;
+        //    dbtPlayer.kiRegen += 5;
+        //    dbtPlayer.orbGrabRange += 6;
+        //    dbtPlayer.orbHealAmount += 150;
+        //    dbtPlayer.chargeLimitAdd += 8;
+        //    dbtPlayer.flightSpeedAdd += 0.6f;
+        //    dbtPlayer.flightUsageAdd += 3;
+        //    dbtPlayer.zenkaiCharm = true;
+        //}
 
-        private void SOA(Player player, bool hideVisual)
-        {
-            mod.GetItem("GenerationsForce").UpdateAccessory(player, hideVisual);
-            mod.GetItem("SoranForce").UpdateAccessory(player, hideVisual);
-            mod.GetItem("SyranForce").UpdateAccessory(player, hideVisual);
-        }
+        //private void SOA(Player player, bool hideVisual)
+        //{
+        //    mod.GetItem("GenerationsForce").UpdateAccessory(player, hideVisual);
+        //    mod.GetItem("SoranForce").UpdateAccessory(player, hideVisual);
+        //    mod.GetItem("SyranForce").UpdateAccessory(player, hideVisual);
+        //}
 
         public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,
             ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
