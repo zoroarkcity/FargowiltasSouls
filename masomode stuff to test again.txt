@@ -237,3 +237,4 @@ goblins no longer drop boosted balls on first invasion
 beating goblins for first time no longer spawns a meteorite
 blender sprites
 buffed prime max hp
+nerfed force of earth, now receives disrupted focus on hit (SOT does not)

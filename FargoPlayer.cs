@@ -2871,7 +2871,7 @@ namespace FargowiltasSouls
         {
             WasHurtBySomething = true;
 
-            if (MythrilEnchant && !EarthForce)
+            if (MythrilEnchant && !TerrariaSoul)
             {
                 player.AddBuff(ModContent.BuffType<DisruptedFocus>(), 300);
             }
