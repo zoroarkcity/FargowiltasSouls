@@ -2607,11 +2607,14 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
 
-                if (++Counter[2] > 90)
+                if (++Counter[2] > 85)
                 {
                     Counter[2] = 0;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                        Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DicerPlantera>(), npc.damage / 5, 0f, Main.myPlayer, 120, 300);
+                    {
+                        Projectile.NewProjectile(npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height)),
+                            Vector2.Zero, ModContent.ProjectileType<DicerPlantera>(), npc.damage / 5, 0f, Main.myPlayer, 120);//, 300);
+                    }
                 }
 
                 /*Timer++;
@@ -2641,13 +2644,14 @@ namespace FargowiltasSouls.NPCs
                     if (Main.player[npc.target].venom)
                     {
                         npc.defense *= 2;
-                        Counter[0]++;
+                        //Counter[0]++;
                         SharkCount = 1;
                     }
+                    npc.position -= npc.velocity * 0.1f;
                 }
                 else
                 {
-                    npc.position -= npc.velocity * 0.1f;
+                    npc.position -= npc.velocity / 3;
                 }
             }
 
@@ -2918,13 +2922,13 @@ namespace FargowiltasSouls.NPCs
                 }
             }*/
 
-            if (Fargowiltas.Instance.CalamityLoaded && Revengeance)
+            /*if (Fargowiltas.Instance.CalamityLoaded && Revengeance)
             {
                 if (masoBool[1])
                     npc.dontTakeDamage = false;
                 else
                     masoBool[1] = !NPC.AnyNPCs(NPCID.GolemHead);
-            }
+            }*/
 
             if (!npc.dontTakeDamage)
             {
@@ -3813,7 +3817,7 @@ namespace FargowiltasSouls.NPCs
             if (Main.player[Main.myPlayer].active && !Main.player[Main.myPlayer].dead && masoStateML >= 0 && masoStateML <= 3)
                 Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<NullificationCurse>(), 2);
 
-            npc.position -= npc.velocity / 3; //SLOW DOWN
+            npc.position -= npc.velocity * 2f / 3f; //SLOW DOWN
 
             /*if (!masoBool[0])
             {
@@ -3856,7 +3860,7 @@ namespace FargowiltasSouls.NPCs
                                         {
                                             Projectile.NewProjectile(bodyPart.Center,
                                                 6f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI / 2 / 3 * j),
-                                                ProjectileID.CultistBossFireBall, damage, 0f, Main.myPlayer);
+                                                ModContent.ProjectileType<MoonLordFireball>(), damage, 0f, Main.myPlayer, 20, 20 + 60);
                                         }
                                     }
                                 }
@@ -3921,7 +3925,7 @@ namespace FargowiltasSouls.NPCs
                                         for (int j = 0; j < max; j++)
                                         {
                                             Projectile.NewProjectile(bodyPart.Center,
-                                                2.5f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * 2 / max * j),
+                                                3f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * 2 / max * j),
                                                 ProjectileID.NebulaLaser, damage, 0f, Main.myPlayer);
                                         }
 

@@ -19,13 +19,14 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void SetDefaults()
         {
-            projectile.width = 2;
-            projectile.height = 2;
+            projectile.width = 4;
+            projectile.height = 4;
             projectile.hostile = true;
             projectile.timeLeft = 360;
             projectile.aiStyle = -1;
             cooldownSlot = 1;
             projectile.tileCollide = false;
+            projectile.scale = 1.5f;
         }
 
         public override void AI()

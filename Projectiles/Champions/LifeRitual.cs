@@ -45,10 +45,13 @@ namespace FargowiltasSouls.Projectiles.Champions
                 if (projectile.alpha < 0)
                     projectile.alpha = 0;
 
-                if (Main.npc[ai1].ai[0] != 2f && Main.npc[ai1].ai[0] != 3f
-                    && Main.npc[ai1].ai[0] != 9f && Main.npc[ai1].ai[0] != 10f)
+                if (Main.npc[ai1].ai[0] != 2f && Main.npc[ai1].ai[0] != 8f)
                 {
                     projectile.velocity = (Main.npc[ai1].Center - projectile.Center) / 30;
+                }
+                else
+                {
+                    projectile.velocity *= 0.95f;
                 }
 
                 Player player = Main.player[Main.myPlayer];

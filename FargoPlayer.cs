@@ -31,10 +31,12 @@ namespace FargowiltasSouls
         public float wingTimeModifier;
 
         public bool FreeEaterSummon = true;
-
+        public int Screenshake;
 
         public bool Wood;
         public bool QueenStinger;
+        public bool EridanusEmpower;
+        public int EridanusTimer;
 
         //minions
         public bool BrainMinion;
@@ -503,6 +505,9 @@ namespace FargowiltasSouls
             {
                 MutantEyeCD = 3600;
 
+                if (!Main.dedServ && Main.LocalPlayer.active)
+                    Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 30;
+
                 const int invulTime = 90;
                 player.immune = true;
                 player.immuneTime = invulTime;
@@ -571,12 +576,15 @@ namespace FargowiltasSouls
             }
 
             AttackSpeed = 1f;
+            if (Screenshake > 0)
+                Screenshake--;
 
             Wood = false;
 
             wingTimeModifier = 1f;
 
             QueenStinger = false;
+            EridanusEmpower = false;
 
             BrainMinion = false;
             EaterMinion = false;
@@ -818,6 +826,11 @@ namespace FargowiltasSouls
 
             wingTimeModifier = 1f;
             FreeEaterSummon = true;
+            if (Screenshake > 0)
+                Screenshake--;
+
+            EridanusEmpower = false;
+            EridanusTimer = 0;
 
             //debuffs
             Hexed = false;
@@ -2869,7 +2882,7 @@ namespace FargowiltasSouls
         {
             WasHurtBySomething = true;
 
-            if (MythrilEnchant && !EarthForce)
+            if (MythrilEnchant && !TerrariaSoul)
             {
                 player.AddBuff(ModContent.BuffType<DisruptedFocus>(), 300);
             }
@@ -3435,6 +3448,12 @@ namespace FargowiltasSouls
             if (BetsyDashing) //dont draw player during betsy dash
                 while (layers.Count > 0)
                     layers.RemoveAt(0);
+        }
+
+        public override void ModifyScreenPosition()
+        {
+            if (Screenshake > 0)
+                Main.screenPosition += Main.rand.NextVector2Circular(7, 7);
         }
     }
 }

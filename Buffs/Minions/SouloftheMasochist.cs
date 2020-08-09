@@ -9,7 +9,7 @@ namespace FargowiltasSouls.Buffs.Minions
     {
         public override void SetDefaults()
         {
-            DisplayName.SetDefault("Soul of the Mutants");
+            DisplayName.SetDefault("Soul of the Siblings");
             Description.SetDefault("The power of Eternity Mode is with you");
             Main.buffNoTimeDisplay[Type] = true;
             Main.buffNoSave[Type] = true;

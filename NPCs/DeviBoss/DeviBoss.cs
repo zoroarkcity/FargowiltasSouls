@@ -1120,6 +1120,21 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         }
                     }
 
+                    if (npc.ai[3] < 4 && npc.Distance(Main.LocalPlayer.Center) < 3000 && Collision.CanHitLine(npc.Center, 0, 0, Main.LocalPlayer.Center, 0, 0)
+                        && Math.Sign(Main.LocalPlayer.direction) == Math.Sign(npc.Center.X - Main.LocalPlayer.Center.X))
+                    {
+                        Vector2 target = Main.LocalPlayer.Center;
+                        int length = (int)npc.Distance(target) / 10;
+                        Vector2 offset = npc.DirectionTo(target) * 10f;
+                        for (int i = 0; i < length; i++) //dust indicator
+                        {
+                            int d = Dust.NewDust(npc.Center + offset * i, 0, 0, DustID.GoldFlame, 0f, 0f, 0, new Color());
+                            Main.dust[d].noLight = true;
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].scale = 1f;
+                        }
+                    }
+
                     if (++npc.ai[2] > 60)
                     {
                         npc.ai[2] = 0;
@@ -1152,28 +1167,18 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 Main.dust[d].noGravity = true;
                                 Main.dust[d].velocity = vector7;
                             }
+
+                            if (npc.ai[3] == 1 && Main.netMode != NetmodeID.MultiplayerClient)
+                                Projectile.NewProjectile(npc.Center, new Vector2(0, -2), ModContent.ProjectileType<DeviMedusa>(), 0, 0, Main.myPlayer);
                         }
                         else if (npc.ai[3] == 4) //petrify
                         {
                             Main.PlaySound(SoundID.NPCKilled, npc.Center, 17);
 
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(npc.Center, new Vector2(0, -4), ModContent.ProjectileType<DeviMedusa>(), 0, 0, Main.myPlayer);
-
-                            if (npc.Distance(Main.LocalPlayer.Center) < 3000 && Collision.CanHitLine(npc.Center, 0, 0, Main.LocalPlayer.Center, 0, 0))
+                            if (npc.Distance(Main.LocalPlayer.Center) < 3000 && Collision.CanHitLine(npc.Center, 0, 0, Main.LocalPlayer.Center, 0, 0)
+                                && Math.Sign(Main.LocalPlayer.direction) == Math.Sign(npc.Center.X - Main.LocalPlayer.Center.X))
                             {
-                                if (Math.Sign(Main.LocalPlayer.direction) == Math.Sign(npc.Center.X - Main.LocalPlayer.Center.X))
-                                    Main.LocalPlayer.AddBuff(BuffID.Stoned, 300);
-
-                                Vector2 target = Main.LocalPlayer.Center;
-                                int length = (int)npc.Distance(target) / 10;
-                                Vector2 offset = npc.DirectionTo(target) * 10f;
-                                for (int i = 0; i < length; i++) //dust indicator
-                                {
-                                    int d = Dust.NewDust(npc.Center + offset * i, 0, 0, DustID.GoldFlame, 0f, 0f, 0, new Color());
-                                    Main.dust[d].noLight = true;
-                                    Main.dust[d].scale = 1f;
-                                }
+                                Main.LocalPlayer.AddBuff(BuffID.Stoned, 300);
                             }
                         }
                         else if (npc.ai[3] < 7) //ray warning

@@ -17,6 +17,7 @@ namespace FargowiltasSouls.Patreon.DemonKing
         {
             DisplayName.SetDefault("Duke Fishron");
             Main.projFrames[projectile.type] = 8;
+            ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }

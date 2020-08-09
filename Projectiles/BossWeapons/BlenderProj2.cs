@@ -9,9 +9,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
     internal class BlenderProj2 : ModProjectile
     {
         public int Counter = 0;
-
-        public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/DicerProj";
-
+        
         public override void SetDefaults()
         {
             projectile.width = 30;
@@ -63,7 +61,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 Counter = 0;
                 int proj2 = mod.ProjectileType("BlenderProj3");
-                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, proj2, projectile.damage, 0, Main.myPlayer);
+                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
             }
         }
 
@@ -75,6 +73,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Main.dust[dustIndex].noGravity = true;
                 Main.dust[dustIndex].scale = 1.6f;
             }*/
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.immune[projectile.owner] = 6;
         }
     }
 }

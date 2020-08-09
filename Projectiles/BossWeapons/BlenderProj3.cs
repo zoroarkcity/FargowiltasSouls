@@ -78,33 +78,30 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void Kill(int timeLeft)
         {
-            int proj2 = 484; //374;
+            int proj2 = ModContent.ProjectileType<BlenderSpray>(); //374;
 
             if (projectile.owner == Main.myPlayer)
             {
                 if (Main.rand.Next(2) == 0)
                 {
-                    int p = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 5f, proj2, (int)(projectile.damage * 0.5f), 2 /*kb*/, Main.myPlayer);
-                    Main.projectile[p].timeLeft = 180;
-                    p = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 5f, 0f, proj2, (int)(projectile.damage * 0.5f), 2, Main.myPlayer);
-                    Main.projectile[p].timeLeft = 180;
-                    p = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, -5f, proj2, (int)(projectile.damage * 0.5f), 2, Main.myPlayer);
-                    Main.projectile[p].timeLeft = 180;
-                    p = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -5f, 0f, proj2, (int)(projectile.damage * 0.5f), 2, Main.myPlayer);
-                    Main.projectile[p].timeLeft = 180;
+                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 10f, proj2, projectile.damage, projectile.knockBack /*kb*/, Main.myPlayer);
+                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 10f, 0f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, -10f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -10f, 0f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
                 }
                 else
                 {
-                    int p = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4f, 4f, proj2, (int)(projectile.damage * 0.5f), 2, Main.myPlayer);
-                    Main.projectile[p].timeLeft = 180;
-                    p = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4f, -4f, proj2, (int)(projectile.damage * 0.5f), 2, Main.myPlayer);
-                    Main.projectile[p].timeLeft = 180;
-                    p = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4f, -4f, proj2, (int)(projectile.damage * 0.5f), 2, Main.myPlayer);
-                    Main.projectile[p].timeLeft = 180;
-                    p = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4f, 4f, proj2, (int)(projectile.damage * 0.5f), 2, Main.myPlayer);
-                    Main.projectile[p].timeLeft = 180;
+                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 8f, 8f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -8f, -8f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 8f, -8f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -8f, 8f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
                 }
             }
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.immune[projectile.owner] = 6;
         }
     }
 }

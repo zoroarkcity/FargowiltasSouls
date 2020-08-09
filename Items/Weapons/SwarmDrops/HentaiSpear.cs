@@ -52,7 +52,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 item.shootSpeed = 25f;
                 item.useAnimation = 100;
                 item.useTime = 100;
-                item.thrown = true;
+                item.ranged = true;
                 item.melee = false;
             }
             else
@@ -61,7 +61,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 item.shootSpeed = 6f;
                 item.useAnimation = 16;
                 item.useTime = 16;
-                item.thrown = false;
+                item.ranged = false;
                 item.melee = true;
             }
             return true;

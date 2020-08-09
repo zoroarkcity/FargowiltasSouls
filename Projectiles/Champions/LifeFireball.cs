@@ -14,6 +14,8 @@ namespace FargowiltasSouls.Projectiles.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fireball");
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
@@ -27,6 +29,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.timeLeft = 240;
+            projectile.scale = 2f;
             cooldownSlot = 1;
         }
 
@@ -37,13 +40,14 @@ namespace FargowiltasSouls.Projectiles.Champions
                 projectile.localAI[0] = 1f;
                 Main.PlaySound(SoundID.Item20, projectile.position);
             }
-            for (int index1 = 0; index1 < 2; ++index1)
+
+            for (int index1 = 0; index1 < 4; ++index1)
             {
                 int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6,
-                    projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, new Color(), 2f);
+                    projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, new Color(), 2.5f);
                 Main.dust[index2].noGravity = true;
-                Main.dust[index2].velocity.X *= 0.3f;
-                Main.dust[index2].velocity.Y *= 0.3f;
+                Main.dust[index2].velocity.X *= 0.5f;
+                Main.dust[index2].velocity.Y *= 0.5f;
             }
 
             if (--projectile.ai[0] > 0)
@@ -90,6 +94,8 @@ namespace FargowiltasSouls.Projectiles.Champions
                         projectile.velocity *= 1.04f;
                 }*/
             }
+
+            projectile.rotation += 0.2f;
         }
 
         public override void Kill(int timeLeft)
@@ -107,7 +113,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             }
 
             Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 14);
-
+            
             for (int i = 0; i < 30; i++)
             {
                 int dust = Dust.NewDust(projectile.position, projectile.width,
@@ -167,7 +173,22 @@ namespace FargowiltasSouls.Projectiles.Champions
             int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
-            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+
+            Color color26 = lightColor;
+            color26 = projectile.GetAlpha(color26);
+
+            SpriteEffects effects = projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+            {
+                Color color27 = Color.Red * projectile.Opacity * 0.5f;
+                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                Vector2 value4 = projectile.oldPos[i];
+                float num165 = projectile.oldRot[i];
+                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, effects, 0f);
+            }
+
+            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, effects, 0f);
             return false;
         }
     }

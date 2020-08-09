@@ -720,10 +720,10 @@ namespace FargowiltasSouls.Projectiles
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                for (int i = -1; i <= 1; i++)
+                                for (int i = -2; i <= 2; i++)
                                 {
                                     Projectile.NewProjectile(projectile.Center,
-                                        Vector2.Normalize(projectile.velocity).RotatedBy(MathHelper.ToRadians(5 * i)),
+                                        1.5f * Vector2.Normalize(projectile.velocity).RotatedBy(MathHelper.ToRadians(5 * i)),
                                         ModContent.ProjectileType<PhantasmalBolt2>(), projectile.damage, 0f, Main.myPlayer);
                                 }
                                 projectile.Kill();
@@ -1005,13 +1005,19 @@ namespace FargowiltasSouls.Projectiles
 
                         if (projectile.ai[0] == -1 && projectile.localAI[0] > 0) //sent to fly, flagged as from hand
                         {
-                            if (++projectile.localAI[1] < 140)
-                                projectile.velocity *= 1.022f;
+                            if (++projectile.localAI[1] < 150)
+                                projectile.velocity *= 1.02f;
 
                             if (projectile.localAI[0] == 1 && projectile.velocity.Length() > 11) //only do this once
                             {
                                 projectile.localAI[0] = 2;
                                 projectile.velocity.Normalize();
+
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<PhantasmalSphereDeathray>(),
+                                        0, 0f, Main.myPlayer, 0f, projectile.whoAmI);
+                                }
                             }
                         }
                     }

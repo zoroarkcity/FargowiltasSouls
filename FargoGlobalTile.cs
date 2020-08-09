@@ -215,27 +215,31 @@ namespace FargowiltasSouls
                 && tile.slope() == 0 && !tile.inActive();
         }
 
-        public override void RightClick(int i, int j, int type)
+        public override void NearbyEffects(int i, int j, int type, bool closer)
         {
             if (type == TileID.LihzahrdAltar && Collision.CanHit(new Vector2(i * 16 + 8, j * 16 + 8), 0, 0, Main.LocalPlayer.Center, 0, 0))
             {
                 Main.LocalPlayer.AddBuff(mod.BuffType("LihzahrdBlessing"), 60 * 60 * 10); //10mins
-                Main.PlaySound(SoundID.Item9, Main.LocalPlayer.Center);
             }
         }
 
         public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
         {
-            if (FargoSoulsWorld.MasochistMode && !NPC.downedGolemBoss
+            if (FargoSoulsWorld.MasochistMode
                 && Framing.GetTileSafely(i, j).wall == WallID.LihzahrdBrickUnsafe
                 && (type == TileID.Traps || type == TileID.PressurePlates))
             {
+                int p = Player.FindClosest(new Vector2(i * 16 + 8, j * 16 + 8), 0, 0);
+                if (p != -1)
+                {
+                    Tile tile = Framing.GetTileSafely(Main.player[p].Center);
+                    if (tile.wall == WallID.LihzahrdBrickUnsafe && !Main.player[p].GetModPlayer<FargoPlayer>().LihzahrdCurse)
+                        return true;
+                }
                 return false;
             }
             return true;
         }
-
-
 
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
         {

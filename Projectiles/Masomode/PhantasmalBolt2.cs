@@ -53,16 +53,18 @@ namespace FargowiltasSouls.Projectiles.Masomode
             {
                 if (projectile.localAI[1] < 90) //accelerate
                 {
-                    projectile.velocity *= 1.04f;
+                    projectile.velocity *= 1.035f;
                 }
-                else if (projectile.localAI[1] < 150 && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore)
+
+                if (projectile.localAI[1] < 120
+                    && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore)
                     && Main.npc[EModeGlobalNPC.moonBoss].HasValidTarget) //home
                 {
                     float rotation = projectile.velocity.ToRotation();
                     Vector2 vel = Main.player[Main.npc[EModeGlobalNPC.moonBoss].target].Center
                         + Main.player[Main.npc[EModeGlobalNPC.moonBoss].target].velocity * 10f - projectile.Center;
                     float targetAngle = vel.ToRotation();
-                    projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, 0.03f));
+                    projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, 0.012f));
                 }
             }
         }

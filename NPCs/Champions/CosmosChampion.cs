@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using FargowiltasSouls.Items.Accessories.Enchantments;
+using FargowiltasSouls.Items.Armor;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
 using System.IO;
@@ -85,7 +86,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             if (npc.localAI[3] == 0) //just spawned
             {
-                if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 2000)
+                if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 1500)
                     npc.localAI[3] = 1;
                 npc.TargetClosest(false);
             }
@@ -124,7 +125,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 }
             }
 
-            if (npc.localAI[2] < 2 && npc.ai[0] != -2 && npc.life < npc.lifeMax * .2)
+            if (FargoSoulsWorld.MasochistMode && npc.localAI[2] < 2 && npc.ai[0] != -2 && npc.life < npc.lifeMax * .2)
             {
                 npc.ai[0] = -2;
                 npc.ai[1] = 0;
@@ -154,7 +155,7 @@ namespace FargowiltasSouls.NPCs.Champions
             switch ((int)npc.ai[0])
             {
                 case -3: //final phase
-                    if ((!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f)) //despawn code
+                    if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f) //despawn code
                     {
                         npc.TargetClosest(false);
                         if (npc.timeLeft > 30)
@@ -170,6 +171,9 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.ai[1] == 0)
                     {
                         npc.ai[1] = 1;
+
+                        if (!Main.dedServ && Main.LocalPlayer.active)
+                            Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 30;
 
                         Main.PlaySound(SoundID.Roar, npc.Center, 0);
 
@@ -273,6 +277,9 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.netUpdate = true;
 
                         Main.PlaySound(SoundID.Item92, npc.Center);
+
+                        if (!Main.dedServ && Main.LocalPlayer.active)
+                            Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 30;
 
                         int type; //for dust
 
@@ -1311,6 +1318,15 @@ namespace FargowiltasSouls.NPCs.Champions
                 lastDrop = thisDrop;
                 Item.NewItem(npc.position, npc.Size, drops[thisDrop]);
             }
+
+            int armour;
+            switch(Main.rand.Next(3))
+            {
+                case 0: armour = ModContent.ItemType<EridanusHat>(); break;
+                case 1: armour = ModContent.ItemType<EridanusBattleplate>(); break;
+                default: armour = ModContent.ItemType<EridanusLegwear>(); break;
+            }
+            Item.NewItem(npc.position, npc.Size, armour);
 
             //Item.NewItem(npc.position, npc.Size, ModLoader.GetMod("Fargowiltas").ItemType("CrucibleCosmos"));
 

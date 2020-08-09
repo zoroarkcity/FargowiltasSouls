@@ -34,9 +34,9 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.width = 120;
             npc.height = 120;
             npc.damage = 260;
-            npc.defense = 60;
-            npc.lifeMax = 700000;
-            npc.value = Item.buyPrice(0, 50);
+            npc.defense = 130;
+            npc.lifeMax = 850000;
+            npc.value = Item.buyPrice(1);
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -780,7 +780,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     if (!AliveCheck(player))
                         break;
                     npc.velocity *= 0.9f;
-                    if (++npc.ai[1] > 120)
+                    if (++npc.ai[1] > 60)
                     {
                         npc.netUpdate = true;
                         npc.ai[0] = npc.dontTakeDamage ? npc.ai[0] + 1 : 0;
@@ -842,7 +842,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     targetPos = player.Center + player.DirectionTo(npc.Center) * 500;
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.7f);
-                    if (++npc.ai[1] > 120 || (npc.dontTakeDamage && npc.ai[1] > 30))
+                    if (++npc.ai[1] > 60 || (npc.dontTakeDamage && npc.ai[1] > 30))
                     {
                         npc.netUpdate = true;
                         npc.ai[0] -= 2;
@@ -877,8 +877,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         }
                     }
                     targetPos = new Vector2(npc.ai[2], npc.ai[3]);
-                    Movement(targetPos, 0.7f);
-                    if (++npc.ai[1] > 210 || (npc.dontTakeDamage && npc.ai[1] > 150))
+                    Movement(targetPos, 1.4f);
+                    if (++npc.ai[1] > 150)
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, Vector2.UnitX * npc.localAI[2], ModContent.ProjectileType<AbomSword>(), npc.damage * 3 / 8, 0f, Main.myPlayer, npc.localAI[2] * 0.0001f, npc.whoAmI);
@@ -930,7 +930,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     targetPos.X += 500 * (npc.Center.X < targetPos.X ? -1 : 1);
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.7f);
-                    if (++npc.ai[1] > 120)
+                    if (++npc.ai[1] > 60)
                     {
                         npc.netUpdate = true;
                         npc.ai[0] = npc.dontTakeDamage ? -3 : 0;

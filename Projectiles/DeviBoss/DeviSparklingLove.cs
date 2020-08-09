@@ -130,6 +130,9 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
             MakeDust();
 
+            if (!Main.dedServ && Main.LocalPlayer.active)
+                Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 30;
+
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 /*for (int i = 0; i < 8; i++)

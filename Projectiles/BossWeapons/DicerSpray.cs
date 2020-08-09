@@ -13,6 +13,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.CloneDefaults(ProjectileID.SeedlerThorn);
             aiType = ProjectileID.SeedlerThorn;
             projectile.penetrate = -1;
+            projectile.timeLeft = 120;
         }
     }
 }

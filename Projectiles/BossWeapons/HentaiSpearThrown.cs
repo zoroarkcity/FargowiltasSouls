@@ -34,6 +34,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.extraUpdates = 1;
             projectile.scale = 1.3f;
             projectile.alpha = 0;
+            projectile.ranged = true;
 
             projectile.localNPCHitCooldown = 0;
             projectile.usesLocalNPCImmunity = true;
@@ -61,14 +62,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     if (p != Main.maxProjectiles)
                     {
                         Main.projectile[p].melee = false;
-                        Main.projectile[p].thrown = true;
+                        Main.projectile[p].ranged = true;
                     }
                     p = Projectile.NewProjectile(projectile.Center, 16f * -baseVel,
                         ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack / 2, projectile.owner, 1f);
                     if (p != Main.maxProjectiles)
                     {
                         Main.projectile[p].melee = false;
-                        Main.projectile[p].thrown = true;
+                        Main.projectile[p].ranged = true;
                     }
                     
                     /*Vector2 vel = baseVel.RotatedByRandom(Math.PI / 4);
@@ -92,7 +93,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     if (p != Main.maxProjectiles)
                     {
                         Main.projectile[p].melee = false;
-                        Main.projectile[p].thrown = true;
+                        Main.projectile[p].ranged = true;
                     }
                 }
             }
@@ -108,7 +109,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 if (p < 1000)
                 {
                     Main.projectile[p].melee = false;
-                    Main.projectile[p].thrown = true;
+                    Main.projectile[p].ranged = true;
                 }
             }
             target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 600);

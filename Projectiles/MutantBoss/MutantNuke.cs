@@ -40,6 +40,13 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 Main.PlaySound(SoundID.Item20, projectile.position);
             }
 
+            if (!NPCs.EModeGlobalNPC.BossIsAlive(ref NPCs.EModeGlobalNPC.mutantBoss, ModContent.NPCType<NPCs.MutantBoss.MutantBoss>())
+                || Main.npc[NPCs.EModeGlobalNPC.mutantBoss].dontTakeDamage)
+            {
+                projectile.Kill();
+                return;
+            }
+
             projectile.velocity.Y += projectile.ai[0];
             projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2f;
 

@@ -27,6 +27,9 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void AI()
         {
+            if (!Main.dedServ && Main.LocalPlayer.active)
+                Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 2;
+
             Vector2? vector78 = null;
             if (projectile.velocity.HasNaNs() || projectile.velocity == Vector2.Zero)
             {

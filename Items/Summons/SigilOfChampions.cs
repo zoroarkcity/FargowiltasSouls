@@ -164,7 +164,7 @@ Not consumed on use");
             recipe.AddIngredient(ItemID.FrostCore, 5);
             recipe.AddIngredient(ItemID.SoulofLight, 5);
             recipe.AddIngredient(ItemID.SoulofNight, 5);
-            recipe.AddIngredient(ItemID.DesertFossil, 5);
+            recipe.AddIngredient(ItemID.AncientBattleArmorMaterial, 5);
             recipe.AddIngredient(ItemID.Coral, 5);
             recipe.AddIngredient(ItemID.LunarBar, 5);
 

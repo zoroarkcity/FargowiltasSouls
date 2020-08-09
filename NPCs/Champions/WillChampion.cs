@@ -85,7 +85,7 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 npc.TargetClosest(false);
                 Movement(Main.player[npc.target].Center, 0.8f, 32f);
-                if (npc.Distance(Main.player[npc.target].Center) < 2000)
+                if (npc.Distance(Main.player[npc.target].Center) < 1500)
                     spawned = true;
                 else
                     return;
@@ -98,7 +98,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
             Player player = Main.player[npc.target];
 
-            if (npc.HasValidTarget && npc.Distance(player.Center) < 2500 && player.ZoneUnderworldHeight)
+            if (npc.HasValidTarget && npc.Distance(player.Center) < 2500)
                 npc.timeLeft = 600;
 
             if (npc.localAI[2] == 0 && npc.life < npc.lifeMax * .66)

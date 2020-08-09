@@ -81,7 +81,7 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 npc.TargetClosest(false);
                 Movement(Main.player[npc.target].Center, 0.8f, 32f);
-                if (npc.Distance(Main.player[npc.target].Center) < 2000)
+                if (npc.Distance(Main.player[npc.target].Center) < 1500)
                     npc.localAI[3] = 1;
                 else
                     return;
@@ -111,7 +111,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
             npc.direction = npc.spriteDirection = npc.Center.X < player.Center.X ? 1 : -1;
 
-            if (npc.localAI[3] == 1 && npc.life < npc.lifeMax * .66)
+            if (npc.localAI[3] == 1 && npc.life < npc.lifeMax * (FargoSoulsWorld.MasochistMode ? 0.66 : .5))
             {
                 npc.localAI[3] = 2;
                 npc.dontTakeDamage = true;
@@ -142,7 +142,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         Main.projectile[i].Kill();
                 }
             }
-            else if (npc.localAI[3] == 2 && npc.life < npc.lifeMax * .33)
+            else if (npc.localAI[3] == 2 && npc.life < npc.lifeMax * .33 && FargoSoulsWorld.MasochistMode)
             {
                 npc.localAI[3] = 3;
                 npc.dontTakeDamage = true;

@@ -33,8 +33,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             npc.height = 120;//50;
             npc.damage = 360;
             npc.defense = 360;
-            npc.value = Item.buyPrice(1);
-            npc.lifeMax = Main.expertMode ? 7700000 : 3700000;
+            npc.value = Item.buyPrice(2);
+            npc.lifeMax = Main.expertMode ? 17700000 : 7700000;// : 3700000;
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -826,6 +826,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
                             if (++npc.ai[1] > 35)
                             {
+                                if (!Main.dedServ && Main.LocalPlayer.active)
+                                    Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 30;
+
                                 npc.ai[0] = 0;
                                 npc.ai[1] = 0;
                                 npc.ai[2] = 0;
@@ -1468,21 +1471,27 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         break;
                     npc.velocity.Normalize();
                     npc.velocity *= 2f;
-                    if (npc.ai[1] > 180 && Main.netMode != NetmodeID.MultiplayerClient)
+                    if (npc.ai[1] > 180)
                     {
-                        Vector2 safeZone = npc.Center;
-                        safeZone.Y -= 100;
-                        const float safeRange = 150 + 200;
-                        for (int i = 0; i < 3; i++)
+                        if (!Main.dedServ && Main.LocalPlayer.active)
+                            Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 2;
+
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Vector2 spawnPos = npc.Center + Main.rand.NextVector2Circular(1200, 1200);
-                            if (Vector2.Distance(safeZone, spawnPos) < safeRange)
+                            Vector2 safeZone = npc.Center;
+                            safeZone.Y -= 100;
+                            const float safeRange = 150 + 200;
+                            for (int i = 0; i < 3; i++)
                             {
-                                Vector2 directionOut = spawnPos - safeZone;
-                                directionOut.Normalize();
-                                spawnPos = safeZone + directionOut * Main.rand.NextFloat(safeRange, 1200);
+                                Vector2 spawnPos = npc.Center + Main.rand.NextVector2Circular(1200, 1200);
+                                if (Vector2.Distance(safeZone, spawnPos) < safeRange)
+                                {
+                                    Vector2 directionOut = spawnPos - safeZone;
+                                    directionOut.Normalize();
+                                    spawnPos = safeZone + directionOut * Main.rand.NextFloat(safeRange, 1200);
+                                }
+                                Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<MutantBomb>(), npc.damage / 4, 0f, Main.myPlayer);
                             }
-                            Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<MutantBomb>(), npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
                     if (++npc.ai[1] > 360)
@@ -1900,7 +1909,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            damage *= 0.8;
+            //damage *= 0.75;
             return true;
         }
 

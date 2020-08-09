@@ -49,6 +49,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
             npc.scale *= 1.25f;
             npc.trapImmune = true;
+            npc.dontCountMe = true;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -60,8 +61,9 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void AI()
         {
             int ai1 = (int)npc.ai[1];
-            if (!(ai1 > -1 && ai1 < Main.maxNPCs && Main.npc[ai1].active && Main.npc[ai1].ai[0] == npc.whoAmI && Main.npc[ai1].life >= Main.npc[ai1].lifeMax / 10
-                && (Main.npc[ai1].type == ModContent.NPCType<TerraChampion>() || Main.npc[ai1].type == ModContent.NPCType<TerraChampionBody>())))
+            if (!(ai1 > -1 && ai1 < Main.maxNPCs && Main.npc[ai1].active && Main.npc[ai1].ai[0] == npc.whoAmI
+                && (Main.npc[ai1].type == ModContent.NPCType<TerraChampion>() || Main.npc[ai1].type == ModContent.NPCType<TerraChampionBody>()))
+                || (FargoSoulsWorld.MasochistMode && Main.npc[ai1].life < Main.npc[ai1].lifeMax / 10))
             {
                 Main.PlaySound(SoundID.Item, npc.Center, 14);
 

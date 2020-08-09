@@ -9,7 +9,7 @@ namespace FargowiltasSouls.Buffs.Boss
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Abominable Presence");
-            Description.SetDefault("Defense, damage reduction, and life regen reduced; Moon Leech effect; Chaos State effect");
+            Description.SetDefault("Defense, damage reduction, and life regen reduced; Moon Leech effect");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;

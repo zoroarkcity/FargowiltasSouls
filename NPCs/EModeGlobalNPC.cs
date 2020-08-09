@@ -68,7 +68,7 @@ namespace FargowiltasSouls.NPCs
         public static int mutantBoss = -1;
         public static int championBoss = -1;
 
-        public static bool Revengeance => CalamityMod.World.CalamityWorld.revenge;
+        //public static bool Revengeance => CalamityMod.World.CalamityWorld.revenge;
 
         public override void ResetEffects(NPC npc)
         {
@@ -383,7 +383,7 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.SkeletronPrime:
                     Counter[2] = 0;
                     npc.trapImmune = true;
-                    npc.lifeMax = (int)(npc.lifeMax * 1.2);
+                    npc.lifeMax = (int)(npc.lifeMax * 1.5);
                     break;
                 case NPCID.PrimeCannon:
                 case NPCID.PrimeLaser:
@@ -6241,10 +6241,10 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.GoblinWarrior:
                         if (NPC.downedGoblins)
                         {
-                            if (FargoSoulsWorld.forceMeteor)
+                            if (FargoSoulsWorld.firstGoblins)
                             {
-                                FargoSoulsWorld.forceMeteor = false;
-                                WorldGen.dropMeteor();
+                                FargoSoulsWorld.firstGoblins = false;
+                                //WorldGen.dropMeteor();
                                 if (!NPC.AnyNPCs(ModContent.NPCType<Abominationn>()))
                                 {
                                     int p = Player.FindClosest(npc.Center, 0, 0);
@@ -6253,10 +6253,10 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
                         }
-                        else
+                        /*else
                         {
                             Item.NewItem(npc.Hitbox, ItemID.SpikyBall, 10);
-                        }
+                        }*/
                         break;
 
                     case NPCID.GoblinSummoner:
@@ -6756,6 +6756,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.MoonLordCore:
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<GalacticGlobe>());
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LunarOre, 100);
                         //npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<LunarCrystal>(), Main.rand.Next(10) + 5);
                         break;
 
