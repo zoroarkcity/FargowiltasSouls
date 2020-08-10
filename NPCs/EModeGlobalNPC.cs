@@ -3684,7 +3684,7 @@ namespace FargowiltasSouls.NPCs
                             else //not in a wall
                             {
                                 if (++Counter[0] >= 300)
-                                    Shoot(npc, 30, 600, 12, ProjectileID.CursedFlameHostile, npc.damage / 4, 0, false, false, 75);
+                                    Shoot(npc, 60, 600, 8, ProjectileID.CursedFlameHostile, npc.damage / 5, 0, false, false, 75);
                             }
                             goto case NPCID.Harpy;
 
