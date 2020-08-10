@@ -245,3 +245,6 @@ nerfed flying fish fire rate
 timber head shoots ghost snowballs as telegraph
 adamantite enchant doesnt affect aerial bane arrows after splitting
 guardian telegraphs are gray
+reduced destroyer max star spam rate
+destroyer dark stars now speed up as health decreases
+reduced dust and noise of dark stars
