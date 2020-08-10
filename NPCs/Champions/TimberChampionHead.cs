@@ -333,7 +333,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            int damage = npc.ai[1] > 180 ? npc.damage / 4 : 0;
+                            int damage = npc.ai[1] > 120 ? npc.damage / 4 : 0;
                             for (int i = -2; i <= 2; i++)
                             {
                                 Vector2 speed = new Vector2(5f * i, -20f);

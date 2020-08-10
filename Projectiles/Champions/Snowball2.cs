@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             }
 
             if (projectile.damage == 0)
-                projectile.alpha = 125;
+                projectile.alpha = 150;
 
             projectile.velocity.Y += 0.5f;
 
