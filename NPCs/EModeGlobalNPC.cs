@@ -1545,7 +1545,7 @@ namespace FargowiltasSouls.NPCs
 
                         case NPCID.FlyingFish:
                             Counter[0]++;
-                            if (Counter[0] >= 30)
+                            if (Counter[0] >= 70)
                                 Shoot(npc, 0, 250, 10, ProjectileID.WaterStream, npc.damage / 4, 1, false, true);
                             break;
 

@@ -326,25 +326,23 @@ namespace FargowiltasSouls.NPCs.Champions
                     targetPos.X += player.velocity.X * 45f;
                     targetPos.Y -= 200;
                     Movement(targetPos, 0.45f, 32f);
-
-                    if (npc.ai[1] > 120)
+                    
+                    if (++npc.ai[2] > 5)
                     {
-                        if (++npc.ai[2] > 5)
-                        {
-                            npc.ai[2] = 0;
+                        npc.ai[2] = 0;
 
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int damage = npc.ai[1] > 180 ? npc.damage / 4 : 0;
+                            for (int i = -2; i <= 2; i++)
                             {
-                                for (int i = -2; i <= 2; i++)
-                                {
-                                    Vector2 speed = new Vector2(5f * i, -20f);
-                                    Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<Snowball2>(), npc.damage / 4, 0f, Main.myPlayer, npc.target);
-                                }
+                                Vector2 speed = new Vector2(5f * i, -20f);
+                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<Snowball2>(), damage, 0f, Main.myPlayer, npc.target);
                             }
                         }
                     }
 
-                    if (++npc.ai[1] > 360)
+                    if (++npc.ai[1] > 420)
                     {
                         npc.TargetClosest();
                         npc.ai[0]++;

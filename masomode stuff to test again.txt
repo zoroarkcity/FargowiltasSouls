@@ -240,3 +240,8 @@ buffed prime max hp
 nerfed force of earth, now receives disrupted focus on hit (SOT does not)
 lihzahrd blessing granted by having line of sight to altar
 temple traps can now be destroyed if you dont have lihzahrd curse
+
+nerfed flying fish fire rate
+timber head shoots ghost snowballs as telegraph
+adamantite enchant doesnt affect aerial bane arrows after splitting
+guardian telegraphs are gray

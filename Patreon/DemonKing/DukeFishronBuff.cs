@@ -22,8 +22,17 @@ namespace FargowiltasSouls.Patreon.DemonKing
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<FargoPlayer>().DukeFishron = true;
-            player.buffTime[buffIndex] = 2;
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<DukeFishronMinion>()] > 0) modPlayer.DukeFishron = true;
+            if (!modPlayer.DukeFishron)
+            {
+                player.DelBuff(buffIndex);
+                buffIndex--;
+            }
+            else
+            {
+                player.buffTime[buffIndex] = 18000;
+            }
         }
     }
 }

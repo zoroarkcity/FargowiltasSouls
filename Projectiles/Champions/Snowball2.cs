@@ -46,6 +46,9 @@ namespace FargowiltasSouls.Projectiles.Champions
                 }
             }
 
+            if (projectile.damage == 0)
+                projectile.alpha = 125;
+
             projectile.velocity.Y += 0.5f;
 
             projectile.tileCollide = projectile.position.Y > Main.player[(int)projectile.ai[0]].position.Y + Main.player[(int)projectile.ai[0]].height;
