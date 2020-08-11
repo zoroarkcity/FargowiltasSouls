@@ -250,3 +250,4 @@ destroyer dark stars now speed up as health decreases
 reduced dust and noise of dark stars
 reduced hellflame dust, projectile speed, and homing radius
 hellzone now shoots additional homing skulls
+adjusted terra champ sine lightning fireball attack
