@@ -422,11 +422,11 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.velocity = Vector2.Zero;
                         npc.rotation = (npc.position - npc.oldPosition).ToRotation();*/
 
-                        float sinModifier = (float)Math.Sin(2 * (float)Math.PI * (npc.localAI[0] / end * 4 + 0.25f));
+                        float sinModifier = (float)Math.Sin(2 * (float)Math.PI * (npc.localAI[0] / end * 3 + 0.25f));
                         npc.rotation = npc.localAI[1] + (float)Math.PI / 2 * sinModifier;
                         npc.velocity = 32f * npc.rotation.ToRotationVector2();
                         
-                        if (Math.Abs(sinModifier) < 0.0001f) //account for rounding issues
+                        if (Math.Abs(sinModifier) < 0.001f) //account for rounding issues
                         {
                             Main.PlaySound(SoundID.Item12, npc.Center);
 
