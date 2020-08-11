@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.friendly = true;
             projectile.alpha = 255;
             projectile.penetrate = 4;
-            projectile.extraUpdates = 2;
+            projectile.extraUpdates = 1;
             projectile.ranged = true;
             projectile.aiStyle = -1;
             projectile.ignoreWater = true;
@@ -58,13 +58,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 projectile.ai[1] = 0;
                 Dust dust;
-                int dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.SolarFlare, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100);
-                dust = Main.dust[dustIndex];
-                dust.noGravity = true;
-                dust.shader = GameShaders.Armor.GetSecondaryShader(56, Main.LocalPlayer);
-
-                if (Main.rand.Next(3) != 0) dust.scale *= 2f;
-
+                int dustIndex;
+                
                 dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.SolarFlare, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100);
                 dust = Main.dust[dustIndex];
                 dust.noGravity = true;
@@ -72,27 +67,44 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                 if (Main.rand.Next(3) != 0) dust.scale *= 2f;
 
-                dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 0, default(Color),
-                    1f);
-                dust = Main.dust[dustIndex];
-                if (Main.rand.Next(3) != 0)
+                if (Main.rand.Next(2) == 0)
                 {
-                    dust.scale *= 1.5f;
-                    dust.velocity *= 2f;
+                    dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.SolarFlare, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100);
+                    dust = Main.dust[dustIndex];
+                    dust.noGravity = true;
+                    dust.shader = GameShaders.Armor.GetSecondaryShader(56, Main.LocalPlayer);
+
+                    if (Main.rand.Next(3) != 0) dust.scale *= 2f;
                 }
 
-                dust.velocity *= 1.2f;
-
-                dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Smoke, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 0,
-                    default(Color), .5f);
-                dust = Main.dust[dustIndex];
-                if (Main.rand.Next(3) != 0)
+                if (Main.rand.Next(3) == 0)
                 {
-                    dust.scale *= 2f;
-                    dust.velocity *= 2f;
+                    dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 0, default(Color),
+                      1f);
+                    dust = Main.dust[dustIndex];
+
+                    if (Main.rand.Next(3) != 0)
+                    {
+                        dust.scale *= 1.5f;
+                        dust.velocity *= 2f;
+                    }
+
+                    dust.velocity *= 1.2f;
                 }
 
-                dust.velocity *= 1.2f;
+                if (Main.rand.Next(3) == 0)
+                {
+                    dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Smoke, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 0,
+                      default(Color), .5f);
+                    dust = Main.dust[dustIndex];
+                    if (Main.rand.Next(3) != 0)
+                    {
+                        dust.scale *= 2f;
+                        dust.velocity *= 2f;
+                    }
+
+                    dust.velocity *= 1.2f;
+                }
             }
             else
             {
@@ -108,7 +120,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     searchTimer = 18;
 
                     int possibleTarget = -1;
-                    float closestDistance = 500f;
+                    float closestDistance = 300f;
 
                     for (int i = 0; i < 200; i++)
                     {

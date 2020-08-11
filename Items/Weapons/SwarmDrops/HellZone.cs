@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,6 +10,8 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
     public class HellZone : ModItem
     {
+        public int skullTimer;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hell Zone");
@@ -19,14 +22,14 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 225; //
+            item.damage = 205; //
             item.knockBack = 0.5f;
             item.shootSpeed = 12f; //
 
             item.useStyle = 5;
             item.autoReuse = true;
             item.useAnimation = 30; //
-            item.useTime = 5; //
+            item.useTime = 6; //
             item.width = 54;
             item.height = 14;
             item.shoot = mod.ProjectileType("HellFlame");
@@ -42,6 +45,12 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
+            if (--skullTimer < 0)
+            {
+                skullTimer = 10;
+                //float ai = Main.rand.NextFloat((float)Math.PI * 2);
+                Projectile.NewProjectile(position, 1.5f * new Vector2(speedX, speedY), mod.ProjectileType("HellSkull"), damage / 2, knockBack, player.whoAmI, -1);
+            }
             return false;
         }
 
