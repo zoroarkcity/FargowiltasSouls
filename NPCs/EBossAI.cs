@@ -14,6 +14,7 @@ using FargowiltasSouls.Projectiles.MutantBoss;
 using Fargowiltas.Items.Summons.Mutant;
 using Fargowiltas.Items.Summons;
 using Fargowiltas.Items.Summons.VanillaCopy;
+using FargowiltasSouls.NPCs.EternityMode;
 
 namespace FargowiltasSouls.NPCs
 {
@@ -351,7 +352,7 @@ namespace FargowiltasSouls.NPCs
                 Player player = Main.player[npc.target];
 
                 //eater meme
-                if (player.GetModPlayer<FargoPlayer>().FreeEaterSummon)
+                if (!player.dead && player.GetModPlayer<FargoPlayer>().FreeEaterSummon)
                 {
                     player.GetModPlayer<FargoPlayer>().FreeEaterSummon = false;
 

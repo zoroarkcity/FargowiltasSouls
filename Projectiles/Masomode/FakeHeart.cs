@@ -60,18 +60,22 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             if (projectile.Colliding(projectile.Hitbox, target.Hitbox))
             {
-                target.hurtCooldowns[0] = 0;
-                int defense = target.statDefense;
-                float endurance = target.endurance;
-                target.statDefense = 0;
-                target.endurance = 0;
-                target.Hurt(PlayerDeathReason.ByCustomReason(target.name + " felt heartbroken."), projectile.damage, 0, false, false, false, 0);
-                target.statDefense = defense;
-                target.endurance = endurance;
-                projectile.timeLeft = 0;
+                if (!target.GetModPlayer<FargoPlayer>().DevianttHearts)
+                {
+                    target.hurtCooldowns[0] = 0;
+                    int defense = target.statDefense;
+                    float endurance = target.endurance;
+                    target.statDefense = 0;
+                    target.endurance = 0;
+                    target.Hurt(PlayerDeathReason.ByCustomReason(target.name + " felt heartbroken."), projectile.damage, 0, false, false, false, 0);
+                    target.statDefense = defense;
+                    target.endurance = endurance;
 
-                if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
-                    target.AddBuff(mod.BuffType("Lovestruck"), 240);
+                    if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                        target.AddBuff(mod.BuffType("Lovestruck"), 240);
+                }
+  
+                projectile.timeLeft = 0;
             }
             return false;
         }

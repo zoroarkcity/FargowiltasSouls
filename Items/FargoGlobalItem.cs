@@ -15,12 +15,11 @@ namespace FargowiltasSouls.Items
     {
         private static Mod thorium = ModLoader.GetMod("ThoriumMod");
 
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        public override void SetDefaults(Item item)
         {
-            if (item.type == ItemID.DogWhistle)
+            if (item.type == ItemID.Stinger)
             {
-                TooltipLine line = new TooltipLine(mod, "fun", "Shoutout to Browny and Paca");
-                tooltips.Add(line);
+                item.ammo = item.type;
             }
         }
 
@@ -197,12 +196,12 @@ namespace FargowiltasSouls.Items
                 }
             }
 
-            if (Fargowiltas.Instance.ThoriumLoaded) ThoriumCanUse(player, item);
+            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumCanUse(player, item);
 
             return true;
         }
 
-        private void ThoriumCanUse(Player player, Item item)
+        /*private void ThoriumCanUse(Player player, Item item)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
@@ -223,7 +222,7 @@ namespace FargowiltasSouls.Items
                     }
                 }
             }
-        }
+        }*/
 
         public override bool UseItem(Item item, Player player)
         {
@@ -237,11 +236,11 @@ namespace FargowiltasSouls.Items
                 player.AddBuff(BuffID.PotionSickness, 10800);
             }
 
-            if (modPlayer.SacredEnchant && item.healLife > 0)
-            {
-                player.HealEffect(item.healLife / 2);
-                player.statLife += item.healLife / 2;
-            }
+            //if (modPlayer.SacredEnchant && item.healLife > 0)
+            //{
+            //    player.HealEffect(item.healLife / 2);
+            //    player.statLife += item.healLife / 2;
+            //}
 
             if (modPlayer.UniverseEffect && item.damage > 0) item.shootSpeed *= modPlayer.Eternity ? 2f : 1.5f;
 

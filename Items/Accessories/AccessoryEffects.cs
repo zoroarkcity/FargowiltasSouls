@@ -1,31 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 using Terraria.Graphics.Capture;
 using FargowiltasSouls.NPCs;
 using FargowiltasSouls.Projectiles;
-using ThoriumMod;
-using ThoriumMod.Projectiles;
-using ThoriumMod.Buffs;
 using FargowiltasSouls.Buffs.Souls;
-using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Projectiles.Souls;
-using FargowiltasSouls.Projectiles.BossWeapons;
-using FargowiltasSouls.Projectiles.Masomode;
-using FargowiltasSouls.Items.Weapons.SwarmDrops;
 using FargowiltasSouls.NPCs.MutantBoss;
-using FargowiltasSouls.Buffs.Boss;
-using FargowiltasSouls.Buffs;
 using FargowiltasSouls.Projectiles.Minions;
-using FargowiltasSouls.Items.Summons;
 
 namespace FargowiltasSouls
 {
@@ -1496,17 +1483,17 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                thorium.GetItem("OceanRetaliation").UpdateAccessory(player, hideVisual);
-                thorium.GetItem("TerrariumDefender").UpdateAccessory(player, hideVisual);
-            }
+            //if (Fargowiltas.Instance.ThoriumLoaded)
+            //{
+            //    thorium.GetItem("OceanRetaliation").UpdateAccessory(player, hideVisual);
+            //    thorium.GetItem("TerrariumDefender").UpdateAccessory(player, hideVisual);
+            //}
 
-            if (Fargowiltas.Instance.CalamityLoaded)
-            {
-                calamity.GetItem("RampartofDeities").UpdateAccessory(player, hideVisual);
-                calamity.GetItem("AsgardianAegis").UpdateAccessory(player, hideVisual);
-            }
+            //if (Fargowiltas.Instance.CalamityLoaded)
+            //{
+            //    calamity.GetItem("RampartofDeities").UpdateAccessory(player, hideVisual);
+            //    calamity.GetItem("AsgardianAegis").UpdateAccessory(player, hideVisual);
+            //}
         }
 
         public void SupersonicSoul(bool hideVisual)
@@ -1529,7 +1516,7 @@ namespace FargowiltasSouls
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.NoMomentum))
             {
-                player.runSlowdown = 10;
+                player.runSlowdown = 2;
             }
 
             player.moveSpeed += 0.5f;
@@ -1556,13 +1543,13 @@ namespace FargowiltasSouls
             //magic carpet
             player.carpet = true;
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                thorium.GetItem("TerrariumBoots").UpdateAccessory(player, hideVisual);
-                thorium.GetItem("AirWalkers").UpdateAccessory(player, hideVisual);
-                thorium.GetItem("SurvivalistBoots").UpdateAccessory(player, hideVisual);
-                thorium.GetItem("WeightedWinglets").UpdateAccessory(player, hideVisual);
-            }
+            //if (Fargowiltas.Instance.ThoriumLoaded)
+            //{
+            //    thorium.GetItem("TerrariumBoots").UpdateAccessory(player, hideVisual);
+            //    thorium.GetItem("AirWalkers").UpdateAccessory(player, hideVisual);
+            //    thorium.GetItem("SurvivalistBoots").UpdateAccessory(player, hideVisual);
+            //    thorium.GetItem("WeightedWinglets").UpdateAccessory(player, hideVisual);
+            //}
         }
 
         public void FlightMasterySoul()
@@ -1644,7 +1631,7 @@ namespace FargowiltasSouls
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
 
             //pets
-            AddPet(SoulConfig.Instance.thoriumToggles.BoxPet, hideVisual, thorium.BuffType("LockBoxBuff"), thorium.ProjectileType("LockBoxPet"));
+            //AddPet(SoulConfig.Instance.thoriumToggles.BoxPet, hideVisual, thorium.BuffType("LockBoxBuff"), thorium.ProjectileType("LockBoxPet"));
         }
 
 

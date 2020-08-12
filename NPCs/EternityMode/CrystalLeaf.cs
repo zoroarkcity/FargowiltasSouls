@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
-namespace FargowiltasSouls.NPCs
+namespace FargowiltasSouls.NPCs.EternityMode
 {
     public class CrystalLeaf : ModNPC
     {

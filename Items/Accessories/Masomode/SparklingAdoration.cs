@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sparkling Adoration");
-            Tooltip.SetDefault(@"Grants immunity to Lovestruck
+            Tooltip.SetDefault(@"Grants immunity to Lovestruck and Fake Hearts
 Graze projectiles to gain up to 30% increased critical damage
 Critical damage bonus decreases over time and is fully lost on hit
 Your attacks periodically summon life-draining hearts

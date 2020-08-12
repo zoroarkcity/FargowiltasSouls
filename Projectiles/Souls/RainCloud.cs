@@ -75,11 +75,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
             //bigger = more rain
             if (projectile.scale > 3f)
             {
-                projectile.localAI[1] += 8;
+                projectile.localAI[1] += 4;
             }
             else if (projectile.scale > 2f)
             {
-                projectile.localAI[1] += 4;
+                projectile.localAI[1] += 3;
             }
             else if (projectile.scale > 1.5f)
             {
@@ -97,7 +97,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
                 int num414 = (int)(projectile.Center.X + (float)Main.rand.Next((int)(-20 * projectile.scale), (int)(20 * projectile.scale)));
                 int num415 = (int)(projectile.position.Y + (float)projectile.height + 4f);
-                int p = Projectile.NewProjectile((float)num414, (float)num415, 0f, 5f, ProjectileID.RainFriendly, projectile.damage, 0f, projectile.owner, 0f, 0f);
+                int p = Projectile.NewProjectile((float)num414, (float)num415, 0f, 5f, ProjectileID.RainFriendly, projectile.damage / 2, 0f, projectile.owner, 0f, 0f);
                 Main.projectile[p].penetrate = 1;
             }
         }

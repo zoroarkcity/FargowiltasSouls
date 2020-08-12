@@ -810,16 +810,6 @@ namespace FargowiltasSouls.NPCs
                                 npc.Transform(NPCID.Shark);
                             break;
 
-                        //mimic swapping
-                        case NPCID.BigMimicCorruption:
-                            if (Main.rand.Next(4) == 0)
-                                npc.Transform(NPCID.BigMimicCrimson);
-                            break;
-                        case NPCID.BigMimicCrimson:
-                            if (Main.rand.Next(4) == 0)
-                                npc.Transform(NPCID.BigMimicCorruption);
-                            break;
-
                         //sandshark swapping
                         case NPCID.SandShark:
                             if (Main.rand.Next(4) == 0)
@@ -1367,7 +1357,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.Snatcher:
                         case NPCID.ManEater:
 
-                            if (++Counter[0] > 60 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 1000)
+                            if (++Counter[0] > 60 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 500)
                             {
                                 Player target = Main.player[npc.target];
                                 Vector2 velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 15;
@@ -1382,7 +1372,7 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.AngryTrapper:
-                            if (++Counter[0] > 60 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 1500)
+                            if (++Counter[0] > 60 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 1000)
                             {
                                 Player target = Main.player[npc.target];
                                 Vector2 velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 15;
@@ -3234,6 +3224,7 @@ namespace FargowiltasSouls.NPCs
                                 masoBool[0] = true;
                             }
 
+                            //mimic enrage
                             if (npc.position.Y < Main.worldSurface * 16)
                             {
                                 if (++Counter[0] > 300)
@@ -3241,7 +3232,7 @@ namespace FargowiltasSouls.NPCs
                                     Counter[0] = 0;
                                     masoBool[1] = !masoBool[1];
                                 }
-                                if (masoBool[1] && ++Counter[1] > 6)
+                                if (masoBool[1] && ++Counter[1] > 10 && !npc.dontTakeDamage)
                                 {
                                     Counter[1] = 0;
                                     if (npc.HasPlayerTarget)
@@ -3674,7 +3665,7 @@ namespace FargowiltasSouls.NPCs
                                     speed.Normalize();
                                     speed *= 14f;
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                                        Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<PirateDeadeyeBullet>(), 15, 0f, Main.myPlayer);
+                                        Projectile.NewProjectile(npc.Center, speed, ProjectileID.BulletDeadeye /*ModContent.ProjectileType<PirateDeadeyeBullet>()*/, 15, 0f, Main.myPlayer);
 
                                     Main.PlaySound(SoundID.Item11, npc.Center);
                                 }
@@ -8285,7 +8276,11 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.GiantShelly2:
                         if (npc.ai[0] == 3f)
                         {
-                            FargoGlobalProjectile.XWay(6, npc.Center, ProjectileID.Stinger, 3, npc.damage / 4, 1);
+                            Vector2 velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 10;
+                            int p = Projectile.NewProjectile(npc.Center, velocity, ProjectileID.Stinger, npc.damage / 4, 1, Main.myPlayer);
+                            FargoGlobalProjectile.SplitProj(Main.projectile[p], 5);
+
+                            //FargoGlobalProjectile.XWay(6, npc.Center, ProjectileID.Stinger, 3, npc.damage / 4, 1);
                         }
 
                         break;

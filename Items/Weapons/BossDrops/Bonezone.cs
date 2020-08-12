@@ -7,7 +7,7 @@ using FargowiltasSouls.Projectiles.BossWeapons;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class Bonezone : ModItem
+    public class BoneZone : ModItem
     {
         int counter = 1;
 

@@ -77,30 +77,30 @@ Increased minion knockback";
             player.maxTurrets += 2;
             player.minionKB += 3f;
 
-            if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
+            //if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
 
-            if (Fargowiltas.Instance.CalamityLoaded) Calamity(player, hideVisual);
+            //if (Fargowiltas.Instance.CalamityLoaded) Calamity(player, hideVisual);
         }
 
-        private void Thorium(Player player)
-        {
-            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-            //phylactery
-            if (!thoriumPlayer.lichPrevent)
-            {
-                player.AddBuff(thorium.BuffType("LichActive"), 60, true);
-            }
-            //crystal scorpion
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.CrystalScorpion))
-            {
-                thoriumPlayer.crystalScorpion = true;
-            }
-        }
+        //private void Thorium(Player player)
+        //{
+        //    ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
+        //    //phylactery
+        //    if (!thoriumPlayer.lichPrevent)
+        //    {
+        //        player.AddBuff(thorium.BuffType("LichActive"), 60, true);
+        //    }
+        //    //crystal scorpion
+        //    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.CrystalScorpion))
+        //    {
+        //        thoriumPlayer.crystalScorpion = true;
+        //    }
+        //}
 
-        private void Calamity(Player player, bool hideVisual)
-        {
-            calamity.GetItem("Nucleogenesis").UpdateAccessory(player, hideVisual);
-        }
+        //private void Calamity(Player player, bool hideVisual)
+        //{
+        //    calamity.GetItem("Nucleogenesis").UpdateAccessory(player, hideVisual);
+        //}
 
         public override void AddRecipes()
         {

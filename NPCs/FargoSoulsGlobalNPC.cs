@@ -593,11 +593,11 @@ namespace FargowiltasSouls.NPCs
                 int chance = 10;
                 int bonus = 4;
 
-                if (midas)
+                /*if (midas)
                 {
                     chance /= 2;
                     bonus *= 2;
-                }
+                }*/
 
                 if (Main.rand.Next(chance) == 0)
                 {
@@ -695,11 +695,11 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.QueenBee:
-                        Item.NewItem(npc.Hitbox, ModContent.ItemType<HiveStaff>());
+                        Item.NewItem(npc.Hitbox, ModContent.ItemType<TheSmallSting>());
                         break;
 
                     case NPCID.SkeletronHead:
-                        Item.NewItem(npc.Hitbox, ModContent.ItemType<Bonezone>());
+                        Item.NewItem(npc.Hitbox, ModContent.ItemType<BoneZone>());
                         break;
 
                     case NPCID.WallofFlesh:
@@ -711,7 +711,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.SkeletronPrime:
-                        Item.NewItem(npc.Hitbox, ModContent.ItemType<DarkStarCannon>());
+                        Item.NewItem(npc.Hitbox, ModContent.ItemType<PrimeLaserCannon>());
                         break;
 
                     case NPCID.Retinazer:
@@ -733,7 +733,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Golem:
-                        Item.NewItem(npc.Hitbox, ModContent.ItemType<GolemTome>());
+                        Item.NewItem(npc.Hitbox, ModContent.ItemType<RockSlide>());
                         break;
 
                     case NPCID.DukeFishron:
@@ -871,10 +871,10 @@ namespace FargowiltasSouls.NPCs
                 damage += 5;
             }
 
-            if (modPlayer.KnightEnchant && Villain && !npc.boss)
-            {
-                damage *= 1.5;
-            }
+            //if (modPlayer.KnightEnchant && Villain && !npc.boss)
+            //{
+            //    damage *= 1.5;
+            //}
 
             if (crit && modPlayer.ShroomEnchant && !modPlayer.TerrariaSoul && player.stealth == 0)
             {
@@ -951,15 +951,15 @@ namespace FargowiltasSouls.NPCs
             }
         }
 
-        public override void OnHitNPC(NPC npc, NPC target, int damage, float knockback, bool crit)
-        {
-            FargoPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>();
+        //public override void OnHitNPC(NPC npc, NPC target, int damage, float knockback, bool crit)
+        //{
+        //    FargoPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>();
 
-            if (!modPlayer.ThoriumSoul && modPlayer.KnightEnchant && !npc.friendly && target.townNPC)
-            {
-                Villain = true;
-            }
-        }
+        //    if (!modPlayer.ThoriumSoul && modPlayer.KnightEnchant && !npc.friendly && target.townNPC)
+        //    {
+        //        Villain = true;
+        //    }
+        //}
 
         public override void SetupShop(int type, Chest shop, ref int nextSlot)
         {

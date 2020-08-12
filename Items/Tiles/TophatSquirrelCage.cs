@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Items.Tiles
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.Terrarium);
-            recipe.AddIngredient(ItemType<Items.Weapons.TophatSquirrel>());
+            recipe.AddIngredient(ItemType<Items.Weapons.Misc.TophatSquirrel>());
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

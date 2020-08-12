@@ -82,14 +82,14 @@ namespace FargowiltasSouls.Items.Accessories.Souls
                 player.scope = true;
             }
 
-            if (Fargowiltas.Instance.CalamityLoaded && SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ElementalQuiver)) Calamity(player);
+           // if (Fargowiltas.Instance.CalamityLoaded && SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ElementalQuiver)) Calamity(player);
         }
 
-        private void Calamity(Player player)
-        {
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-            modPlayer.eQuiver = true;
-        }
+        //private void Calamity(Player player)
+        //{
+        //    CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
+        //    modPlayer.eQuiver = true;
+        //}
 
         public override void AddRecipes()
         {

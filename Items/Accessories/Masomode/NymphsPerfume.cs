@@ -28,6 +28,12 @@ Your attacks occasionally produce hearts
             item.value = Item.sellPrice(0, 4);
         }
 
+        public override void UpdateInventory(Player player)
+        {
+            FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
+            fargoPlayer.NymphsPerfumeRespawn = true;
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.buffImmune[BuffID.Lovestruck] = true;
@@ -36,6 +42,7 @@ Your attacks occasionally produce hearts
             player.buffImmune[BuffID.Stinky] = true;
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
             fargoPlayer.NymphsPerfume = true;
+            fargoPlayer.NymphsPerfumeRespawn = true;
             if (fargoPlayer.NymphsPerfumeCD > 0)
                 fargoPlayer.NymphsPerfumeCD--;
         }

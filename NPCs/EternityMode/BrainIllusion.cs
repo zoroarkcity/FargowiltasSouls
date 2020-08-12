@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
-namespace FargowiltasSouls.NPCs
+namespace FargowiltasSouls.NPCs.EternityMode
 {
     [AutoloadBossHead]
     public class BrainIllusion : ModNPC

@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 
-namespace FargowiltasSouls.Items.Weapons
+namespace FargowiltasSouls.Items.Weapons.Misc
 {
     public class VoidBow : ModItem
     {
