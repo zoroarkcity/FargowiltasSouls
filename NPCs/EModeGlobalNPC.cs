@@ -1535,7 +1535,7 @@ namespace FargowiltasSouls.NPCs
 
                         case NPCID.FlyingFish:
                             Counter[0]++;
-                            if (Counter[0] >= 30)
+                            if (Counter[0] >= 70)
                                 Shoot(npc, 0, 250, 10, ProjectileID.WaterStream, npc.damage / 4, 1, false, true);
                             break;
 
@@ -3675,7 +3675,7 @@ namespace FargowiltasSouls.NPCs
                             else //not in a wall
                             {
                                 if (++Counter[0] >= 300)
-                                    Shoot(npc, 30, 600, 12, ProjectileID.CursedFlameHostile, npc.damage / 4, 0, false, false, 75);
+                                    Shoot(npc, 45, 600, 9, ProjectileID.CursedFlameHostile, npc.damage / 5, 0, false, false, 75);
                             }
                             goto case NPCID.Harpy;
 

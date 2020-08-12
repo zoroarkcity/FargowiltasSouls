@@ -1961,18 +1961,21 @@ namespace FargowiltasSouls.NPCs
                 {
                     npc.localAI[0] = 0f;
                     int cap = Main.npc[npc.realLife].lifeMax / Main.npc[npc.realLife].life;
-                    if (cap > 70) //prevent meme scaling at super low life
-                        cap = 70;
+                    if (cap > 25) //prevent meme scaling at super low life
+                        cap = 25;
                     Counter[0] += Main.rand.Next(2 + cap) + 1;
                     if (Counter[0] >= Main.rand.Next(1400, 26000))
                     {
                         Counter[0] = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                         {
-                            Vector2 distance = Main.player[npc.target].Center - npc.Center;
+                            Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 15f;
                             double angleModifier = MathHelper.ToRadians(5) * distance.Length() / 1800.0;
                             distance.Normalize();
-                            distance *= 8f;
+                            float modifier = 24f * (1f - (float)Main.npc[npc.realLife].life / Main.npc[npc.realLife].lifeMax);
+                            if (modifier < 8)
+                                modifier = 8;
+                            distance *= modifier;
                             int type = ModContent.ProjectileType<DarkStar>();
                             Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
                             Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);

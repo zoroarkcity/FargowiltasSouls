@@ -409,37 +409,33 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.localAI[0] == 0)
                         {
                             npc.localAI[1] = npc.DirectionTo(player.Center).ToRotation();
-                            npc.localAI[2] = npc.Center.X;
-                            npc.localAI[3] = npc.Center.Y;
                             Main.PlaySound(SoundID.Roar, player.Center, 0);
                         }
 
                         const int end = 360;
 
-                        Vector2 offset;
+                        /*Vector2 offset;
                         offset.X = 10f * npc.localAI[0];
                         offset.Y = 600 * (float)Math.Sin(2f * Math.PI / end * 4 * npc.localAI[0]);
 
                         npc.Center = new Vector2(npc.localAI[2], npc.localAI[3]) + offset.RotatedBy(npc.localAI[1]);
                         npc.velocity = Vector2.Zero;
-                        npc.rotation = (npc.position - npc.oldPosition).ToRotation();
+                        npc.rotation = (npc.position - npc.oldPosition).ToRotation();*/
 
-                        if (++npc.ai[2] > 6 && Math.Abs(offset.Y) > 595)
+                        float sinModifier = (float)Math.Sin(2 * (float)Math.PI * (npc.localAI[0] / end * 3 + 0.25f));
+                        npc.rotation = npc.localAI[1] + (float)Math.PI / 2 * sinModifier;
+                        npc.velocity = 32f * npc.rotation.ToRotationVector2();
+                        
+                        if (Math.Abs(sinModifier) < 0.001f) //account for rounding issues
                         {
-                            npc.ai[2] = 0;
-
                             Main.PlaySound(SoundID.Item12, npc.Center);
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                /*Vector2 vel = Vector2.UnitX.RotatedBy(Math.PI / 4 * (Main.rand.NextDouble() - 0.5)) * 8f;
-                                Projectile.NewProjectile(npc.Center, vel.RotatedBy(npc.localAI[1] - Math.PI / 2 * Math.Sign(offset.Y)), ProjectileID.CultistBossLightningOrbArc,
-                                    npc.damage / 4, 0, Main.myPlayer, npc.localAI[1] - (float)Math.PI / 2 * Math.Sign(offset.Y), Main.rand.Next(100));*/
-
                                 for (int j = -5; j <= 5; j++)
                                 {
                                     float rotationOffset = (float)Math.PI / 2 + (float)Math.PI / 2 / 5 * j;
-                                    rotationOffset *= Math.Sign(offset.Y);
+                                    rotationOffset *= Math.Sign(-sinModifier);
                                     Projectile.NewProjectile(npc.Center,
                                         6f * Vector2.UnitX.RotatedBy(npc.localAI[1] + rotationOffset),
                                         ProjectileID.CultistBossFireBall, npc.damage / 4, 0f, Main.myPlayer);
@@ -449,7 +445,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     float ai1New = Main.rand.Next(100);
                                     float rotationOffset = (float)Math.PI / 2 + (float)Math.PI / 2 / 4.5f * i;
-                                    rotationOffset *= Math.Sign(offset.Y);
+                                    rotationOffset *= Math.Sign(-sinModifier);
                                     Vector2 vel2 = Vector2.UnitX.RotatedBy(Math.PI / 4 * (Main.rand.NextDouble() - 0.5)) * 8f;
                                     Projectile.NewProjectile(npc.Center, vel2.RotatedBy(npc.localAI[1] + rotationOffset), ProjectileID.CultistBossLightningOrbArc,
                                         npc.damage / 4, 0, Main.myPlayer, npc.localAI[1] + rotationOffset, ai1New);

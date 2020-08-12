@@ -241,7 +241,8 @@ namespace FargowiltasSouls.Projectiles
 
                     if (!townNPCProj && (modPlayer.AdamantiteEnchant || modPlayer.TerrariaSoul) && CanSplit && projectile.friendly && !projectile.hostile
                         && !Rotate && projectile.damage > 0 && !projectile.minion && projectile.aiStyle != 19 && projectile.aiStyle != 99
-                        && SoulConfig.Instance.GetValue(SoulConfig.Instance.AdamantiteSplit) && Array.IndexOf(noSplit, projectile.type) <= -1)
+                        && SoulConfig.Instance.GetValue(SoulConfig.Instance.AdamantiteSplit) && Array.IndexOf(noSplit, projectile.type) <= -1
+                        && !(projectile.type == ProjectileID.DD2BetsyArrow && projectile.ai[1] == -1))
                     {
                         if (adamantiteCD != 0)
                         {

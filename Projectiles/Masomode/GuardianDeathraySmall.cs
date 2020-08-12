@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 {
     public class GuardianDeathraySmall : Deathrays.BaseDeathray
     {
-        public GuardianDeathraySmall() : base(30, "ShadowDeathray") { }
+        public GuardianDeathraySmall() : base(30, "GuardianDeathray") { }
         private const float maxTime = 30;
 
         private Vector2 offset;
@@ -60,14 +60,14 @@ namespace FargowiltasSouls.Projectiles.Masomode
             {
                 Main.PlaySound(SoundID.Item12, projectile.Center);
             }
-            float num801 = 0.2f;
+            float num801 = 0.15f;
             projectile.localAI[0] += 1f;
             if (projectile.localAI[0] >= maxTime)
             {
                 projectile.Kill();
                 return;
             }
-            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 10f * num801;
+            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 1f * num801;
             if (projectile.scale > num801)
             {
                 projectile.scale = num801;
