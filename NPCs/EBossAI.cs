@@ -1971,7 +1971,7 @@ namespace FargowiltasSouls.NPCs
                             Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 15f;
                             double angleModifier = MathHelper.ToRadians(5) * distance.Length() / 1800.0;
                             distance.Normalize();
-                            float modifier = 24f * (1f - (float)Main.npc[npc.realLife].life / Main.npc[npc.realLife].lifeMax);
+                            float modifier = 16f * (1f - (float)Main.npc[npc.realLife].life / Main.npc[npc.realLife].lifeMax);
                             if (modifier < 8)
                                 modifier = 8;
                             distance *= modifier;

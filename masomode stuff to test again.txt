@@ -251,3 +251,9 @@ reduced dust and noise of dark stars
 reduced hellflame dust, projectile speed, and homing radius
 hellzone now shoots additional homing skulls
 adjusted terra champ sine lightning fireball attack
+betsy rework:
+	dark mages removed, replaced with sky dragon fury waves
+	sprays much more projs during flame breath
+	sprays phantom phoenixes during fireballs
+	other enemies despawn during wave 7
+reduced destroyer dark star max speed
