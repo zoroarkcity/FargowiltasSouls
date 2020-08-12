@@ -8,22 +8,21 @@ using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.Champions
 {
-    public class CosmosMeteor2 : ModProjectile
+    public class CosmosMoon : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_424";
-            
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cosmic Meteor");
+            DisplayName.SetDefault("Cosmic Moon");
         }
 
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(ProjectileID.Meteor1);
+            projectile.width = 620;
+            projectile.height = 620;
             projectile.aiStyle = -1;
-            projectile.magic = false;
-            projectile.friendly = false;
             projectile.hostile = true;
+            projectile.ignoreWater = true;
+            projectile.tileCollide = false;
             
             projectile.extraUpdates = 0;
             cooldownSlot = 1;
@@ -31,12 +30,12 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
 
-            projectile.scale = 10f;
+            projectile.scale = 0.5f;
         }
 
         public override bool CanHitPlayer(Player target)
         {
-            return projectile.Distance(target.Center) < projectile.width * projectile.scale;
+            return projectile.Distance(target.Center) < projectile.width * projectile.scale + target.height / 2;
         }
 
         public override void AI()
@@ -47,9 +46,10 @@ namespace FargowiltasSouls.Projectiles.Champions
 
                 Main.PlaySound(SoundID.Item92, projectile.Center);
 
-                projectile.rotation += (float)Math.PI / 2;
+                projectile.localAI[1] += (float)Math.PI / 2;
                 if (projectile.ai[0] < 0)
-                    projectile.rotation += (float)Math.PI;
+                    projectile.localAI[1] += (float)Math.PI;
+                projectile.rotation = projectile.localAI[1];
             }
 
             int ai1 = (int)projectile.ai[1];
@@ -64,8 +64,9 @@ namespace FargowiltasSouls.Projectiles.Champions
             const float maxAmplitude = 850;
             float offset = Math.Abs(maxAmplitude * (float)Math.Sin(Main.npc[ai1].ai[2] * 2 * (float)Math.PI / 200));
             offset += 150;
-            projectile.rotation += 0.01f;
-            projectile.Center = Main.npc[ai1].Center + offset * projectile.rotation.ToRotationVector2();
+            projectile.localAI[1] += 0.01f;
+            projectile.rotation += 0.04f;
+            projectile.Center = Main.npc[ai1].Center + offset * projectile.localAI[1].ToRotationVector2();
         }
 
         public override void Kill(int timeLeft) //vanilla explosion code echhhhhhhhhhh
@@ -170,8 +171,10 @@ namespace FargowiltasSouls.Projectiles.Champions
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             if (FargoSoulsWorld.MasochistMode)
+            {
                 target.AddBuff(BuffID.BrokenArmor, 300);
-            target.AddBuff(BuffID.OnFire, 300);
+                target.AddBuff(ModContent.BuffType<Buffs.Masomode.CurseoftheMoon>(), 300);
+            }
         }
 
         public override Color? GetAlpha(Color lightColor)

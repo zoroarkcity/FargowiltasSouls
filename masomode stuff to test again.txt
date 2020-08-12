@@ -259,3 +259,4 @@ betsy rework:
 reduced destroyer dark star max speed
 new dusts for devi and mutant mega rays
 fake hearts now restore 1 hp if you're immune to them
+adjusted regurgitator - hungries do less damage and no longer pierce
