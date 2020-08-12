@@ -257,3 +257,5 @@ betsy rework:
 	sprays phantom phoenixes during fireballs
 	other enemies despawn during wave 7
 reduced destroyer dark star max speed
+new dusts for devi and mutant mega rays
+fake hearts now restore 1 hp if you're immune to them
