@@ -66,7 +66,7 @@ namespace FargowiltasSouls.NPCs.EternityMode
                 if (--npc.localAI[2] < 0) //projectile timer
                 {
                     npc.localAI[2] = 300;
-                    if (npc.ai[1] == 125)
+                    if (npc.ai[1] == 125 && plantera.life > plantera.lifeMax / 2)
                     {
                         Main.PlaySound(6, (int)npc.position.X, (int)npc.position.Y);
                         if (Main.netMode != -1)

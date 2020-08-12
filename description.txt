@@ -1,35 +1,31 @@
 NEW UPDATE - V 1.4
 
 
-
 new in beta
--modded toggles are gone now too
--nymph's perfume makes you respawn with full health (effect works in inventory)
--Soul of Eternity now has Bionomic Cluster effects in inventory
--Removed evil mimics having a chance to swap to the other one
--Flying Dutchman bullets no longer bounce
--Big mimic coin guns attack slightly slower, and they no longer fire while they're invincible
--Added 4 mana crystals to Devi's starter pack
--Sparkling Adoration gives Immunity to fake hearts
--shroomite effect doesnt go thru mutant presence
--updated sprites: big sting, fish stick
--Reduced man eater and friends range
--Shelly shoots spikes at the player instead of around itself (when attacked in shell mode)
--Supersonic Soul's No momentum mode is now less severe and more usable, 5x more momeentum as before (which is still 10xless than normal)
+-Added Rabies Vaccine
+-Nymph perfume full HP on respawn does not work if a boss is alive
+-Halved Rain Enchant's max rainfall speed and damage
+-Fixed Small Sting tooltip saying stingers instead of darts
+-Free EoW summon will not spawn if you're dead 
+-Bee Enchantment recipe is back to post plant as it belongs :ech:
+-Platinum Enchantment no longer synergizes with Midas
+-Added new SoU and SoE item animations
 
--Dark Star Cannon is now Prime's Laser Cannon, a magic weapon that shoots lasers just like it used to shoot stars ECH
--Added The Small Sting
+
+
+
+-updated sprites: big sting, fish stick
+
+-Dark Star Cannon is now Prime's Laser Cannon, a magic weapon that shoots lasers (wip kinda)
+-Added The Small Sting (wip kinda)
 -Queen Bee now drops this, Hive Staff is unobtainable for now
 
 
 
 
 
-
-
-
 todo
--60 rabies shots for immunity to feral bite or something
+necro - now usable with DG less dumb
 Kill rainbow slime
 timestop isnt a buff or works thru immune
 toggle for extra lures in fish soul, never use bait ever
@@ -40,16 +36,13 @@ Apprentice becomes dark artist
 Dark Artist becomes apprentice but uses epic player shadow copy and they all hold the sentry ??
 adamantite - tighter spread, they dont have full damage
 tungsten - Add a seperate toggle for items and projectiles. Maybe try to make it look better for some things like yoyos
-platinum - No longer synergizes with Midas
 shinobi -  Tele through wall doesn't work right in MP
 chlorophyte - no change??
-put bee back to post plant lol
 cobalt - buff
 tiki - Make it work more consistently, does not confuse free minions, works with worm summons.
 turtle - gets some epic visual of actually being in your shell, after leaving you are debuffed for a bit
 jungle - spores home in slowly
 frost - Absorbs Snow Enchant and Grinch pet
-necro - now usable with DG less dumb
 forbidden - Any Scorpion in recipe ech
 ancient shadow - orbs move slower, or even stay still, actually making you have to aim for them, when hit they go sicko mode, detatch themselves, and pursue enemies, respawn around you a few seconds later in a new location 
 red riding - Add a toggle for werewolf visual, remove Celestial Shell for Moon Charm in recipe
@@ -69,7 +62,6 @@ Make hornet and imp work with spooky
 fix all toggle names and colors
 recheck eater thru wall meme and all beetle auras
 Rod hot key in gold enchant
-also no full health on revive while a boss is alive
 
 
 
@@ -194,6 +186,14 @@ Emode
 -Unicorns only leave rainbows when travelling at max speed, should look a bit better
 -Mothron always spawns with 2 babies at its side
 -Snatchers, Man Eaters,  and Angry Trappers lunge for you
+-Removed evil mimics having a chance to swap to the other one
+-Flying Dutchman bullets no longer bounce
+-Big mimic coin guns attack slightly slower, and they no longer fire while they're invincible
+-Added 4 mana crystals to Devi's starter pack
+-Sparkling Adoration gives Immunity to fake hearts
+-nymph's perfume makes you respawn with full health (effect works in inventory)
+-Soul of Eternity now has Bionomic Cluster effects in inventory
+-Supersonic Soul's No momentum mode is now less severe and more usable, 5x more momeentum as before (which is still 10xless than normal)
 
 
 -Removed Apoth support in SoE

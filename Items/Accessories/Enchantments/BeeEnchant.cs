@@ -65,12 +65,13 @@ Summons a pet Baby Hornet
             recipe.AddIngredient(ItemID.HiveBackpack);
             //stinger necklace
             recipe.AddIngredient(ItemID.BeeGun);
+            recipe.AddIngredient(ItemID.WaspGun);
             //beenades
             //honey bomb
             //honey fin
             recipe.AddIngredient(ItemID.Nectar);
             
-            recipe.AddTile(TileID.DemonAltar);
+            recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

@@ -260,6 +260,7 @@ namespace FargowiltasSouls
         public bool PhantasmalRing;
         public bool MutantsDiscountCard;
         public bool MutantsPact;
+        public bool RabiesVaccine;
         public bool TwinsEX;
         public bool TimsConcoction;
         public bool ReceivedMasoGift;
@@ -348,6 +349,7 @@ namespace FargowiltasSouls
             if (MutantsDiscountCard) FargoDisabledSouls.Add("MutantsDiscountCard");
             if (MutantsPact) FargoDisabledSouls.Add("MutantsPact");
             if (ReceivedMasoGift) FargoDisabledSouls.Add("ReceivedMasoGift");
+            if (RabiesVaccine) FargoDisabledSouls.Add("RabiesVaccine");
 
             return new TagCompound {
                     {name, FargoDisabledSouls}
@@ -365,6 +367,7 @@ namespace FargowiltasSouls
             MutantsDiscountCard = disabledSouls.Contains("MutantsDiscountCard");
             MutantsPact = disabledSouls.Contains("MutantsPact");
             ReceivedMasoGift = disabledSouls.Contains("ReceivedMasoGift");
+            RabiesVaccine = disabledSouls.Contains("RabiesVaccine");
         }
 
         public override void OnEnterWorld(Player player)
@@ -813,7 +816,7 @@ namespace FargowiltasSouls
 
         public override void OnRespawn(Player player)
         {
-            if (NymphsPerfumeRespawn)
+            if (NymphsPerfumeRespawn && !EModeGlobalNPC.AnyBossAlive())
             {
                 player.statLife = player.statLifeMax2;
             }
@@ -895,6 +898,12 @@ namespace FargowiltasSouls
 
         public override void PreUpdate()
         {
+            if (RabiesVaccine)
+            {
+                player.buffImmune[BuffID.Rabies] = true;
+            }
+
+
             if (HurtTimer > 0)
                 HurtTimer--;
 

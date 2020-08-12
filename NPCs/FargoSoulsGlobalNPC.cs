@@ -593,11 +593,11 @@ namespace FargowiltasSouls.NPCs
                 int chance = 10;
                 int bonus = 4;
 
-                if (midas)
+                /*if (midas)
                 {
                     chance /= 2;
                     bonus *= 2;
-                }
+                }*/
 
                 if (Main.rand.Next(chance) == 0)
                 {

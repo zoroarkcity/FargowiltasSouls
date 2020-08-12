@@ -9,6 +9,7 @@ using ThoriumMod.Items.Misc;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Fargowiltas.Items.Tiles;
+using Terraria.DataStructures;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -432,6 +433,8 @@ At 100% every attack gains 10% life steal
 You also gain +10% damage and +10 defense
 This stacks up to 200,000 times until you get hit
 Additionally grants:");
+
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, 10));
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)

@@ -2,8 +2,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
@@ -12,7 +10,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Small Sting");
-            Tooltip.SetDefault("Uses stingers for ammo\n66% chance to not consume ammo\n'something'");
+            Tooltip.SetDefault("Uses darts for ammo\n50% chance to not consume ammo\n'something'");
         }
 
         public override void SetDefaults()
@@ -48,10 +46,10 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             return new Vector2(-10, 0);
         }*/
 
-        /*public override bool ConsumeAmmo(Player player)
+        public override bool ConsumeAmmo(Player player)
         {
-            return Main.rand.Next(3) == 0;
-        }*/
+            return Main.rand.Next(2) == 0;
+        }
     }
 }
 

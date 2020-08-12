@@ -352,7 +352,7 @@ namespace FargowiltasSouls.NPCs
                 Player player = Main.player[npc.target];
 
                 //eater meme
-                if (player.GetModPlayer<FargoPlayer>().FreeEaterSummon)
+                if (!player.dead && player.GetModPlayer<FargoPlayer>().FreeEaterSummon)
                 {
                     player.GetModPlayer<FargoPlayer>().FreeEaterSummon = false;
 
