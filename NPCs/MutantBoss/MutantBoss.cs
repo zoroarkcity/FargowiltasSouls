@@ -54,6 +54,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             npc.buffImmune[ModContent.BuffType<MutantNibble>()] = true;
             npc.buffImmune[ModContent.BuffType<OceanicMaul>()] = true;
             npc.buffImmune[ModContent.BuffType<TimeFrozen>()] = true;
+            npc.buffImmune[ModContent.BuffType<LightningRod>()] = true;
             npc.timeLeft = NPC.activeTime * 30;
             if (FargoSoulsWorld.AngryMutant || Fargowiltas.Instance.CalamityLoaded)
             {
