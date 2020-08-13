@@ -3260,62 +3260,7 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.DD2Betsy:
-                            betsyBoss = npc.whoAmI;
-
-                            if (npc.ai[0] == 6f) //when approaching for roar
-                            {
-                                if (npc.ai[1] == 0f)
-                                {
-                                    npc.position += npc.velocity;
-                                }
-                                else if (npc.ai[1] == 1f)
-                                {
-                                    masoBool[0] = true;
-                                }
-                            }
-
-                            if (masoBool[0])
-                            {
-                                npc.velocity = Vector2.Zero;
-                                Counter[0]++;
-                                if (Counter[0] % 2 == 0)
-                                {
-                                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                                    {
-                                        Projectile.NewProjectile(npc.Center, -Vector2.UnitY.RotatedBy(2 * Math.PI / 30 * Counter[1]), ModContent.ProjectileType<BetsyFury>(), npc.damage / 3, 0f, Main.myPlayer, npc.target);
-                                        Projectile.NewProjectile(npc.Center, -Vector2.UnitY.RotatedBy(2 * Math.PI / 30 * -Counter[1]), ModContent.ProjectileType<BetsyFury>(), npc.damage / 3, 0f, Main.myPlayer, npc.target);
-                                    }
-                                    Counter[1]++;
-                                }
-                                if (Counter[0] > 90)
-                                {
-                                    masoBool[0] = false;
-                                    masoBool[1] = true;
-                                    Counter[0] = 0;
-                                    Counter[1] = 0;
-                                }
-                            }
-
-                            if (masoBool[1])
-                            {
-                                if (++Counter[1] > 75)
-                                {
-                                    masoBool[1] = false;
-                                    Counter[0] = 0;
-                                    Counter[1] = 0;
-                                }
-                                npc.position -= npc.velocity * 0.5f;
-                                if (Counter[0] % 2 == 0)
-                                    return false;
-                            }
-
-                            if (!DD2Event.Ongoing && npc.HasPlayerTarget && (!Main.player[npc.target].active || Main.player[npc.target].dead || npc.Distance(Main.player[npc.target].Center) > 3000))
-                            {
-                                int p = Player.FindClosest(npc.Center, 0, 0); //extra despawn code for when summoned outside event
-                                if (p < 0 || !Main.player[p].active || Main.player[p].dead || npc.Distance(Main.player[p].Center) > 3000)
-                                    npc.active = false;
-                            }
-                            break;
+                            return BetsyAI(npc);
 
                         case NPCID.DungeonGuardian:
                             guardBoss = npc.whoAmI;

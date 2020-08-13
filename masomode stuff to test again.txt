@@ -261,3 +261,6 @@ new dusts for devi and mutant mega rays
 fake hearts now restore 1 hp if you're immune to them
 adjusted regurgitator - hungries do less damage and no longer pierce
 buffed slime king slasher stats but the spikes now pierce (rip single target damage)
+gold shell is cancelled by using rod
+betsy drops her summon when spawned
+hm boss summons are only given when they're available in progression (prevent pandora spawning a boss early -> infinite grind attempts)

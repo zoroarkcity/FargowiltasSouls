@@ -236,6 +236,11 @@ namespace FargowiltasSouls.Items
                 player.AddBuff(BuffID.PotionSickness, 10800);
             }
 
+            if (item.type == ItemID.RodofDiscord)
+            {
+                player.ClearBuff(ModContent.BuffType<Buffs.Souls.GoldenStasis>());
+            }
+
             //if (modPlayer.SacredEnchant && item.healLife > 0)
             //{
             //    player.HealEffect(item.healLife / 2);

@@ -30,6 +30,8 @@ namespace FargowiltasSouls.Buffs.Souls
             player.controlMount = false;
             player.velocity = player.oldVelocity;
             player.position = player.oldPosition;
+
+            player.AddBuff(ModContent.BuffType<GoldenStasisCD>(), 3000);
         }
     }
 }
