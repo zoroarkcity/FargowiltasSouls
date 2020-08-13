@@ -4391,10 +4391,6 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.EyeofCthulhu:
                     case NPCID.WanderingEye:
-                        target.AddBuff(BuffID.Obstructed, 60);
-                        target.AddBuff(ModContent.BuffType<Berserked>(), 300);
-                        break;
-
                     case NPCID.ServantofCthulhu:
                     case NPCID.DemonEye:
                     case NPCID.DemonEyeOwl:
@@ -4404,8 +4400,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.DialatedEye:
                     case NPCID.GreenEye:
                     case NPCID.PurpleEye:
-                        target.AddBuff(BuffID.Obstructed, 60);
-                        target.AddBuff(ModContent.BuffType<Berserked>(), 120);
+                        target.AddBuff(BuffID.Obstructed, 15);
+                        target.AddBuff(ModContent.BuffType<Berserked>(), 300);
                         break;
 
                     case NPCID.QueenBee:
