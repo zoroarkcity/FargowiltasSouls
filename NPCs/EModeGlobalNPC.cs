@@ -8083,7 +8083,7 @@ namespace FargowiltasSouls.NPCs
                         damage = damage * 2 / 3;
                         break;
                     case NPCID.MoonLordHead:
-                        damage = damage * 2;
+                        //damage = damage * 2;
                         break;
 
                     case NPCID.CultistDragonBody1:
