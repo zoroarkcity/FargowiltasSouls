@@ -12,8 +12,9 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Projectiles.MutantBoss;
-using Fargowiltas.Items.Summons.Mutant;
 using Fargowiltas.Items.Summons;
+using Fargowiltas.Items.Summons.Abom;
+using Fargowiltas.Items.Summons.Mutant;
 using Fargowiltas.Items.Summons.VanillaCopy;
 using FargowiltasSouls.NPCs.EternityMode;
 
