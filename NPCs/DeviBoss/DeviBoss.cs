@@ -1247,8 +1247,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             num1 = 0.43f;
                         if (npc.ai[3] >= 4f)
                             num1 = 0.33f;
-                        if (npc.ai[3] >= 5f)
-                            num1 = 1f;
                         for (int i = 0; i < 9; ++i)
                         {
                             if (Main.rand.NextFloat() >= num1)

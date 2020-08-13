@@ -319,16 +319,14 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     else if (npc.ai[2] < 420) //charging up dust
                     {
                         float num1 = 0.99f;
-                        if (npc.ai[2] >= 70f)
+                        if (npc.ai[2] >= 84f)
                             num1 = 0.79f;
-                        if (npc.ai[2] >= 140f)
+                        if (npc.ai[2] >= 168f)
                             num1 = 0.58f;
-                        if (npc.ai[2] >= 210f)
+                        if (npc.ai[2] >= 252f)
                             num1 = 0.43f;
-                        if (npc.ai[2] >= 280f)
+                        if (npc.ai[2] >= 336f)
                             num1 = 0.33f;
-                        if (npc.ai[2] >= 350f)
-                            num1 = 1f;
                         for (int i = 0; i < 9; ++i)
                         {
                             if (Main.rand.NextFloat() >= num1)
