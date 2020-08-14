@@ -11,7 +11,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
     public class FleshCannon : ModItem
     {
         public int counter;
-        public int hungryCounter;
 
         public override void SetStaticDefaults()
         {
@@ -21,7 +20,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 275;
+            item.damage = 310;
             item.magic = true;
             item.mana = 6;
             item.width = 24;
@@ -45,9 +44,10 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
             const int factor = 14; //make sure this is even number btw
 
-            if (++hungryCounter > factor * 0.75) //burp hungy
+            counter++;
+
+            if (counter == factor || counter == factor / 2) //burp hungy
             {
-                hungryCounter = 0;
                 Projectile.NewProjectile(position, speed * 2f, type, damage / 2, knockBack, player.whoAmI);
                 Main.PlaySound(new LegacySoundStyle(4, 13), position);
             }
@@ -56,7 +56,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             Projectile.NewProjectile(position, speed.RotatedBy(rotation) * 0.4f, ProjectileID.PurpleLaser, damage, knockBack, player.whoAmI);
             Projectile.NewProjectile(position, speed.RotatedBy(-rotation) * 0.4f, mod.ProjectileType("FleshLaser"), damage, knockBack, player.whoAmI);
 
-            if (++counter >= factor) //reset
+            if (counter >= factor) //reset
             {
                 counter = 0;
             }
