@@ -702,7 +702,7 @@ namespace FargowiltasSouls.NPCs
         {
             skeleBoss = npc.whoAmI;
 
-            if (Counter[0] != 0)
+            /*if (Counter[0] != 0)
             {
                 Counter[2]++;
 
@@ -746,7 +746,7 @@ namespace FargowiltasSouls.NPCs
                         Counter[0] = 0;
                     }
                 }
-            }
+            }*/
 
             if (npc.ai[1] == 1f || npc.ai[1] == 2f) //spinning or DG mode
             {

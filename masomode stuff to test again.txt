@@ -263,3 +263,4 @@ hm boss summons are only given when they're available in progression (prevent pa
 changed reverse mana flow formula, is now (item.mana / (1f - player.endurance) + player.statDefense) damage per use
 moon lord head no longer takes double damage (preparation for 1.4)
 eoc and attacks inflict shorter obstructed and longer berserked
+skeletron no longer revives hands
