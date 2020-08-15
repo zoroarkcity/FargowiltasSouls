@@ -30,6 +30,9 @@ Increases your max number of sentries by 2");
         {
             player.GetModPlayer<FargoPlayer>().AllDamageUp(0.05f);
             player.GetModPlayer<FargoPlayer>().AllCritUp(5);
+
+            player.maxMinions += 3;
+            player.maxTurrets += 2;
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)

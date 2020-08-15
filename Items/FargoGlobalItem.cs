@@ -108,7 +108,8 @@ namespace FargowiltasSouls.Items
 
             if (item.magic && player.GetModPlayer<FargoPlayer>().ReverseManaFlow)
             {
-                player.Hurt(PlayerDeathReason.ByCustomReason(player.name + " was destroyed by their own magic."), item.mana + item.damage / 10, 0);
+                int damage = (int)(item.mana / (1f - player.endurance) + player.statDefense);
+                player.Hurt(PlayerDeathReason.ByCustomReason(player.name + " was destroyed by their own magic."), damage, 0);
                 player.immune = false;
                 player.immuneTime = 0;
             }
@@ -241,6 +242,11 @@ namespace FargowiltasSouls.Items
                 player.HealEffect(heal);
                 player.statLife += heal;
                 player.AddBuff(BuffID.PotionSickness, 10800);
+            }
+
+            if (item.type == ItemID.RodofDiscord)
+            {
+                player.ClearBuff(ModContent.BuffType<Buffs.Souls.GoldenStasis>());
             }
 
             //if (modPlayer.SacredEnchant && item.healLife > 0)

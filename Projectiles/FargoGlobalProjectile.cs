@@ -82,6 +82,10 @@ namespace FargowiltasSouls.Projectiles
             {
                 switch (projectile.type)
                 {
+                    case ProjectileID.DD2BetsyFlameBreath:
+                        projectile.tileCollide = false;
+                        break;
+
                     case ProjectileID.PhantasmalDeathray:
                     case ProjectileID.SaucerDeathray:
                         ImmuneToGuttedHeart = true;
@@ -1029,6 +1033,49 @@ namespace FargowiltasSouls.Projectiles
                         projectile.damage = 40;
                     break;
 
+                case ProjectileID.DD2BetsyFireball:
+                    if (FargoSoulsWorld.MasochistMode && !FargoSoulsWorld.SwarmActive)
+                    {
+                        if (!masobool)
+                        {
+                            masobool = true;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    Vector2 speed = Main.rand.NextFloat(8, 12) * -Vector2.UnitY.RotatedByRandom(Math.PI / 2);
+                                    Projectile.NewProjectile(projectile.Center, speed, ModContent.ProjectileType<BetsyPhoenix>(),
+                                        projectile.damage, 0f, Main.myPlayer, Player.FindClosest(projectile.Center, 0, 0), 60 + Main.rand.Next(60));
+                                }
+                            }
+                        }
+                    }
+                    break;
+
+                case ProjectileID.DD2BetsyFlameBreath:
+                    if (FargoSoulsWorld.MasochistMode && !FargoSoulsWorld.SwarmActive)
+                    {
+                        if (++counter > 2)
+                        {
+                            counter = 0;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Main.PlaySound(SoundID.Item34, projectile.Center);
+                                Vector2 projVel = projectile.velocity.RotatedBy((Main.rand.NextDouble() - 0.5) * Math.PI / 10);
+                                projVel.Normalize();
+                                projVel *= Main.rand.NextFloat(8f, 12f);
+                                int type = ProjectileID.CultistBossFireBall;
+                                if (Main.rand.Next(2) == 0)
+                                {
+                                    type = ModContent.ProjectileType<Champions.WillFireball>();
+                                    projVel *= 2.5f;
+                                }
+                                Projectile.NewProjectile(projectile.Center, projVel, type, projectile.damage, 0f, Main.myPlayer);
+                            }
+                        }
+                    }
+                    break;
+
                 default:
                         break;
             }
@@ -1563,6 +1610,14 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.CultistBossFireBall:
                         target.AddBuff(BuffID.OnFire, 300);
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.betsyBoss, NPCID.DD2Betsy))
+                        {
+                            //target.AddBuff(BuffID.OnFire, 600);
+                            //target.AddBuff(BuffID.Ichor, 600);
+                            target.AddBuff(BuffID.WitheredArmor, Main.rand.Next(60, 300));
+                            target.AddBuff(BuffID.WitheredWeapon, Main.rand.Next(60, 300));
+                            target.AddBuff(BuffID.Burning, 300);
+                        }
                         break;
 
                     case ProjectileID.CultistBossFireBallClone:

@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Projectiles.Masomode
+namespace FargowiltasSouls.Projectiles.BossWeapons
 {
     public class HellSkull : ModProjectile
     {

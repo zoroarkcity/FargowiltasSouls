@@ -6,13 +6,15 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.GameContent.Events;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Projectiles.MutantBoss;
-using Fargowiltas.Items.Summons.Mutant;
 using Fargowiltas.Items.Summons;
+using Fargowiltas.Items.Summons.Abom;
+using Fargowiltas.Items.Summons.Mutant;
 using Fargowiltas.Items.Summons.VanillaCopy;
 using FargowiltasSouls.NPCs.EternityMode;
 
@@ -1487,7 +1489,7 @@ namespace FargowiltasSouls.NPCs
             }*/
 
             //drop summon
-            if (!NPC.downedMechBoss2 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            if (Main.hardMode && !NPC.downedMechBoss2 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
                 Player player = Main.player[npc.target];
 
@@ -1898,7 +1900,7 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedMechBoss1 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            if (Main.hardMode && !NPC.downedMechBoss1 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
                 Player player = Main.player[npc.target];
 
@@ -1972,7 +1974,7 @@ namespace FargowiltasSouls.NPCs
                             Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 15f;
                             double angleModifier = MathHelper.ToRadians(5) * distance.Length() / 1800.0;
                             distance.Normalize();
-                            float modifier = 24f * (1f - (float)Main.npc[npc.realLife].life / Main.npc[npc.realLife].lifeMax);
+                            float modifier = 16f * (1f - (float)Main.npc[npc.realLife].life / Main.npc[npc.realLife].lifeMax);
                             if (modifier < 8)
                                 modifier = 8;
                             distance *= modifier;
@@ -2296,7 +2298,7 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedMechBoss3 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            if (Main.hardMode && !NPC.downedMechBoss3 && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
                 Player player = Main.player[npc.target];
 
@@ -2659,7 +2661,8 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedPlantBoss && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && !NPC.downedPlantBoss 
+                && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
                 Player player = Main.player[npc.target];
 
@@ -2947,7 +2950,7 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedGolemBoss && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            if (NPC.downedPlantBoss && !NPC.downedGolemBoss && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
                 Player player = Main.player[npc.target];
 
@@ -3569,6 +3572,76 @@ namespace FargowiltasSouls.NPCs
             }
         }
 
+        public bool BetsyAI(NPC npc)
+        {
+            betsyBoss = npc.whoAmI;
+
+            if (npc.ai[0] == 6f) //when approaching for roar
+            {
+                if (npc.ai[1] == 0f)
+                {
+                    npc.position += npc.velocity;
+                }
+                else if (npc.ai[1] == 1f)
+                {
+                    masoBool[0] = true;
+                }
+            }
+
+            if (masoBool[0])
+            {
+                npc.velocity = Vector2.Zero;
+                Counter[0]++;
+                if (Counter[0] % 2 == 0)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Projectile.NewProjectile(npc.Center, -Vector2.UnitY.RotatedBy(2 * Math.PI / 30 * Counter[1]), ModContent.ProjectileType<BetsyFury>(), npc.damage / 3, 0f, Main.myPlayer, npc.target);
+                        Projectile.NewProjectile(npc.Center, -Vector2.UnitY.RotatedBy(2 * Math.PI / 30 * -Counter[1]), ModContent.ProjectileType<BetsyFury>(), npc.damage / 3, 0f, Main.myPlayer, npc.target);
+                    }
+                    Counter[1]++;
+                }
+                if (Counter[0] > 90)
+                {
+                    masoBool[0] = false;
+                    masoBool[1] = true;
+                    Counter[0] = 0;
+                    Counter[1] = 0;
+                }
+            }
+
+            if (masoBool[1])
+            {
+                if (++Counter[1] > 75)
+                {
+                    masoBool[1] = false;
+                    Counter[0] = 0;
+                    Counter[1] = 0;
+                }
+                npc.position -= npc.velocity * 0.5f;
+                if (Counter[0] % 2 == 0)
+                    return false;
+            }
+
+            if (!DD2Event.Ongoing && npc.HasPlayerTarget && (!Main.player[npc.target].active || Main.player[npc.target].dead || npc.Distance(Main.player[npc.target].Center) > 3000))
+            {
+                int p = Player.FindClosest(npc.Center, 0, 0); //extra despawn code for when summoned outside event
+                if (p < 0 || !Main.player[p].active || Main.player[p].dead || npc.Distance(Main.player[p].Center) > 3000)
+                    npc.active = false;
+            }
+
+            //drop summon
+            if (NPC.downedGolemBoss && !FargoSoulsWorld.downedBetsy && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            {
+                Player player = Main.player[npc.target];
+
+                Item.NewItem(player.Hitbox, ModContent.ItemType<BetsyEgg>());
+                droppedSummon = true;
+            }
+
+            return true;
+        }
+
         public void CultistAI(NPC npc)
         {
             cultBoss = npc.whoAmI;
@@ -3746,7 +3819,7 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedAncientCultist && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            if (NPC.downedGolemBoss && !NPC.downedAncientCultist && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
                 Player player = Main.player[npc.target];
 
@@ -4090,7 +4163,7 @@ namespace FargowiltasSouls.NPCs
             }
 
             //drop summon
-            if (!NPC.downedMoonlord && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            if (NPC.downedAncientCultist && !NPC.downedMoonlord && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
                 Player player = Main.player[npc.target];
 

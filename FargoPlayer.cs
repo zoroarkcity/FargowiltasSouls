@@ -460,7 +460,6 @@ namespace FargowiltasSouls
                 player.AddBuff(ModContent.BuffType<GoldenStasis>(), 600);
                 player.AddBuff(ModContent.BuffType<GoldenStasisCD>(), 3600);
 
-
                 goldHP = player.statLife;
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Zhonyas").WithVolume(1f), player.Center);
             }

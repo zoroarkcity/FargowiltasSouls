@@ -44,9 +44,11 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
             const int factor = 14; //make sure this is even number btw
 
-            if (counter == 0 || counter == factor / 2) //burp hungy
+            counter++;
+
+            if (counter == factor || counter == factor / 2) //burp hungy
             {
-                Projectile.NewProjectile(position, speed * 2f, type, damage, knockBack, player.whoAmI);
+                Projectile.NewProjectile(position, speed * 2f, type, damage / 2, knockBack, player.whoAmI);
                 Main.PlaySound(new LegacySoundStyle(4, 13), position);
             }
 
@@ -54,7 +56,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             Projectile.NewProjectile(position, speed.RotatedBy(rotation) * 0.4f, ProjectileID.PurpleLaser, damage, knockBack, player.whoAmI);
             Projectile.NewProjectile(position, speed.RotatedBy(-rotation) * 0.4f, mod.ProjectileType("FleshLaser"), damage, knockBack, player.whoAmI);
 
-            if (++counter >= factor) //reset
+            if (counter >= factor) //reset
             {
                 counter = 0;
             }

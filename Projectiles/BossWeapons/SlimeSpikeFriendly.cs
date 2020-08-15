@@ -23,7 +23,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.hostile = false;
             projectile.friendly = true;
             projectile.timeLeft = 30;
-            projectile.penetrate = 1;
+            projectile.penetrate = 2;
         }
 
         public override void AI()

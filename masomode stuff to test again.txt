@@ -18,7 +18,6 @@ reworked slime slinging slasher, homing and piercing
 reworked big sting, consumes darts to shoot piercing stingers, much more spread
 reworked mech flail, spawns fewer and slower eyes, creates burst of much faster eyes on hit
 maso boss scaling now disabled by default
-removed lifesteal from palladium (still present on force of earth)
 
 increased mutant DR from 10% to 20%
 reduced mutant eye graze cap buff to 50%
@@ -27,7 +26,6 @@ all of moon lord's attacks will inflict curse of the moon (phantasmal inflicts l
 all sources of curse of the moon extended
 curse of the moon inflicts defense, DR, damage, crit down
 removed moon lord damage boost
-buffed lord head from 50% to 75% life
 beetle ench MURDERED: caps at first beetle level (unnerfed in SOT)
 
 added sigil of champions
@@ -42,7 +40,6 @@ cultist clones no longer deal contact damage
 increased safe space of rune wizard
 reduced damage of some of mutant's attacks, mainly last stand
 
-nerfed reverse mana flow to only inflict the weapon's mana times two as damage
 nerfed debuffs like HELL, i literally cannot list it
 nerfed wyvern light orb speed
 iron enchantment rework:
@@ -56,7 +53,7 @@ brain p2 rework
 	spams harmless illusions that fly around and be annoying, become opaque as life decreases
 	brain clone moves much slower and doesn't teleport
 wof deathrays dont freeze you
-skeletron and prime have a 3 second windup while entering DG form
+skeletron and prime have a brief startup while entering DG form
 mutant nuke has a visual effect and hitboxes adjusted
 
 removed nerf to moon lord head's max life
@@ -145,7 +142,6 @@ item stealing has a 5sec cooldown
 goblin thief speed nerfed
 goblin warriors take a small amount of knockback
 goblin sorcerors capped at 2 alive at a time until post-eye or hm
-cultist clones all share cultist boss hitbox (piercing should not really work)
 changed crystal bullet/holy arrow nerf slightly
 lihzahrds no longer drop hostile spiky balls to compensate for temple buff
 
@@ -189,7 +185,7 @@ razorpine and blizzard staff are -33% damage -66% speed
 removed pumpking spraying greek fire constantly
 pumpking now shoots large rings of homing scythes
 ice queen shoots rings of waves while spinning and uses super flockos otherwise
-reverse mana flow does more damage and has hexed effect on magic weapons
+reverse mana flow applies hexed effect on magic weapons
 sprites:
 	sans golem
 	brain minion icon
@@ -251,3 +247,19 @@ reduced dust and noise of dark stars
 reduced hellflame dust, projectile speed, and homing radius
 hellzone now shoots additional homing skulls
 adjusted terra champ sine lightning fireball attack
+betsy rework:
+	dark mages removed, replaced with sky dragon fury waves
+	sprays much more projs during flame breath
+	sprays phantom phoenixes during fireballs
+	other enemies despawn during wave 7
+reduced destroyer dark star max speed
+new dusts for devi and mutant mega rays
+fake hearts now restore 1 hp if you're immune to them
+adjusted regurgitator - hungries do less damage and no longer pierce
+buffed slime king slasher stats but the spikes now pierce (rip single target damage)
+gold shell is cancelled by using rod
+betsy drops her summon when spawned
+hm boss summons are only given when they're available in progression (prevent pandora spawning a boss early -> infinite grind attempts)
+changed reverse mana flow formula, is now (item.mana / (1f - player.endurance) + player.statDefense) damage per use
+moon lord head no longer takes double damage (preparation for 1.4)
+eoc and attacks inflict shorter obstructed and longer berserked
