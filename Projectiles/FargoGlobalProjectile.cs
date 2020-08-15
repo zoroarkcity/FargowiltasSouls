@@ -206,7 +206,7 @@ namespace FargowiltasSouls.Projectiles
                         }
                     }
 
-                    if (modPlayer.TungstenEnchant && !townNPCProj && projectile.damage != 0 && !projectile.trap && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && projectile.friendly && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenSize, false))
+                    if (modPlayer.TungstenEnchant && !townNPCProj && projectile.damage != 0 && !projectile.trap && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && projectile.friendly && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenProjSize, false))
                     {
                         projectile.position = projectile.Center;
                         projectile.scale *= 2f;
@@ -252,7 +252,7 @@ namespace FargowiltasSouls.Projectiles
                         if (adamantiteCD == 0)
                         {
                             adamantiteCD = modPlayer.TerrariaSoul ? 4 : 8;
-                            SplitProj(projectile, 3);
+                            SplitProj(projectile, 3, MathHelper.Pi / 8, 0.5f);
                         }
                     }
 
@@ -264,7 +264,7 @@ namespace FargowiltasSouls.Projectiles
                         }*/
                         if (modPlayer.FishSoul2)
                         {
-                            SplitProj(projectile, 11);
+                            SplitProj(projectile, 11, MathHelper.Pi / 3, 1);
                         }
                     }
 
@@ -499,7 +499,7 @@ namespace FargowiltasSouls.Projectiles
             return retVal;
         }
 
-        public static void SplitProj(Projectile projectile, int number)
+        public static void SplitProj(Projectile projectile, int number, float maxSpread, float damageRatio)
         {
             if (projectile.type == ModContent.ProjectileType<SpawnProj>())
             {
@@ -514,14 +514,14 @@ namespace FargowiltasSouls.Projectiles
 
             Projectile split;
 
-            double spread = 0.6 / number;
+            double spread = maxSpread / number;
 
             for (int i = 0; i < number / 2; i++)
             {
                 for (int j = 0; j < 2; j++)
                 {
                     int factor = (j == 0) ? 1 : -1;
-                    split = NewProjectileDirectSafe(projectile.Center, projectile.velocity.RotatedBy(factor * spread * (i + 1)), projectile.type, projectile.damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1]);
+                    split = NewProjectileDirectSafe(projectile.Center, projectile.velocity.RotatedBy(factor * spread * (i + 1)), projectile.type, (int)(projectile.damage * damageRatio), projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1]);
 
                     if (split != null)
                     {
@@ -1893,17 +1893,13 @@ namespace FargowiltasSouls.Projectiles
             {
                 if (modPlayer.CobaltEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CobaltShards) && modPlayer.CobaltCD == 0 && Main.rand.Next(4) == 0)
                 {
-                    int damage = 40;
-                    if (modPlayer.EarthForce)
-                        damage = 80;
-
                     Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 27);
 
                     for (int i = 0; i < 5; i++)
                     {
                         float velX = -projectile.velocity.X * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
                         float velY = -projectile.velocity.Y * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
-                        int p = Projectile.NewProjectile(projectile.position.X + velX, projectile.position.Y + velY, velX, velY, ProjectileID.CrystalShard, damage, 0f, projectile.owner);
+                        int p = Projectile.NewProjectile(projectile.position.X + velX, projectile.position.Y + velY, velX, velY, ProjectileID.CrystalShard, projectile.damage, 0f, projectile.owner);
 
                         Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
                     }

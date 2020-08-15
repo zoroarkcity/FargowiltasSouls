@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FargowiltasSouls.Buffs.Souls;
 using FargowiltasSouls.Projectiles;
 using FargowiltasSouls.Projectiles.Masomode;
 using Microsoft.Xna.Framework;
@@ -80,6 +81,12 @@ namespace FargowiltasSouls.Items
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
+            //dont use hotkeys in stasis
+            if (player.HasBuff(ModContent.BuffType<GoldenStasis>()))
+            {
+                return false;
+            }
+
             if (FargoSoulsWorld.MasochistMode)
             {
                 if (item.type == ItemID.RodofDiscord && 
@@ -127,7 +134,7 @@ namespace FargowiltasSouls.Items
                     Vector2 vel = Vector2.Normalize(Main.MouseWorld - player.Center) * 17f;
                     int p = Projectile.NewProjectile(player.Center, vel, ProjectileID.SnowBallFriendly, (int)(item.damage * .5f), 1, Main.myPlayer);
                     if (p != 1000)
-                        FargoGlobalProjectile.SplitProj(Main.projectile[p], 3);
+                        FargoGlobalProjectile.SplitProj(Main.projectile[p], 3, MathHelper.Pi / 5, 1);
                 }
 
                 if (modPlayer.CelestialRune && SoulConfig.Instance.GetValue(SoulConfig.Instance.CelestialRune))

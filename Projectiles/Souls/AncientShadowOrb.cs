@@ -30,8 +30,6 @@ namespace FargowiltasSouls.Projectiles.Souls
             ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
             ProjectileID.Sets.Homing[projectile.type] = true;
 
-
-
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[projectile.type] = 0;
         }
@@ -116,7 +114,6 @@ namespace FargowiltasSouls.Projectiles.Souls
             {
                 return true;
             }
-
 
             //Redraw the projectile with the color not influenced by light
             Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);

@@ -3,8 +3,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Projectiles;
 using FargowiltasSouls.Projectiles.BossWeapons;
+using FargowiltasSouls.Projectiles;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
@@ -40,7 +40,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         {
             int p = Projectile.NewProjectile(player.Center, new Vector2(speedX, speedY), type, damage, knockback, player.whoAmI);
 
-            FargoGlobalProjectile.SplitProj(Main.projectile[p], Main.rand.Next(3, 6));
+            FargoGlobalProjectile.SplitProj(Main.projectile[p], Main.rand.Next(3, 6), MathHelper.Pi / 5, 1);
 
             return false;
         }

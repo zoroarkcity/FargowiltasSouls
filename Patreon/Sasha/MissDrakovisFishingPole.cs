@@ -78,7 +78,7 @@ namespace FargowiltasSouls.Patreon.Sasha
                 case 3:
                     int p = Projectile.NewProjectile(position, new Vector2(speedX, speedY), item.shoot = mod.ProjectileType("Bubble"), damage, knockBack, player.whoAmI);
 
-                    FargoGlobalProjectile.SplitProj(Main.projectile[p], 5);
+                    FargoGlobalProjectile.SplitProj(Main.projectile[p], 5, MathHelper.Pi / 5, 1);
 
                     break;
                 //summon

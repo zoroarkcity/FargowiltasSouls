@@ -76,7 +76,6 @@ namespace FargowiltasSouls
         public bool ChloroEnchant;
         public bool VortexEnchant;
         public bool VortexStealth = false;
-        private int vortexCD = 0;
         public bool AdamantiteEnchant;
         public bool FrostEnchant;
         public int IcicleCount = 0;
@@ -116,7 +115,7 @@ namespace FargowiltasSouls
         public bool SilverEnchant;
         public bool PlatinumEnchant;
         public bool NecroEnchant;
-        private int necroCD;
+        public int NecroCD;
         public bool ObsidianEnchant;
         private int obsidianCD = 0;
         public bool TinEnchant;
@@ -898,12 +897,6 @@ namespace FargowiltasSouls
 
         public override void PreUpdate()
         {
-            if (RabiesVaccine)
-            {
-                player.buffImmune[BuffID.Rabies] = true;
-            }
-
-
             if (HurtTimer > 0)
                 HurtTimer--;
 
@@ -1302,6 +1295,11 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (RabiesVaccine)
+            {
+                player.buffImmune[BuffID.Rabies] = true;
+            }
+
             if (StealingCooldown > 0)
                 StealingCooldown--;
 
@@ -2464,35 +2462,6 @@ namespace FargowiltasSouls
                         target.buffImmune[ModContent.BuffType<GodEater>()] = false;
                     }
                     target.AddBuff(ModContent.BuffType<GodEater>(), 420);
-                }
-            }
-
-            if (NecroEnchant && necroCD == 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.NecroGuardian))
-            {
-                necroCD = 1200;
-                float screenX = Main.screenPosition.X;
-                if (player.direction < 0)
-                {
-                    screenX += Main.screenWidth;
-                }
-                float screenY = Main.screenPosition.Y;
-                screenY += Main.rand.Next(Main.screenHeight);
-                Vector2 vector = new Vector2(screenX, screenY);
-                float velocityX = target.Center.X - vector.X;
-                float velocityY = target.Center.Y - vector.Y;
-                velocityX += Main.rand.Next(-50, 51) * 0.1f;
-                velocityY += Main.rand.Next(-50, 51) * 0.1f;
-                int num5 = 24;
-                float num6 = (float)Math.Sqrt(velocityX * velocityX + velocityY * velocityY);
-                num6 = num5 / num6;
-                velocityX *= num6;
-                velocityY *= num6;
-                Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(new Vector2(screenX, screenY), new Vector2(velocityX, velocityY),
-                    ModContent.ProjectileType<DungeonGuardianNecro>(), (int)(500 * player.rangedDamage), 0f, player.whoAmI, 0, 120);
-                if (p != null)
-                {
-                    p.penetrate = 1;
-                    p.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
                 }
             }
 

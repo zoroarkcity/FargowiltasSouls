@@ -2,19 +2,39 @@ NEW UPDATE - V 1.4
 
 
 new in beta
--Added Rabies Vaccine
--Nymph perfume full HP on respawn does not work if a boss is alive
--Halved Rain Enchant's max rainfall speed and damage
--Fixed Small Sting tooltip saying stingers instead of darts
--Free EoW summon will not spawn if you're dead 
--Bee Enchantment recipe is back to post plant as it belongs :ech:
--Platinum Enchantment no longer synergizes with Midas
--Added new SoU and SoE item animations
+-Reworked Necro Enchantment: Kill enemeies to make them drop a bone pile, touch the pile to spawn a fridnely baby guardian that will attack enemies, damage scales with the killed enemy's max HP
+-Tungsten Enchantment now has seperate toggles for items and projectiles
+-Forbidden Enchantment recipe now accepts any Scorpion
+-Renamed Orichalcum toggle, it toggles off petals, but not extra debuff damage
+-Frost Enchantment has a larger dust ring every 10 icicles spawned
+-Huntress and Red Riding picks the first arrow type you have no matter where you have it in your inventory 
+-Vortex Enchantment has a debuff for vortex spawning now
+-Cobalt Enchantment's shard damage now scales with the original projectile's
+-Adamantite Enchantment's split projectiles deal half as much damage, spread is slightly tighter
+-Trawler Soul's extra lures spread is wider
+-Rabies Vaccine now actually works
+-Rod hotkey or any other item will never work in gold stasis
+-Fixed The Guardian projectile looking dumb while spinning finally
 
 
 
 
--updated sprites: big sting, fish stick
+
+jungle - spores home in slowly
+apprentice works with melee weapons
+shinobi -  Tele through wall doesn't work right in MP
+
+
+
+
+
+
+
+
+
+
+
+
 
 -Dark Star Cannon is now Prime's Laser Cannon, a magic weapon that shoots lasers (wip kinda)
 -Added The Small Sting (wip kinda)
@@ -25,6 +45,7 @@ new in beta
 
 
 todo
+look at hell zone..
 necro - now usable with DG less dumb
 Kill rainbow slime
 timestop isnt a buff or works thru immune
@@ -34,34 +55,21 @@ look over all enchant rcipes again e
 do force upgrades for all
 Apprentice becomes dark artist 
 Dark Artist becomes apprentice but uses epic player shadow copy and they all hold the sentry ??
-adamantite - tighter spread, they dont have full damage
-tungsten - Add a seperate toggle for items and projectiles. Maybe try to make it look better for some things like yoyos
-shinobi -  Tele through wall doesn't work right in MP
-chlorophyte - no change??
-cobalt - buff
 tiki - Make it work more consistently, does not confuse free minions, works with worm summons.
 turtle - gets some epic visual of actually being in your shell, after leaving you are debuffed for a bit
-jungle - spores home in slowly
+
 frost - Absorbs Snow Enchant and Grinch pet
-forbidden - Any Scorpion in recipe ech
+
 ancient shadow - orbs move slower, or even stay still, actually making you have to aim for them, when hit they go sicko mode, detatch themselves, and pursue enemies, respawn around you a few seconds later in a new location 
 red riding - Add a toggle for werewolf visual, remove Celestial Shell for Moon Charm in recipe
 snow - slows down nearby enemies and proj
 wizard - the pogger enchant class, increases effects of all other enchantments
 Patreon toggle and marker
-Huntress arrow fade in, apprentice works with melee weapons
-Shadow orbs from ancient shadow give off teal light, remove light and draw them in Color.White?
-Sound when orbs struck
-Have a cooldown on jungle spore jump imo
-huntress picks like ammo does normally e
-Kill ori fire config
-maybe a super ring of dust for 10 icicles
-Vortex cd debuff
-Free summon toggle
+
+
 Make hornet and imp work with spooky
 fix all toggle names and colors
 recheck eater thru wall meme and all beetle auras
-Rod hot key in gold enchant
 
 
 
@@ -115,7 +123,8 @@ Enchants
 -Frost Enchantment rework: The icicles move twice as fast when launched. Damage now scales. Icicles rotate slower. Max icicles increased from 3 to 30. Icicles are launched when you attack no matter how many there are, if you keep attacking you will just keep firing one at a time. The longer you don't attack the faster they spawn. If 10 or more connect with an enemy, the enemy, bosses included, is frozen for one second and they take 20% increased damage from you for 5 seconds. The more icicles that hit, the longer the freeze
 -Vortex Enchantment rework: Vortex damage now scales. The vortex lasts much longer. The Vortex now additionally pulls in all projectiles. The suck range is much larger. While stealthed your projectiles will not be sucked in. When the vortex runs out any non boss nearby is wiped from existence. The cooldown to spawn a void is much longer.
 -Orichalcum Enchantment rework: No longer spawns fireballs. Petals inflict On Fire, Cursed Inferno, Shadowflame, or Frostburn on hit. All DoTs deal 5x damage. Petals reset iframes.
-
+-Platinum Enchantment no longer synergizes with Midas
+-Added new SoU and SoE item animations
 
 
 -Updated several Thorium Enchantments with missing or extra accessory effects: Crier
@@ -194,7 +203,7 @@ Emode
 -nymph's perfume makes you respawn with full health (effect works in inventory)
 -Soul of Eternity now has Bionomic Cluster effects in inventory
 -Supersonic Soul's No momentum mode is now less severe and more usable, 5x more momeentum as before (which is still 10xless than normal)
-
+-Added Rabies Vaccine
 
 -Removed Apoth support in SoE
 
@@ -223,11 +232,11 @@ Weapons
 -Fish Stick has a smaller tile hitbox because it looked dumb
 -Fish Stick's tornado height scales with minion slots up to 5
 -Fish Stick sharks now pierce 
-
+-updated sprites: big sting, fish stick
 
 
 new sprites:
-Fig Branch PAtreon, pain emblem, staff of ocean, vortex magnet
+Fig Branch Patreon, pain emblem, staff of ocean, vortex magnet
 -Amalgamated Dart Box
 nuke proj (update item)
 rogue essence and soul

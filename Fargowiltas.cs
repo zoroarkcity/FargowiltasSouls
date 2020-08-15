@@ -107,7 +107,7 @@ namespace FargowiltasSouls
             AddToggle("CobaltConfig", "Cobalt Shards", "CobaltEnchant", "3da4c4");
             AddToggle("AncientCobaltConfig", "Ancient Cobalt Stingers", "AncientCobaltEnchant", "ffffff");
             AddToggle("MythrilConfig", "Mythril Weapon Speed", "MythrilEnchant", "9dd290");
-            AddToggle("OrichalcumConfig", "Orichalcum Fireballs", "OrichalcumEnchant", "eb3291");
+            AddToggle("OrichalcumConfig", "Orichalcum Petals", "OrichalcumEnchant", "eb3291");
             AddToggle("PalladiumConfig", "Palladium Healing", "PalladiumEnchant", "f5ac28");
             AddToggle("TitaniumConfig", "Titanium Shadow Dodge", "TitaniumEnchant", "828c88");
 
@@ -117,7 +117,8 @@ namespace FargowiltasSouls
             AddToggle("IronSConfig", "Iron Shield", "IronEnchant", "988e83");
             AddToggle("CthulhuShield", "Shield of Cthulhu", "IronEnchant", "988e83");
             AddToggle("TinConfig", "Tin Crits", "TinEnchant", "a28b4e");
-            AddToggle("TungstenConfig", "Tungsten Effect", "TungstenEnchant", "b0d2b2");
+            AddToggle("TungstenConfig", "Tungsten Item Effect", "TungstenEnchant", "b0d2b2");
+            AddToggle("TungstenProjConfig", "Tungsten Projectile Effect", "TungstenEnchant", "b0d2b2");
 
             AddToggle("WillHeader", "Force of Will", "WillForce", "ffffff");
             AddToggle("GladiatorConfig", "Gladiator Rain", "GladiatorEnchant", "9c924e");
@@ -1204,6 +1205,10 @@ namespace FargowiltasSouls
             //vanilla birds
             group = new RecipeGroup(() => Lang.misc[37] + " Bird", ItemID.Bird, ItemID.BlueJay, ItemID.Cardinal, ItemID.GoldBird, ItemID.Duck, ItemID.MallardDuck);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyBird", group);
+
+            //vanilla scorpions
+            group = new RecipeGroup(() => Lang.misc[37] + " Scorpion", ItemID.Scorpion, ItemID.BlackScorpion);
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyScorpion", group);
 
             //gold pick
             group = new RecipeGroup(() => Lang.misc[37] + " Gold Pickaxe", ItemID.GoldPickaxe, ItemID.PlatinumPickaxe);

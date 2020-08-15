@@ -8229,7 +8229,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             Vector2 velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 10;
                             int p = Projectile.NewProjectile(npc.Center, velocity, ProjectileID.Stinger, npc.damage / 4, 1, Main.myPlayer);
-                            FargoGlobalProjectile.SplitProj(Main.projectile[p], 5);
+                            FargoGlobalProjectile.SplitProj(Main.projectile[p], 5, MathHelper.Pi / 5, 1);
 
                             //FargoGlobalProjectile.XWay(6, npc.Center, ProjectileID.Stinger, 3, npc.damage / 4, 1);
                         }
