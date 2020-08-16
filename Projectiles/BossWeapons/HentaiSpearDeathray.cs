@@ -13,8 +13,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
     {
         public HentaiSpearDeathray() : base(90, "PhantasmalDeathrayML") { }
 
-        private const float maxTime = 90;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phantasmal Deathray");

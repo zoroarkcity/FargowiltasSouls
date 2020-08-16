@@ -12,8 +12,6 @@ namespace FargowiltasSouls.Projectiles.Deathrays
     {
         public DeviBigDeathray() : base(180, "DeviDeathray") { }
 
-        private const float maxTime = 180;
-
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Love Ray");

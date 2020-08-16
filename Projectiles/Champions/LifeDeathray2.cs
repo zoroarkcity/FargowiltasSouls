@@ -12,7 +12,6 @@ namespace FargowiltasSouls.Projectiles.Champions
     public class LifeDeathray2 : Deathrays.BaseDeathray
     {
         public LifeDeathray2() : base(30, "AbomDeathray") { }
-        private const float maxTime = 30;
 
         public override void SetStaticDefaults()
         {

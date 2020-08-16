@@ -12,8 +12,6 @@ namespace FargowiltasSouls.Projectiles.Deathrays
     {
         public PhantasmalDeathrayWOFS() : base(30, "PhantasmalDeathrayWOF") { }
 
-        private const float maxTime = 30;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Divine Deathray");

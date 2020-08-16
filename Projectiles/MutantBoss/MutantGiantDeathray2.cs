@@ -10,7 +10,6 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
     public class MutantGiantDeathray2 : Deathrays.BaseDeathray
     {
         public MutantGiantDeathray2() : base(600, "PhantasmalDeathrayML") { }
-        private const float maxTime = 600;
 
         public int dustTimer;
 
@@ -143,53 +142,21 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     }
                 }
             }
-        }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
-        {
-            if (projectile.velocity == Vector2.Zero)
+            if (++projectile.frameCounter > 3)
             {
-                return false;
-            }
-            Texture2D texture2D19 = Main.projectileTexture[projectile.type];
-            Texture2D texture2D20 = mod.GetTexture("Projectiles/Minions/PhantasmalDeathrayTrueEye2");
-            Texture2D texture2D21 = mod.GetTexture("Projectiles/Minions/PhantasmalDeathrayTrueEye3");
-            float num223 = projectile.localAI[1];
-            Microsoft.Xna.Framework.Color color44 = new Microsoft.Xna.Framework.Color(255, 255, 255, 0) * 0.9f;
-            SpriteBatch arg_ABD8_0 = Main.spriteBatch;
-            Texture2D arg_ABD8_1 = texture2D19;
-            Vector2 arg_ABD8_2 = projectile.Center - Main.screenPosition;
-            Microsoft.Xna.Framework.Rectangle? sourceRectangle2 = null;
-            arg_ABD8_0.Draw(arg_ABD8_1, arg_ABD8_2, sourceRectangle2, color44, projectile.rotation, texture2D19.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
-            num223 -= (float)(texture2D19.Height / 2 + texture2D21.Height) * projectile.scale;
-            Vector2 value20 = projectile.Center;
-            value20 += projectile.velocity * projectile.scale * (float)texture2D19.Height / 2f;
-            if (num223 > 0f)
-            {
-                float num224 = 0f;
-                Microsoft.Xna.Framework.Rectangle rectangle7 = new Microsoft.Xna.Framework.Rectangle(0, 16 * (projectile.timeLeft / 3 % 5), texture2D20.Width, 16);
-                while (num224 + 1f < num223)
+                if (++projectile.frame > 15)
+                    projectile.frame = 0;
+
+                switch (projectile.frame)
                 {
-                    if (num223 - num224 < (float)rectangle7.Height)
-                    {
-                        rectangle7.Height = (int)(num223 - num224);
-                    }
-                    Main.spriteBatch.Draw(texture2D20, value20 - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(rectangle7), color44, projectile.rotation, new Vector2((float)(rectangle7.Width / 2), 0f), projectile.scale, SpriteEffects.None, 0f);
-                    num224 += (float)rectangle7.Height * projectile.scale;
-                    value20 += projectile.velocity * (float)rectangle7.Height * projectile.scale;
-                    rectangle7.Y += 16;
-                    if (rectangle7.Y + rectangle7.Height > texture2D20.Height)
-                    {
-                        rectangle7.Y = 0;
-                    }
+                    case 1:
+                    case 3:
+                    case 9:
+                    case 11: projectile.frameCounter = 2; break;
+                    default: projectile.frameCounter = 0; break;
                 }
             }
-            SpriteBatch arg_AE2D_0 = Main.spriteBatch;
-            Texture2D arg_AE2D_1 = texture2D21;
-            Vector2 arg_AE2D_2 = value20 - Main.screenPosition;
-            sourceRectangle2 = null;
-            arg_AE2D_0.Draw(arg_AE2D_1, arg_AE2D_2, sourceRectangle2, color44, projectile.rotation, texture2D21.Frame(1, 1, 0, 0).Top(), projectile.scale, SpriteEffects.None, 0f);
-            return false;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -210,6 +177,54 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             target.immuneTime = 0;
             target.hurtCooldowns[0] = 0;
             target.hurtCooldowns[1] = 0;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            if (projectile.velocity == Vector2.Zero)
+            {
+                return false;
+            }
+            Texture2D texture2D19 = mod.GetTexture("Projectiles/Deathrays/Mutant/MutantDeathray_" + projectile.frame.ToString());
+            Texture2D texture2D20 = mod.GetTexture("Projectiles/Deathrays/Mutant/MutantDeathray2_" + projectile.frame.ToString());
+            Texture2D texture2D21 = mod.GetTexture("Projectiles/Deathrays/" + texture + "3");
+            float num223 = projectile.localAI[1];
+            Color color44 = new Color(255, 255, 255, 0) * 0.95f;
+            SpriteBatch arg_ABD8_0 = Main.spriteBatch;
+            Texture2D arg_ABD8_1 = texture2D19;
+            Vector2 arg_ABD8_2 = projectile.Center - Main.screenPosition;
+            Rectangle? sourceRectangle2 = null;
+            arg_ABD8_0.Draw(arg_ABD8_1, arg_ABD8_2, sourceRectangle2, color44, projectile.rotation, texture2D19.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
+            num223 -= (texture2D19.Height / 2 + texture2D21.Height) * projectile.scale;
+            Vector2 value20 = projectile.Center;
+            value20 += projectile.velocity * projectile.scale * texture2D19.Height / 2f;
+            if (num223 > 0f)
+            {
+                float num224 = 0f;
+                Rectangle rectangle7 = new Rectangle(0, 0, texture2D20.Width, 30);
+                while (num224 + 1f < num223)
+                {
+                    if (num223 - num224 < rectangle7.Height)
+                    {
+                        rectangle7.Height = (int)(num223 - num224);
+                    }
+
+                    Main.spriteBatch.Draw(texture2D20, value20 - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(rectangle7), color44, projectile.rotation, new Vector2(rectangle7.Width / 2, 0f), projectile.scale, SpriteEffects.None, 0f);
+                    num224 += rectangle7.Height * projectile.scale;
+                    value20 += projectile.velocity * rectangle7.Height * projectile.scale;
+                    rectangle7.Y += 30;
+                    if (rectangle7.Y + rectangle7.Height > texture2D20.Height)
+                    {
+                        rectangle7.Y = 0;
+                    }
+                }
+            }
+            SpriteBatch arg_AE2D_0 = Main.spriteBatch;
+            Texture2D arg_AE2D_1 = texture2D21;
+            Vector2 arg_AE2D_2 = value20 - Main.screenPosition;
+            sourceRectangle2 = null;
+            arg_AE2D_0.Draw(arg_AE2D_1, arg_AE2D_2, sourceRectangle2, color44, projectile.rotation, texture2D21.Frame(1, 1, 0, 0).Top(), projectile.scale, SpriteEffects.None, 0f);
+            return false;
         }
     }
 }

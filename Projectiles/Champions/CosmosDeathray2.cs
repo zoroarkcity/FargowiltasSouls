@@ -12,7 +12,6 @@ namespace FargowiltasSouls.Projectiles.Champions
     public class CosmosDeathray2 : Deathrays.BaseDeathray
     {
         public CosmosDeathray2() : base(180, "PhantasmalDeathrayML") { }
-        private const float maxTime = 180;
 
         public override void SetStaticDefaults()
         {

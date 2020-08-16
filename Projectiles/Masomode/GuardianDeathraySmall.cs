@@ -12,7 +12,6 @@ namespace FargowiltasSouls.Projectiles.Masomode
     public class GuardianDeathraySmall : Deathrays.BaseDeathray
     {
         public GuardianDeathraySmall() : base(30, "GuardianDeathray") { }
-        private const float maxTime = 30;
 
         private Vector2 offset;
 
