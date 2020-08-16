@@ -53,6 +53,12 @@ namespace FargowiltasSouls.NPCs.Champions
             musicPriority = MusicPriority.BossHigh;
         }
 
+        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        {
+            //npc.damage = (int)(npc.damage * 0.5f);
+            npc.lifeMax = (int)(npc.lifeMax * bossLifeScale);
+        }
+
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             cooldownSlot = 1;

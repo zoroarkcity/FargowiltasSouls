@@ -653,13 +653,16 @@ namespace FargowiltasSouls.NPCs
                             npc.netUpdate = true;
                         }
                         npc.velocity = Vector2.Zero;
-                        if (++Counter[0] > 2)
+                        if (++Counter[0] > 1)
                         {
                             Counter[0] = 0;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(npc.Center + Vector2.UnitY * 15, 12f * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))), ModContent.ProjectileType<Bee>(), npc.damage / 5, 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center + Vector2.UnitY * 15, -12f * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))), ModContent.ProjectileType<Bee>(), npc.damage / 5, 0f, Main.myPlayer);
+                                const float rotation = 0.02f;
+                                Projectile.NewProjectile(npc.Center + new Vector2(3 * npc.direction, 15), Main.rand.NextFloat(9f, 18f) * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))),
+                                    ModContent.ProjectileType<Bee>(), npc.damage / 5, 0f, Main.myPlayer, npc.target, Main.rand.Next(2) == 0 ? -rotation : rotation);
+                                Projectile.NewProjectile(npc.Center + new Vector2(3 * npc.direction, 15), -Main.rand.NextFloat(9f, 18f) * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))),
+                                    ModContent.ProjectileType<Bee>(), npc.damage / 5, 0f, Main.myPlayer, npc.target, Main.rand.Next(2) == 0 ? -rotation : rotation);
                             }
                         }
                     }
@@ -689,13 +692,13 @@ namespace FargowiltasSouls.NPCs
                     if (Counter[1] > 3)
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
-                            Projectiles.FargoGlobalProjectile.XWay(16, npc.Center, ProjectileID.Stinger, 6, 11, 1);
+                            FargoGlobalProjectile.XWay(16, npc.Center, ProjectileID.Stinger, 6, 11, 1);
                         Counter[1] = 0;
                     }
                     else
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
-                            Projectiles.FargoGlobalProjectile.XWay(8, npc.Center, ProjectileID.Stinger, 6, 11, 1);
+                            FargoGlobalProjectile.XWay(8, npc.Center, ProjectileID.Stinger, 6, 11, 1);
                     }
                 }
             }

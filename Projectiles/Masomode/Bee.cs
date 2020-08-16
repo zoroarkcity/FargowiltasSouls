@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.Masomode
 {
@@ -41,6 +42,14 @@ namespace FargowiltasSouls.Projectiles.Masomode
             if ((projectile.wet || projectile.lavaWet) && !projectile.honeyWet) //die in liquids
             {
                 projectile.Kill();
+            }
+
+            if (++projectile.localAI[0] > 30 && projectile.localAI[0] < 90)
+            {
+                float rotation = projectile.velocity.ToRotation();
+                Vector2 vel = Main.player[(int)projectile.ai[0]].Center - projectile.Center;
+                float targetAngle = vel.ToRotation();
+                projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, projectile.ai[1]));
             }
         }
 

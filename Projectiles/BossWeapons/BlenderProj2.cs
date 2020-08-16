@@ -20,6 +20,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.scale = 1f;
 
             projectile.extraUpdates = 1;
+            projectile.tileCollide = false;
         }
 
         public override void AI()

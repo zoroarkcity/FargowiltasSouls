@@ -267,3 +267,8 @@ skeletron no longer revives hands
 boc creepers shoot new ichor proj
 boc p2 shoots denser laser spreads
 reduced velocity of cultist's pillar toss
+blender secondary projs ignore tiles
+cosmos has mp scaling
+blender secondaries ignore walls to fix that one wall glitch
+crystal leaves despawn immediately to unfuck plantera swarm
+buffed qb p2 bee spray

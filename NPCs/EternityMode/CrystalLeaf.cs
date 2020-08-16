@@ -47,7 +47,7 @@ namespace FargowiltasSouls.NPCs.EternityMode
             if (npc.buffType[0] != 0)
                 npc.DelBuff(0);
 
-            if (npc.ai[0] < 0f || npc.ai[0] >= 200f)
+            if (npc.ai[0] < 0f || npc.ai[0] >= Main.maxNPCs || FargoSoulsWorld.SwarmActive)
             {
                 npc.active = false;
                 npc.netUpdate = true;
