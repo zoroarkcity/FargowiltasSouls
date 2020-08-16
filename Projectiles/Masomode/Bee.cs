@@ -23,6 +23,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.width = 16;
             projectile.height = 16;
             projectile.hostile = true;
+            projectile.tileCollide = false;
             projectile.timeLeft = 600;
             projectile.aiStyle = -1;
         }
@@ -51,6 +52,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 float targetAngle = vel.ToRotation();
                 projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, projectile.ai[1]));
             }
+
+            projectile.tileCollide = projectile.localAI[0] > 180;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
