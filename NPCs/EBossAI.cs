@@ -406,6 +406,12 @@ namespace FargowiltasSouls.NPCs
                         n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<BrainClone>(), npc.whoAmI);
                         if (n != 200 && Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+
+                        for (int i = 0; i < Main.maxProjectiles; i++) //clear old golden showers
+                        {
+                            if (Main.projectile[i].active && Main.projectile[i].type == ModContent.ProjectileType<GoldenShowerHoming>())
+                                Main.projectile[i].Kill();
+                        }
                     }
                 }
 
@@ -459,34 +465,35 @@ namespace FargowiltasSouls.NPCs
                     {
                         Vector2 offset = npc.Center - Main.player[npc.target].Center;
 
-                        const int degree = 8;
+                        const int max = 3;
+                        const int degree = 3;
 
                         Vector2 spawnPos = Main.player[npc.target].Center;
                         spawnPos.X += offset.X;
                         spawnPos.Y += offset.Y;
                         Projectile.NewProjectile(spawnPos, new Vector2(0, -4), ModContent.ProjectileType<BrainofConfusion>(), 0, 0, Main.myPlayer);
-                        for (int i = -1; i <= 1; i++)
+                        for (int i = -max; i <= max; i++)
                             Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), ModContent.ProjectileType<DestroyerLaser>(), npc.damage / 4, 0f, Main.myPlayer);
 
                         spawnPos = Main.player[npc.target].Center;
                         spawnPos.X += offset.X;
                         spawnPos.Y -= offset.Y;
                         Projectile.NewProjectile(spawnPos, new Vector2(0, -4), ModContent.ProjectileType<BrainofConfusion>(), 0, 0, Main.myPlayer);
-                        for (int i = -1; i <= 1; i++)
+                        for (int i = -max; i <= max; i++)
                             Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), ModContent.ProjectileType<DestroyerLaser>(), npc.damage / 4, 0f, Main.myPlayer);
 
                         spawnPos = Main.player[npc.target].Center;
                         spawnPos.X -= offset.X;
                         spawnPos.Y += offset.Y;
                         Projectile.NewProjectile(spawnPos, new Vector2(0, -4), ModContent.ProjectileType<BrainofConfusion>(), 0, 0, Main.myPlayer);
-                        for (int i = -1; i <= 1; i++)
+                        for (int i = -max; i <= max; i++)
                             Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), ModContent.ProjectileType<DestroyerLaser>(), npc.damage / 4, 0f, Main.myPlayer);
 
                         spawnPos = Main.player[npc.target].Center;
                         spawnPos.X -= offset.X;
                         spawnPos.Y -= offset.Y;
                         Projectile.NewProjectile(spawnPos, new Vector2(0, -4), ModContent.ProjectileType<BrainofConfusion>(), 0, 0, Main.myPlayer);
-                        for (int i = -1; i <= 1; i++)
+                        for (int i = -max; i <= max; i++)
                             Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), ModContent.ProjectileType<DestroyerLaser>(), npc.damage / 4, 0f, Main.myPlayer);
                     }
                 }
@@ -500,12 +507,12 @@ namespace FargowiltasSouls.NPCs
 
                 if (--Counter[1] < 0)
                 {
-                    Counter[1] = Main.rand.Next(7, 15);
+                    Counter[1] = Main.rand.Next(5, 15);
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Vector2 spawn = Main.player[npc.target].Center + Main.rand.NextVector2CircularEdge(1200f, 1200f);
                         Vector2 speed = Main.player[npc.target].Center + Main.rand.NextVector2Circular(-600f, 600f) - spawn;
-                        speed = Vector2.Normalize(speed) * Main.rand.NextFloat(24f, 48f);
+                        speed = Vector2.Normalize(speed) * Main.rand.NextFloat(12f, 48f);
                         Projectile.NewProjectile(spawn, speed, ModContent.ProjectileType<BrainIllusionProj>(), 0, 0f, Main.myPlayer, npc.whoAmI);
                     }
                 }
@@ -523,22 +530,24 @@ namespace FargowiltasSouls.NPCs
 
         public void CreeperAI(NPC npc)
         {
-            if (++Counter[2] >= 600)
+            if (++Counter[2] >= 900)
             {
                 int count = NPC.CountNPCS(NPCID.Creeper) - 1;
-                Counter[2] = (20 - count) * 29;
+                Counter[2] = (20 - count) * 44;
                 if (Counter[2] < 0)
                     Counter[2] = 0;
 
                 if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Vector2 speed = Main.player[npc.target].Center - npc.Center;
+                    Projectile.NewProjectile(npc.Center, 10f * npc.DirectionFrom(Main.player[npc.target].Center).RotatedByRandom(Math.PI),
+                        ModContent.ProjectileType<GoldenShowerHoming>(), npc.damage / 4, 0f, Main.myPlayer, npc.target, -60f);
+                    /*Vector2 speed = Main.player[npc.target].Center - npc.Center;
                     speed.Y -= Math.Abs(speed.X) * 0.1f; //account for gravity
                     speed.X += Main.rand.Next(-10, 11);
                     speed.Y += Main.rand.Next(-30, 21);
                     speed.Normalize();
                     speed *= 10f;
-                    Projectile.NewProjectile(npc.Center, speed, ProjectileID.GoldenShowerHostile, npc.damage / 4, 0f, Main.myPlayer);
+                    Projectile.NewProjectile(npc.Center, speed, ProjectileID.GoldenShowerHostile, npc.damage / 4, 0f, Main.myPlayer);*/
                 }
 
                 npc.netUpdate = true;

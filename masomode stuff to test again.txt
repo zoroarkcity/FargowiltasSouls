@@ -264,3 +264,6 @@ changed reverse mana flow formula, is now (item.mana / (1f - player.endurance) +
 moon lord head no longer takes double damage (preparation for 1.4)
 eoc and attacks inflict shorter obstructed and longer berserked
 skeletron no longer revives hands
+boc creepers shoot new ichor proj
+boc p2 shoots denser laser spreads
+reduced velocity of cultist's pillar toss
