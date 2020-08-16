@@ -272,3 +272,4 @@ cosmos has mp scaling
 blender secondaries ignore walls to fix that one wall glitch
 crystal leaves despawn immediately to unfuck plantera swarm
 buffed qb p2 bee spray
+slime king slasher stats nerfed back down, its spikes can only hit one enemy each (but still have pierce iframes)
