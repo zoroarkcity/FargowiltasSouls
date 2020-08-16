@@ -39,11 +39,11 @@ namespace FargowiltasSouls.Projectiles.Souls
                 modPlayer.OriEnchant = false;
             }
 
-            if (!(modPlayer.OriEnchant) || !SoulConfig.Instance.GetValue(SoulConfig.Instance.OrichalcumFire))
-            {
-                projectile.Kill();
-                return;
-            }
+            //if (!(modPlayer.OriEnchant) || !SoulConfig.Instance.GetValue(SoulConfig.Instance.OrichalcumFire))
+            //{
+            //    projectile.Kill();
+            //    return;
+            //}
 
             //Factors for calculations
             double deg = projectile.ai[1];

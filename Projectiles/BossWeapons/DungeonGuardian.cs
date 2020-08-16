@@ -14,8 +14,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
 		public override void SetDefaults()
 		{
-			projectile.width = 40;
-			projectile.height = 50;
+			projectile.width = 80;
+			projectile.height = 102;
 			projectile.aiStyle = 0;
 			aiType = ProjectileID.Bullet;
 			projectile.friendly = true;

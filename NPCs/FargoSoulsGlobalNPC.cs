@@ -587,6 +587,12 @@ namespace FargowiltasSouls.NPCs
             Player player = Main.player[npc.lastInteraction];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
+            if (modPlayer.NecroEnchant && modPlayer.NecroCD == 0)
+            {
+                Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, modPlayer.HighestDamageTypeScaling(npc.lifeMax / 5));
+                modPlayer.NecroCD = 60;
+            }
+
             if (modPlayer.PlatinumEnchant && !npc.boss && firstLoot)
             {
                 bool midas = npc.HasBuff(BuffID.Midas);
