@@ -530,12 +530,17 @@ namespace FargowiltasSouls.NPCs
 
         public void CreeperAI(NPC npc)
         {
-            if (++Counter[2] >= 900)
+            if (!masoBool[0])
             {
-                int count = NPC.CountNPCS(NPCID.Creeper) - 1;
-                Counter[2] = (20 - count) * 44;
-                if (Counter[2] < 0)
-                    Counter[2] = 0;
+                masoBool[0] = true;
+                Counter[2] = Main.rand.Next(60 * NPC.CountNPCS(NPCID.Creeper)) + Main.rand.Next(-60, 61);
+            }
+
+            if (--Counter[2] < 0)
+            {
+                Counter[2] = 60 * NPC.CountNPCS(NPCID.Creeper) - 30;
+                if (Counter[2] > 120)
+                    Counter[2] += Main.rand.Next(-60, 61);
 
                 if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                 {

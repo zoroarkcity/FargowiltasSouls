@@ -361,7 +361,6 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.Creeper:
                     npc.lifeMax = (int)(npc.lifeMax * 1.25);
-                    Counter[2] = Main.rand.Next(900);
                     break;
 
                 case NPCID.WallofFlesh:
