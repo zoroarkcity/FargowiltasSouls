@@ -339,7 +339,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.ai[1] = 60;
                         if (++npc.ai[2] > 5)
                         {
-                            npc.ai[0] = 15;
+                            npc.ai[0]++;
                             npc.ai[1] = 0;
                             npc.ai[2] = 0;
                             npc.velocity = npc.DirectionTo(player.Center) * 2f;
