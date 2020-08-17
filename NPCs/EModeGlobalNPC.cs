@@ -466,7 +466,6 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.MoonLordCore:
                     isMasoML = true;
-                    masoStateML = 0;
                     break;
 
                 case NPCID.MoonLordHead:

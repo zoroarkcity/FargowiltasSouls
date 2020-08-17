@@ -275,3 +275,5 @@ buffed qb p2 bee spray
 slime king slasher stats nerfed back down, its spikes can only hit one enemy each (but still have pierce iframes)
 resprited mutant deathrays and styx gazer blade
 did something that might have fixed the rare abom glitch despawn
+ordinary carrot and upgrades give sniper scope effect (has toggle)
+fixed ml null curse phases resetting when you magic mirror(?????????????????)

@@ -22,10 +22,10 @@ Increases max life by 100%, damage by 50%, and damage reduction by 10%
 Increases life regen drastically, increases max number of minions and sentries by 10
 Grants gravity control, fastfall, and immunity to knockback, almost all Eternity Mode debuffs, and more
 Grants autofire to all weapons, modifier protection, and you automatically use mana potions when needed
-Makes armed and magic skeletons less hostile outside the Dungeon
+Makes armed and magic skeletons less hostile outside the Dungeon, zoom with right click
 Your attacks create additional attacks, hearts, and inflict a cocktail of Eternity Mode debuffs
 Press the Fireball Dash key to perform a short invincible dash
-Certain enemies will drop potions when defeated and 50% discount on reforges
+Certain enemies will drop potions when defeated, 50% discount on reforges, you respawn with more life
 You respawn twice as fast, have Honey buff, improved night vision, and erupt into various attacks when injured
 Prevents boss spawns, increases spawn rate, increases loot, and attacks may squeak and deal 1 damage to you
 Summons the aid of all Eternity Mode bosses to your side");
@@ -76,6 +76,9 @@ Summons the aid of all Eternity Mode bosses to your side");
             fargoPlayer.SecurityWallet = true;
             fargoPlayer.TribalCharm = true;
             fargoPlayer.NymphsPerfumeRespawn = true;
+            player.nightVision = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot))
+                player.scope = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -208,6 +211,8 @@ Summons the aid of all Eternity Mode bosses to your side");
 
             //carrot
             player.nightVision = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot))
+                player.scope = true;
 
             //squeaky toy
             fargoPlayer.SqueakyAcc = true;

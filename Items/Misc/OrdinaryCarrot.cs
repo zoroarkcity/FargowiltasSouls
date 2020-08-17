@@ -13,6 +13,7 @@ namespace FargowiltasSouls.Items.Misc
             Tooltip.SetDefault(@"Increases night vision
 Minor improvements to all stats
 1 minute duration
+Right click to increase view range while in inventory
 'Plucked from the face of a defeated foe'");
             DisplayName.AddTranslation(GameCulture.Chinese, "普通的胡萝卜");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -35,6 +36,12 @@ Minor improvements to all stats
             item.consumable = true;
             item.UseSound = SoundID.Item2;
             item.value = Item.sellPrice(0, 0, 10, 0);
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot))
+                player.scope = true;
         }
 
         public override bool UseItem(Player player)

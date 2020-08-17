@@ -3896,6 +3896,7 @@ namespace FargowiltasSouls.NPCs
             if (!masoBool[3])
             {
                 masoBool[3] = true;
+                masoStateML = 0;
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<LunarRitual>(),

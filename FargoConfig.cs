@@ -370,6 +370,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool TimsConcoction;
 
+        [Label("$Mods.FargowiltasSouls.MasoCarrotConfig")]
+        [DefaultValue(true)]
+        public bool Carrot;
+
         [Label("$Mods.FargowiltasSouls.MasoRainbowConfig")]
         [DefaultValue(true)]
         public bool RainbowSlime;

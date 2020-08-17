@@ -18,10 +18,10 @@ Your attacks can inflict Clipped Wings, spawn Frostfireballs, and produce hearts
 You have autofire, improved night vision, and faster respawn when no boss is alive
 Automatically use mana potions when needed and gives modifier protection
 Attacks have a chance to squeak and deal 1 damage to you
-You erupt into Shadowflame tentacles when injured
+You erupt into Shadowflame tentacles when injured and respawn with more life
 Certain enemies will drop potions when defeated and 50% discount on reforges
 Summons a friendly rainbow slime
-Use to teleport to your last death point
+Use to teleport to your last death point and right click to zoom
 'The amalgamate born of a thousand common enemies'");
             DisplayName.AddTranslation(GameCulture.Chinese, "生态集群");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'由上千普通敌人融合而成'
@@ -63,6 +63,9 @@ Use to teleport to your last death point
             fargoPlayer.SecurityWallet = true;
             fargoPlayer.TribalCharm = true;
             fargoPlayer.NymphsPerfumeRespawn = true;
+            player.nightVision = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot))
+                player.scope = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -118,6 +121,8 @@ Use to teleport to your last death point
 
             //carrot
             player.nightVision = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot))
+                player.scope = true;
 
             //nymph's perfume
             player.buffImmune[BuffID.Lovestruck] = true;

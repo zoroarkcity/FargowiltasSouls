@@ -194,6 +194,7 @@ namespace FargowiltasSouls
             //bionomic 
             AddToggle("BionomicHeader", "Bionomic Cluster", "BionomicCluster", "ffffff");
             AddToggle("MasoConcoctionConfig", "Tim's Concoction", "TimsConcoction", "ffffff");
+            AddToggle("MasoCarrotConfig", "Carrot View", "OrdinaryCarrot", "ffffff");
             AddToggle("MasoRainbowConfig", "Rainbow Slime Minion", "ConcentratedRainbowMatter", "ffffff");
             AddToggle("MasoFrigidConfig", "Frostfireballs", "FrigidGemstone", "ffffff");
             AddToggle("MasoNymphConfig", "Attacks Spawn Hearts", "NymphsPerfume", "ffffff");

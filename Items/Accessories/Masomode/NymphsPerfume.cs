@@ -11,6 +11,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         {
             DisplayName.SetDefault("Nymph's Perfume");
             Tooltip.SetDefault(@"Grants immunity to Lovestruck, Stinky, and Hexed
+You respawn with more life
 Your attacks occasionally produce hearts
 'The scent is somewhat overpowering'");
             DisplayName.AddTranslation(GameCulture.Chinese, "染血女神的香水");
