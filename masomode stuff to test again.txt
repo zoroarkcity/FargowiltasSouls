@@ -277,3 +277,4 @@ resprited mutant deathrays and styx gazer blade
 did something that might have fixed the rare abom glitch despawn
 ordinary carrot and upgrades give sniper scope effect (has toggle)
 fixed ml null curse phases resetting when you magic mirror(?????????????????)
+changed implementation of eternia crystal resistance so it actually only takes 1 damage during betsy fight
