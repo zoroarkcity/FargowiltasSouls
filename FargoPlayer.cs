@@ -2817,6 +2817,12 @@ namespace FargowiltasSouls
             }
         }
 
+        public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
+        {
+            if (npc.GetGlobalNPC<FargoSoulsGlobalNPC>().CurseoftheMoon)
+                damage = (int)(damage * 0.85);
+        }
+
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
             if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, ModContent.NPCType<NPCs.DeviBoss.DeviBoss>()))
