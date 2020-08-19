@@ -282,3 +282,8 @@ when applied to enemies, curse of the moon reduces their contact damage
 life champ immune to daybroken and celled
 fixed weird pause if you died during deviantt's axe slam
 made DAMN sure shadow orb has no contact damage
+wof has a telegraph denoting the safe range of cursed flame wall
+wof has a dust ring when switching vulernabilities
+wof's deathray telegraph lasts longer
+wof eyes have longer delay after p2 attacks before they can fire again
+fixed wof's p2 attacks not covering the full range they should during desperation attack

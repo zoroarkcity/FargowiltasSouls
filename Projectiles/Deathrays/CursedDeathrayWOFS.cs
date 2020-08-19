@@ -8,13 +8,13 @@ using Terraria.Enums;
 
 namespace FargowiltasSouls.Projectiles.Deathrays
 {
-    public class PhantasmalDeathrayWOFS : BaseDeathray
+    public class CursedDeathrayWOFS : BaseDeathray
     {
-        public PhantasmalDeathrayWOFS() : base(60, "PhantasmalDeathrayWOF") { }
+        public CursedDeathrayWOFS() : base(240, "CursedDeathray") { }
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Divine Deathray");
+            DisplayName.SetDefault("Cursed Deathray");
         }
 
         public override void AI()
@@ -24,18 +24,12 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            if (Main.npc[(int)projectile.ai[1]].active && Main.npc[(int)projectile.ai[1]].type == NPCID.WallofFleshEye)
+            if (Main.npc[(int)projectile.ai[1]].active && Main.npc[(int)projectile.ai[1]].type == NPCID.WallofFlesh
+                && Main.npc[(int)projectile.ai[1]].GetGlobalNPC<NPCs.EModeGlobalNPC>().Counter[0] < 260) //cancel if the cursed flame attack is cancelled early
             {
-                //Vector2 value21 = new Vector2(27f, 59f);
-                //Vector2 fireFrom = new Vector2(Main.npc[(int)projectile.ai[1]].Center.X, Main.npc[(int)projectile.ai[1]].Center.Y);
-                //Vector2 value22 = Utils.Vector2FromElipse(Main.npc[(int)projectile.ai[1]].localAI[2].ToRotationVector2(), value21 * Main.npc[(int)projectile.ai[1]].localAI[3]);
-                //projectile.position = fireFrom + value22 - new Vector2(projectile.width, projectile.height) / 2f;
-                Vector2 offset;
-                if (projectile.ai[0] == 0f)
-                    offset = new Vector2(Main.npc[(int)projectile.ai[1]].width - 36, 6).RotatedBy(Main.npc[(int)projectile.ai[1]].rotation + Math.PI);
-                else
-                    offset = new Vector2(Main.npc[(int)projectile.ai[1]].width - 36, -6).RotatedBy(Main.npc[(int)projectile.ai[1]].rotation);
-                projectile.Center = Main.npc[(int)projectile.ai[1]].Center + offset;
+                projectile.Center = Main.npc[(int)projectile.ai[1]].Center;
+                projectile.position.X += 800 * projectile.ai[0];
+                projectile.position.Y -= 1500;
             }
             else
             {
@@ -57,19 +51,14 @@ namespace FargowiltasSouls.Projectiles.Deathrays
                 projectile.Kill();
                 return;
             }
-            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 0.6f * num801;
+            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 10f * num801;
             if (projectile.scale > num801)
             {
                 projectile.scale = num801;
             }
-            //float num804 = projectile.velocity.ToRotation();
+            float num804 = projectile.velocity.ToRotation();
             //num804 += projectile.ai[0];
-            //projectile.rotation = num804 - 1.57079637f;
-            float num804 = Main.npc[(int)projectile.ai[1]].rotation + 1.57079637f;
-            if (projectile.ai[0] != 0f)
-                num804 -= (float)Math.PI;
-            projectile.rotation = num804;
-            num804 += 1.57079637f;
+            projectile.rotation = num804 - 1.57079637f;
             projectile.velocity = num804.ToRotationVector2();
             float num805 = 3f;
             float num806 = (float)projectile.width;
@@ -113,12 +102,6 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             }
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
             //Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
-        }
-
-        public override void OnHitPlayer(Player target, int damage, bool crit)
-        {
-            target.AddBuff(mod.BuffType("Flipped"), 300);
-            target.AddBuff(BuffID.Confused, 300);
         }
 
         public override bool CanDamage()

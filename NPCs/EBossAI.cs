@@ -952,8 +952,16 @@ namespace FargowiltasSouls.NPCs
                 }
                 else if (Counter[0] < 240) //special attacks
                 {
+                    if (masoBool[3])
+                        Counter[1]++;
+
                     if (masoBool[1]) //cursed inferno attack
                     {
+                        if (Counter[0] == 10 && Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitY, ModContent.ProjectileType<CursedDeathrayWOFS>(), 0, 0f, Main.myPlayer, npc.direction, npc.whoAmI);
+                        }
+
                         if (++Counter[1] > 5)
                         {
                             Counter[1] = 0;
@@ -1110,7 +1118,7 @@ namespace FargowiltasSouls.NPCs
                 if (!masoBool[3])
                 {
                     masoBool[3] = true;
-                    Main.PlaySound(SoundID.Roar, (int)npc.position.X, (int)npc.position.Y, 0);
+                    Main.PlaySound(SoundID.ForceRoar, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f); //eoc roar
                 }
             }
 
@@ -1128,10 +1136,6 @@ namespace FargowiltasSouls.NPCs
         {
             if (masoBool[3])
                 return true;
-
-            if (npc.realLife != -1 && Main.npc[npc.realLife].GetGlobalNPC<EModeGlobalNPC>().masoBool[0]
-                && Main.npc[npc.realLife].GetGlobalNPC<EModeGlobalNPC>().Counter[0] < 240)
-                npc.localAI[1] = 0; //dont fire during mouth's special attacks
 
             float maxTime = 540f;
 
@@ -1151,13 +1155,27 @@ namespace FargowiltasSouls.NPCs
                 else
                     npc.ai[2] *= -1f;
 
-                if (npc.ai[2] > 0 && Main.netMode != NetmodeID.MultiplayerClient) //FIRE LASER
+                if (npc.ai[2] > 0) //FIRE LASER
                 {
-                    Vector2 speed = Vector2.UnitX.RotatedBy(npc.ai[3]);
-                    float ai0 = (npc.realLife != -1 && Main.npc[npc.realLife].velocity.X > 0) ? 1f : 0f;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                        Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("PhantasmalDeathrayWOF"), npc.damage / 4, 0f, Main.myPlayer, ai0, npc.whoAmI);
-
+                    {
+                        Vector2 speed = Vector2.UnitX.RotatedBy(npc.ai[3]);
+                        float ai0 = (npc.realLife != -1 && Main.npc[npc.realLife].velocity.X > 0) ? 1f : 0f;
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("PhantasmalDeathrayWOF"), npc.damage / 4, 0f, Main.myPlayer, ai0, npc.whoAmI);
+                    }
+                }
+                else //ring dust to denote i am vulnerable now
+                {
+                    for (int i = 0; i < 42; i++)
+                    {
+                        Vector2 vector6 = Vector2.UnitY * 18f;
+                        vector6 = vector6.RotatedBy((i - (36 / 2 - 1)) * 6.28318548f / 42) + npc.Center;
+                        Vector2 vector7 = vector6 - npc.Center;
+                        int d = Dust.NewDust(vector6 + vector7, 0, 0, 88, 0f, 0f, 0, default(Color), 4f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity = vector7;
+                    }
                 }
                 npc.netUpdate = true;
             }
@@ -1188,7 +1206,7 @@ namespace FargowiltasSouls.NPCs
                 {
                     if (Main.rand.Next(4) < 3) //dust telegraphs switch
                     {
-                        int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 90, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 114, default(Color), 3.5f);
+                        int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 88, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 114, default(Color), 3.5f);
                         Main.dust[dust].noGravity = true;
                         Main.dust[dust].velocity *= 1.8f;
                         Main.dust[dust].velocity.Y -= 0.5f;
@@ -1229,6 +1247,12 @@ namespace FargowiltasSouls.NPCs
                         return false;
                     }
                 }
+            }
+
+            if (npc.realLife != -1 && Main.npc[npc.realLife].GetGlobalNPC<EModeGlobalNPC>().masoBool[0]
+                && Main.npc[npc.realLife].GetGlobalNPC<EModeGlobalNPC>().Counter[0] < 240)
+            {
+                npc.localAI[1] = -90f; //dont fire during mouth's special attacks (this is at bottom to override others)
             }
 
             return true;
