@@ -280,3 +280,4 @@ fixed ml null curse phases resetting when you magic mirror(?????????????????)
 changed implementation of eternia crystal resistance so it actually only takes 1 damage during betsy fight
 when applied to enemies, curse of the moon reduces their contact damage
 life champ immune to daybroken and celled
+fixed weird pause if you died during deviantt's axe slam

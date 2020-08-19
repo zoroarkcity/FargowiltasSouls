@@ -1273,9 +1273,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     break;
 
                 case 15: //sparkling love
-                    if (npc.ai[1] > 150 && (!AliveCheck(player) || Phase2Check()))
-                        break;
-
                     if (npc.localAI[0] == 0)
                     {
                         npc.localAI[0] = 1;
