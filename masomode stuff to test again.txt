@@ -289,3 +289,4 @@ wof eyes have longer delay after p2 attacks before they can fire again
 fixed wof's p2 attacks not covering the full range they should during desperation attack
 
 corrected wof cf wall warning i think
+fixed wyverns balls being wrong
