@@ -290,3 +290,7 @@ fixed wof's p2 attacks not covering the full range they should during desperatio
 
 corrected wof cf wall warning i think
 fixed wyverns balls being wrong
+adjusted speed and homing of sparkling adoration's hearts
+adjusted deathrays produced by sparkling love right click
+penetrator right click uses mutant deathray resprite
+changed deviantt mega ray dust

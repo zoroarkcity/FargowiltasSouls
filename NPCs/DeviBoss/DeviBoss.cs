@@ -1229,12 +1229,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                     if (npc.ai[3] >= 7) //firing laser dust
                     {
-                        for (int i = 0; i < 5; i++)
+                        /*for (int i = 0; i < 5; i++)
                         {
                             int d = Dust.NewDust(npc.position, npc.width, npc.height, 86, -npc.velocity.X, -npc.velocity.Y, 0, default(Color), 2.5f);
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity *= 12f;
-                        }
+                        }*/
                     }
                     else //charge up dust
                     {

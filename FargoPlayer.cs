@@ -2430,13 +2430,13 @@ namespace FargowiltasSouls
                     for (int i = -3; i <= 3; i++)
                     {
                         Vector2 spawnPos = player.Center + offset.RotatedBy(Math.PI / 7 * i);
-                        Vector2 speed = 20 * Vector2.Normalize(Main.MouseWorld - spawnPos);
+                        Vector2 speed = 17 * Vector2.Normalize(Main.MouseWorld - spawnPos);
 
                         int heartDamage = MutantEye ? 170 : 17;
                         heartDamage = (int)(heartDamage * player.minionDamage);
 
-                        float ai1 = (Main.MouseWorld - spawnPos).Length() / 20 + 10;
-                        Projectile.NewProjectile(spawnPos, speed, mod.ProjectileType("FriendHeart"), heartDamage, 3f, player.whoAmI, -1, ai1);
+                        float ai1 = (Main.MouseWorld - spawnPos).Length() / 17;
+                        Projectile.NewProjectile(spawnPos, speed, ModContent.ProjectileType<FriendHeart>(), heartDamage, 3f, player.whoAmI, -1, ai1);
 
                         for (int j = 0; j < 20; j++)
                         {
