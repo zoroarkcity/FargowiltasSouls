@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Projectiles.Minions
 {
     public class EridanusDeathray : Deathrays.BaseDeathray
     {
-        public EridanusDeathray() : base(20, "PhantasmalDeathrayML") { }
+        public EridanusDeathray() : base(20, "ShadowDeathray") { }
 
         public override void SetStaticDefaults()
         {
@@ -124,7 +124,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 for (int i = 0; i < 280; i++)
                 {
                     int d = Dust.NewDust(projectile.position + projectile.velocity * Main.rand.NextFloat(6000),
-                        projectile.width, projectile.height, 229, 0f, 0f, 0, default(Color), 1.5f);
+                        projectile.width, projectile.height, 254, 0f, 0f, 0, default(Color), 1.5f);
                     Main.dust[d].noGravity = true;
                     Main.dust[d].velocity *= 6f;
                 }

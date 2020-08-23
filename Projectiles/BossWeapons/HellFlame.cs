@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.friendly = true;
             projectile.alpha = 255;
             projectile.penetrate = 4;
-            projectile.extraUpdates = 1;
+            projectile.extraUpdates = 2;
             projectile.ranged = true;
             projectile.aiStyle = -1;
             projectile.ignoreWater = true;
