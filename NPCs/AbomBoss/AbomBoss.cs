@@ -34,8 +34,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.width = 120;
             npc.height = 120;
             npc.damage = 260;
-            npc.defense = 130;
-            npc.lifeMax = 850000;
+            npc.defense = 80;
+            npc.lifeMax = 800000;
             npc.value = Item.buyPrice(1);
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
@@ -53,6 +53,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.buffImmune[mod.BuffType("ClippedWings")] = true;
             npc.buffImmune[mod.BuffType("MutantNibble")] = true;
             npc.buffImmune[mod.BuffType("OceanicMaul")] = true;
+            npc.buffImmune[mod.BuffType("LightningRod")] = true;
             npc.timeLeft = NPC.activeTime * 30;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
             music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma");
@@ -448,7 +449,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
                     npc.velocity = npc.DirectionTo(player.Center) * 3f;
 
-                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 60 : 75))
+                    if (++npc.ai[1] > (npc.localAI[3] > 1 ? 75 : 90))
                     {
                         npc.ai[1] = 0;
                         if (++npc.ai[2] > 3)

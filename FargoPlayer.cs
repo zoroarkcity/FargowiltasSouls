@@ -1385,7 +1385,7 @@ namespace FargowiltasSouls
                 if (player.nebulaCD > 0)
                     player.nebulaCD--;
 
-                if (!TerrariaSoul) //cap boosters
+                if (!TerrariaSoul && !CosmoForce) //cap boosters
                 {
                     void DecrementBuff(int buffType)
                     {

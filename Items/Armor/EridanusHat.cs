@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Items.Armor
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Eridanus Hood");
+            DisplayName.SetDefault("Eridanus Hat");
             Tooltip.SetDefault(@"5% increased damage
 5% increased critical strike chance
 Increases your max number of minions by 3
@@ -28,7 +28,7 @@ Increases your max number of sentries by 2");
 
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<FargoPlayer>().AllDamageUp(0.05f);
+            player.GetModPlayer<FargoPlayer>().AllDamageUp(0.5f);
             player.GetModPlayer<FargoPlayer>().AllCritUp(5);
 
             player.maxMinions += 3;
@@ -48,8 +48,9 @@ Increases your max number of sentries by 2");
         public override void UpdateArmorSet(Player player)
         {
             player.setBonus = @"The blessing of Eridanus empowers your attacks
-40% increased damage for the empowered class
 The empowered class changes every 20 seconds
+Eridanus fights alongside you when you use the empowered class
+40% increased damage for the empowered class
 20% increased weapon use speed";
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
@@ -105,10 +106,10 @@ The empowered class changes every 20 seconds
 
             if (player.whoAmI == Main.myPlayer)
             {
-                /*if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Minions.EridanusMinion>()] < 1)
+                if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Minions.EridanusMinion>()] < 1)
                 {
-                
-                }*/
+                    Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Minions.EridanusMinion>(), 220, 12f, Main.myPlayer, -1);
+                }
                 if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Minions.EridanusRitual>()] < 1)
                 {
                     Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Minions.EridanusRitual>(), 0, 0f, Main.myPlayer);

@@ -298,3 +298,10 @@ buffed destroyer coil attack damage
 destroyer coil fires more lasers at once as health decreases
 adjusted destroyer max dark star rate and velocity from segments as health decreases
 visual update for wof ray firing
+
+cosmos force has unnerfed nebula boosters
+nerfed number of eaters spawned by rockeater launcher
+nerfed slime slinging slasher, mech leash by increasing iframes on hit
+added eridanus minion to eridanus armour (unsprited)
+adjusted abom stats
+resprited queen bee
