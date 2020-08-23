@@ -2032,8 +2032,8 @@ namespace FargowiltasSouls.NPCs
                                 modifier = 8;
                             distance *= modifier;
                             int type = ModContent.ProjectileType<DarkStar>();
-                            Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
-                            Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
                 }
