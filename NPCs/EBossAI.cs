@@ -1184,7 +1184,7 @@ namespace FargowiltasSouls.NPCs
             {
                 npc.alpha = 175;
                 npc.dontTakeDamage = true;
-                if (npc.ai[1] <= 90)
+                if (npc.ai[1] <= 90) //still firing laser rn
                 {
                     masoBool[3] = true;
                     npc.AI();
@@ -1202,6 +1202,16 @@ namespace FargowiltasSouls.NPCs
             {
                 npc.alpha = 0;
                 npc.dontTakeDamage = false;
+
+                if (npc.ai[1] == maxTime - 3 * 5 && Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        float ai0 = (npc.realLife != -1 && Main.npc[npc.realLife].velocity.X > 0) ? 1f : 0f;
+                        Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("WOFBlast"), 0, 0f, Main.myPlayer, ai0, npc.whoAmI);
+                    }
+                }
+
                 if (npc.ai[1] > maxTime - 180f)
                 {
                     if (Main.rand.Next(4) < 3) //dust telegraphs switch
@@ -1714,6 +1724,8 @@ namespace FargowiltasSouls.NPCs
                         npc.velocity += npc.velocity.RotatedBy(Math.PI / 2) * npc.velocity.Length() / Counter[1];
                         npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) + 1.57f;
 
+                        int projDamage = npc.damage / 10;
+
                         if (++npc.localAI[2] > 45) //shoot star spreads into the circle
                         {
                             npc.localAI[2] = 0;
@@ -1724,9 +1736,9 @@ namespace FargowiltasSouls.NPCs
                                 distance.Normalize();
                                 distance *= 7f;
                                 int type = ModContent.ProjectileType<DarkStar>();
-                                Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 12, 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center, distance, type, npc.damage / 12, 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 12, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, projDamage, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, distance, type, projDamage, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, projDamage, 0f, Main.myPlayer);
                             }
                         }
 
@@ -1738,12 +1750,12 @@ namespace FargowiltasSouls.NPCs
                             Counter[2] = 0;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                const int max = 6;
+                                int max = (int)(12f - 10f * npc.life / npc.lifeMax);
                                 for (int i = 0; i < max; i++)
                                 {
                                     Vector2 speed = npc.DirectionTo(pivot).RotatedBy(2 * Math.PI / max * i);
                                     Vector2 spawnPos = pivot - speed * 600;
-                                    Projectile.NewProjectile(spawnPos, speed, ModContent.ProjectileType<DestroyerLaser>(), npc.damage / 12, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(spawnPos, speed, ModContent.ProjectileType<DestroyerLaser>(), projDamage, 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -2004,8 +2016,8 @@ namespace FargowiltasSouls.NPCs
                 {
                     npc.localAI[0] = 0f;
                     int cap = Main.npc[npc.realLife].lifeMax / Main.npc[npc.realLife].life;
-                    if (cap > 25) //prevent meme scaling at super low life
-                        cap = 25;
+                    if (cap > 20) //prevent meme scaling at super low life
+                        cap = 20;
                     Counter[0] += Main.rand.Next(2 + cap) + 1;
                     if (Counter[0] >= Main.rand.Next(1400, 26000))
                     {
@@ -2015,7 +2027,7 @@ namespace FargowiltasSouls.NPCs
                             Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 15f;
                             double angleModifier = MathHelper.ToRadians(5) * distance.Length() / 1800.0;
                             distance.Normalize();
-                            float modifier = 16f * (1f - (float)Main.npc[npc.realLife].life / Main.npc[npc.realLife].lifeMax);
+                            float modifier = 14f * (1f - (float)Main.npc[npc.realLife].life / Main.npc[npc.realLife].lifeMax);
                             if (modifier < 8)
                                 modifier = 8;
                             distance *= modifier;

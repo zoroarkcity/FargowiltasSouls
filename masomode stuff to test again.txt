@@ -294,3 +294,7 @@ adjusted speed and homing of sparkling adoration's hearts
 adjusted deathrays produced by sparkling love right click
 penetrator right click uses mutant deathray resprite
 changed deviantt mega ray dust
+buffed destroyer coil attack damage
+destroyer coil fires more lasers at once as health decreases
+adjusted destroyer max dark star rate and velocity from segments as health decreases
+visual update for wof ray firing

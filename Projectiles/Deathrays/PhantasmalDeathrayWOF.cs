@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Enums;
+using FargowiltasSouls.Projectiles.Masomode;
 
 namespace FargowiltasSouls.Projectiles.Deathrays
 {
@@ -57,7 +57,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
                 projectile.Kill();
                 return;
             }
-            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 10f * num801;
+            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 5f * num801;
             if (projectile.scale > num801)
             {
                 projectile.scale = num801;
@@ -113,8 +113,30 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             }
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
             //Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
-        }
 
+            /*if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                Vector2 offset = new Vector2(Main.rand.NextFloat(array3[0]), Main.rand.NextFloat(-22 * projectile.scale, 22 * projectile.scale));
+                Projectile.NewProjectile(projectile.Center + offset, Vector2.Zero, 
+                    ModContent.ProjectileType<WOFBlast2>(), 0, 0f, Main.myPlayer, 0f, projectile.whoAmI);
+            }*/
+
+            const int increment = 100;
+            for (int i = 0; i < array3[0]; i += increment)
+            {
+                if (Main.rand.Next(3) != 0)
+                    continue;
+                float offset = i + Main.rand.NextFloat(-increment, increment);
+                if (offset < 0)
+                    offset = 0;
+                if (offset > array3[0])
+                    offset = array3[0];
+                int d = Dust.NewDust(projectile.position + projectile.velocity * offset,
+                    projectile.width, projectile.height, 92, 0f, 0f, 0, default(Color), 1.5f);
+                Main.dust[d].noGravity = true;
+                Main.dust[d].velocity *= 3f;
+            }
+        }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
