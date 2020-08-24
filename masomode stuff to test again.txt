@@ -306,3 +306,6 @@ added eridanus minion to eridanus armour (unsprited)
 adjusted abom stats
 resprited queen bee
 reduced mutant life to normal and he has 25% DR
+
+ERIDANUS SPRITE
+eridanus minion officially complete

@@ -10,18 +10,20 @@ namespace FargowiltasSouls.Projectiles.Minions
 {
     public class EridanusMinion : ModProjectile
     {
+        public override string Texture => "FargowiltasSouls/NPCs/Champions/CosmosChampion";
+
         public const int baseDamage = 220;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eridanus");
-            Main.projFrames[projectile.type] = 1;
+            Main.projFrames[projectile.type] = 5;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 50;
-            projectile.height = 80;
+            projectile.width = 75;
+            projectile.height = 100;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.friendly = true;
@@ -58,6 +60,9 @@ namespace FargowiltasSouls.Projectiles.Minions
                 projectile.netUpdate = true;
             }
 
+            projectile.frame = 0;
+            projectile.rotation = 0;
+
             if (projectile.ai[0] >= 0 && projectile.ai[0] < 200) //has target
             {
                 NPC npc = Main.npc[(int)projectile.ai[0]];
@@ -87,6 +92,11 @@ namespace FargowiltasSouls.Projectiles.Minions
                                             (int)(baseDamage * Main.player[projectile.owner].meleeDamage / 3), projectile.knockBack / 2, Main.myPlayer, maxRange);
                                     }
                                 }
+
+                                projectile.frame = player.HeldItem.melee ? 2 : 1;
+                                projectile.rotation = projectile.DirectionTo(npc.Center).ToRotation();
+                                if (projectile.spriteDirection < 0)
+                                    projectile.rotation += (float)Math.PI;
                             }
                             break;
 
@@ -107,6 +117,14 @@ namespace FargowiltasSouls.Projectiles.Minions
                                             (int)(baseDamage * Main.player[projectile.owner].rangedDamage * 1.5f), projectile.knockBack * 2, Main.myPlayer, npc.whoAmI);
                                     }
                                 }
+                                
+                                if (player.HeldItem.ranged)
+                                {
+                                    if (projectile.localAI[0] < 15)
+                                        projectile.frame = 4;
+                                    else if (projectile.localAI[0] > 50)
+                                        projectile.frame = 3;
+                                }
                             }
                             break;
 
@@ -116,10 +134,16 @@ namespace FargowiltasSouls.Projectiles.Minions
                                 projectile.Center = Vector2.Lerp(projectile.Center, home, 0.15f);
                                 projectile.velocity *= 0.8f;
 
+                                if (player.HeldItem.magic && projectile.localAI[0] > 45)
+                                    projectile.frame = 3;
+
                                 if (++projectile.localAI[0] > 60)
                                 {
                                     if (projectile.localAI[0] > 90)
                                         projectile.localAI[0] = 0;
+
+                                    if (player.HeldItem.magic)
+                                        projectile.frame = 4;
 
                                     if (projectile.localAI[0] % 5 == 0 && player.HeldItem.magic) //rain lunar flares
                                     {
@@ -150,10 +174,14 @@ namespace FargowiltasSouls.Projectiles.Minions
                                 if (projectile.Distance(home) > 50)
                                     Movement(home, 0.8f, 32f);
 
+                                projectile.frame = 1;
+
+                                bool okToAttack = (!player.HeldItem.melee && !player.HeldItem.ranged && !player.HeldItem.magic) || !player.controlUseItem;
+
                                 if (++projectile.localAI[0] > 30)
                                 {
                                     projectile.localAI[0] = 0;
-                                    if (Main.myPlayer == projectile.owner && ((!player.HeldItem.melee && !player.HeldItem.ranged && !player.HeldItem.magic) || !player.controlUseItem))
+                                    if (Main.myPlayer == projectile.owner && okToAttack)
                                     {
                                         int modifier = Math.Sign(projectile.Center.Y - npc.Center.Y);
                                         Projectile.NewProjectile(projectile.Center + 3000 * projectile.DirectionFrom(npc.Center) * modifier,
@@ -161,6 +189,13 @@ namespace FargowiltasSouls.Projectiles.Minions
                                             projectile.damage / 3, 0f, Main.myPlayer);
                                     }
                                 }
+
+                                if (okToAttack && projectile.localAI[0] < 10)
+                                    projectile.frame = 2;
+
+                                projectile.rotation = projectile.DirectionTo(npc.Center).ToRotation();
+                                if (projectile.spriteDirection < 0)
+                                    projectile.rotation += (float)Math.PI;
                             }
                             break;
                     }
@@ -267,12 +302,16 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture2D13 = Main.projectileTexture[projectile.type];
+            Texture2D texture2D14 = mod.GetTexture("NPCs/Champions/CosmosChampion_Glow2");
             int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
             int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
             SpriteEffects effects = projectile.spriteDirection < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, effects, 0f);
+
+            Color glowColor = new Color(170 + Main.DiscoR / 3, 170 + Main.DiscoG / 3, 170 + Main.DiscoB / 3);
+            Main.spriteBatch.Draw(texture2D14, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glowColor, projectile.rotation, origin2, projectile.scale, effects, 0f);
             return false;
         }
 

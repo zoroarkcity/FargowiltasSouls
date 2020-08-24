@@ -19,15 +19,15 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eridanus, Champion of Cosmos");
-            Main.npcFrameCount[npc.type] = 4;
+            Main.npcFrameCount[npc.type] = 5;
             NPCID.Sets.TrailCacheLength[npc.type] = 6;
             NPCID.Sets.TrailingMode[npc.type] = 1;
         }
 
         public override void SetDefaults()
         {
-            npc.width = 100;
-            npc.height = 160;
+            npc.width = 75;
+            npc.height = 100;
             npc.damage = 160;
             npc.defense = 70;
             npc.lifeMax = 700000;
@@ -51,6 +51,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
             music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Champions");
             musicPriority = MusicPriority.BossHigh;
+
+            npc.scale *= 1.5f;
         }
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -1030,7 +1032,9 @@ namespace FargowiltasSouls.NPCs.Champions
                         else
                         {
                             npc.direction = npc.spriteDirection = Math.Sign(npc.ai[3]); //dont turn around if crossed up
-                            npc.rotation = 0;
+                            npc.rotation = npc.velocity.ToRotation();
+                            if (npc.direction < 0)
+                                npc.rotation += (float)Math.PI;
 
                             if (++npc.ai[2] > 1)
                             {
@@ -1185,10 +1189,12 @@ namespace FargowiltasSouls.NPCs.Champions
             switch((int)npc.ai[0])
             {
                 case -3:
-                    if (npc.ai[2] < 50 || (npc.ai[2] > 100 && npc.ai[2] < 150))
+                    if (npc.ai[2] < 30 || (npc.ai[2] > 100 && npc.ai[2] < 130))
+                        npc.frame.Y = frameHeight * 4;
+                    else if ((npc.ai[2] > 70 && npc.ai[2] < 100) || npc.ai[2] > 170)
                         npc.frame.Y = frameHeight * 3;
                     else
-                        npc.frame.Y = frameHeight;
+                        npc.frame.Y = 0;
                     break;
 
                 case -2:
@@ -1197,7 +1203,9 @@ namespace FargowiltasSouls.NPCs.Champions
 
                 case -1:
                     if (npc.ai[1] > 120)
-                        npc.frame.Y = frameHeight * 2;
+                        npc.frame.Y = frameHeight * 4;
+                    else if (npc.ai[1] > 100)
+                        npc.frame.Y = frameHeight * 3;
                     else
                         npc.frame.Y = 0;
                     break;
@@ -1228,9 +1236,9 @@ namespace FargowiltasSouls.NPCs.Champions
 
                 case 7:
                     if (npc.ai[1] < 30)
-                        npc.frame.Y = frameHeight;
+                        npc.frame.Y = frameHeight * 3;
                     else if (npc.ai[1] < 60)
-                        npc.frame.Y = frameHeight * 2;
+                        npc.frame.Y = frameHeight * 4;
                     else
                         npc.frame.Y = 0;
                     break;
@@ -1262,15 +1270,15 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.ai[1] <= 110 + 45)
                             npc.frame.Y = frameHeight;
                         else
-                            npc.frame.Y = frameHeight * 3;
+                            npc.frame.Y = frameHeight * 2;
                     }
                     break;
 
                 case 15: //ZA WARUDO
                     if (npc.ai[1] < 90)
-                        npc.frame.Y = frameHeight;
+                        npc.frame.Y = frameHeight * 3;
                     else if (npc.ai[1] < 210)
-                        npc.frame.Y = frameHeight * 2;
+                        npc.frame.Y = frameHeight * 4;
                     else
                         npc.frame.Y = 0;
                     break;
@@ -1344,10 +1352,10 @@ namespace FargowiltasSouls.NPCs.Champions
             }
         }
 
-        public override Color? GetAlpha(Color drawColor)
+        /*public override Color? GetAlpha(Color drawColor)
         {
             return Color.White * npc.Opacity;
-        }
+        }*/
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
@@ -1363,14 +1371,20 @@ namespace FargowiltasSouls.NPCs.Champions
             SpriteEffects effects = npc.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Texture2D texture2D14 = mod.GetTexture("NPCs/Champions/CosmosChampion_Glow");
+            Texture2D texture2D15 = mod.GetTexture("NPCs/Champions/CosmosChampion_Glow2");
+            Color glowColor = new Color(170 + Main.DiscoR / 3, 170 + Main.DiscoG / 3, 170 + Main.DiscoB / 3);
 
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
             {
-                Color color27 = color26 * 0.5f;
+                Color color27 = npc.localAI[2] != 0 ? Color.White * 0.5f * npc.Opacity : color26 * 0.5f;
                 color27 *= (float)(NPCID.Sets.TrailCacheLength[npc.type] - i) / NPCID.Sets.TrailCacheLength[npc.type];
                 Vector2 value4 = npc.oldPos[i];
                 float num165 = npc.rotation; //npc.oldRot[i];
                 Main.spriteBatch.Draw(npc.localAI[2] != 0 ? texture2D14 : texture2D13, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
+
+                Color color28 = glowColor * 0.5f;
+                color28 *= (float)(NPCID.Sets.TrailCacheLength[npc.type] - i) / NPCID.Sets.TrailCacheLength[npc.type];
+                Main.spriteBatch.Draw(texture2D15, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color28, num165, origin2, npc.scale, effects, 0f);
             }
 
             /*if (npc.localAI[2] != 0) //draw glow around it
@@ -1381,6 +1395,7 @@ namespace FargowiltasSouls.NPCs.Champions
             }*/
 
             Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
+            Main.spriteBatch.Draw(texture2D15, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glowColor, npc.rotation, origin2, npc.scale, effects, 0f);
             return false;
         }
     }
