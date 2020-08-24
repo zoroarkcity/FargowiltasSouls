@@ -1534,7 +1534,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.ArmoredSkeleton:
                             Counter[0]++;
                             if (Counter[0] >= 300)
-                                Shoot(npc, 0, 500, 10, ProjectileID.SwordBeam, npc.damage, 1, false, true, DustID.AmberBolt);
+                                Shoot(npc, 0, 500, 10, ProjectileID.SwordBeam, npc.damage / 4, 1, false, true, DustID.AmberBolt);
                             break;
 
                         case NPCID.Vulture:

@@ -311,3 +311,4 @@ ERIDANUS SPRITE
 eridanus minion officially 80% complete
 resprite will typhoons(?)
 shadow champion animation
+armored skeleton sword beams inflict their contact damage (was 4x)
