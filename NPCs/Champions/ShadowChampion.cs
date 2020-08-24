@@ -19,6 +19,7 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Shadow");
+            Main.npcFrameCount[npc.type] = 5;
             NPCID.Sets.TrailCacheLength[npc.type] = 6;
             NPCID.Sets.TrailingMode[npc.type] = 1;
         }
@@ -540,6 +541,17 @@ namespace FargowiltasSouls.NPCs.Champions
                     int d = Dust.NewDust(npc.position, npc.width, npc.height, 54, 0f, 0f, 0, default(Color), 5f);
                     Main.dust[d].noGravity = true;
                 }
+            }
+        }
+
+        public override void FindFrame(int frameHeight)
+        {
+            if (++npc.frameCounter > 3)
+            {
+                npc.frameCounter = 0;
+                npc.frame.Y += frameHeight;
+                if (npc.frame.Y >= frameHeight * 5)
+                    npc.frame.Y = 0;
             }
         }
 

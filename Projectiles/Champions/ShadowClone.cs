@@ -15,6 +15,7 @@ namespace FargowiltasSouls.Projectiles.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Shadow");
+            Main.projFrames[projectile.type] = 5;
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
@@ -76,6 +77,13 @@ namespace FargowiltasSouls.Projectiles.Champions
             else if (projectile.ai[1] == -30)
             {
                 projectile.velocity = 45f * Vector2.UnitX.RotatedBy(projectile.localAI[0]);
+            }
+
+            if (++projectile.frameCounter > 3)
+            {
+                projectile.frameCounter = 0;
+                if (++projectile.frame >= 5)
+                    projectile.frame = 0;
             }
         }
 

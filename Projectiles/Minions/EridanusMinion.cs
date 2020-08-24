@@ -91,7 +91,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                                     if (Main.myPlayer == projectile.owner && player.HeldItem.melee)
                                     {
                                         const float maxRange = 700;
-                                        Projectile.NewProjectile(projectile.Center, 16f * projectile.DirectionTo(npc.Center), ModContent.ProjectileType<EridanusFist>(),
+                                        Projectile.NewProjectile(projectile.Center, 16f * projectile.DirectionTo(npc.Center).RotatedByRandom(MathHelper.ToRadians(5)), ModContent.ProjectileType<EridanusFist>(),
                                             (int)(baseDamage * Main.player[projectile.owner].meleeDamage / 3), projectile.knockBack / 2, Main.myPlayer, maxRange);
                                     }
                                 }

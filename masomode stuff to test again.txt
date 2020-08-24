@@ -310,3 +310,4 @@ reduced mutant life to normal and he has 25% DR
 ERIDANUS SPRITE
 eridanus minion officially 80% complete
 resprite will typhoons(?)
+shadow champion animation
