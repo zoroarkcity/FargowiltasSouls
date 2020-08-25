@@ -23,7 +23,7 @@ Press the Fireball Dash key to perform a short invincible dash
 Grants effects of Wet debuff while riding Cute Fishron and gravity control
 Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu
 'Warm, beating, and no body needed'");
-            DisplayName.AddTranslation(GameCulture.Chinese, "受虐者之心");
+            DisplayName.AddTranslation(GameCulture.Chinese, "永恒者之心");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'大多数情况下已经不用受苦了'
 免疫人形废土,冻结,渗入,枯萎武器和枯萎盔甲
 免疫野性咬噬,突变啃啄,翻转,不稳定,扭曲和混沌
@@ -32,7 +32,8 @@ Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu
 增加100%飞行时间
 根据武器类型定期发动额外的攻击
 暴击造成贝特希的诅咒
-骑乘超可爱猪鲨时获得潮湿状态,能够控制重力
+按下火球冲刺按键来进行一次短程的无敌冲刺
+骑乘猪鲨坐骑时获得潮湿状态,能够控制重力
 召唤一个友善的超级圣诞雪灵,迷你飞碟和真·克苏鲁之眼");
         }
 
