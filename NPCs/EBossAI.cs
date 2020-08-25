@@ -2593,7 +2593,7 @@ namespace FargowiltasSouls.NPCs
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     const int max = 5;
-                    const float distance = 125f;
+                    const float distance = 130f;
                     float rotation = 2f * (float)Math.PI / max;
                     for (int i = 0; i < max; i++)
                     {
@@ -2665,7 +2665,7 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
 
-                if (++Counter[2] > 85)
+                if (++Counter[2] > 135)
                 {
                     Counter[2] = 0;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -2697,19 +2697,16 @@ namespace FargowiltasSouls.NPCs
 
                 SharkCount = 0;
 
-                if (npc.HasPlayerTarget)
+                if (npc.HasPlayerTarget && Main.player[npc.target].venom)
                 {
-                    if (Main.player[npc.target].venom)
-                    {
-                        npc.defense *= 2;
-                        //Counter[0]++;
-                        SharkCount = 1;
-                    }
+                    npc.defense *= 2;
+                    //Counter[0]++;
+                    SharkCount = 1;
                     npc.position -= npc.velocity * 0.1f;
                 }
                 else
                 {
-                    npc.position -= npc.velocity / 3;
+                    npc.position -= npc.velocity * 0.2f;
                 }
             }
 

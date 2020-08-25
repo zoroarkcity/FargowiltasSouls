@@ -313,3 +313,11 @@ resprite will typhoons(?)
 shadow champion animation
 armored skeleton sword beams inflict their contact damage (was 4x)
 fixed eridanus despawning in mp
+plantera crystal leaves have a small telegraph before firing
+nerfed plantera dicer mine spawn rate, explode rate, range of blasts
+nerfed plantera crystal p2 ring undulation rate
+nerfed plantera speed more when you're not envenomed
+nerfed plantera crystal damage to 110 (was 180, plantera has 114)
+buffed plantera p2 crystal leaf size
+map icons for cosmos, shadow
+updated some champ stills
