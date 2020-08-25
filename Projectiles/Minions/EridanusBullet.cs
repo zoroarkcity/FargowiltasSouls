@@ -30,7 +30,6 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.penetrate = 1;
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 0;
-            projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
         }
 
         public override void AI()

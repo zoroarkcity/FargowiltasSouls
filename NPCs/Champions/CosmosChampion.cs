@@ -1084,7 +1084,8 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     else if (npc.ai[1] == 90)
                     {
-                        Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/ZaWarudo").WithVolume(1f).WithPitchVariance(.5f), player.Center);
+                        if (!Main.dedServ)
+                            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/ZaWarudo").WithVolume(1f).WithPitchVariance(.5f), player.Center);
 
                         const int num226 = 80;
                         for (int num227 = 0; num227 < num226; num227++)
@@ -1118,7 +1119,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (++npc.ai[2] > 12)
                         {
                             npc.ai[2] = 0;
-
+                            
                             int max = 8 + (int)npc.ai[3] * (npc.localAI[2] == 0 ? 2 : 4);
                             float rotation = Main.rand.NextFloat((float)Math.PI * 2);
                             for (int i = 0; i < max; i++)
@@ -1128,7 +1129,8 @@ namespace FargowiltasSouls.NPCs.Champions
                                 Vector2 spawnPos = player.Center + distance * Vector2.UnitX.RotatedBy(2 * Math.PI / max * i + rotation);
                                 Vector2 vel = 2.5f * player.DirectionFrom(spawnPos);// distance * player.DirectionFrom(spawnPos) / ai0;
                                 ai0 = distance / 2.5f;
-                                Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<CosmosInvader>(), npc.damage / 4, 0f, Main.myPlayer, ai0);
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<CosmosInvader>(), npc.damage / 4, 0f, Main.myPlayer, ai0);
                             }
 
                             npc.ai[3]++;
