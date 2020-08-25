@@ -1,5 +1,6 @@
-﻿using Terraria;
+using Terraria;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
@@ -9,9 +10,10 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eurus Socks");
-
             Tooltip.SetDefault(
 @"The wearer can run pretty fast");
+            DisplayName.AddTranslation(GameCulture.Chinese, "欧洛斯之袜");
+            Tooltip.AddTranslation(GameCulture.Chinese, @"穿戴者可跑的非常快");
         }
 
         public override void SetDefaults()
