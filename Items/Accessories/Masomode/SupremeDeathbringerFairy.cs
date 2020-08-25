@@ -30,7 +30,7 @@ Summons 2 Skeletron arms to whack enemies
 冲刺或快速奔跑时发射一串血镰
 攻击造成毒液效果
 蜜蜂和虚弱黄蜂变得友好
-可能会吸引宝宝骷髅头
+永久蜂蜜Buff效果
 召唤2个骷髅王手臂重击敌人");
         }
 
