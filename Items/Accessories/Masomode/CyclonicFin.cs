@@ -25,8 +25,8 @@ Endurance recovers when you reach full life again
             DisplayName.AddTranslation(GameCulture.Chinese, "憎恶手杖");
             Tooltip.AddTranslation(GameCulture.Chinese, @"免疫憎恶毒牙
 擦弹增加暴击伤害的上限增加20%
-暴击时显现幽灵猪鲨
-幽灵猪鲨会造成突变啃啄,阻止敌人再生
+暴击时显现幽灵憎恶
+幽灵憎恶会造成突变啃啄,阻止敌人再生
 受到致命伤害时，保留1血不死
 该效果发动时，10秒钟内禁止回复血量
 该效果在回复到满血时才能够下一次发动
