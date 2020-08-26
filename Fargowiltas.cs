@@ -1007,21 +1007,41 @@ namespace FargowiltasSouls
                         "FargowiltasSouls/NPCs/Vanilla/NPC_Head_Boss_4"
                     );*/
                     //bossChecklist.Call("AddBossWithInfo", "Duke Fishron EX", 14.02f, (Func<bool>)(() => FargoSoulsWorld.downedFishronEX), "Fish using a [i:" + ItemType("TruffleWormEX") + "]");
-                    bossChecklist.Call(
+                    if (ModLoader.GetMod("CalamityMod") != null)
+		            {
+
+			        bossChecklist.Call(
+                        "AddBoss",
+                        20.0f,
+                        ModContent.NPCType<NPCs.MutantBoss.MutantBoss>(),
+			            this,
+			            "Mutant",
+			            (Func<bool>)(() => FargoSoulsWorld.downedMutant),
+			            ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
+			            new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), ModContent.ItemType<Items.Tiles.MutantMusicBox>() },
+			            ModContent.ItemType<Items.Misc.Sadism>(),
+			            "Throw [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while Abominationn is alive, in Mutant's presence.",
+			            "Mutant has eviscerated everyone under its hands.",
+			            "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
+			            "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
+                    );
+		            } else {
+			        bossChecklist.Call(
                         "AddBoss",
                         14.03f,
                         ModContent.NPCType<NPCs.MutantBoss.MutantBoss>(),
-                        this,
-                        "Mutant",
-                        (Func<bool>)(() => FargoSoulsWorld.downedMutant),
-                        ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
-                        new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), ModContent.ItemType<Items.Tiles.MutantMusicBox>() },
-                        ModContent.ItemType<Items.Misc.Sadism>(),
-                        "Throw [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while Abominationn is alive, in Mutant's presence.",
-                        "Mutant has eviscerated everyone under its hands.",
-                        "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
-                        "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
+			            this,
+			            "Mutant",
+			            (Func<bool>)(() => FargoSoulsWorld.downedMutant),
+			            ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
+			            new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), ModContent.ItemType<Items.Tiles.MutantMusicBox>() },
+			            ModContent.ItemType<Items.Misc.Sadism>(),
+			            "Throw [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while Abominationn is alive, in Mutant's presence.",
+			            "Mutant has eviscerated everyone under its hands.",
+			            "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
+			            "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
                     );
+		            }
                 }
                 //mutant shop
                 Mod fargos = ModLoader.GetMod("Fargowiltas");
