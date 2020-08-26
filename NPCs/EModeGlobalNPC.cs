@@ -6858,6 +6858,9 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     for (int i = 0; i < 2; i++)
                                     {
+                                        if (Main.rand.Next(3) != 0)
+                                            continue;
+
                                         int spawn = NPC.NewNPC((int)(npc.position.X + npc.width / 2), (int)(npc.position.Y + npc.height), 1);
                                         if (spawn != 200)
                                         {
@@ -6883,6 +6886,9 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     for (int i = 0; i < 2; i++)
                                     {
+                                        if (Main.rand.Next(3) != 0)
+                                            continue;
+
                                         int spawn = NPC.NewNPC((int)(npc.position.X + npc.width / 2), (int)(npc.position.Y + npc.height), 1);
 
                                         if (spawn != 200)
@@ -6909,6 +6915,9 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     for (int i = 0; i < 2; i++)
                                     {
+                                        if (Main.rand.Next(3) != 0)
+                                            continue;
+
                                         int spawn = NPC.NewNPC((int)(npc.position.X + npc.width / 2), (int)(npc.position.Y + npc.height), 1);
                                         Main.npc[spawn].SetDefaults(NPCID.GreenSlime);
                                         Main.npc[spawn].velocity.X = npc.velocity.X * 2f;
@@ -6931,6 +6940,9 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     for (int i = 0; i < 3; i++)
                                     {
+                                        if (Main.rand.Next(3) != 0)
+                                            continue;
+
                                         int spawn = NPC.NewNPC((int)(npc.position.X + npc.width / 2), (int)(npc.position.Y + npc.height), 1);
 
                                         if (spawn != 200)
@@ -7353,6 +7365,9 @@ namespace FargowiltasSouls.NPCs
 
                                 for (int i = 0; i < slimes.Length; i++)
                                 {
+                                    if (Main.rand.Next(3) != 0)
+                                        continue;
+
                                     int spawn = NPC.NewNPC((int)(npc.position.X + npc.width / 2), (int)(npc.position.Y + npc.height), 1);
                                     Main.npc[spawn].SetDefaults(slimes[i]);
                                     Main.npc[spawn].velocity.X = npc.velocity.X * 2f;
