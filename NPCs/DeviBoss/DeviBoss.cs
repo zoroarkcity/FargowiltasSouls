@@ -10,6 +10,7 @@ using Terraria.Localization;
 using FargowiltasSouls.Projectiles.Deathrays;
 using FargowiltasSouls.Projectiles.DeviBoss;
 using FargowiltasSouls.Projectiles.Masomode;
+using FargowiltasSouls.Items.Summons;
 
 namespace FargowiltasSouls.NPCs.DeviBoss
 {
@@ -17,6 +18,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
     public class DeviBoss : ModNPC
     {
         public bool playerInvulTriggered;
+        private bool droppedSummon = false;
 
         public int[] attackQueue = new int[4];
         public int lastStrongAttack;
@@ -1391,6 +1393,13 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
             if (player.immune || player.hurtCooldowns[0] != 0 || player.hurtCooldowns[1] != 0)
                 playerInvulTriggered = true;
+
+            //drop summon
+            if (!FargoSoulsWorld.downedDevi && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            {
+                Item.NewItem(player.Hitbox, ModContent.ItemType<DevisCurse>());
+                droppedSummon = true;
+            }
         }
 
         private void GetNextAttack()

@@ -417,7 +417,6 @@ namespace FargowiltasSouls
                         dustScale = 3f;
                     }
                     
-
                     //dust
                     for (int j = 0; j < 20; j++)
                     {
@@ -426,8 +425,13 @@ namespace FargowiltasSouls
                         Vector2 vector7 = vector6 - player.Center;
                         int d = Dust.NewDust(vector6 + vector7, 0, 0, 15);
                         Main.dust[d].noGravity = true;
-                        Main.dust[d].velocity = vector7;
                         Main.dust[d].scale = dustScale;
+                        Main.dust[d].velocity = vector7;
+
+                        if (IcicleCount % 10 == 0)
+                        {
+                            Main.dust[d].velocity *= 2;
+                        }
                     }
 
                     icicleCD = 120 - (IcicleCount * 4);
@@ -855,7 +859,7 @@ namespace FargowiltasSouls
                 player.onHitRegen = true;
                 PalladEnchant = true;
 
-                if (EarthForce && palladiumCD > 0)
+                if (palladiumCD > 0)
                     palladiumCD--;
             }
         }
@@ -1359,7 +1363,7 @@ namespace FargowiltasSouls
                     //proj spawns arrows all around it until it dies
                     Projectile.NewProjectile(mouse.X, player.Center.Y - 500, 0f, 0f, ModContent.ProjectileType<ArrowRain>(), 50, 0f, player.whoAmI, arrowType, player.direction);
 
-                    player.AddBuff(ModContent.BuffType<HuntressCD>(), RedEnchant ? 300 : 600);
+                    player.AddBuff(ModContent.BuffType<HuntressCD>(), RedEnchant ? 900 : 1800);
                 }
             }
         }
@@ -1644,7 +1648,14 @@ namespace FargowiltasSouls
             player.npcTypeNoAggro[537] = true;
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BuilderMode))
+            {
                 BuilderMode = true;
+
+                for (int i = 0; i < TileLoader.TileCount; i++)
+                {
+                    player.adjTile[i] = true;
+                }
+            }
 
             //cell phone
             player.accWatch = 3;
@@ -1659,6 +1670,7 @@ namespace FargowiltasSouls
             player.accThirdEye = true;
             player.accCalendar = true;
             player.accWeatherRadio = true;
+            
 
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
 

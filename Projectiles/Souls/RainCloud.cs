@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             {
                 Projectile proj = Main.projectile[i];
 
-                if (proj.active && proj.owner == player.whoAmI && proj.type != projectile.type && proj.type != ProjectileID.RainFriendly && proj.Hitbox.Intersects(projectile.Hitbox))
+                if (proj.active && !proj.hostile && proj.owner == player.whoAmI && proj.type != projectile.type && proj.type != ProjectileID.RainFriendly && proj.Hitbox.Intersects(projectile.Hitbox))
                 {
                     if (projectile.scale < 3f)
                     {
@@ -56,7 +56,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                         Vector2 vector2_3 = rotationVector2 * 8f;
                         float ai_1 = Main.rand.Next(80);
                         Projectile.NewProjectile(projectile.Center.X + vector2_3.X * 5, projectile.Center.Y + vector2_3.Y * 5, vector2_3.X, vector2_3.Y,
-                            mod.ProjectileType("LightningArc"), projectile.damage * 2, projectile.knockBack, projectile.owner,
+                            mod.ProjectileType("LightningArc"), proj.damage * 2, projectile.knockBack, projectile.owner,
                             rotationVector2.ToRotation(), ai_1);
 
                     }

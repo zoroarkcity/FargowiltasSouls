@@ -75,7 +75,7 @@ namespace FargowiltasSouls.Items.Summons
             recipe.AddIngredient(mod.ItemType("CrackedGem"), 5);
 
             recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this, 5);
+            recipe.SetResult(this);
             recipe.AddRecipe();
 
             recipe = new ModRecipe(mod);
@@ -88,7 +88,7 @@ namespace FargowiltasSouls.Items.Summons
             recipe.AddIngredient(mod.ItemType("CrackedGem"), 5);
 
             recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this, 5);
+            recipe.SetResult(this);
             recipe.AddRecipe();
         }
     }

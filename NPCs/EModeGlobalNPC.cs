@@ -651,6 +651,8 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.CorruptGoldfish:
                 case NPCID.CrimsonGoldfish:
                 case NPCID.WaterSphere:
+                case NPCID.Frog:
+                case NPCID.GoldFrog:
                     isWaterEnemy = true;
                     break;
 

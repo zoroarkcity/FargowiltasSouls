@@ -13,6 +13,7 @@ namespace FargowiltasSouls.Buffs.Souls
             Description.SetDefault("You cannot stop time yet");
             Main.buffNoSave[Type] = true;
             Main.debuff[Type] = true;
+            canBeCleared = false;
         }
 
         public override void Update(Player player, ref int buffIndex)

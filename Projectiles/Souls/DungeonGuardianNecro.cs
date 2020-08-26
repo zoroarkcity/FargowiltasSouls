@@ -76,11 +76,6 @@ namespace FargowiltasSouls.Projectiles.Souls
             return selectedTarget;
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            crit = true;
-        }
-
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 50; i++)
