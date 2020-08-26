@@ -20,6 +20,7 @@ Bees and weak Hornets become friendly
 免疫感染
 增加10点护甲穿透
 攻击造成中毒效果
+永久蜂蜜Buff效果
 蜜蜂和虚弱黄蜂变得友好");
         }
 
