@@ -26,7 +26,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void SetDefaults()
         {
-            npc.width = 75;
+            npc.width = 80;
             npc.height = 100;
             npc.damage = 160;
             npc.defense = 70;
@@ -162,6 +162,83 @@ namespace FargowiltasSouls.NPCs.Champions
 
             switch ((int)npc.ai[0])
             {
+                case -4: //hit children
+                    {
+                        npc.timeLeft = 600;
+
+                        int ai2 = (int)npc.ai[2];
+                        if (ai2 > -1 && ai2 < Main.maxNPCs && Main.npc[ai2].active && Main.npc[ai2].type == ModLoader.GetMod("Fargowiltas").NPCType("Deviantt"))
+                        {
+                            targetPos = Main.npc[ai2].Center;
+                            npc.direction = npc.spriteDirection = npc.Center.X < targetPos.X ? 1 : -1;
+
+                            targetPos.X += npc.width / 4 * (npc.Center.X < targetPos.X ? -1 : 1);
+                            if (npc.Distance(targetPos) > npc.width / 4)
+                                Movement(targetPos, 1.6f, 64f);
+
+                            if (npc.localAI[1] == 0)
+                            {
+                                npc.localAI[1] = 1;
+                                Main.PlaySound(SoundID.Roar, npc.Center, 0);
+                            }
+
+                            if (++npc.localAI[0] <= 5)
+                            {
+                                npc.rotation = npc.DirectionTo(Main.npc[ai2].Center).ToRotation();
+                                if (npc.direction < 0)
+                                    npc.rotation += (float)Math.PI;
+
+                                npc.ai[3] = npc.Center.X < Main.npc[ai2].Center.X ? 1 : -1; //store direction im facing
+
+                                if (npc.localAI[0] == 5)
+                                {
+                                    npc.netUpdate = true;
+                                    if (npc.Distance(targetPos) < 150)
+                                    {
+                                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        {
+                                            Vector2 offset = Vector2.UnitX;
+                                            if (npc.direction < 0)
+                                                offset.X *= -1f;
+                                            offset = offset.RotatedBy(npc.DirectionTo(Main.npc[ai2].Center).ToRotation());
+
+                                            int modifier = Math.Sign(npc.Center.Y - Main.npc[ai2].Center.Y);
+                                            Projectile.NewProjectile(npc.Center + offset + 3000 * npc.DirectionFrom(Main.npc[ai2].Center) * modifier,
+                                                npc.DirectionTo(Main.npc[ai2].Center) * modifier,
+                                                ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        npc.localAI[0] = 0;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                npc.direction = npc.spriteDirection = Math.Sign(npc.ai[3]); //dont turn around if crossed up
+
+                                if (npc.localAI[0] > 10)
+                                {
+                                    npc.localAI[0] = 0;
+                                    npc.ai[3] = 0;
+                                    npc.netUpdate = true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            npc.ai[0] = npc.ai[1];
+                            npc.ai[1] = 0;
+                            npc.ai[2] = 0;
+                            npc.ai[3] = 0;
+                            npc.localAI[0] = 0;
+                            npc.localAI[1] = 0;
+                            npc.netUpdate = true;
+                        }
+                    }
+                    break;
+
                 case -3: //final phase
                     if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f) //despawn code
                     {
@@ -558,12 +635,26 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     if (++npc.ai[1] > 60)
                     {
+                        float oldAi0 = npc.ai[0];
+
                         npc.TargetClosest();
                         npc.ai[0] += npc.localAI[2] == 0 ? 2 : 1;
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
+
+                        for (int i = 0; i < Main.maxNPCs; i++) //look for deviantt to kill
+                        {
+                            int type = ModLoader.GetMod("Fargowiltas").NPCType("Deviantt");
+                            if (Main.npc[i].active && Main.npc[i].type == type && npc.Distance(Main.npc[i].Center) < 2000 && player.Distance(Main.npc[i].Center) < 2000)
+                            {
+                                npc.ai[0] = -4;
+                                npc.ai[1] = oldAi0;
+                                npc.ai[2] = i; //store target npc
+                                break;
+                            }
+                        }
                     }
                     break;
 
@@ -651,12 +742,26 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     if (++npc.ai[1] > 60)
                     {
+                        float oldAi0 = npc.ai[0];
+
                         npc.TargetClosest();
                         npc.ai[0]++;
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
+
+                        for (int i = 0; i < Main.maxNPCs; i++) //look for deviantt to kill
+                        {
+                            int type = ModLoader.GetMod("Fargowiltas").NPCType("Deviantt");
+                            if (Main.npc[i].active && Main.npc[i].type == type && npc.Distance(Main.npc[i].Center) < 2000 && player.Distance(Main.npc[i].Center) < 2000)
+                            {
+                                npc.ai[0] = -4;
+                                npc.ai[1] = oldAi0;
+                                npc.ai[2] = i; //store target npc
+                                break;
+                            }
+                        }
                     }
                     break;
 
@@ -1190,6 +1295,12 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             switch((int)npc.ai[0])
             {
+                case -4:
+                    npc.frame.Y = frameHeight;
+                    if (npc.localAI[0] >= 5)
+                        npc.frame.Y = frameHeight * 2;
+                    break;
+
                 case -3:
                     if (npc.ai[2] < 30 || (npc.ai[2] > 100 && npc.ai[2] < 130))
                         npc.frame.Y = frameHeight * 4;
