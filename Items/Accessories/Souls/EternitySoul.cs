@@ -70,7 +70,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
     "Attacks cause Pumpking attacks",
     "Attacks cause Cultist spells",
     "Attacks cause meteor showers",
-    "Projectiles may split",
+    "All Projectiles will split",
     "Projectiles may shatter",
     "Projectiles spawn stars",
     "Item and projectile size increased",

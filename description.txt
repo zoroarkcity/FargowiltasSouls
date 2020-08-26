@@ -2,23 +2,41 @@ NEW UPDATE - V 1.4
 
 
 new in beta
--Reworked Necro Enchantment: Kill enemeies to make them drop a bone pile, touch the pile to spawn a fridnely baby guardian that will attack enemies, damage scales with the killed enemy's max HP
--Tungsten Enchantment now has seperate toggles for items and projectiles
--Forbidden Enchantment recipe now accepts any Scorpion
--Renamed Orichalcum toggle, it toggles off petals, but not extra debuff damage
--Frost Enchantment has a larger dust ring every 10 icicles spawned
--Huntress and Red Riding picks the first arrow type you have no matter where you have it in your inventory 
--Vortex Enchantment has a debuff for vortex spawning now
--Cobalt Enchantment's shard damage now scales with the original projectile's
--Adamantite Enchantment's split projectiles deal half as much damage, spread is slightly tighter
--Trawler Soul's extra lures spread is wider
--Rabies Vaccine now actually works
--Rod hotkey or any other item will never work in gold stasis
--Fixed The Guardian projectile looking dumb while spinning finally
+-Adamantite spread is even tighter 
+-Frost Enchant multiples of 10 icicles even more noticeable
+-Rain enchant lightning deals 2x damage of the projectile it was spawned from as opposed to 2x damage of the original proj that spawns the rain cloud
+
+-Nurse can no longer heal Gold, Huntress, Vortex, or Stardust cooldown debuffs
+-Deviantt's Curse and Abominationn's Curse recipes now only give 1 instead of 5
+-All siblings drop Free Summons like vanilla bosses
+-Deviating Enery sprite pog
+-Added Acorn Construct (Trojan Squirrel mount)
+-Increased Paradox Wolf Soul CD to 5 seconds, added dust when its back
+-Added back rod hotkey while in gold shell, but it ends the debuff
+-Frogs and Gold Frogs will no longer be affected by posion jungle water
+-Fixed Ninja Enchant potentially teleporting you diagnolly through several blocks (or going into the temple)
+-Tungsten toggles now function right
+-Tungsten projectiles work with Adamantite split
+-Adamantite split has full damage for piercing projectiles
+-Added Necro toggle
+-Increased Huntress/Red Riding cooldowns to 30/15 seconds from 10/5
+-Rain Enchant cloud no longer absorbs hostile projectiles
+-Tribal Charm no longer effects fishing rods
+-Reworked Adamantite Enchant to split projectiles on a timer rather than on a projectile count, this makes it much better for slow firing weapons and much worse for projectile spammy things, cooldown of 1 second, .75 second on force, .5 on SoT, every projectile splits always in SoE (lol)
+-new flavor text for adamantite
+-Palladium is officially post Plantera and has its lifesteal again, heal cap doubled to 16 in Force
+-Titanium nothing new except whole new recipe
+-Ancient Cobalt stinger damage also scales with the original projectile's now
+-Cobalt CD is .75 seconds on force, .5 in Soul of Terraria
+-Reduced Orichalcum Enchant dot boost to 3x, force is 5x
 
 
 
 
+
+
+
+-add all toggle colors and actual names
 
 jungle - spores home in slowly
 apprentice works with melee weapons
@@ -29,24 +47,7 @@ shinobi -  Tele through wall doesn't work right in MP
 
 
 
-
-
-
-
-
-
-
--Dark Star Cannon is now Prime's Laser Cannon, a magic weapon that shoots lasers (wip kinda)
--Added The Small Sting (wip kinda)
--Queen Bee now drops this, Hive Staff is unobtainable for now
-
-
-
-
-
 todo
-look at hell zone..
-necro - now usable with DG less dumb
 Kill rainbow slime
 timestop isnt a buff or works thru immune
 toggle for extra lures in fish soul, never use bait ever
@@ -68,7 +69,6 @@ Patreon toggle and marker
 
 
 Make hornet and imp work with spooky
-fix all toggle names and colors
 recheck eater thru wall meme and all beetle auras
 
 
@@ -79,80 +79,21 @@ recheck eater thru wall meme and all beetle auras
 
 
 
-
-Items
-
--Moved flavor text to the bottom for all items like it is in vanilla
-
 Enchants
--All enchant and soul recipes changed drastically
--Removed dev items from Soa enchants
--DESTROYED MODDED ENCHANTS (for now)
--thorium effects all in their own file
--Ninja smoke bombs disappear shortly after teleporting
+-Tungsten Enchantment now has seperate toggles for items and projectiles
 -Pearlwood and basically everything else wont work on target dummies
--Tin Crits now have a cooldown: 1 seconds between crit gains, half a second in Terra Force, quarter of a second in SoT, no limit in SoE
--Valhalla Knight Enchantment rework: Now grants a buff after continually attacking an enemy that makes you reduce iframes of all enemies for some time. Buff now lasts 5 seconds, effect was 2 seconds before. The cooldown is removed, was 15 seconds. iframes will no longer be reset if they were already low enough
--Squire Enchantment rework: Effect is now a weaker version of Valhalla Knight, less than half as good
 
--Angler Enchant lost Frost Daggerfish, gained Angler Tackle Bag and its effects 
--Wood bois
+-Adamantite Enchantment's split projectiles deal half as much damage, spread is slightly tighter
 
--Wood Enchantments no longer gain bonuses in certain biomes, they always have the old buffed effect or a slightly weaker version of it
-
--Palmwood sentry attack rate up, no longer gains bonus in desert
--Pearlwood stars no longer have rainbow trails in the hallow
--Ebonwood aura has increased range, no lnager gains bonus in corruption
--Boreal always shoots 3 snowballs, no bonus in the snow biome
--Rich Mahogany hooks will no longer shoot at enemies in the jungle
--Wood now makes critters self destruct shortly after releasing them, no more souls, takes any bird in recipe (special effects for certain critters coming soon)
--Copper lightning is smaller visually, there's no more bonus if the enemy is wet, the chance for the lightning is 4x higher, with Terra Force the effect can hit 10x as many targets, deals 5x damage and has a cooldown less than half
--Ninja Enchant will now teleport you correctly onto platforms making it much better to use probably. First Strike no longer multiplies projectiles and the next attack will deal 3x damage, same as melee
--Monk Enchant dash now charges when not attacking, instead of standing still. Charge time doubled
--Rain Enchant - Halved the amount of damage you have to deal to spawn a rain cloud, rain drops have full damage of the projectile that spawned it, lightning has 2x damage. Any projectiles will affect the cloud, not just 'wet projectiles'. Lightning spawns at the edge of the cloud instead of the center. The cloud will not rise higher than intended now
--Gold Enchant now has a cooldown debuff
--Stardust Enchant now has a cooldown debuff. When it runs out, a dust ring appears around your stardust guardian
--Huntress Enchant can now rain whatever arrow type is in your first slot like Red Riding could, arrow rain lasts much longer, fall faster, and covers a slighlty wider area, decreased cooldown to 10 seconds
--Red Riding Enchant's arrows now follow the cursor, fires the double the arrows of Huntress, has a half the CD of Huntress (you can almost always have arrow rain active)
--Molten Enchant aura damage scales with highest damage type instead of just melee damage. Old aura damage: 20 damage up to 80 damage when enemies are very close to you proccing once per second. New: always 20 damage, but the speed of the damage dealt will be increased as enemies get closer up to 10 procs per second (200 damage)
--Obsidian Enchant rework: You have normal gravity and movement in lava, you can swim in lava. While in lava attacks spawn iframe ignoring explosions on hit
--Shadewood rework: Now gives you an aura similar to ebonwood. While in the aura, enemies will spill out blood when attacked
--Shroomite Enchant rework: While in stealth all attacks gain a trail of mushrooms. Swords and projectiles
--Spooky Enchant rework: Now makes all minions directly attack with scythes instead of throwing them out randomly. The scythe no longer has infinite pierce and will die shortly after hitting the first enemy, it has special immune frames, Scythes no longer split into smaller scythes, scythes are much smaller
--Gladiator Enchantment spears fall twice as fast and deal half as much damage
--Frost Enchantment rework: The icicles move twice as fast when launched. Damage now scales. Icicles rotate slower. Max icicles increased from 3 to 30. Icicles are launched when you attack no matter how many there are, if you keep attacking you will just keep firing one at a time. The longer you don't attack the faster they spawn. If 10 or more connect with an enemy, the enemy, bosses included, is frozen for one second and they take 20% increased damage from you for 5 seconds. The more icicles that hit, the longer the freeze
--Vortex Enchantment rework: Vortex damage now scales. The vortex lasts much longer. The Vortex now additionally pulls in all projectiles. The suck range is much larger. While stealthed your projectiles will not be sucked in. When the vortex runs out any non boss nearby is wiped from existence. The cooldown to spawn a void is much longer.
--Orichalcum Enchantment rework: No longer spawns fireballs. Petals inflict On Fire, Cursed Inferno, Shadowflame, or Frostburn on hit. All DoTs deal 5x damage. Petals reset iframes.
--Platinum Enchantment no longer synergizes with Midas
--Added new SoU and SoE item animations
-
-
--Updated several Thorium Enchantments with missing or extra accessory effects: Crier
--Removed Grand Thorium Armor from Thorium Enchant, added some stuff
-
--Removed The Ring from SoU 
-
--Added several missing calamity toggles, some disruptive toggles will start off by default
+-Trawler Soul's extra lures spread is wider
 
 -fixed mutant giving no reward at all outside emode 
--Slime Rain only needs one Slime Slinger
--same with nuke fishron
 
-
-
-Souls
--Added Aelous Boots to Supersonic Soul, Removed Frostspark and Green Horseshoe Balloon, Added Pink Horseshoe Balloon
--Removed all Thorium wings from Flight Mastery Soul, and froom trawler, berserker soul
-
--Updated some calamity support tooltips
-
--Reduced Galactic Reformer cost to 500 dynamite from 999
--Reduced Universal Collapse cost to 100 Galactic reformers from 999
 
 Emode
 -Updated  lava slime jump (tm)
 -Hallowed Cactus inflict Flipped instead of Confused
--Pumpking and Ice Queen can drop their items outside ofthe event
+-Pumpking and Ice Queen can drop their items outside of the event
 -Removed Plantera's Fruit, Bloodied Skull, Lunatic Sigil, Fleshier Doll
 -These bosses drop the mutant mod summon instead
 -All bosses will drop a summon when they spawn until they are defetaed in emode
@@ -205,34 +146,16 @@ Emode
 -Supersonic Soul's No momentum mode is now less severe and more usable, 5x more momeentum as before (which is still 10xless than normal)
 -Added Rabies Vaccine
 
--Removed Apoth support in SoE
 
 -Look into meme weapon and enchant nerfs/reworks
 
 
-
-
-
--Removed Slinger's Essence and Olympians Soul for now
-
-
 Weapons
--Hell Zone inflicts Hell Fire again, REEEEEE (Hell Fire no longer deals percent based damage)
--Blender's extra yoyos circle around the main one instead of spazzing out
--Rockeater eaters deal ranged damage and not melee
--The Twins extra projectiles deal melee damage correctly
--Bone Zone's shadow skull deals ranged damage. Bone Zone fires a shadow skull every 3 shots instead of randomly
--RockSlide explosions deal magic damage correctly
--Slime King's Slasher spikes deal melee damage correctly, travel faster but disappear sooner
--The Landlside is now the Rockslide
--Landlside EX is now the Landlside
--Slime Kings Slasher fires several slime spikes per swing now
--Fish Stick sharks aim for the target they hit not the fish stick that threw, they no longer pierce, they deal summon damage actually, they move faster
--Fixed Fish Stick rarity
+-Dark Star Cannon is now Prime's Laser Cannon, a magic weapon that shoots lasers (wip kinda)
+-Added The Small Sting (wip kinda)
+-Queen Bee now drops this, Hive Staff is unobtainable for now
 -Fish Stick has a smaller tile hitbox because it looked dumb
--Fish Stick's tornado height scales with minion slots up to 5
 -Fish Stick sharks now pierce 
--updated sprites: big sting, fish stick
 
 
 new sprites:
@@ -248,12 +171,18 @@ solar flare debuff
 rick painitng
 gold dipping vat
 probes and rainbow slime buffs work?
+dragon fang, deviating energy
+hive staff and sentry
+big brain buster
+
+
+
 plant fiber toggle
 
 PATREON
 -Added announcment for unique patreon player effects
 -Added tooltip to Computation Orb
--Added Fig Branch (update to 1.4 dove and fledgling wing player effect)
+-Added Fig Branch (fledgling wing player effect)
 -Added Squidward Door
 -Added Medallion of the Fallen King (get new frames and finish extra attacks)
 -Added Paradox Wolf Soul

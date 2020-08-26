@@ -9,6 +9,7 @@ using Terraria.Localization;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using FargowiltasSouls.Projectiles.AbomBoss;
+using FargowiltasSouls.Items.Summons;
 
 namespace FargowiltasSouls.NPCs.AbomBoss
 {
@@ -16,6 +17,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
     public class AbomBoss : ModNPC
     {
         public bool playerInvulTriggered;
+        private bool droppedSummon = false;
         public int ritualProj, ringProj, spriteProj;
 
         public override void SetStaticDefaults()
@@ -959,6 +961,13 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
             if (player.immune || player.hurtCooldowns[0] != 0 || player.hurtCooldowns[1] != 0)
                 playerInvulTriggered = true;
+
+            //drop summon
+            if (!FargoSoulsWorld.downedAbom && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            {
+                Item.NewItem(player.Hitbox, ModContent.ItemType<AbomsCurse>());
+                droppedSummon = true;
+            }
         }
 
         private void Aura(float distance, int buff, bool reverse = false, int dustid = DustID.GoldFlame, bool checkDuration = false, bool targetEveryone = true)

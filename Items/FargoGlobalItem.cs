@@ -84,7 +84,14 @@ namespace FargowiltasSouls.Items
             //dont use hotkeys in stasis
             if (player.HasBuff(ModContent.BuffType<GoldenStasis>()))
             {
-                return false;
+                if (item.type == ItemID.RodofDiscord)
+                {
+                    player.ClearBuff(ModContent.BuffType<Buffs.Souls.GoldenStasis>());
+                }
+                else
+                {
+                    return false;
+                }
             }
 
             if (FargoSoulsWorld.MasochistMode)

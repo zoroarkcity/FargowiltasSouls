@@ -510,8 +510,15 @@ namespace FargowiltasSouls.NPCs
 
             if (modPlayer.OriEnchant && npc.lifeRegen < 0)
             {
-                npc.lifeRegen *= 5;
-                damage *= 5;
+                int multiplier = 3;
+
+                if (modPlayer.EarthForce || modPlayer.WizardEnchant)
+                {
+                    multiplier = 5;
+                }
+
+                npc.lifeRegen *= multiplier;
+                damage *= multiplier;
             }
         }
 
@@ -587,7 +594,7 @@ namespace FargowiltasSouls.NPCs
             Player player = Main.player[npc.lastInteraction];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (modPlayer.NecroEnchant && modPlayer.NecroCD == 0)
+            if (modPlayer.NecroEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.NecroGuardian) && modPlayer.NecroCD == 0)
             {
                 Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, modPlayer.HighestDamageTypeScaling(npc.lifeMax / 5));
                 modPlayer.NecroCD = 60;

@@ -13,9 +13,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Adamantite Enchantment");
             Tooltip.SetDefault(
-@"Every 8th projectile you shoot will split into 3
-Any secondary projectiles may also split
-'Who needs to aim?'"); 
+@"One of your projectiles will split into 3 every second
+'Three degrees of seperation'"); 
             DisplayName.AddTranslation(GameCulture.Chinese, "精金魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'谁需要瞄准?'

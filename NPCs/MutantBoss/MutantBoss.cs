@@ -12,6 +12,7 @@ using FargowiltasSouls.Buffs.Boss;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Buffs.Souls;
 using FargowiltasSouls.Projectiles.MutantBoss;
+using FargowiltasSouls.Items.Summons;
 
 namespace FargowiltasSouls.NPCs.MutantBoss
 {
@@ -19,6 +20,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
     public class MutantBoss : ModNPC
     {
         public int ritualProj, spriteProj, ringProj;
+        private bool droppedSummon = false;
 
         public override void SetStaticDefaults()
         {
@@ -1758,6 +1760,13 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 default:
                     npc.ai[0] = 11;
                     goto case 11;
+            }
+
+            //drop summon
+            if (!FargoSoulsWorld.downedMutant && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            {
+                Item.NewItem(player.Hitbox, ModContent.ItemType<AbominationnVoodooDoll>());
+                droppedSummon = true;
             }
         }
 

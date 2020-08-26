@@ -44,6 +44,9 @@ namespace FargowiltasSouls
         public bool BigBrainMinion;
         public bool DukeFishron;
 
+        //mount
+        public bool SquirrelMount;
+
         //pet
 
         public bool ChibiDevi;
@@ -77,6 +80,7 @@ namespace FargowiltasSouls
         public bool VortexEnchant;
         public bool VortexStealth = false;
         public bool AdamantiteEnchant;
+        public int AdamantiteCD = 0;
         public bool FrostEnchant;
         public int IcicleCount = 0;
         private int icicleCD = 0;
@@ -153,6 +157,7 @@ namespace FargowiltasSouls
         public int MonkDashing = 0;
         private int monkTimer;
         public bool SnowEnchant;
+        public bool WizardEnchant;
 
         public bool Solar;
         public bool Nebula;
@@ -448,6 +453,11 @@ namespace FargowiltasSouls
                 }
             }
 
+            if (GoldShell)
+            {
+                return;
+            }
+
             if (Fargowiltas.FreezeKey.JustPressed && StardustEnchant && !player.HasBuff(ModContent.BuffType<TimeStopCD>()))
             {
                 player.AddBuff(ModContent.BuffType<TimeStopCD>(), 3600);
@@ -592,6 +602,8 @@ namespace FargowiltasSouls
             BigBrainMinion = false;
             DukeFishron = false;
 
+            SquirrelMount = false;
+
             ChibiDevi = false;
             MutantSpawn = false;
             BabyAbom = false;
@@ -666,6 +678,7 @@ namespace FargowiltasSouls
             HuntressEnchant = false;
             MonkEnchant = false;
             SnowEnchant = false;
+            WizardEnchant = false;
 
             Solar = false;
             Nebula = false;
@@ -1194,6 +1207,9 @@ namespace FargowiltasSouls
 
             if ((CobaltEnchant || AncientCobaltEnchant) && CobaltCD > 0)
                 CobaltCD--;
+
+            if ((AdamantiteEnchant) && AdamantiteCD > 0)
+                AdamantiteCD--;
 
             if (LihzahrdTreasureBox && player.gravDir > 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.LihzahrdBoxGeysers))
             {
@@ -2563,7 +2579,10 @@ namespace FargowiltasSouls
             if (PalladEnchant && !TerrariaSoul && palladiumCD == 0 && !target.immortal && !player.moonLeech)
             {
                 int heal = damage / 10;
-                if (heal > 8)
+
+                if ((EarthForce || WizardEnchant) && heal > 16)
+                    heal = 16;
+                else if (!EarthForce && !WizardEnchant && heal > 8)
                     heal = 8;
                 else if (heal < 1)
                     heal = 1;
@@ -3273,7 +3292,7 @@ namespace FargowiltasSouls
 
         public override bool PreItemCheck()
         {
-            if (Berserked || (TribalCharm && SoulConfig.Instance.TribalCharm && player.HeldItem.type != ItemID.RodofDiscord))
+            if (Berserked || (TribalCharm && SoulConfig.Instance.TribalCharm && player.HeldItem.type != ItemID.RodofDiscord && player.HeldItem.fishingPole == 0 ))
             {
                 TribalAutoFire = player.HeldItem.autoReuse;
                 player.HeldItem.autoReuse = true;
@@ -3425,6 +3444,17 @@ namespace FargowiltasSouls
             if (BetsyDashing) //dont draw player during betsy dash
                 while (layers.Count > 0)
                     layers.RemoveAt(0);
+
+            if (SquirrelMount)
+            {
+                foreach (PlayerLayer playerLayer in layers)
+                {
+                    if (playerLayer != PlayerLayer.MountBack && playerLayer != PlayerLayer.MountFront && playerLayer != PlayerLayer.MiscEffectsFront && playerLayer != PlayerLayer.MiscEffectsBack)
+                    {
+                        playerLayer.visible = false;
+                    }
+                }
+            }
         }
 
         public override void ModifyScreenPosition()

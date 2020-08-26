@@ -1,6 +1,8 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Terraria.ID;
+using System;
 
 namespace FargowiltasSouls.Patreon.ParadoxWolf
 {
@@ -38,6 +40,19 @@ namespace FargowiltasSouls.Patreon.ParadoxWolf
             {
                 dashCD--;
 
+                if (dashCD == 0)
+                {
+                    double spread = 2 * Math.PI / 36;
+                    for (int i = 0; i < 36; i++)
+                    {
+                        Vector2 velocity = new Vector2(2, 2).RotatedBy(spread * i);
+
+                        int index2 = Dust.NewDust(player.Center, 0, 0, 37, velocity.X, velocity.Y, 100);
+                        Main.dust[index2].noGravity = true;
+                        Main.dust[index2].noLight = true;
+                    }
+                }
+
                 return;
             }
 
@@ -64,7 +79,7 @@ namespace FargowiltasSouls.Patreon.ParadoxWolf
                 {
                     player.velocity *= 0.5f;
                     player.dashDelay = 0;
-                    dashCD = 60; 
+                    dashCD = 300; 
                 }
                 
                 return;

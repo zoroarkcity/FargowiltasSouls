@@ -10,6 +10,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class CrystalAssassinEnchant : ModItem
     {
+        public override bool Autoload(ref string name)
+        {
+            return false;
+        }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Crystal Assassin Enchantment");

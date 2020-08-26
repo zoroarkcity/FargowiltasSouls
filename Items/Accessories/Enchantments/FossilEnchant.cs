@@ -15,8 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Fossil Enchantment");
             Tooltip.SetDefault(
-@"If you reach zero HP you cheat death, returning with 20 HP
+@"If you reach zero HP you cheat death, returning with 1 HP
 For a few seconds after reviving, you are immune to all damage and spawn bones
+Collect these bones once they stop moving to heal for 10 HP each
 Summons a pet Baby Dino
 'Beyond a forgotten age'");
             DisplayName.AddTranslation(GameCulture.Chinese, "化石魔石");
