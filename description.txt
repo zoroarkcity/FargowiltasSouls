@@ -2,33 +2,37 @@ NEW UPDATE - V 1.4
 
 
 new in beta
--Adamantite spread is even tighter 
--Frost Enchant multiples of 10 icicles even more noticeable
--Rain enchant lightning deals 2x damage of the projectile it was spawned from as opposed to 2x damage of the original proj that spawns the rain cloud
-
--Nurse can no longer heal Gold, Huntress, Vortex, or Stardust cooldown debuffs
--Deviantt's Curse and Abominationn's Curse recipes now only give 1 instead of 5
--All siblings drop Free Summons like vanilla bosses
--Deviating Enery sprite pog
--Added Acorn Construct (Trojan Squirrel mount)
--Increased Paradox Wolf Soul CD to 5 seconds, added dust when its back
--Added back rod hotkey while in gold shell, but it ends the debuff
--Frogs and Gold Frogs will no longer be affected by posion jungle water
+-Added Acorn Construct (Trojan Squirrel mount) 
+-Reworked Adamantite Enchant to split projectiles on a timer rather than on a projectile count, this makes it much better for slow firing weapons and much worse for projectile spammy things, cooldown of 1 second, .75 second on force, .5 on SoT, every projectile splits always in SoE (lol)
+-Adamantite spread is even tighter, new flavor text
 -Fixed Ninja Enchant potentially teleporting you diagnolly through several blocks (or going into the temple)
 -Tungsten toggles now function right
 -Tungsten projectiles work with Adamantite split
 -Adamantite split has full damage for piercing projectiles
--Added Necro toggle
+-Added Necro toggle, it's no longer always a crit, graves work differentlty for bosses: every 10% of their Hp taken they drop a grave that deals 2% of their max HP
 -Increased Huntress/Red Riding cooldowns to 30/15 seconds from 10/5
 -Rain Enchant cloud no longer absorbs hostile projectiles
--Tribal Charm no longer effects fishing rods
--Reworked Adamantite Enchant to split projectiles on a timer rather than on a projectile count, this makes it much better for slow firing weapons and much worse for projectile spammy things, cooldown of 1 second, .75 second on force, .5 on SoT, every projectile splits always in SoE (lol)
--new flavor text for adamantite
+-Rain enchant lightning deals 2x damage of the projectile it was spawned from as opposed to 2x damage of the original proj that spawns the rain cloud
+-Frost Enchant multiples of 10 icicles is even more noticeable
 -Palladium is officially post Plantera and has its lifesteal again, heal cap doubled to 16 in Force
 -Titanium nothing new except whole new recipe
 -Ancient Cobalt stinger damage also scales with the original projectile's now
 -Cobalt CD is .75 seconds on force, .5 in Soul of Terraria
 -Reduced Orichalcum Enchant dot boost to 3x, force is 5x
+-Nurse can no longer heal Gold, Huntress, Vortex, or Stardust cooldown debuffs
+-Added back rod hotkey while in gold shell, but it ends the debuff
+-Deviantt's Curse and Abominationn's Curse recipes now only give 1 instead of 5
+-All siblings drop Free Summons like vanilla bosses
+-Deviating Enery sprite
+-Increased Paradox Wolf Soul CD to 5 seconds, added dust when its back
+-Frogs and Gold Frogs will no longer be affected by posion jungle water
+-Tribal Charm no longer effects fishing rods
+
+
+
+
+
+
 
 
 
@@ -70,6 +74,10 @@ Patreon toggle and marker
 
 Make hornet and imp work with spooky
 recheck eater thru wall meme and all beetle auras
+
+
+
+
 
 
 
