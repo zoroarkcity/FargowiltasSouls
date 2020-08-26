@@ -329,3 +329,4 @@ rain cloud will not absorb minions
 rain cloud will not absorb noSplit projectiles (phantasm, vortex beater, etc)
 rain cloud will not absorb held projectiles (spears, styx gazer, etc)
 skeletons can only spray bones upwards when they die
+penetrator dash counts as a held proj
