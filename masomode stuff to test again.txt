@@ -326,3 +326,5 @@ nerfed all slime splitting to only have 33% chance of occurring
 nerfed abom life slightly
 rain cloud will only absorb friendly projectiles that inflict damage (should make absolute sure it can't eat boss arenas)
 rain cloud will not absorb minions
+rain cloud will not absorb noSplit projectiles (phantasm, vortex beater, etc)
+skeletons can only spray bones upwards when they die

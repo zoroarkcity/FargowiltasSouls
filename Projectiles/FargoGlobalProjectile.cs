@@ -167,7 +167,7 @@ namespace FargowiltasSouls.Projectiles
             Fargowiltas.ModProjDict.TryGetValue(projectile.type, out ModProjID);
         }
 
-        private static int[] noSplit = {
+        public static int[] noSplit = {
             ProjectileID.CrystalShard,
             ProjectileID.SandnadoFriendly,
             ProjectileID.LastPrism,
@@ -180,7 +180,8 @@ namespace FargowiltasSouls.Projectiles
             ProjectileID.ChargedBlasterCannon,
             ProjectileID.MedusaHead,
             ProjectileID.WireKite,
-            ProjectileID.DD2PhoenixBow
+            ProjectileID.DD2PhoenixBow,
+            ProjectileID.LaserMachinegun
         };
 
         public override bool PreAI(Projectile projectile)
