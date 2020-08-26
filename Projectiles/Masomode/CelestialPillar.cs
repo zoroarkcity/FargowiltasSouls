@@ -31,7 +31,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.ignoreWater = true;
             projectile.timeLeft = 600;
             cooldownSlot = 1;
-
+            projectile.penetrate = -1;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
