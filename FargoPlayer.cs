@@ -1401,7 +1401,7 @@ namespace FargowiltasSouls
                 if (player.nebulaCD > 0)
                     player.nebulaCD--;
 
-                if (!TerrariaSoul) //cap boosters
+                if (!TerrariaSoul && !CosmoForce) //cap boosters
                 {
                     void DecrementBuff(int buffType)
                     {
@@ -2244,7 +2244,7 @@ namespace FargowiltasSouls
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
         {
-            if (target.type == NPCID.TargetDummy || target.townNPC)
+            if (target.type == NPCID.TargetDummy || target.friendly)
                 return;
 
             OnHitNPCEither(target, damage, knockback, crit, proj.type);
@@ -2446,13 +2446,13 @@ namespace FargowiltasSouls
                     for (int i = -3; i <= 3; i++)
                     {
                         Vector2 spawnPos = player.Center + offset.RotatedBy(Math.PI / 7 * i);
-                        Vector2 speed = 20 * Vector2.Normalize(Main.MouseWorld - spawnPos);
+                        Vector2 speed = 17 * Vector2.Normalize(Main.MouseWorld - spawnPos);
 
                         int heartDamage = MutantEye ? 170 : 17;
                         heartDamage = (int)(heartDamage * player.minionDamage);
 
-                        float ai1 = (Main.MouseWorld - spawnPos).Length() / 20 + 10;
-                        Projectile.NewProjectile(spawnPos, speed, mod.ProjectileType("FriendHeart"), heartDamage, 3f, player.whoAmI, -1, ai1);
+                        float ai1 = (Main.MouseWorld - spawnPos).Length() / 17;
+                        Projectile.NewProjectile(spawnPos, speed, ModContent.ProjectileType<FriendHeart>(), heartDamage, 3f, player.whoAmI, -1, ai1);
 
                         for (int j = 0; j < 20; j++)
                         {
@@ -2666,7 +2666,7 @@ namespace FargowiltasSouls
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
         {
-            if (target.type == NPCID.TargetDummy || target.townNPC)
+            if (target.type == NPCID.TargetDummy || target.friendly)
                 return;
 
             OnHitNPCEither(target, damage, knockback, crit);
@@ -2834,6 +2834,12 @@ namespace FargowiltasSouls
                 num342 *= player.gravDir;
                 Projectile.NewProjectile((float)(hitbox.X + hitbox.Width / 2) + num343, (float)(hitbox.Y + hitbox.Height / 2) + num342, (float)player.direction * num341, num340 * player.gravDir, ModContent.ProjectileType<ShroomiteShroom>(), item.damage / 2, 0f, player.whoAmI, 0f, 0f);
             }
+        }
+
+        public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
+        {
+            if (npc.GetGlobalNPC<FargoSoulsGlobalNPC>().CurseoftheMoon)
+                damage = (int)(damage * 0.85);
         }
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
@@ -3333,6 +3339,8 @@ namespace FargowiltasSouls
                 case ItemID.DaedalusStormbow:
                 case ItemID.StarCannon:
                 case ItemID.DD2BetsyBow:
+                case ItemID.ElectrosphereLauncher:
+                case ItemID.SnowmanCannon:
                     return 2f / 3f;
 
                 case ItemID.Razorpine:
@@ -3343,14 +3351,12 @@ namespace FargowiltasSouls
                 case ItemID.Uzi:
                 case ItemID.Megashark:
                 case ItemID.ChlorophyteShotbow:
-                case ItemID.SnowmanCannon:
                 case ItemID.BeesKnees:
                 case ItemID.PhoenixBlaster:
                 case ItemID.LastPrism:
                 case ItemID.Tsunami:
                 case ItemID.Phantasm:
                 case ItemID.OnyxBlaster:
-                case ItemID.ElectrosphereLauncher:
                 case ItemID.ChainGun:
                 case ItemID.HellwingBow:
                 case ItemID.Beenade:

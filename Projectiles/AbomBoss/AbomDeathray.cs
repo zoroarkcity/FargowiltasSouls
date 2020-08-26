@@ -11,7 +11,6 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
     public class AbomDeathray : Deathrays.BaseDeathray
     {
         public AbomDeathray() : base(120, "AbomDeathray") { }
-        private const float maxTime = 120;
         private Vector2 spawnPos;
 
         public override void SetStaticDefaults()

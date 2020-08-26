@@ -406,6 +406,12 @@ namespace FargowiltasSouls.NPCs
                         n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<BrainClone>(), npc.whoAmI);
                         if (n != 200 && Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+
+                        for (int i = 0; i < Main.maxProjectiles; i++) //clear old golden showers
+                        {
+                            if (Main.projectile[i].active && Main.projectile[i].type == ModContent.ProjectileType<GoldenShowerHoming>())
+                                Main.projectile[i].Kill();
+                        }
                     }
                 }
 
@@ -459,34 +465,35 @@ namespace FargowiltasSouls.NPCs
                     {
                         Vector2 offset = npc.Center - Main.player[npc.target].Center;
 
-                        const int degree = 8;
+                        const int max = 3;
+                        const int degree = 3;
 
                         Vector2 spawnPos = Main.player[npc.target].Center;
                         spawnPos.X += offset.X;
                         spawnPos.Y += offset.Y;
                         Projectile.NewProjectile(spawnPos, new Vector2(0, -4), ModContent.ProjectileType<BrainofConfusion>(), 0, 0, Main.myPlayer);
-                        for (int i = -1; i <= 1; i++)
+                        for (int i = -max; i <= max; i++)
                             Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), ModContent.ProjectileType<DestroyerLaser>(), npc.damage / 4, 0f, Main.myPlayer);
 
                         spawnPos = Main.player[npc.target].Center;
                         spawnPos.X += offset.X;
                         spawnPos.Y -= offset.Y;
                         Projectile.NewProjectile(spawnPos, new Vector2(0, -4), ModContent.ProjectileType<BrainofConfusion>(), 0, 0, Main.myPlayer);
-                        for (int i = -1; i <= 1; i++)
+                        for (int i = -max; i <= max; i++)
                             Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), ModContent.ProjectileType<DestroyerLaser>(), npc.damage / 4, 0f, Main.myPlayer);
 
                         spawnPos = Main.player[npc.target].Center;
                         spawnPos.X -= offset.X;
                         spawnPos.Y += offset.Y;
                         Projectile.NewProjectile(spawnPos, new Vector2(0, -4), ModContent.ProjectileType<BrainofConfusion>(), 0, 0, Main.myPlayer);
-                        for (int i = -1; i <= 1; i++)
+                        for (int i = -max; i <= max; i++)
                             Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), ModContent.ProjectileType<DestroyerLaser>(), npc.damage / 4, 0f, Main.myPlayer);
 
                         spawnPos = Main.player[npc.target].Center;
                         spawnPos.X -= offset.X;
                         spawnPos.Y -= offset.Y;
                         Projectile.NewProjectile(spawnPos, new Vector2(0, -4), ModContent.ProjectileType<BrainofConfusion>(), 0, 0, Main.myPlayer);
-                        for (int i = -1; i <= 1; i++)
+                        for (int i = -max; i <= max; i++)
                             Projectile.NewProjectile(spawnPos, Main.player[npc.target].DirectionFrom(spawnPos).RotatedBy(MathHelper.ToRadians(degree) * i), ModContent.ProjectileType<DestroyerLaser>(), npc.damage / 4, 0f, Main.myPlayer);
                     }
                 }
@@ -500,12 +507,12 @@ namespace FargowiltasSouls.NPCs
 
                 if (--Counter[1] < 0)
                 {
-                    Counter[1] = Main.rand.Next(7, 15);
+                    Counter[1] = Main.rand.Next(5, 15);
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Vector2 spawn = Main.player[npc.target].Center + Main.rand.NextVector2CircularEdge(1200f, 1200f);
                         Vector2 speed = Main.player[npc.target].Center + Main.rand.NextVector2Circular(-600f, 600f) - spawn;
-                        speed = Vector2.Normalize(speed) * Main.rand.NextFloat(24f, 48f);
+                        speed = Vector2.Normalize(speed) * Main.rand.NextFloat(12f, 48f);
                         Projectile.NewProjectile(spawn, speed, ModContent.ProjectileType<BrainIllusionProj>(), 0, 0f, Main.myPlayer, npc.whoAmI);
                     }
                 }
@@ -523,22 +530,29 @@ namespace FargowiltasSouls.NPCs
 
         public void CreeperAI(NPC npc)
         {
-            if (++Counter[2] >= 600)
+            if (!masoBool[0])
             {
-                int count = NPC.CountNPCS(NPCID.Creeper) - 1;
-                Counter[2] = (20 - count) * 29;
-                if (Counter[2] < 0)
-                    Counter[2] = 0;
+                masoBool[0] = true;
+                Counter[2] = Main.rand.Next(60 * NPC.CountNPCS(NPCID.Creeper)) + Main.rand.Next(-60, 61);
+            }
+
+            if (--Counter[2] < 0)
+            {
+                Counter[2] = 60 * NPC.CountNPCS(NPCID.Creeper) - 30;
+                if (Counter[2] > 120)
+                    Counter[2] += Main.rand.Next(-60, 61);
 
                 if (npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Vector2 speed = Main.player[npc.target].Center - npc.Center;
+                    Projectile.NewProjectile(npc.Center, 10f * npc.DirectionFrom(Main.player[npc.target].Center).RotatedByRandom(Math.PI),
+                        ModContent.ProjectileType<GoldenShowerHoming>(), npc.damage / 4, 0f, Main.myPlayer, npc.target, -60f);
+                    /*Vector2 speed = Main.player[npc.target].Center - npc.Center;
                     speed.Y -= Math.Abs(speed.X) * 0.1f; //account for gravity
                     speed.X += Main.rand.Next(-10, 11);
                     speed.Y += Main.rand.Next(-30, 21);
                     speed.Normalize();
                     speed *= 10f;
-                    Projectile.NewProjectile(npc.Center, speed, ProjectileID.GoldenShowerHostile, npc.damage / 4, 0f, Main.myPlayer);
+                    Projectile.NewProjectile(npc.Center, speed, ProjectileID.GoldenShowerHostile, npc.damage / 4, 0f, Main.myPlayer);*/
                 }
 
                 npc.netUpdate = true;
@@ -639,13 +653,16 @@ namespace FargowiltasSouls.NPCs
                             npc.netUpdate = true;
                         }
                         npc.velocity = Vector2.Zero;
-                        if (++Counter[0] > 2)
+                        if (++Counter[0] > 1)
                         {
                             Counter[0] = 0;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Projectile.NewProjectile(npc.Center + Vector2.UnitY * 15, 12f * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))), ModContent.ProjectileType<Bee>(), npc.damage / 5, 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center + Vector2.UnitY * 15, -12f * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))), ModContent.ProjectileType<Bee>(), npc.damage / 5, 0f, Main.myPlayer);
+                                const float rotation = 0.02f;
+                                Projectile.NewProjectile(npc.Center + new Vector2(3 * npc.direction, 15), Main.rand.NextFloat(9f, 18f) * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))),
+                                    ModContent.ProjectileType<Bee>(), npc.damage / 5, 0f, Main.myPlayer, npc.target, Main.rand.Next(2) == 0 ? -rotation : rotation);
+                                Projectile.NewProjectile(npc.Center + new Vector2(3 * npc.direction, 15), -Main.rand.NextFloat(9f, 18f) * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))),
+                                    ModContent.ProjectileType<Bee>(), npc.damage / 5, 0f, Main.myPlayer, npc.target, Main.rand.Next(2) == 0 ? -rotation : rotation);
                             }
                         }
                     }
@@ -675,13 +692,13 @@ namespace FargowiltasSouls.NPCs
                     if (Counter[1] > 3)
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
-                            Projectiles.FargoGlobalProjectile.XWay(16, npc.Center, ProjectileID.Stinger, 6, 11, 1);
+                            FargoGlobalProjectile.XWay(16, npc.Center, ProjectileID.Stinger, 6, 11, 1);
                         Counter[1] = 0;
                     }
                     else
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
-                            Projectiles.FargoGlobalProjectile.XWay(8, npc.Center, ProjectileID.Stinger, 6, 11, 1);
+                            FargoGlobalProjectile.XWay(8, npc.Center, ProjectileID.Stinger, 6, 11, 1);
                     }
                 }
             }
@@ -702,7 +719,7 @@ namespace FargowiltasSouls.NPCs
         {
             skeleBoss = npc.whoAmI;
 
-            if (Counter[0] != 0)
+            /*if (Counter[0] != 0)
             {
                 Counter[2]++;
 
@@ -746,7 +763,7 @@ namespace FargowiltasSouls.NPCs
                         Counter[0] = 0;
                     }
                 }
-            }
+            }*/
 
             if (npc.ai[1] == 1f || npc.ai[1] == 2f) //spinning or DG mode
             {
@@ -935,8 +952,16 @@ namespace FargowiltasSouls.NPCs
                 }
                 else if (Counter[0] < 240) //special attacks
                 {
+                    if (masoBool[3])
+                        Counter[1]++;
+
                     if (masoBool[1]) //cursed inferno attack
                     {
+                        if (Counter[0] == 10 && Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitY, ModContent.ProjectileType<CursedDeathrayWOFS>(), 0, 0f, Main.myPlayer, npc.direction, npc.whoAmI);
+                        }
+
                         if (++Counter[1] > 5)
                         {
                             Counter[1] = 0;
@@ -1093,7 +1118,7 @@ namespace FargowiltasSouls.NPCs
                 if (!masoBool[3])
                 {
                     masoBool[3] = true;
-                    Main.PlaySound(SoundID.Roar, (int)npc.position.X, (int)npc.position.Y, 0);
+                    Main.PlaySound(SoundID.ForceRoar, (int)npc.Center.X, (int)npc.Center.Y, -1, 1f, 0f); //eoc roar
                 }
             }
 
@@ -1111,10 +1136,6 @@ namespace FargowiltasSouls.NPCs
         {
             if (masoBool[3])
                 return true;
-
-            if (npc.realLife != -1 && Main.npc[npc.realLife].GetGlobalNPC<EModeGlobalNPC>().masoBool[0]
-                && Main.npc[npc.realLife].GetGlobalNPC<EModeGlobalNPC>().Counter[0] < 240)
-                npc.localAI[1] = 0; //dont fire during mouth's special attacks
 
             float maxTime = 540f;
 
@@ -1134,13 +1155,27 @@ namespace FargowiltasSouls.NPCs
                 else
                     npc.ai[2] *= -1f;
 
-                if (npc.ai[2] > 0 && Main.netMode != NetmodeID.MultiplayerClient) //FIRE LASER
+                if (npc.ai[2] > 0) //FIRE LASER
                 {
-                    Vector2 speed = Vector2.UnitX.RotatedBy(npc.ai[3]);
-                    float ai0 = (npc.realLife != -1 && Main.npc[npc.realLife].velocity.X > 0) ? 1f : 0f;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
-                        Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("PhantasmalDeathrayWOF"), npc.damage / 4, 0f, Main.myPlayer, ai0, npc.whoAmI);
-
+                    {
+                        Vector2 speed = Vector2.UnitX.RotatedBy(npc.ai[3]);
+                        float ai0 = (npc.realLife != -1 && Main.npc[npc.realLife].velocity.X > 0) ? 1f : 0f;
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("PhantasmalDeathrayWOF"), npc.damage / 4, 0f, Main.myPlayer, ai0, npc.whoAmI);
+                    }
+                }
+                else //ring dust to denote i am vulnerable now
+                {
+                    for (int i = 0; i < 42; i++)
+                    {
+                        Vector2 vector6 = Vector2.UnitY * 18f;
+                        vector6 = vector6.RotatedBy((i - (36 / 2 - 1)) * 6.28318548f / 42) + npc.Center;
+                        Vector2 vector7 = vector6 - npc.Center;
+                        int d = Dust.NewDust(vector6 + vector7, 0, 0, 88, 0f, 0f, 0, default(Color), 4f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity = vector7;
+                    }
                 }
                 npc.netUpdate = true;
             }
@@ -1149,7 +1184,7 @@ namespace FargowiltasSouls.NPCs
             {
                 npc.alpha = 175;
                 npc.dontTakeDamage = true;
-                if (npc.ai[1] <= 90)
+                if (npc.ai[1] <= 90) //still firing laser rn
                 {
                     masoBool[3] = true;
                     npc.AI();
@@ -1167,11 +1202,21 @@ namespace FargowiltasSouls.NPCs
             {
                 npc.alpha = 0;
                 npc.dontTakeDamage = false;
+
+                if (npc.ai[1] == maxTime - 3 * 5 && Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        float ai0 = (npc.realLife != -1 && Main.npc[npc.realLife].velocity.X > 0) ? 1f : 0f;
+                        Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("WOFBlast"), 0, 0f, Main.myPlayer, ai0, npc.whoAmI);
+                    }
+                }
+
                 if (npc.ai[1] > maxTime - 180f)
                 {
                     if (Main.rand.Next(4) < 3) //dust telegraphs switch
                     {
-                        int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 90, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 114, default(Color), 3.5f);
+                        int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 88, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 114, default(Color), 3.5f);
                         Main.dust[dust].noGravity = true;
                         Main.dust[dust].velocity *= 1.8f;
                         Main.dust[dust].velocity.Y -= 0.5f;
@@ -1212,6 +1257,12 @@ namespace FargowiltasSouls.NPCs
                         return false;
                     }
                 }
+            }
+
+            if (npc.realLife != -1 && Main.npc[npc.realLife].GetGlobalNPC<EModeGlobalNPC>().masoBool[0]
+                && Main.npc[npc.realLife].GetGlobalNPC<EModeGlobalNPC>().Counter[0] < 240)
+            {
+                npc.localAI[1] = -90f; //dont fire during mouth's special attacks (this is at bottom to override others)
             }
 
             return true;
@@ -1673,6 +1724,8 @@ namespace FargowiltasSouls.NPCs
                         npc.velocity += npc.velocity.RotatedBy(Math.PI / 2) * npc.velocity.Length() / Counter[1];
                         npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) + 1.57f;
 
+                        int projDamage = npc.damage / 10;
+
                         if (++npc.localAI[2] > 45) //shoot star spreads into the circle
                         {
                             npc.localAI[2] = 0;
@@ -1683,9 +1736,9 @@ namespace FargowiltasSouls.NPCs
                                 distance.Normalize();
                                 distance *= 7f;
                                 int type = ModContent.ProjectileType<DarkStar>();
-                                Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 12, 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center, distance, type, npc.damage / 12, 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 12, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, projDamage, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, distance, type, projDamage, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, projDamage, 0f, Main.myPlayer);
                             }
                         }
 
@@ -1697,12 +1750,12 @@ namespace FargowiltasSouls.NPCs
                             Counter[2] = 0;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                const int max = 6;
+                                int max = (int)(12f - 10f * npc.life / npc.lifeMax);
                                 for (int i = 0; i < max; i++)
                                 {
                                     Vector2 speed = npc.DirectionTo(pivot).RotatedBy(2 * Math.PI / max * i);
                                     Vector2 spawnPos = pivot - speed * 600;
-                                    Projectile.NewProjectile(spawnPos, speed, ModContent.ProjectileType<DestroyerLaser>(), npc.damage / 12, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(spawnPos, speed, ModContent.ProjectileType<DestroyerLaser>(), projDamage, 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -1963,8 +2016,8 @@ namespace FargowiltasSouls.NPCs
                 {
                     npc.localAI[0] = 0f;
                     int cap = Main.npc[npc.realLife].lifeMax / Main.npc[npc.realLife].life;
-                    if (cap > 25) //prevent meme scaling at super low life
-                        cap = 25;
+                    if (cap > 20) //prevent meme scaling at super low life
+                        cap = 20;
                     Counter[0] += Main.rand.Next(2 + cap) + 1;
                     if (Counter[0] >= Main.rand.Next(1400, 26000))
                     {
@@ -1974,13 +2027,13 @@ namespace FargowiltasSouls.NPCs
                             Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 15f;
                             double angleModifier = MathHelper.ToRadians(5) * distance.Length() / 1800.0;
                             distance.Normalize();
-                            float modifier = 16f * (1f - (float)Main.npc[npc.realLife].life / Main.npc[npc.realLife].lifeMax);
+                            float modifier = 14f * (1f - (float)Main.npc[npc.realLife].life / Main.npc[npc.realLife].lifeMax);
                             if (modifier < 8)
                                 modifier = 8;
                             distance *= modifier;
                             int type = ModContent.ProjectileType<DarkStar>();
-                            Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
-                            Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 5, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, distance.RotatedBy(-angleModifier), type, npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
                 }
@@ -2540,7 +2593,7 @@ namespace FargowiltasSouls.NPCs
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     const int max = 5;
-                    const float distance = 125f;
+                    const float distance = 130f;
                     float rotation = 2f * (float)Math.PI / max;
                     for (int i = 0; i < max; i++)
                     {
@@ -2612,7 +2665,7 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
 
-                if (++Counter[2] > 85)
+                if (++Counter[2] > 135)
                 {
                     Counter[2] = 0;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -2644,19 +2697,16 @@ namespace FargowiltasSouls.NPCs
 
                 SharkCount = 0;
 
-                if (npc.HasPlayerTarget)
+                if (npc.HasPlayerTarget && Main.player[npc.target].venom)
                 {
-                    if (Main.player[npc.target].venom)
-                    {
-                        npc.defense *= 2;
-                        //Counter[0]++;
-                        SharkCount = 1;
-                    }
+                    npc.defense *= 2;
+                    //Counter[0]++;
+                    SharkCount = 1;
                     npc.position -= npc.velocity * 0.1f;
                 }
                 else
                 {
-                    npc.position -= npc.velocity / 3;
+                    npc.position -= npc.velocity * 0.2f;
                 }
             }
 
@@ -3879,6 +3929,7 @@ namespace FargowiltasSouls.NPCs
             if (!masoBool[3])
             {
                 masoBool[3] = true;
+                masoStateML = 0;
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<LunarRitual>(),

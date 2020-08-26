@@ -13,7 +13,6 @@ namespace FargowiltasSouls.Projectiles.Champions
     public class NatureDeathray : Deathrays.BaseDeathray
     {
         public NatureDeathray() : base(120, "NatureDeathray") { }
-        private const float maxTime = 120;
 
         public override void SetStaticDefaults()
         {

@@ -11,7 +11,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
     public class SparklingLoveDeathray2 : Deathrays.BaseDeathray
     {
         public SparklingLoveDeathray2() : base(60, "DeviDeathray") { }
-        private const float maxTime = 60;
 
         public override void SetStaticDefaults()
         {

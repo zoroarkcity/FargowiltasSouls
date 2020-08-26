@@ -28,6 +28,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             projectile.timeLeft = 180;
             projectile.alpha = 250;
             projectile.aiStyle = -1;
+            projectile.penetrate = -1;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
         }
 

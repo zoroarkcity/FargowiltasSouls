@@ -35,7 +35,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             if (projectile.localAI[0] == 0)
             {
-                projectile.localAI[0] = 1;
+                projectile.localAI[0] = projectile.Center.X;
+                projectile.localAI[1] = projectile.Center.Y;
                 Main.PlaySound(SoundID.Item44, projectile.Center);
             }
 
@@ -57,11 +58,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             
             if (projectile.owner == Main.myPlayer)
             {
-                for (int i = 0; i < 4; i++)
-                {
-                    Projectile.NewProjectile(projectile.Center, Vector2.UnitX.RotatedBy(projectile.rotation + (float)Math.PI / 2 * i),
+                Projectile.NewProjectile(projectile.Center, Vector2.UnitX.RotatedBy(projectile.rotation),
                         ModContent.ProjectileType<SparklingLoveDeathray2>(), projectile.damage, projectile.knockBack, projectile.owner);
-                }
+                Projectile.NewProjectile(projectile.Center, Vector2.UnitX.RotatedBy(projectile.rotation + (float)Math.PI),
+                        ModContent.ProjectileType<SparklingLoveDeathray2>(), projectile.damage, projectile.knockBack, projectile.owner);
+
+                Projectile.NewProjectile(new Vector2(projectile.localAI[0], projectile.localAI[1]), Vector2.UnitX.RotatedBy(projectile.rotation - (float)Math.PI / 2),
+                    ModContent.ProjectileType<SparklingLoveDeathray2>(), projectile.damage, projectile.knockBack, projectile.owner);
             }
         }
 

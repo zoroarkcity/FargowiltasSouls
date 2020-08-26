@@ -21,7 +21,7 @@ Grants life regeneration");
             item.height = 18;
             item.rare = 11;
             item.value = Item.sellPrice(0, 20);
-            item.defense = 40;
+            item.defense = 30;
         }
 
         public override void UpdateEquip(Player player)

@@ -263,3 +263,61 @@ hm boss summons are only given when they're available in progression (prevent pa
 changed reverse mana flow formula, is now (item.mana / (1f - player.endurance) + player.statDefense) damage per use
 moon lord head no longer takes double damage (preparation for 1.4)
 eoc and attacks inflict shorter obstructed and longer berserked
+skeletron no longer revives hands
+boc creepers shoot new ichor proj
+boc p2 shoots denser laser spreads
+reduced velocity of cultist's pillar toss
+blender secondary projs ignore tiles
+cosmos has mp scaling
+blender secondaries ignore walls to fix that one wall glitch
+crystal leaves despawn immediately to unfuck plantera swarm
+buffed qb p2 bee spray
+slime king slasher stats nerfed back down, its spikes can only hit one enemy each (but still have pierce iframes)
+resprited mutant deathrays and styx gazer blade
+did something that might have fixed the rare abom glitch despawn
+ordinary carrot and upgrades give sniper scope effect (has toggle)
+fixed ml null curse phases resetting when you magic mirror(?????????????????)
+changed implementation of eternia crystal resistance so it actually only takes 1 damage during betsy fight
+when applied to enemies, curse of the moon reduces their contact damage
+life champ immune to daybroken and celled
+fixed weird pause if you died during deviantt's axe slam
+made DAMN sure shadow orb has no contact damage
+wof has a telegraph denoting the safe range of cursed flame wall
+wof has a dust ring when switching vulernabilities
+wof's deathray telegraph lasts longer
+wof eyes have longer delay after p2 attacks before they can fire again
+fixed wof's p2 attacks not covering the full range they should during desperation attack
+
+corrected wof cf wall warning i think
+fixed wyverns balls being wrong
+adjusted speed and homing of sparkling adoration's hearts
+adjusted deathrays produced by sparkling love right click
+penetrator right click uses mutant deathray resprite
+changed deviantt mega ray dust
+buffed destroyer coil attack damage
+destroyer coil fires more lasers at once as health decreases
+adjusted destroyer max dark star rate and velocity from segments as health decreases
+visual update for wof ray firing
+
+cosmos force has unnerfed nebula boosters
+nerfed number of eaters spawned by rockeater launcher
+nerfed slime slinging slasher, mech leash by increasing iframes on hit
+added eridanus minion to eridanus armour (unsprited)
+adjusted abom stats
+resprited queen bee
+reduced mutant life to normal and he has 25% DR
+
+ERIDANUS SPRITE
+eridanus minion officially 80% complete
+resprite will typhoons(?)
+shadow champion animation
+armored skeleton sword beams inflict their contact damage (was 4x)
+fixed eridanus despawning in mp
+plantera crystal leaves have a small telegraph before firing
+nerfed plantera dicer mine spawn rate, explode rate, range of blasts
+nerfed plantera crystal p2 ring undulation rate
+nerfed plantera speed more when you're not envenomed
+nerfed plantera crystal damage to 110 (was 180, plantera has 114)
+buffed plantera p2 crystal leaf size
+map icons for cosmos, shadow
+updated some champ stills

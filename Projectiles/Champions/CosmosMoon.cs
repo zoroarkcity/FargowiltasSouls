@@ -29,6 +29,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
+            projectile.penetrate = -1;
 
             projectile.scale = 0.5f;
         }

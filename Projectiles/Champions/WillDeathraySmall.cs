@@ -13,7 +13,6 @@ namespace FargowiltasSouls.Projectiles.Champions
     public class WillDeathraySmall : Deathrays.BaseDeathray
     {
         public WillDeathraySmall() : base(60, "AbomDeathray") { }
-        private const float maxTime = 60;
 
         public override void SetStaticDefaults()
         {

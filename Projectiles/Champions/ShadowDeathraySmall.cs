@@ -12,7 +12,6 @@ namespace FargowiltasSouls.Projectiles.Champions
     public class ShadowDeathraySmall : Deathrays.BaseDeathray
     {
         public ShadowDeathraySmall() : base(30, "ShadowDeathray") { }
-        private const float maxTime = 30;
 
         public override void SetStaticDefaults()
         {

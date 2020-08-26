@@ -361,7 +361,6 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.Creeper:
                     npc.lifeMax = (int)(npc.lifeMax * 1.25);
-                    Counter[2] = Main.rand.Next(600);
                     break;
 
                 case NPCID.WallofFlesh:
@@ -467,7 +466,6 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.MoonLordCore:
                     isMasoML = true;
-                    masoStateML = 0;
                     break;
 
                 case NPCID.MoonLordHead:
@@ -1276,20 +1274,13 @@ namespace FargowiltasSouls.NPCs
                             //cant use HasValidTarget for this because that returns true even if betsy is targeting the crystal (npc.target seems to become -1)
                             if (BossIsAlive(ref betsyBoss, NPCID.DD2Betsy) && Main.npc[betsyBoss].HasPlayerTarget
                                 && Main.player[Main.npc[betsyBoss].target].active && !Main.player[Main.npc[betsyBoss].target].dead && !Main.player[Main.npc[betsyBoss].target].ghost
-                                && npc.Distance(Main.player[Main.npc[betsyBoss].target].Center) < 2500)
+                                && npc.Distance(Main.player[Main.npc[betsyBoss].target].Center) < 3000)
                             {
-                                Counter[0] = 120; //even if betsy targets crystal, wait before becoming fully vulnerable
+                                Counter[0] = 30; //even if betsy targets crystal, wait before becoming fully vulnerable
                             }
 
                             if (Counter[0] > 0)
-                            {
                                 Counter[0]--;
-                                npc.defense = 99999;
-                            }
-                            else
-                            {
-                                npc.defense = npc.defDefense;
-                            }
                             break;
 
                         case NPCID.DesertBeast:
@@ -1545,7 +1536,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.ArmoredSkeleton:
                             Counter[0]++;
                             if (Counter[0] >= 300)
-                                Shoot(npc, 0, 500, 10, ProjectileID.SwordBeam, npc.damage, 1, false, true, DustID.AmberBolt);
+                                Shoot(npc, 0, 500, 10, ProjectileID.SwordBeam, npc.damage / 4, 1, false, true, DustID.AmberBolt);
                             break;
 
                         case NPCID.Vulture:
@@ -4163,10 +4154,10 @@ namespace FargowiltasSouls.NPCs
                                 if (Main.netMode != NetmodeID.MultiplayerClient && npc.velocity != Vector2.Zero)
                                 {
                                     const int max = 12;
-                                    Vector2 vel = Vector2.Normalize(npc.velocity) * 2f;
+                                    Vector2 vel = Vector2.Normalize(npc.velocity) * 1.5f;
                                     for (int i = 0; i < max; i++)
                                     {
-                                        Projectile.NewProjectile(npc.Center, vel.RotatedBy(1.25f * Math.PI / max * i),
+                                        Projectile.NewProjectile(npc.Center, vel.RotatedBy(2f * Math.PI / max * i),
                                             ModContent.ProjectileType<LightBall>(), npc.damage / 5, 0f, Main.myPlayer, 0f, .01f * npc.direction);
                                     }
                                 }
@@ -8193,13 +8184,19 @@ namespace FargowiltasSouls.NPCs
 
         public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (npc.friendly && BossIsAlive(ref deviBoss, mod.NPCType("DeviBoss")) && npc.Distance(Main.npc[deviBoss].Center) < 2000)
-                damage *= 8;
+            if (npc.friendly)
+            {
+                if (BossIsAlive(ref deviBoss, ModContent.NPCType<DeviBoss.DeviBoss>()) && npc.Distance(Main.npc[deviBoss].Center) < 2000)
+                    damage *= 8;
+            }
 
             if (FargoSoulsWorld.MasochistMode)
             {
+                if (npc.friendly && npc.type == NPCID.DD2EterniaCrystal && Counter[0] > 0)
+                    damage = 1;
+
                 if (BeetleDefenseAura)
-                    damage *= (3/4);
+                    damage *= 0.75;
 
                 if (PaladinsShield)
                     damage /= 2;

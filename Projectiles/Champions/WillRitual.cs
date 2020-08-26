@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Projectiles.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Will Seal");
-            Main.projFrames[projectile.type] = 3;
+            Main.projFrames[projectile.type] = 22;
         }
 
         public override void SetDefaults()
@@ -115,10 +115,13 @@ namespace FargowiltasSouls.Projectiles.Champions
                 projectile.netUpdate = true;
             }
 
-            projectile.rotation += 0.2f;
-            projectile.frame++;
-            if (projectile.frame > 2)
-                projectile.frame = 0;
+            projectile.rotation -= MathHelper.ToRadians(1.5f);
+            if (++projectile.frameCounter > 2)
+            {
+                projectile.frameCounter = 0;
+                if (++projectile.frame >= 22)
+                    projectile.frame = 0;
+            }
         }
 
         public override bool CanDamage()
@@ -130,14 +133,16 @@ namespace FargowiltasSouls.Projectiles.Champions
         {
             Texture2D texture2D13 = Main.projectileTexture[projectile.type];
             int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
-            int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
-            Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
-            Vector2 origin2 = rectangle.Size() / 2f;
 
             Color color26 = projectile.GetAlpha(lightColor);
 
             for (int x = 0; x < 32; x++)
             {
+                int frame = (projectile.frame + x) % 22;
+                int y3 = num156 * frame; //ypos of upper left corner of sprite to draw
+                Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
+                Vector2 origin2 = rectangle.Size() / 2f;
+
                 Vector2 drawOffset = new Vector2(threshold * projectile.scale / 2f, 0f).RotatedBy(projectile.ai[0]);
                 drawOffset = drawOffset.RotatedBy(2f * PI / 32f * x);
                 const int max = 4;

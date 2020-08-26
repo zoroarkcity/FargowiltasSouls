@@ -28,11 +28,11 @@ namespace FargowiltasSouls.Buffs.Souls
         {
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SolarFlare = true;
 
-            if (npc.buffTime[buffIndex] < 3)
+            if (npc.buffTime[buffIndex] < 2)
             {
                 int p = Projectile.NewProjectile(npc.Center, Vector2.Zero, mod.ProjectileType("Explosion"), 1000, 0f, Main.myPlayer);
-
-                Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                if (p != Main.maxProjectiles)
+                    Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
             }
         }
 

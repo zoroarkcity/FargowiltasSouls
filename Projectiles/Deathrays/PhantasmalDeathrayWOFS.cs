@@ -10,9 +10,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
 {
     public class PhantasmalDeathrayWOFS : BaseDeathray
     {
-        public PhantasmalDeathrayWOFS() : base(30, "PhantasmalDeathrayWOF") { }
-
-        private const float maxTime = 30;
+        public PhantasmalDeathrayWOFS() : base(60, "PhantasmalDeathrayWOF") { }
 
         public override void SetStaticDefaults()
         {
@@ -52,7 +50,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             {
                 Main.PlaySound(SoundID.Zombie, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
             }*/
-            float num801 = 0.3f;
+            float num801 = 0.2f;
             projectile.localAI[0] += 1f;
             if (projectile.localAI[0] >= maxTime)
             {

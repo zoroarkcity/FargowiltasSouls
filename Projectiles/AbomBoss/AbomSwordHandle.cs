@@ -11,8 +11,6 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
     public class AbomSwordHandle : Deathrays.BaseDeathray
     {
         public AbomSwordHandle() : base(150, "AbomDeathray") { }
-        private const float maxTime = 150;
-
         public int counter;
 
         public override void SetStaticDefaults()

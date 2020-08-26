@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.hostile = true;
             projectile.scale = 1f;
             projectile.timeLeft = 120;
-
+            projectile.penetrate = -1;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
         }
 

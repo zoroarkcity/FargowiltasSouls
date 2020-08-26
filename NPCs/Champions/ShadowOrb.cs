@@ -49,6 +49,11 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.localAI[3] = reader.ReadSingle();
         }
 
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return false;
+        }
+
         public override void AI()
         {
             if (npc.buffType[0] != 0)
@@ -70,6 +75,9 @@ namespace FargowiltasSouls.NPCs.Champions
             
             npc.scale = (Main.mouseTextColor / 200f - 0.35f) * 0.2f + 0.95f;
             npc.life = npc.lifeMax;
+
+            npc.damage = 0;
+            npc.defDamage = 0;
 
             npc.position = host.Center + new Vector2(npc.ai[1], 0f).RotatedBy(npc.ai[3]);
             npc.position.X -= npc.width / 2;

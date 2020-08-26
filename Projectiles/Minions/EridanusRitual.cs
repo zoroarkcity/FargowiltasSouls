@@ -28,6 +28,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.tileCollide = false;
             projectile.friendly = true;
             projectile.alpha = 255;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
         }
 
         public override void AI()

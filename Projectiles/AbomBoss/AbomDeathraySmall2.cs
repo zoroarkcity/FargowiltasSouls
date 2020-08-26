@@ -11,7 +11,6 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
     public class AbomDeathraySmall2 : Deathrays.BaseDeathray
     {
         public AbomDeathraySmall2() : base(30, "AbomDeathray") { }
-        private const float maxTime = 30;
 
         public override void SetStaticDefaults()
         {

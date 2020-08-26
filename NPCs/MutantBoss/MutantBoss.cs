@@ -36,7 +36,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             npc.damage = 360;
             npc.defense = 360;
             npc.value = Item.buyPrice(2);
-            npc.lifeMax = Main.expertMode ? 17700000 : 7700000;// : 3700000;
+            npc.lifeMax = Main.expertMode ? 7700000 : 3700000;
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -1949,7 +1949,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            //damage *= 0.75;
+            damage *= 0.75;
             return true;
         }
 

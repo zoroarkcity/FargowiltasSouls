@@ -47,18 +47,13 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 int ai0 = (int)projectile.ai[0];
                 if (Main.npc[ai0].CanBeChasedBy())
                 {
-                    double num4 = (Main.npc[ai0].Center - projectile.Center).ToRotation() - projectile.velocity.ToRotation();
-                    if (num4 > Math.PI)
-                    {
-                        num4 -= 2.0 * Math.PI;
-                    }
+                    float rotation = projectile.velocity.ToRotation();
+                    Vector2 vel = Main.npc[ai0].Center - projectile.Center;
+                    float targetAngle = vel.ToRotation();
+                    projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, projectile.localAI[1]));
 
-                    if (num4 < -1.0 * Math.PI)
-                    {
-                        num4 += 2.0 * Math.PI;
-                    }
-
-                    projectile.velocity = projectile.velocity.RotatedBy(num4 * (projectile.Distance(Main.npc[ai0].Center) > 100 ? 0.4f : 0.1f));
+                    if (projectile.localAI[1] < 0.5f)
+                        projectile.localAI[1] += 1f / 1500f;
                 }
                 else
                 {
@@ -90,6 +85,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     projectile.ai[0] = possibleTarget;
                     projectile.netUpdate = true;
                 }
+
+                projectile.localAI[1] = 0;
             }
 
             projectile.rotation = projectile.velocity.ToRotation() - (float)Math.PI / 2;

@@ -1231,12 +1231,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                     if (npc.ai[3] >= 7) //firing laser dust
                     {
-                        for (int i = 0; i < 5; i++)
+                        /*for (int i = 0; i < 5; i++)
                         {
                             int d = Dust.NewDust(npc.position, npc.width, npc.height, 86, -npc.velocity.X, -npc.velocity.Y, 0, default(Color), 2.5f);
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity *= 12f;
-                        }
+                        }*/
                     }
                     else //charge up dust
                     {
@@ -1275,9 +1275,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     break;
 
                 case 15: //sparkling love
-                    if (npc.ai[1] > 150 && (!AliveCheck(player) || Phase2Check()))
-                        break;
-
                     if (npc.localAI[0] == 0)
                     {
                         npc.localAI[0] = 1;
