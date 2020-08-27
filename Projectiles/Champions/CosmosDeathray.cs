@@ -125,6 +125,11 @@ namespace FargowiltasSouls.Projectiles.Champions
             }
         }
 
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            damage *= 2;
+        }
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(ModContent.BuffType<Buffs.Masomode.CurseoftheMoon>(), 360);

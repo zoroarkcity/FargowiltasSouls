@@ -46,9 +46,11 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.buffImmune[BuffID.Chilled] = true;
             npc.buffImmune[BuffID.OnFire] = true;
             npc.buffImmune[BuffID.Suffocation] = true;
+            npc.buffImmune[BuffID.Lovestruck] = true;
             npc.buffImmune[mod.BuffType("Lethargic")] = true;
             npc.buffImmune[mod.BuffType("ClippedWings")] = true;
             npc.buffImmune[mod.BuffType("TimeFrozen")] = true;
+            npc.buffImmune[mod.BuffType("LightningRod")] = true;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
 
             music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Champions");
@@ -171,7 +173,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.timeLeft = 600;
 
                         int ai2 = (int)npc.ai[2];
-                        if (++npc.ai[3] < 600 && ai2 > -1 && ai2 < Main.maxNPCs && Main.npc[ai2].active && Main.npc[ai2].type == ModLoader.GetMod("Fargowiltas").NPCType("Deviantt"))
+                        if (++npc.ai[3] < 360 && ai2 > -1 && ai2 < Main.maxNPCs && Main.npc[ai2].active && Main.npc[ai2].type == ModLoader.GetMod("Fargowiltas").NPCType("Deviantt"))
                         {
                             targetPos = Main.npc[ai2].Center;
                             npc.direction = npc.spriteDirection = npc.Center.X < targetPos.X ? 1 : -1;
@@ -227,7 +229,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
                         else
                         {
-                            if (npc.ai[3] >= 600) //if couldn't kill deviantt in 10 seconds, just stop trying
+                            if (npc.ai[3] >= 360) //if couldn't kill deviantt in 6 seconds, just stop trying
                                 hitChildren = true;
 
                             npc.ai[0] = npc.ai[1];
