@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eridanus");
-            Main.projFrames[projectile.type] = 5;
+            Main.projFrames[projectile.type] = 9;
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 7;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
@@ -65,7 +65,16 @@ namespace FargowiltasSouls.Projectiles.Minions
                 projectile.netUpdate = true;
             }
 
-            projectile.frame = 0;
+            if (++projectile.frameCounter > 6)
+            {
+                projectile.frameCounter = 0;
+                projectile.frame++;
+            }
+            if (projectile.frame > 4)
+            {
+                projectile.frame = 0;
+            }
+
             projectile.rotation = 0;
 
             if (projectile.ai[0] >= 0 && projectile.ai[0] < 200) //has target
@@ -98,7 +107,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                                     }
                                 }
 
-                                projectile.frame = player.HeldItem.melee ? 2 : 1;
+                                projectile.frame = player.HeldItem.melee ? 6 : 5;
                                 projectile.rotation = projectile.DirectionTo(npc.Center).ToRotation();
                                 if (projectile.spriteDirection < 0)
                                     projectile.rotation += (float)Math.PI;
@@ -126,9 +135,9 @@ namespace FargowiltasSouls.Projectiles.Minions
                                 if (player.HeldItem.ranged)
                                 {
                                     if (projectile.localAI[0] < 15)
-                                        projectile.frame = 4;
+                                        projectile.frame = 8;
                                     else if (projectile.localAI[0] > 50)
-                                        projectile.frame = 3;
+                                        projectile.frame = 7;
                                 }
                             }
                             break;
@@ -140,7 +149,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                                 projectile.velocity *= 0.8f;
 
                                 if (player.HeldItem.magic && projectile.localAI[0] > 45)
-                                    projectile.frame = 3;
+                                    projectile.frame = 7;
 
                                 if (++projectile.localAI[0] > 60)
                                 {
@@ -148,7 +157,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                                         projectile.localAI[0] = 0;
 
                                     if (player.HeldItem.magic)
-                                        projectile.frame = 4;
+                                        projectile.frame = 8;
 
                                     if (projectile.localAI[0] % 5 == 0 && player.HeldItem.magic) //rain lunar flares
                                     {
@@ -179,7 +188,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                                 if (projectile.Distance(home) > 50)
                                     Movement(home, 0.8f, 32f);
 
-                                projectile.frame = 1;
+                                projectile.frame = 5;
 
                                 bool okToAttack = (!player.HeldItem.melee && !player.HeldItem.ranged && !player.HeldItem.magic) || !player.controlUseItem;
 
@@ -196,7 +205,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                                 }
 
                                 if (okToAttack && projectile.localAI[0] < 10)
-                                    projectile.frame = 2;
+                                    projectile.frame = 6;
 
                                 projectile.rotation = projectile.DirectionTo(npc.Center).ToRotation();
                                 if (projectile.spriteDirection < 0)

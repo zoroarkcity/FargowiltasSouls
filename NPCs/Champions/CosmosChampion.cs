@@ -19,14 +19,14 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eridanus, Champion of Cosmos");
-            Main.npcFrameCount[npc.type] = 5;
+            Main.npcFrameCount[npc.type] = 9;
             NPCID.Sets.TrailCacheLength[npc.type] = 6;
             NPCID.Sets.TrailingMode[npc.type] = 1;
         }
 
         public override void SetDefaults()
         {
-            npc.width = 75;
+            npc.width = 80;
             npc.height = 100;
             npc.damage = 160;
             npc.defense = 70;
@@ -162,6 +162,83 @@ namespace FargowiltasSouls.NPCs.Champions
 
             switch ((int)npc.ai[0])
             {
+                case -4: //hit children
+                    {
+                        npc.timeLeft = 600;
+
+                        int ai2 = (int)npc.ai[2];
+                        if (ai2 > -1 && ai2 < Main.maxNPCs && Main.npc[ai2].active && Main.npc[ai2].type == ModLoader.GetMod("Fargowiltas").NPCType("Deviantt"))
+                        {
+                            targetPos = Main.npc[ai2].Center;
+                            npc.direction = npc.spriteDirection = npc.Center.X < targetPos.X ? 1 : -1;
+
+                            targetPos.X += npc.width / 4 * (npc.Center.X < targetPos.X ? -1 : 1);
+                            if (npc.Distance(targetPos) > npc.width / 4)
+                                Movement(targetPos, 1.6f, 64f);
+
+                            if (npc.localAI[1] == 0)
+                            {
+                                npc.localAI[1] = 1;
+                                Main.PlaySound(SoundID.Roar, npc.Center, 0);
+                            }
+
+                            if (++npc.localAI[0] <= 5)
+                            {
+                                npc.rotation = npc.DirectionTo(Main.npc[ai2].Center).ToRotation();
+                                if (npc.direction < 0)
+                                    npc.rotation += (float)Math.PI;
+
+                                npc.ai[3] = npc.Center.X < Main.npc[ai2].Center.X ? 1 : -1; //store direction im facing
+
+                                if (npc.localAI[0] == 5)
+                                {
+                                    npc.netUpdate = true;
+                                    if (npc.Distance(targetPos) < 150)
+                                    {
+                                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        {
+                                            Vector2 offset = Vector2.UnitX;
+                                            if (npc.direction < 0)
+                                                offset.X *= -1f;
+                                            offset = offset.RotatedBy(npc.DirectionTo(Main.npc[ai2].Center).ToRotation());
+
+                                            int modifier = Math.Sign(npc.Center.Y - Main.npc[ai2].Center.Y);
+                                            Projectile.NewProjectile(npc.Center + offset + 3000 * npc.DirectionFrom(Main.npc[ai2].Center) * modifier,
+                                                npc.DirectionTo(Main.npc[ai2].Center) * modifier,
+                                                ModContent.ProjectileType<CosmosDeathray>(), npc.damage / 4, 0f, Main.myPlayer);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        npc.localAI[0] = 0;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                npc.direction = npc.spriteDirection = Math.Sign(npc.ai[3]); //dont turn around if crossed up
+
+                                if (npc.localAI[0] > 10)
+                                {
+                                    npc.localAI[0] = 0;
+                                    npc.ai[3] = 0;
+                                    npc.netUpdate = true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            npc.ai[0] = npc.ai[1];
+                            npc.ai[1] = 0;
+                            npc.ai[2] = 0;
+                            npc.ai[3] = 0;
+                            npc.localAI[0] = 0;
+                            npc.localAI[1] = 0;
+                            npc.netUpdate = true;
+                        }
+                    }
+                    break;
+
                 case -3: //final phase
                     if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f) //despawn code
                     {
@@ -558,12 +635,26 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     if (++npc.ai[1] > 60)
                     {
+                        float oldAi0 = npc.ai[0];
+
                         npc.TargetClosest();
                         npc.ai[0] += npc.localAI[2] == 0 ? 2 : 1;
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
+
+                        for (int i = 0; i < Main.maxNPCs; i++) //look for deviantt to kill
+                        {
+                            int type = ModLoader.GetMod("Fargowiltas").NPCType("Deviantt");
+                            if (Main.npc[i].active && Main.npc[i].type == type && npc.Distance(Main.npc[i].Center) < 2000 && player.Distance(Main.npc[i].Center) < 2000)
+                            {
+                                npc.ai[0] = -4;
+                                npc.ai[1] = oldAi0;
+                                npc.ai[2] = i; //store target npc
+                                break;
+                            }
+                        }
                     }
                     break;
 
@@ -651,12 +742,26 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     if (++npc.ai[1] > 60)
                     {
+                        float oldAi0 = npc.ai[0];
+
                         npc.TargetClosest();
                         npc.ai[0]++;
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
+
+                        for (int i = 0; i < Main.maxNPCs; i++) //look for deviantt to kill
+                        {
+                            int type = ModLoader.GetMod("Fargowiltas").NPCType("Deviantt");
+                            if (Main.npc[i].active && Main.npc[i].type == type && npc.Distance(Main.npc[i].Center) < 2000 && player.Distance(Main.npc[i].Center) < 2000)
+                            {
+                                npc.ai[0] = -4;
+                                npc.ai[1] = oldAi0;
+                                npc.ai[2] = i; //store target npc
+                                break;
+                            }
+                        }
                     }
                     break;
 
@@ -736,7 +841,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.direction < 0)
                             npc.rotation += (float)Math.PI;
 
-                        npc.ai[3] = npc.Center.X < player.Center.X ? 1 : -1; //store direction im facing
+                        npc.localAI[0] = npc.Center.X < player.Center.X ? 1 : -1; //store direction im facing
 
                         if (npc.ai[2] == 75) //falling punch
                         {
@@ -753,7 +858,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     else
                     {
-                        npc.direction = npc.spriteDirection = Math.Sign(npc.ai[3]); //dont turn around if crossed up
+                        npc.direction = npc.spriteDirection = Math.Sign(npc.localAI[0]); //dont turn around if crossed up
 
                         if (--npc.ai[3] < 0)
                         {
@@ -775,6 +880,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
+                        npc.localAI[0] = 0;
                         npc.netUpdate = true;
                     }
                     break;
@@ -910,7 +1016,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Vector2 offset = new Vector2(40, -16);
+                                Vector2 offset = new Vector2(70, -16);
                                 if (player.Center.X < npc.Center.X)
                                     offset.X *= -1f;
                                 for (int i = 0; i < 2; i++)
@@ -1188,105 +1294,113 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void FindFrame(int frameHeight)
         {
-            switch((int)npc.ai[0])
+            if (++npc.frameCounter > 6)
             {
+                npc.frameCounter = 0;
+                npc.frame.Y += frameHeight;
+            }
+
+            if (npc.frame.Y > frameHeight * 4)
+            {
+                npc.frame.Y = 0;
+            }
+
+            switch ((int)npc.ai[0])
+            {
+                case -4:
+                    npc.frame.Y = frameHeight * 5;
+                    if (npc.localAI[0] >= 5)
+                        npc.frame.Y = frameHeight * 6;
+                    break;
+
                 case -3:
                     if (npc.ai[2] < 30 || (npc.ai[2] > 100 && npc.ai[2] < 130))
-                        npc.frame.Y = frameHeight * 4;
+                        npc.frame.Y = frameHeight * 8;
                     else if ((npc.ai[2] > 70 && npc.ai[2] < 100) || npc.ai[2] > 170)
-                        npc.frame.Y = frameHeight * 3;
-                    else
-                        npc.frame.Y = 0;
+                        npc.frame.Y = frameHeight * 7;
                     break;
 
                 case -2:
-                    npc.frame.Y = frameHeight;
+                    npc.frame.Y = frameHeight * 5;
                     break;
 
                 case -1:
                     if (npc.ai[1] > 120)
-                        npc.frame.Y = frameHeight * 4;
+                        npc.frame.Y = frameHeight * 8;
                     else if (npc.ai[1] > 100)
-                        npc.frame.Y = frameHeight * 3;
-                    else
-                        npc.frame.Y = 0;
+                        npc.frame.Y = frameHeight * 7;
                     break;
 
                 case 1:
                     if (npc.ai[2] <= 10)
-                        npc.frame.Y = frameHeight;
+                        npc.frame.Y = frameHeight * 5;
                     else
-                        npc.frame.Y = frameHeight * 2;
+                        npc.frame.Y = frameHeight * 6;
                     break;
 
                 case 3:
                     {
                         int threshold = npc.localAI[2] == 0 ? 70 : 50;
                         if (npc.ai[2] <= threshold)
-                            npc.frame.Y = frameHeight;
+                            npc.frame.Y = frameHeight * 5;
                         else
-                            npc.frame.Y = frameHeight * 2;
+                            npc.frame.Y = frameHeight * 6;
                     }
                     break;
 
                 case 5:
                     if (npc.ai[2] <= 75)
-                        npc.frame.Y = frameHeight;
+                        npc.frame.Y = frameHeight * 5;
                     else
-                        npc.frame.Y = frameHeight * 2;
+                        npc.frame.Y = frameHeight * 6;
                     break;
 
                 case 7:
                     if (npc.ai[1] < 30)
-                        npc.frame.Y = frameHeight * 3;
+                        npc.frame.Y = frameHeight * 7;
                     else if (npc.ai[1] < 60)
-                        npc.frame.Y = frameHeight * 4;
-                    else
-                        npc.frame.Y = 0;
+                        npc.frame.Y = frameHeight * 8;
                     break;
 
                 case 9:
                     if (npc.ai[2] <= 180)
-                        npc.frame.Y = frameHeight;
+                        npc.frame.Y = frameHeight * 5;
                     else
-                        npc.frame.Y = frameHeight * 2;
+                        npc.frame.Y = frameHeight * 6;
                     break;
 
                 case 11:
-                    if (npc.ai[3] <= 3)
-                        npc.frame.Y = frameHeight;
+                    if (npc.ai[1] > 60)
+                        npc.frame.Y = frameHeight * 6;
                     else
-                        npc.frame.Y = frameHeight * 2;
+                        npc.frame.Y = frameHeight * 5;
                     break;
 
                 case 13:
                     if (npc.ai[1] < 110)
                     {
                         if (npc.ai[2] <= 10)
-                            npc.frame.Y = frameHeight;
+                            npc.frame.Y = frameHeight * 5;
                         else
-                            npc.frame.Y = frameHeight * 2;
+                            npc.frame.Y = frameHeight * 6;
                     }
                     else //uppercut time
                     {
                         if (npc.ai[1] <= 110 + 45)
-                            npc.frame.Y = frameHeight;
+                            npc.frame.Y = frameHeight * 5;
                         else
-                            npc.frame.Y = frameHeight * 2;
+                            npc.frame.Y = frameHeight * 6;
                     }
                     break;
 
                 case 15: //ZA WARUDO
                     if (npc.ai[1] < 90)
-                        npc.frame.Y = frameHeight * 3;
+                        npc.frame.Y = frameHeight * 7;
                     else if (npc.ai[1] < 210)
-                        npc.frame.Y = frameHeight * 4;
-                    else
-                        npc.frame.Y = 0;
+                        npc.frame.Y = frameHeight * 8;
                     break;
 
                 default:
-                    npc.frame.Y = 0;
                     break;
             }
         }
