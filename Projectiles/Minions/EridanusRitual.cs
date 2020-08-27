@@ -78,7 +78,7 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.Transform);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
             Texture2D texture2D13 = Main.projectileTexture[projectile.type];
             int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
             int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
@@ -92,10 +92,13 @@ namespace FargowiltasSouls.Projectiles.Minions
             {
                 if (x < projectile.localAI[0])
                     continue;
-                Vector2 drawOffset = new Vector2(0f, -threshold * projectile.scale);//.RotatedBy(projectile.ai[0]);
-                drawOffset = drawOffset.RotatedBy(2f * PI / max * (x + 1));
-                Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+                Vector2 drawOffset = new Vector2(0f, -threshold * projectile.scale);
+                drawOffset = drawOffset.RotatedBy(x * PI / max * 2).RotatedBy(projectile.ai[0]);
+                spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, 0, origin2, projectile.scale, SpriteEffects.None, 0f);
             }
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
             return false;
         }
 

@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eridanus");
-            Main.projFrames[projectile.type] = 5;
+            Main.projFrames[projectile.type] = 9;
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 7;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
@@ -65,7 +65,16 @@ namespace FargowiltasSouls.Projectiles.Minions
                 projectile.netUpdate = true;
             }
 
-            projectile.frame = 0;
+            if (++projectile.frameCounter > 6)
+            {
+                projectile.frameCounter = 0;
+                projectile.frame++;
+            }
+            if (projectile.frame > 4)
+            {
+                projectile.frame = 0;
+            }
+
             projectile.rotation = 0;
 
             if (projectile.ai[0] >= 0 && projectile.ai[0] < 200) //has target
@@ -98,7 +107,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                                     }
                                 }
 
-                                projectile.frame = player.HeldItem.melee ? 2 : 1;
+                                projectile.frame = player.HeldItem.melee ? 6 : 5;
                                 projectile.rotation = projectile.DirectionTo(npc.Center).ToRotation();
                                 if (projectile.spriteDirection < 0)
                                     projectile.rotation += (float)Math.PI;
@@ -126,9 +135,9 @@ namespace FargowiltasSouls.Projectiles.Minions
                                 if (player.HeldItem.ranged)
                                 {
                                     if (projectile.localAI[0] < 15)
-                                        projectile.frame = 4;
+                                        projectile.frame = 8;
                                     else if (projectile.localAI[0] > 50)
-                                        projectile.frame = 3;
+                                        projectile.frame = 7;
                                 }
                             }
                             break;
@@ -140,7 +149,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                                 projectile.velocity *= 0.8f;
 
                                 if (player.HeldItem.magic && projectile.localAI[0] > 45)
-                                    projectile.frame = 3;
+                                    projectile.frame = 7;
 
                                 if (++projectile.localAI[0] > 60)
                                 {
@@ -148,7 +157,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                                         projectile.localAI[0] = 0;
 
                                     if (player.HeldItem.magic)
-                                        projectile.frame = 4;
+                                        projectile.frame = 8;
 
                                     if (projectile.localAI[0] % 5 == 0 && player.HeldItem.magic) //rain lunar flares
                                     {
@@ -179,7 +188,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                                 if (projectile.Distance(home) > 50)
                                     Movement(home, 0.8f, 32f);
 
-                                projectile.frame = 1;
+                                projectile.frame = 5;
 
                                 bool okToAttack = (!player.HeldItem.melee && !player.HeldItem.ranged && !player.HeldItem.magic) || !player.controlUseItem;
 
@@ -196,7 +205,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                                 }
 
                                 if (okToAttack && projectile.localAI[0] < 10)
-                                    projectile.frame = 2;
+                                    projectile.frame = 6;
 
                                 projectile.rotation = projectile.DirectionTo(npc.Center).ToRotation();
                                 if (projectile.spriteDirection < 0)
@@ -261,7 +270,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 }
             }
 
-            if (++drawTrailOffset > 3)
+            if (++drawTrailOffset > 2)
                 drawTrailOffset = 0;
         }
 
@@ -297,70 +306,49 @@ namespace FargowiltasSouls.Projectiles.Minions
                 projectile.velocity.Y = cap * Math.Sign(projectile.velocity.Y);
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.AddBuff(ModContent.BuffType<Buffs.Masomode.CurseoftheMoon>(), 360);
-        }
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) => target.AddBuff(ModContent.BuffType<Buffs.Masomode.CurseoftheMoon>(), 360);
 
-        public override bool? CanCutTiles()
-        {
-            return false;
-        }
+        public override bool? CanCutTiles() => false;
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture2D13 = Main.projectileTexture[projectile.type];
-            Texture2D texture2D14 = mod.GetTexture("NPCs/Champions/CosmosChampion_Glow2");
-            Texture2D texture2D15 = mod.GetTexture("NPCs/Champions/CosmosChampion_Glow");
-            int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
-            int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
-            Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
+            Texture2D projTex = Main.projectileTexture[projectile.type];
+            Texture2D glowTex = mod.GetTexture("NPCs/Champions/CosmosChampion_Glow");
+            Texture2D glowerTex = mod.GetTexture("NPCs/Champions/CosmosChampion_Glow2");
+            int size = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
+            int y3 = size * projectile.frame; //ypos of upper left corner of sprite to draw
+            Rectangle rectangle = new Rectangle(0, y3, projTex.Width, size);
             Vector2 origin2 = rectangle.Size() / 2f;
-            SpriteEffects effects = projectile.spriteDirection < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-
-            Color color26 = projectile.GetAlpha(lightColor);
+            SpriteEffects flipper = projectile.spriteDirection < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            Color projColor = projectile.GetAlpha(lightColor);
             int add = 150;
             Color glowColor = new Color(add + Main.DiscoR / 3, add + Main.DiscoG / 3, add + Main.DiscoB / 3);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.Transform);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
             {
                 if (i % 2 == (drawTrailOffset > 1 ? 1 : 0))
                     continue;
-                //Color color27 = color26 * 0.5f;
-                //color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+
                 Vector2 value4 = projectile.oldPos[i];
                 float num165 = projectile.oldRot[i];
-
-                //Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, effects, 0f);
-
-                Color color28 = glowColor * 0.5f;
-                Color color28butbrighter = glowColor * 0.2f;
-
-                Main.spriteBatch.Draw(texture2D14, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color28butbrighter, num165, origin2, projectile.scale, effects, 0f);
-                Main.spriteBatch.Draw(texture2D15, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color28, num165, origin2, projectile.scale, effects, 0f);
+                spriteBatch.Draw(glowTex, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glowColor * 0.5f, num165, origin2, projectile.scale, flipper, 0f);
             }
-            
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.Transform);
-
-            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, projectile.rotation, origin2, projectile.scale, effects, 0f);
-            //drawing this before too so it's not affected by the light of the og sprite
-            Main.spriteBatch.Draw(texture2D14, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glowColor, projectile.rotation, origin2, projectile.scale, effects, 0f);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.Transform);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            spriteBatch.Draw(projTex, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projColor, projectile.rotation, origin2, projectile.scale, flipper, 0f);
+            spriteBatch.Draw(glowerTex, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glowColor, projectile.rotation, origin2, projectile.scale, flipper, 0f);
 
-            Main.spriteBatch.Draw(texture2D14, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glowColor, projectile.rotation, origin2, projectile.scale, effects, 0f);
-
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            spriteBatch.Draw(glowerTex, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glowColor, projectile.rotation, origin2, projectile.scale, flipper, 0f);
+           
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
             return false;
-        }
-        public override Color? GetAlpha(Color lightColor)
-        {
-            Color poglight = new Color(lightColor.R - 30, lightColor.G - 30, lightColor.B - 30);
-            return poglight * projectile.Opacity;
         }
     }
 }

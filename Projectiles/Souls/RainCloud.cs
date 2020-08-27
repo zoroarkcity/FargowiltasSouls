@@ -41,7 +41,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
             {
                 Projectile proj = Main.projectile[i];
 
-                if (proj.active && !proj.hostile && proj.owner == player.whoAmI && proj.type != projectile.type && proj.type != ProjectileID.RainFriendly && proj.Hitbox.Intersects(projectile.Hitbox))
+                if (proj.active && proj.friendly && !proj.hostile && proj.owner == player.whoAmI && proj.damage > 0 && !proj.minion
+                    && proj.type != projectile.type && proj.type != ProjectileID.RainFriendly && proj.whoAmI != Main.player[proj.owner].heldProj
+                    && Array.IndexOf(FargoGlobalProjectile.noSplit, projectile.type) <= -1 && proj.Hitbox.Intersects(projectile.Hitbox))
                 {
                     if (projectile.scale < 3f)
                     {
