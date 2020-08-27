@@ -1015,7 +1015,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Vector2 offset = new Vector2(40, -16);
+                                Vector2 offset = new Vector2(70, -16);
                                 if (player.Center.X < npc.Center.X)
                                     offset.X *= -1f;
                                 for (int i = 0; i < 2; i++)
@@ -1364,10 +1364,10 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case 11:
-                    if (npc.ai[3] <= 3)
-                        npc.frame.Y = frameHeight;
-                    else
+                    if (npc.ai[1] > 60)
                         npc.frame.Y = frameHeight * 2;
+                    else
+                        npc.frame.Y = frameHeight;
                     break;
 
                 case 13:
