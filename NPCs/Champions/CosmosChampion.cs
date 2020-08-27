@@ -19,7 +19,7 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eridanus, Champion of Cosmos");
-            Main.npcFrameCount[npc.type] = 5;
+            Main.npcFrameCount[npc.type] = 9;
             NPCID.Sets.TrailCacheLength[npc.type] = 6;
             NPCID.Sets.TrailingMode[npc.type] = 1;
         }
@@ -841,7 +841,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.direction < 0)
                             npc.rotation += (float)Math.PI;
 
-                        npc.ai[3] = npc.Center.X < player.Center.X ? 1 : -1; //store direction im facing
+                        npc.localAI[0] = npc.Center.X < player.Center.X ? 1 : -1; //store direction im facing
 
                         if (npc.ai[2] == 75) //falling punch
                         {
@@ -858,7 +858,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     else
                     {
-                        npc.direction = npc.spriteDirection = Math.Sign(npc.ai[3]); //dont turn around if crossed up
+                        npc.direction = npc.spriteDirection = Math.Sign(npc.localAI[0]); //dont turn around if crossed up
 
                         if (--npc.ai[3] < 0)
                         {
@@ -880,6 +880,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
+                        npc.localAI[0] = 0;
                         npc.netUpdate = true;
                     }
                     break;
@@ -1293,111 +1294,113 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void FindFrame(int frameHeight)
         {
-            switch((int)npc.ai[0])
+            if (++npc.frameCounter > 6)
+            {
+                npc.frameCounter = 0;
+                npc.frame.Y += frameHeight;
+            }
+
+            if (npc.frame.Y > frameHeight * 4)
+            {
+                npc.frame.Y = 0;
+            }
+
+            switch ((int)npc.ai[0])
             {
                 case -4:
-                    npc.frame.Y = frameHeight;
+                    npc.frame.Y = frameHeight * 5;
                     if (npc.localAI[0] >= 5)
-                        npc.frame.Y = frameHeight * 2;
+                        npc.frame.Y = frameHeight * 6;
                     break;
 
                 case -3:
                     if (npc.ai[2] < 30 || (npc.ai[2] > 100 && npc.ai[2] < 130))
-                        npc.frame.Y = frameHeight * 4;
+                        npc.frame.Y = frameHeight * 8;
                     else if ((npc.ai[2] > 70 && npc.ai[2] < 100) || npc.ai[2] > 170)
-                        npc.frame.Y = frameHeight * 3;
-                    else
-                        npc.frame.Y = 0;
+                        npc.frame.Y = frameHeight * 7;
                     break;
 
                 case -2:
-                    npc.frame.Y = frameHeight;
+                    npc.frame.Y = frameHeight * 5;
                     break;
 
                 case -1:
                     if (npc.ai[1] > 120)
-                        npc.frame.Y = frameHeight * 4;
+                        npc.frame.Y = frameHeight * 8;
                     else if (npc.ai[1] > 100)
-                        npc.frame.Y = frameHeight * 3;
-                    else
-                        npc.frame.Y = 0;
+                        npc.frame.Y = frameHeight * 7;
                     break;
 
                 case 1:
                     if (npc.ai[2] <= 10)
-                        npc.frame.Y = frameHeight;
+                        npc.frame.Y = frameHeight * 5;
                     else
-                        npc.frame.Y = frameHeight * 2;
+                        npc.frame.Y = frameHeight * 6;
                     break;
 
                 case 3:
                     {
                         int threshold = npc.localAI[2] == 0 ? 70 : 50;
                         if (npc.ai[2] <= threshold)
-                            npc.frame.Y = frameHeight;
+                            npc.frame.Y = frameHeight * 5;
                         else
-                            npc.frame.Y = frameHeight * 2;
+                            npc.frame.Y = frameHeight * 6;
                     }
                     break;
 
                 case 5:
                     if (npc.ai[2] <= 75)
-                        npc.frame.Y = frameHeight;
+                        npc.frame.Y = frameHeight * 5;
                     else
-                        npc.frame.Y = frameHeight * 2;
+                        npc.frame.Y = frameHeight * 6;
                     break;
 
                 case 7:
                     if (npc.ai[1] < 30)
-                        npc.frame.Y = frameHeight * 3;
+                        npc.frame.Y = frameHeight * 7;
                     else if (npc.ai[1] < 60)
-                        npc.frame.Y = frameHeight * 4;
-                    else
-                        npc.frame.Y = 0;
+                        npc.frame.Y = frameHeight * 8;
                     break;
 
                 case 9:
                     if (npc.ai[2] <= 180)
-                        npc.frame.Y = frameHeight;
+                        npc.frame.Y = frameHeight * 5;
                     else
-                        npc.frame.Y = frameHeight * 2;
+                        npc.frame.Y = frameHeight * 6;
                     break;
 
                 case 11:
                     if (npc.ai[1] > 60)
-                        npc.frame.Y = frameHeight * 2;
+                        npc.frame.Y = frameHeight * 6;
                     else
-                        npc.frame.Y = frameHeight;
+                        npc.frame.Y = frameHeight * 5;
                     break;
 
                 case 13:
                     if (npc.ai[1] < 110)
                     {
                         if (npc.ai[2] <= 10)
-                            npc.frame.Y = frameHeight;
+                            npc.frame.Y = frameHeight * 5;
                         else
-                            npc.frame.Y = frameHeight * 2;
+                            npc.frame.Y = frameHeight * 6;
                     }
                     else //uppercut time
                     {
                         if (npc.ai[1] <= 110 + 45)
-                            npc.frame.Y = frameHeight;
+                            npc.frame.Y = frameHeight * 5;
                         else
-                            npc.frame.Y = frameHeight * 2;
+                            npc.frame.Y = frameHeight * 6;
                     }
                     break;
 
                 case 15: //ZA WARUDO
                     if (npc.ai[1] < 90)
-                        npc.frame.Y = frameHeight * 3;
+                        npc.frame.Y = frameHeight * 7;
                     else if (npc.ai[1] < 210)
-                        npc.frame.Y = frameHeight * 4;
-                    else
-                        npc.frame.Y = 0;
+                        npc.frame.Y = frameHeight * 8;
                     break;
 
                 default:
-                    npc.frame.Y = 0;
                     break;
             }
         }

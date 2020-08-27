@@ -333,3 +333,4 @@ penetrator dash counts as a held proj
 eridanus will now ignore you to brutally murder deviantt if she's nearby
 eridanus no longer freaks out during nebula
 eridanus tweaks to deathray splits and nebula blaze offset
+eridanus no longer flies backwards during meteor dive
