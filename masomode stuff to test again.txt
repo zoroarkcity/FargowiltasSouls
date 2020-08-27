@@ -337,4 +337,4 @@ eridanus no longer flies backwards during meteor dive
 restored lexus cyanixs deviantt theme
 new placeholder champs theme
 
-eridanus will give up killing deviantt and won't try again if it takes him longer than 15 seconds
+eridanus will give up killing deviantt and won't try again if it takes him longer than 10 seconds

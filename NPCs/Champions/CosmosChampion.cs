@@ -171,7 +171,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.timeLeft = 600;
 
                         int ai2 = (int)npc.ai[2];
-                        if (++npc.ai[3] < 900 && ai2 > -1 && ai2 < Main.maxNPCs && Main.npc[ai2].active && Main.npc[ai2].type == ModLoader.GetMod("Fargowiltas").NPCType("Deviantt"))
+                        if (++npc.ai[3] < 600 && ai2 > -1 && ai2 < Main.maxNPCs && Main.npc[ai2].active && Main.npc[ai2].type == ModLoader.GetMod("Fargowiltas").NPCType("Deviantt"))
                         {
                             targetPos = Main.npc[ai2].Center;
                             npc.direction = npc.spriteDirection = npc.Center.X < targetPos.X ? 1 : -1;
@@ -227,7 +227,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
                         else
                         {
-                            if (npc.ai[3] >= 900) //if couldn't kill deviantt in 15 seconds, just stop trying
+                            if (npc.ai[3] >= 600) //if couldn't kill deviantt in 10 seconds, just stop trying
                                 hitChildren = true;
 
                             npc.ai[0] = npc.ai[1];
