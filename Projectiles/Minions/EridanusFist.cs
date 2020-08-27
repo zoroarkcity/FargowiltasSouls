@@ -13,13 +13,13 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eridanus Fist");
-            Main.projFrames[projectile.type] = 1;
+            Main.projFrames[projectile.type] = 11;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 50;
-            projectile.height = 50;
+            projectile.width = 40;
+            projectile.height = 40;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.friendly = true;
@@ -27,6 +27,8 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.alpha = 0;
             projectile.timeLeft = 300;
             projectile.extraUpdates = 1;
+            projectile.hide = true;
+            projectile.scale = 1.25f;
         }
 
         public override void AI()
@@ -40,21 +42,42 @@ namespace FargowiltasSouls.Projectiles.Minions
             if (projectile.localAI[0] == 0)
             {
                 projectile.localAI[0] = 1;
+                projectile.frame = Main.rand.Next(Main.projFrames[projectile.type]);
                 Main.PlaySound(SoundID.Item, projectile.Center, 14);
             }
+
+            projectile.hide = false;
+            projectile.direction = projectile.spriteDirection = Math.Sign(projectile.velocity.X);
+            projectile.rotation = projectile.velocity.ToRotation();
+            if (projectile.spriteDirection < 0)
+                projectile.rotation += (float)Math.PI;
+
+            if (++projectile.frameCounter > 2)
+            {
+                projectile.frameCounter = 0;
+                if (++projectile.frame >= Main.projFrames[projectile.type])
+                    projectile.frame = 0;
+            }
+
+            int index = Dust.NewDust(projectile.position, projectile.width, projectile.height,
+                DustID.Fire, projectile.velocity.X, projectile.velocity.Y, 100, new Color(), 1.2f);
+            Main.dust[index].position = (Main.dust[index].position + projectile.Center) / 2f;
+            Main.dust[index].noGravity = true;
+            Main.dust[index].velocity = Main.dust[index].velocity * 0.3f;
+            Main.dust[index].velocity = Main.dust[index].velocity - projectile.velocity * 0.1f;
         }
 
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(SoundID.Item, projectile.Center, 14);
 
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 5; i++)
             {
                 int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 3f);
                 Main.dust[dust].velocity *= 1.4f;
             }
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 5; i++)
             {
                 int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 3.5f);
                 Main.dust[dust].noGravity = true;

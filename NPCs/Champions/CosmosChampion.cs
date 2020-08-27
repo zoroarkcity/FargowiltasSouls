@@ -433,8 +433,20 @@ namespace FargowiltasSouls.NPCs.Champions
                                 }
                             }
                         }
-                    
-                        for (int index = 0; index < 50; ++index) //dust
+
+                        const int num226 = 150;
+                        for (int num227 = 0; num227 < num226; num227++)
+                        {
+                            Vector2 vector6 = Vector2.UnitX * 50f;
+                            vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226)) + npc.Center;
+                            Vector2 vector7 = vector6 - npc.Center;
+                            int num228 = Dust.NewDust(vector6 + vector7, 0, 0, type, 0f, 0f, 0, default);
+                            Main.dust[num228].scale = 3f;
+                            Main.dust[num228].noGravity = true;
+                            Main.dust[num228].velocity = vector7;
+                        }
+
+                        /*for (int index = 0; index < 50; ++index) //dust
                         {
                             Dust dust = Main.dust[Dust.NewDust(npc.position, npc.width, npc.height, type, 0.0f, 0.0f, 0, new Color(), 1f)];
                             dust.velocity *= 10f;
@@ -446,17 +458,6 @@ namespace FargowiltasSouls.NPCs.Champions
                                 dust.velocity *= 3f;
                                 dust.scale *= 2f;
                             }
-                        }
-
-                        const int num226 = 150;
-                        for (int num227 = 0; num227 < num226; num227++)
-                        {
-                            Vector2 vector6 = Vector2.UnitX * 60f;
-                            vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + npc.Center;
-                            Vector2 vector7 = vector6 - npc.Center;
-                            int num228 = Dust.NewDust(vector6 + vector7, 0, 0, type, 0f, 0f, 0, default(Color), 3f);
-                            Main.dust[num228].noGravity = true;
-                            Main.dust[num228].velocity = vector7;
                         }
 
                         Vector2 size = new Vector2(500, 500);
@@ -539,7 +540,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 Main.gore[gore].velocity.X += 1f;
                                 Main.gore[gore].velocity.Y += 1f;
                             }
-                        }
+                        }*/
                     }
                     break;
 
@@ -1135,7 +1136,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 npc.velocity = 42f * npc.DirectionTo(player.Center);
                                 npc.netUpdate = true;
                                 
-                                npc.localAI[0] = npc.Center.X + (npc.Center.X < player.Center.X ? -50 : 50);
+                                npc.localAI[0] = npc.Center.X;
                                 npc.localAI[1] = player.Center.Y;
 
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
