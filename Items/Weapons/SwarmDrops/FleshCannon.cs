@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 310;
+            item.damage = 275;
             item.magic = true;
             item.mana = 6;
             item.width = 24;
@@ -45,10 +45,9 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             const int factor = 14; //make sure this is even number btw
 
             counter++;
-
-            if (counter == factor || counter == factor / 2) //burp hungy
+            if (player.ownedProjectileCounts[type] < 1 && counter == factor)
             {
-                Projectile.NewProjectile(position, speed * 2f, type, damage, knockBack, player.whoAmI);
+                Projectile.NewProjectile(position, speed * 2f, type, damage, knockBack, player.whoAmI, 0f, damage);
                 Main.PlaySound(new LegacySoundStyle(4, 13), position);
             }
 

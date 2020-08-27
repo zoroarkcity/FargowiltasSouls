@@ -342,3 +342,8 @@ eridanus deathrays do increased damage to town npcs
 eridanus max life reduced
 eridanus p3 dust reduced
 eridanus uppercut deathray split adjusted
+regurgitator rework
+	a single hungry charges up while you use it
+	stop firing to release the hungry
+	hungry damage increases as it grows
+	hungry becomes a guaranteed crit and gains an additional x1.5 damage at max size
