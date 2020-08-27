@@ -339,3 +339,4 @@ new placeholder champs theme
 
 eridanus will give up killing deviantt and won't try again if it takes him longer than 6 seconds
 eridanus deathrays do increased damage to town npcs
+eridanus max life reduced
