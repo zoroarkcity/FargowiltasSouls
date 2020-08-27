@@ -3,29 +3,8 @@ NEW UPDATE - V 1.4
 
 new in beta
 -Added Acorn Construct (Trojan Squirrel mount) 
--Reworked Adamantite Enchant to split projectiles on a timer rather than on a projectile count, this makes it much better for slow firing weapons and much worse for projectile spammy things, cooldown of 1 second, .75 second on force, .5 on SoT, every projectile splits always in SoE (lol)
--Adamantite spread is even tighter, new flavor text
--Fixed Ninja Enchant potentially teleporting you diagnolly through several blocks (or going into the temple)
--Tungsten toggles now function right
--Tungsten projectiles work with Adamantite split
--Adamantite split has full damage for piercing projectiles
--Added Necro toggle, it's no longer always a crit, graves work differentlty for bosses: every 10% of their Hp taken they drop a grave that deals 2% of their max HP
--Increased Huntress/Red Riding cooldowns to 30/15 seconds from 10/5
--Rain Enchant cloud no longer absorbs hostile projectiles
--Rain enchant lightning deals 2x damage of the projectile it was spawned from as opposed to 2x damage of the original proj that spawns the rain cloud
--Frost Enchant multiples of 10 icicles is even more noticeable
--Palladium is officially post Plantera and has its lifesteal again, heal cap doubled to 16 in Force
--Titanium nothing new except whole new recipe
--Ancient Cobalt stinger damage also scales with the original projectile's now
--Cobalt CD is .75 seconds on force, .5 in Soul of Terraria
--Reduced Orichalcum Enchant dot boost to 3x, force is 5x
--Nurse can no longer heal Gold, Huntress, Vortex, or Stardust cooldown debuffs
--Added back rod hotkey while in gold shell, but it ends the debuff
+
 -Deviantt's Curse and Abominationn's Curse recipes now only give 1 instead of 5
--All siblings drop Free Summons like vanilla bosses
--Deviating Enery sprite
--Increased Paradox Wolf Soul CD to 5 seconds, added dust when its back
--Frogs and Gold Frogs will no longer be affected by posion jungle water
 -Tribal Charm no longer effects fishing rods
 
 
@@ -37,18 +16,12 @@ new in beta
 
 
 
-
-
-
+-add necro on bosses to tooltip
 -add all toggle colors and actual names
 
 jungle - spores home in slowly
 apprentice works with melee weapons
 shinobi -  Tele through wall doesn't work right in MP
-
-
-
-
 
 
 todo
@@ -74,6 +47,7 @@ Patreon toggle and marker
 
 Make hornet and imp work with spooky
 recheck eater thru wall meme and all beetle auras
+-Look into meme weapon and enchant nerfs/reworks
 
 
 
@@ -82,119 +56,65 @@ recheck eater thru wall meme and all beetle auras
 
 
 
-
-
-
-
-
-Enchants
--Tungsten Enchantment now has seperate toggles for items and projectiles
--Pearlwood and basically everything else wont work on target dummies
-
--Adamantite Enchantment's split projectiles deal half as much damage, spread is slightly tighter
-
--Trawler Soul's extra lures spread is wider
 
 -fixed mutant giving no reward at all outside emode 
+-Updated  lava slime jump (tm)
 
 
 Emode
--Updated  lava slime jump (tm)
 -Hallowed Cactus inflict Flipped instead of Confused
 -Pumpking and Ice Queen can drop their items outside of the event
 -Removed Plantera's Fruit, Bloodied Skull, Lunatic Sigil, Fleshier Doll
 -These bosses drop the mutant mod summon instead
--All bosses will drop a summon when they spawn until they are defetaed in emode
 -Added magma stone toggle
 -Sand Sharks and Ghouls can spawn in as any variant
 -Creatures from the Deep can spawn at the Ocean at night Hardmode
 -Town NPCs will become a zombie if killed by a zombie
--Red, Yellow, Black, and Spiked slimes will spawn during the Slime Rain. Pinky as well rarely
 -Rainbow Slimes spawn a Pinky, Gastropod, Crimson, and Corrupt Slime on death
--All Slimes will always be hostile
--Raincoat Zombies now swim across water
--Slimed Zombies may spawn a Blue Slime on death
--Armored Skeletons fire sword beams
--Vultires shoot feathers twice as often
--Servants of Cthulhu have less bonus HP: 5x -> 2x. They move much faster tho
--Umbrella Slimes fall slowly through the air on their umbrella
--Wraiths fly instead of hover
--Flying Fish shoot water streams at you
 -Lac Beetles have an aura that gives nearby enemies 25% DR
 -Cochineal Beetle have an aura that gives nearby enemies 25% more damage
 -Cyan Beetle have an aura that gives nearby enemies the ability to Freeze you
 -Ice Bats no longer inflict Frozen
 -Eater of Souls and Harpies only go through walls when they can't reach you
 -Wither Beast auras are now regular and not reversed
--Fake Hearts are slightly off color
 -Jammed no longer teleports projectiles to the corner of the map
 -Destroyed eternity passive regen and boss scaling once and for all
--Pinky is much rarer in Slime Rains
 -Armored bones can replace each other
--Derplings are much smaller, aura is much smaller, aura is bleeding instead of confused, and they drain life while you're inside
--Harpies fire rings of feathers
--Pinky bounces constantly
--Antlions shoot faster, with greater velocity, and from a wider angle, and their attacks no longer drop sand blocks
--Parrots spawn in the sky in hard mode
--Giant Shellies spew spikes out if attacked while spinning, no more thorns effect if you get them with melee
--Ichor stickers explode into ichor
--Moved parrot spawning to the surface jungle during the day
+-Parrots spawn in the jungle in hard mode
 -Blazing wheels are 50% larger
 -Desert Spirits spawns in non corrupt deserts
 -Unicorns only leave rainbows when travelling at max speed, should look a bit better
--Mothron always spawns with 2 babies at its side
 -Snatchers, Man Eaters,  and Angry Trappers lunge for you
 -Removed evil mimics having a chance to swap to the other one
--Flying Dutchman bullets no longer bounce
 -Big mimic coin guns attack slightly slower, and they no longer fire while they're invincible
 -Added 4 mana crystals to Devi's starter pack
 -Sparkling Adoration gives Immunity to fake hearts
 -nymph's perfume makes you respawn with full health (effect works in inventory)
 -Soul of Eternity now has Bionomic Cluster effects in inventory
 -Supersonic Soul's No momentum mode is now less severe and more usable, 5x more momeentum as before (which is still 10xless than normal)
--Added Rabies Vaccine
 
 
--Look into meme weapon and enchant nerfs/reworks
 
 
 Weapons
 -Dark Star Cannon is now Prime's Laser Cannon, a magic weapon that shoots lasers (wip kinda)
--Added The Small Sting (wip kinda)
 -Queen Bee now drops this, Hive Staff is unobtainable for now
 -Fish Stick has a smaller tile hitbox because it looked dumb
 -Fish Stick sharks now pierce 
 
 
 new sprites:
-Fig Branch Patreon, pain emblem, staff of ocean, vortex magnet
--Amalgamated Dart Box
 nuke proj (update item)
 rogue essence and soul
-lihzahrd treasure box
 aelous boots (update recipe, and add vanity)
 -time stop debuff (implement)
--devi energy
-solar flare debuff
 rick painitng
 gold dipping vat
 probes and rainbow slime buffs work?
-dragon fang, deviating energy
-hive staff and sentry
 big brain buster
 
 
-
 plant fiber toggle
-
-PATREON
--Added announcment for unique patreon player effects
--Added tooltip to Computation Orb
--Added Fig Branch (fledgling wing player effect)
--Added Squidward Door
--Added Medallion of the Fallen King (get new frames and finish extra attacks)
--Added Paradox Wolf Soul
-
 
 
 -See the wiki for full details

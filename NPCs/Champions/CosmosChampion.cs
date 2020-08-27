@@ -1485,7 +1485,11 @@ namespace FargowiltasSouls.NPCs.Champions
 
             Texture2D texture2D14 = mod.GetTexture("NPCs/Champions/CosmosChampion_Glow");
             Texture2D texture2D15 = mod.GetTexture("NPCs/Champions/CosmosChampion_Glow2");
-            Color glowColor = new Color(170 + Main.DiscoR / 3, 170 + Main.DiscoG / 3, 170 + Main.DiscoB / 3);
+            Color glowColor = new Color(150 + Main.DiscoR / 3, 150 + Main.DiscoG / 3, 150 + Main.DiscoB / 3);
+
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.Transform);
 
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
             {
@@ -1500,6 +1504,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 Main.spriteBatch.Draw(texture2D15, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color28, num165, origin2, npc.scale, effects, 0f);
             }
 
+
             /*if (npc.localAI[2] != 0) //draw glow around it
             {
                 Texture2D texture2D14 = mod.GetTexture("NPCs/Champions/CosmosChampion_Glow");
@@ -1507,8 +1512,17 @@ namespace FargowiltasSouls.NPCs.Champions
                 Main.spriteBatch.Draw(texture2D14, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White * npc.Opacity, npc.rotation, origin2, scale, effects, 0f);
             }*/
 
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.Transform);
+
             Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
             Main.spriteBatch.Draw(texture2D15, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glowColor, npc.rotation, origin2, npc.scale, effects, 0f);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.Transform);
+
+            Main.spriteBatch.Draw(texture2D15, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glowColor, npc.rotation, origin2, npc.scale, effects, 0f);
+
             return false;
         }
     }
