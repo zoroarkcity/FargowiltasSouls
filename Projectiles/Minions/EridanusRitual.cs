@@ -50,14 +50,17 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.scale /= 2f;
             if (projectile.scale < 0.1f)
                 projectile.scale = 0.1f;
-            projectile.ai[0] += rotationPerTick;
+            /*projectile.ai[0] += rotationPerTick;
             if (projectile.ai[0] > PI)
             {
                 projectile.ai[0] -= 2f * PI;
                 projectile.netUpdate = true;
             }
-            projectile.rotation = projectile.ai[0];
-            
+            projectile.rotation = projectile.ai[0];*/
+            projectile.rotation += rotationPerTick;
+            if (projectile.rotation > PI)
+                projectile.rotation -= 2f * PI;
+
             switch (Main.player[projectile.owner].GetModPlayer<FargoPlayer>().EridanusTimer / (60 * 20))
             {
                 case 0: projectile.frame = 1; break;
@@ -77,8 +80,8 @@ namespace FargowiltasSouls.Projectiles.Minions
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            //spriteBatch.End();
+            //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
             Texture2D texture2D13 = Main.projectileTexture[projectile.type];
             int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
             int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
@@ -94,17 +97,17 @@ namespace FargowiltasSouls.Projectiles.Minions
                     continue;
                 Vector2 drawOffset = new Vector2(0f, -threshold * projectile.scale);
                 drawOffset = drawOffset.RotatedBy(x * PI / max * 2).RotatedBy(projectile.ai[0]);
-                spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, 0, origin2, projectile.scale, SpriteEffects.None, 0f);
+                spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
             }
 
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            //spriteBatch.End();
+            //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
             return false;
         }
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * projectile.Opacity;
+            return Color.White * projectile.Opacity * 0.8f;
         }
     }
 }
