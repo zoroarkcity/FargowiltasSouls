@@ -14,10 +14,9 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Styx Gazer");
-            Tooltip.SetDefault(@"[c/ff0000:CHEAT WEAPON]
-Right click to wield a magic scythe wand sword ray of destruction
-'Let's keep how you got this a secret'");
+            DisplayName.SetDefault("Styx Gazer"); //[c/ff0000:CHEAT WEAPON]
+            Tooltip.SetDefault(@"Right click to wield a magic scythe wand sword ray of destruction
+'The reward for slaughtering many...'");
         }
 
         public override void SetDefaults()
@@ -104,16 +103,17 @@ Right click to wield a magic scythe wand sword ray of destruction
             return false;
         }
 
-        /*public override void AddRecipes()
+        public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerMoon"));
             recipe.AddIngredient(mod.ItemType("Sadism"), 15);
+            recipe.AddIngredient(mod.ItemType("CyclonicFin"));
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }*/
+        }
     }
 }

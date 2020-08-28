@@ -1171,9 +1171,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         public override void NPCLoot()
         {
-            //only available if abom hasnt been defeated in world and if it was also a nohit
-            if (!playerInvulTriggered && !FargoSoulsWorld.downedAbom)
-                Item.NewItem(npc.Hitbox, mod.ItemType("StyxGazer"));
+            if (!playerInvulTriggered)
+                Item.NewItem(npc.Hitbox, mod.ItemType("BabyScythe"));
 
             if (Main.rand.Next(100) < 3)
                 Item.NewItem(npc.Hitbox, mod.ItemType("StaffOfUnleashedOcean"));

@@ -369,3 +369,5 @@ spaz flame adjusted has sprite
 molten fury -15%
 nature shroomite attack changed, bullet now stops near you once and redirects itself
 lowered calamity mutant life to 277M
+styx gazer and sparkling love are now craftable post-mutant weapons (variations on penetrator recipe)
+all siblings have their master pets as nohit rewards, can be obtained on any attempt

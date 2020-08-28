@@ -1669,8 +1669,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
         public override void NPCLoot()
         {
-            if (!playerInvulTriggered && !FargoSoulsWorld.downedDevi)
-                Item.NewItem(npc.Hitbox, mod.ItemType("SparklingLove"));
+            if (!playerInvulTriggered)
+                Item.NewItem(npc.Hitbox, mod.ItemType("ChibiHat"));
 
             FargoSoulsWorld.downedDevi = true;
             if (Main.netMode == NetmodeID.Server)

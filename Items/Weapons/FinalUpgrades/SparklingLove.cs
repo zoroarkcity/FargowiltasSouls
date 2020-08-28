@@ -13,9 +13,8 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sparkling Love");
-            Tooltip.SetDefault(@"[c/ff0000:CHEAT WEAPON]
-Right click to summon the soul of Deviantt
-'Let's keep how you got this a secret'");
+            Tooltip.SetDefault(@"Right click to summon the soul of Deviantt
+'The reward for slaughtering many...'");
         }
 
         public override void SetDefaults()
@@ -84,38 +83,17 @@ Right click to summon the soul of Deviantt
             }
         }
 
-        /*public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            flip = !flip;
-            Vector2 speed = new Vector2(speedX, speedY);
-
-            if (player.altFunctionUse == 2) //right click
-            {
-                speed = speed.RotatedBy(Math.PI / 2 * (flip ? 1 : -1));
-                Projectile.NewProjectile(position, speed, type, damage, knockBack, item.owner, (float)Math.PI / 120 * (flip ? -1 : 1));
-            }
-            else
-            {
-                const int max = 5;
-                for (int i = 0; i < max; i++)
-                {
-                    Projectile.NewProjectile(position, speed.RotatedBy(2 * Math.PI / max * i), type,
-                        damage, knockBack, item.owner, 0, (Main.MouseWorld - position).Length() * (flip ? 1 : -1));
-                }
-            }
-            return false;
-        }*/
-
-        /*public override void AddRecipes()
+        public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerMoon"));
             recipe.AddIngredient(mod.ItemType("Sadism"), 15);
+            recipe.AddIngredient(mod.ItemType("SparklingAdoration"));
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }*/
+        }
     }
 }
