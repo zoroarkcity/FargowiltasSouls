@@ -3368,6 +3368,9 @@ namespace FargowiltasSouls
                 case ItemID.NebulaArcanum:
                     return 0.75f;
 
+                case ItemID.MoltenFury:
+                    return 0.85f;
+
                 default:
                     return 1f;
             }

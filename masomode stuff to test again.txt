@@ -366,3 +366,4 @@ king slime rework
 spirit life adjusted
 regurg hungy no longer persists indefinitely while homing (fixes being reflected)
 spaz flame adjusted has sprite
+molten fury -15%
