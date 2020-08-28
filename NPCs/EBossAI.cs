@@ -80,8 +80,8 @@ namespace FargowiltasSouls.NPCs
                         {
                             Vector2 spawnPos = Main.player[npc.target].Center;
                             spawnPos.X += 110 * i;
-                            spawnPos.Y -= 650;
-                            Projectile.NewProjectile(spawnPos, (masoBool[0] ? 6f : 2f) * Vector2.UnitY,
+                            spawnPos.Y -= 600;
+                            Projectile.NewProjectile(spawnPos, (masoBool[0] ? 6f : 1.5f) * Vector2.UnitY,
                                 ModContent.ProjectileType<SlimeSpike2>(), npc.damage / 5, 0f, Main.myPlayer);
                         }
                     }
