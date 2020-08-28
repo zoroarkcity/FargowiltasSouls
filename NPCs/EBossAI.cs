@@ -27,19 +27,38 @@ namespace FargowiltasSouls.NPCs
         public void KingSlimeAI(NPC npc)
         {
             slimeBoss = npc.whoAmI;
-            npc.color = Main.DiscoColor * 0.2f;
+            npc.color = Main.DiscoColor * 0.3f;
             if (masoBool[1])
             {
-                if (npc.velocity.Y == 0f) //start attack
+                if (npc.velocity.Y == 0f) //attack that happens when landing
                 {
                     masoBool[1] = false;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        for (int i = 0; i < 30; i++)
+                        /*for (int i = 0; i < 30; i++) //spike spray
                         {
                             Projectile.NewProjectile(new Vector2(npc.Center.X + Main.rand.Next(-5, 5), npc.Center.Y - 15),
                                 new Vector2(Main.rand.NextFloat(-6, 6), Main.rand.NextFloat(-8, -5)),
                                 ProjectileID.SpikedSlimeSpike, npc.damage / 5, 0f, Main.myPlayer);
+                        }*/
+
+                        if (npc.HasValidTarget)
+                        {
+                            Main.PlaySound(SoundID.Item21, Main.player[npc.target].Center);
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    Vector2 spawn = Main.player[npc.target].Center;
+                                    spawn.X += Main.rand.Next(-200, 201);
+                                    spawn.Y -= Main.rand.Next(600, 901);
+                                    Vector2 speed = Main.player[npc.target].Center - spawn;
+                                    speed.Normalize();
+                                    speed *= masoBool[0] ? 10f : 5f;
+                                    speed = speed.RotatedByRandom(MathHelper.ToRadians(4));
+                                    Projectile.NewProjectile(spawn, speed, ModContent.ProjectileType<SlimeBallHostile>(), npc.damage / 5, 0f, Main.myPlayer);
+                                }
+                            }
                         }
                     }
                 }
@@ -49,43 +68,22 @@ namespace FargowiltasSouls.NPCs
                 masoBool[1] = true;
             }
 
-            if ((masoBool[0] || npc.life < npc.lifeMax * .5f) && npc.HasPlayerTarget)
+            if ((masoBool[0] || npc.life < npc.lifeMax * .5f) && npc.HasValidTarget)
             {
-                Player p = Main.player[npc.target];
-
-                Counter[0]++;
-                if (Counter[0] >= 90) //slime rain
+                if (--Counter[0] < 0) //spike rain
                 {
-                    Counter[0] = 0;
-                    Main.PlaySound(SoundID.Item21, p.Center);
+                    Counter[0] = 240;
+                    
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        for (int i = 0; i < 5; i++)
+                        for (int i = -10; i <= 10; i++)
                         {
-                            Vector2 spawn = p.Center;
-                            spawn.X += Main.rand.Next(-200, 201);
-                            spawn.Y -= Main.rand.Next(600, 901);
-                            Vector2 speed = p.Center - spawn;
-                            speed.Normalize();
-                            speed *= masoBool[0] ? 10f : 5f;
-                            speed = speed.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-5, 5)));
-                            Projectile.NewProjectile(spawn, speed, ModContent.ProjectileType<SlimeBallHostile>(), npc.damage / 5, 0f, Main.myPlayer);
+                            Vector2 spawnPos = Main.player[npc.target].Center;
+                            spawnPos.X += 110 * i;
+                            spawnPos.Y -= 650;
+                            Projectile.NewProjectile(spawnPos, (masoBool[0] ? 6f : 2f) * Vector2.UnitY,
+                                ModContent.ProjectileType<SlimeSpike2>(), npc.damage / 5, 0f, Main.myPlayer);
                         }
-                    }
-                }
-
-                if (++Counter[2] > 300)
-                {
-                    Counter[2] = 0;
-                    const float gravity = 0.15f;
-                    float time = masoBool[0] ? 60f : 120f;
-                    Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 30f;
-                    distance.X = distance.X / time;
-                    distance.Y = distance.Y / time - 0.5f * gravity * time;
-                    for (int i = 0; i < 10; i++)
-                    {
-                        Projectile.NewProjectile(npc.Center, distance + Main.rand.NextVector2Square(-0.5f, 0.5f) * (masoBool[0] ? 3 : 1),
-                            ModContent.ProjectileType<SlimeSpike>(), npc.damage / 5, 0f, Main.myPlayer);
                     }
                 }
             }
@@ -127,11 +125,23 @@ namespace FargowiltasSouls.NPCs
                     Main.PlaySound(SoundID.Roar, npc.Center, 0);
                 }
 
-                if (Counter[0] < 60) //slime rain much faster
-                    Counter[0] = 60;
+                if (Counter[0] > 45) //faster slime spike rain
+                    Counter[0] = 45;
 
-                if (Counter[2] < 270) //aimed spikes much faster
-                    Counter[2] = 270;
+                if (++Counter[2] > 30) //aimed spikes
+                {
+                    Counter[2] = 0;
+                    const float gravity = 0.15f;
+                    float time = 45f;
+                    Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 30f;
+                    distance.X = distance.X / time;
+                    distance.Y = distance.Y / time - 0.5f * gravity * time;
+                    for (int i = 0; i < 15; i++)
+                    {
+                        Projectile.NewProjectile(npc.Center, distance + Main.rand.NextVector2Square(-1f, 1f) * 2f,
+                            ModContent.ProjectileType<SlimeSpike>(), npc.damage / 4, 0f, Main.myPlayer);
+                    }
+                }
 
                 if (npc.HasValidTarget && Main.player[npc.target].position.Y > npc.position.Y) //player went back down
                 {

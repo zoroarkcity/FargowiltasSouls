@@ -358,3 +358,7 @@ reduced champion of nature stats slightly
 fixed regurg hungy persisting when dead
 regurg hungy ignores tungsten ench
 champion of earth resprite
+king slime rework
+	jumps now cause slimeballs to fall instead of spike spray
+	spike spray only occurs when enraged
+	below 50%, now causes an even spread rain of spikes
