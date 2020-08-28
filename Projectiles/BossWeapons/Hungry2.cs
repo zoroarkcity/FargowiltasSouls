@@ -94,7 +94,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 projectile.Center = player.Center + 60f * player.HeldItem.scale * Vector2.UnitX.RotatedBy(projectile.rotation);
                 projectile.position -= projectile.velocity;
 
-                projectile.timeLeft = 120;
+                projectile.timeLeft = 240;
             }
             else
             {
@@ -118,6 +118,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                         NPC n = Main.npc[foundTarget];
                         Vector2 desiredVelocity = projectile.DirectionTo(n.Center) * desiredFlySpeedInPixelsPerFrame;
                         projectile.velocity = Vector2.Lerp(projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
+                    }
+                    else if (projectile.timeLeft > 120)
+                    {
                         projectile.timeLeft = 120;
                     }
                 }

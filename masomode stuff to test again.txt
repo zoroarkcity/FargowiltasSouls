@@ -362,3 +362,7 @@ king slime rework
 	jumps now cause slimeballs to fall instead of spike spray
 	spike spray only occurs when enraged
 	below 50%, now causes an even spread rain of spikes
+
+spirit life adjusted
+regurg hungy no longer persists indefinitely while homing (fixes being reflected)
+spaz flame adjusted has sprite
