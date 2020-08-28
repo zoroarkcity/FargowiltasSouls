@@ -310,5 +310,47 @@ namespace FargowiltasSouls.Items
                 reforgePrice /= 2;
             return true;
         }
+
+        //summon variants
+        private static readonly int[] Summon = { ItemID.NimbusRod, ItemID.CrimsonRod, ItemID.BeeGun, ItemID.WaspGun, ItemID.PiranhaGun, ItemID.BatScepter };
+
+        public override bool CanRightClick(Item item)
+        {
+            if (Array.IndexOf(Summon, item.type) > -1)
+            {
+                return true;
+            }
+
+            return base.CanRightClick(item);
+        }
+
+        public override void RightClick(Item item, Player player)
+        {
+            int newType = -1;
+
+            if (Array.IndexOf(Summon, item.type) > -1)
+            {
+                newType = mod.ItemType(ItemID.GetUniqueKey(item.type).Replace("Terraria ", string.Empty) + "Summon");
+            }
+
+            if (newType != -1)
+            {
+                int num = Item.NewItem(player.getRect(), newType, prefixGiven: item.prefix);
+
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                {
+                    NetMessage.SendData(MessageID.SyncItem, number: num, number2: 1f);
+                }
+            }
+        }
+
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            if (Array.IndexOf(Summon, item.type) > -1)
+            {
+                TooltipLine helperLine = new TooltipLine(mod, "help", "Right click to convert");
+                tooltips.Add(helperLine);
+            }
+        }
     }
 }
