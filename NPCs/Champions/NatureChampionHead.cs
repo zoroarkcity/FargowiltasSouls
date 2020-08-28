@@ -325,17 +325,18 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             if (npc.localAI[0] > 60 && npc.ai[2] % 2 == 0)
                             {
-                                Main.PlaySound(SoundID.Item11, npc.Center);
-
                                 Vector2 speed = player.Center - npc.Center;
                                 speed.X += Main.rand.Next(-40, 41);
                                 speed.Y += Main.rand.Next(-40, 41);
                                 speed.Normalize();
-                                speed *= 14f;
+                                speed *= 12.5f;
+                                int delay = (int)(npc.Distance(player.Center) - 100) / 14;
+                                if (delay < 0)
+                                    delay = 0;
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
-                                    Projectile.NewProjectile(npc.Center + speed * 5 + Vector2.UnitY * 10, speed,
-                                        ModContent.ProjectileType<NatureBullet>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center + Vector2.UnitY * 10, speed,
+                                        ModContent.ProjectileType<NatureBullet>(), npc.damage / 4, 0f, Main.myPlayer, delay);
                                 }
                             }
                         }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,6 +10,8 @@ namespace FargowiltasSouls.Projectiles.Champions
     {
         public override string Texture => "FargowiltasSouls/Projectiles/Masomode/SniperBullet";
 
+        public int stopped;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Nature Bullet");
@@ -17,10 +20,61 @@ namespace FargowiltasSouls.Projectiles.Champions
         public override void SetDefaults()
         {
             projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
-            aiType = ProjectileID.Bullet;
+            projectile.aiStyle = -1;
             projectile.friendly = false;
             projectile.ranged = false;
             projectile.hostile = true;
+            projectile.tileCollide = false;
+            projectile.ignoreWater = true;
+        }
+
+        public override void AI()
+        {
+            if (projectile.alpha > 0)
+            {
+                projectile.alpha -= 7;
+                if (projectile.alpha < 0)
+                    projectile.alpha = 0;
+            }
+
+            if (projectile.localAI[0] == 0)
+            {
+                projectile.localAI[0] = 1;
+                projectile.localAI[1] = projectile.velocity.Length();
+                Main.PlaySound(SoundID.Item11, projectile.Center);
+            }
+
+            projectile.hide = false;
+            
+            if (--projectile.ai[0] < 0 && projectile.ai[0] > -40 * projectile.MaxUpdates)
+            {
+                projectile.velocity = Vector2.Zero;
+                projectile.hide = true;
+
+                if (Main.rand.Next(2) == 0)
+                {
+                    int d = Dust.NewDust(projectile.Center, 0, 0, 229, Scale: 2f);
+                    Main.dust[d].noGravity = true;
+                    Main.dust[d].velocity *= 3f;
+                }
+            }
+            else if (projectile.ai[0] == -40 * projectile.MaxUpdates)
+            {
+                Main.PlaySound(SoundID.Item11, projectile.Center);
+                int p = Player.FindClosest(projectile.Center, 0, 0);
+                if (p != -1)
+                    projectile.velocity = projectile.DirectionTo(Main.player[p].Center) * projectile.localAI[1];
+                else
+                    projectile.Kill();
+            }
+            else if (projectile.ai[0] < -40 * projectile.MaxUpdates)
+            {
+                projectile.tileCollide = true;
+                projectile.ignoreWater = false;
+            }
+
+            if (projectile.velocity != Vector2.Zero)
+                projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -56,7 +110,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White;
+            return Color.White * projectile.Opacity;
         }
     }
 }

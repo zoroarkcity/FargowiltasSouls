@@ -367,3 +367,4 @@ spirit life adjusted
 regurg hungy no longer persists indefinitely while homing (fixes being reflected)
 spaz flame adjusted has sprite
 molten fury -15%
+nature shroomite attack changed, bullet now stops near you once and redirects itself
