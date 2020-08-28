@@ -57,51 +57,15 @@ recheck eater thru wall meme and all beetle auras
 
 
 
+
+
 -fixed mutant giving no reward at all outside emode 
 -Updated  lava slime jump (tm)
 
 
-Emode
--Hallowed Cactus inflict Flipped instead of Confused
--Pumpking and Ice Queen can drop their items outside of the event
--Removed Plantera's Fruit, Bloodied Skull, Lunatic Sigil, Fleshier Doll
--These bosses drop the mutant mod summon instead
--Added magma stone toggle
--Sand Sharks and Ghouls can spawn in as any variant
--Creatures from the Deep can spawn at the Ocean at night Hardmode
--Town NPCs will become a zombie if killed by a zombie
--Rainbow Slimes spawn a Pinky, Gastropod, Crimson, and Corrupt Slime on death
--Lac Beetles have an aura that gives nearby enemies 25% DR
--Cochineal Beetle have an aura that gives nearby enemies 25% more damage
--Cyan Beetle have an aura that gives nearby enemies the ability to Freeze you
--Ice Bats no longer inflict Frozen
--Eater of Souls and Harpies only go through walls when they can't reach you
--Wither Beast auras are now regular and not reversed
--Jammed no longer teleports projectiles to the corner of the map
--Destroyed eternity passive regen and boss scaling once and for all
--Armored bones can replace each other
--Parrots spawn in the jungle in hard mode
--Blazing wheels are 50% larger
--Desert Spirits spawns in non corrupt deserts
--Unicorns only leave rainbows when travelling at max speed, should look a bit better
--Snatchers, Man Eaters,  and Angry Trappers lunge for you
--Removed evil mimics having a chance to swap to the other one
--Big mimic coin guns attack slightly slower, and they no longer fire while they're invincible
--Added 4 mana crystals to Devi's starter pack
--Sparkling Adoration gives Immunity to fake hearts
--nymph's perfume makes you respawn with full health (effect works in inventory)
--Soul of Eternity now has Bionomic Cluster effects in inventory
--Supersonic Soul's No momentum mode is now less severe and more usable, 5x more momeentum as before (which is still 10xless than normal)
-
-
-
-
 Weapons
--Dark Star Cannon is now Prime's Laser Cannon, a magic weapon that shoots lasers (wip kinda)
--Queen Bee now drops this, Hive Staff is unobtainable for now
 -Fish Stick has a smaller tile hitbox because it looked dumb
 -Fish Stick sharks now pierce 
-
 
 new sprites:
 nuke proj (update item)
@@ -112,7 +76,6 @@ rick painitng
 gold dipping vat
 probes and rainbow slime buffs work?
 big brain buster
-
 
 plant fiber toggle
 
