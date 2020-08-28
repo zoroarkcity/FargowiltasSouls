@@ -72,12 +72,26 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            if (FargoSoulsWorld.MasochistMode)
+            if (NPCs.EModeGlobalNPC.BossIsAlive(ref NPCs.EModeGlobalNPC.championBoss, ModContent.NPCType<NPCs.Champions.WillChampion>()))
             {
-                target.AddBuff(ModContent.BuffType<Defenseless>(), 300);
-                target.AddBuff(ModContent.BuffType<Midas>(), 300);
+                if (FargoSoulsWorld.MasochistMode)
+                {
+                    target.AddBuff(ModContent.BuffType<Defenseless>(), 300);
+                    target.AddBuff(ModContent.BuffType<Midas>(), 300);
+                }
+                target.AddBuff(BuffID.Bleeding, 300);
             }
-            target.AddBuff(BuffID.Bleeding, 300);
+            if (NPCs.EModeGlobalNPC.BossIsAlive(ref NPCs.EModeGlobalNPC.betsyBoss, NPCID.DD2Betsy))
+            {
+                if (FargoSoulsWorld.MasochistMode)
+                {
+                    //target.AddBuff(BuffID.OnFire, 600);
+                    //target.AddBuff(BuffID.Ichor, 600);
+                    target.AddBuff(BuffID.WitheredArmor, Main.rand.Next(60, 300));
+                    target.AddBuff(BuffID.WitheredWeapon, Main.rand.Next(60, 300));
+                    target.AddBuff(BuffID.Burning, 300);
+                }
+            }
             projectile.timeLeft = 0;
         }
 

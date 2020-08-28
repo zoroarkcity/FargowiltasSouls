@@ -18,7 +18,6 @@ reworked slime slinging slasher, homing and piercing
 reworked big sting, consumes darts to shoot piercing stingers, much more spread
 reworked mech flail, spawns fewer and slower eyes, creates burst of much faster eyes on hit
 maso boss scaling now disabled by default
-removed lifesteal from palladium (still present on force of earth)
 
 increased mutant DR from 10% to 20%
 reduced mutant eye graze cap buff to 50%
@@ -27,7 +26,6 @@ all of moon lord's attacks will inflict curse of the moon (phantasmal inflicts l
 all sources of curse of the moon extended
 curse of the moon inflicts defense, DR, damage, crit down
 removed moon lord damage boost
-buffed lord head from 50% to 75% life
 beetle ench MURDERED: caps at first beetle level (unnerfed in SOT)
 
 added sigil of champions
@@ -42,7 +40,6 @@ cultist clones no longer deal contact damage
 increased safe space of rune wizard
 reduced damage of some of mutant's attacks, mainly last stand
 
-nerfed reverse mana flow to only inflict the weapon's mana times two as damage
 nerfed debuffs like HELL, i literally cannot list it
 nerfed wyvern light orb speed
 iron enchantment rework:
@@ -56,7 +53,7 @@ brain p2 rework
 	spams harmless illusions that fly around and be annoying, become opaque as life decreases
 	brain clone moves much slower and doesn't teleport
 wof deathrays dont freeze you
-skeletron and prime have a 3 second windup while entering DG form
+skeletron and prime have a brief startup while entering DG form
 mutant nuke has a visual effect and hitboxes adjusted
 
 removed nerf to moon lord head's max life
@@ -145,7 +142,6 @@ item stealing has a 5sec cooldown
 goblin thief speed nerfed
 goblin warriors take a small amount of knockback
 goblin sorcerors capped at 2 alive at a time until post-eye or hm
-cultist clones all share cultist boss hitbox (piercing should not really work)
 changed crystal bullet/holy arrow nerf slightly
 lihzahrds no longer drop hostile spiky balls to compensate for temple buff
 
@@ -189,7 +185,7 @@ razorpine and blizzard staff are -33% damage -66% speed
 removed pumpking spraying greek fire constantly
 pumpking now shoots large rings of homing scythes
 ice queen shoots rings of waves while spinning and uses super flockos otherwise
-reverse mana flow does more damage and has hexed effect on magic weapons
+reverse mana flow applies hexed effect on magic weapons
 sprites:
 	sans golem
 	brain minion icon
@@ -240,3 +236,107 @@ buffed prime max hp
 nerfed force of earth, now receives disrupted focus on hit (SOT does not)
 lihzahrd blessing granted by having line of sight to altar
 temple traps can now be destroyed if you dont have lihzahrd curse
+
+nerfed flying fish fire rate
+timber head shoots ghost snowballs as telegraph
+adamantite enchant doesnt affect aerial bane arrows after splitting
+guardian telegraphs are gray
+reduced destroyer max star spam rate
+destroyer dark stars now speed up as health decreases
+reduced dust and noise of dark stars
+reduced hellflame dust, projectile speed, and homing radius
+hellzone now shoots additional homing skulls
+adjusted terra champ sine lightning fireball attack
+betsy rework:
+	dark mages removed, replaced with sky dragon fury waves
+	sprays much more projs during flame breath
+	sprays phantom phoenixes during fireballs
+	other enemies despawn during wave 7
+reduced destroyer dark star max speed
+new dusts for devi and mutant mega rays
+fake hearts now restore 1 hp if you're immune to them
+adjusted regurgitator - hungries do less damage and no longer pierce
+buffed slime king slasher stats but the spikes now pierce (rip single target damage)
+gold shell is cancelled by using rod
+betsy drops her summon when spawned
+hm boss summons are only given when they're available in progression (prevent pandora spawning a boss early -> infinite grind attempts)
+changed reverse mana flow formula, is now (item.mana / (1f - player.endurance) + player.statDefense) damage per use
+moon lord head no longer takes double damage (preparation for 1.4)
+eoc and attacks inflict shorter obstructed and longer berserked
+skeletron no longer revives hands
+boc creepers shoot new ichor proj
+boc p2 shoots denser laser spreads
+reduced velocity of cultist's pillar toss
+blender secondary projs ignore tiles
+cosmos has mp scaling
+blender secondaries ignore walls to fix that one wall glitch
+crystal leaves despawn immediately to unfuck plantera swarm
+buffed qb p2 bee spray
+slime king slasher stats nerfed back down, its spikes can only hit one enemy each (but still have pierce iframes)
+resprited mutant deathrays and styx gazer blade
+did something that might have fixed the rare abom glitch despawn
+ordinary carrot and upgrades give sniper scope effect (has toggle)
+fixed ml null curse phases resetting when you magic mirror(?????????????????)
+changed implementation of eternia crystal resistance so it actually only takes 1 damage during betsy fight
+when applied to enemies, curse of the moon reduces their contact damage
+life champ immune to daybroken and celled
+fixed weird pause if you died during deviantt's axe slam
+made DAMN sure shadow orb has no contact damage
+wof has a telegraph denoting the safe range of cursed flame wall
+wof has a dust ring when switching vulernabilities
+wof's deathray telegraph lasts longer
+wof eyes have longer delay after p2 attacks before they can fire again
+fixed wof's p2 attacks not covering the full range they should during desperation attack
+
+corrected wof cf wall warning i think
+fixed wyverns balls being wrong
+adjusted speed and homing of sparkling adoration's hearts
+adjusted deathrays produced by sparkling love right click
+penetrator right click uses mutant deathray resprite
+changed deviantt mega ray dust
+buffed destroyer coil attack damage
+destroyer coil fires more lasers at once as health decreases
+adjusted destroyer max dark star rate and velocity from segments as health decreases
+visual update for wof ray firing
+
+cosmos force has unnerfed nebula boosters
+nerfed number of eaters spawned by rockeater launcher
+nerfed slime slinging slasher, mech leash by increasing iframes on hit
+added eridanus minion to eridanus armour (unsprited)
+adjusted abom stats
+resprited queen bee
+reduced mutant life to normal and he has 25% DR
+
+ERIDANUS SPRITE
+eridanus minion officially 80% complete
+resprite will typhoons(?)
+shadow champion animation
+armored skeleton sword beams inflict their contact damage (was 4x)
+fixed eridanus despawning in mp
+plantera crystal leaves have a small telegraph before firing
+nerfed plantera dicer mine spawn rate, explode rate, range of blasts
+nerfed plantera crystal p2 ring undulation rate
+nerfed plantera speed more when you're not envenomed
+nerfed plantera crystal damage to 110 (was 180, plantera has 114)
+buffed plantera p2 crystal leaf size
+map icons for cosmos, shadow
+updated some champ stills
+
+nerfed all slime splitting to only have 33% chance of occurring
+nerfed abom life slightly
+rain cloud will only absorb friendly projectiles that inflict damage (should make absolute sure it can't eat boss arenas)
+rain cloud will not absorb minions
+rain cloud will not absorb noSplit projectiles (phantasm, vortex beater, etc)
+rain cloud will not absorb held projectiles (spears, styx gazer, etc)
+skeletons can only spray bones upwards when they die
+penetrator dash counts as a held proj
+eridanus will now ignore you to brutally murder deviantt if she's nearby
+eridanus no longer freaks out during nebula
+eridanus tweaks to deathray splits and nebula blaze offset
+eridanus no longer flies backwards during meteor dive
+restored lexus cyanixs deviantt theme
+new placeholder champs theme
+
+eridanus will give up killing deviantt and won't try again if it takes him longer than 6 seconds
+eridanus deathrays do increased damage to town npcs
+eridanus max life reduced

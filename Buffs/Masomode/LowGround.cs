@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Buffs.Masomode
@@ -13,6 +14,8 @@ namespace FargowiltasSouls.Buffs.Masomode
             Description.SetDefault("Cannot stand on platforms or liquids");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
+            DisplayName.AddTranslation(GameCulture.Chinese, "低地");
+            Description.AddTranslation(GameCulture.Chinese, "不能站在平台或液体上");
         }
 
         public override void Update(Player player, ref int buffIndex)

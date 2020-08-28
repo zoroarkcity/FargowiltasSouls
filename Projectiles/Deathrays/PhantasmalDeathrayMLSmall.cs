@@ -12,8 +12,6 @@ namespace FargowiltasSouls.Projectiles.Deathrays
     {
         public PhantasmalDeathrayMLSmall() : base(30, "PhantasmalDeathrayML") { }
 
-        private const float maxTime = 30;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phantasmal Deathray II");

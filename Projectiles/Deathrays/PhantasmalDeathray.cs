@@ -13,8 +13,6 @@ namespace FargowiltasSouls.Projectiles.Deathrays
     {
         public PhantasmalDeathray() : base(240, "PhantasmalDeathray") { }
 
-        private const float maxTime = 240;
-
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Blazing Deathray");

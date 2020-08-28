@@ -12,6 +12,7 @@ using FargowiltasSouls.Buffs.Boss;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Buffs.Souls;
 using FargowiltasSouls.Projectiles.MutantBoss;
+using FargowiltasSouls.Items.Summons;
 
 namespace FargowiltasSouls.NPCs.MutantBoss
 {
@@ -19,6 +20,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
     public class MutantBoss : ModNPC
     {
         public int ritualProj, spriteProj, ringProj;
+        private bool droppedSummon = false;
 
         public override void SetStaticDefaults()
         {
@@ -34,7 +36,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             npc.damage = 360;
             npc.defense = 360;
             npc.value = Item.buyPrice(2);
-            npc.lifeMax = Main.expertMode ? 17700000 : 7700000;// : 3700000;
+            npc.lifeMax = Main.expertMode ? 7700000 : 3700000;
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -54,6 +56,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             npc.buffImmune[ModContent.BuffType<MutantNibble>()] = true;
             npc.buffImmune[ModContent.BuffType<OceanicMaul>()] = true;
             npc.buffImmune[ModContent.BuffType<TimeFrozen>()] = true;
+            npc.buffImmune[ModContent.BuffType<LightningRod>()] = true;
             npc.timeLeft = NPC.activeTime * 30;
             if (FargoSoulsWorld.AngryMutant || Fargowiltas.Instance.CalamityLoaded)
             {
@@ -274,6 +277,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (!AliveCheck(player))
                         break;
                     npc.velocity = Vector2.Zero;
+
                     if (--npc.localAI[0] < 0)
                     {
                         npc.localAI[0] = Main.rand.Next(30);
@@ -284,6 +288,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Projectile.NewProjectile(spawnPos, Vector2.Zero, type, 0, 0f, Main.myPlayer);
                         }
                     }
+
                     if (++npc.ai[1] > 120)
                     {
                         npc.ai[1] = 0;
@@ -293,6 +298,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             SpawnSphereRing(10, 6f, npc.damage / 3, -.5f);
                         }
                     }
+
                     if (++npc.ai[2] > 1020)
                     {
                         npc.netUpdate = true;
@@ -313,6 +319,33 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 ModContent.ProjectileType<MutantGiantDeathray2>(), npc.damage / 6, 0f, Main.myPlayer, 0, npc.whoAmI);
                         }
                     }
+                    else if (npc.ai[2] < 420) //charging up dust
+                    {
+                        float num1 = 0.99f;
+                        if (npc.ai[2] >= 84f)
+                            num1 = 0.79f;
+                        if (npc.ai[2] >= 168f)
+                            num1 = 0.58f;
+                        if (npc.ai[2] >= 252f)
+                            num1 = 0.43f;
+                        if (npc.ai[2] >= 336f)
+                            num1 = 0.33f;
+                        for (int i = 0; i < 9; ++i)
+                        {
+                            if (Main.rand.NextFloat() >= num1)
+                            {
+                                float f = Main.rand.NextFloat() * 6.283185f;
+                                float num2 = Main.rand.NextFloat();
+                                Dust dust = Dust.NewDustPerfect(npc.Center + f.ToRotationVector2() * (110 + 600 * num2), 229, (f - 3.141593f).ToRotationVector2() * (14 + 8 * num2), 0, default, 1f);
+                                dust.scale = 0.9f;
+                                dust.fadeIn = 1.15f + num2 * 0.3f;
+                                //dust.color = new Color(1f, 1f, 1f, num1) * (1f - num1);
+                                dust.noGravity = true;
+                                //dust.noLight = true;
+                            }
+                        }
+                    }
+
                     for (int i = 0; i < 5; i++)
                     {
                         int d = Dust.NewDust(npc.position, npc.width, npc.height, 229, 0f, 0f, 0, default(Color), 1.5f);
@@ -1728,6 +1761,13 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     npc.ai[0] = 11;
                     goto case 11;
             }
+
+            //drop summon
+            if (!FargoSoulsWorld.downedMutant && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            {
+                Item.NewItem(player.Hitbox, ModContent.ItemType<AbominationnVoodooDoll>());
+                droppedSummon = true;
+            }
         }
 
         private float GetSpinOffset()
@@ -1909,7 +1949,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            //damage *= 0.75;
+            damage *= 0.75;
             return true;
         }
 

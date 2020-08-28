@@ -46,7 +46,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().TitaniumEffect(); //new set bonus
+            player.GetModPlayer<FargoPlayer>().TitaniumEffect(); //new set bonus soon
         }
 
         public override void AddRecipes()
@@ -55,13 +55,10 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             recipe.AddRecipeGroup("FargowiltasSouls:AnyTitaHead");
             recipe.AddIngredient(ItemID.TitaniumBreastplate);
             recipe.AddIngredient(ItemID.TitaniumLeggings);
-            //titanium drill
-            //titanium sword
-            //rockfish
-            recipe.AddIngredient(ItemID.Cutlass);
-            recipe.AddIngredient(ItemID.SlapHand);
-            recipe.AddIngredient(ItemID.Anchor);
-            recipe.AddIngredient(ItemID.MonkStaffT1);
+            recipe.AddIngredient(ItemID.TitaniumDrill);
+            recipe.AddIngredient(ItemID.TitaniumSword);
+            recipe.AddIngredient(ItemID.Rockfish);
+            recipe.AddIngredient(ItemID.WhitePhasesaber);
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

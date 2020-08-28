@@ -410,6 +410,13 @@ namespace FargowiltasSouls
                         Projectile frost = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, ModContent.ProjectileType<FrostIcicle>(), 0, 0f, player.whoAmI, 5, radians);
                     }
 
+                    float dustScale = 1.5f;
+
+                    if (IcicleCount % 10 == 0)
+                    {
+                        dustScale = 3f;
+                    }
+                    
                     //dust
                     for (int j = 0; j < 20; j++)
                     {
@@ -418,8 +425,13 @@ namespace FargowiltasSouls
                         Vector2 vector7 = vector6 - player.Center;
                         int d = Dust.NewDust(vector6 + vector7, 0, 0, 15);
                         Main.dust[d].noGravity = true;
+                        Main.dust[d].scale = dustScale;
                         Main.dust[d].velocity = vector7;
-                        Main.dust[d].scale = 1.5f;
+
+                        if (IcicleCount % 10 == 0)
+                        {
+                            Main.dust[d].velocity *= 2;
+                        }
                     }
 
                     icicleCD = 120 - (IcicleCount * 4);
@@ -772,8 +784,8 @@ namespace FargowiltasSouls
         {
             NecroEnchant = true;
 
-            if (necroCD != 0)
-                necroCD--;
+            if (NecroCD != 0)
+                NecroCD--;
 
             AddPet(SoulConfig.Instance.DGPet, hideVisual, BuffID.BabySkeletronHead, ProjectileID.BabySkeletronHead);
         }
@@ -811,7 +823,7 @@ namespace FargowiltasSouls
 
         public void OrichalcumEffect()
         {
-            if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.OrichalcumFire)) return;
+            if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.OrichalcumPetals)) return;
 
             player.onHitPetal = true;
 
@@ -847,7 +859,7 @@ namespace FargowiltasSouls
                 player.onHitRegen = true;
                 PalladEnchant = true;
 
-                if (EarthForce && palladiumCD > 0)
+                if (palladiumCD > 0)
                     palladiumCD--;
             }
         }
@@ -1180,18 +1192,16 @@ namespace FargowiltasSouls
                 if (player.doubleTapCardinalTimer[0] > 0 && player.doubleTapCardinalTimer[0] != 15)
                 {
                     VortexStealth = !VortexStealth;
-                    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.VortexVoid) && vortexCD == 0 && VortexStealth)
+                    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.VortexVoid) && !player.HasBuff(ModContent.BuffType<VortexCD>()) && VortexStealth)
                     {
                         int p = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<Projectiles.Void>(),  HighestDamageTypeScaling(60), 5f, player.whoAmI);
 
                         Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
-                        vortexCD = 3600;
+
+                        player.AddBuff(ModContent.BuffType<VortexCD>(), 3600);
                     }
                 }
             }
-
-            if (vortexCD != 0)
-                vortexCD--;
 
             if (player.mount.Active)
                 VortexStealth = false;
@@ -1344,25 +1354,51 @@ namespace FargowiltasSouls
                 {
                     Vector2 mouse = Main.MouseWorld;
 
-                    //find arrow type to use, for red riding only
-                    Item firstAmmo = player.inventory[54];
+                    Item firstAmmo = PickAmmo();
                     int arrowType = firstAmmo.shoot;
                     int damage = HighestDamageTypeScaling(firstAmmo.damage);
-
-                    if (firstAmmo.ammo != AmmoID.Arrow)
-                    {
-                        arrowType = ProjectileID.WoodenArrowFriendly;
-                        damage = HighestDamageTypeScaling(5); //wooden arrow dmg
-                    }
 
                     int heatray = Projectile.NewProjectile(player.Center, new Vector2(0, -6f), ProjectileID.HeatRay, 0, 0, Main.myPlayer);
                     Main.projectile[heatray].tileCollide = false;
                     //proj spawns arrows all around it until it dies
                     Projectile.NewProjectile(mouse.X, player.Center.Y - 500, 0f, 0f, ModContent.ProjectileType<ArrowRain>(), 50, 0f, player.whoAmI, arrowType, player.direction);
 
-                    player.AddBuff(ModContent.BuffType<HuntressCD>(), RedEnchant ? 300 : 600);
+                    player.AddBuff(ModContent.BuffType<HuntressCD>(), RedEnchant ? 900 : 1800);
                 }
             }
+        }
+
+        public Item PickAmmo()
+        {
+            Item item = new Item();
+            bool flag = false;
+            for (int i = 54; i < 58; i++)
+            {
+                if (player.inventory[i].ammo == AmmoID.Arrow && player.inventory[i].stack > 0)
+                {
+                    item = player.inventory[i];
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag)
+            {
+                for (int j = 0; j < 54; j++)
+                {
+                    if (player.inventory[j].ammo == AmmoID.Arrow && player.inventory[j].stack > 0)
+                    {
+                        item = player.inventory[j];
+                        break;
+                    }
+                }
+            }
+
+            if (item.ammo != AmmoID.Arrow)
+            {
+                item.SetDefaults(ItemID.WoodenArrow);
+            }
+
+            return item;
         }
 
         public void MonkEffect()
@@ -1612,7 +1648,14 @@ namespace FargowiltasSouls
             player.npcTypeNoAggro[537] = true;
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.BuilderMode))
+            {
                 BuilderMode = true;
+
+                for (int i = 0; i < TileLoader.TileCount; i++)
+                {
+                    player.adjTile[i] = true;
+                }
+            }
 
             //cell phone
             player.accWatch = 3;
@@ -1627,6 +1670,7 @@ namespace FargowiltasSouls
             player.accThirdEye = true;
             player.accCalendar = true;
             player.accWeatherRadio = true;
+            
 
             if (!Fargowiltas.Instance.ThoriumLoaded) return;
 

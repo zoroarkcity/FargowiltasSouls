@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FargowiltasSouls.Buffs.Souls;
 using FargowiltasSouls.Projectiles;
 using FargowiltasSouls.Projectiles.Masomode;
 using Microsoft.Xna.Framework;
@@ -80,6 +81,19 @@ namespace FargowiltasSouls.Items
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
+            //dont use hotkeys in stasis
+            if (player.HasBuff(ModContent.BuffType<GoldenStasis>()))
+            {
+                if (item.type == ItemID.RodofDiscord)
+                {
+                    player.ClearBuff(ModContent.BuffType<Buffs.Souls.GoldenStasis>());
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
             if (FargoSoulsWorld.MasochistMode)
             {
                 if (item.type == ItemID.RodofDiscord && 
@@ -101,7 +115,8 @@ namespace FargowiltasSouls.Items
 
             if (item.magic && player.GetModPlayer<FargoPlayer>().ReverseManaFlow)
             {
-                player.Hurt(PlayerDeathReason.ByCustomReason(player.name + " was destroyed by their own magic."), item.mana + item.damage / 10, 0);
+                int damage = (int)(item.mana / (1f - player.endurance) + player.statDefense);
+                player.Hurt(PlayerDeathReason.ByCustomReason(player.name + " was destroyed by their own magic."), damage, 0);
                 player.immune = false;
                 player.immuneTime = 0;
             }
@@ -127,7 +142,7 @@ namespace FargowiltasSouls.Items
                     Vector2 vel = Vector2.Normalize(Main.MouseWorld - player.Center) * 17f;
                     int p = Projectile.NewProjectile(player.Center, vel, ProjectileID.SnowBallFriendly, (int)(item.damage * .5f), 1, Main.myPlayer);
                     if (p != 1000)
-                        FargoGlobalProjectile.SplitProj(Main.projectile[p], 3);
+                        FargoGlobalProjectile.SplitProj(Main.projectile[p], 3, MathHelper.Pi / 5, 1);
                 }
 
                 if (modPlayer.CelestialRune && SoulConfig.Instance.GetValue(SoulConfig.Instance.CelestialRune))
@@ -236,6 +251,11 @@ namespace FargowiltasSouls.Items
                 player.AddBuff(BuffID.PotionSickness, 10800);
             }
 
+            if (item.type == ItemID.RodofDiscord)
+            {
+                player.ClearBuff(ModContent.BuffType<Buffs.Souls.GoldenStasis>());
+            }
+
             //if (modPlayer.SacredEnchant && item.healLife > 0)
             //{
             //    player.HealEffect(item.healLife / 2);
@@ -289,6 +309,48 @@ namespace FargowiltasSouls.Items
             if (Main.LocalPlayer.GetModPlayer<FargoPlayer>().SecurityWallet)
                 reforgePrice /= 2;
             return true;
+        }
+
+        //summon variants
+        private static readonly int[] Summon = { ItemID.NimbusRod, ItemID.CrimsonRod, ItemID.BeeGun, ItemID.WaspGun, ItemID.PiranhaGun, ItemID.BatScepter };
+
+        public override bool CanRightClick(Item item)
+        {
+            if (Array.IndexOf(Summon, item.type) > -1)
+            {
+                return true;
+            }
+
+            return base.CanRightClick(item);
+        }
+
+        public override void RightClick(Item item, Player player)
+        {
+            int newType = -1;
+
+            if (Array.IndexOf(Summon, item.type) > -1)
+            {
+                newType = mod.ItemType(ItemID.GetUniqueKey(item.type).Replace("Terraria ", string.Empty) + "Summon");
+            }
+
+            if (newType != -1)
+            {
+                int num = Item.NewItem(player.getRect(), newType, prefixGiven: item.prefix);
+
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                {
+                    NetMessage.SendData(MessageID.SyncItem, number: num, number2: 1f);
+                }
+            }
+        }
+
+        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        {
+            if (Array.IndexOf(Summon, item.type) > -1)
+            {
+                TooltipLine helperLine = new TooltipLine(mod, "help", "Right click to convert");
+                tooltips.Add(helperLine);
+            }
         }
     }
 }

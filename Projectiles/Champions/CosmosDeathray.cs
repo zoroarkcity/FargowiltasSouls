@@ -12,7 +12,6 @@ namespace FargowiltasSouls.Projectiles.Champions
     public class CosmosDeathray : Deathrays.BaseDeathray
     {
         public CosmosDeathray() : base(20, "PhantasmalDeathrayML") { }
-        private const float maxTime = 20;
 
         public override void SetStaticDefaults()
         {
@@ -124,6 +123,11 @@ namespace FargowiltasSouls.Projectiles.Champions
                     Main.dust[d].velocity *= 6f;
                 }
             }
+        }
+
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            damage *= 2;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

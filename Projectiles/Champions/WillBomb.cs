@@ -26,7 +26,8 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.hostile = true;
             projectile.timeLeft = 600;
             projectile.tileCollide = false;
-            
+            projectile.penetrate = -1;
+
             cooldownSlot = 1;
 
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;

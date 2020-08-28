@@ -112,7 +112,7 @@ namespace FargowiltasSouls
 
         [Label("$Mods.FargowiltasSouls.OrichalcumConfig")]
         [DefaultValue(true)]
-        public bool OrichalcumFire;
+        public bool OrichalcumPetals;
 
         [Label("$Mods.FargowiltasSouls.PalladiumConfig")]
         [DefaultValue(true)]
@@ -146,6 +146,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.TungstenConfig")]
         [DefaultValue(true)]
         public bool TungstenSize;
+
+        [Label("$Mods.FargowiltasSouls.TungstenProjConfig")]
+        [DefaultValue(true)]
+        public bool TungstenProjSize;
 
         [Label("$Mods.FargowiltasSouls.ObsidianConfig")]
         [DefaultValue(true)]
@@ -365,6 +369,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.MasoConcoctionConfig")]
         [DefaultValue(true)]
         public bool TimsConcoction;
+
+        [Label("$Mods.FargowiltasSouls.MasoCarrotConfig")]
+        [DefaultValue(true)]
+        public bool Carrot;
 
         [Label("$Mods.FargowiltasSouls.MasoRainbowConfig")]
         [DefaultValue(true)]

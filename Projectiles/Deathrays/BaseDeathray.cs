@@ -15,8 +15,8 @@ namespace FargowiltasSouls.Projectiles.Deathrays
 {
     public abstract class BaseDeathray : ModProjectile
     {
-        private readonly float maxTime;
-        private readonly string texture;
+        protected readonly float maxTime;
+        protected readonly string texture;
 
         protected BaseDeathray(float maxTime, string texture)
         {
@@ -70,7 +70,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             Texture2D texture2D20 = mod.GetTexture("Projectiles/Deathrays/" + texture + "2");
             Texture2D texture2D21 = mod.GetTexture("Projectiles/Deathrays/" + texture + "3");
             float num223 = projectile.localAI[1];
-            Microsoft.Xna.Framework.Color color44 = new Microsoft.Xna.Framework.Color(255, 255, 255, 0) * 0.9f;
+            Microsoft.Xna.Framework.Color color44 = new Microsoft.Xna.Framework.Color(255, 255, 255, 0) * 0.95f;
             SpriteBatch arg_ABD8_0 = Main.spriteBatch;
             Texture2D arg_ABD8_1 = texture2D19;
             Vector2 arg_ABD8_2 = projectile.Center - Main.screenPosition;

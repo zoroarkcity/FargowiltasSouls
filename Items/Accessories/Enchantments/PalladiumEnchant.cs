@@ -58,12 +58,10 @@ One attack gains 10% life steal every 4 seconds, capped at 8 HP
             recipe.AddIngredient(ItemID.PalladiumBreastplate);
             recipe.AddIngredient(ItemID.PalladiumLeggings);
             recipe.AddIngredient(ItemID.PalladiumSword);
-            recipe.AddIngredient(ItemID.PalladiumRepeater);
             recipe.AddIngredient(ItemID.SoulDrain);
             //sanguine staff
-            //vampire knoves
-            recipe.AddIngredient(ItemID.HeartLantern, 5);
-            //underground reward painting
+            recipe.AddIngredient(ItemID.VampireKnives);
+            recipe.AddIngredient(ItemID.UndergroundReward);
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

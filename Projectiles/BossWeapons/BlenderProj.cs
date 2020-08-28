@@ -23,8 +23,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetDefaults()
         {
             projectile.CloneDefaults(ProjectileID.Kraken);
-            projectile.width = 30;
-            projectile.height = 30;
+            //projectile.width = 46;
+            //projectile.height = 46;
             //yoyo ai
             projectile.aiStyle = 99;
             projectile.friendly = true;

@@ -9,6 +9,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class AncientHallowEnchant : ModItem
     {
+        public override bool Autoload(ref string name)
+        {
+            return false;
+        }
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ancient Hallowed Enchantment");

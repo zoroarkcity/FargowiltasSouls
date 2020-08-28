@@ -12,8 +12,6 @@ namespace FargowiltasSouls.Projectiles.Deathrays
     {
         public DeviBigDeathray() : base(180, "DeviDeathray") { }
 
-        private const float maxTime = 180;
-
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Love Ray");
@@ -109,6 +107,23 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             }
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
             //Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
+
+            const int increment = 100;
+            for (int i = 0; i < array3[0]; i += increment)
+            {
+                if (Main.rand.Next(3) != 0)
+                    continue;
+                float offset = i + Main.rand.NextFloat(-increment, increment);
+                if (offset < 0)
+                    offset = 0;
+                if (offset > array3[0])
+                    offset = array3[0];
+                int d = Dust.NewDust(projectile.position + projectile.velocity * offset,
+                    projectile.width, projectile.height, 86, 0f, 0f, 0, default, Main.rand.NextFloat(4f, 8f));
+                Main.dust[d].noGravity = true;
+                Main.dust[d].velocity += projectile.velocity * 0.5f;
+                Main.dust[d].velocity *= Main.rand.NextFloat(12f, 24f);
+            }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

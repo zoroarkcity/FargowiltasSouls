@@ -18,11 +18,10 @@ namespace FargowiltasSouls.Items.Accessories.Forces
 25% chance for your projectiles to explode into shards
 20% increased weapon use speed
 Greatly increases life regeneration after striking an enemy 
-One attack gains 10% life steal every 4 seconds, capped at 8 HP
+One attack gains 10% life steal every 4 seconds, capped at 16 HP
 Flower petals will cause extra damage to your target 
-Spawns 6 fireballs to rotate around you
-Every 8th projectile you shoot will split into 3
-Any secondary projectiles may also split
+Damaging debuffs deal 5x damage
+One of your projectiles will split into 3 every 3/4 of a second
 Briefly become invulnerable after striking an enemy");
 
             DisplayName.AddTranslation(GameCulture.Chinese, "大地之力");

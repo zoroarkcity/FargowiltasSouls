@@ -8,35 +8,37 @@ using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.Champions
 {
-    public class CosmosMeteor2 : ModProjectile
+    public class CosmosMoon : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_424";
-            
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Cosmic Meteor");
+            DisplayName.SetDefault("Cosmic Moon");
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 7;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(ProjectileID.Meteor1);
+            projectile.width = 410;
+            projectile.height = 410;
             projectile.aiStyle = -1;
-            projectile.magic = false;
-            projectile.friendly = false;
             projectile.hostile = true;
+            projectile.ignoreWater = true;
+            projectile.tileCollide = false;
             
             projectile.extraUpdates = 0;
             cooldownSlot = 1;
 
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
+            projectile.penetrate = -1;
 
-            projectile.scale = 10f;
+            //projectile.scale = 0.5f;
         }
 
         public override bool CanHitPlayer(Player target)
         {
-            return projectile.Distance(target.Center) < projectile.width * projectile.scale;
+            return projectile.Distance(target.Center) < projectile.width * projectile.scale + target.height / 2;
         }
 
         public override void AI()
@@ -47,9 +49,10 @@ namespace FargowiltasSouls.Projectiles.Champions
 
                 Main.PlaySound(SoundID.Item92, projectile.Center);
 
-                projectile.rotation += (float)Math.PI / 2;
+                projectile.localAI[1] += (float)Math.PI / 2;
                 if (projectile.ai[0] < 0)
-                    projectile.rotation += (float)Math.PI;
+                    projectile.localAI[1] += (float)Math.PI;
+                projectile.rotation = projectile.localAI[1];
             }
 
             int ai1 = (int)projectile.ai[1];
@@ -64,8 +67,9 @@ namespace FargowiltasSouls.Projectiles.Champions
             const float maxAmplitude = 850;
             float offset = Math.Abs(maxAmplitude * (float)Math.Sin(Main.npc[ai1].ai[2] * 2 * (float)Math.PI / 200));
             offset += 150;
-            projectile.rotation += 0.01f;
-            projectile.Center = Main.npc[ai1].Center + offset * projectile.rotation.ToRotationVector2();
+            projectile.localAI[1] += 0.01f;
+            projectile.rotation += 0.04f;
+            projectile.Center = Main.npc[ai1].Center + offset * projectile.localAI[1].ToRotationVector2();
         }
 
         public override void Kill(int timeLeft) //vanilla explosion code echhhhhhhhhhh
@@ -170,8 +174,10 @@ namespace FargowiltasSouls.Projectiles.Champions
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             if (FargoSoulsWorld.MasochistMode)
+            {
                 target.AddBuff(BuffID.BrokenArmor, 300);
-            target.AddBuff(BuffID.OnFire, 300);
+                target.AddBuff(ModContent.BuffType<Buffs.Masomode.CurseoftheMoon>(), 300);
+            }
         }
 
         public override Color? GetAlpha(Color lightColor)
@@ -186,7 +192,28 @@ namespace FargowiltasSouls.Projectiles.Champions
             int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
-            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+            Color glow = new Color(Main.DiscoR + 210, Main.DiscoG + 210, Main.DiscoB + 210);
+            Color glow2 = new Color(Main.DiscoR + 50, Main.DiscoG + 50, Main.DiscoB + 50);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+            {
+                Vector2 value4 = projectile.oldPos[i];
+                float num165 = projectile.oldRot[i];
+                spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glow2 * 0.35f, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
+            }
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glow2 * 0.35f, projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+
             return false;
         }
     }

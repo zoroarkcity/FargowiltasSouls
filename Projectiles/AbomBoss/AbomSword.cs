@@ -11,7 +11,6 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
     public class AbomSword : Deathrays.BaseDeathray
     {
         public AbomSword() : base(150, "AbomDeathray") { }
-        private const float maxTime = 150;
 
         public int counter;
         public bool spawnedHandle;
@@ -143,6 +142,13 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity *= 4f;
             }
+
+            if (++projectile.frameCounter > 1)
+            {
+                projectile.frameCounter = 0;
+                if (++projectile.frame > 10)
+                    projectile.frame = 0;
+            }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -159,6 +165,54 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             }
             target.AddBuff(BuffID.WitheredArmor, 600);
             target.AddBuff(BuffID.WitheredWeapon, 600);
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            if (projectile.velocity == Vector2.Zero)
+            {
+                return false;
+            }
+            Texture2D texture2D19 = mod.GetTexture("Projectiles/Deathrays/Abom/AbomDeathray_" + projectile.frame.ToString());
+            Texture2D texture2D20 = mod.GetTexture("Projectiles/Deathrays/Abom/AbomDeathray2_" + projectile.frame.ToString());
+            Texture2D texture2D21 = mod.GetTexture("Projectiles/Deathrays/" + texture + "3");
+            float num223 = projectile.localAI[1];
+            Color color44 = new Color(255, 255, 255, 0) * 0.95f;
+            SpriteBatch arg_ABD8_0 = Main.spriteBatch;
+            Texture2D arg_ABD8_1 = texture2D19;
+            Vector2 arg_ABD8_2 = projectile.Center - Main.screenPosition;
+            Rectangle? sourceRectangle2 = null;
+            arg_ABD8_0.Draw(arg_ABD8_1, arg_ABD8_2, sourceRectangle2, color44, projectile.rotation, texture2D19.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
+            num223 -= (texture2D19.Height / 2 + texture2D21.Height) * projectile.scale;
+            Vector2 value20 = projectile.Center;
+            value20 += projectile.velocity * projectile.scale * texture2D19.Height / 2f;
+            if (num223 > 0f)
+            {
+                float num224 = 0f;
+                Rectangle rectangle7 = new Rectangle(0, 0, texture2D20.Width, 30);
+                while (num224 + 1f < num223)
+                {
+                    if (num223 - num224 < rectangle7.Height)
+                    {
+                        rectangle7.Height = (int)(num223 - num224);
+                    }
+
+                    Main.spriteBatch.Draw(texture2D20, value20 - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(rectangle7), color44, projectile.rotation, new Vector2(rectangle7.Width / 2, 0f), projectile.scale, SpriteEffects.None, 0f);
+                    num224 += rectangle7.Height * projectile.scale;
+                    value20 += projectile.velocity * rectangle7.Height * projectile.scale;
+                    rectangle7.Y += 30;
+                    if (rectangle7.Y + rectangle7.Height > texture2D20.Height)
+                    {
+                        rectangle7.Y = 0;
+                    }
+                }
+            }
+            SpriteBatch arg_AE2D_0 = Main.spriteBatch;
+            Texture2D arg_AE2D_1 = texture2D21;
+            Vector2 arg_AE2D_2 = value20 - Main.screenPosition;
+            sourceRectangle2 = null;
+            arg_AE2D_0.Draw(arg_AE2D_1, arg_AE2D_2, sourceRectangle2, color44, projectile.rotation, texture2D21.Frame(1, 1, 0, 0).Top(), projectile.scale, SpriteEffects.None, 0f);
+            return false;
         }
     }
 }

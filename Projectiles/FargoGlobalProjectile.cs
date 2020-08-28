@@ -46,7 +46,6 @@ namespace FargowiltasSouls.Projectiles
         //enchants
         public bool CanSplit = true;
         private int numSplits = 1;
-        private static int adamantiteCD = 0;
         private bool ninjaTele;
         private bool stormBoosted = false;
         private int stormTimer;
@@ -82,6 +81,10 @@ namespace FargowiltasSouls.Projectiles
             {
                 switch (projectile.type)
                 {
+                    case ProjectileID.DD2BetsyFlameBreath:
+                        projectile.tileCollide = false;
+                        break;
+
                     case ProjectileID.PhantasmalDeathray:
                     case ProjectileID.SaucerDeathray:
                         ImmuneToGuttedHeart = true;
@@ -164,7 +167,7 @@ namespace FargowiltasSouls.Projectiles
             Fargowiltas.ModProjDict.TryGetValue(projectile.type, out ModProjID);
         }
 
-        private static int[] noSplit = {
+        public static int[] noSplit = {
             ProjectileID.CrystalShard,
             ProjectileID.SandnadoFriendly,
             ProjectileID.LastPrism,
@@ -177,7 +180,8 @@ namespace FargowiltasSouls.Projectiles
             ProjectileID.ChargedBlasterCannon,
             ProjectileID.MedusaHead,
             ProjectileID.WireKite,
-            ProjectileID.DD2PhoenixBow
+            ProjectileID.DD2PhoenixBow,
+            ProjectileID.LaserMachinegun
         };
 
         public override bool PreAI(Projectile projectile)
@@ -206,7 +210,7 @@ namespace FargowiltasSouls.Projectiles
                         }
                     }
 
-                    if (modPlayer.TungstenEnchant && !townNPCProj && projectile.damage != 0 && !projectile.trap && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && projectile.friendly && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenSize, false))
+                    if (modPlayer.TungstenEnchant && !townNPCProj && projectile.damage != 0 && !projectile.trap && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && projectile.friendly && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenProjSize, false))
                     {
                         projectile.position = projectile.Center;
                         projectile.scale *= 2f;
@@ -239,23 +243,37 @@ namespace FargowiltasSouls.Projectiles
                         projectile.damage *= 5;
                     }
 
-                    if (!townNPCProj && (modPlayer.AdamantiteEnchant || modPlayer.TerrariaSoul) && CanSplit && projectile.friendly && !projectile.hostile
+                    if (!townNPCProj && modPlayer.AdamantiteEnchant && modPlayer.AdamantiteCD == 0 && CanSplit && projectile.friendly && !projectile.hostile
                         && !Rotate && projectile.damage > 0 && !projectile.minion && projectile.aiStyle != 19 && projectile.aiStyle != 99
-                        && SoulConfig.Instance.GetValue(SoulConfig.Instance.AdamantiteSplit) && Array.IndexOf(noSplit, projectile.type) <= -1)
+                        && SoulConfig.Instance.GetValue(SoulConfig.Instance.AdamantiteSplit) && Array.IndexOf(noSplit, projectile.type) <= -1
+                        && !(projectile.type == ProjectileID.DD2BetsyArrow && projectile.ai[1] == -1))
                     {
-                        if (adamantiteCD != 0)
+                        modPlayer.AdamantiteCD = 60;
+
+                        if (modPlayer.Eternity)
                         {
-                            adamantiteCD--;
+                            modPlayer.AdamantiteCD = 0;
+                        }
+                        else if (modPlayer.TerrariaSoul)
+                        {
+                            modPlayer.AdamantiteCD = 30;
+                        }
+                        else if (modPlayer.EarthForce || modPlayer.WizardEnchant)
+                        {
+                            modPlayer.AdamantiteCD = 45;
                         }
 
-                        if (adamantiteCD == 0)
+                        float damageRatio = 0.5f;
+
+                        if (projectile.penetrate > 1)
                         {
-                            adamantiteCD = modPlayer.TerrariaSoul ? 4 : 8;
-                            SplitProj(projectile, 3);
+                            damageRatio = 1;
                         }
+
+                        SplitProj(projectile, 3, MathHelper.Pi / 16, damageRatio);
                     }
 
-                    if (projectile.bobber)
+                    if (projectile.bobber && CanSplit)
                     {
                         /*if (modPlayer.FishSoul1)
                         {
@@ -263,7 +281,7 @@ namespace FargowiltasSouls.Projectiles
                         }*/
                         if (modPlayer.FishSoul2)
                         {
-                            SplitProj(projectile, 11);
+                            SplitProj(projectile, 11, MathHelper.Pi / 3, 1);
                         }
                     }
 
@@ -283,7 +301,7 @@ namespace FargowiltasSouls.Projectiles
                     }
                 }
 
-                if (tungstenProjectile && (!modPlayer.TungstenEnchant || !SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenSize, false)))
+                if (tungstenProjectile && (!modPlayer.TungstenEnchant || !SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenProjSize, false)))
                 {
                     projectile.position = projectile.Center;
                     projectile.scale /= 2f;
@@ -498,7 +516,7 @@ namespace FargowiltasSouls.Projectiles
             return retVal;
         }
 
-        public static void SplitProj(Projectile projectile, int number)
+        public static void SplitProj(Projectile projectile, int number, float maxSpread, float damageRatio)
         {
             if (projectile.type == ModContent.ProjectileType<SpawnProj>())
             {
@@ -513,20 +531,21 @@ namespace FargowiltasSouls.Projectiles
 
             Projectile split;
 
-            double spread = 0.6 / number;
+            double spread = maxSpread / number;
 
             for (int i = 0; i < number / 2; i++)
             {
                 for (int j = 0; j < 2; j++)
                 {
                     int factor = (j == 0) ? 1 : -1;
-                    split = NewProjectileDirectSafe(projectile.Center, projectile.velocity.RotatedBy(factor * spread * (i + 1)), projectile.type, projectile.damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1]);
+                    split = NewProjectileDirectSafe(projectile.Center, projectile.velocity.RotatedBy(factor * spread * (i + 1)), projectile.type, (int)(projectile.damage * damageRatio), projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1]);
 
                     if (split != null)
                     {
                         split.friendly = true;
                         split.GetGlobalProjectile<FargoGlobalProjectile>().numSplits = projectile.GetGlobalProjectile<FargoGlobalProjectile>().numSplits;
-                        split.GetGlobalProjectile<FargoGlobalProjectile>().firstTick = false;
+                        //split.GetGlobalProjectile<FargoGlobalProjectile>().firstTick = false;
+                        split.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
                         split.GetGlobalProjectile<FargoGlobalProjectile>().tungstenProjectile = projectile.GetGlobalProjectile<FargoGlobalProjectile>().tungstenProjectile;
                     }
                 }
@@ -1028,6 +1047,49 @@ namespace FargowiltasSouls.Projectiles
                         projectile.damage = 40;
                     break;
 
+                case ProjectileID.DD2BetsyFireball:
+                    if (FargoSoulsWorld.MasochistMode && !FargoSoulsWorld.SwarmActive)
+                    {
+                        if (!masobool)
+                        {
+                            masobool = true;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    Vector2 speed = Main.rand.NextFloat(8, 12) * -Vector2.UnitY.RotatedByRandom(Math.PI / 2);
+                                    Projectile.NewProjectile(projectile.Center, speed, ModContent.ProjectileType<BetsyPhoenix>(),
+                                        projectile.damage, 0f, Main.myPlayer, Player.FindClosest(projectile.Center, 0, 0), 60 + Main.rand.Next(60));
+                                }
+                            }
+                        }
+                    }
+                    break;
+
+                case ProjectileID.DD2BetsyFlameBreath:
+                    if (FargoSoulsWorld.MasochistMode && !FargoSoulsWorld.SwarmActive)
+                    {
+                        if (++counter > 2)
+                        {
+                            counter = 0;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                Main.PlaySound(SoundID.Item34, projectile.Center);
+                                Vector2 projVel = projectile.velocity.RotatedBy((Main.rand.NextDouble() - 0.5) * Math.PI / 10);
+                                projVel.Normalize();
+                                projVel *= Main.rand.NextFloat(8f, 12f);
+                                int type = ProjectileID.CultistBossFireBall;
+                                if (Main.rand.Next(2) == 0)
+                                {
+                                    type = ModContent.ProjectileType<Champions.WillFireball>();
+                                    projVel *= 2.5f;
+                                }
+                                Projectile.NewProjectile(projectile.Center, projVel, type, projectile.damage, 0f, Main.myPlayer);
+                            }
+                        }
+                    }
+                    break;
+
                 default:
                         break;
             }
@@ -1364,29 +1426,30 @@ namespace FargowiltasSouls.Projectiles
             {
                 ninjaTele = true;
 
-                var teleportPos = new Vector2();
+                Vector2 teleportPos = new Vector2(projectile.position.X, projectile.position.Y - 30);
+                Vector2 originalPos = new Vector2(teleportPos.X, teleportPos.Y);
 
-                teleportPos.X = projectile.position.X;
-                teleportPos.Y = projectile.position.Y - 30;
 
                 //spiral out to find a save spot
                 int count = 0;
                 int increase = 10;
                 while (Collision.SolidCollision(teleportPos, player.width, player.height))
                 {
+                    teleportPos = originalPos;
+
                     switch (count)
                     {
                         case 0:
                             teleportPos.X -= increase;
                             break;
                         case 1:
-                            teleportPos.X += increase * 2;
+                            teleportPos.X += increase;
                             break;
                         case 2:
                             teleportPos.Y += increase;
                             break;
                         default:
-                            teleportPos.Y -= increase * 2;
+                            teleportPos.Y -= increase;
                             increase += 10;
                             break;
                     }
@@ -1397,6 +1460,10 @@ namespace FargowiltasSouls.Projectiles
                         count = 0;
                     }
 
+                    if (increase > 100)
+                    {
+                        return true;
+                    }
                 }
 
                 if (teleportPos.X > 50 && teleportPos.X < (double)(Main.maxTilesX * 16 - 50) && teleportPos.Y > 50 && teleportPos.Y < (double)(Main.maxTilesY * 16 - 50))
@@ -1562,6 +1629,14 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.CultistBossFireBall:
                         target.AddBuff(BuffID.OnFire, 300);
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.betsyBoss, NPCID.DD2Betsy))
+                        {
+                            //target.AddBuff(BuffID.OnFire, 600);
+                            //target.AddBuff(BuffID.Ichor, 600);
+                            target.AddBuff(BuffID.WitheredArmor, Main.rand.Next(60, 300));
+                            target.AddBuff(BuffID.WitheredWeapon, Main.rand.Next(60, 300));
+                            target.AddBuff(BuffID.Burning, 300);
+                        }
                         break;
 
                     case ProjectileID.CultistBossFireBallClone:
@@ -1892,26 +1967,33 @@ namespace FargowiltasSouls.Projectiles
             {
                 if (modPlayer.CobaltEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CobaltShards) && modPlayer.CobaltCD == 0 && Main.rand.Next(4) == 0)
                 {
-                    int damage = 40;
-                    if (modPlayer.EarthForce)
-                        damage = 80;
-
                     Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 27);
 
                     for (int i = 0; i < 5; i++)
                     {
                         float velX = -projectile.velocity.X * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
                         float velY = -projectile.velocity.Y * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
-                        int p = Projectile.NewProjectile(projectile.position.X + velX, projectile.position.Y + velY, velX, velY, ProjectileID.CrystalShard, damage, 0f, projectile.owner);
+                        int p = Projectile.NewProjectile(projectile.position.X + velX, projectile.position.Y + velY, velX, velY, ProjectileID.CrystalShard, projectile.damage, 0f, projectile.owner);
 
                         Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
                     }
 
-                    modPlayer.CobaltCD = 60;
+                    if (modPlayer.TerrariaSoul)
+                    {
+                        modPlayer.CobaltCD = 30;
+                    }
+                    else if (modPlayer.EarthForce || modPlayer.WizardEnchant)
+                    {
+                        modPlayer.CobaltCD = 45;
+                    }
+                    else
+                    {
+                        modPlayer.CobaltCD = 60;
+                    }
                 }
                 else if (modPlayer.AncientCobaltEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CobaltStingers) && modPlayer.CobaltCD == 0 && Main.rand.Next(5) == 0)
                 {
-                   Projectile[] projs = XWay(3, projectile.Center, ProjectileID.HornetStinger, 5f, 15, 0);
+                   Projectile[] projs = XWay(3, projectile.Center, ProjectileID.HornetStinger, 5f, projectile.damage, 0);
 
                     for (int i = 0; i < projs.Length; i++)
                     {

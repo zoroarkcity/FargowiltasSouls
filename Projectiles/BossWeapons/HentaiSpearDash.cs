@@ -54,6 +54,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             player.controlHook = false;
             player.controlMount = false;
 
+            player.heldProj = projectile.whoAmI;
 
             if (player.mount.Active)
                 player.mount.Dismount(player);

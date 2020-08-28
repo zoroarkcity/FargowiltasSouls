@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
     {
         public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/DicerProj2";
 
-        private const int range = 250;
+        private const int range = 220;
 
         public override void SetDefaults()
         {
@@ -49,7 +49,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
                 if (projectile.ai[1] < -75) //explode
                 {
-                    projectile.ai[0] = 30;
+                    projectile.ai[0] = 60;
                     projectile.ai[1] = 0;
                     bool planteraAlive = NPC.plantBoss > -1 && NPC.plantBoss < Main.maxNPCs && Main.npc[NPC.plantBoss].active && Main.npc[NPC.plantBoss].type == NPCID.Plantera;
                     if (++projectile.localAI[1] > 7 || !planteraAlive) //die after this many explosions

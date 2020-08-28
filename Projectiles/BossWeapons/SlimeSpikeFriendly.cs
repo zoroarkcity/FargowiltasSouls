@@ -23,7 +23,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.hostile = false;
             projectile.friendly = true;
             projectile.timeLeft = 30;
-            projectile.penetrate = 1;
+            projectile.penetrate = 2;
         }
 
         public override void AI()
@@ -50,6 +50,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffID.Slimed, 150);
+            projectile.timeLeft = 0;
         }
     }
 }

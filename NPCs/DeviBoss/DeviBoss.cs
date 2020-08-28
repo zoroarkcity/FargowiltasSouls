@@ -10,6 +10,7 @@ using Terraria.Localization;
 using FargowiltasSouls.Projectiles.Deathrays;
 using FargowiltasSouls.Projectiles.DeviBoss;
 using FargowiltasSouls.Projectiles.Masomode;
+using FargowiltasSouls.Items.Summons;
 
 namespace FargowiltasSouls.NPCs.DeviBoss
 {
@@ -17,6 +18,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
     public class DeviBoss : ModNPC
     {
         public bool playerInvulTriggered;
+        private bool droppedSummon = false;
 
         public int[] attackQueue = new int[4];
         public int lastStrongAttack;
@@ -62,7 +64,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             //npc.buffImmune[mod.BuffType("OceanicMaul")] = true;
             npc.timeLeft = NPC.activeTime * 30;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Deviantt");
+            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/LexusCyanixs");
             musicPriority = (MusicPriority)10;
 
             npc.value = Item.buyPrice(0, 5);
@@ -238,7 +240,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity *= 4f;
                         }
-                        npc.localAI[3] = 2; //this marks p2
+                        npc.localAI[3] = 2; //npc marks p2
                         if (FargoSoulsWorld.MasochistMode)
                         {
                             int heal = (int)(npc.lifeMax / 90 * Main.rand.NextFloat(1f, 1.5f));
@@ -1169,7 +1171,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             }
 
                             if (npc.ai[3] == 1 && Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(npc.Center, new Vector2(0, -2), ModContent.ProjectileType<DeviMedusa>(), 0, 0, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, new Vector2(0, -1), ModContent.ProjectileType<DeviMedusa>(), 0, 0, Main.myPlayer);
                         }
                         else if (npc.ai[3] == 4) //petrify
                         {
@@ -1178,8 +1180,18 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             if (npc.Distance(Main.LocalPlayer.Center) < 3000 && Collision.CanHitLine(npc.Center, 0, 0, Main.LocalPlayer.Center, 0, 0)
                                 && Math.Sign(Main.LocalPlayer.direction) == Math.Sign(npc.Center.X - Main.LocalPlayer.Center.X))
                             {
+                                for (int i = 0; i < 50; i++) //petrify dust
+                                {
+                                    int d = Dust.NewDust(Main.LocalPlayer.Center, 0, 0, DustID.GoldFlame, 0f, 0f, 0, default(Color), 2f);
+                                    Main.dust[d].noGravity = true;
+                                    Main.dust[d].velocity *= 6f;
+                                }
+
                                 Main.LocalPlayer.AddBuff(BuffID.Stoned, 300);
                             }
+
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                Projectile.NewProjectile(npc.Center, new Vector2(0, -1), ModContent.ProjectileType<DeviMedusa>(), 0, 0, Main.myPlayer);
                         }
                         else if (npc.ai[3] < 7) //ray warning
                         {
@@ -1217,13 +1229,39 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         }
                     }
 
-                    if (npc.ai[3] >= 7)
+                    if (npc.ai[3] >= 7) //firing laser dust
                     {
-                        for (int i = 0; i < 5; i++)
+                        /*for (int i = 0; i < 5; i++)
                         {
                             int d = Dust.NewDust(npc.position, npc.width, npc.height, 86, -npc.velocity.X, -npc.velocity.Y, 0, default(Color), 2.5f);
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity *= 12f;
+                        }*/
+                    }
+                    else //charge up dust
+                    {
+                        float num1 = 0.99f;
+                        if (npc.ai[3] >= 1f)
+                            num1 = 0.79f;
+                        if (npc.ai[3] >= 2f)
+                            num1 = 0.58f;
+                        if (npc.ai[3] >= 3f)
+                            num1 = 0.43f;
+                        if (npc.ai[3] >= 4f)
+                            num1 = 0.33f;
+                        for (int i = 0; i < 9; ++i)
+                        {
+                            if (Main.rand.NextFloat() >= num1)
+                            {
+                                float f = Main.rand.NextFloat() * 6.283185f;
+                                float num2 = Main.rand.NextFloat();
+                                Dust dust = Dust.NewDustPerfect(npc.Center + f.ToRotationVector2() * (110 + 600 * num2), 86, (f - 3.141593f).ToRotationVector2() * (14 + 8 * num2), 0, default, 1f);
+                                dust.scale = 0.9f;
+                                dust.fadeIn = 1.15f + num2 * 0.3f;
+                                //dust.color = new Color(1f, 1f, 1f, num1) * (1f - num1);
+                                dust.noGravity = true;
+                                //dust.noLight = true;
+                            }
                         }
                     }
 
@@ -1237,9 +1275,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     break;
 
                 case 15: //sparkling love
-                    if (npc.ai[1] > 150 && (!AliveCheck(player) || Phase2Check()))
-                        break;
-
                     if (npc.localAI[0] == 0)
                     {
                         npc.localAI[0] = 1;
@@ -1358,6 +1393,13 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
             if (player.immune || player.hurtCooldowns[0] != 0 || player.hurtCooldowns[1] != 0)
                 playerInvulTriggered = true;
+
+            //drop summon
+            if (!FargoSoulsWorld.downedDevi && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            {
+                Item.NewItem(player.Hitbox, ModContent.ItemType<DevisCurse>());
+                droppedSummon = true;
+            }
         }
 
         private void GetNextAttack()
@@ -1382,16 +1424,16 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                 newQueue[i] = Main.rand.Next(1, 11);
 
                 bool repeat = false;
-                if (newQueue[i] == 8) //this is the middle of an attack pattern, dont pick it
+                if (newQueue[i] == 8) //npc is the middle of an attack pattern, dont pick it
                     repeat = true;
                 for (int j = 0; j < 3; j++) //cant pick attack that's queued in the previous set
                     if (newQueue[i] == attackQueue[j])
                         repeat = true;
-                for (int j = i; j >= 0; j--) //can't pick attack that's already queued in this set
+                for (int j = i; j >= 0; j--) //can't pick attack that's already queued in npc set
                     if (i != j && newQueue[i] == newQueue[j])
                         repeat = true;
 
-                if (repeat) //retry this one if needed
+                if (repeat) //retry npc one if needed
                     i--;
             }
 

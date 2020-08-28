@@ -18,23 +18,24 @@ Your attacks can inflict Clipped Wings, spawn Frostfireballs, and produce hearts
 You have autofire, improved night vision, and faster respawn when no boss is alive
 Automatically use mana potions when needed and gives modifier protection
 Attacks have a chance to squeak and deal 1 damage to you
-You erupt into Shadowflame tentacles when injured
+You erupt into Shadowflame tentacles when injured and respawn with more life
 Certain enemies will drop potions when defeated and 50% discount on reforges
 Summons a friendly rainbow slime
-Use to teleport to your last death point
+Use to teleport to your last death point and right click to zoom
 'The amalgamate born of a thousand common enemies'");
             DisplayName.AddTranslation(GameCulture.Chinese, "生态集群");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'由上千普通敌人融合而成'
 免疫寒焰,暗影烈焰,吱吱响的玩具,内疚,强风和窒息
 免疫宇宙之火,剪除羽翼,残疾,织网和净化
-免疫热恋,恶臭,点金手和偷取物品的敌人
+免疫热恋,恶臭,点金手,着魔,仙人掌的伤害和偷取物品的敌人
 攻击造成剪除羽翼,发射霜火球,并且产生心
 一键连发,提高夜视能力,
 没有Boss存活时,重生速度加快
 在需要时自动使用魔力药水,并给予词缀保护
 敌人攻击概率无效,只造成1点伤害
 受伤时爆发暗影烈焰触须
-召唤一个友善的彩虹史莱姆");
+召唤一个友善的彩虹史莱姆
+按下快捷键传送到上次死亡地点");
         }
 
         public override void SetDefaults()
@@ -63,6 +64,9 @@ Use to teleport to your last death point
             fargoPlayer.SecurityWallet = true;
             fargoPlayer.TribalCharm = true;
             fargoPlayer.NymphsPerfumeRespawn = true;
+            player.nightVision = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot))
+                player.scope = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -118,6 +122,8 @@ Use to teleport to your last death point
 
             //carrot
             player.nightVision = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot))
+                player.scope = true;
 
             //nymph's perfume
             player.buffImmune[BuffID.Lovestruck] = true;

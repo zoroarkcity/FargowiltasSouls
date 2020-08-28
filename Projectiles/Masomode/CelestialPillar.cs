@@ -31,7 +31,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.ignoreWater = true;
             projectile.timeLeft = 600;
             cooldownSlot = 1;
-
+            projectile.penetrate = -1;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
@@ -89,7 +89,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                         projectile.velocity = Main.player[target].Center - projectile.Center;
                         float distance = projectile.velocity.Length();
                         projectile.velocity.Normalize();
-                        const float speed = 28f;
+                        const float speed = 22f;
                         projectile.velocity *= speed;
                         projectile.timeLeft = (int)(distance / speed);
                         projectile.netUpdate = true;

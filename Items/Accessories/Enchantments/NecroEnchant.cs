@@ -15,7 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Necro Enchantment");
             Tooltip.SetDefault(
-@"A Dungeon Guardian will occasionally annihilate a foe when struck by any attack
+@"Slain enemies may drop a pile of bones
+Touch a pile of bones to spawn a friendly Dungeon Guardian
+Damage scales with the defeated enemy's max HP
 Summons a pet Skeletron Head
 'Welcome to the bone zone'");
             DisplayName.AddTranslation(GameCulture.Chinese, "死灵魔石");

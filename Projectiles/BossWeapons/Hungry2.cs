@@ -22,6 +22,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             base.SetDefaults();
             projectile.minion = false;
             projectile.magic = true;
+            projectile.penetrate = 1;
         }
 
         public override void AI()
@@ -57,6 +58,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Main.NewText(amountOfFramesToLerpBy.ToString());
                 //Main.NewText(Main.player[projectile.owner].numMinions.ToString() + " " + Main.player[projectile.owner].maxMinions.ToString() + " " + Main.player[projectile.owner].slotsMinions.ToString());
             }*/
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (projectile.velocity.X != oldVelocity.X)
+                projectile.velocity.X = -oldVelocity.X;
+            if (projectile.velocity.Y != oldVelocity.Y)
+                projectile.velocity.Y = -oldVelocity.Y;
+
+            return false;
         }
     }
 }

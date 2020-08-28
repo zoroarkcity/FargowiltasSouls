@@ -3,11 +3,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Projectiles.BossWeapons
+namespace FargowiltasSouls.Projectiles.Souls
 {
     public class DungeonGuardianNecro : ModProjectile
     {
-        public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/DungeonGuardian";
+        public override string Texture => "Terraria/Projectile_197";
 
         public override void SetStaticDefaults()
         {
@@ -16,8 +16,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
 		public override void SetDefaults()
 		{
-			projectile.width = 40;
-			projectile.height = 50;
+			projectile.width = 42;
+			projectile.height = 48;
 			projectile.aiStyle = 0;
 			aiType = ProjectileID.Bullet;
 			projectile.friendly = true;
@@ -34,7 +34,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             const int aislotHomingCooldown = 0;
             //int homingDelay = 10;
             int homingDelay = (int) projectile.ai[1];
-            const float desiredFlySpeedInPixelsPerFrame = 60;
+            const float desiredFlySpeedInPixelsPerFrame = 30;
             const float amountOfFramesToLerpBy = 20; // minimum of 1, please keep in full numbers even though it's  float!
 
             projectile.ai[aislotHomingCooldown]++;
@@ -74,11 +74,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
 
             return selectedTarget;
-        }
-
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            crit = true;
         }
 
         public override void Kill(int timeLeft)

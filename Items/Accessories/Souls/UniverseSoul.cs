@@ -93,7 +93,7 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
 
             Tooltip.SetDefault(tooltip);
 
-            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(12, 5));
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, 10));
             DisplayName.AddTranslation(GameCulture.Chinese, "寰宇之魂");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }

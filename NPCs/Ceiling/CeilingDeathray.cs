@@ -10,8 +10,7 @@ namespace FargowiltasSouls.NPCs.Ceiling
     public class CeilingDeathray : Projectiles.Deathrays.BaseDeathray
     {
         public CeilingDeathray() : base(120, "PhantasmalDeathrayML") { }
-        private const float maxTime = 120;
-
+        
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phantasmal Deathray");

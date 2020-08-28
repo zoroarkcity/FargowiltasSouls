@@ -41,6 +41,8 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.buffImmune[BuffID.Chilled] = true;
             npc.buffImmune[BuffID.OnFire] = true;
             npc.buffImmune[BuffID.Suffocation] = true;
+            npc.buffImmune[BuffID.Daybreak] = true;
+            npc.buffImmune[BuffID.StardustMinionBleed] = true;
             npc.buffImmune[mod.BuffType("Lethargic")] = true;
             npc.buffImmune[mod.BuffType("ClippedWings")] = true;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;

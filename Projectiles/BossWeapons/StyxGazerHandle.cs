@@ -11,8 +11,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
     public class StyxGazerHandle : Deathrays.BaseDeathray
     {
         public StyxGazerHandle() : base(120, "AbomDeathray") { }
-        private const float maxTime = 120;
-
         public int counter;
 
         public override void SetStaticDefaults()

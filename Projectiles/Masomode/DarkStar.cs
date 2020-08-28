@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,8 +20,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             projectile.width = 16;
             projectile.height = 16;
-            projectile.aiStyle = 5;
-            aiType = ProjectileID.FallingStar;
+            projectile.aiStyle = -1;
             projectile.alpha = 50;
             //projectile.light = 1f;
             projectile.tileCollide = false;
@@ -32,7 +32,31 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void AI()
         {
-            projectile.tileCollide = false;
+            if (projectile.soundDelay == 0)
+            {
+                projectile.soundDelay = 60 + Main.rand.Next(60);
+                Main.PlaySound(SoundID.Item9, projectile.position);
+            }
+            
+            if (projectile.localAI[0] == 0)
+                projectile.localAI[0] = 1f;
+            projectile.alpha += (int)(25.0 * projectile.localAI[0]);
+            if (projectile.alpha > 200)
+            {
+                projectile.alpha = 200;
+                projectile.localAI[0] = -1f;
+            }
+            if (projectile.alpha < 0)
+            {
+                projectile.alpha = 0;
+                projectile.localAI[0] = 1f;
+            }
+            
+            projectile.rotation = projectile.rotation + (Math.Abs(projectile.velocity.X) + Math.Abs(projectile.velocity.Y)) * 0.01f * projectile.direction;
+            
+            if (Main.rand.Next(30) == 0)
+                Dust.NewDust(projectile.position, projectile.width, projectile.height, 58, (float)(projectile.velocity.X * 0.5), (float)(projectile.velocity.Y * 0.5), 150, default, 1.2f);
+
             Lighting.AddLight(projectile.Center, 0.9f, 0.8f, 0.1f);
         }
 

@@ -15,6 +15,12 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 Allows the holder to double jump
 Increases jump height and negates fall damage
 'Run like the wind'");
+            DisplayName.AddTranslation(GameCulture.Chinese, "埃俄罗斯之靴");
+            Tooltip.AddTranslation(GameCulture.Chinese, @"'风一般地奔跑'
+允许飞行，超快速奔跑，冰上额外机动力
++8%移动速度
+允许持有者二段跳
+增加跳跃高度，免疫摔伤");
         }
 
         public override void SetDefaults()

@@ -12,14 +12,15 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         
         public override void SetDefaults()
         {
-            projectile.width = 30;
-            projectile.height = 30;
+            projectile.width = 46;
+            projectile.height = 46;
             projectile.friendly = true;
             projectile.penetrate = -1;
             projectile.melee = true;
             projectile.scale = 1f;
 
             projectile.extraUpdates = 1;
+            projectile.tileCollide = false;
         }
 
         public override void AI()

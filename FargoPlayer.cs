@@ -44,6 +44,9 @@ namespace FargowiltasSouls
         public bool BigBrainMinion;
         public bool DukeFishron;
 
+        //mount
+        public bool SquirrelMount;
+
         //pet
 
         public bool ChibiDevi;
@@ -76,8 +79,8 @@ namespace FargowiltasSouls
         public bool ChloroEnchant;
         public bool VortexEnchant;
         public bool VortexStealth = false;
-        private int vortexCD = 0;
         public bool AdamantiteEnchant;
+        public int AdamantiteCD = 0;
         public bool FrostEnchant;
         public int IcicleCount = 0;
         private int icicleCD = 0;
@@ -116,7 +119,7 @@ namespace FargowiltasSouls
         public bool SilverEnchant;
         public bool PlatinumEnchant;
         public bool NecroEnchant;
-        private int necroCD;
+        public int NecroCD;
         public bool ObsidianEnchant;
         private int obsidianCD = 0;
         public bool TinEnchant;
@@ -154,6 +157,7 @@ namespace FargowiltasSouls
         public int MonkDashing = 0;
         private int monkTimer;
         public bool SnowEnchant;
+        public bool WizardEnchant;
 
         public bool Solar;
         public bool Nebula;
@@ -260,6 +264,7 @@ namespace FargowiltasSouls
         public bool PhantasmalRing;
         public bool MutantsDiscountCard;
         public bool MutantsPact;
+        public bool RabiesVaccine;
         public bool TwinsEX;
         public bool TimsConcoction;
         public bool ReceivedMasoGift;
@@ -348,6 +353,7 @@ namespace FargowiltasSouls
             if (MutantsDiscountCard) FargoDisabledSouls.Add("MutantsDiscountCard");
             if (MutantsPact) FargoDisabledSouls.Add("MutantsPact");
             if (ReceivedMasoGift) FargoDisabledSouls.Add("ReceivedMasoGift");
+            if (RabiesVaccine) FargoDisabledSouls.Add("RabiesVaccine");
 
             return new TagCompound {
                     {name, FargoDisabledSouls}
@@ -365,6 +371,7 @@ namespace FargowiltasSouls
             MutantsDiscountCard = disabledSouls.Contains("MutantsDiscountCard");
             MutantsPact = disabledSouls.Contains("MutantsPact");
             ReceivedMasoGift = disabledSouls.Contains("ReceivedMasoGift");
+            RabiesVaccine = disabledSouls.Contains("RabiesVaccine");
         }
 
         public override void OnEnterWorld(Player player)
@@ -446,6 +453,11 @@ namespace FargowiltasSouls
                 }
             }
 
+            if (GoldShell)
+            {
+                return;
+            }
+
             if (Fargowiltas.FreezeKey.JustPressed && StardustEnchant && !player.HasBuff(ModContent.BuffType<TimeStopCD>()))
             {
                 player.AddBuff(ModContent.BuffType<TimeStopCD>(), 3600);
@@ -457,7 +469,6 @@ namespace FargowiltasSouls
             {
                 player.AddBuff(ModContent.BuffType<GoldenStasis>(), 600);
                 player.AddBuff(ModContent.BuffType<GoldenStasisCD>(), 3600);
-
 
                 goldHP = player.statLife;
                 Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Zhonyas").WithVolume(1f), player.Center);
@@ -591,6 +602,8 @@ namespace FargowiltasSouls
             BigBrainMinion = false;
             DukeFishron = false;
 
+            SquirrelMount = false;
+
             ChibiDevi = false;
             MutantSpawn = false;
             BabyAbom = false;
@@ -665,6 +678,7 @@ namespace FargowiltasSouls
             HuntressEnchant = false;
             MonkEnchant = false;
             SnowEnchant = false;
+            WizardEnchant = false;
 
             Solar = false;
             Nebula = false;
@@ -813,7 +827,7 @@ namespace FargowiltasSouls
 
         public override void OnRespawn(Player player)
         {
-            if (NymphsPerfumeRespawn)
+            if (NymphsPerfumeRespawn && !EModeGlobalNPC.AnyBossAlive())
             {
                 player.statLife = player.statLifeMax2;
             }
@@ -1194,6 +1208,9 @@ namespace FargowiltasSouls
             if ((CobaltEnchant || AncientCobaltEnchant) && CobaltCD > 0)
                 CobaltCD--;
 
+            if ((AdamantiteEnchant) && AdamantiteCD > 0)
+                AdamantiteCD--;
+
             if (LihzahrdTreasureBox && player.gravDir > 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.LihzahrdBoxGeysers))
             {
                 if (player.controlDown && !player.mount.Active && !player.controlJump)
@@ -1293,6 +1310,11 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (RabiesVaccine)
+            {
+                player.buffImmune[BuffID.Rabies] = true;
+            }
+
             if (StealingCooldown > 0)
                 StealingCooldown--;
 
@@ -1379,7 +1401,7 @@ namespace FargowiltasSouls
                 if (player.nebulaCD > 0)
                     player.nebulaCD--;
 
-                if (!TerrariaSoul) //cap boosters
+                if (!TerrariaSoul && !CosmoForce) //cap boosters
                 {
                     void DecrementBuff(int buffType)
                     {
@@ -2222,7 +2244,7 @@ namespace FargowiltasSouls
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
         {
-            if (target.type == NPCID.TargetDummy || target.townNPC)
+            if (target.type == NPCID.TargetDummy || target.friendly)
                 return;
 
             OnHitNPCEither(target, damage, knockback, crit, proj.type);
@@ -2424,13 +2446,13 @@ namespace FargowiltasSouls
                     for (int i = -3; i <= 3; i++)
                     {
                         Vector2 spawnPos = player.Center + offset.RotatedBy(Math.PI / 7 * i);
-                        Vector2 speed = 20 * Vector2.Normalize(Main.MouseWorld - spawnPos);
+                        Vector2 speed = 17 * Vector2.Normalize(Main.MouseWorld - spawnPos);
 
                         int heartDamage = MutantEye ? 170 : 17;
                         heartDamage = (int)(heartDamage * player.minionDamage);
 
-                        float ai1 = (Main.MouseWorld - spawnPos).Length() / 20 + 10;
-                        Projectile.NewProjectile(spawnPos, speed, mod.ProjectileType("FriendHeart"), heartDamage, 3f, player.whoAmI, -1, ai1);
+                        float ai1 = (Main.MouseWorld - spawnPos).Length() / 17;
+                        Projectile.NewProjectile(spawnPos, speed, ModContent.ProjectileType<FriendHeart>(), heartDamage, 3f, player.whoAmI, -1, ai1);
 
                         for (int j = 0; j < 20; j++)
                         {
@@ -2455,35 +2477,6 @@ namespace FargowiltasSouls
                         target.buffImmune[ModContent.BuffType<GodEater>()] = false;
                     }
                     target.AddBuff(ModContent.BuffType<GodEater>(), 420);
-                }
-            }
-
-            if (NecroEnchant && necroCD == 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.NecroGuardian))
-            {
-                necroCD = 1200;
-                float screenX = Main.screenPosition.X;
-                if (player.direction < 0)
-                {
-                    screenX += Main.screenWidth;
-                }
-                float screenY = Main.screenPosition.Y;
-                screenY += Main.rand.Next(Main.screenHeight);
-                Vector2 vector = new Vector2(screenX, screenY);
-                float velocityX = target.Center.X - vector.X;
-                float velocityY = target.Center.Y - vector.Y;
-                velocityX += Main.rand.Next(-50, 51) * 0.1f;
-                velocityY += Main.rand.Next(-50, 51) * 0.1f;
-                int num5 = 24;
-                float num6 = (float)Math.Sqrt(velocityX * velocityX + velocityY * velocityY);
-                num6 = num5 / num6;
-                velocityX *= num6;
-                velocityY *= num6;
-                Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(new Vector2(screenX, screenY), new Vector2(velocityX, velocityY),
-                    ModContent.ProjectileType<DungeonGuardianNecro>(), (int)(500 * player.rangedDamage), 0f, player.whoAmI, 0, 120);
-                if (p != null)
-                {
-                    p.penetrate = 1;
-                    p.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
                 }
             }
 
@@ -2586,7 +2579,10 @@ namespace FargowiltasSouls
             if (PalladEnchant && !TerrariaSoul && palladiumCD == 0 && !target.immortal && !player.moonLeech)
             {
                 int heal = damage / 10;
-                if (heal > 8)
+
+                if ((EarthForce || WizardEnchant) && heal > 16)
+                    heal = 16;
+                else if (!EarthForce && !WizardEnchant && heal > 8)
                     heal = 8;
                 else if (heal < 1)
                     heal = 1;
@@ -2670,7 +2666,7 @@ namespace FargowiltasSouls
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
         {
-            if (target.type == NPCID.TargetDummy || target.townNPC)
+            if (target.type == NPCID.TargetDummy || target.friendly)
                 return;
 
             OnHitNPCEither(target, damage, knockback, crit);
@@ -2838,6 +2834,12 @@ namespace FargowiltasSouls
                 num342 *= player.gravDir;
                 Projectile.NewProjectile((float)(hitbox.X + hitbox.Width / 2) + num343, (float)(hitbox.Y + hitbox.Height / 2) + num342, (float)player.direction * num341, num340 * player.gravDir, ModContent.ProjectileType<ShroomiteShroom>(), item.damage / 2, 0f, player.whoAmI, 0f, 0f);
             }
+        }
+
+        public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
+        {
+            if (npc.GetGlobalNPC<FargoSoulsGlobalNPC>().CurseoftheMoon)
+                damage = (int)(damage * 0.85);
         }
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
@@ -3296,7 +3298,7 @@ namespace FargowiltasSouls
 
         public override bool PreItemCheck()
         {
-            if (Berserked || (TribalCharm && SoulConfig.Instance.TribalCharm && player.HeldItem.type != ItemID.RodofDiscord))
+            if (Berserked || (TribalCharm && SoulConfig.Instance.TribalCharm && player.HeldItem.type != ItemID.RodofDiscord && player.HeldItem.fishingPole == 0 ))
             {
                 TribalAutoFire = player.HeldItem.autoReuse;
                 player.HeldItem.autoReuse = true;
@@ -3337,6 +3339,8 @@ namespace FargowiltasSouls
                 case ItemID.DaedalusStormbow:
                 case ItemID.StarCannon:
                 case ItemID.DD2BetsyBow:
+                case ItemID.ElectrosphereLauncher:
+                case ItemID.SnowmanCannon:
                     return 2f / 3f;
 
                 case ItemID.Razorpine:
@@ -3347,14 +3351,12 @@ namespace FargowiltasSouls
                 case ItemID.Uzi:
                 case ItemID.Megashark:
                 case ItemID.ChlorophyteShotbow:
-                case ItemID.SnowmanCannon:
                 case ItemID.BeesKnees:
                 case ItemID.PhoenixBlaster:
                 case ItemID.LastPrism:
                 case ItemID.Tsunami:
                 case ItemID.Phantasm:
                 case ItemID.OnyxBlaster:
-                case ItemID.ElectrosphereLauncher:
                 case ItemID.ChainGun:
                 case ItemID.HellwingBow:
                 case ItemID.Beenade:
@@ -3448,6 +3450,17 @@ namespace FargowiltasSouls
             if (BetsyDashing) //dont draw player during betsy dash
                 while (layers.Count > 0)
                     layers.RemoveAt(0);
+
+            if (SquirrelMount)
+            {
+                foreach (PlayerLayer playerLayer in layers)
+                {
+                    if (playerLayer != PlayerLayer.MountBack && playerLayer != PlayerLayer.MountFront && playerLayer != PlayerLayer.MiscEffectsFront && playerLayer != PlayerLayer.MiscEffectsBack)
+                    {
+                        playerLayer.visible = false;
+                    }
+                }
+            }
         }
 
         public override void ModifyScreenPosition()

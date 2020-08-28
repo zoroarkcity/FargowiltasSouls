@@ -54,6 +54,8 @@ namespace FargowiltasSouls.NPCs
         public int frostCount = 0;
         public int frostCD = 0;
         public bool Chilled = false;
+
+        private int necroDamage = 0;
         
 
         private int squireCounter = 0;
@@ -510,8 +512,15 @@ namespace FargowiltasSouls.NPCs
 
             if (modPlayer.OriEnchant && npc.lifeRegen < 0)
             {
-                npc.lifeRegen *= 5;
-                damage *= 5;
+                int multiplier = 3;
+
+                if (modPlayer.EarthForce || modPlayer.WizardEnchant)
+                {
+                    multiplier = 5;
+                }
+
+                npc.lifeRegen *= multiplier;
+                damage *= multiplier;
             }
         }
 
@@ -587,17 +596,23 @@ namespace FargowiltasSouls.NPCs
             Player player = Main.player[npc.lastInteraction];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
+            if (modPlayer.NecroEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.NecroGuardian) && !npc.boss && modPlayer.NecroCD == 0)
+            {
+                Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, modPlayer.HighestDamageTypeScaling(npc.lifeMax / 5));
+                modPlayer.NecroCD = 60;
+            }
+
             if (modPlayer.PlatinumEnchant && !npc.boss && firstLoot)
             {
                 bool midas = npc.HasBuff(BuffID.Midas);
                 int chance = 10;
                 int bonus = 4;
 
-                if (midas)
+                /*if (midas)
                 {
                     chance /= 2;
                     bonus *= 2;
-                }
+                }*/
 
                 if (Main.rand.Next(chance) == 0)
                 {
@@ -835,6 +850,18 @@ namespace FargowiltasSouls.NPCs
             if (Chilled)
             {
                 damage = (int)(damage * 1.2f);
+            }
+
+            if (modPlayer.NecroEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.NecroGuardian) && npc.boss)
+            {
+                necroDamage += damage;
+
+                if (necroDamage > npc.lifeMax / 10)
+                {
+                    necroDamage = 0;
+
+                    Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, modPlayer.HighestDamageTypeScaling(npc.lifeMax / 50));
+                }
             }
         }
 

@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.IO;
 
 namespace FargowiltasSouls.NPCs.EternityMode
 {
@@ -21,7 +22,7 @@ namespace FargowiltasSouls.NPCs.EternityMode
         {
             npc.width = 32;
             npc.height = 32;
-            npc.damage = 90;
+            npc.damage = 60;
             npc.defense = 9999;
             npc.lifeMax = 9999;
             npc.HitSound = SoundID.NPCHit1;
@@ -42,12 +43,22 @@ namespace FargowiltasSouls.NPCs.EternityMode
             npc.life = 9999;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(npc.localAI[2]);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            npc.localAI[2] = reader.ReadSingle();
+        }
+
         public override void AI()
         {
             if (npc.buffType[0] != 0)
                 npc.DelBuff(0);
 
-            if (npc.ai[0] < 0f || npc.ai[0] >= 200f)
+            if (npc.ai[0] < 0f || npc.ai[0] >= Main.maxNPCs || FargoSoulsWorld.SwarmActive)
             {
                 npc.active = false;
                 npc.netUpdate = true;
@@ -66,7 +77,8 @@ namespace FargowiltasSouls.NPCs.EternityMode
                 if (--npc.localAI[2] < 0) //projectile timer
                 {
                     npc.localAI[2] = 300;
-                    if (npc.ai[1] == 125)
+                    npc.netUpdate = true;
+                    if (npc.ai[1] == 130 && plantera.life > plantera.lifeMax / 2)
                     {
                         Main.PlaySound(6, (int)npc.position.X, (int)npc.position.Y);
                         if (Main.netMode != -1)
@@ -102,21 +114,26 @@ namespace FargowiltasSouls.NPCs.EternityMode
             npc.position = plantera.Center + new Vector2(npc.ai[1], 0f).RotatedBy(npc.ai[3]);
             npc.position.X -= npc.width / 2;
             npc.position.Y -= npc.height / 2;
-            float rotation = npc.ai[1] == 125f ? 0.03f : -0.015f;
-            npc.ai[3] += rotation;
-            if (npc.ai[3] > (float)Math.PI)
-            {
-                npc.ai[3] -= 2f * (float)Math.PI;
-                npc.netUpdate = true;
-            }
-            npc.rotation = npc.ai[3] + (float)Math.PI / 2f;
 
-            if (npc.ai[1] > 125)
+            if (!(npc.localAI[2] < 30 && plantera.life > plantera.lifeMax / 2 && npc.ai[1] == 130)) //pause before shooting
             {
-                npc.ai[2] += 2 * (float)Math.PI / 420;
-                if (npc.ai[2] > (float)Math.PI)
-                    npc.ai[2] -= 2 * (float)Math.PI;
-                npc.ai[1] += (float)Math.Sin(npc.ai[2]) * 7;
+                float rotation = npc.ai[1] == 130f ? 0.03f : -0.015f;
+                npc.ai[3] += rotation;
+                if (npc.ai[3] > (float)Math.PI)
+                {
+                    npc.ai[3] -= 2f * (float)Math.PI;
+                    npc.netUpdate = true;
+                }
+                npc.rotation = npc.ai[3] + (float)Math.PI / 2f;
+
+                if (npc.ai[1] > 130)
+                {
+                    npc.ai[2] += 2 * (float)Math.PI / 480;
+                    if (npc.ai[2] > (float)Math.PI)
+                        npc.ai[2] -= 2 * (float)Math.PI;
+                    npc.ai[1] += (float)Math.Sin(npc.ai[2]) * 7;
+                    npc.scale *= 1.5f;
+                }
             }
         }
 

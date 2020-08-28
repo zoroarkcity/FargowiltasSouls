@@ -87,7 +87,7 @@ namespace FargowiltasSouls
             
             AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SteelRed"), ItemType("MutantMusicBox"), TileType("MutantMusicBoxSheet"));
             AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma"), ItemType("AbomMusicBox"), TileType("AbomMusicBoxSheet"));
-            AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Deviantt"), ItemType("DeviMusicBox"), TileType("DeviMusicBoxSheet"));
+            AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/LexusCyanixs"), ItemType("DeviMusicBox"), TileType("DeviMusicBoxSheet"));
 
             #region Toggles
 
@@ -107,7 +107,7 @@ namespace FargowiltasSouls
             AddToggle("CobaltConfig", "Cobalt Shards", "CobaltEnchant", "3da4c4");
             AddToggle("AncientCobaltConfig", "Ancient Cobalt Stingers", "AncientCobaltEnchant", "ffffff");
             AddToggle("MythrilConfig", "Mythril Weapon Speed", "MythrilEnchant", "9dd290");
-            AddToggle("OrichalcumConfig", "Orichalcum Fireballs", "OrichalcumEnchant", "eb3291");
+            AddToggle("OrichalcumConfig", "Orichalcum Petals", "OrichalcumEnchant", "eb3291");
             AddToggle("PalladiumConfig", "Palladium Healing", "PalladiumEnchant", "f5ac28");
             AddToggle("TitaniumConfig", "Titanium Shadow Dodge", "TitaniumEnchant", "828c88");
 
@@ -117,7 +117,8 @@ namespace FargowiltasSouls
             AddToggle("IronSConfig", "Iron Shield", "IronEnchant", "988e83");
             AddToggle("CthulhuShield", "Shield of Cthulhu", "IronEnchant", "988e83");
             AddToggle("TinConfig", "Tin Crits", "TinEnchant", "a28b4e");
-            AddToggle("TungstenConfig", "Tungsten Effect", "TungstenEnchant", "b0d2b2");
+            AddToggle("TungstenConfig", "Tungsten Item Effect", "TungstenEnchant", "b0d2b2");
+            AddToggle("TungstenProjConfig", "Tungsten Projectile Effect", "TungstenEnchant", "b0d2b2");
 
             AddToggle("WillHeader", "Force of Will", "WillForce", "ffffff");
             AddToggle("GladiatorConfig", "Gladiator Rain", "GladiatorEnchant", "9c924e");
@@ -147,7 +148,7 @@ namespace FargowiltasSouls
             AddToggle("ShadowHeader", "Shadow Force", "ShadowForce", "ffffff");
             AddToggle("DarkArtConfig", "Flameburst Minion", "DarkArtistEnchant", "9b5cb0");
             AddToggle("ApprenticeConfig", "Apprentice Effect", "ApprenticeEnchant", "ffffff");
-            AddToggle("NecroConfig", "Necro Guardian", "NecroEnchant", "565643");
+            AddToggle("NecroConfig", "Necro Graves", "NecroEnchant", "565643");
             AddToggle("ShadowConfig", "Shadow Darkness", "ShadowEnchant", "42356f");
             AddToggle("AncientShadowConfig", "Ancient Shadow Orbs", "AncientShadowEnchant", "42356f");
             AddToggle("MonkConfig", "Monk Dash", "MonkEnchant", "ffffff");
@@ -193,6 +194,7 @@ namespace FargowiltasSouls
             //bionomic 
             AddToggle("BionomicHeader", "Bionomic Cluster", "BionomicCluster", "ffffff");
             AddToggle("MasoConcoctionConfig", "Tim's Concoction", "TimsConcoction", "ffffff");
+            AddToggle("MasoCarrotConfig", "Carrot View", "OrdinaryCarrot", "ffffff");
             AddToggle("MasoRainbowConfig", "Rainbow Slime Minion", "ConcentratedRainbowMatter", "ffffff");
             AddToggle("MasoFrigidConfig", "Frostfireballs", "FrigidGemstone", "ffffff");
             AddToggle("MasoNymphConfig", "Attacks Spawn Hearts", "NymphsPerfume", "ffffff");
@@ -1005,21 +1007,41 @@ namespace FargowiltasSouls
                         "FargowiltasSouls/NPCs/Vanilla/NPC_Head_Boss_4"
                     );*/
                     //bossChecklist.Call("AddBossWithInfo", "Duke Fishron EX", 14.02f, (Func<bool>)(() => FargoSoulsWorld.downedFishronEX), "Fish using a [i:" + ItemType("TruffleWormEX") + "]");
-                    bossChecklist.Call(
+                    if (ModLoader.GetMod("CalamityMod") != null)
+		            {
+
+			        bossChecklist.Call(
+                        "AddBoss",
+                        20.0f,
+                        ModContent.NPCType<NPCs.MutantBoss.MutantBoss>(),
+			            this,
+			            "Mutant",
+			            (Func<bool>)(() => FargoSoulsWorld.downedMutant),
+			            ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
+			            new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), ModContent.ItemType<Items.Tiles.MutantMusicBox>() },
+			            ModContent.ItemType<Items.Misc.Sadism>(),
+			            "Throw [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while Abominationn is alive, in Mutant's presence.",
+			            "Mutant has eviscerated everyone under its hands.",
+			            "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
+			            "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
+                    );
+		            } else {
+			        bossChecklist.Call(
                         "AddBoss",
                         14.03f,
                         ModContent.NPCType<NPCs.MutantBoss.MutantBoss>(),
-                        this,
-                        "Mutant",
-                        (Func<bool>)(() => FargoSoulsWorld.downedMutant),
-                        ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
-                        new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), ModContent.ItemType<Items.Tiles.MutantMusicBox>() },
-                        ModContent.ItemType<Items.Misc.Sadism>(),
-                        "Throw [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while Abominationn is alive, in Mutant's presence.",
-                        "Mutant has eviscerated everyone under its hands.",
-                        "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
-                        "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
+			            this,
+			            "Mutant",
+			            (Func<bool>)(() => FargoSoulsWorld.downedMutant),
+			            ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
+			            new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), ModContent.ItemType<Items.Tiles.MutantMusicBox>() },
+			            ModContent.ItemType<Items.Misc.Sadism>(),
+			            "Throw [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while Abominationn is alive, in Mutant's presence.",
+			            "Mutant has eviscerated everyone under its hands.",
+			            "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
+			            "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
                     );
+		            }
                 }
                 //mutant shop
                 Mod fargos = ModLoader.GetMod("Fargowiltas");
@@ -1204,6 +1226,10 @@ namespace FargowiltasSouls
             //vanilla birds
             group = new RecipeGroup(() => Lang.misc[37] + " Bird", ItemID.Bird, ItemID.BlueJay, ItemID.Cardinal, ItemID.GoldBird, ItemID.Duck, ItemID.MallardDuck);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyBird", group);
+
+            //vanilla scorpions
+            group = new RecipeGroup(() => Lang.misc[37] + " Scorpion", ItemID.Scorpion, ItemID.BlackScorpion);
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyScorpion", group);
 
             //gold pick
             group = new RecipeGroup(() => Lang.misc[37] + " Gold Pickaxe", ItemID.GoldPickaxe, ItemID.PlatinumPickaxe);

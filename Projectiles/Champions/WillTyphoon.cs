@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Projectiles.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Will Typhoon");
-            Main.projFrames[projectile.type] = 3;
+            Main.projFrames[projectile.type] = 22;
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
@@ -37,24 +37,21 @@ namespace FargowiltasSouls.Projectiles.Champions
             int cap = Main.rand.Next(3);
             for (int index1 = 0; index1 < cap; ++index1)
             {
-                Vector2 vector2_1 = projectile.velocity;
-                vector2_1.Normalize();
-                vector2_1.X *= projectile.width;
-                vector2_1.Y *= projectile.height;
-                vector2_1 /= 2;
-                vector2_1 = vector2_1.RotatedBy((index1 - 2) * Math.PI / 6);
-                vector2_1 += projectile.Center;
                 Vector2 vector2_2 = (Main.rand.NextFloat() * (float)Math.PI - (float)Math.PI / 2f).ToRotationVector2();
                 vector2_2 *= Main.rand.Next(3, 8);
-                int index2 = Dust.NewDust(vector2_1 + vector2_2, 0, 0, 87, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
+                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 87, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
                 Main.dust[index2].noGravity = true;
                 Main.dust[index2].velocity /= 4f;
                 Main.dust[index2].velocity -= projectile.velocity;
             }
-            projectile.rotation += 0.2f * (projectile.velocity.X > 0f ? 1f : -1f);
-            projectile.frame++;
-            if (projectile.frame > 2)
-                projectile.frame = 0;
+
+            projectile.rotation -= MathHelper.ToRadians(1.5f);
+            if (++projectile.frameCounter > 2)
+            {
+                projectile.frameCounter = 0;
+                if (++projectile.frame >= 22)
+                    projectile.frame = 0;
+            }
         }
         
         public override void Kill(int timeLeft)
