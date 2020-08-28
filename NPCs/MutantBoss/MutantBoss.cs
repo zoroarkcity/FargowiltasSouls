@@ -60,7 +60,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             npc.timeLeft = NPC.activeTime * 30;
             if (FargoSoulsWorld.AngryMutant || Fargowiltas.Instance.CalamityLoaded)
             {
-                npc.lifeMax = 377000000;
+                npc.lifeMax = 277000000;
                 npc.damage = (int)(npc.damage * 1.5);
                 npc.defense *= 5;
                 if (Fargowiltas.Instance.CalamityLoaded)
