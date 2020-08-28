@@ -27,4 +27,7 @@
       <HintPath>..\folder for wip\ThoriumMod.XNA.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Items\Weapons\SummonVariants\" />
+  </ItemGroup>
 </Project>
