@@ -48,7 +48,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
             if (counter == factor || counter == factor / 2) //burp hungy
             {
-                Projectile.NewProjectile(position, speed * 2f, type, damage / 2, knockBack, player.whoAmI);
+                Projectile.NewProjectile(position, speed * 2f, type, damage, knockBack, player.whoAmI);
                 Main.PlaySound(new LegacySoundStyle(4, 13), position);
             }
 

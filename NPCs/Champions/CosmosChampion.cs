@@ -16,6 +16,8 @@ namespace FargowiltasSouls.NPCs.Champions
     [AutoloadBossHead]
     public class CosmosChampion : ModNPC
     {
+        bool hitChildren;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eridanus, Champion of Cosmos");
@@ -30,7 +32,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.height = 100;
             npc.damage = 160;
             npc.defense = 70;
-            npc.lifeMax = 700000;
+            npc.lifeMax = 600000;
             npc.HitSound = SoundID.NPCHit5;
             npc.DeathSound = SoundID.NPCDeath7;
             npc.noGravity = true;
@@ -44,9 +46,11 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.buffImmune[BuffID.Chilled] = true;
             npc.buffImmune[BuffID.OnFire] = true;
             npc.buffImmune[BuffID.Suffocation] = true;
+            npc.buffImmune[BuffID.Lovestruck] = true;
             npc.buffImmune[mod.BuffType("Lethargic")] = true;
             npc.buffImmune[mod.BuffType("ClippedWings")] = true;
             npc.buffImmune[mod.BuffType("TimeFrozen")] = true;
+            npc.buffImmune[mod.BuffType("LightningRod")] = true;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
 
             music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Champions");
@@ -80,6 +84,7 @@ namespace FargowiltasSouls.NPCs.Champions
             writer.Write(npc.localAI[1]);
             writer.Write(npc.localAI[2]);
             writer.Write(npc.localAI[3]);
+            writer.Write(hitChildren);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -88,6 +93,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.localAI[1] = reader.ReadSingle();
             npc.localAI[2] = reader.ReadSingle();
             npc.localAI[3] = reader.ReadSingle();
+            hitChildren = reader.ReadBoolean();
         }
 
         public override void AI()
@@ -167,7 +173,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.timeLeft = 600;
 
                         int ai2 = (int)npc.ai[2];
-                        if (ai2 > -1 && ai2 < Main.maxNPCs && Main.npc[ai2].active && Main.npc[ai2].type == ModLoader.GetMod("Fargowiltas").NPCType("Deviantt"))
+                        if (++npc.ai[3] < 360 && ai2 > -1 && ai2 < Main.maxNPCs && Main.npc[ai2].active && Main.npc[ai2].type == ModLoader.GetMod("Fargowiltas").NPCType("Deviantt"))
                         {
                             targetPos = Main.npc[ai2].Center;
                             npc.direction = npc.spriteDirection = npc.Center.X < targetPos.X ? 1 : -1;
@@ -187,8 +193,6 @@ namespace FargowiltasSouls.NPCs.Champions
                                 npc.rotation = npc.DirectionTo(Main.npc[ai2].Center).ToRotation();
                                 if (npc.direction < 0)
                                     npc.rotation += (float)Math.PI;
-
-                                npc.ai[3] = npc.Center.X < Main.npc[ai2].Center.X ? 1 : -1; //store direction im facing
 
                                 if (npc.localAI[0] == 5)
                                 {
@@ -216,18 +220,18 @@ namespace FargowiltasSouls.NPCs.Champions
                             }
                             else
                             {
-                                npc.direction = npc.spriteDirection = Math.Sign(npc.ai[3]); //dont turn around if crossed up
-
                                 if (npc.localAI[0] > 10)
                                 {
                                     npc.localAI[0] = 0;
-                                    npc.ai[3] = 0;
                                     npc.netUpdate = true;
                                 }
                             }
                         }
                         else
                         {
+                            if (npc.ai[3] >= 360) //if couldn't kill deviantt in 6 seconds, just stop trying
+                                hitChildren = true;
+
                             npc.ai[0] = npc.ai[1];
                             npc.ai[1] = 0;
                             npc.ai[2] = 0;
@@ -644,16 +648,20 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
 
-                        for (int i = 0; i < Main.maxNPCs; i++) //look for deviantt to kill
+                        if (!hitChildren)
                         {
-                            int type = ModLoader.GetMod("Fargowiltas").NPCType("Deviantt");
-                            if (Main.npc[i].active && Main.npc[i].type == type && npc.Distance(Main.npc[i].Center) < 2000 && player.Distance(Main.npc[i].Center) < 2000)
+                            for (int i = 0; i < Main.maxNPCs; i++) //look for deviantt to kill
                             {
-                                npc.ai[0] = -4;
-                                npc.ai[1] = oldAi0;
-                                npc.ai[2] = i; //store target npc
-                                break;
+                                int type = ModLoader.GetMod("Fargowiltas").NPCType("Deviantt");
+                                if (Main.npc[i].active && Main.npc[i].type == type && npc.Distance(Main.npc[i].Center) < 2000 && player.Distance(Main.npc[i].Center) < 2000)
+                                {
+                                    npc.ai[0] = -4;
+                                    npc.ai[1] = oldAi0;
+                                    npc.ai[2] = i; //store target npc
+                                    break;
+                                }
                             }
+
                         }
                     }
                     break;
@@ -751,15 +759,18 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
 
-                        for (int i = 0; i < Main.maxNPCs; i++) //look for deviantt to kill
+                        if (!hitChildren)
                         {
-                            int type = ModLoader.GetMod("Fargowiltas").NPCType("Deviantt");
-                            if (Main.npc[i].active && Main.npc[i].type == type && npc.Distance(Main.npc[i].Center) < 2000 && player.Distance(Main.npc[i].Center) < 2000)
+                            for (int i = 0; i < Main.maxNPCs; i++) //look for deviantt to kill
                             {
-                                npc.ai[0] = -4;
-                                npc.ai[1] = oldAi0;
-                                npc.ai[2] = i; //store target npc
-                                break;
+                                int type = ModLoader.GetMod("Fargowiltas").NPCType("Deviantt");
+                                if (Main.npc[i].active && Main.npc[i].type == type && npc.Distance(Main.npc[i].Center) < 2000 && player.Distance(Main.npc[i].Center) < 2000)
+                                {
+                                    npc.ai[0] = -4;
+                                    npc.ai[1] = oldAi0;
+                                    npc.ai[2] = i; //store target npc
+                                    break;
+                                }
                             }
                         }
                     }
