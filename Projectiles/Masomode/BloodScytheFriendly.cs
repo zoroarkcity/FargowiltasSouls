@@ -7,8 +7,6 @@ namespace FargowiltasSouls.Projectiles.Masomode
 {
     public class BloodScytheFriendly : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_44";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blood Scythe");
@@ -23,11 +21,12 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
         }
 
-        public override Color? GetAlpha(Color lightColor)
+        /*public override Color? GetAlpha(Color lightColor)
         {
             return Color.Red;
-        }
-
+        }*/
+	// causes huge lag on mac/linux
+	
         /*public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffID.ShadowFlame, 300);

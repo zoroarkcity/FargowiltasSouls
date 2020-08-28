@@ -108,10 +108,5 @@ namespace FargowiltasSouls.Projectiles.Minions
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, effects, 0f);
             return false;
         }
-
-        public override Color? GetAlpha(Color lightColor)
-        {
-            return Color.White;
-        }
     }
 }

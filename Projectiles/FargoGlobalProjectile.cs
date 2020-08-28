@@ -1337,23 +1337,23 @@ namespace FargowiltasSouls.Projectiles
                 if (projectile.type == ProjectileID.HarpyFeather)
                 {
                     projectile.Name = "Vulture Feather";
-                    return Color.Brown;
+                    //return Color.Brown;
                 }
 
                 else if (projectile.type == ProjectileID.PineNeedleFriendly)
                 {
-                    return Color.GreenYellow;
+                    //return Color.GreenYellow;
                 }
 
                 else if(projectile.type == ProjectileID.Bone || projectile.type == ProjectileID.BoneGloveProj)
                 {
-                    return Color.SandyBrown;
+                    //return Color.SandyBrown;
                 }
 
                 else if (projectile.type == ProjectileID.DemonScythe)
                 {
                     projectile.Name = "Blood Scythe";
-                    return Color.Red;
+                    //return Color.Green;
                 }
             }
 

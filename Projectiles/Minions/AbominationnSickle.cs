@@ -49,11 +49,6 @@ namespace FargowiltasSouls.Projectiles.Minions
             }
         }
 
-        public override Color? GetAlpha(Color lightColor)
-        {
-            return Color.White;
-        }
-
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(mod.BuffType("MutantNibble"), 600);

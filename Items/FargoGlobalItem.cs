@@ -111,7 +111,7 @@ namespace FargowiltasSouls.Items
                 }
             }
 
-            if (item.type == ItemID.PumpkinPie && player.GetModPlayer<FargoPlayer>().PumpkinEnchant && player.statLife != player.statLifeMax2 && player.potionDelay > 0) return false;
+            if (item.type == ItemID.PumpkinPie && player.statLife != player.statLifeMax2 && player.potionDelay > 0) return false;
 
             if (item.magic && player.GetModPlayer<FargoPlayer>().ReverseManaFlow)
             {

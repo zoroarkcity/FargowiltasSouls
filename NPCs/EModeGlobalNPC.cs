@@ -1544,7 +1544,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 Counter[0]++;
                                 if (Counter[0] >= 150)
-                                    Shoot(npc, 30, 500, 10, ProjectileID.HarpyFeather, npc.damage / 4, 1, true);
+                                    Shoot(npc, 30, 500, 10, ModContent.ProjectileType<VultureFeather>(), npc.damage / 4, 1, true);
                             }
                             break;
 
