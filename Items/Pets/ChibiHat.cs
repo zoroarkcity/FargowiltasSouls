@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System.Collections.Generic;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
@@ -20,6 +21,17 @@ namespace FargowiltasSouls.Items.Pets
             item.rare = -13;
             item.shoot = mod.ProjectileType("ChibiDevi");
             item.buffType = mod.BuffType("ChibiDeviBuff");
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine line2 in list)
+            {
+                if (line2.mod == "Terraria" && line2.Name == "ItemName")
+                {
+                    line2.overrideColor = Main.DiscoColor;
+                }
+            }
         }
 
         public override void UseStyle(Player player)
