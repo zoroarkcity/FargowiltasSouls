@@ -44,10 +44,22 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void AI()
         {
+            if (projectile.localAI[0] == 0) //override tungsten
+            {
+                projectile.localAI[0] = 1;
+                projectile.scale = 1f;
+            }
+
+            //dust!
+            int dustId = Dust.NewDust(projectile.position, projectile.width, projectile.height, 60, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
+            Main.dust[dustId].noGravity = true;
+            int dustId3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 60, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
+            Main.dust[dustId3].noGravity = true;
+
             if (projectile.ai[0] == 0)
             {
                 Player player = Main.player[projectile.owner];
-                if (!player.controlUseItem)
+                if (!(player.active && !player.dead && player.controlUseItem))
                 {
                     Main.PlaySound(new LegacySoundStyle(4, 13), projectile.Center);
                     projectile.ai[0] = 1;
@@ -79,7 +91,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 if (player.direction < 0)
                     projectile.rotation += (float)Math.PI;
                 projectile.velocity = projectile.rotation.ToRotationVector2() * projectile.velocity.Length();
-                projectile.Center = player.Center + 60 * Vector2.UnitX.RotatedBy(projectile.rotation);
+                projectile.Center = player.Center + 60f * player.HeldItem.scale * Vector2.UnitX.RotatedBy(projectile.rotation);
                 projectile.position -= projectile.velocity;
 
                 projectile.timeLeft = 120;
@@ -126,12 +138,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.rotation += (float)Math.PI / 2;
 
             projectile.damage = (int)(projectile.ai[1] * projectile.scale);
-
-            //dust!
-            int dustId = Dust.NewDust(projectile.position, projectile.width, projectile.height, 60, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-            Main.dust[dustId].noGravity = true;
-            int dustId3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 60, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-            Main.dust[dustId3].noGravity = true;
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

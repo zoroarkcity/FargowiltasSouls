@@ -1614,8 +1614,11 @@ namespace FargowiltasSouls.NPCs
                         Vector2 target = Main.npc[retiBoss].Center + Main.npc[retiBoss].DirectionTo(npc.Center) * 100;
                         npc.velocity = (target - npc.Center) / 60;
 
-                        const float rotationInterval = 2f * (float)Math.PI * 1f / 4f / 60f * 0.6f;
+                        const float rotationInterval = 2f * (float)Math.PI * 1f / 4f / 60f * 0.5f;
                         npc.rotation += rotationInterval * (Main.npc[retiBoss].GetGlobalNPC<EModeGlobalNPC>().masoBool[2] ? 1f : -1f);
+
+                        if (Counter[2] < 0)
+                            Counter[2] = 0;
 
                         if (++Counter[2] < 30) //snap to reti, don't do contact damage
                         {
@@ -1628,7 +1631,7 @@ namespace FargowiltasSouls.NPCs
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                float speed = 14f * Math.Min((Counter[2] - 30) / 180f, 1f); //fan out gradually
+                                float speed = 10f * Math.Min((Counter[2] - 30) / 180f, 1f); //fan out gradually
                                 for (int i = 0; i < 8; i++)
                                 {
                                     Projectile.NewProjectile(npc.Center, speed * (npc.rotation + (float)Math.PI / 4 * i).ToRotationVector2(),
@@ -1672,15 +1675,25 @@ namespace FargowiltasSouls.NPCs
                         return false;
                     }
 
-                    if (Counter[2] > 90) //cooldown before attacking again
-                        Counter[2] = 90;
+                    if (Counter[2] > 75) //cooldown before attacking again
+                        Counter[2] = 75;
                     if (Counter[2] > 0)
                     {
                         Counter[2]--;
                         if (npc.HasValidTarget)
                         {
-                            float targetRotation = npc.DirectionTo(Main.player[npc.target].Center).ToRotation() - (float)Math.PI / 2;
-                            npc.rotation = MathHelper.Lerp(npc.rotation, targetRotation, 0.05f);
+                            const float PI = (float)Math.PI;
+                            if (npc.rotation > PI)
+                                npc.rotation -= 2 * PI;
+                            if (npc.rotation < -PI)
+                                npc.rotation += 2 * PI;
+
+                            float targetRotation = npc.DirectionTo(Main.player[npc.target].Center).ToRotation() - PI / 2;
+                            if (targetRotation > PI)
+                                targetRotation -= 2 * PI;
+                            if (targetRotation < -PI)
+                                targetRotation += 2 * PI;
+                            npc.rotation = MathHelper.Lerp(npc.rotation, targetRotation, 0.07f);
                         }
                         return false;
                     }

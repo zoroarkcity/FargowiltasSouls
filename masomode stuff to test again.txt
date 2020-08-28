@@ -351,4 +351,10 @@ devi, abom, mutant boss new map icons
 resprited true mutant armor
 twins rang now accelerates while returning to player
 twins rang flames and lasers do full damage (was half)
-spaz now has a new attack during reti deathray (test in mp)
+spaz now has a new attack during reti deathray
+
+reduced spaz wheel range and rotation speed
+reduced champion of nature stats slightly
+fixed regurg hungy persisting when dead
+regurg hungy ignores tungsten ench
+champion of earth resprite
