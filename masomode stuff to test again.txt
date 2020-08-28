@@ -347,3 +347,8 @@ regurgitator rework
 	stop firing to release the hungry
 	hungry damage increases as it grows
 	hungry becomes a guaranteed crit and gains an additional x1.5 damage at max size
+devi, abom, mutant boss new map icons
+resprited true mutant armor
+twins rang now accelerates while returning to player
+twins rang flames and lasers do full damage (was half)
+spaz now has a new attack during reti deathray (test in mp)

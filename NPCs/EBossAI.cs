@@ -1551,10 +1551,12 @@ namespace FargowiltasSouls.NPCs
             return true;
         }
 
-        public void SpazmatismAI(NPC npc)
+        public bool SpazmatismAI(NPC npc)
         {
             spazBoss = npc.whoAmI;
             bool retiAlive = BossIsAlive(ref retiBoss, NPCID.Retinazer);
+
+            canHitPlayer = true;
 
             if (!masoBool[0]) //spawn in phase 2
             {
@@ -1603,28 +1605,61 @@ namespace FargowiltasSouls.NPCs
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
+                        NetUpdateMaso(npc.whoAmI);
+                        return false;
                     }
 
-                    if (++Counter[0] > 40)
+                    if (npc.HasValidTarget)
                     {
-                        Counter[0] = 0;
-                        if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget) //vanilla spaz p1 shoot fireball code
+                        Vector2 target = Main.npc[retiBoss].Center + Main.npc[retiBoss].DirectionTo(npc.Center) * 100;
+                        npc.velocity = (target - npc.Center) / 60;
+
+                        const float rotationInterval = 2f * (float)Math.PI * 1f / 4f / 60f * 0.6f;
+                        npc.rotation += rotationInterval * (Main.npc[retiBoss].GetGlobalNPC<EModeGlobalNPC>().masoBool[2] ? 1f : -1f);
+
+                        if (++Counter[2] < 30) //snap to reti, don't do contact damage
                         {
-                            Vector2 Speed = Main.player[npc.target].Center - npc.Center;
-                            Speed.Normalize();
-                            int Damage;
-                            if (Main.expertMode)
-                            {
-                                Speed *= 14f;
-                                Damage = 22;
-                            }
-                            else
-                            {
-                                Speed *= 12f;
-                                Damage = 25;
-                            }
-                            Projectile.NewProjectile(npc.Center + Speed * 4f, Speed, ProjectileID.CursedFlameHostile, Damage, 0f, Main.myPlayer);
+                            npc.rotation = npc.DirectionTo(Main.npc[retiBoss].Center).ToRotation() - (float)Math.PI / 2;
+                            canHitPlayer = false;
                         }
+                        else if (++Counter[0] > 5) //rings of fire
+                        {
+                            Counter[0] = 0;
+
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                float speed = 14f * Math.Min((Counter[2] - 30) / 180f, 1f); //fan out gradually
+                                for (int i = 0; i < 8; i++)
+                                {
+                                    Projectile.NewProjectile(npc.Center, speed * (npc.rotation + (float)Math.PI / 4 * i).ToRotationVector2(),
+                                        ProjectileID.EyeFire, npc.damage / 4, 0f, Main.myPlayer);
+                                }
+                            }
+                        }
+
+                        /*if (++Counter[0] > 40)
+                        {
+                            Counter[0] = 0;
+                            if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget) //vanilla spaz p1 shoot fireball code
+                            {
+                                Vector2 Speed = Main.player[npc.target].Center - npc.Center;
+                                Speed.Normalize();
+                                int Damage;
+                                if (Main.expertMode)
+                                {
+                                    Speed *= 14f;
+                                    Damage = 22;
+                                }
+                                else
+                                {
+                                    Speed *= 12f;
+                                    Damage = 25;
+                                }
+                                Projectile.NewProjectile(npc.Center + Speed * 4f, Speed, ProjectileID.CursedFlameHostile, Damage, 0f, Main.myPlayer);
+                            }
+                        }*/
+
+                        return false;
                     }
                 }
                 else //dashing
@@ -1633,7 +1668,23 @@ namespace FargowiltasSouls.NPCs
                     {
                         npc.ai[1] = 0; //switch to not dashing
                         npc.netUpdate = true;
+                        NetUpdateMaso(npc.whoAmI);
+                        return false;
                     }
+
+                    if (Counter[2] > 90) //cooldown before attacking again
+                        Counter[2] = 90;
+                    if (Counter[2] > 0)
+                    {
+                        Counter[2]--;
+                        if (npc.HasValidTarget)
+                        {
+                            float targetRotation = npc.DirectionTo(Main.player[npc.target].Center).ToRotation() - (float)Math.PI / 2;
+                            npc.rotation = MathHelper.Lerp(npc.rotation, targetRotation, 0.05f);
+                        }
+                        return false;
+                    }
+
                     if (npc.HasValidTarget && ++Counter[0] > 3) //cursed flamethrower when dashing
                     {
                         Counter[0] = 0;
@@ -1697,6 +1748,8 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
             }*/
+
+            return true;
         }
 
         public bool DestroyerAI(NPC npc)

@@ -1705,7 +1705,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
         public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
         {
-            spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            //spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
