@@ -373,3 +373,4 @@ all siblings have their master pets as nohit rewards, can be obtained on any att
 sibling pet items are rainbow (for now until master rarity actually exists)
 laser machinegun -25%
 dart pistol/rifle -15%
+updated qb gores and map icon
