@@ -1172,7 +1172,11 @@ namespace FargowiltasSouls.NPCs.AbomBoss
         public override void NPCLoot()
         {
             if (!playerInvulTriggered)
+            {
+                if (!FargoSoulsWorld.downedAbom)
+                    Item.NewItem(npc.Hitbox, mod.ItemType("StyxGazer"));
                 Item.NewItem(npc.Hitbox, mod.ItemType("BabyScythe"));
+            }
 
             if (Main.rand.Next(100) < 3)
                 Item.NewItem(npc.Hitbox, mod.ItemType("StaffOfUnleashedOcean"));

@@ -13,8 +13,9 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sparkling Love");
-            Tooltip.SetDefault(@"Right click to summon the soul of Deviantt
-'The reward for slaughtering many...'");
+            Tooltip.SetDefault(@"[c/ff0000:CHEAT WEAPON]
+Right click to summon the soul of Deviantt
+'Let's keep how you got this a secret'");
         }
 
         public override void SetDefaults()

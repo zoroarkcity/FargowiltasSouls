@@ -14,9 +14,10 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Styx Gazer"); //[c/ff0000:CHEAT WEAPON]
-            Tooltip.SetDefault(@"Right click to wield a magic scythe wand sword ray of destruction
-'The reward for slaughtering many...'");
+            DisplayName.SetDefault("Styx Gazer");
+            Tooltip.SetDefault(@"[c/ff0000:CHEAT WEAPON]
+Right click to wield a magic scythe wand sword ray of destruction
+'Let's keep how you got this a secret'");
         }
 
         public override void SetDefaults()
@@ -103,7 +104,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             return false;
         }
 
-        public override void AddRecipes()
+        /*public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
 
@@ -114,6 +115,6 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
+        }*/
     }
 }
