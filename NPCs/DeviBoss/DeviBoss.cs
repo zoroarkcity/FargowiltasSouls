@@ -1671,7 +1671,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
         {
             if (!playerInvulTriggered)
             {
-                if (!FargoSoulsWorld.downedDevi)
+                if (!FargoSoulsWorld.downedDevi && !Main.hardMode)
                     Item.NewItem(npc.Hitbox, mod.ItemType("SparklingLove"));
                 Item.NewItem(npc.Hitbox, mod.ItemType("ChibiHat"));
             }
