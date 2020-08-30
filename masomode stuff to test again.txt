@@ -377,3 +377,5 @@ updated qb gores and map icon
 
 more spaz range and faster expand
 eri trail exists
+updated earth gore
+added spirit gore

@@ -755,6 +755,18 @@ namespace FargowiltasSouls.NPCs.Champions
             }
         }
 
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (npc.life <= 0)
+            {
+                for (int i = 1; i <= 5; i++)
+                {
+                    Vector2 pos = npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height));
+                    Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/SpiritGore" + i.ToString()), npc.scale);
+                }
+            }
+        }
+
         public override void NPCLoot()
         {
             FargoSoulsWorld.downedChampions[6] = true;
