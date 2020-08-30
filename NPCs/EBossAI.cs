@@ -1641,7 +1641,7 @@ namespace FargowiltasSouls.NPCs
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                float speed = 15f * Math.Min((Counter[2] - 30) / 90f, 1f); //fan out gradually
+                                float speed = 14f * Math.Min((Counter[2] - 30) / 120f, 1f); //fan out gradually
                                 for (int i = 0; i < 8; i++)
                                 {
                                     Projectile.NewProjectile(npc.Center, speed * (npc.rotation + (float)Math.PI / 4 * i).ToRotationVector2(),

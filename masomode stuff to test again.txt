@@ -376,3 +376,4 @@ dart pistol/rifle -15%
 updated qb gores and map icon
 
 more spaz range and faster expand
+eri trail exists
