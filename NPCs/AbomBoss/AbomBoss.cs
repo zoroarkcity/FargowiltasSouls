@@ -1173,7 +1173,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
         {
             if (!playerInvulTriggered)
             {
-                if (!FargoSoulsWorld.downedAbom)
+                if (!FargoSoulsWorld.downedAbom && FargoSoulsWorld.MasochistMode)
                     Item.NewItem(npc.Hitbox, mod.ItemType("StyxGazer"));
                 Item.NewItem(npc.Hitbox, mod.ItemType("BabyScythe"));
             }

@@ -376,6 +376,7 @@ dart pistol/rifle -15%
 updated qb gores and map icon
 
 more spaz range and faster expand
+added emode check for abom/devi nohit weapons lol
 eri trail exists
 updated earth gore
 added spirit gore
