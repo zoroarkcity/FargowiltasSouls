@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class ObsidianEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Obsidian Enchantment");
@@ -18,9 +16,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"Grants immunity to fire and lava
 You have normal movement and can swim in lava
 While standing in lava, your attacks spawn explosions
-Effects of Molten Skull Rose 
 'The earth calls'");
             DisplayName.AddTranslation(GameCulture.Chinese, "黑曜石魔石");
+            //Effects of Molten Skull Rose 
 
         }
 
@@ -58,7 +56,7 @@ Effects of Molten Skull Rose
             recipe.AddIngredient(ItemID.ObsidianPants);
             recipe.AddIngredient(ItemID.ObsidianRose); //molten skull rose
             recipe.AddIngredient(ItemID.ObsidianHorseshoe);
-            //cascade?
+            recipe.AddIngredient(ItemID.Cascade);
             recipe.AddIngredient(ItemID.Fireblossom);
             //magma snail
             //obsidifsh

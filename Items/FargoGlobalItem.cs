@@ -8,14 +8,11 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 
 namespace FargowiltasSouls.Items
 {
     public class FargoGlobalItem : GlobalItem
     {
-        private static Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetDefaults(Item item)
         {
             if (item.type == ItemID.Stinger)
@@ -34,7 +31,7 @@ namespace FargowiltasSouls.Items
             FargoPlayer p = (FargoPlayer) player.GetModPlayer(mod, "FargoPlayer");
             //ignore money, hearts, mana stars
             if (p.IronEnchant && item.type != 71 && item.type != 72 && item.type != 73 && item.type != 74 && item.type != 54 && item.type != 1734 && item.type != 1735 &&
-                item.type != 184 && item.type != ItemID.CandyCane && item.type != ItemID.SugarPlum) grabRange += p.TerraForce ? 1000 : 250;
+                item.type != 184 && item.type != ItemID.CandyCane && item.type != ItemID.SugarPlum) grabRange += (p.TerraForce || p.WizardEnchant) ? 1000 : 250;
         }
 
         public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref int damage, ref float knockback)
@@ -111,8 +108,6 @@ namespace FargowiltasSouls.Items
                 }
             }
 
-            if (item.type == ItemID.PumpkinPie && player.statLife != player.statLifeMax2 && player.potionDelay > 0) return false;
-
             if (item.magic && player.GetModPlayer<FargoPlayer>().ReverseManaFlow)
             {
                 int damage = (int)(item.mana / (1f - player.endurance) + player.statDefense);
@@ -141,8 +136,16 @@ namespace FargowiltasSouls.Items
                 {
                     Vector2 vel = Vector2.Normalize(Main.MouseWorld - player.Center) * 17f;
                     int p = Projectile.NewProjectile(player.Center, vel, ProjectileID.SnowBallFriendly, (int)(item.damage * .5f), 1, Main.myPlayer);
+
+                    int numSnowballs = 3;
+
+                    if (modPlayer.WoodForce || modPlayer.WizardEnchant)
+                    {
+                        numSnowballs = 5;
+                    }
+
                     if (p != 1000)
-                        FargoGlobalProjectile.SplitProj(Main.projectile[p], 3, MathHelper.Pi / 5, 1);
+                        FargoGlobalProjectile.SplitProj(Main.projectile[p], numSnowballs, MathHelper.Pi / 10, 1);
                 }
 
                 if (modPlayer.CelestialRune && SoulConfig.Instance.GetValue(SoulConfig.Instance.CelestialRune))
@@ -211,56 +214,17 @@ namespace FargowiltasSouls.Items
                 }
             }
 
-            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumCanUse(player, item);
-
             return true;
         }
-
-        /*private void ThoriumCanUse(Player player, Item item)
-        {
-            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.IllumiteMissile))
-            {
-                //illumite effect
-                if (modPlayer.IllumiteEnchant)
-                {
-                    thoriumPlayer.rocketsFired++;
-                    if (thoriumPlayer.rocketsFired >= 3)
-                    {
-                        Vector2 velocity = Vector2.Normalize(Main.MouseWorld - player.Center) * (item.shootSpeed > 0 ? item.shootSpeed : 10) * 1.5f;
-
-                        Projectile.NewProjectile(player.Center, velocity, thorium.ProjectileType("IllumiteMissile"), item.damage, item.knockBack, player.whoAmI, 0f, 0f);
-                        thoriumPlayer.rocketsFired = 0;
-                        Main.PlaySound(SoundID.Item14, player.position);
-                    }
-                }
-            }
-        }*/
 
         public override bool UseItem(Item item, Player player)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (item.type == ItemID.PumpkinPie && player.statLife != player.statLifeMax2 && modPlayer.PumpkinEnchant)
-            {
-                int heal = player.statLifeMax2 - player.statLife;
-                player.HealEffect(heal);
-                player.statLife += heal;
-                player.AddBuff(BuffID.PotionSickness, 10800);
-            }
-
             if (item.type == ItemID.RodofDiscord)
             {
                 player.ClearBuff(ModContent.BuffType<Buffs.Souls.GoldenStasis>());
             }
-
-            //if (modPlayer.SacredEnchant && item.healLife > 0)
-            //{
-            //    player.HealEffect(item.healLife / 2);
-            //    player.statLife += item.healLife / 2;
-            //}
 
             if (modPlayer.UniverseEffect && item.damage > 0) item.shootSpeed *= modPlayer.Eternity ? 2f : 1.5f;
 

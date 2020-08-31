@@ -214,6 +214,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool FrostIcicles;
 
+        [Label("$Mods.FargowiltasSouls.SnowConfig")]
+        [DefaultValue(true)]
+        public bool SnowStorm;
+
         [Label("$Mods.FargowiltasSouls.JungleConfig")]
         [DefaultValue(true)]
         public bool JungleSpores;
@@ -652,6 +656,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.PetSnowmanConfig")]
         [DefaultValue(true)]
         public bool SnowmanPet;
+
+        [Label("$Mods.FargowiltasSouls.PetGrinchConfig")]
+        [DefaultValue(true)]
+        public bool GrinchPet;
 
         [Label("$Mods.FargowiltasSouls.PetSpiderConfig")]
         [DefaultValue(true)]

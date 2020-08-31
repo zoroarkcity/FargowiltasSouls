@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class ShinobiEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shinobi Infiltrator Enchantment");
@@ -81,6 +79,7 @@ Summons a pet Gato and Black Cat
             recipe.AddIngredient(ItemID.MonkAltHead);
             recipe.AddIngredient(ItemID.MonkAltShirt);
             recipe.AddIngredient(ItemID.MonkAltPants);
+            recipe.AddIngredient(null, "NinjaEnchant");
             recipe.AddIngredient(null, "MonkEnchant");
             recipe.AddIngredient(ItemID.MasterNinjaGear);
             //chain guiottine

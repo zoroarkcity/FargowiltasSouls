@@ -9,18 +9,17 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class TurtleEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Turtle Enchantment");
             Tooltip.SetDefault(
-@"When standing still and not attacking, you gain the Shell Hide buff
-Shell Hide protects you from all projectiles, but increases contact damage
+@"When standing still and not attacking, you will enter your shell
+While in your shell, you will gain 90% damage resistance and reflect projectiles
+Taking 10 hits will break your shell
 100% of contact damage is reflected
 Enemies may explode into needles on death
 Summons a pet Lizard and Turtle
-'You suddenly have the urge to hide in a shell'"); //shell hide no happen with SoE
+'You suddenly have the urge to hide in a shell'"); 
             DisplayName.AddTranslation(GameCulture.Chinese, "乌龟魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'你突然有一种想躲进壳里的冲动'

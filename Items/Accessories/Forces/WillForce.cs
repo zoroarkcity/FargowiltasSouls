@@ -2,13 +2,12 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using FargowiltasSouls.Items.Accessories.Enchantments;
 
 namespace FargowiltasSouls.Items.Accessories.Forces
 {
     public class WillForce : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Force of Will");
@@ -18,10 +17,10 @@ namespace FargowiltasSouls.Items.Accessories.Forces
 Your attacks inflict Midas
 Press the Gold hotkey to be encased in a Golden Shell
 You will not be able to move or attack, but will be immune to all damage
-20% chance for enemies to drop 8x loot
+20% chance for enemies to drop 5x loot
 Spears will rain down on struck enemies 
 Double tap down to create a localized rain of arrows
-Continually attacking an enemy will drastically reduce its immunity frames
+Continually attacking an enemy will grant you the Power of Valhalla buff
 Greatly enhances Ballista and Explosive Traps effectiveness
 Effects of Greedy Ring, Celestial Shell, and Shiny Stone
 Summons several pets";
@@ -64,6 +63,8 @@ Summons several pets";
             modPlayer.PlatinumEnchant = true;
             //javelins and pets
             modPlayer.GladiatorEffect(hideVisual);
+            //wizard bonuses if somehow wearing only other enchants and not forces
+            modPlayer.WizardEnchant = true;
             //arrow rain, celestial shell, pet
             modPlayer.RedRidingEffect(hideVisual);
             modPlayer.HuntressEffect();
@@ -77,6 +78,7 @@ Summons several pets";
             recipe.AddIngredient(null, "GoldEnchant");
             recipe.AddIngredient(null, "PlatinumEnchant");
             recipe.AddIngredient(null, "GladiatorEnchant");
+            recipe.AddIngredient(ModContent.ItemType<WizardEnchant>());
             recipe.AddIngredient(null, "RedRidingEnchant");
             recipe.AddIngredient(null, "ValhallaKnightEnchant");
 

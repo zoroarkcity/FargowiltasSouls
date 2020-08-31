@@ -8,15 +8,13 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class HuntressEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Huntress Enchantment");
             Tooltip.SetDefault(
 @"Double tap down to create a localized rain of arrows at the cursor's position for a few seconds
-The arrow type and damage is based on your first ammo slot
-This has a cooldown of 10 seconds
+The arrow type is based on the first arrow in your inventory
+This has a cooldown of 30 seconds
 Explosive Traps recharge faster and oil enemies
 Set oiled enemies on fire for extra damage
 'The Hunt is On'");

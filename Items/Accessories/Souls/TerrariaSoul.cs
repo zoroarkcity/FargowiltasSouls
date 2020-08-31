@@ -12,10 +12,6 @@ namespace FargowiltasSouls.Items.Accessories.Souls
     [AutoloadEquip(EquipType.Shield)]
     public class TerrariaSoul : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        public int timer;
-        public bool allowJump = true;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul of Terraria");

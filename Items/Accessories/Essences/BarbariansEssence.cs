@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Essences
 {
     public class BarbariansEssence : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Barbarian's Essence");
@@ -63,32 +61,17 @@ namespace FargowiltasSouls.Items.Accessories.Essences
             recipe.AddIngredient(ItemID.WarriorEmblem);
             recipe.AddIngredient(ItemID.ZombieArm);
             //bloody machete
-            //recipe.AddIngredient(ItemID.Trident);
+            recipe.AddIngredient(ItemID.Trident);
             recipe.AddIngredient(ItemID.ChainKnife); //flaming mace
-
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(thorium.ItemType("RedHourglass"));
-                recipe.AddIngredient(ItemID.StylistKilLaKillScissorsIWish);
-                recipe.AddIngredient(ItemID.IceBlade);
-                recipe.AddIngredient(ItemID.FalconBlade);
-                recipe.AddIngredient(thorium.ItemType("DrenchedDirk"));
-                recipe.AddIngredient(thorium.ItemType("Whip"));
-                recipe.AddIngredient(thorium.ItemType("EnergyStormPartisan"));
-                recipe.AddRecipeGroup("FargowiltasSouls:AnyThoriumYoyo");
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.StylistKilLaKillScissorsIWish);
-                recipe.AddIngredient(ItemID.IceBlade);
-                //shroomerang
-                recipe.AddIngredient(ItemID.FalconBlade);
-                //amazon
-                //combat wrench
-                //blue moon
-                recipe.AddIngredient(ItemID.Flamarang);
-                //terragrim -  make recipe phm
-            }
+            recipe.AddIngredient(ItemID.StylistKilLaKillScissorsIWish);
+            recipe.AddIngredient(ItemID.IceBlade);
+            //shroomerang
+            recipe.AddIngredient(ItemID.FalconBlade);
+            //amazon
+            //combat wrench
+            //blue moon
+            recipe.AddIngredient(ItemID.Flamarang);
+            //terragrim -  make recipe phm
 
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.SetResult(this);

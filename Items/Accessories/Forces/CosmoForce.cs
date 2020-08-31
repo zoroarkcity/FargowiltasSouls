@@ -8,22 +8,13 @@ namespace FargowiltasSouls.Items.Accessories.Forces
 {
     public class CosmoForce : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        public int timer;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Force of Cosmos");
 
             string tooltip =
 @"'Been around since the Big Bang'
-";
-            string tooltip_ch =
-@"'自宇宙大爆炸以来就一直存在'
-";
-
-            tooltip +=
-@"A meteor shower initiates every few seconds while attacking
+A meteor shower initiates every few seconds while attacking
 Solar shield allows you to dash through enemies
 Attacks may inflict the Solar Flare debuff
 Double tap down to toggle stealth, reducing chance for enemies to target you but slowing movement
@@ -33,9 +24,9 @@ Double tap down to direct your empowered guardian
 Press the Freeze Key to freeze time for 5 seconds
 There is a 60 second cooldown for this effect, a sound effect plays when it's back
 Summons a pet Companion Cube";
-
-            tooltip_ch +=
-@"攻击时,每隔几秒就会爆发一次流星雨
+            string tooltip_ch =
+@"'自宇宙大爆炸以来就一直存在'
+攻击时,每隔几秒就会爆发一次流星雨
 日耀护盾允许你向敌人冲刺
 攻击概率造成耀斑效果
 双击'下'键切换潜行,减少敌人攻击你的概率, 但减少移动速度
@@ -64,11 +55,11 @@ Summons a pet Companion Cube";
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            //meme speed, solar flare, white dwarf flames, tide turner daggers, pyro bursts, assassin insta kill
+            //meme speed, solar flare, 
             modPlayer.CosmoForce = true;
 
             //meteor shower
-            modPlayer.MeteorEffect(75);
+            modPlayer.MeteorEffect();
             //solar shields
             modPlayer.SolarEffect();
             //flare debuff

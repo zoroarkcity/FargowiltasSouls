@@ -9,9 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Essences
 {
     public class SlingersEssence : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
-
         public override bool Autoload(ref string name)
         {
             return false;
@@ -69,23 +66,7 @@ namespace FargowiltasSouls.Items.Accessories.Essences
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            /*if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(thorium.ItemType("NinjaEmblem"));
-                recipe.AddIngredient(fargos.ItemType("WoodYoyoThrown"));
-                recipe.AddIngredient(fargos.ItemType("BloodyMacheteThrown"));
-                recipe.AddIngredient(fargos.ItemType("IceBoomerangThrown"));
-                recipe.AddIngredient(ItemID.AleThrowingGlove);
-                recipe.AddIngredient(thorium.ItemType("EnchantedKnife"));
-                recipe.AddIngredient(thorium.ItemType("StarfishSlicer"), 300);
-                recipe.AddIngredient(fargos.ItemType("JungleYoyoThrown"));
-                recipe.AddIngredient(ItemID.Beenade, 300);
-                recipe.AddIngredient(ItemID.BoneGlove);
-                recipe.AddIngredient(fargos.ItemType("BlueMoonThrown"));
-                recipe.AddIngredient(thorium.ItemType("ChampionsGodHand"));
-                recipe.AddIngredient(thorium.ItemType("GaussKnife"));
-                recipe.AddIngredient(fargos.ItemType("FlamarangThrown"));
-            }
+            /*
             else
             {
                 //no others

@@ -13,7 +13,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             Tooltip.SetDefault(
 @"Two Shadow Orbs will orbit around you
 Attacking a Shadow Orb will cause it to release a burst of homing shadow energy
-After being struck, a Shadow Orb cannot be hit for 5 seconds
 Your attacks may inflict Darkness
 Summons a pet Eater of Souls and Shadow Orb
 'Archaic, yet functional'");
@@ -47,7 +46,7 @@ Summons a pet Eater of Souls and Shadow Orb
             recipe.AddIngredient(ItemID.AncientGoldHelmet);
             recipe.AddIngredient(null, "ShadowEnchant");
             recipe.AddIngredient(ItemID.ShadowFlameKnife);
-            recipe.AddIngredient(ItemID.ShadowFlameHexDoll);
+            //recipe.AddIngredient(ItemID.ShadowFlameHexDoll);
             //dart rifle
             //toxicarp
 

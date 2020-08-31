@@ -1,21 +1,14 @@
-using CalamityMod.CalPlayer;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
-using CalamityMod.Items.Accessories;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     public class ConjuristsSoul : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Conjurist's Soul");
@@ -32,18 +25,6 @@ Increased minion knockback";
 +4最大召唤栏
 +2最大哨兵栏
 增加召唤物击退";
-
-            if (thorium != null)
-            {
-                tooltip += "\nEffects of Phylactery and Crystal Scorpion";
-                tooltip_ch += "\n拥有魂匣,魔晶蝎和云码垂饰的效果";
-            }
-
-            if (calamity != null)
-            {
-                tooltip += "\nEffects of Nucleogenesis";
-                tooltip_ch += "\n拥有斯塔提斯的诅咒系带的效果";
-            }
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "召唤之魂");
@@ -76,69 +57,29 @@ Increased minion knockback";
             player.maxMinions += 4;
             player.maxTurrets += 2;
             player.minionKB += 3f;
-
-            //if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
-
-            //if (Fargowiltas.Instance.CalamityLoaded) Calamity(player, hideVisual);
         }
-
-        //private void Thorium(Player player)
-        //{
-        //    ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-        //    //phylactery
-        //    if (!thoriumPlayer.lichPrevent)
-        //    {
-        //        player.AddBuff(thorium.BuffType("LichActive"), 60, true);
-        //    }
-        //    //crystal scorpion
-        //    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.CrystalScorpion))
-        //    {
-        //        thoriumPlayer.crystalScorpion = true;
-        //    }
-        //}
-
-        //private void Calamity(Player player, bool hideVisual)
-        //{
-        //    calamity.GetItem("Nucleogenesis").UpdateAccessory(player, hideVisual);
-        //}
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(null, "OccultistsEssence");
-            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? calamity.ItemType("Nucleogenesis") : ItemID.PapyrusScarab);
+            recipe.AddIngredient(ItemID.PapyrusScarab);
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(thorium.ItemType("Phylactery"));
-                recipe.AddIngredient(thorium.ItemType("CrystalScorpion"));
-                recipe.AddIngredient(thorium.ItemType("HailBomber"));
-                recipe.AddIngredient(thorium.ItemType("MushymenStaff"));
-                recipe.AddIngredient(ItemID.PirateStaff);
-                recipe.AddIngredient(ItemID.OpticStaff);
-                recipe.AddIngredient(thorium.ItemType("BlackCane"));
-                recipe.AddIngredient(thorium.ItemType("TerrariumSummon"));
-                recipe.AddIngredient(ItemID.StaffoftheFrostHydra);
-                recipe.AddIngredient(ItemID.RavenStaff);
-                recipe.AddIngredient(ItemID.XenoStaff);
-            }
-            else
-            {
-                //blade staff
-                recipe.AddIngredient(ItemID.PirateStaff);
-                recipe.AddIngredient(ItemID.OpticStaff);
-                recipe.AddIngredient(ItemID.DeadlySphereStaff);
-                //desert tiger staff
-                recipe.AddIngredient(ItemID.StaffoftheFrostHydra);
-                //mourningstar?
-                recipe.AddIngredient(ItemID.DD2BallistraTowerT3Popper);
-                recipe.AddIngredient(ItemID.DD2ExplosiveTrapT3Popper);
-                recipe.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
-                recipe.AddIngredient(ItemID.DD2LightningAuraT3Popper);
-                recipe.AddIngredient(ItemID.TempestStaff);
-                recipe.AddIngredient(ItemID.RavenStaff);
-                recipe.AddIngredient(ItemID.XenoStaff);
-            }
+
+           //blade staff
+            recipe.AddIngredient(ItemID.PirateStaff);
+            recipe.AddIngredient(ItemID.OpticStaff);
+            recipe.AddIngredient(ItemID.DeadlySphereStaff);
+            //desert tiger staff
+            recipe.AddIngredient(ItemID.StaffoftheFrostHydra);
+            //mourningstar?
+            recipe.AddIngredient(ItemID.DD2BallistraTowerT3Popper);
+            recipe.AddIngredient(ItemID.DD2ExplosiveTrapT3Popper);
+            recipe.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
+            recipe.AddIngredient(ItemID.DD2LightningAuraT3Popper);
+            recipe.AddIngredient(ItemID.TempestStaff);
+            recipe.AddIngredient(ItemID.RavenStaff);
+            recipe.AddIngredient(ItemID.XenoStaff);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 

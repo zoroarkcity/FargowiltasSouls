@@ -7,18 +7,16 @@ namespace FargowiltasSouls.Items.Accessories.Forces
 {
     public class SpiritForce : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Force of Spirit");
 
             string tooltip =
 @"'Ascend from this mortal realm'
-If you reach zero HP you cheat death, returning with 100 HP
-For a few seconds after reviving, you are immune to all damage and spawn bones
+If you reach zero HP you will revive with 50 HP and spawn several bones
+Collect the bones once they stop moving to heal for 15 HP each
 Double tap down to call an ancient storm to the cursor location
-Any projectiles shot through your storm gain 50% damage
+Any projectiles shot through your storm gain 60% damage
 Summons an Enchanted Sword familiar
 You gain a shield that can reflect projectiles
 You may continue to summon temporary minions after maxing out on your slots
@@ -61,11 +59,11 @@ Summons several pets";
             //spectre works for all, spirit trapper works for all
             modPlayer.SpiritForce = true;
             //revive, bone zone, pet
-            modPlayer.FossilEffect(25, hideVisual);
+            modPlayer.FossilEffect(hideVisual);
             //storm
             modPlayer.ForbiddenEffect();
             //sword, shield, pet
-            modPlayer.HallowEffect(hideVisual, 100);
+            modPlayer.HallowEffect(hideVisual);
             //infested debuff, pet
             modPlayer.TikiEffect(hideVisual);
             //pet

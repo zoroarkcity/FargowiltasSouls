@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Essences
 {
     public class OccultistsEssence : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Occultist's Essence");
@@ -58,38 +56,19 @@ Increases your max number of sentries by 1
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(ItemID.SummonerEmblem);
-                recipe.AddIngredient(thorium.ItemType("HatchlingStaff"));
-                recipe.AddIngredient(thorium.ItemType("FalconeerCane"));
-                recipe.AddIngredient(thorium.ItemType("MeteorStaff"));
-                recipe.AddIngredient(thorium.ItemType("NanoClamCane"));
-                recipe.AddIngredient(thorium.ItemType("ViscountCane"));
-                recipe.AddIngredient(ItemID.HornetStaff);
-                recipe.AddIngredient(ItemID.ImpStaff);
-                recipe.AddIngredient(ItemID.DD2BallistraTowerT1Popper);
-                recipe.AddIngredient(ItemID.DD2ExplosiveTrapT1Popper);
-                recipe.AddIngredient(ItemID.DD2FlameburstTowerT1Popper);
-                recipe.AddIngredient(ItemID.DD2LightningAuraT1Popper);
-            }
-            else
-            {
-                
-                recipe.AddIngredient(ItemID.SummonerEmblem);
-                //finch staff
-                recipe.AddIngredient(ItemID.SlimeStaff);
-                //vampire frog staff
-                recipe.AddIngredient(ItemID.HornetStaff);
-                recipe.AddIngredient(ItemID.ImpStaff);
-                recipe.AddIngredient(ItemID.DD2BallistraTowerT1Popper);
-                recipe.AddIngredient(ItemID.DD2ExplosiveTrapT1Popper);
-                recipe.AddIngredient(ItemID.DD2FlameburstTowerT1Popper);
-                recipe.AddIngredient(ItemID.DD2LightningAuraT1Popper);
-                //firecracker
+            recipe.AddIngredient(ItemID.SummonerEmblem);
+            //finch staff
+            recipe.AddIngredient(ItemID.SlimeStaff);
+            //vampire frog staff
+            recipe.AddIngredient(ItemID.HornetStaff);
+            recipe.AddIngredient(ItemID.ImpStaff);
+            recipe.AddIngredient(ItemID.DD2BallistraTowerT1Popper);
+            recipe.AddIngredient(ItemID.DD2ExplosiveTrapT1Popper);
+            recipe.AddIngredient(ItemID.DD2FlameburstTowerT1Popper);
+            recipe.AddIngredient(ItemID.DD2LightningAuraT1Popper);
+            //firecracker
 
             //summon variants?
-            }
 
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.SetResult(this);

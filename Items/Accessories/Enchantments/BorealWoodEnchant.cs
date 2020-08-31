@@ -55,12 +55,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             recipe.AddIngredient(ItemID.BorealWoodHelmet);
             recipe.AddIngredient(ItemID.BorealWoodBreastplate);
             recipe.AddIngredient(ItemID.BorealWoodGreaves);
-            recipe.AddIngredient(ItemID.BorealWoodSword);
+            //recipe.AddIngredient(ItemID.BorealWoodSword);
             recipe.AddIngredient(ItemID.BorealWoodBow);
             recipe.AddIngredient(ItemID.Snowball, 300);
             recipe.AddIngredient(ItemID.Shiverthorn);
             //cherry/plum
-            recipe.AddIngredient(ItemID.Penguin);
+            //recipe.AddIngredient(ItemID.Penguin);
             recipe.AddIngredient(ItemID.ColdWatersintheWhiteLand);
 
             recipe.AddTile(TileID.DemonAltar);

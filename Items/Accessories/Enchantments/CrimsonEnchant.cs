@@ -9,13 +9,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class CrimsonEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Crimson Enchantment");
             Tooltip.SetDefault(
-@"Greatly increases life regen
+@"After taking a hit, regen is greatly increased until the hit is healed off
+If you take another hit before it's healed, you lose the heal in addition to normal damage
 Summons a pet Face Monster and Crimson Heart
 'The blood of your enemy is your rebirth'");
             DisplayName.AddTranslation(GameCulture.Chinese, "血腥魔石");

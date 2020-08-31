@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class NebulaEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Nebula Enchantment");
@@ -56,7 +54,7 @@ Buff booster stacking capped at 2
             recipe.AddIngredient(ItemID.NebulaHelmet);
             recipe.AddIngredient(ItemID.NebulaBreastplate);
             recipe.AddIngredient(ItemID.NebulaLeggings);
-            //nebula wings
+            recipe.AddIngredient(ItemID.WingsNebula);
             recipe.AddIngredient(ItemID.NebulaArcanum);
             recipe.AddIngredient(ItemID.NebulaBlaze);
             //LeafBlower

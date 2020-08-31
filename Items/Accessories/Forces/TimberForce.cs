@@ -13,16 +13,13 @@ namespace FargowiltasSouls.Items.Accessories.Forces
 
             Tooltip.SetDefault(
 @"'Extremely rigid'
-Critters have massively increased defense
+Critters will explode 1 second after being released
 Grants immunity to Guilty
-When critters die, they release their souls to aid you
-Every 5th attack will be accompanied by several snowballs
-All grappling hooks pull you in and retract twice as fast
-Any hook will periodically fire homing shots at enemies
-You have a large aura of Shadowflame
-Enemies getting too close will trigger a blood geyser and all other on hit effects
+Attacks will periodically be accompanied by several snowballs
+All grappling hooks shoot, pull, and retract 2.5x as fast
+You have an aura of Shadowflame, Cursed Flames, and Bleeding
 Double tap down to spawn a palm tree sentry that throws nuts at enemies
-Projectiles will spawn a star when they hit something");
+Projectiles may spawn a star when they hit something");
             DisplayName.AddTranslation(GameCulture.Chinese, "森林之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'很刚'

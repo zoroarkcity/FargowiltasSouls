@@ -7,28 +7,26 @@ namespace FargowiltasSouls.Items.Accessories.Forces
 {
     public class NatureForce : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Force of Nature");
 
             string tooltip =
 @"'Tapped into every secret of the wilds'
-Greatly increases life regen
+After taking a hit, regen is greatly increased until the hit is healed off
+If you take another hit before it's healed, you lose the heal in addition to normal damage
 Nearby enemies are ignited
 The closer they are to you the more damage they take
 When you are hurt, you violently explode to damage nearby enemies
 Grants immunity to Wet
-A miniature storm will appear after heavily damaging enemies
+A miniature storm will appear after damaging enemies
 Icicles will start to appear around you
-When there are three, attacking will launch them towards the cursor
-Your attacks inflict Frostburn
+You have a small area around you that will slow projectiles to 2/3 speed
 Summons a ring of leaf crystals to shoot at nearby enemies
 Jumping will release a lingering spore explosion
 All herb collection is doubled
 Not moving puts you in stealth
-While in stealth, crits deal 3x damage
+While in stealth, all attacks gain trails of mushrooms
 Effects of Flower Boots
 Summons several pets";
 
@@ -72,19 +70,19 @@ Summons several pets";
             //regen, pets
             modPlayer.CrimsonEffect(hideVisual);
             //inferno and explode
-            modPlayer.MoltenEffect(30);
+            modPlayer.MoltenEffect();
             //rain
             modPlayer.RainEnchant = true;
             player.buffImmune[BuffID.Wet] = true;
             //icicles, pets
-            modPlayer.FrostEffect(75, hideVisual);
+            modPlayer.FrostEffect(hideVisual);
+            modPlayer.SnowEffect(hideVisual);
             //spores
             modPlayer.JungleEffect();
             //crystal and pet
-            modPlayer.ChloroEffect(hideVisual, 100);
-            modPlayer.ChloroEnchant = true;
+            modPlayer.ChloroEffect(hideVisual);
             modPlayer.FlowerBoots();
-            //stealth, crits, pet
+            //stealth, shrooms, pet
             modPlayer.ShroomiteEffect(hideVisual);
         }
 

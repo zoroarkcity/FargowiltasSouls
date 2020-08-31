@@ -56,9 +56,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             recipe.AddIngredient(ItemID.EbonwoodBreastplate);
             recipe.AddIngredient(ItemID.EbonwoodGreaves);
             recipe.AddIngredient(ItemID.EbonwoodSword);
-            recipe.AddIngredient(ItemID.EbonwoodBow);
+            //recipe.AddIngredient(ItemID.EbonwoodBow);
             recipe.AddIngredient(ItemID.Deathweed);
-            recipe.AddIngredient(ItemID.VileMushroom);
+            //recipe.AddIngredient(ItemID.VileMushroom);
             //elderberry/blackcurrant
             recipe.AddIngredient(ItemID.Ebonkoi);
             recipe.AddIngredient(ItemID.LightlessChasms);

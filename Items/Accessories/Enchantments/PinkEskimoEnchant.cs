@@ -12,8 +12,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             return false;
         }
         
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pink Eskimo Enchantment");
