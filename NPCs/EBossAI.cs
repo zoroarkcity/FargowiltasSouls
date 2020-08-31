@@ -2907,7 +2907,7 @@ namespace FargowiltasSouls.NPCs
                                     {
                                         int tilePosX = (int)Main.player[npc.target].Center.X / 16;
                                         int tilePosY = (int)Main.player[npc.target].Center.Y / 16;// + 1;
-                                        tilePosX += 4 * i;
+                                        tilePosX += 6 * i;
 
                                         if (Main.tile[tilePosX, tilePosY] == null)
                                             Main.tile[tilePosX, tilePosY] = new Tile();
@@ -2962,7 +2962,7 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     int tilePosX = (int)Main.player[npc.target].Center.X / 16;
                                     int tilePosY = (int)Main.player[npc.target].Center.Y / 16;// + 1;
-                                    tilePosX += 4 * i;
+                                    tilePosX += 6 * i;
 
                                     if (Main.tile[tilePosX, tilePosY] == null)
                                         Main.tile[tilePosX, tilePosY] = new Tile();

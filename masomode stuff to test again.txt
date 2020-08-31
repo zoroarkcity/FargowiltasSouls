@@ -380,3 +380,4 @@ added emode check for abom/devi nohit weapons lol
 eri trail exists
 updated earth gore
 added spirit gore
+golem boulders are more spread out, geyser telegraph changed

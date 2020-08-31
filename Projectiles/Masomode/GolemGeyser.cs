@@ -46,8 +46,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
             if (projectile.ai[1] == 0) //spawned, while in ground tile
             {
-                projectile.position.Y -= 16;
-                if (!(tile.nactive() && Main.tileSolid[tile.type])) //if reached air tile
+                projectile.position.Y += 16; //go down
+
+                if (!(tile.nactive() && Main.tileSolid[tile.type] && tile.type != TileID.Platforms && tile.type != TileID.PlanterBox)) //if reached air tile
                 {
                     projectile.ai[1] = 1;
                     projectile.netUpdate = true;
@@ -57,13 +58,16 @@ namespace FargowiltasSouls.Projectiles.Masomode
             {
                 if (tile.nactive() && Main.tileSolid[tile.type] && tile.type != TileID.Platforms && tile.type != TileID.PlanterBox) //if inside solid tile, go back down
                 {
-                    if (projectile.timeLeft > 90)
-                        projectile.timeLeft = 90;
+                    projectile.Kill();
+                    return;
+
+                    /*if (projectile.timeLeft > 5)
+                        projectile.timeLeft = 5;
                     projectile.extraUpdates = 0;
                     projectile.position.Y += 16;
                     //make warning dusts
                     int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire, 0f, 8f);
-                    Main.dust[d].velocity *= 3f;
+                    Main.dust[d].velocity *= 3f;*/
                 }
                 else //if in air, go up
                 {
@@ -86,7 +90,10 @@ namespace FargowiltasSouls.Projectiles.Masomode
         public override void Kill(int timeLeft)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
-                Projectile.NewProjectile(projectile.Center, Vector2.UnitY * 8, ProjectileID.GeyserTrap, projectile.damage, 0f, Main.myPlayer);
+            {
+                Projectile.NewProjectile(projectile.Center, Vector2.UnitY, ModContent.ProjectileType<GolemDeathraySmall>(), projectile.damage, 0f, Main.myPlayer);
+                //Projectile.NewProjectile(projectile.Center, Vector2.UnitY * 8, ProjectileID.GeyserTrap, projectile.damage, 0f, Main.myPlayer);
+            }
         }
     }
 }
