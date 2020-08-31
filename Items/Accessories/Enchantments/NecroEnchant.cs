@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class NecroEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Necro Enchantment");
@@ -18,6 +16,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"Slain enemies may drop a pile of bones
 Touch a pile of bones to spawn a friendly Dungeon Guardian
 Damage scales with the defeated enemy's max HP
+Bosses will drop bones every 10% of their HP lost
 Summons a pet Skeletron Head
 'Welcome to the bone zone'");
             DisplayName.AddTranslation(GameCulture.Chinese, "死灵魔石");

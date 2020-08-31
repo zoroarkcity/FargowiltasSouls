@@ -148,7 +148,17 @@ namespace FargowiltasSouls.NPCs
 
                 if (critterCounter <= 0)
                 {
-                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<ExplosionSmall>(), 25, 4, npc.releaseOwner);
+                    Player player = Main.player[npc.releaseOwner];
+                    FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+
+                    int damage = 25;
+
+                    if (modPlayer.WoodForce || modPlayer.WizardEnchant)
+                    {
+                        damage *= 5;
+                    }
+
+                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<ExplosionSmall>(), modPlayer.HighestDamageTypeScaling(damage), 4, npc.releaseOwner);
                     //gold critters make coin value go up of hit enemy, millions of other effects eeech
                 }
                 
@@ -381,7 +391,14 @@ namespace FargowiltasSouls.NPCs
                     npc.lifeRegen = 0;
                 }
 
-                npc.lifeRegen -= npc.type == NPCID.EaterofWorldsBody ? 2 : 10;
+                int dot = npc.type == NPCID.EaterofWorldsBody ? 2 : 10;
+
+                if (modPlayer.TerraForce || modPlayer.WizardEnchant)
+                {
+                    dot *= 3;
+                }
+
+                npc.lifeRegen -= dot;
             }
 
             //50 dps
@@ -599,7 +616,17 @@ namespace FargowiltasSouls.NPCs
             if (modPlayer.NecroEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.NecroGuardian) && !npc.boss && modPlayer.NecroCD == 0)
             {
                 Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, modPlayer.HighestDamageTypeScaling(npc.lifeMax / 5));
-                modPlayer.NecroCD = 60;
+
+                if (modPlayer.ShadowForce || modPlayer.WizardEnchant)
+                {
+                    modPlayer.NecroCD = 30;
+                }
+                else
+                {
+                    modPlayer.NecroCD = 60;
+                }
+
+               
             }
 
             if (modPlayer.PlatinumEnchant && !npc.boss && firstLoot)
@@ -844,7 +871,17 @@ namespace FargowiltasSouls.NPCs
 
             if (modPlayer.SpiderEnchant && projectile.minion && Main.rand.Next(101) <= modPlayer.SummonCrit)
             {
+                if (modPlayer.LifeForce || modPlayer.WizardEnchant)
+                {
+                    damage = (int)(damage * 1.5f);
+                }
+               
                 crit = true;
+            }
+
+            if (projectile.GetGlobalProjectile<FargoGlobalProjectile>().TungstenProjectile && crit)
+            {
+                damage = (int)(damage * 1.075f);
             }
 
             if (Chilled)
@@ -977,16 +1014,6 @@ namespace FargowiltasSouls.NPCs
                 }
             }
         }
-
-        //public override void OnHitNPC(NPC npc, NPC target, int damage, float knockback, bool crit)
-        //{
-        //    FargoPlayer modPlayer = Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>();
-
-        //    if (!modPlayer.ThoriumSoul && modPlayer.KnightEnchant && !npc.friendly && target.townNPC)
-        //    {
-        //        Villain = true;
-        //    }
-        //}
 
         public override void SetupShop(int type, Chest shop, ref int nextSlot)
         {

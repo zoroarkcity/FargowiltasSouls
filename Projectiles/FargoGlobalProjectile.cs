@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CalamityMod.Buffs.Pets;
 using Fargowiltas.Projectiles;
 using FargowiltasSouls.Buffs.Boss;
 using FargowiltasSouls.Buffs.Masomode;
@@ -16,10 +15,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Buffs.Healer;
-using ThoriumMod.Buffs.Pet;
-using ThoriumMod.Buffs.Summon;
-using ThoriumMod.Projectiles.Pets;
 
 namespace FargowiltasSouls.Projectiles
 {
@@ -32,9 +27,6 @@ namespace FargowiltasSouls.Projectiles
                 return true;
             }
         }
-
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
 
         private bool townNPCProj = false;
         private int counter;
@@ -49,18 +41,18 @@ namespace FargowiltasSouls.Projectiles
         private bool ninjaTele;
         private bool stormBoosted = false;
         private int stormTimer;
-        private bool tungstenProjectile = false;
+        private int preStormDamage;
+        public bool TungstenProjectile = false;
         private bool tikiMinion = false;
         private int tikiTimer = 300;
         public int shroomiteMushroomCD = 0;
         private int spookyCD = 0;
         public bool FrostFreeze = false;
+        public bool SuperBee = false;
+        public bool ChilledProj = false;
+        public int ChilledTimer;
 
         public Func<Projectile, bool> GrazeCheck = projectile => projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + 100 && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0);
-
-        public bool Rotate = false;
-        public int RotateDist = 32;
-        public int RotateDir = 1;
 
         private bool firstTick = true;
         private bool squeakyToy = false;
@@ -210,31 +202,52 @@ namespace FargowiltasSouls.Projectiles
                         }
                     }
 
-                    if (modPlayer.TungstenEnchant && !townNPCProj && projectile.damage != 0 && !projectile.trap && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && projectile.friendly && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenProjSize, false))
+                    if (modPlayer.TungstenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenProjSize, false) && modPlayer.TungstenCD == 0 && !townNPCProj && projectile.damage != 0 && !projectile.trap && !projectile.minion && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && projectile.friendly)
                     {
                         projectile.position = projectile.Center;
                         projectile.scale *= 2f;
                         projectile.width *= 2;
                         projectile.height *= 2;
                         projectile.Center = projectile.position;
-                        tungstenProjectile = true;
+                        TungstenProjectile = true;
+                        modPlayer.TungstenCD = 30;
+
+                        if (modPlayer.TerraForce || modPlayer.WizardEnchant)
+                        {
+                            modPlayer.TungstenCD /= 2;
+                        }
                     }
 
                     if (modPlayer.TikiEnchant && modPlayer.TikiMinion && projectile.minion && projectile.minionSlots > 0)
                     {
                         tikiMinion = true;
 
-                        if (projectile.type == ModContent.ProjectileType<EaterBody>() || projectile.type == ProjectileID.StardustDragon2 || projectile.type == ProjectileID.StardustDragon3)
+                        if (projectile.type != ModContent.ProjectileType<EaterBody>() && projectile.type != ProjectileID.StardustDragon2 && projectile.type != ProjectileID.StardustDragon3)
                         {
-                            for (int i = 0; i < 1000; i++)
+                           tikiMinion = true;
+                           tikiTimer = 300;
+
+                            if (modPlayer.SpiritForce || modPlayer.WizardEnchant)
+                            {
+                                tikiTimer = 480;
+                            }
+
+
+                            /*for (int i = 0; i < 1000; i++)
                             {
                                 Projectile pro = Main.projectile[i];
 
                                 if (pro.type == ProjectileID.StardustDragon1 || pro.type == ProjectileID.StardustDragon4 || pro.type == ModContent.ProjectileType<EaterHead>() || pro.type == ModContent.ProjectileType<EaterTail>())
                                 {
                                     pro.GetGlobalProjectile<FargoGlobalProjectile>().tikiMinion = true;
+                                    pro.GetGlobalProjectile<FargoGlobalProjectile>().tikiTimer = 300;
+
+                                    if (modPlayer.SpiritForce || modPlayer.WizardEnchant)
+                                    {
+                                        pro.GetGlobalProjectile<FargoGlobalProjectile>().tikiTimer = 480;
+                                    }
                                 }
-                            }
+                            }*/
                         }
                     }
 
@@ -243,8 +256,7 @@ namespace FargowiltasSouls.Projectiles
                         projectile.damage *= 5;
                     }
 
-                    if (!townNPCProj && modPlayer.AdamantiteEnchant && modPlayer.AdamantiteCD == 0 && CanSplit && projectile.friendly && !projectile.hostile
-                        && !Rotate && projectile.damage > 0 && !projectile.minion && projectile.aiStyle != 19 && projectile.aiStyle != 99
+                    if (!townNPCProj && modPlayer.AdamantiteEnchant && modPlayer.AdamantiteCD == 0 && CanSplit && projectile.friendly && !projectile.hostile && projectile.damage > 0 && !projectile.minion && projectile.aiStyle != 19 && projectile.aiStyle != 99
                         && SoulConfig.Instance.GetValue(SoulConfig.Instance.AdamantiteSplit) && Array.IndexOf(noSplit, projectile.type) <= -1
                         && !(projectile.type == ProjectileID.DD2BetsyArrow && projectile.ai[1] == -1))
                     {
@@ -285,30 +297,27 @@ namespace FargowiltasSouls.Projectiles
                         }
                     }
 
-                    if (Rotate && !modPlayer.TerrariaSoul)
-                    {
-                        projectile.timeLeft = 600;
-                    }
-
-                    if (modPlayer.BeeEnchant && (projectile.type == ProjectileID.GiantBee || projectile.type == ProjectileID.Bee || projectile.type == ProjectileID.Wasp) && Main.rand.Next(2) == 0)
+                    if (modPlayer.BeeEnchant && (projectile.type == ProjectileID.GiantBee || projectile.type == ProjectileID.Bee || projectile.type == ProjectileID.Wasp))
                     {
                         projectile.usesLocalNPCImmunity = true;
                         projectile.localNPCHitCooldown = 5;
                         projectile.penetrate *= 2;
                         projectile.timeLeft *= 2;
-                        projectile.scale *= 3;
-                        projectile.damage = (int)(projectile.damage * 1.5);
+                        projectile.scale *= 2.5f;
+                        //projectile.damage = (int)(projectile.damage * 1.5);
+                        SuperBee = true;
+
                     }
                 }
 
-                if (tungstenProjectile && (!modPlayer.TungstenEnchant || !SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenProjSize, false)))
+                if (TungstenProjectile && (!modPlayer.TungstenEnchant || !SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenProjSize, false)))
                 {
                     projectile.position = projectile.Center;
                     projectile.scale /= 2f;
                     projectile.width /= 2;
                     projectile.height /= 2;
                     projectile.Center = projectile.position;
-                    tungstenProjectile = false;
+                    TungstenProjectile = false;
                 }
 
                 if (tikiMinion)
@@ -349,10 +358,28 @@ namespace FargowiltasSouls.Projectiles
                     }
                 }
 
+                if (SuperBee && (modPlayer.LifeForce || modPlayer.WizardEnchant))
+                {
+                    projectile.position += projectile.velocity;
+                }
+
                 //prob change in 1.4
                 if (modPlayer.StardustEnchant && projectile.type == ProjectileID.StardustGuardian)
                 {
                     projectile.localAI[0] = 0f;
+                }
+
+                //hook ai
+                if (modPlayer.MahoganyEnchant && projectile.aiStyle == 7 && (modPlayer.WoodForce || modPlayer.WizardEnchant))
+                {
+                    float multiplier = .5f;
+
+                    if (modPlayer.WoodForce || modPlayer.WizardEnchant)
+                    {
+                        multiplier = 1.5f;
+                    }
+
+                    projectile.position += (projectile.velocity * multiplier);
                 }
 
                 if (projectile.friendly && !projectile.hostile)
@@ -376,10 +403,19 @@ namespace FargowiltasSouls.Projectiles
 
                         if (nearestProj != null)
                         {
-                            projectile.damage = (int)(projectile.damage * 1.5);
+                            float multiplier = 1.3f;
+
+                            if (modPlayer.SpiritForce || modPlayer.WizardEnchant)
+                            {
+                                multiplier = 1.6f;
+                            }
+
+                            preStormDamage = projectile.damage;
+
+                            projectile.damage = (int)(projectile.damage * multiplier);
 
                             stormBoosted = true;
-                            stormTimer = 120;
+                            stormTimer = 240;
                         }
                     }
 
@@ -389,7 +425,7 @@ namespace FargowiltasSouls.Projectiles
 
                         if (stormTimer == 0)
                         {
-                            projectile.damage = (int)(projectile.damage * (2f / 3f));
+                            projectile.damage = preStormDamage;
                             stormBoosted = false;
                         }
                     }
@@ -407,11 +443,16 @@ namespace FargowiltasSouls.Projectiles
                         projectile.Kill();
                     }
 
-                    if (modPlayer.ShroomEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ShroomiteShrooms) && player.stealth == 0 && projectile.damage > 0 && !townNPCProj && projectile.velocity.Length() > 1 && projectile.minionSlots == 0 && projectile.type != ModContent.ProjectileType<ShroomiteShroom>())
+                    if (modPlayer.ShroomEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ShroomiteShrooms) && player.stealth == 0 && projectile.damage > 0 && !townNPCProj && projectile.velocity.Length() > 1 && projectile.minionSlots == 0 && projectile.type != ModContent.ProjectileType<ShroomiteShroom>() && player.ownedProjectileCounts[ModContent.ProjectileType<ShroomiteShroom>()] < 50)
                     {
                         if (shroomiteMushroomCD <= 0)
                         {
-                            shroomiteMushroomCD = 10;
+                            shroomiteMushroomCD = 15;
+
+                            if (modPlayer.NatureForce || modPlayer.WizardEnchant)
+                            {
+                                shroomiteMushroomCD = 10;
+                            }
 
                             int p = Projectile.NewProjectile(projectile.position.X + (float)(projectile.width / 2), projectile.position.Y + (float)(projectile.height / 2), projectile.velocity.X, projectile.velocity.Y, ModContent.ProjectileType<ShroomiteShroom>(), projectile.damage / 5, 0f, projectile.owner, 0f, 0f);
                         }
@@ -447,6 +488,11 @@ namespace FargowiltasSouls.Projectiles
                                 Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 62, 0.5f);
 
                                 spookyCD = 30 + Main.rand.Next(player.maxMinions * 5);
+
+                                if (modPlayer.ShadowForce || modPlayer.WizardEnchant)
+                                {
+                                    spookyCD -= 10;
+                                }
                             }
                         }
 
@@ -454,31 +500,14 @@ namespace FargowiltasSouls.Projectiles
                 }
             }
 
-            if(Rotate)
+            if (ChilledTimer > 0)
             {
-                projectile.tileCollide = false;
-                projectile.usesLocalNPCImmunity = true;
+                ChilledTimer--;
 
-                Player p = Main.player[projectile.owner];
-
-                //Factors for calculations
-                double deg = projectile.ai[1];
-                double rad = deg * (Math.PI / 180);
-
-                projectile.position.X = p.Center.X - (int)(Math.Cos(rad) * RotateDist) - projectile.width / 2;
-                projectile.position.Y = p.Center.Y - (int)(Math.Sin(rad) * RotateDist) - projectile.height / 2;
-
-                //increase/decrease degrees
-                if(RotateDir == 1)
+                if (ChilledTimer == 0)
                 {
-                    projectile.ai[1] += projectile.ai[0];
+                    ChilledProj = false;
                 }
-                else
-                {
-                    projectile.ai[1] -= projectile.ai[0];
-                }
-
-                retVal = false;
             }
 
             if (TimeFrozen > 0 && !firstTick && !TimeFreezeImmune)
@@ -546,7 +575,7 @@ namespace FargowiltasSouls.Projectiles
                         split.GetGlobalProjectile<FargoGlobalProjectile>().numSplits = projectile.GetGlobalProjectile<FargoGlobalProjectile>().numSplits;
                         //split.GetGlobalProjectile<FargoGlobalProjectile>().firstTick = false;
                         split.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
-                        split.GetGlobalProjectile<FargoGlobalProjectile>().tungstenProjectile = projectile.GetGlobalProjectile<FargoGlobalProjectile>().tungstenProjectile;
+                        split.GetGlobalProjectile<FargoGlobalProjectile>().TungstenProjectile = projectile.GetGlobalProjectile<FargoGlobalProjectile>().TungstenProjectile;
                     }
                 }
             }
@@ -597,7 +626,7 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case ProjectileID.BlackCat:
-                    KillPet(projectile, player, BuffID.BlackCat, modPlayer.NinjaEnchant, SoulConfig.Instance.BlackCatPet);
+                    KillPet(projectile, player, BuffID.BlackCat, modPlayer.WizardEnchant, SoulConfig.Instance.BlackCatPet);
                     break;
 
                 case ProjectileID.Wisp:
@@ -645,11 +674,15 @@ namespace FargowiltasSouls.Projectiles
                     break;
 
                 case ProjectileID.Penguin:
-                    KillPet(projectile, player, BuffID.BabyPenguin, modPlayer.FrostEnchant, SoulConfig.Instance.PenguinPet);
+                    KillPet(projectile, player, BuffID.BabyPenguin, modPlayer.SnowEnchant, SoulConfig.Instance.PenguinPet);
                     break;
 
                 case ProjectileID.BabySnowman:
                     KillPet(projectile, player, BuffID.BabySnowman, modPlayer.FrostEnchant, SoulConfig.Instance.SnowmanPet);
+                    break;
+
+                case ProjectileID.BabyGrinch:
+                    KillPet(projectile, player, BuffID.BabyGrinch, modPlayer.FrostEnchant, SoulConfig.Instance.GrinchPet);
                     break;
 
                 case ProjectileID.DD2PetGato:
@@ -1094,20 +1127,18 @@ namespace FargowiltasSouls.Projectiles
                         break;
             }
 
-            //if (Fargowiltas.Instance.ThoriumLoaded)
-            //{
-            //    ThoriumPets(projectile);
-            //}
-
-            //if (Fargowiltas.Instance.CalamityLoaded)
-            //{
-            //    CalamityPets(projectile);
-            //}
-
             if (stormBoosted)
             {
                 int dustId = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.GoldFlame, projectile.velocity.X, projectile.velocity.Y, 100, default(Color), 1.5f);
                 Main.dust[dustId].noGravity = true;
+            }
+
+            if (ChilledProj)
+            {
+                int dustId = Dust.NewDust(projectile.Center, projectile.width, projectile.height, 76, projectile.velocity.X, projectile.velocity.Y, 100, default(Color), 1f);
+                Main.dust[dustId].noGravity = true;
+
+                projectile.position -= projectile.velocity * 0.33f;
             }
 
             if (projectile.bobber && modPlayer.FishSoul1)
@@ -1116,141 +1147,6 @@ namespace FargowiltasSouls.Projectiles
                     projectile.localAI[1] = 655; //quick catch. not 660 and up (that breaks fishron summoning)
             }
         }
-
-        //private void ThoriumPets(Projectile projectile)
-        //{
-        //    Player player = Main.player[projectile.owner];
-        //    FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-
-        //    switch (ModProjID)
-        //    {
-
-        //        #region thorium pets
-
-        //        case 2:
-        //            //KillPet(projectile, player, ModContent.BuffType<BioFeederBuff>(), modPlayer.MeteorEnchant, SoulConfig.Instance.thoriumToggles.BioFeederPet);
-        //            break;
-
-        //        case 3:
-        //            KillPet(projectile, player, ModContent.BuffType<BlisterBuff>(), modPlayer.FleshEnchant, SoulConfig.Instance.thoriumToggles.BlisterPet);
-        //            break;
-
-        //        case 4:
-        //            KillPet(projectile, player, ModContent.BuffType<WyvernPetBuff>(), modPlayer.DragonEnchant, SoulConfig.Instance.thoriumToggles.WyvernPet);
-        //            break;
-
-        //        case 6:
-        //            KillPet(projectile, player, ModContent.BuffType<LockBoxBuff>(), modPlayer.MinerEnchant, SoulConfig.Instance.thoriumToggles.BoxPet);
-        //            break;
-
-        //        case 9:
-        //            KillPet(projectile, player, ModContent.BuffType<LifeSpiritBuff>(), modPlayer.SacredEnchant, SoulConfig.Instance.thoriumToggles.SpiritPet);
-        //            break;
-
-        //        case 11:
-        //            KillPet(projectile, player, ModContent.BuffType<SaplingBuff>(), modPlayer.LivingWoodEnchant, SoulConfig.Instance.thoriumToggles.SaplingMinion, true);
-        //            break;
-
-        //        case 12:
-        //            KillPet(projectile, player, ModContent.BuffType<SnowyOwlBuff>(), modPlayer.CryoEnchant, SoulConfig.Instance.thoriumToggles.OwlPet);
-        //            break;
-
-        //        case 13:
-        //            KillPet(projectile, player, ModContent.BuffType<JellyPet>(), modPlayer.DepthEnchant, SoulConfig.Instance.thoriumToggles.JellyfishPet);
-        //            break;
-
-        //        case 17:
-        //            KillPet(projectile, player, ModContent.BuffType<ShineDust>(), modPlayer.PlatinumEnchant, SoulConfig.Instance.thoriumToggles.GlitterPet);
-        //            break;
-
-        //        case 18:
-        //            KillPet(projectile, player, ModContent.BuffType<DrachmaBuff>(), modPlayer.GoldEnchant, SoulConfig.Instance.thoriumToggles.CoinPet);
-        //            break;
-
-        //            #endregion
-        //    }
-        //}
-
-        //private void CalamityPets(Projectile projectile)
-        //{
-        //    Player player = Main.player[projectile.owner];
-        //    FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-
-        //    switch (ModProjID)
-        //    {
-        //        case 101:
-        //            KillPet(projectile, player, ModContent.BuffType<Kendra>(), modPlayer.DaedalusEnchant, SoulConfig.Instance.calamityToggles.KendraPet);
-        //            break;
-
-                
-
-        //        case 103:
-        //            KillPet(projectile, player, ModContent.BuffType<ThirdSageBuff>(), modPlayer.DaedalusEnchant, SoulConfig.Instance.calamityToggles.ThirdSagePet);
-        //            break;
-
-        //        case 104:
-        //            KillPet(projectile, player, ModContent.BuffType<BearBuff>(), modPlayer.DaedalusEnchant, SoulConfig.Instance.calamityToggles.BearPet);
-        //            break;
-
-        //        case 105:
-        //            KillPet(projectile, player, ModContent.BuffType<BrimlingBuff>(), modPlayer.BrimflameEnchant, SoulConfig.Instance.calamityToggles.BrimlingPet);
-        //            break;
-
-        //        case 106:
-        //            KillPet(projectile, player, ModContent.BuffType<DannyDevito>(), modPlayer.SulphurEnchant, SoulConfig.Instance.calamityToggles.DannyPet);
-        //            break;
-
-        //        case 107:
-        //            KillPet(projectile, player, ModContent.BuffType<SirenLightPetBuff>(), modPlayer.FathomEnchant, SoulConfig.Instance.calamityToggles.SirenPet);
-        //            break;
-
-        //        case 108:
-        //        case 109:
-        //            KillPet(projectile, player, ModContent.BuffType<ChibiiBuff>(), modPlayer.GodSlayerEnchant, SoulConfig.Instance.calamityToggles.ChibiiPet);
-        //            break;
-
-        //        case 110:
-        //            KillPet(projectile, player, ModContent.BuffType<AkatoYharonBuff>(), modPlayer.SilvaEnchant, SoulConfig.Instance.calamityToggles.AkatoPet);
-        //            break;
-
-        //        case 111:
-        //            KillPet(projectile, player, ModContent.BuffType<Fox>(), modPlayer.SilvaEnchant, SoulConfig.Instance.calamityToggles.FoxPet);
-        //            break;
-
-        //        case 112:
-        //            KillPet(projectile, player, ModContent.BuffType<LeviBuff>(), modPlayer.DemonShadeEnchant, SoulConfig.Instance.calamityToggles.LeviPet);
-        //            break;
-
-        //        case 113:
-        //            KillPet(projectile, player, ModContent.BuffType<RotomBuff>(), modPlayer.AerospecEnchant, SoulConfig.Instance.calamityToggles.RotomPet);
-        //            break;
-
-        //        case 114:
-        //            KillPet(projectile, player, ModContent.BuffType<AstrophageBuff>(), modPlayer.AstralEnchant, SoulConfig.Instance.calamityToggles.AstrophagePet);
-        //            break;
-
-        //        case 115:
-        //            KillPet(projectile, player, ModContent.BuffType<SparksBuff>(), modPlayer.ReaverEnchant, SoulConfig.Instance.calamityToggles.SparksPet);
-        //            break;
-
-        //        case 116:
-        //            KillPet(projectile, player, ModContent.BuffType<RadiatorBuff>(), modPlayer.SulphurEnchant, SoulConfig.Instance.calamityToggles.RadiatorPet);
-        //            break;
-
-        //        case 117:
-        //            KillPet(projectile, player, ModContent.BuffType<BabyGhostBellBuff>(), modPlayer.MolluskEnchant, SoulConfig.Instance.calamityToggles.GhostBellPet);
-        //            break;
-
-        //        case 118:
-        //            KillPet(projectile, player, ModContent.BuffType<FlakPetBuff>(), modPlayer.FathomEnchant, SoulConfig.Instance.calamityToggles.FlakPet);
-        //            break;
-
-        //        case 119:
-        //            KillPet(projectile, player, ModContent.BuffType<SCalPetBuff>(), modPlayer.DemonShadeEnchant, SoulConfig.Instance.calamityToggles.ScalPet);
-        //            break;
-
-        //    }
-        //}
 
         public static void PrintAI(Projectile projectile)
         {
@@ -1321,7 +1217,7 @@ namespace FargowiltasSouls.Projectiles
                 fallThrough = false;
             }
 
-            if (tungstenProjectile)
+            if (TungstenProjectile)
             {
                 width /= 2;
                 height /= 2;
@@ -1345,7 +1241,7 @@ namespace FargowiltasSouls.Projectiles
                     return Color.GreenYellow;
                 }
 
-                else if(projectile.type == ProjectileID.Bone || projectile.type == ProjectileID.BoneGloveProj)
+                else if(projectile.type == ProjectileID.Bone)
                 {
                     return Color.SandyBrown;
                 }
@@ -1388,34 +1284,7 @@ namespace FargowiltasSouls.Projectiles
                     
                 }
             }
-
-            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumOnHit(projectile, crit);
         }
-
-        //private void ThoriumOnHit(Projectile projectile, bool crit)
-        //{
-        //    Player player = Main.player[Main.myPlayer];
-        //    FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-
-        //    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.JesterBell))
-        //    {
-        //        //jester effect
-        //        if (modPlayer.JesterEnchant && crit)
-        //        {
-        //            for (int m = 0; m < 1000; m++)
-        //            {
-        //                Projectile projectile2 = Main.projectile[m];
-        //                if (projectile2.active && projectile2.type == thorium.ProjectileType("JestersBell"))
-        //                {
-        //                    return;
-        //                }
-        //            }
-        //            Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 35, 1f, 0f);
-        //            Projectile.NewProjectile(player.Center.X, player.Center.Y - 50f, 0f, 0f, thorium.ProjectileType("JestersBell"), 0, 0f, projectile.owner, 0f, 0f);
-        //            Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, thorium.ProjectileType("JestersBell2"), 0, 0f, projectile.owner, 0f, 0f);
-        //        }
-        //    }
-        //}
 
         public override bool OnTileCollide(Projectile projectile, Vector2 oldVelocity)
         {
@@ -1649,10 +1518,14 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.RuneBlast:
-                        target.AddBuff(ModContent.BuffType<FlamesoftheUniverse>(), 60);
+
                         //target.AddBuff(ModContent.BuffType<Hexed>(), 240);
                         if (!EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, mod.NPCType("DeviBoss")))
+                        {
+                            target.AddBuff(ModContent.BuffType<FlamesoftheUniverse>(), 60);
                             target.AddBuff(BuffID.Suffocation, 240);
+                        }  
+                        
                         break;
 
                     case ProjectileID.ThornBall:
@@ -1963,37 +1836,40 @@ namespace FargowiltasSouls.Projectiles
             Player player = Main.player[projectile.owner];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (!townNPCProj && CanSplit && projectile.friendly && projectile.damage > 0 && !projectile.minion && projectile.aiStyle != 19 && !Rotate)
+            if (!townNPCProj && CanSplit && projectile.friendly && projectile.damage > 0 && !projectile.minion && projectile.aiStyle != 19)
             {
-                if (modPlayer.CobaltEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CobaltShards) && modPlayer.CobaltCD == 0 && Main.rand.Next(4) == 0)
+                if (modPlayer.CobaltEnchant)
                 {
-                    Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 27);
+                    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.CobaltShards) && modPlayer.CobaltCD == 0 && Main.rand.Next(4) == 0)
+                    {
+                        Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 27);
 
-                    for (int i = 0; i < 5; i++)
-                    {
-                        float velX = -projectile.velocity.X * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
-                        float velY = -projectile.velocity.Y * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
-                        int p = Projectile.NewProjectile(projectile.position.X + velX, projectile.position.Y + velY, velX, velY, ProjectileID.CrystalShard, projectile.damage, 0f, projectile.owner);
+                        for (int i = 0; i < 5; i++)
+                        {
+                            float velX = -projectile.velocity.X * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
+                            float velY = -projectile.velocity.Y * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
+                            int p = Projectile.NewProjectile(projectile.position.X + velX, projectile.position.Y + velY, velX, velY, ProjectileID.CrystalShard, projectile.damage, 0f, projectile.owner);
 
-                        Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
-                    }
+                            Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                        }
 
-                    if (modPlayer.TerrariaSoul)
-                    {
-                        modPlayer.CobaltCD = 30;
-                    }
-                    else if (modPlayer.EarthForce || modPlayer.WizardEnchant)
-                    {
-                        modPlayer.CobaltCD = 45;
-                    }
-                    else
-                    {
-                        modPlayer.CobaltCD = 60;
+                        if (modPlayer.TerrariaSoul)
+                        {
+                            modPlayer.CobaltCD = 30;
+                        }
+                        else if (modPlayer.EarthForce || modPlayer.WizardEnchant)
+                        {
+                            modPlayer.CobaltCD = 45;
+                        }
+                        else
+                        {
+                            modPlayer.CobaltCD = 60;
+                        }
                     }
                 }
-                else if (modPlayer.AncientCobaltEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CobaltStingers) && modPlayer.CobaltCD == 0 && Main.rand.Next(5) == 0)
+                else if (modPlayer.AncientCobaltEnchant && !modPlayer.CobaltEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CobaltStingers) && modPlayer.CobaltCD == 0 && Main.rand.Next(5) == 0)
                 {
-                   Projectile[] projs = XWay(3, projectile.Center, ProjectileID.HornetStinger, 5f, projectile.damage, 0);
+                    Projectile[] projs = XWay(3, projectile.Center, ProjectileID.HornetStinger, 5f, projectile.damage, 0);
 
                     for (int i = 0; i < projs.Length; i++)
                     {
@@ -2012,9 +1888,15 @@ namespace FargowiltasSouls.Projectiles
 
             if (modPlayer.MahoganyEnchant)
             {
-                speed *= 2;
-            }
+                float multiplier = 1.5f;
 
+                if (modPlayer.WoodForce || modPlayer.WizardEnchant)
+                {
+                    multiplier = 2.5f;
+                }
+
+                speed *= multiplier;
+            }
         }
 
         public override void GrappleRetreatSpeed(Projectile projectile, Player player, ref float speed)
@@ -2023,7 +1905,14 @@ namespace FargowiltasSouls.Projectiles
 
             if (modPlayer.MahoganyEnchant)
             {
-                speed *= 2;
+                float multiplier = 1.5f;
+
+                if (modPlayer.WoodForce || modPlayer.WizardEnchant)
+                {
+                    multiplier = 2.5f;
+                }
+
+                speed *= multiplier;
             }
         }
 

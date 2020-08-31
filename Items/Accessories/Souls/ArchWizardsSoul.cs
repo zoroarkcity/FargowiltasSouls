@@ -3,28 +3,23 @@ using Terraria.ModLoader;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
-using CalamityMod.CalPlayer;
-using Fargowiltas.Items.Tiles;
 using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     public class ArchWizardsSoul : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Arch Wizard's Soul");
 
-            string tooltip = 
+            string tooltip =
 @"'Arcane to the core'
 30% increased magic damage
 20% increased spell casting speed
 15% increased magic crit chance
 Increases your maximum mana by 200
-";
+Effects of Celestial Cuffs and Mana Flower";
             string tooltip_ch =
 @"'神秘核心'
 增加30%魔法伤害
@@ -32,17 +27,6 @@ Increases your maximum mana by 200
 增加15%魔法暴击率
 增加200最大法力值
 ";
-
-            if (calamity == null)
-            {
-                tooltip += "Effects of Celestial Cuffs and Mana Flower";
-                tooltip_ch += "拥有星体手铐和魔力花的效果";
-            }
-            else
-            {
-                tooltip += "Effects of Celestial Cuffs and Ethereal Talisman";
-                tooltip_ch += "拥有星体手铐和空灵护符的效果";
-            }
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "巫师之魂");
@@ -80,14 +64,6 @@ Increases your maximum mana by 200
             //add mana cloak
             player.manaMagnet = true;
             player.magicCuffs = true;
-
-            if (Fargowiltas.Instance.CalamityLoaded) Calamity(player);
-        }
-
-        private void Calamity(Player player)
-        {
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-            modPlayer.eTalisman = true;
         }
 
         public override void AddRecipes()
@@ -95,26 +71,14 @@ Increases your maximum mana by 200
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddIngredient(null, "ApprenticesEssence");
-            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? calamity.ItemType("EtherealTalisman") : ItemID.ManaFlower); //mana cloak
+            recipe.AddIngredient(ItemID.ManaFlower); //mana cloak
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(ItemID.CelestialCuffs);
-                recipe.AddIngredient(ItemID.MedusaHead);
-                //blood thorn
-                recipe.AddIngredient(thorium.ItemType("TwinsIre"));
-                recipe.AddIngredient(thorium.ItemType("TerraStaff"));
-                recipe.AddIngredient(ItemID.RainbowGun);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.CelestialCuffs);
-                recipe.AddIngredient(ItemID.CelestialEmblem);
-                recipe.AddIngredient(ItemID.MedusaHead);
-                //blood thorn
-                //magnet sphere
-                recipe.AddIngredient(ItemID.RainbowGun);
-            }
+            recipe.AddIngredient(ItemID.CelestialCuffs);
+            recipe.AddIngredient(ItemID.CelestialEmblem);
+            recipe.AddIngredient(ItemID.MedusaHead);
+            //blood thorn
+            //magnet sphere
+            recipe.AddIngredient(ItemID.RainbowGun);
 
             recipe.AddIngredient(ItemID.ApprenticeStaffT3);
             //stellar tune

@@ -29,7 +29,7 @@ namespace FargowiltasSouls.Projectiles.Souls
 
         public override void AI()
         {
-            projectile.scale = 3f;
+            projectile.scale = 2f;
 
             if (projectile.ai[1] == 0)
             {
@@ -44,23 +44,6 @@ namespace FargowiltasSouls.Projectiles.Souls
                     int num228 = Dust.NewDust(vector6 + vector7, 0, 0, DustID.FlameBurst, 0f, 0f, 0, default(Color), 1.5f);
                     Main.dust[num228].noGravity = true;
                     Main.dust[num228].velocity = vector7;
-                }
-            }
-
-            //dust!
-            for (int i = 0; i < 3; i++)
-            {
-                if (Main.rand.Next(2) != 0)
-                {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 6, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-                    dust.noGravity = true;
-                    dust.velocity *= 0.3f;
-                    if (Main.rand.Next(1) == 0)
-                    {
-                        Dust expr_131_cp_0 = dust;
-                        expr_131_cp_0.velocity.Y = expr_131_cp_0.velocity.Y + (float)Math.Sign(dust.velocity.Y) * 1.2f;
-                        dust.fadeIn += 0.5f;
-                    }
                 }
             }
 
@@ -110,7 +93,9 @@ namespace FargowiltasSouls.Projectiles.Souls
 
         public override void Kill(int timeleft)
         {
-            Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.InfernoFriendlyBlast, projectile.damage, 0, projectile.owner);
+            int p = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.InfernoFriendlyBlast, projectile.damage, 0, projectile.owner);
+
+            Main.projectile[p].timeLeft = 15;
         }
     }
 }

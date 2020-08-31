@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class HallowEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hallowed Enchantment");
@@ -51,7 +49,7 @@ Summons a magical fairy
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().HallowEffect(hideVisual, 80); //new effect
+            player.GetModPlayer<FargoPlayer>().HallowEffect(hideVisual); //new effect
         }
 
         public override void AddRecipes()
@@ -61,7 +59,8 @@ Summons a magical fairy
             recipe.AddRecipeGroup("FargowiltasSouls:AnyHallowHead"); //add summon helm here
             recipe.AddIngredient(ItemID.HallowedPlateMail);
             recipe.AddIngredient(ItemID.HallowedGreaves);
-            //exotic scimitar
+            recipe.AddIngredient(ItemID.DyeTradersScimitar);
+            recipe.AddIngredient(ItemID.Excalibur);
             recipe.AddIngredient(ItemID.Gungnir);
             //hallow lance
             //hallowed repeater

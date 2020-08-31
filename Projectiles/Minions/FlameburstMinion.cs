@@ -9,6 +9,8 @@ namespace FargowiltasSouls.Projectiles.Minions
 {
     public class FlameburstMinion : ModProjectile
     {
+        Vector2 destination;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Flameburst Minion");
@@ -42,10 +44,6 @@ namespace FargowiltasSouls.Projectiles.Minions
                 return;
             }
 
-            //float above player
-            projectile.position.X = player.Center.X - (float)(projectile.width / 2);
-            projectile.position.Y = player.Center.Y - (float)(projectile.height / 2) + player.gfxOffY - 50f;
-
             //pulsation mumbo jumbo
             projectile.position.X = (float)((int)projectile.position.X);
             projectile.position.Y = (float)((int)projectile.position.Y);
@@ -53,86 +51,166 @@ namespace FargowiltasSouls.Projectiles.Minions
             num395 *= 0.2f;
             projectile.scale = num395 + 0.95f;
 
-            //rotate towards and face mouse
-            const float rotationModifier = 0.08f;
-
-            if (Main.MouseWorld.X > projectile.Center.X)
+            //charging above the player
+            if (projectile.ai[0] == 0)
             {
-                projectile.spriteDirection = 1;
+                //float above player
+                projectile.position.X = player.Center.X - (float)(projectile.width / 2);
+                projectile.position.Y = player.Center.Y - (float)(projectile.height / 2) + player.gfxOffY - 50f;
 
-                projectile.rotation = projectile.rotation.AngleLerp(
-                (new Vector2(Main.MouseWorld.X, Main.MouseWorld.Y) - projectile.Center).ToRotation(), rotationModifier);
-            }
-            else
-            {
-                projectile.spriteDirection = -1;
+                //rotate towards and face mouse
+                const float rotationModifier = 0.08f;
 
-                //absolute fuckery so it faces the right direction
-                Vector2 target = new Vector2(Main.MouseWorld.X - (Main.MouseWorld.X - projectile.Center.X) * 2, Main.MouseWorld.Y - (Main.MouseWorld.Y - projectile.Center.Y) * 2) - projectile.Center;
-
-                projectile.rotation = projectile.rotation.AngleLerp(
-                target.ToRotation(), rotationModifier);
-            }
-
-            //4 seconds
-            const float chargeTime = 240;
-            if (projectile.localAI[1] > 0)
-            {
-                projectile.localAI[1]--;
-                if (projectile.owner == Main.myPlayer)
-                    projectile.netUpdate = true;
-            }
-
-            if (player.controlUseItem)
-            {
-                //charge up while attacking
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<MegaFlameburst>()] < 1)
+                if (Main.MouseWorld.X > projectile.Center.X)
                 {
+                    projectile.spriteDirection = 1;
+
+                    projectile.rotation = projectile.rotation.AngleLerp(
+                    (new Vector2(Main.MouseWorld.X, Main.MouseWorld.Y) - projectile.Center).ToRotation(), rotationModifier);
+                }
+                else
+                {
+                    projectile.spriteDirection = -1;
+
+                    //absolute fuckery so it faces the right direction
+                    Vector2 target = new Vector2(Main.MouseWorld.X - (Main.MouseWorld.X - projectile.Center.X) * 2, Main.MouseWorld.Y - (Main.MouseWorld.Y - projectile.Center.Y) * 2) - projectile.Center;
+
+                    projectile.rotation = projectile.rotation.AngleLerp(target.ToRotation(), rotationModifier);
+                }
+
+                //4 seconds
+                const float chargeTime = 120;
+
+                if (player.controlUseItem)
+                {
+                    //charge up while attacking
                     projectile.localAI[0]++;
-                }
-                //charge level 1
-                if (projectile.localAI[0] == chargeTime)
-                {
-                    if (projectile.owner == Main.myPlayer)
-                        projectile.netUpdate = true;
 
-                    double spread = 2 * Math.PI / 36;
-                    for (int i = 0; i < 36; i++)
+                    //charge level 1
+                    if (projectile.localAI[0] == chargeTime)
                     {
-                        Vector2 velocity = new Vector2(2, 2).RotatedBy(spread * i);
+                        if (projectile.owner == Main.myPlayer)
+                            projectile.netUpdate = true;
 
-                        int index2 = Dust.NewDust(projectile.Center, 0, 0, DustID.FlameBurst, velocity.X, velocity.Y, 100);
-                        Main.dust[index2].noGravity = true;
-                        Main.dust[index2].noLight = true;
+                        double spread = 2 * Math.PI / 36;
+                        for (int i = 0; i < 36; i++)
+                        {
+                            Vector2 velocity = new Vector2(2, 2).RotatedBy(spread * i);
+
+                            int index2 = Dust.NewDust(projectile.Center, 0, 0, DustID.FlameBurst, velocity.X, velocity.Y, 100);
+                            Main.dust[index2].noGravity = true;
+                            Main.dust[index2].noLight = true;
+                        }
+                    }
+                    //charging further
+                    if (projectile.localAI[0] > chargeTime)
+                    {
+                        int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.FlameBurst, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f);
+                        Main.dust[d].noGravity = true;
                     }
                 }
-                //charging further
-                if (projectile.localAI[0] > chargeTime)
+                else
                 {
-                    int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.FlameBurst, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f);
-                    Main.dust[d].noGravity = true;
+                    //let go and fire
+                    if (projectile.localAI[0] > chargeTime)
+                    {
+                        if (projectile.owner == Main.myPlayer)
+                            projectile.netUpdate = true;
+
+                        Vector2 mouse = Main.MouseWorld;
+                        destination = mouse;
+
+                        //switch to travel mode
+                        projectile.ai[0] = 1;
+
+                        player.GetModPlayer<FargoPlayer>().DarkSpawnCD = 60;
+                    }
+                    projectile.localAI[0] = 0;
                 }
             }
             else
             {
-                //let go and fire
-                if (projectile.localAI[0] > chargeTime)
+                //travelling to destination
+                if (Vector2.Distance(projectile.Center, destination) > 10 && projectile.localAI[0] == 0)
                 {
-                    if (projectile.owner == Main.myPlayer)
-                        projectile.netUpdate = true;
-                    projectile.localAI[1] = 120f;
-                    if (projectile.owner == Main.myPlayer)
+                    Vector2 velocity = Vector2.Normalize(destination - projectile.Center) * 8;
+                    projectile.velocity = velocity;
+
+                    //dust
+                    int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width, projectile.height + 5, DustID.FlameBurst, projectile.velocity.X * 0.2f,
+                        projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
+                    Main.dust[dustId].noGravity = true;
+                    int dustId3 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width, projectile.height + 5, DustID.FlameBurst, projectile.velocity.X * 0.2f,
+                        projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
+                    Main.dust[dustId3].noGravity = true;
+                }
+                //attack as a sentry
+                else
+                {
+                    projectile.localAI[0] = 1;
+                    projectile.velocity = Vector2.Zero;
+
+                    int attackRate = 30;
+                    projectile.ai[1] += 1f;
+
+                    if (projectile.ai[1] >= attackRate)
                     {
-                        Vector2 velocity = Vector2.UnitX.RotatedBy(projectile.rotation) * 6 * (projectile.spriteDirection == 1 ? 1 : -1);
+                        float num = 2000f;
+                        int npcIndex = -1;
+                        for (int i = 0; i < 200; i++)
+                        {
+                            float dist = Vector2.Distance(projectile.Center, Main.npc[i].Center);
 
-                        int type = ModContent.ProjectileType<MegaFlameburst>();
+                            if (dist < num && dist < 600 && Main.npc[i].CanBeChasedBy(projectile, false))
+                            {
+                                npcIndex = i;
+                                num = dist;
+                            }
+                        }
 
-                        Projectile.NewProjectile(projectile.Center, velocity, type,
-                            player.GetModPlayer<FargoPlayer>().HighestDamageTypeScaling(200), 4f, projectile.owner, projectile.whoAmI);
-                        Main.PlayTrackedSound(SoundID.DD2_FlameburstTowerShot, projectile.Center);
+                        if (npcIndex != -1)
+                        {
+                            NPC target = Main.npc[npcIndex];
+
+                            if (Collision.CanHit(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height))
+                            {
+                                Vector2 velocity = Vector2.Normalize(target.Center - projectile.Center) * 10;
+
+                                int p = Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<MegaFlameburst>(), player.GetModPlayer<FargoPlayer>().HighestDamageTypeScaling(100), 4, projectile.owner, projectile.whoAmI);
+                                Main.PlayTrackedSound(SoundID.DD2_FlameburstTowerShot, projectile.Center);
+
+                                const float rotationModifier = 0.08f;
+
+                                for (int i = 0; i < 20; i++)
+                                {
+                                    if (target.Center.X > projectile.Center.X)
+                                    {
+                                        projectile.spriteDirection = 1;
+
+                                        projectile.rotation = projectile.rotation.AngleLerp(
+                                        (new Vector2(target.Center.X, target.Center.Y) - projectile.Center).ToRotation(), rotationModifier);
+                                    }
+                                    else
+                                    {
+                                        projectile.spriteDirection = -1;
+
+                                        //absolute fuckery so it faces the right direction
+                                        Vector2 rotation = new Vector2(target.Center.X - (target.Center.X - projectile.Center.X) * 2, target.Center.Y - (target.Center.Y - projectile.Center.Y) * 2) - projectile.Center;
+
+                                        projectile.rotation = projectile.rotation.AngleLerp(rotation.ToRotation(), rotationModifier);
+                                    }
+                                } 
+                            }
+                        }
+                        projectile.ai[1] = 0f;
+
+                        //kill if too far away
+                        if (Vector2.Distance(Main.player[projectile.owner].Center, projectile.Center) > 2000)
+                        {
+                            projectile.Kill();
+                        }
                     }
                 }
-                projectile.localAI[0] = 0;
             }
         }
 

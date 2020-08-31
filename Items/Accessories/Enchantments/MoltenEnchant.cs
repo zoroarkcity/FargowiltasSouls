@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class MoltenEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Molten Enchantment");
@@ -50,7 +48,7 @@ When you are hurt, you violently explode to damage nearby enemies
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().MoltenEffect(20);
+            player.GetModPlayer<FargoPlayer>().MoltenEffect();
         }
 
         public override void AddRecipes()
@@ -60,7 +58,7 @@ When you are hurt, you violently explode to damage nearby enemies
             recipe.AddIngredient(ItemID.MoltenBreastplate);
             recipe.AddIngredient(ItemID.MoltenGreaves);
             recipe.AddIngredient(ItemID.Sunfury);
-            recipe.AddIngredient(ItemID.MoltenFury);
+            //recipe.AddIngredient(ItemID.MoltenFury);
             recipe.AddIngredient(ItemID.PhoenixBlaster);
             recipe.AddIngredient(ItemID.DarkLance);
             //lavafly

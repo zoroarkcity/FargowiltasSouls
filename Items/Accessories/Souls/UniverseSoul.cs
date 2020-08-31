@@ -1,11 +1,9 @@
-using CalamityMod.CalPlayer;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 using Fargowiltas.Items.Tiles;
 
@@ -13,10 +11,6 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 {
     public class UniverseSoul : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
-        private readonly Mod dbzMod = ModLoader.GetMod("DBZMOD");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul of the Universe");
@@ -30,7 +24,11 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 Crits deal 5x damage
 All weapons have double knockback
 Increases your maximum mana by 300
-";
+Increases your max number of minions by 8
+Increases your max number of sentries by 4
+All attacks inflict Flames of the Universe
+Effects of the Fire Gauntlet and Yoyo Bag
+Effects of Sniper Scope, Celestial Cuffs and Mana Flower";
             string tooltip_ch =
 @"'诸天也向你俯首'
 增加66%所有伤害
@@ -42,54 +40,12 @@ Increases your maximum mana by 300
 增加300最大法力值
 ";
 
-            if (thorium != null)
-            {
-                tooltip += "Increases maximum inspiration by 30\n";
-                tooltip_ch += "增加30最大灵感值\n";
-            }
-
-            tooltip += 
-@"Increases your max number of minions by 8
-Increases your max number of sentries by 4
-All attacks inflict Flames of the Universe
-Effects of the Fire Gauntlet and Yoyo Bag
-Effects of Sniper Scope, Celestial Cuffs and Mana Flower";
-
             tooltip_ch +=
 @"+8最大召唤栏
 +4最大哨兵栏
 所有攻击造成宇宙之火效果
 拥有烈火手套和悠悠球袋的效果
 拥有狙击镜, 星体手铐和魔力花的效果";
-
-            if (thorium != null)
-            {
-                tooltip += @"
-Effects of Phylactery and Crystal Scorpion
-Effects of Guide to Expert Throwing - Volume III, Mermaid's Canteen, and Deadman's Patch
-Effects of Support Sash, Saving Grace, Soul Guard, Archdemon's Curse, Archangel's Heart, and Medical Bag
-Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
-                
-                tooltip_ch += @"
-拥有拥有魂匣, 魔晶蝎和云码垂饰的效果
-拥有投手大师指导:卷三, 美人鱼水壶和亡者眼罩的效果
-拥有支援腰带, 救世恩典, 灵魂庇佑, 大恶魔之咒, 圣天使之心和医疗包的效果
-拥有史诗吹口, 金属弱音器, 数码调谐器和吉他拨片的效果";
-            }
-            
-            if (calamity != null)
-            {
-                tooltip += "\nEffects of Elemental Gauntlet, Elemental Quiver, Ethereal Talisman, Nucleogenesis, and Nanotech";
-                
-                tooltip_ch += "\n拥有元素之握, 元素箭袋, 空灵护符, 斯塔提斯的诅咒系带和纳米技术的效果";
-            }
-            
-            if(dbzMod != null)
-            {
-                tooltip += "\nEffects of Zenkai Charm and Aspera Crystallite";
-                
-                tooltip_ch += "\n拥有全开符咒和原始晶粒的效果";
-            }
 
             Tooltip.SetDefault(tooltip);
 
@@ -137,151 +93,7 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
             player.manaFlower = true;
             player.manaMagnet = true;
             player.magicCuffs = true;
-
-            //if (Fargowiltas.Instance.ThoriumLoaded) Thorium(player);
-
-            //if (Fargowiltas.Instance.CalamityLoaded) Calamity(player, hideVisual);
-
-            //if (Fargowiltas.Instance.DBZMODLoaded) DBT(player);
         }
-
-        //private void Thorium(Player player)
-        //{
-        //    ThoriumPlayer thoriumPlayer = player.GetModPlayer<ThoriumPlayer>();
-        //    //phylactery
-        //    if (!thoriumPlayer.lichPrevent)
-        //    {
-        //        player.AddBuff(thorium.BuffType("LichActive"), 60, true);
-        //    }
-        //    //crystal scorpion
-        //    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.CrystalScorpion))
-        //    {
-        //        thoriumPlayer.crystalScorpion = true;
-        //    }
-
-        //    //THROWING
-        //    thoriumPlayer.throwGuide2 = true;
-        //    //dead mans patch
-        //    thoriumPlayer.deadEyeBool = true;
-        //    //mermaid canteen
-        //    thoriumPlayer.throwerExhaustionMax += 1125;
-        //    thoriumPlayer.canteenCadet = true;
-
-        //    //HEALER
-        //    thoriumPlayer.radiantBoost += 0.4f;
-        //    thoriumPlayer.radiantSpeed -= 0.25f;
-        //    thoriumPlayer.healingSpeed += 0.25f;
-        //    thoriumPlayer.radiantCrit += 20;
-        //    //support stash
-        //    thoriumPlayer.supportSash = true;
-        //    thoriumPlayer.quickBelt = true;
-        //    //saving grace
-        //    thoriumPlayer.crossHeal = true;
-        //    thoriumPlayer.healBloom = true;
-        //    //soul guard
-        //    thoriumPlayer.graveGoods = true;
-        //    for (int i = 0; i < 255; i++)
-        //    {
-        //        Player player2 = Main.player[i];
-        //        if (player2.active && player2 != player && Vector2.Distance(player2.Center, player.Center) < 400f)
-        //        {
-        //            player2.AddBuff(thorium.BuffType("AegisAura"), 30, false);
-        //        }
-        //    }
-        //    //archdemon's curse
-        //    thoriumPlayer.darkAura = true;
-        //    //archangels heart
-        //    thoriumPlayer.healBonus += 5;
-        //    //medical bag
-        //    thoriumPlayer.medicalAcc = true;
-        //    //head mirror arrow 
-        //    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.thoriumToggles.HeadMirror))
-        //    {
-        //        float num = 0f;
-        //        int num2 = player.whoAmI;
-        //        for (int i = 0; i < 255; i++)
-        //        {
-        //            if (Main.player[i].active && Main.player[i] != player && !Main.player[i].dead && (Main.player[i].statLifeMax2 - Main.player[i].statLife) > num)
-        //            {
-        //                num = (Main.player[i].statLifeMax2 - Main.player[i].statLife);
-        //                num2 = i;
-        //            }
-        //        }
-        //        if (player.ownedProjectileCounts[thorium.ProjectileType("HealerSymbol")] < 1)
-        //        {
-        //            Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, thorium.ProjectileType("HealerSymbol"), 0, 0f, player.whoAmI, 0f, 0f);
-        //        }
-        //        for (int j = 0; j < 1000; j++)
-        //        {
-        //            Projectile projectile = Main.projectile[j];
-        //            if (projectile.active && projectile.owner == player.whoAmI && projectile.type == thorium.ProjectileType("HealerSymbol"))
-        //            {
-        //                projectile.timeLeft = 2;
-        //                projectile.ai[1] = num2;
-        //            }
-        //        }
-        //    }
-        //    //BARD
-        //    thoriumPlayer.symphonicDamage += 0.3f;
-        //    thoriumPlayer.symphonicSpeed += .2f;
-        //    thoriumPlayer.symphonicCrit += 15;
-        //    thoriumPlayer.bardResourceMax2 += 30;
-        //    //epic mouthpiece
-        //    thoriumPlayer.accWindHoming = true;
-        //    thoriumPlayer.bardHomingBonus = 5f;
-        //    //straight mute
-        //    thoriumPlayer.accBrassMute2 = true;
-        //    //digital tuner
-        //    thoriumPlayer.accPercussionTuner2 = true;
-        //    //guitar pick claw
-        //    thoriumPlayer.bardBounceBonus = 5;
-        //}
-
-        //private void Calamity(Player player, bool hideVisual)
-        //{
-        //    CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-        //    //melee
-        //    modPlayer.eGauntlet = true;
-        //    //removing the extra boosts it adds because meme calamity
-        //    player.meleeDamage -= .15f;
-        //    player.meleeSpeed -= .15f;
-        //    player.meleeCrit -= 5;
-
-        //    if (SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ElementalQuiver))
-        //    {
-        //        //range
-        //        modPlayer.eQuiver = true;
-        //    }
-            
-        //    //magic
-        //    modPlayer.eTalisman = true;
-        //    //summon
-        //    modPlayer.statisBeltOfCurses = true;
-        //    modPlayer.shadowMinions = true;
-        //    modPlayer.tearMinions = true;
-        //    //throw
-        //    calamity.GetItem("EclipseMirror").UpdateAccessory(player, hideVisual);
-        //    calamity.GetItem("Nanotech").UpdateAccessory(player, hideVisual);
-        //    calamity.GetItem("VeneratedLocket").UpdateAccessory(player, hideVisual);
-        //    calamity.GetItem("DragonScales").UpdateAccessory(player, hideVisual);
-        //}
-
-        //private void DBT(Player player)
-        //{
-        //    DBZMOD.MyPlayer dbtPlayer = player.GetModPlayer<DBZMOD.MyPlayer>();
-
-        //    dbtPlayer.chargeMoveSpeed = Math.Max(dbtPlayer.chargeMoveSpeed, 2f);
-        //    dbtPlayer.kiKbAddition += 0.4f;
-        //    dbtPlayer.kiDrainMulti -= 0.5f;
-        //    dbtPlayer.kiMaxMult += 0.4f;
-        //    dbtPlayer.kiRegen += 5;
-        //    dbtPlayer.orbGrabRange += 6;
-        //    dbtPlayer.orbHealAmount += 150;
-        //    dbtPlayer.chargeLimitAdd += 8;
-        //    dbtPlayer.flightSpeedAdd += 0.6f;
-        //    dbtPlayer.flightUsageAdd += 3;
-        //    dbtPlayer.zenkaiCharm = true;
-        //}
 
         public override void AddRecipes()
         {
@@ -292,23 +104,6 @@ Effects of Epic Mouthpiece, Straight Mute, Digital Tuner, and Guitar Pick Claw";
             recipe.AddIngredient(null, "ConjuristsSoul");
             //recipe.AddIngredient(null, "OlympiansSoul");
             
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                //recipe.AddIngredient(null, "GuardianAngelsSoul");
-                //recipe.AddIngredient(null, "BardSoul");
-                //recipe.AddIngredient(thorium.ItemType("TheRing"));              
-            }
-
-            if (Fargowiltas.Instance.CalamityLoaded)
-            {
-                //recipe.AddIngredient(null, "RogueSoul");
-            }
-
-            if (Fargowiltas.Instance.DBZMODLoaded)
-            {
-                //recipe.AddIngredient(null, "KiSoul");
-            }
-
             recipe.AddIngredient(null, "MutantScale", 10);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));

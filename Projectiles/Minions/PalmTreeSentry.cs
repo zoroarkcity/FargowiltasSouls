@@ -26,8 +26,9 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override void AI()
         {
             Player player = Main.player[projectile.owner];
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (player.active && !player.dead && player.GetModPlayer<FargoPlayer>().PalmEnchant)
+            if (player.active && !player.dead && modPlayer.PalmEnchant)
                 projectile.timeLeft = 2;
 
             projectile.velocity.Y = projectile.velocity.Y + 0.2f;
@@ -39,6 +40,11 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.ai[1] += 1f;
 
             int attackRate = 45;
+
+            if (modPlayer.WoodForce || modPlayer.WizardEnchant)
+            {
+                attackRate = 30;
+            }
 
             if (projectile.ai[1] >= attackRate)
             {

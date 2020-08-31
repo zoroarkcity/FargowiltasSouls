@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 using System.Collections.Generic;
 
@@ -10,13 +9,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class PlatinumEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Platinum Enchantment");
 
-            string tooltip = @"10% chance for enemies to drop 4x loot
+            string tooltip = @"20% chance for enemies to drop 2x loot
 'Its value is immeasurable'";
             string tooltip_ch = @"'价值不可估量'
 敌人10%概率4倍掉落

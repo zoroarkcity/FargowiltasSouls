@@ -9,9 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class CopperEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        public int timer;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Copper Enchantment");
@@ -64,7 +61,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             recipe.AddIngredient(ItemID.CopperGreaves);
             recipe.AddIngredient(ItemID.CopperShortsword);
             recipe.AddIngredient(ItemID.AmethystStaff);
-            recipe.AddIngredient(ItemID.PurplePhaseblade);
+            //recipe.AddIngredient(ItemID.PurplePhaseblade);
             //thunder zapper
             recipe.AddIngredient(ItemID.Wire, 20);
             //daybloom

@@ -20,6 +20,7 @@ using FargowiltasSouls.NPCs.MutantBoss;
 
 using FargowiltasSouls.Items.Summons;
 using FargowiltasSouls.NPCs.EternityMode;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace FargowiltasSouls
 {
@@ -57,6 +58,10 @@ namespace FargowiltasSouls
         public bool PetsActive = true;
         public bool ShadowEnchant;
         public bool CrimsonEnchant;
+        public bool CrimsonRegen;
+        public int CrimsonTotalToRegen = 0;
+        public int CrimsonRegenSoFar = 0;
+        public int CrimsonRegenTimer = 0;
         public bool SpectreEnchant;
         public bool BeeEnchant;
         public bool SpiderEnchant;
@@ -66,8 +71,6 @@ namespace FargowiltasSouls
         private int freezeLength = 300;
         public bool MythrilEnchant;
         public bool FossilEnchant;
-        public bool FossilBones = false;
-        private int boneCD = 0;
         public bool JungleEnchant;
         private int jungleCD;
         public bool ElementEnchant;
@@ -104,6 +107,9 @@ namespace FargowiltasSouls
         public bool IronEnchant;
         public bool IronGuard;
         public bool TurtleEnchant;
+        private int turtleCounter = 0;
+        public int TurtleShellHP = 10;
+        private int turtleRecoverCD = 240;
         public bool ShellHide;
         public bool LeadEnchant;
         public bool GladEnchant;
@@ -132,18 +138,22 @@ namespace FargowiltasSouls
         public bool ShinobiEnchant;
         public bool ValhallaEnchant;
         public bool DarkEnchant;
+        public int DarkSpawnCD = 0;
         private int apprenticeCD = 0;
         Vector2 prevPosition;
         public bool RedEnchant;
         public bool TungstenEnchant;
         private float tungstenPrevSizeSave = -1;
+        public int TungstenCD = 0;
 
         public bool MahoganyEnchant;
         public bool BorealEnchant;
         public bool WoodEnchant;
         public bool PalmEnchant;
         public bool ShadeEnchant;
+        private int shadewoodCD = 0;
         public bool PearlEnchant;
+        private int pearlCD = 0;
 
         public bool RainEnchant;
         private int rainDamage;
@@ -467,7 +477,14 @@ namespace FargowiltasSouls
 
             if (Fargowiltas.GoldKey.JustPressed && GoldEnchant && !player.HasBuff(ModContent.BuffType<GoldenStasisCD>()))
             {
-                player.AddBuff(ModContent.BuffType<GoldenStasis>(), 600);
+                int duration = 300;
+
+                if (WillForce || WizardEnchant)
+                {
+                    duration *= 2;
+                }
+
+                player.AddBuff(ModContent.BuffType<GoldenStasis>(), duration);
                 player.AddBuff(ModContent.BuffType<GoldenStasisCD>(), 3600);
 
                 goldHP = player.statLife;
@@ -612,6 +629,7 @@ namespace FargowiltasSouls
             PetsActive = true;
             ShadowEnchant = false;
             CrimsonEnchant = false;
+            CrimsonRegen = false;
             SpectreEnchant = false;
             BeeEnchant = false;
             SpiderEnchant = false;
@@ -692,8 +710,6 @@ namespace FargowiltasSouls
             ShadowForce = false;
             WillForce = false;
             WoodForce = false;
-
-            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumResetEffects();
 
             //calamity
             AerospecEnchant = false;
@@ -1190,6 +1206,12 @@ namespace FargowiltasSouls
             if (ObsidianEnchant && obsidianCD > 0)
                 obsidianCD--;
 
+            if (PearlEnchant && pearlCD > 0)
+                pearlCD--;
+
+            if (TungstenEnchant && TungstenCD > 0)
+                TungstenCD--;
+
             if (GoldShell)
             {
                 player.immune = true;
@@ -1401,7 +1423,7 @@ namespace FargowiltasSouls
                 if (player.nebulaCD > 0)
                     player.nebulaCD--;
 
-                if (!TerrariaSoul && !CosmoForce) //cap boosters
+                if (!TerrariaSoul && !CosmoForce && !WizardEnchant) //cap boosters
                 {
                     void DecrementBuff(int buffType)
                     {
@@ -1509,7 +1531,7 @@ namespace FargowiltasSouls
             if (TikiEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.TikiMinions))
             {
                 actualMinions = player.maxMinions;
-                player.maxMinions = 100;
+                player.maxMinions = 999;
 
                 if (player.numMinions >= actualMinions)
                     TikiMinion = true;
@@ -1819,8 +1841,6 @@ namespace FargowiltasSouls
                     dust2.noGravity = true;
                 }
             }
-
-            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumPostUpdate();
             
             if (MutantPresence)
             {
@@ -2165,8 +2185,6 @@ namespace FargowiltasSouls
                 knockback = 0;
                 crit = false;
             }
-
-            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumModifyProj(proj, target, damage, crit);
         }
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
@@ -2225,7 +2243,13 @@ namespace FargowiltasSouls
                 crit = false;
             }
 
-            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumModifyNPC(target, item, damage, crit);
+            if (TungstenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenSize, false))
+            {
+                if (crit)
+                {
+                    damage = (int)(damage * 1.075f);
+                }
+            }
         }
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit)
@@ -2255,14 +2279,14 @@ namespace FargowiltasSouls
                 {
                     SpectreHurt(proj);
 
-                    if (SpiritForce || (crit && Main.rand.Next(5) == 0))
+                    if (SpiritForce || WizardEnchant || (crit && Main.rand.Next(5) == 0))
                     {
                         SpectreHeal(target, proj);
                     }
                 }
             }
 
-            if (PearlEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.PearlwoodStars) && Main.rand.Next(4) == 0 && proj.type != ProjectileID.HallowStar && proj.damage > 0)
+            if (PearlEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.PearlwoodStars) && pearlCD == 0 && proj.type != ProjectileID.HallowStar && proj.damage > 0)
             {
                 //holy stars
                 Main.PlaySound(SoundID.Item10, proj.position);
@@ -2288,6 +2312,8 @@ namespace FargowiltasSouls
                 int num488 = Projectile.NewProjectile(x, y, num483, num484, ProjectileID.HallowStar, num487, proj.knockBack, proj.owner, 0f, 0f);
                 if (num488 != 1000)
                     Main.projectile[num488].ai[1] = proj.position.Y;
+
+                pearlCD = (WoodForce || WizardEnchant) ? 15 : 30;
             }
 
             if (CyclonicFin)
@@ -2410,9 +2436,6 @@ namespace FargowiltasSouls
                 target.AddBuff(fireDebuffs[debuff], 300);
                 target.immune[proj.owner] = 2;
             }
-
-
-            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumHitProj(proj, target, damage, crit);
         }
 
         public void OnHitNPCEither(NPC target, int damage, float knockback, bool crit, int projectile = -1)
@@ -2428,12 +2451,19 @@ namespace FargowiltasSouls
                 obsidianCD = 30;
             }
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShadewoodEffect) && target.HasBuff(ModContent.BuffType<SuperBleed>()) && projectile != ModContent.ProjectileType<SuperBlood>())
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShadewoodEffect) && target.HasBuff(ModContent.BuffType<SuperBleed>()) && shadewoodCD == 0 && projectile != ModContent.ProjectileType<SuperBlood>())
             {
                 for(int i = 0; i < Main.rand.Next(3, 6); i++)
                 {
                     Projectile.NewProjectile(target.Center.X, target.Center.Y - 20, 0f + Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5), ModContent.ProjectileType<SuperBlood>(), 20, 0f, Main.myPlayer);
                 }
+
+                if (WoodForce || WizardEnchant)
+                {
+                    target.AddBuff(BuffID.Ichor, 30);
+                }
+
+                shadewoodCD = 30;
             }
 
             if (DevianttHearts && DevianttHeartsCD <= 0)
@@ -2501,14 +2531,14 @@ namespace FargowiltasSouls
             {
                 rainDamage += damage;
 
-                if(rainDamage > 500)
+                if(rainDamage > 500 || NatureForce || WizardEnchant)
                 {
                     Projectile.NewProjectile(target.Center, new Vector2(0, -2f), ModContent.ProjectileType<RainCloud>(), damage, 0, Main.myPlayer);
                     rainDamage = 0;
                 }
             }
 
-            if (SolarEnchant && !TerrariaSoul && Main.rand.Next(4) == 0)
+            if (SolarEnchant && Main.rand.Next(4) == 0)
                 target.AddBuff(ModContent.BuffType<SolarFlare>(), 300);
 
             if (tinCD == 0)
@@ -2642,10 +2672,7 @@ namespace FargowiltasSouls
                 if (ShadowEnchant && Main.rand.Next(15) == 0)
                     target.AddBuff(BuffID.Darkness, 600, true);
 
-                if (FrostEnchant)
-                    target.AddBuff(BuffID.Frostburn, 300);
-
-                if (LeadEnchant && Main.rand.Next(5) == 0)
+                if (LeadEnchant && (Main.rand.Next(5) == 0 || TerraForce || WizardEnchant))
                     target.AddBuff(ModContent.BuffType<LeadPoison>(), 30);
             }
 
@@ -2683,7 +2710,7 @@ namespace FargowiltasSouls
                 speedY *= num2;
                 Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(target.position, new Vector2(speedX, speedY), ProjectileID.SpectreWrath, damage / 2, 0, player.whoAmI, target.whoAmI);
 
-                if ((SpiritForce || (crit && Main.rand.Next(5) == 0)) && p != null)
+                if ((SpiritForce || WizardEnchant || (crit && Main.rand.Next(5) == 0)) && p != null)
                 {
                     SpectreHeal(target, p);
                 }
@@ -2768,8 +2795,6 @@ namespace FargowiltasSouls
                 int dam = (int)(40 * player.magicDamage);
                 Projectile.NewProjectile(spawn, vel, ModContent.ProjectileType<Shadowfrostfireball>(), dam, 6f, player.whoAmI, target.whoAmI);
             }
-
-            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumHitNPC(target, item, crit);
         }
 
         public override void MeleeEffects(Item item, Rectangle hitbox)
@@ -2832,7 +2857,7 @@ namespace FargowiltasSouls
                 num341 *= 1.5f;
                 num343 *= (float)player.direction;
                 num342 *= player.gravDir;
-                Projectile.NewProjectile((float)(hitbox.X + hitbox.Width / 2) + num343, (float)(hitbox.Y + hitbox.Height / 2) + num342, (float)player.direction * num341, num340 * player.gravDir, ModContent.ProjectileType<ShroomiteShroom>(), item.damage / 2, 0f, player.whoAmI, 0f, 0f);
+                Projectile.NewProjectile((float)(hitbox.X + hitbox.Width / 2) + num343, (float)(hitbox.Y + hitbox.Height / 2) + num342, (float)player.direction * num341, num340 * player.gravDir, ModContent.ProjectileType<ShroomiteShroom>(), item.damage / 5, 0f, player.whoAmI, 0f, 0f);
             }
         }
 
@@ -2877,6 +2902,22 @@ namespace FargowiltasSouls
                 damage *= 3;
             }
 
+            if (CrimsonEnchant && SoulConfig.Instance.CrimsonRegen)
+            {
+                //if was already healing, kill it
+                if (player.HasBuff(ModContent.BuffType<CrimsonRegen>()))
+                {
+                    damage += CrimsonRegenSoFar;
+                }
+                else
+                {
+                    player.AddBuff(ModContent.BuffType<CrimsonRegen>(), 2);
+                }
+
+                CrimsonTotalToRegen = damage - CrimsonRegenSoFar;
+                CrimsonRegenSoFar = 0;
+            }
+
             return true;
         }
 
@@ -2907,6 +2948,23 @@ namespace FargowiltasSouls
                 else if(TinCrit != 4)
                 {
                     TinCrit = 4;
+                }
+            }
+
+            if (ShellHide)
+            {
+                TurtleShellHP--;
+
+                //some funny dust
+                const int max = 30;
+                for (int i = 0; i < max; i++)
+                {
+                    Vector2 vector6 = Vector2.UnitY * 5f;
+                    vector6 = vector6.RotatedBy((i - (max / 2 - 1)) * 6.28318548f / max) + Main.LocalPlayer.Center;
+                    Vector2 vector7 = vector6 - Main.LocalPlayer.Center;
+                    int d = Dust.NewDust(vector6 + vector7, 0, 0, DustID.GoldFlame, 0f, 0f, 0, default(Color), 2f);
+                    Main.dust[d].noGravity = true;
+                    Main.dust[d].velocity = vector7;
                 }
             }
 
@@ -2965,7 +3023,7 @@ namespace FargowiltasSouls
                 if (MoltenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.MoltenExplosion))
                 {
                     int baseDamage = 150;
-                    if (NatureForce)
+                    if (NatureForce || WizardEnchant)
                         baseDamage = 250;
                     if (TerrariaSoul)
                         baseDamage = 500;
@@ -3033,18 +3091,37 @@ namespace FargowiltasSouls
                         Main.NewText("You've been revived!", 175, 75);
                         player.AddBuff(ModContent.BuffType<Revived>(), 14400);
                         retVal = false;
+
+                        FargoGlobalProjectile.XWay(25, player.Center, ModContent.ProjectileType<FossilBone>(), 20, 0, 0);
                     }
                     else if (FossilEnchant)
                     {
-                        int heal = SpiritForce ? 100 : 20;
+                        int heal = 1;
+
+                        if (SpiritForce || WizardEnchant)
+                        {
+                            heal = 50;
+                        }
+
                         player.statLife = heal;
                         player.HealEffect(heal);
                         player.immune = true;
                         player.immuneTime = player.longInvince ? 300 : 200;
-                        FossilBones = true;
-                        Main.NewText("You've been revived!", 175, 75);
+                        CombatText.NewText(player.Hitbox, Color.SandyBrown, "You've been revived!");
+                        //Main.NewText("You've been revived!", 175, 75);
                         player.AddBuff(ModContent.BuffType<Revived>(), 18000);
                         retVal = false;
+
+                        //spawn bones
+                        int numBones = 6;
+
+                        if (SpiritForce || WizardEnchant)
+                        {
+                            numBones *= 2;
+                        }
+
+                        FargoGlobalProjectile.XWay(numBones, player.Center, ModContent.ProjectileType<FossilBone>(), 20, 0, 0);
+
                     }
                 }
 
@@ -3221,48 +3298,14 @@ namespace FargowiltasSouls
             player.meleeDamage += dmg;
             player.rangedDamage += dmg;
             player.minionDamage += dmg;
-
-            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumDamage(dmg);
-
-            //if (Fargowiltas.Instance.CalamityLoaded) CalamityDamage(dmg);
-
-            //if (Fargowiltas.Instance.DBZMODLoaded) DBTDamage(dmg);
         }
-
-        //private void CalamityDamage(float dmg)
-        //{
-        //    ModLoader.GetMod("CalamityMod").Call("AddRogueDamage", player, dmg);
-        //}
-
-        //private void DBTDamage(float dmg)
-        //{
-        //    DBZMOD.MyPlayer dbtPlayer = player.GetModPlayer<DBZMOD.MyPlayer>();
-        //    dbtPlayer.KiDamage += dmg;
-        //}
 
         public void AllCritUp(int crit)
         {
             player.meleeCrit += crit;
             player.rangedCrit += crit;
             player.magicCrit += crit;
-
-            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumCrit(crit);
-
-            //if (Fargowiltas.Instance.CalamityLoaded) CalamityCrit(crit);
-
-            //if (Fargowiltas.Instance.DBZMODLoaded) DBTCrit(crit);
         }
-
-        //private void CalamityCrit(int crit)
-        //{
-        //    ModLoader.GetMod("CalamityMod").Call("AddRogueCrit", player, crit);
-        //}
-
-        //private void DBTCrit(int crit)
-        //{
-        //    DBZMOD.MyPlayer dbtPlayer = player.GetModPlayer<DBZMOD.MyPlayer>();
-        //    dbtPlayer.kiCrit += crit;
-        //}
 
         public void AllCritEquals(int crit)
         {
@@ -3270,24 +3313,7 @@ namespace FargowiltasSouls
             player.rangedCrit = crit;
             player.magicCrit = crit;
             SummonCrit = crit;
-
-            //if (Fargowiltas.Instance.ThoriumLoaded) ThoriumCritEquals(crit);
-
-            //if (Fargowiltas.Instance.CalamityLoaded) CalamityCritEquals(crit);
-
-            //if (Fargowiltas.Instance.DBZMODLoaded) DBTCritEquals(crit);
         }
-
-        //private void CalamityCritEquals(int crit)
-        //{
-        //    player.GetModPlayer<CalamityMod.CalPlayer.CalamityPlayer>().throwingCrit = crit;
-        //}
-
-        //private void DBTCritEquals(int crit)
-        //{
-        //    DBZMOD.MyPlayer dbtPlayer = player.GetModPlayer<DBZMOD.MyPlayer>();
-        //    dbtPlayer.kiCrit = crit;
-        //}
 
         public int HighestDamageTypeScaling(int dmg)
         {
@@ -3445,9 +3471,50 @@ namespace FargowiltasSouls
             }
         }
 
+        int frameCounter = 0;
+        int frame = 1;
+
+        public static readonly PlayerLayer BlizzardEffect = new PlayerLayer("ExampleMod", "MiscEffects", PlayerLayer.MiscEffectsFront, delegate (PlayerDrawInfo drawInfo) {
+            if (drawInfo.shadow != 0f)
+            {
+                return;
+            }
+            Player drawPlayer = drawInfo.drawPlayer;
+            Mod mod = ModLoader.GetMod("FargowiltasSouls");
+            FargoPlayer modPlayer = drawPlayer.GetModPlayer<FargoPlayer>();
+            if (modPlayer.SnowEnchant)
+            {
+                modPlayer.frameCounter++;
+
+                if (modPlayer.frameCounter > 5)
+                {
+                    modPlayer.frame++;
+                    modPlayer.frameCounter = 0;
+
+                    if (modPlayer.frame > 20)
+                    {
+                        modPlayer.frame = 1;
+                    }
+                }
+
+                Texture2D texture = mod.GetTexture("Projectiles/Souls/SnowBlizzard");
+                int frameSize = texture.Height / 20;
+                int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
+                int drawY = (int)(drawInfo.position.Y + drawPlayer.height / 2f - Main.screenPosition.Y);
+                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, frameSize * modPlayer.frame, texture.Width, frameSize), Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height / 2f) / 16f)), 0f, new Vector2(texture.Width / 2f, frameSize / 2f), 1f, SpriteEffects.None, 0);
+                Main.playerDrawData.Add(data);
+            }
+        });
+
+
+
+
         public override void ModifyDrawLayers(List<PlayerLayer> layers)
         {
-            if (BetsyDashing) //dont draw player during betsy dash
+            BlizzardEffect.visible = true;
+            layers.Add(BlizzardEffect);
+
+            if (BetsyDashing || ShellHide || GoldShell) //dont draw player during betsy dash
                 while (layers.Count > 0)
                     layers.RemoveAt(0);
 
@@ -3461,6 +3528,8 @@ namespace FargowiltasSouls
                     }
                 }
             }
+
+
         }
 
         public override void ModifyScreenPosition()

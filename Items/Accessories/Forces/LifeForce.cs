@@ -2,34 +2,27 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Forces
 {
     public class LifeForce : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        public int timer;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Force of Life");
 
             string tooltip =
 @"'Rare is a living thing that dare disobey your will'
-You leave behind a trail of fire when you walk
-Eating Pumpkin Pie heals you to full HP
+You will grow pumpkins while walking on the ground
 100% of contact damage is reflected
 Enemies may explode into needles on death
-50% chance for any friendly bee to become a Mega Bee
-Mega Bees ignore most enemy defense, immune frames, and last twice as long
-20% chance for minions to crit
-When standing still and not attacking, you gain the Shell Hide buff
-Shell Hide protects you from all projectiles, but increases contact damage
+Any friendly bee or wasp will become a Mega Bee
+20% chance for minions to crit for 3X damage
+When standing still and not attacking, you will enter your shell
 Beetles protect you from damage
 Increases flight time by 50%
-";
+Summons several pets";
             string tooltip_ch =
 @"'罕有活物敢违背你的意愿'
 走路时会留下一道火焰路径
@@ -43,9 +36,6 @@ Increases flight time by 50%
 缩壳时免疫抛射物,但收到更多接触伤害
 甲虫保护你免受伤害
 增加50%飞行时间";
-
-            tooltip += "Summons several pets";
-            tooltip_ch += "召唤数个宠物";
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "生命之力");
@@ -76,7 +66,7 @@ Increases flight time by 50%
             if(!modPlayer.TerrariaSoul)
                 modPlayer.wingTimeModifier += .5f;
             //flame trail, pie heal, pet
-            modPlayer.PumpkinEffect(25, hideVisual);
+            modPlayer.PumpkinEffect(hideVisual);
             //shell hide, pets
             modPlayer.TurtleEffect(hideVisual);
             player.thorns = 1f;

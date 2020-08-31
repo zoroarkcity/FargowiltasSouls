@@ -10,6 +10,7 @@ namespace FargowiltasSouls.Projectiles.Souls
     public class AncientShadowOrb : ModProjectile
     {
         public override string Texture => "Terraria/Projectile_18";
+        int invisTimer = 0;
 
         public override void SetStaticDefaults()
         {
@@ -46,6 +47,27 @@ namespace FargowiltasSouls.Projectiles.Souls
                 return;
             }
 
+            // CD
+            if (projectile.ai[0] > 0)
+            {
+                projectile.ai[0]--;
+
+                //dusts indicate its back
+                if (projectile.ai[0] == 0)
+                {
+                    const int num226 = 18;
+                    for (int num227 = 0; num227 < num226; num227++)
+                    {
+                        Vector2 vector6 = Vector2.UnitX.RotatedBy(projectile.rotation) * 6f;
+                        vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + projectile.Center;
+                        Vector2 vector7 = vector6 - projectile.Center;
+                        int num228 = Dust.NewDust(vector6 + vector7, 0, 0, DustID.Shadowflame, 0f, 0f, 0, default(Color), 2f);
+                        Main.dust[num228].noGravity = true;
+                        Main.dust[num228].velocity = vector7;
+                    }
+                }
+            }
+
             float num395 = Main.mouseTextColor / 200f - 0.35f;
             num395 *= 0.2f;
             projectile.scale = num395 + 0.95f;
@@ -53,14 +75,14 @@ namespace FargowiltasSouls.Projectiles.Souls
             if (projectile.owner == Main.myPlayer)
             {
                 //rotation mumbo jumbo
-                float distanceFromPlayer = 150;
+                float distanceFromPlayer = 250;
 
                 Lighting.AddLight(projectile.Center, 0.1f, 0.4f, 0.2f);
 
                 projectile.position = player.Center + new Vector2(distanceFromPlayer, 0f).RotatedBy(projectile.ai[1]);
                 projectile.position.X -= projectile.width / 2;
                 projectile.position.Y -= projectile.height / 2;
-                float rotation = 0.03f;
+                float rotation = (float)Math.PI / 120;
                 projectile.ai[1] -= rotation;
                 if (projectile.ai[1] > (float)Math.PI)
                 {
@@ -73,33 +95,22 @@ namespace FargowiltasSouls.Projectiles.Souls
                 //wait for CD
                 if (projectile.ai[0] != 0f)
                 {
-                    projectile.ai[0] -= 1f;
-
-                    if (projectile.ai[0] == 0)
-                    {
-                        const int num226 = 18; //dusts indicate charged up
-                        for (int num227 = 0; num227 < num226; num227++)
-                        {
-                            Vector2 vector6 = Vector2.UnitX.RotatedBy(projectile.rotation) * 6f;
-                            vector6 = vector6.RotatedBy(((num227 - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + projectile.Center;
-                            Vector2 vector7 = vector6 - projectile.Center;
-                            int num228 = Dust.NewDust(vector6 + vector7, 0, 0, DustID.Shadowflame, 0f, 0f, 0, default(Color), 2f);
-                            Main.dust[num228].noGravity = true;
-                            Main.dust[num228].velocity = vector7;
-                        }
-                    }
-
                     return;
                 }
 
-
+                //detect being hit
                 for (int i = 0; i < Main.maxProjectiles; i++)
                 {
                     Projectile proj = Main.projectile[i];
 
                     if (proj.active && proj.owner == projectile.owner && proj.type != mod.ProjectileType("AncientShadowBall") && !proj.minion && proj.damage > 0 && proj.Hitbox.Intersects(projectile.Hitbox))
                     {
-                        FargoGlobalProjectile.XWay(10, projectile.Center, mod.ProjectileType("AncientShadowBall"), 6, 30, 0);
+                        int numBalls = 10;
+
+                        FargoGlobalProjectile.XWay(numBalls, projectile.Center, mod.ProjectileType("AncientShadowBall"), 6, modPlayer.HighestDamageTypeScaling(40), 0);
+                        
+                        proj.active = false;
+
                         projectile.ai[0] = 300;
 
                         break;
@@ -110,9 +121,9 @@ namespace FargowiltasSouls.Projectiles.Souls
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            if (projectile.ai[0] != 0f)
+            if (projectile.ai[0] > 0)
             {
-                return true;
+                return false;
             }
 
             //Redraw the projectile with the color not influenced by light

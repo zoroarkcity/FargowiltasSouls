@@ -9,15 +9,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class FossilEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fossil Enchantment");
             Tooltip.SetDefault(
-@"If you reach zero HP you cheat death, returning with 1 HP
-For a few seconds after reviving, you are immune to all damage and spawn bones
-Collect these bones once they stop moving to heal for 10 HP each
+@"If you reach zero HP you will revive with 1 HP and spawn several bones
+Collect the bones once they stop moving to heal for 15 HP each
 Summons a pet Baby Dino
 'Beyond a forgotten age'");
             DisplayName.AddTranslation(GameCulture.Chinese, "化石魔石");
@@ -51,7 +48,7 @@ Summons a pet Baby Dino
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().FossilEffect(10, hideVisual);
+            player.GetModPlayer<FargoPlayer>().FossilEffect(hideVisual);
         }
 
         public override void AddRecipes()

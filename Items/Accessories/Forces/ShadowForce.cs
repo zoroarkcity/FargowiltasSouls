@@ -1,28 +1,25 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Forces
 {
     public class ShadowForce : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shadow Force");
 
             string tooltip = @"'Dark, Darker, Yet Darker'
-Two Shadow Orbs will orbit around you
+Three Shadow Orbs will orbit around you
 Your attacks may inflict Darkness on enemies
-A Dungeon Guardian will occasionally annihilate a foe when struck
-All of your minions may occasionally spew massive scythes everywhere
+Slain enemies may drop a pile of bones
+All of your minions gain an extra scythe attack
 Throw a smoke bomb to teleport to it and gain the First Strike Buff
-Stand still to gain a single use monk dash
+Don't attack to gain a single use monk dash
 Dash into any walls, to teleport through them to the next opening
-Summons a Flameburst minion that will fire after charging up
+Summons a Flameburst minion that will travel to your mouse after charging up
 While attacking, Flameburst shots manifest themselves from your shadows
 Greatly enhances Flameburst and Lightning Aura effectiveness
 Effects of Master Ninja Gear

@@ -10,8 +10,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
     [AutoloadEquip(EquipType.Shield)]
     public class IronEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Iron Enchantment");

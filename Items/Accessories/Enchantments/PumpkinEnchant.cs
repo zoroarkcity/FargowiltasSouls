@@ -9,14 +9,13 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class PumpkinEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pumpkin Enchantment");
             Tooltip.SetDefault(
-@"You leave behind a trail of fire when you walk
-Eating Pumpkin Pie heals you to full HP and inflicts Potion Sickness for 3 minutes
+@"You will grow pumpkins while walking on the ground
+When fully grown, the will heal 15 HP
+Enemies that touch them will destroy them and take damage
 Summons a pet Squashling
 'Your sudden pumpkin craving will never be satisfied'");
             DisplayName.AddTranslation(GameCulture.Chinese, "南瓜魔石");
@@ -50,7 +49,7 @@ Summons a pet Squashling
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().PumpkinEffect(12, hideVisual);
+            player.GetModPlayer<FargoPlayer>().PumpkinEffect(hideVisual);
         }
 
         public override void AddRecipes()

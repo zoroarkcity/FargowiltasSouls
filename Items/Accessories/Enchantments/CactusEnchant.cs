@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class CactusEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cactus Enchantment");
@@ -61,7 +59,7 @@ Enemies may explode into needles on death
             recipe.AddIngredient(ItemID.CactusSword);
             recipe.AddIngredient(ItemID.Sandgun);
             recipe.AddIngredient(ItemID.Waterleaf);
-            recipe.AddIngredient(ItemID.PinkPricklyPear);
+            //recipe.AddIngredient(ItemID.PinkPricklyPear);
             //any dragonfly
             // flounder
             recipe.AddIngredient(ItemID.SecretoftheSands);

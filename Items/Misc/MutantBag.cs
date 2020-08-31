@@ -30,8 +30,8 @@ namespace FargowiltasSouls.Items.Misc
         {
             player.QuickSpawnItem(mod.ItemType("Sadism"), Main.rand.Next(6) + 15);
 
-            if (!Fargowiltas.Instance.CalamityLoaded)
-                player.QuickSpawnItem(mod.ItemType("MutantsFury"));
+            player.QuickSpawnItem(mod.ItemType("MutantsFury"));
+                
         }
     }
 }

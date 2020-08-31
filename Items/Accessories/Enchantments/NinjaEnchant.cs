@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class NinjaEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ninja Enchantment");
@@ -18,7 +16,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"Throw a smoke bomb to teleport to it and gain the First Strike Buff
 Using the Rod of Discord will also grant this buff
 First Strike ensures your next attack is a crit dealing 3x damage
-Summons a pet Black Cat
 'Now you see me, now you don’t'");
             DisplayName.AddTranslation(GameCulture.Chinese, "忍者魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -54,7 +51,7 @@ Summons a pet Black Cat
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().NinjaEffect(hideVisual); //move pet
+            player.GetModPlayer<FargoPlayer>().NinjaEffect(hideVisual);
         }
 
         public override void AddRecipes()
@@ -63,13 +60,12 @@ Summons a pet Black Cat
             recipe.AddIngredient(ItemID.NinjaHood);
             recipe.AddIngredient(ItemID.NinjaShirt);
             recipe.AddIngredient(ItemID.NinjaPants);
-            //katana
             //chain knife
+            recipe.AddIngredient(ItemID.Katana);
             recipe.AddIngredient(ItemID.Shuriken, 300);
             //throwing knives
             recipe.AddIngredient(ItemID.SmokeBomb, 50);
-            //slime hook
-            recipe.AddIngredient(ItemID.SlimySaddle);
+            recipe.AddIngredient(ItemID.SlimeHook);
             
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

@@ -20,12 +20,15 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.CloneDefaults(ProjectileID.Mushroom);
             aiType = ProjectileID.Mushroom;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+
+            projectile.usesIDStaticNPCImmunity = true;
+            projectile.idStaticNPCHitCooldown = 20;
         }
 
         public override void AI()
         {
-            //dies twice as fast
-            projectile.alpha += 4;
+            //dies thrice as fast
+            projectile.alpha += 8;
         }
 
         public override Color? GetAlpha(Color lightColor)

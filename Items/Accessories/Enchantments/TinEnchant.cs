@@ -9,9 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class TinEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        public int timer;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tin Enchantment");

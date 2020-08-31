@@ -7,8 +7,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class RainEnchant : ModItem
     {        
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rain Enchantment");

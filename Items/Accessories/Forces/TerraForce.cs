@@ -8,8 +8,6 @@ namespace FargowiltasSouls.Items.Accessories.Forces
     [AutoloadEquip(EquipType.Shield)]
     public class TerraForce : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Terra Force");
@@ -17,7 +15,6 @@ namespace FargowiltasSouls.Items.Accessories.Forces
             string tooltip =
 @"'The land lends its strength'
 Attacks have a chance to shock enemies with lightning
-If an enemy is wet, the chance and damage is increased
 Sets your critical strike chance to 10%
 Every crit will increase it by 5%
 Getting hit drops your crit back down
@@ -25,12 +22,10 @@ Allows the player to dash into the enemy
 Right Click to guard with your shield
 You attract items from a larger range
 150% increased sword size
-100% increased projectile size
-Projectiles still have the same tile collision hitbox
+Every quarter second a projectile will be doubled in size
 Attacks may inflict enemies with Lead Poisoning
-Lead Poisoning deals damage over time and spreads to nearby enemies
-Grants immunity to fire, fall damage, and lava
-While standing in lava, you gain 20 armor penetration, 15% attack speed, and your attacks ignite enemies";
+Grants lava mobility and immunity to fire and lava
+Your attacks spawn explosions";
 
             string tooltip_ch =
 @"'大地赐予它力量'

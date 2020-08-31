@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class FrostEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frost Enchantment");
@@ -19,8 +17,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"Icicles will start to appear around you
 Attacking will launch them towards the cursor
 When 10 or more hit an enemy, they are frozen solid and take 20% extra damage for 5 seconds
-Your attacks inflict Frostburn
-Summons a pet Penguin and Snowman
+You have a small area around you that will slow projectiles to 2/3 speed
+Summons several pets
 'Let's coat the world in a deep freeze'";
 
             string tooltip_ch =
@@ -58,7 +56,8 @@ Summons a pet Penguin and Snowman
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().FrostEffect(50, hideVisual); //add grinch, kill fish
+            player.GetModPlayer<FargoPlayer>().FrostEffect(hideVisual);
+            player.GetModPlayer<FargoPlayer>().SnowEffect(hideVisual);
         }
 
         public override void AddRecipes()
@@ -67,13 +66,14 @@ Summons a pet Penguin and Snowman
             recipe.AddIngredient(ItemID.FrostHelmet);
             recipe.AddIngredient(ItemID.FrostBreastplate);
             recipe.AddIngredient(ItemID.FrostLeggings);
-            //snow enchant
-            recipe.AddIngredient(ItemID.Frostbrand);
-            recipe.AddIngredient(ItemID.IceBow);
+            recipe.AddIngredient(ModContent.ItemType<SnowEnchant>());
+            //recipe.AddIngredient(ItemID.Frostbrand);
+            //recipe.AddIngredient(ItemID.IceBow);
             //frost staff
             //coolwhip
+            recipe.AddIngredient(ItemID.BlizzardStaff);
             recipe.AddIngredient(ItemID.ToySled);
-            //grinch pet
+            recipe.AddIngredient(ItemID.BabyGrinchMischiefWhistle);
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

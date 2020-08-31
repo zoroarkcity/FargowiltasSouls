@@ -1,9 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
@@ -13,7 +10,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Wizard Enchantment");
             Tooltip.SetDefault(
-@"
+@"Enhances the power of all other equipped Enchantments
+Summons a pet Black Cat
 'I'm a what?'");
 
         }
@@ -41,8 +39,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            //player.GetModPlayer<FargoPlayer>().WizardEnchant = true;
-            //add pet
+            player.GetModPlayer<FargoPlayer>().WizardEnchant = true;
+            player.GetModPlayer<FargoPlayer>().AddPet(SoulConfig.Instance.BlackCatPet, hideVisual, BuffID.BlackCat, ProjectileID.BlackCat);
         }
 
         public override void AddRecipes()
@@ -50,8 +48,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddIngredient(ItemID.WizardHat);
-            recipe.AddIngredient(ItemID.AmethystRobe);
-            recipe.AddIngredient(ItemID.TopazRobe);
+            //recipe.AddIngredient(ItemID.AmethystRobe);
+            //recipe.AddIngredient(ItemID.TopazRobe);
+            recipe.AddIngredient(ItemID.EmeraldRobe);
             recipe.AddIngredient(ItemID.SapphireRobe);
             recipe.AddIngredient(ItemID.RubyRobe);
             recipe.AddIngredient(ItemID.DiamondRobe);
@@ -59,7 +58,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             recipe.AddIngredient(ItemID.RareEnchantment);
             recipe.AddIngredient(ItemID.UnluckyYarn);
 
-            recipe.AddTile(TileID.DemonAltar);
+            recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

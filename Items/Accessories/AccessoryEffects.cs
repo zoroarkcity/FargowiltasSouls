@@ -224,10 +224,20 @@ namespace FargowiltasSouls
             }
         }
 
-        public void ChloroEffect(bool hideVisual, int dmg)
+        public void ChloroEffect(bool hideVisual)
         {
+            //herb double
+            ChloroEnchant = true;
+
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ChlorophyteCrystals) && player.ownedProjectileCounts[ModContent.ProjectileType<Chlorofuck>()] == 0)
             {
+                int dmg = 100;
+
+                if (NatureForce || WizardEnchant)
+                {
+                    dmg = 200;
+                }
+
                 const int max = 5;
                 float rotation = 2f * (float)Math.PI / max;
 
@@ -251,7 +261,7 @@ namespace FargowiltasSouls
             if (TerraForce)
             {
                 dmg = 100;
-                maxTargets = 50;
+                maxTargets = 10;
                 cdLength = 120;
             }
 
@@ -297,10 +307,36 @@ namespace FargowiltasSouls
 
         public void CrimsonEffect(bool hideVisual)
         {
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.CrimsonRegen))
+            if (CrimsonRegen)
             {
-                player.crimsonRegen = true;
+                CrimsonRegenTimer++;
+
+                if (CrimsonRegenTimer > 30)
+                {
+                    CrimsonRegenTimer = 0;
+
+                    int heal = 5;
+
+                    if (NatureForce || WizardEnchant)
+                    {
+                        heal *= 2;
+                    }
+
+                    player.HealEffect(heal);
+                    player.statLife += heal;
+                    CrimsonRegenSoFar += heal;
+
+                    //done regenning
+                    if (CrimsonRegenSoFar >= CrimsonTotalToRegen)
+                    {
+                        CrimsonTotalToRegen = 0;
+                        CrimsonRegenSoFar = 0;
+                        player.DelBuff(player.FindBuffIndex(ModContent.BuffType<CrimsonRegen>()));
+                    }
+                }
             }
+
+            player.crimsonRegen = true;
 
             CrimsonEnchant = true;
             AddPet(SoulConfig.Instance.FaceMonsterPet, hideVisual, BuffID.BabyFaceMonster, ProjectileID.BabyFaceMonster);
@@ -312,9 +348,29 @@ namespace FargowiltasSouls
             player.setApprenticeT3 = true;
             DarkEnchant = true;
 
+            int maxTowers = 3;
+
+            if (TerrariaSoul)
+            {
+                maxTowers = 5;
+            }
+            else if (ShadowForce || WizardEnchant)
+            {
+                maxTowers = 4;
+            }
+
             //spawn tower boi
-            if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<FlameburstMinion>()] < 1)
+            if (player.whoAmI == Main.myPlayer && DarkSpawnCD == 0 && player.ownedProjectileCounts[ModContent.ProjectileType<FlameburstMinion>()] < maxTowers)
+            {
                 Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<FlameburstMinion>(), 0, 0f, player.whoAmI);
+                DarkSpawnCD = 99999;
+            }
+
+            if (DarkSpawnCD > 0)
+            {
+                DarkSpawnCD--;
+            }
+                
 
             AddPet(SoulConfig.Instance.FlickerwickPet, hideVisual, BuffID.PetDD2Ghost, ProjectileID.DD2PetGhost);
         }
@@ -330,59 +386,15 @@ namespace FargowiltasSouls
             ForbiddenEnchant = true;
         }
 
-        public void FossilEffect(int dmg, bool hideVisual)
+        public void FossilEffect(bool hideVisual)
         {
-            FossilEnchant = true;
-
             //bone zone
-            if (FossilBones)
-            {
-                if (boneCD <= 0 && !player.dead)
-                {
-                    for (int i = 0; i < Main.rand.Next(4, 12); i++)
-                    {
-                        float randX, randY;
-
-                        do
-                        {
-                            randX = Main.rand.Next(-10, 10);
-                        } while (randX <= 4f && randX >= -4f);
-
-                        do
-                        {
-                            randY = Main.rand.Next(-10, 10);
-                        } while (randY <= 4f && randY >= -4f);
-
-                        Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, new Vector2(randX, randY), ProjectileID.BoneGloveProj, HighestDamageTypeScaling(dmg), 2, Main.myPlayer);
-                        if (p != null)
-                            p.GetGlobalProjectile<FargoGlobalProjectile>().IsRecolor = true;
-                    }
-
-                    Projectile p2 = FargoGlobalProjectile.NewProjectileDirectSafe(player.Center, Vector2.Zero, ProjectileID.Bone, HighestDamageTypeScaling((int)(dmg * 1.5f)), 0f, player.whoAmI);
-                    if (p2 != null)
-                    {
-                        p2.GetGlobalProjectile<FargoGlobalProjectile>().Rotate = true;
-                        p2.GetGlobalProjectile<FargoGlobalProjectile>().RotateDist = Main.rand.Next(32, 128);
-                        p2.GetGlobalProjectile<FargoGlobalProjectile>().RotateDir = Main.rand.Next(2);
-                        p2.GetGlobalProjectile<FargoGlobalProjectile>().IsRecolor = true;
-                        p2.noDropItem = true;
-                    }
-
-                    boneCD = 20;
-                }
-                else
-                {
-                    boneCD--;
-                }
-
-                if (!player.immune)
-                    FossilBones = false;
-            }
+            FossilEnchant = true;
 
             AddPet(SoulConfig.Instance.DinoPet, hideVisual, BuffID.BabyDinosaur, ProjectileID.BabyDino);
         }
 
-        public void FrostEffect(int dmg, bool hideVisual)
+        public void FrostEffect(bool hideVisual)
         {
             FrostEnchant = true;
 
@@ -444,6 +456,13 @@ namespace FargowiltasSouls
 
                 if (IcicleCount >= 1 && player.controlUseItem && player.HeldItem.damage > 0)
                 {
+                    int dmg = 50;
+
+                    if (NatureForce || WizardEnchant)
+                    {
+                        dmg = 75;
+                    }
+
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
                         Projectile proj = Main.projectile[i];
@@ -466,7 +485,7 @@ namespace FargowiltasSouls
             }
 
             AddPet(SoulConfig.Instance.SnowmanPet, hideVisual, BuffID.BabySnowman, ProjectileID.BabySnowman);
-            AddPet(SoulConfig.Instance.PenguinPet, hideVisual, BuffID.BabyPenguin, ProjectileID.Penguin);
+            AddPet(SoulConfig.Instance.GrinchPet, hideVisual, BuffID.BabyGrinch, ProjectileID.BabyGrinch);
         }
 
         public void GladiatorEffect(bool hideVisual)
@@ -497,9 +516,17 @@ namespace FargowiltasSouls
             AddPet(SoulConfig.Instance.ParrotPet, hideVisual, BuffID.PetParrot, ProjectileID.Parrot);
         }
 
-        public void HallowEffect(bool hideVisual, int dmg)
+        public void HallowEffect(bool hideVisual)
         {
             HallowEnchant = true;
+
+            int dmg = 80;
+
+            if (SpiritForce || WizardEnchant)
+            {
+                dmg = 120;
+            }
+
             AddMinion(SoulConfig.Instance.HallowSword, ModContent.ProjectileType<HallowSword>(), (int)(dmg * player.minionDamage), 0f);
 
             //reflect proj
@@ -631,7 +658,7 @@ namespace FargowiltasSouls
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.JungleSpores) && player.jump > 0 && jungleCD == 0)
             {
-                int dmg = NatureForce ? 50 : 15;
+                int dmg = (NatureForce || WizardEnchant) ? 100 : 25;
                 Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 62, 0.5f);
                 FargoGlobalProjectile.XWay(10, player.Center, ModContent.ProjectileType<SporeBoom>(), 3f, HighestDamageTypeScaling(dmg), 0f);
                 jungleCD = 30;
@@ -647,12 +674,19 @@ namespace FargowiltasSouls
             player.cordage = true;
         }
 
-        public void MeteorEffect(int damage)
+        public void MeteorEffect()
         {
             MeteorEnchant = true;
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MeteorShower))
             {
+                int damage = 50;
+
+                if (CosmoForce || WizardEnchant)
+                {
+                    damage = 100;
+                }
+
                 if (meteorShower)
                 {
                     if (meteorTimer % 2 == 0)
@@ -667,6 +701,12 @@ namespace FargowiltasSouls
                     if (meteorTimer <= 0)
                     {
                         meteorCD = 300;
+
+                        if (CosmoForce || WizardEnchant)
+                        {
+                            meteorCD = 240;
+                        }
+
                         meteorTimer = 150;
                         meteorShower = false;
                     }
@@ -719,7 +759,7 @@ namespace FargowiltasSouls
             AddPet(SoulConfig.Instance.MagicLanternPet, hideVisual, BuffID.MagicLantern, ProjectileID.MagicLantern);
         }
 
-        public void MoltenEffect(int dmg)
+        public void MoltenEffect()
         {
             MoltenEnchant = true;
 
@@ -729,9 +769,15 @@ namespace FargowiltasSouls
                 Lighting.AddLight((int)(player.Center.X / 16f), (int)(player.Center.Y / 16f), 0.65f, 0.4f, 0.1f);
                 int buff = BuffID.OnFire;
                 float distance = 200f;
+
+                int baseDamage = 20;
+
+                if (NatureForce || WizardEnchant)
+                {
+                    baseDamage *= 2;
+                }
                 
-                int damage = HighestDamageTypeScaling(dmg);
-                
+                int damage = HighestDamageTypeScaling(baseDamage);
 
                 if (player.whoAmI == Main.myPlayer)
                 {
@@ -798,7 +844,6 @@ namespace FargowiltasSouls
             }
 
             NinjaEnchant = true;
-            AddPet(SoulConfig.Instance.BlackCatPet, hideVisual, BuffID.BlackCat, ProjectileID.BlackCat);
         }
 
         public void ObsidianEffect()
@@ -816,9 +861,9 @@ namespace FargowiltasSouls
                 player.gravity = Player.defaultGravity;
                 player.ignoreWater = true;
                 player.accFlipper = true;
-
-                ObsidianEnchant = true;
             }
+
+            ObsidianEnchant = (TerraForce || WizardEnchant) || player.lavaWet;
         }
 
         public void OrichalcumEffect()
@@ -864,21 +909,34 @@ namespace FargowiltasSouls
             }
         }
 
-        public void PumpkinEffect(int dmg, bool hideVisual)
+        public void PumpkinEffect(bool hideVisual)
         {
             //pumpkin pies
             PumpkinEnchant = true;
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.PumpkinFire) && (player.controlLeft || player.controlRight) && !IsStandingStill)
             {
-                if (pumpkinCD <= 0)
+                if (pumpkinCD <= 0 && player.ownedProjectileCounts[ModContent.ProjectileType<GrowingPumpkin>()] < 5)
                 {
-                    int p = Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileID.MolotovFire, HighestDamageTypeScaling(dmg), 1f, player.whoAmI);
+                    int x = (int)player.Center.X / 16;
+                    int y = (int)(player.position.Y + player.height - 1f) / 16;
 
-                    Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
-                    pumpkinCD = 20;
-                }
+                    if (Main.tile[x, y] == null)
+                    {
+                        Main.tile[x, y] = new Tile();
+                    }
 
+                    if (!Main.tile[x, y].active() && Main.tile[x, y].liquid == 0 && Main.tile[x, y + 1] != null && (WorldGen.SolidTile(x, y + 1) || Main.tile[x, y + 1].type == TileID.Platforms))
+                    {
+                        Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<GrowingPumpkin>(), 0,  0, player.whoAmI);
+                    }
+
+                    pumpkinCD = 300;
+                }  
+            }
+
+            if (pumpkinCD > 0)
+            {
                 pumpkinCD--;
             }
 
@@ -1166,8 +1224,30 @@ namespace FargowiltasSouls
             AddPet(SoulConfig.Instance.TurtlePet, hideVisual, BuffID.PetTurtle, ProjectileID.Turtle);
             AddPet(SoulConfig.Instance.LizardPet, hideVisual, BuffID.PetLizard, ProjectileID.PetLizard);
 
-            if (!TerrariaSoul && SoulConfig.Instance.GetValue(SoulConfig.Instance.TurtleShell) && IsStandingStill && !player.controlUseItem && !noDodge)
-                player.AddBuff(ModContent.BuffType<ShellHide>(), 2);
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.TurtleShell) && !player.HasBuff(ModContent.BuffType<BrokenShell>()) && IsStandingStill && !player.controlUseItem)
+            {
+                turtleCounter++;
+
+                if (turtleCounter > 30)
+                {
+                    player.AddBuff(ModContent.BuffType<ShellHide>(), 2);
+                }
+            }
+            else
+            {
+                turtleCounter = 0;
+            }
+
+            if (TurtleShellHP < 10 && !player.HasBuff(ModContent.BuffType<BrokenShell>()) && !ShellHide && (LifeForce || WizardEnchant))
+            {
+                turtleRecoverCD--;
+                if (turtleRecoverCD == 0)
+                {
+                    turtleRecoverCD = 240;
+
+                    TurtleShellHP++;
+                }
+            }
         }
 
         public void ValhallaEffect(bool hideVisual)
@@ -1226,11 +1306,24 @@ namespace FargowiltasSouls
 
             int dist = 250;
 
+            if (WoodForce || WizardEnchant)
+            {
+                dist = 350;
+            }
+
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC npc = Main.npc[i];
                 if (npc.active && !npc.friendly && npc.lifeMax > 1 && npc.Distance(player.Center) < dist)
+                {
                     npc.AddBuff(BuffID.ShadowFlame, 120);
+
+                    if (WoodForce || WizardEnchant)
+                    {
+                        npc.AddBuff(BuffID.CursedInferno, 120);
+                    }
+                }
+                    
             }
 
             for (int i = 0; i < 20; i++)
@@ -1279,6 +1372,11 @@ namespace FargowiltasSouls
                     dust.velocity += Vector2.Normalize(offset) * -5f;
                 dust.noGravity = true;
             }
+
+            if (shadewoodCD > 0)
+            {
+                shadewoodCD--;
+            }
         }
 
         public void PalmEffect()
@@ -1304,7 +1402,7 @@ namespace FargowiltasSouls
                         }
                     }
 
-                    Projectile.NewProjectile(mouse.X, mouse.Y - 10, 0f, 0f, ModContent.ProjectileType<PalmTreeSentry>(), WoodForce ? 45 : 15, 0f, player.whoAmI);
+                    Projectile.NewProjectile(mouse.X, mouse.Y - 10, 0f, 0f, ModContent.ProjectileType<PalmTreeSentry>(), (WoodForce || WizardEnchant) ? 45 : 15, 0f, player.whoAmI);
                 }
             }
         }
@@ -1318,13 +1416,13 @@ namespace FargowiltasSouls
             {
                 Item heldItem = player.HeldItem;
 
-                if (apprenticeCD == 0 && heldItem.shoot > 0 && heldItem.damage > 0 && player.controlUseItem && prevPosition != null)
+                if (apprenticeCD == 0 && heldItem.damage > 0 && player.controlUseItem && player.itemAnimation != 0 && prevPosition != null)
                 {
                     if (prevPosition != null)
                     {
-                        Vector2 vel = (Main.MouseWorld - prevPosition).SafeNormalize(-Vector2.UnitY);
+                        Vector2 vel = (Main.MouseWorld - prevPosition).SafeNormalize(-Vector2.UnitY) * 15;
 
-                        Projectile.NewProjectile(prevPosition, vel * heldItem.shootSpeed, ProjectileID.DD2FlameBurstTowerT3Shot, heldItem.damage / 2, 1, player.whoAmI);
+                        Projectile.NewProjectile(prevPosition, vel, ProjectileID.DD2FlameBurstTowerT3Shot, heldItem.damage / 2, 1, player.whoAmI);
 
                         for (int i = 0; i < 5; i++)
                         {
@@ -1428,10 +1526,46 @@ namespace FargowiltasSouls
             }
         }
 
-        public void SnowEffect()
+        public void SnowEffect(bool hideVisual)
         {
             SnowEnchant = true;
 
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SnowStorm))
+            {
+                int dist = 100;
+
+                if (FrostEnchant)
+                {
+                    dist = 125;
+                }
+
+                //dust
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 offset = new Vector2();
+                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                    offset.X += (float)(Math.Sin(angle) * Main.rand.Next(dist + 1));
+                    offset.Y += (float)(Math.Cos(angle) * Main.rand.Next(dist + 1));
+                    Dust dust = Main.dust[Dust.NewDust(
+                        player.Center + offset - new Vector2(4, 4), 0, 0,
+                        76, 0, 0, 100, Color.White, .75f)];
+
+                    dust.noGravity = true;
+                }
+
+                for (int i = 0; i < 1000; i++)
+                {
+                    Projectile proj = Main.projectile[i];
+
+                    if (proj.active && proj.hostile && proj.damage > 0 && Vector2.Distance(proj.Center, player.Center) < dist)
+                    {
+                        proj.GetGlobalProjectile<FargoGlobalProjectile>().ChilledProj = true;
+                        proj.GetGlobalProjectile<FargoGlobalProjectile>().ChilledTimer = 30;
+                    }
+                }
+            }
+
+            AddPet(SoulConfig.Instance.PenguinPet, hideVisual, BuffID.BabyPenguin, ProjectileID.Penguin);
 
         }
 
@@ -1441,7 +1575,17 @@ namespace FargowiltasSouls
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.AncientShadow) && player.ownedProjectileCounts[ModContent.ProjectileType<AncientShadowOrb>()] == 0)
             {
-                const int max = 2;
+                int max = 2;
+
+                if (TerrariaSoul)
+                {
+                    max = 4;
+                }
+                else if (ShadowForce || WizardEnchant)
+                {
+                    max = 3;
+                }
+
                 float rotation = 2f * (float)Math.PI / max;
 
                 for (int i = 0; i < max; i++)
@@ -1456,8 +1600,6 @@ namespace FargowiltasSouls
         #endregion
 
         #region souls
-        private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
-
         public void ColossusSoul(int maxHP, float damageResist, int lifeRegen, bool hideVisual)
         {
             player.statLifeMax2 += maxHP;
@@ -1518,18 +1660,6 @@ namespace FargowiltasSouls
                     if (target.active && player != target && Vector2.Distance(target.Center, player.Center) < 400) target.AddBuff(BuffID.PaladinsShield, 30);
                 }
             }
-
-            //if (Fargowiltas.Instance.ThoriumLoaded)
-            //{
-            //    thorium.GetItem("OceanRetaliation").UpdateAccessory(player, hideVisual);
-            //    thorium.GetItem("TerrariumDefender").UpdateAccessory(player, hideVisual);
-            //}
-
-            //if (Fargowiltas.Instance.CalamityLoaded)
-            //{
-            //    calamity.GetItem("RampartofDeities").UpdateAccessory(player, hideVisual);
-            //    calamity.GetItem("AsgardianAegis").UpdateAccessory(player, hideVisual);
-            //}
         }
 
         public void SupersonicSoul(bool hideVisual)
@@ -1578,14 +1708,6 @@ namespace FargowiltasSouls
             }
             //magic carpet
             player.carpet = true;
-
-            //if (Fargowiltas.Instance.ThoriumLoaded)
-            //{
-            //    thorium.GetItem("TerrariumBoots").UpdateAccessory(player, hideVisual);
-            //    thorium.GetItem("AirWalkers").UpdateAccessory(player, hideVisual);
-            //    thorium.GetItem("SurvivalistBoots").UpdateAccessory(player, hideVisual);
-            //    thorium.GetItem("WeightedWinglets").UpdateAccessory(player, hideVisual);
-            //}
         }
 
         public void FlightMasterySoul()
@@ -1670,12 +1792,6 @@ namespace FargowiltasSouls
             player.accThirdEye = true;
             player.accCalendar = true;
             player.accWeatherRadio = true;
-            
-
-            if (!Fargowiltas.Instance.ThoriumLoaded) return;
-
-            //pets
-            //AddPet(SoulConfig.Instance.thoriumToggles.BoxPet, hideVisual, thorium.BuffType("LockBoxBuff"), thorium.ProjectileType("LockBoxPet"));
         }
 
 
