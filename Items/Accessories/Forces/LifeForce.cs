@@ -18,7 +18,7 @@ You will grow pumpkins while walking on the ground
 100% of contact damage is reflected
 Enemies may explode into needles on death
 Any friendly bee or wasp will become a Mega Bee
-20% chance for minions to crit for 3X damage
+30% chance for minions to crit
 When standing still and not attacking, you will enter your shell
 Beetles protect you from damage
 Increases flight time by 50%

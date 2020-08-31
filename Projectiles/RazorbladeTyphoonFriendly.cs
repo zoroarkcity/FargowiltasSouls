@@ -9,12 +9,10 @@ namespace FargowiltasSouls.Projectiles
 {
     public class RazorbladeTyphoonFriendly : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_409";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Razorblade Typhoon");
-            Main.projFrames[projectile.type] = 3;
+            Main.projFrames[projectile.type] = 4;
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
@@ -74,7 +72,7 @@ namespace FargowiltasSouls.Projectiles
             }
             projectile.rotation += 0.2f * (projectile.velocity.X > 0f ? 1f : -1f);
             projectile.frame++;
-            if (projectile.frame > 2)
+            if (projectile.frame > 3)
                 projectile.frame = 0;
         }
 

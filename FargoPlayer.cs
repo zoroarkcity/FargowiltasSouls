@@ -1332,6 +1332,11 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (SpiderEnchant)
+            {
+                SummonCrit = LifeForce || WizardEnchant ? 30 : 15;
+            }
+
             if (RabiesVaccine)
             {
                 player.buffImmune[BuffID.Rabies] = true;
@@ -1794,7 +1799,7 @@ namespace FargowiltasSouls
 
             Item heldItem = player.HeldItem;
             //fix your toggles terry
-            if (TungstenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenSize, false))
+            if (TungstenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenSize))
             {
                 if (heldItem.damage > 0 && heldItem.scale < 2.5f)
                 {
@@ -1853,6 +1858,19 @@ namespace FargowiltasSouls
                 player.statDefense /= 2;
                 player.endurance /= 2;
             }*/
+
+            if (TinEnchant)
+            {
+                AllCritEquals(TinCrit);
+
+                if (Eternity)
+                {
+                    if (eternityDamage > 20000)
+                        eternityDamage = 20000;
+                    AllDamageUp(eternityDamage);
+                    player.statDefense += (int)(eternityDamage * 100); //10 defense per .1 damage
+                }
+            }
         }
 
         public override float UseTimeMultiplier(Item item)
@@ -2243,7 +2261,7 @@ namespace FargowiltasSouls
                 crit = false;
             }
 
-            if (TungstenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenSize, false))
+            if (TungstenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenSize))
             {
                 if (crit)
                 {
@@ -2320,7 +2338,6 @@ namespace FargowiltasSouls
             {
                 //target.AddBuff(ModContent.BuffType<OceanicMaul>(), 900);
                 //target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 900);
-
                 if (crit && CyclonicFinCD <= 0 && proj.type != ModContent.ProjectileType<RazorbladeTyphoonFriendly>() && SoulConfig.Instance.GetValue(SoulConfig.Instance.FishronMinion))
                 {
                     CyclonicFinCD = 360;
@@ -2902,7 +2919,7 @@ namespace FargowiltasSouls
                 damage *= 3;
             }
 
-            if (CrimsonEnchant && SoulConfig.Instance.CrimsonRegen)
+            if (CrimsonEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CrimsonRegen))
             {
                 //if was already healing, kill it
                 if (player.HasBuff(ModContent.BuffType<CrimsonRegen>()))
@@ -3312,7 +3329,8 @@ namespace FargowiltasSouls
             player.meleeCrit = crit;
             player.rangedCrit = crit;
             player.magicCrit = crit;
-            SummonCrit = crit;
+            if (SpiderEnchant)
+                SummonCrit = crit;
         }
 
         public int HighestDamageTypeScaling(int dmg)

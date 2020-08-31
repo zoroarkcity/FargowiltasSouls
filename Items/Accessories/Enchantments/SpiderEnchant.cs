@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Spider Enchantment");
 
             string tooltip =
-@"Your minions can now crit with a 20% chance
+@"Your minions can now crit with a 15% chance
 Summons a pet Spider
 'Arachniphobia is punishable by arachnid induced death'";
             string tooltip_ch =

@@ -871,10 +871,10 @@ namespace FargowiltasSouls.NPCs
 
             if (modPlayer.SpiderEnchant && projectile.minion && Main.rand.Next(101) <= modPlayer.SummonCrit)
             {
-                if (modPlayer.LifeForce || modPlayer.WizardEnchant)
+                /*if (modPlayer.LifeForce || modPlayer.WizardEnchant)
                 {
                     damage = (int)(damage * 1.5f);
-                }
+                }*/
                
                 crit = true;
             }
