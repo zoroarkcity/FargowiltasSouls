@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class ValhallaKnightEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Valhalla Knight Enchantment");

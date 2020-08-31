@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 using System.Collections.Generic;
 
@@ -10,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class SpiderEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spider Enchantment");
@@ -64,7 +61,6 @@ Summons a pet Spider
             recipe.AddIngredient(ItemID.SpiderGreaves);
             recipe.AddIngredient(ItemID.SpiderStaff);
             recipe.AddIngredient(ItemID.QueenSpiderStaff);
-            //bananarangs
             recipe.AddIngredient(ItemID.WebSlinger);
             //web rope coil
             //rainbow string

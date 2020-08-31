@@ -1,4 +1,3 @@
-using CalamityMod.CalPlayer;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -12,36 +11,22 @@ namespace FargowiltasSouls.Items.Accessories.Souls
     //[AutoloadEquip(EquipType.Neck)]
     public class SnipersSoul : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sniper's Soul");
 
-            string tooltip = 
+            string tooltip =
 @"'Ready, aim, fire'
 30% increased ranged damage
 20% increased firing speed
 15% increased ranged critical chance
-";
+Effects of Sniper Scope";
             string tooltip_ch =
 @"'准备,瞄准,开火'
 增加30%远程伤害
 增加20%开火速度
 增加15%远程暴击率
 ";
-
-            if (calamity == null)
-            {
-                tooltip += "Effects of Sniper Scope";
-                tooltip_ch += "拥有狙击镜的效果";
-            }
-            else
-            {
-                tooltip += "Effects of Elemental Quiver and Sniper Scope";
-                tooltip_ch += "拥有元素箭袋和狙击镜的效果";
-            }
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "神枪手之魂");
@@ -81,35 +66,19 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             {
                 player.scope = true;
             }
-
-           // if (Fargowiltas.Instance.CalamityLoaded && SoulConfig.Instance.GetValue(SoulConfig.Instance.calamityToggles.ElementalQuiver)) Calamity(player);
         }
-
-        //private void Calamity(Player player)
-        //{
-        //    CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-        //    modPlayer.eQuiver = true;
-        //}
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddIngredient(null, "SharpshootersEssence");
-            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? calamity.ItemType("ElementalQuiver") : ItemID.MagicQuiver); //molten quiver
+            recipe.AddIngredient(ItemID.MagicQuiver); //molten quiver
             recipe.AddIngredient(ItemID.SniperScope); //recon scope
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(thorium.ItemType("DestroyersRage"));
-                recipe.AddIngredient(thorium.ItemType("TerraBow"));
-            }
-            else
-            {
-                
-                recipe.AddIngredient(ItemID.DartPistol);
-                recipe.AddIngredient(ItemID.Megashark);
-            }
+
+            recipe.AddIngredient(ItemID.DartPistol);
+            recipe.AddIngredient(ItemID.Megashark);
 
             recipe.AddIngredient(ItemID.PulseBow);
             recipe.AddIngredient(ItemID.NailGun);

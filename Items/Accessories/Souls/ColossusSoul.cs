@@ -1,21 +1,15 @@
-using CalamityMod.CalPlayer;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     //[AutoloadEquip(EquipType.Shield)]
     public class ColossusSoul : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Colossus Soul");
@@ -38,18 +32,6 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell";
 敌人更有可能以你为目标
 拥有混乱之脑,星辰项链和甜心项链的效果
 拥有蜜蜂斗篷,孢子囊,圣骑士护盾和冰霜龟壳的效果";
-
-            if (thorium != null)
-            {
-                tooltip += "\nEffects of Ocean's Retaliation and Terrarium Defender";
-                tooltip_ch += "\n拥有海潮之噬和生存者披风的效果\n拥有爆炸盾和界元之庇护的效果";
-            }
-
-            if (calamity != null)
-            {
-                tooltip += "\nEffects of Rampart of Deities and Asgardian Aegis";
-                tooltip_ch += "\n拥有阿斯加德之庇护的效果";
-            }
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "巨像之魂");
@@ -100,24 +82,10 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell";
             recipe.AddIngredient(ItemID.FleshKnuckles); //hero shield
             recipe.AddIngredient(ItemID.SporeSac);
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(thorium.ItemType("OceanRetaliation"));
-                recipe.AddIngredient(thorium.ItemType("TerrariumDefender"));
-            }
 
-            if (Fargowiltas.Instance.CalamityLoaded)
-            {
-                recipe.AddIngredient(calamity.ItemType("RampartofDeities"));
-                recipe.AddIngredient(calamity.ItemType("AsgardianAegis"));
-            }
-            
-            if(!Fargowiltas.Instance.ThoriumLoaded && !Fargowiltas.Instance.CalamityLoaded)
-            {
-                recipe.AddIngredient(ItemID.FrozenTurtleShell); //frozen shield
-                //recipe.AddIngredient(ItemID.PaladinsShield);
-                recipe.AddIngredient(ItemID.AnkhShield);
-            }
+            recipe.AddIngredient(ItemID.FrozenTurtleShell); //frozen shield
+            recipe.AddIngredient(ItemID.PaladinsShield);
+            recipe.AddIngredient(ItemID.AnkhShield);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 

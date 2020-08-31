@@ -69,8 +69,6 @@ namespace FargowiltasSouls.NPCs
         public static int mutantBoss = -1;
         public static int championBoss = -1;
 
-        //public static bool Revengeance => CalamityMod.World.CalamityWorld.revenge;
-
         public override void ResetEffects(NPC npc)
         {
             PaladinsShield = false;

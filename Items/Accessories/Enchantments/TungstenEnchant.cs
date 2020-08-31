@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 using System.Collections.Generic;
 
@@ -10,17 +9,14 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class TungstenEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        public int timer;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tungsten Enchantment");
 
             string tooltip =
 @"150% increased sword size
-100% increased projectile size
-Projectiles still have the same tile collision hitbox
+Every half second a projectile will be doubled in size
+Enlarged swords and projectiles deal 15% more damage on crits
 'Bigger is always better'";
             string tooltip_ch =
 @"'大就是好'
@@ -68,11 +64,11 @@ Projectiles still have the same tile collision hitbox
             recipe.AddIngredient(ItemID.TungstenGreaves);
             //tungsten sword
             //ruler
-            //candy cane sword
+            recipe.AddIngredient(ItemID.CandyCaneSword);
             recipe.AddIngredient(ItemID.GreenPhaseblade);
             recipe.AddIngredient(ItemID.EmeraldStaff);
             recipe.AddIngredient(ItemID.Snail);
-            recipe.AddIngredient(ItemID.Sluggy);
+            //recipe.AddIngredient(ItemID.Sluggy);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

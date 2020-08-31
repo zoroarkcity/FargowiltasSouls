@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Rich Mahogany Enchantment");
             Tooltip.SetDefault(
-@"All grappling hooks pull you in and retract twice as fast
+@"All grappling hooks shoot, pull, and retract 1.5x as fast
 'Guaranteed to keep you hooked'"); 
             DisplayName.AddTranslation(GameCulture.Chinese, "红木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 

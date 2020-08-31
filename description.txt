@@ -2,10 +2,59 @@ NEW UPDATE - V 1.4
 
 
 new in beta
--Added Acorn Construct (Trojan Squirrel mount) 
+-Absolutely all modded soul support is gone
+-Ancient Cobalt and Cobalt no longer stack
 
+-Ancient Shadow rework: Orbs are further away from the player, orbs will despawn the attack that hits them, and they will disappear when hit. They will respawn on the same cooldown of 5 seconds. Damage for shadow balls starts higher and scales now. In Force, 3 orbs spawn, in Soul of Terraria 4
+-Necro grave CD is halved in force
+-Spooky minions fire a bit faster in force
+-Ninja no longer has a cat
+-Apprentice works with melee weapons, no longer fails with non auto swing weapons, and fireballs fire at a constant speed instead of based on your held item
+-Dark Artist Enchant rework: After charging up and releasing, the Flameburst minion will travel to where you had your mouse at the time, upon reaching the destination it acts as a sentry. You can spawn up to 3 at once, 4 in the force, 5 in Soul of Terraria
+-Turtle Enchantment rework: You must stand still for half a second to gain the shell hide buff now. While in the shell, you gain 90% DR and reflect all projectiles. After taking 10 hits the shell is broken for a minute. In Force, the shell will recover HP every 4 seconds while not using it
+-The player is now invisible when encased in gold enchant
+-Spider Enchant crits deal 3X damage in Force
+-Bee Enchantment Mega Bees are a 100% chance now, they're smaller, have no 50% damage boost, in the force Mega bees also move twice as fast
+-Pumpkin Enchant rework: No more fire, no more pumpkin pie heal. You will grow pumpkins every 5 seconds while walking on the ground, 5 max. Once they fully grow after 5 seconds touch them to heal 15 HP. Enemies that touch them will destroy them and take damage, bonus damage if fully grown. In force the heal and damage is doubled.
+-Ebonwood aura is larger and also inflicts Cursed Flames in force
+-Wood Enchant critter damage now scales. Critter damage is 5x higher in the force
+-Pearlwood stars now have a cooldown of half a second to spawn. Coodown is halved in force
+-Shadewood now has a cooldown of half a second between blood procs. In the force, Enemies struck in the aura are also inflicted with Ichor
+-Boreal snowball spread is much tighter. There are 5 snowballs instead of 3 in the force
+-Palmwood sentry also attacks faster in the force.
+-Rich Mahogany hook bonuses nerfed from 2x to 1.5x, but now also makes hooks travel 1.5x as fast outward. In the force the bonuses are 2.5x
+-Obsidian explosions occur outside lava in the force.
+-Tungsten Enchant rework: Crits performed by enlarged items or projectiles deal 15% more damage, only one projectile every half second will become enlarged, minions will not become enlarged anymore, cooldown halved in force.
+-Lowered copper enchant's max targets in force to 10 from 50
+-Lead Enchant will always inflict Lead Poisoning in the force as opposed to 20% chance to. The dot also deals 3x damage in the force
+-Added Snow Enchant - You have a small aura that chills projectiles while inside it and for half a second after leaving. Chilled projectiles move at 2/3 speed, radius is slightly larger in frost enchant
+-Frost Enchant now absorbs Snow Enchant and has the grinch pet, Frost no longer makes your attacks inflict Frostburn
+-Shroomite Mushrooms can only hit a certain npc 3 times per second (nerf), they are produced less often, last less time, and theres a cap to how many can exist at once, produced more often in the force
+-Chlorophyte leaves damage is doubled in the force
+-Rain Enchant cloud will always spawn instead of after a certain amount of damage in the force
+-Molten inferno damage is doubled in the force
+-Crimson Enchant rework: After taking a hit, regen is greatly increased until the hit is healed off
+If you take another hit before it's healed, you lose the heal in addition to normal damage, in the force the heal speed is doubled (heal speed is prob way too high help balance lol)
+-Jungle Enchant damage up to 25 from 15, force damage is 100 from 50
+-Meteor enchant damage is higher in the force and showers happen slightly more often
+-Solar's Solar Flare debuff no longer dies in Soul of Terraria
+-Hallowed Enchant sword minion damage is higher in the force
+-Tiki Enchant's 'infinite' max minions increased to 999 from 100, minions last 8 seconds in the force, now works 10% less stupid
+-Forbidden Enchant's storm boosted projectiles last longer and deal 30% extra damage from 50%, in the force they deal 60%.
+-Fossil Enchant rework: Revive amount down to 1 HP from 20. Spawning damaging bones is removed, now you spawn bones when revived that heal you when collected. More bones spawn and your base rive is 50 in the force
+-Platinum Enchant loot bonus chance from 10% to 20%, loot bonus from 4x to 2x. With force the bonus is 5x
+-Gold Enchant's shell duration reduced to 5 seconds from 10, back to 10 in force
+-Added Wizard Enchant - remember all those force upgrades ? This activates them early for all other equipped enchants
+-Devi rune blasts dont inflict Flames of the universe
+
+
+
+
+-Added Acorn Construct (Trojan Squirrel mount) 
 -Deviantt's Curse and Abominationn's Curse recipes now only give 1 instead of 5
 -Tribal Charm no longer effects fishing rods
+
+
 
 
 
@@ -57,51 +106,15 @@ recheck eater thru wall meme and all beetle auras
 
 
 
+
+
 -fixed mutant giving no reward at all outside emode 
 -Updated  lava slime jump (tm)
 
 
-Emode
--Hallowed Cactus inflict Flipped instead of Confused
--Pumpking and Ice Queen can drop their items outside of the event
--Removed Plantera's Fruit, Bloodied Skull, Lunatic Sigil, Fleshier Doll
--These bosses drop the mutant mod summon instead
--Added magma stone toggle
--Sand Sharks and Ghouls can spawn in as any variant
--Creatures from the Deep can spawn at the Ocean at night Hardmode
--Town NPCs will become a zombie if killed by a zombie
--Rainbow Slimes spawn a Pinky, Gastropod, Crimson, and Corrupt Slime on death
--Lac Beetles have an aura that gives nearby enemies 25% DR
--Cochineal Beetle have an aura that gives nearby enemies 25% more damage
--Cyan Beetle have an aura that gives nearby enemies the ability to Freeze you
--Ice Bats no longer inflict Frozen
--Eater of Souls and Harpies only go through walls when they can't reach you
--Wither Beast auras are now regular and not reversed
--Jammed no longer teleports projectiles to the corner of the map
--Destroyed eternity passive regen and boss scaling once and for all
--Armored bones can replace each other
--Parrots spawn in the jungle in hard mode
--Blazing wheels are 50% larger
--Desert Spirits spawns in non corrupt deserts
--Unicorns only leave rainbows when travelling at max speed, should look a bit better
--Snatchers, Man Eaters,  and Angry Trappers lunge for you
--Removed evil mimics having a chance to swap to the other one
--Big mimic coin guns attack slightly slower, and they no longer fire while they're invincible
--Added 4 mana crystals to Devi's starter pack
--Sparkling Adoration gives Immunity to fake hearts
--nymph's perfume makes you respawn with full health (effect works in inventory)
--Soul of Eternity now has Bionomic Cluster effects in inventory
--Supersonic Soul's No momentum mode is now less severe and more usable, 5x more momeentum as before (which is still 10xless than normal)
-
-
-
-
 Weapons
--Dark Star Cannon is now Prime's Laser Cannon, a magic weapon that shoots lasers (wip kinda)
--Queen Bee now drops this, Hive Staff is unobtainable for now
 -Fish Stick has a smaller tile hitbox because it looked dumb
 -Fish Stick sharks now pierce 
-
 
 new sprites:
 nuke proj (update item)
@@ -112,7 +125,6 @@ rick painitng
 gold dipping vat
 probes and rainbow slime buffs work?
 big brain buster
-
 
 plant fiber toggle
 

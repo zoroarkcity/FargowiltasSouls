@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class MeteorEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Meteor Enchantment");
@@ -51,7 +49,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            modPlayer.MeteorEffect(50);
+            modPlayer.MeteorEffect();
         }
 
         public override void AddRecipes()

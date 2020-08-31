@@ -11,7 +11,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Snow Enchantment");
             Tooltip.SetDefault(
-@"You have a small area around you that Frostburns enemies and slows projectiles
+@"You have a small area around you that will slow projectiles to 2/3 speed
+Summons a pet Penguin
 'It's Burning Cold Outside'");
         }
 
@@ -27,7 +28,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().SnowEffect(); //add fish pet
+            player.GetModPlayer<FargoPlayer>().SnowEffect(hideVisual);
         }
 
         public override void AddRecipes()
@@ -39,11 +40,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             recipe.AddIngredient(ItemID.EskimoPants);
             //hand warmer
             //fruitcake chakram
+            recipe.AddIngredient(ItemID.IceBoomerang);
             //ice boomerang
             //frost daggerfish
             recipe.AddIngredient(ItemID.FrostMinnow);
             recipe.AddIngredient(ItemID.AtlanticCod);
-            //fish pet
+            recipe.AddIngredient(ItemID.Fish);
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

@@ -2499,8 +2499,7 @@ namespace FargowiltasSouls.NPCs
 
             if (Main.npc[ai1].ai[0] == 2f) //phase 2
             {
-                //npc.dontTakeDamage = !(Fargowiltas.Instance.CalamityLoaded && Revengeance);
-                
+
                 npc.target = Main.npc[ai1].target;
                 if (Main.npc[ai1].ai[1] == 3 || !npc.HasValidTarget) //return to normal AI
                     return true;
@@ -3066,13 +3065,6 @@ namespace FargowiltasSouls.NPCs
                 }
             }*/
 
-            /*if (Fargowiltas.Instance.CalamityLoaded && Revengeance)
-            {
-                if (masoBool[1])
-                    npc.dontTakeDamage = false;
-                else
-                    masoBool[1] = !NPC.AnyNPCs(NPCID.GolemHead);
-            }*/
 
             if (!npc.dontTakeDamage)
             {

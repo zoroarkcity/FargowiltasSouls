@@ -1,6 +1,6 @@
 using Terraria;
 using Terraria.ModLoader;
-using static Terraria.ID.ItemID;
+using Terraria.ID;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
@@ -11,8 +11,6 @@ namespace FargowiltasSouls.Items.Accessories.Souls
     //[AutoloadEquip(EquipType.Back)]
     public class WorldShaperSoul : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("World Shaper Soul");
@@ -94,20 +92,19 @@ Summons a pet Magic Lantern");
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            //recipe.AddIngredient(null, Fargowiltas.Instance.ThoriumLoaded ? "GeodeEnchant" : "MinerEnchant");
             recipe.AddIngredient(null, "MinerEnchant");
-            recipe.AddIngredient(Toolbelt);
-            recipe.AddIngredient(Toolbox);
-            recipe.AddIngredient(ArchitectGizmoPack);
-            recipe.AddIngredient(ActuationAccessory);
-            recipe.AddIngredient(LaserRuler);
-            recipe.AddIngredient(RoyalGel);
-            recipe.AddIngredient(CellPhone);
-            recipe.AddIngredient(GravityGlobe);
+            recipe.AddIngredient(ItemID.Toolbelt);
+            recipe.AddIngredient(ItemID.Toolbox);
+            recipe.AddIngredient(ItemID.ArchitectGizmoPack);
+            recipe.AddIngredient(ItemID.ActuationAccessory);
+            recipe.AddIngredient(ItemID.LaserRuler);
+            recipe.AddIngredient(ItemID.RoyalGel);
+            recipe.AddIngredient(ItemID.CellPhone);
+            recipe.AddIngredient(ItemID.GravityGlobe);
             //haemoraxe
             recipe.AddRecipeGroup("FargowiltasSouls:AnyDrax");
-            recipe.AddIngredient(ShroomiteDiggingClaw);
-            recipe.AddIngredient(DrillContainmentUnit);
+            recipe.AddIngredient(ItemID.ShroomiteDiggingClaw);
+            recipe.AddIngredient(ItemID.DrillContainmentUnit);
             //dynamite kitten pet
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));

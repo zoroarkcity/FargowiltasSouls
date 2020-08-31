@@ -54,7 +54,7 @@ Summons a magical fairy
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().HallowEffect(hideVisual, 80);
+            player.GetModPlayer<FargoPlayer>().HallowEffect(hideVisual);
         }
 
         public override void AddRecipes()

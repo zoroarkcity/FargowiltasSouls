@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Items.Misc;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     //[AutoloadEquip(EquipType.Back)]
     public class TrawlerSoul : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Trawler Soul"); 

@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class ChlorophyteEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Chlorophyte Enchantment");
@@ -61,9 +59,7 @@ Summons a pet Seedling
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             //crystal and pet
-            modPlayer.ChloroEffect(hideVisual, 100);
-            //herb double and bulb effect with thorium
-            modPlayer.ChloroEnchant = true;
+            modPlayer.ChloroEffect(hideVisual);
             //modPlayer.FlowerBoots();
             modPlayer.JungleEffect();
         }
@@ -75,9 +71,8 @@ Summons a pet Seedling
             recipe.AddIngredient(ItemID.ChlorophytePlateMail);
             recipe.AddIngredient(ItemID.ChlorophyteGreaves);
             recipe.AddIngredient(null, "JungleEnchant");
-            //chloro warhammer
-            //chloro claymore
-            //wasp gun
+            recipe.AddIngredient(ItemID.ChlorophyteWarhammer);
+            recipe.AddIngredient(ItemID.ChlorophyteClaymore);
             //grape juice
             recipe.AddIngredient(ItemID.Seedling);
             //plantero pet

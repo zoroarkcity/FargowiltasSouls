@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Essences
 {
     public class SharpshootersEssence : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sharpshooter's Essence");
@@ -58,37 +56,16 @@ namespace FargowiltasSouls.Items.Accessories.Essences
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                //just thorium
-                recipe.AddIngredient(ItemID.RangerEmblem);
-                recipe.AddIngredient(ItemID.PainterPaintballGun);
-                recipe.AddIngredient(ItemID.SnowballCannon);
-                recipe.AddIngredient(ItemID.RedRyder);
-                recipe.AddIngredient(ItemID.Harpoon);
-                recipe.AddIngredient(ItemID.Musket);
-                recipe.AddIngredient(thorium.ItemType("GuanoGunner"));
-                recipe.AddIngredient(thorium.ItemType("SharkStorm"));
-                recipe.AddIngredient(ItemID.BeesKnees);
-                recipe.AddIngredient(thorium.ItemType("EnergyStormBolter"));
-                recipe.AddIngredient(thorium.ItemType("HeroTripleBow"));
-                recipe.AddIngredient(thorium.ItemType("HitScanner"));
-                recipe.AddIngredient(thorium.ItemType("RangedThorHammer"));
-                recipe.AddIngredient(ItemID.HellwingBow);
-            }
-            else
-            {
-                //no others
-                recipe.AddIngredient(ItemID.RangerEmblem);
-                recipe.AddIngredient(ItemID.PainterPaintballGun);
-                recipe.AddIngredient(ItemID.SnowballCannon); 
-                recipe.AddIngredient(ItemID.RedRyder);
-                recipe.AddIngredient(ItemID.Harpoon);
-                recipe.AddIngredient(ItemID.Musket);
-                recipe.AddIngredient(ItemID.Boomstick);
-                recipe.AddIngredient(ItemID.BeesKnees);
-                recipe.AddIngredient(ItemID.HellwingBow);
-            }
+            //no others
+            recipe.AddIngredient(ItemID.RangerEmblem);
+            recipe.AddIngredient(ItemID.PainterPaintballGun);
+            recipe.AddIngredient(ItemID.SnowballCannon);
+            recipe.AddIngredient(ItemID.RedRyder);
+            recipe.AddIngredient(ItemID.Harpoon);
+            recipe.AddIngredient(ItemID.Musket);
+            recipe.AddIngredient(ItemID.Boomstick);
+            recipe.AddIngredient(ItemID.BeesKnees);
+            recipe.AddIngredient(ItemID.HellwingBow);
 
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.SetResult(this);

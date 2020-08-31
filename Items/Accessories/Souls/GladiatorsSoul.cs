@@ -2,9 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using CalamityMod.CalPlayer;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
@@ -12,37 +10,23 @@ namespace FargowiltasSouls.Items.Accessories.Souls
     //[AutoloadEquip(EquipType.Waist)]
     public class GladiatorsSoul : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Berserker's Soul");
 
-            string tooltip = 
+            string tooltip =
 @"'None shall live to tell the tale'
 30% increased melee damage
 20% increased melee speed
 15% increased melee crit chance
 Increased melee knockback
-";
+Effects of the Fire Gauntlet and Yoyo Bag";
             string tooltip_ch =
 @"'不留活口'
 增加30%近战伤害
 增加30%近战速度
 增加15%近战暴击率
 增加近战击退";
-
-            if (calamity == null)
-            {
-                tooltip += "Effects of the Fire Gauntlet and Yoyo Bag";
-                tooltip_ch += "拥有烈火手套和悠悠球袋的效果";
-            }
-            else
-            {
-                tooltip += "Effects of the Elemental Gauntlet and Yoyo Bag";
-                tooltip_ch += "元素之握和悠悠球袋的效果";
-            }
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "狂战士之魂");
@@ -88,14 +72,6 @@ Increased melee knockback
             player.yoyoString = true;
 
             //berserker glove effect, auto swing thing
-
-            if (Fargowiltas.Instance.CalamityLoaded) Calamity(player);
-        }
-
-        private void Calamity(Player player)
-        {
-            CalamityPlayer modPlayer = player.GetModPlayer<CalamityPlayer>();
-            modPlayer.eGauntlet = true;
         }
 
         public override void AddRecipes()
@@ -103,7 +79,7 @@ Increased melee knockback
             ModRecipe recipe = new ModRecipe(mod);
 
             recipe.AddIngredient(null, "BarbariansEssence");
-            recipe.AddIngredient(Fargowiltas.Instance.CalamityLoaded ? calamity.ItemType("ElementalGauntlet") : ItemID.FireGauntlet);
+            recipe.AddIngredient(ItemID.FireGauntlet);
             //berserkers glove
             recipe.AddIngredient(ItemID.YoyoBag);
             recipe.AddIngredient(ItemID.KOCannon);

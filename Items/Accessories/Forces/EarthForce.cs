@@ -7,8 +7,6 @@ namespace FargowiltasSouls.Items.Accessories.Forces
 {
     public class EarthForce : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Force of Earth");

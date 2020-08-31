@@ -1,23 +1,15 @@
-using CalamityMod.CalPlayer;
-using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
-using ThoriumMod.Items.Misc;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     [AutoloadEquip(EquipType.Wings)]
     public class DimensionSoul : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul of Dimensions");
@@ -56,25 +48,6 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
 拥有混乱之脑, 星辰项链, 甜心项链, 蜜蜂斗篷和孢子囊的效果
 拥有圣骑士护盾, 冰霜龟壳, 北极潜水装备, 蛙腿和飞毯的效果
 拥有熔岩行走靴, 渔具包, 油漆喷雾器, 促动安装器, 手机和重力球的效果";
-
-            if (thorium != null)
-            {
-                tooltip += @"
-Effects of Ocean's Retaliation and Terrarium Defender
-Effects of Air Walkers, Survivalist Boots, and Weighted Winglets";
-                
-                tooltip_ch += @"
-                拥有海潮之噬和生存者披风的效果
-                拥有爆炸盾和界元之庇护的效果
-                拥有履空靴, 我命至上主义者之飞靴和举足轻重靴的效果";
-
-            }
-
-            if (calamity != null)
-            {
-                tooltip += "\nEffects of Asgardian Aegis";
-                tooltip_ch += "\n拥有阿斯加德之庇护的效果";
-            }
 
             Tooltip.SetDefault(tooltip);
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
@@ -147,11 +120,6 @@ Effects of Air Walkers, Survivalist Boots, and Weighted Winglets";
             recipe.AddIngredient(null, "TrawlerSoul");
             recipe.AddIngredient(null, "WorldShaperSoul");
             recipe.AddIngredient(null, "MutantScale", 10);
-
-            if (Fargowiltas.Instance.CalamityLoaded)
-            {
-                recipe.AddIngredient(calamity.ItemType("CelestialTracers"));
-            }
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
                 

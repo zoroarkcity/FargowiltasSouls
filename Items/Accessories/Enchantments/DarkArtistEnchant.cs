@@ -9,14 +9,13 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class DarkArtistEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dark Artist Enchantment");
 
             string tooltip =
-@"Summons a Flameburst minion that will fire after charging up
+@"Summons a Flameburst minion that will travel to your mouse after charging up
+It will then act as a sentry, up to 3 can exist at once
 While attacking, Flameburst shots manifest themselves from your shadows
 Greatly enhances Flameburst effectiveness
 Summons a pet Flickerwick
@@ -62,7 +61,7 @@ Summons a pet Flickerwick
             recipe.AddIngredient(ItemID.ApprenticeAltPants);
             recipe.AddIngredient(null, "ApprenticeEnchant");
             recipe.AddIngredient(ItemID.DD2FlameburstTowerT3Popper);
-            recipe.AddIngredient(ItemID.ShadowbeamStaff);
+            //recipe.AddIngredient(ItemID.ShadowbeamStaff);
             recipe.AddIngredient(ItemID.InfernoFork);
             //Razorpine
             //staff of earth

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 using Fargowiltas.Items.Tiles;
 
@@ -13,9 +12,6 @@ namespace FargowiltasSouls.Items.Accessories.Souls
     //[AutoloadEquip(EquipType.Shoes)]
     public class SupersonicSoul : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-        private readonly Mod calamity = ModLoader.GetMod("CalamityMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Supersonic Soul"); 
@@ -38,12 +34,6 @@ Effects of Flying Carpet";
 获得水/岩浆上行走能力
 免疫岩浆和坠落伤害
 拥有飞毯效果";
-
-            if (thorium != null)
-            {
-                tooltip += "\nEffects of Air Walkers, Survivalist Boots, and Weighted Winglets";
-                tooltip_ch += "\n拥有履空靴,我命至上主义者之飞靴和举足轻重靴的效果";
-            }
 
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "超音速之魂");
@@ -84,28 +74,10 @@ Effects of Flying Carpet";
             //hellfire treads
             //mountss
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                recipe.AddIngredient(thorium.ItemType("TerrariumBoots"));
-                recipe.AddIngredient(thorium.ItemType("AirWalkers"));
-                recipe.AddIngredient(thorium.ItemType("SurvivalistBoots"));
-                recipe.AddIngredient(thorium.ItemType("WeightedWinglets"));
-                recipe.AddIngredient(ItemID.ArcticDivingGear);
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.ArcticDivingGear);
-            }
+            recipe.AddIngredient(ItemID.ArcticDivingGear);
 
-            if (Fargowiltas.Instance.CalamityLoaded)
-            {
-                recipe.AddIngredient(calamity.ItemType("MOAB"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.FrogLeg); //frog gear
-                recipe.AddIngredient(ItemID.BundleofBalloons);
-            }
+            recipe.AddIngredient(ItemID.FrogLeg); //frog gear
+            recipe.AddIngredient(ItemID.BundleofBalloons);
 
             recipe.AddIngredient(ItemID.BalloonHorseshoeSharkron);
             recipe.AddIngredient(ItemID.FlyingCarpet);

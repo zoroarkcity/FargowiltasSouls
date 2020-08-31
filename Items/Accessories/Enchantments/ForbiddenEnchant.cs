@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -16,7 +15,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 
             string tooltip =
 @"Double tap down to call an ancient storm to the cursor location
-Any projectiles shot through your storm gain 50% damage
+Any projectiles shot through your storm gain 30% damage
 'Walk like an Egyptian'";
             string tooltip_ch =
 @"'走路像个埃及人Z(￣ｰ￣)Z'

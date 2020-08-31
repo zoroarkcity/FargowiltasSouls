@@ -14,9 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Wood Enchantment");
             Tooltip.SetDefault(
 @"Critters will explode 1 second after being released
-Certain critters have extra effects
 Grants immunity to Guilty
-Effects of Critter guide tm
 'Humble beginnings…'"); 
             DisplayName.AddTranslation(GameCulture.Chinese, "木魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -24,6 +22,8 @@ Effects of Critter guide tm
 大幅增加动物防御力
 杀死动物不会再获得内疚Debuff
 动物死后,释放它们的灵魂来帮助你");
+            //Certain critters have extra effects
+            //Effects of Critter guide tm
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)

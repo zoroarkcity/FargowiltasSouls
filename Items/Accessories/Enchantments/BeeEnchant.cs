@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Bee Enchantment");
 
             string tooltip =
-@"50% chance for any friendly bee to become a Mega Bee
+@"Any friendly bee or wasp will become a Mega Bee
 Mega Bees ignore most enemy defense, immune frames, and last twice as long
 Summons a pet Baby Hornet
 'According to all known laws of aviation, there is no way a bee should be able to fly'";

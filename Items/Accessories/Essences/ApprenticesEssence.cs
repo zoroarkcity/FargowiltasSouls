@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Essences
 {
     public class ApprenticesEssence : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Apprentice's Essence");
@@ -58,37 +56,16 @@ Increases your maximum mana by 50
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            if (Fargowiltas.Instance.ThoriumLoaded)
-            {
-                //just thorium
-                recipe.AddIngredient(ItemID.SorcererEmblem);
-                recipe.AddIngredient(thorium.ItemType("GraveBuster"));
-                recipe.AddIngredient(thorium.ItemType("ThoriumStaff"));
-                recipe.AddIngredient(ItemID.Vilethorn);
-                recipe.AddIngredient(ItemID.CrimsonRod);
-                recipe.AddIngredient(thorium.ItemType("DetachedUFOBlaster"));
-                recipe.AddIngredient(ItemID.WaterBolt);
-                recipe.AddIngredient(ItemID.BookofSkulls);
-                recipe.AddIngredient(ItemID.MagicMissile);
-                recipe.AddIngredient(ItemID.Flamelash);
-                recipe.AddIngredient(thorium.ItemType("SpineBreaker"));
-                recipe.AddIngredient(ItemID.DemonScythe);
-                recipe.AddIngredient(thorium.ItemType("MagikStaff"));
-            }
-            else
-            {
-                recipe.AddIngredient(ItemID.SorcererEmblem);
-                recipe.AddIngredient(ItemID.WandofSparking);
-                recipe.AddIngredient(ItemID.Vilethorn);
-                recipe.AddIngredient(ItemID.CrimsonRod);
-                recipe.AddIngredient(ItemID.WaterBolt);
-                recipe.AddIngredient(ItemID.BookofSkulls);
-                recipe.AddIngredient(ItemID.AquaScepter);
-                recipe.AddIngredient(ItemID.Flamelash);
-                recipe.AddIngredient(ItemID.DemonScythe);
-                //gray zapinator
-                
-            }
+            recipe.AddIngredient(ItemID.SorcererEmblem);
+            recipe.AddIngredient(ItemID.WandofSparking);
+            recipe.AddIngredient(ItemID.Vilethorn);
+            recipe.AddIngredient(ItemID.CrimsonRod);
+            recipe.AddIngredient(ItemID.WaterBolt);
+            recipe.AddIngredient(ItemID.BookofSkulls);
+            recipe.AddIngredient(ItemID.AquaScepter);
+            recipe.AddIngredient(ItemID.Flamelash);
+            recipe.AddIngredient(ItemID.DemonScythe);
+            //gray zapinator
 
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.SetResult(this);

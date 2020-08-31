@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     public class ShroomiteEnchant : ModItem
     {
-        private readonly Mod thorium = ModLoader.GetMod("ThoriumMod");
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shroomite Enchantment");
