@@ -110,6 +110,7 @@ Right click to wield a magic scythe wand sword ray of destruction
 
             recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerMoon"));
             recipe.AddIngredient(mod.ItemType("Sadism"), 15);
+            recipe.AddIngredient(mod.ItemType("CyclonicFin"));
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);

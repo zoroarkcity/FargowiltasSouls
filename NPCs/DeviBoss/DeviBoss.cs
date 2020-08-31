@@ -1669,8 +1669,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
         public override void NPCLoot()
         {
-            if (!playerInvulTriggered && !FargoSoulsWorld.downedDevi)
-                Item.NewItem(npc.Hitbox, mod.ItemType("SparklingLove"));
+            if (!playerInvulTriggered)
+            {
+                if (!FargoSoulsWorld.downedDevi && !Main.hardMode && FargoSoulsWorld.MasochistMode)
+                    Item.NewItem(npc.Hitbox, mod.ItemType("SparklingLove"));
+                Item.NewItem(npc.Hitbox, mod.ItemType("ChibiHat"));
+            }
 
             FargoSoulsWorld.downedDevi = true;
             if (Main.netMode == NetmodeID.Server)
@@ -1705,7 +1709,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
         public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
         {
-            spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            //spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

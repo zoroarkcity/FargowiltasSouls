@@ -19,6 +19,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
     [AutoloadBossHead]
     public class MutantBoss : ModNPC
     {
+        public bool playerInvulTriggered;
         public int ritualProj, spriteProj, ringProj;
         private bool droppedSummon = false;
 
@@ -60,7 +61,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             npc.timeLeft = NPC.activeTime * 30;
             if (FargoSoulsWorld.AngryMutant || Fargowiltas.Instance.CalamityLoaded)
             {
-                npc.lifeMax = 377000000;
+                npc.lifeMax = 277000000;
                 npc.damage = (int)(npc.damage * 1.5);
                 npc.defense *= 5;
                 if (Fargowiltas.Instance.CalamityLoaded)
@@ -1762,6 +1763,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     goto case 11;
             }
 
+            if (player.immune || player.hurtCooldowns[0] != 0 || player.hurtCooldowns[1] != 0)
+                playerInvulTriggered = true;
+
             //drop summon
             if (!FargoSoulsWorld.downedMutant && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
@@ -1980,6 +1984,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override void NPCLoot()
         {
+            if (!playerInvulTriggered)
+                Item.NewItem(npc.Hitbox, mod.ItemType("SpawnSack"));
+
             FargoSoulsWorld.downedMutant = true;
             FargoSoulsWorld.skipMutantP1 = 0;
             if (Main.netMode == NetmodeID.Server)
@@ -2014,7 +2021,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
         {
-            spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            //spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

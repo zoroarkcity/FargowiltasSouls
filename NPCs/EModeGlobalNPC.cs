@@ -43,6 +43,7 @@ namespace FargowiltasSouls.NPCs
         public int[] Counter = new int[4];
         public byte SharkCount = 0;
         private bool applyDebuff;
+        public bool canHitPlayer;
 
         public static int boss = -1;
         public static int slimeBoss = -1;
@@ -81,6 +82,8 @@ namespace FargowiltasSouls.NPCs
             LoadSprites(npc);
 
             Counter[2] = 600; //legacy
+
+            canHitPlayer = true;
 
             if (!FargoSoulsWorld.MasochistMode) return;
 
@@ -464,6 +467,7 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.MoonLordCore:
                     isMasoML = true;
+                    canHitPlayer = false;
                     break;
 
                 case NPCID.MoonLordHead:
@@ -472,6 +476,7 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.MoonLordLeechBlob:
                     npc.buffImmune[ModContent.BuffType<ClippedWings>()] = true;
                     isMasoML = true;
+                    canHitPlayer = false;
                     break;
 
                 #endregion
@@ -548,8 +553,11 @@ namespace FargowiltasSouls.NPCs
                     break;
 
                 case NPCID.Retinazer:
+                    npc.buffImmune[BuffID.Suffocation] = true;
+                    break;
                 case NPCID.Spazmatism:
                     npc.buffImmune[BuffID.Suffocation] = true;
+                    Counter[2] = 0;
                     break;
 
                 case NPCID.Plantera:
@@ -665,9 +673,7 @@ namespace FargowiltasSouls.NPCs
 
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
         {
-            if (FargoSoulsWorld.MasochistMode && isMasoML)
-                return false;
-            return true;
+            return canHitPlayer;
         }
 
         public override bool PreAI(NPC npc)
@@ -1060,8 +1066,7 @@ namespace FargowiltasSouls.NPCs
                             return RetinazerAI(npc);
 
                         case NPCID.Spazmatism:
-                            SpazmatismAI(npc);
-                            break;
+                            return SpazmatismAI(npc);
 
                         case NPCID.Probe:
                             if (BossIsAlive(ref destroyBoss, NPCID.TheDestroyer))

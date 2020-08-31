@@ -1171,9 +1171,12 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         public override void NPCLoot()
         {
-            //only available if abom hasnt been defeated in world and if it was also a nohit
-            if (!playerInvulTriggered && !FargoSoulsWorld.downedAbom)
-                Item.NewItem(npc.Hitbox, mod.ItemType("StyxGazer"));
+            if (!playerInvulTriggered)
+            {
+                if (!FargoSoulsWorld.downedAbom && FargoSoulsWorld.MasochistMode)
+                    Item.NewItem(npc.Hitbox, mod.ItemType("StyxGazer"));
+                Item.NewItem(npc.Hitbox, mod.ItemType("BabyScythe"));
+            }
 
             if (Main.rand.Next(100) < 3)
                 Item.NewItem(npc.Hitbox, mod.ItemType("StaffOfUnleashedOcean"));
@@ -1215,7 +1218,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         public override void BossHeadSpriteEffects(ref SpriteEffects spriteEffects)
         {
-            spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            //spriteEffects = npc.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

@@ -24,8 +24,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void SetDefaults()
         {
-            npc.width = 60;
-            npc.height = 60;
+            npc.width = 100;
+            npc.height = 100;
             npc.damage = 125;
             npc.defense = 80;
             npc.lifeMax = 300000;
@@ -45,7 +45,6 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
 
             npc.trapImmune = true;
-            npc.scale = 2;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)

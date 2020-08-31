@@ -340,3 +340,44 @@ new placeholder champs theme
 eridanus will give up killing deviantt and won't try again if it takes him longer than 6 seconds
 eridanus deathrays do increased damage to town npcs
 eridanus max life reduced
+eridanus p3 dust reduced
+eridanus uppercut deathray split adjusted
+regurgitator rework
+	a single hungry charges up while you use it
+	stop firing to release the hungry
+	hungry damage increases as it grows
+	hungry becomes a guaranteed crit and gains an additional x1.5 damage at max size
+devi, abom, mutant boss new map icons
+resprited true mutant armor
+twins rang now accelerates while returning to player
+twins rang flames and lasers do full damage (was half)
+spaz now has a new attack during reti deathray
+
+reduced spaz wheel range and rotation speed
+reduced champion of nature stats slightly
+fixed regurg hungy persisting when dead
+regurg hungy ignores tungsten ench
+champion of earth resprite
+king slime rework
+	jumps now cause slimeballs to fall instead of spike spray
+	spike spray only occurs when enraged
+	below 50%, now causes an even spread rain of spikes
+
+spirit life adjusted
+regurg hungy no longer persists indefinitely while homing (fixes being reflected)
+spaz flame adjusted has sprite
+molten fury -15%
+nature shroomite attack changed, bullet now stops near you once and redirects itself
+lowered calamity mutant life to 277M
+all siblings have their master pets as nohit rewards, can be obtained on any attempt (sibling weapons are first attempt nohit only)
+sibling pet items are rainbow (for now until master rarity actually exists)
+laser machinegun -25%
+dart pistol/rifle -15%
+updated qb gores and map icon
+
+more spaz range and faster expand
+added emode check for abom/devi nohit weapons lol
+eri trail exists
+updated earth gore
+added spirit gore
+golem boulders are more spread out, geyser telegraph changed

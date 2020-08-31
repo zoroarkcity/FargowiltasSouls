@@ -30,7 +30,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.height = 150;
             npc.damage = 120;
             npc.defense = 40;
-            npc.lifeMax = 700000;
+            npc.lifeMax = 650000;
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath52;
             npc.noGravity = true;
@@ -752,6 +752,18 @@ namespace FargowiltasSouls.NPCs.Champions
                 default: //eyes open
                     npc.frame.Y = 0;
                     break;
+            }
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (npc.life <= 0)
+            {
+                for (int i = 1; i <= 5; i++)
+                {
+                    Vector2 pos = npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height));
+                    Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/SpiritGore" + i.ToString()), npc.scale);
+                }
             }
         }
 

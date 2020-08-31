@@ -17,6 +17,7 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Earth");
+            Main.npcFrameCount[npc.type] = 2;
             NPCID.Sets.TrailCacheLength[npc.type] = 6;
             NPCID.Sets.TrailingMode[npc.type] = 1;
         }
@@ -24,7 +25,7 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetDefaults()
         {
             npc.width = 120;
-            npc.height = 120;
+            npc.height = 180;
             npc.damage = 130;
             npc.defense = 80;
             npc.lifeMax = 320000;
@@ -46,7 +47,6 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
 
             npc.trapImmune = true;
-            npc.scale = 1.5f;
 
             music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Champions");
             musicPriority = MusicPriority.BossHigh;
@@ -312,6 +312,26 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.velocity.Y = cap * Math.Sign(npc.velocity.Y);
         }
 
+        public override void FindFrame(int frameHeight)
+        {
+            npc.frame.Y = 0;
+            switch ((int)npc.ai[0])
+            {
+                case -1:
+                    if (npc.ai[1] > 120)
+                        npc.frame.Y = frameHeight;
+                    break;
+
+                case 1:
+                    if (npc.ai[2] < 20)
+                        npc.frame.Y = frameHeight;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(BuffID.OnFire, 300);
@@ -323,7 +343,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             if (npc.life <= 0)
             {
-                for (int i = 1; i <= 3; i++)
+                for (int i = 1; i <= 4; i++)
                 {
                     Vector2 pos = npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height));
                     Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/EarthGore" + i.ToString()), npc.scale);

@@ -145,7 +145,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
                 Suck();
                 
-                if (++projectile.localAI[0] > 15) //shoot lightning out
+                if (++projectile.localAI[0] > 20) //shoot lightning out
                 {
                     projectile.localAI[0] = 0;
 

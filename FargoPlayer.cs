@@ -3392,7 +3392,13 @@ namespace FargowiltasSouls
                 case ItemID.SDMG:
                 case ItemID.Xenopopper:
                 case ItemID.NebulaArcanum:
+                case ItemID.LaserMachinegun:
                     return 0.75f;
+
+                case ItemID.MoltenFury:
+                case ItemID.DartPistol:
+                case ItemID.DartRifle:
+                    return 0.85f;
 
                 default:
                     return 1f;
