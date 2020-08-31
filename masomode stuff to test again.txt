@@ -381,3 +381,6 @@ eri trail exists
 updated earth gore
 added spirit gore
 golem boulders are more spread out, geyser telegraph changed
+added a 50% check for twins invul checks to try and fix invincible swarms
+retinazer deathray rotations slightly faster to cover more range
+spazmatism flame wheel rotates slightly faster but 6 spikes instead of 8
