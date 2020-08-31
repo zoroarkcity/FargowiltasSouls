@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eridanus Bullet");
-            Main.projFrames[projectile.type] = 1;
+            Main.projFrames[projectile.type] = 8;
         }
 
         public override void SetDefaults()
@@ -81,15 +81,26 @@ namespace FargowiltasSouls.Projectiles.Minions
                 }
             }
 
-            if (projectile.localAI[0] == 0)
-            {
-                projectile.localAI[0] = 1;
-                Main.PlaySound(SoundID.Item92, projectile.Center);
-            }
-
             if (++projectile.localAI[0] < 300)
             {
                 projectile.velocity *= 1.005f;
+            }
+
+            if (projectile.localAI[0] == 0)
+            {
+                projectile.localAI[0] = 1;
+                projectile.frame = Main.rand.Next(Main.projFrames[projectile.type]);
+                projectile.rotation = Main.rand.NextFloat((float)Math.PI * 2);
+                Main.PlaySound(SoundID.Item92, projectile.Center);
+            }
+
+            projectile.rotation += 0.15f * Math.Sign(projectile.velocity.X);
+
+            if (++projectile.frameCounter > 2)
+            {
+                projectile.frameCounter = 0;
+                if (++projectile.frame >= Main.projFrames[projectile.type])
+                    projectile.frame = 0;
             }
         }
 
@@ -139,12 +150,12 @@ namespace FargowiltasSouls.Projectiles.Minions
                 Main.dust[index3].noLight = true;
             }
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 40; i++)
             {
-                int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 229, 0f, 0f, 100, default, Main.rand.NextFloat(3f, 6f));
+                int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 229, 0f, 0f, 100, default, Main.rand.NextFloat(2f, 5f));
                 if (Main.rand.Next(3) == 0)
                     Main.dust[d].noGravity = true;
-                Main.dust[d].velocity *= Main.rand.NextFloat(12f, 24f);
+                Main.dust[d].velocity *= Main.rand.NextFloat(12f, 18f);
                 Main.dust[d].position = projectile.Center;
             }
         }
