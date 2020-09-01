@@ -1127,10 +1127,10 @@ namespace FargowiltasSouls
             //minion crits
             SpiderEnchant = true;
 
-            if (!TinEnchant)
+            /*if (!TinEnchant)
             {
                 SummonCrit = 20;
-            }
+            }*/
 
             AddPet(SoulConfig.Instance.SpiderPet, hideVisual, BuffID.PetSpider, ProjectileID.Spider);
         }
@@ -1199,15 +1199,6 @@ namespace FargowiltasSouls
             if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.TinCrit, false)) return;
 
             TinEnchant = true;
-            AllCritEquals(TinCrit);
-
-            if (Eternity)
-            {
-                if (eternityDamage > 20000)
-                    eternityDamage = 20000;
-                AllDamageUp(eternityDamage);
-                player.statDefense += (int)(eternityDamage * 100); //10 defense per .1 damage
-            }
         }
 
         public void TitaniumEffect()

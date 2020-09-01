@@ -1293,12 +1293,15 @@ namespace FargowiltasSouls.NPCs
                 npc.netUpdate = true;
             }
 
-            npc.dontTakeDamage = npc.life == 1 || !npc.HasValidTarget;
-            if (npc.life > 1 && npc.HasValidTarget)
-                npc.dontTakeDamage = false;
-            //become vulnerable again when both twins at 1hp
-            if (npc.dontTakeDamage && npc.HasValidTarget && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
-                npc.dontTakeDamage = false;
+            if (npc.life <= npc.lifeMax / 2 || npc.dontTakeDamage)
+            {
+                npc.dontTakeDamage = npc.life == 1 || !npc.HasValidTarget;
+                if (npc.life > 1 && npc.HasValidTarget)
+                    npc.dontTakeDamage = false;
+                //become vulnerable again when both twins at 1hp
+                if (npc.dontTakeDamage && npc.HasValidTarget && (!BossIsAlive(ref spazBoss, NPCID.Spazmatism) || Main.npc[spazBoss].life == 1))
+                    npc.dontTakeDamage = false;
+            }
 
             if (npc.ai[0] < 4f) //going to phase 3
             {
@@ -1358,7 +1361,7 @@ namespace FargowiltasSouls.NPCs
                 SharkCount = 253;
 
                 //2*pi * (# of full circles) / (seconds to finish rotation) / (ticks per sec)
-                const float rotationInterval = 2f * (float)Math.PI * 1f / 4f / 60f;
+                const float rotationInterval = 2f * (float)Math.PI * 1.2f / 4f / 60f;
 
                 npc.ai[0]++; //base value is 4
                 switch (Counter[0]) //laser code idfk
@@ -1375,6 +1378,9 @@ namespace FargowiltasSouls.NPCs
                             npc.ai[0] = 4f;
                             if (npc.HasPlayerTarget)
                             {
+                                npc.rotation = npc.Center.X < Main.player[npc.target].Center.X ? 0 : (float)Math.PI;
+                                npc.rotation -= (float)Math.PI / 2;
+
                                 Counter[0]++;
                                 npc.ai[3] = -npc.rotation;
                                 if (--npc.ai[2] > 295f)
@@ -1578,12 +1584,15 @@ namespace FargowiltasSouls.NPCs
                 npc.netUpdate = true;
             }
 
-            npc.dontTakeDamage = npc.life == 1 || !npc.HasValidTarget;
-            if (npc.life > 1 && npc.HasValidTarget)
-                npc.dontTakeDamage = false;
-            //become vulnerable again when both twins at 1hp
-            if (npc.dontTakeDamage && npc.HasValidTarget && (!BossIsAlive(ref retiBoss, NPCID.Retinazer) || Main.npc[retiBoss].life == 1))
-                npc.dontTakeDamage = false;
+            if (npc.life <= npc.lifeMax / 2 || npc.dontTakeDamage)
+            {
+                npc.dontTakeDamage = npc.life == 1 || !npc.HasValidTarget;
+                if (npc.life > 1 && npc.HasValidTarget)
+                    npc.dontTakeDamage = false;
+                //become vulnerable again when both twins at 1hp
+                if (npc.dontTakeDamage && npc.HasValidTarget && (!BossIsAlive(ref retiBoss, NPCID.Retinazer) || Main.npc[retiBoss].life == 1))
+                    npc.dontTakeDamage = false;
+            }
 
             if (npc.ai[0] < 4f)
             {
@@ -1609,7 +1618,8 @@ namespace FargowiltasSouls.NPCs
 
                 if (npc.ai[1] == 0f) //not dashing
                 {
-                    if (retiAlive && (Main.npc[retiBoss].ai[0] < 4f || Main.npc[retiBoss].GetGlobalNPC<EModeGlobalNPC>().Counter[0] == 0)) //reti is in normal AI
+                    if (retiAlive && (Main.npc[retiBoss].ai[0] < 4f || Main.npc[retiBoss].GetGlobalNPC<EModeGlobalNPC>().Counter[0] == 0
+                        || Main.npc[retiBoss].GetGlobalNPC<EModeGlobalNPC>().Counter[0] == 3)) //reti is in normal AI
                     {
                         npc.ai[1] = 1; //switch to dashing
                         npc.ai[2] = 0;
@@ -1624,7 +1634,7 @@ namespace FargowiltasSouls.NPCs
                         Vector2 target = Main.npc[retiBoss].Center + Main.npc[retiBoss].DirectionTo(npc.Center) * 100;
                         npc.velocity = (target - npc.Center) / 60;
 
-                        const float rotationInterval = 2f * (float)Math.PI * 1f / 4f / 60f * 0.5f;
+                        const float rotationInterval = 2f * (float)Math.PI * 1.2f / 4f / 60f * 0.65f;
                         npc.rotation += rotationInterval * (Main.npc[retiBoss].GetGlobalNPC<EModeGlobalNPC>().masoBool[2] ? 1f : -1f);
 
                         if (Counter[2] < 0)
@@ -1642,9 +1652,10 @@ namespace FargowiltasSouls.NPCs
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 float speed = 14f * Math.Min((Counter[2] - 30) / 120f, 1f); //fan out gradually
-                                for (int i = 0; i < 8; i++)
+                                float baseRotation = npc.rotation - (float)Math.PI / 2;
+                                for (int i = 0; i < 6; i++)
                                 {
-                                    Projectile.NewProjectile(npc.Center, speed * (npc.rotation + (float)Math.PI / 4 * i).ToRotationVector2(),
+                                    Projectile.NewProjectile(npc.Center, speed * (baseRotation + (float)Math.PI / 3f * i).ToRotationVector2(),
                                         ModContent.ProjectileType<EyeFire2>(), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
@@ -1677,7 +1688,8 @@ namespace FargowiltasSouls.NPCs
                 }
                 else //dashing
                 {
-                    if (retiAlive && Main.npc[retiBoss].ai[0] >= 4f && Main.npc[retiBoss].GetGlobalNPC<EModeGlobalNPC>().Counter[0] != 0) //reti is doing the spin
+                    if (retiAlive && Main.npc[retiBoss].ai[0] >= 4f && Main.npc[retiBoss].GetGlobalNPC<EModeGlobalNPC>().Counter[0] != 0
+                        && Main.npc[retiBoss].GetGlobalNPC<EModeGlobalNPC>().Counter[0] != 3) //reti is doing the spin
                     {
                         npc.ai[1] = 0; //switch to not dashing
                         npc.netUpdate = true;

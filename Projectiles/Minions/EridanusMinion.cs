@@ -81,7 +81,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             {
                 NPC npc = Main.npc[(int)projectile.ai[0]];
 
-                if (npc.CanBeChasedBy(projectile) && player.Distance(projectile.Center) < 2500)
+                if (npc.CanBeChasedBy(projectile) && player.Distance(projectile.Center) < 2500 && projectile.Distance(npc.Center) < 2500)
                 {
                     projectile.direction = projectile.spriteDirection = projectile.Center.X < npc.Center.X ? 1 : -1;
 
