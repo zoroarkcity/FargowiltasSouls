@@ -392,3 +392,4 @@ moved around spider and tin ench effect locations internally for the sake of che
 crimson regen and tungsten do not override mutant presence
 fixed texture bug that made spectral abom not work
 eridanus bullet sprite
+vampire knives -15%

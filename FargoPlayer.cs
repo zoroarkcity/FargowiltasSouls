@@ -3416,6 +3416,7 @@ namespace FargowiltasSouls
                 case ItemID.MoltenFury:
                 case ItemID.DartPistol:
                 case ItemID.DartRifle:
+                case ItemID.VampireKnives:
                     return 0.85f;
 
                 default:
