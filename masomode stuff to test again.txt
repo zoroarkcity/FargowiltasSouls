@@ -393,3 +393,5 @@ crimson regen and tungsten do not override mutant presence
 fixed texture bug that made spectral abom not work
 eridanus bullet sprite
 vampire knives -15%
+mutant eye animation
+cosmos gore
