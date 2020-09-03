@@ -394,4 +394,5 @@ fixed texture bug that made spectral abom not work
 eridanus bullet sprite
 vampire knives -15%
 mutant eye animation
+abom wand animation
 cosmos gore
