@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,16 +18,16 @@ Summons a pet Black Cat
 
         }
 
-        /*public override void ModifyTooltips(List<TooltipLine> list)
+        public override void ModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
                 if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
                 {
-                    tooltipLine.overrideColor = new Color(151, 107, 75);
+                    tooltipLine.overrideColor = new Color(50, 80, 193);
                 }
             }
-        }*/
+        }
 
         public override void SetDefaults()
         {
@@ -39,7 +41,7 @@ Summons a pet Black Cat
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().WizardEnchant = true;
+            //player.GetModPlayer<FargoPlayer>().WizardEnchant = true;
             player.GetModPlayer<FargoPlayer>().AddPet(SoulConfig.Instance.BlackCatPet, hideVisual, BuffID.BlackCat, ProjectileID.BlackCat);
         }
 
@@ -50,11 +52,12 @@ Summons a pet Black Cat
             recipe.AddIngredient(ItemID.WizardHat);
             //recipe.AddIngredient(ItemID.AmethystRobe);
             //recipe.AddIngredient(ItemID.TopazRobe);
-            recipe.AddIngredient(ItemID.EmeraldRobe);
+            //recipe.AddIngredient(ItemID.EmeraldRobe);
             recipe.AddIngredient(ItemID.SapphireRobe);
             recipe.AddIngredient(ItemID.RubyRobe);
             recipe.AddIngredient(ItemID.DiamondRobe);
             //amber robe
+            recipe.AddIngredient(ItemID.IceRod);
             recipe.AddIngredient(ItemID.RareEnchantment);
             recipe.AddIngredient(ItemID.UnluckyYarn);
 

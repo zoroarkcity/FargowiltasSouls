@@ -631,15 +631,13 @@ namespace FargowiltasSouls.NPCs
 
             if (modPlayer.PlatinumEnchant && !npc.boss && firstLoot)
             {
-                bool midas = npc.HasBuff(BuffID.Midas);
-                int chance = 10;
-                int bonus = 4;
+                int chance = 5;
+                int bonus = 2;
 
-                /*if (midas)
+                if (modPlayer.WillForce || modPlayer.WizardEnchant)
                 {
-                    chance /= 2;
-                    bonus *= 2;
-                }*/
+                    bonus = 5;
+                }
 
                 if (Main.rand.Next(chance) == 0)
                 {
@@ -753,7 +751,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.SkeletronPrime:
-                        Item.NewItem(npc.Hitbox, ModContent.ItemType<PrimeLaserCannon>());
+                        Item.NewItem(npc.Hitbox, ModContent.ItemType<RefractorBlaster>());
                         break;
 
                     case NPCID.Retinazer:

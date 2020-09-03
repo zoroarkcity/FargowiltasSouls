@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
@@ -17,6 +19,17 @@ Shooting it will make it grow
 At maximum size, attacks will turn into lightning bolts
 'Come again some other day'");
             DisplayName.AddTranslation(GameCulture.Chinese, "云雨魔石");
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(255, 236, 0);
+                }
+            }
         }
 
         public override void SetDefaults()

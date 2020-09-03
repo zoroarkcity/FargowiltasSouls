@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
@@ -14,6 +16,17 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"Not attacking for 2 second grants you a single use monk dash that works in any cardinal direction
 Lightning Aura can now crit and strikes faster
 'Hours of Meditation have led to this…'");
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(146, 5, 32);
+                }
+            }
         }
 
         public override void SetDefaults()

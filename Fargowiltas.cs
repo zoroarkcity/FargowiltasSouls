@@ -101,7 +101,7 @@ namespace FargowiltasSouls
             AddToggle("EarthHeader", "Force of Earth", "EarthForce", "ffffff");
             AddToggle("AdamantiteConfig", "Adamantite Projectile Splitting", "AdamantiteEnchant", "dd557d");
             AddToggle("CobaltConfig", "Cobalt Shards", "CobaltEnchant", "3da4c4");
-            AddToggle("AncientCobaltConfig", "Ancient Cobalt Stingers", "AncientCobaltEnchant", "ffffff");
+            AddToggle("AncientCobaltConfig", "Ancient Cobalt Stingers", "AncientCobaltEnchant", "354c74");
             AddToggle("MythrilConfig", "Mythril Weapon Speed", "MythrilEnchant", "9dd290");
             AddToggle("OrichalcumConfig", "Orichalcum Petals", "OrichalcumEnchant", "eb3291");
             AddToggle("PalladiumConfig", "Palladium Healing", "PalladiumEnchant", "f5ac28");
@@ -115,13 +115,14 @@ namespace FargowiltasSouls
             AddToggle("TinConfig", "Tin Crits", "TinEnchant", "a28b4e");
             AddToggle("TungstenConfig", "Tungsten Item Effect", "TungstenEnchant", "b0d2b2");
             AddToggle("TungstenProjConfig", "Tungsten Projectile Effect", "TungstenEnchant", "b0d2b2");
+            AddToggle("ObsidianConfig", "Obsidian Explosions", "ObsidianEnchant", "453e73");
 
             AddToggle("WillHeader", "Force of Will", "WillForce", "ffffff");
             AddToggle("GladiatorConfig", "Gladiator Rain", "GladiatorEnchant", "9c924e");
             AddToggle("GoldConfig", "Gold Lucky Coin", "GoldEnchant", "e7b21c");
-            AddToggle("HuntressConfig", "Huntress Ability", "HuntressEnchant", "ffffff");
+            AddToggle("HuntressConfig", "Huntress Ability", "HuntressEnchant", "7ac04c");
             AddToggle("ValhallaConfig", "Squire/Valhalla Effect", "ValhallaKnightEnchant", "93651e");
-            AddToggle("SquirePanicConfig", "Ballista Panic On Hit", "SquireEnchant", "ffffff");
+            AddToggle("SquirePanicConfig", "Ballista Panic On Hit", "SquireEnchant", "948f8c");
 
             AddToggle("LifeHeader", "Force of Life", "LifeForce", "ffffff");
             AddToggle("BeetleConfig", "Beetles", "BeetleEnchant", "6D5C85");
@@ -134,20 +135,22 @@ namespace FargowiltasSouls
             AddToggle("ChlorophyteConfig", "Chlorophyte Leaf Crystal", "ChlorophyteEnchant", "248900");
             AddToggle("ChlorophyteFlowerConfig", "Flower Boots", "ChlorophyteEnchant", "248900");
             AddToggle("CrimsonConfig", "Crimson Regen", "CrimsonEnchant", "C8364B");
-            AddToggle("RainConfig", "Rain Clouds", "RainEnchant", "ffffff");
+            AddToggle("RainConfig", "Rain Clouds", "RainEnchant", "ffec00");
             AddToggle("FrostConfig", "Frost Icicles", "FrostEnchant", "7abdb9");
+            AddToggle("SnowConfig", "Snowstorm", "SnowEnchant", "25c3f2");
             AddToggle("JungleConfig", "Jungle Spores", "JungleEnchant", "71971f");
             AddToggle("MoltenConfig", "Molten Inferno Buff", "MoltenEnchant", "c12b2b");
             AddToggle("MoltenEConfig", "Molten Explosion On Hit", "MoltenEnchant", "c12b2b");
             AddToggle("ShroomiteConfig", "Shroomite Stealth", "ShroomiteEnchant", "008cf4");
+            AddToggle("ShroomiteShroomConfig", "Shroomite Mushrooms", "ShroomiteEnchant", "008cf4");
 
             AddToggle("ShadowHeader", "Shadow Force", "ShadowForce", "ffffff");
             AddToggle("DarkArtConfig", "Flameburst Minion", "DarkArtistEnchant", "9b5cb0");
-            AddToggle("ApprenticeConfig", "Apprentice Effect", "ApprenticeEnchant", "ffffff");
+            AddToggle("ApprenticeConfig", "Apprentice Effect", "ApprenticeEnchant", "5d86a6");
             AddToggle("NecroConfig", "Necro Graves", "NecroEnchant", "565643");
             AddToggle("ShadowConfig", "Shadow Darkness", "ShadowEnchant", "42356f");
             AddToggle("AncientShadowConfig", "Ancient Shadow Orbs", "AncientShadowEnchant", "42356f");
-            AddToggle("MonkConfig", "Monk Dash", "MonkEnchant", "ffffff");
+            AddToggle("MonkConfig", "Monk Dash", "MonkEnchant", "920520");
             AddToggle("ShinobiConfig", "Shinobi Through Walls", "ShinobiEnchant", "935b18");
             AddToggle("ShinobiTabiConfig", "Tabi Dash", "ShinobiEnchant", "935b18");
             AddToggle("ShinobiClimbingConfig", "Tiger Climbing Gear", "ShinobiEnchant", "935b18");
@@ -287,6 +290,7 @@ namespace FargowiltasSouls
             AddToggle("PetSeedConfig", "Seedling Pet", 1182, "ffffff");
             AddToggle("PetDGConfig", "Skeletron Pet", 1169, "ffffff");
             AddToggle("PetSnowmanConfig", "Snowman Pet", 1312, "ffffff");
+            AddToggle("PetGrinchConfig", "Grinch Pet", ItemID.BabyGrinchMischiefWhistle, "ffffff");
             AddToggle("PetSpiderConfig", "Spider Pet", 1798, "ffffff");
             AddToggle("PetSquashConfig", "Squashling Pet", 1799, "ffffff");
             AddToggle("PetTikiConfig", "Tiki Pet", 1171, "ffffff");

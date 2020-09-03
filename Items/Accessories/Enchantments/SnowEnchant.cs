@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
@@ -14,6 +16,17 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"You have a small area around you that will slow projectiles to 2/3 speed
 Summons a pet Penguin
 'It's Burning Cold Outside'");
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(37, 195, 242);
+                }
+            }
         }
 
         public override void SetDefaults()

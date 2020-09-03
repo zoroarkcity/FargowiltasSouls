@@ -2,11 +2,13 @@ NEW UPDATE - V 1.4
 
 
 new in beta
-
-
-
-
-
+-Primes Laser cannon renamed to Refractor Blaster
+-Snow enchant visual now toggles with the effect and it goes away when you die
+-Silver Enchant is back in Hallowed Enchant
+-Added Ice Rod to Wizard Enchant
+-Fixed Wizard Enchant not always being active
+-Added all missing enchant tooltip colors
+-Fixed names and colors of all toggles
 
 
 

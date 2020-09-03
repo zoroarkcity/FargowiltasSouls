@@ -21,6 +21,8 @@ using FargowiltasSouls.NPCs.MutantBoss;
 using FargowiltasSouls.Items.Summons;
 using FargowiltasSouls.NPCs.EternityMode;
 using Microsoft.Xna.Framework.Graphics;
+using FargowiltasSouls.Items.Accessories.Enchantments;
+using Terraria.Graphics.Shaders;
 
 namespace FargowiltasSouls
 {
@@ -167,6 +169,7 @@ namespace FargowiltasSouls
         public int MonkDashing = 0;
         private int monkTimer;
         public bool SnowEnchant;
+        public bool SnowVisual;
         public bool WizardEnchant;
 
         public bool Solar;
@@ -696,7 +699,7 @@ namespace FargowiltasSouls
             HuntressEnchant = false;
             MonkEnchant = false;
             SnowEnchant = false;
-            WizardEnchant = false;
+            SnowVisual = false;
 
             Solar = false;
             Nebula = false;
@@ -931,6 +934,21 @@ namespace FargowiltasSouls
             IsStandingStill = Math.Abs(player.velocity.X) < 0.05 && Math.Abs(player.velocity.Y) < 0.05;
             
             player.npcTypeNoAggro[0] = true;
+
+            //wizard 
+            for (int i = 3; i <= 9; i++)
+            {
+                Item item = player.armor[i];
+
+                if (item.type == ModContent.ItemType<WizardEnchant>())
+                {
+                    WizardEnchant = true;
+                    break;
+                }
+
+                WizardEnchant = false;
+            }
+
 
             if (FargoSoulsWorld.MasochistMode)
             {
@@ -3498,7 +3516,7 @@ namespace FargowiltasSouls
         int frameCounter = 0;
         int frame = 1;
 
-        public static readonly PlayerLayer BlizzardEffect = new PlayerLayer("ExampleMod", "MiscEffects", PlayerLayer.MiscEffectsFront, delegate (PlayerDrawInfo drawInfo) {
+        public static readonly PlayerLayer BlizzardEffect = new PlayerLayer("FargowiltasSouls", "MiscEffects", PlayerLayer.MiscEffectsFront, delegate (PlayerDrawInfo drawInfo) {
             if (drawInfo.shadow != 0f)
             {
                 return;
@@ -3506,7 +3524,7 @@ namespace FargowiltasSouls
             Player drawPlayer = drawInfo.drawPlayer;
             Mod mod = ModLoader.GetMod("FargowiltasSouls");
             FargoPlayer modPlayer = drawPlayer.GetModPlayer<FargoPlayer>();
-            if (modPlayer.SnowEnchant)
+            if (!drawPlayer.dead && modPlayer.SnowVisual)
             {
                 modPlayer.frameCounter++;
 
@@ -3527,6 +3545,9 @@ namespace FargowiltasSouls
                 int drawY = (int)(drawInfo.position.Y + drawPlayer.height / 2f - Main.screenPosition.Y);
                 DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, frameSize * modPlayer.frame, texture.Width, frameSize), Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height / 2f) / 16f)), 0f, new Vector2(texture.Width / 2f, frameSize / 2f), 1f, SpriteEffects.None, 0);
                 Main.playerDrawData.Add(data);
+
+
+                //GameShaders.Armor.Apply(GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type, drawPlayer, data);
             }
         });
 
