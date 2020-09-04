@@ -396,3 +396,6 @@ vampire knives -15%
 mutant eye animation
 abom wand animation
 cosmos gore
+
+removed sparkling love recipe 100%
+fiddled with spectral abom and fixed nuke fishron firing the wrong proj

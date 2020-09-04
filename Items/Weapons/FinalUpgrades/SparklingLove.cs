@@ -84,7 +84,7 @@ Right click to summon the soul of Deviantt
             }
         }
 
-        public override void AddRecipes()
+        /*public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
 
@@ -95,6 +95,6 @@ Right click to summon the soul of Deviantt
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
+        }*/
     }
 }
