@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
@@ -14,6 +16,17 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"20% chance for your projectiles to explode into stingers
 This can only happen once every second
 'The jungle of old empowers you'");
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(53, 76, 116);
+                }
+            }
         }
 
         public override void SetDefaults()

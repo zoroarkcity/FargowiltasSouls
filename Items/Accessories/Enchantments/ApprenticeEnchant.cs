@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
@@ -14,6 +16,17 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"While attacking, Flameburst shots manifest themselves from your shadows
 Flameburst field of view and range are dramatically increased
 'A long way to perfection'");
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(93, 134, 166);
+                }
+            }
         }
 
         public override void SetDefaults()

@@ -1523,6 +1523,8 @@ namespace FargowiltasSouls
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SnowStorm))
             {
+                SnowVisual = true;
+
                 int dist = 100;
 
                 if (FrostEnchant)
@@ -1557,7 +1559,6 @@ namespace FargowiltasSouls
             }
 
             AddPet(SoulConfig.Instance.PenguinPet, hideVisual, BuffID.BabyPenguin, ProjectileID.Penguin);
-
         }
 
         public void AncientShadowEffect()

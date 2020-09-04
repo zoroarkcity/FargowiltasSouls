@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
@@ -18,6 +19,17 @@ This has a cooldown of 30 seconds
 Explosive Traps recharge faster and oil enemies
 Set oiled enemies on fire for extra damage
 'The Hunt is On'");
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(122, 192, 76);
+                }
+            }
         }
 
         public override void SetDefaults()

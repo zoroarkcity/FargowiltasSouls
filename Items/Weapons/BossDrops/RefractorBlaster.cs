@@ -7,11 +7,11 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class PrimeLaserCannon : ModItem
+    public class RefractorBlaster : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Prime's Laser Cannon");
+            DisplayName.SetDefault("Refractor Blaster");
             Tooltip.SetDefault("'Modified from the arm of a defeated foe..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "暗星炮");
             Tooltip.AddTranslation(GameCulture.Chinese, "'由一个被击败的敌人的武器改装而来..'");

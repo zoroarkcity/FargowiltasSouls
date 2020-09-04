@@ -59,8 +59,8 @@ Summons a magical fairy
             recipe.AddRecipeGroup("FargowiltasSouls:AnyHallowHead"); //add summon helm here
             recipe.AddIngredient(ItemID.HallowedPlateMail);
             recipe.AddIngredient(ItemID.HallowedGreaves);
+            recipe.AddIngredient(ModContent.ItemType<SilverEnchant>());
             recipe.AddIngredient(ItemID.DyeTradersScimitar);
-            recipe.AddIngredient(ItemID.Excalibur);
             recipe.AddIngredient(ItemID.Gungnir);
             //hallow lance
             //hallowed repeater

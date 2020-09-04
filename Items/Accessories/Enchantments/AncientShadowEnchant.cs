@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
@@ -16,6 +18,17 @@ Attacking a Shadow Orb will cause it to release a burst of homing shadow energy
 Your attacks may inflict Darkness
 Summons a pet Eater of Souls and Shadow Orb
 'Archaic, yet functional'");
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(94, 85, 220);
+                }
+            }
         }
 
         public override void SetDefaults()

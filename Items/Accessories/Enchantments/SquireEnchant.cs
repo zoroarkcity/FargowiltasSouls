@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
@@ -20,6 +22,17 @@ Ballista pierces more targets and panics when you take damage
 @"'谁需要瞄准?'
 第8个抛射物将会分裂成3个
 分裂出的抛射物同样可以分裂");
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> list)
+        {
+            foreach (TooltipLine tooltipLine in list)
+            {
+                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+                {
+                    tooltipLine.overrideColor = new Color(148, 143, 140);
+                }
+            }
         }
 
         public override void SetDefaults()
