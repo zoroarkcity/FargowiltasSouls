@@ -399,3 +399,5 @@ cosmos gore
 
 removed sparkling love recipe 100%
 fiddled with spectral abom and fixed nuke fishron firing the wrong proj
+sprites for abom and mutant curse
+reduced spectre healing orb life to 2sec and halved their speed

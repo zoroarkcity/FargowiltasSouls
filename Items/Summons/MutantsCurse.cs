@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
@@ -9,14 +10,13 @@ namespace FargowiltasSouls.Items.Summons
 {
     public class MutantsCurse : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mutant's Curse");
             Tooltip.SetDefault("'At least this way, you don't need that doll'");
             DisplayName.AddTranslation(GameCulture.Chinese, "突变体的诅咒");
             Tooltip.AddTranslation(GameCulture.Chinese, "'至少不需要用娃娃了'");
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(3, 11));
         }
 
         public override void SetDefaults()

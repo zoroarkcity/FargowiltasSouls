@@ -73,6 +73,10 @@ namespace FargowiltasSouls.Projectiles
             {
                 switch (projectile.type)
                 {
+                    case ProjectileID.SpiritHeal:
+                        projectile.timeLeft = 120 * 4; //account for extraupdates
+                        break;
+
                     case ProjectileID.DD2BetsyFlameBreath:
                         projectile.tileCollide = false;
                         break;
@@ -745,6 +749,11 @@ namespace FargowiltasSouls.Projectiles
                     break;*/
 
                 #endregion
+
+                case ProjectileID.SpiritHeal:
+                    if (FargoSoulsWorld.MasochistMode)
+                        projectile.position -= projectile.velocity / 2;
+                    break;
 
                 case ProjectileID.WireKite:
                     if (FargoSoulsWorld.MasochistMode)
