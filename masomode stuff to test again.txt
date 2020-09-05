@@ -401,3 +401,12 @@ removed sparkling love recipe 100%
 fiddled with spectral abom and fixed nuke fishron firing the wrong proj
 sprites for abom and mutant curse
 reduced spectre healing orb life to 2sec and halved their speed
+regurgitator hungry cannot split
+halved moon lord head max life again
+pillars no longer have boosted life, instead they have 50% DR
+fixed(?) betsy defeated twice message
+sharknado overrides creeper
+cosmos moons do double damage to npcs
+changed build number to 1.3.90
+betsy phoenixes aim ahead of you
+betsy electrosphere attack is scarier

@@ -391,7 +391,7 @@ namespace FargowiltasSouls
         {
             disabledSouls.Clear();
 
-            for (int i = 0; i < 200; i++)
+            /*for (int i = 0; i < 200; i++)
             {
                 if (Main.npc[i].type == NPCID.LunarTowerSolar
                 || Main.npc[i].type == NPCID.LunarTowerVortex
@@ -412,7 +412,7 @@ namespace FargowiltasSouls
                         Main.npc[i].life = Main.npc[i].lifeMax;
                     }
                 }
-            }
+            }*/
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet)

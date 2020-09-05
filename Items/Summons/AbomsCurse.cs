@@ -28,6 +28,8 @@ namespace FargowiltasSouls.Items.Summons
             item.useStyle = 4;
             item.consumable = true;
             item.value = Item.buyPrice(0, 8);
+
+            item.noUseGraphic = true;
         }
 
         public override bool UseItem(Player player)

@@ -89,7 +89,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
             
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<BetsyElectrosphere>(), projectile.damage, 0f, Main.myPlayer);
+                Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<BetsyElectrosphere>(), 
+                    projectile.damage, 0f, Main.myPlayer, spawn.X, spawn.Y);
             }
             
             Main.PlayTrackedSound(SoundID.DD2_SkyDragonsFuryCircle, projectile.Center);
