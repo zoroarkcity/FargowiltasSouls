@@ -965,7 +965,14 @@ namespace FargowiltasSouls.NPCs
                 {
                     if (modPlayer.ValhallaEnchant)
                     {
-                        player.AddBuff(ModContent.BuffType<ValhallaBuff>(), 300);
+                        int duration = 300;
+
+                        if (modPlayer.WillForce || modPlayer.WizardEnchant)
+                        {
+                            duration = 480;
+                        }
+
+                        player.AddBuff(ModContent.BuffType<ValhallaBuff>(), duration);
                     }
                     else if (modPlayer.SquireEnchant)
                     {
@@ -1000,7 +1007,14 @@ namespace FargowiltasSouls.NPCs
                     {
                         if (modPlayer.ValhallaEnchant)
                         {
-                            player.AddBuff(ModContent.BuffType<ValhallaBuff>(), 300);
+                            int duration = 300;
+
+                            if (modPlayer.WillForce || modPlayer.WizardEnchant)
+                            {
+                                duration = 480;
+                            }
+
+                            player.AddBuff(ModContent.BuffType<ValhallaBuff>(), duration);
                         }
                         else if (modPlayer.SquireEnchant)
                         {

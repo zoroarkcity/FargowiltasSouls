@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.netImportant = true;
             projectile.width = 44;
             projectile.height = 30;
-            projectile.timeLeft *= 5;
+            projectile.timeLeft = 1800;
             projectile.aiStyle = -1;
             projectile.friendly = true;
             projectile.minion = true;
@@ -33,10 +33,6 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override void AI()
         {
             Player player = Main.player[projectile.owner];
-            if (player.active && !player.dead)
-            {
-                projectile.timeLeft = 2;
-            }
 
             if (player.dead || !player.GetModPlayer<FargoPlayer>().DarkEnchant || !SoulConfig.Instance.GetValue(SoulConfig.Instance.DarkArtistMinion))
             {
@@ -217,6 +213,20 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override bool CanDamage()
         {
             return false;
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            const int num226 = 12;
+            for (int i = 0; i < num226; i++)
+            {
+                Vector2 vector6 = Vector2.UnitX.RotatedBy(projectile.rotation) * 6f;
+                vector6 = vector6.RotatedBy(((i - (num226 / 2 - 1)) * 6.28318548f / num226), default(Vector2)) + projectile.Center;
+                Vector2 vector7 = vector6 - projectile.Center;
+                int num228 = Dust.NewDust(vector6 + vector7, 0, 0, DustID.FlameBurst, 0f, 0f, 0, default(Color), 1.5f);
+                Main.dust[num228].noGravity = true;
+                Main.dust[num228].velocity = vector7;
+            }
         }
     }
 }

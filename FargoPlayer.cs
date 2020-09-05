@@ -2573,7 +2573,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            if (SolarEnchant && Main.rand.Next(4) == 0)
+            if (SolarEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.SolarFlare) && Main.rand.Next(4) == 0)
                 target.AddBuff(ModContent.BuffType<SolarFlare>(), 300);
 
             if (tinCD == 0)
@@ -3127,7 +3127,7 @@ namespace FargowiltasSouls
                         player.AddBuff(ModContent.BuffType<Revived>(), 14400);
                         retVal = false;
 
-                        FargoGlobalProjectile.XWay(25, player.Center, ModContent.ProjectileType<FossilBone>(), 20, 0, 0);
+                        FargoGlobalProjectile.XWay(25, player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
                     }
                     else if (FossilEnchant)
                     {
@@ -3155,7 +3155,7 @@ namespace FargowiltasSouls
                             numBones *= 2;
                         }
 
-                        FargoGlobalProjectile.XWay(numBones, player.Center, ModContent.ProjectileType<FossilBone>(), 20, 0, 0);
+                        FargoGlobalProjectile.XWay(numBones, player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
 
                     }
                 }

@@ -321,6 +321,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool SolarShield;
 
+        [Label("$Mods.FargowiltasSouls.SolarFlareConfig")]
+        [DefaultValue(true)]
+        public bool SolarFlare;
+
         [Label("$Mods.FargowiltasSouls.StardustConfig")]
         [DefaultValue(true)]
         public bool StardustGuardian;
