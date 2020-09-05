@@ -7,14 +7,11 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.Masomode
 {
-    public class BetsyElectrosphere : ModProjectile
+    public class BetsyElectrosphere2 : ModProjectile
     {
         public override string Texture => "Terraria/Projectile_443";
 
-        public int p = -1;
-        public int timer;
-        public float rotation;
-        public Vector2 spawn;
+        public float ai0;
 
         public override void SetStaticDefaults()
         {
@@ -30,46 +27,21 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.alpha = 255;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
-            projectile.timeLeft = 240;
+            projectile.timeLeft = 300;
             projectile.hostile = true;
             projectile.penetrate = -1;
         }
 
         public override bool PreAI()
         {
-            if (projectile.timeLeft == 240)
-            {
-                spawn.X = projectile.ai[0];
-                spawn.Y = projectile.ai[1];
-                rotation = projectile.velocity.ToRotation();
-                timer = Main.rand.Next(60);
-            }
+            if (projectile.timeLeft == 300)
+                ai0 = projectile.ai[0];
             return true;
         }
 
         public override void AI()
         {
-            projectile.velocity = Vector2.Zero;
-
-            if (p == -1)
-            {
-                p = Player.FindClosest(projectile.Center, 0, 0);
-            }
-            else
-            {
-                if (projectile.Distance(Main.player[p].Center) < 600)
-                    projectile.velocity = 2f * projectile.DirectionTo(Main.player[p].Center);
-
-                if (++timer > 60)
-                {
-                    timer = 0;
-                    if (Main.player[p].Distance(spawn) > projectile.Distance(spawn) && Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        Projectile.NewProjectile(projectile.Center, rotation.ToRotationVector2().RotatedByRandom(MathHelper.ToRadians(30)),
-                            ModContent.ProjectileType<BetsyFury2>(), projectile.damage, 0f, Main.myPlayer, p);
-                    }
-                }
-            }
+            projectile.velocity += projectile.velocity.RotatedBy(Math.PI / 2) / ai0 * projectile.velocity.Length();
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

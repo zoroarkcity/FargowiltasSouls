@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
@@ -10,11 +11,10 @@ namespace FargowiltasSouls.Items.Summons
 {
     public class AbomsCurse : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Abominationn's Curse");
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 10));
         }
 
         public override void SetDefaults()
@@ -28,6 +28,8 @@ namespace FargowiltasSouls.Items.Summons
             item.useStyle = 4;
             item.consumable = true;
             item.value = Item.buyPrice(0, 8);
+
+            item.noUseGraphic = true;
         }
 
         public override bool UseItem(Player player)

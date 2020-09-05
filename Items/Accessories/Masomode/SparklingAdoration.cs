@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
@@ -15,6 +16,7 @@ Graze projectiles to gain up to 30% increased critical damage
 Critical damage bonus decreases over time and is fully lost on hit
 Your attacks periodically summon life-draining hearts
 'With all of your emotion!'");
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(4, 11));
         }
 
         public override void SetDefaults()

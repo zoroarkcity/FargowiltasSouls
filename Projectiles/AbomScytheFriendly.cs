@@ -9,11 +9,10 @@ namespace FargowiltasSouls.Projectiles
 {
     public class AbomScytheFriendly : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_274";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Abominable Scythe");
+            Main.projFrames[projectile.type] = 4;
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 8;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }

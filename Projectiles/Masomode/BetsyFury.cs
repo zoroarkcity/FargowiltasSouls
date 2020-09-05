@@ -21,8 +21,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
+            projectile.width = 30;
+            projectile.height = 30;
             projectile.aiStyle = -1;
             projectile.alpha = 255;
             projectile.tileCollide = false;
@@ -40,7 +40,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 spawn = projectile.Center;
             }
 
-            if (projectile.Distance(spawn) > (Main.player[(int)projectile.ai[0]].Center - spawn).Length() + 300)
+            if (projectile.Distance(spawn) > 1200)
                 projectile.Kill();
 
             if (++projectile.localAI[0] < 120)
@@ -89,7 +89,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
             
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<BetsyElectrosphere>(), projectile.damage, 0f, Main.myPlayer);
+                Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<BetsyElectrosphere>(), 
+                    projectile.damage, 0f, Main.myPlayer, spawn.X, spawn.Y);
             }
             
             Main.PlayTrackedSound(SoundID.DD2_SkyDragonsFuryCircle, projectile.Center);

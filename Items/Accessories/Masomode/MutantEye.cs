@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
@@ -28,6 +29,7 @@ Mutant Bomb has a 60 second cooldown
 减少憎恶手杖复活效果禁止回血的时间
 按下Mutant Bomb快捷键释放一波球并破坏多数敌对抛射物
 Mutant Bomb有60秒的冷却");
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(4, 18));
         }
 
         public override void SetDefaults()

@@ -33,7 +33,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void AI()
         {
-            if (--projectile.ai[1] < 0 && projectile.ai[1] > -45)
+            if (--projectile.ai[1] < 0 && projectile.ai[1] > -300)
             {
                 if (projectile.ai[0] >= 0 && projectile.ai[0] < Main.maxPlayers)
                 {
@@ -42,14 +42,27 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
                     Player p = Main.player[(int)projectile.ai[0]];
 
-                    Vector2 distance = p.Center - projectile.Center;
-                    double angle = distance.ToRotation() - projectile.velocity.ToRotation();
-                    if (angle > Math.PI)
-                        angle -= 2.0 * Math.PI;
-                    if (angle < -Math.PI)
-                        angle += 2.0 * Math.PI;
+                    //if (projectile.localAI[0] == 0) projectile.localAI[0] = projectile.Center.X < p.Center.X ? 1 : -1;
 
-                    projectile.velocity = projectile.velocity.RotatedBy(angle * 0.2);
+                    Vector2 target = p.Center;
+                    //target.X += projectile.localAI[0] * 200;
+
+                    if (projectile.Distance(target) > 200)
+                    {
+                        Vector2 distance = target - projectile.Center;
+
+                        double angle = distance.ToRotation() - projectile.velocity.ToRotation();
+                        if (angle > Math.PI)
+                            angle -= 2.0 * Math.PI;
+                        if (angle < -Math.PI)
+                            angle += 2.0 * Math.PI;
+
+                        projectile.velocity = projectile.velocity.RotatedBy(angle * 0.2);
+                    }
+                    else
+                    {
+                        projectile.ai[1] = -300;
+                    }
                 }
                 else
                 {

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
@@ -31,6 +32,7 @@ Endurance recovers when you reach full life again
 该效果发动时，10秒钟内禁止回复血量
 该效果在回复到满血时才能够下一次发动
 '看起来像是什么遗失了的东西'");
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(4, 14));
         }
 
         public override void SetDefaults()

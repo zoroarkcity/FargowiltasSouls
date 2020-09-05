@@ -1765,7 +1765,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
             if (player.immune || player.hurtCooldowns[0] != 0 || player.hurtCooldowns[1] != 0)
                 playerInvulTriggered = true;
-
+            
             //drop summon
             if (!FargoSoulsWorld.downedMutant && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {

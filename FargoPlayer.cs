@@ -391,7 +391,7 @@ namespace FargowiltasSouls
         {
             disabledSouls.Clear();
 
-            for (int i = 0; i < 200; i++)
+            /*for (int i = 0; i < 200; i++)
             {
                 if (Main.npc[i].type == NPCID.LunarTowerSolar
                 || Main.npc[i].type == NPCID.LunarTowerVortex
@@ -412,7 +412,7 @@ namespace FargowiltasSouls
                         Main.npc[i].life = Main.npc[i].lifeMax;
                     }
                 }
-            }
+            }*/
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet)
@@ -3400,16 +3400,16 @@ namespace FargowiltasSouls
             {
                 case ItemID.DaedalusStormbow:
                 case ItemID.StarCannon:
-                case ItemID.DD2BetsyBow:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.SnowmanCannon:
                     return 2f / 3f;
 
                 case ItemID.Razorpine:
                 case ItemID.BlizzardStaff:
-                    AttackSpeed -= 2f / 3f;
+                    AttackSpeed -= 1f / 3f;
                     return 2f / 3f;
 
+                case ItemID.DD2BetsyBow:
                 case ItemID.Uzi:
                 case ItemID.Megashark:
                 case ItemID.ChlorophyteShotbow:
@@ -3434,6 +3434,7 @@ namespace FargowiltasSouls
                 case ItemID.MoltenFury:
                 case ItemID.DartPistol:
                 case ItemID.DartRifle:
+                case ItemID.VampireKnives:
                     return 0.85f;
 
                 default:
