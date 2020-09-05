@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override bool PreAI()
         {
-            if (projectile.timeLeft == 300)
+            if (projectile.timeLeft == 240)
             {
                 spawn.X = projectile.ai[0];
                 spawn.Y = projectile.ai[1];

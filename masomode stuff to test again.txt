@@ -419,3 +419,5 @@ betsy has a p1 and p2
 betsy fury hitbox increased a lot
 betsy flame breath ignores creepers
 betsy electrosphere timeleft reduced
+betsy phoenix homing is a little more generous
+betsy has a helpful reverse aura for fury ring break range

@@ -3744,6 +3744,9 @@ namespace FargowiltasSouls.NPCs
                     Counter[0] = 0;
                     Counter[1] = 0;
                 }
+
+                Aura(npc, 1200, BuffID.WitheredWeapon, true, 226);
+                Aura(npc, 1200, BuffID.WitheredArmor, true, 226);
             }
 
             if (masoBool[1])
