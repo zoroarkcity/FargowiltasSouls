@@ -415,3 +415,7 @@ spectre lifesteal nerf changed to 3sec timeleft, -50% speed
 betsy fury ring breaks at a specific distance
 betsy phoenix homing is extremely aggressive
 betsy has a p1 and p2
+
+betsy fury hitbox increased a lot
+betsy flame breath ignores creepers
+betsy electrosphere timeleft reduced

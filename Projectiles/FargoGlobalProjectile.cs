@@ -79,6 +79,8 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.DD2BetsyFlameBreath:
                         projectile.tileCollide = false;
+                        projectile.penetrate = -1;
+                        ImmuneToGuttedHeart = true;
                         break;
 
                     case ProjectileID.PhantasmalDeathray:

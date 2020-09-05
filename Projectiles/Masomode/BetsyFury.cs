@@ -21,8 +21,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
+            projectile.width = 30;
+            projectile.height = 30;
             projectile.aiStyle = -1;
             projectile.alpha = 255;
             projectile.tileCollide = false;
