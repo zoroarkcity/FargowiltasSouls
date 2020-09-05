@@ -410,3 +410,8 @@ cosmos moons do double damage to npcs
 changed build number to 1.3.90
 betsy phoenixes aim ahead of you
 betsy electrosphere attack is scarier
+
+spectre lifesteal nerf changed to 3sec timeleft, -50% speed
+betsy fury ring breaks at a specific distance
+betsy phoenix homing is extremely aggressive
+betsy has a p1 and p2

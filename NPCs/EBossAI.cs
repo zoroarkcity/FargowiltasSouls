@@ -3706,6 +3706,12 @@ namespace FargowiltasSouls.NPCs
         {
             betsyBoss = npc.whoAmI;
 
+            if (!masoBool[3] && npc.life < npc.lifeMax / 2)
+            {
+                masoBool[3] = true;
+                Main.PlaySound(SoundID.Roar, npc.Center, 0);
+            }
+
             if (npc.ai[0] == 6f) //when approaching for roar
             {
                 if (npc.ai[1] == 0f)
@@ -3731,7 +3737,7 @@ namespace FargowiltasSouls.NPCs
                     }
                     Counter[1]++;
                 }
-                if (Counter[0] > 90)
+                if (Counter[0] > (masoBool[3] ? 90 : 30) + 2)
                 {
                     masoBool[0] = false;
                     masoBool[1] = true;

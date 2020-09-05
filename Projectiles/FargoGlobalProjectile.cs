@@ -74,7 +74,7 @@ namespace FargowiltasSouls.Projectiles
                 switch (projectile.type)
                 {
                     case ProjectileID.SpiritHeal:
-                        projectile.timeLeft = 120 * 4; //account for extraupdates
+                        projectile.timeLeft = 180 * 4; //account for extraupdates
                         break;
 
                     case ProjectileID.DD2BetsyFlameBreath:
@@ -1098,11 +1098,15 @@ namespace FargowiltasSouls.Projectiles
                             masobool = true;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                for (int i = 0; i < 2; i++)
+                                bool phase2 = EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.betsyBoss, NPCID.DD2Betsy)
+                                    && Main.npc[EModeGlobalNPC.betsyBoss].GetGlobalNPC<EModeGlobalNPC>().masoBool[3];
+                                int max = phase2 ? 2 : 1;
+                                for (int i = 0; i < max; i++)
                                 {
                                     Vector2 speed = Main.rand.NextFloat(8, 12) * -Vector2.UnitY.RotatedByRandom(Math.PI / 2);
+                                    float ai1 = phase2 ? 60 + Main.rand.Next(60) : 90 + Main.rand.Next(30);
                                     Projectile.NewProjectile(projectile.Center, speed, ModContent.ProjectileType<BetsyPhoenix>(),
-                                        projectile.damage, 0f, Main.myPlayer, Player.FindClosest(projectile.Center, 0, 0), 60 + Main.rand.Next(60));
+                                        projectile.damage, 0f, Main.myPlayer, Player.FindClosest(projectile.Center, 0, 0), ai1);
                                 }
                             }
                         }
@@ -1112,7 +1116,10 @@ namespace FargowiltasSouls.Projectiles
                 case ProjectileID.DD2BetsyFlameBreath:
                     if (FargoSoulsWorld.MasochistMode && !FargoSoulsWorld.SwarmActive)
                     {
-                        if (++counter > 2)
+                        bool phase2 = EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.betsyBoss, NPCID.DD2Betsy)
+                                    && Main.npc[EModeGlobalNPC.betsyBoss].GetGlobalNPC<EModeGlobalNPC>().masoBool[3];
+
+                        if (++counter > (phase2 ? 2 : 4))
                         {
                             counter = 0;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -1122,10 +1129,12 @@ namespace FargowiltasSouls.Projectiles
                                 projVel.Normalize();
                                 projVel *= Main.rand.NextFloat(8f, 12f);
                                 int type = ProjectileID.CultistBossFireBall;
-                                if (Main.rand.Next(2) == 0)
+                                if (!phase2 || Main.rand.Next(2) == 0)
                                 {
                                     type = ModContent.ProjectileType<Champions.WillFireball>();
-                                    projVel *= 2.5f;
+                                    projVel *= 2f;
+                                    if (phase2)
+                                        projVel *= 1.5f;
                                 }
                                 Projectile.NewProjectile(projectile.Center, projVel, type, projectile.damage, 0f, Main.myPlayer);
                             }

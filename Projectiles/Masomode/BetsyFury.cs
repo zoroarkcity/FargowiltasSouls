@@ -40,7 +40,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 spawn = projectile.Center;
             }
 
-            if (projectile.Distance(spawn) > (Main.player[(int)projectile.ai[0]].Center - spawn).Length() + 300)
+            if (projectile.Distance(spawn) > 1200)
                 projectile.Kill();
 
             if (++projectile.localAI[0] < 120)
