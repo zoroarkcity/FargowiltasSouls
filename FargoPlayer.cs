@@ -3400,16 +3400,16 @@ namespace FargowiltasSouls
             {
                 case ItemID.DaedalusStormbow:
                 case ItemID.StarCannon:
-                case ItemID.DD2BetsyBow:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.SnowmanCannon:
                     return 2f / 3f;
 
                 case ItemID.Razorpine:
                 case ItemID.BlizzardStaff:
-                    AttackSpeed -= 2f / 3f;
+                    AttackSpeed -= 1f / 3f;
                     return 2f / 3f;
 
+                case ItemID.DD2BetsyBow:
                 case ItemID.Uzi:
                 case ItemID.Megashark:
                 case ItemID.ChlorophyteShotbow:
