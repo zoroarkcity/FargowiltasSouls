@@ -360,7 +360,8 @@ namespace FargowiltasSouls
             }
 
             //spawn tower boi
-            if (player.whoAmI == Main.myPlayer && DarkSpawnCD == 0 && player.ownedProjectileCounts[ModContent.ProjectileType<FlameburstMinion>()] < maxTowers)
+            if (player.whoAmI == Main.myPlayer && DarkSpawnCD == 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.DarkArtistMinion)
+                && player.ownedProjectileCounts[ModContent.ProjectileType<FlameburstMinion>()] < maxTowers)
             {
                 Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<FlameburstMinion>(), 0, 0f, player.whoAmI);
                 DarkSpawnCD = 99999;

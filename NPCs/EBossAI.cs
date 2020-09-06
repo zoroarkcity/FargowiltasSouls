@@ -3803,7 +3803,7 @@ namespace FargowiltasSouls.NPCs
             }*/
 
             //PrintAI(npc);
-
+            //Main.NewText(Terraria.NPC.CountNPCS(Terraria.ID.NPCID.CultistBossClone).ToString());
             //npc.damage = npc.defDamage;
 
             if (npc.ai[3] == -1f)
