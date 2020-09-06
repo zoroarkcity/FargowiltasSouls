@@ -427,5 +427,5 @@ frost wave v spreads
 clones use inwards ring of fireballs a la dg
 stardust meteor rain throughout arena instead of aimed
 removed cultist contact damage
-shotbow, megashark went from -25% to -15%
+shotbow, megashark, chain gun went from -25% to -15%
 bat scepter -15%

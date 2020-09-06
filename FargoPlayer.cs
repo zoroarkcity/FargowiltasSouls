@@ -3417,7 +3417,6 @@ namespace FargowiltasSouls
                 case ItemID.Tsunami:
                 case ItemID.Phantasm:
                 case ItemID.OnyxBlaster:
-                case ItemID.ChainGun:
                 case ItemID.HellwingBow:
                 case ItemID.Beenade:
                 case ItemID.Handgun:
@@ -3436,6 +3435,7 @@ namespace FargowiltasSouls
                 case ItemID.ChlorophyteShotbow:
                 case ItemID.Megashark:
                 case ItemID.BatScepter:
+                case ItemID.ChainGun:
                     return 0.85f;
 
                 default:
