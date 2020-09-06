@@ -429,3 +429,6 @@ stardust meteor rain throughout arena instead of aimed
 removed cultist contact damage
 shotbow, megashark, chain gun went from -25% to -15%
 bat scepter -15%
+
+cultist and clones emit light
+cultist lightning portal can't hit player

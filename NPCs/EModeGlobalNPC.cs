@@ -1137,6 +1137,8 @@ namespace FargowiltasSouls.NPCs
                                 int cultist = (int)npc.ai[3];
                                 if (Main.npc[cultist].active && Main.npc[cultist].type == NPCID.CultistBoss)
                                 {
+                                    Lighting.AddLight(npc.Center, 1f, 1f, 1f);
+
                                     if (Main.npc[cultist].ai[2] > -1 && Main.npc[cultist].ai[2] < Main.maxProjectiles
                                         && Main.npc[cultist].ai[3] == -1 && Main.npc[cultist].ai[0] == 5) //during ritual
                                     {

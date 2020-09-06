@@ -30,14 +30,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
-        public override bool CanDamage()
-        {
-            return projectile.scale >= 1;
-        }
-
         public override bool CanHitPlayer(Player target)
         {
-            return projectile.Distance(target.Center) < projectile.width;
+            return false;
         }
 
         public override void AI()
