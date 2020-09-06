@@ -97,11 +97,15 @@ namespace FargowiltasSouls.NPCs.Champions
             if (npc.localAI[3] == 0) //spawn friends
             {
                 npc.TargetClosest(false);
-                Movement(Main.player[npc.target].Center, 0.8f, 32f);
                 if (npc.Distance(Main.player[npc.target].Center) < 1500)
+                {
                     npc.localAI[3] = 1;
+                }
                 else
+                {
+                    Movement(Main.player[npc.target].Center, 0.8f, 32f);
                     return;
+                }
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
@@ -612,6 +616,56 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 target.AddBuff(BuffID.Frostburn, 300);
                 target.AddBuff(BuffID.OnFire, 300);
+            }
+        }
+
+        public override void HitEffect(int hitDirection, double damage)
+        {
+            if (npc.life <= 0)
+            {
+                for (int i = 1; i <= 6; i++)
+                {
+                    Vector2 pos = npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height));
+                    Gore.NewGore(pos, npc.velocity, mod.GetGoreSlot("Gores/NatureGore" + i.ToString()), npc.scale);
+                }
+                
+                for (int i = 0; i < Main.maxNPCs; i++) //find neck segments, place gores there
+                {
+                    if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<NatureChampionHead>() && Main.npc[i].ai[1] == npc.whoAmI)
+                    {
+                        Vector2 connector = Main.npc[i].Center;
+                        Vector2 neckOrigin = npc.Center + new Vector2(54 * npc.spriteDirection, -10);
+                        float chainsPerUse = 0.05f;
+                        bool spawnNeck = false;
+                        for (float j = 0; j <= 1; j += chainsPerUse)
+                        {
+                            if (j == 0)
+                                continue;
+                            Vector2 distBetween = new Vector2(X(j, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X) -
+                            X(j - chainsPerUse, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X),
+                            Y(j, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y) -
+                            Y(j - chainsPerUse, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y));
+                            if (distBetween.Length() > 36 && chainsPerUse > 0.01f)
+                            {
+                                chainsPerUse -= 0.01f;
+                                j -= chainsPerUse;
+                                continue;
+                            }
+                            float projTrueRotation = distBetween.ToRotation() - (float)Math.PI / 2;
+                            Vector2 lightPos = new Vector2(X(j, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X), Y(j, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y));
+
+                            spawnNeck = !spawnNeck;
+                            if (spawnNeck)
+                                Gore.NewGore(lightPos, Main.npc[i].velocity, mod.GetGoreSlot("Gores/NatureGore7"), Main.npc[i].scale);
+                        }
+
+                        for (int j = 8; j <= 10; j++) //head gores
+                        {
+                            Vector2 pos = Main.npc[i].position + new Vector2(Main.rand.NextFloat(Main.npc[i].width), Main.rand.NextFloat(Main.npc[i].height));
+                            Gore.NewGore(pos, Main.npc[i].velocity, mod.GetGoreSlot("Gores/NatureGore" + j.ToString()), Main.npc[i].scale);
+                        }
+                    }
+                }
             }
         }
 
