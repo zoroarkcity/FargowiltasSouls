@@ -3411,8 +3411,6 @@ namespace FargowiltasSouls
 
                 case ItemID.DD2BetsyBow:
                 case ItemID.Uzi:
-                case ItemID.Megashark:
-                case ItemID.ChlorophyteShotbow:
                 case ItemID.BeesKnees:
                 case ItemID.PhoenixBlaster:
                 case ItemID.LastPrism:
@@ -3435,6 +3433,9 @@ namespace FargowiltasSouls
                 case ItemID.DartPistol:
                 case ItemID.DartRifle:
                 case ItemID.VampireKnives:
+                case ItemID.ChlorophyteShotbow:
+                case ItemID.Megashark:
+                case ItemID.BatScepter:
                     return 0.85f;
 
                 default:

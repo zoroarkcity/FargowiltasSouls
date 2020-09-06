@@ -111,6 +111,12 @@ namespace FargowiltasSouls.Projectiles
                         projectile.tileCollide = false;
                         break;
 
+                    case ProjectileID.CultistBossFireBall:
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss)
+                            && Main.npc[EModeGlobalNPC.cultBoss].life < Main.npc[EModeGlobalNPC.cultBoss].lifeMax / 2)
+                            projectile.timeLeft = 1;
+                        break;
+
                     case ProjectileID.CultistBossFireBallClone:
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss))
                             projectile.timeLeft = 1;

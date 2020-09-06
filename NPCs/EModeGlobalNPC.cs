@@ -449,6 +449,7 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.CultistBoss:
                     npc.lifeMax = (int)(npc.lifeMax * 1.5);
+                    canHitPlayer = false;
                     Counter[2] = 0;
                     break;
                 case NPCID.CultistBossClone:
@@ -1210,7 +1211,7 @@ namespace FargowiltasSouls.NPCs
                                 Vector2 pivot = new Vector2(npc.ai[2], npc.ai[3]);
                                 npc.velocity = Vector2.Normalize(pivot - npc.Center).RotatedBy(Math.PI / 2) * 6f;
                             }
-                            npc.damage = npc.alpha < 100 ? npc.defDamage : 0;
+                            canHitPlayer = ++npc.localAI[3] > 120;
                             break;
 
                         case NPCID.AncientLight:
