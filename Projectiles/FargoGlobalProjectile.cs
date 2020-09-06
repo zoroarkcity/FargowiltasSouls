@@ -383,16 +383,9 @@ namespace FargowiltasSouls.Projectiles
                 }
 
                 //hook ai
-                if (modPlayer.MahoganyEnchant && projectile.aiStyle == 7 && (modPlayer.WoodForce || modPlayer.WizardEnchant))
+                if (modPlayer.MahoganyEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.MahoganyHook, false) && projectile.aiStyle == 7 && (modPlayer.WoodForce || modPlayer.WizardEnchant))
                 {
-                    float multiplier = .5f;
-
-                    if (modPlayer.WoodForce || modPlayer.WizardEnchant)
-                    {
-                        multiplier = 1.5f;
-                    }
-
-                    projectile.position += (projectile.velocity * multiplier);
+                    projectile.extraUpdates = 1;
                 }
 
                 if (projectile.friendly && !projectile.hostile)
@@ -1913,7 +1906,7 @@ namespace FargowiltasSouls.Projectiles
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (modPlayer.MahoganyEnchant)
+            if (modPlayer.MahoganyEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.MahoganyHook, false))
             {
                 float multiplier = 1.5f;
 
@@ -1930,7 +1923,7 @@ namespace FargowiltasSouls.Projectiles
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            if (modPlayer.MahoganyEnchant)
+            if (modPlayer.MahoganyEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.MahoganyHook, false))
             {
                 float multiplier = 1.5f;
 

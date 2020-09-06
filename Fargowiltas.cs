@@ -168,6 +168,7 @@ namespace FargowiltasSouls
             AddToggle("MeteorConfig", "Meteor Shower", "MeteorEnchant", "5f4752");
             AddToggle("NebulaConfig", "Nebula Boosters", "NebulaEnchant", "fe7ee5");
             AddToggle("SolarConfig", "Solar Shield", "SolarEnchant", "fe9e23");
+            AddToggle("SolarFlareConfig", "Inflict Solar Flare", "SolarEnchant", "fe9e23");
             AddToggle("StardustConfig", "Stardust Guardian", "StardustEnchant", "00aeee");
             AddToggle("VortexSConfig", "Vortex Stealth", "VortexEnchant", "00f2aa");
             AddToggle("VortexVConfig", "Vortex Voids", "VortexEnchant", "00f2aa");

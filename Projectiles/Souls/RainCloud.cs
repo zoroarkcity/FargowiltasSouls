@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Projectiles.Souls;
+using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -43,7 +44,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
                 if (proj.active && proj.friendly && !proj.hostile && proj.owner == player.whoAmI && proj.damage > 0 && !proj.minion
                     && proj.type != projectile.type && proj.type != ProjectileID.RainFriendly && proj.whoAmI != Main.player[proj.owner].heldProj
-                    && Array.IndexOf(FargoGlobalProjectile.noSplit, projectile.type) <= -1 && proj.Hitbox.Intersects(projectile.Hitbox))
+                    && Array.IndexOf(FargoGlobalProjectile.noSplit, projectile.type) <= -1 && proj.type != ModContent.ProjectileType<Chlorofuck>() && proj.Hitbox.Intersects(projectile.Hitbox))
                 {
                     if (projectile.scale < 3f)
                     {

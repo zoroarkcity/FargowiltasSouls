@@ -2,6 +2,30 @@ NEW UPDATE - V 1.4
 
 
 new in beta
+-Fixed Golden Dipping Vat tile and added animation
+-Broken Shell debuff now has a space
+-Fixed Solar Enchant tooltip saying only melee attacks inflicted Solar flare
+-Added Solar flare toggle
+-Mahogany hook toggle now actually works
+-Mahogany increased shoot speed now works better?
+-Power of Valhalla buff lasts 8 seconds instead of 5 in the force
+-Small Sting ignores half defense instead of all defense
+-Fossil enchant bones stop closer to you
+-Dark Artist minion should hopefully not just not exist
+-Dark Artist sentries last 30 seconds instead of forever
+-Ancient Shadow Orbs will respawn with the correct amount if something like Wizard Enchant is equipped or dequipped
+-Ancient Shadow Ball damage increased from 40 to 50
+-Changed Jungle Enchant spore to use chlorophyte spores
+-Meteor Enchant damage now scales with any damage type not just magic
+-Meteor Enchant now longer gets doubled damage in the force/wizard, shower cooldown in force/wizard is reduced a bit more
+-Rain Enchant cloud won't absorb your chlorophye crystals anymore
+
+
+
+
+
+
+
 -Primes Laser cannon renamed to Refractor Blaster
 -Snow enchant visual now toggles with the effect and it goes away when you die
 -Silver Enchant is back in Hallowed Enchant
@@ -9,9 +33,12 @@ new in beta
 -Fixed Wizard Enchant not always being active
 -Added all missing enchant tooltip colors
 -Fixed names and colors of all toggles
-
-
-
+-tin enchant no longer gives summon crit inherently (must equip spider ench to receive this)
+-spider ench base crit chance lowered to 15%
+-upgraded spider ench effect is no longer boosted crit damage, now has higher crit chance
+-moved around spider and tin ench effect locations internally for the sake of checks and overrides
+-crimson regen and tungsten do not override mutant presence
+-fixed texture bug that made spectral abom not work
 
 
 -Added Acorn Construct (Trojan Squirrel mount) 

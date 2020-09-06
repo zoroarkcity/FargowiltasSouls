@@ -366,7 +366,11 @@ namespace FargowiltasSouls
                 DarkSpawnCD = 99999;
             }
 
-            if (DarkSpawnCD > 0)
+            if (DarkSpawnCD > 60 && player.ownedProjectileCounts[ModContent.ProjectileType<FlameburstMinion>()] < 1)
+            {
+                DarkSpawnCD = 0;
+            }
+            else if (DarkSpawnCD > 0)
             {
                 DarkSpawnCD--;
             }
@@ -660,7 +664,7 @@ namespace FargowiltasSouls
             {
                 int dmg = (NatureForce || WizardEnchant) ? 100 : 25;
                 Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 62, 0.5f);
-                FargoGlobalProjectile.XWay(10, player.Center, ModContent.ProjectileType<SporeBoom>(), 3f, HighestDamageTypeScaling(dmg), 0f);
+                FargoGlobalProjectile.XWay(10, player.Center, ProjectileID.SporeCloud/*ModContent.ProjectileType<SporeBoom>()*/, 3f, HighestDamageTypeScaling(dmg), 0f);
                 jungleCD = 30;
             }
 
@@ -682,16 +686,11 @@ namespace FargowiltasSouls
             {
                 int damage = 50;
 
-                if (CosmoForce || WizardEnchant)
-                {
-                    damage = 100;
-                }
-
                 if (meteorShower)
                 {
                     if (meteorTimer % 2 == 0)
                     {
-                        int p = Projectile.NewProjectile(player.Center.X + Main.rand.Next(-1000, 1000), player.Center.Y - 1000, Main.rand.Next(-2, 2), 0f + Main.rand.Next(8, 12), Main.rand.Next(424, 427), (int)(damage * player.magicDamage), 0f, player.whoAmI, 0f, 0.5f + (float)Main.rand.NextDouble() * 0.3f);
+                        int p = Projectile.NewProjectile(player.Center.X + Main.rand.Next(-1000, 1000), player.Center.Y - 1000, Main.rand.Next(-2, 2), 0f + Main.rand.Next(8, 12), Main.rand.Next(424, 427), HighestDamageTypeScaling(damage), 0f, player.whoAmI, 0f, 0.5f + (float)Main.rand.NextDouble() * 0.3f);
 
                         Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
                     }
@@ -704,7 +703,7 @@ namespace FargowiltasSouls
 
                         if (CosmoForce || WizardEnchant)
                         {
-                            meteorCD = 240;
+                            meteorCD = 200;
                         }
 
                         meteorTimer = 150;
@@ -1565,8 +1564,10 @@ namespace FargowiltasSouls
         {
             AncientShadowEnchant = true;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.AncientShadow) && player.ownedProjectileCounts[ModContent.ProjectileType<AncientShadowOrb>()] == 0)
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.AncientShadow))
             {
+                int currentOrbs = player.ownedProjectileCounts[ModContent.ProjectileType<AncientShadowOrb>()];
+
                 int max = 2;
 
                 if (TerrariaSoul)
@@ -1578,13 +1579,39 @@ namespace FargowiltasSouls
                     max = 3;
                 }
 
-                float rotation = 2f * (float)Math.PI / max;
-
-                for (int i = 0; i < max; i++)
+                //spawn for first time
+                if (currentOrbs == 0)
                 {
-                    Vector2 spawnPos = player.Center + new Vector2(60, 0f).RotatedBy(rotation * i);
-                    int p = Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<AncientShadowOrb>(), 0, 10f, player.whoAmI, 0, rotation * i);
-                    Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                    float rotation = 2f * (float)Math.PI / max;
+
+                    for (int i = 0; i < max; i++)
+                    {
+                        Vector2 spawnPos = player.Center + new Vector2(60, 0f).RotatedBy(rotation * i);
+                        int p = Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<AncientShadowOrb>(), 0, 10f, player.whoAmI, 0, rotation * i);
+                        Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                    }
+                }
+                //equipped somwthing that allows for more or less, respawn
+                else if (currentOrbs != max)
+                {
+                    for (int i = 0; i < 1000; i++)
+                    {
+                        Projectile proj = Main.projectile[i];
+
+                        if (proj.active && proj.type == ModContent.ProjectileType<AncientShadowOrb>() && proj.owner == player.whoAmI)
+                        {
+                            proj.Kill();
+                        }
+                    }
+
+                    float rotation = 2f * (float)Math.PI / max;
+
+                    for (int i = 0; i < max; i++)
+                    {
+                        Vector2 spawnPos = player.Center + new Vector2(60, 0f).RotatedBy(rotation * i);
+                        int p = Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<AncientShadowOrb>(), 0, 10f, player.whoAmI, 0, rotation * i);
+                        Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+                    }
                 }
             }
         }
