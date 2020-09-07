@@ -75,7 +75,15 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 }
             }
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
-            music = Fargowiltas.Instance.MasomodeEXLoaded ? Fargowiltas.Instance.MasomodeEXCompatibility.ModInstance.GetSoundSlot(SoundType.Music, "Sounds/Music/rePrologue") : mod.GetSoundSlot(SoundType.Music, "Sounds/Music/SteelRed");
+            if (Fargowiltas.Instance.MasomodeEXLoaded)
+            {
+                music = Fargowiltas.Instance.MasomodeEXCompatibility.ModInstance.GetSoundSlot(SoundType.Music, "Sounds/Music/rePrologue");
+            }
+            else
+            {
+                Mod musicMod = ModLoader.GetMod("FargowiltasMusic");
+                music = musicMod != null ? ModLoader.GetMod("FargowiltasMusic").GetSoundSlot(SoundType.Music, "Sounds/Music/SteelRed") : MusicID.LunarBoss;
+            }
             musicPriority = (MusicPriority)12;
 
             bossBag = ModContent.ItemType<Items.Misc.MutantBag>();

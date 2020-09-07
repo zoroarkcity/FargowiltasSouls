@@ -53,7 +53,8 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.buffImmune[mod.BuffType("LightningRod")] = true;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
 
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Champions");
+            Mod musicMod = ModLoader.GetMod("FargowiltasMusic");
+            music = musicMod != null ? ModLoader.GetMod("FargowiltasMusic").GetSoundSlot(SoundType.Music, "Sounds/Music/Champions") : MusicID.LunarBoss;
             musicPriority = MusicPriority.BossHigh;
 
             npc.scale *= 1.5f;

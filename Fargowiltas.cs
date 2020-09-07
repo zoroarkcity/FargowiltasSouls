@@ -26,7 +26,7 @@ using Fargowiltas.Items.Explosives;
 
 namespace FargowiltasSouls
 {
-    internal class Fargowiltas : Mod
+    public class Fargowiltas : Mod
     {
         internal static ModHotKey FreezeKey;
         internal static ModHotKey GoldKey;
@@ -80,10 +80,6 @@ namespace FargowiltasSouls
                 BetsyDashKey = RegisterHotKey("Fireball Dash", "C");
                 MutantBombKey = RegisterHotKey("Mutant Bomb", "Z");
             }
-            
-            AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/SteelRed"), ItemType("MutantMusicBox"), TileType("MutantMusicBoxSheet"));
-            AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma"), ItemType("AbomMusicBox"), TileType("AbomMusicBoxSheet"));
-            AddMusicBox(GetSoundSlot(SoundType.Music, "Sounds/Music/LexusCyanixs"), ItemType("DeviMusicBox"), TileType("DeviMusicBoxSheet"));
 
             #region Toggles
 
@@ -766,6 +762,7 @@ namespace FargowiltasSouls
                 }
 
                 Mod bossChecklist = ModLoader.GetMod("BossChecklist");
+                Mod musicMod = ModLoader.GetMod("FargowiltasMusic");
                 if (bossChecklist != null)
                 {
                     bossChecklist.Call(
@@ -776,7 +773,8 @@ namespace FargowiltasSouls
                         "Deviantt",
                         (Func<bool>)(() => FargoSoulsWorld.downedDevi),
                         ModContent.ItemType<Items.Summons.DevisCurse>(),
-                        new List<int> { /*ModContent.ItemType<Items.Tiles.DeviTrophy>(),*/ ModContent.ItemType<Items.Tiles.DeviMusicBox>() },
+                        musicMod != null ? new List<int> { ModContent.ItemType<Items.Tiles.DeviTrophy>(), musicMod.ItemType("DeviMusicBox") }
+                        : new List<int> { ModContent.ItemType<Items.Tiles.DeviTrophy>() },
                         new List<int> { ModContent.ItemType<Items.Misc.DeviatingEnergy>() },
                         "Spawn by using [i:" + ModContent.ItemType<Items.Summons.DevisCurse>() + "].",
                         "Deviantt is satisfied with its show of love.",
@@ -985,7 +983,8 @@ namespace FargowiltasSouls
                         "Abominationn",
                         (Func<bool>)(() => FargoSoulsWorld.downedAbom),
                         ModContent.ItemType<Items.Summons.AbomsCurse>(),
-                        new List<int> { ModContent.ItemType<Items.Tiles.AbomTrophy>(), ModContent.ItemType<Items.Tiles.AbomMusicBox>() },
+                        musicMod != null ? new List<int> { ModContent.ItemType<Items.Tiles.AbomTrophy>(), musicMod.ItemType("AbomMusicBox") }
+                        : new List<int> { ModContent.ItemType<Items.Tiles.AbomTrophy>() },
                         new List<int> { ModContent.ItemType<Items.Misc.MutantScale>() },
                         "Spawn by using [i:" + ModContent.ItemType<Items.Summons.AbomsCurse>() + "].",
                         "Abominationn has destroyed everyone.",
@@ -1019,7 +1018,8 @@ namespace FargowiltasSouls
 			            "Mutant",
 			            (Func<bool>)(() => FargoSoulsWorld.downedMutant),
 			            ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
-			            new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), ModContent.ItemType<Items.Tiles.MutantMusicBox>() },
+                        musicMod != null ? new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), musicMod.ItemType("MutantMusicBox") }
+                        : new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>() },
 			            ModContent.ItemType<Items.Misc.Sadism>(),
 			            "Throw [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while Abominationn is alive, in Mutant's presence.",
 			            "Mutant has eviscerated everyone under its hands.",
@@ -1035,7 +1035,8 @@ namespace FargowiltasSouls
 			            "Mutant",
 			            (Func<bool>)(() => FargoSoulsWorld.downedMutant),
 			            ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
-			            new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), ModContent.ItemType<Items.Tiles.MutantMusicBox>() },
+                        musicMod != null ? new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), musicMod.ItemType("MutantMusicBox") }
+                        : new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>() },
 			            ModContent.ItemType<Items.Misc.Sadism>(),
 			            "Throw [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while Abominationn is alive, in Mutant's presence.",
 			            "Mutant has eviscerated everyone under its hands.",
@@ -1535,8 +1536,7 @@ namespace FargowiltasSouls
 
         internal MasomodeEXCompatibility MasomodeEXCompatibility { get; private set; }
         internal bool MasomodeEXLoaded => MasomodeEXCompatibility != null;
-
-
+        
         internal DBZMODCompatibility DBZMODCompatibility { get; private set; }
         internal bool DBZMODLoaded => DBZMODCompatibility != null;
 

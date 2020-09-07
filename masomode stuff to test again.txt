@@ -443,3 +443,4 @@ gutted heart creeper life halved and defense removed, but creepers only take 25%
 tried fixing the glitch that caused enemies to not call HitEffect() when defeated
 mech leash adjusted: eyes spawned on hit last for less time and spawns fewer eyes on hit
 will champ now aims his bomb at you (contact damage removed)
+FARGO'S MUSIC MOD IS REAL.

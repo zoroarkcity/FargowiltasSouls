@@ -58,7 +58,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.buffImmune[mod.BuffType("LightningRod")] = true;
             npc.timeLeft = NPC.activeTime * 30;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma");
+            Mod musicMod = ModLoader.GetMod("FargowiltasMusic");
+            music = musicMod != null ? ModLoader.GetMod("FargowiltasMusic").GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma") : MusicID.Boss2;
             musicPriority = (MusicPriority)11;
         }
 
