@@ -450,3 +450,5 @@ funny message if music mod isnt loaded
 queen stinger nerf, only gives honey for 5sec when hurt (has toggle now)
 necro guardian is guaranteed to never crit UNLESS soul of terraria, in which case it always crits
 ender betsy recolor
+fixed abominable wand sheeting error
+added devi curse sprite
