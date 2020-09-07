@@ -47,6 +47,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 }
                 else //swinging down
                 {
+                    if (projectile.timeLeft == 15) //confirm facing the right direction with right offset
+                        projectile.rotation = (float)Math.PI / 4 * Main.projectile[ai1].spriteDirection - (float)Math.PI / 4;
+
                     projectile.rotation -= (float)Math.PI / 15 * Main.projectile[ai1].spriteDirection * 0.75f;
                     Vector2 offset = new Vector2(0, -275).RotatedBy(projectile.rotation + (float)Math.PI / 4);
                     projectile.Center = Main.projectile[ai1].Center + offset;
