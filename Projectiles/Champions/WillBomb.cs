@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.height = 50;
             projectile.aiStyle = -1;
             projectile.hostile = true;
-            projectile.timeLeft = 600;
+            projectile.timeLeft = 40;
             projectile.tileCollide = false;
             projectile.penetrate = -1;
 
@@ -33,15 +33,17 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
+        public override bool CanDamage()
+        {
+            return false;
+        }
+
         public override void AI()
         {
-            projectile.velocity.Y += 0.3f;
-            if (projectile.velocity.Y > 0)
-            {
-                projectile.Kill();
-            }
+            Vector2 reduction = Vector2.Normalize(projectile.velocity) * projectile.ai[0];
+            projectile.velocity -= reduction;
 
-            projectile.rotation += projectile.velocity.Length() * 0.03f;
+            projectile.rotation += projectile.velocity.Length() * 0.03f * Math.Sign(projectile.velocity.X);
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

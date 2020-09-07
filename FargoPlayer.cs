@@ -347,6 +347,7 @@ namespace FargowiltasSouls
         public bool LihzahrdCurse;
         public bool LihzahrdBlessing;
         public bool Berserked;
+        public bool HolyPrice;
 
         public int MasomodeCrystalTimer = 0;
         public int MasomodeFreezeTimer = 0;
@@ -836,6 +837,7 @@ namespace FargowiltasSouls
             LihzahrdCurse = false;
             LihzahrdBlessing = false;
             Berserked = false;
+            HolyPrice = false;
 
             if (!Mash && MashCounter > 0)
             {
@@ -1663,7 +1665,7 @@ namespace FargowiltasSouls
                     if (SoulConfig.Instance.GetValue(SoulConfig.Instance.GuttedHeart))
                     {
                         int count = 0;
-                        for (int i = 0; i < 200; i++)
+                        for (int i = 0; i < Main.maxNPCs; i++)
                         {
                             if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<CreeperGutted>() && Main.npc[i].ai[0] == player.whoAmI)
                                 count++;
@@ -1678,7 +1680,7 @@ namespace FargowiltasSouls
                             if (Main.netMode == NetmodeID.SinglePlayer)
                             {
                                 int n = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y, ModContent.NPCType<CreeperGutted>(), 0, player.whoAmI, 0f, multiplier);
-                                if (n != 200)
+                                if (n != Main.maxNPCs)
                                     Main.npc[n].velocity = Vector2.UnitX.RotatedByRandom(2 * Math.PI) * 8;
                             }
                             else if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -1693,7 +1695,7 @@ namespace FargowiltasSouls
                         else
                         {
                             int lowestHealth = -1;
-                            for (int i = 0; i < 200; i++)
+                            for (int i = 0; i < Main.maxNPCs; i++)
                             {
                                 if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<CreeperGutted>() && Main.npc[i].ai[0] == player.whoAmI)
                                 {
@@ -2161,6 +2163,9 @@ namespace FargowiltasSouls
 
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            if (HolyPrice)
+                damage = (int)(2.0 / 3.0 * damage);
+
             if (Eternity)
             {
                 if (crit)
@@ -2225,6 +2230,9 @@ namespace FargowiltasSouls
 
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
         {
+            if (HolyPrice)
+                damage = (int)(2.0 / 3.0 * damage);
+
             if (Eternity)
             {
                 if (crit)
@@ -2902,6 +2910,18 @@ namespace FargowiltasSouls
                 damage = (int)(damage * 0.85);
         }
 
+        public override void OnHitByNPC(NPC npc, int damage, bool crit)
+        {
+            if (FargoSoulsWorld.MasochistMode && player.shadowDodge) //prehurt hook not called on titanium dodge
+                player.AddBuff(ModContent.BuffType<HolyPrice>(), 600);
+        }
+
+        public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
+        {
+            if (FargoSoulsWorld.MasochistMode && player.shadowDodge) //prehurt hook not called on titanium dodge
+                player.AddBuff(ModContent.BuffType<HolyPrice>(), 600);
+        }
+
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
             if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.deviBoss, ModContent.NPCType<NPCs.DeviBoss.DeviBoss>()))
@@ -3406,7 +3426,7 @@ namespace FargowiltasSouls
 
                 case ItemID.Razorpine:
                 case ItemID.BlizzardStaff:
-                    AttackSpeed -= 1f / 3f;
+                    AttackSpeed *= 2f / 3f;
                     return 2f / 3f;
 
                 case ItemID.DD2BetsyBow:
@@ -3437,6 +3457,13 @@ namespace FargowiltasSouls
                 case ItemID.BatScepter:
                 case ItemID.ChainGun:
                     return 0.85f;
+
+                case ItemID.DD2SquireBetsySword: //flying dragon
+                    AttackSpeed *= 1.2f;
+                    return 1.2f;
+
+                case ItemID.MonkStaffT3: //sky dragon's fury
+                    return 1.25f;
 
                 default:
                     return 1f;

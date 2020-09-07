@@ -21,8 +21,8 @@ namespace FargowiltasSouls.NPCs.EternityMode
             npc.width = 30;
             npc.height = 30;
             npc.damage = 20;
-            npc.defense = 10;
-            npc.lifeMax = 100;
+            npc.defense = 0;
+            npc.lifeMax = 50;
             npc.friendly = true;
             npc.netAlways = true;
             npc.HitSound = SoundID.NPCHit9;
@@ -84,8 +84,8 @@ namespace FargowiltasSouls.NPCs.EternityMode
                 {
                     int n = npc.whoAmI;
                     npc.StrikeNPCNoInteraction(9999, 0f, 0);
-                    if (Main.netMode != 0)
-                        NetMessage.SendData(28, -1, -1, null, n, 9999f);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n, 9999f);
                     return;
                 }
             }
@@ -106,6 +106,11 @@ namespace FargowiltasSouls.NPCs.EternityMode
         public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             damage *= 8;
+        }
+
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit)
+        {
+            damage /= 4;
         }
 
         public override bool? CanBeHitByProjectile(Projectile projectile)

@@ -752,6 +752,22 @@ namespace FargowiltasSouls.Projectiles
 
                 #endregion
 
+                case ProjectileID.VampireHeal:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
+                        if (!masobool)
+                        {
+                            masobool = true;
+                            if (Main.rand.Next(2) == 0)
+                                projectile.Kill();
+                        }
+                    }
+                    break;
+
+                case ProjectileID.DD2SquireSonicBoom:
+                    projectile.position += projectile.velocity / 2f;
+                    break;
+
                 case ProjectileID.SpiritHeal:
                     if (FargoSoulsWorld.MasochistMode)
                         projectile.position -= projectile.velocity / 2;

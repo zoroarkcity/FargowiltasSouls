@@ -90,8 +90,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 vector55.Normalize();
                 vector55 *= Main.rand.Next(45, 65) * 0.1f;
                 vector55 = vector55.RotatedBy((Main.rand.NextDouble() - 0.5) * 1.5707963705062866);
-                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vector55.X, vector55.Y, mod.ProjectileType("MechEyeProjectile"), projectile.damage, projectile.knockBack,
-                    projectile.owner, -10f);
+                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vector55.X, vector55.Y, 
+                    mod.ProjectileType("MechEyeProjectile"), projectile.damage, projectile.knockBack, projectile.owner, -10f);
 
                 eyeSpawn = 10;
             }
@@ -101,12 +101,15 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             if (projectile.ai[0] != 1f)
             {
-                for (int i = 0; i < 20; i++)
+                const int max = 10;
+                for (int i = 0; i < max; i++)
                 {
-                    Vector2 vector55 = Vector2.UnitX.RotatedBy(Math.PI * 2 / 20 * (i + Main.rand.NextDouble()));
+                    Vector2 vector55 = Vector2.UnitX.RotatedBy(Math.PI * 2 / max * (i + Main.rand.NextDouble()));
                     vector55 *= Main.rand.Next(45, 65) * 0.3f;
-                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vector55.X, vector55.Y,
+                    int p = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vector55.X, vector55.Y,
                         mod.ProjectileType("MechEyeProjectile"), projectile.damage, projectile.knockBack, projectile.owner, -10f);
+                    if (p != Main.maxProjectiles)
+                        Main.projectile[p].timeLeft = 120;
                 }
             }
 
