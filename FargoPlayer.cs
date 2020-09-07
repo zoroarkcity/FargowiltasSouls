@@ -392,6 +392,12 @@ namespace FargowiltasSouls
         {
             disabledSouls.Clear();
 
+            if (ModLoader.GetMod("FargowiltasMusic") == null)
+            {
+                Main.NewText("Fargo's Music Mod not found!", Color.LimeGreen);
+                Main.NewText("Please install Fargo's Music Mod for the full experience!!", Color.LimeGreen);
+            }
+
             /*for (int i = 0; i < 200; i++)
             {
                 if (Main.npc[i].type == NPCID.LunarTowerSolar

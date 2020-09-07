@@ -445,3 +445,4 @@ mech leash adjusted: eyes spawned on hit last for less time and spawns fewer eye
 will champ now aims his bomb at you (contact damage removed)
 fixed sparkling love rc devi swinging axe weirdly backwards
 FARGO'S MUSIC MOD IS REAL.
+funny message if music mod isnt loaded
