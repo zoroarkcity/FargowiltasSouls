@@ -111,6 +111,12 @@ namespace FargowiltasSouls.Projectiles
                         projectile.tileCollide = false;
                         break;
 
+                    case ProjectileID.CultistBossFireBall:
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss)
+                            && Main.npc[EModeGlobalNPC.cultBoss].life < Main.npc[EModeGlobalNPC.cultBoss].lifeMax / 2)
+                            projectile.timeLeft = 1;
+                        break;
+
                     case ProjectileID.CultistBossFireBallClone:
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss))
                             projectile.timeLeft = 1;
@@ -745,6 +751,22 @@ namespace FargowiltasSouls.Projectiles
                     break;*/
 
                 #endregion
+
+                case ProjectileID.VampireHeal:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
+                        if (!masobool)
+                        {
+                            masobool = true;
+                            if (Main.rand.Next(2) == 0)
+                                projectile.Kill();
+                        }
+                    }
+                    break;
+
+                case ProjectileID.DD2SquireSonicBoom:
+                    projectile.position += projectile.velocity / 2f;
+                    break;
 
                 case ProjectileID.SpiritHeal:
                     if (FargoSoulsWorld.MasochistMode)

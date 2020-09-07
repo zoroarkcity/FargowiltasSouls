@@ -3788,6 +3788,8 @@ namespace FargowiltasSouls.NPCs
             if (Main.LocalPlayer.active && !Main.LocalPlayer.dead && npc.Distance(Main.LocalPlayer.Center) < 3000)
                 Main.LocalPlayer.AddBuff(BuffID.ChaosState, 2);
 
+            Lighting.AddLight(npc.Center, 1f, 1f, 1f);
+
             /*Timer++;
             Timer++;
             if (Timer >= 1200)
@@ -3803,8 +3805,8 @@ namespace FargowiltasSouls.NPCs
             }*/
 
             //PrintAI(npc);
-
-            npc.damage = npc.defDamage;
+            //Main.NewText(Terraria.NPC.CountNPCS(Terraria.ID.NPCID.CultistBossClone).ToString());
+            //npc.damage = npc.defDamage;
 
             if (npc.ai[3] == -1f)
             {
@@ -3840,8 +3842,7 @@ namespace FargowiltasSouls.NPCs
             }
             else
             {
-                if (npc.ai[3] == 0)
-                    npc.damage = 0;
+                //if (npc.ai[3] == 0) npc.damage = 0;
 
                 int damage = 75; //necessary because calameme
                 switch ((int)npc.ai[0])
@@ -3862,16 +3863,31 @@ namespace FargowiltasSouls.NPCs
                             int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
                             if (t != -1 && Main.player[t].active)
                             {
-                                for (int i = 0; i < 200; i++)
+                                if (npc.life > npc.lifeMax / 2) //single wave
                                 {
-                                    if (Main.npc[i].active && Main.npc[i].type == NPCID.CultistBossClone)
+                                    for (int i = 0; i < Main.maxNPCs; i++)
                                     {
-                                        Vector2 distance = Main.player[t].Center - Main.npc[i].Center;
-                                        distance.Normalize();
-                                        distance = distance.RotatedByRandom(Math.PI / 12);
-                                        distance *= Main.rand.NextFloat(6f, 9f);
-                                        Projectile.NewProjectile(Main.npc[i].Center, distance,
-                                            ProjectileID.FrostWave, damage / 3, 0f, Main.myPlayer);
+                                        if (Main.npc[i].active && Main.npc[i].type == NPCID.CultistBossClone)
+                                        {
+                                            Vector2 distance = Main.player[t].Center - Main.npc[i].Center;
+                                            distance.Normalize();
+                                            distance *= Main.rand.NextFloat(6f, 9f);
+                                            distance = distance.RotatedByRandom(Math.PI / 24);
+                                            Projectile.NewProjectile(Main.npc[i].Center, distance,
+                                                ProjectileID.FrostWave, damage / 3, 0f, Main.myPlayer);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    for (int i = -5; i <= 5; i++) //waves beside you
+                                    {
+                                        if (i == 0)
+                                            continue;
+                                        Vector2 spawnPos = Main.player[t].Center;
+                                        spawnPos.X += Math.Sign(i) * 125 + i * 100;
+                                        spawnPos.Y -= 700 + Math.Abs(i) * 50;
+                                        Projectile.NewProjectile(spawnPos, Vector2.UnitY * 10f, ProjectileID.FrostWave, damage / 3, 0f, Main.myPlayer);
                                     }
                                 }
                             }
@@ -3879,58 +3895,90 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case 3:
-                        if (npc.ai[1] == 3f && Main.netMode != NetmodeID.MultiplayerClient) //fireballs, solar goop support
+                        if (npc.ai[1] == 3f && Main.netMode != NetmodeID.MultiplayerClient) //fireballs
                         {
-                            for (int i = 0; i < 200; i++)
+                            if (npc.life > npc.lifeMax / 2) //solar goop support
                             {
-                                if (Main.npc[i].active && Main.npc[i].type == NPCID.CultistBossClone)
+                                for (int i = 0; i < 200; i++)
                                 {
-                                    int n = NPC.NewNPC((int)Main.npc[i].Center.X, (int)Main.npc[i].Center.Y, NPCID.SolarGoop);
-                                    if (n < 200)
+                                    if (Main.npc[i].active && Main.npc[i].type == NPCID.CultistBossClone)
                                     {
-                                        Main.npc[n].velocity.X = Main.rand.Next(-10, 11);
-                                        Main.npc[n].velocity.Y = Main.rand.Next(-15, -4);
-                                        if (Main.netMode == NetmodeID.Server)
-                                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                                        int n = NPC.NewNPC((int)Main.npc[i].Center.X, (int)Main.npc[i].Center.Y, NPCID.SolarGoop);
+                                        if (n < 200)
+                                        {
+                                            Main.npc[n].velocity.X = Main.rand.Next(-10, 11);
+                                            Main.npc[n].velocity.Y = Main.rand.Next(-15, -4);
+                                            if (Main.netMode == NetmodeID.Server)
+                                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                                        }
                                     }
+                                }
+                            }
+                            else //fireball ring
+                            {
+                                int max = NPC.CountNPCS(NPCID.CultistBossClone) * 2 + 4;
+
+                                Vector2 baseOffset = npc.DirectionTo(Main.player[npc.target].Center);
+                                const float spawnOffset = 1200f;
+                                const float speed = 6f;
+                                const float ai0 = spawnOffset / speed;
+                                for (int i = 0; i < max; i++)
+                                {
+                                    Projectile.NewProjectile(Main.player[npc.target].Center + spawnOffset * baseOffset.RotatedBy(2 * Math.PI / max * i),
+                                        -speed * baseOffset.RotatedBy(2 * Math.PI / max * i), ModContent.ProjectileType<CultistFireball>(),
+                                        damage / 3, 0f, Main.myPlayer, ai0);
+                                }
+
+                                for (int i = 0; i < 30; i++) //make dust
+                                {
+                                    Vector2 vector6 = Vector2.UnitY * 18f;
+                                    vector6 = vector6.RotatedBy((i - (36 / 2 - 1)) * 6.28318548f / 42) + npc.Center;
+                                    Vector2 vector7 = vector6 - npc.Center;
+                                    int d = Dust.NewDust(vector6 + vector7, 0, 0, DustID.Fire, 0f, 0f, 0, default, 4f);
+                                    Main.dust[d].noGravity = true;
+                                    Main.dust[d].scale = 4f;
+                                    Main.dust[d].velocity = vector7;
                                 }
                             }
                         }
                         break;
 
                     case 4:
-                        if (npc.ai[1] == 19f && npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient) //lightning orb, lightning support
+                        if (npc.ai[1] == 19f && npc.HasPlayerTarget && Main.netMode != NetmodeID.MultiplayerClient) //lightning orb
                         {
+                            int cultistCount = 1;
                             for (int i = 0; i < 200; i++)
                             {
                                 if (Main.npc[i].active && Main.npc[i].type == NPCID.CultistBossClone)
                                 {
-                                    Vector2 dir = Main.player[npc.target].Center - Main.npc[i].Center;
-                                    float ai1New = Main.rand.Next(100);
-                                    Vector2 vel = Vector2.Normalize(dir.RotatedByRandom(Math.PI / 4)) * 7f;
-                                    Projectile.NewProjectile(Main.npc[i].Center, vel, ProjectileID.CultistBossLightningOrbArc,
-                                        damage / 15 * 6, 0, Main.myPlayer, dir.ToRotation(), ai1New);
+                                    if (npc.life > npc.lifeMax / 2) //aimed lightning
+                                    {
+                                        Vector2 dir = Main.player[npc.target].Center - Main.npc[i].Center;
+                                        float ai1New = Main.rand.Next(100);
+                                        Vector2 vel = Vector2.Normalize(dir.RotatedByRandom(Math.PI / 4)) * 7f;
+                                        Projectile.NewProjectile(Main.npc[i].Center, vel, ProjectileID.CultistBossLightningOrbArc,
+                                            damage / 15 * 6, 0, Main.myPlayer, dir.ToRotation(), ai1New);
+                                    }
+                                    else //vortex lightning
+                                    {
+                                        Projectile.NewProjectile(Main.npc[i].Center, Main.rand.NextVector2Square(-30, 30), ModContent.ProjectileType<CultistVortex>(),
+                                          damage / 15 * 6, 0, Main.myPlayer, 0f, cultistCount);
+                                        cultistCount++;
+                                    }
                                 }
                             }
                         }
                         break;
 
                     case 7:
-                        if (npc.ai[1] == 3f && Main.netMode != NetmodeID.MultiplayerClient) //ancient light, phantasmal eye support
+                        if (npc.ai[1] == 3f && Main.netMode != NetmodeID.MultiplayerClient) //ancient light, jellyfish support
                         {
-                            for (int i = 0; i < 200; i++)
+                            for (int i = 0; i < Main.maxProjectiles; i++)
                             {
-                                if (Main.npc[i].active && Main.npc[i].type == NPCID.CultistBossClone)
+                                if (Main.projectile[i].active && Main.projectile[i].type == ModContent.ProjectileType<Projectiles.Masomode.CultistRitual>())
                                 {
-                                    Projectile.NewProjectile(Main.npc[i].Center, Main.npc[i].DirectionTo(Main.player[npc.target].Center) * 10f, ProjectileID.StardustJellyfishSmall, damage / 3, 0f, Main.myPlayer);
-                                    /*Vector2 speed = Vector2.UnitX.RotatedByRandom(Math.PI);
-                                    speed *= 6f;
-                                    Projectile.NewProjectile(Main.npc[i].Center, speed,
-                                        ProjectileID.PhantasmalEye, damage / 3, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(Main.npc[i].Center, speed.RotatedBy(Math.PI * 2 / 3),
-                                        ProjectileID.PhantasmalEye, damage / 3, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(Main.npc[i].Center, speed.RotatedBy(-Math.PI * 2 / 3),
-                                        ProjectileID.PhantasmalEye, damage / 3, 0f, Main.myPlayer);*/
+                                    Projectile.NewProjectile(new Vector2(Main.projectile[i].Center.X, Main.player[npc.target].Center.Y - 700),
+                                        Vector2.Zero, ModContent.ProjectileType<StardustRain>(), damage / 3, 0f, Main.myPlayer);
                                 }
                             }
                         }

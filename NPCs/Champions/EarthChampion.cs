@@ -48,7 +48,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
             npc.trapImmune = true;
 
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Champions");
+            Mod musicMod = ModLoader.GetMod("FargowiltasMusic");
+            music = musicMod != null ? ModLoader.GetMod("FargowiltasMusic").GetSoundSlot(SoundType.Music, "Sounds/Music/Champions") : MusicID.Boss1;
             musicPriority = MusicPriority.BossHigh;
         }
 

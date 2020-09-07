@@ -46,7 +46,8 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.buffImmune[mod.BuffType("ClippedWings")] = true;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
 
-            music = mod.GetSoundSlot(SoundType.Music, "Sounds/Music/Champions");
+            Mod musicMod = ModLoader.GetMod("FargowiltasMusic");
+            music = musicMod != null ? ModLoader.GetMod("FargowiltasMusic").GetSoundSlot(SoundType.Music, "Sounds/Music/Champions") : MusicID.Boss1;
             musicPriority = MusicPriority.BossHigh;
         }
 

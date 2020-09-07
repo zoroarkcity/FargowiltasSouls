@@ -421,3 +421,28 @@ betsy flame breath ignores creepers
 betsy electrosphere timeleft reduced
 betsy phoenix homing is a little more generous
 betsy has a helpful reverse aura for fury ring break range
+
+lightning vortex that rains down a bolt
+frost wave v spreads
+clones use inwards ring of fireballs a la dg
+stardust meteor rain throughout arena instead of aimed
+removed cultist contact damage
+shotbow, megashark, chain gun went from -25% to -15%
+bat scepter -15%
+cultist and clones emit light
+cultist lightning portal can't hit player
+
+nature gores
+tried to fix nature doing his quirky not-moving thingy
+emode balance
+	flying dragon has +20% damage and attack speed, projectile has x1.5 speed
+	sky dragon fury has +25% damage
+	shadow dodge causes holy price debuff
+	vampire knives only have a 50% chance of giving lifesteal
+gutted heart creeper life halved and defense removed, but creepers only take 25% contact damage from npcs
+tried fixing the glitch that caused enemies to not call HitEffect() when defeated
+mech leash adjusted: eyes spawned on hit last for less time and spawns fewer eyes on hit
+will champ now aims his bomb at you (contact damage removed)
+fixed sparkling love rc devi swinging axe weirdly backwards
+FARGO'S MUSIC MOD IS REAL.
+funny message if music mod isnt loaded

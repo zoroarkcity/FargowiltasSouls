@@ -449,6 +449,7 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.CultistBoss:
                     npc.lifeMax = (int)(npc.lifeMax * 1.5);
+                    canHitPlayer = false;
                     Counter[2] = 0;
                     break;
                 case NPCID.CultistBossClone:
@@ -1131,23 +1132,15 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.CultistBossClone:
-                            /*if (!masoBool[0] && ++Counter > 15)
-                            {
-                                masoBool[0] = true;
-                                Counter = 0;
-                                if (Main.netMode != NetmodeID.MultiplayerClient) //my hitbox
-                                {
-                                    int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<CultistCloneHitbox>(), 0, npc.whoAmI, npc.ai[3]);
-                                    if (n != Main.maxNPCs && Main.netMode != NetmodeID.MultiplayerClient)
-                                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
-                                }
-                            }*/
                             if (npc.ai[3] > -1 && npc.ai[3] < Main.maxNPCs)
                             {
                                 int cultist = (int)npc.ai[3];
-                                if (Main.npc[cultist].active && Main.npc[cultist].type == NPCID.CultistBoss && Main.npc[cultist].ai[2] > -1 && Main.npc[cultist].ai[2] < Main.maxProjectiles)
+                                if (Main.npc[cultist].active && Main.npc[cultist].type == NPCID.CultistBoss)
                                 {
-                                    if (Main.npc[cultist].ai[3] == -1 && Main.npc[cultist].ai[0] == 5)
+                                    Lighting.AddLight(npc.Center, 1f, 1f, 1f);
+
+                                    if (Main.npc[cultist].ai[2] > -1 && Main.npc[cultist].ai[2] < Main.maxProjectiles
+                                        && Main.npc[cultist].ai[3] == -1 && Main.npc[cultist].ai[0] == 5) //during ritual
                                     {
                                         if (npc.alpha > 0)
                                         {
@@ -1163,7 +1156,7 @@ namespace FargowiltasSouls.NPCs
                                             }
                                         }
 
-                                        int ritual = (int)Main.npc[cultist].ai[2];
+                                        int ritual = (int)Main.npc[cultist].ai[2]; //rotate around ritual
                                         if (Main.projectile[ritual].active && Main.projectile[ritual].type == ProjectileID.CultistRitual)
                                         {
                                             Vector2 offset = Main.npc[cultist].Center - Main.projectile[ritual].Center;
@@ -1172,8 +1165,7 @@ namespace FargowiltasSouls.NPCs
                                     }
                                     else
                                     {
-                                        masoBool[1] = false;
-                                        if (Main.npc[cultist].ai[3] == 0)
+                                        if (Main.npc[cultist].ai[3] == 0) //be visible always
                                             npc.alpha = 0;
                                     }
                                 }
@@ -1210,7 +1202,7 @@ namespace FargowiltasSouls.NPCs
                                 Vector2 pivot = new Vector2(npc.ai[2], npc.ai[3]);
                                 npc.velocity = Vector2.Normalize(pivot - npc.Center).RotatedBy(Math.PI / 2) * 6f;
                             }
-                            npc.damage = npc.alpha < 100 ? npc.defDamage : 0;
+                            canHitPlayer = ++npc.localAI[3] > 120;
                             break;
 
                         case NPCID.AncientLight:
@@ -4238,11 +4230,18 @@ namespace FargowiltasSouls.NPCs
             {
                 if (npc.life <= 0 && npc.type == NPCID.CultistBossClone)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (npc.ai[3] > -1 && npc.ai[3] < Main.maxNPCs) //if cultist fight still ongoing
                     {
-                        int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.CultistBossClone, 0, npc.ai[0], npc.ai[1], npc.ai[2], npc.ai[3], npc.target);
-                        if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
-                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                        int cultist = (int)npc.ai[3];
+                        if (Main.npc[cultist].active && Main.npc[cultist].type == NPCID.CultistBoss)
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, NPCID.CultistBossClone, 0, npc.ai[0], npc.ai[1], npc.ai[2], npc.ai[3], npc.target);
+                                if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
+                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                            }
+                        }
                     }
                 }
             }

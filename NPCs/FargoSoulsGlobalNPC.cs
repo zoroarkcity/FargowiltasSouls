@@ -499,10 +499,13 @@ namespace FargowiltasSouls.NPCs
                 if (npc.lifeRegenCount > 0)
                     npc.lifeRegenCount = 0;
 
-                if (npc.life > LifePrevious)
-                    npc.life = LifePrevious;
-                else
-                    LifePrevious = npc.life;
+                if (npc.life > 0 && LifePrevious > 0) //trying to prevent some wack despawn stuff
+                {
+                    if (npc.life > LifePrevious)
+                        npc.life = LifePrevious;
+                    else
+                        LifePrevious = npc.life;
+                }
             }
             else
             {
