@@ -2986,6 +2986,11 @@ namespace FargowiltasSouls
         {
             WasHurtBySomething = true;
 
+            if (QueenStinger && SoulConfig.Instance.GetValue(SoulConfig.Instance.QueenStingerHoney))
+            {
+                player.AddBuff(BuffID.Honey, 300);
+            }
+
             if (MythrilEnchant && !TerrariaSoul)
             {
                 player.AddBuff(ModContent.BuffType<DisruptedFocus>(), 300);

@@ -369,6 +369,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool AgitatedLens;
 
+        [Label("$Mods.FargowiltasSouls.MasoHoneyConfig")]
+        [DefaultValue(true)]
+        public bool QueenStingerHoney;
+
         [Label("$Mods.FargowiltasSouls.MasoSkeleConfig")]
         [DefaultValue(true)]
         public bool NecromanticBrew;

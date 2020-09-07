@@ -8663,6 +8663,13 @@ namespace FargowiltasSouls.NPCs
                         Main.goreLoaded[370] = true;*/
                         break;
 
+                    case NPCID.DD2Betsy:
+                        Main.npcTexture[npc.type] = mod.GetTexture((recolor ? "NPCs/Resprites/" : "NPCs/Vanilla/") + "NPC_" + npc.type.ToString());
+                        Main.NPCLoaded[npc.type] = true;
+                        Main.extraTexture[81] = mod.GetTexture(recolor ? "NPCs/Resprites/Extra_81" : "NPCs/Vanilla/Extra_81");
+                        Main.extraTexture[82] = mod.GetTexture(recolor ? "NPCs/Resprites/Extra_82" : "NPCs/Vanilla/Extra_82");
+                        break;
+
                     case NPCID.DukeFishron:
                         Main.npcTexture[npc.type] = mod.GetTexture((recolor ? "NPCs/Resprites/" : "NPCs/Vanilla/") + "NPC_" + npc.type.ToString());
                         Main.NPCLoaded[npc.type] = true;
