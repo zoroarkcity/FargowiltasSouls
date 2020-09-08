@@ -453,3 +453,4 @@ ender betsy recolor
 fixed abominable wand sheeting error
 added devi curse sprite
 pillar DR reduced to 33%
+vortex beater -15%
