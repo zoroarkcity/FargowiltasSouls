@@ -15,6 +15,8 @@ namespace FargowiltasSouls.Projectiles.Champions
         {
             base.SetDefaults();
             projectile.timeLeft = 300;
+            projectile.penetrate = -1;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
         public override void AI()

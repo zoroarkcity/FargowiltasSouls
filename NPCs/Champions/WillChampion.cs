@@ -706,6 +706,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 ModContent.ItemType<GladiatorEnchant>(),
                 ModContent.ItemType<RedRidingEnchant>(),
                 ModContent.ItemType<ValhallaKnightEnchant>(),
+                ModContent.ItemType<WizardEnchant>(),
             };
             int lastDrop = -1; //don't drop same ench twice
             for (int i = 0; i < 2; i++)
