@@ -7729,7 +7729,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.LunarTowerSolar:
                     case NPCID.LunarTowerStardust:
                     case NPCID.LunarTowerVortex:
-                        damage /= 2;
+                        damage = (int)(2.0 / 3.0 * damage);
                         break;
 
                     case NPCID.Salamander:
@@ -7975,7 +7975,7 @@ namespace FargowiltasSouls.NPCs
                         if (npc.Distance(Main.player[projectile.owner].Center) > 2500)
                             damage = 0;
                         else
-                            damage /= 2;
+                            damage = (int)(2.0 / 3.0 * damage);
                         break;
 
                     case NPCID.Salamander:

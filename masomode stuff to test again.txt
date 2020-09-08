@@ -452,3 +452,4 @@ necro guardian is guaranteed to never crit UNLESS soul of terraria, in which cas
 ender betsy recolor
 fixed abominable wand sheeting error
 added devi curse sprite
+pillar DR reduced to 33%
