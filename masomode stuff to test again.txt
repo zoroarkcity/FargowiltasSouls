@@ -457,3 +457,4 @@ vortex beater -15%
 will champ drops wizard ench
 nature crystal leaves ignore creepers
 sinister icon makes enemies drop 1 coin instead, hopefully this allows phantoms to spawn
+betsy gores and icons

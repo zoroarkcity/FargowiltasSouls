@@ -8668,6 +8668,23 @@ namespace FargowiltasSouls.NPCs
                         Main.NPCLoaded[npc.type] = true;
                         Main.extraTexture[81] = mod.GetTexture(recolor ? "NPCs/Resprites/Extra_81" : "NPCs/Vanilla/Extra_81");
                         Main.extraTexture[82] = mod.GetTexture(recolor ? "NPCs/Resprites/Extra_82" : "NPCs/Vanilla/Extra_82");
+                        Main.goreTexture[1079] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1079");
+                        Main.goreTexture[1080] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1080");
+                        Main.goreTexture[1081] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1081");
+                        Main.goreTexture[1082] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1082");
+                        Main.goreTexture[1083] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1083");
+                        Main.goreTexture[1084] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1084");
+                        Main.goreTexture[1085] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1085");
+                        Main.goreTexture[1086] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1086");
+                        Main.goreLoaded[1079] = true;
+                        Main.goreLoaded[1080] = true;
+                        Main.goreLoaded[1081] = true;
+                        Main.goreLoaded[1082] = true;
+                        Main.goreLoaded[1083] = true;
+                        Main.goreLoaded[1084] = true;
+                        Main.goreLoaded[1085] = true;
+                        Main.goreLoaded[1086] = true;
+                        Main.npcHeadBossTexture[34] = mod.GetTexture((recolor ? "NPCs/Resprites/" : "NPCs/Vanilla/") + "NPC_Head_Boss_34");
                         break;
 
                     case NPCID.DukeFishron:
