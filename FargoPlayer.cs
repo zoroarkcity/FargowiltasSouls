@@ -3457,6 +3457,7 @@ namespace FargowiltasSouls
                 case ItemID.Xenopopper:
                 case ItemID.NebulaArcanum:
                 case ItemID.LaserMachinegun:
+                case ItemID.PainterPaintballGun:
                     return 0.75f;
 
                 case ItemID.MoltenFury:

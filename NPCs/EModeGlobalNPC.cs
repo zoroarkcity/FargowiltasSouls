@@ -498,9 +498,15 @@ namespace FargowiltasSouls.NPCs
                 
 
                 case NPCID.EaterofWorldsHead:
+                    npc.buffImmune[BuffID.CursedInferno] = true;
+                    break;
                 case NPCID.EaterofWorldsBody:
+                    npc.buffImmune[BuffID.CursedInferno] = true;
+                    npc.damage *= 2;
+                    break;
                 case NPCID.EaterofWorldsTail:
                     npc.buffImmune[BuffID.CursedInferno] = true;
+                    npc.damage *= 2;
                     break;
 
                 case NPCID.EaterofSouls:
@@ -4388,6 +4394,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.EyeofCthulhu:
                     case NPCID.WanderingEye:
                     case NPCID.ServantofCthulhu:
+                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 180);
+                        goto case NPCID.DemonEye;
                     case NPCID.DemonEye:
                     case NPCID.DemonEyeOwl:
                     case NPCID.DemonEyeSpaceship:
@@ -4418,6 +4426,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.EaterofWorldsHead:
                     case NPCID.EaterofWorldsBody:
                     case NPCID.EaterofWorldsTail:
+                        target.AddBuff(BuffID.CursedInferno, 300);
                         target.AddBuff(ModContent.BuffType<Rotting>(), 600);
                         break;
 
