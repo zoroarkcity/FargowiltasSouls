@@ -19,10 +19,10 @@ namespace FargowiltasSouls.Buffs.Masomode
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.statDefense -= 15;
-            player.endurance -= 0.15f;
-            player.GetModPlayer<FargoPlayer>().AllDamageUp(-0.15f);
-            player.GetModPlayer<FargoPlayer>().AllCritUp(-15);
+            player.statDefense -= 20;
+            player.endurance -= 0.20f;
+            player.GetModPlayer<FargoPlayer>().AllDamageUp(-0.20f);
+            player.GetModPlayer<FargoPlayer>().AllCritUp(-20);
             player.GetModPlayer<FargoPlayer>().CurseoftheMoon = true;
         }
 

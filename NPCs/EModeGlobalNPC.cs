@@ -4394,7 +4394,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.EyeofCthulhu:
                     case NPCID.WanderingEye:
                     case NPCID.ServantofCthulhu:
-                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 180);
+                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 300);
                         goto case NPCID.DemonEye;
                     case NPCID.DemonEye:
                     case NPCID.DemonEyeOwl:

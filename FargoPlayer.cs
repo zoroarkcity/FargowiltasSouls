@@ -2006,7 +2006,7 @@ namespace FargowiltasSouls
                     player.lifeRegenCount = 0;
 
                 player.lifeRegenTime = 0;
-                player.lifeRegen -= 15;
+                player.lifeRegen -= 20;
             }
 
             if (Oiled && player.lifeRegen < 0)
@@ -2913,7 +2913,7 @@ namespace FargowiltasSouls
         public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
         {
             if (npc.GetGlobalNPC<FargoSoulsGlobalNPC>().CurseoftheMoon)
-                damage = (int)(damage * 0.85);
+                damage = (int)(damage * 0.8);
         }
 
         public override void OnHitByNPC(NPC npc, int damage, bool crit)

@@ -461,3 +461,4 @@ betsy gores and icons
 paintball gun -25%
 eater of worlds inflicts cursed inferno on hit, body and tail do double damage (still less than head)
 eoc inflicts curse of the moon
+curse of the moon buffed from 15% everything to 20%
