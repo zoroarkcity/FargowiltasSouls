@@ -462,3 +462,7 @@ paintball gun -25%
 eater of worlds inflicts cursed inferno on hit, body and tail do double damage (still less than head)
 eoc inflicts curse of the moon
 curse of the moon buffed from 15% everything to 20%
+recovering debuff duration doubled
+emode abom not drop curse until post-ml
+emode mutant not drop curse until post-abom
+necro grave has another check for the toggle/ench when touched (so you cant stack graves and then meme mutant p2)

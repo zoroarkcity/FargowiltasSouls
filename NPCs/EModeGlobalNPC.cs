@@ -8326,7 +8326,7 @@ namespace FargowiltasSouls.NPCs
                 if (Main.player[Main.myPlayer].HasBuff(ModContent.BuffType<Recovering>()))
                     return false;
                 else if (AnyBossAlive())
-                    Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<Recovering>(), 3600);
+                    Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<Recovering>(), 7200);
             }
             return true;
         }
