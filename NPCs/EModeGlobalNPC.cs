@@ -4412,7 +4412,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.EyeofCthulhu:
                     case NPCID.WanderingEye:
                     case NPCID.ServantofCthulhu:
-                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 300);
+                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 180);
                         goto case NPCID.DemonEye;
                     case NPCID.DemonEye:
                     case NPCID.DemonEyeOwl:
