@@ -481,3 +481,6 @@ holy stars are affected by kill cooldown (they weren't before, this nerfs holy a
 dark casters spray water bolts
 nerfed angry bones bone spray slightly but they shoot baby guardians, rate increases when shot at
 queen bee stops stinger rings below 50%, instead throws hives (rate is slower during subjects, faster without them)
+
+lowered eoc debuff duration
+fixed other caster ai enemies shooting water bolts

@@ -1261,7 +1261,7 @@ namespace FargowiltasSouls.NPCs
                         //minibosses
                         case NPCID.RuneWizard:
                             RuneWizardAI(npc);
-                            goto case NPCID.DarkCaster;
+                            goto case NPCID.FireImp;
 
                         case NPCID.RainbowSlime:
                             RainbowSlimeAI(npc);
@@ -1292,7 +1292,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.Tim:
                             Aura(npc, 450, BuffID.Silenced, true, 15, true);
                             Aura(npc, 150, BuffID.Cursed, false, 20, true);
-                            goto case NPCID.DarkCaster;
+                            goto case NPCID.FireImp;
 
                         case NPCID.CochinealBeetle: //damage up
                             Aura(npc, 400, -1, false, 60);
@@ -3747,7 +3747,7 @@ namespace FargowiltasSouls.NPCs
                             }
                             if (npc.noTileCollide)
                                 npc.velocity.Y++;
-                            goto case NPCID.DarkCaster;
+                            goto case NPCID.FireImp;
 
                         case NPCID.GoblinThief:
                             npc.position.X += npc.velocity.X / 2f;
