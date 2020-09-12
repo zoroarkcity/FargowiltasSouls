@@ -621,6 +621,10 @@ namespace FargowiltasSouls.NPCs
             {
                 npc.ai[0] = 3; //always shoot stingers mode
             }
+            else if (npc.life < npc.lifeMax / 2)
+            {
+                Counter[0]++; //throw hives faster when no royal subjects alive
+            }
 
             //only while stationary mode
             if (npc.ai[0] == 3f || npc.ai[0] == 1f)
@@ -668,7 +672,7 @@ namespace FargowiltasSouls.NPCs
                             Counter[0] = 0;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                const float rotation = 0.02f;
+                                const float rotation = 0.025f;
                                 Projectile.NewProjectile(npc.Center + new Vector2(3 * npc.direction, 15), Main.rand.NextFloat(9f, 18f) * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))),
                                     ModContent.ProjectileType<Bee>(), npc.damage / 5, 0f, Main.myPlayer, npc.target, Main.rand.Next(2) == 0 ? -rotation : rotation);
                                 Projectile.NewProjectile(npc.Center + new Vector2(3 * npc.direction, 15), -Main.rand.NextFloat(9f, 18f) * Vector2.UnitX.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))),
@@ -694,21 +698,40 @@ namespace FargowiltasSouls.NPCs
                     return false;
                 }
 
-                Counter[0]++;
-                if (Counter[0] >= 90)
+                if (npc.life > npc.lifeMax / 2)
                 {
-                    Counter[0] = 0;
-                    Counter[1]++;
-                    if (Counter[1] > 3)
+                    if (++Counter[0] >= 90) //stinger sprays above 50%
                     {
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                            FargoGlobalProjectile.XWay(16, npc.Center, ProjectileID.Stinger, 6, 11, 1);
-                        Counter[1] = 0;
+                        Counter[0] = 0;
+                        Counter[1]++;
+                        if (Counter[1] > 3)
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                FargoGlobalProjectile.XWay(16, npc.Center, ProjectileID.Stinger, 6, 11, 1);
+                            Counter[1] = 0;
+                        }
+                        else
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                FargoGlobalProjectile.XWay(8, npc.Center, ProjectileID.Stinger, 6, 11, 1);
+                        }
                     }
-                    else
+                }
+                else
+                {
+                    if (++Counter[0] > 600) //lobs hives below 50%
                     {
+                        Counter[0] = 0;
+                        const float gravity = 0.25f;
+                        float time = 60f;
+                        Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 30f;
+                        distance.X = distance.X / time;
+                        distance.Y = distance.Y / time - 0.5f * gravity * time;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
-                            FargoGlobalProjectile.XWay(8, npc.Center, ProjectileID.Stinger, 6, 11, 1);
+                        {
+                            Projectile.NewProjectile(npc.Center, distance, ModContent.ProjectileType<Beehive>(), 
+                                npc.damage / 4, 0f, Main.myPlayer, time - 2);
+                        }
                     }
                 }
             }
@@ -1424,7 +1447,7 @@ namespace FargowiltasSouls.NPCs
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 speed = Vector2.UnitX.RotatedBy(npc.rotation);
-                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<PhantasmalDeathray>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<PhantasmalDeathray>(), npc.damage / 3, 0f, Main.myPlayer, 0f, npc.whoAmI);
                             }
                             Counter[0]++;
                             npc.ai[0] = 4f;
@@ -1653,10 +1676,10 @@ namespace FargowiltasSouls.NPCs
                             {
                                 float speed = 14f * Math.Min((Counter[2] - 30) / 120f, 1f); //fan out gradually
                                 float baseRotation = npc.rotation - (float)Math.PI / 2;
-                                for (int i = 0; i < 6; i++)
+                                for (int i = 0; i < 5; i++)
                                 {
-                                    Projectile.NewProjectile(npc.Center, speed * (baseRotation + (float)Math.PI / 3f * i).ToRotationVector2(),
-                                        ModContent.ProjectileType<EyeFire2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center, speed * (baseRotation + (float)Math.PI / 2.5f * i).ToRotationVector2(),
+                                        ModContent.ProjectileType<EyeFire2>(), npc.damage / 5, 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -1838,7 +1861,9 @@ namespace FargowiltasSouls.NPCs
                             Counter[2] = 0;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int max = (int)(12f - 10f * npc.life / npc.lifeMax);
+                                int max = (int)(12f - 8f * npc.life / npc.lifeMax);
+                                if (max % 2 != 0) //always shoot even number
+                                    max++;
                                 for (int i = 0; i < max; i++)
                                 {
                                     Vector2 speed = npc.DirectionTo(pivot).RotatedBy(2 * Math.PI / max * i);
@@ -1870,7 +1895,7 @@ namespace FargowiltasSouls.NPCs
                                 Vector2 movement = pivot - target.Center;
                                 float difference = movement.Length() - 600;
                                 movement.Normalize();
-                                movement *= difference < 17f ? difference : 17f;
+                                movement *= difference < 34f ? difference : 34f;
                                 target.position += movement;
 
                                 for (int i = 0; i < 20; i++)

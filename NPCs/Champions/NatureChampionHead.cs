@@ -112,7 +112,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             if (npc.localAI[0] > 60 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(npc.Center + Main.rand.NextVector2Circular(npc.width / 2, npc.height / 2),
-                                    Vector2.UnitY * Main.rand.NextFloat(4f, 8f), ProjectileID.GoldenShowerHostile, npc.damage / 4, 0f, Main.myPlayer);
+                                    Vector2.UnitY * Main.rand.NextFloat(-2f, 2f), ProjectileID.GoldenShowerHostile, npc.damage / 4, 0f, Main.myPlayer);
                             }
                         }
                     }

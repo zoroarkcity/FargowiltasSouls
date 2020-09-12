@@ -567,7 +567,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 Vector2 movement = pivot - target.Center;
                                 float difference = movement.Length() - 600;
                                 movement.Normalize();
-                                movement *= difference < 17f ? difference : 17f;
+                                movement *= difference < 34f ? difference : 34f;
                                 target.position += movement;
 
                                 for (int i = 0; i < 20; i++)

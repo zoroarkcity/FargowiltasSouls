@@ -456,7 +456,7 @@ pillar DR reduced to 33%
 vortex beater -15%
 will champ drops wizard ench
 nature crystal leaves ignore creepers
-sinister icon makes enemies drop 1 coin instead, hopefully this allows phantoms to spawn
+sinister icon makes enemies drop 1 coin instead, should fix dungeon spirits not spawning from them and similar
 betsy gores and icons
 paintball gun -25%
 eater of worlds inflicts cursed inferno on hit, body and tail do double damage (still less than head)
@@ -466,3 +466,18 @@ recovering debuff duration doubled
 emode abom not drop curse until post-ml
 emode mutant not drop curse until post-abom
 necro grave has another check for the toggle/ench when touched (so you cant stack graves and then meme mutant p2)
+coil vacuum is much stronger
+reti's deathray does less damage (228 to 152), but inflicts ichor and on fire now
+spazmatism wheel damage slightly reduced and number of spokes reduced from 6 to 5
+destroyer always shoots even number of lasers during coil
+champion of nature
+	rain emits light to be more visible hopefully
+	rain cloud is larger but does no contact damage
+	ichor rain has less starting velocity
+sparkling love hearts will eventually just shoot directly at the target
+use pandora's box while standing in front of plantera's bulb to spawn guntera
+use pandora's box while standing in front of flesh walls, on luminite brick to spawn ceiling of moon lord
+holy stars are affected by kill cooldown (they weren't before, this nerfs holy arrows really hard)
+dark casters spray water bolts
+nerfed angry bones bone spray slightly but they shoot baby guardians, rate increases when shot at
+queen bee stops stinger rings below 50%, instead throws hives (rate is slower during subjects, faster without them)

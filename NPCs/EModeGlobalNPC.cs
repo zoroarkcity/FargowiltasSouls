@@ -3929,6 +3929,17 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.DarkCaster:
+                            if (++Counter[0] > 300)
+                            {
+                                Counter[0] = 0;
+                                for (int i = 0; i < 5; i++) //spray water bolts
+                                {
+                                    Main.PlaySound(SoundID.Item21, npc.Center);
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        Projectile.NewProjectile(npc.Center, Main.rand.NextVector2CircularEdge(-4.5f, 4.5f), ModContent.ProjectileType<WaterBoltHostile>(), npc.damage / 4, 0f, Main.myPlayer);
+                                }
+                            }
+                            goto case NPCID.FireImp;
                         case NPCID.FireImp:
                             if (Counter[1] > 0)
                             {
@@ -4054,7 +4065,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.AngryBonesBig:
                         case NPCID.AngryBonesBigHelmet:
                         case NPCID.AngryBonesBigMuscle:
-                            if (++Counter[0] > 180)
+                            if (++Counter[0] > 180) //spray bones
                             {
                                 if (++Counter[1] > 6 && npc.HasValidTarget && Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
                                 {
@@ -4062,7 +4073,6 @@ namespace FargowiltasSouls.NPCs
                                     Vector2 speed = new Vector2(Main.rand.Next(-100, 101), Main.rand.Next(-100, 101));
                                     speed.Normalize();
                                     speed *= 6f;
-                                    speed += npc.velocity * 1.25f;
                                     speed.Y -= Math.Abs(speed.X) * 0.2f;
                                     speed.Y -= 3f;
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -4070,6 +4080,14 @@ namespace FargowiltasSouls.NPCs
                                 }
                                 if (Counter[0] > 300)
                                     Counter[0] = 0;
+                            }
+                            if (npc.justHit)
+                                Counter[2] += 60;
+                            if (++Counter[2] > 300) //shoot baby guardians
+                            {
+                                Counter[2] = 0;
+                                if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasValidTarget && Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
+                                    Projectile.NewProjectile(npc.Center, npc.DirectionTo(Main.player[npc.target].Center), ModContent.ProjectileType<SkeletronGuardian2>(), npc.damage / 4, 0f, Main.myPlayer);
                             }
                             break;
 
@@ -4561,7 +4579,6 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.WaterSphere:
                         target.AddBuff(BuffID.Wet, 1200);
-                        //target.AddBuff(BuffID.Silenced, 120);
                         break;
 
                     case NPCID.GiantShelly:

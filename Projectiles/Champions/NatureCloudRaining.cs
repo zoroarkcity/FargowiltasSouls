@@ -26,8 +26,14 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.hostile = true;
             projectile.timeLeft = 300;
             projectile.tileCollide = false;
-            
+
+            projectile.scale = 1.5f;
             cooldownSlot = 1;
+        }
+
+        public override bool CanDamage()
+        {
+            return false;
         }
 
         public override void AI()
