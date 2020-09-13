@@ -91,10 +91,7 @@ namespace FargowiltasSouls.NPCs.Champions
             switch ((int)npc.ai[0])
             {
                 case -3: //crimson
-                    if (body.Distance(player.Center) < 3000 && body.Distance(player.Center) > 300)
-                        targetPos = player.Center - Vector2.UnitY * 250f;
-                    else
-                        targetPos = body.Center + body.DirectionTo(player.Center) * 300;
+                    targetPos = player.Center - Vector2.UnitY * 250f;
                     Movement(targetPos, 0.3f, 24f);
 
                     if (++npc.ai[2] > 60) //ichor periodically
@@ -104,7 +101,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             npc.ai[2] = 0;
                         }
 
-                        npc.velocity *= 0.9f;
+                        npc.velocity *= 0.99f;
 
                         if (++npc.localAI[1] > 2) //rain piss
                         {
@@ -147,10 +144,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     if (++npc.localAI[0] < 240) //stay near
                     {
-                        if (body.Distance(player.Center) < 3000 && body.Distance(player.Center) > 300)
-                            targetPos = player.Center;
-                        else
-                            targetPos = body.Center + body.DirectionTo(player.Center) * 300;
+                        targetPos = player.Center;
                         Movement(targetPos, 0.10f, 24f);
 
                         for (int i = 0; i < 20; i++) //warning ring
@@ -195,10 +189,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case -1: //rain
-                    if (body.Distance(player.Center) < 3000 && body.Distance(player.Center) > 300)
-                        targetPos = player.Center + npc.DirectionFrom(player.Center) * 300;
-                    else
-                        targetPos = body.Center + body.DirectionTo(player.Center) * 300;
+                    targetPos = player.Center + npc.DirectionFrom(player.Center) * 300;
                     Movement(targetPos, 0.25f, 24f);
 
                     if (++npc.localAI[1] > 45)
@@ -280,10 +271,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case 2: //chlorophyte
-                    if (body.Distance(player.Center) < 3000 && body.Distance(player.Center) > 300)
-                        targetPos = player.Center;
-                    else
-                        targetPos = body.Center + body.DirectionTo(player.Center) * 300;
+                    targetPos = player.Center;
                     Movement(targetPos, 0.12f, 24f);
 
                     if (npc.ai[2] == 0)
@@ -515,8 +503,68 @@ namespace FargowiltasSouls.NPCs.Champions
             return false;
         }
 
+        public Vector2 position, oldPosition;
+        private static float X(float t, float x0, float x1, float x2)
+        {
+            return (float)(
+                x0 * Math.Pow((1 - t), 2) +
+                x1 * 2 * t * Math.Pow((1 - t), 1) +
+                x2 * Math.Pow(t, 2)
+            );
+        }
+        private static float Y(float t, float y0, float y1, float y2)
+        {
+            return (float)(
+                 y0 * Math.Pow((1 - t), 2) +
+                 y1 * 2 * t * Math.Pow((1 - t), 1) +
+                 y2 * Math.Pow(t, 2)
+             );
+        }
+
+        public void CheckDrawNeck(SpriteBatch spriteBatch)
+        {
+            if (!(npc.ai[1] > -1 && npc.ai[1] < Main.maxNPCs && Main.npc[(int)npc.ai[1]].active
+                && Main.npc[(int)npc.ai[1]].type == ModContent.NPCType<NatureChampion>()))
+            {
+                return;
+            }
+
+            NPC body = Main.npc[(int)npc.ai[1]];
+
+            if (Main.LocalPlayer.Distance(body.Center) > 1200)
+            {
+                string neckTex = "NPCs/Champions/NatureChampion_Neck";
+                Texture2D neckTex2D = mod.GetTexture(neckTex);
+                Vector2 connector = npc.Center;
+                Vector2 neckOrigin = body.Center + new Vector2(54 * body.spriteDirection, -10);
+                float chainsPerUse = 0.05f;
+                for (float j = 0; j <= 1; j += chainsPerUse)
+                {
+                    if (j == 0)
+                        continue;
+                    Vector2 distBetween = new Vector2(X(j, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X) -
+                    X(j - chainsPerUse, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X),
+                    Y(j, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y) -
+                    Y(j - chainsPerUse, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y));
+                    if (distBetween.Length() > 36 && chainsPerUse > 0.01f)
+                    {
+                        chainsPerUse -= 0.01f;
+                        j -= chainsPerUse;
+                        continue;
+                    }
+                    float projTrueRotation = distBetween.ToRotation() - (float)Math.PI / 2;
+                    Vector2 lightPos = new Vector2(X(j, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X), Y(j, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y));
+                    spriteBatch.Draw(neckTex2D, new Vector2(X(j, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X) - Main.screenPosition.X, Y(j, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y) - Main.screenPosition.Y),
+                    new Rectangle(0, 0, neckTex2D.Width, neckTex2D.Height), body.GetAlpha(Lighting.GetColor((int)lightPos.X / 16, (int)lightPos.Y / 16)), projTrueRotation,
+                    new Vector2(neckTex2D.Width * 0.5f, neckTex2D.Height * 0.5f), 1f, connector.X < neckOrigin.X ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                }
+            }
+        }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
+            CheckDrawNeck(spriteBatch);
+
             Texture2D texture2D13 = Main.npcTexture[npc.type];
             //int num156 = Main.npcTexture[npc.type].Height / Main.npcFrameCount[npc.type]; //ypos of lower right corner of sprite to draw
             //int y3 = num156 * npc.frame.Y; //ypos of upper left corner of sprite to draw

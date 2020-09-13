@@ -86,6 +86,7 @@ namespace FargowiltasSouls.Projectiles
                     case ProjectileID.PhantasmalDeathray:
                     case ProjectileID.SaucerDeathray:
                     case ProjectileID.Sharknado:
+                    case ProjectileID.Cthulunado:
                         ImmuneToGuttedHeart = true;
                         break;
 

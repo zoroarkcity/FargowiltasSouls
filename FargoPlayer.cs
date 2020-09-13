@@ -90,7 +90,8 @@ namespace FargowiltasSouls
         public int IcicleCount = 0;
         private int icicleCD = 0;
         public bool PalladEnchant;
-        private int palladiumCD = 0;
+        public int PalladCounter;
+        //private int palladiumCD = 0;
         public bool OriEnchant;
         public bool OriSpawn = false;
         public bool MeteorEnchant;
@@ -1749,17 +1750,10 @@ namespace FargowiltasSouls
                 player.endurance = 0;
             }
 
-            if (MutantNibble)
+            if (MutantNibble) //disables lifesteal, mostly
             {
-                //disables lifesteal, mostly
-                if (player.statLife > StatLifePrevious)
+                if (player.statLife > 0 && StatLifePrevious > 0 && player.statLife > StatLifePrevious)
                     player.statLife = StatLifePrevious;
-                else
-                    StatLifePrevious = player.statLife;
-            }
-            else
-            {
-                StatLifePrevious = player.statLife;
             }
 
             if (Defenseless)
@@ -1897,6 +1891,27 @@ namespace FargowiltasSouls
                     player.statDefense += (int)(eternityDamage * 100); //10 defense per .1 damage
                 }
             }
+
+            if (PalladEnchant)
+            {
+                int increment = player.statLife - StatLifePrevious;
+                if (increment > 0)
+                {
+                    PalladCounter += increment;
+                    if (PalladCounter > 80)
+                    {
+                        PalladCounter = 0;
+                        if (player.whoAmI == Main.myPlayer && player.statLife < player.statLifeMax2 && SoulConfig.Instance.GetValue(SoulConfig.Instance.PalladiumOrb))
+                        {
+                            int damage = EarthForce || WizardEnchant ? 80 : 40;
+                            Projectile.NewProjectile(player.Center, -Vector2.UnitY, ModContent.ProjectileType<Projectiles.Souls.PalladOrb>(),
+                                HighestDamageTypeScaling(damage), 10f, player.whoAmI, -1);
+                        }
+                    }
+                }
+            }
+
+            StatLifePrevious = player.statLife;
         }
 
         public override float UseTimeMultiplier(Item item)
@@ -2489,6 +2504,11 @@ namespace FargowiltasSouls
 
         public void OnHitNPCEither(NPC target, int damage, float knockback, bool crit, int projectile = -1)
         {
+            if (PalladEnchant && !player.onHitRegen)
+            {
+                player.AddBuff(BuffID.RapidHealing, Math.Min(300, damage / 3)); //heal time based on damage dealt, capped at 5sec
+            }
+
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.CopperLightning) && CopperEnchant && copperCD == 0)
             {
                 CopperEffect(target);
@@ -2655,7 +2675,7 @@ namespace FargowiltasSouls
             }
             
 
-            if (PalladEnchant && !TerrariaSoul && palladiumCD == 0 && !target.immortal && !player.moonLeech)
+            /*if (PalladEnchant && !TerrariaSoul && palladiumCD == 0 && !target.immortal && !player.moonLeech)
             {
                 int heal = damage / 10;
 
@@ -2668,7 +2688,7 @@ namespace FargowiltasSouls
                 player.statLife += heal;
                 player.HealEffect(heal);
                 palladiumCD = 240;
-            }
+            }*/
 
             if (NymphsPerfume && NymphsPerfumeCD <= 0 && !target.immortal && !player.moonLeech)
             {

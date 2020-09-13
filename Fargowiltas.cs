@@ -101,6 +101,7 @@ namespace FargowiltasSouls
             AddToggle("MythrilConfig", "Mythril Weapon Speed", "MythrilEnchant", "9dd290");
             AddToggle("OrichalcumConfig", "Orichalcum Petals", "OrichalcumEnchant", "eb3291");
             AddToggle("PalladiumConfig", "Palladium Healing", "PalladiumEnchant", "f5ac28");
+            AddToggle("PalladiumOrbConfig", "Palladium Orbs", "PalladiumEnchant", "f5ac28");
             AddToggle("TitaniumConfig", "Titanium Shadow Dodge", "TitaniumEnchant", "828c88");
 
             AddToggle("TerraHeader", "Terra Force", "TerraForce", "ffffff");

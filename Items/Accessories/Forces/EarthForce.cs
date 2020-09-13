@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces
 25% chance for your projectiles to explode into shards
 20% increased weapon use speed
 Greatly increases life regeneration after striking an enemy 
-One attack gains 10% life steal every 4 seconds, capped at 16 HP
+You spawn an orb of damaging life energy every 80 life regenerated
 Flower petals will cause extra damage to your target 
 Damaging debuffs deal 5x damage
 One of your projectiles will split into 3 every 3/4 of a second

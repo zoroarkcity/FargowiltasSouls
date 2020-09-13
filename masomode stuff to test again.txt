@@ -485,3 +485,12 @@ queen bee stops stinger rings below 50%, instead throws hives (rate is slower du
 lowered eoc debuff duration
 fixed other caster ai enemies shooting water bolts
 buffed plantera dicer damage slightly
+qb beehive is thrown faster
+adjusted movement of nature heads, mainly crimson (ichor)
+tried something else to fix nature necks not drawing
+nature deathray only in emode
+golem boulders fade in faster but actually hover in place until they finish spawning in
+palladium rework
+	moved back to pre mechs
+	buff time is based on damage, capped at 5sec (always 5sec in force)
+	spits an orb of life energy every 80 life recovered

@@ -723,7 +723,7 @@ namespace FargowiltasSouls.NPCs
                     {
                         Counter[0] = 0;
                         const float gravity = 0.25f;
-                        float time = 60f;
+                        float time = 45f;
                         Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 30f;
                         distance.X = distance.X / time;
                         distance.Y = distance.Y / time - 0.5f * gravity * time;

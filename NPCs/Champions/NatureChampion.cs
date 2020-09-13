@@ -205,7 +205,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         else
                         {
                             float accel = 2f;
-                            /*if (Math.Abs(player.Center.X - npc.Center.X) > 1500) //secretly fast run
+                            /*if (Math.Abs(player.Center.X - npc.Center.X) > 1200) //secretly fast run
                             {
                                 accel = 24f;
                             }
@@ -436,8 +436,18 @@ namespace FargowiltasSouls.NPCs.Champions
                             set = Main.rand.Next(configurations.Length);
                         lastSet = set;
 
-                        ActivateHead(heads[configurations[set].Key]);
-                        ActivateHead(heads[configurations[set].Value]);
+                        if (Main.expertMode) //activate both in expert
+                        {
+                            ActivateHead(heads[configurations[set].Key]);
+                            ActivateHead(heads[configurations[set].Value]);
+                        }
+                        else //only activate one in normal
+                        {
+                            if (Main.rand.Next(2) == 0)
+                                ActivateHead(heads[configurations[set].Key]);
+                            else
+                                ActivateHead(heads[configurations[set].Value]);
+                        }
                     }
 
                     if (++npc.ai[1] > 300) //wait
@@ -473,7 +483,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     goto case 0;
 
                 case 11: //deathrays
-                    if (npc.ai[2] == 0)
+                    if (npc.ai[2] == 0 && FargoSoulsWorld.MasochistMode)
                     {
                         npc.ai[2] = 1;
 
@@ -512,7 +522,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
                     }
 
-                    if (++npc.ai[1] > 330) //wait
+                    if (++npc.ai[1] > 330 || !FargoSoulsWorld.MasochistMode) //wait
                     {
                         npc.TargetClosest();
                         npc.ai[0]++;
@@ -744,30 +754,33 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<NatureChampionHead>() && Main.npc[i].ai[1] == npc.whoAmI)
                 {
-                    string neckTex = "NPCs/Champions/NatureChampion_Neck";
-                    Texture2D neckTex2D = mod.GetTexture(neckTex);
-                    Vector2 connector = Main.npc[i].Center;
-                    Vector2 neckOrigin = npc.Center + new Vector2(54 * npc.spriteDirection, -10);
-                    float chainsPerUse = 0.05f;
-                    for (float j = 0; j <= 1; j += chainsPerUse)
+                    if (npc.Distance(Main.LocalPlayer.Center) <= 1200)
                     {
-                        if (j == 0)
-                            continue;
-                        Vector2 distBetween = new Vector2(X(j, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X) -
-                        X(j - chainsPerUse, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X),
-                        Y(j, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y) -
-                        Y(j - chainsPerUse, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y));
-                        if (distBetween.Length() > 36 && chainsPerUse > 0.01f)
+                        string neckTex = "NPCs/Champions/NatureChampion_Neck";
+                        Texture2D neckTex2D = mod.GetTexture(neckTex);
+                        Vector2 connector = Main.npc[i].Center;
+                        Vector2 neckOrigin = npc.Center + new Vector2(54 * npc.spriteDirection, -10);
+                        float chainsPerUse = 0.05f;
+                        for (float j = 0; j <= 1; j += chainsPerUse)
                         {
-                            chainsPerUse -= 0.01f;
-                            j -= chainsPerUse;
-                            continue;
+                            if (j == 0)
+                                continue;
+                            Vector2 distBetween = new Vector2(X(j, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X) -
+                            X(j - chainsPerUse, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X),
+                            Y(j, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y) -
+                            Y(j - chainsPerUse, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y));
+                            if (distBetween.Length() > 36 && chainsPerUse > 0.01f)
+                            {
+                                chainsPerUse -= 0.01f;
+                                j -= chainsPerUse;
+                                continue;
+                            }
+                            float projTrueRotation = distBetween.ToRotation() - (float)Math.PI / 2;
+                            Vector2 lightPos = new Vector2(X(j, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X), Y(j, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y));
+                            spriteBatch.Draw(neckTex2D, new Vector2(X(j, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X) - Main.screenPosition.X, Y(j, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y) - Main.screenPosition.Y),
+                            new Rectangle(0, 0, neckTex2D.Width, neckTex2D.Height), npc.GetAlpha(Lighting.GetColor((int)lightPos.X / 16, (int)lightPos.Y / 16)), projTrueRotation,
+                            new Vector2(neckTex2D.Width * 0.5f, neckTex2D.Height * 0.5f), 1f, connector.X < neckOrigin.X ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
                         }
-                        float projTrueRotation = distBetween.ToRotation() - (float)Math.PI / 2;
-                        Vector2 lightPos = new Vector2(X(j, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X), Y(j, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y));
-                        spriteBatch.Draw(neckTex2D, new Vector2(X(j, neckOrigin.X, (neckOrigin.X + connector.X) / 2, connector.X) - Main.screenPosition.X, Y(j, neckOrigin.Y, (neckOrigin.Y + 50), connector.Y) - Main.screenPosition.Y),
-                        new Rectangle(0, 0, neckTex2D.Width, neckTex2D.Height), npc.GetAlpha(Lighting.GetColor((int)lightPos.X / 16, (int)lightPos.Y / 16)), projTrueRotation,
-                        new Vector2(neckTex2D.Width * 0.5f, neckTex2D.Height * 0.5f), 1f, connector.X < neckOrigin.X ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
                     }
 
                     /*Texture2D texture = mod.GetTexture("NPCs/Champions/NatureChampion_Neck");

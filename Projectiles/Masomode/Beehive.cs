@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 projectile.localAI[0] = 1f;
                 Main.PlaySound(SoundID.Item1, projectile.Center);
             }
-            projectile.velocity.Y += 0.2f;
+            projectile.velocity.Y += 0.25f;
 
             projectile.rotation += 0.088f * Math.Sign(projectile.velocity.X);
 

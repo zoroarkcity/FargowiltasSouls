@@ -118,6 +118,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool PalladiumHeal;
 
+        [Label("$Mods.FargowiltasSouls.PalladiumOrbConfig")]
+        [DefaultValue(true)]
+        public bool PalladiumOrb;
+
         [Label("$Mods.FargowiltasSouls.TitaniumConfig")]
         [DefaultValue(true)]
         public bool TitaniumDodge;
