@@ -484,3 +484,4 @@ queen bee stops stinger rings below 50%, instead throws hives (rate is slower du
 
 lowered eoc debuff duration
 fixed other caster ai enemies shooting water bolts
+buffed plantera dicer damage slightly
