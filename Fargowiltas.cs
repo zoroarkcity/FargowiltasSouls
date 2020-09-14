@@ -85,6 +85,18 @@ namespace FargowiltasSouls
 
             #region enchants
 
+            AddToggle("PatreonHeader", "Patreon Items", "RoombaPet", "ffffff");
+            AddToggle("PatreonRoomba", "Roomba", "RoombaPet", "ffffff");
+            AddToggle("PatreonOrb", "Computation Orb", "ComputationOrb", "ffffff");
+            AddToggle("PatreonFishingRod", "Miss Drakovi's Fishing Pole", "MissDrakovisFishingPole", "ffffff");
+            AddToggle("PatreonDoor", "Squidward Door", "SquidwardDoor", "ffffff");
+            AddToggle("PatreonWolf", "Paradox Wolf Soul", "ParadoxWolfSoul", "ffffff");
+            AddToggle("PatreonDove", "Fig Branch", "FigBranch", "ffffff");
+            AddToggle("PatreonKingSlime", "Medallion of the Fallen King", "MedallionoftheFallenKing", "ffffff");
+            AddToggle("PatreonFishron", "Staff Of Unleashed Ocean", "StaffOfUnleashedOcean", "ffffff");
+
+
+
             AddToggle("WoodHeader", "Force of Timber", "TimberForce", "ffffff");
             AddToggle("BorealConfig", "Boreal Snowballs", "BorealWoodEnchant", "8B7464");
             AddToggle("MahoganyConfig", "Mahogany Hook Speed", "RichMahoganyEnchant", "b56c64");
@@ -248,6 +260,8 @@ namespace FargowiltasSouls
 
             AddToggle("SoulHeader", "Souls", "UniverseSoul", "ffffff");
             AddToggle("MeleeConfig", "Melee Speed", "GladiatorsSoul", "ffffff");
+            AddToggle("MagmaStoneConfig", "Magma Stone", "GladiatorsSoul", "ffffff");
+            AddToggle("YoyoBagConfig", "Yoyo Bag", "GladiatorsSoul", "ffffff");
             AddToggle("SniperConfig", "Sniper Scope", "SnipersSoul", "ffffff");
             AddToggle("UniverseConfig", "Universe Attack Speed", "UniverseSoul", "ffffff");
             AddToggle("MiningHuntConfig", "Mining Hunter Buff", "MinerEnchant", "ffffff");
@@ -262,6 +276,9 @@ namespace FargowiltasSouls
             AddToggle("RunSpeedConfig", "Higher Base Run Speed", "SupersonicSoul", "ffffff");
             AddToggle("MomentumConfig", "No Momentum", "SupersonicSoul", "ffffff");
             AddToggle("SupersonicConfig", "Supersonic Speed Boosts", "SupersonicSoul", "ffffff");
+            AddToggle("SupersonicJumpsConfig", "Supersonic Jumps", "SupersonicSoul", "ffffff");
+            AddToggle("SupersonicRocketBootsConfig", "Supersonic Rocket Boots", "SupersonicSoul", "ffffff");
+            AddToggle("SupersonicCarpetConfig", "Supersonic Carpet", "SupersonicSoul", "ffffff");
             AddToggle("EternityConfig", "Eternity Stacking", "EternitySoul", "ffffff");
 
             #endregion

@@ -5,6 +5,7 @@ using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using FargowiltasSouls.Projectiles;
 using Fargowiltas.Items.Tiles;
+using System.Collections.Generic;
 
 namespace FargowiltasSouls.Patreon.Sasha
 {
@@ -32,6 +33,13 @@ namespace FargowiltasSouls.Patreon.Sasha
             item.autoReuse = true;
 
             SetUpItem();
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
+            line.overrideColor = Color.Orange;
+            tooltips.Add(line);
         }
 
         public override bool AltFunctionUse(Player player)
@@ -191,23 +199,25 @@ namespace FargowiltasSouls.Patreon.Sasha
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.GoldenFishingRod);
-            recipe.AddIngredient(ItemID.BalloonPufferfish);
-            recipe.AddIngredient(ItemID.PurpleClubberfish);
-            recipe.AddIngredient(ItemID.FrostDaggerfish, 500);
-            recipe.AddIngredient(ItemID.ZephyrFish);
-            recipe.AddIngredient(ItemID.Toxikarp);
-            recipe.AddIngredient(ItemID.Bladetongue);
-            recipe.AddIngredient(ItemID.CrystalSerpent);
-            recipe.AddIngredient(ItemID.ScalyTruffle);
-            recipe.AddIngredient(ItemID.ObsidianSwordfish);
+            if (SoulConfig.Instance.PatreonFishingRod)
+            {
+                ModRecipe recipe = new ModRecipe(mod);
+                recipe.AddIngredient(ItemID.GoldenFishingRod);
+                recipe.AddIngredient(ItemID.BalloonPufferfish);
+                recipe.AddIngredient(ItemID.PurpleClubberfish);
+                recipe.AddIngredient(ItemID.FrostDaggerfish, 500);
+                recipe.AddIngredient(ItemID.ZephyrFish);
+                recipe.AddIngredient(ItemID.Toxikarp);
+                recipe.AddIngredient(ItemID.Bladetongue);
+                recipe.AddIngredient(ItemID.CrystalSerpent);
+                recipe.AddIngredient(ItemID.ScalyTruffle);
+                recipe.AddIngredient(ItemID.ObsidianSwordfish);
 
-            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
+                recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
 
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+                recipe.SetResult(this);
+                recipe.AddRecipe();
+            }
         }
-
     }
 }

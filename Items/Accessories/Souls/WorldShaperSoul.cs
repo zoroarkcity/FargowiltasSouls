@@ -52,6 +52,11 @@ Summons a pet Magic Lantern");
             item.accessory = true;
             item.value = 750000;
             item.rare = 11;
+
+            item.useStyle = 4;
+            item.useTime = 1;
+            item.UseSound = SoundID.Item6;
+            item.useAnimation = 1;
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)
@@ -63,6 +68,18 @@ Summons a pet Magic Lantern");
                     tooltipLine.overrideColor = new Color?(new Color(255, 239, 2));
                 }
             }
+        }
+
+        public override bool UseItem(Player player)
+        {
+            player.Spawn();
+
+            for (int num348 = 0; num348 < 70; num348++)
+            {
+                Dust.NewDust(player.position, player.width, player.height, 15, 0f, 0f, 150, default(Color), 1.5f);
+            }
+
+            return base.UseItem(player);
         }
 
         public override void UpdateInventory(Player player)

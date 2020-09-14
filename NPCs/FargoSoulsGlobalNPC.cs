@@ -10,6 +10,7 @@ using FargowiltasSouls.Items.Weapons.BossDrops;
 using FargowiltasSouls.NPCs.Critters;
 using FargowiltasSouls.Projectiles.Souls;
 using FargowiltasSouls.Buffs.Souls;
+using Fargowiltas.NPCs;
 
 namespace FargowiltasSouls.NPCs
 {
@@ -595,6 +596,20 @@ namespace FargowiltasSouls.NPCs
             Player player = Main.player[npc.lastInteraction];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
+            if (modPlayer.NecroEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.NecroGuardian) && !npc.boss && modPlayer.NecroCD == 0 && player.ownedProjectileCounts[ModContent.ProjectileType<NecroGrave>()] < 5)
+            {
+                Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, npc.lifeMax / 5);
+
+                if (modPlayer.ShadowForce || modPlayer.WizardEnchant)
+                {
+                    modPlayer.NecroCD = 30;
+                }
+                else
+                {
+                    modPlayer.NecroCD = 60;
+                }
+            }
+
             if (firstIconLoot)
             {
                 firstIconLoot = false;
@@ -615,22 +630,6 @@ namespace FargowiltasSouls.NPCs
         {
             Player player = Main.player[npc.lastInteraction];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-
-            if (modPlayer.NecroEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.NecroGuardian) && !npc.boss && modPlayer.NecroCD == 0)
-            {
-                Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, modPlayer.HighestDamageTypeScaling(npc.lifeMax / 5));
-
-                if (modPlayer.ShadowForce || modPlayer.WizardEnchant)
-                {
-                    modPlayer.NecroCD = 30;
-                }
-                else
-                {
-                    modPlayer.NecroCD = 60;
-                }
-
-               
-            }
 
             if (modPlayer.PlatinumEnchant && !npc.boss && firstLoot)
             {
@@ -666,17 +665,17 @@ namespace FargowiltasSouls.NPCs
             firstLoot = false;
 
             //patreon gang
-            if (npc.type == NPCID.Golem && Main.rand.Next(10) == 0)
+            if (SoulConfig.Instance.PatreonOrb && npc.type == NPCID.Golem && Main.rand.Next(10) == 0)
             {
                 Item.NewItem(npc.Hitbox, ModContent.ItemType<Patreon.Daawnz.ComputationOrb>());
             }
 
-            if (npc.type == NPCID.Squid && Main.rand.Next(50) == 0)
+            if (SoulConfig.Instance.PatreonDoor && npc.type == NPCID.Squid && Main.rand.Next(50) == 0)
             {
                 Item.NewItem(npc.Hitbox, ModContent.ItemType<Patreon.Sam.SquidwardDoor>());
             }
 
-            if (npc.type == NPCID.KingSlime && FargoSoulsWorld.MasochistMode && Main.rand.Next(100) == 0)
+            if (SoulConfig.Instance.PatreonKingSlime && npc.type == NPCID.KingSlime && FargoSoulsWorld.MasochistMode && Main.rand.Next(100) == 0)
             {
                 Item.NewItem(npc.Hitbox, ModContent.ItemType<Patreon.Catsounds.MedallionoftheFallenKing>());
             }
@@ -814,12 +813,12 @@ namespace FargowiltasSouls.NPCs
                 return false;
             }*/
 
-            if (Needles && npc.lifeMax > 1 && Main.rand.Next(2) == 0)
+            if (Needles && npc.lifeMax > 1 && Main.rand.Next(2) == 0 && npc.type != ModContent.NPCType<SuperDummy>())
             {
                 int dmg = 15;
                 int numNeedles = 8;
 
-                if (modPlayer.LifeForce)
+                if (modPlayer.LifeForce || modPlayer.WizardEnchant)
                 {
                     dmg = 50;
                     numNeedles = 16;
@@ -890,7 +889,7 @@ namespace FargowiltasSouls.NPCs
                 damage = (int)(damage * 1.2f);
             }
 
-            if (modPlayer.NecroEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.NecroGuardian) && npc.boss)
+            if (modPlayer.NecroEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.NecroGuardian) && npc.boss && player.ownedProjectileCounts[ModContent.ProjectileType<NecroGrave>()] < 5)
             {
                 necroDamage += damage;
 
@@ -898,7 +897,7 @@ namespace FargowiltasSouls.NPCs
                 {
                     necroDamage = 0;
 
-                    Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, modPlayer.HighestDamageTypeScaling(npc.lifeMax / 50));
+                    Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, npc.lifeMax / 50);
                 }
             }
         }
@@ -910,7 +909,7 @@ namespace FargowiltasSouls.NPCs
             if (target.HasBuff(ModContent.BuffType<ShellHide>()))
                 damage *= 2;
 
-            if (npc.type == NPCID.Wolf && damage > target.statLife)
+            if (SoulConfig.Instance.PatreonWolf && npc.type == NPCID.Wolf && damage > target.statLife)
             {
                 Item.NewItem(npc.Hitbox, ModContent.ItemType<Patreon.ParadoxWolf.ParadoxWolfSoul>());
             }
@@ -1032,7 +1031,7 @@ namespace FargowiltasSouls.NPCs
 
         public override void SetupShop(int type, Chest shop, ref int nextSlot)
         {
-            if (type == NPCID.Steampunker)
+            if (SoulConfig.Instance.PatreonRoomba && type == NPCID.Steampunker)
             {
                 shop.item[nextSlot].SetDefaults(ModContent.ItemType<Patreon.Gittle.RoombaPet>());
                 shop.item[nextSlot].value = 50000;

@@ -119,7 +119,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                         //switch to travel mode
                         projectile.ai[0] = 1;
 
-                        player.GetModPlayer<FargoPlayer>().DarkSpawnCD = 60;
+                        player.GetModPlayer<FargoPlayer>().DarkSpawn = true;
                     }
                     projectile.localAI[0] = 0;
                 }
@@ -146,7 +146,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                     projectile.localAI[0] = 1;
                     projectile.velocity = Vector2.Zero;
 
-                    int attackRate = 30;
+                    int attackRate = 45;
                     projectile.ai[1] += 1f;
 
                     if (projectile.ai[1] >= attackRate)

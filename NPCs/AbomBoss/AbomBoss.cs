@@ -1179,7 +1179,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 Item.NewItem(npc.Hitbox, mod.ItemType("BabyScythe"));
             }
 
-            if (Main.rand.Next(100) < 3)
+            if (SoulConfig.Instance.PatreonFishron && Main.rand.Next(100) < 3)
                 Item.NewItem(npc.Hitbox, mod.ItemType("StaffOfUnleashedOcean"));
 
             FargoSoulsWorld.downedAbom = true;

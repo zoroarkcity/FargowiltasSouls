@@ -5,6 +5,7 @@ using System;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
@@ -393,8 +394,8 @@ Efectos de pociones de Brillo, Espeleólogo, Cazador, y Sentido del peligro; Efe
 Crit chance is set to 50%
 Crit to increase it by 10%
 At 100% every attack gains 10% life steal
-You also gain +10% damage and +10 defense
-This stacks up to 200,000 times until you get hit
+You also gain +5% damage and +5 defense
+This stacks up to 950 times until you get hit
 Additionally grants:");
 
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, 10));
@@ -426,6 +427,23 @@ Additionally grants:");
             item.value = 100000000;
             item.shieldSlot = 5;
             item.defense = 100;
+
+            item.useStyle = 4;
+            item.useTime = 1;
+            item.UseSound = SoundID.Item6;
+            item.useAnimation = 1;
+        }
+
+        public override bool UseItem(Player player)
+        {
+            player.Spawn();
+
+            for (int num348 = 0; num348 < 70; num348++)
+            {
+                Dust.NewDust(player.position, player.width, player.height, 15, 0f, 0f, 150, default(Color), 1.5f);
+            }
+
+            return base.UseItem(player);
         }
 
         public override void UpdateInventory(Player player)
@@ -462,17 +480,20 @@ Additionally grants:");
 
             //UNIVERSE
             modPlayer.UniverseEffect = true;
-            modPlayer.AllDamageUp(2f);
+            modPlayer.AllDamageUp(2.5f);
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.UniverseAttackSpeed))
             {
-                modPlayer.AttackSpeed += 1;
+                modPlayer.AttackSpeed += 2.5f;
             }
             player.maxMinions += 20;
             player.maxTurrets += 10;
             //accessorys
-            player.counterWeight = 556 + Main.rand.Next(6);
-            player.yoyoGlove = true;
-            player.yoyoString = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.YoyoBag))
+            {
+                player.counterWeight = 556 + Main.rand.Next(6);
+                player.yoyoGlove = true;
+                player.yoyoString = true;
+            }
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SniperScope))
             {
                 player.scope = true;

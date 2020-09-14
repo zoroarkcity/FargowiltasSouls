@@ -2,6 +2,39 @@ NEW UPDATE - V 1.4
 
 
 new in beta
+
+-Necro graves no longer scale with your damage
+-Flameburst attack speed is lower
+-Blender looks wayyy better, also its range is essentially infinite, also the extra homing projectiles only spawn when hitting an enemy instead of every second, they can spawn more often if you continue damaging the enemy, they also no longer split again into fragments
+-Updated Destroyer Gun projectile, Destroyer Gun EX is still full destroyer
+-Bunny Mask Slime now inflicts Slimed
+-Chaos Elemental is immune to Confused
+-Umbrella Slime can actually jump out of water now
+-Removed Swamp Thing's amazing ogre snot attack
+-World Shaper Soul and upgrades can now be used to return to spawn like the Cell Phone
+-Necro Graves despawn quicker, and only 5 graves can spawn at once, necro graves are spawned in pre loot now, stuff that isnt calling loot can still drop a grave
+-The Guardian death dust is no longer dumb
+-Fixed Soul of Eternity not giving as much damage as the tooltip said
+-Nerfed SoE to give you 5% damage and 5 defense per stack from 10% and 10, max stacks from 20,000 to 950 (Now Max is 5000% increase damage)
+-Frost Enchant now works on worms
+-Destroyer is not immune to Time Freeze or Chilled
+-Updated Galactic Reformer and Universal Collapse sprite
+-Cactus Enchant will not work on Super Dummy
+-Pumpkin Enchant pumpkins won't explode on friendly npcs
+-Removed Mutating Energy, Eternal Energy uses old Mutating Energy sprite
+-Added Extra jumps, Rocket boots, and carpet toggles to Supersonic Soul, Carpet lasts much longer in Supersonic Soul
+-Truffle Worm is no longer dropped by mushroom enemies 
+-Added Yoyo Bag toggle
+-Added a marker to patreon item tooltips, added toggles to make each patreon item obtainable
+-Dark Artist sentries consistently spawn correctly now !?
+-Shinobi tele thru walls should not explode in multiplayer !?
+
+
+
+
+
+
+
 -Fixed Golden Dipping Vat tile and added animation
 -Broken Shell debuff now has a space
 -Fixed Solar Enchant tooltip saying only melee attacks inflicted Solar flare
@@ -19,12 +52,6 @@ new in beta
 -Meteor Enchant damage now scales with any damage type not just magic
 -Meteor Enchant now longer gets doubled damage in the force/wizard, shower cooldown in force/wizard is reduced a bit more
 -Rain Enchant cloud won't absorb your chlorophye crystals anymore
-
-
-
-
-
-
 
 -Primes Laser cannon renamed to Refractor Blaster
 -Snow enchant visual now toggles with the effect and it goes away when you die
@@ -44,60 +71,25 @@ new in beta
 -Added Acorn Construct (Trojan Squirrel mount) 
 -Deviantt's Curse and Abominationn's Curse recipes now only give 1 instead of 5
 -Tribal Charm no longer effects fishing rods
+-gold dipping vat sprite update
+-big brain buster, sprite
 
 
 
 
 
-
-
-
-
--add necro on bosses to tooltip
--add all toggle colors and actual names
-
-jungle - spores home in slowly
-apprentice works with melee weapons
-shinobi -  Tele through wall doesn't work right in MP
-
-
-todo
-Kill rainbow slime
-timestop isnt a buff or works thru immune
-toggle for extra lures in fish soul, never use bait ever
-
-look over all enchant rcipes again e
-do force upgrades for all
-Apprentice becomes dark artist 
-Dark Artist becomes apprentice but uses epic player shadow copy and they all hold the sentry ??
-tiki - Make it work more consistently, does not confuse free minions, works with worm summons.
-
-red riding - Add a toggle for werewolf visual, remove Celestial Shell for Moon Charm in recipe
-Patreon toggle and marker
-
-Make hornet and imp work with spooky
-recheck eater thru wall meme and all beetle auras
 -Look into meme weapon and enchant nerfs/reworks
 
 -fixed mutant giving no reward at all outside emode 
 -Updated  lava slime jump (tm)
-
 
 Weapons
 -Fish Stick has a smaller tile hitbox because it looked dumb
 -Fish Stick sharks now pierce 
 
 new sprites:
-nuke proj (update item)
-rogue essence and soul
 aelous boots (update recipe, and add vanity)
 -time stop debuff (implement)
-rick painitng
-gold dipping vat
 probes and rainbow slime buffs work?
-big brain buster
-
-plant fiber toggle
-
 
 -See the wiki for full details

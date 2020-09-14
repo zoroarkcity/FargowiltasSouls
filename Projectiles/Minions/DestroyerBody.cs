@@ -9,12 +9,9 @@ namespace FargowiltasSouls.Projectiles.Minions
 {
     public class DestroyerBody : ModProjectile
     {
-        public override string Texture => "Terraria/NPC_135";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Destroyer Body");
-            Main.projFrames[projectile.type] = 2;
         }
 
         public override void SetDefaults()

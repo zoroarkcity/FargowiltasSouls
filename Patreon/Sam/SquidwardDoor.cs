@@ -1,4 +1,6 @@
-﻿using Terraria.ID;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Patreon.Sam
@@ -23,6 +25,13 @@ namespace FargowiltasSouls.Patreon.Sam
             item.consumable = true;
             item.value = 150;
             item.createTile = mod.TileType("SquidwardDoorClosed");
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
+            line.overrideColor = Color.Orange;
+            tooltips.Add(line);
         }
     }
 }

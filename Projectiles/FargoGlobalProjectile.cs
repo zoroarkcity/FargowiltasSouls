@@ -1309,15 +1309,57 @@ namespace FargowiltasSouls.Projectiles
                 {
                     if (!target.HasBuff(ModContent.BuffType<TimeFrozen>()))
                     {
-                        target.AddBuff(ModContent.BuffType<TimeFrozen>(), 60);
-                        target.AddBuff(BuffID.Chilled, 300);
+                        if (target.realLife != -1)
+                        {
+                            NPC head = Main.npc[target.realLife];
+                            head.AddBuff(ModContent.BuffType<TimeFrozen>(), 60);
+                            head.AddBuff(BuffID.Chilled, 300);
+
+                            NPC next = Main.npc[(int)head.ai[0]];
+                            int bodyType = next.type;
+
+                            while (next.active && next.type == bodyType)
+                            {
+                                next.AddBuff(ModContent.BuffType<TimeFrozen>(), 60);
+                                next.AddBuff(BuffID.Chilled, 300);
+                                next = Main.npc[(int)next.ai[0]];
+                            }
+
+                            //one more for the tail
+                            next.AddBuff(ModContent.BuffType<TimeFrozen>(), 60);
+                            next.AddBuff(BuffID.Chilled, 300);
+                        }
+                        else
+                        {
+                            target.AddBuff(ModContent.BuffType<TimeFrozen>(), 60);
+                            target.AddBuff(BuffID.Chilled, 300);
+                        }
                     }
                     else
                     {
                         //full 30 icicles means 2 extra seconds of freeze pog
-                        target.AddBuff(ModContent.BuffType<TimeFrozen>(), 3);
+                        if (target.realLife != -1)
+                        {
+                            NPC head = Main.npc[target.realLife];
+                            head.AddBuff(ModContent.BuffType<TimeFrozen>(), 3);
+
+                            NPC next = Main.npc[(int)head.ai[0]];
+                            int bodyType = next.type;
+
+                            while (next.active && next.type == bodyType)
+                            {
+                                next.AddBuff(ModContent.BuffType<TimeFrozen>(), 3);
+                                next = Main.npc[(int)next.ai[0]];
+                            }
+
+                            //one more for the tail
+                            next.AddBuff(ModContent.BuffType<TimeFrozen>(), 3);
+                        }
+                        else
+                        {
+                            target.AddBuff(ModContent.BuffType<TimeFrozen>(), 3);
+                        }
                     }
-                    
                 }
             }
         }

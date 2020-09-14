@@ -83,9 +83,12 @@ Effects of Sniper Scope, Celestial Cuffs and Mana Flower";
             player.maxTurrets += 4;
 
             //accessorys
-            player.counterWeight = 556 + Main.rand.Next(6);
-            player.yoyoGlove = true;
-            player.yoyoString = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.YoyoBag))
+            {
+                player.counterWeight = 556 + Main.rand.Next(6);
+                player.yoyoGlove = true;
+                player.yoyoString = true;
+            }
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SniperScope))
             {
                 player.scope = true;

@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Projectiles.Minions
 {
     public class DestroyerTail : ModProjectile
     {
-        public override string Texture => "Terraria/NPC_136";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Destroyer Tail");
@@ -19,7 +17,7 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override void SetDefaults()
         {
             projectile.width = 24;
-            projectile.height = 24;
+            projectile.height = 48;
             projectile.penetrate = -1;
             projectile.timeLeft = 300;
             projectile.minion = true;
@@ -120,7 +118,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.position = projectile.Center;
             projectile.width = projectile.height = (int) (num1038 * projectile.scale);
             projectile.Center = projectile.position;
-            if (vector134 != Vector2.Zero) projectile.Center = value67 - Vector2.Normalize(vector134) * 36;
+            if (vector134 != Vector2.Zero) projectile.Center = value67 - Vector2.Normalize(vector134) * 45;
             projectile.spriteDirection = vector134.X > 0f ? 1 : -1;
         }
 

@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Small Sting");
-            Tooltip.SetDefault("Uses darts for ammo\n50% chance to not consume ammo\n'something'");
+            Tooltip.SetDefault("Uses darts for ammo\n50% chance to not consume ammo\n'Repurposed from the abdomen of a defeated foe..'");
         }
 
         public override void SetDefaults()

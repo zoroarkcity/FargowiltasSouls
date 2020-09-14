@@ -67,7 +67,6 @@ namespace FargowiltasSouls
             }
         }
 
-
         [Header("$Mods.FargowiltasSouls.WoodHeader")]
         [Label("$Mods.FargowiltasSouls.BorealConfig")]
         [DefaultValue(true)]
@@ -517,6 +516,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool MagmaStone;
 
+        [Label("$Mods.FargowiltasSouls.YoyoBagConfig")]
+        [DefaultValue(true)]
+        public bool YoyoBag;
+
         [Label("$Mods.FargowiltasSouls.SniperConfig")]
         [DefaultValue(true)]
         public bool SniperScope;
@@ -580,6 +583,18 @@ namespace FargowiltasSouls
         [DefaultValue(5)]
         [Slider]
         public int SupersonicMultiplier;
+
+        [Label("$Mods.FargowiltasSouls.SupersonicJumpsConfig")]
+        [DefaultValue(true)]
+        public bool SupersonicJumps;
+
+        [Label("$Mods.FargowiltasSouls.SupersonicRocketBootsConfig")]
+        [DefaultValue(true)]
+        public bool SupersonicRocketBoots;
+
+        [Label("$Mods.FargowiltasSouls.SupersonicCarpetConfig")]
+        [DefaultValue(true)]
+        public bool SupersonicCarpet;
 
         [Label("$Mods.FargowiltasSouls.EternityConfig")]
         [DefaultValue(true)]
@@ -720,6 +735,43 @@ namespace FargowiltasSouls
 
         #endregion
 
+        [Header("$Mods.FargowiltasSouls.PatreonHeader")]
+        [Label("$Mods.FargowiltasSouls.PatreonRoomba")]
+        [DefaultValue(true)]
+        public bool PatreonRoomba;
+
+        [Label("$Mods.FargowiltasSouls.PatreonOrb")]
+        [DefaultValue(true)]
+        public bool PatreonOrb;
+
+        [Label("$Mods.FargowiltasSouls.PatreonFishingRod")]
+        [DefaultValue(true)]
+        public bool PatreonFishingRod;
+
+        [Label("$Mods.FargowiltasSouls.PatreonDoor")]
+        [DefaultValue(true)]
+        public bool PatreonDoor;
+
+        [Label("$Mods.FargowiltasSouls.PatreonWolf")]
+        [DefaultValue(true)]
+        public bool PatreonWolf;
+
+        [Label("$Mods.FargowiltasSouls.PatreonDove")]
+        [DefaultValue(true)]
+        public bool PatreonDove;
+
+        [Label("$Mods.FargowiltasSouls.PatreonKingSlime")]
+        [DefaultValue(true)]
+        public bool PatreonKingSlime;
+
+        [Label("$Mods.FargowiltasSouls.PatreonFishron")]
+        [DefaultValue(true)]
+        public bool PatreonFishron;
+
+
+
+
+
         /*[Label("$Mods.FargowiltasSouls.ThoriumHeader")]
         public ThoriumToggles thoriumToggles = new ThoriumToggles();
 
@@ -728,7 +780,7 @@ namespace FargowiltasSouls
 
 
         //soa soon tm
-       
+
         public override void OnLoaded()
         {
             Instance = this;

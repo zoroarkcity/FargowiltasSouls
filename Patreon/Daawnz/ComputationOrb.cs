@@ -1,6 +1,8 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace FargowiltasSouls.Patreon.Daawnz
 {
@@ -26,6 +28,13 @@ Non-magic/summon weapons require 10 mana to use");
             item.accessory = true;
             item.rare = 8;
             item.value = 100000;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
+            line.overrideColor = Color.Orange;
+            tooltips.Add(line);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
