@@ -23,6 +23,11 @@ namespace FargowiltasSouls.Projectiles.Souls
             projectile.timeLeft = 1800;
         }
 
+        public override bool CanDamage()
+        {
+            return false;
+        }
+
         public override void AI()
         {
             Player player = Main.player[projectile.owner];
@@ -35,7 +40,8 @@ namespace FargowiltasSouls.Projectiles.Souls
 
             if (player.Hitbox.Intersects(projectile.Hitbox))
             {
-                Projectile.NewProjectile(projectile.Center, new Vector2(0, -20), ModContent.ProjectileType<DungeonGuardianNecro>(), (int)projectile.ai[0], 1, projectile.owner);
+                if (player.GetModPlayer<FargoPlayer>().NecroEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.NecroGuardian))
+                    Projectile.NewProjectile(projectile.Center, new Vector2(0, -20), ModContent.ProjectileType<DungeonGuardianNecro>(), (int)projectile.ai[0], 1, projectile.owner);
 
                 //dust ring
                 int num1 = 36;

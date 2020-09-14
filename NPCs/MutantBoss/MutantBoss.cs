@@ -1775,9 +1775,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 playerInvulTriggered = true;
             
             //drop summon
-            if (!FargoSoulsWorld.downedMutant && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            if (FargoSoulsWorld.downedAbom && !FargoSoulsWorld.downedMutant && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
-                Item.NewItem(player.Hitbox, ModContent.ItemType<AbominationnVoodooDoll>());
+                Item.NewItem(player.Hitbox, ModContent.ItemType<MutantsCurse>());
                 droppedSummon = true;
             }
         }

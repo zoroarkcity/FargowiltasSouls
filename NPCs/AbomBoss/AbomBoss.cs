@@ -965,7 +965,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 playerInvulTriggered = true;
 
             //drop summon
-            if (!FargoSoulsWorld.downedAbom && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
+            if (NPC.downedMoonlord && !FargoSoulsWorld.downedAbom && Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget && !droppedSummon)
             {
                 Item.NewItem(player.Hitbox, ModContent.ItemType<AbomsCurse>());
                 droppedSummon = true;

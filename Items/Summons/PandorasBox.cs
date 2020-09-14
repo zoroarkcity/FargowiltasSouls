@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
@@ -32,6 +33,27 @@ namespace FargowiltasSouls.Items.Summons
 
         public override bool UseItem(Player player)
         {
+            Tile centerTile = Framing.GetTileSafely(player.Center);
+            if (centerTile.type == TileID.PlanteraBulb) //spawn guntera when in front of bulb
+            {
+                int type = ModContent.NPCType<NPCs.Guntera.Guntera>();
+                NPC.NewNPC((int)player.position.X + Main.rand.Next(-800, 800), (int)player.position.Y + Main.rand.Next(-1000, -250), type);
+                Main.PlaySound(SoundID.Roar, (int)player.position.X, (int)player.position.Y, 0);
+                return true;
+            }
+
+            if (centerTile.wall == WallID.Flesh) //spawn ceiling when in front of flesh wall and on luminite brick
+            {
+                Tile floorTile = Framing.GetTileSafely(new Vector2(player.Center.X, player.position.Y + player.height + 8));
+                if (floorTile.type == TileID.LunarBrick)
+                {
+                    int type = ModContent.NPCType<NPCs.Ceiling.CeilingOfMoonLord>();
+                    NPC.NewNPC((int)player.position.X + Main.rand.Next(-800, 800), (int)player.position.Y + Main.rand.Next(-1000, -250), type);
+                    Main.PlaySound(SoundID.Roar, (int)player.position.X, (int)player.position.Y, 0);
+                    return true;
+                }
+            }
+
             int totalNPCs = NPCLoader.NPCCount;
 
             for (int i = 0; i < 5; i++)
@@ -55,7 +77,7 @@ namespace FargowiltasSouls.Items.Summons
                     }
                     else
                     {
-                        int spawn = NPC.NewNPC((int)player.position.X + Main.rand.Next(-800, 800), (int)player.position.Y + Main.rand.Next(-1000, -250), npc.type);
+                        NPC.NewNPC((int)player.position.X + Main.rand.Next(-800, 800), (int)player.position.Y + Main.rand.Next(-1000, -250), npc.type);
                     }
                 }
                 //night

@@ -897,11 +897,12 @@ namespace FargowiltasSouls
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.PalladiumHeal))
             {
-                player.onHitRegen = true;
+                if (EarthForce || TerrariaSoul)
+                    player.onHitRegen = true;
                 PalladEnchant = true;
 
-                if (palladiumCD > 0)
-                    palladiumCD--;
+                /*if (palladiumCD > 0)
+                    palladiumCD--;*/
             }
         }
 

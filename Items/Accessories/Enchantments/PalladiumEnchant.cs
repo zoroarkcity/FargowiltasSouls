@@ -13,8 +13,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Palladium Enchantment");
             Tooltip.SetDefault(
-@"Greatly increases life regeneration after striking an enemy
-One attack gains 10% life steal every 4 seconds, capped at 8 HP
+@"Briefly increases life regeneration after striking an enemy
+You spawn an orb of damaging life energy every 80 life regenerated
 'You feel your wounds slowly healing' ");
             DisplayName.AddTranslation(GameCulture.Chinese, "钯金魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, 
@@ -58,7 +58,7 @@ One attack gains 10% life steal every 4 seconds, capped at 8 HP
             recipe.AddIngredient(ItemID.PalladiumSword);
             recipe.AddIngredient(ItemID.SoulDrain);
             //sanguine staff
-            recipe.AddIngredient(ItemID.VampireKnives);
+            //recipe.AddIngredient(ItemID.VampireKnives);
             recipe.AddIngredient(ItemID.UndergroundReward);
 
             recipe.AddTile(TileID.CrystalBall);

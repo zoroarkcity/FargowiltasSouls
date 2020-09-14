@@ -117,6 +117,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool PalladiumHeal;
 
+        [Label("$Mods.FargowiltasSouls.PalladiumOrbConfig")]
+        [DefaultValue(true)]
+        public bool PalladiumOrb;
+
         [Label("$Mods.FargowiltasSouls.TitaniumConfig")]
         [DefaultValue(true)]
         public bool TitaniumDodge;
@@ -367,6 +371,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.MasoEyeConfig")]
         [DefaultValue(true)]
         public bool AgitatedLens;
+
+        [Label("$Mods.FargowiltasSouls.MasoHoneyConfig")]
+        [DefaultValue(true)]
+        public bool QueenStingerHoney;
 
         [Label("$Mods.FargowiltasSouls.MasoSkeleConfig")]
         [DefaultValue(true)]

@@ -114,6 +114,8 @@ namespace FargowiltasSouls.Projectiles.Deathrays
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(BuffID.Burning, 300);
+            target.AddBuff(BuffID.OnFire, 300);
+            target.AddBuff(BuffID.Ichor, 300);
         }
     }
 }

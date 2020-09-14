@@ -47,13 +47,18 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 int ai0 = (int)projectile.ai[0];
                 if (Main.npc[ai0].CanBeChasedBy())
                 {
-                    float rotation = projectile.velocity.ToRotation();
-                    Vector2 vel = Main.npc[ai0].Center - projectile.Center;
-                    float targetAngle = vel.ToRotation();
-                    projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, projectile.localAI[1]));
-
-                    if (projectile.localAI[1] < 0.5f)
+                    if (projectile.localAI[1] < 0.16f)
+                    {
+                        float rotation = projectile.velocity.ToRotation();
+                        Vector2 vel = Main.npc[ai0].Center - projectile.Center;
+                        float targetAngle = vel.ToRotation();
                         projectile.localAI[1] += 1f / 1500f;
+                        projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, projectile.localAI[1]));
+                    }
+                    else //eventually just switch to direct aim
+                    {
+                        projectile.velocity = projectile.DirectionTo(Main.npc[ai0].Center) * projectile.velocity.Length();
+                    }
                 }
                 else
                 {

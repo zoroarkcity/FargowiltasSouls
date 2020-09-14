@@ -52,6 +52,11 @@ namespace FargowiltasSouls.Projectiles.Souls
             }
         }
 
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            crit = Main.player[projectile.owner].GetModPlayer<FargoPlayer>().TerrariaSoul;
+        }
+
         private int HomeOnTarget()
         {
             const bool homingCanAimAtWetEnemies = true;

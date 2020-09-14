@@ -24,6 +24,11 @@ namespace FargowiltasSouls.Projectiles.Champions
             cooldownSlot = 1;
         }
 
+        public override void AI()
+        {
+            Lighting.AddLight(projectile.Center, 0.5f, 0.75f, 1f);
+        }
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             target.AddBuff(BuffID.Wet, 300);

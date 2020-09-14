@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
@@ -9,12 +10,11 @@ namespace FargowiltasSouls.Items.Summons
 {
 	public class DevisCurse : ModItem
 	{
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Deviantt's Curse");
-		}
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(4, 7));
+        }
 
         /*public override bool Autoload(ref string name)
         {
@@ -32,6 +32,8 @@ namespace FargowiltasSouls.Items.Summons
             item.useStyle = 4;
             item.consumable = true;
             item.value = Item.buyPrice(0, 2);
+
+            item.noUseGraphic = true;
         }
 
         public override bool UseItem(Player player)

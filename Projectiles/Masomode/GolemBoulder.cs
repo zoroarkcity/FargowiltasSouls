@@ -33,15 +33,20 @@ namespace FargowiltasSouls.Projectiles.Masomode
             return projectile.alpha == 0;
         }
 
-        public override void AI()
+        public override bool PreAI()
         {
-            projectile.alpha -= 5;
+            projectile.alpha -= 8;
             if (projectile.alpha < 0)
                 projectile.alpha = 0;
 
             if (projectile.alpha > 0) //pause in air until fully faded in
-                return;
+                return false;
 
+            return true;
+        }
+
+        public override void AI()
+        {
             if (!projectile.tileCollide)
             {
                 Tile tile = Framing.GetTileSafely(projectile.Center - Vector2.UnitY * 26);

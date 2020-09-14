@@ -504,9 +504,15 @@ namespace FargowiltasSouls.NPCs
                 
 
                 case NPCID.EaterofWorldsHead:
+                    npc.buffImmune[BuffID.CursedInferno] = true;
+                    break;
                 case NPCID.EaterofWorldsBody:
+                    npc.buffImmune[BuffID.CursedInferno] = true;
+                    npc.damage *= 2;
+                    break;
                 case NPCID.EaterofWorldsTail:
                     npc.buffImmune[BuffID.CursedInferno] = true;
+                    npc.damage *= 2;
                     break;
 
                 case NPCID.EaterofSouls:
@@ -1263,7 +1269,7 @@ namespace FargowiltasSouls.NPCs
                         //minibosses
                         case NPCID.RuneWizard:
                             RuneWizardAI(npc);
-                            goto case NPCID.DarkCaster;
+                            goto case NPCID.FireImp;
 
                         case NPCID.RainbowSlime:
                             RainbowSlimeAI(npc);
@@ -1294,7 +1300,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.Tim:
                             Aura(npc, 450, BuffID.Silenced, true, 15, true);
                             Aura(npc, 150, BuffID.Cursed, false, 20, true);
-                            goto case NPCID.DarkCaster;
+                            goto case NPCID.FireImp;
 
                         case NPCID.CochinealBeetle: //damage up
                             Aura(npc, 400, -1, false, 60);
@@ -3758,7 +3764,7 @@ namespace FargowiltasSouls.NPCs
                             }
                             if (npc.noTileCollide)
                                 npc.velocity.Y++;
-                            goto case NPCID.DarkCaster;
+                            goto case NPCID.FireImp;
 
                         case NPCID.GoblinThief:
                             npc.position.X += npc.velocity.X / 2f;
@@ -3940,6 +3946,17 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.DarkCaster:
+                            if (++Counter[0] > 300)
+                            {
+                                Counter[0] = 0;
+                                for (int i = 0; i < 5; i++) //spray water bolts
+                                {
+                                    Main.PlaySound(SoundID.Item21, npc.Center);
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        Projectile.NewProjectile(npc.Center, Main.rand.NextVector2CircularEdge(-4.5f, 4.5f), ModContent.ProjectileType<WaterBoltHostile>(), npc.damage / 4, 0f, Main.myPlayer);
+                                }
+                            }
+                            goto case NPCID.FireImp;
                         case NPCID.FireImp:
                             if (Counter[1] > 0)
                             {
@@ -4065,7 +4082,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.AngryBonesBig:
                         case NPCID.AngryBonesBigHelmet:
                         case NPCID.AngryBonesBigMuscle:
-                            if (++Counter[0] > 180)
+                            if (++Counter[0] > 180) //spray bones
                             {
                                 if (++Counter[1] > 6 && npc.HasValidTarget && Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
                                 {
@@ -4073,7 +4090,6 @@ namespace FargowiltasSouls.NPCs
                                     Vector2 speed = new Vector2(Main.rand.Next(-100, 101), Main.rand.Next(-100, 101));
                                     speed.Normalize();
                                     speed *= 6f;
-                                    speed += npc.velocity * 1.25f;
                                     speed.Y -= Math.Abs(speed.X) * 0.2f;
                                     speed.Y -= 3f;
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -4081,6 +4097,14 @@ namespace FargowiltasSouls.NPCs
                                 }
                                 if (Counter[0] > 300)
                                     Counter[0] = 0;
+                            }
+                            if (npc.justHit)
+                                Counter[2] += 60;
+                            if (++Counter[2] > 300) //shoot baby guardians
+                            {
+                                Counter[2] = 0;
+                                if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasValidTarget && Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
+                                    Projectile.NewProjectile(npc.Center, npc.DirectionTo(Main.player[npc.target].Center), ModContent.ProjectileType<SkeletronGuardian2>(), npc.damage / 4, 0f, Main.myPlayer);
                             }
                             break;
 
@@ -4406,6 +4430,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.EyeofCthulhu:
                     case NPCID.WanderingEye:
                     case NPCID.ServantofCthulhu:
+                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 180);
+                        goto case NPCID.DemonEye;
                     case NPCID.DemonEye:
                     case NPCID.DemonEyeOwl:
                     case NPCID.DemonEyeSpaceship:
@@ -4436,6 +4462,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.EaterofWorldsHead:
                     case NPCID.EaterofWorldsBody:
                     case NPCID.EaterofWorldsTail:
+                        target.AddBuff(BuffID.CursedInferno, 300);
                         target.AddBuff(ModContent.BuffType<Rotting>(), 600);
                         break;
 
@@ -4570,7 +4597,6 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.WaterSphere:
                         target.AddBuff(BuffID.Wet, 1200);
-                        //target.AddBuff(BuffID.Silenced, 120);
                         break;
 
                     case NPCID.GiantShelly:
@@ -7736,7 +7762,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.LunarTowerSolar:
                     case NPCID.LunarTowerStardust:
                     case NPCID.LunarTowerVortex:
-                        damage /= 2;
+                        damage = (int)(2.0 / 3.0 * damage);
                         break;
 
                     case NPCID.Salamander:
@@ -7982,7 +8008,7 @@ namespace FargowiltasSouls.NPCs
                         if (npc.Distance(Main.player[projectile.owner].Center) > 2500)
                             damage = 0;
                         else
-                            damage /= 2;
+                            damage = (int)(2.0 / 3.0 * damage);
                         break;
 
                     case NPCID.Salamander:
@@ -8324,7 +8350,7 @@ namespace FargowiltasSouls.NPCs
                 if (Main.player[Main.myPlayer].HasBuff(ModContent.BuffType<Recovering>()))
                     return false;
                 else if (AnyBossAlive())
-                    Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<Recovering>(), 3600);
+                    Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<Recovering>(), 7200);
             }
             return true;
         }
@@ -8668,6 +8694,30 @@ namespace FargowiltasSouls.NPCs
                         Main.goreLoaded[368] = true;
                         Main.goreLoaded[369] = true;
                         Main.goreLoaded[370] = true;*/
+                        break;
+
+                    case NPCID.DD2Betsy:
+                        Main.npcTexture[npc.type] = mod.GetTexture((recolor ? "NPCs/Resprites/" : "NPCs/Vanilla/") + "NPC_" + npc.type.ToString());
+                        Main.NPCLoaded[npc.type] = true;
+                        Main.extraTexture[81] = mod.GetTexture(recolor ? "NPCs/Resprites/Extra_81" : "NPCs/Vanilla/Extra_81");
+                        Main.extraTexture[82] = mod.GetTexture(recolor ? "NPCs/Resprites/Extra_82" : "NPCs/Vanilla/Extra_82");
+                        Main.goreTexture[1079] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1079");
+                        Main.goreTexture[1080] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1080");
+                        Main.goreTexture[1081] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1081");
+                        Main.goreTexture[1082] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1082");
+                        Main.goreTexture[1083] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1083");
+                        Main.goreTexture[1084] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1084");
+                        Main.goreTexture[1085] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1085");
+                        Main.goreTexture[1086] = mod.GetTexture((recolor ? "NPCs/Resprites/Gores/" : "NPCs/Vanilla/Gores/") + "Gore_1086");
+                        Main.goreLoaded[1079] = true;
+                        Main.goreLoaded[1080] = true;
+                        Main.goreLoaded[1081] = true;
+                        Main.goreLoaded[1082] = true;
+                        Main.goreLoaded[1083] = true;
+                        Main.goreLoaded[1084] = true;
+                        Main.goreLoaded[1085] = true;
+                        Main.goreLoaded[1086] = true;
+                        Main.npcHeadBossTexture[34] = mod.GetTexture((recolor ? "NPCs/Resprites/" : "NPCs/Vanilla/") + "NPC_Head_Boss_34");
                         break;
 
                     case NPCID.DukeFishron:

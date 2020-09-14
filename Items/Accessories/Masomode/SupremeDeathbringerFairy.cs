@@ -18,7 +18,7 @@ When you land after a jump, slime will fall from the sky over your cursor
 While dashing or running quickly you will create a trail of blood scythes
 Your attacks inflict Venom
 Bees and weak Hornets become friendly
-You have permanent effects of Honey buff
+Gain Honey buff when hurt
 Summons 2 Skeletron arms to whack enemies
 'Supremacy not necessarily guaranteed'");
             DisplayName.AddTranslation(GameCulture.Chinese, "至高告死精灵");
@@ -64,7 +64,7 @@ Summons 2 Skeletron arms to whack enemies
 
             //queen stinger
             player.buffImmune[mod.BuffType("Infested")] = true;
-            player.honey = true;
+            //player.honey = true;
             player.armorPenetration += 10;
             player.npcTypeNoAggro[210] = true;
             player.npcTypeNoAggro[211] = true;

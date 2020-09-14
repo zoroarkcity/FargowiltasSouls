@@ -113,6 +113,7 @@ namespace FargowiltasSouls
             AddToggle("MythrilConfig", "Mythril Weapon Speed", "MythrilEnchant", "9dd290");
             AddToggle("OrichalcumConfig", "Orichalcum Petals", "OrichalcumEnchant", "eb3291");
             AddToggle("PalladiumConfig", "Palladium Healing", "PalladiumEnchant", "f5ac28");
+            AddToggle("PalladiumOrbConfig", "Palladium Orbs", "PalladiumEnchant", "f5ac28");
             AddToggle("TitaniumConfig", "Titanium Shadow Dodge", "TitaniumEnchant", "828c88");
 
             AddToggle("TerraHeader", "Terra Force", "TerraForce", "ffffff");
@@ -197,6 +198,7 @@ namespace FargowiltasSouls
             AddToggle("SupremeFairyHeader", "Supreme Deathbringer Fairy", "SupremeDeathbringerFairy", "ffffff");
             AddToggle("MasoSlimeConfig", "Slimy Shield Effects", "SlimyShield", "ffffff");
             AddToggle("MasoEyeConfig", "Scythes When Dashing", "AgitatingLens", "ffffff");
+            AddToggle("MasoHoneyConfig", "Gain Honey When Hurt", "QueenStinger", "ffffff");
             AddToggle("MasoSkeleConfig", "Skeletron Arms Minion", "NecromanticBrew", "ffffff");
 
             //bionomic 

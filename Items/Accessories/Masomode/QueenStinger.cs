@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             Tooltip.SetDefault(@"Grants immunity to Infested
 Increases armor penetration by 10
 Your attacks inflict Poisoned
-You have permanent effects of Honey buff
+Gain Honey buff when hurt
 Bees and weak Hornets become friendly
 'Ripped right off of a defeated foe'");
             DisplayName.AddTranslation(GameCulture.Chinese, "女王的毒刺");
@@ -37,7 +37,7 @@ Bees and weak Hornets become friendly
         {
             //pen
             player.armorPenetration += 10;
-            player.honey = true;
+            //player.honey = true;
             player.buffImmune[mod.BuffType("Infested")] = true;
 
             //bees

@@ -616,8 +616,8 @@ namespace FargowiltasSouls.NPCs
 
                 if ((modPlayer.MasochistSoul || npc.life <= 2000) && !npc.boss && modPlayer.SinisterIconDrops)
                 {
-                    if (!modPlayer.MasochistSoul)
-                        npc.value = 0;
+                    if (!modPlayer.MasochistSoul && npc.value > 1)
+                        npc.value = 1;
 
                     npc.NPCLoot();
                 }
