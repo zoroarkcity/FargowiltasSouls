@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
-    internal class BlenderProj2 : ModProjectile
+    internal class BlenderOrbital : ModProjectile
     {
         public int Counter = 0;
         
@@ -28,9 +28,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Projectile proj = Main.projectile[(int)projectile.localAI[0]];
 
             projectile.timeLeft++;
-            projectile.rotation += 0.2f;
+            projectile.rotation += 0.5f;
 
-            if (!proj.active || proj.type != ModContent.ProjectileType<BlenderProj>())
+            if (!proj.active || proj.type != ModContent.ProjectileType<BlenderYoyoProj>())
             {
                 projectile.Kill();
                 return;
@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             if (projectile.owner == Main.myPlayer)
             {
                 //rotation mumbo jumbo
-                float distanceFromPlayer = 32;
+                float distanceFromPlayer = 48;
 
                 projectile.position = proj.Center + new Vector2(distanceFromPlayer, 0f).RotatedBy(projectile.ai[1]);
                 projectile.position.X -= projectile.width / 2;
@@ -52,8 +52,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     projectile.ai[1] -= 2f * (float)Math.PI;
                     projectile.netUpdate = true;
                 }
-
-                projectile.rotation = (Main.MouseWorld - projectile.Center).ToRotation() - 5;
             }
 
 
@@ -62,7 +60,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 Counter = 0;
                 int proj2 = mod.ProjectileType("BlenderProj3");
-                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
+                //Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
             }
         }
 
@@ -79,6 +77,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 6;
+
+            Vector2 velocity = Vector2.Normalize(projectile.Center - target.Center) * 10;
+
+            int proj2 = mod.ProjectileType("BlenderProj3");
+            Projectile.NewProjectile(new Vector2(projectile.Center.X, projectile.Center.Y), velocity, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
         }
     }
 }

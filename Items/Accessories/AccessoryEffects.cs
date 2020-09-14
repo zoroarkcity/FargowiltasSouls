@@ -360,22 +360,18 @@ namespace FargowiltasSouls
             }
 
             //spawn tower boi
-            if (player.whoAmI == Main.myPlayer && DarkSpawnCD == 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.DarkArtistMinion)
+            if (player.whoAmI == Main.myPlayer && DarkSpawn && DarkSpawnCD <= 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.DarkArtistMinion)
                 && player.ownedProjectileCounts[ModContent.ProjectileType<FlameburstMinion>()] < maxTowers)
             {
                 Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<FlameburstMinion>(), 0, 0f, player.whoAmI);
-                DarkSpawnCD = 99999;
+                DarkSpawn = false;
+                DarkSpawnCD = 60;
             }
 
-            if (DarkSpawnCD > 60 && player.ownedProjectileCounts[ModContent.ProjectileType<FlameburstMinion>()] < 1)
-            {
-                DarkSpawnCD = 0;
-            }
-            else if (DarkSpawnCD > 0)
+            if (DarkSpawnCD > 0)
             {
                 DarkSpawnCD--;
             }
-                
 
             AddPet(SoulConfig.Instance.FlickerwickPet, hideVisual, BuffID.PetDD2Ghost, ProjectileID.DD2PetGhost);
         }
@@ -973,7 +969,7 @@ namespace FargowiltasSouls
         {
             player.setMonkT3 = true;
             //tele through wall until open space on dash into wall
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShinobiWalls) && player.dashDelay == -1 && player.mount.Type == -1 && player.velocity.X == 0)
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ShinobiWalls) && player.whoAmI == Main.myPlayer && player.dashDelay == -1 && player.mount.Type == -1 && player.velocity.X == 0)
             {
                 var teleportPos = new Vector2();
                 int direction = player.direction;
@@ -1683,6 +1679,8 @@ namespace FargowiltasSouls
             }
         }
 
+        private bool extraCarpetDuration = true;
+
         public void SupersonicSoul(bool hideVisual)
         {
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicSpeed) && !player.GetModPlayer<FargoPlayer>().noSupersonic && !EModeGlobalNPC.AnyBossAlive())
@@ -1707,8 +1705,13 @@ namespace FargowiltasSouls
             }
 
             player.moveSpeed += 0.5f;
-            player.rocketBoots = 3;
-            player.rocketTimeMax = 10;
+
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicRocketBoots, false))
+            {
+                player.rocketBoots = 3;
+                player.rocketTimeMax = 10;
+            }
+            
             player.iceSkate = true;
             //arctic diving gear
             player.arcticDivingGear = true;
@@ -1720,7 +1723,7 @@ namespace FargowiltasSouls
             player.lavaImmune = true;
             player.noFallDmg = true;
             //bundle
-            if (player.wingTime == 0)
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicJumps, false) && player.wingTime == 0)
             {
                 player.doubleJumpCloud = true;
                 player.doubleJumpSandstorm = true;
@@ -1728,7 +1731,20 @@ namespace FargowiltasSouls
                 player.doubleJumpFart = true;
             }
             //magic carpet
-            player.carpet = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SupersonicCarpet, false))
+            {
+                player.carpet = true;
+
+                if (player.canCarpet)
+                {
+                    extraCarpetDuration = true;
+                }
+                else if (extraCarpetDuration)
+                {
+                    extraCarpetDuration = false;
+                    player.carpetTime = 1000;
+                }
+            }
         }
 
         public void FlightMasterySoul()

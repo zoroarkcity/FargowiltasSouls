@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
 
 namespace FargowiltasSouls.Patreon.DemonKing
 {
@@ -34,6 +35,13 @@ namespace FargowiltasSouls.Patreon.DemonKing
             item.buffType = mod.BuffType("DukeFishronBuff");
             item.autoReuse = true;
             item.value = Item.sellPrice(0, 25);
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
+            line.overrideColor = Color.Orange;
+            tooltips.Add(line);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

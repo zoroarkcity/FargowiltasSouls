@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 			item.melee = true;
 			item.channel = true;
 			item.noMelee = true;
-            item.shoot = ModContent.ProjectileType<BlenderProj>();
+            item.shoot = ModContent.ProjectileType<BlenderYoyoProj>();
 			item.useAnimation = 25;
 			item.useTime = 25;
 			item.shootSpeed = 16f;

@@ -141,6 +141,7 @@ namespace FargowiltasSouls
         public bool ShinobiEnchant;
         public bool ValhallaEnchant;
         public bool DarkEnchant;
+        public bool DarkSpawn;
         public int DarkSpawnCD = 0;
         private int apprenticeCD = 0;
         Vector2 prevPosition;
@@ -1885,8 +1886,8 @@ namespace FargowiltasSouls
 
                 if (Eternity)
                 {
-                    if (eternityDamage > 20000)
-                        eternityDamage = 20000;
+                    if (eternityDamage > 47.5f)
+                        eternityDamage = 47.5f;
                     AllDamageUp(eternityDamage);
                     player.statDefense += (int)(eternityDamage * 100); //10 defense per .1 damage
                 }
@@ -2631,7 +2632,7 @@ namespace FargowiltasSouls
 
                         if (SoulConfig.Instance.GetValue(SoulConfig.Instance.EternityStacking, false))
                         {
-                            eternityDamage += .1f;
+                            eternityDamage += .05f;
                         }
                     }
                 }

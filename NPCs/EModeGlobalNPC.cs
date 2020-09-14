@@ -16,6 +16,8 @@ using FargowiltasSouls.Items.Misc;
 using Fargowiltas.NPCs;
 using FargowiltasSouls.Items.Tiles;
 using Fargowiltas.Items.Tiles;
+using FargowiltasSouls.Buffs.Souls;
+using Fargowiltas;
 
 namespace FargowiltasSouls.NPCs
 {
@@ -147,6 +149,10 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.Butcher:
                     npc.knockBackResist = 0f;
+                    break;
+
+                case NPCID.ChaosElemental:
+                    npc.buffImmune[BuffID.Confused] = true;
                     break;
 
                 case NPCID.Tim:
@@ -550,6 +556,8 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.TheDestroyerTail:
                 case NPCID.Probe:
                     npc.buffImmune[BuffID.Suffocation] = true;
+                    npc.buffImmune[ModContent.BuffType<TimeFrozen>()] = false;
+                    npc.buffImmune[BuffID.Chilled] = false;
                     break;
 
                 case NPCID.SkeletronPrime:
@@ -1522,10 +1530,19 @@ namespace FargowiltasSouls.NPCs
                             goto case NPCID.Zombie;
 
                         case NPCID.UmbrellaSlime:
-                            if (npc.velocity.Y > 0)
+                            if (npc.wet)
+                            {
+                                Counter[0] = 30;
+                            }
+
+                            if (Counter[0] > 0)
+                            {
+                                Counter[0]--;
+                            }
+
+                            if (Counter[0] <= 0 && npc.velocity.Y > 0)
                             {
                                 npc.velocity.Y /= 10;
-                                //npc.velocity.X = npc.oldVelocity.X;
                             }
                             break;
 
@@ -4200,13 +4217,13 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.SwampThing:
-                            if (++Counter[0] > 300)
+                            /*if (++Counter[0] > 300)
                             {
                                 Counter[0] = 0;
                                 if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                                     Projectile.NewProjectile(npc.Center, npc.DirectionTo(Main.player[npc.target].Center) * 12f,
                                         ProjectileID.DD2OgreSpit, npc.damage / 4, 0, Main.myPlayer);
-                            }
+                            }*/
                             break;
 
                         case NPCID.Zombie:
@@ -4333,6 +4350,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.SlimeRibbonRed:
                     case NPCID.SlimeRibbonWhite:
                     case NPCID.SlimeRibbonYellow:
+                    case NPCID.SlimeMasked:
                         target.AddBuff(BuffID.Slimed, 120);
                         break;
 
@@ -6430,8 +6448,8 @@ namespace FargowiltasSouls.NPCs
                         Item.NewItem(npc.Hitbox, ItemID.GlowingMushroom, Main.rand.Next(5) + 1);
                         if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.MushroomGrassSeeds);
-                        if (Main.rand.Next(20) == 0)
-                            Item.NewItem(npc.Hitbox, ItemID.TruffleWorm);
+                        //if (Main.rand.Next(20) == 0)
+                        //    Item.NewItem(npc.Hitbox, ItemID.TruffleWorm);
                         break;
 
                     case NPCID.Demon:
@@ -7243,17 +7261,6 @@ namespace FargowiltasSouls.NPCs
                                 /*int maxEX = Main.rand.Next(5) + 5;
                                 for (int i = 0; i < maxEX; i++)
                                     npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<MutantScale>());*/
-
-                                if (FargoSoulsWorld.downedAbom)
-                                {
-                                    /*int maxDoll = Main.rand.Next(5) + 5;
-                                    for (int i = 0; i < maxDoll; i++)
-                                        npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<AbominationnVoodooDoll>());*/
-
-                                    int maxEnergy = Main.rand.Next(10) + 10;
-                                    for (int i = 0; i < maxEnergy; i++)
-                                        npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<MutatingEnergy>());
-                                }
 
                                 for (int i = 0; i < 5; i++)
                                     Item.NewItem(npc.Hitbox, ItemID.Heart);

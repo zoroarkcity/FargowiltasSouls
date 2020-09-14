@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Projectiles.Minions
 {
     public class DestroyerHead : ModProjectile
     {
-        public override string Texture => "Terraria/NPC_134";
-
         public float modifier;
 
         public override void SetStaticDefaults()

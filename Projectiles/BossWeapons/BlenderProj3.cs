@@ -26,7 +26,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             if (Counter >= 75)
             {
-                projectile.scale += .1f;
+                projectile.scale += .02f;
                 projectile.rotation += 0.2f;
             }
 
@@ -80,11 +80,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             int proj2 = ModContent.ProjectileType<BlenderSpray>(); //374;
 
-            if (projectile.owner == Main.myPlayer)
+            /*if (projectile.owner == Main.myPlayer)
             {
                 if (Main.rand.Next(2) == 0)
                 {
-                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 10f, proj2, projectile.damage, projectile.knockBack /*kb*/, Main.myPlayer);
+                    Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 10f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
                     Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 10f, 0f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
                     Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, -10f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
                     Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -10f, 0f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
@@ -96,7 +96,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 8f, -8f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
                     Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -8f, 8f, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
                 }
-            }
+            }*/
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

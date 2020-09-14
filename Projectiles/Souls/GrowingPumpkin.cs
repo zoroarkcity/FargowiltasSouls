@@ -34,7 +34,7 @@ namespace FargowiltasSouls.Projectiles.Souls
             {
                 NPC npc = Main.npc[i];
 
-                if (npc.active && npc.Hitbox.Intersects(projectile.Hitbox))
+                if (npc.active && !npc.friendly && npc.Hitbox.Intersects(projectile.Hitbox))
                 {
                     Player player = Main.player[projectile.owner];
                     FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();

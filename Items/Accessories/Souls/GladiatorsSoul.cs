@@ -66,10 +66,13 @@ Effects of the Fire Gauntlet and Yoyo Bag";
             }
             
             player.kbGlove = true;
-            //yoyo bag
-            player.counterWeight = 556 + Main.rand.Next(6);
-            player.yoyoGlove = true;
-            player.yoyoString = true;
+
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.YoyoBag))
+            {
+                player.counterWeight = 556 + Main.rand.Next(6);
+                player.yoyoGlove = true;
+                player.yoyoString = true;
+            }           
 
             //berserker glove effect, auto swing thing
         }

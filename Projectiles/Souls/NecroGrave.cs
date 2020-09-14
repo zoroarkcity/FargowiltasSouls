@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Projectiles.Souls
             projectile.tileCollide = true;
             projectile.ignoreWater = true;
             projectile.penetrate = -1;
-            projectile.timeLeft = 7200;
+            projectile.timeLeft = 1800;
         }
 
         public override bool CanDamage()

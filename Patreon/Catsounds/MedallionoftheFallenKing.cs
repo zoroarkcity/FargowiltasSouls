@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Patreon.Catsounds
@@ -19,6 +21,13 @@ namespace FargowiltasSouls.Patreon.Catsounds
             item.accessory = true;
             item.rare = 1;
             item.value = 50000;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
+            line.overrideColor = Color.Orange;
+            tooltips.Add(line);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

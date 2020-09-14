@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using System;
+using System.Collections.Generic;
 
 namespace FargowiltasSouls.Patreon.ParadoxWolf
 {
@@ -15,7 +16,8 @@ namespace FargowiltasSouls.Patreon.ParadoxWolf
         {
             DisplayName.SetDefault("Paradox Wolf Soul");
             Tooltip.SetDefault(
-@"Double tap to dash through and damage enemies");
+@"Double tap to dash through and damage enemies
+There is a cooldown of 5 seconds between uses");
         }
 
         public override void SetDefaults()
@@ -25,6 +27,13 @@ namespace FargowiltasSouls.Patreon.ParadoxWolf
             item.accessory = true;
             item.rare = 5;
             item.value = 100000;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
+            line.overrideColor = Color.Orange;
+            tooltips.Add(line);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

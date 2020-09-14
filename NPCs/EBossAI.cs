@@ -17,6 +17,7 @@ using Fargowiltas.Items.Summons.Abom;
 using Fargowiltas.Items.Summons.Mutant;
 using Fargowiltas.Items.Summons.VanillaCopy;
 using FargowiltasSouls.NPCs.EternityMode;
+using FargowiltasSouls.Buffs.Souls;
 
 namespace FargowiltasSouls.NPCs
 {
@@ -1816,6 +1817,9 @@ namespace FargowiltasSouls.NPCs
             
             if (!masoBool[0])
             {
+                npc.buffImmune[ModContent.BuffType<TimeFrozen>()] = false;
+                npc.buffImmune[BuffID.Chilled] = false;
+
                 if (npc.life < (int)(npc.lifeMax * .75))
                 {
                     masoBool[0] = true;
@@ -2161,7 +2165,10 @@ namespace FargowiltasSouls.NPCs
                 return;
             }
 
-            if (npc.buffType[0] != 0)
+            npc.buffImmune[ModContent.BuffType<TimeFrozen>()] = false;
+            npc.buffImmune[BuffID.Chilled] = false;
+
+            if (npc.buffType[0] != 0 && npc.buffType[0] != BuffID.Chilled && npc.buffType[0] != ModContent.BuffType<TimeFrozen>())
                 npc.DelBuff(0);
         }
 

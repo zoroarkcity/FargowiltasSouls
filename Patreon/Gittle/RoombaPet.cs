@@ -2,6 +2,8 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Patreon.Gittle
 {
@@ -20,6 +22,13 @@ namespace FargowiltasSouls.Patreon.Gittle
             item.CloneDefaults(ItemID.ZephyrFish);
             item.shoot = mod.ProjectileType("RoombaPetProj");
             item.buffType = mod.BuffType("RoombaPetBuff");
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
+            line.overrideColor = Color.Orange;
+            tooltips.Add(line);
         }
 
         public override void UseStyle(Player player)
