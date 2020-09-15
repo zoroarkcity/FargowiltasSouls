@@ -525,3 +525,12 @@ will champ uses more spears during his 33% gold shell
 timber spawn ai stuff
 fixed some double instances of the non functioning shadowflame
 fixed soul of siblings not actually giving immunity to the functioning shadowflame
+shadow champ
+	slightly increased damage again
+	BIG buff for guardian damage
+	shadow clones track your movement
+	adjusted split of flaming scythes to fuck you up better
+	flameburst attack changed
+		p1 has higher base vel
+		p2 is old p3 (shoot to both sides which then home in)
+		p3 now shoots both p1 and p2 at the same time but less dense
