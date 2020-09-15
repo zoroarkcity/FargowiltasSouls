@@ -3493,8 +3493,8 @@ namespace FargowiltasSouls
                     return 0.85f;
 
                 case ItemID.DD2SquireBetsySword: //flying dragon
-                    AttackSpeed *= 1.2f;
-                    return 1.2f;
+                    AttackSpeed *= 4f / 3f;
+                    return 4f / 3f;
 
                 case ItemID.MonkStaffT3: //sky dragon's fury
                     return 1.25f;

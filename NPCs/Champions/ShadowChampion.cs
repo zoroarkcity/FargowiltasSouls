@@ -28,7 +28,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 110;
             npc.height = 110;
-            npc.damage = 115;
+            npc.damage = 135;
             npc.defense = 60;
             npc.lifeMax = 330000;
             npc.HitSound = SoundID.NPCHit5;
@@ -230,7 +230,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<ShadowOrb>() && Main.npc[i].ai[0] == npc.whoAmI)
                                 {
                                     Vector2 vel = npc.DirectionTo(Main.npc[i].Center).RotatedBy(Math.PI / 2);
-                                    Projectile.NewProjectile(Main.npc[i].Center, vel, ProjectileID.DemonSickle, npc.damage / 4, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(Main.npc[i].Center, vel, ProjectileID.DemonSickle, npc.damage / 3, 0f, Main.myPlayer);
                                 }
                             }
                         }
@@ -374,7 +374,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                     }
                                 }
                             }
-                            else
+                            else //p1, p2
                             {
                                 for (int i = 0; i < 40; i++)
                                 {
@@ -382,6 +382,8 @@ namespace FargowiltasSouls.NPCs.Champions
                                     float max = 0.0075f;
                                     float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
                                     float ai1 = Main.rand.NextFloat(-max, max);
+                                    if (npc.localAI[3] == 2)
+                                        vel *= 2.5f;
                                     Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
                                 }
                             }
@@ -592,7 +594,10 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             target.AddBuff(BuffID.Darkness, 300);
             if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(BuffID.ShadowFlame, 300);
                 target.AddBuff(BuffID.Blackout, 300);
+            }
         }
 
         public override void BossLoot(ref string name, ref int potionType)

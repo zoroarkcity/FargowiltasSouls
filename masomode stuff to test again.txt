@@ -494,3 +494,24 @@ palladium rework
 	moved back to pre mechs
 	buff time is based on damage, capped at 5sec (always 5sec in force)
 	spits an orb of life energy every 80 life recovered
+
+betsy's fury shots dont break when they hit a regular friendly npc
+flying dragon buffed to +33% damage and speed
+buffed cultist/mutant pillar damage a lot
+cultist p2 frost waves pincer you from above and below
+cultist p2 fireball ring has slightly more fireballs and speed
+earth champ punches slightly faster in p2
+shadow champ
+	all attack damage significantly higher
+	all attacks inflict shadowflame in emode
+	phase 2 flamebursts have much higher base move speed
+	flaming scythes break into homing much closer
+	MUCH higher damage on phase transition scythes
+nature champ spawning ai adjusted, should fix it forever
+nature body and crimson head have no contact damage
+terra champ movement adjusted after sine wave, hopefully returns to you faster
+eridanus deletes your minions for you at each phase transition
+mutant p2 boundary nerfed from 6 spokes to 5
+mutant p2 predictive dash has 10 ticks of leeway on his aim and slightly more delay between dashes
+fixed skeletron (prime) dg form not being disabled during swarm
+styx gazer animation slower

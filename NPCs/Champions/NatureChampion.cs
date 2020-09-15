@@ -75,8 +75,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            cooldownSlot = 1;
-            return true;
+            return false;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -98,7 +97,8 @@ namespace FargowiltasSouls.NPCs.Champions
             if (npc.localAI[3] == 0) //spawn friends
             {
                 npc.TargetClosest(false);
-                if (npc.Distance(Main.player[npc.target].Center) < 1500)
+                npc.localAI[3] = 1;
+                /*if (npc.Distance(Main.player[npc.target].Center) < 1500)
                 {
                     npc.localAI[3] = 1;
                 }
@@ -106,7 +106,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 {
                     Movement(Main.player[npc.target].Center, 0.8f, 32f);
                     return;
-                }
+                }*/
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
@@ -270,20 +270,6 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case 0: //think
-                    if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 3000f
-                        || player.Center.Y < Main.worldSurface * 16 || player.ZoneUnderworldHeight) //despawn code
-                    {
-                        npc.TargetClosest(false);
-                        if (npc.timeLeft > 30)
-                            npc.timeLeft = 30;
-
-                        npc.noTileCollide = true;
-                        npc.noGravity = true;
-                        npc.velocity.Y += 1f;
-
-                        break;
-                    }
-
                     npc.noTileCollide = false;
                     npc.noGravity = false;
 
@@ -386,6 +372,19 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case 2:
+                    if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 3000f
+                        || player.Center.Y < Main.worldSurface * 16 || player.ZoneUnderworldHeight) //despawn code
+                    {
+                        npc.TargetClosest(false);
+                        if (npc.timeLeft > 30)
+                            npc.timeLeft = 30;
+
+                        npc.noTileCollide = true;
+                        npc.noGravity = true;
+                        npc.velocity.Y += 1f;
+
+                        break;
+                    }
                     goto case 0;
 
                 case 3: //decide an attack
@@ -462,25 +461,25 @@ namespace FargowiltasSouls.NPCs.Champions
                     goto case -1;
 
                 case 4:
-                    goto case 0;
+                    goto case 2;
 
                 case 5:
                     goto case 3;
 
                 case 6:
-                    goto case 0;
+                    goto case 2;
 
                 case 7:
                     goto case 3;
 
                 case 8:
-                    goto case 0;
+                    goto case 2;
 
                 case 9:
                     goto case 1;
 
                 case 10:
-                    goto case 0;
+                    goto case 2;
 
                 case 11: //deathrays
                     if (npc.ai[2] == 0 && FargoSoulsWorld.MasochistMode)

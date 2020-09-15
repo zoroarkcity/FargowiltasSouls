@@ -7106,7 +7106,7 @@ namespace FargowiltasSouls.NPCs
                         return false;
 
                     case NPCID.SkeletronHead:
-                        if (npc.ai[1] != 2f)
+                        if (npc.ai[1] != 2f && !FargoSoulsWorld.SwarmActive)
                         {
                             Main.PlaySound(SoundID.Roar, (int)npc.position.X, (int)npc.position.Y, 0);
                             npc.life = npc.lifeMax / 176;
@@ -7125,7 +7125,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.SkeletronPrime:
-                        if (npc.ai[1] != 2f)
+                        if (npc.ai[1] != 2f && !FargoSoulsWorld.SwarmActive)
                         {
                             Main.PlaySound(SoundID.Roar, (int)npc.position.X, (int)npc.position.Y, 0);
                             npc.life = npc.lifeMax / 420;

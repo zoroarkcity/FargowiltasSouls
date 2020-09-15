@@ -180,7 +180,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if ((++npc.localAI[1] > 60 && npc.Distance(player.Center) > 1000) ||
                             (npc.ai[3] > 0 ? npc.Center.X > player.Center.X + 300 : npc.Center.X < player.Center.X - 300))
                         {
-                            npc.ai[1] = 0;
+                            npc.ai[1] = head.localAI[2] == 1 ? 15 : 0;
                             npc.localAI[1] = 0;
                             npc.netUpdate = true;
                         }
