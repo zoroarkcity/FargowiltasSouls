@@ -92,8 +92,12 @@ Eridanus fights alongside you when you use the empowered class
                 {
                     for (int i = 0; i < Main.maxProjectiles; i++) //clear minions
                     {
-                        if (Main.projectile[i].active && Main.projectile[i].owner == player.whoAmI && Main.projectile[i].minionSlots > 0)
+                        if (Main.projectile[i].active && Main.projectile[i].owner == player.whoAmI
+                            && Main.projectile[i].type != ModContent.ProjectileType<Projectiles.Minions.EridanusMinion>()
+                            && (Main.projectile[i].minionSlots > 0 || Main.projectile[i].minion))
+                        {
                             Main.projectile[i].Kill();
+                        }
                     }
                 }
             }

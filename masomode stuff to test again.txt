@@ -515,3 +515,8 @@ mutant p2 boundary nerfed from 6 spokes to 5
 mutant p2 predictive dash has 10 ticks of leeway on his aim and slightly more delay between dashes
 fixed skeletron (prime) dg form not being disabled during swarm
 styx gazer animation slower
+
+after sine attack, terra champ is coming directly at you
+	run
+changed implementation of eri armour minion clear
+earth champ hands glue to you during fireballs if p2 and player is behind where hand should be
