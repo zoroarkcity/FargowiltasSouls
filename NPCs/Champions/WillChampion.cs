@@ -144,7 +144,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             
                             if (Main.netMode != NetmodeID.MultiplayerClient && npc.ai[1] < 300)
                             {
-                                const int max = 6;
+                                int max = npc.life < npc.lifeMax / 2 && FargoSoulsWorld.MasochistMode ? 10 : 6;
                                 float offset = npc.localAI[0] > 0 && player.velocity != Vector2.Zero //aim to intercept
                                     ? Main.rand.NextFloat((float)Math.PI * 2) : player.velocity.ToRotation();
                                 for (int i = 0; i < max; i++)
@@ -160,10 +160,14 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             Main.PlaySound(SoundID.Item4, npc.Center);
 
-                            for (int i = 0; i < Main.maxProjectiles; i++) //purge leftover bombs
+                            for (int i = 0; i < Main.maxProjectiles; i++) //purge leftover bombs and spears
                             {
-                                if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].type == ModContent.ProjectileType<WillBomb>())
+                                if (Main.projectile[i].active && Main.projectile[i].hostile
+                                    && (Main.projectile[i].type == ModContent.ProjectileType<WillBomb>()
+                                    || Main.projectile[i].type == ModContent.ProjectileType<WillJavelin>()))
+                                {
                                     Main.projectile[i].Kill();
+                                }
                             }
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
