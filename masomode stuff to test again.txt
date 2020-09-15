@@ -536,3 +536,4 @@ shadow champ
 		p3 now shoots both p1 and p2 at the same time but less dense
 
 shadow damage slightly reduced, no longer on ml timer for contact damage (prevents doublehitting with tentacle dash)
+earth champ hands decelerate harder in phase 2 (should alleviate them going offscreen while punching)

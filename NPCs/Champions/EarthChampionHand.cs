@@ -161,7 +161,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             npc.position += player.velocity / 10f;
 
                         npc.localAI[3] = 1;
-                        npc.velocity *= 0.95f;
+                        npc.velocity *= npc.localAI[2] == 1 ? 0.9f : 0.95f;
                         npc.rotation = npc.DirectionTo(player.Center).ToRotation() - (float)Math.PI / 2;
                     }
                     else if (npc.ai[1] == 105) //dash
