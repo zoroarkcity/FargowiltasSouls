@@ -28,7 +28,7 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 110;
             npc.height = 110;
-            npc.damage = 140;
+            npc.damage = 130;
             npc.defense = 60;
             npc.lifeMax = 330000;
             npc.HitSound = SoundID.NPCHit5;
@@ -55,11 +55,11 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.dontTakeDamage = true;
         }
 
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        /*public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             cooldownSlot = 1;
             return true;
-        }
+        }*/
 
         /*public override void SendExtraAI(BinaryWriter writer)
         {

@@ -534,3 +534,5 @@ shadow champ
 		p1 has higher base vel
 		p2 is old p3 (shoot to both sides which then home in)
 		p3 now shoots both p1 and p2 at the same time but less dense
+
+shadow damage slightly reduced, no longer on ml timer for contact damage (prevents doublehitting with tentacle dash)
