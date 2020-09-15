@@ -4844,7 +4844,7 @@ namespace FargowiltasSouls.NPCs
                         }
                         target.AddBuff(ModContent.BuffType<Midas>(), 600);
                         if (Main.hardMode)
-                            target.AddBuff(BuffID.ShadowFlame, 300);
+                            target.AddBuff(mod.BuffType("Shadowflame"), 300);
                         break;
 
                     case NPCID.PirateCaptain:
@@ -4880,7 +4880,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.GoblinSummoner:
                     case NPCID.GoblinScout:
                         if (Main.hardMode)
-                            target.AddBuff(BuffID.ShadowFlame, 300);
+                            target.AddBuff(mod.BuffType("Shadowflame"), 300);
                         break;
 
                     case NPCID.ScutlixRider:

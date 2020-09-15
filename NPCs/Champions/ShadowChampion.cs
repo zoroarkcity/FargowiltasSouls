@@ -595,7 +595,7 @@ namespace FargowiltasSouls.NPCs.Champions
             target.AddBuff(BuffID.Darkness, 300);
             if (FargoSoulsWorld.MasochistMode)
             {
-                target.AddBuff(BuffID.ShadowFlame, 300);
+                target.AddBuff(mod.BuffType("Shadowflame"), 300);
                 target.AddBuff(BuffID.Blackout, 300);
             }
         }

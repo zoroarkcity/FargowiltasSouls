@@ -523,3 +523,5 @@ earth champ hands glue to you during fireballs if p2 and player is behind where 
 will champ purges leftover javelins from his regular attack pattern during gold shell phases
 will champ uses more spears during his 33% gold shell
 timber spawn ai stuff
+fixed some double instances of the non functioning shadowflame
+fixed soul of siblings not actually giving immunity to the functioning shadowflame
