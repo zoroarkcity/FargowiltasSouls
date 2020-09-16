@@ -1329,7 +1329,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     else if (npc.ai[1] == 150) //start swinging
                     {
                         targetPos = player.Center;
-                        targetPos.X += 200 * (npc.Center.X < targetPos.X ? -1 : 1);
+                        targetPos.X -= 200 * npc.ai[2];
                         npc.velocity = (targetPos - npc.Center) / 30;
                         npc.netUpdate = true;
 
