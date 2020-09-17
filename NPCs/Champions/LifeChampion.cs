@@ -697,8 +697,9 @@ namespace FargowiltasSouls.NPCs.Champions
             //spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
 
             int currentFrame = npc.frame.Y / (texture2D13.Height / Main.npcFrameCount[npc.type]);
-            Texture2D wing = mod.GetTexture("NPCs/Champions/LifeChampion_Wing" + currentFrame.ToString());
-            Rectangle wingRectangle = wing.Bounds;
+            Texture2D wing = mod.GetTexture("NPCs/Champions/LifeChampion_Wings");
+            int wingHeight = wing.Height / Main.npcFrameCount[npc.type];
+            Rectangle wingRectangle = new Rectangle(0, currentFrame * wingHeight, wing.Width, wingHeight);
             Vector2 wingOrigin = wingRectangle.Size() / 2f;
             
             Color glowColor = Color.White * npc.Opacity;
@@ -707,9 +708,9 @@ namespace FargowiltasSouls.NPCs.Champions
             {
                 Vector2 value4 = npc.oldPos[i];
                 float num165 = 0; //npc.oldRot[i];
-                Main.spriteBatch.Draw(wing, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(wingRectangle), glowColor * 0.5f, num165, wingOrigin, npc.scale, effects, 0f);
+                Main.spriteBatch.Draw(wing, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(wingRectangle), glowColor * 0.5f, num165, wingOrigin, npc.scale * 2, effects, 0f);
             }
-            spriteBatch.Draw(wing, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(wingRectangle), glowColor, 0, wingOrigin, npc.scale, effects, 0f);
+            spriteBatch.Draw(wing, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(wingRectangle), glowColor, 0, wingOrigin, npc.scale * 2, effects, 0f);
 
             //spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
             return false;
