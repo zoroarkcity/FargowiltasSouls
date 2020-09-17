@@ -194,7 +194,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     Vector2 speed = new Vector2(0f, 8f * (j + 1) + 4f).RotatedBy(projectile.rotation);
                     for (int i = 0; i < max; i++)
                         Projectile.NewProjectile(projectile.Center, speed.RotatedBy(rotationInterval * i),
-                            mod.ProjectileType("CelestialFragment"), projectile.damage / 3, 0f, Main.myPlayer, projectile.ai[0]);
+                            mod.ProjectileType("CelestialFragment"), projectile.damage / 2, 0f, Main.myPlayer, projectile.ai[0]);
                 }
             }
         }

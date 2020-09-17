@@ -158,7 +158,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Main.player[projectile.owner].ChangeDir(direction);
             Main.player[projectile.owner].itemRotation = (float)Math.Atan2(projectile.velocity.Y * projectile.direction, projectile.velocity.X * projectile.direction);
 
-            if (++projectile.frameCounter > 1)
+            if (++projectile.frameCounter > 3)
             {
                 projectile.frameCounter = 0;
                 if (++projectile.frame > 10)

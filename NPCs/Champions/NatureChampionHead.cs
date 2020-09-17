@@ -58,6 +58,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
+            if (npc.ai[0] == -3) //crimson head does no contact damage
+                return false;
             cooldownSlot = 1;
             return true;
         }

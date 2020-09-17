@@ -143,7 +143,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
                 Main.dust[d].velocity *= 4f;
             }
 
-            if (++projectile.frameCounter > 1)
+            if (++projectile.frameCounter > 3)
             {
                 projectile.frameCounter = 0;
                 if (++projectile.frame > 10)

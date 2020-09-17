@@ -848,7 +848,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             if (++npc.ai[1] > 120)
                             {
                                 targetPos = player.Center;
-                                targetPos.X += 300 * (npc.Center.X < targetPos.X ? -1 : 1);
+                                targetPos.X -= 300 * npc.ai[2];
                                 npc.velocity = (targetPos - npc.Center) / 30;
 
                                 npc.localAI[2]++;
@@ -1034,13 +1034,19 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
                 case 14: //pause and then initiate dash
                     npc.velocity *= 0.9f;
-                    if (npc.ai[3] == 0)
+
+                    if (npc.ai[1] == 20) //telegraph
                     {
-                        npc.ai[3] = 1;
                         if (npc.ai[2] < 5 && Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, npc.DirectionTo(player.Center + player.velocity * 30f), ModContent.ProjectileType<MutantDeathrayAim>(), 0, 0f, Main.myPlayer, 30f, npc.whoAmI);
                     }
-                    if (++npc.ai[1] > 30)
+
+                    if (npc.ai[1] < 50) //track player up until just before dash
+                    {
+                        npc.localAI[0] = npc.DirectionTo(player.Center + player.velocity * 30f).ToRotation();
+                    }
+
+                    if (++npc.ai[1] > 60)
                     {
                         npc.netUpdate = true;
                         npc.ai[0]++;
@@ -1055,7 +1061,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         }
                         else
                         {
-                            npc.velocity = npc.DirectionTo(player.Center + player.velocity * 30f) * 45f;
+                            npc.velocity = npc.localAI[0].ToRotationVector2() * 45f;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity), ModContent.ProjectileType<MutantDeathray2>(), npc.damage / 5, 0f, Main.myPlayer);
@@ -1063,6 +1069,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSpearDash>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 1f);
                             }
                         }
+                        npc.localAI[0] = 0;
                     }
                     break;
 
@@ -1090,7 +1097,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             npc.ai[2] -= (float)Math.PI * 2;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            int max = FargoSoulsWorld.MasochistMode ? 6 : 4;
+                            int max = FargoSoulsWorld.MasochistMode ? 5 : 4;
                             for (int i = 0; i < max; i++)
                             {
                                 Projectile.NewProjectile(npc.Center, new Vector2(6f, 0).RotatedBy(npc.ai[2] + Math.PI * 2 / max * i),
@@ -1296,9 +1303,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         break;
                     targetPos = player.Center;
                     targetPos.X += 500 * (npc.Center.X < targetPos.X ? -1 : 1);
-                    if (npc.Distance(targetPos) > 50)
+                    if (npc.Distance(targetPos) > 25)
                     {
-                        Movement(targetPos, 0.4f);
+                        Movement(targetPos, 0.8f);
                     }
                     if (++npc.ai[1] > 60)
                     {
@@ -1961,7 +1968,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            damage *= 0.75;
+            damage *= 0.8;
             return true;
         }
 

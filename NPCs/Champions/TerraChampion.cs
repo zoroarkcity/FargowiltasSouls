@@ -462,7 +462,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             npc.localAI[1] = 0;
                             npc.localAI[2] = 0;
                             npc.localAI[3] = 0;
-                            npc.velocity = npc.DirectionTo(player.Center).RotatedBy(-Math.PI / 2) * 18f;
+                            npc.velocity = npc.DirectionTo(player.Center) * npc.velocity.Length();
                         }
                     }
                     break;
