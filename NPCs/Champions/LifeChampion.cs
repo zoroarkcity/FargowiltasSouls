@@ -17,14 +17,15 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Life");
+            Main.npcFrameCount[npc.type] = 8;
             NPCID.Sets.TrailCacheLength[npc.type] = 6;
             NPCID.Sets.TrailingMode[npc.type] = 1;
         }
 
         public override void SetDefaults()
         {
-            npc.width = 110;
-            npc.height = 110;
+            npc.width = 130;
+            npc.height = 130;
             npc.damage = 160;
             npc.defense = 0;
             npc.lifeMax = 35000;
@@ -561,6 +562,21 @@ namespace FargowiltasSouls.NPCs.Champions
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity *= 4f;
             }
+
+            npc.rotation += (float)Math.PI * 2 / 90;
+        }
+
+        public override void FindFrame(int frameHeight)
+        {
+            if (++npc.frameCounter > 4)
+            {
+                npc.frameCounter = 0;
+                npc.frame.Y += frameHeight;
+                if (npc.frame.Y >= frameHeight * 8)
+                {
+                    npc.frame.Y = 0;
+                }
+            }
         }
 
         private void Movement(Vector2 targetPos, float speedModifier, float cap = 12f, bool fastY = false)
@@ -649,10 +665,10 @@ namespace FargowiltasSouls.NPCs.Champions
             }
         }
 
-        public override Color? GetAlpha(Color drawColor)
+        /*public override Color? GetAlpha(Color drawColor)
         {
             return Color.White * npc.Opacity;
-        }
+        }*/
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
@@ -665,7 +681,7 @@ namespace FargowiltasSouls.NPCs.Champions
             Color color26 = lightColor;
             color26 = npc.GetAlpha(color26);
 
-            SpriteEffects effects = npc.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteEffects effects = SpriteEffects.None; /*npc.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
             {
@@ -674,9 +690,28 @@ namespace FargowiltasSouls.NPCs.Champions
                 Vector2 value4 = npc.oldPos[i];
                 float num165 = npc.rotation; //npc.oldRot[i];
                 Main.spriteBatch.Draw(texture2D13, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
-            }
+            }*/
 
             Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
+
+            //spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+
+            int currentFrame = npc.frame.Y / (texture2D13.Height / Main.npcFrameCount[npc.type]);
+            Texture2D wing = mod.GetTexture("NPCs/Champions/LifeChampion_Wing" + currentFrame.ToString());
+            Rectangle wingRectangle = wing.Bounds;
+            Vector2 wingOrigin = wingRectangle.Size() / 2f;
+            
+            Color glowColor = Color.White * npc.Opacity;
+
+            for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
+            {
+                Vector2 value4 = npc.oldPos[i];
+                float num165 = 0; //npc.oldRot[i];
+                Main.spriteBatch.Draw(wing, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(wingRectangle), glowColor * 0.5f, num165, wingOrigin, npc.scale, effects, 0f);
+            }
+            spriteBatch.Draw(wing, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(wingRectangle), glowColor, 0, wingOrigin, npc.scale, effects, 0f);
+
+            //spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
             return false;
         }
     }

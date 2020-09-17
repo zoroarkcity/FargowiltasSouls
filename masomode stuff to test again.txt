@@ -545,3 +545,4 @@ deviantt and mutant movement for their big weapons adjusted so they arent COMPLE
 spirit champ
 	separate iframes for body and hands
 	life slightly reduced
+life champ is sprited (POG)
