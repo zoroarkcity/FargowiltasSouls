@@ -28,9 +28,9 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             npc.width = 150;
             npc.height = 150;
-            npc.damage = 120;
+            npc.damage = 125;
             npc.defense = 40;
-            npc.lifeMax = 600000;
+            npc.lifeMax = 550000;
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath52;
             npc.noGravity = true;
@@ -294,6 +294,12 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (++npc.ai[1] > 600)
                     {
                         npc.dontTakeDamage = false;
+                        npc.netUpdate = true;
+                        npc.ai[0] = 0;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.localAI[3] = 2; //can die now
                     }
                     break;
 
@@ -363,7 +369,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (npc.Distance(targetPos) > 25)
                         Movement(targetPos, 0.8f, 24f);
 
-                    if (++npc.ai[2] > 60)
+                    if (++npc.ai[2] > 45)
                     {
                         npc.ai[2] = 0;
                         
@@ -381,9 +387,12 @@ namespace FargowiltasSouls.NPCs.Champions
                             }
                             else //sandnado
                             {
+                                npc.GetGlobalNPC<EModeGlobalNPC>().masoBool[0] = !npc.GetGlobalNPC<EModeGlobalNPC>().masoBool[0];
+
                                 Vector2 target = player.Center;
-                                target.X += player.velocity.X * 90;
-                                target.Y -= 150;
+                                if (npc.GetGlobalNPC<EModeGlobalNPC>().masoBool[0] && npc.life < npc.lifeMax * 0.66)
+                                    target += player.velocity * 90f; //alternate between predictive and direct aim
+                                target.Y -= 100;
                                 Projectile.NewProjectile(target, Vector2.Zero, ProjectileID.SandnadoHostileMark, 0, 0f, Main.myPlayer);
 
                                 int length = (int)npc.Distance(target) / 10;
@@ -429,6 +438,25 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
                     }
 
+                    if (npc.life < npc.lifeMax * 0.66)
+                    {
+                        if (++npc.ai[3] > 55) //homing spectre bolts
+                        {
+                            npc.ai[3] = 0;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                const int max = 5;
+                                for (int i = 0; i < max; i++)
+                                {
+                                    Vector2 speed = Main.rand.NextFloat(1, 2) * Vector2.UnitX.RotatedByRandom(Math.PI * 2);
+                                    float ai1 = 60 + Main.rand.Next(30);
+                                    Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<SpiritSpirit>(),
+                                        npc.damage / 4, 0f, Main.myPlayer, npc.target, ai1);
+                                }
+                            }
+                        }
+                    }
+
                     if (++npc.ai[1] > 360)
                     {
                         npc.TargetClosest();
@@ -456,12 +484,23 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            for (int i = 0; i < 15; i++)
+                            for (int i = 0; i < 15; i++) //sword burst
                             {
                                 float speed = Main.rand.NextFloat(4f, 8f);
                                 Vector2 velocity = speed * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * 2 * Math.PI);
                                 float ai1 = speed / Main.rand.NextFloat(60f, 120f);
                                 Projectile.NewProjectile(npc.Center, velocity, ModContent.ProjectileType<SpiritSword>(), npc.damage / 4, 0f, Main.myPlayer, 0f, ai1);
+                            }
+
+                            if (npc.life < npc.lifeMax * 0.66)
+                            {
+                                const int max = 12; //hand ring
+                                for (int i = 0; i < max; i++)
+                                {
+                                    Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI * 2 / max * i);
+                                    float ai0 = 1.045f;
+                                    Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<SpiritHand>(), npc.damage / 4, 0f, Main.myPlayer, ai0);
+                                }
                             }
                         }
                     }
@@ -603,6 +642,17 @@ namespace FargowiltasSouls.NPCs.Champions
                                     float ai1 = Main.rand.NextFloat(0.025f);
                                     Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<SpiritHand>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
                                 }
+
+                                Main.PlaySound(SoundID.Item2, npc.Center);
+
+                                if (npc.life < npc.lifeMax * 0.66)
+                                {
+                                    for (int i = 0; i < 12; i++)
+                                    {
+                                        Projectile.NewProjectile(npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
+                                            Main.rand.NextFloat(-8f, 8f), Main.rand.NextFloat(-8f, 8f), ModContent.ProjectileType<SpiritCrossBone>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    }
+                                }
                             }
                         }
 
@@ -670,7 +720,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override bool CheckDead()
         {
-            if (npc.ai[0] != -3f && FargoSoulsWorld.MasochistMode)
+            if (npc.localAI[3] != 2f && FargoSoulsWorld.MasochistMode)
             {
                 npc.active = true;
                 npc.life = 1;
@@ -758,7 +808,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            if (npc.life <= 0)
+            if (npc.life <= 0 && npc.localAI[3] == 2)
             {
                 for (int i = 1; i <= 5; i++)
                 {

@@ -26,7 +26,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.height = 100;
             npc.damage = 125;
             npc.defense = 140;
-            npc.lifeMax = 650000;
+            npc.lifeMax = 550000;
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath52;
             npc.noGravity = true;
@@ -70,6 +70,21 @@ namespace FargowiltasSouls.NPCs.Champions
             Player player = Main.player[npc.target];
             Vector2 targetPos;
             
+            void Heal()
+            {
+                if (++npc.localAI[1] > 10) //heal 6 times per second
+                {
+                    npc.localAI[1] = 0;
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Vector2 speed = Main.rand.NextFloat(1, 2) * Vector2.UnitX.RotatedByRandom(Math.PI * 2);
+                        int heal = (int)(head.lifeMax / 100f * Main.rand.NextFloat(0.95f, 1.05f)); //heal back roughly 1 percent per heal
+                        float ai1 = 30 + Main.rand.Next(30);
+                        Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<SpiritHeal>(), heal, 0f, Main.myPlayer, head.whoAmI, ai1);
+                    }
+                }
+            }
+
             switch ((int)npc.ai[0])
             {
                 case 0: //float near head
@@ -111,7 +126,8 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.15f, 7f);
 
-                        if (npc.Hitbox.Intersects(player.Hitbox) && player.GetModPlayer<FargoPlayer>().MashCounter <= 0) //GOTCHA
+                        if (npc.Hitbox.Intersects(player.Hitbox) && !player.HasBuff(ModContent.BuffType<Buffs.Boss.Grabbed>())
+                            && player.GetModPlayer<FargoPlayer>().MashCounter <= 0) //GOTCHA
                         {
                             Main.PlaySound(SoundID.Roar, npc.Center, 0);
                             
@@ -128,7 +144,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     }
                     break;
 
-                case 2: //grab
+                case 2: //successful grab
                     if ((head.ai[0] != -1 && head.ai[0] != -3) || !player.active || player.dead || player.GetModPlayer<FargoPlayer>().MashCounter > 30)
                     {
                         if (npc.Hitbox.Intersects(player.Hitbox)) //throw aside
@@ -146,6 +162,8 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         if (npc.Hitbox.Intersects(player.Hitbox))
                         {
+                            Heal();
+
                             player.Center = npc.Center;
                             player.velocity.X = 0;
                             player.velocity.Y = -0.4f;
@@ -167,6 +185,8 @@ namespace FargowiltasSouls.NPCs.Champions
                 case 4: //enrage grab
                     if (npc.Hitbox.Intersects(player.Hitbox))
                     {
+                        Heal();
+
                         player.Center = npc.Center;
                         player.velocity.X = 0;
                         player.velocity.Y = -0.4f;

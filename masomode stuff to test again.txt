@@ -545,5 +545,17 @@ deviantt and mutant movement for their big weapons adjusted so they arent COMPLE
 spirit champ
 	separate iframes for body and hands
 	life slightly reduced
+	damage very slightly increased
+	has a phase 2 at 66% life that does the following:
+		crossbone tornados alternate predictive and direct aim, also does slightly faster attacks here
+		during grab, shoots spectre bolts at you
+		during swords, shoots rings of hands
+		during shield, drops crossbones
+	actually getting grabbed will produce spectre orbs that HEAL SPIRIT CHAMP
+	returns to normal attack pattern after last stand (cannot do last stand again)
+	TEST IN MP THAT HE DOESNT GLITCH OUT SOMEHOW WITH LAST STAND THING
 sigil of champions is sprited
 life champ is sprited (POG)
+heart of the eternal animation
+removed deviantt presence, several of devi's attacks ignore creepers instead
+sandnados ignore creepers too now
