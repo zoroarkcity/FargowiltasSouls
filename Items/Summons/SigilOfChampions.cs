@@ -10,8 +10,6 @@ namespace FargowiltasSouls.Items.Summons
 {
     public class SigilOfChampions : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sigil of Champions");
@@ -23,8 +21,8 @@ Not consumed on use");
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 20;
+            item.width = 40;
+            item.height = 40;
             item.rare = 11;
             item.maxStack = 1;
             item.useAnimation = 45;
