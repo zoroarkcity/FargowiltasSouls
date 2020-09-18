@@ -494,3 +494,55 @@ palladium rework
 	moved back to pre mechs
 	buff time is based on damage, capped at 5sec (always 5sec in force)
 	spits an orb of life energy every 80 life recovered
+
+betsy's fury shots dont break when they hit a regular friendly npc
+flying dragon buffed to +33% damage and speed
+buffed cultist/mutant pillar damage a lot
+cultist p2 frost waves pincer you from above and below
+cultist p2 fireball ring has slightly more fireballs and speed
+earth champ punches slightly faster in p2
+shadow champ
+	all attack damage significantly higher
+	all attacks inflict shadowflame in emode
+	phase 2 flamebursts have much higher base move speed
+	flaming scythes break into homing much closer
+	MUCH higher damage on phase transition scythes
+nature champ spawning ai adjusted, should fix it forever
+nature body and crimson head have no contact damage
+terra champ movement adjusted after sine wave, hopefully returns to you faster
+eridanus deletes your minions for you at each phase transition
+mutant p2 boundary nerfed from 6 spokes to 5
+mutant p2 predictive dash has 10 ticks of leeway on his aim and slightly more delay between dashes
+fixed skeletron (prime) dg form not being disabled during swarm
+styx gazer animation slower
+
+after sine attack, terra champ is coming directly at you
+	run
+changed implementation of eri armour minion clear
+earth champ hands glue to you during fireballs if p2 and player is behind where hand should be
+will champ purges leftover javelins from his regular attack pattern during gold shell phases
+will champ uses more spears during his 33% gold shell
+timber spawn ai stuff
+fixed some double instances of the non functioning shadowflame
+fixed soul of siblings not actually giving immunity to the functioning shadowflame
+shadow champ
+	slightly increased damage again
+	BIG buff for guardian damage
+	shadow clones track your movement
+	adjusted split of flaming scythes to fuck you up better
+	flameburst attack changed
+		p1 has higher base vel
+		p2 is old p3 (shoot to both sides which then home in)
+		p3 now shoots both p1 and p2 at the same time but less dense
+
+shadow damage slightly reduced, no longer on ml timer for contact damage (prevents doublehitting with tentacle dash)
+earth champ hands decelerate harder in phase 2 (should alleviate them going offscreen while punching)
+mutant presence allows more life regen
+mutant DR 25% to 20%
+mutant's movement is much sharper during predictive throw (should make dodging subtly easier)
+mutant predictive dash is slightly more delay between dashes
+deviantt and mutant movement for their big weapons adjusted so they arent COMPLETELY stupid when you go behind them
+spirit champ
+	separate iframes for body and hands
+	life slightly reduced
+life champ is sprited (POG)

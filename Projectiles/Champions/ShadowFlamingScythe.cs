@@ -52,7 +52,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
             if (projectile.ai[0] == 0)
             {
-                if (projectile.localAI[0] == 160)
+                if (projectile.localAI[0] == 140)
                     projectile.Kill();
             }
             else
@@ -76,7 +76,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             {
                 for (int i = -1; i <= 1; i++)
                 {
-                    Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(30) * i),
+                    Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(45) * i),
                         projectile.type, projectile.damage, 0f, projectile.owner, 1);
                 }
             }
@@ -98,6 +98,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             target.AddBuff(BuffID.Darkness, 300);
             if (FargoSoulsWorld.MasochistMode)
             {
+                target.AddBuff(mod.BuffType("Shadowflame"), 300);
                 target.AddBuff(BuffID.Blackout, 300);
                 target.AddBuff(BuffID.OnFire, 900);
                 target.AddBuff(ModContent.BuffType<LivingWasteland>(), 900);

@@ -87,6 +87,19 @@ Eridanus fights alongside you when you use the empowered class
                     Main.dust[d].noLight = true;
                     Main.dust[d].velocity *= 24f;
                 }
+
+                if (Main.myPlayer == player.whoAmI)
+                {
+                    for (int i = 0; i < Main.maxProjectiles; i++) //clear minions
+                    {
+                        if (Main.projectile[i].active && Main.projectile[i].owner == player.whoAmI
+                            && Main.projectile[i].type != ModContent.ProjectileType<Projectiles.Minions.EridanusMinion>()
+                            && (Main.projectile[i].minionSlots > 0 || Main.projectile[i].minion))
+                        {
+                            Main.projectile[i].Kill();
+                        }
+                    }
+                }
             }
 
             if (++fargoPlayer.EridanusTimer > 60 * 20 * 4) //handle loop

@@ -62,6 +62,8 @@ namespace FargowiltasSouls.Projectiles.Champions
                 Vector2 targetPos = player.Center + projectile.DirectionFrom(player.Center) * 400f;
                 if (projectile.Distance(targetPos) > 50)
                     Movement(targetPos, 0.3f, 24f);
+
+                projectile.position += player.velocity * 0.9f;
             }
             else if (projectile.ai[1] == 0)
             {
@@ -123,7 +125,10 @@ namespace FargowiltasSouls.Projectiles.Champions
         {
             target.AddBuff(BuffID.Darkness, 300);
             if (FargoSoulsWorld.MasochistMode)
+            {
+                target.AddBuff(mod.BuffType("Shadowflame"), 300);
                 target.AddBuff(BuffID.Blackout, 300);
+            }
         }
 
         public override Color? GetAlpha(Color lightColor)

@@ -30,7 +30,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.height = 150;
             npc.damage = 120;
             npc.defense = 40;
-            npc.lifeMax = 650000;
+            npc.lifeMax = 600000;
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath52;
             npc.noGravity = true;
@@ -53,11 +53,11 @@ namespace FargowiltasSouls.NPCs.Champions
             musicPriority = MusicPriority.BossHigh;
         }
 
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        /*public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             cooldownSlot = 1;
             return true;
-        }
+        }*/
 
         public override void SendExtraAI(BinaryWriter writer)
         {

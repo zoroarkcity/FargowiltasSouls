@@ -161,7 +161,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             npc.position += player.velocity / 10f;
 
                         npc.localAI[3] = 1;
-                        npc.velocity *= 0.95f;
+                        npc.velocity *= npc.localAI[2] == 1 ? 0.9f : 0.95f;
                         npc.rotation = npc.DirectionTo(player.Center).ToRotation() - (float)Math.PI / 2;
                     }
                     else if (npc.ai[1] == 105) //dash
@@ -180,7 +180,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if ((++npc.localAI[1] > 60 && npc.Distance(player.Center) > 1000) ||
                             (npc.ai[3] > 0 ? npc.Center.X > player.Center.X + 300 : npc.Center.X < player.Center.X - 300))
                         {
-                            npc.ai[1] = 0;
+                            npc.ai[1] = head.localAI[2] == 1 ? 15 : 0;
                             npc.localAI[1] = 0;
                             npc.netUpdate = true;
                         }
@@ -331,9 +331,14 @@ namespace FargowiltasSouls.NPCs.Champions
                 case 8: //wait while head does fireballs
                     npc.noTileCollide = true;
                     
-                    targetPos.X = head.Center.X + 350 * -npc.ai[3];
+                    targetPos.X = head.Center.X + 330 * -npc.ai[3];
                     targetPos.Y = player.Center.Y;
-                    if (npc.Distance(targetPos) > 50)
+                    if (head.localAI[2] == 1) //if p2 and player is behind where hand should be, fuck them up
+                    {
+                        if (Math.Sign(player.Center.X - targetPos.X) == Math.Sign(-npc.ai[3]))
+                            targetPos.X = player.Center.X;
+                    }
+                    if (npc.Distance(targetPos) > 30)
                         Movement(targetPos, 0.8f, 32f);
 
                     npc.rotation = 0;
@@ -341,7 +346,6 @@ namespace FargowiltasSouls.NPCs.Champions
                     if (++npc.localAI[0] > 120 && head.localAI[2] == 1)
                     {
                         npc.localAI[3] = 1;
-                        npc.rotation = npc.DirectionTo(player.Center).ToRotation() - (float)Math.PI / 2;
                     }
 
                     if (npc.ai[1] > 60) //grace period over, if head reverts back then leave this state

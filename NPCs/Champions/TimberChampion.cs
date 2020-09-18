@@ -60,11 +60,7 @@ namespace FargowiltasSouls.NPCs.Champions
             if (npc.localAI[2] == 0)
             {
                 npc.TargetClosest(false);
-                Movement(Main.player[npc.target].Center, 0.8f, 32f);
-                if (npc.Distance(Main.player[npc.target].Center) < 1500)
-                    npc.localAI[2] = 1;
-                else
-                    return;
+                npc.localAI[2] = 1;
             }
 
             EModeGlobalNPC.championBoss = npc.whoAmI;
@@ -243,7 +239,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.velocity.Y == 0)
                             npc.velocity.X *= 0.99f;
 
-                        if (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f)
+                        if (npc.ai[0] != 0 && (!player.active || player.dead || Vector2.Distance(npc.Center, player.Center) > 2500f))
                         {
                             npc.TargetClosest();
                             if (npc.timeLeft > 30)
@@ -253,7 +249,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             npc.noGravity = true;
                             npc.velocity.Y -= 1f;
 
-                            npc.ai[0] = 0; //prevent proceeding to next steps of ai while despawning
+                            npc.ai[1] = 0; //prevent proceeding to next steps of ai while despawning
                         }
                         else
                         {

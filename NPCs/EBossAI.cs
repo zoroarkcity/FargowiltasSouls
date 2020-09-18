@@ -3912,14 +3912,20 @@ namespace FargowiltasSouls.NPCs
                                 }
                                 else
                                 {
-                                    for (int i = -5; i <= 5; i++) //waves beside you
+                                    for (int j = -1; j <= 1; j++) //from above and below
                                     {
-                                        if (i == 0)
+                                        if (j == 0)
                                             continue;
-                                        Vector2 spawnPos = Main.player[t].Center;
-                                        spawnPos.X += Math.Sign(i) * 125 + i * 100;
-                                        spawnPos.Y -= 700 + Math.Abs(i) * 50;
-                                        Projectile.NewProjectile(spawnPos, Vector2.UnitY * 10f, ProjectileID.FrostWave, damage / 3, 0f, Main.myPlayer);
+
+                                        for (int i = -5; i <= 5; i++) //waves beside you
+                                        {
+                                            if (i == 0)
+                                                continue;
+                                            Vector2 spawnPos = Main.player[t].Center;
+                                            spawnPos.X += Math.Sign(i) * 125 + i * 125;
+                                            spawnPos.Y -= (700 + Math.Abs(i) * 50) * j;
+                                            Projectile.NewProjectile(spawnPos, Vector2.UnitY * 10f * j, ProjectileID.FrostWave, damage / 3, 0f, Main.myPlayer);
+                                        }
                                     }
                                 }
                             }
@@ -3948,11 +3954,11 @@ namespace FargowiltasSouls.NPCs
                             }
                             else //fireball ring
                             {
-                                int max = NPC.CountNPCS(NPCID.CultistBossClone) * 2 + 4;
+                                int max = NPC.CountNPCS(NPCID.CultistBossClone) * 2 + 6;
 
                                 Vector2 baseOffset = npc.DirectionTo(Main.player[npc.target].Center);
                                 const float spawnOffset = 1200f;
-                                const float speed = 6f;
+                                const float speed = 7f;
                                 const float ai0 = spawnOffset / speed;
                                 for (int i = 0; i < max; i++)
                                 {

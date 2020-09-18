@@ -9,76 +9,47 @@ new in beta
 
 
 
--Necro graves no longer scale with your damage
--Flameburst attack speed is lower
--Blender looks wayyy better, also its range is essentially infinite, also the extra homing projectiles only spawn when hitting an enemy instead of every second, they can spawn more often if you continue damaging the enemy, they also no longer split again into fragments
--Updated Destroyer Gun projectile, Destroyer Gun EX is still full destroyer
--Bunny Mask Slime now inflicts Slimed
--Chaos Elemental is immune to Confused
--Umbrella Slime can actually jump out of water now
--Removed Swamp Thing's amazing ogre snot attack
--World Shaper Soul and upgrades can now be used to return to spawn like the Cell Phone
--Necro Graves despawn quicker, and only 5 graves can spawn at once, necro graves are spawned in pre loot now, stuff that isnt calling loot can still drop a grave
--The Guardian death dust is no longer dumb
--Fixed Soul of Eternity not giving as much damage as the tooltip said
--Nerfed SoE to give you 5% damage and 5 defense per stack from 10% and 10, max stacks from 20,000 to 950 (Now Max is 5000% increase damage)
--Frost Enchant now works on worms
--Destroyer is not immune to Time Freeze or Chilled
--Updated Galactic Reformer and Universal Collapse sprite
--Cactus Enchant will not work on Super Dummy
--Pumpkin Enchant pumpkins won't explode on friendly npcs
--Removed Mutating Energy, Eternal Energy uses old Mutating Energy sprite
--Added Extra jumps, Rocket boots, and carpet toggles to Supersonic Soul, Carpet lasts much longer in Supersonic Soul
--Truffle Worm is no longer dropped by mushroom enemies 
--Added Yoyo Bag toggle
--Added a marker to patreon item tooltips, added toggles to make each patreon item obtainable
--Dark Artist sentries consistently spawn correctly now !?
--Shinobi tele thru walls should not explode in multiplayer !?
-
-
-
-
-
-
-
--Fixed Golden Dipping Vat tile and added animation
--Broken Shell debuff now has a space
--Fixed Solar Enchant tooltip saying only melee attacks inflicted Solar flare
--Added Solar flare toggle
--Mahogany hook toggle now actually works
--Mahogany increased shoot speed now works better?
--Power of Valhalla buff lasts 8 seconds instead of 5 in the force
--Small Sting ignores half defense instead of all defense
--Fossil enchant bones stop closer to you
--Dark Artist minion should hopefully not just not exist
--Dark Artist sentries last 30 seconds instead of forever
--Ancient Shadow Orbs will respawn with the correct amount if something like Wizard Enchant is equipped or dequipped
 -Ancient Shadow Ball damage increased from 40 to 50
 -Changed Jungle Enchant spore to use chlorophyte spores
 -Meteor Enchant damage now scales with any damage type not just magic
 -Meteor Enchant now longer gets doubled damage in the force/wizard, shower cooldown in force/wizard is reduced a bit more
--Rain Enchant cloud won't absorb your chlorophye crystals anymore
-
--Primes Laser cannon renamed to Refractor Blaster
--Snow enchant visual now toggles with the effect and it goes away when you die
--Silver Enchant is back in Hallowed Enchant
--Added Ice Rod to Wizard Enchant
--Fixed Wizard Enchant not always being active
--Added all missing enchant tooltip colors
--Fixed names and colors of all toggles
 -tin enchant no longer gives summon crit inherently (must equip spider ench to receive this)
 -spider ench base crit chance lowered to 15%
 -upgraded spider ench effect is no longer boosted crit damage, now has higher crit chance
--moved around spider and tin ench effect locations internally for the sake of checks and overrides
--crimson regen and tungsten do not override mutant presence
--fixed texture bug that made spectral abom not work
+-Cactus Enchant will not work on Super Dummy
+-Added Solar flare toggle
+-Mahogany hook toggle now actually works
+-Power of Valhalla buff lasts 8 seconds instead of 5 in the force
+-Shinobi tele thru walls should not explode in multiplayer !?
 
+-World Shaper Soul and upgrades can now be used to return to spawn like the Cell Phone
+-Fixed Soul of Eternity not giving as much damage as the tooltip said
+-Nerfed SoE to give you 5% damage and 5 defense per stack from 10% and 10, max stacks from 20,000 to 950 (Now Max is 5000% increase damage)
+-Added Extra jumps, Rocket boots, and carpet toggles to Supersonic Soul, Carpet lasts much longer in Supersonic Soul
+-Added Yoyo Bag toggle
 
--Added Acorn Construct (Trojan Squirrel mount) 
+-Blender looks wayyy better, also its range is essentially infinite, also the extra homing projectiles only spawn when hitting an enemy instead of every second, they can spawn more often if you continue damaging the enemy, they also no longer split again into fragments
+-Updated Destroyer Gun projectile, Destroyer Gun EX is still full destroyer
+
+-Bunny Mask Slime now inflicts Slimed
+-Chaos Elemental is immune to Confused
+-Removed Swamp Thing's amazing ogre snot attack
+-Truffle Worm is no longer dropped by mushroom enemies 
+-Destroyer is not immune to Time Freeze or Chilled
+
+-Removed Mutating Energy, Eternal Energy uses old Mutating Energy sprite
+-Updated Galactic Reformer and Universal Collapse sprite
+-Added a marker to patreon item tooltips, added toggles to make each patreon item obtainable
+-Fixed Golden Dipping Vat tile and added animation
 -Deviantt's Curse and Abominationn's Curse recipes now only give 1 instead of 5
 -Tribal Charm no longer effects fishing rods
--gold dipping vat sprite update
+
+-Added Acorn Construct (Trojan Squirrel mount) 
 -big brain buster, sprite
+
+
+
+
 
 
 
