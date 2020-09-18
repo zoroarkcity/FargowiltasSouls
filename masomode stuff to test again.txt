@@ -561,3 +561,4 @@ removed deviantt presence, several of devi's attacks ignore creepers instead
 sandnados ignore creepers too now
 
 added a check so spirit champ can't heal past his max life
+less aiming ahead for spirit sandnado

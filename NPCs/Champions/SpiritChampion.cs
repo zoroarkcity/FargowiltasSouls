@@ -391,7 +391,7 @@ namespace FargowiltasSouls.NPCs.Champions
 
                                 Vector2 target = player.Center;
                                 if (npc.GetGlobalNPC<EModeGlobalNPC>().masoBool[0] && npc.life < npc.lifeMax * 0.66)
-                                    target += player.velocity * 90f; //alternate between predictive and direct aim
+                                    target += player.velocity * 30f; //alternate between predictive and direct aim
                                 target.Y -= 100;
                                 Projectile.NewProjectile(target, Vector2.Zero, ProjectileID.SandnadoHostileMark, 0, 0f, Main.myPlayer);
 
