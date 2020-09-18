@@ -23,6 +23,7 @@ using Fargowiltas.Items.Summons.Deviantt;
 using Fargowiltas.Items.Misc;
 using Fargowiltas.Items.Tiles;
 using Fargowiltas.Items.Explosives;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace FargowiltasSouls
 {
@@ -532,6 +533,18 @@ namespace FargowiltasSouls
             #endregion*/
 
             #endregion
+
+
+            if (Main.netMode != NetmodeID.Server)
+            {
+                #region shaders
+                //loading a ref for a shader
+                Ref<Effect> lcRef = new Ref<Effect>(GetEffect("Effects/LifeChampionShader"));
+                //loading the shader from the ref
+                GameShaders.Misc["LCWingShader"] = new MiscShaderData(lcRef, "LCWings");
+
+                #endregion
+            }
 
         }
 

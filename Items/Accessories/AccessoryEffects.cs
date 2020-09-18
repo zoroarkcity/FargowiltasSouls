@@ -945,12 +945,10 @@ namespace FargowiltasSouls
             RedEnchant = true;
 
             //celestial shell
-            player.accMerman = true;
             player.wolfAcc = true;
 
             if (hideVisual)
             {
-                player.hideMerman = true;
                 player.hideWolf = true;
             }
 

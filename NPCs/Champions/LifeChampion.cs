@@ -8,6 +8,8 @@ using Terraria.Localization;
 using FargowiltasSouls.Items.Accessories.Enchantments;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
+using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
 
 namespace FargowiltasSouls.NPCs.Champions
 {
@@ -698,22 +700,52 @@ namespace FargowiltasSouls.NPCs.Champions
 
             int currentFrame = npc.frame.Y / (texture2D13.Height / Main.npcFrameCount[npc.type]);
             Texture2D wing = mod.GetTexture("NPCs/Champions/LifeChampion_Wings");
+            Texture2D wingGlow = mod.GetTexture("NPCs/Champions/LifeChampion_WingsGlow");
             int wingHeight = wing.Height / Main.npcFrameCount[npc.type];
             Rectangle wingRectangle = new Rectangle(0, currentFrame * wingHeight, wing.Width, wingHeight);
             Vector2 wingOrigin = wingRectangle.Size() / 2f;
             
             Color glowColor = Color.White * npc.Opacity;
 
+            spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
             for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
             {
                 Vector2 value4 = npc.oldPos[i];
                 float num165 = 0; //npc.oldRot[i];
-                Main.spriteBatch.Draw(wing, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(wingRectangle), glowColor * 0.5f, num165, wingOrigin, npc.scale * 2, effects, 0f);
+                DrawData wingTrailGlow = new DrawData(wing, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(wingRectangle), glowColor * (0.5f / i), num165, wingOrigin, npc.scale * 2, effects, 0);
+                GameShaders.Misc["LCWingShader"].UseColor(new Color(1f, 0.647f, 0.839f)).UseSecondaryColor(Color.CornflowerBlue);
+                GameShaders.Misc["LCWingShader"].Apply(wingTrailGlow);
+                wingTrailGlow.Draw(spriteBatch);
             }
+
+            spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+
             spriteBatch.Draw(wing, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(wingRectangle), glowColor, 0, wingOrigin, npc.scale * 2, effects, 0f);
 
-            //spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+            
+            DrawData wingGlowData = new DrawData(wingGlow, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(wingRectangle), glowColor, 0, wingOrigin, npc.scale * 2, effects, 0);
+            GameShaders.Misc["LCWingShader"].UseColor(new Color(1f, 0.647f, 0.839f)).UseSecondaryColor(Color.Goldenrod);
+            GameShaders.Misc["LCWingShader"].Apply(wingGlowData);
+            wingGlowData.Draw(spriteBatch);
+
+            spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix); 
             return false;
+        }
+        public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+        {
+            Texture2D star = mod.GetTexture("Effects/LifeStar");
+            Rectangle rect = new Rectangle(0, 0, star.Width, star.Height);
+            float scale = Main.cursorScale + 0.3f;
+            Vector2 origin = new Vector2((star.Width / 2) + scale, (star.Height / 2) + scale);
+
+            spriteBatch.Draw(star, npc.Center - Main.screenPosition, new Rectangle?(rect), Color.HotPink, 0, origin, scale, SpriteEffects.None, 0);
+            DrawData starDraw = new DrawData(star, npc.Center - Main.screenPosition, new Rectangle?(rect), Color.White, 0, origin, scale, SpriteEffects.None, 0);
+            GameShaders.Misc["LCWingShader"].UseColor(Color.Goldenrod).UseSecondaryColor(Color.HotPink);
+            GameShaders.Misc["LCWingShader"].Apply(starDraw);
+            starDraw.Draw(spriteBatch);
+
+            spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
         }
     }
 }

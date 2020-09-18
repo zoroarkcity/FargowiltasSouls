@@ -30,7 +30,7 @@ namespace FargowiltasSouls.Projectiles.Souls
             if (owner.GetModPlayer<FargoPlayer>().RedEnchant)
             {
                 projectile.Center = new Vector2(Main.MouseWorld.X, Main.MouseWorld.Y - 400);
-                launchArrow = true;
+                //launchArrow = true;
             }
 
             //delay

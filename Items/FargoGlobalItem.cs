@@ -52,6 +52,11 @@ namespace FargowiltasSouls.Items
         {
             FargoPlayer p = player.GetModPlayer<FargoPlayer>();
 
+            if (item.makeNPC > 0 && (p.WoodForce || p.WizardEnchant) && Main.rand.Next(2) == 0)
+            {
+                return false;
+            }
+
             if (p.BuilderMode && (item.createTile != -1 || item.createWall != -1) && item.type != ItemID.PlatinumCoin && item.type != ItemID.GoldCoin) return false;
             return true;
         }
