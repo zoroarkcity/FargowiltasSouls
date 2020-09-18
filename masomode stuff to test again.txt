@@ -538,11 +538,12 @@ shadow champ
 shadow damage slightly reduced, no longer on ml timer for contact damage (prevents doublehitting with tentacle dash)
 earth champ hands decelerate harder in phase 2 (should alleviate them going offscreen while punching)
 mutant presence allows more life regen
-mutant DR 25% to 20%
+mutant DR 25% to 10%
 mutant's movement is much sharper during predictive throw (should make dodging subtly easier)
 mutant predictive dash is slightly more delay between dashes
 deviantt and mutant movement for their big weapons adjusted so they arent COMPLETELY stupid when you go behind them
 spirit champ
 	separate iframes for body and hands
 	life slightly reduced
+sigil of champions is sprited
 life champ is sprited (POG)
