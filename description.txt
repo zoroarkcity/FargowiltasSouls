@@ -2,6 +2,12 @@ NEW UPDATE - V 1.4
 
 
 new in beta
+-Acorn Construct takes no fall damage, has better speed
+-Red Riding ability has half as many arrows
+-Force of Timber gives a 50% chance to not consume critters when released
+-Removed extra chance to spawn lightning from lightning rod for enemies
+
+
 
 -Necro graves no longer scale with your damage
 -Flameburst attack speed is lower

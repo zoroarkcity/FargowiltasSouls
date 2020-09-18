@@ -65,7 +65,7 @@ Summons a pet Puppy
             recipe.AddIngredient(ItemID.HuntressAltShirt);
             recipe.AddIngredient(ItemID.HuntressAltPants);
             recipe.AddIngredient(null, "HuntressEnchant");
-            recipe.AddIngredient(ItemID.CelestialShell);
+            recipe.AddIngredient(ItemID.MoonCharm);
             //candy corn rifle
             //celebration
             //eventide

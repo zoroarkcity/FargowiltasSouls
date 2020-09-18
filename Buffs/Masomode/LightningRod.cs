@@ -55,14 +55,11 @@ namespace FargowiltasSouls.Buffs.Masomode
 
             NPCs.FargoSoulsGlobalNPC fargoNPC = npc.GetGlobalNPC<NPCs.FargoSoulsGlobalNPC>();
             fargoNPC.lightningRodTimer++;
-            if (fargoNPC.lightningRodTimer >= 60)
+            if (fargoNPC.lightningRodTimer >= 60 && )
             {
                 fargoNPC.lightningRodTimer = 0;
                 SpawnLightning(npc, mod.ProjectileType("LightningVortex"), 60);
             }
-
-            if (Main.rand.Next(60) == 1)
-                SpawnLightning(npc, mod.ProjectileType("LightningVortex"), 60);
         }
     }
 }
