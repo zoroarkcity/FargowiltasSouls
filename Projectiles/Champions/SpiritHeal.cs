@@ -54,6 +54,8 @@ namespace FargowiltasSouls.Projectiles.Champions
                         {
                             n.life += projectile.damage;
                             n.HealEffect(projectile.damage);
+                            if (n.life > n.lifeMax)
+                                n.life = n.lifeMax;
                             projectile.Kill();
                         }
                     }

@@ -559,3 +559,5 @@ life champ is sprited (POG)
 heart of the eternal animation
 removed deviantt presence, several of devi's attacks ignore creepers instead
 sandnados ignore creepers too now
+
+added a check so spirit champ can't heal past his max life
