@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
@@ -35,6 +36,7 @@ Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu
 按下火球冲刺按键来进行一次短程的无敌冲刺
 骑乘猪鲨坐骑时获得潮湿状态,能够控制重力
 召唤一个友善的超级圣诞雪灵,迷你飞碟和真·克苏鲁之眼");
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(4, 5));
         }
 
         public override void SetDefaults()

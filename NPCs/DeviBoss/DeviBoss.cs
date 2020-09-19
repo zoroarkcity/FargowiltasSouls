@@ -141,11 +141,11 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             {
                 Aura(2000f, mod.BuffType("GodEater"), true, 86);
             }*/
-            else if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
+            /*else if (Main.player[Main.myPlayer].active && npc.Distance(Main.player[Main.myPlayer].Center) < 3000f)
             {
                 if (FargoSoulsWorld.MasochistMode)
                     Main.player[Main.myPlayer].AddBuff(mod.BuffType("DeviPresence"), 2);
-            }
+            }*/
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {

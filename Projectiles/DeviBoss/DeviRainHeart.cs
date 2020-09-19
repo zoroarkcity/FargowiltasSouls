@@ -28,6 +28,8 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             projectile.tileCollide = false;
             projectile.timeLeft = 600;
             cooldownSlot = 1;
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
         }
 
         public override void AI()

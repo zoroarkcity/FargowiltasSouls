@@ -560,7 +560,8 @@ namespace FargowiltasSouls.NPCs.Champions
 
             for (int i = 0; i < 3; i++)
             {
-                int d = Dust.NewDust(npc.position, npc.width, npc.height, 87, 0f, 0f, 0, default(Color), 1.5f);
+                Vector2 origin = npc.Center - new Vector2(300, 200) * npc.scale;
+                int d = Dust.NewDust(origin, (int)(600 * npc.scale), (int)(400 * npc.scale), 87, 0f, 0f, 0, default(Color), 1.5f);
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity *= 4f;
             }

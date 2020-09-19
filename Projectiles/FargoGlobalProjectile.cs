@@ -87,6 +87,8 @@ namespace FargowiltasSouls.Projectiles
                     case ProjectileID.SaucerDeathray:
                     case ProjectileID.Sharknado:
                     case ProjectileID.Cthulunado:
+                    case ProjectileID.SandnadoHostile:
+                    case ProjectileID.SandnadoHostileMark:
                         ImmuneToGuttedHeart = true;
                         break;
 
