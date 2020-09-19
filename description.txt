@@ -6,6 +6,10 @@ new in beta
 -Red Riding ability has half as many arrows
 -Force of Timber gives a 50% chance to not consume critters when released
 -Removed extra chance to spawn lightning from lightning rod for enemies
+-Moved boss zen to mutant mod
+
+
+
 
 
 

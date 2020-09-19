@@ -5415,11 +5415,6 @@ namespace FargowiltasSouls.NPCs
             {
                 spawnRate = (int)(spawnRate * 0.9);
                 maxSpawns = (int)(maxSpawns * 1.25f);
-
-                if (AnyBossAlive())
-                {
-                    maxSpawns = 0;
-                }
             }
         }
 
