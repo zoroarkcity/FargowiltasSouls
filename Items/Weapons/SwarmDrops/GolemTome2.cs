@@ -8,8 +8,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
     public class GolemTome2 : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Weapons/BossDrops/RockSlide";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Landslide");

@@ -52,9 +52,3 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         }
     }
 }
-
-
-
-//Uses any type of bullets as ammunition, though it will only inherit the damage bonuses of any ammo it uses.
-//Fires a fast, high-damage stinger, but has about the use speed of the Sniper Rifle.
-//Fired stingers ignore all enemy defense; this trait carries over across both upgrades.

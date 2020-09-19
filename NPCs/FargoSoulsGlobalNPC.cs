@@ -680,27 +680,6 @@ namespace FargowiltasSouls.NPCs
                 Item.NewItem(npc.Hitbox, ModContent.ItemType<Patreon.Catsounds.MedallionoftheFallenKing>());
             }
 
-            switch (npc.type) //cracked gem
-            {
-                case NPCID.BlueSlime:
-                    if (npc.netID == NPCID.Pinky && Main.rand.Next(3) == 0)
-                        Item.NewItem(npc.Hitbox, ModContent.ItemType<CrackedGem>(), Main.rand.Next(3) + 1);
-                    break;
-
-                case NPCID.Nymph:
-                case NPCID.DoctorBones:
-                case NPCID.DungeonSlime:
-                case NPCID.Tim:
-                case NPCID.UndeadMiner:
-                    if (Main.rand.Next(3) == 0)
-                        Item.NewItem(npc.Hitbox, ModContent.ItemType<CrackedGem>(), Main.rand.Next(3) + 1);
-                    break;
-
-                default:
-                    break;
-            }
-
-
             //boss drops
             if (Main.rand.Next(FargoSoulsWorld.MasochistMode ? 3 : 10) == 0)
             {

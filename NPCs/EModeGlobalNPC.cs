@@ -5415,11 +5415,6 @@ namespace FargowiltasSouls.NPCs
             {
                 spawnRate = (int)(spawnRate * 0.9);
                 maxSpawns = (int)(maxSpawns * 1.25f);
-
-                if (AnyBossAlive())
-                {
-                    maxSpawns = 0;
-                }
             }
         }
 
@@ -6061,7 +6056,7 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, ItemID.GoldCoin, 1 + Main.rand.Next(5));
                             Item.NewItem(npc.Hitbox, ItemID.FloatingIslandFishingCrate);
                             if (Main.rand.Next(5) == 0)
-                                Item.NewItem(npc.Hitbox, ModContent.ItemType<DragonFang>());
+                                Item.NewItem(npc.Hitbox, ModContent.ItemType<WyvernFeather>());
                             return false;
                         }
                         break;
@@ -6266,7 +6261,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.WyvernHead:
                         Item.NewItem(npc.Hitbox, ItemID.FloatingIslandFishingCrate);
                         if (Main.rand.Next(5) == 0)
-                            Item.NewItem(npc.Hitbox, ModContent.ItemType<DragonFang>());
+                            Item.NewItem(npc.Hitbox, ModContent.ItemType<WyvernFeather>());
                         if (Main.rand.Next(20) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.CloudinaBottle);
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)

@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
     public class DestroyerGun2 : ModItem
     {
-        public override string Texture => "FargowiltasSouls/Items/Weapons/BossDrops/DestroyerGun";
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Destroyer Gun EX");
