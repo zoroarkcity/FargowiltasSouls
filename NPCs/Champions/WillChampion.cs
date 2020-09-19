@@ -390,7 +390,10 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.localAI[0] = 2;
                         if (Main.netMode != NetmodeID.MultiplayerClient && npc.localAI[3] == 1)
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<WillFireball2>(), npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2), 
+                                ModContent.ProjectileType<WillFireball2>(), npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(-Math.PI / 2),
+                                ModContent.ProjectileType<WillFireball2>(), npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
 
