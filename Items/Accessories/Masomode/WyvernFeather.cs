@@ -4,11 +4,11 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class DragonFang : ModItem
+    public class WyvernFeather : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dragon's Fang");
+            DisplayName.SetDefault("Wyvern Feather");
             Tooltip.SetDefault(@"Grants immunity to Clipped Wings and Crippled
 Your attacks have a 10% chance to inflict Clipped Wings on non-boss enemies
 'Warm to the touch'");

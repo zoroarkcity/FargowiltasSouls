@@ -7,7 +7,12 @@ new in beta
 -Force of Timber gives a 50% chance to not consume critters when released
 -Removed extra chance to spawn lightning from lightning rod for enemies
 -Moved boss zen to mutant mod
-
+-Removed Cracked Gems
+-Ori dot boost is no longer tied to the petal toggle
+-Added toggle for trawler Soul extra lures, and guide to plant fiber cordage
+-Fixed dark artist not spawning again part 3 
+-Renamed The Twins to Twinrangs, Dragon's Fang to Wyvern Feather
+-Updated sprites: Landlside, Necromantic Brew, Sands of Time, Sinister Icon, Lump of Flesh, Pungent Eyeball, Mystic Skull, Force of Will, Soul of Terraria sheet fix, Tribal Charm, Slime Slinging Slasher, Magical Bulb, Destroyer Gun EX, Galactic Reformer, Regurgitator, The Twinrangs, Supreme Deathbringer Fairy, Pure Heart
 
 
 

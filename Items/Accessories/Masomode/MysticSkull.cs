@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.DataStructures;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
@@ -21,6 +22,8 @@ Automatically use mana potions when needed
 免疫窒息
 减少10%魔法伤害
 需要时自动使用魔力药水");
+
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(4, 7));
         }
 
         public override void SetDefaults()

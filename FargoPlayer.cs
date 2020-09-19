@@ -93,7 +93,6 @@ namespace FargowiltasSouls
         public int PalladCounter;
         //private int palladiumCD = 0;
         public bool OriEnchant;
-        public bool OriSpawn = false;
         public bool MeteorEnchant;
         private int meteorTimer = 150;
         private int meteorCD = 0;
@@ -1196,9 +1195,6 @@ namespace FargowiltasSouls
 
             if (tinCD > 0)
                 tinCD--;
-
-            if(OriSpawn && !OriEnchant)
-                OriSpawn = false;
 
             if (VortexStealth && !VortexEnchant)
                 VortexStealth = false;

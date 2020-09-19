@@ -9,7 +9,7 @@ namespace FargowiltasSouls.Projectiles
 {
     public class NukeProj : ModProjectile
     {
-        public int countdown = 4;
+        public int countdown = 5;
 
         public override void SetStaticDefaults()
         {
@@ -23,8 +23,8 @@ namespace FargowiltasSouls.Projectiles
             projectile.aiStyle = 16; //explosives AI
             projectile.friendly = true;
             projectile.penetrate = -1;
-            projectile.timeLeft = 800;
-            Main.projFrames[projectile.type] = 4;
+            projectile.timeLeft = 1000;
+            Main.projFrames[projectile.type] = 5;
         }
 
         public override void AI()
@@ -43,7 +43,7 @@ namespace FargowiltasSouls.Projectiles
             {
                 projectile.frame++; //Making the frame go up...
                 projectile.frameCounter = 0; //Resetting the timer.
-                if (projectile.frame > 3) //amt of frames - 1
+                if (projectile.frame > 4) //amt of frames - 1
                 {
                     projectile.frame = 0;
                 }

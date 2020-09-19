@@ -225,6 +225,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool JungleSpores;
 
+        [Label("$Mods.FargowiltasSouls.CordageConfig")]
+        [DefaultValue(true)]
+        public bool Cordage;
+
         [Label("$Mods.FargowiltasSouls.MoltenConfig")]
         [DefaultValue(true)]
         public bool MoltenInferno;
@@ -603,6 +607,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.SupersonicCarpetConfig")]
         [DefaultValue(true)]
         public bool SupersonicCarpet;
+
+        [Label("$Mods.FargowiltasSouls.TrawlerConfig")]
+        [DefaultValue(true)]
+        public bool TrawlerLures;
 
         [Label("$Mods.FargowiltasSouls.EternityConfig")]
         [DefaultValue(true)]

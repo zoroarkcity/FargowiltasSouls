@@ -345,6 +345,12 @@ namespace FargowiltasSouls
 
         public void DarkArtistEffect(bool hideVisual)
         {
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<FlameburstMinion>()] == 0)
+            {
+                DarkSpawn = true;
+                //DarkSpawnCD = 60;
+            }
+
             player.setApprenticeT3 = true;
             DarkEnchant = true;
 
@@ -670,9 +676,11 @@ namespace FargowiltasSouls
                 jungleCD--;
             }
 
-            if (NatureForce) return;
-
-            player.cordage = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Cordage))
+            {
+                player.cordage = true;
+            }
+            
         }
 
         public void MeteorEffect()
@@ -864,11 +872,11 @@ namespace FargowiltasSouls
 
         public void OrichalcumEffect()
         {
+            OriEnchant = true;
+
             if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.OrichalcumPetals)) return;
 
             player.onHitPetal = true;
-
-            OriEnchant = true;
 
             /*int ballAmt = 6;
 
@@ -1757,7 +1765,11 @@ namespace FargowiltasSouls
             //instacatch
             FishSoul1 = true;
             //extra lures
-            FishSoul2 = true;
+            if (SoulConfig.Instance.TrawlerLures)
+            {
+                FishSoul2 = true;
+            }
+            
             AddPet(SoulConfig.Instance.ZephyrFishPet, hideVisual, BuffID.ZephyrFish, ProjectileID.ZephyrFish);
             player.fishingSkill += 60;
             player.sonarPotion = true;
