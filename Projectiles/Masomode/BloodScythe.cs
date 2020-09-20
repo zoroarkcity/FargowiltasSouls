@@ -41,10 +41,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
         }
 
-        public override Color? GetAlpha(Color lightColor)
+        /*public override Color? GetAlpha(Color lightColor)
         {
             return Color.White;
-        }
+        }*/
+	// causes huge lag on mac/linux
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {

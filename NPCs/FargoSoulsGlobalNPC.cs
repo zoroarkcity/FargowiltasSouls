@@ -803,7 +803,7 @@ namespace FargowiltasSouls.NPCs
                     numNeedles = 16;
                 }
 
-                Projectile[] projs = FargoGlobalProjectile.XWay(numNeedles, npc.Center, ProjectileID.PineNeedleFriendly, 5, modPlayer.HighestDamageTypeScaling(dmg), 5f);
+                Projectile[] projs = FargoGlobalProjectile.XWay(numNeedles, npc.Center, ModContent.ProjectileType<CactusNeedle>(), 5, modPlayer.HighestDamageTypeScaling(dmg), 5f);
 
                 for (int i = 0; i < projs.Length; i++)
                 {
