@@ -93,7 +93,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 if (player.direction < 0)
                     projectile.rotation += (float)Math.PI;
                 projectile.velocity = projectile.rotation.ToRotationVector2() * projectile.velocity.Length();
-                projectile.Center = player.Center + 60f * player.HeldItem.scale * Vector2.UnitX.RotatedBy(projectile.rotation);
+                float offset = 60f + 40f * projectile.scale / 5f;
+                projectile.Center = player.Center + offset * player.HeldItem.scale * Vector2.UnitX.RotatedBy(projectile.rotation);
                 projectile.position -= projectile.velocity;
 
                 projectile.timeLeft = 240;
