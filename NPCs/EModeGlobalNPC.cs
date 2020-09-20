@@ -39,6 +39,8 @@ namespace FargowiltasSouls.NPCs
         public bool BeetleOffenseAura = false;
         public bool BeetleDefenseAura = false;
         public bool BeetleUtilAura = false;
+        private int beetleTimer = 0;
+
         public bool PaladinsShield = false;
         public bool isMasoML;
         public bool isWaterEnemy;
@@ -74,9 +76,14 @@ namespace FargowiltasSouls.NPCs
         public override void ResetEffects(NPC npc)
         {
             PaladinsShield = false;
-            BeetleDefenseAura = false;
-            BeetleOffenseAura = false;
-            BeetleUtilAura = false;
+
+            if (beetleTimer > 0 && --beetleTimer <= 0)
+            {
+                BeetleDefenseAura = false;
+                BeetleOffenseAura = false;
+                BeetleUtilAura = false;
+            }
+            
         }
 
         public override void SetDefaults(NPC npc)
@@ -1307,6 +1314,7 @@ namespace FargowiltasSouls.NPCs
                             foreach (NPC n in Main.npc.Where(n => n.active && !n.friendly && n.type != NPCID.CochinealBeetle && n.Distance(npc.Center) < 400))
                             {
                                 n.GetGlobalNPC<EModeGlobalNPC>().BeetleOffenseAura = true;
+                                n.GetGlobalNPC<EModeGlobalNPC>().beetleTimer = 60;
                                 if (Main.rand.Next(2) == 0)
                                 {
                                     int d = Dust.NewDust(n.position, n.width, n.height, 60, 0f, -1.5f, 0, new Color());
@@ -1320,6 +1328,8 @@ namespace FargowiltasSouls.NPCs
                             foreach (NPC n in Main.npc.Where(n => n.active && !n.friendly && n.type != NPCID.CyanBeetle && n.Distance(npc.Center) < 400))
                             {
                                 n.GetGlobalNPC<EModeGlobalNPC>().BeetleUtilAura = true;
+                                n.GetGlobalNPC<EModeGlobalNPC>().beetleTimer = 60;
+
                                 if (Main.rand.Next(2) == 0)
                                 {
                                     int d = Dust.NewDust(n.position, n.width, n.height, 187, 0f, -1.5f, 0, new Color());
@@ -1333,6 +1343,7 @@ namespace FargowiltasSouls.NPCs
                             foreach (NPC n in Main.npc.Where(n => n.active && !n.friendly && n.type != NPCID.LacBeetle && n.Distance(npc.Center) < 400))
                             {
                                 n.GetGlobalNPC<EModeGlobalNPC>().BeetleDefenseAura = true;
+                                n.GetGlobalNPC<EModeGlobalNPC>().beetleTimer = 60;
                                 if (Main.rand.Next(2) == 0)
                                 {
                                     int d = Dust.NewDust(n.position, n.width, n.height, 21, 0f, -1.5f, 0, new Color());
@@ -6164,16 +6175,16 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.IlluminantBat:
                         if (Main.rand.Next(10) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<RabiesShot>());
-                        goto case NPCID.IlluminantSlime;
+                        //goto case NPCID.IlluminantSlime;
 
-                    case NPCID.IlluminantSlime:
-                    case NPCID.EnchantedSword:
-                        if (Main.rand.Next(3) == 0)
-                            Item.NewItem(npc.Hitbox, ModContent.ItemType<VolatileEnergy>(), 1);
+                    //case NPCID.IlluminantSlime:
+                    //case NPCID.EnchantedSword:
+                    //    if (Main.rand.Next(3) == 0)
+                    //        Item.NewItem(npc.Hitbox, ModContent.ItemType<VolatileEnergy>(), 1);
                         break;
 
                     case NPCID.ChaosElemental:
-                        Item.NewItem(npc.Hitbox, ModContent.ItemType<VolatileEnergy>(), 3);
+                        //Item.NewItem(npc.Hitbox, ModContent.ItemType<VolatileEnergy>(), 3);
 
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.TeleportationPotion, Main.rand.Next(0, 2) + 1);

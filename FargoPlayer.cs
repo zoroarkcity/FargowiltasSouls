@@ -3148,6 +3148,7 @@ namespace FargowiltasSouls
                     if (!WasHurtBySomething)
                     {
                         player.statLife = 1;
+                        CombatText.NewText(player.Hitbox, Color.SandyBrown, "You've been revived!");
                         return false; //this is deliberate
                     }
                 }
@@ -3161,7 +3162,7 @@ namespace FargowiltasSouls
                         player.HealEffect(heal);
                         player.immune = true;
                         player.immuneTime = player.longInvince ? 180 : 120;
-                        Main.NewText("You've been revived!", 175, 75);
+                        CombatText.NewText(player.Hitbox, Color.SandyBrown, "You've been revived!");
                         player.AddBuff(ModContent.BuffType<Revived>(), 10800);
                         retVal = false;
                     }
@@ -3171,7 +3172,7 @@ namespace FargowiltasSouls
                         player.HealEffect(200);
                         player.immune = true;
                         player.immuneTime = player.longInvince ? 180 : 120;
-                        Main.NewText("You've been revived!", 175, 75);
+                        CombatText.NewText(player.Hitbox, Color.SandyBrown, "You've been revived!");
                         player.AddBuff(ModContent.BuffType<Revived>(), 14400);
                         retVal = false;
 
@@ -3191,7 +3192,6 @@ namespace FargowiltasSouls
                         player.immune = true;
                         player.immuneTime = player.longInvince ? 300 : 200;
                         CombatText.NewText(player.Hitbox, Color.SandyBrown, "You've been revived!");
-                        //Main.NewText("You've been revived!", 175, 75);
                         player.AddBuff(ModContent.BuffType<Revived>(), 18000);
                         retVal = false;
 

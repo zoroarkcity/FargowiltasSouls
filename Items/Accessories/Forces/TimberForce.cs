@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces
             Tooltip.SetDefault(
 @"'Extremely rigid'
 Critters will explode 1 second after being released
-Grants immunity to Guilty
+50% chance to not consume critters
 Attacks will periodically be accompanied by several snowballs
 All grappling hooks shoot, pull, and retract 2.5x as fast
 You have an aura of Shadowflame, Cursed Flames, and Bleeding
