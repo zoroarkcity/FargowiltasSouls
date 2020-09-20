@@ -730,9 +730,10 @@ namespace FargowiltasSouls.NPCs.Champions
             GameShaders.Misc["LCWingShader"].Apply(wingGlowData);
             wingGlowData.Draw(spriteBatch);
 
-            spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix); 
+            spriteBatch.End(); spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix); 
             return false;
         }
+
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
         {
             Texture2D star = mod.GetTexture("Effects/LifeStar");

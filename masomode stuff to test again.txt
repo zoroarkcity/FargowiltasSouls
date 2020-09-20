@@ -562,3 +562,6 @@ sandnados ignore creepers too now
 
 added a check so spirit champ can't heal past his max life
 less aiming ahead for spirit sandnado
+will p3 dash fireballs move slightly
+changed immediate draws at the end of predraws to deferred to hopefully mitigate lag
+reverted regurgitator sprite

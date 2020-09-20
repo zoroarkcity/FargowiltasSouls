@@ -277,7 +277,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (Main.netMode != NetmodeID.MultiplayerClient) //sandnado
                         {
                             Vector2 target = player.Center;
-                            target.Y -= 150;
+                            target.Y -= 100;
                             Projectile.NewProjectile(target, Vector2.Zero, ProjectileID.SandnadoHostileMark, 0, 0f, Main.myPlayer);
 
                             int length = (int)npc.Distance(target) / 10;
