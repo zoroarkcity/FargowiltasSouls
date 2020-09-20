@@ -3148,7 +3148,7 @@ namespace FargowiltasSouls
                     if (!WasHurtBySomething)
                     {
                         player.statLife = 1;
-                        CombatText.NewText(player.Hitbox, Color.SandyBrown, "You've been revived!");
+                        //CombatText.NewText(player.Hitbox, Color.SandyBrown, "You've been revived!");
                         return false; //this is deliberate
                     }
                 }

@@ -1,19 +1,9 @@
 NEW UPDATE - V 1.4
 
-
 new in beta
--Removed Volatile Energy
--Added Aeolus Boots vanity
--Added combat text to all revives
--Made sure there's no way multiple rain clouds can spawn with Rain Enchant
--Beetle auras now actually work 
-
-
-
-Weapons
--Fish Stick sharks now pierce 
-
-new sprites:
-probes and rainbow slime buffs work?
+-no more revive text on abom wand
+-blender orbitals are not affected by tungsten
+-Fish stick sharks are now a custom proj and actually pierce :tm: (nerf, test on cultist)
+-Added rainbow slime and probe minion buff icons
 
 -See the wiki for full details

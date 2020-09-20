@@ -48,14 +48,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     if (Main.rand.Next(2) == 0)
                     {
                         Vector2 velocity = Vector2.Normalize(target.Center - x.Center) * 20;
-                        int shark = Projectile.NewProjectile(x.Center, velocity, ProjectileID.MiniSharkron, projectile.damage, projectile.knockBack, projectile.owner);
-                        if (shark < 1000)
-                        {
-                            Main.projectile[shark].tileCollide = false;
-                            Main.projectile[shark].timeLeft = 120;
-                            Main.projectile[shark].penetrate = 2;
-                            Main.projectile[shark].minion = true;
-                        }
+                        Projectile.NewProjectile(x.Center, velocity, ModContent.ProjectileType<FishStickShark>(), projectile.damage, projectile.knockBack, projectile.owner);
                     }
                 });
         }
