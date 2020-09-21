@@ -41,14 +41,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             int bonusMinions = player.maxMinions > 5 ? 5 : player.maxMinions;
 
             if (player.ownedProjectileCounts[ModContent.ProjectileType<Whirlpool>()] < 1)
-                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Whirlpool>(), projectile.damage, 0f, projectile.owner, 16, 6 + bonusMinions);
+                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Whirlpool>(), projectile.damage * 2, 0f, projectile.owner, 16, 6 + bonusMinions);
             else
                 Main.projectile.Where(x => x.active && x.type == ModContent.ProjectileType<Whirlpool>()).ToList().ForEach(x =>
                 {
                     if (Main.rand.Next(2) == 0)
                     {
                         Vector2 velocity = Vector2.Normalize(target.Center - x.Center) * 20;
-                        Projectile.NewProjectile(x.Center, velocity, ModContent.ProjectileType<FishStickShark>(), projectile.damage, projectile.knockBack, projectile.owner);
+                        Projectile.NewProjectile(x.Center, velocity, ModContent.ProjectileType<FishStickShark>(), projectile.damage / 2, projectile.knockBack, projectile.owner);
                     }
                 });
         }

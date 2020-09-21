@@ -18,11 +18,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             projectile.tileCollide = false;
             projectile.minion = true;
+
+            
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 2;
+            target.immune[projectile.owner] = 3;
             projectile.Kill();
         }
 

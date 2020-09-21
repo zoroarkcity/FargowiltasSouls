@@ -937,7 +937,7 @@ namespace FargowiltasSouls.NPCs
             {
                 squireCounter += 5;
 
-                if (squireCounter >= 100)
+                if (squireCounter >= 250)
                 {
                     if (modPlayer.ValhallaEnchant)
                     {
@@ -979,7 +979,7 @@ namespace FargowiltasSouls.NPCs
                 {
                     squireCounter++;
 
-                    if (squireCounter >= 100)
+                    if (squireCounter >= 250)
                     {
                         if (modPlayer.ValhallaEnchant)
                         {

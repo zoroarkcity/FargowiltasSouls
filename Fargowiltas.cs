@@ -212,7 +212,7 @@ namespace FargowiltasSouls
             AddToggle("MasoNymphConfig", "Attacks Spawn Hearts", "NymphsPerfume", "ffffff");
             AddToggle("MasoSqueakConfig", "Squeaky Toy On Hit", "SqueakyToy", "ffffff");
             AddToggle("MasoPouchConfig", "Tentacles On Hit", "WretchedPouch", "ffffff");
-            AddToggle("MasoClippedConfig", "Inflict Clipped Wings", "DragonFang", "ffffff");
+            AddToggle("MasoClippedConfig", "Inflict Clipped Wings", "WyvernFeather", "ffffff");
             AddToggle("TribalCharmConfig", "Tribal Charm Auto Swing", "TribalCharm", "ffffff");
             AddToggle("WalletHeader", "Security Wallet", "SecurityWallet", "ffffff");
 
