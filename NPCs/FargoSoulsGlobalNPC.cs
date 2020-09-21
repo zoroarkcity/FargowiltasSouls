@@ -809,14 +809,9 @@ namespace FargowiltasSouls.NPCs
                 {
                     if (projs[i] == null) continue;
                     Projectile p = projs[i];
-                    p.GetGlobalProjectile<FargoGlobalProjectile>().IsRecolor = true;
-                    p.magic = false;
-                    p.melee = true;
                     p.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
                 }
             }
-
-            
 
             return true;
         }

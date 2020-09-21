@@ -1560,13 +1560,13 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.FlyingFish:
                             Counter[0]++;
                             if (Counter[0] >= 70)
-                                Shoot(npc, 0, 250, 10, ProjectileID.WaterStream, npc.damage / 4, 1, false, true);
+                                Shoot(npc, 0, 250, 10, ProjectileID.WaterStream, npc.damage / 4, 1, true);
                             break;
 
                         case NPCID.ArmoredSkeleton:
                             Counter[0]++;
                             if (Counter[0] >= 300)
-                                Shoot(npc, 0, 500, 10, ProjectileID.SwordBeam, npc.damage / 4, 1, false, true, DustID.AmberBolt);
+                                Shoot(npc, 0, 500, 10, ProjectileID.SwordBeam, npc.damage / 4, 1, true, DustID.AmberBolt);
                             break;
 
                         case NPCID.Vulture:
@@ -1574,7 +1574,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 Counter[0]++;
                                 if (Counter[0] >= 150)
-                                    Shoot(npc, 30, 500, 10, ModContent.ProjectileType<VultureFeather>(), npc.damage / 4, 1, true);
+                                    Shoot(npc, 30, 500, 10, ModContent.ProjectileType<VultureFeather>(), npc.damage / 4, 1);
                             }
                             break;
 
@@ -1587,7 +1587,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.Crab:
                             Counter[0]++;
                             if (Counter[0] >= 300)
-                                Shoot(npc, 30, 800, 14, ProjectileID.Bubble, npc.damage / 4, 1, false, true);
+                                Shoot(npc, 30, 800, 14, ProjectileID.Bubble, npc.damage / 4, 1, true);
                             break;
 
                         case NPCID.ArmoredViking:
@@ -1634,7 +1634,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.BloodCrawlerWall:
                         case NPCID.JungleCreeperWall:
                             if (++Counter[0] >= 360)
-                                Shoot(npc, 60, 400, 14, ProjectileID.WebSpit, 9, 0, false, false, DustID.Web);
+                                Shoot(npc, 60, 400, 14, ProjectileID.WebSpit, 9, 0, false, DustID.Web);
                             break;
 
                         case NPCID.SeekerHead:
@@ -3690,7 +3690,7 @@ namespace FargowiltasSouls.NPCs
                             else //not in a wall
                             {
                                 if (++Counter[0] >= 300)
-                                    Shoot(npc, 45, 600, 9, ProjectileID.CursedFlameHostile, npc.damage / 5, 0, false, false, 75);
+                                    Shoot(npc, 45, 600, 9, ProjectileID.CursedFlameHostile, npc.damage / 5, 0, false, 75);
                             }
                             goto case NPCID.Harpy;
 
@@ -8962,7 +8962,7 @@ namespace FargowiltasSouls.NPCs
 
         }
 
-        private void Shoot(NPC npc, int delay, float distance, int speed, int proj, int dmg, float kb, bool recolor = false, bool hostile = false, int dustID = -1)
+        private void Shoot(NPC npc, int delay, float distance, int speed, int proj, int dmg, float kb, bool hostile = false, int dustID = -1)
         {
             int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
             if (t == -1)
@@ -9008,8 +9008,6 @@ namespace FargowiltasSouls.NPCs
                         int p = Projectile.NewProjectile(npc.Center, velocity, proj, dmg, kb, Main.myPlayer);
                         if (p < 1000)
                         {
-                            if (recolor)
-                                Main.projectile[p].GetGlobalProjectile<FargoGlobalProjectile>().IsRecolor = true;
                             if (hostile)
                             {
                                 Main.projectile[p].friendly = false;

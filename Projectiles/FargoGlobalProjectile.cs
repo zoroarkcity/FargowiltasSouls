@@ -12,7 +12,6 @@ using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Minions;
 using FargowiltasSouls.Projectiles.Souls;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +30,6 @@ namespace FargowiltasSouls.Projectiles
 
         private bool townNPCProj = false;
         private int counter;
-        public bool IsRecolor = false;
         private int rainbowCounter = 0;
         public bool Rainbow = false;
         public int GrazeCD;
@@ -1265,36 +1263,6 @@ namespace FargowiltasSouls.Projectiles
             }
 
             return base.TileCollideStyle(projectile, ref width, ref height, ref fallThrough);
-        }
-
-        public override Color? GetAlpha(Projectile projectile, Color lightColor)
-        {
-            if (IsRecolor)
-            {
-                if (projectile.type == ProjectileID.HarpyFeather)
-                {
-                    projectile.Name = "Vulture Feather";
-                    //return Color.Brown;
-                }
-
-                else if (projectile.type == ProjectileID.PineNeedleFriendly)
-                {
-                    //return Color.GreenYellow;
-                }
-
-                else if(projectile.type == ProjectileID.Bone)
-                {
-                    //return Color.SandyBrown;
-                }
-
-                else if (projectile.type == ProjectileID.DemonScythe)
-                {
-                    projectile.Name = "Blood Scythe";
-                    //return Color.Green;
-                }
-            }
-
-            return null;
         }
 
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)

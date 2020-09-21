@@ -22,5 +22,13 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.tileCollide = true;
             cooldownSlot = 1; // do we need this?
         }
+
+        public override void Kill(int timeLeft)
+        {
+            for (int num610 = 0; num610 < 10; num610++)
+            {
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 42, projectile.velocity.X * 0.1f, projectile.velocity.Y * 0.1f, 0, Color.SandyBrown, 1f);
+            }
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Projectiles.Souls
             projectile.aiStyle = 336;
             projectile.hostile = false;
             projectile.friendly = true;
-            projectile.magic = true;
+            projectile.melee = true;
             projectile.timeLeft = 600;
             projectile.tileCollide = true;
             cooldownSlot = 1;

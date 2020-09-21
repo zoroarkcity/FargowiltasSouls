@@ -6,4 +6,7 @@ new in beta
 -Fish stick sharks are now a custom proj and actually pierce :tm: (nerf, test on cultist)
 -Added rainbow slime and probe minion buff icons
 
+
+-Changed all projectiles recolored in code to just be recolored sprites as their own projectile, possibly ending that dumb mac lag 
+
 -See the wiki for full details

@@ -54,5 +54,10 @@ namespace FargowiltasSouls.Projectiles.Minions
             target.AddBuff(mod.BuffType("MutantNibble"), 600);
             target.AddBuff(BuffID.ShadowFlame, 600);
         }
+
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White;
+        }
     }
 }
