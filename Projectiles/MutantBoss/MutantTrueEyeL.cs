@@ -43,7 +43,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override bool CanHitPlayer(Player target)
         {
-            return target.hurtCooldowns[1] == 0;
+            return false;
         }
 
         public override void AI()

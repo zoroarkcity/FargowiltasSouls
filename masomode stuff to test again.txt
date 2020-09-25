@@ -565,3 +565,9 @@ less aiming ahead for spirit sandnado
 will p3 dash fireballs move slightly
 changed immediate draws at the end of predraws to deferred to hopefully mitigate lag
 reverted regurgitator sprite
+
+mutant boss
+	slime rain attack completely reworked
+	fishron attack completely reworked
+	mutant's true eyes dont have contact damage
+	always moves downwards during nuke

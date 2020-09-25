@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
     public class MutantFishron : ModProjectile
     {
         public override string Texture => "Terraria/NPC_370";
+
+        int p = -1;
 
         public override void SetStaticDefaults()
         {
@@ -28,7 +31,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.hostile = true;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
-            projectile.timeLeft = 180;
+            projectile.timeLeft = 240;
             projectile.alpha = 100;
             cooldownSlot = 1;
         }
@@ -38,22 +41,32 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             return target.hurtCooldowns[1] == 0;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(p);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            p = reader.ReadInt32();
+        }
+
+        public override bool CanDamage()
+        {
+            return projectile.localAI[0] > 55;
+        }
+
         public override void AI()
         {
             if (projectile.localAI[1] == 0f)
             {
-                projectile.localAI[1] = projectile.ai[1] + 1;
+                projectile.localAI[1] = 1;
                 Main.PlaySound(SoundID.Zombie, (int)projectile.Center.X, (int)projectile.Center.Y, 20);
+                p = Player.FindClosest(projectile.Center, 0, 0);
                 projectile.netUpdate = true;
             }
 
-            if (projectile.localAI[0]++ > 60f)
-            {
-                projectile.localAI[0] = 0f;
-                projectile.ai[1]++;
-            }
-
-            if (projectile.ai[1] % 2 == 1) //dash
+            if (++projectile.localAI[0] > 90) //dash
             {
                 projectile.rotation = projectile.velocity.ToRotation();
                 projectile.direction = projectile.spriteDirection = projectile.velocity.X > 0 ? 1 : -1;
@@ -75,9 +88,9 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             }
             else //preparing to dash
             {
-                int ai0 = (int)projectile.ai[0];
-                const float moveSpeed = 1f;
-                if (projectile.localAI[0] == 60f) //just about to dash
+                int ai0 = p;
+                //const float moveSpeed = 1f;
+                if (projectile.localAI[0] == 90) //just about to dash
                 {
                     projectile.velocity = Main.player[ai0].Center - projectile.Center;
                     projectile.velocity.Normalize();
@@ -101,7 +114,10 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                         vel.X += 300;
                         projectile.direction = projectile.spriteDirection = -1;
                     }
-                    vel.Y -= 200f;
+                    Vector2 targetPos = Main.player[ai0].Center + new Vector2(projectile.ai[0], projectile.ai[1]);
+                    Vector2 distance = (targetPos - projectile.Center) / 6f;
+                    projectile.velocity = (projectile.velocity * 23f + distance) / 24f;
+                    /*vel.Y -= 200f;
                     vel.Normalize();
                     vel *= 12f;
                     if (projectile.velocity.X < vel.X)
@@ -127,7 +143,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                         projectile.velocity.Y -= moveSpeed;
                         if (projectile.velocity.Y > 0 && vel.Y < 0)
                             projectile.velocity.Y -= moveSpeed;
-                    }
+                    }*/
                     if (++projectile.frameCounter > 5)
                     {
                         projectile.frameCounter = 0;
@@ -150,7 +166,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             target.AddBuff(mod.BuffType("CurseoftheMoon"), 900);
         }
 
-        public override void Kill(int timeleft)
+        /*public override void Kill(int timeleft)
         {
             Main.PlaySound(SoundID.Item84, projectile.Center);
             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -175,7 +191,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     Main.projectile[p].timeLeft = 240;
             }
             Main.PlaySound(SoundID.Item84, projectile.Center);
-        }
+        }*/
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {

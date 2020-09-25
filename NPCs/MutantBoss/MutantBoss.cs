@@ -1438,42 +1438,62 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     break;
 
                 case 30: //spawn fishrons
-                    npc.velocity *= 0.99f;
-                    if (--npc.ai[1] < 0)
+                    npc.velocity *= 0.98f;
+                    if (++npc.ai[1] == 1)
                     {
-                        npc.ai[1] = 20;
-                        if (++npc.ai[2] > 3)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            /*float[] options = { 11, 18, 26, 31, 33 };
-                            npc.ai[0] = options[Main.rand.Next(options.Length)];*/
-                            npc.ai[0]++;
-                            npc.ai[2] = 0;
-                            npc.netUpdate = true;
-                            npc.TargetClosest();
-                        }
-                        else
-                        {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(npc.Center, Vector2.UnitY * -3f, ModContent.ProjectileType<MutantFishron>(), npc.damage / 4, 0f, Main.myPlayer, npc.target);
-                            for (int i = 0; i < 30; i++)
+                            if (Main.rand.Next(2) == 0) //fan above player
                             {
-                                int d = Dust.NewDust(npc.position, npc.width, npc.height, 135, 0f, 0f, 0, default(Color), 3f);
-                                Main.dust[d].noGravity = true;
-                                Main.dust[d].noLight = true;
-                                Main.dust[d].velocity *= 12f;
+                                for (int i = -2; i <= 2; i++)
+                                {
+                                    Vector2 offset = Vector2.UnitY.RotatedBy(Math.PI / 4 / 2 * i) * -400f;
+                                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantFishron>(), npc.damage / 4, 0f, Main.myPlayer, offset.X, offset.Y);
+                                }
+                            }
+                            else
+                            {
+                                for (int j = -1; j <= 1; j++) //to both sides of player
+                                {
+                                    if (j == 0)
+                                        continue;
+
+                                    for (int i = -2; i <= 2; i++) //fan of fishron
+                                    {
+                                        Vector2 offset = Vector2.UnitX.RotatedBy(Math.PI / 5 / 2 * i) * 450f * j;
+                                        Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantFishron>(), npc.damage / 4, 0f, Main.myPlayer, offset.X, offset.Y);
+                                    }
+                                }
                             }
                         }
+                        for (int i = 0; i < 30; i++)
+                        {
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, 135, 0f, 0f, 0, default(Color), 3f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].noLight = true;
+                            Main.dust[d].velocity *= 12f;
+                        }
+                    }
+                    if (++npc.ai[2] > 90)
+                    {
+                        /*float[] options = { 11, 18, 26, 31, 33 };
+                        npc.ai[0] = options[Main.rand.Next(options.Length)];*/
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.netUpdate = true;
+                        npc.TargetClosest();
                     }
                     break;
 
-                case 31: //maneuver above for dive
+                case 31: //maneuver below for dive
                     if (!AliveCheck(player))
                         break;
                     targetPos = player.Center;
-                    //targetPos.X += 700 * (npc.Center.X < targetPos.X ? -1 : 1);
+                    targetPos.X += 400 * (npc.Center.X < targetPos.X ? -1 : 1);
                     targetPos.Y += 400;
-                    Movement(targetPos, 1f);
-                    if (++npc.ai[1] > 90) //dive here
+                    Movement(targetPos, 1.2f);
+                    if (++npc.ai[1] > 60) //dive here
                     {
                         npc.velocity.X = 30f * (npc.position.X < player.position.X ? 1 : -1);
                         if (npc.velocity.Y > 0)
@@ -1510,6 +1530,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         }
                         npc.ai[0]++;
                         npc.ai[1] = 0;
+                        if (npc.velocity.Y < 0)
+                            npc.velocity.Y *= -1f;
                         npc.netUpdate = true;
                         npc.TargetClosest();
                     }
@@ -1568,7 +1590,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     break;
 
-                case 35: //flee while slime raining
+                case 35: //flee to prepare for slime rain
                     if (!AliveCheck(player))
                         break;
                     targetPos = player.Center;
@@ -1576,7 +1598,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     targetPos.Y += 200;
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.7f);
-                    if (++npc.ai[1] > 6)
+                    /*if (++npc.ai[1] > 6)
                     {
                         npc.ai[1] = 0;
                         Main.PlaySound(SoundID.Item34, player.Center);
@@ -1594,19 +1616,10 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[3] = 1;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSlimeRain>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
-                    }
-                    if (++npc.ai[2] > 180)
+                    }*/
+                    if (++npc.ai[2] > 60)//180)
                     {
-                        if (npc.ai[0] == 38)
-                        {
-                            /*float[] options = { 11, 16, 18, 39, 41 };
-                            npc.ai[0] = options[Main.rand.Next(options.Length)];*/
-                            npc.ai[0]++;
-                        }
-                        else
-                        {
-                            npc.ai[0]++;
-                        }
+                        npc.ai[0]++;
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
@@ -1615,7 +1628,53 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     break;
 
-                case 36: //go below to initiate dash
+                case 36: //slime rain
+                    npc.velocity *= 0.9f;
+                    if (npc.ai[3] == 0)
+                    {
+                        npc.ai[3] = 1;
+                        Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSlimeRain>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
+                    }
+                    if (--npc.ai[1] < 0)
+                    {
+                        npc.ai[1] = 90;
+                        if (npc.ai[2] < 300 && Main.netMode != NetmodeID.MultiplayerClient) //spawn irisu walls of slime balls
+                        {
+                            const int xRange = 1400;
+                            Vector2 start = npc.Center;
+                            start.X -= xRange;
+
+                            const int safeRange = 160;
+                            int safespot = Main.rand.Next(800, 2000) - safeRange / 2;
+
+                            int end = 2 * xRange;
+                            int type = ModContent.ProjectileType<MutantSlimeBall2>();
+                            for (int i = 0; i < end; i += 48)
+                            {
+                                if (i < safespot || i > safespot + safeRange)
+                                {
+                                    Projectile.NewProjectile(start.X + i + Main.rand.NextFloat(-24, 24), start.Y - 1400 + Main.rand.NextFloat(-24, 24),
+                                        0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
+                                    Projectile.NewProjectile(start.X + i + Main.rand.NextFloat(-24, 24), start.Y - 1448 + Main.rand.NextFloat(-24, 24),
+                                        0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
+                                }
+                            }
+                        }
+                    }
+                    if (++npc.ai[2] > 450)
+                    {
+                        npc.ai[0]++;
+                        npc.ai[1] = 0;
+                        npc.ai[2] = 0;
+                        npc.ai[3] = 0;
+                        npc.netUpdate = true;
+                        npc.TargetClosest();
+                    }
+                    break;
+
+                case 37: //go above to initiate dash
                     if (!AliveCheck(player))
                         break;
                     targetPos = player.Center;
@@ -1625,7 +1684,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (++npc.ai[1] > 60) //dive here
                     {
                         npc.velocity.X = 35f * (npc.position.X < player.position.X ? 1 : -1);
-                        npc.velocity.Y = -10f;
+                        npc.velocity.Y = 10f;
                         npc.ai[0]++;
                         npc.ai[1] = 0;
                         npc.netUpdate = true;
@@ -1633,18 +1692,15 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     break;
 
-                case 37: //spawn fishrons
+                case 38: //spawn fishrons
                     goto case 30;
-
-                case 38: //rain slime again
-                    goto case 35;
 
                 case 39: //SPHERE RING SPAMMMMM
                     npc.velocity = Vector2.Zero;
-                    if (++npc.ai[1] > 10 && npc.ai[3] > 60)
+                    if (++npc.ai[1] > 10 && npc.ai[3] > 90)
                     {
                         npc.ai[1] = 0;
-                        float rotation = MathHelper.ToRadians(45) * (npc.ai[3] - 60) / 240 * npc.ai[2];
+                        float rotation = MathHelper.ToRadians(45) * (npc.ai[3] - 90) / 240 * npc.ai[2];
                         SpawnSphereRing(10, 10f, npc.damage / 4, -1f, rotation);
                         SpawnSphereRing(10, 10f, npc.damage / 4, 1f, rotation);
                     }
@@ -1653,7 +1709,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[2] = Main.rand.Next(2) == 0 ? -1 : 1;
                         Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                     }
-                    if (++npc.ai[3] > 300)
+                    if (++npc.ai[3] > 360)
                     {
                         npc.netUpdate = true;
                         npc.ai[0]++;
