@@ -24,6 +24,7 @@ using Fargowiltas.Items.Misc;
 using Fargowiltas.Items.Tiles;
 using Fargowiltas.Items.Explosives;
 using Microsoft.Xna.Framework.Graphics;
+using FargowiltasSouls.Items.Dyes;
 
 namespace FargowiltasSouls
 {
@@ -540,10 +541,16 @@ namespace FargowiltasSouls
             if (Main.netMode != NetmodeID.Server)
             {
                 #region shaders
-                //loading a ref for a shader
+                //loading refs for shaders
                 Ref<Effect> lcRef = new Ref<Effect>(GetEffect("Effects/LifeChampionShader"));
-                //loading the shader from the ref
+                Ref<Effect> wcRef = new Ref<Effect>(GetEffect("Effects/WillChampionShader"));
+
+                //loading shaders from refs
                 GameShaders.Misc["LCWingShader"] = new MiscShaderData(lcRef, "LCWings");
+                GameShaders.Armor.BindShader(ModContent.ItemType<LifeDye>(), new ArmorShaderData(lcRef, "LCArmor").UseColor(new Color(1f, 0.647f, 0.839f)).UseSecondaryColor(Color.Goldenrod));
+
+                GameShaders.Misc["WCWingShader"] = new MiscShaderData(wcRef, "WCWings");
+                GameShaders.Armor.BindShader(ModContent.ItemType<WillDye>(), new ArmorShaderData(wcRef, "WCArmor").UseColor(Color.DarkOrchid).UseSecondaryColor(Color.LightPink).UseImage("Images/Misc/Noise"));
 
                 #endregion
             }
