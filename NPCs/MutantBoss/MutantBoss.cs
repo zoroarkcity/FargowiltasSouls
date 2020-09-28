@@ -1647,31 +1647,31 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             start.X -= xRange;
 
                             const int safeRange = 160;
-                            int safespot = Main.rand.Next(800, 2000) - safeRange / 2;
+                            int safespot = Main.rand.Next(900, 1900) - safeRange / 2;
 
                             int end = 2 * xRange;
                             int type = ModContent.ProjectileType<MutantSlimeBall2>();
                             for (int i = 0; i < safespot; i+= 48)
                             {
                                 Projectile.NewProjectile(start.X + i + Main.rand.NextFloat(-24, 0), start.Y - 1400 + Main.rand.NextFloat(-24, 24),
-                                        0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
+                                        0f, 5f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
                                 Projectile.NewProjectile(start.X + i + Main.rand.NextFloat(-24, 0), start.Y - 1448 + Main.rand.NextFloat(-24, 24),
-                                    0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
+                                    0f, 5f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
                             }
                             Projectile.NewProjectile(start.X + safespot, start.Y - 1424,
                                 0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
                             for (int i = safespot + safeRange; i < end; i += 48)
                             {
                                 Projectile.NewProjectile(start.X + i + Main.rand.NextFloat(24), start.Y - 1400 + Main.rand.NextFloat(-24, 24),
-                                        0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
+                                        0f, 5f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
                                 Projectile.NewProjectile(start.X + i + Main.rand.NextFloat(24), start.Y - 1448 + Main.rand.NextFloat(-24, 24),
-                                    0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
+                                    0f, 5f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
                             }
                             Projectile.NewProjectile(start.X + safespot + safeRange, start.Y - 1424,
                                 0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
                         }
                     }
-                    if (++npc.ai[2] > 450)
+                    if (++npc.ai[2] > 480)
                     {
                         npc.ai[0]++;
                         npc.ai[1] = 0;
