@@ -571,3 +571,25 @@ mutant boss
 	fishron attack completely reworked
 	mutant's true eyes dont have contact damage
 	always moves downwards during nuke
+	arena is stationary during pillar
+guntera tentacles can grip air in p2
+holy price lasts 15 seconds now
+chlorophyte bullets are slower and despawn after 3 seconds
+spirit champ
+	slowed down spectres
+	fires crossbones only straight down during shield
+shadow champ
+	does more damage on flamebursts
+	pumpking scythes do more damage when they home
+	has dungeon guardian's telegraphs on the guardians attack
+earth champ
+	moves much slower during fireball breathing attack
+	hands reposition faster during first attack in p2
+	first attack has movement adjusted
+	first attack now causes chain explosions after finishing a punch
+	flower petals split after travelling a short distance in p2
+	hand slams spawn semi homing life orbs in p2
+	contact damage inflicts lethargic (mythril reference)
+vortex ench portal no longer instakills enemies, instead does a very high damage explosion as it dies
+abom wand halves sparkling adoration cooldown and boosts damage
+mutant eye upgrades sparkling adoration's friend hearts to love rays

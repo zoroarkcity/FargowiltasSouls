@@ -178,7 +178,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         targetPos = player.Center;
                         targetPos.Y -= 325;
                         if (npc.Distance(targetPos) > 50)
-                            Movement(targetPos, 0.4f, 24f, true);
+                            Movement(targetPos, 0.4f, 16f, true);
                     }
 
                     if (npc.localAI[2] == 0 && npc.life < npc.lifeMax / 2)
@@ -230,7 +230,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             }
                         }
                         if (npc.Distance(targetPos) > 50)
-                            Movement(targetPos, 0.2f, 24f, true);
+                            Movement(targetPos, 0.2f, 12f, true);
 
                         if (++npc.ai[2] > 75)
                         {
@@ -337,7 +337,10 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             target.AddBuff(BuffID.OnFire, 300);
             if (FargoSoulsWorld.MasochistMode)
+            {
                 target.AddBuff(BuffID.Burning, 300);
+                target.AddBuff(ModContent.BuffType<Buffs.Masomode.Lethargic>(), 300);
+            }
         }
 
         public override void HitEffect(int hitDirection, double damage)

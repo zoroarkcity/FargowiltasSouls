@@ -40,8 +40,15 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 if (projectile.alpha < 0)
                     projectile.alpha = 0;
 
-                projectile.velocity = Main.npc[ai1].Center - projectile.Center;
-                projectile.velocity /= 60f;
+                if (Main.npc[ai1].ai[0] == 19) //stationary during pillar
+                {
+                    projectile.velocity = Vector2.Zero;
+                }
+                else
+                {
+                    projectile.velocity = Main.npc[ai1].Center - projectile.Center;
+                    projectile.velocity /= 60f;
+                }
 
                 Player player = Main.player[Main.myPlayer];
                 if (player.active && !player.dead)

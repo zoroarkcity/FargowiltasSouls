@@ -111,7 +111,7 @@ namespace FargowiltasSouls.Projectiles
                     int minDist = 500;
                     Player player = Main.player[projectile.owner];
 
-                    for (int i = 0; i < 200; i++)
+                    /*for (int i = 0; i < 200; i++)
                     {
                         float distance = projectile.Distance(Main.npc[i].Center);
                         NPC npc = Main.npc[i];
@@ -129,7 +129,7 @@ namespace FargowiltasSouls.Projectiles
                         {
                             npc.active = false;
                         }
-                    }
+                    }*/
 
                     for (int i = 0; i < 1000; i++)
                     {
@@ -214,6 +214,25 @@ namespace FargowiltasSouls.Projectiles
                     dust.velocity *= 3f;
                     dust.scale *= 2f;
                 }
+            }
+
+            if (projectile.localAI[0] == 0 && projectile.owner == Main.myPlayer)
+            {
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    if (Main.npc[i].active && projectile.Distance(Main.npc[i].Center) < 850) //strip nearby enemies of iframes
+                        Main.npc[i].immune[projectile.owner] = 0;
+                }
+
+                projectile.localAI[0] = 1;
+                projectile.position = projectile.Center;
+                projectile.width = 600;
+                projectile.height = 600;
+                projectile.Center = projectile.position;
+
+                projectile.damage *= 10;
+                projectile.knockBack *= 10;
+                projectile.Damage();
             }
         }
 

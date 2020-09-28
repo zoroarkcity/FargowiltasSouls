@@ -645,12 +645,12 @@ namespace FargowiltasSouls.NPCs.Champions
 
                                 Main.PlaySound(SoundID.Item2, npc.Center);
 
-                                if (npc.life < npc.lifeMax * 0.66)
+                                if (npc.life < npc.lifeMax * 0.66) //do vertical only crossbones in p2
                                 {
-                                    for (int i = 0; i < 12; i++)
+                                    for (int i = 0; i < 6; i++)
                                     {
                                         Projectile.NewProjectile(npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
-                                            Main.rand.NextFloat(-8f, 8f), Main.rand.NextFloat(-8f, 8f), ModContent.ProjectileType<SpiritCrossBone>(), npc.damage / 4, 0f, Main.myPlayer);
+                                            Main.rand.NextFloat(-1f, 1f), Main.rand.NextFloat(-8f, 0f), ModContent.ProjectileType<SpiritCrossBone>(), npc.damage / 4, 0f, Main.myPlayer);
                                     }
                                 }
                             }

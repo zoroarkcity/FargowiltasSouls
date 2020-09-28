@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.height = 20;
             projectile.aiStyle = -1;
             projectile.hostile = true;
-            projectile.timeLeft = 300;
+            projectile.timeLeft = 240;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
 
@@ -36,6 +36,9 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void AI()
         {
+            if (projectile.ai[0] == 0 && projectile.timeLeft > 105)
+                projectile.timeLeft = 105;
+
             if (projectile.localAI[0] == 0f)
             {
                 projectile.localAI[0] = 1f;
@@ -58,6 +61,18 @@ namespace FargowiltasSouls.Projectiles.Champions
             Main.dust[dust].velocity *= 0.1f;
 
             Dust.NewDust(projectile.position, projectile.width, projectile.height, 86, projectile.velocity.X, projectile.velocity.Y);
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            if (projectile.ai[0] == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                for (int i = -1; i <= 1; i++) //split
+                {
+                    Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(5) * i) / 2f,
+                        projectile.type, projectile.damage, 0f, Main.myPlayer, 1f);
+                }
+            }
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

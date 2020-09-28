@@ -1458,9 +1458,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                     if (j == 0)
                                         continue;
 
-                                    for (int i = -2; i <= 2; i++) //fan of fishron
+                                    for (int i = -1; i <= 1; i++) //fan of fishron
                                     {
-                                        Vector2 offset = Vector2.UnitX.RotatedBy(Math.PI / 5 / 2 * i) * 450f * j;
+                                        Vector2 offset = Vector2.UnitX.RotatedBy(Math.PI / 3 / 3 * i) * 450f * j;
                                         Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantFishron>(), npc.damage / 4, 0f, Main.myPlayer, offset.X, offset.Y);
                                     }
                                 }
@@ -1541,7 +1541,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (!AliveCheck(player))
                         break;
                     npc.velocity.Normalize();
-                    npc.velocity *= 2f;
+                    npc.velocity *= 3f;
                     if (npc.ai[1] > 180)
                     {
                         if (!Main.dedServ && Main.LocalPlayer.active)
@@ -1651,16 +1651,24 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
                             int end = 2 * xRange;
                             int type = ModContent.ProjectileType<MutantSlimeBall2>();
-                            for (int i = 0; i < end; i += 48)
+                            for (int i = 0; i < safespot; i+= 48)
                             {
-                                if (i < safespot || i > safespot + safeRange)
-                                {
-                                    Projectile.NewProjectile(start.X + i + Main.rand.NextFloat(-24, 24), start.Y - 1400 + Main.rand.NextFloat(-24, 24),
+                                Projectile.NewProjectile(start.X + i + Main.rand.NextFloat(-24, 0), start.Y - 1400 + Main.rand.NextFloat(-24, 24),
                                         0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
-                                    Projectile.NewProjectile(start.X + i + Main.rand.NextFloat(-24, 24), start.Y - 1448 + Main.rand.NextFloat(-24, 24),
-                                        0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
-                                }
+                                Projectile.NewProjectile(start.X + i + Main.rand.NextFloat(-24, 0), start.Y - 1448 + Main.rand.NextFloat(-24, 24),
+                                    0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
                             }
+                            Projectile.NewProjectile(start.X + safespot, start.Y - 1424,
+                                0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
+                            for (int i = safespot + safeRange; i < end; i += 48)
+                            {
+                                Projectile.NewProjectile(start.X + i + Main.rand.NextFloat(24), start.Y - 1400 + Main.rand.NextFloat(-24, 24),
+                                        0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
+                                Projectile.NewProjectile(start.X + i + Main.rand.NextFloat(24), start.Y - 1448 + Main.rand.NextFloat(-24, 24),
+                                    0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
+                            }
+                            Projectile.NewProjectile(start.X + safespot + safeRange, start.Y - 1424,
+                                0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
                         }
                     }
                     if (++npc.ai[2] > 450)
