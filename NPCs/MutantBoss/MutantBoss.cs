@@ -1171,9 +1171,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     {
                         Movement(targetPos, 0.5f);
                     }
-                    if (++npc.ai[1] > 60)
+                    if (++npc.ai[1] > 90)
                     {
-                        npc.ai[1] = 0;
+                        npc.ai[1] = 30;
                         if (++npc.ai[2] > (FargoSoulsWorld.MasochistMode ? 3 : 1))
                         {
                             /*float[] options = { 13, 18, 21, 24, 26, 31, 33, 40 };
@@ -1340,7 +1340,6 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         break;
                     targetPos = player.Center;
                     targetPos.X += 600 * (npc.Center.X < targetPos.X ? -1 : 1);
-                    targetPos.Y -= 250;
                     if (npc.Distance(targetPos) > 50)
                     {
                         Movement(targetPos, 0.5f);
@@ -1364,21 +1363,27 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     break;
 
-                case 27: //DEATHRAY SPAM
+                case 27: //reti fan
                     npc.velocity = Vector2.Zero;
+                    if (npc.ai[2] == 0)
+                    {
+                        npc.ai[2] = Main.rand.Next(2) == 0 ? -1 : 1; //randomly aim either up or down
+                    }
                     if (++npc.ai[1] > 10)
                     {
                         npc.ai[1] = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.UnitX, ModContent.ProjectileType<MutantDeathray3>(), npc.damage / 4, 0, Main.myPlayer, MathHelper.ToRadians(260) / -90f, npc.whoAmI);
-                            Projectile.NewProjectile(npc.Center, -Vector2.UnitX, ModContent.ProjectileType<MutantDeathray3>(), npc.damage / 4, 0, Main.myPlayer, MathHelper.ToRadians(260) / 90f, npc.whoAmI);
+                            float rotation = MathHelper.ToRadians(260) / 90f * npc.ai[2];
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitX, ModContent.ProjectileType<MutantDeathray3>(), npc.damage / 4, 0, Main.myPlayer, rotation, npc.whoAmI);
+                            Projectile.NewProjectile(npc.Center, -Vector2.UnitX, ModContent.ProjectileType<MutantDeathray3>(), npc.damage / 4, 0, Main.myPlayer, -rotation, npc.whoAmI);
                         }
                     }
                     if (++npc.ai[3] > 180)
                     {
                         npc.ai[0]++;
                         npc.ai[1] = 0;
+                        npc.ai[2] = 0;
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
                         Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
@@ -1394,17 +1399,21 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     break;
 
                 case 28: //rain primes
-                    if (++npc.ai[1] > 4 && npc.ai[3] > 30)
+                    if (++npc.ai[1] > 3 && npc.ai[3] > 30)
                     {
                         npc.ai[1] = 0;
+                        if (npc.ai[2] > 0)
+                            npc.ai[2] = -1;
+                        else
+                            npc.ai[2] = 1;
                         Main.PlaySound(SoundID.Item21, npc.Center);
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 spawnPos = npc.Center;
-                            spawnPos.X += Main.rand.Next(-600, 601);
-                            spawnPos.Y -= 1200;
+                            spawnPos.X += Main.rand.NextFloat(-500, 500);
+                            spawnPos.Y -= 1600 * npc.ai[2];
                             Vector2 vel = npc.Center;
-                            vel.Y += 600;
+                            vel.Y += 500;
                             vel -= spawnPos;
                             vel.Normalize();
                             vel *= 18;
@@ -1424,6 +1433,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             npc.ai[0] = 11;
                         }
                         npc.ai[1] = 0;
+                        npc.ai[2] = 0;
                         npc.ai[3] = 0;
                         npc.netUpdate = true;
                     }
@@ -1633,14 +1643,15 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (npc.ai[3] == 0)
                     {
                         npc.ai[3] = 1;
+                        Main.NewText(npc.position.Y);
                         Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSlimeRain>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                     }
                     if (--npc.ai[1] < 0)
                     {
-                        npc.ai[1] = 90;
-                        if (npc.ai[2] < 300 && Main.netMode != NetmodeID.MultiplayerClient) //spawn irisu walls of slime balls
+                        npc.ai[1] = 100;
+                        if (npc.ai[2] < 330 && Main.netMode != NetmodeID.MultiplayerClient) //spawn irisu walls of slime balls
                         {
                             const int xRange = 1400;
                             Vector2 start = npc.Center;
@@ -1671,7 +1682,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 0f, 6f, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
                         }
                     }
-                    if (++npc.ai[2] > 480)
+                    if (++npc.ai[2] > 510)
                     {
                         npc.ai[0]++;
                         npc.ai[1] = 0;

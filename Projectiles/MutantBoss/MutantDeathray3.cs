@@ -12,8 +12,6 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
     {
         public MutantDeathray3() : base(90, "PhantasmalDeathray") { }
 
-        private const float maxTime = 90;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Blazing Deathray");
@@ -22,6 +20,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         public override bool CanHitPlayer(Player target)
         {
             return target.hurtCooldowns[1] == 0;
+        }
+
+        public override bool CanDamage()
+        {
+            return projectile.localAI[0] > 15;
         }
 
         public override void AI()
