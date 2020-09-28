@@ -94,7 +94,7 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.ChlorophyteBullet:
                         projectile.extraUpdates = 0;
-                        projectile.timeLeft = 180;
+                        projectile.timeLeft = 120;
                         break;
 
                     case ProjectileID.CrystalBullet:

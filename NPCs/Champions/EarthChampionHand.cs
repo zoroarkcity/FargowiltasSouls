@@ -185,6 +185,8 @@ namespace FargowiltasSouls.NPCs.Champions
                             npc.localAI[1] = 0;
                             npc.netUpdate = true;
 
+                            npc.velocity = Vector2.Zero;
+
                             if (head.localAI[2] == 1 && FargoSoulsWorld.MasochistMode && Main.netMode != NetmodeID.MultiplayerClient) //explosion chain
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<EarthChainBlast>(),

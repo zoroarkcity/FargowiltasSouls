@@ -574,7 +574,7 @@ mutant boss
 	arena is stationary during pillar
 guntera tentacles can grip air in p2
 holy price lasts 15 seconds now
-chlorophyte bullets are slower and despawn after 3 seconds
+chlorophyte bullets are slower and despawn after 2 seconds
 spirit champ
 	slowed down spectres
 	fires crossbones only straight down during shield
@@ -593,3 +593,6 @@ earth champ
 vortex ench portal no longer instakills enemies, instead does a very high damage explosion as it dies
 abom wand halves sparkling adoration cooldown and boosts damage
 mutant eye upgrades sparkling adoration's friend hearts to love rays
+
+earth champ hands stop completely after punch
+chloro bullet duration is 2sec
