@@ -417,6 +417,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (npc.ai[2] == 0)
                     {
                         npc.ai[2] = Main.rand.Next(2) == 0 ? -1 : 1;
+                        npc.ai[3] = Main.rand.NextFloat((float)Math.PI * 2);
                     }
                     if (++npc.ai[3] > 420)
                     {
@@ -1726,6 +1727,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (npc.ai[2] == 0)
                     {
                         npc.ai[2] = Main.rand.Next(2) == 0 ? -1 : 1;
+                        npc.ai[3] = Main.rand.NextFloat((float)Math.PI * 2);
                         Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                     }
                     if (++npc.ai[3] > 360)
