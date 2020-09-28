@@ -596,3 +596,4 @@ mutant eye upgrades sparkling adoration's friend hearts to love rays
 
 earth champ hands stop completely after punch
 chloro bullet duration is 2sec
+spirit champ no longer combos you with his contact damage
