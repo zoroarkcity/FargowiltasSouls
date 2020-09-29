@@ -973,7 +973,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     else
                     {
                         npc.netUpdate = true;
-                        npc.ai[0] = 35;
+                        npc.ai[0]++;
                         npc.ai[1] = 0;
                         npc.ai[2] = player.DirectionTo(npc.Center).ToRotation();
                         npc.ai[3] = (float)Math.PI / 10f;
