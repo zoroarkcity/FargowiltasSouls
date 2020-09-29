@@ -19,6 +19,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.width = 14;
             projectile.height = 14;
             //projectile.aiStyle = 14;
+            projectile.tileCollide = false;
+            projectile.ignoreWater = true;
             projectile.hostile = true;
             projectile.timeLeft = 90;
             cooldownSlot = 1;
