@@ -616,3 +616,5 @@ mutant polish
 	slime rain tweaked again
 	more overlap between ray fan and primes
 	misc unimportant internal tweaks
+
+adjusted propagation of earth champ chain blasts

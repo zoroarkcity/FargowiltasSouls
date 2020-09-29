@@ -63,11 +63,20 @@ namespace FargowiltasSouls.Projectiles.Champions
 
                 Vector2 baseDirection = projectile.ai[0].ToRotationVector2();
                 float random = MathHelper.ToRadians(15);
-                for (int i = -1; i <= 1; i++) //split into more explosions
+                if (projectile.ai[1] > 2)
                 {
-                    if (i == 0)
-                        continue;
-                    Vector2 offset = projectile.width * 2.25f * baseDirection.RotatedBy(MathHelper.ToRadians(60) * i + Main.rand.NextFloat(-random, random));
+                    for (int i = -1; i <= 1; i++) //split into more explosions
+                    {
+                        if (i == 0)
+                            continue;
+                        Vector2 offset = projectile.width * 2.25f * baseDirection.RotatedBy(MathHelper.ToRadians(60) * i + Main.rand.NextFloat(-random, random));
+                        Projectile.NewProjectile(projectile.Center + offset, Vector2.Zero, projectile.type,
+                            projectile.damage, 0f, projectile.owner, projectile.ai[0], projectile.ai[1]);
+                    }
+                }
+                else
+                {
+                    Vector2 offset = projectile.width * 2.25f * baseDirection.RotatedBy(Main.rand.NextFloat(-random, random));
                     Projectile.NewProjectile(projectile.Center + offset, Vector2.Zero, projectile.type,
                         projectile.damage, 0f, projectile.owner, projectile.ai[0], projectile.ai[1]);
                 }
