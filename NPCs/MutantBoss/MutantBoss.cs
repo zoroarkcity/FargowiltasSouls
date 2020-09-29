@@ -1375,13 +1375,13 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     break;
 
-                case 27: //reti fan
+                case 27: //reti fan and prime rain
                     npc.velocity = Vector2.Zero;
                     if (npc.ai[2] == 0)
                     {
                         npc.ai[2] = Main.rand.Next(2) == 0 ? -1 : 1; //randomly aim either up or down
                     }
-                    if (++npc.ai[1] > 10)
+                    if (npc.ai[3] < 240 && ++npc.ai[1] > 10)
                     {
                         npc.ai[1] = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -1391,14 +1391,40 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Projectile.NewProjectile(npc.Center, -Vector2.UnitX, ModContent.ProjectileType<MutantDeathray3>(), npc.damage / 4, 0, Main.myPlayer, -rotation, npc.whoAmI);
                         }
                     }
-                    if (++npc.ai[3] > 200)
+                    if (npc.ai[3] == 180)
+                    {
+                        Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
+                    }
+                    if (npc.ai[3] > 180 && ++npc.localAI[0] > 2)
+                    {
+                        npc.localAI[0] = 0;
+                        if (npc.localAI[1] > 0)
+                            npc.localAI[1] = -1;
+                        else
+                            npc.localAI[1] = 1;
+                        Main.PlaySound(SoundID.Item21, npc.Center);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Vector2 spawnPos = npc.Center;
+                            spawnPos.X += Main.rand.NextFloat(-400, 400);
+                            spawnPos.Y -= 1600 * npc.localAI[1];
+                            Vector2 vel = npc.Center;
+                            vel.Y += player.Center.Y < npc.Center.Y ? -600 : 600;
+                            vel -= spawnPos;
+                            vel.Normalize();
+                            vel *= 18;
+                            Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<MutantGuardian>(), npc.damage / 3, 0f, Main.myPlayer);
+                        }
+                    }
+                    if (++npc.ai[3] > 300)
                     {
                         npc.ai[0]++;
                         npc.ai[1] = 0;
                         npc.ai[2] = 0;
                         npc.ai[3] = 0;
+                        npc.localAI[0] = 0;
+                        npc.localAI[1] = 0;
                         npc.netUpdate = true;
-                        Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         npc.TargetClosest();
                     }
                     for (int i = 0; i < 3; i++)
@@ -1410,29 +1436,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     break;
 
-                case 28: //rain primes
-                    if (++npc.ai[1] > 2)
-                    {
-                        npc.ai[1] = 0;
-                        if (npc.ai[2] > 0)
-                            npc.ai[2] = -1;
-                        else
-                            npc.ai[2] = 1;
-                        Main.PlaySound(SoundID.Item21, npc.Center);
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            Vector2 spawnPos = npc.Center;
-                            spawnPos.X += Main.rand.NextFloat(-400, 400);
-                            spawnPos.Y -= 1600 * npc.ai[2];
-                            Vector2 vel = npc.Center;
-                            vel.Y += player.Center.Y < npc.Center.Y ? -600 : 600;
-                            vel -= spawnPos;
-                            vel.Normalize();
-                            vel *= 18;
-                            Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<MutantGuardian>(), npc.damage / 3, 0f, Main.myPlayer);
-                        }
-                    }
-                    if (++npc.ai[3] > 120)
+                case 28: //on standby, wait for previous attack to clear
+                    if (++npc.ai[3] > 30)
                     {
                         /*float[] options = { 29, 31, 39, 41 };
                         npc.ai[0] = options[Main.rand.Next(options.Length)];*/
@@ -1542,6 +1547,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         }
                         npc.ai[0]++;
                         npc.ai[1] = 0;
+                        if (Math.Sign(player.Center.X - npc.Center.X) == Math.Sign(npc.velocity.X))
+                            npc.velocity.X *= -1f;
                         if (npc.velocity.Y < 0)
                             npc.velocity.Y *= -1f;
                         npc.netUpdate = true;
@@ -1641,7 +1648,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     break;
 
                 case 36: //slime rain
-                    npc.velocity *= 0.9f;
+                    npc.velocity = Vector2.Zero;
                     if (npc.ai[3] == 0)
                     {
                         npc.ai[3] = 1;
@@ -1652,9 +1659,22 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     if (npc.ai[1] == 0) //telegraphs for where slime will fall
                     {
-                        npc.localAI[0] = Main.rand.Next(4, 17) * 120;
-                        if (npc.localAI[0] == 1200) //safespot never right on mutant
-                            npc.localAI[0] += Main.rand.Next(2) == 0 ? 120 : -120;
+                        bool first = npc.localAI[0] == 0;
+                        npc.localAI[0] = Main.rand.Next(4, 10) * 120;
+                        if (first) //always start on the same side as the player
+                        {
+                            if (player.Center.X < npc.Center.X && npc.localAI[0] > 1200)
+                                npc.localAI[0] -= 1200;
+                            else if (player.Center.X > npc.Center.X && npc.localAI[0] < 1200)
+                                npc.localAI[0] += 1200;
+                        }
+                        else //after that, always be on opposite side from player
+                        {
+                            if (player.Center.X < npc.Center.X && npc.localAI[0] < 1200)
+                                npc.localAI[0] += 1200;
+                            else if (player.Center.X > npc.Center.X && npc.localAI[0] > 1200)
+                                npc.localAI[0] -= 1200;
+                        }
                         npc.localAI[0] += 60;
                         Vector2 basePos = npc.Center;
                         basePos.X -= 1200;
@@ -1664,7 +1684,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             {
                                 if (i + 60 == (int)npc.localAI[0])
                                     continue;
-                                Projectile.NewProjectile(basePos.X + i + 60, basePos.Y + Main.rand.NextFloat(-150, 150), 0f, 0f, ModContent.ProjectileType<MutantReticle>(), npc.damage / 5, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(basePos.X + i + 60, basePos.Y, 0f, 0f, ModContent.ProjectileType<MutantReticle>(), 0, 0f, Main.myPlayer);
                             }
                         }
                     }
@@ -1675,28 +1695,28 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         {
                             Vector2 basePos = npc.Center;
                             basePos.X -= 1200;
-                            for (int i = -360; i <= 2760; i += 90)
+                            for (int i = -360; i <= 2760; i += 75)
                             {
-                                float xOffset = i + Main.rand.Next(90);
-                                if (Math.Abs(xOffset - npc.localAI[0]) < 240) //dont fall over safespot
+                                float xOffset = i + Main.rand.Next(75);
+                                if (Math.Abs(xOffset - npc.localAI[0]) < 180) //dont fall over safespot
                                     continue;
                                 Vector2 spawnPos = basePos;
                                 spawnPos.X += xOffset;
-                                Vector2 velocity = new Vector2(Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(30f, 40f));
+                                Vector2 velocity = new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(30f, 40f));
                                 if (Main.rand.Next(2) == 0)
                                 {
-                                    spawnPos.Y -= 1400;
+                                    spawnPos.Y -= 1300;
                                 }
                                 else
                                 {
-                                    spawnPos.Y += 1400;
+                                    spawnPos.Y += 1300;
                                     velocity *= -1f;
                                 }
                                 Projectile.NewProjectile(spawnPos, velocity, ModContent.ProjectileType<MutantSlimeBall>(), npc.damage / 5, 0f, Main.myPlayer);
                             }
                         }
                     }
-                    if (++npc.ai[1] > 180)
+                    if (++npc.ai[1] > 150)
                     {
                         npc.ai[1] = 0;
                     }
@@ -1736,7 +1756,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 0f, speed, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
                         }
                     }*/
-                    if (++npc.ai[2] > 540)
+                    if (++npc.ai[2] > 450)
                     {
                         npc.ai[0]++;
                         npc.ai[1] = 0;
@@ -2133,6 +2153,10 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             {
                 npc.ai[0] = FargoSoulsWorld.MasochistMode ? -1 : -6;
                 npc.ai[1] = 0;
+                npc.ai[2] = 0;
+                npc.ai[3] = 0;
+                npc.localAI[0] = 0;
+                npc.localAI[1] = 0;
                 npc.dontTakeDamage = true;
                 npc.netUpdate = true;
                 for (int i = 0; i < 1000; i++)

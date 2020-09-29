@@ -35,14 +35,22 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void AI()
         {
-            if (projectile.localAI[0] == 0)
+            if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<NPCs.MutantBoss.MutantBoss>())
+                && !Main.npc[EModeGlobalNPC.mutantBoss].dontTakeDamage)
             {
-                projectile.localAI[0] = Main.rand.Next(2) == 0 ? -1 : 1;
-                projectile.rotation = Main.rand.NextFloat((float)System.Math.PI * 2);
-            }
+                if (projectile.localAI[0] == 0)
+                {
+                    projectile.localAI[0] = Main.rand.Next(2) == 0 ? -1 : 1;
+                    projectile.rotation = Main.rand.NextFloat((float)System.Math.PI * 2);
+                }
 
-            projectile.velocity = Vector2.Zero;
-            projectile.rotation += MathHelper.ToRadians(6) * projectile.localAI[0];
+                projectile.velocity = Vector2.Zero;
+                projectile.rotation += MathHelper.ToRadians(6) * projectile.localAI[0];
+            }
+            else
+            {
+                projectile.Kill();
+            }
         }
 
         public override Color? GetAlpha(Color lightColor)

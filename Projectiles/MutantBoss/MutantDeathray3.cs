@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override bool CanDamage()
         {
-            return projectile.localAI[0] > 15;
+            return projectile.localAI[0] > 10;
         }
 
         public override void AI()
