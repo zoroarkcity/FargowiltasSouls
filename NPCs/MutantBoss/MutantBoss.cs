@@ -1662,7 +1662,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             start.Y -= 1400 * npc.localAI[0];
 
                             const int safeRange = 160;
-                            int safespot = Main.rand.Next(800, 2000) - safeRange / 2;
+                            int safespot = Main.rand.Next(1000, 1800) - safeRange / 2;
 
                             int end = 2 * xRange;
                             int type = ModContent.ProjectileType<MutantSlimeBall2>();
