@@ -1646,7 +1646,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     {
                         npc.ai[3] = 1;
                         npc.localAI[0] = Main.rand.Next(2) == 0 || npc.position.Y < 1500 ? -1 : 1;
-                        Main.NewText(npc.position.Y);
+                        //Main.NewText(npc.position.Y);
                         Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSlimeRain>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
