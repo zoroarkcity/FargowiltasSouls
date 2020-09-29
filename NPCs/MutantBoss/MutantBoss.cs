@@ -973,7 +973,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     else
                     {
                         npc.netUpdate = true;
-                        npc.ai[0]++;
+                        npc.ai[0] = 35;
                         npc.ai[1] = 0;
                         npc.ai[2] = player.DirectionTo(npc.Center).ToRotation();
                         npc.ai[3] = (float)Math.PI / 10f;
@@ -1607,7 +1607,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         break;
                     targetPos = player.Center;
                     targetPos.X += 700 * (npc.Center.X < targetPos.X ? -1 : 1);
-                    //targetPos.Y += 200;
+                    targetPos.Y += 200;
                     if (npc.Distance(targetPos) > 50)
                         Movement(targetPos, 0.7f);
                     /*if (++npc.ai[1] > 6)
@@ -1645,13 +1645,62 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (npc.ai[3] == 0)
                     {
                         npc.ai[3] = 1;
-                        npc.localAI[0] = Main.rand.Next(2) == 0 || npc.position.Y < 1500 ? -1 : 1;
                         //Main.NewText(npc.position.Y);
                         Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSlimeRain>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                     }
-                    if (--npc.ai[1] < 0)
+                    if (npc.ai[1] == 0) //telegraphs for where slime will fall
+                    {
+                        npc.localAI[0] = Main.rand.Next(4, 17) * 120;
+                        if (npc.localAI[0] == 1200) //safespot never right on mutant
+                            npc.localAI[0] += Main.rand.Next(2) == 0 ? 120 : -120;
+                        npc.localAI[0] += 60;
+                        Vector2 basePos = npc.Center;
+                        basePos.X -= 1200;
+                        for (int i = -360; i <= 2760; i += 120) //spawn telegraphs
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                if (i + 60 == (int)npc.localAI[0])
+                                    continue;
+                                Projectile.NewProjectile(basePos.X + i + 60, basePos.Y, 0f, 0f, ModContent.ProjectileType<MutantReticle>(), npc.damage / 5, 0f, Main.myPlayer);
+                            }
+                        }
+                    }
+                    if (npc.ai[1] > 90 && npc.ai[1] % 5 == 0) //rain down slime balls
+                    {
+                        Main.PlaySound(SoundID.Item34, player.Center);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Vector2 basePos = npc.Center;
+                            basePos.X -= 1200;
+                            for (int i = -360; i <= 2760; i += 90)
+                            {
+                                float xOffset = i + Main.rand.Next(90);
+                                if (Math.Abs(xOffset - npc.localAI[0]) < 240) //dont fall over safespot
+                                    continue;
+                                Vector2 spawnPos = basePos;
+                                spawnPos.X += xOffset;
+                                Vector2 velocity = new Vector2(Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(30f, 40f));
+                                if (Main.rand.Next(2) == 0)
+                                {
+                                    spawnPos.Y -= 1400;
+                                }
+                                else
+                                {
+                                    spawnPos.Y += 1400;
+                                    velocity *= -1f;
+                                }
+                                Projectile.NewProjectile(spawnPos, velocity, ModContent.ProjectileType<MutantSlimeBall>(), npc.damage / 5, 0f, Main.myPlayer);
+                            }
+                        }
+                    }
+                    if (++npc.ai[1] > 180)
+                    {
+                        npc.ai[1] = 0;
+                    }
+                    /*if (--npc.ai[1] < 0)
                     {
                         npc.ai[1] = 100;
                         if (npc.ai[2] < 330 && Main.netMode != NetmodeID.MultiplayerClient) //spawn irisu walls of slime balls
@@ -1686,8 +1735,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Projectile.NewProjectile(start.X + safespot + safeRange, start.Y - 24,
                                 0f, speed, type, npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, Main.rand.NextFloat(-0.3f, 0.3f));
                         }
-                    }
-                    if (++npc.ai[2] > 510)
+                    }*/
+                    if (++npc.ai[2] > 540)
                     {
                         npc.ai[0]++;
                         npc.ai[1] = 0;

@@ -24,8 +24,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void SetDefaults()
         {
-            projectile.width = 100;
-            projectile.height = 100;
+            projectile.width = 90;
+            projectile.height = 90;
             projectile.aiStyle = -1;
             projectile.penetrate = -1;
             projectile.hostile = true;
@@ -66,7 +66,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 projectile.netUpdate = true;
             }
 
-            if (++projectile.localAI[0] > 80) //dash
+            if (++projectile.localAI[0] > 85) //dash
             {
                 projectile.rotation = projectile.velocity.ToRotation();
                 projectile.direction = projectile.spriteDirection = projectile.velocity.X > 0 ? 1 : -1;
@@ -90,7 +90,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             {
                 int ai0 = p;
                 //const float moveSpeed = 1f;
-                if (projectile.localAI[0] == 80) //just about to dash
+                if (projectile.localAI[0] == 85) //just about to dash
                 {
                     projectile.velocity = Main.player[ai0].Center - projectile.Center;
                     projectile.velocity.Normalize();

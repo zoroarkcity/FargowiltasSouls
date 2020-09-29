@@ -16,19 +16,22 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void SetDefaults()
         {
-            projectile.width = 16;
+            projectile.width = 14;
             projectile.height = 14;
-            projectile.aiStyle = 14;
+            //projectile.aiStyle = 14;
             projectile.hostile = true;
-            projectile.timeLeft = 180;
+            projectile.timeLeft = 90;
             cooldownSlot = 1;
         }
 
         public override void AI()
         {
-            int dust = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), projectile.width, projectile.height, 59, projectile.velocity.X * 0.2f,
-                projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-            Main.dust[dust].noGravity = true;
+            if (Main.rand.Next(2) == 0)
+            {
+                int dust = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), projectile.width, projectile.height, 59, projectile.velocity.X * 0.2f,
+                  projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
+                Main.dust[dust].noGravity = true;
+            }
         }
 
         public override void Kill(int timeleft)
