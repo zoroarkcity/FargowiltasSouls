@@ -49,9 +49,6 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 && System.Math.Abs(projectile.position.Y - Main.npc[ai0].Center.Y) < 1500f)
             {
                 projectile.timeLeft = 2;
-
-                if (projectile.velocity.Y > 0 ? projectile.position.Y > Main.npc[ai0].Center.Y : projectile.position.Y < Main.npc[ai0].Center.Y)
-                    projectile.velocity.Y *= 1.03f;
             }
             else
             {

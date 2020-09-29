@@ -180,6 +180,10 @@ namespace FargowiltasSouls
         public bool SquirePanic;
 
         [Header("$Mods.FargowiltasSouls.LifeHeader")]
+        [Label("$Mods.FargowiltasSouls.BeeConfig")]
+        [DefaultValue(true)]
+        public bool BeeEffect;
+
         [Label("$Mods.FargowiltasSouls.BeetleConfig")]
         [DefaultValue(true)]
         public bool BeetleEffect;

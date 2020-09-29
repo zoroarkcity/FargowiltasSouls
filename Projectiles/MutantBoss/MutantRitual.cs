@@ -40,7 +40,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 if (projectile.alpha < 0)
                     projectile.alpha = 0;
 
-                if (Main.npc[ai1].ai[0] == 19) //stationary during pillar
+                //stationary during pillar and after slime rain
+                if (Main.npc[ai1].ai[0] == 19 || Main.npc[ai1].ai[0] == 37 || Main.npc[ai1].ai[0] == 38 || Main.npc[ai1].ai[0] == 39)
                 {
                     projectile.velocity = Vector2.Zero;
                 }

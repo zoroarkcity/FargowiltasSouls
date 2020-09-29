@@ -66,7 +66,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 projectile.netUpdate = true;
             }
 
-            if (++projectile.localAI[0] > 90) //dash
+            if (++projectile.localAI[0] > 80) //dash
             {
                 projectile.rotation = projectile.velocity.ToRotation();
                 projectile.direction = projectile.spriteDirection = projectile.velocity.X > 0 ? 1 : -1;
@@ -90,7 +90,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             {
                 int ai0 = p;
                 //const float moveSpeed = 1f;
-                if (projectile.localAI[0] == 90) //just about to dash
+                if (projectile.localAI[0] == 80) //just about to dash
                 {
                     projectile.velocity = Main.player[ai0].Center - projectile.Center;
                     projectile.velocity.Normalize();
@@ -115,8 +115,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                         projectile.direction = projectile.spriteDirection = -1;
                     }
                     Vector2 targetPos = Main.player[ai0].Center + new Vector2(projectile.ai[0], projectile.ai[1]);
-                    Vector2 distance = (targetPos - projectile.Center) / 6f;
-                    projectile.velocity = (projectile.velocity * 23f + distance) / 24f;
+                    Vector2 distance = (targetPos - projectile.Center) / 5f;
+                    projectile.velocity = (projectile.velocity * 20f + distance) / 21f;
                     /*vel.Y -= 200f;
                     vel.Normalize();
                     vel *= 12f;

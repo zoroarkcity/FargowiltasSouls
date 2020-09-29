@@ -2335,6 +2335,17 @@ namespace FargowiltasSouls
                 return;
 
             OnHitNPCEither(target, damage, knockback, crit, proj.type);
+
+            if (BeeEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.BeeEffect) && target.realLife == -1
+                && proj.type != ProjectileID.Bee && proj.type != ProjectileID.GiantBee && proj.maxPenetrate > 1 && proj.owner == Main.myPlayer)
+            {
+                bool force = LifeForce || WizardEnchant;
+                if (force || Main.rand.Next(2) == 0)
+                {
+                    Projectile.NewProjectile(target.Center.X, target.Center.Y, Main.rand.Next(-35, 36) * 0.2f, Main.rand.Next(-35, 36) * 0.2f,
+                        force ? ProjectileID.GiantBee : player.beeType(), proj.damage, player.beeKB(0f), player.whoAmI);
+                }
+            }
                 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SpectreOrbs) && !target.immortal)
             {

@@ -150,7 +150,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             targetPos.X = player.Center.X - 400;
 
                         if (npc.Distance(targetPos) > 50)
-                            Movement(targetPos, head.localAI[2] == 1 ? 1.8f : 1.2f, 32f);
+                            Movement(targetPos, head.localAI[2] == 1 ? 2.4f : 1.2f, 32f);
 
                         if (head.localAI[2] == 1)
                             npc.position += player.velocity / 3f;
@@ -176,6 +176,14 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.localAI[3] = 1;
                         npc.rotation = npc.velocity.ToRotation() - (float)Math.PI / 2;
 
+                        for (int i = 0; i < 5; i++) //flame jet behind self
+                        {
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Fire, -npc.velocity.X * 0.25f, -npc.velocity.Y * 0.25f, Scale: 3f);
+                            Main.dust[d].position -= Vector2.Normalize(npc.velocity) * npc.width / 2;
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity *= 4f;
+                        }
+
                         //passed player, prepare another dash
                         if ((++npc.localAI[1] > 60 && npc.Distance(player.Center) > 1000) ||
                             (npc.ai[3] > 0 ? 
@@ -185,13 +193,13 @@ namespace FargowiltasSouls.NPCs.Champions
                             npc.localAI[1] = 0;
                             npc.netUpdate = true;
 
-                            npc.velocity = Vector2.Zero;
-
                             if (head.localAI[2] == 1 && FargoSoulsWorld.MasochistMode && Main.netMode != NetmodeID.MultiplayerClient) //explosion chain
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<EarthChainBlast>(),
                                     npc.damage / 4, 0f, Main.myPlayer, npc.velocity.ToRotation(), 5);
                             }
+
+                            npc.velocity = Vector2.Zero;
                         }
                     }
 

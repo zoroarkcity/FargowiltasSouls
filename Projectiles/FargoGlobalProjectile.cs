@@ -315,7 +315,7 @@ namespace FargowiltasSouls.Projectiles
                         }
                     }
 
-                    if (modPlayer.BeeEnchant && (projectile.type == ProjectileID.GiantBee || projectile.type == ProjectileID.Bee || projectile.type == ProjectileID.Wasp))
+                    /*if (modPlayer.BeeEnchant && (projectile.type == ProjectileID.GiantBee || projectile.type == ProjectileID.Bee || projectile.type == ProjectileID.Wasp))
                     {
                         projectile.usesLocalNPCImmunity = true;
                         projectile.localNPCHitCooldown = 5;
@@ -324,8 +324,7 @@ namespace FargowiltasSouls.Projectiles
                         projectile.scale *= 2.5f;
                         //projectile.damage = (int)(projectile.damage * 1.5);
                         SuperBee = true;
-
-                    }
+                    }*/
                 }
 
                 if (TungstenProjectile && (!modPlayer.TungstenEnchant || !SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenProjSize)))
@@ -1952,7 +1951,7 @@ namespace FargowiltasSouls.Projectiles
                 }
                 else if (modPlayer.AncientCobaltEnchant && !modPlayer.CobaltEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CobaltStingers) && modPlayer.CobaltCD == 0 && Main.rand.Next(5) == 0)
                 {
-                    Projectile[] projs = XWay(3, projectile.Center, ProjectileID.HornetStinger, 5f, projectile.damage, 0);
+                    Projectile[] projs = XWay(3, projectile.Center, ProjectileID.HornetStinger, 5f, projectile.damage / 2, 0);
 
                     for (int i = 0; i < projs.Length; i++)
                     {

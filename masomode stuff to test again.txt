@@ -594,13 +594,20 @@ vortex ench portal no longer instakills enemies, instead does a very high damage
 abom wand halves sparkling adoration cooldown and boosts damage
 mutant eye upgrades sparkling adoration's friend hearts to love rays
 
-earth champ hands stop completely after punch
+earth champ hands stop completely after punch and punches have fire trail
 chloro bullet duration is 2sec
 spirit champ no longer combos you with his contact damage
 mutant 
-	slime ball gap spawn zone is slightly smaller, slime balls fall slightly slower
+	more dust from mutant sword explosion
+	slime ball gap spawn zone is slightly smaller, slime balls fall slightly slower, can come from above or below
 	small delay added between pillars and scythes
 	retinazer deathray fan is now randomly either up or down
 	prime rain after deathray fan is adjusted, comes from above/below and less horizontal random offset
 	okuu nonspell has random starting angle
 most auras are invisible and have doubled range in maso ex (half range for reverse)
+bee enchantment
+	recipe is now pre hm
+	old effect removed
+	now gives bees from piercing projs (will not trigger on segment npcs such as worms)
+nerfed ancient cobalt, stingers are half damage of origin proj (was full damage)
+ebonwood ench aura does not shine in front of blocks

@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 {
     public class MutantDeathray3 : Deathrays.BaseDeathray
     {
-        public MutantDeathray3() : base(90, "PhantasmalDeathray") { }
+        public MutantDeathray3() : base(100, "PhantasmalDeathray") { }
 
         public override void SetStaticDefaults()
         {
