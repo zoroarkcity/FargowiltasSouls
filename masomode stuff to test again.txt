@@ -611,3 +611,7 @@ bee enchantment
 	now gives bees from piercing projs (will not trigger on segment npcs such as worms)
 nerfed ancient cobalt, stingers are half damage of origin proj (was full damage)
 ebonwood ench aura does not shine in front of blocks
+
+mutant polish
+	slime rain less spawn variance
+	more overlap between ray fan and primes

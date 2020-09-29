@@ -1411,7 +1411,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     break;
 
                 case 28: //rain primes
-                    if (++npc.ai[1] > 3 && npc.ai[3] > 30)
+                    if (++npc.ai[1] > 2)
                     {
                         npc.ai[1] = 0;
                         if (npc.ai[2] > 0)
