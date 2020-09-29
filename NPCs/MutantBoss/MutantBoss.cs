@@ -1664,7 +1664,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             {
                                 if (i + 60 == (int)npc.localAI[0])
                                     continue;
-                                Projectile.NewProjectile(basePos.X + i + 60, basePos.Y, 0f, 0f, ModContent.ProjectileType<MutantReticle>(), npc.damage / 5, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(basePos.X + i + 60, basePos.Y + Main.rand.NextFloat(-150, 150), 0f, 0f, ModContent.ProjectileType<MutantReticle>(), npc.damage / 5, 0f, Main.myPlayer);
                             }
                         }
                     }
