@@ -1661,7 +1661,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (npc.ai[1] == 0) //telegraphs for where slime will fall
                     {
                         bool first = npc.localAI[0] == 0;
-                        npc.localAI[0] = Main.rand.Next(4, 10) * 120;
+                        npc.localAI[0] = Main.rand.Next(5, 9) * 120;
                         if (first) //always start on the same side as the player
                         {
                             if (player.Center.X < npc.Center.X && npc.localAI[0] > 1200)
@@ -1689,7 +1689,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             }
                         }
                     }
-                    if (npc.ai[1] > 90 && npc.ai[1] % 5 == 0) //rain down slime balls
+                    if (npc.ai[1] > 100 && npc.ai[1] % 5 == 0) //rain down slime balls
                     {
                         Main.PlaySound(SoundID.Item34, player.Center);
                         if (Main.netMode != NetmodeID.MultiplayerClient)
