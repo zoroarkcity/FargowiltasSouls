@@ -618,3 +618,4 @@ mutant polish
 	misc unimportant internal tweaks
 
 adjusted propagation of earth champ chain blasts
+spirit champ resprite
