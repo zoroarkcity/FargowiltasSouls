@@ -8935,20 +8935,27 @@ namespace FargowiltasSouls.NPCs
 
         public static void Aura(NPC npc, float distance, int buff, bool reverse = false, int dustid = DustID.GoldFlame, bool checkDuration = false)
         {
-            for (int i = 0; i < 20; i++)
+            if (Fargowiltas.Instance.MasomodeEXLoaded)
             {
-                Vector2 offset = new Vector2();
-                double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                offset.X += (float)(Math.Sin(angle) * distance);
-                offset.Y += (float)(Math.Cos(angle) * distance);
-                Dust dust = Main.dust[Dust.NewDust(
-                    npc.Center + offset - new Vector2(4, 4), 0, 0,
-                    dustid, 0, 0, 100, Color.White, 1f
-                    )];
-                dust.velocity = npc.velocity;
-                if (Main.rand.Next(3) == 0)
-                    dust.velocity += Vector2.Normalize(offset) * (reverse ? 5f : -5f);
-                dust.noGravity = true;
+                distance *= reverse ? 0.5f : 2f;
+            }
+            else
+            {
+                for (int i = 0; i < 20; i++)
+                {
+                    Vector2 offset = new Vector2();
+                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                    offset.X += (float)(Math.Sin(angle) * distance);
+                    offset.Y += (float)(Math.Cos(angle) * distance);
+                    Dust dust = Main.dust[Dust.NewDust(
+                        npc.Center + offset - new Vector2(4, 4), 0, 0,
+                        dustid, 0, 0, 100, Color.White, 1f
+                        )];
+                    dust.velocity = npc.velocity;
+                    if (Main.rand.Next(3) == 0)
+                        dust.velocity += Vector2.Normalize(offset) * (reverse ? 5f : -5f);
+                    dust.noGravity = true;
+                }
             }
 
             if (buff == -1)
@@ -8959,7 +8966,6 @@ namespace FargowiltasSouls.NPCs
             float range = npc.Distance(p.Center);
             if (reverse ? range > distance && range < 3000f : range < distance)
                 p.AddBuff(buff, checkDuration && Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
-
         }
 
         private void Shoot(NPC npc, int delay, float distance, int speed, int proj, int dmg, float kb, bool hostile = false, int dustID = -1)

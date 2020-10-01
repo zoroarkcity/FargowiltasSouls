@@ -15,6 +15,7 @@ using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Projectiles.Souls;
 using FargowiltasSouls.Projectiles.BossWeapons;
 using FargowiltasSouls.Projectiles.Masomode;
+using FargowiltasSouls.Projectiles.Minions;
 using FargowiltasSouls.Items.Weapons.SwarmDrops;
 using FargowiltasSouls.NPCs.MutantBoss;
 
@@ -2304,6 +2305,17 @@ namespace FargowiltasSouls
                 return;
 
             OnHitNPCEither(target, damage, knockback, crit, proj.type);
+
+            if (BeeEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.BeeEffect) && target.realLife == -1
+                && proj.type != ProjectileID.Bee && proj.type != ProjectileID.GiantBee && proj.maxPenetrate > 1 && proj.owner == Main.myPlayer)
+            {
+                bool force = LifeForce || WizardEnchant;
+                if (force || Main.rand.Next(2) == 0)
+                {
+                    Projectile.NewProjectile(target.Center.X, target.Center.Y, Main.rand.Next(-35, 36) * 0.2f, Main.rand.Next(-35, 36) * 0.2f,
+                        force ? ProjectileID.GiantBee : player.beeType(), proj.damage, player.beeKB(0f), player.whoAmI);
+                }
+            }
                 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SpectreOrbs) && !target.immortal)
             {
@@ -2504,7 +2516,7 @@ namespace FargowiltasSouls
 
             if (DevianttHearts && DevianttHeartsCD <= 0)
             {
-                DevianttHeartsCD = MutantEye ? 300 : 600;
+                DevianttHeartsCD = CyclonicFin ? 300 : 600;
 
                 if (Main.myPlayer == player.whoAmI)
                 {
@@ -2512,13 +2524,17 @@ namespace FargowiltasSouls
                     for (int i = -3; i <= 3; i++)
                     {
                         Vector2 spawnPos = player.Center + offset.RotatedBy(Math.PI / 7 * i);
-                        Vector2 speed = 17 * Vector2.Normalize(Main.MouseWorld - spawnPos);
+                        Vector2 speed = Vector2.Normalize(Main.MouseWorld - spawnPos);
 
-                        int heartDamage = MutantEye ? 170 : 17;
+                        int heartDamage = CyclonicFin ? 170 : 17;
                         heartDamage = (int)(heartDamage * player.minionDamage);
 
                         float ai1 = (Main.MouseWorld - spawnPos).Length() / 17;
-                        Projectile.NewProjectile(spawnPos, speed, ModContent.ProjectileType<FriendHeart>(), heartDamage, 3f, player.whoAmI, -1, ai1);
+
+                        if (MutantEye)
+                            Projectile.NewProjectile(spawnPos, speed, ModContent.ProjectileType<FriendRay>(), heartDamage, 3f, player.whoAmI, (float)Math.PI / 7 * i);
+                        else
+                            Projectile.NewProjectile(spawnPos, 17f * speed, ModContent.ProjectileType<FriendHeart>(), heartDamage, 3f, player.whoAmI, -1, ai1);
 
                         for (int j = 0; j < 20; j++)
                         {
@@ -2906,13 +2922,13 @@ namespace FargowiltasSouls
         public override void OnHitByNPC(NPC npc, int damage, bool crit)
         {
             if (FargoSoulsWorld.MasochistMode && player.shadowDodge) //prehurt hook not called on titanium dodge
-                player.AddBuff(ModContent.BuffType<HolyPrice>(), 600);
+                player.AddBuff(ModContent.BuffType<HolyPrice>(), 900);
         }
 
         public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
         {
             if (FargoSoulsWorld.MasochistMode && player.shadowDodge) //prehurt hook not called on titanium dodge
-                player.AddBuff(ModContent.BuffType<HolyPrice>(), 600);
+                player.AddBuff(ModContent.BuffType<HolyPrice>(), 900);
         }
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)

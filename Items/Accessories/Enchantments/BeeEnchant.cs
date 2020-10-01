@@ -14,8 +14,8 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Bee Enchantment");
 
             string tooltip =
-@"Any friendly bee or wasp will become a Mega Bee
-Mega Bees ignore most enemy defense, immune frames, and last twice as long
+@"Increases the strength of friendly bees
+Your piercing attacks spawn bees
 Summons a pet Baby Hornet
 'According to all known laws of aviation, there is no way a bee should be able to fly'";
             string tooltip_ch =
@@ -65,13 +65,13 @@ Summons a pet Baby Hornet
             recipe.AddIngredient(ItemID.HiveBackpack);
             //stinger necklace
             recipe.AddIngredient(ItemID.BeeGun);
-            recipe.AddIngredient(ItemID.WaspGun);
-            //beenades
+            //recipe.AddIngredient(ItemID.WaspGun);
+            recipe.AddIngredient(ItemID.Beenade);
             //honey bomb
-            //honey fin
+            recipe.AddIngredient(ItemID.Honeyfin);
             recipe.AddIngredient(ItemID.Nectar);
             
-            recipe.AddTile(TileID.CrystalBall);
+            recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

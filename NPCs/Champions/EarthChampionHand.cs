@@ -150,7 +150,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             targetPos.X = player.Center.X - 400;
 
                         if (npc.Distance(targetPos) > 50)
-                            Movement(targetPos, 1.2f, 32f);
+                            Movement(targetPos, head.localAI[2] == 1 ? 2.4f : 1.2f, 32f);
 
                         if (head.localAI[2] == 1)
                             npc.position += player.velocity / 3f;
@@ -161,7 +161,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             npc.position += player.velocity / 10f;
 
                         npc.localAI[3] = 1;
-                        npc.velocity *= npc.localAI[2] == 1 ? 0.9f : 0.95f;
+                        npc.velocity *= npc.localAI[2] == 1 ? 0.8f : 0.95f;
                         npc.rotation = npc.DirectionTo(player.Center).ToRotation() - (float)Math.PI / 2;
                     }
                     else if (npc.ai[1] == 105) //dash
@@ -176,13 +176,30 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.localAI[3] = 1;
                         npc.rotation = npc.velocity.ToRotation() - (float)Math.PI / 2;
 
+                        for (int i = 0; i < 5; i++) //flame jet behind self
+                        {
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Fire, -npc.velocity.X * 0.25f, -npc.velocity.Y * 0.25f, Scale: 3f);
+                            Main.dust[d].position -= Vector2.Normalize(npc.velocity) * npc.width / 2;
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity *= 4f;
+                        }
+
                         //passed player, prepare another dash
                         if ((++npc.localAI[1] > 60 && npc.Distance(player.Center) > 1000) ||
-                            (npc.ai[3] > 0 ? npc.Center.X > player.Center.X + 300 : npc.Center.X < player.Center.X - 300))
+                            (npc.ai[3] > 0 ? 
+                            npc.Center.X > Math.Min(head.Center.X, player.Center.X) + 300 : npc.Center.X < Math.Max(head.Center.X, player.Center.X) - 300))
                         {
                             npc.ai[1] = head.localAI[2] == 1 ? 15 : 0;
                             npc.localAI[1] = 0;
                             npc.netUpdate = true;
+
+                            if (head.localAI[2] == 1 && FargoSoulsWorld.MasochistMode && Main.netMode != NetmodeID.MultiplayerClient) //explosion chain
+                            {
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<EarthChainBlast>(),
+                                    npc.damage / 4, 0f, Main.myPlayer, npc.velocity.ToRotation(), 7);
+                            }
+
+                            npc.velocity = Vector2.Zero;
                         }
                     }
 
@@ -222,7 +239,8 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.localAI[0] = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.UnitX * npc.ai[3], ModContent.ProjectileType<FlowerPetal>(), npc.damage / 4, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitX * npc.ai[3], ModContent.ProjectileType<FlowerPetal>(), 
+                                npc.damage / 4, 0f, Main.myPlayer, head.localAI[2] == 1 && FargoSoulsWorld.MasochistMode ? 0 : 1);
                         }
                     }
 
@@ -248,7 +266,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         targetPos = head.Center;
                         targetPos.Y -= head.height;
                         targetPos.X += 50 * -npc.ai[3];
-                        Movement(targetPos, 1.6f, 32f);
+                        Movement(targetPos, 2.0f, 32f);
 
                         npc.rotation = 0;
                     }
@@ -286,15 +304,27 @@ namespace FargowiltasSouls.NPCs.Champions
 
                                 if (Main.netMode != NetmodeID.MultiplayerClient) //spawn geysers and bombs
                                 {
+                                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ProjectileID.DD2ExplosiveTrapT3Explosion, 0, 0f, Main.myPlayer);
                                     Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<FuseBomb>(), npc.damage / 4, 0f, Main.myPlayer);
-
-                                    Vector2 spawnPos = npc.Center;
-                                    for (int i = 0; i <= 3; i++)
+                                    
+                                    if (head.localAI[2] == 1 && FargoSoulsWorld.MasochistMode)
                                     {
-                                        int tilePosX = (int)spawnPos.X / 16 + 250 * i / 16 * (int)-npc.ai[3];
-                                        int tilePosY = (int)spawnPos.Y / 16;// + 1;
+                                        for (int i = 0; i < 4; i++)
+                                        {
+                                            Vector2 vel = Vector2.Normalize(npc.oldVelocity).RotatedBy(Math.PI * 2 / 4 * (npc.ai[3] < 0 ? i : i + 0.5));
+                                            Projectile.NewProjectile(npc.Center, 1.5f * vel, ModContent.ProjectileType<EarthPalladOrb>(), npc.damage / 4, 0f, Main.myPlayer);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Vector2 spawnPos = npc.Center;
+                                        for (int i = 0; i <= 3; i++)
+                                        {
+                                            int tilePosX = (int)spawnPos.X / 16 + 250 * i / 16 * (int)-npc.ai[3];
+                                            int tilePosY = (int)spawnPos.Y / 16;// + 1;
 
-                                        Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<EarthGeyser>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
+                                            Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<EarthGeyser>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
+                                        }
                                     }
                                 }
                             }
@@ -482,7 +512,10 @@ namespace FargowiltasSouls.NPCs.Champions
         {
             target.AddBuff(BuffID.OnFire, 300);
             if (FargoSoulsWorld.MasochistMode)
+            {
                 target.AddBuff(BuffID.Burning, 300);
+                target.AddBuff(ModContent.BuffType<Buffs.Masomode.Lethargic>(), 300);
+            }
         }
 
         public override bool CheckActive()

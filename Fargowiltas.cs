@@ -135,6 +135,7 @@ namespace FargowiltasSouls
             AddToggle("SquirePanicConfig", "Ballista Panic On Hit", "SquireEnchant", "948f8c");
 
             AddToggle("LifeHeader", "Force of Life", "LifeForce", "ffffff");
+            AddToggle("BeeConfig", "Bees", "BeeEnchant", "FEF625");
             AddToggle("BeetleConfig", "Beetles", "BeetleEnchant", "6D5C85");
             AddToggle("CactusConfig", "Cactus Needles", "CactusEnchant", "799e1d");
             AddToggle("PumpkinConfig", "Grow Pumpkins", "PumpkinEnchant", "e3651c");

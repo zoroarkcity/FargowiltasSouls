@@ -115,6 +115,42 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 Main.dust[index3].noGravity = true;
             }
 
+            for (int i = 0; i < 10; i++)
+            {
+                int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 229, 0f, 0f, 100, default, 3f);
+                Main.dust[dust].velocity *= 1.4f;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0f, 0f, 100, default, 3.5f);
+                Main.dust[dust].noGravity = true;
+                Main.dust[dust].velocity *= 7f;
+                dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0f, 0f, 100, default, 1.5f);
+                Main.dust[dust].velocity *= 3f;
+            }
+
+            for (int index1 = 0; index1 < 20; ++index1)
+            {
+                int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 229, 0f, 0f, 100, new Color(), 2f);
+                Main.dust[index2].noGravity = true;
+                Main.dust[index2].velocity *= 21f * projectile.scale;
+                Main.dust[index2].noLight = true;
+                int index3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 229, 0f, 0f, 100, new Color(), 1f);
+                Main.dust[index3].velocity *= 12f;
+                Main.dust[index3].noGravity = true;
+                Main.dust[index3].noLight = true;
+            }
+
+            for (int i = 0; i < 20; i++)
+            {
+                int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 229, 0f, 0f, 100, default, Main.rand.NextFloat(2f, 3.5f));
+                if (Main.rand.Next(3) == 0)
+                    Main.dust[d].noGravity = true;
+                Main.dust[d].velocity *= Main.rand.NextFloat(9f, 12f);
+                Main.dust[d].position = projectile.Center;
+            }
+
             if (Main.netMode != NetmodeID.MultiplayerClient) //cosmetic explosion
                 Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("PhantasmalBlast"), 0, 0f, Main.myPlayer);
         }

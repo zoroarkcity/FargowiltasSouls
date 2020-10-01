@@ -38,7 +38,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                     {
                         for (int i = 0; i < 3; i++) //make up for real spectre bolt having 3 extraUpdates
                         {
-                            Vector2 change = projectile.DirectionTo(p.Center) * 3f;
+                            Vector2 change = projectile.DirectionTo(p.Center) * 2f;
                             projectile.velocity = (projectile.velocity * 29f + change) / 30f;
                         }
                     }

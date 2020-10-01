@@ -290,6 +290,32 @@ namespace FargowiltasSouls.NPCs.Champions
                     //warning dust
                     Main.dust[Dust.NewDust(npc.Center, 0, 0, DustID.Fire, 0f, 0f, 0, default(Color), 2f)].velocity *= 7f;
 
+                    if (npc.ai[1] == 90 && Main.netMode != NetmodeID.MultiplayerClient) //telegraph
+                    {
+                        for (int i = -1; i <= 1; i++) //on both sides
+                        {
+                            if (i == 0)
+                                continue;
+
+                            //p2 fires from above/below, others fire from sides
+                            Vector2 spawnPos = player.Center + i * (npc.localAI[3] == 2 ? Vector2.UnitY * 1000 : Vector2.UnitX * 1000);
+
+                            for (int j = -1; j <= 1; j++) //three angles
+                            {
+                                Vector2 vel = Vector2.Normalize(player.Center - spawnPos);
+                                vel = vel.RotatedBy(MathHelper.ToRadians(25) * j); //offset between three streams
+                                Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, npc.target, -1f);
+                            }
+
+                            if (npc.localAI[3] == 3) //p3 also spawns one stream from above/below
+                            {
+                                Vector2 wallSpawn = player.Center + i * Vector2.UnitY * 1000;
+                                Projectile.NewProjectile(wallSpawn, Vector2.Normalize(player.Center - wallSpawn),
+                                    ModContent.ProjectileType<GuardianDeathraySmall>(), 0, 0f, Main.myPlayer, npc.target, -1f);
+                            }
+                        }
+                    }
+
                     if (++npc.ai[2] > 5 && npc.ai[1] > 120)
                     {
                         npc.ai[2] = 0;
@@ -370,7 +396,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                         Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5) + Math.PI / 2 * j);
                                         float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
                                         float ai1 = Main.rand.NextFloat(0.06f);
-                                        Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
+                                        Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 3, 0f, Main.myPlayer, ai0, ai1);
                                     }
                                 }
 
@@ -382,7 +408,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                         float max = 0.006f;
                                         float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
                                         float ai1 = Main.rand.NextFloat(-max, max);
-                                        Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
+                                        Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 3, 0f, Main.myPlayer, ai0, ai1);
                                     }
                                 }
                             }
@@ -394,7 +420,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                     float max = 0.0075f;
                                     float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
                                     float ai1 = Main.rand.NextFloat(-max, max);
-                                    Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
+                                    Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 3, 0f, Main.myPlayer, ai0, ai1);
                                 }
                             }
                         }

@@ -77,7 +77,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                 for (int i = -1; i <= 1; i++)
                 {
                     Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(45) * i),
-                        projectile.type, projectile.damage, 0f, projectile.owner, 1);
+                        projectile.type, (int)(projectile.damage / 3.0 * 4.0), 0f, projectile.owner, 1);
                 }
             }
 

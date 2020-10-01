@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         {
             int ai0 = (int)projectile.ai[0];
             if (ai0 > -1 && ai0 < 200 && Main.npc[ai0].active && Main.npc[ai0].type == mod.NPCType("MutantBoss")
-                && (Main.npc[ai0].ai[0] == 35 || Main.npc[ai0].ai[0] == 38))
+                && Main.npc[ai0].ai[0] == 36)//(Main.npc[ai0].ai[0] == 35 || Main.npc[ai0].ai[0] == 38))
             {
                 projectile.timeLeft = 2;
                 projectile.Center = Main.npc[ai0].Center;
