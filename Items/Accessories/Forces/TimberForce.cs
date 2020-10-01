@@ -12,14 +12,14 @@ namespace FargowiltasSouls.Items.Accessories.Forces
             DisplayName.SetDefault("Force of Timber");
 
             Tooltip.SetDefault(
-@"'Extremely rigid'
-Critters will explode 1 second after being released
+@"Critters will explode 1 second after being released
 50% chance to not consume critters
 Attacks will periodically be accompanied by several snowballs
 All grappling hooks shoot, pull, and retract 2.5x as fast
 You have an aura of Shadowflame, Cursed Flames, and Bleeding
 Double tap down to spawn a palm tree sentry that throws nuts at enemies
-Projectiles may spawn a star when they hit something");
+Projectiles may spawn a star when they hit something
+'Extremely rigid'");
             DisplayName.AddTranslation(GameCulture.Chinese, "森林之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'很刚'

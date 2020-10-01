@@ -13,8 +13,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces
             DisplayName.SetDefault("Force of Cosmos");
 
             string tooltip =
-@"'Been around since the Big Bang'
-A meteor shower initiates every few seconds while attacking
+@"A meteor shower initiates every few seconds while attacking
 Solar shield allows you to dash through enemies
 Attacks may inflict the Solar Flare debuff
 Double tap down to toggle stealth, reducing chance for enemies to target you but slowing movement
@@ -23,7 +22,8 @@ Hurting enemies has a chance to spawn buff boosters
 Double tap down to direct your empowered guardian
 Press the Freeze Key to freeze time for 5 seconds
 There is a 60 second cooldown for this effect, a sound effect plays when it's back
-Summons a pet Companion Cube";
+Summons a pet Companion Cube
+'Been around since the Big Bang'";
             string tooltip_ch =
 @"'自宇宙大爆炸以来就一直存在'
 攻击时,每隔几秒就会爆发一次流星雨

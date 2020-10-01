@@ -14,12 +14,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.CloneDefaults(ProjectileID.MiniSharkron);
             aiType = ProjectileID.MiniSharkron;
             projectile.penetrate = 2;
-            projectile.timeLeft = 120;
+            projectile.timeLeft = 90;
 
             projectile.tileCollide = false;
             projectile.minion = true;
 
-            
+        }
+
+        public override void AI()
+        {
+            projectile.position += projectile.velocity * .5f;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

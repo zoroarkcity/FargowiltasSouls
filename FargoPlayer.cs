@@ -186,21 +186,7 @@ namespace FargowiltasSouls
         public bool WillForce;
         public bool WoodForce;
 
-        //calamity
-        public bool AerospecEnchant;
-        public bool AstralEnchant;
-        public bool BrimflameEnchant;
-        public bool ReaverEnchant;
-        public bool StatigelEnchant;
-        public bool DaedalusEnchant;
-        public bool AtaxiaEnchant;
-        public bool MolluskEnchant;
-        public bool OmegaBlueEnchant;
-        public bool GodSlayerEnchant;
-        public bool SilvaEnchant;
-        public bool DemonShadeEnchant;
-        public bool SulphurEnchant;
-        public bool FathomEnchant;
+        
 
         #endregion
 
@@ -721,22 +707,6 @@ namespace FargowiltasSouls
             ShadowForce = false;
             WillForce = false;
             WoodForce = false;
-
-            //calamity
-            AerospecEnchant = false;
-            AstralEnchant = false;
-            BrimflameEnchant = false;
-            ReaverEnchant = false;
-            SulphurEnchant = false;
-            StatigelEnchant = false;
-            DaedalusEnchant = false;
-            AtaxiaEnchant = false;
-            MolluskEnchant = false;
-            OmegaBlueEnchant = false;
-            GodSlayerEnchant = false;
-            SilvaEnchant = false;
-            DemonShadeEnchant = false;
-            FathomEnchant = false;
 
             #endregion
 
@@ -3221,7 +3191,28 @@ namespace FargowiltasSouls
                     retVal = false;
                 }
             }
-            
+
+            if (TinEnchant)
+            {
+                if (Eternity)
+                {
+                    TinCrit = 50;
+                    eternityDamage = 0;
+                }
+                else if (TerrariaSoul && TinCrit != 25)
+                {
+                    TinCrit = 25;
+                }
+                else if (TerraForce && TinCrit != 10)
+                {
+                    TinCrit = 10;
+                }
+                else if (TinCrit != 4)
+                {
+                    TinCrit = 4;
+                }
+            }
+
             //add more tbh
             if (Infested && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
             {
@@ -3475,6 +3466,7 @@ namespace FargowiltasSouls
                 case ItemID.NebulaArcanum:
                 case ItemID.LaserMachinegun:
                 case ItemID.PainterPaintballGun:
+                case ItemID.XenoStaff:
                     return 0.75f;
 
                 case ItemID.MoltenFury:

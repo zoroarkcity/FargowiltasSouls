@@ -13,8 +13,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces
             DisplayName.SetDefault("Force of Life");
 
             string tooltip =
-@"'Rare is a living thing that dare disobey your will'
-You will grow pumpkins while walking on the ground
+@"You will grow pumpkins while walking on the ground
 100% of contact damage is reflected
 Enemies may explode into needles on death
 Any friendly bee or wasp will become a Mega Bee
@@ -22,7 +21,8 @@ Any friendly bee or wasp will become a Mega Bee
 When standing still and not attacking, you will enter your shell
 Beetles protect you from damage
 Increases flight time by 50%
-Summons several pets";
+Summons several pets
+'Rare is a living thing that dare disobey your will'";
             string tooltip_ch =
 @"'罕有活物敢违背你的意愿'
 走路时会留下一道火焰路径

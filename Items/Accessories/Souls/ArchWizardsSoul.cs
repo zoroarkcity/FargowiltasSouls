@@ -14,12 +14,12 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             DisplayName.SetDefault("Arch Wizard's Soul");
 
             string tooltip =
-@"'Arcane to the core'
-30% increased magic damage
+@"30% increased magic damage
 20% increased spell casting speed
 15% increased magic crit chance
 Increases your maximum mana by 200
-Effects of Celestial Cuffs and Mana Flower";
+Effects of Celestial Cuffs and Mana Flower
+'Arcane to the core'";
             string tooltip_ch =
 @"'神秘核心'
 增加30%魔法伤害

@@ -15,9 +15,8 @@ namespace FargowiltasSouls.Items.Accessories.Souls
         {
             DisplayName.SetDefault("Soul of Dimensions");
             DisplayName.AddTranslation(GameCulture.Chinese, "维度之魂");
-            String tooltip = 
-@"'The dimensions of Terraria at your fingertips'
-Increases HP by 300
+            String tooltip =
+@"Increases HP by 300
 20% damage reduction
 Increases life regeneration by 8
 Grants immunity to knockback and several debuffs
@@ -31,7 +30,8 @@ Auto paint and actuator effect
 Grants the ability to enable Builder Mode
 Effects of the Brain of Confusion, Star Veil, Sweetheart Necklace, Bee Cloak, and Spore Sac
 Effects of Paladin's Shield, Frozen Turtle Shell, Arctic Diving Gear, Frog Legs, and Flying Carpet
-Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phone, and Gravity Globe";
+Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phone, and Gravity Globe
+'The dimensions of Terraria at your fingertips'";
 
             String tooltip_ch =
 @"'泰拉瑞亚维度触手可及'
