@@ -16,15 +16,15 @@ namespace FargowiltasSouls.Items.Accessories.Souls
         {
             DisplayName.SetDefault("Supersonic Soul"); 
 
-            string tooltip = 
-@"'I am speed'
-Allows Supersonic running, flight, and extra mobility on ice
+            string tooltip =
+@"Allows Supersonic running, flight, and extra mobility on ice
 Allows the holder to quintuple jump if no wings are equipped
 Increases jump height, jump speed, and allows auto-jump
 Grants the ability to swim and greatly extends underwater breathing
 Provides the ability to walk on water and lava
 Grants immunity to lava and fall damage
-Effects of Flying Carpet";
+Effects of Flying Carpet
+'I am speed'";
             string tooltip_ch =
 @"'我就是速度'
 获得超音速奔跑,飞行,以及额外的冰上移动力

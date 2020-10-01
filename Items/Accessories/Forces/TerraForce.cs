@@ -13,8 +13,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces
             DisplayName.SetDefault("Terra Force");
 
             string tooltip =
-@"'The land lends its strength'
-Attacks have a chance to shock enemies with lightning
+@"Attacks have a chance to shock enemies with lightning
 Sets your critical strike chance to 10%
 Every crit will increase it by 5%
 Getting hit drops your crit back down
@@ -25,7 +24,8 @@ You attract items from a larger range
 Every quarter second a projectile will be doubled in size
 Attacks may inflict enemies with Lead Poisoning
 Grants lava mobility and immunity to fire and lava
-Your attacks spawn explosions";
+Your attacks spawn explosions
+'The land lends its strength'";
 
             string tooltip_ch =
 @"'大地赐予它力量'

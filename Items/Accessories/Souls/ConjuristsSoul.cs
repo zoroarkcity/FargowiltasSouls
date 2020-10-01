@@ -14,11 +14,11 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             DisplayName.SetDefault("Conjurist's Soul");
 
             string tooltip =
-@"'An army at your disposal'
-30% increased summon damage
+@"30% increased summon damage
 Increases your max number of minions by 4
 Increases your max number of sentries by 2
-Increased minion knockback";
+Increased minion knockback
+'An army at your disposal'";
             string tooltip_ch =
 @"'一支听命于你的军队'
 增加30%召唤伤害

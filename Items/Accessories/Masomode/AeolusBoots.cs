@@ -5,6 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
+    [AutoloadEquip(EquipType.Shoes)]
     public class AeolusBoots : ModItem
     {
         public override void SetStaticDefaults()

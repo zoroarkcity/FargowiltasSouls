@@ -20,10 +20,10 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             DisplayName.SetDefault("Olympian's Soul");
 
             string tooltip =
-@"'Strike with deadly precision'
-30% increased throwing damage
+@"30% increased throwing damage
 20% increased throwing speed
-15% increased throwing critical chance and velocity";
+15% increased throwing critical chance and velocity
+'Strike with deadly precision'";
             string tooltip_ch =
 @"'致命的精准打击'
 增加30%投掷伤害

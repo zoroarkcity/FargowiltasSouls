@@ -16,8 +16,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             DisplayName.SetDefault("Soul of the Universe");
 
             string tooltip =
-@"'The heavens themselves bow to you'
-66% increased all damage
+@"66% increased all damage
 50% increased use speed for all weapons
 50% increased shoot speed
 25% increased all critical chance
@@ -28,7 +27,8 @@ Increases your max number of minions by 8
 Increases your max number of sentries by 4
 All attacks inflict Flames of the Universe
 Effects of the Fire Gauntlet and Yoyo Bag
-Effects of Sniper Scope, Celestial Cuffs and Mana Flower";
+Effects of Sniper Scope, Celestial Cuffs and Mana Flower
+'The heavens themselves bow to you'";
             string tooltip_ch =
 @"'诸天也向你俯首'
 增加66%所有伤害

@@ -38,6 +38,12 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 projectile.velocity = Vector2.Zero;
             }
 
+            //destroy duplicates if they somehow spawn
+            if (player.ownedProjectileCounts[projectile.type] > 1)
+            {
+                projectile.Kill();
+            }
+
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];

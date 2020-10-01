@@ -15,8 +15,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
         {
             DisplayName.SetDefault("World Shaper Soul");
             Tooltip.SetDefault(
-@"'Limitless possibilities'
-Increased block and wall placement speed by 50% 
+@"Increased block and wall placement speed by 50% 
 Near infinite block placement and mining reach
 Mining speed tripled 
 Shows the location of enemies, traps, and treasures
@@ -27,7 +26,8 @@ Anything that creates a tile will not be consumed and can be used much faster
 No enemies can spawn
 Effect can be disabled in Soul Toggles menu
 Effects of the Cell Phone and Royal Gel
-Summons a pet Magic Lantern");
+Summons a pet Magic Lantern
+'Limitless possibilities'");
             DisplayName.AddTranslation(GameCulture.Chinese, "铸世者之魂");
             Tooltip.AddTranslation(GameCulture.Chinese, 
 @"'无限的可能性'

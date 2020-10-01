@@ -69,9 +69,7 @@ namespace FargowiltasSouls.Patreon.Catsounds
                         {
                             int p = Projectile.NewProjectile(new Vector2(projectile.Center.X + Main.rand.Next(-5, 5), projectile.Center.Y - 15),
                                 new Vector2(Main.rand.NextFloat(-6, 6), Main.rand.NextFloat(-8, -5)),
-                                ProjectileID.SpikedSlimeSpike, projectile.damage / 3, 0f, Main.myPlayer);
-                            Main.projectile[p].hostile = false;
-                            Main.projectile[p].friendly = true;
+                                ModContent.ProjectileType<SlimeSpikeFriendly>(), projectile.damage / 3, 0f, Main.myPlayer);
                             Main.projectile[p].penetrate = 1;
                         }
                     }

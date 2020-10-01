@@ -16,11 +16,11 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             DisplayName.SetDefault("Sniper's Soul");
 
             string tooltip =
-@"'Ready, aim, fire'
-30% increased ranged damage
+@"30% increased ranged damage
 20% increased firing speed
 15% increased ranged critical chance
-Effects of Sniper Scope";
+Effects of Sniper Scope
+'Ready, aim, fire'";
             string tooltip_ch =
 @"'准备,瞄准,开火'
 增加30%远程伤害

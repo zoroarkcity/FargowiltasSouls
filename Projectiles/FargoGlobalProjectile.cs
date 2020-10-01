@@ -7,11 +7,11 @@ using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Buffs.Souls;
 using FargowiltasSouls.NPCs;
 using FargowiltasSouls.NPCs.Champions;
+using FargowiltasSouls.Projectiles.BossWeapons;
 using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Minions;
 using FargowiltasSouls.Projectiles.Souls;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +30,6 @@ namespace FargowiltasSouls.Projectiles
 
         private bool townNPCProj = false;
         private int counter;
-        public bool IsRecolor = false;
         private int rainbowCounter = 0;
         public bool Rainbow = false;
         public int GrazeCD;
@@ -220,7 +219,7 @@ namespace FargowiltasSouls.Projectiles
                         }
                     }
 
-                    if (modPlayer.TungstenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenProjSize) && modPlayer.TungstenCD == 0 && !townNPCProj && projectile.damage != 0 && !projectile.trap && !projectile.minion && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && projectile.friendly)
+                    if (modPlayer.TungstenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenProjSize) && modPlayer.TungstenCD == 0 && !townNPCProj && projectile.damage != 0 && !projectile.trap && !projectile.minion && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && projectile.type != ModContent.ProjectileType<BlenderOrbital>() && projectile.friendly)
                     {
                         projectile.position = projectile.Center;
                         projectile.scale *= 2f;
@@ -1264,36 +1263,6 @@ namespace FargowiltasSouls.Projectiles
             }
 
             return base.TileCollideStyle(projectile, ref width, ref height, ref fallThrough);
-        }
-
-        public override Color? GetAlpha(Projectile projectile, Color lightColor)
-        {
-            if (IsRecolor)
-            {
-                if (projectile.type == ProjectileID.HarpyFeather)
-                {
-                    projectile.Name = "Vulture Feather";
-                    return Color.Brown;
-                }
-
-                else if (projectile.type == ProjectileID.PineNeedleFriendly)
-                {
-                    return Color.GreenYellow;
-                }
-
-                else if(projectile.type == ProjectileID.Bone)
-                {
-                    return Color.SandyBrown;
-                }
-
-                else if (projectile.type == ProjectileID.DemonScythe)
-                {
-                    projectile.Name = "Blood Scythe";
-                    return Color.Red;
-                }
-            }
-
-            return null;
         }
 
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)

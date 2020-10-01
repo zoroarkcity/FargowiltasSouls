@@ -12,8 +12,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces
             DisplayName.SetDefault("Force of Nature");
 
             string tooltip =
-@"'Tapped into every secret of the wilds'
-After taking a hit, regen is greatly increased until the hit is healed off
+@"After taking a hit, regen is greatly increased until the hit is healed off
 If you take another hit before it's healed, you lose the heal in addition to normal damage
 Nearby enemies are ignited
 The closer they are to you the more damage they take
@@ -28,7 +27,8 @@ All herb collection is doubled
 Not moving puts you in stealth
 While in stealth, all attacks gain trails of mushrooms
 Effects of Flower Boots
-Summons several pets";
+Summons several pets
+'Tapped into every secret of the wilds'";
 
             string tooltip_ch =
 @"'挖掘了荒野的每一个秘密'

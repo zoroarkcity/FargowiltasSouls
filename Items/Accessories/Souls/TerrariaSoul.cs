@@ -17,8 +17,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             DisplayName.SetDefault("Soul of Terraria");
 
             string tooltip =
-@"'A true master of Terraria'
-Summons fireballs, shadow orbs, icicles, leaf crystals, flameburst minion, hallowed sword and shield, beetles, and several pets
+@"Summons fireballs, shadow orbs, icicles, leaf crystals, flameburst minion, hallowed sword and shield, beetles, and several pets
 Toggle vanity to remove all Pets, Right Click to Guard
 Double tap down to spawn a sentry and portal, call a storm and arrow rain, toggle stealth, and direct your empowered guardian
 Gold Key encases you in gold, Freeze Key freezes time for 5 seconds, minions spew scythes
@@ -36,7 +35,8 @@ Critters have increased defense and their souls will aid you, You may summon tem
 All grappling hooks are more effective and fire homing shots, Greatly enhances all DD2 sentries
 Your attacks inflict Midas, Enemies explode into needles
 You violently explode to damage nearby enemies when hurt and revive with 200 HP when killed
-Effects of Flower Boots, Master Ninja Gear, Greedy Ring, Celestial Shell, and Shiny Stone";
+Effects of Flower Boots, Master Ninja Gear, Greedy Ring, Celestial Shell, and Shiny Stone
+'A true master of Terraria'";
 
 
             string tooltip_ch =

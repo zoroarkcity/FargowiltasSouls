@@ -13,8 +13,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces
             DisplayName.SetDefault("Force of Will");
 
             string tooltip =
-@"'A mind of unbreakable determination'
-Your attacks inflict Midas
+@"Your attacks inflict Midas
 Press the Gold hotkey to be encased in a Golden Shell
 You will not be able to move or attack, but will be immune to all damage
 20% chance for enemies to drop 5x loot
@@ -23,7 +22,8 @@ Double tap down to create a localized rain of arrows
 Continually attacking an enemy will grant you the Power of Valhalla buff
 Greatly enhances Ballista and Explosive Traps effectiveness
 Effects of Greedy Ring, Celestial Shell, and Shiny Stone
-Summons several pets";
+Summons several pets
+'A mind of unbreakable determination'";
             string tooltip_ch =
 @"'坚不可摧的决心'
 攻击造成点金手和大出血

@@ -15,12 +15,12 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             DisplayName.SetDefault("Berserker's Soul");
 
             string tooltip =
-@"'None shall live to tell the tale'
-30% increased melee damage
+@"30% increased melee damage
 20% increased melee speed
 15% increased melee crit chance
 Increased melee knockback
-Effects of the Fire Gauntlet and Yoyo Bag";
+Effects of the Fire Gauntlet and Yoyo Bag
+'None shall live to tell the tale'";
             string tooltip_ch =
 @"'不留活口'
 增加30%近战伤害
