@@ -7,6 +7,11 @@ namespace FargowiltasSouls.Items.Misc
 {
 	public class VolatileEnergy : ModItem
 	{
+        public override bool Autoload(ref string name)
+        {
+            return false;
+        }
+
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Volatile Energy");

@@ -12,15 +12,15 @@ namespace FargowiltasSouls.Items.Accessories.Forces
             DisplayName.SetDefault("Force of Earth");
 
             Tooltip.SetDefault(
-@"'Gaia's blessing shines upon you'
-25% chance for your projectiles to explode into shards
+@"25% chance for your projectiles to explode into shards
 20% increased weapon use speed
 Greatly increases life regeneration after striking an enemy 
 You spawn an orb of damaging life energy every 80 life regenerated
 Flower petals will cause extra damage to your target 
 Damaging debuffs deal 5x damage
 One of your projectiles will split into 3 every 3/4 of a second
-Briefly become invulnerable after striking an enemy");
+Briefly become invulnerable after striking an enemy
+'Gaia's blessing shines upon you'");
 
             DisplayName.AddTranslation(GameCulture.Chinese, "大地之力");
             Tooltip.AddTranslation(GameCulture.Chinese, 

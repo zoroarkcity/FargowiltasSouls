@@ -803,20 +803,15 @@ namespace FargowiltasSouls.NPCs
                     numNeedles = 16;
                 }
 
-                Projectile[] projs = FargoGlobalProjectile.XWay(numNeedles, npc.Center, ProjectileID.PineNeedleFriendly, 5, modPlayer.HighestDamageTypeScaling(dmg), 5f);
+                Projectile[] projs = FargoGlobalProjectile.XWay(numNeedles, npc.Center, ModContent.ProjectileType<CactusNeedle>(), 5, modPlayer.HighestDamageTypeScaling(dmg), 5f);
 
                 for (int i = 0; i < projs.Length; i++)
                 {
                     if (projs[i] == null) continue;
                     Projectile p = projs[i];
-                    p.GetGlobalProjectile<FargoGlobalProjectile>().IsRecolor = true;
-                    p.magic = false;
-                    p.melee = true;
                     p.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
                 }
             }
-
-            
 
             return true;
         }
@@ -942,7 +937,7 @@ namespace FargowiltasSouls.NPCs
             {
                 squireCounter += 5;
 
-                if (squireCounter >= 100)
+                if (squireCounter >= 250)
                 {
                     if (modPlayer.ValhallaEnchant)
                     {
@@ -984,7 +979,7 @@ namespace FargowiltasSouls.NPCs
                 {
                     squireCounter++;
 
-                    if (squireCounter >= 100)
+                    if (squireCounter >= 250)
                     {
                         if (modPlayer.ValhallaEnchant)
                         {

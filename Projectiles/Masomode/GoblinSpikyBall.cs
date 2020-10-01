@@ -6,8 +6,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 {
     public class GoblinSpikyBall : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_24";
-
+	
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spiky Ball");
@@ -28,11 +27,6 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             fallThrough = false;
             return base.TileCollideStyle(ref width, ref height, ref fallThrough);
-        }
-
-        public override Color? GetAlpha(Color lightColor)
-        {
-            return Color.Red;
         }
     }
 }

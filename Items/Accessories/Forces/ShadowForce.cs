@@ -11,8 +11,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces
         {
             DisplayName.SetDefault("Shadow Force");
 
-            string tooltip = @"'Dark, Darker, Yet Darker'
-Three Shadow Orbs will orbit around you
+            string tooltip = @"Three Shadow Orbs will orbit around you
 Your attacks may inflict Darkness on enemies
 Slain enemies may drop a pile of bones
 All of your minions gain an extra scythe attack
@@ -23,7 +22,8 @@ Summons a Flameburst minion that will travel to your mouse after charging up
 While attacking, Flameburst shots manifest themselves from your shadows
 Greatly enhances Flameburst and Lightning Aura effectiveness
 Effects of Master Ninja Gear
-Summons several pets";
+Summons several pets
+'Dark, Darker, Yet Darker'";
 
             string tooltip_ch = @"'Dark, Darker, Yet Darker'
 攻击概率造成黑暗

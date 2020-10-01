@@ -15,12 +15,12 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             DisplayName.SetDefault("Trawler Soul"); 
 
             string tooltip =
-@"'The fish catch themselves'
-Increases fishing skill substantially
+@"Increases fishing skill substantially
 All fishing rods will have 10 extra lures
 You catch fish almost instantly
 Permanent Sonar and Crate Buffs
-Effects of Angler Tackle Bag";
+Effects of Angler Tackle Bag
+'The fish catch themselves'";
             string tooltip_ch =
 @"'让鱼自己抓自己'
 极大提升钓鱼能力

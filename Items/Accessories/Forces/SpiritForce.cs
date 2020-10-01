@@ -12,8 +12,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces
             DisplayName.SetDefault("Force of Spirit");
 
             string tooltip =
-@"'Ascend from this mortal realm'
-If you reach zero HP you will revive with 50 HP and spawn several bones
+@"If you reach zero HP you will revive with 50 HP and spawn several bones
 Collect the bones once they stop moving to heal for 15 HP each
 Double tap down to call an ancient storm to the cursor location
 Any projectiles shot through your storm gain 60% damage
@@ -22,7 +21,8 @@ You gain a shield that can reflect projectiles
 You may continue to summon temporary minions after maxing out on your slots
 Damage has a chance to spawn damaging orbs
 If you crit, you might also get a healing orb
-Summons several pets";
+Summons several pets
+'Ascend from this mortal realm'";
 
             string tooltip_ch =
 @"'从尘世飞升'

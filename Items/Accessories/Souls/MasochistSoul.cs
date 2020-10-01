@@ -16,8 +16,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
         {
             DisplayName.SetDefault("Soul of the Siblings");
             Tooltip.SetDefault(
-@"'Embrace eternity'
-Increases wing time by 200%, armor penetration by 50, and movement speed by 20%
+@"Increases wing time by 200%, armor penetration by 50, and movement speed by 20%
 Increases max life by 100%, damage by 50%, and damage reduction by 10%
 Increases life regen drastically, increases max number of minions and sentries by 10
 Grants gravity control, fastfall, and immunity to knockback, almost all Eternity Mode debuffs, and more
@@ -28,7 +27,8 @@ Press the Fireball Dash key to perform a short invincible dash
 Certain enemies will drop potions when defeated, 50% discount on reforges, you respawn with more life
 You respawn twice as fast, gain Honey buff when hurt, improved night vision, and erupt into various attacks when injured
 Prevents boss spawns, increases spawn rate, increases loot, and attacks may squeak and deal 1 damage to you
-Summons the aid of all Eternity Mode bosses to your side");
+Summons the aid of all Eternity Mode bosses to your side
+'Embrace eternity'");
 
             DisplayName.AddTranslation(GameCulture.Chinese, "受虐之魂");
             Tooltip.AddTranslation(GameCulture.Chinese, 

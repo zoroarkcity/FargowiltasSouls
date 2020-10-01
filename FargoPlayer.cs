@@ -187,21 +187,7 @@ namespace FargowiltasSouls
         public bool WillForce;
         public bool WoodForce;
 
-        //calamity
-        public bool AerospecEnchant;
-        public bool AstralEnchant;
-        public bool BrimflameEnchant;
-        public bool ReaverEnchant;
-        public bool StatigelEnchant;
-        public bool DaedalusEnchant;
-        public bool AtaxiaEnchant;
-        public bool MolluskEnchant;
-        public bool OmegaBlueEnchant;
-        public bool GodSlayerEnchant;
-        public bool SilvaEnchant;
-        public bool DemonShadeEnchant;
-        public bool SulphurEnchant;
-        public bool FathomEnchant;
+        
 
         #endregion
 
@@ -722,22 +708,6 @@ namespace FargowiltasSouls
             ShadowForce = false;
             WillForce = false;
             WoodForce = false;
-
-            //calamity
-            AerospecEnchant = false;
-            AstralEnchant = false;
-            BrimflameEnchant = false;
-            ReaverEnchant = false;
-            SulphurEnchant = false;
-            StatigelEnchant = false;
-            DaedalusEnchant = false;
-            AtaxiaEnchant = false;
-            MolluskEnchant = false;
-            OmegaBlueEnchant = false;
-            GodSlayerEnchant = false;
-            SilvaEnchant = false;
-            DemonShadeEnchant = false;
-            FathomEnchant = false;
 
             #endregion
 
@@ -3164,6 +3134,7 @@ namespace FargowiltasSouls
                     if (!WasHurtBySomething)
                     {
                         player.statLife = 1;
+                        //CombatText.NewText(player.Hitbox, Color.SandyBrown, "You've been revived!");
                         return false; //this is deliberate
                     }
                 }
@@ -3177,7 +3148,7 @@ namespace FargowiltasSouls
                         player.HealEffect(heal);
                         player.immune = true;
                         player.immuneTime = player.longInvince ? 180 : 120;
-                        Main.NewText("You've been revived!", 175, 75);
+                        CombatText.NewText(player.Hitbox, Color.SandyBrown, "You've been revived!");
                         player.AddBuff(ModContent.BuffType<Revived>(), 10800);
                         retVal = false;
                     }
@@ -3187,7 +3158,7 @@ namespace FargowiltasSouls
                         player.HealEffect(200);
                         player.immune = true;
                         player.immuneTime = player.longInvince ? 180 : 120;
-                        Main.NewText("You've been revived!", 175, 75);
+                        CombatText.NewText(player.Hitbox, Color.SandyBrown, "You've been revived!");
                         player.AddBuff(ModContent.BuffType<Revived>(), 14400);
                         retVal = false;
 
@@ -3207,7 +3178,6 @@ namespace FargowiltasSouls
                         player.immune = true;
                         player.immuneTime = player.longInvince ? 300 : 200;
                         CombatText.NewText(player.Hitbox, Color.SandyBrown, "You've been revived!");
-                        //Main.NewText("You've been revived!", 175, 75);
                         player.AddBuff(ModContent.BuffType<Revived>(), 18000);
                         retVal = false;
 
@@ -3237,7 +3207,28 @@ namespace FargowiltasSouls
                     retVal = false;
                 }
             }
-            
+
+            if (TinEnchant)
+            {
+                if (Eternity)
+                {
+                    TinCrit = 50;
+                    eternityDamage = 0;
+                }
+                else if (TerrariaSoul && TinCrit != 25)
+                {
+                    TinCrit = 25;
+                }
+                else if (TerraForce && TinCrit != 10)
+                {
+                    TinCrit = 10;
+                }
+                else if (TinCrit != 4)
+                {
+                    TinCrit = 4;
+                }
+            }
+
             //add more tbh
             if (Infested && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
             {
@@ -3491,6 +3482,7 @@ namespace FargowiltasSouls
                 case ItemID.NebulaArcanum:
                 case ItemID.LaserMachinegun:
                 case ItemID.PainterPaintballGun:
+                case ItemID.XenoStaff:
                     return 0.75f;
 
                 case ItemID.MoltenFury:

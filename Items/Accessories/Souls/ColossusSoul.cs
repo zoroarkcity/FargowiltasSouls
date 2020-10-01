@@ -15,14 +15,14 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             DisplayName.SetDefault("Colossus Soul");
 
             string tooltip =
-@"'Nothing can stop you'
-Increases HP by 100
+@"Increases HP by 100
 15% damage reduction
 Increases life regeneration by 5
 Grants immunity to knockback and several debuffs
 Enemies are more likely to target you
 Effects of Brain of Confusion, Star Veil, and Sweetheart Necklace
-Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell";
+Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell
+'Nothing can stop you'";
             string tooltip_ch =
 @"'没有什么能阻止你'
 增加100最大生命值
