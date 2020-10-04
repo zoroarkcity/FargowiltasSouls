@@ -21,12 +21,12 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 
         public override void SetDefaults()
         {
-            item.damage = 14;
+            item.damage = 12;
             item.ranged = true;
             item.width = 54;
             item.height = 14;
-            item.useTime = 21;
-            item.useAnimation = 21; // must be the same^
+            item.useTime = 24;
+            item.useAnimation = 24; // must be the same^
             item.useStyle = 5;
             item.noMelee = true;
             item.knockBack = 1.5f;

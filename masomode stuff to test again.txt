@@ -623,3 +623,4 @@ spirit champ resprite
 ebonwood aura wont affect critters
 adjusted mutant presence so it seals all toggle minions
 hallowed shield and turtle shell no longer work on strong projectiles (any that are immune to gutted creepers or mutant bomb)
+bone zone stat adjustment and its bones now break into piercing x bones with less damage (was crystal bullet shards)
