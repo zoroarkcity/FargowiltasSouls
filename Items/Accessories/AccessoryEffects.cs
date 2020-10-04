@@ -558,7 +558,8 @@ namespace FargowiltasSouls
 
                 Main.projectile.Where(x => x.active && x.hostile).ToList().ForEach(x =>
                 {
-                    if (Vector2.Distance(x.Center, player.Center) <= focusRadius + Math.Min(x.width, x.height) / 2)
+                    if (Vector2.Distance(x.Center, player.Center) <= focusRadius + Math.Min(x.width, x.height) / 2
+                        && !x.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart && !x.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb)
                     {
                         for (int i = 0; i < 5; i++)
                         {
@@ -1308,7 +1309,7 @@ namespace FargowiltasSouls
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC npc = Main.npc[i];
-                if (npc.active && !npc.friendly && npc.lifeMax > 1 && npc.Distance(player.Center) < dist)
+                if (npc.active && !npc.friendly && npc.lifeMax > 5 && npc.Distance(player.Center) < dist)
                 {
                     npc.AddBuff(BuffID.ShadowFlame, 120);
 

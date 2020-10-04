@@ -619,3 +619,7 @@ mutant polish
 
 adjusted propagation of earth champ chain blasts
 spirit champ resprite
+
+ebonwood aura wont affect critters
+adjusted mutant presence so it seals all toggle minions
+hallowed shield and turtle shell no longer work on strong projectiles (any that are immune to gutted creepers or mutant bomb)

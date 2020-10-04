@@ -807,7 +807,7 @@ namespace FargowiltasSouls
             OceanicMaul = false;
             DeathMarked = false;
             Midas = false;
-            MutantPresence = false;
+            MutantPresence = MutantPresence ? player.HasBuff(ModContent.BuffType<Buffs.Boss.MutantPresence>()) : false;
             DevianttPresence = false;
             Swarming = false;
             LowGround = false;
