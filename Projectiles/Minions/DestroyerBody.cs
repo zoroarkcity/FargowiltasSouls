@@ -55,10 +55,15 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture2D13 = Main.projectileTexture[projectile.type];
+            Texture2D glow = mod.GetTexture("Projectiles/Minions/DestroyerBody_glow");
             int num214 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type];
             int y6 = num214 * projectile.frame;
+            Microsoft.Xna.Framework.Color color25 = Lighting.GetColor((int)(projectile.Center.X / 16), (int)(projectile.Center.Y / 16));
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Rectangle(0, y6, texture2D13.Width, num214),
-                projectile.GetAlpha(Color.White), projectile.rotation, new Vector2(texture2D13.Width / 2f, num214 / 2f), projectile.scale,
+                color25, projectile.rotation, new Vector2(texture2D13.Width / 2f, num214 / 2f), projectile.scale,
+                projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            Main.spriteBatch.Draw(glow, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Rectangle(0, y6, texture2D13.Width, num214),
+                Color.White, projectile.rotation, new Vector2(texture2D13.Width / 2f, num214 / 2f), projectile.scale,
                 projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             return false;
         }
@@ -127,6 +132,8 @@ namespace FargowiltasSouls.Projectiles.Minions
                     -projectile.velocity.Y * 0.2f, 100);
                 Main.dust[dust].velocity *= 2f;
             }
+            int g = Gore.NewGore(projectile.Center, projectile.velocity/2, mod.GetGoreSlot("Gores/DestroyerGun/DestroyerBody"), projectile.scale);
+            Main.gore[g].timeLeft = 20;
         }
     }
 }
