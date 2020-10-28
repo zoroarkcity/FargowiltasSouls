@@ -9,6 +9,12 @@ namespace FargowiltasSouls.Projectiles.Masomode
 {
     public class QueenFlocko : AbomBoss.AbomFlocko
     {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            projectile.timeLeft = 150;
+        }
+
         public override bool CanDamage()
         {
             return false;
@@ -29,8 +35,6 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 return;
             }
 
-            projectile.timeLeft = 2;
-
             Player player = Main.player[npc.target];
 
             Vector2 target = player.Center;
@@ -49,7 +53,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     projectile.velocity *= 1.05f;
             }
 
-            if (++projectile.localAI[1] > 90) //fire frost wave
+            if (++projectile.localAI[1] > 120) //fire frost wave
             {
                 projectile.localAI[1] = 0f;
                 Main.PlaySound(SoundID.Item120, projectile.position);

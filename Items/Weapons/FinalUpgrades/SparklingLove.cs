@@ -14,6 +14,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
         {
             DisplayName.SetDefault("Sparkling Love");
             Tooltip.SetDefault(@"Right click to summon the soul of Deviantt
+Right click pattern becomes denser with up to 5 empty minion slots
 'The soul-consuming demon axe of love and justice from a defeated foe...'");
         }
 
@@ -88,9 +89,9 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             ModRecipe recipe = new ModRecipe(mod);
 
             //recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerMoon"));
-            recipe.AddIngredient(mod.ItemType("Sadism"), 70);
-            recipe.AddIngredient(mod.ItemType("MutantScale"), 70);
-            recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 70);
+            recipe.AddIngredient(mod.ItemType("Sadism"), 30);
+            recipe.AddIngredient(mod.ItemType("MutantScale"), 30);
+            recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 30);
             recipe.AddIngredient(mod.ItemType("BrokenBlade"));
             recipe.AddIngredient(mod.ItemType("SparklingAdoration"));
 

@@ -2293,14 +2293,13 @@ namespace FargowiltasSouls.NPCs
                                         }
                                     }
                                 }
-
-                                masoBool[0] = false;
                             }
                             else
                             {
-                                if (++Counter[3] > 10)
+                                if (++Counter[3] > 90)
                                 {
                                     Counter[3] = 0;
+
                                     if (npc.whoAmI == NPC.FindFirstNPC(npc.type) && Main.netMode != NetmodeID.MultiplayerClient)
                                     {
                                         Vector2 speed = new Vector2(Main.rand.NextFloat(40f), Main.rand.NextFloat(-20f, 20f));

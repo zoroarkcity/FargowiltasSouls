@@ -686,3 +686,7 @@ active summon weapons:
 	all tooltips now state how many empty slots to get their full power
 stinger is no longer an ammo
 added echdeath
+
+fixed meme ice queen thingy
+sibling weapon recipes tweaked
+echdeath

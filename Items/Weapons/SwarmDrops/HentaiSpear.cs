@@ -113,9 +113,9 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             ModRecipe recipe = new ModRecipe(mod);
 
             //recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerMoon"));
-            recipe.AddIngredient(mod.ItemType("Sadism"), 70);
-            recipe.AddIngredient(mod.ItemType("MutantScale"), 70);
-            recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 70);
+            recipe.AddIngredient(mod.ItemType("Sadism"), 30);
+            recipe.AddIngredient(mod.ItemType("MutantScale"), 30);
+            recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 30);
             recipe.AddIngredient(mod.ItemType("BrokenSpear"));
             recipe.AddIngredient(mod.ItemType("MutantEye"));
 
