@@ -134,9 +134,9 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.dontTakeDamage = true;
                         npc.velocity *= 0.9f;
 
-                        if (++npc.ai[2] > 40)
+                        if (++npc.ai[2] > 60)
                         {
-                            npc.ai[2] = 0;
+                            npc.ai[2] = 20;
 
                             Main.PlaySound(SoundID.Item92, npc.Center);
 
@@ -144,7 +144,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             
                             if (Main.netMode != NetmodeID.MultiplayerClient && npc.ai[1] < 300)
                             {
-                                int max = npc.life < npc.lifeMax / 2 && FargoSoulsWorld.MasochistMode ? 10 : 6;
+                                int max = npc.life < npc.lifeMax / 2 && FargoSoulsWorld.MasochistMode ? 8 : 6;
                                 float offset = npc.localAI[0] > 0 && player.velocity != Vector2.Zero //aim to intercept
                                     ? Main.rand.NextFloat((float)Math.PI * 2) : player.velocity.ToRotation();
                                 for (int i = 0; i < max; i++)
@@ -187,7 +187,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 Main.dust[num228].velocity = vector7;
                             }
                         }
-                        else if (npc.ai[1] > 360)
+                        else if (npc.ai[1] > 380)
                         {
                             npc.ai[0]++;
                             npc.ai[1] = 0;

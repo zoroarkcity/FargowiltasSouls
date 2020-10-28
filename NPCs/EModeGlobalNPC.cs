@@ -874,7 +874,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.BlueSlime:
                             if (Main.slimeRain)
                             {
-                                if (Main.rand.Next(4) == 0)
+                                if (Main.rand.Next(8) == 0)
                                 {
                                     int[] slimes = { NPCID.RedSlime, NPCID.PurpleSlime, NPCID.YellowSlime, NPCID.BlackSlime, NPCID.SlimeSpiked };
 
@@ -883,14 +883,13 @@ namespace FargowiltasSouls.NPCs
                                     if (Main.netMode == NetmodeID.Server)
                                         NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc.whoAmI);
                                 }
-                                else if (Main.rand.Next(50) == 0)
+                                /*else if (Main.rand.Next(50) == 0)
                                 {
                                     npc.SetDefaults(NPCID.Pinky);
 
                                     if (Main.netMode == NetmodeID.Server)
                                         NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc.whoAmI);
-                                }
-                                
+                                }*/
                             }
                                 
                             break;
@@ -2921,7 +2920,7 @@ namespace FargowiltasSouls.NPCs
                             //sand balls
                             if (Counter[1] > 0)
                             {
-                                if (Counter[1] == 60)
+                                if (Counter[1] == 75)
                                 {
                                     Main.PlaySound(SoundID.Item5, npc.position);
                                 }
@@ -2929,7 +2928,7 @@ namespace FargowiltasSouls.NPCs
                                 Counter[1]--;
                             }
 
-                            if (Counter[1] == 0)
+                            if (Counter[1] <= 0)
                             {
                                 float num265 = 12f;
                                 Vector2 pos = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
@@ -2940,25 +2939,26 @@ namespace FargowiltasSouls.NPCs
                                 velocityX *= num268 * 1.5f;
                                 velocityY *= num268 * 1.5f;
 
-                                if (Main.netMode != 1 && Main.player[npc.target].Center.Y <= npc.Center.Y && Collision.CanHit(npc.position, npc.width, npc.height, Main.player[npc.target].position, Main.player[npc.target].width, Main.player[npc.target].height))
+                                if (Main.netMode != NetmodeID.MultiplayerClient && Main.player[npc.target].Center.Y <= npc.Center.Y && Collision.CanHit(npc.position, npc.width, npc.height, Main.player[npc.target].position, Main.player[npc.target].width, Main.player[npc.target].height))
                                 {
                                     int num269 = 10;
                                     int num270 = 31;
                                     int proj = Projectile.NewProjectile(pos.X, pos.Y, velocityX, velocityY, num270, num269, 0f, Main.myPlayer, 0f, 0f);
-                                    Main.projectile[proj].ai[0] = 2f;
-                                    Main.projectile[proj].timeLeft = 300;
-                                    Main.projectile[proj].friendly = false;
-                                    NetMessage.SendData(27, -1, -1, null, proj, 0f, 0f, 0f, 0, 0, 0);
+                                    if (proj != Main.maxProjectiles)
+                                    {
+                                        Main.projectile[proj].ai[0] = 2f;
+                                        Main.projectile[proj].timeLeft = 300;
+                                        Main.projectile[proj].friendly = false;
+                                        NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, proj);
+                                    }
                                     npc.netUpdate = true;
 
-                                    Counter[1] = 60;
+                                    Counter[1] = 75;
                                 }
                             }
 
                             //never fire sand balls from vanilla
                             npc.ai[0] = 10;
-
-
                             break;
 
                         case NPCID.AngryNimbus:
@@ -3744,6 +3744,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.GoblinPeon:
                         case NPCID.GoblinScout:
                         case NPCID.GoblinWarrior:
+                        case NPCID.GoblinThief:
                             if (npc.HasPlayerTarget && (!Main.player[npc.target].active || Main.player[npc.target].dead))
                             {
                                 npc.TargetClosest();
@@ -3763,7 +3764,7 @@ namespace FargowiltasSouls.NPCs
                             if (!masoBool[0])
                             {
                                 masoBool[0] = true;
-                                if (!Main.hardMode && NPC.CountNPCS(npc.type) > 2)
+                                if (!Main.hardMode && !NPC.downedSlimeKing && !NPC.downedBoss1 && NPC.CountNPCS(npc.type) > 2)
                                     npc.Transform(NPCID.GoblinPeon);
                             }
 
@@ -3776,10 +3777,6 @@ namespace FargowiltasSouls.NPCs
                             if (npc.noTileCollide)
                                 npc.velocity.Y++;
                             goto case NPCID.FireImp;
-
-                        case NPCID.GoblinThief:
-                            npc.position.X += npc.velocity.X / 2f;
-                            goto case NPCID.GoblinArcher;
 
                         case NPCID.VileSpit:
                             /*if (--Counter2 < 0)

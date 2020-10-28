@@ -624,3 +624,16 @@ ebonwood aura wont affect critters
 adjusted mutant presence so it seals all toggle minions
 hallowed shield and turtle shell no longer work on strong projectiles (any that are immune to gutted creepers or mutant bomb)
 bone zone stat adjustment and its bones now break into piercing x bones with less damage (was crystal bullet shards)
+
+slightly more start delay on nature crimson head and slightly more upwards starting vel for ichor
+spirit champ hands dont have contact damage in between attacks
+will champ
+	33% transition has 8 spears instead of 10
+	extra 20 tick delay on phase transition spears
+	orbital strike deathrays persist marginally longer
+reduced chance of slimes becoming stronger slimes during slime rain
+removed increased chance of pinky spawning during slime rain
+adjusted goblin sorceror cap condition, its active in prehardmode pre-slimeking pre-eoc
+antlions slightly more delay between sandballs to reduce stunlocking ability
+goblin thieves no longer phase through walls
+boosted mutant damage with calamity enabled (1.5x -> 2x)
