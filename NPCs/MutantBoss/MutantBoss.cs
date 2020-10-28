@@ -2173,7 +2173,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override void NPCLoot()
         {
-            if (!playerInvulTriggered && FargoSoulsWorld.MasochistMode)
+            if ((!playerInvulTriggered || Main.rand.Next(10) == 0) && FargoSoulsWorld.MasochistMode)
             {
                 Item.NewItem(npc.Hitbox, mod.ItemType("BrokenSpear"));
                 Item.NewItem(npc.Hitbox, mod.ItemType("SpawnSack"));
