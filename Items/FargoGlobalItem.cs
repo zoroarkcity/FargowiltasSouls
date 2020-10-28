@@ -15,10 +15,10 @@ namespace FargowiltasSouls.Items
     {
         public override void SetDefaults(Item item)
         {
-            if (item.type == ItemID.Stinger)
+            /*if (item.type == ItemID.Stinger)
             {
                 item.ammo = item.type;
-            }
+            }*/
         }
 
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)

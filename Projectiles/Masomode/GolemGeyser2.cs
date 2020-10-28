@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.Masomode
 {
-    public class GolemGeyser : ModProjectile
+    public class GolemGeyser2 : ModProjectile
     {
         public override string Texture => "FargowiltasSouls/Projectiles/Explosion";
 
@@ -46,7 +46,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
             if (projectile.ai[1] == 0) //spawned, while in ground tile
             {
-                projectile.position.Y += 16; //go down
+                projectile.position.Y -= 16; //go up
 
                 if (!(tile.nactive() && Main.tileSolid[tile.type] && tile.type != TileID.Platforms && tile.type != TileID.PlanterBox)) //if reached air tile
                 {
@@ -69,9 +69,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire, 0f, 8f);
                     Main.dust[d].velocity *= 3f;*/
                 }
-                else //if in air, go up
+                else //if in air, go down
                 {
-                    projectile.position.Y -= 16;
+                    projectile.position.Y += 16;
                 }
             }
 
@@ -91,7 +91,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(projectile.Center, Vector2.UnitY, ModContent.ProjectileType<GolemDeathraySmall>(), projectile.damage, 0f, Main.myPlayer);
+                Projectile.NewProjectile(projectile.Center, -Vector2.UnitY, ModContent.ProjectileType<GolemDeathraySmall>(), projectile.damage, 0f, Main.myPlayer);
                 //Projectile.NewProjectile(projectile.Center, Vector2.UnitY * 8, ProjectileID.GeyserTrap, projectile.damage, 0f, Main.myPlayer);
             }
         }

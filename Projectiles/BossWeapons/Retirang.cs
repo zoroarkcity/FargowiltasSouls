@@ -9,6 +9,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
     public class Retirang : ModProjectile
     {
         private int counter = 0;
+        private bool hitSomething;
 
         public override void SetStaticDefaults()
         {
@@ -33,27 +34,30 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             if (counter >= 15)
             {
-                for (int k = 0; k < Main.maxNPCs; k++)
+                counter = 0;
+
+                if (projectile.owner == Main.myPlayer)
                 {
-                    NPC npc = Main.npc[k];
-                    float distance = Vector2.Distance(npc.Center, projectile.Center);
-
-                    if ((distance < 500) && Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height))
+                    for (int k = 0; k < Main.maxNPCs; k++)
                     {
-                        Vector2 velocity = (npc.Center - projectile.Center) * 20;
+                        NPC npc = Main.npc[k];
+                        float distance = Vector2.Distance(npc.Center, projectile.Center);
 
-                        int p = Projectile.NewProjectile(projectile.Center, velocity, ProjectileID.PurpleLaser, projectile.damage, 0, projectile.owner);
-                        if (p != Main.maxProjectiles)
+                        if ((distance < 500) && Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height))
                         {
-                            Main.projectile[p].melee = true;
-                            Main.projectile[p].magic = false;
-                        }
+                            Vector2 velocity = (npc.Center - projectile.Center) * 20;
 
-                        break;
+                            int p = Projectile.NewProjectile(projectile.Center, velocity, ProjectileID.PurpleLaser, projectile.damage, 0, projectile.owner);
+                            if (p != Main.maxProjectiles)
+                            {
+                                Main.projectile[p].melee = true;
+                                Main.projectile[p].magic = false;
+                            }
+
+                            break;
+                        }
                     }
                 }
-
-                counter = 0;
             }
 
             //dust!
@@ -67,6 +71,70 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                 if (projectile.Distance(Main.player[projectile.owner].Center) <= projectile.localAI[0])
                     projectile.Kill();
+            }
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (!hitSomething)
+            {
+                hitSomething = true;
+                if (projectile.owner == Main.myPlayer)
+                {
+                    for (int k = 0; k < Main.maxNPCs; k++)
+                    {
+                        NPC npc = Main.npc[k];
+                        float distance = Vector2.Distance(npc.Center, projectile.Center);
+
+                        if ((distance < 500) && Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height))
+                        {
+                            Vector2 velocity = (npc.Center - projectile.Center) * 20;
+
+                            int p = Projectile.NewProjectile(projectile.Center, velocity, ProjectileID.PurpleLaser, projectile.damage, 0, projectile.owner);
+                            if (p != Main.maxProjectiles)
+                            {
+                                Main.projectile[p].melee = true;
+                                Main.projectile[p].magic = false;
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            if (!hitSomething)
+            {
+                hitSomething = true;
+                if (projectile.owner == Main.myPlayer)
+                {
+                    for (int k = 0; k < Main.maxNPCs; k++)
+                    {
+                        if (k == target.whoAmI)
+                            continue;
+
+                        NPC npc = Main.npc[k];
+                        float distance = Vector2.Distance(npc.Center, projectile.Center);
+
+                        if ((distance < 500) && Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height))
+                        {
+                            Vector2 velocity = (npc.Center - projectile.Center) * 20;
+
+                            int p = Projectile.NewProjectile(projectile.Center, velocity, ProjectileID.PurpleLaser, projectile.damage, 0, projectile.owner);
+                            if (p != Main.maxProjectiles)
+                            {
+                                Main.projectile[p].melee = true;
+                                Main.projectile[p].magic = false;
+                            }
+
+                            break;
+                        }
+                    }
+                }
             }
         }
 

@@ -138,11 +138,12 @@ namespace FargowiltasSouls.NPCs.Champions
                         {
                             npc.ai[2] = 20;
 
-                            Main.PlaySound(SoundID.Item92, npc.Center);
+                            if (npc.ai[1] < 330)
+                                Main.PlaySound(SoundID.Item92, npc.Center);
 
                             npc.localAI[0] = npc.localAI[0] > 0 ? -1 : 1;
                             
-                            if (Main.netMode != NetmodeID.MultiplayerClient && npc.ai[1] < 300)
+                            if (Main.netMode != NetmodeID.MultiplayerClient && npc.ai[1] < 330)
                             {
                                 int max = npc.life < npc.lifeMax / 2 && FargoSoulsWorld.MasochistMode ? 8 : 6;
                                 float offset = npc.localAI[0] > 0 && player.velocity != Vector2.Zero //aim to intercept

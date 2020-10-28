@@ -1172,10 +1172,9 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         public override void NPCLoot()
         {
-            if (!playerInvulTriggered)
+            if (!playerInvulTriggered && FargoSoulsWorld.MasochistMode)
             {
-                if (!FargoSoulsWorld.downedAbom && FargoSoulsWorld.MasochistMode)
-                    Item.NewItem(npc.Hitbox, mod.ItemType("StyxGazer"));
+                Item.NewItem(npc.Hitbox, mod.ItemType("BrokenHilt"));
                 Item.NewItem(npc.Hitbox, mod.ItemType("BabyScythe"));
             }
 

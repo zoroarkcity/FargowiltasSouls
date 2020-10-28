@@ -23,7 +23,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
 
             NPC npc = Main.npc[(int)projectile.ai[0]];
-            if (!(npc.active && npc.type == NPCID.IceQueen && npc.ai[0] != 2))
+            if (!(npc.active && npc.type == NPCID.IceQueen && npc.whoAmI == NPC.FindFirstNPC(NPCID.IceQueen) && npc.ai[0] != 2))
             {
                 projectile.Kill();
                 return;
@@ -49,14 +49,15 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     projectile.velocity *= 1.05f;
             }
 
-            if (++projectile.localAI[0] > 90 && ++projectile.localAI[1] > 60) //fire frost wave
+            if (++projectile.localAI[1] > 90) //fire frost wave
             {
                 projectile.localAI[1] = 0f;
                 Main.PlaySound(SoundID.Item120, projectile.position);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Vector2 vel = projectile.DirectionTo(player.Center) * 7f;
-                    Projectile.NewProjectile(projectile.Center, vel, ProjectileID.FrostWave, projectile.damage, projectile.knockBack, projectile.owner);
+                    for (int i = -1; i <= 1; i++)
+                        Projectile.NewProjectile(projectile.Center, vel.RotatedBy(MathHelper.ToRadians(5) * i), ProjectileID.FrostWave, projectile.damage, projectile.knockBack, projectile.owner);
                 }
             }
 

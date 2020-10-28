@@ -33,6 +33,11 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.localNPCHitCooldown = 10;
         }
 
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
+
         public override void AI()
         {
             Lighting.AddLight(projectile.Center, 0.56f, 0f, 0.35f);

@@ -287,10 +287,6 @@ namespace FargowiltasSouls.NPCs
                     npc.trapImmune = true;
                     break;
 
-                case NPCID.SandElemental:
-                    npc.lifeMax *= 2;
-                    break;
-
                 case NPCID.SolarCrawltipedeTail:
                     npc.trapImmune = true;
                     break;
@@ -743,7 +739,7 @@ namespace FargowiltasSouls.NPCs
                                 Horde(npc, 5);
                             break;
 
-                        case NPCID.CaveBat:
+                        /*case NPCID.CaveBat:
                         case NPCID.JungleBat:
                         case NPCID.Hellbat:
                         case NPCID.IceBat:
@@ -753,7 +749,7 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.GiantFlyingFox:
                             if (Main.rand.Next(4) == 0)
                                 Horde(npc, Main.rand.Next(5) + 1);
-                            break;
+                            break;*/
 
                         case NPCID.Shark:
                             if (Main.rand.Next(4) == 0)
@@ -2302,9 +2298,9 @@ namespace FargowiltasSouls.NPCs
                             }
                             else
                             {
-                                if (!masoBool[0])
+                                if (++Counter[3] > 10)
                                 {
-                                    masoBool[0] = true;
+                                    Counter[3] = 0;
                                     if (npc.whoAmI == NPC.FindFirstNPC(npc.type) && Main.netMode != NetmodeID.MultiplayerClient)
                                     {
                                         Vector2 speed = new Vector2(Main.rand.NextFloat(40f), Main.rand.NextFloat(-20f, 20f));
@@ -3115,7 +3111,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 if ((npc.ai[3] - 60) % 120 == 0)
                                 {
-                                    Counter[0] = 30;
+                                    Counter[0] = 20;
                                 }
 
                                 if (Counter[0] > 0)
@@ -3124,7 +3120,7 @@ namespace FargowiltasSouls.NPCs
                                     if (++Counter[1] > 2)
                                     {
                                         Counter[1] = 0;
-                                        Vector2 speed = 16f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 3.0);
+                                        Vector2 speed = 14f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 5.0);
                                         if (Main.netMode != NetmodeID.MultiplayerClient)
                                             Projectile.NewProjectile(npc.Center, speed, ProjectileID.SaucerLaser, 15, 0f, Main.myPlayer);
                                     }
@@ -3617,10 +3613,10 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.PirateShipCannon:
-                            if (++Counter[0] > 300)
+                            if (++Counter[0] > 360)
                             {
-                                Counter[0] = 0;
                                 masoBool[0] = !masoBool[0];
+                                Counter[0] = masoBool[0] ? 180 : 0;
                             }
                             if (masoBool[0] && ++Counter[1] > 10)
                             {
@@ -4041,7 +4037,7 @@ namespace FargowiltasSouls.NPCs
                                         NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                                 }
                             }
-                            if (++Counter[1] > 240)
+                            if (++Counter[1] > 360)
                             {
                                 Counter[1] = 0;
                                 if (npc.HasValidTarget && Main.netMode != NetmodeID.MultiplayerClient)
@@ -4090,6 +4086,18 @@ namespace FargowiltasSouls.NPCs
                         case NPCID.AngryBonesBig:
                         case NPCID.AngryBonesBigHelmet:
                         case NPCID.AngryBonesBigMuscle:
+                        case NPCID.HellArmoredBones:
+                        case NPCID.HellArmoredBonesMace:
+                        case NPCID.HellArmoredBonesSpikeShield:
+                        case NPCID.HellArmoredBonesSword:
+                        case NPCID.RustyArmoredBonesAxe:
+                        case NPCID.RustyArmoredBonesFlail:
+                        case NPCID.RustyArmoredBonesSword:
+                        case NPCID.RustyArmoredBonesSwordNoArmor:
+                        case NPCID.BlueArmoredBones:
+                        case NPCID.BlueArmoredBonesMace:
+                        case NPCID.BlueArmoredBonesNoPants:
+                        case NPCID.BlueArmoredBonesSword:
                             if (++Counter[0] > 180) //spray bones
                             {
                                 if (++Counter[1] > 6 && npc.HasValidTarget && Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
@@ -6247,7 +6255,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.RaggedCaster:
                     case NPCID.RaggedCasterOpenCoat:
                         Item.NewItem(npc.Hitbox, ItemID.Bone);
-                        if (Main.rand.Next(50) == 0)
+                        if (Main.rand.Next(20) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<SkullCharm>());
                         break;
 
@@ -6670,7 +6678,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.EyeofCthulhu:
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeCrystal, Main.rand.Next(3) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeCrystal, 5);
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.WoodenCrate, 5);
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<AgitatingLens>());
                         break;
@@ -6758,7 +6766,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.Plantera:
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<MagicalBulb>());
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.JungleFishingCrate, 5);
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeFruit, Main.rand.Next(3) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeFruit, 5);
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.ChlorophyteOre, Main.rand.Next(101) + 100);
                         break;
 
@@ -7169,7 +7177,6 @@ namespace FargowiltasSouls.NPCs
                                 npc.netUpdate = true;
                             return false;
                         }
-
                         break;
 
                     case NPCID.Spazmatism:
@@ -7181,7 +7188,6 @@ namespace FargowiltasSouls.NPCs
                                 npc.netUpdate = true;
                             return false;
                         }
-
                         break;
 
                     case NPCID.DukeFishron:
@@ -8271,11 +8277,11 @@ namespace FargowiltasSouls.NPCs
 
         public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            if (npc.friendly)
+            /*if (npc.friendly)
             {
                 if (BossIsAlive(ref deviBoss, ModContent.NPCType<DeviBoss.DeviBoss>()) && npc.Distance(Main.npc[deviBoss].Center) < 2000)
                     damage *= 8;
-            }
+            }*/
 
             if (FargoSoulsWorld.MasochistMode)
             {
@@ -8907,6 +8913,7 @@ namespace FargowiltasSouls.NPCs
             netMessage.Write(Counter[0]);
             netMessage.Write(Counter[1]);
             netMessage.Write(Counter[2]);
+            netMessage.Write(Counter[3]);
             netMessage.Send();
         }
 

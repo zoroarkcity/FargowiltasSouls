@@ -139,7 +139,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     break;
 
                 case 1: //dashes
-                    if (++npc.ai[1] < 60) //hover near a side
+                    if (++npc.ai[1] < 75) //hover near a side
                     {
                         npc.rotation = 0;
 
@@ -155,7 +155,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (head.localAI[2] == 1)
                             npc.position += player.velocity / 3f;
                     }
-                    else if (npc.ai[1] < 105) //prepare to dash, enable hitbox
+                    else if (npc.ai[1] < 120) //prepare to dash, enable hitbox
                     {
                         if (head.localAI[2] == 1)
                             npc.position += player.velocity / 10f;
@@ -164,7 +164,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.velocity *= npc.localAI[2] == 1 ? 0.8f : 0.95f;
                         npc.rotation = npc.DirectionTo(player.Center).ToRotation() - (float)Math.PI / 2;
                     }
-                    else if (npc.ai[1] == 105) //dash
+                    else if (npc.ai[1] == 120) //dash
                     {
                         npc.localAI[3] = 1;
                         npc.velocity = npc.DirectionTo(player.Center) * (head.localAI[2] == 1 ? 20 : 16);
@@ -203,7 +203,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         }
                     }
 
-                    if (++npc.localAI[0] > 600) //proceed
+                    if (++npc.localAI[0] > 660) //proceed
                     {
                         npc.ai[0]++;
                         npc.ai[1] = 0;

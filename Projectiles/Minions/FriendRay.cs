@@ -26,6 +26,9 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
 
             projectile.hide = true;
+
+            projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = 0;
         }
 
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
@@ -35,6 +38,9 @@ namespace FargowiltasSouls.Projectiles.Minions
 
         public override void AI()
         {
+            if (projectile.timeLeft % 5 == 0)
+                projectile.netUpdate = true;
+
             Vector2? vector78 = null;
             if (projectile.velocity.HasNaNs() || projectile.velocity == Vector2.Zero)
             {
@@ -142,7 +148,7 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffID.Lovestruck, 300);
-            target.immune[projectile.owner] = 1;
+            //target.immune[projectile.owner] = 1;
         }
     }
 }

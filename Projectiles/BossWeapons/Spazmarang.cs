@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
     public class Spazmarang : ModProjectile
     {
         private int counter = 0;
-
+        private bool hitSomething;
 
         public override void SetStaticDefaults()
         {
@@ -35,14 +35,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             if (counter >= 30)
             {
-                Vector2[] velocity = { projectile.velocity / 2, -projectile.velocity / 2, projectile.velocity.RotatedBy(Math.PI / 2) / 2, -projectile.velocity.RotatedBy(Math.PI / 2) / 2 };
-
-                for (int i = 0; i < 4; i++)
-                {
-                    int p = Projectile.NewProjectile(projectile.Center, velocity[i], ModContent.ProjectileType<EyeFireFriendly>(), projectile.damage, 0, projectile.owner);
-                }
-
                 counter = 0;
+
+                if (projectile.owner == Main.myPlayer)
+                {
+                    Vector2[] velocity = { projectile.velocity / 2, -projectile.velocity / 2, projectile.velocity.RotatedBy(Math.PI / 2) / 2, -projectile.velocity.RotatedBy(Math.PI / 2) / 2 };
+                    for (int i = 0; i < 4; i++)
+                        Projectile.NewProjectile(projectile.Center, velocity[i], ModContent.ProjectileType<EyeFireFriendly>(), projectile.damage, 0, projectile.owner);
+                }
             }
 
             //dust!
@@ -60,6 +60,21 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
         }
 
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (!hitSomething)
+            {
+                hitSomething = true;
+                if (projectile.owner == Main.myPlayer)
+                {
+                    Vector2[] velocity = { projectile.velocity / 2, -projectile.velocity / 2, projectile.velocity.RotatedBy(Math.PI / 2) / 2, -projectile.velocity.RotatedBy(Math.PI / 2) / 2 };
+                    for (int i = 0; i < 4; i++)
+                        Projectile.NewProjectile(projectile.Center, velocity[i], ModContent.ProjectileType<EyeFireFriendly>(), projectile.damage, 0, projectile.owner);
+                }
+            }
+            return true;
+        }
+
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
             //smaller tile hitbox
@@ -71,6 +86,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffID.CursedInferno, 120);
+            if (!hitSomething)
+            {
+                hitSomething = true;
+                if (projectile.owner == Main.myPlayer)
+                {
+                    Vector2[] velocity = { projectile.velocity / 2, -projectile.velocity / 2, projectile.velocity.RotatedBy(Math.PI / 2) / 2, -projectile.velocity.RotatedBy(Math.PI / 2) / 2 };
+                    for (int i = 0; i < 4; i++)
+                        Projectile.NewProjectile(projectile.Center, velocity[i], ModContent.ProjectileType<EyeFireFriendly>(), projectile.damage, 0, projectile.owner);
+                }
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

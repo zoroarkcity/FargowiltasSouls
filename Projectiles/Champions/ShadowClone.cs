@@ -34,11 +34,6 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.timeLeft = 720;
         }
 
-        public override bool CanDamage()
-        {
-            return projectile.ai[1] < 0;
-        }
-
         public override void AI()
         {
             Player player = Main.player[(int)projectile.ai[0]];

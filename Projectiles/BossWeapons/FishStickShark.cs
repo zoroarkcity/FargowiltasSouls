@@ -9,6 +9,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
     {
         public override string Texture => "Terraria/Projectile_408";
 
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Shark");
+            Main.projFrames[projectile.type] = Main.projFrames[ProjectileID.MiniSharkron];
+        }
+
         public override void SetDefaults()
         {
             projectile.CloneDefaults(ProjectileID.MiniSharkron);
@@ -18,7 +24,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             projectile.tileCollide = false;
             projectile.minion = true;
-
         }
 
         public override void AI()

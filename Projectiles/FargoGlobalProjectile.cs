@@ -73,7 +73,7 @@ namespace FargowiltasSouls.Projectiles
                 switch (projectile.type)
                 {
                     case ProjectileID.SpiritHeal:
-                        projectile.timeLeft = 180 * 4; //account for extraupdates
+                        projectile.timeLeft = 240 * 4; //account for extraupdates
                         break;
 
                     case ProjectileID.DD2BetsyFlameBreath:
@@ -773,7 +773,7 @@ namespace FargowiltasSouls.Projectiles
 
                 case ProjectileID.SpiritHeal:
                     if (FargoSoulsWorld.MasochistMode)
-                        projectile.position -= projectile.velocity / 2;
+                        projectile.position -= projectile.velocity / 4;
                     break;
 
                 case ProjectileID.WireKite:
@@ -790,8 +790,9 @@ namespace FargowiltasSouls.Projectiles
                 case ProjectileID.NebulaSphere:
                     if (FargoSoulsWorld.MasochistMode)
                     {
-                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss))
-                            projectile.position += projectile.velocity / 4;
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss)
+                            && projectile.Distance(Main.player[Main.npc[EModeGlobalNPC.cultBoss].target].Center) > 300)
+                            projectile.position += projectile.velocity;
                     }
                     break;
 

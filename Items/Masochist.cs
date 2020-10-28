@@ -14,7 +14,16 @@ namespace FargowiltasSouls.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mutant's Gift");
-            Tooltip.SetDefault("'Use this to turn on/off Eternity Mode'");
+            Tooltip.SetDefault(@"Toggles Eternity Mode, entailing the following
+Changes world to Expert Mode
+Changes all vanilla and Souls Mod boss AIs and many enemy AIs
+Compatible bosses drop additional loot including exclusive accessories
+Rebalances many weapons and certain mechanics
+Introduces new debuffs and possible debuff sources
+Increases cash from enemies and adds certain drops
+Increases spawn rates
+Cannot be used while a boss is alive
+[c/ff0000:NOT INTENDED FOR USE WITH OTHER CONTENT MODS OR MODDED DIFFICULTIES]");
             DisplayName.AddTranslation(GameCulture.Chinese, "突变体的礼物");
             Tooltip.AddTranslation(GameCulture.Chinese, "'用开/关受虐模式'");
         }
