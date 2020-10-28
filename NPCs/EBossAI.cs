@@ -2944,8 +2944,9 @@ namespace FargowiltasSouls.NPCs
                             Counter[0]++;
                             if (Counter[0] == 1) //plant geysers on floor
                             {
-                                Vector2 spawnPos = npc.Center;
-                                for (int i = -3; i <= 3; i++)
+                                Vector2 spawnPos = new Vector2(npc.position.X, npc.Center.Y);
+                                spawnPos.X -= npc.width * 7;
+                                for (int i = 0; i < 6; i++)
                                 {
                                     int tilePosX = (int)spawnPos.X / 16 + npc.width * i * 3 / 16;
                                     int tilePosY = (int)spawnPos.Y / 16;// + 1;
@@ -2953,14 +2954,14 @@ namespace FargowiltasSouls.NPCs
                                     /*if (Main.tile[tilePosX, tilePosY] == null)
                                         Main.tile[tilePosX, tilePosY] = new Tile();
 
-                                    while (!(Main.tile[tilePosX, tilePosY].nactive() && Main.tileSolid[(int)Main.tile[tilePosX, tilePosY].type]))
+                                    while (!(Main.tile[tilePosX, tilePosY].nactive() && Main.tileSolid[Main.tile[tilePosX, tilePosY].type]))
                                     {
                                         tilePosY++;
                                         if (Main.tile[tilePosX, tilePosY] == null)
                                             Main.tile[tilePosX, tilePosY] = new Tile();
                                     }*/
 
-                                    Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser>(), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
+                                    Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser2>(), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
                                 }
                             }
                             else if (Counter[0] == 2) //rocks fall and ceiling geysers
@@ -2989,9 +2990,8 @@ namespace FargowiltasSouls.NPCs
                                     }
                                 }
 
-                                Vector2 spawnPos = new Vector2(npc.position.X, npc.Center.Y);
-                                spawnPos.X -= npc.width * 7;
-                                for (int i = 0; i < 6; i++)
+                                Vector2 spawnPos = npc.Center;
+                                for (int i = -3; i <= 3; i++)
                                 {
                                     int tilePosX = (int)spawnPos.X / 16 + npc.width * i * 3 / 16;
                                     int tilePosY = (int)spawnPos.Y / 16;// + 1;
@@ -2999,14 +2999,14 @@ namespace FargowiltasSouls.NPCs
                                     /*if (Main.tile[tilePosX, tilePosY] == null)
                                         Main.tile[tilePosX, tilePosY] = new Tile();
 
-                                    while (!(Main.tile[tilePosX, tilePosY].nactive() && Main.tileSolid[Main.tile[tilePosX, tilePosY].type]))
+                                    while (!(Main.tile[tilePosX, tilePosY].nactive() && Main.tileSolid[(int)Main.tile[tilePosX, tilePosY].type]))
                                     {
                                         tilePosY++;
                                         if (Main.tile[tilePosX, tilePosY] == null)
                                             Main.tile[tilePosX, tilePosY] = new Tile();
                                     }*/
 
-                                    Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser2>(), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
+                                    Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser>(), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
                                 }
                             }
                         }
