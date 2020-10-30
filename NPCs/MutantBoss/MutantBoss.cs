@@ -2175,7 +2175,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
         {
             if ((!playerInvulTriggered || Main.rand.Next(10) == 0) && FargoSoulsWorld.MasochistMode)
             {
-                Item.NewItem(npc.Hitbox, mod.ItemType("BrokenSpear"));
+                Item.NewItem(npc.Hitbox, mod.ItemType("PhantasmalEnergy"));
                 Item.NewItem(npc.Hitbox, mod.ItemType("SpawnSack"));
             }
 

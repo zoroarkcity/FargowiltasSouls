@@ -9,8 +9,6 @@ namespace FargowiltasSouls.Items.Misc
 {
 	public class BrokenHilt : ModItem
 	{
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Broken Hilt");

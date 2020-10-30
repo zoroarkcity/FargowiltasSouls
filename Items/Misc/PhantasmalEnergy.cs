@@ -7,13 +7,11 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Misc
 {
-	public class BrokenSpear : ModItem
+	public class PhantasmalEnergy : ModItem
 	{
-        public override string Texture => "FargowiltasSouls/Items/Placeholder";
-
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Broken Spear");
+			DisplayName.SetDefault("Phantasmal Energy");
 		}
 
 		public override void SetDefaults()

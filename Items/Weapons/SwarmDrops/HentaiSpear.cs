@@ -116,7 +116,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             recipe.AddIngredient(mod.ItemType("Sadism"), 30);
             recipe.AddIngredient(mod.ItemType("MutantScale"), 30);
             recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 30);
-            recipe.AddIngredient(mod.ItemType("BrokenSpear"));
+            recipe.AddIngredient(mod.ItemType("PhantasmalEnergy"));
             recipe.AddIngredient(mod.ItemType("MutantEye"));
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
