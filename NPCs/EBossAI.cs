@@ -2882,16 +2882,13 @@ namespace FargowiltasSouls.NPCs
                     targetPos.X += Main.rand.Next(-25, 26);
                     targetPos.Y += Main.rand.Next(-25, 26);
 
-                    if (WorldGen.SolidTile(Framing.GetTileSafely((int)targetPos.X, (int)targetPos.Y)) //check the tile can be grappled
-                        || Framing.GetTileSafely((int)targetPos.X, (int)targetPos.Y).wall > 0)
-                    {
-                        npc.localAI[0] = 600; //reset vanilla timer for picking new block
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                            npc.netUpdate = true;
+                    Tile tile = Framing.GetTileSafely((int)targetPos.X, (int)targetPos.Y);
+                    npc.localAI[0] = 600; //reset vanilla timer for picking new block
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        npc.netUpdate = true;
 
-                        npc.ai[0] = targetPos.X;
-                        npc.ai[1] = targetPos.Y;
-                    }
+                    npc.ai[0] = targetPos.X;
+                    npc.ai[1] = targetPos.Y;
                 }
 
                 npc.position += npc.velocity;

@@ -690,3 +690,5 @@ added echdeath
 fixed meme ice queen thingy
 sibling weapon recipes tweaked
 echdeath
+
+plantera hooks can grasp air
