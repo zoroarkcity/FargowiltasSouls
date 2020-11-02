@@ -692,3 +692,4 @@ sibling weapon recipes tweaked
 echdeath
 
 plantera hooks can grasp air
+iron parry anim
