@@ -908,6 +908,13 @@ namespace FargowiltasSouls
             recipe.SetResult(ModContent.ItemType<RuneOrb>());
             recipe.AddRecipe();
 
+            recipe = new ModRecipe(this);
+            recipe.AddIngredient(ItemID.LifeCrystal);
+            recipe.AddIngredient(ModContent.ItemType<Items.Misc.DeviatingEnergy>(), 5);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.SetResult(ModContent.ItemType<HeartChocolate>());
+            recipe.AddRecipe();
+
             /*recipe = new ModRecipe(this);
             recipe.AddRecipeGroup("FargowiltasSouls:AnyBonesBanner", 2);
             recipe.AddIngredient(ModContent.ItemType<Items.Misc.DeviatingEnergy>(), 5);
@@ -1062,6 +1069,7 @@ namespace FargowiltasSouls
                     fargoNPC.Counter[0] = reader.ReadInt32();
                     fargoNPC.Counter[1] = reader.ReadInt32();
                     fargoNPC.Counter[2] = reader.ReadInt32();
+                    fargoNPC.Counter[3] = reader.ReadInt32();
                     break;
 
                 case 3: //rainbow slime/paladin, MP clients syncing to server

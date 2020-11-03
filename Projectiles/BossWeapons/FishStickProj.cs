@@ -38,19 +38,34 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             Player player = Main.player[projectile.owner];
 
-            int bonusMinions = player.maxMinions > 5 ? 5 : player.maxMinions;
-
             if (player.ownedProjectileCounts[ModContent.ProjectileType<Whirlpool>()] < 1)
-                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Whirlpool>(), projectile.damage * 2, 0f, projectile.owner, 16, 6 + bonusMinions);
-            else
-                Main.projectile.Where(x => x.active && x.type == ModContent.ProjectileType<Whirlpool>()).ToList().ForEach(x =>
+            {
+                float minionSlotsUsed = 0;
+                for (int i = 0; i < Main.maxProjectiles; i++)
                 {
-                    if (Main.rand.Next(2) == 0)
-                    {
-                        Vector2 velocity = Vector2.Normalize(target.Center - x.Center) * 20;
-                        Projectile.NewProjectile(x.Center, velocity, ModContent.ProjectileType<FishStickShark>(), projectile.damage / 2, projectile.knockBack, projectile.owner);
-                    }
-                });
+                    if (Main.projectile[i].active && !Main.projectile[i].hostile && Main.projectile[i].owner == projectile.owner && Main.projectile[i].minion)
+                        minionSlotsUsed += Main.projectile[i].minionSlots;
+                }
+
+                float modifier = Main.player[projectile.owner].maxMinions - minionSlotsUsed;
+                if (modifier < 0)
+                    modifier = 0;
+                if (modifier > 4)
+                    modifier = 4;
+
+                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Whirlpool>(), projectile.damage * 2, 0f, projectile.owner, 16, 2 + modifier * 2);
+            }
+            else
+            {
+                Main.projectile.Where(x => x.active && x.type == ModContent.ProjectileType<Whirlpool>()).ToList().ForEach(x =>
+                  {
+                      if (Main.rand.Next(2) == 0)
+                      {
+                          Vector2 velocity = Vector2.Normalize(target.Center - x.Center) * Main.rand.NextFloat(16f, 24f);
+                          Projectile.NewProjectile(x.Center, velocity, ModContent.ProjectileType<FishStickShark>(), projectile.damage / 2, projectile.knockBack, projectile.owner);
+                      }
+                  });
+            }
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)

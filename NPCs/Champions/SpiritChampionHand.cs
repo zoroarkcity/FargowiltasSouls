@@ -47,7 +47,7 @@ namespace FargowiltasSouls.NPCs.Champions
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             cooldownSlot = 1;
-            return true;
+            return npc.localAI[3] == 0;
         }
 
         public override void AI()
@@ -85,6 +85,8 @@ namespace FargowiltasSouls.NPCs.Champions
                 }
             }
 
+            npc.localAI[3] = 0;
+
             switch ((int)npc.ai[0])
             {
                 case 0: //float near head
@@ -92,6 +94,8 @@ namespace FargowiltasSouls.NPCs.Champions
                         targetPos = head.Center;
                         float offset = head.ai[0] % 2 == 0 ? 50 : 150;
                         float distance = head.ai[0] % 2 == 0 ? 50 : 100;
+                        if (head.ai[0] % 2 == 0)
+                            npc.localAI[3] = 1;
                         targetPos.X += offset * npc.ai[2];
                         targetPos.Y += offset * npc.ai[3];
                         if (npc.Distance(targetPos) > distance)

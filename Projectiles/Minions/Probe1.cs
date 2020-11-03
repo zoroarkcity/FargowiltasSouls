@@ -40,9 +40,9 @@ namespace FargowiltasSouls.Projectiles.Minions
 
             if (projectile.damage == 0)
             {
-                projectile.damage = (int)(50f * player.minionDamage);
+                projectile.damage = (int)(35f * player.minionDamage);
                 if (player.GetModPlayer<FargoPlayer>().MasochistSoul)
-                    projectile.damage *= 2;
+                    projectile.damage *= 3;
             }
 
             projectile.ai[0] -= (float)Math.PI / 60f;
@@ -54,11 +54,11 @@ namespace FargowiltasSouls.Projectiles.Minions
 
                 if (--projectile.localAI[0] < 0f)
                 {
-                    if (player.controlUseItem)
+                    if (player.controlUseItem && player.HeldItem.damage > 0 && player.HeldItem.pick == 0 && player.HeldItem.hammer == 0 && player.HeldItem.axe == 0)
                     {
-                        projectile.localAI[0] = player.GetModPlayer<FargoPlayer>().MasochistSoul ? 30f : 60f;
+                        projectile.localAI[0] = player.GetModPlayer<FargoPlayer>().MasochistSoul ? 15f : 30f;
                         Projectile.NewProjectile(projectile.Center, new Vector2(8f, 0f).RotatedBy(projectile.rotation),
-                            mod.ProjectileType("ProbeLaser"), projectile.damage / 5 * 8, 0f, projectile.owner);
+                            mod.ProjectileType("ProbeLaser"), projectile.damage, projectile.knockBack, projectile.owner);
                         projectile.netUpdate = true;
                     }
                     else

@@ -807,7 +807,7 @@ namespace FargowiltasSouls
             OceanicMaul = false;
             DeathMarked = false;
             Midas = false;
-            MutantPresence = false;
+            MutantPresence = MutantPresence ? player.HasBuff(ModContent.BuffType<Buffs.Boss.MutantPresence>()) : false;
             DevianttPresence = false;
             Swarming = false;
             LowGround = false;
@@ -2952,6 +2952,7 @@ namespace FargowiltasSouls
                 player.hurtCooldowns[0] = invul;
                 player.hurtCooldowns[1] = invul;
                 player.AddBuff(BuffID.ParryDamageBuff, 300);
+                Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<IronParry>(), 0, 0f, Main.myPlayer);
                 return false;
             }
 

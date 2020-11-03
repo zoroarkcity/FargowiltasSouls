@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Penetrator");
-            Tooltip.SetDefault("Right click to sunder reality\n'The reward for slaughtering many...'");
+            Tooltip.SetDefault("Right click to sunder reality\n'The reward for embracing eternity...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "洞察者");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励...'");
         }
@@ -112,8 +112,12 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerMoon"));
-            recipe.AddIngredient(mod.ItemType("Sadism"), 15);
+            //recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerMoon"));
+            recipe.AddIngredient(mod.ItemType("Sadism"), 30);
+            recipe.AddIngredient(mod.ItemType("MutantScale"), 30);
+            recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 30);
+            recipe.AddIngredient(mod.ItemType("PhantasmalEnergy"));
+            recipe.AddIngredient(mod.ItemType("MutantEye"));
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);

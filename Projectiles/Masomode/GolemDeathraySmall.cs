@@ -114,7 +114,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(projectile.Center, Vector2.UnitY * 8, ProjectileID.GeyserTrap, projectile.damage, 0f, Main.myPlayer);
+                Projectile.NewProjectile(projectile.Center, projectile.velocity * 8, ProjectileID.GeyserTrap, projectile.damage, 0f, Main.myPlayer);
             }
         }
     }

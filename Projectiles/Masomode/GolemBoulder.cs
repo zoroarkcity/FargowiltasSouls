@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override bool PreAI()
         {
-            projectile.alpha -= 8;
+            projectile.alpha -= 16;
             if (projectile.alpha < 0)
                 projectile.alpha = 0;
 

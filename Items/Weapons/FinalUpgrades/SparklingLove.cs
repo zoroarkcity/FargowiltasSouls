@@ -13,9 +13,9 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sparkling Love");
-            Tooltip.SetDefault(@"[c/ff0000:CHEAT WEAPON]
-Right click to summon the soul of Deviantt
-'Let's keep how you got this a secret'");
+            Tooltip.SetDefault(@"Right click to summon the soul of Deviantt
+Right click pattern becomes denser with up to 5 empty minion slots
+'The soul-consuming demon axe of love and justice from a defeated foe...'");
         }
 
         public override void SetDefaults()
@@ -84,17 +84,20 @@ Right click to summon the soul of Deviantt
             }
         }
 
-        /*public override void AddRecipes()
+        public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
 
-            recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerMoon"));
-            recipe.AddIngredient(mod.ItemType("Sadism"), 15);
+            //recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerMoon"));
+            recipe.AddIngredient(mod.ItemType("Sadism"), 30);
+            recipe.AddIngredient(mod.ItemType("MutantScale"), 30);
+            recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 30);
+            recipe.AddIngredient(mod.ItemType("BrokenBlade"));
             recipe.AddIngredient(mod.ItemType("SparklingAdoration"));
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }*/
+        }
     }
 }

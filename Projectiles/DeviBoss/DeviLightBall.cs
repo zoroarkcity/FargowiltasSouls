@@ -34,8 +34,8 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
 
             if (projectile.ai[0] == 0f && Main.netMode != NetmodeID.MultiplayerClient) //split
             {
-                for (int i = 1; i <= 4; i++)
-                    Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity).RotatedBy(MathHelper.ToRadians(15) * i * Math.Sign(projectile.ai[1])),
+                for (int i = 1; i <= 6; i++)
+                    Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity).RotatedBy(MathHelper.ToRadians(10) * i * Math.Sign(projectile.ai[1])),
                         mod.ProjectileType("DeviLightBall"), projectile.damage, projectile.knockBack, projectile.owner, 0.03f);
             }
         }

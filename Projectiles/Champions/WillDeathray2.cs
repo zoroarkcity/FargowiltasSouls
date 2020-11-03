@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 {
     public class WillDeathray2 : Deathrays.BaseDeathray
     {
-        public WillDeathray2() : base(15, "AbomDeathray") { }
+        public WillDeathray2() : base(20, "AbomDeathray") { }
 
         public override void SetStaticDefaults()
         {

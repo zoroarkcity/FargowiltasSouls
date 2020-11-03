@@ -96,9 +96,9 @@ namespace FargowiltasSouls.NPCs.Champions
                     targetPos = player.Center - Vector2.UnitY * 250f;
                     Movement(targetPos, 0.3f, 24f);
 
-                    if (++npc.ai[2] > 60) //ichor periodically
+                    if (++npc.ai[2] > 75) //ichor periodically
                     {
-                        if (npc.ai[2] > 90)
+                        if (npc.ai[2] > 105)
                         {
                             npc.ai[2] = 0;
                         }
@@ -111,7 +111,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             if (npc.localAI[0] > 60 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(npc.Center + Main.rand.NextVector2Circular(npc.width / 2, npc.height / 2),
-                                    Vector2.UnitY * Main.rand.NextFloat(-2f, 2f), ProjectileID.GoldenShowerHostile, npc.damage / 4, 0f, Main.myPlayer);
+                                    Vector2.UnitY * Main.rand.NextFloat(-4f, 0), ProjectileID.GoldenShowerHostile, npc.damage / 4, 0f, Main.myPlayer);
                             }
                         }
                     }

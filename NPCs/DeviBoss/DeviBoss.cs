@@ -672,7 +672,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             }
                         }
                     }
-                    else if (npc.ai[1] > 90)
+                    else if (npc.ai[1] > 120)
                     {
                         if (++npc.ai[2] > 3)
                         {
@@ -836,7 +836,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 int max = npc.localAI[3] > 1 ? 30 : 20;
                                 for (int i = 0; i < max; i++)
                                 {
-                                    int p = Projectile.NewProjectile(npc.Center, 4f * Vector2.UnitX.RotatedBy(Main.rand.NextFloat((float)Math.PI * 2)), ModContent.ProjectileType<DeviLostSoul>(), projectileDamage, 0f, Main.myPlayer);
+                                    int p = Projectile.NewProjectile(npc.Center, Main.rand.NextFloat(2f, 6f) * Vector2.UnitX.RotatedBy(Main.rand.NextFloat((float)Math.PI * 2)), ModContent.ProjectileType<DeviLostSoul>(), projectileDamage, 0f, Main.myPlayer);
                                     if (p != Main.maxProjectiles)
                                         Main.projectile[p].timeLeft = 300;
                                 }
@@ -1670,10 +1670,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
         public override void NPCLoot()
         {
-            if (!playerInvulTriggered)
+            if (!playerInvulTriggered && FargoSoulsWorld.MasochistMode)
             {
-                if (!FargoSoulsWorld.downedDevi && !Main.hardMode && FargoSoulsWorld.MasochistMode)
-                    Item.NewItem(npc.Hitbox, mod.ItemType("SparklingLove"));
+                Item.NewItem(npc.Hitbox, mod.ItemType("BrokenBlade"));
                 Item.NewItem(npc.Hitbox, mod.ItemType("ChibiHat"));
             }
 

@@ -56,8 +56,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 modifier = Main.player[projectile.owner].maxMinions - minionSlotsUsed;
                 if (modifier < 0)
                     modifier = 0;
-                if (modifier > 5)
-                    modifier = 5;
+                if (modifier > 3)
+                    modifier = 3;
 
                 if (projectile.owner == Main.myPlayer)
                 {
@@ -77,7 +77,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             const int homingDelay = 10;
             const float desiredFlySpeedInPixelsPerFrame = 60;
             
-            float amountOfFramesToLerpBy = 120 - 20 * modifier; // minimum of 1, please keep in full numbers even though it's a float!
+            float amountOfFramesToLerpBy = 120 - 33 * modifier; // minimum of 1, please keep in full numbers even though it's a float!
 
             projectile.ai[aislotHomingCooldown]++;
             if (projectile.ai[aislotHomingCooldown] > homingDelay)

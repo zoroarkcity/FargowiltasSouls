@@ -279,7 +279,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             npc.ai[2] += (float)Math.PI * 2;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            int max = npc.localAI[2] == 1 ? 5 : 4;
+                            int max = npc.localAI[2] == 1 ? 4 : 3;
                             for (int i = 0; i < max; i++)
                             {
                                 Projectile.NewProjectile(npc.Center, new Vector2(6f, 0).RotatedBy(npc.ai[2] + Math.PI / max * 2 * i),

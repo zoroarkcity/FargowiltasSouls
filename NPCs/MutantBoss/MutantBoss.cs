@@ -62,7 +62,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             if (FargoSoulsWorld.AngryMutant || Fargowiltas.Instance.CalamityLoaded)
             {
                 npc.lifeMax = 277000000;
-                npc.damage = (int)(npc.damage * 1.5);
+                npc.damage = (int)(npc.damage * 2);
                 npc.defense *= 5;
                 if (Fargowiltas.Instance.CalamityLoaded)
                 {
@@ -2173,8 +2173,11 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override void NPCLoot()
         {
-            if (!playerInvulTriggered)
+            if ((!playerInvulTriggered || Main.rand.Next(10) == 0) && FargoSoulsWorld.MasochistMode)
+            {
+                Item.NewItem(npc.Hitbox, mod.ItemType("PhantasmalEnergy"));
                 Item.NewItem(npc.Hitbox, mod.ItemType("SpawnSack"));
+            }
 
             FargoSoulsWorld.downedMutant = true;
             FargoSoulsWorld.skipMutantP1 = 0;
