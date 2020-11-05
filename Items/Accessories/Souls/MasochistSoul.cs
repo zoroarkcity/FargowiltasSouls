@@ -25,7 +25,7 @@ Makes armed and magic skeletons less hostile outside the Dungeon, zoom with righ
 Your attacks create additional attacks, hearts, and inflict a cocktail of Eternity Mode debuffs
 Press the Fireball Dash key to perform a short invincible dash
 Certain enemies will drop potions when defeated, 50% discount on reforges, you respawn with more life
-You respawn twice as fast, gain Honey buff when hurt, improved night vision, and erupt into various attacks when injured
+You respawn twice as fast, attacks spawn honey, have improved night vision, and erupt into various attacks when injured
 Prevents boss spawns, increases spawn rate, increases loot, and attacks may squeak and deal 1 damage to you
 Summons the aid of all Eternity Mode bosses to your side
 'Embrace eternity'");

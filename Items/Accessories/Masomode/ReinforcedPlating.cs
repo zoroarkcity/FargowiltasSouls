@@ -9,8 +9,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Reinforced Plating");
-            Tooltip.SetDefault(@"Grants immunity to Defenseless, Stunned, and knockback
-Reduces damage taken by 10%
+            Tooltip.SetDefault(@"Grants immunity to Defenseless, Nano Injection, and knockback
+Reduces damage taken by 5%
 'The sturdiest piece of a defeated foe'");
             DisplayName.AddTranslation(GameCulture.Chinese, "强化钢板");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'被打败的敌人最坚强的一面'
@@ -25,14 +25,14 @@ Reduces damage taken by 10%
             item.accessory = true;
             item.rare = 6;
             item.value = Item.sellPrice(0, 4);
-            item.defense = 10;
+            item.defense = 15;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.buffImmune[mod.BuffType("Defenseless")] = true;
-            player.buffImmune[mod.BuffType("Stunned")] = true;
-            player.endurance += 0.1f;
+            player.buffImmune[mod.BuffType("NanoInjection")] = true;
+            player.endurance += 0.05f;
             player.noKnockback = true;
         }
     }

@@ -15,6 +15,14 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             base.SetDefaults();
             projectile.scale = 1.5f;
+            projectile.tileCollide = false;
+            projectile.ignoreWater = true;
+        }
+
+        public override void AI()
+        {
+            base.AI();
+            Lighting.AddLight(projectile.Center, 0f, 0f, 0.8f);
         }
     }
 }

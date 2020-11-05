@@ -202,7 +202,7 @@ namespace FargowiltasSouls
             AddToggle("SupremeFairyHeader", "Supreme Deathbringer Fairy", "SupremeDeathbringerFairy", "ffffff");
             AddToggle("MasoSlimeConfig", "Slimy Shield Effects", "SlimyShield", "ffffff");
             AddToggle("MasoEyeConfig", "Scythes When Dashing", "AgitatingLens", "ffffff");
-            AddToggle("MasoHoneyConfig", "Gain Honey When Hurt", "QueenStinger", "ffffff");
+            AddToggle("MasoHoneyConfig", "Honey When Hitting Enemies", "QueenStinger", "ffffff");
             AddToggle("MasoSkeleConfig", "Skeletron Arms Minion", "NecromanticBrew", "ffffff");
 
             //bionomic 

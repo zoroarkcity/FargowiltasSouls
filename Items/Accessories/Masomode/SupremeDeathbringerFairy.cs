@@ -16,9 +16,8 @@ Increases damage by 10% and armor penetration by 10
 15% increased fall speed
 When you land after a jump, slime will fall from the sky over your cursor
 While dashing or running quickly you will create a trail of blood scythes
-Your attacks inflict Venom
+Your attacks inflict Venom and spray honey that increases your life regeneration
 Bees and weak Hornets become friendly
-Gain Honey buff when hurt
 Summons 2 Skeletron arms to whack enemies
 'Supremacy not necessarily guaranteed'");
             DisplayName.AddTranslation(GameCulture.Chinese, "至高告死精灵");

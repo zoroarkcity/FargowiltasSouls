@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
 {
     public class PhantasmalDeathrayMLSmall : BaseDeathray
     {
-        public PhantasmalDeathrayMLSmall() : base(30, "PhantasmalDeathrayML") { }
+        public PhantasmalDeathrayMLSmall() : base(180, "PhantasmalDeathrayML") { }
 
         public override void SetStaticDefaults()
         {
@@ -28,6 +28,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             if (Main.npc[ai1].active && (Main.npc[ai1].type == NPCID.MoonLordHand || Main.npc[ai1].type == NPCID.MoonLordHead))
             {
                 projectile.Center = Main.npc[ai1].Center;
+                projectile.velocity = Main.npc[ai1].localAI[0].ToRotationVector2();
             }
             else
             {

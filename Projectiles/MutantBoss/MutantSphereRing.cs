@@ -31,7 +31,18 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override bool CanHitPlayer(Player target)
         {
-            return target.hurtCooldowns[1] == 0 && projectile.Distance(target.Center) < projectile.width / 2;
+            if (target.hurtCooldowns[1] == 0)
+            {
+                Vector2 adjustedPos = projectile.Center - target.Center;
+                if (Math.Abs(adjustedPos.X) > target.width / 2)
+                    adjustedPos.X = target.width / 2 * Math.Sign(adjustedPos.X);
+                if (Math.Abs(adjustedPos.Y) > target.width / 2)
+                    adjustedPos.Y = target.width / 2 * Math.Sign(adjustedPos.Y);
+
+                if (projectile.Distance(target.Center + adjustedPos) <= projectile.width / 2)
+                    return true;
+            }
+            return false;
         }
 
         public override void AI()

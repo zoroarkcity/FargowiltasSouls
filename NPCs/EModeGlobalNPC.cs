@@ -4979,11 +4979,13 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.SkeletronPrime:
                         target.AddBuff(ModContent.BuffType<Defenseless>(), 480);
-                        break;
-
+                        goto case NPCID.PrimeCannon;
+                    case NPCID.PrimeCannon:
+                    case NPCID.PrimeLaser:
                     case NPCID.PrimeVice:
                     case NPCID.PrimeSaw:
-                        AddBuffNoStack(target, ModContent.BuffType<Stunned>());
+                        target.AddBuff(ModContent.BuffType<NanoInjection>(), 360);
+                        //AddBuffNoStack(target, ModContent.BuffType<Stunned>());
                         break;
 
                     case NPCID.DesertBeast:
@@ -6665,7 +6667,7 @@ namespace FargowiltasSouls.NPCs
 
                     #region boss drops
                     case NPCID.KingSlime:
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.HerbBag, Main.rand.Next(5) + 1);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeCrystal, 5);
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.WoodenCrate, 5);
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<SlimyShield>());
                         if (Main.netMode != NetmodeID.MultiplayerClient && !BossIsAlive(ref mutantBoss, mod.NPCType("MutantBoss")) && !NPC.AnyNPCs(ModContent.NPCType<Mutant>()))
@@ -6677,7 +6679,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.EyeofCthulhu:
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeCrystal, 5);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.HerbBag, 5);
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.WoodenCrate, 5);
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<AgitatingLens>());
                         break;

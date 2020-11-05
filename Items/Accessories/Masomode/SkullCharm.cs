@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Skull Charm");
-            Tooltip.SetDefault(@"Grants immunity to Dazed
+            Tooltip.SetDefault(@"Grants immunity to Dazed and Stunned
 Increases damage taken and dealt by 10%
 Enemies are less likely to target you
 Makes armed and magic skeletons less hostile outside the Dungeon
@@ -35,6 +35,7 @@ Makes armed and magic skeletons less hostile outside the Dungeon
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.buffImmune[BuffID.Dazed] = true;
+            player.buffImmune[ModContent.BuffType<Buffs.Masomode.Stunned>()] = true;
             player.GetModPlayer<FargoPlayer>().AllDamageUp(0.1f);
             player.endurance -= 0.1f;
             player.aggro -= 400;
