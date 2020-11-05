@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Items.Misc;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -29,6 +30,15 @@ namespace FargowiltasSouls.Items.Armor
             player.GetModPlayer<FargoPlayer>().AllDamageUp(0.05f);
             player.GetModPlayer<FargoPlayer>().AllCritUp(5);
             player.moveSpeed += 0.1f;
+        }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<LunarCrystal>(), 5);
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rockeater Launcher");
-            Tooltip.SetDefault("50% chance to not consume ammo\nIncreased damage to enemies in the given range\n'The reward for slaughtering many..'");
+            Tooltip.SetDefault("Uses rockets for ammo\n50% chance to not consume ammo\nIncreased damage to enemies in the given range\n'The reward for slaughtering many..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "吞噬者发射器");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励..'");
         }
@@ -63,7 +63,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             recipe.AddIngredient(mod.ItemType("EaterStaff"));
             recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerWorm"));
             recipe.AddIngredient(ItemID.LunarBar, 10);
-            //recipe.AddIngredient(null, "LunarCrystal", 5);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);

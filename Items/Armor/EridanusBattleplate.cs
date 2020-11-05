@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Items.Misc;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -29,6 +30,15 @@ Grants life regeneration");
             player.GetModPlayer<FargoPlayer>().AllDamageUp(0.1f);
             player.GetModPlayer<FargoPlayer>().AllCritUp(10);
             player.lifeRegen += 4;
+        }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<LunarCrystal>(), 5);
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }
