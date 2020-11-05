@@ -693,3 +693,27 @@ echdeath
 
 plantera hooks can grasp air
 iron parry anim
+swapped eoc and ks dropping life crystals and herb bags
+reduced horizontal random variation of king slime's slimeball rain
+reduced damage of king slime's projectiles
+king slime spikes ignore tiles and emit light
+polished hit detection of mutant's spiral spheres
+eow/boc despawn much faster when player is dead
+frozen turtle shell gives 15% DR instead of 25% in emode
+reduced heart of eternal stat ups to 5% (was 10%)
+reduced dubious circuitry and reinforced plating DR to 5%
+reinforced plating defense increased to 15
+dubious circuitry defense increased to 10
+queen bee hive toss timer runs during bee spray attack (net effect she does it more often, but not during bee spray)
+slightly reduced destroyer dark star velocity
+destroyer moves much more aggressively in p2
+spinning prime limbs can't hurt you for one second after spin ends
+prime will respawn any despawned limbs while entering p2(? test this)
+mini saucer minion reworked, hovers over mouse and shoots down (test in mp that it doesnt look weird for other players)
+prime inflicts nano injection (regen, speed, defense, damage down) instead of stunned
+skull charm and upgrades have stunned immunity
+reinforced plating and upgrades have nano injection immunity instead of stunned
+ivy venom converts to infested EX instead of infested now and has a chat message when it does
+changed moon lord p2's nebula bolts to nebula blazes
+queen stinger no longer gives honey when hurt, now gives honey drops for hitting enemies
+moon lord socket rays reworked, now track you for a while and then fire

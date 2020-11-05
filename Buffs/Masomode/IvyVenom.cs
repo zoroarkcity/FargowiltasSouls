@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Buffs.Masomode
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Ivy Venom");
-            Description.SetDefault("Losing life, will become Infested at 20 seconds");
+            Description.SetDefault("Losing life, will become Infested EX at 20 seconds");
             DisplayName.AddTranslation(GameCulture.Chinese, "常春藤毒");
             Description.AddTranslation(GameCulture.Chinese, "流失生命, 持续时间超过20秒时变为感染");
             Main.debuff[Type] = true;
@@ -27,11 +27,12 @@ namespace FargowiltasSouls.Buffs.Masomode
 
         public override void Update(Player player, ref int buffIndex)
         {
-            if (player.buffTime[buffIndex] > 1200 && !player.buffImmune[ModContent.BuffType<Infested>()])
+            if (player.buffTime[buffIndex] > 1200)
             {
-                player.AddBuff(mod.BuffType("Infested"), player.buffTime[buffIndex]);
+                player.AddBuff(mod.BuffType("InfestedEX"), player.buffTime[buffIndex]);
                 player.buffTime[buffIndex] = 1;
                 Main.PlaySound(SoundID.Roar, (int)player.Center.X, (int)player.Center.Y, 0);
+                Main.NewText("Your Ivy Venom has become an Infestation!", 175, 75, 255);
             }
             player.venom = true;
         }

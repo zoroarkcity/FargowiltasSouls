@@ -39,6 +39,7 @@ namespace FargowiltasSouls
 
         public bool Wood;
         public bool QueenStinger;
+        public int QueenStingerCD;
         public bool EridanusEmpower;
         public int EridanusTimer;
 
@@ -1327,6 +1328,11 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (QueenStinger && QueenStingerCD > 0)
+            {
+                QueenStingerCD--;
+            }
+
             if (SpiderEnchant)
             {
                 SummonCrit = LifeForce || WizardEnchant ? 30 : 15;
@@ -2483,6 +2489,17 @@ namespace FargowiltasSouls
 
         public void OnHitNPCEither(NPC target, int damage, float knockback, bool crit, int projectile = -1)
         {
+            if (QueenStinger && QueenStingerCD <= 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.QueenStingerHoney))
+            {
+                QueenStingerCD = SupremeDeathbringerFairy ? 300 : 600;
+
+                for (int j = 0; j < 15; j++) //spray honey
+                {
+                    Projectile.NewProjectile(target.Center, new Vector2(Main.rand.NextFloat(-6, 6), Main.rand.NextFloat(-8, -5)), 
+                        ModContent.ProjectileType<HoneyDrop>(), 0, 0f, Main.myPlayer);
+                }
+            }
+
             if (PalladEnchant && !player.onHitRegen)
             {
                 player.AddBuff(BuffID.RapidHealing, Math.Min(300, damage / 3)); //heal time based on damage dealt, capped at 5sec
@@ -2990,11 +3007,6 @@ namespace FargowiltasSouls
         {
             WasHurtBySomething = true;
 
-            if (QueenStinger && SoulConfig.Instance.GetValue(SoulConfig.Instance.QueenStingerHoney))
-            {
-                player.AddBuff(BuffID.Honey, 300);
-            }
-
             if (MythrilEnchant && !TerrariaSoul)
             {
                 player.AddBuff(ModContent.BuffType<DisruptedFocus>(), 300);
@@ -3284,6 +3296,9 @@ namespace FargowiltasSouls
                 player.shadowDodge = false;
                 player.blackBelt = false;
             }
+
+            if (FargoSoulsWorld.MasochistMode && player.iceBarrier)
+                player.endurance -= 0.1f;
         }
 
         public override void ModifyDrawInfo(ref PlayerDrawInfo drawInfo)
@@ -3370,7 +3385,11 @@ namespace FargowiltasSouls
         {
             int buffIndex = player.FindBuffIndex(ModContent.BuffType<Infested>());
             if (buffIndex == -1)
-                return 0;
+            {
+                buffIndex = player.FindBuffIndex(ModContent.BuffType<InfestedEX>());
+                if (buffIndex == -1)
+                    return 0;
+            }
 
             int timeLeft = player.buffTime[buffIndex];
             float baseVal = (float)(MaxInfestTime - timeLeft) / 120; //change the denominator to adjust max power of DOT

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,7 @@ namespace FargowiltasSouls.Projectiles.Minions
     public class MiniSaucer : ModProjectile
     {
         private int rotation = 0;
+        private Vector2 mousePos;
 
         public override void SetStaticDefaults()
         {
@@ -36,6 +38,18 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.scale = 1.5f;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(mousePos.X);
+            writer.Write(mousePos.Y);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            mousePos.X = reader.ReadSingle();
+            mousePos.Y = reader.ReadSingle();
+        }
+
         public override void AI()
         {
             Player player = Main.player[projectile.owner];
@@ -45,99 +59,64 @@ namespace FargowiltasSouls.Projectiles.Minions
             if (projectile.damage == 0)
                 projectile.damage = (int)(50f * player.minionDamage);
 
-            NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
+            /*NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
             if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile))
             {
                 projectile.ai[0] = minionAttackTargetNpc.whoAmI;
                 projectile.netUpdate = true;
+            }*/
+            
+            if (player.whoAmI == Main.myPlayer)
+            {
+                mousePos = Main.MouseWorld;
+                mousePos.Y -= 250f;
             }
 
-            if (projectile.ai[0] >= 0 && projectile.ai[0] < 200) //has target
+            if (projectile.Distance(Main.player[projectile.owner].Center) > 2000)
             {
-                NPC npc = Main.npc[(int)projectile.ai[0]];
+                projectile.Center = player.Center;
+                projectile.velocity = Vector2.UnitX.RotatedByRandom(2 * Math.PI) * 12f;
+            }
 
-                if (npc.CanBeChasedBy(projectile))
+            Vector2 distance = mousePos - projectile.Center;
+            float length = distance.Length();
+            if (length > 20f)
+            {
+                distance /= 18f;
+                projectile.velocity = (projectile.velocity * 23f + distance) / 24f;
+            }
+            else
+            {
+                if (projectile.velocity.Length() < 12f)
+                    projectile.velocity *= 1.05f;
+            }
+
+            if (player.whoAmI == Main.myPlayer && player.controlUseItem)
+            {
+                if (++projectile.localAI[0] > 5f) //shoot laser
                 {
-                    Vector2 distance = npc.Center - projectile.Center;
-                    float offset = 250 + npc.height / 2;
-                    distance.Y -= offset;
-                    float length = distance.Length();
-                    if (length > 50f)
+                    projectile.localAI[0] = 0f;
+                    if (player.whoAmI == Main.myPlayer)
                     {
-                        projectile.velocity = (projectile.velocity * 23f + distance / 18f) / 24f;
-                    }
-                    else
-                    {
-                        if (projectile.velocity.Length() < 12f)
-                            projectile.velocity *= 1.05f;
-                    }
-
-                    if (++projectile.localAI[0] > 20f)
-                    {
-                        projectile.localAI[0] = 0f;
-                        if (player.whoAmI == Main.myPlayer)
-                        {
-                            Vector2 vel = new Vector2(0f, -10f).RotatedBy((Main.rand.NextDouble() - 0.5) * Math.PI);
-                            Projectile.NewProjectile(projectile.Center, vel, mod.ProjectileType("SaucerRocket"),
-                                projectile.damage, projectile.knockBack * 4f, projectile.owner, npc.whoAmI, 20f);
-                        }
-                    }
-
-                    if (++projectile.localAI[1] > 5f)
-                    {
-                        projectile.localAI[1] = 0f;
-                        Vector2 vel = distance;
-                        vel.Y += offset;
-                        vel.Normalize();
-                        vel *= 16f;
+                        Vector2 vel = projectile.DirectionTo(Main.MouseWorld) * 16f;
                         Main.PlaySound(SoundID.Item12, projectile.Center);
-                        if (player.whoAmI == Main.myPlayer)
-                        {
-                            Projectile.NewProjectile(projectile.Center + projectile.velocity * 2.5f,
-                                vel.RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 3.0),
-                                mod.ProjectileType("SaucerLaser"), projectile.damage / 2, projectile.knockBack, projectile.owner);
-                        }
+
+                        Projectile.NewProjectile(projectile.Center + projectile.velocity * 2.5f,
+                            vel.RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 3.0),
+                            mod.ProjectileType("SaucerLaser"), projectile.damage / 2, projectile.knockBack, projectile.owner);
                     }
                 }
-                else //forget target
-                {
-                    projectile.ai[0] = -1f;
-                    projectile.netUpdate = true;
-                }
-            }
-            else //no target
-            {
-                Vector2 distance = player.Center - projectile.Center;
-                distance.X -= 100 * player.direction;
-                distance.Y -= 50f;
-                float length = distance.Length();
-                if (length > 2000f)
-                {
-                    projectile.Center = player.Center;
-                    projectile.velocity = Vector2.UnitX.RotatedByRandom(2 * Math.PI) * 12f;
-                }
-                else if (length > 20f)
-                {
-                    distance /= 18f;
-                    projectile.velocity = (projectile.velocity * 23f + distance) / 24f;
-                }
-                else
-                {
-                    if (projectile.velocity.Length() < 12f)
-                        projectile.velocity *= 1.05f;
-                }
 
-                projectile.localAI[1]++;
-                if (projectile.localAI[1] > 6f)
+                if (++projectile.localAI[1] > 20f) //try to find target for rocket
                 {
                     projectile.localAI[1] = 0f;
 
-                    float maxDistance = 1000f;
+                    float maxDistance = 500f;
                     int possibleTarget = -1;
-                    for (int i = 0; i < 200; i++)
+                    for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];
-                        if (npc.CanBeChasedBy(projectile))// && Collision.CanHitLine(projectile.Center, 0, 0, npc.Center, 0, 0))
+                        if (npc.CanBeChasedBy(projectile) && Collision.CanHitLine(projectile.Center, 0, 0, npc.Center, 0, 0))
                         {
                             float npcDistance = player.Distance(npc.Center);
                             if (npcDistance < maxDistance)
@@ -148,22 +127,24 @@ namespace FargowiltasSouls.Projectiles.Minions
                         }
                     }
 
-                    if (possibleTarget >= 0)
+                    if (possibleTarget >= 0) //shoot rocket
                     {
-                        projectile.ai[0] = possibleTarget;
-                        projectile.netUpdate = true;
+                        Vector2 vel = new Vector2(0f, -10f).RotatedBy((Main.rand.NextDouble() - 0.5) * Math.PI);
+                        Projectile.NewProjectile(projectile.Center, vel, mod.ProjectileType("SaucerRocket"),
+                            projectile.damage, projectile.knockBack * 4f, projectile.owner, possibleTarget, 20f);
                     }
                 }
             }
 
-            if (projectile.velocity.X > 16f)
-                projectile.velocity.X = 16f;
-            if (projectile.velocity.X < -16f)
-                projectile.velocity.X = -16f;
-            if (projectile.velocity.Y > 16f)
-                projectile.velocity.Y = 16f;
-            if (projectile.velocity.Y < -16f)
-                projectile.velocity.Y = -16f;
+            const float cap = 32f;
+            if (projectile.velocity.X > cap)
+                projectile.velocity.X = cap;
+            if (projectile.velocity.X < -cap)
+                projectile.velocity.X = -cap;
+            if (projectile.velocity.Y > cap)
+                projectile.velocity.Y = cap;
+            if (projectile.velocity.Y < -cap)
+                projectile.velocity.Y = -cap;
 
             projectile.rotation = (float)Math.Sin(2 * Math.PI * rotation++ / 90) * (float)Math.PI / 8f;
             if (rotation > 180)

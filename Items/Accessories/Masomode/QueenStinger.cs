@@ -11,8 +11,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             DisplayName.SetDefault("The Queen's Stinger");
             Tooltip.SetDefault(@"Grants immunity to Infested
 Increases armor penetration by 10
-Your attacks inflict Poisoned
-Gain Honey buff when hurt
+Your attacks inflict Poisoned and spray honey that increases your life regeneration
 Bees and weak Hornets become friendly
 'Ripped right off of a defeated foe'");
             DisplayName.AddTranslation(GameCulture.Chinese, "女王的毒刺");

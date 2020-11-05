@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lump of Flesh");
-            Tooltip.SetDefault(@"Grants immunity to Blackout, Obstructed, and Dazed
+            Tooltip.SetDefault(@"Grants immunity to Blackout, Obstructed, Dazed, and Stunned
 Increases minion damage by 16% but slightly decreases defense
 Increases your max number of minions by 2
 Increases your max number of sentries by 2
@@ -43,6 +43,7 @@ Makes armed and magic skeletons less hostile outside the Dungeon
             player.buffImmune[BuffID.Blackout] = true;
             player.buffImmune[BuffID.Obstructed] = true;
             player.buffImmune[BuffID.Dazed] = true;
+            player.buffImmune[ModContent.BuffType<Buffs.Masomode.Stunned>()] = true;
             player.minionDamage += 0.16f;
             player.statDefense -= 6;
             player.aggro -= 400;

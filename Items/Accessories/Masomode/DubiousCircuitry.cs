@@ -10,11 +10,11 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dubious Circuitry");
-            Tooltip.SetDefault(@"Grants immunity to Cursed Inferno, Ichor, Lightning Rod, Defenseless, Stunned, and knockback
+            Tooltip.SetDefault(@"Grants immunity to Cursed Inferno, Ichor, Lightning Rod, Defenseless, Nano Injection, and knockback
 Your attacks inflict Cursed Inferno and Ichor
 Your attacks have a small chance to inflict Lightning Rod
 Two friendly probes fight by your side
-Reduces damage taken by 6%
+Reduces damage taken by 5%
 'Malware probably not included'");
             DisplayName.AddTranslation(GameCulture.Chinese, "可疑电路");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'里面也许没有恶意软件'
@@ -32,21 +32,21 @@ Reduces damage taken by 6%
             item.accessory = true;
             item.rare = 7;
             item.value = Item.sellPrice(0, 5);
-            item.defense = 6;
+            item.defense = 10;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.buffImmune[BuffID.CursedInferno] = true;
             player.buffImmune[BuffID.Ichor] = true;
-            player.buffImmune[mod.BuffType("Defenseless")] = true;
-            player.buffImmune[mod.BuffType("Stunned")] = true;
-            player.buffImmune[mod.BuffType("LightningRod")] = true;
+            player.buffImmune[ModContent.BuffType<Buffs.Masomode.Defenseless>()] = true;
+            player.buffImmune[ModContent.BuffType<Buffs.Masomode.NanoInjection>()] = true;
+            player.buffImmune[ModContent.BuffType<Buffs.Masomode.LightningRod>()] = true;
             player.GetModPlayer<FargoPlayer>().FusedLens = true;
             player.GetModPlayer<FargoPlayer>().GroundStick = true;
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.ProbeMinion))
-                player.AddBuff(mod.BuffType("Probes"), 2);
-            player.endurance += 0.06f;
+                player.AddBuff(ModContent.BuffType<Buffs.Minions.Probes>(), 2);
+            player.endurance += 0.05f;
             player.noKnockback = true;
         }
 
