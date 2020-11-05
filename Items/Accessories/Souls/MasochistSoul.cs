@@ -376,6 +376,7 @@ Summons the aid of all Eternity Mode bosses to your side
             player.buffImmune[ModContent.BuffType<MarkedforDeath>()] = true;
             player.buffImmune[ModContent.BuffType<Midas>()] = true;
             player.buffImmune[ModContent.BuffType<MutantNibble>()] = true;
+            player.buffImmune[ModContent.BuffType<NanoInjection>()] = true;
             player.buffImmune[ModContent.BuffType<NullificationCurse>()] = true;
             player.buffImmune[ModContent.BuffType<Oiled>()] = true;
             player.buffImmune[ModContent.BuffType<OceanicMaul>()] = true;

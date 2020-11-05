@@ -717,3 +717,7 @@ ivy venom converts to infested EX instead of infested now and has a chat message
 changed moon lord p2's nebula bolts to nebula blazes
 queen stinger no longer gives honey when hurt, now gives honey drops for hitting enemies
 moon lord socket rays reworked, now track you for a while and then fire
+
+skeletron (prime) telegraph their spins
+fixed soul of siblings not having nanoinjection immune
+boc falls faster

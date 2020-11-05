@@ -384,7 +384,7 @@ namespace FargowiltasSouls.NPCs
             brainBoss = npc.whoAmI;
 
             if (!npc.HasValidTarget)
-                npc.velocity.Y += 0.25f;
+                npc.velocity.Y += 0.75f;
 
             if (npc.alpha == 0)
             {
@@ -656,7 +656,7 @@ namespace FargowiltasSouls.NPCs
             }
             else
             {
-                if (++Counter[0] > 600 && Counter[2] <= 600) //lobs hives below 50%
+                if (++Counter[0] > 570 && Counter[2] <= 600) //lobs hives below 50%
                 {
                     Counter[0] = 0;
                     const float gravity = 0.25f;
@@ -683,7 +683,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             masoBool[3] = true;
                             npc.netUpdate = true;
-                            for (int i = 0; i < 36; i++)
+                            for (int i = 0; i < 36; i++) //telegraphing dust ring
                             {
                                 Vector2 vector6 = Vector2.UnitY * 9f;
                                 vector6 = vector6.RotatedBy((i - (36 / 2 - 1)) * 6.28318548f / 36) + npc.Center;
@@ -692,7 +692,8 @@ namespace FargowiltasSouls.NPCs
                                 Main.dust[d].noGravity = true;
                                 Main.dust[d].velocity = vector7;
                             }
-                            Main.PlaySound(SoundID.Roar, npc.Center, 0);
+                            if (npc.HasValidTarget)
+                                Main.PlaySound(SoundID.ForceRoar, Main.player[npc.target].Center, -1); //eoc roar
                         }
 
                         if (Collision.CanHitLine(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0))
@@ -761,8 +762,6 @@ namespace FargowiltasSouls.NPCs
         {
             skeleBoss = npc.whoAmI;
 
-            PrintAI(npc);
-
             /*if (Counter[0] != 0)
             {
                 Counter[2]++;
@@ -808,6 +807,14 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
             }*/
+
+            if (npc.ai[1] == 0f && npc.ai[2] == 800 - 90) //telegraph spin
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<TargetingReticle>(), 0, 0f, Main.myPlayer, npc.whoAmI, npc.type);
+                }
+            }
 
             if (npc.ai[1] == 1f || npc.ai[1] == 2f) //spinning or DG mode
             {
@@ -2213,8 +2220,14 @@ namespace FargowiltasSouls.NPCs
         public void SkeletronPrimeAI(NPC npc)
         {
             primeBoss = npc.whoAmI;
-
-            PrintAI(npc);
+            
+            if (npc.ai[1] == 0f && npc.ai[2] == 600 - 90) //telegraph spin
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<TargetingReticle>(), 0, 0f, Main.myPlayer, npc.whoAmI, npc.type);
+                }
+            }
 
             if (npc.ai[0] != 2f) //in phase 1
             {
@@ -2402,7 +2415,7 @@ namespace FargowiltasSouls.NPCs
                                         int p = Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(2f) * j), 
                                             ModContent.ProjectileType<DarkStar>(), damage, 0f, Main.myPlayer);
                                         if (p != Main.maxProjectiles)
-                                            Main.projectile[p].timeLeft = 300;
+                                            Main.projectile[p].timeLeft = 480;
                                     }
                                 }
                             }
@@ -2675,6 +2688,8 @@ namespace FargowiltasSouls.NPCs
                     Main.dust[d].noGravity = true;
                     if (!masoBool[2]) //AND STRETCH HIS ARMS OUT JUST FOR YOU
                     {
+                        Counter[3] = 2; //no damage while moving into position
+
                         int rotation = 0;
                         switch (npc.type)
                         {
@@ -2715,7 +2730,7 @@ namespace FargowiltasSouls.NPCs
                     }
                     else //spinning
                     {
-                        Counter[3] = 60; //disable contact damage for this long
+                        masoBool[3] = true;
 
                         float range = Counter[0]; //extend further to hit player if beyond current range
                         if (Main.npc[ai1].HasValidTarget && Main.npc[ai1].Distance(Main.player[Main.npc[ai1].target].Center) > range)
@@ -2732,6 +2747,14 @@ namespace FargowiltasSouls.NPCs
                     }
                     npc.rotation = Main.npc[ai1].DirectionTo(npc.Center).ToRotation() - (float)Math.PI / 2;
                     return false;
+                }
+                else
+                {
+                    if (masoBool[3]) //disable contact damage for 1sec after spin is over
+                    {
+                        masoBool[3] = false;
+                        Counter[3] = 60;
+                    }
                 }
 
                 if (masoBool[2])
