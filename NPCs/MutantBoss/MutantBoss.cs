@@ -2173,10 +2173,17 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override void NPCLoot()
         {
-            if ((!playerInvulTriggered || Main.rand.Next(10) == 0) && FargoSoulsWorld.MasochistMode)
+            if (FargoSoulsWorld.MasochistMode)
             {
-                Item.NewItem(npc.Hitbox, mod.ItemType("PhantasmalEnergy"));
-                Item.NewItem(npc.Hitbox, mod.ItemType("SpawnSack"));
+                if (!playerInvulTriggered)
+                {
+                    Item.NewItem(npc.Hitbox, mod.ItemType("PhantasmalEnergy"));
+                    Item.NewItem(npc.Hitbox, mod.ItemType("SpawnSack"));
+                }
+                else if (Main.rand.Next(10) == 0)
+                {
+                    Item.NewItem(npc.Hitbox, mod.ItemType("PhantasmalEnergy"));
+                }
             }
 
             FargoSoulsWorld.downedMutant = true;
