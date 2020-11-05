@@ -542,6 +542,25 @@ Additionally grants:");
             recipe.AddIngredient(null, "DimensionSoul");
             recipe.AddIngredient(null, "TerrariaSoul");
             recipe.AddIngredient(null, "MasochistSoul");
+
+            if (ModLoader.GetMod("FargowiltasSoulsDLC") != null)
+            {
+                Mod fargoDLC = ModLoader.GetMod("FargowiltasSoulsDLC");
+
+                if (ModLoader.GetMod("ThoriumMod") != null)
+                {
+                    recipe.AddIngredient(fargoDLC.ItemType("ThoriumSoul"));
+                }
+                if (ModLoader.GetMod("CalamityMod") != null)
+                {
+                    recipe.AddIngredient(fargoDLC.ItemType("CalamitySoul"));
+                }
+                if (ModLoader.GetMod("SacredTools") != null)
+                {
+                    recipe.AddIngredient(fargoDLC.ItemType("SoASoul"));
+                }
+            }
+
             recipe.AddIngredient(null, "Sadism", 30);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
