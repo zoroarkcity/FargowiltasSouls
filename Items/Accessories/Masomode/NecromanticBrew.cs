@@ -11,7 +11,6 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             DisplayName.SetDefault("Necromantic Brew");
             Tooltip.SetDefault(@"Grants immunity to Lethargic
 Summons 2 Skeletron arms to whack enemies
-May attract baby skeleton heads
 'The bone-growing solution of a defeated foe'");
             DisplayName.AddTranslation(GameCulture.Chinese, "死灵密酿");
             Tooltip.AddTranslation(GameCulture.Chinese, @"被击败敌人的促进骨生长的溶液

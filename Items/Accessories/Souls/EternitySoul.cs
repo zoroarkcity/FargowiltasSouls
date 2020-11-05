@@ -42,7 +42,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
     "Summons beetles to protect you",
     "Summons a Flameburst minion",
     "Summons a ton of pets",
-    "Summons all Masochist Mode bosses to your side ",
+    "Summons all Eternity Mode bosses to your side ",
     "Attacks may spawn lightning",
     "Attacks may spawn flower petals",
     "Attacks may spawn spectre orbs",

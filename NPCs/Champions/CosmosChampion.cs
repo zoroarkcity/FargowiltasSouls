@@ -10,6 +10,7 @@ using FargowiltasSouls.Items.Armor;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
 using System.IO;
+using FargowiltasSouls.Items.Misc;
 
 namespace FargowiltasSouls.NPCs.Champions
 {
@@ -1474,16 +1475,17 @@ namespace FargowiltasSouls.NPCs.Champions
                 Item.NewItem(npc.position, npc.Size, drops[thisDrop]);
             }
 
-            int armour;
+            /*int armour;
             switch (Main.rand.Next(3))
             {
                 case 0: armour = ModContent.ItemType<EridanusHat>(); break;
                 case 1: armour = ModContent.ItemType<EridanusBattleplate>(); break;
                 default: armour = ModContent.ItemType<EridanusLegwear>(); break;
             }
-            Item.NewItem(npc.position, npc.Size, armour);
+            Item.NewItem(npc.position, npc.Size, armour);*/
 
-            //Item.NewItem(npc.position, npc.Size, ModLoader.GetMod("Fargowiltas").ItemType("CrucibleCosmos"));
+            Item.NewItem(npc.position, npc.Size, ModContent.ItemType<LunarCrystal>(), 5);
+
 
             for (int i = 0; i < 10; i++)
             {

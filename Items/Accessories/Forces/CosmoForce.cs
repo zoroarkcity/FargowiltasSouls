@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Fargowiltas.Items.Tiles;
+using FargowiltasSouls.Items.Misc;
 
 namespace FargowiltasSouls.Items.Accessories.Forces
 {
@@ -82,6 +83,7 @@ Summons a pet Companion Cube
             recipe.AddIngredient(null, "VortexEnchant");
             recipe.AddIngredient(null, "NebulaEnchant");
             recipe.AddIngredient(null, "StardustEnchant");
+            recipe.AddIngredient(ModContent.ItemType<LunarCrystal>(), 5);
             recipe.AddIngredient(ItemID.SuspiciousLookingTentacle);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));

@@ -3,5 +3,12 @@ NEW UPDATE - V 1.3.92
 -Added DLC souls to recipes
 -Improved EoC scythe dust
 -Improved EoW and Destroyer Minion visuals
+-Fixed SoE tooltip still saying masomode
+-Fixed Necromanic Brew still talking about Baby Guardians
+-Eridanus now drops Lunar Crystals instead of armor pieces
+-Lunar Crystals are crafted into the armor and Force of the Cosmos
+-Nuke Fishron recipe is no longer inconsistent
+-Added ammo use lines to Bone Zone and Rockeater Launcher tooltips
+-Bone Zone now has 33% chance to not consume ammo
 
 -See the wiki for full details
