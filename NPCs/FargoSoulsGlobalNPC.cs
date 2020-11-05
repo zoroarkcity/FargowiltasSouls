@@ -116,7 +116,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.Squirrel:
                     case NPCID.SquirrelRed:
                         if (Main.rand.Next(8) == 0)
-                            npc.Transform(ModContent.NPCType<TophatSquirrel>());
+                            npc.Transform(ModContent.NPCType<TophatSquirrelCritter>());
                         break;
 
                     default:

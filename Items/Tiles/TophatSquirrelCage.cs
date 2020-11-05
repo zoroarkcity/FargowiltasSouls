@@ -1,3 +1,4 @@
+using FargowiltasSouls.Items.Misc;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -24,7 +25,7 @@ namespace FargowiltasSouls.Items.Tiles
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.Terrarium);
-            recipe.AddIngredient(ItemType<Items.Weapons.Misc.TophatSquirrel>());
+            recipe.AddIngredient(ItemType<TopHatSquirrelCaught>());
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

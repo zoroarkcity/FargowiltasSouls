@@ -72,6 +72,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
             if (ContentModLoaded)
                 npc.lifeMax = (int)(npc.lifeMax * 1.5);
+
+            bossBag = ModContent.ItemType<Items.Misc.DeviBag>();
         }
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -1680,12 +1682,12 @@ namespace FargowiltasSouls.NPCs.DeviBoss
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData); //sync world
             
-            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("DeviatingEnergy"), Main.rand.Next(11) + 10);
-            
             if (FargoSoulsWorld.MasochistMode)
             {
                 npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("SparklingAdoration"));
             }
+
+            npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<Items.Misc.DeviBag>());
 
             if (Main.rand.Next(10) == 0)
                 Item.NewItem(npc.Hitbox, mod.ItemType("DeviTrophy"));

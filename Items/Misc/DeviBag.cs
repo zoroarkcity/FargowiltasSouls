@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Misc
 {
-    public class MutantBag : ModItem
+    public class DeviBag : ModItem
     {
-        public override int BossBagNPC => ModContent.NPCType<NPCs.MutantBoss.MutantBoss>();
+        public override int BossBagNPC => ModContent.NPCType<NPCs.DeviBoss.DeviBoss>();
 
         public override void SetStaticDefaults()
         {
@@ -28,12 +28,8 @@ namespace FargowiltasSouls.Items.Misc
 
         public override void OpenBossBag(Player player)
         {
-            if (FargoSoulsWorld.MasochistMode)
-            {
-                player.QuickSpawnItem(mod.ItemType("Sadism"), Main.rand.Next(6) + 15);
-            }
+            player.QuickSpawnItem(mod.ItemType("DeviatingEnergy"), Main.rand.Next(11) + 10);
 
-            player.QuickSpawnItem(mod.ItemType("MutantsFury"));   
         }
     }
 }

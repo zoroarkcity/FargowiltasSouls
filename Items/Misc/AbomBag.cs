@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Misc
 {
-    public class MutantBag : ModItem
+    public class AbomBag : ModItem
     {
-        public override int BossBagNPC => ModContent.NPCType<NPCs.MutantBoss.MutantBoss>();
+        public override int BossBagNPC => ModContent.NPCType<NPCs.AbomBoss.AbomBoss>();
 
         public override void SetStaticDefaults()
         {
@@ -28,12 +28,10 @@ namespace FargowiltasSouls.Items.Misc
 
         public override void OpenBossBag(Player player)
         {
-            if (FargoSoulsWorld.MasochistMode)
-            {
-                player.QuickSpawnItem(mod.ItemType("Sadism"), Main.rand.Next(6) + 15);
-            }
+            player.QuickSpawnItem(mod.ItemType("MutantScale"), Main.rand.Next(11) + 10);
 
-            player.QuickSpawnItem(mod.ItemType("MutantsFury"));   
+            if (SoulConfig.Instance.PatreonFishron && Main.rand.Next(100) < 3)
+                player.QuickSpawnItem(mod.ItemType("StaffOfUnleashedOcean"));
         }
     }
 }
