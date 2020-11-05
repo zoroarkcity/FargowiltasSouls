@@ -38,13 +38,13 @@ namespace FargowiltasSouls.Projectiles.Masomode
             int ai0 = (int)projectile.ai[0];
             if (ai0 > -1 && ai0 < Main.maxNPCs && Main.npc[ai0].active && Main.npc[ai0].type == projectile.ai[1] && Main.npc[ai0].HasPlayerTarget)
             {
-                projectile.alpha -= 5;
+                projectile.alpha -= 4;
                 if (projectile.alpha < 0) //fade in
                     projectile.alpha = 0;
 
                 int modifier = Math.Min(60, 90 - projectile.timeLeft);
 
-                projectile.scale = 5f - 4f / 60f * modifier; //start big, shrink down
+                projectile.scale = 4f - 3f / 60f * modifier; //start big, shrink down
 
                 projectile.Center = Main.npc[ai0].Center;
                 projectile.velocity = Main.player[Main.npc[ai0].target].Center - projectile.Center;
