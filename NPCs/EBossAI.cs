@@ -656,7 +656,7 @@ namespace FargowiltasSouls.NPCs
             }
             else
             {
-                if (++Counter[0] > 600 && Counter[2] <= 600) //lobs hives below 50%
+                if (++Counter[0] > 570 && Counter[2] <= 600) //lobs hives below 50%
                 {
                     Counter[0] = 0;
                     const float gravity = 0.25f;
