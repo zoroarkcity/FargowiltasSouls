@@ -61,6 +61,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             Mod musicMod = ModLoader.GetMod("FargowiltasMusic");
             music = musicMod != null ? ModLoader.GetMod("FargowiltasMusic").GetSoundSlot(SoundType.Music, "Sounds/Music/Stigma") : MusicID.Boss2;
             musicPriority = (MusicPriority)11;
+
+            bossBag = ModContent.ItemType<Items.Misc.AbomBag>();
         }
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -1178,23 +1180,22 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 Item.NewItem(npc.Hitbox, mod.ItemType("BabyScythe"));
             }
 
-            if (SoulConfig.Instance.PatreonFishron && Main.rand.Next(100) < 3)
-                Item.NewItem(npc.Hitbox, mod.ItemType("StaffOfUnleashedOcean"));
-
             FargoSoulsWorld.downedAbom = true;
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData); //sync world
             
-            npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutantScale"), Main.rand.Next(11) + 10);
             /*if (Main.expertMode)
             {
                 //npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("AbomBag"));
                 //npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("MutatingEnergy"), Main.rand.Next(11) + 10);
             }*/
+
             if (FargoSoulsWorld.MasochistMode)
             {
                 npc.DropItemInstanced(npc.position, npc.Size, mod.ItemType("CyclonicFin"));
             }
+
+            npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<Items.Misc.AbomBag>());
 
             if (Main.rand.Next(10) == 0)
                 Item.NewItem(npc.Hitbox, mod.ItemType("AbomTrophy"));

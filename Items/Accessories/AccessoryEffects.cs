@@ -556,7 +556,7 @@ namespace FargowiltasSouls
                     dust.noGravity = true;
                 }
 
-                Main.projectile.Where(x => x.active && x.hostile).ToList().ForEach(x =>
+                Main.projectile.Where(x => x.active && x.hostile && x.damage > 0).ToList().ForEach(x =>
                 {
                     if (Vector2.Distance(x.Center, player.Center) <= focusRadius + Math.Min(x.width, x.height) / 2
                         && !x.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart && !x.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb)

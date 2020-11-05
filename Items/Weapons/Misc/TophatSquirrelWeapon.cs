@@ -2,10 +2,14 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.ID;
+using FargowiltasSouls.NPCs.Critters;
+using FargowiltasSouls.Projectiles;
+using Microsoft.Xna.Framework;
+using FargowiltasSouls.Items.Misc;
 
 namespace FargowiltasSouls.Items.Weapons.Misc
 {
-    public class TophatSquirrel : ModItem
+    public class TophatSquirrelWeapon : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -21,13 +25,11 @@ namespace FargowiltasSouls.Items.Weapons.Misc
 
             item.width = 20;
             item.height = 20;
-            item.maxStack = 999;
-            item.rare = 1;
-            item.useAnimation = 20;
-            item.useTime = 20;
-            item.consumable = true;
+            item.rare = 8;
+            item.useAnimation = 30;
+            item.useTime = 30;
 
-            item.thrown = true;
+            item.magic = true;
             item.noMelee = true;
             item.noUseGraphic = true;
             item.useStyle = 1;
@@ -35,22 +37,23 @@ namespace FargowiltasSouls.Items.Weapons.Misc
 
             item.autoReuse = true;
 
-            item.shoot = mod.ProjectileType("Squirrel1");
+            item.shoot = ModContent.ProjectileType<TopHatSquirrelProj>();
             item.shootSpeed = 8f;
         }
 
-        public override bool UseItem(Player player)
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, mod.ProjectileType("Squirrel1"), 0, 0,
-                Main.myPlayer);
-            return true;
+            Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
+
+            return false;
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.Squirrel);
-            recipe.AddIngredient(ItemID.TopHat);
+            
+            recipe.AddIngredient(ModContent.ItemType<TopHatSquirrelCaught>(), 20);
+            recipe.AddIngredient(ItemID.ChlorophyteBar);
 
             recipe.AddTile(TileID.CrystalBall);
 

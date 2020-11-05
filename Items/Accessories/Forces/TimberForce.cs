@@ -53,6 +53,7 @@ Projectiles may spawn a star when they hit something
             player.buffImmune[mod.BuffType("Guilty")] = true;
             //boreal
             modPlayer.BorealEnchant = true;
+            modPlayer.AdditionalAttacks = true;
             //mahogany
             modPlayer.MahoganyEnchant = true;
 

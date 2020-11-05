@@ -5,7 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.NPCs.Critters
 {
-    public class TophatSquirrel : ModNPC
+    public class TophatSquirrelCritter : ModNPC
     {
         public override void SetStaticDefaults()
         {
@@ -23,7 +23,7 @@ namespace FargowiltasSouls.NPCs.Critters
             npc.defense = 0;
             npc.lifeMax = 100;
             Main.npcCatchable[npc.type] = true;
-            npc.catchItem = (short)mod.ItemType("TophatSquirrel");
+            npc.catchItem = (short)mod.ItemType("TophatSquirrelCritter");
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
             npc.value = 0f;
