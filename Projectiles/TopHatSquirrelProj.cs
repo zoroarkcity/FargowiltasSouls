@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles
@@ -16,7 +17,7 @@ namespace FargowiltasSouls.Projectiles
             projectile.width = 15;
             projectile.height = 17;
             projectile.friendly = true;
-            projectile.penetrate = -1;
+            //projectile.penetrate = -1;
             projectile.magic = true;
             projectile.scale = 0.5f;
             projectile.timeLeft = 100;
@@ -28,22 +29,30 @@ namespace FargowiltasSouls.Projectiles
             projectile.scale += .02f;
         }
 
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            projectile.velocity = oldVelocity;
+            return true;
+        }
+
         public override void Kill(int timeLeft)
         {
-            const int proj2 = 88; //laser rifle
+            Main.PlaySound(SoundID.NPCDeath52, projectile.Center);
 
-            FargoGlobalProjectile.XWay(16, projectile.Center, proj2, 4, projectile.damage, 2);
-
-            for (int i = 0; i < 50; i++)
+            if (projectile.owner == Main.myPlayer)
             {
-                Vector2 pos = projectile.position + (projectile.velocity * Main.rand.Next(40, 60)) + 
-                    (projectile.velocity.RotatedBy(MathHelper.Pi / 2) * Main.rand.Next(-150, 150));
+                int proj2 = ModContent.ProjectileType<TopHatSquirrelLaser>();
 
+                FargoGlobalProjectile.XWay(16, projectile.Center, proj2, projectile.velocity.Length() * 2f, projectile.damage, projectile.knockBack);
 
-                int p = Projectile.NewProjectile(pos.X, pos.Y, -projectile.velocity.X * 3, -projectile.velocity.Y * 3, proj2,
-                    projectile.damage, 0f, Main.myPlayer);
-                Main.projectile[p].penetrate = 1;
-                Main.projectile[p].timeLeft = 180;
+                for (int i = 0; i < 50; i++)
+                {
+                    Vector2 pos = projectile.position + Vector2.Normalize(projectile.velocity) * Main.rand.NextFloat(600, 1800) +
+                        Vector2.Normalize(projectile.velocity.RotatedBy(MathHelper.Pi / 2)) * Main.rand.NextFloat(-900, 900);
+
+                    Projectile.NewProjectile(pos, -projectile.velocity * Main.rand.NextFloat(2f, 3f), proj2,
+                        projectile.damage, projectile.knockBack, Main.myPlayer);
+                }
             }
         }
     }
