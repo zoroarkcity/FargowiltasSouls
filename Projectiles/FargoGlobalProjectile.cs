@@ -1583,7 +1583,7 @@ namespace FargowiltasSouls.Projectiles
                     case ProjectileID.ThornBall:
                     case ProjectileID.PoisonSeedPlantera:
                     case ProjectileID.SeedPlantera:
-                        //target.AddBuff(BuffID.Poisoned, 300);
+                        target.AddBuff(BuffID.Poisoned, 300);
                         target.AddBuff(ModContent.BuffType<Infested>(), 180);
                         target.AddBuff(ModContent.BuffType<IvyVenom>(), 180);
                         break;

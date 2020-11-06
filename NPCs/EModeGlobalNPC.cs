@@ -4819,6 +4819,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Plantera:
+                        target.AddBuff(BuffID.Poisoned, 300);
                         target.AddBuff(ModContent.BuffType<Infested>(), 180);
                         target.AddBuff(ModContent.BuffType<IvyVenom>(), 300);
                         break;
@@ -4826,6 +4827,7 @@ namespace FargowiltasSouls.NPCs
                     //case NPCID.PlanterasHook:
                     case NPCID.PlanterasTentacle:
                     case NPCID.Spore:
+                        target.AddBuff(BuffID.Poisoned, 300);
                         target.AddBuff(ModContent.BuffType<Infested>(), 180);
                         target.AddBuff(ModContent.BuffType<IvyVenom>(), 300);
                         break;
