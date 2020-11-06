@@ -364,7 +364,7 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
 
-                if (++Counter[2] > 360)
+                if (++Counter[2] > 270)
                 {
                     Counter[2] = 0;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
