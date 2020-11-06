@@ -364,7 +364,7 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
 
-                if (++Counter[2] > 240)
+                if (++Counter[2] > 360)
                 {
                     Counter[2] = 0;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -387,7 +387,7 @@ namespace FargowiltasSouls.NPCs
                                         Vector2 vel = (Main.player[npc.target].Center - Main.npc[i].Center) / 60;
                                         Projectile.NewProjectile(Main.npc[i].Center, vel,
                                             ModContent.ProjectileType<CursedFireballHoming>(), npc.damage / 5, 0f, Main.myPlayer, npc.target, delay);
-                                        delay += 3;
+                                        delay += 4;
                                     }
                                 }
                             }
