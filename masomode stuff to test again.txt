@@ -721,4 +721,6 @@ moon lord socket rays reworked, now track you for a while and then fire
 skeletron (prime) telegraph their spins
 fixed soul of siblings not having nanoinjection immune
 boc falls faster
+
 restored plantera inflicting poisoned
+basilisk 2% drops pocket mirror

@@ -6472,6 +6472,11 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, ItemID.Blindfold);
                         break;
 
+                    case NPCID.DesertBeast:
+                        if (Main.rand.Next(50) == 0)
+                            Item.NewItem(npc.Hitbox, ItemID.PocketMirror);
+                        break;
+
                     case NPCID.Piranha:
                         if (Main.rand.Next(50) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.AdhesiveBandage);
