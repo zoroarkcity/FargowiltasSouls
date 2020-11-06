@@ -9,7 +9,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blood Sickle");
+            DisplayName.SetDefault("Moon Sickle");
         }
 
         public override void SetDefaults()
