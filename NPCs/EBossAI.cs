@@ -387,7 +387,7 @@ namespace FargowiltasSouls.NPCs
                                         Vector2 vel = (Main.player[npc.target].Center - Main.npc[i].Center) / 60;
                                         Projectile.NewProjectile(Main.npc[i].Center, vel,
                                             ModContent.ProjectileType<CursedFireballHoming>(), npc.damage / 5, 0f, Main.myPlayer, npc.target, delay);
-                                        delay += 5;
+                                        delay += 3;
                                     }
                                 }
                             }

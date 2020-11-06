@@ -7069,7 +7069,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.EaterofWorldsHead:
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        /*if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             int type = Main.rand.Next(2) == 0 ? NPCID.EaterofSouls
                             : (Main.rand.Next(2) == 0 ? NPCID.BigEater : NPCID.LittleEater);
@@ -7077,7 +7077,7 @@ namespace FargowiltasSouls.NPCs
                             if (n < Main.maxNPCs && Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
-                        goto case NPCID.EaterofWorldsBody;
+                        goto case NPCID.EaterofWorldsBody;*/
                     case NPCID.EaterofWorldsBody:
                     case NPCID.EaterofWorldsTail:
                         if (BossIsAlive(ref mutantBoss, ModContent.NPCType<MutantBoss.MutantBoss>()))

@@ -727,7 +727,8 @@ basilisk 2% drops pocket mirror
 removed sroller stat boost
 eow rework:
 	vile spit is no longer indestructible
-	eaters of souls only spawn from eow heads
+	removed eaters of souls spawning
 	slightly increased flame breath damage
-	now fires self-redirecting cursed fireballs from segments periodically
+	now fires self-redirecting cursed fireballs from segments periodically (reduced delay between balls)
 	has a coordinated flying u-turn attack
+reduced top hat squirrel recipe
