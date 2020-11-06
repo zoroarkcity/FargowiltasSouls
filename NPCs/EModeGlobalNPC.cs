@@ -269,12 +269,7 @@ namespace FargowiltasSouls.NPCs
                     break;
 
                 case NPCID.SolarSroller:
-                    npc.lifeMax *= 2;
                     npc.scale += 0.5f;
-                    break;
-
-                case NPCID.VileSpit:
-                    npc.dontTakeDamage = true;
                     break;
 
                 case NPCID.ChaosBall:
@@ -1051,8 +1046,7 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.EaterofWorldsHead:
-                            EaterOfWorldsAI(npc);
-                            break;
+                            return EaterOfWorldsAI(npc);
 
                         case NPCID.BrainofCthulhu:
                             BrainOfCthulhuAI(npc);
@@ -6211,8 +6205,11 @@ namespace FargowiltasSouls.NPCs
                         if (Main.rand.Next(Main.hardMode ? 10 : 25) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<Items.Accessories.Masomode.SqueakyToy>());
                         break;
-
+                        
                     case NPCID.DesertBeast:
+                        if (Main.rand.Next(50) == 0)
+                            Item.NewItem(npc.Hitbox, ItemID.PocketMirror);
+                        goto case NPCID.DesertGhoul;
                     case NPCID.DesertScorpionWalk:
                     case NPCID.DesertScorpionWall:
                     case NPCID.DesertLamiaDark:
@@ -6222,7 +6219,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.DesertGhoulCrimson:
                     case NPCID.DesertGhoulHallow:
                         if (Main.rand.Next(3) == 0)
-                            Item.NewItem(npc.Hitbox, ItemID.DesertFossil, Main.rand.Next(6) + 1);
+                            Item.NewItem(npc.Hitbox, ItemID.DesertFossil, Main.rand.Next(10) + 1);
                         break;
 
                     case NPCID.Crab:
@@ -6470,11 +6467,6 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.RedDevil:
                         if (Main.rand.Next(50) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.Blindfold);
-                        break;
-
-                    case NPCID.DesertBeast:
-                        if (Main.rand.Next(50) == 0)
-                            Item.NewItem(npc.Hitbox, ItemID.PocketMirror);
                         break;
 
                     case NPCID.Piranha:
@@ -7077,6 +7069,15 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.EaterofWorldsHead:
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int type = Main.rand.Next(2) == 0 ? NPCID.EaterofSouls
+                            : (Main.rand.Next(2) == 0 ? NPCID.BigEater : NPCID.LittleEater);
+                            int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type);
+                            if (n < Main.maxNPCs && Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                        }
+                        goto case NPCID.EaterofWorldsBody;
                     case NPCID.EaterofWorldsBody:
                     case NPCID.EaterofWorldsTail:
                         if (BossIsAlive(ref mutantBoss, ModContent.NPCType<MutantBoss.MutantBoss>()))
@@ -7084,20 +7085,6 @@ namespace FargowiltasSouls.NPCs
                             npc.active = false;
                             Main.PlaySound(npc.DeathSound, npc.Center);
                             return false;
-                        }
-
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            int count = NPC.CountNPCS(NPCID.BigEater) + NPC.CountNPCS(NPCID.EaterofSouls) + NPC.CountNPCS(NPCID.LittleEater);
-
-                            if (count < 40)
-                            {
-                                int type = Main.rand.Next(2) == 0 ? NPCID.EaterofSouls
-                                : (Main.rand.Next(2) == 0 ? NPCID.BigEater : NPCID.LittleEater);
-                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type);
-                                if (n < 200 && Main.netMode == NetmodeID.Server)
-                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
-                            }
                         }
 
                         if ((bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive"))

@@ -344,7 +344,7 @@ namespace FargowiltasSouls.NPCs
             }
         }
 
-        public void EaterOfWorldsAI(NPC npc)
+        public bool EaterOfWorldsAI(NPC npc)
         {
             eaterBoss = npc.whoAmI;
             boss = npc.whoAmI;
@@ -352,15 +352,171 @@ namespace FargowiltasSouls.NPCs
             if (!npc.HasValidTarget)
                 npc.velocity.Y += 0.25f;
 
-            Counter[0]++;
-            if (Counter[0] >= 6) //cursed flamethrower, roughly same direction as head
+            if (!masoBool[0])
             {
-                Counter[0] = 0;
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (++Counter[0] >= 6) //cursed flamethrower, roughly same direction as head
                 {
-                    Vector2 velocity = new Vector2(5f, 0f).RotatedBy(npc.rotation - Math.PI / 2.0 + MathHelper.ToRadians(Main.rand.Next(-15, 16)));
-                    Projectile.NewProjectile(npc.Center, velocity, ProjectileID.EyeFire, npc.damage / 6, 0f, Main.myPlayer);
+                    Counter[0] = 0;
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Vector2 velocity = new Vector2(5f, 0f).RotatedBy(npc.rotation - Math.PI / 2.0 + MathHelper.ToRadians(Main.rand.Next(-15, 16)));
+                        Projectile.NewProjectile(npc.Center, velocity, ProjectileID.EyeFire, npc.damage / 5, 0f, Main.myPlayer);
+                    }
                 }
+
+                if (++Counter[2] > 240)
+                {
+                    Counter[2] = 0;
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        int counter = 0;
+                        int delay = 0;
+                        for (int i = 0; i < Main.maxNPCs; i++)
+                        {
+                            if (Main.npc[i].active)
+                            {
+                                if (Main.npc[i].type == npc.type && !Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().masoBool[0])
+                                {
+                                    Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[2] = 0; //stop others from triggering it
+                                }
+                                else if (Main.npc[i].type == NPCID.EaterofWorldsBody || Main.npc[i].type == NPCID.EaterofWorldsTail)
+                                {
+                                    if (++counter > 3) //wave of redirecting flames
+                                    {
+                                        counter = 0;
+                                        Vector2 vel = (Main.player[npc.target].Center - Main.npc[i].Center) / 60;
+                                        Projectile.NewProjectile(Main.npc[i].Center, vel,
+                                            ModContent.ProjectileType<CursedFireballHoming>(), npc.damage / 5, 0f, Main.myPlayer, npc.target, delay);
+                                        delay += 5;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (Counter[1] == 700 - 90) //roar telegraph
+                    Main.PlaySound(SoundID.Roar, Main.player[npc.target].Center, 0);
+
+                if (++Counter[1] > 700 && Main.netMode != NetmodeID.MultiplayerClient) //initiate mass u-turn
+                {
+                    Counter[1] = 0;
+                    if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) < 2400)
+                    {
+                        masoBool[0] = true;
+
+                        Counter[2] = NPC.CountNPCS(npc.type) / 2;
+
+                        int headCounter = 0; //determine position of this head in the group
+                        for (int i = 0; i < Main.maxNPCs; i++) //synchronize
+                        {
+                            if (Main.npc[i].active && Main.npc[i].type == npc.type)
+                            {
+                                Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[1] = 0;
+                                Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[2] = Counter[2];
+                                Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[3] = headCounter;
+                                Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().masoBool[0] = true;
+
+                                Main.npc[i].netUpdate = true;
+                                NetUpdateMaso(i);
+
+                                headCounter *= -1; //alternate 0, 1, -1, 2, -2, 3, -3, etc.
+                                if (headCounter >= 0)
+                                    headCounter++;
+                            }
+                        }
+
+                        npc.netUpdate = true;
+                        NetUpdateMaso(npc.whoAmI);
+                    }
+                }
+            }
+            else
+            {
+                if (++Counter[1] < 120)
+                {
+                    Vector2 target = Main.player[npc.target].Center;
+                    if (Counter[3] != 0)
+                        target.X += 900f / Counter[2] * Counter[3]; //space out
+                    target.Y += 600f;
+
+                    float speedModifier = 0.6f;
+                    if (npc.Center.X < target.X)
+                    {
+                        npc.velocity.X += speedModifier;
+                        if (npc.velocity.X < 0)
+                            npc.velocity.X += speedModifier * 2;
+                    }
+                    else
+                    {
+                        npc.velocity.X -= speedModifier;
+                        if (npc.velocity.X > 0)
+                            npc.velocity.X -= speedModifier * 2;
+                    }
+                    if (npc.Center.Y < target.Y)
+                    {
+                        npc.velocity.Y += speedModifier;
+                        if (npc.velocity.Y < 0)
+                            npc.velocity.Y += speedModifier * 2;
+                    }
+                    else
+                    {
+                        npc.velocity.Y -= speedModifier;
+                        if (npc.velocity.Y > 0)
+                            npc.velocity.Y -= speedModifier * 2;
+                    }
+                    if (Math.Abs(npc.velocity.X) > 24)
+                        npc.velocity.X = 24 * Math.Sign(npc.velocity.X);
+                    if (Math.Abs(npc.velocity.Y) > 24)
+                        npc.velocity.Y = 24 * Math.Sign(npc.velocity.Y);
+
+                    npc.netUpdate = true;
+                    npc.localAI[0] = 1f;
+
+                    if (Main.netMode == NetmodeID.Server && npc.netUpdate && --npc.netSpam < 0) //manual mp sync control
+                    {
+                        npc.netUpdate = false;
+                        npc.netSpam = 5;
+                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc.whoAmI);
+                    }
+                }
+                else if (Counter[1] == 120) //fly up
+                {
+                    Main.PlaySound(SoundID.Roar, Main.player[npc.target].Center, 0);
+                    npc.velocity = Vector2.UnitY * -15f;
+
+                    Counter[0] = Main.player[npc.target].Center.X < npc.Center.X ? -1 : 1;
+                }
+                else if (Counter[1] > 240 && Counter[1] < 300) //u-turn
+                {
+                    npc.velocity = npc.velocity.RotatedBy(MathHelper.ToRadians(3f) * Counter[0]);
+                }
+                else if (Counter[1] > 420)
+                {
+                    Counter[1] = 0;
+                    Counter[2] = 0;
+                    Counter[3] = 0;
+                    masoBool[0] = false;
+
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        if (Main.npc[i].active && Main.npc[i].type == npc.type)
+                        {
+                            Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[1] = 0;
+                            Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[2] = 0;
+                            Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[3] = 0;
+                            Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().masoBool[0] = false;
+                            Main.npc[i].netUpdate = true;
+                            NetUpdateMaso(i);
+                        }
+                    }
+
+                    npc.netUpdate = true;
+                    NetUpdateMaso(npc.whoAmI);
+                }
+
+                npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) + 1.57f;
+                return false;
             }
 
             //drop summon
@@ -377,6 +533,8 @@ namespace FargowiltasSouls.NPCs
                     droppedSummon = true;
                 } 
             }
+
+            return true;
         }
 
         public void BrainOfCthulhuAI(NPC npc)
