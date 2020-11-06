@@ -109,7 +109,7 @@ namespace FargowiltasSouls.NPCs
                     break;
 
                 case NPCID.Plantera:
-                    npc.lifeMax = (int)(npc.lifeMax * 1.25);
+                    npc.lifeMax = (int)(npc.lifeMax * 1.5);
                     break;
 
                 case NPCID.Pixie:

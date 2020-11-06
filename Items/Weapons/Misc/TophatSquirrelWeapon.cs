@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Items.Weapons.Misc
 
         public override void SetDefaults()
         {
-            item.damage = 77;
+            item.damage = 22;
 
             item.width = 20;
             item.height = 20;
@@ -41,6 +41,8 @@ namespace FargowiltasSouls.Items.Weapons.Misc
 
             item.shoot = ModContent.ProjectileType<TopHatSquirrelProj>();
             item.shootSpeed = 8f;
+
+            item.value = Item.sellPrice(0, 20);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

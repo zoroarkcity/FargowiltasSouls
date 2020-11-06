@@ -731,5 +731,6 @@ eow rework:
 	slightly increased flame breath damage
 	now fires self-redirecting cursed fireballs from segments periodically (reduced delay between balls)
 	has a coordinated flying u-turn attack
-reduced top hat squirrel recipe
+reduced top hat squirrel recipe and adjusted stats
 adjusted dusts for mutant/abom sickles
+increased plantera life modifier from 1.25 to 1.5
