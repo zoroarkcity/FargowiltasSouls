@@ -39,8 +39,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 Main.PlaySound(SoundID.Item20, projectile.Center);
             }
 
-            int index = Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 75, projectile.velocity.X, projectile.velocity.Y, 100, default, 3f * projectile.scale);
-            Main.dust[index].noGravity = true;
+            if (Main.rand.Next(3) == 0)
+            {
+                int index = Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 75, projectile.velocity.X, projectile.velocity.Y, 100, default, 3f * projectile.scale);
+                Main.dust[index].noGravity = true;
+            }
 
             if (!(projectile.ai[0] > -1 && projectile.ai[0] < Main.maxPlayers))
             {
@@ -48,7 +51,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 return;
             }
             
-            if (++projectile.localAI[1] == 60)
+            if (projectile.localAI[1]++ == 60)
             {
                 projectile.velocity = Vector2.Zero;
             }

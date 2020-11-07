@@ -73,6 +73,9 @@ namespace FargowiltasSouls.NPCs
         public static int mutantBoss = -1;
         public static int championBoss = -1;
 
+        public static int eaterTimer;
+        public static bool eaterResist;
+
         public override void ResetEffects(NPC npc)
         {
             PaladinsShield = false;
@@ -8085,6 +8088,40 @@ namespace FargowiltasSouls.NPCs
                             damage /= 3;
                             npc.ai[2] = -6f;
                         }*/
+                        break;
+
+                    case NPCID.EaterofWorldsHead:
+                        /*if (masoBool[0])
+                            damage = 0;
+                        break;*/
+                    case NPCID.EaterofWorldsBody:
+                    case NPCID.EaterofWorldsTail:
+                        /*{
+                            int ai1 = (int)npc.ai[1];
+                            while (ai1 > -1 && ai1 < Main.maxNPCs && Main.npc[ai1].active)
+                            {
+                                if (Main.npc[ai1].type == NPCID.EaterofWorldsHead)
+                                {
+                                    if (Main.npc[ai1].GetGlobalNPC<EModeGlobalNPC>().masoBool[0])
+                                    {
+                                        damage = 0;
+                                        Main.NewText("resist");
+                                    }
+                                    else
+                                    {
+                                        Main.NewText("no resist");
+                                    }
+                                    break;
+                                }
+                                else if (Main.npc[ai1].type == NPCID.EaterofWorldsBody)
+                                {
+                                    ai1 = (int)Main.npc[ai1].ai[1];
+                                    break;
+                                }
+                            }
+                        }*/
+                        if (eaterResist)
+                            damage = 0;
                         break;
 
                     case NPCID.TheDestroyer:

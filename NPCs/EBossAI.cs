@@ -352,6 +352,49 @@ namespace FargowiltasSouls.NPCs
             if (!npc.HasValidTarget)
                 npc.velocity.Y += 0.25f;
 
+            if (Main.netMode != NetmodeID.MultiplayerClient && npc.whoAmI == NPC.FindFirstNPC(npc.type) && ++eaterTimer > 300) //only let one eater increment this
+            {
+                bool shoot = true;
+                for (int i = 0; i < Main.maxNPCs; i++) //cancel if anyone is doing the u-turn
+                {
+                    if (Main.npc[i].active && Main.npc[i].type == npc.type && Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().masoBool[0])
+                    {
+                        shoot = false;
+                        eaterTimer -= 30;
+                    }
+                }
+                
+                if (shoot)
+                {
+                    eaterTimer = 0;
+
+                    int counter = 0;
+                    int delay = 0;
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        if (Main.npc[i].active)
+                        {
+                            /*if (Main.npc[i].type == npc.type && !Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().masoBool[0])
+                            {
+                                Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[2] = 0; //stop others from triggering it
+                            }
+                            else */
+                            if (Main.npc[i].type == NPCID.EaterofWorldsHead || Main.npc[i].type == NPCID.EaterofWorldsBody || Main.npc[i].type == NPCID.EaterofWorldsTail)
+                            {
+                                if (++counter > 3) //wave of redirecting flames
+                                {
+                                    counter = 0;
+                                    Vector2 vel = (Main.player[npc.target].Center - Main.npc[i].Center) / 60;
+                                    Projectile.NewProjectile(Main.npc[i].Center, vel,
+                                        ModContent.ProjectileType<CursedFireballHoming>(), npc.damage / 5, 0f, Main.myPlayer, npc.target, delay);
+                                    delay += 4;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             if (!masoBool[0])
             {
                 if (++Counter[0] >= 6) //cursed flamethrower, roughly same direction as head
@@ -361,37 +404,6 @@ namespace FargowiltasSouls.NPCs
                     {
                         Vector2 velocity = new Vector2(5f, 0f).RotatedBy(npc.rotation - Math.PI / 2.0 + MathHelper.ToRadians(Main.rand.Next(-15, 16)));
                         Projectile.NewProjectile(npc.Center, velocity, ProjectileID.EyeFire, npc.damage / 5, 0f, Main.myPlayer);
-                    }
-                }
-
-                if (++Counter[2] > 270)
-                {
-                    Counter[2] = 0;
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                    {
-                        int counter = 0;
-                        int delay = 0;
-                        for (int i = 0; i < Main.maxNPCs; i++)
-                        {
-                            if (Main.npc[i].active)
-                            {
-                                if (Main.npc[i].type == npc.type && !Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().masoBool[0])
-                                {
-                                    Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[2] = 0; //stop others from triggering it
-                                }
-                                else if (Main.npc[i].type == NPCID.EaterofWorldsBody || Main.npc[i].type == NPCID.EaterofWorldsTail)
-                                {
-                                    if (++counter > 3) //wave of redirecting flames
-                                    {
-                                        counter = 0;
-                                        Vector2 vel = (Main.player[npc.target].Center - Main.npc[i].Center) / 60;
-                                        Projectile.NewProjectile(Main.npc[i].Center, vel,
-                                            ModContent.ProjectileType<CursedFireballHoming>(), npc.damage / 5, 0f, Main.myPlayer, npc.target, delay);
-                                        delay += 4;
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
 
@@ -431,8 +443,10 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
             }
-            else
+            else //flying u-turn ai
             {
+                eaterResist = true;
+
                 if (++Counter[1] < 120)
                 {
                     Vector2 target = Main.player[npc.target].Center;
@@ -484,14 +498,35 @@ namespace FargowiltasSouls.NPCs
                 {
                     Main.PlaySound(SoundID.Roar, Main.player[npc.target].Center, 0);
                     npc.velocity = Vector2.UnitY * -15f;
-
-                    Counter[0] = Main.player[npc.target].Center.X < npc.Center.X ? -1 : 1;
+                    Counter[0] = (int)Main.player[npc.target].Center.X; //store their location
                 }
-                else if (Counter[1] > 240 && Counter[1] < 300) //u-turn
+                else if (Counter[1] < 240) //cancel early and turn once we fly past player
                 {
-                    npc.velocity = npc.velocity.RotatedBy(MathHelper.ToRadians(3f) * Counter[0]);
+                    if (npc.Center.Y < Main.player[npc.target].Center.Y - 600)
+                        Counter[1] = 239;
                 }
-                else if (Counter[1] > 420)
+                else if (Counter[1] == 240) //recalculate velocity to u-turn and dive back down in the same spacing over player
+                {
+                    Vector2 target;
+                    target.X = Main.player[npc.target].Center.X;
+                    if (Counter[3] != 0)
+                        target.X += 900f / Counter[2] * Counter[3]; //space out
+                    target.Y = npc.Center.Y;
+
+                    float radius = Math.Abs(target.X - npc.Center.X) / 2;
+                    npc.velocity = Vector2.Normalize(npc.velocity) * (float)Math.PI * radius / 30;
+
+                    Counter[0] = Math.Sign((int)Main.player[npc.target].Center.X - Counter[0]); //which side player moved to
+                }
+                else if (Counter[1] < 270) //u-turn
+                {
+                    npc.velocity = npc.velocity.RotatedBy(MathHelper.ToRadians(6f) * Counter[0]);
+                }
+                else if (Counter[1] == 270)
+                {
+                    npc.velocity = Vector2.Normalize(npc.velocity) * 15f;
+                }
+                else if (Counter[1] > 360)
                 {
                     Counter[1] = 0;
                     Counter[2] = 0;

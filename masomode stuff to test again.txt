@@ -734,3 +734,8 @@ eow rework:
 reduced top hat squirrel recipe and adjusted stats
 adjusted dusts for mutant/abom sickles
 increased plantera life modifier from 1.25 to 1.5
+
+reduced eow fireball sentry dust
+fixed eow spamming fireball sentry or using it during u-turn
+u-turn polished, eaters now aim to dive back down in the same pattern as going up
+eow takes 1 damage during u-turn
