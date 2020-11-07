@@ -198,7 +198,7 @@ namespace FargowiltasSouls.NPCs
                     break;
 
                 case NPCID.BloodFeeder:
-                    npc.lifeMax *= 5;
+                    npc.lifeMax *= 4;
                     break;
 
                 case NPCID.WanderingEye:
@@ -1045,8 +1045,7 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.EyeofCthulhu:
-                            EyeOfCthulhuAI(npc);
-                            break;
+                            return EyeOfCthulhuAI(npc);
 
                         case NPCID.EaterofWorldsHead:
                             return EaterOfWorldsAI(npc);

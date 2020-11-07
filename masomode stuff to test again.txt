@@ -739,3 +739,11 @@ reduced eow fireball sentry dust
 fixed eow spamming fireball sentry or using it during u-turn
 u-turn polished, eaters now aim to dive back down in the same pattern as going up
 eow takes 1 damage during u-turn
+
+reduced blood feeder life multiplier from 5x to 4x
+souls mod deathrays give graze more often
+some internal code rearrangement, shouldnt notice anything
+added a reticle telegraph for mutant's prime rain
+tried something to fix mini saucer's movement in mp
+eoc rework, now has a phase 3 below 20% life
+	teleports to one of four corners around you and does a zigzag hyperdash

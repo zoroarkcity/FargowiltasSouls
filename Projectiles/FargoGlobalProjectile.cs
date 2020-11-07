@@ -68,109 +68,121 @@ namespace FargowiltasSouls.Projectiles
 
         public override void SetDefaults(Projectile projectile)
         {
-            if (FargoSoulsWorld.MasochistMode)
+            switch (projectile.type)
             {
-                switch (projectile.type)
-                {
-                    case ProjectileID.SpiritHeal:
-                        projectile.timeLeft = 240 * 4; //account for extraupdates
-                        break;
+                case ProjectileID.StardustGuardian:
+                case ProjectileID.StardustGuardianExplosion:
+                    TimeFreezeImmune = true;
+                    break;
 
-                    case ProjectileID.DD2BetsyFlameBreath:
+                case ProjectileID.PhantasmalDeathray:
+                case ProjectileID.SaucerDeathray:
+                case ProjectileID.Sharknado:
+                case ProjectileID.Cthulunado:
+                case ProjectileID.SandnadoHostile:
+                case ProjectileID.SandnadoHostileMark:
+                    if (FargoSoulsWorld.MasochistMode)
+                        ImmuneToGuttedHeart = true;
+                    break;
+
+                case ProjectileID.SpiritHeal:
+                    if (FargoSoulsWorld.MasochistMode)
+                        projectile.timeLeft = 240 * 4; //account for extraupdates
+                    break;
+
+                case ProjectileID.DD2BetsyFlameBreath:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
                         projectile.tileCollide = false;
                         projectile.penetrate = -1;
                         ImmuneToGuttedHeart = true;
-                        break;
+                    }
+                    break;
 
-                    case ProjectileID.PhantasmalDeathray:
-                    case ProjectileID.SaucerDeathray:
-                    case ProjectileID.Sharknado:
-                    case ProjectileID.Cthulunado:
-                    case ProjectileID.SandnadoHostile:
-                    case ProjectileID.SandnadoHostileMark:
-                        ImmuneToGuttedHeart = true;
-                        break;
-
-                    case ProjectileID.ChlorophyteBullet:
+                case ProjectileID.ChlorophyteBullet:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
                         projectile.extraUpdates = 0;
                         projectile.timeLeft = 120;
-                        break;
+                    }
+                    break;
 
-                    case ProjectileID.CrystalBullet:
-                    case ProjectileID.HolyArrow:
-                    case ProjectileID.HallowStar:
+                case ProjectileID.CrystalBullet:
+                case ProjectileID.HolyArrow:
+                case ProjectileID.HallowStar:
+                    if (FargoSoulsWorld.MasochistMode)
                         HasKillCooldown = true;
-                        break;
+                    break;
 
-                    case ProjectileID.StardustCellMinionShot:
+                case ProjectileID.StardustCellMinionShot:
+                    if (FargoSoulsWorld.MasochistMode)
                         projectile.minion = true; //allows it to hurt maso ML
-                        break;
+                    break;
 
-                    case ProjectileID.StardustGuardian:
-                    case ProjectileID.StardustGuardianExplosion:
-                        TimeFreezeImmune = true;
-                        break;
-
-                    case ProjectileID.SaucerLaser:
+                case ProjectileID.SaucerLaser:
+                    if (FargoSoulsWorld.MasochistMode)
                         projectile.tileCollide = false;
-                        break;
+                    break;
 
-                    case ProjectileID.CultistBossFireBall:
-                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss)
-                            && Main.npc[EModeGlobalNPC.cultBoss].life < Main.npc[EModeGlobalNPC.cultBoss].lifeMax / 2)
-                            projectile.timeLeft = 1;
-                        break;
+                case ProjectileID.CultistBossFireBall:
+                    if (FargoSoulsWorld.MasochistMode && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss)
+                        && Main.npc[EModeGlobalNPC.cultBoss].life < Main.npc[EModeGlobalNPC.cultBoss].lifeMax / 2)
+                        projectile.timeLeft = 1;
+                    break;
 
-                    case ProjectileID.CultistBossFireBallClone:
-                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss))
-                            projectile.timeLeft = 1;
-                        break;
+                case ProjectileID.CultistBossFireBallClone:
+                    if (FargoSoulsWorld.MasochistMode && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss))
+                        projectile.timeLeft = 1;
+                    break;
 
-                    case ProjectileID.CursedFlameHostile:
-                        /*if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.wallBoss, NPCID.WallofFlesh))
-                        {
-                            projectile.tileCollide = false;
-                            projectile.timeLeft = 120;
-                            projectile.extraUpdates = 1;
-                        }*/
-                        break;
+                case ProjectileID.CursedFlameHostile:
+                    /*if (FargoSoulsGlobalNPC.BossIsAlive(ref FargoSoulsGlobalNPC.wallBoss, NPCID.WallofFlesh))
+                    {
+                        projectile.tileCollide = false;
+                        projectile.timeLeft = 120;
+                        projectile.extraUpdates = 1;
+                    }*/
+                    break;
 
-                    case ProjectileID.SharknadoBolt:
-                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.fishBossEX, NPCID.DukeFishron))
-                            projectile.extraUpdates++;
-                        break;
-
-                    case ProjectileID.FlamesTrap:
-                        if (NPC.golemBoss != -1 && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem)
-                            projectile.tileCollide = false;
-                        break;
-
-                    case ProjectileID.UnholyTridentHostile:
+                case ProjectileID.SharknadoBolt:
+                    if (FargoSoulsWorld.MasochistMode && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.fishBossEX, NPCID.DukeFishron))
                         projectile.extraUpdates++;
-                        break;
+                    break;
 
-                    case ProjectileID.BulletSnowman:
+                case ProjectileID.FlamesTrap:
+                    if (FargoSoulsWorld.MasochistMode && NPC.golemBoss != -1
+                        && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem)
+                    {
+                        projectile.tileCollide = false;
+                    }
+                    break;
+
+                case ProjectileID.UnholyTridentHostile:
+                    if (FargoSoulsWorld.MasochistMode)
+                        projectile.extraUpdates++;
+                    break;
+
+                case ProjectileID.BulletSnowman:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
                         projectile.tileCollide = false;
                         projectile.timeLeft = 600;
-                        break;
+                    }
+                    break;
 
-                    case ProjectileID.CannonballHostile:
+                case ProjectileID.CannonballHostile:
+                    if (FargoSoulsWorld.MasochistMode)
                         projectile.scale = 2f;
-                        break;
+                    break;
 
-                    case ProjectileID.EyeLaser:
-                    case ProjectileID.EyeFire:
+                case ProjectileID.EyeLaser:
+                case ProjectileID.EyeFire:
+                    if (FargoSoulsWorld.MasochistMode)
                         projectile.tileCollide = false;
-                        break;
+                    break;
 
-                    default:
-                        break;
-                }
-            }
-
-            if (projectile.type == ProjectileID.StardustGuardian || projectile.type == ProjectileID.StardustGuardianExplosion)
-            {
-                TimeFreezeImmune = true;
+                default:
+                    break;
             }
 
             Fargowiltas.ModProjDict.TryGetValue(projectile.type, out ModProjID);

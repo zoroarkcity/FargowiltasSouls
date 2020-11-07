@@ -201,7 +201,7 @@ namespace FargowiltasSouls.NPCs
             }
         }
 
-        public void EyeOfCthulhuAI(NPC npc)
+        public bool EyeOfCthulhuAI(NPC npc)
         {
             eyeBoss = npc.whoAmI;
 
@@ -225,9 +225,190 @@ namespace FargowiltasSouls.NPCs
                 }
             }*/
 
+            npc.dontTakeDamage = npc.alpha > 50;
+
+            if (Counter[1] > 0)
+            {
+                if (Counter[1] % (masoBool[0] ? 3 : 6) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                    Projectile.NewProjectile(new Vector2(npc.Center.X + Main.rand.Next(-15, 15), npc.Center.Y), npc.velocity / 10, ModContent.ProjectileType<BloodScythe>(), npc.damage / 4, 1f, Main.myPlayer);
+                Counter[1]--;
+            }
+
+            if (npc.ai[1] == 3f) //during dashes in phase 2
+            {
+                Counter[1] = 30;
+                //masoBool[0] = false;
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                    FargoGlobalProjectile.XWay(8, npc.Center, ModContent.ProjectileType<BloodScythe>(), 1.5f, npc.damage / 4, 0);
+            }
+
             if (npc.life < npc.lifeMax / 2)
             {
-                if (npc.ai[0] == 3 && (npc.ai[1] == 0 || npc.ai[1] == 5))
+                if (masoBool[0] && npc.HasValidTarget) //final phase
+                {
+                    if (++Counter[0] == 1) //teleport to random position
+                    {
+                        npc.Center = Main.player[npc.target].Center;
+                        npc.position.X += Main.rand.Next(2) == 0 ? -600 : 600;
+                        npc.position.Y += Main.rand.Next(2) == 0 ? -400 : 400;
+                        NetUpdateMaso(npc.whoAmI);
+                        npc.netUpdate = true;
+                    }
+                    else if (Counter[0] < 90) //fade in, moving into position
+                    {
+                        npc.alpha -= 4;
+                        if (npc.alpha < 0)
+                            npc.alpha = 0;
+
+                        const float PI = (float)Math.PI;
+                        if (npc.rotation > PI)
+                            npc.rotation -= 2 * PI;
+                        if (npc.rotation < -PI)
+                            npc.rotation += 2 * PI;
+
+                        float targetRotation = npc.DirectionTo(Main.player[npc.target].Center).ToRotation() - PI / 2;
+                        if (targetRotation > PI)
+                            targetRotation -= 2 * PI;
+                        if (targetRotation < -PI)
+                            targetRotation += 2 * PI;
+                        npc.rotation = MathHelper.Lerp(npc.rotation, targetRotation, 0.07f);
+
+                        for (int i = 0; i < 3; i++)
+                        {
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, 229, 0f, 0f, 0, default(Color), 1.5f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].noLight = true;
+                            Main.dust[d].velocity *= 4f;
+                        }
+
+                        Vector2 target = Main.player[npc.target].Center;
+                        target.X += npc.Center.X < target.X ? -600 : 600;
+                        target.Y += npc.Center.Y < target.Y ? -400 : 400;
+
+                        float speedModifier = 0.3f;
+                        if (npc.Center.X < target.X)
+                        {
+                            npc.velocity.X += speedModifier;
+                            if (npc.velocity.X < 0)
+                                npc.velocity.X += speedModifier * 2;
+                        }
+                        else
+                        {
+                            npc.velocity.X -= speedModifier;
+                            if (npc.velocity.X > 0)
+                                npc.velocity.X -= speedModifier * 2;
+                        }
+                        if (npc.Center.Y < target.Y)
+                        {
+                            npc.velocity.Y += speedModifier;
+                            if (npc.velocity.Y < 0)
+                                npc.velocity.Y += speedModifier * 2;
+                        }
+                        else
+                        {
+                            npc.velocity.Y -= speedModifier;
+                            if (npc.velocity.Y > 0)
+                                npc.velocity.Y -= speedModifier * 2;
+                        }
+                        if (Math.Abs(npc.velocity.X) > 24)
+                            npc.velocity.X = 24 * Math.Sign(npc.velocity.X);
+                        if (Math.Abs(npc.velocity.Y) > 24)
+                            npc.velocity.Y = 24 * Math.Sign(npc.velocity.Y);
+                    }
+                    else if (!masoBool[1]) //berserk dashing phase
+                    {
+                        Counter[0] = 90;
+
+                        const float xSpeed = 20f;
+                        const float ySpeed = 40f;
+
+                        if (++Counter[2] == 1)
+                        {
+                            Main.PlaySound(SoundID.ForceRoar, Main.player[npc.target].Center, -1); //eoc roar
+
+                            if (!masoBool[2]) //only set this on the first dash of each set
+                            {
+                                masoBool[2] = true;
+                                npc.velocity.X = npc.Center.X < Main.player[npc.target].Center.X ? xSpeed : -xSpeed;
+                            }
+
+                            npc.velocity.Y = npc.Center.Y < Main.player[npc.target].Center.Y ? ySpeed : -ySpeed; //alternate this every dash
+
+                            Counter[1] = 30;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                FargoGlobalProjectile.XWay(8, npc.Center, ModContent.ProjectileType<BloodScythe>(), 1f, npc.damage / 4, 0);
+
+                            NetUpdateMaso(npc.whoAmI);
+                            npc.netUpdate = true;
+                        }
+                        else if (Counter[2] > 20)
+                        {
+                            Counter[2] = 0;
+                        }
+
+                        if (++Counter[3] > 600 * 3 / xSpeed + 5) //proceed
+                        {
+                            Counter[3] = 0;
+                            masoBool[1] = true;
+                            NetUpdateMaso(npc.whoAmI);
+                            npc.netUpdate = true;
+                        }
+                        
+                        const float PI = (float)Math.PI;
+                        npc.rotation = npc.velocity.ToRotation() - PI / 2;
+                        if (npc.rotation > PI)
+                            npc.rotation -= 2 * PI;
+                        if (npc.rotation < -PI)
+                            npc.rotation += 2 * PI;
+                    }
+                    else if (Counter[0] < 180) //fade out
+                    {
+                        npc.velocity *= 0.98f;
+                        npc.alpha += 4;
+                        if (npc.alpha > 255)
+                            npc.alpha = 255;
+
+                        const float PI = (float)Math.PI;
+                        if (npc.rotation > PI)
+                            npc.rotation -= 2 * PI;
+                        if (npc.rotation < -PI)
+                            npc.rotation += 2 * PI;
+
+                        float targetRotation = npc.DirectionTo(Main.player[npc.target].Center).ToRotation() - PI / 2;
+                        if (targetRotation > PI)
+                            targetRotation -= 2 * PI;
+                        if (targetRotation < -PI)
+                            targetRotation += 2 * PI;
+                        npc.rotation = MathHelper.Lerp(npc.rotation, targetRotation, 0.07f);
+
+                        for (int i = 0; i < 3; i++)
+                        {
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, 229, 0f, 0f, 0, default(Color), 1.5f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].noLight = true;
+                            Main.dust[d].velocity *= 4f;
+                        }
+                    }
+                    else //reset
+                    {
+                        Counter[0] = 0;
+                        Counter[2] = 0;
+                        masoBool[1] = false;
+                        masoBool[2] = false;
+                    }
+
+                    if (npc.netUpdate)
+                    {
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc.whoAmI);
+                            NetUpdateMaso(npc.whoAmI);
+                        }
+                        npc.netUpdate = false;
+                    }
+                    return false;
+                }
+                else if (npc.ai[0] == 3 && (npc.ai[1] == 0 || npc.ai[1] == 5))
                 {
                     if (npc.ai[2] < 2)
                     {
@@ -245,20 +426,28 @@ namespace FargowiltasSouls.NPCs
                             npc.alpha = 255;
                             if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                             {
-                                Vector2 distance = npc.Center - Main.player[npc.target].Center;
-                                npc.Center = Main.player[npc.target].Center;
-                                distance.X *= 1.5f;
-                                if (distance.X > 1200)
-                                    distance.X = 1200;
-                                else if (distance.X < -1200)
-                                    distance.X = -1200;
-                                if (distance.Y > 0)
-                                    distance.Y *= -1;
-                                npc.position.X -= distance.X;
-                                npc.position.Y += distance.Y;
-                                npc.netUpdate = true;
                                 npc.ai[2] = 60;
-                                npc.ai[1] = 5f;//
+                                npc.ai[1] = 5f;
+
+                                if (npc.life > npc.lifeMax / 5)
+                                {
+                                    Vector2 distance = npc.Center - Main.player[npc.target].Center;
+                                    npc.Center = Main.player[npc.target].Center;
+                                    distance.X *= 1.5f;
+                                    if (distance.X > 1200)
+                                        distance.X = 1200;
+                                    else if (distance.X < -1200)
+                                        distance.X = -1200;
+                                    if (distance.Y > 0)
+                                        distance.Y *= -1;
+                                    npc.position.X -= distance.X;
+                                    npc.position.Y += distance.Y;
+                                    npc.netUpdate = true;
+                                }
+                                else //go into final phase
+                                {
+                                    masoBool[0] = true;
+                                }
                             }
                         }
                     }
@@ -283,23 +472,7 @@ namespace FargowiltasSouls.NPCs
                         }
                     }
                 }
-
-                npc.dontTakeDamage = npc.alpha > 50;
-
-                if (Counter[1] > 0)
-                {
-                    if (Counter[1] % 6 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
-                        Projectile.NewProjectile(new Vector2(npc.Center.X + Main.rand.Next(-15, 15), npc.Center.Y), npc.velocity / 10, ModContent.ProjectileType<BloodScythe>(), npc.damage / 4, 1f, Main.myPlayer);
-                    Counter[1]--;
-
-                }
-                if (npc.ai[1] == 3f) //during dashes in phase 2
-                {
-                    Counter[1] = 30;
-                    masoBool[0] = false;
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                        FargoGlobalProjectile.XWay(8, npc.Center, ModContent.ProjectileType<BloodScythe>(), 1.5f, npc.damage / 4, 0);
-                }
+                
                 /*if (++Timer > 600)
                 {
                     Timer = 0;
@@ -342,6 +515,8 @@ namespace FargowiltasSouls.NPCs
                 Item.NewItem(player.Hitbox, ModContent.ItemType<SuspiciousEye>());
                 droppedSummon = true;
             }
+
+            return true;
         }
 
         public bool EaterOfWorldsAI(NPC npc)

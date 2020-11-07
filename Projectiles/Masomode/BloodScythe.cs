@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.hostile = true;
             projectile.friendly = false;
             projectile.magic = false;
-            projectile.timeLeft = 600;
+            projectile.timeLeft = 300;
             projectile.tileCollide = false;
             cooldownSlot = 1;
         }
@@ -34,7 +34,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.rotation += 0.8f;
             if (++projectile.localAI[1] > 30 && projectile.localAI[1] < 120)
                 projectile.velocity *= 1.03f;
-            for (int i = 0; i < 6; i++)
+            
+            for (int i = 0; i < 3; i++)
             {
                 Vector2 offset = new Vector2(0, -20).RotatedBy(projectile.rotation);
                 offset = offset.RotatedByRandom(MathHelper.Pi / 6);
@@ -44,6 +45,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 Main.dust[d].velocity = projectile.velocity / velrando;
                 Main.dust[d].noGravity = true;
             }
+
+            if (projectile.timeLeft < 180)
+                projectile.tileCollide = true;
         }
 
         public override Color? GetAlpha(Color lightColor)
