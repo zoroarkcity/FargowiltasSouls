@@ -1898,7 +1898,7 @@ namespace FargowiltasSouls
                 return 1f;
             }
 
-            if (RangedEssence && item.ranged)
+            /*if (RangedEssence && item.ranged)
             {
                 AttackSpeed += .05f;
             }
@@ -1906,7 +1906,7 @@ namespace FargowiltasSouls
             if (RangedSoul && item.ranged)
             {
                 AttackSpeed += .2f;
-            }
+            }*/
 
             if (MagicSoul && item.magic)
             {
@@ -3638,8 +3638,17 @@ namespace FargowiltasSouls
             }
         });
 
-
-
+        public override bool ConsumeAmmo(Item weapon, Item ammo)
+        {
+            if (weapon.ranged)
+            {
+                if (RangedEssence && Main.rand.Next(10) == 0)
+                    return false;
+                if (RangedSoul && Main.rand.Next(5) == 0)
+                    return false;
+            }
+            return true;
+        }
 
         public override void ModifyDrawLayers(List<PlayerLayer> layers)
         {

@@ -747,3 +747,7 @@ added a reticle telegraph for mutant's prime rain
 tried something to fix mini saucer's movement in mp
 eoc rework, now has a phase 3 below 20% life
 	teleports to one of four corners around you and does a zigzag hyperdash
+
+nerfed sharpshooter essence and sniper soul
+	weapon speed bonus removed
+	gives 10% and 20% ammo conservation instead

@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 
             string tooltip =
 @"30% increased ranged damage
-20% increased firing speed
+20% chance to not consume ammo
 15% increased ranged critical chance
 Effects of Sniper Scope
 'Ready, aim, fire'";
