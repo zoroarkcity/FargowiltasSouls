@@ -244,7 +244,7 @@ namespace FargowiltasSouls.NPCs
 
             if (npc.life < npc.lifeMax / 2)
             {
-                if (masoBool[0] && npc.HasValidTarget) //final phase
+                if (masoBool[0] && npc.HasValidTarget && !Main.dayTime) //final phase
                 {
                     if (++Counter[0] == 1) //teleport to random position
                     {
