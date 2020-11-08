@@ -244,15 +244,53 @@ namespace FargowiltasSouls.NPCs
 
             if (npc.life < npc.lifeMax / 2)
             {
-                if (masoBool[0] && npc.HasValidTarget && !Main.dayTime) //final phase
+                if (masoBool[0]) //final phase
                 {
+                    if (npc.HasValidTarget && !Main.dayTime)
+                    {
+                        if (npc.timeLeft < 300)
+                            npc.timeLeft = 300;
+                    }
+                    else //despawn and retarget
+                    {
+                        npc.TargetClosest(false);
+                        npc.velocity.X *= 0.98f;
+                        npc.velocity.Y -= npc.velocity.Y > 0 ? 1f : 0.25f;
+
+                        if (npc.timeLeft > 30)
+                            npc.timeLeft = 30;
+
+                        Counter[0] = 90;
+                        Counter[2] = 0;
+                        masoBool[1] = true;
+                        masoBool[2] = false;
+
+                        npc.alpha = 0;
+
+                        const float PI = (float)Math.PI;
+                        if (npc.rotation > PI)
+                            npc.rotation -= 2 * PI;
+                        if (npc.rotation < -PI)
+                            npc.rotation += 2 * PI;
+
+                        float targetRotation = npc.DirectionTo(Main.player[npc.target].Center).ToRotation() - PI / 2;
+                        if (targetRotation > PI)
+                            targetRotation -= 2 * PI;
+                        if (targetRotation < -PI)
+                            targetRotation += 2 * PI;
+                        npc.rotation = MathHelper.Lerp(npc.rotation, targetRotation, 0.07f);
+                    }
+
                     if (++Counter[0] == 1) //teleport to random position
                     {
-                        npc.Center = Main.player[npc.target].Center;
-                        npc.position.X += Main.rand.Next(2) == 0 ? -600 : 600;
-                        npc.position.Y += Main.rand.Next(2) == 0 ? -400 : 400;
-                        NetUpdateMaso(npc.whoAmI);
-                        npc.netUpdate = true;
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            npc.Center = Main.player[npc.target].Center;
+                            npc.position.X += Main.rand.Next(2) == 0 ? -600 : 600;
+                            npc.position.Y += Main.rand.Next(2) == 0 ? -400 : 400;
+                            NetUpdateMaso(npc.whoAmI);
+                            npc.netUpdate = true;
+                        }
                     }
                     else if (Counter[0] < 90) //fade in, moving into position
                     {
@@ -319,7 +357,7 @@ namespace FargowiltasSouls.NPCs
                     {
                         Counter[0] = 90;
 
-                        const float xSpeed = 15f;
+                        const float xSpeed = 18f;
                         const float ySpeed = 40f;
 
                         if (++Counter[2] == 1)
@@ -408,6 +446,24 @@ namespace FargowiltasSouls.NPCs
                     }
                     return false;
                 }
+                else if (npc.life < npc.lifeMax * 0.15) //go into final phase
+                {
+                    npc.velocity *= 0.98f;
+                    npc.alpha += 4;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        int d = Dust.NewDust(npc.position, npc.width, npc.height, 229, 0f, 0f, 0, default(Color), 1.5f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].noLight = true;
+                        Main.dust[d].velocity *= 4f;
+                    }
+                    if (npc.alpha > 255)
+                    {
+                        npc.alpha = 255;
+                        masoBool[0] = true;
+                    }
+                    return false;
+                }
                 else if (npc.ai[0] == 3 && (npc.ai[1] == 0 || npc.ai[1] == 5))
                 {
                     if (npc.ai[2] < 2)
@@ -429,25 +485,18 @@ namespace FargowiltasSouls.NPCs
                                 npc.ai[2] = 60;
                                 npc.ai[1] = 5f;
 
-                                if (npc.life > npc.lifeMax * 0.15)
-                                {
-                                    Vector2 distance = npc.Center - Main.player[npc.target].Center;
-                                    npc.Center = Main.player[npc.target].Center;
-                                    distance.X *= 1.5f;
-                                    if (distance.X > 1200)
-                                        distance.X = 1200;
-                                    else if (distance.X < -1200)
-                                        distance.X = -1200;
-                                    if (distance.Y > 0)
-                                        distance.Y *= -1;
-                                    npc.position.X -= distance.X;
-                                    npc.position.Y += distance.Y;
-                                    npc.netUpdate = true;
-                                }
-                                else //go into final phase
-                                {
-                                    masoBool[0] = true;
-                                }
+                                Vector2 distance = npc.Center - Main.player[npc.target].Center;
+                                npc.Center = Main.player[npc.target].Center;
+                                distance.X *= 1.5f;
+                                if (distance.X > 1200)
+                                    distance.X = 1200;
+                                else if (distance.X < -1200)
+                                    distance.X = -1200;
+                                if (distance.Y > 0)
+                                    distance.Y *= -1;
+                                npc.position.X -= distance.X;
+                                npc.position.Y += distance.Y;
+                                npc.netUpdate = true;
                             }
                         }
                     }
@@ -677,7 +726,7 @@ namespace FargowiltasSouls.NPCs
                 }
                 else if (Counter[1] < 240) //cancel early and turn once we fly past player
                 {
-                    if (npc.Center.Y < Main.player[npc.target].Center.Y - 600)
+                    if (npc.Center.Y < Main.player[npc.target].Center.Y - 450)
                         Counter[1] = 239;
                 }
                 else if (Counter[1] == 240) //recalculate velocity to u-turn and dive back down in the same spacing over player
@@ -701,7 +750,7 @@ namespace FargowiltasSouls.NPCs
                 {
                     npc.velocity = Vector2.Normalize(npc.velocity) * 15f;
                 }
-                else if (Counter[1] > 360)
+                else if (Counter[1] > 300)
                 {
                     Counter[1] = 0;
                     Counter[2] = 0;

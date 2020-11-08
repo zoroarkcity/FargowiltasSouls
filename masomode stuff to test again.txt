@@ -752,3 +752,9 @@ nerfed sharpshooter essence and sniper soul
 	weapon speed bonus removed
 	gives 10% and 20% ammo conservation instead
 eoc slowed down and p3 threshold is 15%
+adjusted eoc
+	custom despawn in p3
+	can switch targets when first target dies in mp
+	cant "skip" p3 by bursting down p2 transition
+buffed deviantt's frostfireball attack, shoots more of them and they persist slightly longer
+adjusted eow u-turn so it ends faster
