@@ -181,8 +181,6 @@ namespace FargowiltasSouls
 
             SwarmActive = (bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive");
 
-            NPCs.EModeGlobalNPC.eaterResist = false;
-
             //Main.NewText(BuilderMode);
 
             #region commented

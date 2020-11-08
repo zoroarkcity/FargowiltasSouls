@@ -669,7 +669,7 @@ namespace FargowiltasSouls.NPCs
             }
             else //flying u-turn ai
             {
-                eaterResist = true;
+                //eaterResist = true;
 
                 if (++Counter[1] < 120)
                 {
@@ -2132,9 +2132,9 @@ namespace FargowiltasSouls.NPCs
                             {
                                 float speed = 14f * Math.Min((Counter[2] - 30) / 120f, 1f); //fan out gradually
                                 float baseRotation = npc.rotation - (float)Math.PI / 2;
-                                for (int i = 0; i < 5; i++)
+                                for (int i = 0; i < 4; i++)
                                 {
-                                    Projectile.NewProjectile(npc.Center, speed * (baseRotation + (float)Math.PI / 2.5f * i).ToRotationVector2(),
+                                    Projectile.NewProjectile(npc.Center, speed * (baseRotation + (float)Math.PI / 2f * i).ToRotationVector2(),
                                         ModContent.ProjectileType<EyeFire2>(), npc.damage / 5, 0f, Main.myPlayer);
                                 }
                             }

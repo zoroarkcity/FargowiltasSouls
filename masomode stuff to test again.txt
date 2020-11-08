@@ -758,3 +758,6 @@ adjusted eoc
 	cant "skip" p3 by bursting down p2 transition
 buffed deviantt's frostfireball attack, shoots more of them and they persist slightly longer
 adjusted eow u-turn so it ends faster
+
+removed eow resist because reasons
+nerfed spazmatism flame jets from 5 to 4
