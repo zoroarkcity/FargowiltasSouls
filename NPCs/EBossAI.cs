@@ -576,6 +576,9 @@ namespace FargowiltasSouls.NPCs
             if (!npc.HasValidTarget)
                 npc.velocity.Y += 0.25f;
 
+            if (eaterResist > 0 && npc.whoAmI == NPC.FindFirstNPC(npc.type))
+                eaterResist--;
+
             if (Main.netMode != NetmodeID.MultiplayerClient && npc.whoAmI == NPC.FindFirstNPC(npc.type) && ++eaterTimer > 300) //only let one eater increment this
             {
                 bool shoot = true;
@@ -669,7 +672,7 @@ namespace FargowiltasSouls.NPCs
             }
             else //flying u-turn ai
             {
-                //eaterResist = true;
+                eaterResist = 30;
 
                 if (++Counter[1] < 120)
                 {

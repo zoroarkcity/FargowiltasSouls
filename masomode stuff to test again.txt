@@ -759,5 +759,5 @@ adjusted eoc
 buffed deviantt's frostfireball attack, shoots more of them and they persist slightly longer
 adjusted eow u-turn so it ends faster
 
-removed eow resist because reasons
+altered eow resist implementation
 nerfed spazmatism flame jets from 5 to 4

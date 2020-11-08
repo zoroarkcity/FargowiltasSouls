@@ -74,7 +74,7 @@ namespace FargowiltasSouls.NPCs
         public static int championBoss = -1;
 
         public static int eaterTimer;
-        //public static bool eaterResist;
+        public static int eaterResist;
 
         public override void ResetEffects(NPC npc)
         {
@@ -8119,8 +8119,8 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
                         }*/
-                        /*if (eaterResist)
-                            damage = 0;*/
+                        if (eaterResist > 0)
+                            damage = 0;
                         break;
 
                     case NPCID.TheDestroyer:
