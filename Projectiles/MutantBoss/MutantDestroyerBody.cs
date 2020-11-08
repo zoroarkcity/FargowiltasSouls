@@ -119,7 +119,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         {
             for (int i = 0; i < 20; i++)
             {
-                int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 60, -projectile.velocity.X * 0.2f,
+                int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 62, -projectile.velocity.X * 0.2f,
                     -projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].velocity *= 2f;
@@ -127,6 +127,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     -projectile.velocity.Y * 0.2f, 100);
                 Main.dust[dust].velocity *= 2f;
             }
+            int g = Gore.NewGore(projectile.Center, projectile.velocity / 2, mod.GetGoreSlot("Gores/DestroyerGun/MutantDestroyerBody"), projectile.scale);
+            Main.gore[g].timeLeft = 20;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

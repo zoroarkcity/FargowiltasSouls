@@ -201,6 +201,10 @@ namespace FargowiltasSouls.NPCs
                     npc.lifeMax *= 4;
                     break;
 
+                case NPCID.VileSpit:
+                    npc.scale *= 1.25f;
+                    break;
+
                 case NPCID.WanderingEye:
                     npc.lifeMax *= 2;
                     break;

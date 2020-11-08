@@ -611,7 +611,7 @@ namespace FargowiltasSouls.NPCs
                                 if (++counter > 3) //wave of redirecting flames
                                 {
                                     counter = 0;
-                                    Vector2 vel = (Main.player[npc.target].Center - Main.npc[i].Center) / 60;
+                                    Vector2 vel = (Main.player[npc.target].Center - Main.npc[i].Center) / 45;
                                     Projectile.NewProjectile(Main.npc[i].Center, vel,
                                         ModContent.ProjectileType<CursedFireballHoming>(), npc.damage / 5, 0f, Main.myPlayer, npc.target, delay);
                                     delay += 4;
