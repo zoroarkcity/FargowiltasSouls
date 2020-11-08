@@ -2332,10 +2332,10 @@ namespace FargowiltasSouls.NPCs
                         float num15 = 0.1f;   //turn speed?
                         float num16 = 0.15f;   //acceleration?
 
-                        if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) > 800)
+                        if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) > 900)
                         {
-                            num15 *= 2f;
-                            num16 *= 2f;
+                            num15 *= 1.5f;
+                            num16 *= 1.5f;
                         }
 
                         Vector2 target = Main.player[npc.target].Center;
