@@ -319,7 +319,7 @@ namespace FargowiltasSouls.NPCs
                     {
                         Counter[0] = 90;
 
-                        const float xSpeed = 20f;
+                        const float xSpeed = 15f;
                         const float ySpeed = 40f;
 
                         if (++Counter[2] == 1)
@@ -429,7 +429,7 @@ namespace FargowiltasSouls.NPCs
                                 npc.ai[2] = 60;
                                 npc.ai[1] = 5f;
 
-                                if (npc.life > npc.lifeMax / 5)
+                                if (npc.life > npc.lifeMax * 0.15)
                                 {
                                     Vector2 distance = npc.Center - Main.player[npc.target].Center;
                                     npc.Center = Main.player[npc.target].Center;

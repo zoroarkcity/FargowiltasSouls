@@ -751,3 +751,4 @@ eoc rework, now has a phase 3 below 20% life
 nerfed sharpshooter essence and sniper soul
 	weapon speed bonus removed
 	gives 10% and 20% ammo conservation instead
+eoc slowed down and p3 threshold is 15%
