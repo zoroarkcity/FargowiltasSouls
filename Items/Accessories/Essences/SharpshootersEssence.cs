@@ -14,8 +14,8 @@ namespace FargowiltasSouls.Items.Accessories.Essences
             DisplayName.SetDefault("Sharpshooter's Essence");
             Tooltip.SetDefault(
 @"18% increased ranged damage
+10% chance to not consume ammo
 5% increased ranged critical chance
-5% increased firing speed
 'This is only the beginning..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "狙击手精华");
             Tooltip.AddTranslation(GameCulture.Chinese, 

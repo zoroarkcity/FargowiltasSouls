@@ -73,6 +73,9 @@ namespace FargowiltasSouls.NPCs
         public static int mutantBoss = -1;
         public static int championBoss = -1;
 
+        public static int eaterTimer;
+        public static int eaterResist;
+
         public override void ResetEffects(NPC npc)
         {
             PaladinsShield = false;
@@ -109,7 +112,7 @@ namespace FargowiltasSouls.NPCs
                     break;
 
                 case NPCID.Plantera:
-                    npc.lifeMax = (int)(npc.lifeMax * 1.25);
+                    npc.lifeMax = (int)(npc.lifeMax * 1.5);
                     break;
 
                 case NPCID.Pixie:
@@ -195,7 +198,7 @@ namespace FargowiltasSouls.NPCs
                     break;
 
                 case NPCID.BloodFeeder:
-                    npc.lifeMax *= 5;
+                    npc.lifeMax *= 4;
                     break;
 
                 case NPCID.WanderingEye:
@@ -269,12 +272,7 @@ namespace FargowiltasSouls.NPCs
                     break;
 
                 case NPCID.SolarSroller:
-                    npc.lifeMax *= 2;
                     npc.scale += 0.5f;
-                    break;
-
-                case NPCID.VileSpit:
-                    npc.dontTakeDamage = true;
                     break;
 
                 case NPCID.ChaosBall:
@@ -1047,12 +1045,10 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.EyeofCthulhu:
-                            EyeOfCthulhuAI(npc);
-                            break;
+                            return EyeOfCthulhuAI(npc);
 
                         case NPCID.EaterofWorldsHead:
-                            EaterOfWorldsAI(npc);
-                            break;
+                            return EaterOfWorldsAI(npc);
 
                         case NPCID.BrainofCthulhu:
                             BrainOfCthulhuAI(npc);
@@ -4819,6 +4815,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Plantera:
+                        target.AddBuff(BuffID.Poisoned, 300);
                         target.AddBuff(ModContent.BuffType<Infested>(), 180);
                         target.AddBuff(ModContent.BuffType<IvyVenom>(), 300);
                         break;
@@ -4826,6 +4823,7 @@ namespace FargowiltasSouls.NPCs
                     //case NPCID.PlanterasHook:
                     case NPCID.PlanterasTentacle:
                     case NPCID.Spore:
+                        target.AddBuff(BuffID.Poisoned, 300);
                         target.AddBuff(ModContent.BuffType<Infested>(), 180);
                         target.AddBuff(ModContent.BuffType<IvyVenom>(), 300);
                         break;
@@ -6209,8 +6207,11 @@ namespace FargowiltasSouls.NPCs
                         if (Main.rand.Next(Main.hardMode ? 10 : 25) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<Items.Accessories.Masomode.SqueakyToy>());
                         break;
-
+                        
                     case NPCID.DesertBeast:
+                        if (Main.rand.Next(50) == 0)
+                            Item.NewItem(npc.Hitbox, ItemID.PocketMirror);
+                        goto case NPCID.DesertGhoul;
                     case NPCID.DesertScorpionWalk:
                     case NPCID.DesertScorpionWall:
                     case NPCID.DesertLamiaDark:
@@ -6220,7 +6221,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.DesertGhoulCrimson:
                     case NPCID.DesertGhoulHallow:
                         if (Main.rand.Next(3) == 0)
-                            Item.NewItem(npc.Hitbox, ItemID.DesertFossil, Main.rand.Next(6) + 1);
+                            Item.NewItem(npc.Hitbox, ItemID.DesertFossil, Main.rand.Next(10) + 1);
                         break;
 
                     case NPCID.Crab:
@@ -7070,6 +7071,15 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.EaterofWorldsHead:
+                        /*if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            int type = Main.rand.Next(2) == 0 ? NPCID.EaterofSouls
+                            : (Main.rand.Next(2) == 0 ? NPCID.BigEater : NPCID.LittleEater);
+                            int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type);
+                            if (n < Main.maxNPCs && Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
+                        }
+                        goto case NPCID.EaterofWorldsBody;*/
                     case NPCID.EaterofWorldsBody:
                     case NPCID.EaterofWorldsTail:
                         if (BossIsAlive(ref mutantBoss, ModContent.NPCType<MutantBoss.MutantBoss>()))
@@ -7077,20 +7087,6 @@ namespace FargowiltasSouls.NPCs
                             npc.active = false;
                             Main.PlaySound(npc.DeathSound, npc.Center);
                             return false;
-                        }
-
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            int count = NPC.CountNPCS(NPCID.BigEater) + NPC.CountNPCS(NPCID.EaterofSouls) + NPC.CountNPCS(NPCID.LittleEater);
-
-                            if (count < 40)
-                            {
-                                int type = Main.rand.Next(2) == 0 ? NPCID.EaterofSouls
-                                : (Main.rand.Next(2) == 0 ? NPCID.BigEater : NPCID.LittleEater);
-                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type);
-                                if (n < 200 && Main.netMode == NetmodeID.Server)
-                                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
-                            }
                         }
 
                         if ((bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive"))
@@ -8091,6 +8087,40 @@ namespace FargowiltasSouls.NPCs
                             damage /= 3;
                             npc.ai[2] = -6f;
                         }*/
+                        break;
+
+                    case NPCID.EaterofWorldsHead:
+                        /*if (masoBool[0])
+                            damage = 0;
+                        break;*/
+                    case NPCID.EaterofWorldsBody:
+                    case NPCID.EaterofWorldsTail:
+                        /*{
+                            int ai1 = (int)npc.ai[1];
+                            while (ai1 > -1 && ai1 < Main.maxNPCs && Main.npc[ai1].active)
+                            {
+                                if (Main.npc[ai1].type == NPCID.EaterofWorldsHead)
+                                {
+                                    if (Main.npc[ai1].GetGlobalNPC<EModeGlobalNPC>().masoBool[0])
+                                    {
+                                        damage = 0;
+                                        Main.NewText("resist");
+                                    }
+                                    else
+                                    {
+                                        Main.NewText("no resist");
+                                    }
+                                    break;
+                                }
+                                else if (Main.npc[ai1].type == NPCID.EaterofWorldsBody)
+                                {
+                                    ai1 = (int)Main.npc[ai1].ai[1];
+                                    break;
+                                }
+                            }
+                        }*/
+                        if (eaterResist > 0)
+                            damage = 0;
                         break;
 
                     case NPCID.TheDestroyer:

@@ -21,24 +21,28 @@ namespace FargowiltasSouls.Items.Weapons.Misc
 
         public override void SetDefaults()
         {
-            item.damage = 50;
+            item.damage = 22;
 
             item.width = 20;
             item.height = 20;
             item.rare = 8;
-            item.useAnimation = 30;
-            item.useTime = 30;
+            item.useAnimation = 45;
+            item.useTime = 45;
 
             item.magic = true;
             item.noMelee = true;
             item.noUseGraphic = true;
             item.useStyle = 1;
-            item.knockBack = 3f;
+            item.knockBack = 6.6f;
+
+            item.mana = 66;
 
             item.autoReuse = true;
 
             item.shoot = ModContent.ProjectileType<TopHatSquirrelProj>();
             item.shootSpeed = 8f;
+
+            item.value = Item.sellPrice(0, 20);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -52,10 +56,14 @@ namespace FargowiltasSouls.Items.Weapons.Misc
         {
             ModRecipe recipe = new ModRecipe(mod);
             
-            recipe.AddIngredient(ModContent.ItemType<TopHatSquirrelCaught>(), 20);
-            recipe.AddIngredient(ItemID.ChlorophyteBar);
-
-            recipe.AddTile(TileID.CrystalBall);
+            recipe.AddIngredient(ModContent.ItemType<TopHatSquirrelCaught>(), 10);
+            recipe.AddIngredient(ItemID.ChlorophyteBar, 5);
+            recipe.AddIngredient(ItemID.SoulofFright, 3);
+            recipe.AddIngredient(ItemID.SoulofSight, 3);
+            recipe.AddIngredient(ItemID.SoulofMight, 3);
+            recipe.AddIngredient(ItemID.SoulofLight, 3);
+            recipe.AddIngredient(ItemID.SoulofNight, 3);
+            recipe.AddTile(TileID.MythrilAnvil);
 
             recipe.SetResult(this);
             recipe.AddRecipe();

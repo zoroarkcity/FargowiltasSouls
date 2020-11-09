@@ -1391,6 +1391,16 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Projectile.NewProjectile(npc.Center, -Vector2.UnitX, ModContent.ProjectileType<MutantDeathray3>(), npc.damage / 4, 0, Main.myPlayer, -rotation, npc.whoAmI);
                         }
                     }
+                    if (npc.ai[3] == 90 && Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Vector2 spawnPos = npc.Center;
+                        spawnPos.Y += player.Center.Y < npc.Center.Y ? -600 : 600;
+                        for (int i = -3; i <= 3; i++)
+                        {
+                            Projectile.NewProjectile(spawnPos + Vector2.UnitY * 120 * i, Vector2.Zero,
+                                ModContent.ProjectileType<MutantReticle2>(), 0, 0f, Main.myPlayer);
+                        }
+                    }
                     if (npc.ai[3] == 180)
                     {
                         Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
@@ -2173,10 +2183,17 @@ namespace FargowiltasSouls.NPCs.MutantBoss
 
         public override void NPCLoot()
         {
-            if ((!playerInvulTriggered || Main.rand.Next(10) == 0) && FargoSoulsWorld.MasochistMode)
+            if (FargoSoulsWorld.MasochistMode)
             {
-                Item.NewItem(npc.Hitbox, mod.ItemType("PhantasmalEnergy"));
-                Item.NewItem(npc.Hitbox, mod.ItemType("SpawnSack"));
+                if (!playerInvulTriggered)
+                {
+                    Item.NewItem(npc.Hitbox, mod.ItemType("PhantasmalEnergy"));
+                    Item.NewItem(npc.Hitbox, mod.ItemType("SpawnSack"));
+                }
+                else if (Main.rand.Next(10) == 0)
+                {
+                    Item.NewItem(npc.Hitbox, mod.ItemType("PhantasmalEnergy"));
+                }
             }
 
             FargoSoulsWorld.downedMutant = true;

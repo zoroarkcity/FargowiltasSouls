@@ -556,13 +556,13 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         for (int i = 0; i < Main.maxProjectiles; i++)
                         {
                             if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].type == ModContent.ProjectileType<FrostfireballHostile>()
-                                && Main.projectile[i].timeLeft > 60)
+                                && Main.projectile[i].timeLeft > 120)
                             {
-                                Main.projectile[i].timeLeft = 60;
+                                Main.projectile[i].timeLeft = 120;
                             }
                         }
                     }
-                    if (++npc.ai[2] > (npc.localAI[3] > 1 ? 15 : 30))
+                    if (++npc.ai[2] > (npc.localAI[3] > 1 ? 10 : 20))
                     {
                         npc.netUpdate = true;
                         npc.ai[2] = 0;

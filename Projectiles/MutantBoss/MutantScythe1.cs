@@ -44,9 +44,14 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 Main.PlaySound(SoundID.Item8, projectile.Center);
             }
             projectile.rotation += 0.8f;
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 6; i++)
             {
-                int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 27, 0f, 0f, 100);
+                Vector2 offset = new Vector2(0, -20).RotatedBy(projectile.rotation);
+                offset = offset.RotatedByRandom(MathHelper.Pi / 6);
+                int d = Dust.NewDust(projectile.Center, 0, 0, 229, 0f, 0f, 150);
+                Main.dust[d].position += offset;
+                float velrando = Main.rand.Next(20, 31) / 10;
+                Main.dust[d].velocity = projectile.velocity / velrando;
                 Main.dust[d].noGravity = true;
             }
         }

@@ -721,3 +721,43 @@ moon lord socket rays reworked, now track you for a while and then fire
 skeletron (prime) telegraph their spins
 fixed soul of siblings not having nanoinjection immune
 boc falls faster
+
+restored plantera inflicting poisoned
+basilisk 2% drops pocket mirror
+removed sroller stat boost
+eow rework:
+	vile spit is no longer indestructible
+	removed eaters of souls spawning
+	slightly increased flame breath damage
+	now fires self-redirecting cursed fireballs from segments periodically (reduced delay between balls)
+	has a coordinated flying u-turn attack
+reduced top hat squirrel recipe and adjusted stats
+adjusted dusts for mutant/abom sickles
+increased plantera life modifier from 1.25 to 1.5
+
+reduced eow fireball sentry dust
+fixed eow spamming fireball sentry or using it during u-turn
+u-turn polished, eaters now aim to dive back down in the same pattern as going up
+eow takes 1 damage during u-turn
+
+reduced blood feeder life multiplier from 5x to 4x
+souls mod deathrays give graze more often
+some internal code rearrangement, shouldnt notice anything
+added a reticle telegraph for mutant's prime rain
+tried something to fix mini saucer's movement in mp
+eoc rework, now has a phase 3 below 20% life
+	teleports to one of four corners around you and does a zigzag hyperdash
+
+nerfed sharpshooter essence and sniper soul
+	weapon speed bonus removed
+	gives 10% and 20% ammo conservation instead
+eoc slowed down and p3 threshold is 15%
+adjusted eoc
+	custom despawn in p3
+	can switch targets when first target dies in mp
+	cant "skip" p3 by bursting down p2 transition
+buffed deviantt's frostfireball attack, shoots more of them and they persist slightly longer
+adjusted eow u-turn so it ends faster
+
+altered eow resist implementation
+nerfed spazmatism flame jets from 5 to 4
