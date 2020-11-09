@@ -9,7 +9,6 @@ namespace FargowiltasSouls.Projectiles.Masomode
 {
     public class CursedFireballHoming : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_96";
 
         public override void SetStaticDefaults()
         {
@@ -22,21 +21,34 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.height = 16;
             projectile.aiStyle = -1;
             projectile.hostile = true;
-            projectile.alpha = 100;
+            projectile.alpha = 70;
             projectile.penetrate = -1;
             projectile.tileCollide = false;
             projectile.timeLeft = 600;
-            projectile.scale = 1.3f;
+            projectile.scale = 0.75f;
+            Main.projFrames[projectile.type] = 4;
         }
-
         public override void AI()
         {
+            projectile.frameCounter++;
+            if (projectile.frameCounter > 8)
+            {
+                projectile.frame++;
+                projectile.frameCounter = 1;
+            }
+            if (projectile.frame > 3)
+            {
+                projectile.frame = 0;
+            }
+
+            projectile.scale = 0.75f + (float)(Math.Sin(projectile.timeLeft / 3) / 5); //make it pulsate slightly
+
             //Lighting.AddLight(projectile.Center, 0.35f * 0.8f, 0.8f, 0f);
 
             if (projectile.localAI[0] == 0f)
             {
                 projectile.localAI[0] = 1;
-                Main.PlaySound(SoundID.Item20, projectile.Center);
+                Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 20, 2, 0);
             }
 
             if (Main.rand.Next(3) == 0)
@@ -50,13 +62,32 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 projectile.Kill();
                 return;
             }
-            
-            if (projectile.localAI[1]++ == 60)
+
+            if (projectile.localAI[1] > 20 && projectile.localAI[1] < 60)
+            {
+                float lerpspeed = 0.023f + projectile.localAI[1] / 35000;
+                projectile.velocity = Vector2.Lerp(projectile.velocity, Vector2.Zero, lerpspeed);
+            }
+            if (++projectile.localAI[1] == 60)
             {
                 projectile.velocity = Vector2.Zero;
             }
+
             else if (projectile.localAI[1] == 120 + projectile.ai[1]) //shoot at player much faster
             {
+                Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 20, 2, 0);
+                float num = 24f;
+                for (int index1 = 0; index1 < num; ++index1)
+                {
+                    Vector2 v = 2 * (Vector2.UnitX * 0.0f + -Vector2.UnitY.RotatedBy((double)index1 * (6.28318548202515 / (double)num), new Vector2()) * new Vector2(1f, 4f)).RotatedBy((double)(projectile.DirectionTo(Main.player[(int)projectile.ai[0]].Center).ToRotation()), new Vector2());
+                    int index2 = Dust.NewDust(projectile.Center, 0, 0, 75, 0.0f, 0.0f, 200, default, 1f);
+                    Main.dust[index2].scale = 2f;
+                    Main.dust[index2].fadeIn = 1.3f;
+                    Main.dust[index2].noGravity = true;
+                    Main.dust[index2].position = projectile.Center + v;
+                    Main.dust[index2].velocity = v.SafeNormalize(Vector2.UnitY) * 1.5f;
+                }
+
                 projectile.velocity = projectile.DirectionTo(Main.player[(int)projectile.ai[0]].Center) * 16f;
             }
         }
@@ -79,6 +110,14 @@ namespace FargowiltasSouls.Projectiles.Masomode
         public override Color? GetAlpha(Color lightColor)
         {
             return Color.White * projectile.Opacity;
+        }
+
+        public override bool CanHitPlayer(Player target)
+        {
+            if (projectile.localAI[1] < 120 + projectile.ai[1]) //prevent the projectile from being able to hurt the player before it's redirected at the player, since they move so fast initially it could cause cheap hits
+                return false;
+
+            return true;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
