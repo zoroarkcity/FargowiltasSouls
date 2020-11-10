@@ -771,4 +771,4 @@ fishron
 
 fishron
 	p2 ring -> spawns two sets of razors at a time, a fast and slow
-	p2 nado -> spawns two rings of razors in addition to spectral fishrons
+nano injection causes damage over time

@@ -3814,6 +3814,25 @@ namespace FargowiltasSouls.NPCs
 
         public void DukeFishronAI(NPC npc)
         {
+            void SpawnRazorbladeRing(int max, float speed, int damage, float rotationModifier, bool reduceTimeleft = false)
+            {
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    return;
+                float rotation = 2f * (float)Math.PI / max;
+                Vector2 vel = Main.player[npc.target].Center - npc.Center;
+                vel.Normalize();
+                vel *= speed;
+                int type = ModContent.ProjectileType<RazorbladeTyphoon>();
+                for (int i = 0; i < max; i++)
+                {
+                    vel = vel.RotatedBy(rotation);
+                    int p = Projectile.NewProjectile(npc.Center, vel, type, damage, 0f, Main.myPlayer, rotationModifier * npc.spriteDirection, speed);
+                    if (reduceTimeleft && p < 1000)
+                        Main.projectile[p].timeLeft /= 2;
+                }
+                Main.PlaySound(SoundID.Item84, npc.Center);
+            }
+
             fishBoss = npc.whoAmI;
             if (masoBool[3]) //fishron EX
             {
@@ -3887,7 +3906,7 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
 
-                            SpawnRazorbladeRing(npc, 18, 10f, npc.damage / 6, 1f);
+                            SpawnRazorbladeRing(18, 10f, npc.damage / 6, 1f);
                         }
                         break;
 
@@ -3964,8 +3983,8 @@ namespace FargowiltasSouls.NPCs
                             Projectile.NewProjectile(spawnPos.X, spawnPos.Y, npc.direction * -2f, 8f, ProjectileID.SharknadoBolt, 0, 0f, Main.myPlayer);
                             Projectile.NewProjectile(spawnPos.X, spawnPos.Y, 0f, 2f, ProjectileID.SharknadoBolt, 0, 0f, Main.myPlayer);
 
-                            SpawnRazorbladeRing(npc, 12, 12.5f, npc.damage / 6, 0.75f);
-                            SpawnRazorbladeRing(npc, 12, 10f, npc.damage / 6, -2f);
+                            SpawnRazorbladeRing(12, 12.5f, npc.damage / 6, 0.75f);
+                            SpawnRazorbladeRing(12, 10f, npc.damage / 6, -2f);
                         }
                         break;
 
@@ -4028,8 +4047,8 @@ namespace FargowiltasSouls.NPCs
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                SpawnRazorbladeRing(npc, 5, 9f, npc.damage / 6, 1f, true);
-                                SpawnRazorbladeRing(npc, 5, 9f, npc.damage / 6, -0.5f, true);
+                                SpawnRazorbladeRing(5, 9f, npc.damage / 6, 1f, true);
+                                SpawnRazorbladeRing(5, 9f, npc.damage / 6, -0.5f, true);
                             }
                         }
                         else if (npc.ai[2] == 16f)
@@ -4112,7 +4131,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 if (j == 0)
                                     continue;
-                                
+
                                 Vector2 offset = random ? Vector2.UnitY * -450f * j : Vector2.UnitX * 600f * j;
                                 Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<FishronFishron>(), npc.damage / 4, 0f, Main.myPlayer, offset.X, offset.Y);
                             }
@@ -4122,7 +4141,7 @@ namespace FargowiltasSouls.NPCs
                     case 3: //p1 drop nados
                         if (npc.ai[2] == 60f && Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            SpawnRazorbladeRing(npc, 12, 10f, npc.damage / 4, 1f);
+                            SpawnRazorbladeRing(12, 10f, npc.damage / 4, 1f);
                         }
                         break;
 
@@ -4153,8 +4172,8 @@ namespace FargowiltasSouls.NPCs
 
                     case 7: //p2 spin & bubbles
                         npc.position -= npc.velocity * 0.25f;
-                        Counter[0]++;
-                        if (Counter[0] > 2)
+                        
+                        if (++Counter[0] > 2)
                         {
                             Counter[0] = 0;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -4162,7 +4181,7 @@ namespace FargowiltasSouls.NPCs
                                 Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2),
                                     ModContent.ProjectileType<RazorbladeTyphoon2>(), npc.damage / 4, 0f, Main.myPlayer, .03f);
                                 Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2),
-                                    ModContent.ProjectileType<RazorbladeTyphoon2>(), npc.damage / 4, 0f, Main.myPlayer, .015f);
+                                    ModContent.ProjectileType<RazorbladeTyphoon2>(), npc.damage / 4, 0f, Main.myPlayer, .02f);
 
                                 if (Fargowiltas.Instance.MasomodeEXLoaded) //lol
                                 {
@@ -4191,8 +4210,8 @@ namespace FargowiltasSouls.NPCs
                             spawnPos += npc.Center;
                             Projectile.NewProjectile(spawnPos.X, spawnPos.Y, 0f, 8f, ProjectileID.SharknadoBolt, 0, 0f, Main.myPlayer);
 
-                            SpawnRazorbladeRing(npc, 8, 8f, npc.damage / 4, 2f);
-                            SpawnRazorbladeRing(npc, 8, 8f, npc.damage / 4, -2f);
+                            //SpawnRazorbladeRing(8, 8f, npc.damage / 4, 2f);
+                            //SpawnRazorbladeRing(8, 8f, npc.damage / 4, -2f);
 
                             bool random = Main.rand.Next(2) == 0; //fan above or to sides
                             for (int j = -1; j <= 1; j++) //to both sides of player
@@ -4218,9 +4237,10 @@ namespace FargowiltasSouls.NPCs
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
+                                int type = ModContent.ProjectileType<RazorbladeTyphoon2>();
                                 for (int i = 0; i < Main.maxProjectiles; i++)
                                 {
-                                    if (Main.projectile[i].active && Main.projectile[i].type == ProjectileID.SharknadoBolt)
+                                    if (Main.projectile[i].active && (Main.projectile[i].type == ProjectileID.SharknadoBolt || Main.projectile[i].type == type))
                                     {
                                         Main.projectile[i].Kill();
                                     }
@@ -4303,7 +4323,7 @@ namespace FargowiltasSouls.NPCs
                     case 12: //p3 *teleports behind you*
                         if (npc.ai[2] == 15f)
                         {
-                            SpawnRazorbladeRing(npc, 6, 8f, npc.damage / 4, -0.75f);
+                            SpawnRazorbladeRing(6, 8f, npc.damage / 4, -0.75f);
                         }
                         /*else if (npc.ai[2] == 16f)
                         {

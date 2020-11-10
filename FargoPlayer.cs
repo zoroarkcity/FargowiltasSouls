@@ -337,6 +337,7 @@ namespace FargowiltasSouls
         public bool LihzahrdBlessing;
         public bool Berserked;
         public bool HolyPrice;
+        public bool NanoInjection;
 
         public int MasomodeCrystalTimer = 0;
         public int MasomodeFreezeTimer = 0;
@@ -817,6 +818,7 @@ namespace FargowiltasSouls
             LihzahrdBlessing = false;
             Berserked = false;
             HolyPrice = false;
+            NanoInjection = false;
 
             if (!Mash && MashCounter > 0)
             {
@@ -1934,6 +1936,15 @@ namespace FargowiltasSouls
 
         public override void UpdateBadLifeRegen()
         {
+            if (NanoInjection)
+            {
+                if (player.lifeRegen > 0)
+                    player.lifeRegen = 0;
+
+                player.lifeRegenTime = 0;
+                player.lifeRegen -= 12;
+            }
+
             if (Shadowflame)
             {
                 if (player.lifeRegen > 0)

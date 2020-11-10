@@ -8913,25 +8913,6 @@ namespace FargowiltasSouls.NPCs
             Main.gore[index7].velocity *= 0.4f;
         }
 
-        private void SpawnRazorbladeRing(NPC npc, int max, float speed, int damage, float rotationModifier, bool reduceTimeleft = false)
-        {
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                return;
-            float rotation = 2f * (float)Math.PI / max;
-            Vector2 vel = Main.player[npc.target].Center - npc.Center;
-            vel.Normalize();
-            vel *= speed;
-            int type = ModContent.ProjectileType<RazorbladeTyphoon>();
-            for (int i = 0; i < max; i++)
-            {
-                vel = vel.RotatedBy(rotation);
-                int p = Projectile.NewProjectile(npc.Center, vel, type, damage, 0f, Main.myPlayer, rotationModifier * npc.spriteDirection, speed);
-                if (reduceTimeleft && p < 1000)
-                    Main.projectile[p].timeLeft /= 2;
-            }
-            Main.PlaySound(SoundID.Item84, npc.Center);
-        }
-
         public void NetUpdateMaso(int npc) //MAKE SURE THAT YOU CALL THIS FROM THE GLOBALNPC INSTANCE OF THE NPC ITSELF
         {
             if (Main.netMode == NetmodeID.SinglePlayer)
