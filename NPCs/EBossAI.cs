@@ -4160,7 +4160,9 @@ namespace FargowiltasSouls.NPCs
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2),
-                                    ModContent.ProjectileType<RazorbladeTyphoon2>(), npc.damage / 4, 0f, Main.myPlayer);
+                                    ModContent.ProjectileType<RazorbladeTyphoon2>(), npc.damage / 4, 0f, Main.myPlayer, .03f);
+                                Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2),
+                                    ModContent.ProjectileType<RazorbladeTyphoon2>(), npc.damage / 4, 0f, Main.myPlayer, .015f);
 
                                 if (Fargowiltas.Instance.MasomodeEXLoaded) //lol
                                 {
@@ -4189,7 +4191,8 @@ namespace FargowiltasSouls.NPCs
                             spawnPos += npc.Center;
                             Projectile.NewProjectile(spawnPos.X, spawnPos.Y, 0f, 8f, ProjectileID.SharknadoBolt, 0, 0f, Main.myPlayer);
 
-                            //SpawnRazorbladeRing(npc, 12, 10f, npc.damage / 4, 2f);
+                            SpawnRazorbladeRing(npc, 8, 8f, npc.damage / 4, 2f);
+                            SpawnRazorbladeRing(npc, 8, 8f, npc.damage / 4, -2f);
 
                             bool random = Main.rand.Next(2) == 0; //fan above or to sides
                             for (int j = -1; j <= 1; j++) //to both sides of player

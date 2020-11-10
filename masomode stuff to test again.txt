@@ -768,3 +768,7 @@ fishron
 	p2 ring -> accel bubbles replaced with slower indestructible razors
 	p2 nado -> razor rings replaced with a barrage of spectral fishrons
 	cleanses all sharknados and sharkrons while entering p3
+
+fishron
+	p2 ring -> spawns two sets of razors at a time, a fast and slow
+	p2 nado -> spawns two rings of razors in addition to spectral fishrons

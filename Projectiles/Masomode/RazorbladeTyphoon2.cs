@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
         public override void AI()
         {
             if (++projectile.localAI[1] > 30 && projectile.localAI[1] < 120)
-                projectile.velocity *= 1.025f;
+                projectile.velocity *= 1 + projectile.ai[0];
 
             //vanilla typhoon dust (ech)
             int cap = Main.rand.Next(3);
