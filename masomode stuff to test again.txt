@@ -773,3 +773,6 @@ fishron
 	p2 ring -> spawns two sets of razors at a time, a fast and slow
 nano injection causes damage over time
 eoc/plantera life crystal/fruit drops 5 to 3
+lump of flesh 100 base damage to 75 base damage
+celestial rune and cultist minion fireball has reduced timeleft and red tint
+tried something to fix eater breaking in mp

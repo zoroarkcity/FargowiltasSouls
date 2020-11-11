@@ -144,7 +144,7 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
 
-                if (npc.HasValidTarget && Main.player[npc.target].position.Y > npc.position.Y) //player went back down
+                if (npc.HasValidTarget && Main.netMode != NetmodeID.MultiplayerClient && Main.player[npc.target].position.Y > npc.position.Y) //player went back down
                 {
                     masoBool[0] = false;
                     masoBool[2] = false;
@@ -375,8 +375,7 @@ namespace FargowiltasSouls.NPCs
                             Counter[1] = 30;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                                 FargoGlobalProjectile.XWay(8, npc.Center, ModContent.ProjectileType<BloodScythe>(), 1f, npc.damage / 4, 0);
-
-                            NetUpdateMaso(npc.whoAmI);
+                            
                             npc.netUpdate = true;
                         }
                         else if (Counter[2] > 20)
@@ -388,7 +387,6 @@ namespace FargowiltasSouls.NPCs
                         {
                             Counter[3] = 0;
                             masoBool[1] = true;
-                            NetUpdateMaso(npc.whoAmI);
                             npc.netUpdate = true;
                         }
                         
@@ -666,7 +664,6 @@ namespace FargowiltasSouls.NPCs
                         }
 
                         npc.netUpdate = true;
-                        NetUpdateMaso(npc.whoAmI);
                     }
                 }
             }
@@ -726,7 +723,6 @@ namespace FargowiltasSouls.NPCs
                     Counter[0] = (int)Main.player[npc.target].Center.X; //store their location
 
                     npc.netUpdate = true;
-                    NetUpdateMaso(npc.whoAmI);
                 }
                 else if (Counter[1] < 240) //cancel early and turn once we fly past player
                 {
@@ -747,7 +743,6 @@ namespace FargowiltasSouls.NPCs
                     Counter[0] = Math.Sign((int)Main.player[npc.target].Center.X - Counter[0]); //which side player moved to
 
                     npc.netUpdate = true;
-                    NetUpdateMaso(npc.whoAmI);
                 }
                 else if (Counter[1] < 270) //u-turn
                 {
@@ -757,7 +752,6 @@ namespace FargowiltasSouls.NPCs
                 {
                     npc.velocity = Vector2.Normalize(npc.velocity) * 15f;
                     npc.netUpdate = true;
-                    NetUpdateMaso(npc.whoAmI);
                 }
                 else if (Counter[1] > 300)
                 {
@@ -768,19 +762,26 @@ namespace FargowiltasSouls.NPCs
 
                     for (int i = 0; i < Main.maxNPCs; i++)
                     {
-                        if (Main.npc[i].active && Main.npc[i].type == npc.type)
+                        if (Main.npc[i].active)
                         {
-                            Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[1] = 0;
-                            Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[2] = 0;
-                            Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[3] = 0;
-                            Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().masoBool[0] = false;
-                            Main.npc[i].netUpdate = true;
-                            NetUpdateMaso(i);
+                            if (Main.npc[i].type == npc.type)
+                            {
+                                Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[1] = 0;
+                                Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[2] = 0;
+                                Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().Counter[3] = 0;
+                                Main.npc[i].GetGlobalNPC<EModeGlobalNPC>().masoBool[0] = false;
+                                Main.npc[i].netUpdate = true;
+                                if (Main.netMode == NetmodeID.Server)
+                                    NetUpdateMaso(i);
+                            }
+                            else if (Main.npc[i].type == NPCID.EaterofWorldsBody || Main.npc[i].type == NPCID.EaterofWorldsTail)
+                            {
+                                Main.npc[i].netUpdate = true;
+                            }
                         }
                     }
 
                     npc.netUpdate = true;
-                    NetUpdateMaso(npc.whoAmI);
                 }
 
                 npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) + 1.57f;
