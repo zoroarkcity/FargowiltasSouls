@@ -772,3 +772,4 @@ fishron
 fishron
 	p2 ring -> spawns two sets of razors at a time, a fast and slow
 nano injection causes damage over time
+eoc/plantera life crystal/fruit drops 5 to 3

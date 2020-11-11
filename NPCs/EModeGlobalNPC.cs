@@ -6672,7 +6672,7 @@ namespace FargowiltasSouls.NPCs
 
                     #region boss drops
                     case NPCID.KingSlime:
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeCrystal, 5);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeCrystal, 3);
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.WoodenCrate, 5);
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<SlimyShield>());
                         if (Main.netMode != NetmodeID.MultiplayerClient && !BossIsAlive(ref mutantBoss, mod.NPCType("MutantBoss")) && !NPC.AnyNPCs(ModContent.NPCType<Mutant>()))
@@ -6772,7 +6772,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.Plantera:
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<MagicalBulb>());
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.JungleFishingCrate, 5);
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeFruit, 5);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeFruit, 3);
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.ChlorophyteOre, Main.rand.Next(101) + 100);
                         break;
 
