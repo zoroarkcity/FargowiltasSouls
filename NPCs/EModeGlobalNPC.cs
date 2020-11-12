@@ -201,6 +201,10 @@ namespace FargowiltasSouls.NPCs
                     npc.lifeMax *= 4;
                     break;
 
+                case NPCID.VileSpit:
+                    npc.scale *= 1.25f;
+                    break;
+
                 case NPCID.WanderingEye:
                     npc.lifeMax *= 2;
                     break;
@@ -4441,7 +4445,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.EyeofCthulhu:
                     case NPCID.WanderingEye:
                     case NPCID.ServantofCthulhu:
-                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 180);
+                        target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 120);
                         goto case NPCID.DemonEye;
                     case NPCID.DemonEye:
                     case NPCID.DemonEyeOwl:
@@ -6668,7 +6672,7 @@ namespace FargowiltasSouls.NPCs
 
                     #region boss drops
                     case NPCID.KingSlime:
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeCrystal, 5);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeCrystal, 3);
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.WoodenCrate, 5);
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<SlimyShield>());
                         if (Main.netMode != NetmodeID.MultiplayerClient && !BossIsAlive(ref mutantBoss, mod.NPCType("MutantBoss")) && !NPC.AnyNPCs(ModContent.NPCType<Mutant>()))
@@ -6768,7 +6772,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.Plantera:
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<MagicalBulb>());
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.JungleFishingCrate, 5);
-                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeFruit, 5);
+                        npc.DropItemInstanced(npc.position, npc.Size, ItemID.LifeFruit, 3);
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.ChlorophyteOre, Main.rand.Next(101) + 100);
                         break;
 
@@ -8907,25 +8911,6 @@ namespace FargowiltasSouls.NPCs
             Main.gore[index7].velocity.X = -1.5f - Main.rand.Next(-50, 51) * 0.01f;
             Main.gore[index7].velocity.Y = -1.5f + Main.rand.Next(-50, 51) * 0.01f;
             Main.gore[index7].velocity *= 0.4f;
-        }
-
-        private void SpawnRazorbladeRing(NPC npc, int max, float speed, int damage, float rotationModifier, bool reduceTimeleft = false)
-        {
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                return;
-            float rotation = 2f * (float)Math.PI / max;
-            Vector2 vel = Main.player[npc.target].Center - npc.Center;
-            vel.Normalize();
-            vel *= speed;
-            int type = ModContent.ProjectileType<RazorbladeTyphoon>();
-            for (int i = 0; i < max; i++)
-            {
-                vel = vel.RotatedBy(rotation);
-                int p = Projectile.NewProjectile(npc.Center, vel, type, damage, 0f, Main.myPlayer, rotationModifier * npc.spriteDirection, speed);
-                if (reduceTimeleft && p < 1000)
-                    Main.projectile[p].timeLeft /= 2;
-            }
-            Main.PlaySound(SoundID.Item84, npc.Center);
         }
 
         public void NetUpdateMaso(int npc) //MAKE SURE THAT YOU CALL THIS FROM THE GLOBALNPC INSTANCE OF THE NPC ITSELF

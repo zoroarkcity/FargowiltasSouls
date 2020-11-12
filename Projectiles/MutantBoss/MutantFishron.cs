@@ -94,7 +94,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 {
                     projectile.velocity = Main.player[ai0].Center - projectile.Center;
                     projectile.velocity.Normalize();
-                    projectile.velocity *= 24f;
+                    projectile.velocity *= projectile.type == ModContent.ProjectileType<MutantFishron>() ? 24f : 20f;
                     projectile.rotation = projectile.velocity.ToRotation();
                     projectile.direction = projectile.spriteDirection = projectile.velocity.X > 0 ? 1 : -1;
                     projectile.frameCounter = 5;

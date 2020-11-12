@@ -759,5 +759,20 @@ adjusted eoc
 buffed deviantt's frostfireball attack, shoots more of them and they persist slightly longer
 adjusted eow u-turn so it ends faster
 
-altered eow resist implementation
+altered eow resist implementation (works in mp)
 nerfed spazmatism flame jets from 5 to 4
+reduced damage of cultist's pillar fragments (150 to 100) but they persist longer
+reduced duration of eoc's curse of moon from 3s to 2s
+fishron
+	p1 bubbles -> added barrage of spectral fishrons
+	p2 ring -> accel bubbles replaced with slower indestructible razors
+	p2 nado -> razor rings replaced with a barrage of spectral fishrons
+	cleanses all sharknados and sharkrons while entering p3
+
+fishron
+	p2 ring -> spawns two sets of razors at a time, a fast and slow
+nano injection causes damage over time
+eoc/plantera life crystal/fruit drops 5 to 3
+lump of flesh 100 base damage to 75 base damage
+celestial rune and cultist minion fireball has reduced timeleft and red tint
+tried something to fix eater breaking in mp
