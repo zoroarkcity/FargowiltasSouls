@@ -18,9 +18,10 @@ NEW UPDATE - V 1.3.92
 -Mutant's Destroyers, Primes, and Fishrons are now recolored
 -Tophat Squirrels can be caught as regular critters and crafted into a reworked nonconsumable magic weapon
 
--Updated sprites: Rabies Vaccine, Remote Control, Regurgi (temp possibly), souls and enchants (get opinions)
+-Updated sprites: Rabies Vaccine, Remote Control, Regurgitator, Colossus Soul and World Shaper Soul
 
--add tribal charm waist, wyvern feather head, plantera bulb head, skull charm neck, wretched piuch waist
--add 22 painting
+-Fixed Tophat Squirrel critter not being caught
+-Added visuals for Tribal Charm, Skull Charm, Wretched Pouch, Betsy Heart
+-Tungsten Enchant now always affects spears 
 
 -See the wiki for full details
