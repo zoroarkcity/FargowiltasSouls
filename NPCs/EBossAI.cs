@@ -710,13 +710,11 @@ namespace FargowiltasSouls.NPCs
                         npc.velocity.X = 24 * Math.Sign(npc.velocity.X);
                     if (Math.Abs(npc.velocity.Y) > 24)
                         npc.velocity.Y = 24 * Math.Sign(npc.velocity.Y);
-
-                    npc.netUpdate = true;
+                    
                     npc.localAI[0] = 1f;
 
-                    if (Main.netMode == NetmodeID.Server && npc.netUpdate && --npc.netSpam < 0) //manual mp sync control
+                    if (Main.netMode == NetmodeID.Server && --npc.netSpam < 0) //manual mp sync control
                     {
-                        npc.netUpdate = false;
                         npc.netSpam = 5;
                         NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc.whoAmI);
                     }
@@ -726,6 +724,9 @@ namespace FargowiltasSouls.NPCs
                     Main.PlaySound(SoundID.Roar, Main.player[npc.target].Center, 0);
                     npc.velocity = Vector2.UnitY * -15f;
                     Counter[0] = (int)Main.player[npc.target].Center.X; //store their location
+
+                    npc.netUpdate = true;
+                    NetUpdateMaso(npc.whoAmI);
                 }
                 else if (Counter[1] < 240) //cancel early and turn once we fly past player
                 {
@@ -744,6 +745,9 @@ namespace FargowiltasSouls.NPCs
                     npc.velocity = Vector2.Normalize(npc.velocity) * (float)Math.PI * radius / 30;
 
                     Counter[0] = Math.Sign((int)Main.player[npc.target].Center.X - Counter[0]); //which side player moved to
+
+                    npc.netUpdate = true;
+                    NetUpdateMaso(npc.whoAmI);
                 }
                 else if (Counter[1] < 270) //u-turn
                 {
@@ -752,6 +756,8 @@ namespace FargowiltasSouls.NPCs
                 else if (Counter[1] == 270)
                 {
                     npc.velocity = Vector2.Normalize(npc.velocity) * 15f;
+                    npc.netUpdate = true;
+                    NetUpdateMaso(npc.whoAmI);
                 }
                 else if (Counter[1] > 300)
                 {
@@ -778,6 +784,16 @@ namespace FargowiltasSouls.NPCs
                 }
 
                 npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) + 1.57f;
+
+                if (npc.netUpdate)
+                {
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc.whoAmI);
+                        NetUpdateMaso(npc.whoAmI);
+                    }
+                    npc.netUpdate = false;
+                }
                 return false;
             }
 
