@@ -231,7 +231,7 @@ namespace FargowiltasSouls.Projectiles
                         }
                     }
 
-                    if (modPlayer.TungstenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenProjSize) && modPlayer.TungstenCD == 0 && !townNPCProj && projectile.damage != 0 && !projectile.trap && !projectile.minion && projectile.aiStyle != 99 && projectile.type != ProjectileID.Arkhalis && projectile.type != ModContent.ProjectileType<BlenderOrbital>() && projectile.friendly)
+                    if (modPlayer.TungstenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenProjSize) && (modPlayer.TungstenCD == 0 || projectile.aiStyle != 99) && !townNPCProj && projectile.damage != 0 && !projectile.trap && !projectile.minion && projectile.type != ProjectileID.Arkhalis && projectile.type != ModContent.ProjectileType<BlenderOrbital>() && projectile.friendly)
                     {
                         projectile.position = projectile.Center;
                         projectile.scale *= 2f;
