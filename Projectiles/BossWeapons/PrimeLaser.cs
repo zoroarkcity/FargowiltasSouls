@@ -42,8 +42,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
 			projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
 			Lighting.AddLight((int)projectile.Center.X / 16, (int)projectile.Center.Y / 16, 0.8f, 0f, 0.9f);
-			float num1 = 70f;
-			float num2 = 1f;
+			float num1 = 100f;
+			float num2 = 3f;
 			if ((double)projectile.ai[1] == 0.0)
 			{
 				projectile.localAI[0] += num2;
@@ -69,12 +69,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
 		public override void Kill(int timeLeft)
 		{
-			int num = Main.rand.Next(14, 20);
+			int num = Main.rand.Next(8, 12);
 			for (int index1 = 0; index1 < num; ++index1)
 			{
 				Vector2 position = projectile.Center - (projectile.velocity * index1/2);
-				int index2 = Dust.NewDust(position, 0, 0, 60, 0.0f, 0.0f, 100, new Color(255, 196, 196), 2.1f);
+				int index2 = Dust.NewDust(position, 0, 0, 130, 0.0f, 0.0f, 100, new Color(255, 196, 196), 2.1f);
 				Dust dust = Main.dust[index2];
+				dust.fadeIn = 0.7f;
 				dust.velocity = (projectile.velocity * 1.25f).RotatedByRandom(MathHelper.Pi / 12);
 				Main.dust[index2].noGravity = true;
 			}
@@ -101,7 +102,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 					Microsoft.Xna.Framework.Color color32 = projectile.GetAlpha(color25);
 					color32 *= (num176 - (float)num177) / num176;
 					color32.A = 0;
-					color32 = Color.Lerp(color32, Color.Red, 0.35f);
 					SpriteBatch arg_7727_0 = Main.spriteBatch;
 					Texture2D arg_7727_1 = Main.projectileTexture[projectile.type];
 					Vector2 arg_7727_2 = value8 - value9;
