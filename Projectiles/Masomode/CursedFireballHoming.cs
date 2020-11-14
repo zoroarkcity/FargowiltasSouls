@@ -21,27 +21,23 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.height = 16;
             projectile.aiStyle = -1;
             projectile.hostile = true;
-            projectile.alpha = 70;
             projectile.penetrate = -1;
             projectile.tileCollide = false;
             projectile.timeLeft = 600;
-            projectile.scale = 0.75f;
-            Main.projFrames[projectile.type] = 4;
+            Main.projFrames[projectile.type] = 5;
         }
         public override void AI()
         {
             projectile.frameCounter++;
-            if (projectile.frameCounter > 8)
+            if (projectile.frameCounter > 4)
             {
                 projectile.frame++;
                 projectile.frameCounter = 1;
             }
-            if (projectile.frame > 3)
+            if (projectile.frame > 4)
             {
                 projectile.frame = 0;
             }
-
-            projectile.scale = 0.75f + (float)(Math.Sin(projectile.timeLeft / 3) / 5); //make it pulsate slightly
 
             //Lighting.AddLight(projectile.Center, 0.35f * 0.8f, 0.8f, 0f);
 
@@ -51,7 +47,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 20, 2, 0);
             }
 
-            if (Main.rand.Next(3) == 0)
+            if (Main.rand.Next(3) == 0 && projectile.velocity.Length() > 0)
             {
                 int index = Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, 75, projectile.velocity.X, projectile.velocity.Y, 100, default, 3f * projectile.scale);
                 Main.dust[index].noGravity = true;
@@ -65,7 +61,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
             if (projectile.localAI[1] > 20 && projectile.localAI[1] < 60)
             {
-                float lerpspeed = 0.023f + projectile.localAI[1] / 35000;
+                float lerpspeed = 0.0235f + projectile.localAI[1] / 30000;
                 projectile.velocity = Vector2.Lerp(projectile.velocity, Vector2.Zero, lerpspeed);
             }
             if (++projectile.localAI[1] == 60)
