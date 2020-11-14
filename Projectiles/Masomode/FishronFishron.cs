@@ -10,6 +10,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 {
     public class FishronFishron : MutantBoss.MutantFishron
     {
+        bool firstTick = false;
         public override string Texture => "FargowiltasSouls/NPCs/Vanilla/NPC_370";
 
         public override void SetDefaults()
@@ -18,7 +19,17 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.height = (int)(projectile.height * 0.75);
             projectile.width = (int)(projectile.height * 0.75);
             projectile.tileCollide = false;
-            projectile.timeLeft = 150 + Main.rand.Next(0, 10); //make them all die at slightly different times so no big audio pop on death
+        }
+
+        public override bool PreAI()
+        {
+            if (!firstTick)
+            {
+                projectile.timeLeft = 150 + Main.rand.Next(10); //make them all die at slightly different times so no big audio pop on death
+                projectile.netUpdate = true; //sync timeleft on first tick
+                firstTick = true;
+            }
+            return true;
         }
         public override void OnHitPlayer(Player player, int damage, bool crit)
         {
