@@ -317,11 +317,6 @@ namespace FargowiltasSouls
 
                     int heal = 5;
 
-                    if (NatureForce || WizardEnchant)
-                    {
-                        heal *= 2;
-                    }
-
                     player.HealEffect(heal);
                     player.statLife += heal;
                     CrimsonRegenSoFar += heal;
@@ -666,9 +661,9 @@ namespace FargowiltasSouls
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.JungleSpores) && player.jump > 0 && jungleCD == 0)
             {
-                int dmg = (NatureForce || WizardEnchant) ? 100 : 25;
+                int dmg = (NatureForce || WizardEnchant) ? 150 : 30;
                 Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 62, 0.5f);
-                FargoGlobalProjectile.XWay(10, player.Center, ProjectileID.SporeCloud/*ModContent.ProjectileType<SporeBoom>()*/, 3f, HighestDamageTypeScaling(dmg), 0f);
+                FargoGlobalProjectile.XWay(10, player.Center, ProjectileID.SporeCloud, 3f, HighestDamageTypeScaling(dmg), 0f);
                 jungleCD = 30;
             }
 
@@ -681,7 +676,6 @@ namespace FargowiltasSouls
             {
                 player.cordage = true;
             }
-            
         }
 
         public void MeteorEffect()
@@ -1223,7 +1217,7 @@ namespace FargowiltasSouls
             {
                 turtleCounter++;
 
-                if (turtleCounter > 30)
+                if (turtleCounter > 20)
                 {
                     player.AddBuff(ModContent.BuffType<ShellHide>(), 2);
                 }

@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override void SetDefaults()
         {
             item.damage = 36;
-            item.crit += 15;
+            item.crit = 0;
             item.ranged = true;
             item.useTime = 36;
             item.useAnimation = 36;
@@ -41,10 +41,10 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         }
 
         //make them hold it different
-        /*public override Vector2? HoldoutOffset()
+        public override Vector2? HoldoutOffset()
         {
             return new Vector2(-10, 0);
-        }*/
+        }
 
         public override bool ConsumeAmmo(Player player)
         {

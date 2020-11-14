@@ -464,18 +464,18 @@ namespace FargowiltasSouls.Projectiles
                         projectile.Kill();
                     }
 
-                    if (modPlayer.ShroomEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ShroomiteShrooms) && player.stealth == 0 && projectile.damage > 0 && !townNPCProj && projectile.velocity.Length() > 1 && projectile.minionSlots == 0 && projectile.type != ModContent.ProjectileType<ShroomiteShroom>() && player.ownedProjectileCounts[ModContent.ProjectileType<ShroomiteShroom>()] < 50)
+                    if (modPlayer.ShroomEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.ShroomiteShrooms) && projectile.damage > 0 && !townNPCProj && projectile.velocity.Length() > 1 && projectile.minionSlots == 0 && projectile.type != ModContent.ProjectileType<ShroomiteShroom>() && player.ownedProjectileCounts[ModContent.ProjectileType<ShroomiteShroom>()] < 50)
                     {
                         if (shroomiteMushroomCD <= 0)
                         {
                             shroomiteMushroomCD = 15;
 
-                            if (modPlayer.NatureForce || modPlayer.WizardEnchant)
+                            if (player.stealth == 0 || modPlayer.NatureForce || modPlayer.WizardEnchant)
                             {
-                                shroomiteMushroomCD = 10;
+                                shroomiteMushroomCD = 8;
                             }
 
-                            int p = Projectile.NewProjectile(projectile.position.X + (float)(projectile.width / 2), projectile.position.Y + (float)(projectile.height / 2), projectile.velocity.X, projectile.velocity.Y, ModContent.ProjectileType<ShroomiteShroom>(), projectile.damage / 5, 0f, projectile.owner, 0f, 0f);
+                            int p = Projectile.NewProjectile(projectile.position.X + (float)(projectile.width / 2), projectile.position.Y + (float)(projectile.height / 2), projectile.velocity.X, projectile.velocity.Y, ModContent.ProjectileType<ShroomiteShroom>(), projectile.damage / 3, 0f, projectile.owner, 0f, 0f);
                         }
                         shroomiteMushroomCD--;
                     }

@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
 
             projectile.usesIDStaticNPCImmunity = true;
-            projectile.idStaticNPCHitCooldown = 20;
+            projectile.idStaticNPCHitCooldown = 30;
         }
 
         public override void AI()
