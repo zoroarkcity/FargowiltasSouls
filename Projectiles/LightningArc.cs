@@ -15,10 +15,12 @@ namespace FargowiltasSouls.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lightning Arc");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 20;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[projectile.type] = 1;
         }
 
+        float colorlerp;
+        bool playedsound = false;
         public override void SetDefaults()
         {
             projectile.width = 20;
@@ -26,10 +28,11 @@ namespace FargowiltasSouls.Projectiles
             projectile.scale = 0.5f;
             projectile.aiStyle = -1;
             projectile.friendly = true;
+            projectile.ranged = true;
             projectile.alpha = 100;
             projectile.ignoreWater = true;
             projectile.tileCollide = true;
-            projectile.extraUpdates = 4;
+            projectile.extraUpdates = 3;
             projectile.timeLeft = 120 * (projectile.extraUpdates + 1);
             projectile.penetrate = -1;
 
@@ -41,6 +44,14 @@ namespace FargowiltasSouls.Projectiles
         {
             projectile.frameCounter = projectile.frameCounter + 1;
             Lighting.AddLight(projectile.Center, 0.3f, 0.45f, 0.5f);
+            colorlerp += 0.05f;
+
+            if (!playedsound)
+            {
+                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 122, 0.5f, -0.5f);
+                playedsound = true;
+            }
+
             if (projectile.velocity == Vector2.Zero)
             {
                 if (projectile.frameCounter >= projectile.extraUpdates * 2)
@@ -113,25 +124,46 @@ namespace FargowiltasSouls.Projectiles
                 projectile.velocity = Vector2.Zero;
                 projectile.localAI[1] = 1f;
                 goto label_3461;
-                label_3460:
+            label_3460:
                 spinningpoint = rotationVector2;
-                label_3461:
+            label_3461:
                 if (projectile.velocity == Vector2.Zero || projectile.velocity.Length() < 4f)
                 {
                     projectile.velocity = Vector2.UnitX.RotatedBy(projectile.ai[0]).RotatedByRandom(Math.PI / 4) * 7f;
                     projectile.ai[1] = Main.rand.Next(100);
-                    projectile.netUpdate = true;
                     return;
                 }
                 projectile.localAI[0] += (float)((double)spinningpoint.X * (double)(projectile.extraUpdates + 1) * 2.0) * num1;
                 projectile.velocity = spinningpoint.RotatedBy((double)projectile.ai[0] + 1.57079637050629, new Vector2()) * num1;
                 projectile.rotation = projectile.velocity.ToRotation() + 1.570796f;
             }
+
+            /*for (int index1 = 1; index1 < projectile.oldPos.Length; index1++)
+            {
+                const int max = 5;
+                Vector2 offset = projectile.oldPos[index1 - 1] - projectile.oldPos[index1];
+                offset /= max;
+                for (int i = 0; i < 5; i++)
+                {
+                    Vector2 position = projectile.oldPos[index1] + offset * i;
+                    int index2 = Dust.NewDust(position, projectile.width, projectile.height, 160, 0.0f, 0.0f, 0, new Color(), 1f);
+                    Main.dust[index2].scale = Main.rand.Next(70, 110) * 0.013f;
+                    Main.dust[index2].velocity *= 0.2f;
+                }
+            }*/
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            target.AddBuff(BuffID.Electrified, 240);
+            for (int index = 0; index < projectile.oldPos.Length && ((double)projectile.oldPos[index].X != 0.0 || (double)projectile.oldPos[index].Y != 0.0); ++index)
+            {
+                Rectangle myRect = projHitbox;
+                myRect.X = (int)projectile.oldPos[index].X;
+                myRect.Y = (int)projectile.oldPos[index].Y;
+                if (myRect.Intersects(targetHitbox))
+                    return true;
+            }
+            return false;
         }
 
         public override void Kill(int timeLeft)
@@ -147,22 +179,15 @@ namespace FargowiltasSouls.Projectiles
             }
         }
 
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            for (int index = 0; index < projectile.oldPos.Length && ((double)projectile.oldPos[index].X != 0.0 || (double)projectile.oldPos[index].Y != 0.0); ++index)
-            {
-                Rectangle myRect = projHitbox;
-                myRect.X = (int)projectile.oldPos[index].X;
-                myRect.Y = (int)projectile.oldPos[index].Y;
-                if (myRect.Intersects(targetHitbox))
-                    return true;
-            }
-            return false;
+            target.AddBuff(BuffID.Electrified, 180);
         }
-        
+
         public override Color? GetAlpha(Color lightColor)
         {
-            return new Color(255, 255, 255, 0) * (1f - projectile.alpha / 255f);
+
+            return Color.Lerp(Color.LightSkyBlue, Color.White, 0.5f + (float)Math.Sin(colorlerp) / 2) * 0.5f;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -173,19 +198,26 @@ namespace FargowiltasSouls.Projectiles
             Color color27 = projectile.GetAlpha(lightColor);
             for (int i = 1; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
             {
-                if (projectile.oldPos[i] == Vector2.Zero || projectile.oldPos[i-1] == projectile.oldPos[i])
+                if (projectile.oldPos[i] == Vector2.Zero || projectile.oldPos[i - 1] == projectile.oldPos[i])
                     continue;
                 Vector2 offset = projectile.oldPos[i - 1] - projectile.oldPos[i];
                 int length = (int)offset.Length();
+                float scale = projectile.scale * (float)Math.Sin(i / MathHelper.Pi);
                 offset.Normalize();
-                const int step = 5;
+                const int step = 3;
                 for (int j = 0; j < length; j += step)
                 {
                     Vector2 value5 = projectile.oldPos[i] + offset * j;
-                    Main.spriteBatch.Draw(texture2D13, value5 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, projectile.rotation, origin2, projectile.scale, SpriteEffects.FlipHorizontally, 0f);
+                    Main.spriteBatch.Draw(texture2D13, value5 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, projectile.rotation, origin2, scale, SpriteEffects.FlipHorizontally, 0f);
                 }
             }
             //Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+            return false;
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            projectile.velocity = Vector2.Zero;
             return false;
         }
     }
