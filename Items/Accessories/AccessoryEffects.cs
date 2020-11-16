@@ -256,53 +256,49 @@ namespace FargowiltasSouls
         {
             int dmg = 20;
             int maxTargets = 5;
-            int cdLength = 300;
+            int cdLength = 450;
 
             if (TerraForce)
             {
                 dmg = 100;
                 maxTargets = 10;
-                cdLength = 120;
+                cdLength = 200;
             }
 
-            if (Main.rand.Next(5) == 0)
+            float closestDist = 500f;
+            NPC closestNPC;
+
+            for (int i = 0; i < maxTargets; i++)
             {
-                float closestDist = 500f;
-                NPC closestNPC;
+                closestNPC = null;
 
-                for (int i = 0; i < maxTargets; i++)
+                for (int j = 0; j < 200; j++)
                 {
-                    closestNPC = null;
-
-                    for (int j = 0; j < 200; j++)
+                    NPC npc = Main.npc[j];
+                    if (npc.active && npc != target && npc.Distance(target.Center) < closestDist)
                     {
-                        NPC npc = Main.npc[j];
-                        if (npc.active && npc != target && !npc.HasBuff(ModContent.BuffType<Shock>()) && npc.Distance(target.Center) < closestDist )
-                        {
-                            closestNPC = npc;
-                            break;
-                        }
-                    }
-
-                    if (closestNPC != null)
-                    {
-                        Vector2 ai = closestNPC.Center - target.Center;
-                        float ai2 = Main.rand.Next(100);
-                        Vector2 velocity = Vector2.Normalize(ai) * 20;
-
-                        Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(target.Center, velocity, ModContent.ProjectileType<CopperLightning>(), HighestDamageTypeScaling(dmg), 0f, player.whoAmI, ai.ToRotation(), ai2);
-                        target.AddBuff(ModContent.BuffType<Shock>(), 60);
-                    }
-                    else
-                    {
+                        closestNPC = npc;
                         break;
                     }
-
-                    target = closestNPC;
                 }
 
-                copperCD = cdLength;
+                if (closestNPC != null)
+                {
+                    Vector2 ai = closestNPC.Center - target.Center;
+                    float ai2 = Main.rand.Next(100);
+                    Vector2 velocity = Vector2.Normalize(ai) * 20;
+
+                    Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(target.Center, velocity, ModContent.ProjectileType<CopperLightning>(), HighestDamageTypeScaling(dmg), 0f, player.whoAmI, ai.ToRotation(), ai2);
+                }
+                else
+                {
+                    break;
+                }
+
+                target = closestNPC;
             }
+
+            copperCD = cdLength;
         }
 
         public void CrimsonEffect(bool hideVisual)
@@ -769,7 +765,7 @@ namespace FargowiltasSouls
                 int buff = BuffID.OnFire;
                 float distance = 200f;
 
-                int baseDamage = 20;
+                int baseDamage = 30;
 
                 if (NatureForce || WizardEnchant)
                 {
@@ -911,12 +907,11 @@ namespace FargowiltasSouls
 
         public void PumpkinEffect(bool hideVisual)
         {
-            //pumpkin pies
             PumpkinEnchant = true;
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.PumpkinFire) && (player.controlLeft || player.controlRight) && !IsStandingStill)
             {
-                if (pumpkinCD <= 0 && player.ownedProjectileCounts[ModContent.ProjectileType<GrowingPumpkin>()] < 5)
+                if (pumpkinCD <= 0 && player.ownedProjectileCounts[ModContent.ProjectileType<GrowingPumpkin>()] < 10)
                 {
                     int x = (int)player.Center.X / 16;
                     int y = (int)(player.position.Y + player.height - 1f) / 16;
@@ -929,9 +924,8 @@ namespace FargowiltasSouls
                     if (!Main.tile[x, y].active() && Main.tile[x, y].liquid == 0 && Main.tile[x, y + 1] != null && (WorldGen.SolidTile(x, y + 1) || Main.tile[x, y + 1].type == TileID.Platforms))
                     {
                         Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<GrowingPumpkin>(), 0,  0, player.whoAmI);
+                        pumpkinCD = 300;
                     }
-
-                    pumpkinCD = 300;
                 }  
             }
 

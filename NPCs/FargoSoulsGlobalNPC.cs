@@ -598,15 +598,15 @@ namespace FargowiltasSouls.NPCs
 
             if (modPlayer.NecroEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.NecroGuardian) && !npc.boss && modPlayer.NecroCD == 0 && player.ownedProjectileCounts[ModContent.ProjectileType<NecroGrave>()] < 5)
             {
-                Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, npc.lifeMax / 5);
+                Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, npc.lifeMax / 4);
 
                 if (modPlayer.ShadowForce || modPlayer.WizardEnchant)
                 {
-                    modPlayer.NecroCD = 30;
+                    modPlayer.NecroCD = 15;
                 }
                 else
                 {
-                    modPlayer.NecroCD = 60;
+                    modPlayer.NecroCD = 30;
                 }
             }
 
@@ -871,7 +871,7 @@ namespace FargowiltasSouls.NPCs
                 {
                     necroDamage = 0;
 
-                    Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, npc.lifeMax / 50);
+                    Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, npc.lifeMax / 40);
                 }
             }
         }

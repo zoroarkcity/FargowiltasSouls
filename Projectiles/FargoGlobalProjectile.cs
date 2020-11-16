@@ -231,7 +231,7 @@ namespace FargowiltasSouls.Projectiles
                         }
                     }
 
-                    if (modPlayer.TungstenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenProjSize) && (modPlayer.TungstenCD == 0 || projectile.aiStyle != 99) && !townNPCProj && projectile.damage != 0 && !projectile.trap && !projectile.minion && projectile.type != ProjectileID.Arkhalis && projectile.type != ModContent.ProjectileType<BlenderOrbital>() && projectile.friendly)
+                    if (modPlayer.TungstenEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.TungstenProjSize) && (modPlayer.TungstenCD == 0 || projectile.aiStyle == 99) && !townNPCProj && projectile.damage != 0 && !projectile.trap && !projectile.minion && projectile.type != ProjectileID.Arkhalis && projectile.type != ModContent.ProjectileType<BlenderOrbital>() && projectile.friendly)
                     {
                         projectile.position = projectile.Center;
                         projectile.scale *= 2f;
@@ -1190,7 +1190,7 @@ namespace FargowiltasSouls.Projectiles
                 int dustId = Dust.NewDust(projectile.Center, projectile.width, projectile.height, 76, projectile.velocity.X, projectile.velocity.Y, 100, default(Color), 1f);
                 Main.dust[dustId].noGravity = true;
 
-                projectile.position -= projectile.velocity * 0.33f;
+                projectile.position -= projectile.velocity * 0.5f;
             }
 
             if (projectile.bobber && modPlayer.FishSoul1)

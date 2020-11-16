@@ -42,16 +42,11 @@ namespace FargowiltasSouls.Projectiles.Souls
                     //bonus damage if fully grown
                     int damage = projectile.frame == 4 ? 50 : 15;
 
-                    if (modPlayer.LifeForce || modPlayer.WizardEnchant)
-                    {
-                        damage *= 2;
-                    }
-
                     npc.StrikeNPC(modPlayer.HighestDamageTypeScaling(damage), 1, 0);
+
                     projectile.Kill();
                 }
             }
-
 
             if (projectile.frame != 4)
             {
@@ -84,18 +79,35 @@ namespace FargowiltasSouls.Projectiles.Souls
 
                 if (player.Hitbox.Intersects(projectile.Hitbox))
                 {
-                    int heal = 15;
+                    int heal = 25;
 
                     if (modPlayer.LifeForce || modPlayer.WizardEnchant)
                     {
                         heal *= 2;
                     }
 
+                    SpawnFire(modPlayer);
+
                     player.statLife += heal;
                     player.HealEffect(heal);
                     projectile.Kill();
                 }
             }
+        }
+
+        private void SpawnFire(FargoPlayer modPlayer)
+        {
+            int damage = 50;
+
+            if (modPlayer.LifeForce || modPlayer.WizardEnchant)
+            {
+                damage *= 2;
+            }
+
+            //leave some fire behind
+            Projectile[] fires = FargoGlobalProjectile.XWay(5, projectile.Center, ModContent.ProjectileType<PumpkinFlame>(), 3, modPlayer.HighestDamageTypeScaling(damage), 0);
+
+
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)

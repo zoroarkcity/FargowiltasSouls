@@ -126,7 +126,7 @@ namespace FargowiltasSouls
         public bool ForbiddenEnchant;
         public bool MinerEnchant;
         public bool PumpkinEnchant;
-        private int pumpkinCD;
+        private int pumpkinCD = 0;
         public bool SilverEnchant;
         public bool PlatinumEnchant;
         public bool NecroEnchant;
@@ -494,7 +494,7 @@ namespace FargowiltasSouls
 
             if (Fargowiltas.SmokeBombKey.JustPressed && NinjaEnchant && hasSmokeBomb && smokeBombCD == 0 && player.controlUseItem == false && player.itemAnimation == 0 && player.itemTime == 0)
             {
-                Vector2 velocity = Vector2.Normalize(Main.MouseWorld - player.Center) * 6;
+                Vector2 velocity = Vector2.Normalize(Main.MouseWorld - player.Center) * 12;
 
                 Projectile.NewProjectile(player.Center, velocity, ProjectileID.SmokeBomb, 0, 0, player.whoAmI);
 
@@ -3225,7 +3225,6 @@ namespace FargowiltasSouls
                         }
 
                         FargoGlobalProjectile.XWay(numBones, player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
-
                     }
                 }
 

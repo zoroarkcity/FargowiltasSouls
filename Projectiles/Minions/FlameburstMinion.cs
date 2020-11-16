@@ -129,7 +129,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 //travelling to destination
                 if (Vector2.Distance(projectile.Center, destination) > 10 && projectile.localAI[0] == 0)
                 {
-                    Vector2 velocity = Vector2.Normalize(destination - projectile.Center) * 8;
+                    Vector2 velocity = Vector2.Normalize(destination - projectile.Center) * 10;
                     projectile.velocity = velocity;
 
                     //dust
@@ -146,7 +146,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                     projectile.localAI[0] = 1;
                     projectile.velocity = Vector2.Zero;
 
-                    int attackRate = 45;
+                    int attackRate = 20;
                     projectile.ai[1] += 1f;
 
                     if (projectile.ai[1] >= attackRate)
@@ -172,7 +172,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                             {
                                 Vector2 velocity = Vector2.Normalize(target.Center - projectile.Center) * 10;
 
-                                int p = Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<MegaFlameburst>(), player.GetModPlayer<FargoPlayer>().HighestDamageTypeScaling(100), 4, projectile.owner, projectile.whoAmI);
+                                int p = Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<MegaFlameburst>(), player.GetModPlayer<FargoPlayer>().HighestDamageTypeScaling(85), 4, projectile.owner, projectile.whoAmI);
                                 Main.PlayTrackedSound(SoundID.DD2_FlameburstTowerShot, projectile.Center);
 
                                 const float rotationModifier = 0.08f;
