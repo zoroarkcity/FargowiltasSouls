@@ -69,13 +69,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
 		public override void Kill(int timeLeft)
 		{
-			int num = Main.rand.Next(8, 12);
+			int num = Main.rand.Next(6, 8);
 			for (int index1 = 0; index1 < num; ++index1)
 			{
 				Vector2 position = projectile.Center - (projectile.velocity * index1/2);
 				int index2 = Dust.NewDust(position, 0, 0, 130, 0.0f, 0.0f, 100, new Color(255, 196, 196), 2.1f);
 				Dust dust = Main.dust[index2];
-				dust.fadeIn = 0.7f;
+				dust.fadeIn = 0.2f;
+				dust.scale *= 0.66f;
 				dust.velocity = (projectile.velocity * 1.25f).RotatedByRandom(MathHelper.Pi / 12);
 				Main.dust[index2].noGravity = true;
 			}
