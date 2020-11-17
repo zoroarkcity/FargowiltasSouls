@@ -68,6 +68,7 @@ namespace FargowiltasSouls
         public int CrimsonRegenTimer = 0;
         public bool SpectreEnchant;
         public bool BeeEnchant;
+        private int beeCD = 0;
         public bool SpiderEnchant;
         public int SummonCrit = 20;
         public bool StardustEnchant;
@@ -112,7 +113,7 @@ namespace FargowiltasSouls
         public bool IronGuard;
         public bool TurtleEnchant;
         private int turtleCounter = 0;
-        public int TurtleShellHP = 10;
+        public int TurtleShellHP = 20;
         private int turtleRecoverCD = 240;
         public bool ShellHide;
         public bool LeadEnchant;
@@ -125,7 +126,7 @@ namespace FargowiltasSouls
         public bool ForbiddenEnchant;
         public bool MinerEnchant;
         public bool PumpkinEnchant;
-        private int pumpkinCD;
+        private int pumpkinCD = 0;
         public bool SilverEnchant;
         public bool PlatinumEnchant;
         public bool NecroEnchant;
@@ -493,7 +494,7 @@ namespace FargowiltasSouls
 
             if (Fargowiltas.SmokeBombKey.JustPressed && NinjaEnchant && hasSmokeBomb && smokeBombCD == 0 && player.controlUseItem == false && player.itemAnimation == 0 && player.itemTime == 0)
             {
-                Vector2 velocity = Vector2.Normalize(Main.MouseWorld - player.Center) * 6;
+                Vector2 velocity = Vector2.Normalize(Main.MouseWorld - player.Center) * 12;
 
                 Projectile.NewProjectile(player.Center, velocity, ProjectileID.SmokeBomb, 0, 0, player.whoAmI);
 
@@ -1209,6 +1210,9 @@ namespace FargowiltasSouls
 
             if (TungstenEnchant && TungstenCD > 0)
                 TungstenCD--;
+
+            if (BeeEnchant && beeCD > 0)
+                beeCD--;
 
             if (GoldShell)
             {
@@ -2323,7 +2327,7 @@ namespace FargowiltasSouls
 
             OnHitNPCEither(target, damage, knockback, crit, proj.type);
 
-            if (BeeEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.BeeEffect) && target.realLife == -1
+            if (BeeEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.BeeEffect) && beeCD == 0 && target.realLife == -1
                 && proj.type != ProjectileID.Bee && proj.type != ProjectileID.GiantBee && proj.maxPenetrate > 1 && proj.owner == Main.myPlayer)
             {
                 bool force = LifeForce || WizardEnchant;
@@ -2331,6 +2335,7 @@ namespace FargowiltasSouls
                 {
                     Projectile.NewProjectile(target.Center.X, target.Center.Y, Main.rand.Next(-35, 36) * 0.2f, Main.rand.Next(-35, 36) * 0.2f,
                         force ? ProjectileID.GiantBee : player.beeType(), proj.damage, player.beeKB(0f), player.whoAmI);
+                    beeCD = 15;
                 }
             }
                 
@@ -2672,7 +2677,7 @@ namespace FargowiltasSouls
                 }
                 else if (TinEnchant && crit && TinCrit < 100)
                 {
-                    if (TerraForce)
+                    if (TerraForce || WizardEnchant)
                     {
                         TinCrit += 5;
                         tinCD = 30;
@@ -2680,7 +2685,7 @@ namespace FargowiltasSouls
                     else
                     {
                         TinCrit += 4;
-                        tinCD = 60;
+                        tinCD = 30;
                     }
                 }
             }
@@ -3007,7 +3012,13 @@ namespace FargowiltasSouls
                     player.AddBuff(ModContent.BuffType<CrimsonRegen>(), 2);
                 }
 
-                CrimsonTotalToRegen = damage - CrimsonRegenSoFar;
+                CrimsonTotalToRegen = (damage - CrimsonRegenSoFar) / 2;
+
+                if (NatureForce || WizardEnchant)
+                {
+                    CrimsonTotalToRegen *= 2;
+                }
+
                 CrimsonRegenSoFar = 0;
             }
 
@@ -3214,7 +3225,6 @@ namespace FargowiltasSouls
                         }
 
                         FargoGlobalProjectile.XWay(numBones, player.Center, ModContent.ProjectileType<FossilBone>(), 15, 0, 0);
-
                     }
                 }
 

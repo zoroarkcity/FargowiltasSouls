@@ -14,8 +14,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Shroomite Enchantment");
 
             string tooltip =
-@"Not moving puts you in stealth
-While in stealth, all attacks gain trails of mushrooms
+@"All attacks gain trails of mushrooms
+Not moving puts you in stealth
+While in stealth, more mushrooms will spawn
 Summons a pet Truffle
 'Made with real shrooms!'";
             string tooltip_ch =

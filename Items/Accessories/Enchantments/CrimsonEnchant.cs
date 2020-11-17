@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Crimson Enchantment");
             Tooltip.SetDefault(
-@"After taking a hit, regen is greatly increased until the hit is healed off
+@"After taking a hit, regen is greatly increased until the half the hit is healed off
 If you take another hit before it's healed, you lose the heal in addition to normal damage
 Summons a pet Face Monster and Crimson Heart
 'The blood of your enemy is your rebirth'");

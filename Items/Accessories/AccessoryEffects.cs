@@ -256,53 +256,49 @@ namespace FargowiltasSouls
         {
             int dmg = 20;
             int maxTargets = 5;
-            int cdLength = 300;
+            int cdLength = 450;
 
             if (TerraForce)
             {
                 dmg = 100;
                 maxTargets = 10;
-                cdLength = 120;
+                cdLength = 200;
             }
 
-            if (Main.rand.Next(5) == 0)
+            float closestDist = 500f;
+            NPC closestNPC;
+
+            for (int i = 0; i < maxTargets; i++)
             {
-                float closestDist = 500f;
-                NPC closestNPC;
+                closestNPC = null;
 
-                for (int i = 0; i < maxTargets; i++)
+                for (int j = 0; j < 200; j++)
                 {
-                    closestNPC = null;
-
-                    for (int j = 0; j < 200; j++)
+                    NPC npc = Main.npc[j];
+                    if (npc.active && npc != target && npc.Distance(target.Center) < closestDist)
                     {
-                        NPC npc = Main.npc[j];
-                        if (npc.active && npc != target && !npc.HasBuff(ModContent.BuffType<Shock>()) && npc.Distance(target.Center) < closestDist )
-                        {
-                            closestNPC = npc;
-                            break;
-                        }
-                    }
-
-                    if (closestNPC != null)
-                    {
-                        Vector2 ai = closestNPC.Center - target.Center;
-                        float ai2 = Main.rand.Next(100);
-                        Vector2 velocity = Vector2.Normalize(ai) * 20;
-
-                        Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(target.Center, velocity, ModContent.ProjectileType<CopperLightning>(), HighestDamageTypeScaling(dmg), 0f, player.whoAmI, ai.ToRotation(), ai2);
-                        target.AddBuff(ModContent.BuffType<Shock>(), 60);
-                    }
-                    else
-                    {
+                        closestNPC = npc;
                         break;
                     }
-
-                    target = closestNPC;
                 }
 
-                copperCD = cdLength;
+                if (closestNPC != null)
+                {
+                    Vector2 ai = closestNPC.Center - target.Center;
+                    float ai2 = Main.rand.Next(100);
+                    Vector2 velocity = Vector2.Normalize(ai) * 20;
+
+                    Projectile p = FargoGlobalProjectile.NewProjectileDirectSafe(target.Center, velocity, ModContent.ProjectileType<CopperLightning>(), HighestDamageTypeScaling(dmg), 0f, player.whoAmI, ai.ToRotation(), ai2);
+                }
+                else
+                {
+                    break;
+                }
+
+                target = closestNPC;
             }
+
+            copperCD = cdLength;
         }
 
         public void CrimsonEffect(bool hideVisual)
@@ -316,11 +312,6 @@ namespace FargowiltasSouls
                     CrimsonRegenTimer = 0;
 
                     int heal = 5;
-
-                    if (NatureForce || WizardEnchant)
-                    {
-                        heal *= 2;
-                    }
 
                     player.HealEffect(heal);
                     player.statLife += heal;
@@ -666,9 +657,9 @@ namespace FargowiltasSouls
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.JungleSpores) && player.jump > 0 && jungleCD == 0)
             {
-                int dmg = (NatureForce || WizardEnchant) ? 100 : 25;
+                int dmg = (NatureForce || WizardEnchant) ? 150 : 30;
                 Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 62, 0.5f);
-                FargoGlobalProjectile.XWay(10, player.Center, ProjectileID.SporeCloud/*ModContent.ProjectileType<SporeBoom>()*/, 3f, HighestDamageTypeScaling(dmg), 0f);
+                FargoGlobalProjectile.XWay(10, player.Center, ProjectileID.SporeCloud, 3f, HighestDamageTypeScaling(dmg), 0f);
                 jungleCD = 30;
             }
 
@@ -681,7 +672,6 @@ namespace FargowiltasSouls
             {
                 player.cordage = true;
             }
-            
         }
 
         public void MeteorEffect()
@@ -775,7 +765,7 @@ namespace FargowiltasSouls
                 int buff = BuffID.OnFire;
                 float distance = 200f;
 
-                int baseDamage = 20;
+                int baseDamage = 30;
 
                 if (NatureForce || WizardEnchant)
                 {
@@ -917,12 +907,11 @@ namespace FargowiltasSouls
 
         public void PumpkinEffect(bool hideVisual)
         {
-            //pumpkin pies
             PumpkinEnchant = true;
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.PumpkinFire) && (player.controlLeft || player.controlRight) && !IsStandingStill)
             {
-                if (pumpkinCD <= 0 && player.ownedProjectileCounts[ModContent.ProjectileType<GrowingPumpkin>()] < 5)
+                if (pumpkinCD <= 0 && player.ownedProjectileCounts[ModContent.ProjectileType<GrowingPumpkin>()] < 10)
                 {
                     int x = (int)player.Center.X / 16;
                     int y = (int)(player.position.Y + player.height - 1f) / 16;
@@ -935,9 +924,8 @@ namespace FargowiltasSouls
                     if (!Main.tile[x, y].active() && Main.tile[x, y].liquid == 0 && Main.tile[x, y + 1] != null && (WorldGen.SolidTile(x, y + 1) || Main.tile[x, y + 1].type == TileID.Platforms))
                     {
                         Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<GrowingPumpkin>(), 0,  0, player.whoAmI);
+                        pumpkinCD = 300;
                     }
-
-                    pumpkinCD = 300;
                 }  
             }
 
@@ -1223,7 +1211,7 @@ namespace FargowiltasSouls
             {
                 turtleCounter++;
 
-                if (turtleCounter > 30)
+                if (turtleCounter > 20)
                 {
                     player.AddBuff(ModContent.BuffType<ShellHide>(), 2);
                 }
