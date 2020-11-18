@@ -24,6 +24,8 @@ namespace FargowiltasSouls.Projectiles.Souls
 
         public override void AI()
         {
+            projectile.ai[0]++;
+
             projectile.velocity.Y = projectile.velocity.Y + 0.2f;
             if (projectile.velocity.Y > 16f)
             {
@@ -86,14 +88,21 @@ namespace FargowiltasSouls.Projectiles.Souls
                         heal *= 2;
                     }
 
-                    SpawnFire(modPlayer);
-
                     player.statLife += heal;
                     player.HealEffect(heal);
                     Main.PlaySound(SoundID.Item2, player.Center);
                     projectile.Kill();
                 }
             }
+
+            projectile.width = (int)(32 * projectile.scale);
+            projectile.height = (int)(32 * projectile.scale); //make it not float when shrinking
+
+            if (projectile.ai[0] > 1800) //make projectile shrink and disappear after 30 seconds instead of lasting forever
+                projectile.scale -= 0.01f;
+
+            if(projectile.scale <= 0)
+                projectile.Kill();
         }
 
         private void SpawnFire(FargoPlayer modPlayer)
@@ -126,6 +135,12 @@ namespace FargowiltasSouls.Projectiles.Souls
 
         public override void Kill(int timeLeft)
         {
+            if (projectile.scale <= 0) //dont do fire explosion on death if it dies from scale thing
+                return;
+
+            Player player = Main.player[projectile.owner];
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            SpawnFire(modPlayer);
             const int max = 16;
             for (int i = 0; i < max; i++)
             {
