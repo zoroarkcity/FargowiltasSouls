@@ -398,10 +398,11 @@ namespace FargowiltasSouls.NPCs.Champions
                                 for (int i = 0; i < max; i++)
                                 {
                                     Vector2 dir = npc.DirectionTo(player.Center).RotatedBy(2 * (float)Math.PI / max * i);
-                                    float ai1New = Main.rand.Next(100);
+                                    float ai1New = (Main.rand.Next(2) == 0) ? 1 : -1; //randomize starting direction
                                     Vector2 vel = Vector2.Normalize(dir.RotatedByRandom(Math.PI / 4)) * 6f;
-                                    Projectile.NewProjectile(npc.Center, vel, ProjectileID.CultistBossLightningOrbArc,
+                                    Projectile.NewProjectile(npc.Center, vel * 4, mod.ProjectileType("CosmosLightning"),
                                         npc.damage / 4, 0, Main.myPlayer, dir.ToRotation(), ai1New);
+                                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Thunder").WithVolume(1f).WithPitchVariance(-0.5f), npc.Center);
                                 }
                             }
                         }
