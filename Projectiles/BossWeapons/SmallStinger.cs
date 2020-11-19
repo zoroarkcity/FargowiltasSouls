@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using IL.Terraria.Audio;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
@@ -11,6 +12,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Small Stinger");
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 1;
         }
 
         public override void SetDefaults()
@@ -23,6 +26,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.timeLeft = 120;
             projectile.width = 10;
             projectile.height = 18;
+            projectile.scale *= 1.5f;
+            projectile.height = (int)(projectile.height * 1.5f);
+            projectile.width = (int)(projectile.width * 1.5f);
         }
 
         public override void AI()
@@ -94,6 +100,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     target.AddBuff(BuffID.Poisoned, 600);
                     DustRing(p, 16);
                     p.Kill();
+                    Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 27, 1f, -0.4f);
                 }
             }
 
@@ -107,12 +114,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void Kill(int timeLeft)
         {
-            if (Main.rand.Next(2) == 0)
+            for(int i = 0; i < 10; i++)
             {
-                int num92 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 18, 0f, 0f, 0, default(Color), 0.9f);
+                int num92 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 18, projectile.velocity.X, projectile.velocity.Y, 0, default(Color), 0.9f);
                 Main.dust[num92].noGravity = true;
-                Main.dust[num92].velocity *= 0.5f;
+                Main.dust[num92].velocity *= 0.25f;
+                Main.dust[num92].fadeIn = 1.3f;
             }
+            Main.PlaySound(SoundID.Item10, projectile.Center);
         }
 
         private void DustRing(Projectile proj, int max)
@@ -127,6 +136,40 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity = vector7;
             }
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            SpriteEffects spriteEffects = SpriteEffects.None;
+            Color color25 = Lighting.GetColor((int)(projectile.position.X + projectile.width * 0.5) / 16, (int)((projectile.position.Y + projectile.height * 0.5) / 16.0));
+            Texture2D texture2D3 = Main.projectileTexture[projectile.type];
+            int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type];
+            int y3 = num156 * projectile.frame;
+            Rectangle rectangle = new Rectangle(0, y3, texture2D3.Width, num156);
+            Vector2 origin2 = rectangle.Size() / 2f;
+            int num157 = 7;
+            int num159 = 0;
+            float num160 = 0f;
+
+
+            int num161 = num159;
+            while (projectile.ai[0] != 1 && num161 < num157) //doesnt draw trail while stuck in enemy
+            {
+                Color color26 = color25;
+                color26 = projectile.GetAlpha(color26);
+                float num164 = (num157 - num161);
+                color26 *= num164 / (ProjectileID.Sets.TrailCacheLength[projectile.type] * 1.5f);
+                color26 *= 0.75f;
+                Vector2 value4 = projectile.oldPos[num161];
+                float num165 = projectile.rotation;
+                SpriteEffects effects = spriteEffects;
+                Main.spriteBatch.Draw(texture2D3, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, num165 + projectile.rotation * num160 * (float)(num161 - 1) * -(float)spriteEffects.HasFlag(SpriteEffects.FlipHorizontally).ToDirectionInt(), origin2, projectile.scale * 0.8f, effects, 0f);
+                num161++;
+            }
+
+            Color color29 = projectile.GetAlpha(color25);
+            Main.spriteBatch.Draw(texture2D3, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color29, projectile.rotation, origin2, projectile.scale, spriteEffects, 0f);
+            return false;
         }
     }
 }

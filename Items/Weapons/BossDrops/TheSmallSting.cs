@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -38,6 +40,17 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         {
             type = ModContent.ProjectileType<Projectiles.BossWeapons.SmallStinger>();
             return true;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            foreach (TooltipLine line2 in tooltips)
+            {
+                if (line2.mod == "Terraria" && line2.Name == "CritChance")
+                {
+                    line2.text = ""; //dont show crit chance line, because custom crit method
+                }
+            }
         }
 
         //make them hold it different
