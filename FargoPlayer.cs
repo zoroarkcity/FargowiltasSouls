@@ -1592,7 +1592,7 @@ namespace FargowiltasSouls
                     if (player.velocity.Y == 0f)
                     {
                         SlimyShieldFalling = false;
-                        if (player.whoAmI == Main.myPlayer && player.gravDir > 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.SlimyShield))
+                        if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SlimyShield) && player.whoAmI == Main.myPlayer && player.gravDir > 0)
                         {
                             Main.PlaySound(SoundID.Item21, player.Center);
                             Vector2 mouse = Main.MouseWorld;
@@ -1621,7 +1621,7 @@ namespace FargowiltasSouls
 
             if (AgitatingLens)
             {
-                if (AgitatingLensCD++ > 12)
+                if (AgitatingLensCD++ > 15)
                 {
                     AgitatingLensCD = 0;
                     if ((Math.Abs(player.velocity.X) >= 5 || Math.Abs(player.velocity.Y) >= 5) && player.whoAmI == Main.myPlayer && SoulConfig.Instance.GetValue(SoulConfig.Instance.AgitatedLens))
