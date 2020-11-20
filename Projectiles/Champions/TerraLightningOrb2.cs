@@ -65,10 +65,28 @@ namespace FargowiltasSouls.Projectiles.Champions
 
             projectile.Center = projectile.position;
         }
-
+        bool firsttick = false;
         public override void AI()
         {
             projectile.velocity = Vector2.Zero;
+
+            if(!firsttick)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    Vector2 dir = Vector2.UnitX.RotatedBy(2 * (float)Math.PI / 8 * i);
+                    Vector2 vel = Vector2.Normalize(dir);
+                    Projectile.NewProjectile(projectile.Center, vel, mod.ProjectileType("TerraLightningOrbDeathray"),
+                        projectile.damage, 0, Main.myPlayer, dir.ToRotation(), projectile.whoAmI);
+                }
+                projectile.rotation = projectile.localAI[0];
+                firsttick = true;
+            }
+
+            if(projectile.localAI[0] > 0) //rotate fast, then slow down over time
+            {
+                projectile.rotation += projectile.localAI[1] * (6 - projectile.scale) * 0.012f;
+            }
 
             int ai0 = (int)projectile.ai[0];
             if (ai0 > -1 && ai0 < Main.maxNPCs && Main.npc[ai0].active && Main.npc[ai0].type == ModContent.NPCType<NPCs.Champions.TerraChampion>())
@@ -181,12 +199,14 @@ namespace FargowiltasSouls.Projectiles.Champions
 
             if (projectile.alpha == 0 && Main.netMode != NetmodeID.MultiplayerClient)
             {
+                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Thunder").WithVolume(0.8f).WithPitchVariance(-0.5f), projectile.Center);
                 for (int i = 0; i < 8; i++)
                 {
-                    float ai1New = Main.rand.Next(100);
-                    Vector2 vel = 7 * Vector2.UnitX.RotatedBy(2 * Math.PI / 8 * i +  Math.PI / 4 * (Main.rand.NextDouble() - 0.5));
-                    Projectile.NewProjectile(projectile.Center, vel, ProjectileID.CultistBossLightningOrbArc,
-                        projectile.damage, 0, Main.myPlayer, Vector2.UnitX.RotatedBy(2 * Math.PI / 8 * i).ToRotation(), ai1New);
+                    Vector2 dir = Vector2.UnitX.RotatedBy((2 * (float)Math.PI / 8 * i) + projectile.rotation);
+                    float ai1New = (Main.rand.Next(2) == 0) ? 1 : -1; //randomize starting direction
+                    Vector2 vel = Vector2.Normalize(dir) * 54f;
+                    Projectile.NewProjectile(projectile.Center, vel, mod.ProjectileType("HostileLightning"),
+                        projectile.damage, 0, Main.myPlayer, dir.ToRotation(), ai1New/2);
                 }
             }
         }

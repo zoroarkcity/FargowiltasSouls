@@ -394,15 +394,15 @@ namespace FargowiltasSouls.NPCs.Champions
                             type = 229;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
+                                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Thunder").WithVolume(0.8f).WithPitchVariance(-0.5f), npc.Center);
                                 const int max = 12;
                                 for (int i = 0; i < max; i++)
                                 {
                                     Vector2 dir = npc.DirectionTo(player.Center).RotatedBy(2 * (float)Math.PI / max * i);
                                     float ai1New = (Main.rand.Next(2) == 0) ? 1 : -1; //randomize starting direction
-                                    Vector2 vel = Vector2.Normalize(dir.RotatedByRandom(Math.PI / 4)) * 6f;
+                                    Vector2 vel = Vector2.Normalize(dir) * 6f;
                                     Projectile.NewProjectile(npc.Center, vel * 4, mod.ProjectileType("CosmosLightning"),
                                         npc.damage / 4, 0, Main.myPlayer, dir.ToRotation(), ai1New);
-                                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Thunder").WithVolume(0.8f).WithPitchVariance(-0.5f), npc.Center);
                                 }
                             }
                         }
