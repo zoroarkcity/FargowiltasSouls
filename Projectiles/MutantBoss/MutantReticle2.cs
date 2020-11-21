@@ -41,9 +41,6 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<NPCs.MutantBoss.MutantBoss>())
                 && !Main.npc[EModeGlobalNPC.mutantBoss].dontTakeDamage)
             {
-                projectile.alpha -= 4;
-                if (projectile.alpha < 0) //fade in
-                    projectile.alpha = 0;
 
                 int modifier = Math.Min(60, 90 - projectile.timeLeft);
 
@@ -54,6 +51,16 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             else
             {
                 projectile.Kill();
+            }
+
+            if (projectile.timeLeft < 10)
+                projectile.alpha += 25;
+
+            else
+            {
+                projectile.alpha -= 4;
+                if (projectile.alpha < 0) //fade in
+                    projectile.alpha = 0;
             }
         }
 

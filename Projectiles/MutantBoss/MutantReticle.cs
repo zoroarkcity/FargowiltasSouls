@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasSouls.NPCs;
+using System;
 
 namespace FargowiltasSouls.Projectiles.MutantBoss
 {
@@ -23,7 +24,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.aiStyle = -1;
             projectile.penetrate = -1;
             projectile.hostile = true;
-
+            projectile.alpha = 255;
             projectile.timeLeft = 120;
             //cooldownSlot = 1;
         }
@@ -44,12 +45,26 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     projectile.rotation = Main.rand.NextFloat((float)System.Math.PI * 2);
                 }
 
+                int modifier = Math.Min(60, 90 - projectile.timeLeft);
+
+                projectile.scale = 2f - 1f / 60f * modifier; //start big, shrink down
+
                 projectile.velocity = Vector2.Zero;
                 projectile.rotation += MathHelper.ToRadians(6) * projectile.localAI[0];
             }
             else
             {
                 projectile.Kill();
+            }
+
+            if (projectile.timeLeft < 15)
+                projectile.alpha += 17;
+
+            else
+            {
+                projectile.alpha -= 4;
+                if (projectile.alpha < 0) //fade in
+                    projectile.alpha = 0;
             }
         }
 
