@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             NPC mutant = Main.npc[(int)projectile.ai[1]];
             if(mutant.active && mutant.type == mod.NPCType("MutantBoss")) //check if its attatching itself to mutant
             {
-                projectile.Center = mutant.Center + Vector2.UnitX.RotatedBy(projectile.ai[0]) * 72 * projectile.scale;
+                projectile.Center = mutant.Center + Vector2.UnitX.RotatedBy(projectile.ai[0]) * 96 * projectile.scale;
             }
             if(projectile.scale < 2f) //grow over time
             {

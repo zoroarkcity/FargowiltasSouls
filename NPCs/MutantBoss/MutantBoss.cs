@@ -1403,7 +1403,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (npc.ai[3] == 90 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Vector2 spawnPos = npc.Center;
-                        spawnPos.Y += player.Center.Y < npc.Center.Y ? -600 : 600;
+                        spawnPos.Y -= npc.ai[2] * 600;
                         for (int i = -3; i <= 3; i++)
                         {
                             Projectile.NewProjectile(spawnPos + Vector2.UnitY * 120 * i, Vector2.Zero,
