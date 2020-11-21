@@ -69,7 +69,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                     {
                         if (i == 0)
                             continue;
-                        Vector2 offset = projectile.width * 2.25f * baseDirection.RotatedBy(MathHelper.ToRadians(60) * i + Main.rand.NextFloat(-random, random));
+                        Vector2 offset = projectile.width * 1.25f * baseDirection.RotatedBy(MathHelper.ToRadians(60) * i + Main.rand.NextFloat(-random, random));
                         Projectile.NewProjectile(projectile.Center + offset, Vector2.Zero, projectile.type,
                             projectile.damage, 0f, projectile.owner, projectile.ai[0], projectile.ai[1]);
                     }
@@ -131,11 +131,6 @@ namespace FargowiltasSouls.Projectiles.Champions
             Main.gore[i2].velocity.Y += Main.rand.Next(-10, 11) * 0.05f;
         }
 
-        public override Color? GetAlpha(Color lightColor)
-        {
-            return new Color(255, 255, 255, 127);
-        }
-
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture2D13 = Main.projectileTexture[projectile.type];
@@ -143,7 +138,15 @@ namespace FargowiltasSouls.Projectiles.Champions
             int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
-            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+            Color color = Color.White;
+            if(projectile.ai[1] > 3)
+                color = Color.Lerp(new Color(255, 255, 255, 0), new Color(255, 95, 46, 50), (7-projectile.ai[1]) / 4);
+
+            else
+                color = Color.Lerp(new Color(255, 95, 46, 50), new Color(150, 35, 0, 100), (3-projectile.ai[1]) / 3);
+
+            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color, 
+                projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
             return false;
         }
     }
