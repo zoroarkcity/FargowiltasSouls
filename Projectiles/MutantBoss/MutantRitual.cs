@@ -146,7 +146,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             int rect2 = 0;
             Rectangle glowrectangle = new Rectangle(0, rect2, glow.Width, rect1);
             Vector2 gloworigin2 = glowrectangle.Size() / 2f;
-            Color glowcolor = Color.Lerp(new Color(255, 255, 255, 0), Color.Transparent, 0.65f);
+            Color glowcolor = Color.Lerp(new Color(196, 247, 255, 0), Color.Transparent, 0.65f);
 
             for (int x = 0; x < 32; x++)
             {
