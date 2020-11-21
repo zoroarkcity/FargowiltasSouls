@@ -376,6 +376,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool SlimyShield;
 
+        [Label("$Mods.FargowiltasSouls.SlimeFallingConfig")]
+        [DefaultValue(true)]
+        public bool SlimyFalling;
+
         [Label("$Mods.FargowiltasSouls.MasoEyeConfig")]
         [DefaultValue(true)]
         public bool AgitatedLens;

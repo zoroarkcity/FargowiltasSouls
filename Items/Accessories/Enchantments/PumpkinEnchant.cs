@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             DisplayName.SetDefault("Pumpkin Enchantment");
             Tooltip.SetDefault(
 @"You will grow pumpkins while walking on the ground
-When fully grown, they will heal 15 HP and spawn damaging embers
+When fully grown, they will heal 25 HP and spawn damaging embers
 Enemies that touch them will destroy them and take damage
 Summons a pet Squashling
 'Your sudden pumpkin craving will never be satisfied'");

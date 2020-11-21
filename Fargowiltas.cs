@@ -200,7 +200,8 @@ namespace FargowiltasSouls
 
             //supreme death fairy header
             AddToggle("SupremeFairyHeader", "Supreme Deathbringer Fairy", "SupremeDeathbringerFairy", "ffffff");
-            AddToggle("MasoSlimeConfig", "Slimy Shield Effects", "SlimyShield", "ffffff");
+            AddToggle("MasoSlimeConfig", "Slimy Balls", "SlimyShield", "ffffff");
+            AddToggle("SlimeFallingConfig", "Increased Fall Speed", "SlimyShield", "ffffff");
             AddToggle("MasoEyeConfig", "Scythes When Dashing", "AgitatingLens", "ffffff");
             AddToggle("MasoHoneyConfig", "Honey When Hitting Enemies", "QueenStinger", "ffffff");
             AddToggle("MasoSkeleConfig", "Skeletron Arms Minion", "NecromanticBrew", "ffffff");

@@ -53,7 +53,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 if (modifier > 4)
                     modifier = 4;
 
-                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Whirlpool>(), projectile.damage * 2, 0f, projectile.owner, 16, 2 + modifier * 2);
+                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Whirlpool>(), projectile.damage, 0f, projectile.owner, 16, 2 + modifier * 2);
             }
             else
             {
@@ -62,7 +62,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                       if (Main.rand.Next(2) == 0)
                       {
                           Vector2 velocity = Vector2.Normalize(target.Center - x.Center) * Main.rand.NextFloat(16f, 24f);
-                          Projectile.NewProjectile(x.Center, velocity, ModContent.ProjectileType<FishStickShark>(), projectile.damage / 2, projectile.knockBack, projectile.owner);
+                          Projectile.NewProjectile(x.Center, velocity, ModContent.ProjectileType<FishStickShark>(), projectile.damage, projectile.knockBack, projectile.owner);
                       }
                   });
             }

@@ -39,8 +39,24 @@ NEW UPDATE - V 1.3.92
 -Dark Artist Sentries travel faster when initially launched and they attack twice as fast with a bit less damage
 -Ninja Enchant smoke bombs fired by using the hotkey travel twice as fast for more precise teleporting
 -Fixed Wizard Enchant rarity and value
-
 -Fixed Tungsten exploding and working on everything
+-Epic new lightning and dark star visual
+
+
+
+
+-Fixed Tungsten yoyos smh
+-Small Sting will never show crit chance
+-Small Sting projectile visually epic now
+-Small Sting cannot proc multiple stingers in one shot, bonus damage halved
+-Pumpkins have a sound, despawn after 30 sec, and actually spawn fire for enemies
+-More visual improvements for lightning and stuff ech @ zoro
+-New Regurgitator sprite again
+-Reduced Slimy Shields fall speed increase
+-Seperate toggle for Slimy Shield fall speed
+-Reduced Agitating Lens scythe spawn rate slightly
+-All Fish Stick components have the same damage (whirlpool, sharks, stick)
+
 
 -Fossil Enchant now additionally spawns damaging bones when you take damage
 

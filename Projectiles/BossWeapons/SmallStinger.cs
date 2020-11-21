@@ -84,7 +84,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            //damage = damage + (int)(target.defense * 0.5f) / 2; 
             crit = false;
         }
 
@@ -96,11 +95,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                 if(p.active && p.type == projectile.type && p != projectile && projectile.Hitbox.Intersects(p.Hitbox))
                 {
-                    target.StrikeNPC(projectile.damage, 0, 0, true);
+                    target.StrikeNPC(projectile.damage / 2, 0, 0, true); //normal damage but looks like a crit ech
                     target.AddBuff(BuffID.Poisoned, 600);
                     DustRing(p, 16);
                     p.Kill();
                     Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 27, 1f, -0.4f);
+                    break;
                 }
             }
 
