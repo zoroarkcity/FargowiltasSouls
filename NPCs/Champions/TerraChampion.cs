@@ -171,7 +171,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             {
                                 Vector2 dir = npc.DirectionTo(player.Center);
                                 float ai1New = (Main.rand.Next(2) == 0) ? 1 : -1; //randomize starting direction
-                                Vector2 vel = Vector2.Normalize(dir) * 18f;
+                                Vector2 vel = Vector2.Normalize(dir) * 22f;
                                 Projectile.NewProjectile(npc.Center, vel, mod.ProjectileType("HostileLightning"),
                                     npc.damage / 4, 0, Main.myPlayer, dir.ToRotation(), ai1New);
                             }
