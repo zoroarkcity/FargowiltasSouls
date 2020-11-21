@@ -1381,7 +1381,16 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     {
                         npc.ai[2] = Main.rand.Next(2) == 0 ? -1 : 1; //randomly aim either up or down
                     }
-                    if (npc.ai[3] < 240 && ++npc.ai[1] > 10)
+                    if(npc.ai[3] == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        int max = 7;
+                        for(int i = 0; i <= max; i++)
+                        {
+                            Vector2 dir = Vector2.UnitX.RotatedBy(npc.ai[2] * i * MathHelper.Pi / max) * 6; //rotate initial velocity of telegraphs by 180 degrees depending on velocity of lasers
+                            Projectile.NewProjectile(npc.Center + dir, Vector2.Zero, mod.ProjectileType("MutantGlowything"), 0, 0f, Main.myPlayer, dir.ToRotation(), npc.whoAmI);
+                        }
+                    }
+                    if (npc.ai[3] > 45 && npc.ai[3] < 240 && ++npc.ai[1] > 10)
                     {
                         npc.ai[1] = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
