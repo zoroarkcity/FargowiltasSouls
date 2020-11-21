@@ -1425,11 +1425,11 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 spawnPos = npc.Center;
-                            spawnPos.Y += player.Center.Y < npc.Center.Y ? -600 : 600;
+                            spawnPos.Y -= npc.ai[2] * 600;
                             spawnPos.X += Main.rand.NextFloat(-400, 400);
                             spawnPos.Y -= 1000 * npc.localAI[1];
                             Vector2 vel = npc.Center;
-                            vel.Y += player.Center.Y < npc.Center.Y ? -600 : 600;
+                            vel.Y -= npc.ai[2] * 600;
                             vel -= spawnPos;
                             vel.Normalize();
                             vel *= 18;
