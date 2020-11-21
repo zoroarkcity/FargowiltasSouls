@@ -29,7 +29,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.alpha = 255;
             projectile.friendly = true;
             projectile.minion = true;
-            projectile.timeLeft = 180;
+            projectile.timeLeft = 120;
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 20;
         }
@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             int ai0 = (int)projectile.ai[0];
             if (ai0 >= 0 && ai0 < 200 && Main.projectile[ai0].active && Main.projectile[ai0].type == mod.ProjectileType("TrueEyeR"))
             {
-                if (projectile.timeLeft > 115)
+                if (projectile.timeLeft > 55)
                 {
                     if (Main.projectile[ai0].ai[1] == 0f) //stop following true eye if true eye lost target & isn't preparing to charge
                     {
