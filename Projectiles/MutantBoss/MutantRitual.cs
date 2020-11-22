@@ -146,7 +146,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             int rect2 = 0;
             Rectangle glowrectangle = new Rectangle(0, rect2, glow.Width, rect1);
             Vector2 gloworigin2 = glowrectangle.Size() / 2f;
-            Color glowcolor = Color.Lerp(new Color(196, 247, 255, 0), Color.Transparent, 0.65f);
+            Color glowcolor = Color.Lerp(new Color(196, 247, 255, 0), Color.Transparent, 0.8f);
 
             for (int x = 0; x < 32; x++)
             {
@@ -161,11 +161,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     float num165 = projectile.rotation;
                     Main.spriteBatch.Draw(texture2D13, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
                     Main.spriteBatch.Draw(glow, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(glowrectangle), glowcolor * ((float)(max - i) / max),
-                        projectile.rotation, gloworigin2, projectile.scale * 1.5f, SpriteEffects.None, 0f);
+                        projectile.rotation, gloworigin2, projectile.scale * 1.4f, SpriteEffects.None, 0f);
                 }
                 Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
                 Main.spriteBatch.Draw(glow, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(glowrectangle), glowcolor,
-                    projectile.rotation, gloworigin2, projectile.scale * 1.35f, SpriteEffects.None, 0f);
+                    projectile.rotation, gloworigin2, projectile.scale * 1.3f, SpriteEffects.None, 0f);
             }
             return false;
         }
