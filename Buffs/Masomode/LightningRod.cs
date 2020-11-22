@@ -26,26 +26,26 @@ namespace FargowiltasSouls.Buffs.Masomode
             Point tileCoordinates = obj.Top.ToTileCoordinates();
 
             tileCoordinates.X += Main.rand.Next(-25, 25);
-            tileCoordinates.Y -= 15 + Main.rand.Next(-5, 5);
+            tileCoordinates.Y -= 15 + Main.rand.Next(-5, 5) - ((type == mod.ProjectileType("LightningVortexHostile")) ? 20 : 0);
 
             for (int index = 0; index < 10 && !WorldGen.SolidTile(tileCoordinates.X, tileCoordinates.Y) && tileCoordinates.Y > 10; ++index) tileCoordinates.Y -= 1;
 
             Projectile.NewProjectile(tileCoordinates.X * 16 + 8, tileCoordinates.Y * 16 + 17, 0f, 0f, type, damage, 2f, Main.myPlayer,
-                0f, type == ProjectileID.VortexVortexLightning ? 0f : obj.whoAmI);
+                0f, obj.whoAmI);
         }
 
         public override void Update(Player player, ref int buffIndex)
         {
-            //spawns lightning once per second with a 1/60 chance of spawning another every tick
+            //spawns lightning once per second
             player.GetModPlayer<FargoPlayer>().lightningRodTimer++;
             if (player.GetModPlayer<FargoPlayer>().lightningRodTimer >= 60)
             {
                 player.GetModPlayer<FargoPlayer>().lightningRodTimer = 0;
-                SpawnLightning(player, ProjectileID.VortexVortexLightning, 0);
+                SpawnLightning(player, mod.ProjectileType("LightningVortexHostile"), 0);
             }
 
-            if (Main.rand.Next(60) == 1)
-                SpawnLightning(player, ProjectileID.VortexVortexLightning, 0);
+            //if (Main.rand.Next(60) == 1)
+               // SpawnLightning(player, mod.ProjectileType("LightningVortexHostile"), 0);
         }
 
         public override void Update(NPC npc, ref int buffIndex)

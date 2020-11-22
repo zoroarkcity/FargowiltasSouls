@@ -1381,7 +1381,16 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     {
                         npc.ai[2] = Main.rand.Next(2) == 0 ? -1 : 1; //randomly aim either up or down
                     }
-                    if (npc.ai[3] < 240 && ++npc.ai[1] > 10)
+                    if(npc.ai[3] == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        int max = 7;
+                        for(int i = 0; i <= max; i++)
+                        {
+                            Vector2 dir = Vector2.UnitX.RotatedBy(npc.ai[2] * i * MathHelper.Pi / max) * 6; //rotate initial velocity of telegraphs by 180 degrees depending on velocity of lasers
+                            Projectile.NewProjectile(npc.Center + dir, Vector2.Zero, mod.ProjectileType("MutantGlowything"), 0, 0f, Main.myPlayer, dir.ToRotation(), npc.whoAmI);
+                        }
+                    }
+                    if (npc.ai[3] > 20 && npc.ai[3] < 240 && ++npc.ai[1] > 10)
                     {
                         npc.ai[1] = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -1394,7 +1403,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (npc.ai[3] == 90 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Vector2 spawnPos = npc.Center;
-                        spawnPos.Y += player.Center.Y < npc.Center.Y ? -600 : 600;
+                        spawnPos.Y -= npc.ai[2] * 600;
                         for (int i = -3; i <= 3; i++)
                         {
                             Projectile.NewProjectile(spawnPos + Vector2.UnitY * 120 * i, Vector2.Zero,
@@ -1416,11 +1425,11 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 spawnPos = npc.Center;
-                            spawnPos.Y += player.Center.Y < npc.Center.Y ? -600 : 600;
+                            spawnPos.Y -= npc.ai[2] * 600;
                             spawnPos.X += Main.rand.NextFloat(-400, 400);
                             spawnPos.Y -= 1000 * npc.localAI[1];
                             Vector2 vel = npc.Center;
-                            vel.Y += player.Center.Y < npc.Center.Y ? -600 : 600;
+                            vel.Y -= npc.ai[2] * 600;
                             vel -= spawnPos;
                             vel.Normalize();
                             vel *= 18;
@@ -1714,15 +1723,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 Vector2 spawnPos = basePos;
                                 spawnPos.X += xOffset;
                                 Vector2 velocity = new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(30f, 40f));
-                                if (Main.rand.Next(2) == 0)
-                                {
-                                    spawnPos.Y -= 1300;
-                                }
-                                else
-                                {
-                                    spawnPos.Y += 1300;
-                                    velocity *= -1f;
-                                }
+                                spawnPos.Y -= 1300;
+
                                 Projectile.NewProjectile(spawnPos, velocity, ModContent.ProjectileType<MutantSlimeBall>(), npc.damage / 5, 0f, Main.myPlayer);
                             }
                         }
