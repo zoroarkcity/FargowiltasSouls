@@ -1390,7 +1390,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Projectile.NewProjectile(npc.Center + dir, Vector2.Zero, mod.ProjectileType("MutantGlowything"), 0, 0f, Main.myPlayer, dir.ToRotation(), npc.whoAmI);
                         }
                     }
-                    if (npc.ai[3] > 45 && npc.ai[3] < 240 && ++npc.ai[1] > 10)
+                    if (npc.ai[3] > 20 && npc.ai[3] < 240 && ++npc.ai[1] > 10)
                     {
                         npc.ai[1] = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
