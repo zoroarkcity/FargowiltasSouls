@@ -1723,15 +1723,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 Vector2 spawnPos = basePos;
                                 spawnPos.X += xOffset;
                                 Vector2 velocity = new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(30f, 40f));
-                                if (Main.rand.Next(2) == 0)
-                                {
-                                    spawnPos.Y -= 1300;
-                                }
-                                else
-                                {
-                                    spawnPos.Y += 1300;
-                                    velocity *= -1f;
-                                }
+                                spawnPos.Y -= 1300;
+
                                 Projectile.NewProjectile(spawnPos, velocity, ModContent.ProjectileType<MutantSlimeBall>(), npc.damage / 5, 0f, Main.myPlayer);
                             }
                         }
