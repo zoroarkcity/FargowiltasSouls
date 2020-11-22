@@ -1165,7 +1165,7 @@ namespace FargowiltasSouls
                 TinCrit = 50;
             else if(TerrariaSoul && TinCrit < 25)
                 TinCrit = 25;
-            else if (TerraForce && TinCrit < 10)
+            else if ((TerraForce || WizardEnchant) && TinCrit < 10)
                 TinCrit = 10;
 
             if (tinCD > 0)
@@ -3045,7 +3045,7 @@ namespace FargowiltasSouls
                 {
                     TinCrit = 25;
                 }
-                else if(TerraForce && TinCrit != 10)
+                else if((TerraForce || WizardEnchant) && TinCrit != 10)
                 {
                     TinCrit = 10;
                 }
@@ -3253,7 +3253,7 @@ namespace FargowiltasSouls
                 {
                     TinCrit = 25;
                 }
-                else if (TerraForce && TinCrit != 10)
+                else if ((TerraForce || WizardEnchant) && TinCrit != 10)
                 {
                     TinCrit = 10;
                 }
