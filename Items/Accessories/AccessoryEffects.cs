@@ -327,7 +327,7 @@ namespace FargowiltasSouls
                 }
             }
 
-            player.crimsonRegen = true;
+            //player.crimsonRegen = true;
 
             CrimsonEnchant = true;
             AddPet(SoulConfig.Instance.FaceMonsterPet, hideVisual, BuffID.BabyFaceMonster, ProjectileID.BabyFaceMonster);

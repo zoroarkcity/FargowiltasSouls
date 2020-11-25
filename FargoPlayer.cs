@@ -1165,7 +1165,7 @@ namespace FargowiltasSouls
                 TinCrit = 50;
             else if(TerrariaSoul && TinCrit < 25)
                 TinCrit = 25;
-            else if (TerraForce && TinCrit < 10)
+            else if ((TerraForce || WizardEnchant) && TinCrit < 10)
                 TinCrit = 10;
 
             if (tinCD > 0)
@@ -3045,7 +3045,7 @@ namespace FargowiltasSouls
                 {
                     TinCrit = 25;
                 }
-                else if(TerraForce && TinCrit != 10)
+                else if((TerraForce || WizardEnchant) && TinCrit != 10)
                 {
                     TinCrit = 10;
                 }
@@ -3253,7 +3253,7 @@ namespace FargowiltasSouls
                 {
                     TinCrit = 25;
                 }
-                else if (TerraForce && TinCrit != 10)
+                else if ((TerraForce || WizardEnchant) && TinCrit != 10)
                 {
                     TinCrit = 10;
                 }
@@ -3498,6 +3498,7 @@ namespace FargowiltasSouls
                 case ItemID.StarCannon:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.SnowmanCannon:
+                case ItemID.DemonScythe:
                     return 2f / 3f;
 
                 case ItemID.Razorpine:
@@ -3516,7 +3517,6 @@ namespace FargowiltasSouls
                 case ItemID.HellwingBow:
                 case ItemID.Beenade:
                 case ItemID.Handgun:
-                case ItemID.DemonScythe:
                 case ItemID.SpikyBall:
                 case ItemID.SDMG:
                 case ItemID.Xenopopper:

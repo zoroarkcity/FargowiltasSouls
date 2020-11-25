@@ -15,7 +15,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         {
             DisplayName.SetDefault("Abominable Wand");
             Tooltip.SetDefault(@"Grants immunity to Abominable Fang
-20% increased graze bonus critical damage cap
+Increased critical damage gained per Sparkling Adoration graze
 Halves Sparkling Adoration heart cooldown
 Spectral Abominationn periodically manifests to support your critical hits
 Spectral Abominationn also inflicts Mutant Nibble
