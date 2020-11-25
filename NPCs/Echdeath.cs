@@ -18,16 +18,11 @@ namespace FargowiltasSouls.NPCs
 
         public override void SetDefaults()
         {
-            npc.width = 60;
-            npc.height = 60;
+            npc.width = 50;
+            npc.height = 50;
             npc.damage = int.MaxValue / 10;
             npc.defense = int.MaxValue / 10;
             npc.lifeMax = int.MaxValue / 10;
-            if (Main.expertMode)
-            {
-                npc.damage /= 2;
-                npc.lifeMax /= 2;
-            }
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -51,6 +46,12 @@ namespace FargowiltasSouls.NPCs
             musicPriority = (MusicPriority)12;
         }
 
+        public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+        {
+            npc.damage = int.MaxValue / 10;
+            npc.lifeMax = int.MaxValue / 10;
+        }
+
         public override void BossLoot(ref string name, ref int potionType)
         {
             potionType = mod.ItemType("Sadism");
@@ -60,16 +61,25 @@ namespace FargowiltasSouls.NPCs
         {
             if (!npc.HasValidTarget)
             {
-                npc.ai[0] = 0;
+                //npc.ai[0] = 0;
                 npc.TargetClosest();
-                if (!npc.HasValidTarget)
+                /*if (!npc.HasValidTarget)
                 {
                     npc.active = false;
                     return;
-                }
+                }*/
             }
 
-            npc.timeLeft = 600;
+            if (npc.HasValidTarget)
+            {
+                if (npc.timeLeft < 600)
+                    npc.timeLeft = 600;
+            }
+            else
+            {
+                if (npc.timeLeft > 60)
+                    npc.timeLeft = 60;
+            }
 
             npc.life = npc.lifeMax;
             npc.damage = npc.defDamage;
@@ -81,12 +91,43 @@ namespace FargowiltasSouls.NPCs
 
             npc.ai[0] += 0.05f;
 
-            npc.position += (player.position - player.oldPosition) * 0.5f;
+            npc.position += (player.position - player.oldPosition) * 0.25f;
             npc.velocity = npc.DirectionTo(player.Center) * npc.ai[0];
             if (npc.velocity.Length() > npc.Distance(player.Center))
                 npc.Center = player.Center;
 
             npc.scale = 1f + npc.ai[0] / 4f;
+
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                int fullSize = (int)(60 * npc.scale);
+                for (int i = -fullSize / 2; i <= fullSize / 2; i += 8)
+                {
+                    for (int j = -fullSize / 2; j <= fullSize / 2; j += 8)
+                    {
+                        int tileX = (int)(npc.Center.X + i) / 16;
+                        int tileY = (int)(npc.Center.Y + j) / 16;
+
+                        //out of bounds checks
+                        if (tileX < 0)
+                            tileX = 0;
+                        if (tileX > Main.maxTilesX)
+                            tileX = Main.maxTilesX;
+                        if (tileY < 0)
+                            tileY = 0;
+                        if (tileY > Main.maxTilesY)
+                            tileY = Main.maxTilesY;
+
+                        Tile tile = Framing.GetTileSafely(tileX, tileY);
+                        if (tile.nactive() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type] && tile.frameY == 0) || tile.liquid > 64)
+                        {
+                            WorldGen.KillTile(tileX, tileY);
+                            if (Main.netMode == NetmodeID.Server)
+                                NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, tileX, tileY);
+                        }
+                    }
+                }
+            }
 
             if (npc.target == Main.myPlayer && Main.player[npc.target].active && !Main.player[npc.target].dead && !Main.player[npc.target].ghost
                 && npc.Hitbox.Intersects(Main.player[npc.target].Hitbox))
@@ -97,6 +138,9 @@ namespace FargowiltasSouls.NPCs
                 for (int i = 0; i < 100; i++)
                     CombatText.NewText(Main.player[npc.target].Hitbox, Color.Red, Main.rand.Next(npc.damage), true);
             }
+
+            if (!Main.dedServ && Main.LocalPlayer.active)
+                Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 2;
         }
 
         public override void FindFrame(int frameHeight)
@@ -127,11 +171,6 @@ namespace FargowiltasSouls.NPCs
                 for (int i = 0; i < 100; i++)
                     CombatText.NewText(target.Hitbox, Color.Red, Main.rand.Next(npc.damage), true);
             }
-        }
-
-        public override bool CheckActive()
-        {
-            return false;
         }
 
         public override bool CheckDead()

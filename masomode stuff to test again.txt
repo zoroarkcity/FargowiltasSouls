@@ -32,3 +32,4 @@ mutant eye nerfed, no longer gives extra crit damage gain per graze and max crit
 buffed penetrator damage 1700 to 2000 because i can
 
 destroyer still does coil stars when you have lightning rod but only half as often
+echdeath
