@@ -2361,8 +2361,8 @@ namespace FargowiltasSouls.NPCs
 
                         if (--npc.localAI[2] < 0) //shoot star spreads into the circle
                         {
-                            npc.localAI[2] = 60;
-                            if (Main.netMode != NetmodeID.MultiplayerClient && !Main.player[npc.target].HasBuff(ModContent.BuffType<LightningRod>()))
+                            npc.localAI[2] = Main.player[npc.target].HasBuff(ModContent.BuffType<LightningRod>()) ? 120 : 60;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 distance = Main.player[npc.target].Center - npc.Center;
                                 double angleModifier = MathHelper.ToRadians(30);

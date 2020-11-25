@@ -30,3 +30,5 @@ sparkling adoration adjusted, nerfed max bonus from 30% to 25% crit damage and t
 abominable wand nerfed, no longer gives higher max crit damage, instead doubles crit damage gain per graze
 mutant eye nerfed, no longer gives extra crit damage gain per graze and max crit damage bonus reduced from +50% to +25%
 buffed penetrator damage 1700 to 2000 because i can
+
+destroyer still does coil stars when you have lightning rod but only half as often
