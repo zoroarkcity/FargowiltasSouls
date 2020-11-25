@@ -103,9 +103,14 @@ Summons the aid of all Eternity Mode bosses to your side
 
             //slimy shield
             player.buffImmune[BuffID.Slimed] = true;
+
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SlimyFalling))
+            {
+                player.maxFallSpeed *= 1.5f;
+            }
+
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SlimyShield))
             {
-                player.maxFallSpeed *= 2f;
                 fargoPlayer.SlimyShield = true;
             }
 

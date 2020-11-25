@@ -17,6 +17,9 @@ namespace FargowiltasSouls.Projectiles.Champions
         {
             DisplayName.SetDefault("Cosmic Invader");
             Main.projFrames[projectile.type] = 4;
+
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
@@ -39,7 +42,12 @@ namespace FargowiltasSouls.Projectiles.Champions
 
                 projectile.timeLeft = (int)projectile.ai[0];
 
+                if (projectile.ai[1] != 0) //dont do dust square or spawn in sound when spawned in eri p3
+                    return true;
+
                 Main.PlaySound(SoundID.NPCKilled, (int)projectile.position.X, (int)projectile.position.Y, 7, 1f, 0.0f);
+
+
                 for (int index1 = 0; index1 < 4; ++index1)
                 {
                     int index2 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);
@@ -71,27 +79,6 @@ namespace FargowiltasSouls.Projectiles.Champions
                 }
             }
 
-            if (Main.rand.Next(2) == 0)
-            {
-                int index = Dust.NewDust(projectile.position, projectile.width, projectile.height, 180, 0.0f, 0.0f, 100, new Color(), 1f);
-                Dust dust1 = Main.dust[index];
-                dust1.scale = dust1.scale + Main.rand.Next(50) * 0.01f;
-                Main.dust[index].noGravity = true;
-                Dust dust2 = Main.dust[index];
-                dust2.velocity = dust2.velocity * 0.1f;
-                Main.dust[index].fadeIn = Main.rand.NextFloat() * 1.5f;
-            }
-            if (Main.rand.Next(3) == 0)
-            {
-                int index = Dust.NewDust(projectile.position, projectile.width, projectile.height, 176, 0.0f, 0.0f, 100, new Color(), 1f);
-                Dust dust1 = Main.dust[index];
-                dust1.scale = dust1.scale + 0.3f + Main.rand.Next(50) * 0.01f;
-                Main.dust[index].noGravity = true;
-                Dust dust2 = Main.dust[index];
-                dust2.velocity = dust2.velocity * 0.1f;
-                Main.dust[index].fadeIn = Main.rand.NextFloat() * 1.5f;
-            }
-
             return true;
         }
 
@@ -111,6 +98,29 @@ namespace FargowiltasSouls.Projectiles.Champions
                 if (num5 >= Main.projFrames[projectile.type])
                     projectile.frame = 0;
             }
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            Texture2D glow = mod.GetTexture("Projectiles/Champions/CosmosInvader_glow");
+            int rect1 = glow.Height;
+            int rect2 = 0;
+            Rectangle glowrectangle = new Rectangle(0, rect2, glow.Width, rect1);
+            Vector2 gloworigin2 = glowrectangle.Size() / 2f;
+            Color glowcolor = Color.Lerp(new Color(196, 247, 255, 0), Color.Transparent, 0.9f);
+
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++) //reused betsy fireball scaling trail thing
+            {
+
+                Color color27 = glowcolor;
+                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                float scale = projectile.scale * (ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                Vector2 value4 = projectile.oldPos[i] - (Vector2.Normalize(projectile.velocity) * i * 2);
+                Main.spriteBatch.Draw(glow, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(glowrectangle), color27,
+                    projectile.velocity.ToRotation() + MathHelper.PiOver2, gloworigin2, scale * 0.75f, SpriteEffects.None, 0f);
+            }
+
+            return false;
         }
 
         public override void Kill(int timeLeft) //vanilla explosion code echhhhhhhhhhh
@@ -160,7 +170,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             return Color.White * projectile.Opacity;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture2D13 = Main.projectileTexture[projectile.type];
             int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
@@ -168,7 +178,6 @@ namespace FargowiltasSouls.Projectiles.Champions
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
-            return false;
         }
     }
 }

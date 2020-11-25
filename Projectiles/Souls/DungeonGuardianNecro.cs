@@ -34,8 +34,8 @@ namespace FargowiltasSouls.Projectiles.Souls
             const int aislotHomingCooldown = 0;
             //int homingDelay = 10;
             int homingDelay = (int) projectile.ai[1];
-            const float desiredFlySpeedInPixelsPerFrame = 30;
-            const float amountOfFramesToLerpBy = 20; // minimum of 1, please keep in full numbers even though it's  float!
+            const float desiredFlySpeedInPixelsPerFrame = 45;
+            const float amountOfFramesToLerpBy = 25; // minimum of 1, please keep in full numbers even though it's  float!
 
             projectile.ai[aislotHomingCooldown]++;
             if (projectile.ai[aislotHomingCooldown] > homingDelay)

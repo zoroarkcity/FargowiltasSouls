@@ -5,6 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
+    [AutoloadEquip(EquipType.Head)]
     public class MagicalBulb : ModItem
     {
         public override void SetStaticDefaults()

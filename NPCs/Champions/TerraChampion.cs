@@ -169,10 +169,11 @@ namespace FargowiltasSouls.NPCs.Champions
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                float ai1New = Main.rand.Next(100);
-                                Vector2 vel = Vector2.Normalize(npc.DirectionTo(player.Center).RotatedBy(Math.PI / 4 * (Main.rand.NextDouble() - 0.5))) * 6f;
-                                Projectile.NewProjectile(npc.Center, vel, ProjectileID.CultistBossLightningOrbArc,
-                                    npc.damage / 4, 0, Main.myPlayer, npc.rotation, ai1New);
+                                Vector2 dir = npc.DirectionTo(player.Center);
+                                float ai1New = (Main.rand.Next(2) == 0) ? 1 : -1; //randomize starting direction
+                                Vector2 vel = Vector2.Normalize(dir) * 22f;
+                                Projectile.NewProjectile(npc.Center, vel, mod.ProjectileType("HostileLightning"),
+                                    npc.damage / 4, 0, Main.myPlayer, dir.ToRotation(), ai1New);
                             }
                         }
                     }
@@ -183,7 +184,10 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         if (Main.netMode != NetmodeID.MultiplayerClient) //shoot orb
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<TerraLightningOrb2>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
+                            int p = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<TerraLightningOrb2>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
+                            Main.projectile[p].localAI[0] += 1f + Main.rand.NextFloatDirection(); //random starting rotation
+                            Main.projectile[p].localAI[1] = (Main.rand.Next(2) == 0) ? 1 : -1;
+                            Main.projectile[p].netUpdate = true;
                         }
                     }
                     break;
@@ -444,11 +448,11 @@ namespace FargowiltasSouls.NPCs.Champions
 
                                 for (int i = -5; i <= 5; i++)
                                 {
-                                    float ai1New = Main.rand.Next(100);
                                     float rotationOffset = (float)Math.PI / 2 + (float)Math.PI / 2 / 4.5f * i;
                                     rotationOffset *= Math.Sign(-sinModifier);
-                                    Vector2 vel2 = Vector2.UnitX.RotatedBy(Math.PI / 4 * (Main.rand.NextDouble() - 0.5)) * 8f;
-                                    Projectile.NewProjectile(npc.Center, vel2.RotatedBy(npc.localAI[1] + rotationOffset), ProjectileID.CultistBossLightningOrbArc,
+                                    Vector2 vel2 = Vector2.UnitX.RotatedBy(Math.PI / 4 * (Main.rand.NextDouble() - 0.5)) * 36f;
+                                    float ai1New = (Main.rand.Next(2) == 0) ? 1 : -1; //randomize starting direction
+                                    Projectile.NewProjectile(npc.Center, vel2.RotatedBy(npc.localAI[1] + rotationOffset), mod.ProjectileType("HostileLightning"),
                                         npc.damage / 4, 0, Main.myPlayer, npc.localAI[1] + rotationOffset, ai1New);
                                 }
                             }

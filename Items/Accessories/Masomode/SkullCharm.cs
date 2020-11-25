@@ -5,6 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
+    [AutoloadEquip(EquipType.Neck)]
     public class SkullCharm : ModItem
     {
         public override void SetStaticDefaults()

@@ -35,8 +35,8 @@ Summons a pet Black Cat
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 1;
-            item.value = 10000;
+            item.rare = 4;
+            item.value = 100000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -5,6 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
+    [AutoloadEquip(EquipType.Waist)]
     public class TribalCharm : ModItem
     {
         public override void SetStaticDefaults()

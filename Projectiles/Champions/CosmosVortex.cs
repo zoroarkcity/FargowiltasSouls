@@ -157,9 +157,9 @@ namespace FargowiltasSouls.Projectiles.Champions
                         for (int i = 0; i < max; i++)
                         {
                             Vector2 dir = Vector2.UnitX.RotatedBy(projectile.localAI[1] + 2 * (float)Math.PI / max * i);
-                            float ai1New = Main.rand.Next(100);
-                            Vector2 vel = Vector2.Normalize(dir.RotatedByRandom(Math.PI / 4)) * 6f;
-                            Projectile.NewProjectile(projectile.Center, vel, ProjectileID.CultistBossLightningOrbArc,
+                            float ai1New = (Main.rand.Next(2) == 0) ? 1 : -1; //randomize starting direction
+                            Vector2 vel = Vector2.Normalize(dir) * 6f;
+                            Projectile.NewProjectile(projectile.Center + vel * 6, vel * 6, mod.ProjectileType("CosmosLightning"),
                                 projectile.damage, 0, Main.myPlayer, dir.ToRotation(), ai1New);
                         }
                     }

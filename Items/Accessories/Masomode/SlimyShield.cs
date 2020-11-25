@@ -35,7 +35,12 @@ When you land after a jump, slime will fall from the sky over your cursor
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.buffImmune[BuffID.Slimed] = true;
-            player.maxFallSpeed *= 2f;
+
+            if(SoulConfig.Instance.GetValue(SoulConfig.Instance.SlimyFalling))
+            {
+                player.maxFallSpeed *= 1.5f;
+            }
+
             player.GetModPlayer<FargoPlayer>().SlimyShield = true;
         }
     }

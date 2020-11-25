@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,7 +18,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override void SetDefaults()
         {
             item.damage = 36;
-            item.crit += 15;
+            item.crit = 0;
             item.ranged = true;
             item.useTime = 36;
             item.useAnimation = 36;
@@ -40,11 +42,22 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             return true;
         }
 
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            foreach (TooltipLine line2 in tooltips)
+            {
+                if (line2.mod == "Terraria" && line2.Name == "CritChance")
+                {
+                    line2.text = ""; //dont show crit chance line, because custom crit method
+                }
+            }
+        }
+
         //make them hold it different
-        /*public override Vector2? HoldoutOffset()
+        public override Vector2? HoldoutOffset()
         {
             return new Vector2(-10, 0);
-        }*/
+        }
 
         public override bool ConsumeAmmo(Player player)
         {
