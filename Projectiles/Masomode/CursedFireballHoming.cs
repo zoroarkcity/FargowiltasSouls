@@ -9,10 +9,10 @@ namespace FargowiltasSouls.Projectiles.Masomode
 {
     public class CursedFireballHoming : ModProjectile
     {
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Cursed Flame");
+            Main.projFrames[projectile.type] = 5;
         }
 
         public override void SetDefaults()
@@ -24,7 +24,6 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.penetrate = -1;
             projectile.tileCollide = false;
             projectile.timeLeft = 600;
-            Main.projFrames[projectile.type] = 5;
         }
         public override void AI()
         {
@@ -64,11 +63,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 float lerpspeed = 0.0235f + projectile.localAI[1] / 30000;
                 projectile.velocity = Vector2.Lerp(projectile.velocity, Vector2.Zero, lerpspeed);
             }
+
             if (++projectile.localAI[1] == 60)
             {
                 projectile.velocity = Vector2.Zero;
             }
-
             else if (projectile.localAI[1] == 120 + projectile.ai[1]) //shoot at player much faster
             {
                 Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 20, 2, 0);
@@ -86,6 +85,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
                 projectile.velocity = projectile.DirectionTo(Main.player[(int)projectile.ai[0]].Center) * 16f;
             }
+
+            if (projectile.localAI[1] < 120 + projectile.ai[1])
+                projectile.alpha = 175;
+            else
+                projectile.alpha = 0;
         }
 
         public override void Kill(int timeLeft)
@@ -108,7 +112,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             return Color.White * projectile.Opacity;
         }
 
-        public override bool CanHitPlayer(Player target)
+        public override bool CanDamage()
         {
             if (projectile.localAI[1] < 120 + projectile.ai[1]) //prevent the projectile from being able to hurt the player before it's redirected at the player, since they move so fast initially it could cause cheap hits
                 return false;

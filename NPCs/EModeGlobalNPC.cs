@@ -510,6 +510,7 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.EaterofWorldsHead:
                     npc.buffImmune[BuffID.CursedInferno] = true;
+                    npc.defense += 20;
                     break;
                 case NPCID.EaterofWorldsBody:
                     npc.buffImmune[BuffID.CursedInferno] = true;
@@ -518,11 +519,6 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.EaterofWorldsTail:
                     npc.buffImmune[BuffID.CursedInferno] = true;
                     npc.damage *= 2;
-                    break;
-
-                case NPCID.EaterofSouls:
-                    if (BossIsAlive(ref eaterBoss, NPCID.EaterofWorldsHead))
-                        npc.lifeMax /= 2;
                     break;
 
                 case NPCID.BrainofCthulhu:

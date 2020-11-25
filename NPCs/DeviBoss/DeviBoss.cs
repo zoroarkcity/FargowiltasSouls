@@ -652,7 +652,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         TeleportDust();
                         Main.PlaySound(SoundID.Item84, npc.Center);
                     }
-                    else if (npc.ai[1] == 60)
+                    else if (npc.ai[1] == 50)
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
@@ -674,7 +674,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             }
                         }
                     }
-                    else if (npc.ai[1] > 120)
+                    else if (npc.ai[1] > 100)
                     {
                         if (++npc.ai[2] > 3)
                         {
@@ -1007,10 +1007,13 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                                 Vector2 speed = 24 * Vector2.UnitY.RotatedBy(MathHelper.ToRadians(10) * npc.ai[2]);
                                 int type = npc.localAI[3] > 1 ? ModContent.ProjectileType<DeviRainHeart2>() : ModContent.ProjectileType<DeviRainHeart>();
                                 int damage = npc.localAI[3] > 1 ? npc.damage / 3 : npc.damage / 4;
-                                for (int i = -8; i <= 8; i++)
+                                int range = npc.localAI[3] > 1 ? 8 : 12;
+                                float spacing = 1200f / range;
+                                float offset = Main.rand.NextFloat(-spacing, spacing);
+                                for (int i = -range; i <= range; i++)
                                 {
                                     Vector2 spawnPos = new Vector2(npc.localAI[0], npc.localAI[1]);
-                                    spawnPos.X += 150 * i;
+                                    spawnPos.X += spacing * i + offset;
                                     spawnPos.Y -= 1200;
                                     Projectile.NewProjectile(spawnPos, speed, type, damage, 0f, Main.myPlayer, 0f, npc.whoAmI);
                                 }
@@ -1348,7 +1351,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.2f);
 
-                        if (npc.ai[1] > 270)
+                        if (npc.ai[1] > 300)
                         {
                             GetNextAttack();
                         }

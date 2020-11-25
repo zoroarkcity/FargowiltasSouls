@@ -1221,17 +1221,13 @@ namespace FargowiltasSouls.Projectiles
                 {
                     if (GrazeCheck(projectile))
                     {
-                        double grazeCap = 0.3;
-                        double grazeGain = 0.02;
-                        if (fargoPlayer.CyclonicFin)
-                        {
-                            grazeCap += 0.2;
-                        }
+                        double grazeCap = 0.25;
                         if (fargoPlayer.MutantEye)
-                        {
-                            grazeCap += 0.5;
-                            grazeGain += 0.02;
-                        }
+                            grazeCap += 0.25;
+
+                        double grazeGain = 0.0125;
+                        if (fargoPlayer.CyclonicFin)
+                            grazeGain *= 2;
 
                         GrazeCD = 60;
                         fargoPlayer.GrazeBonus += grazeGain;
@@ -1239,7 +1235,7 @@ namespace FargowiltasSouls.Projectiles
                             fargoPlayer.GrazeBonus = grazeCap;
                         fargoPlayer.GrazeCounter = -1; //reset counter whenever successful graze
 
-                        if (!Main.dedServ) //is this check needed...?
+                        if (!Main.dedServ)
                             Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Graze").WithVolume(1f), Main.LocalPlayer.Center);
 
                         const int max = 30; //make some indicator dusts

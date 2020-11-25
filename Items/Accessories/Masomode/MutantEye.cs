@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         {
             DisplayName.SetDefault("Mutant Eye");
             Tooltip.SetDefault(@"Grants immunity to Mutant Fang
-50% increased graze bonus critical damage cap
+25% increased graze bonus critical damage cap
 Upgrades Sparkling Adoration hearts to love rays
 Increases critical damage gained per graze
 Increases Spectral Abominationn respawn rate and damage

@@ -43,7 +43,7 @@ namespace FargowiltasSouls.NPCs.EternityMode
                 Main.npcTexture[npc.type] = Main.npcTexture[NPCID.BrainofCthulhu];
             }
 
-            if (EModeGlobalNPC.brainBoss < 0f || EModeGlobalNPC.brainBoss >= 200f)
+            if (EModeGlobalNPC.brainBoss < 0f || EModeGlobalNPC.brainBoss >= Main.maxNPCs)
             {
                 npc.StrikeNPCNoInteraction(9999, 0f, 0);
                 npc.active = false;
@@ -72,6 +72,9 @@ namespace FargowiltasSouls.NPCs.EternityMode
             npc.lifeMax = brain.lifeMax;
             npc.knockBackResist = brain.knockBackResist;
 
+            if (npc.Distance(Main.player[npc.target].Center) > 500) //immune to knockback unless this close
+                npc.knockBackResist = 0;
+
             if (npc.alpha == 0)
             {
                 npc.damage = npc.defDamage;
@@ -88,7 +91,7 @@ namespace FargowiltasSouls.NPCs.EternityMode
             Vector2 vector2 = new Vector2(npc.Center.X, npc.Center.Y);
             float num1 = Main.player[npc.target].Center.X - vector2.X;
             float num2 = Main.player[npc.target].Center.Y - vector2.Y;
-            float num3 = (npc.Distance(Main.player[npc.target].Center) > 600 ? 8f : 4f) / (float)Math.Sqrt(num1 * num1 + num2 * num2);
+            float num3 = (npc.Distance(Main.player[npc.target].Center) > 500 ? 8f : 4f) / (float)Math.Sqrt(num1 * num1 + num2 * num2);
             float num4 = num1 * num3;
             float num5 = num2 * num3;
             npc.velocity.X = (npc.velocity.X * 50 + num4) / 51f;
