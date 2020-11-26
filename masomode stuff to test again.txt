@@ -51,3 +51,5 @@ buffed blender damage slightly
 destroyer's dark stars will stop-and-go a little further from you, should give more dodging space
 nerfed destroyer segment fire rate
 nerfed destroyer dark star homing mobility slightly
+
+mutant uses a new homing phantasmal eye when spinning spear
