@@ -44,3 +44,5 @@ prime p2 rework
 	cornerswipe limbs attack less often when prime isn't spinning
 	normalized limb damage (all ~100)
 echdeath
+
+made destroyer fire dark stars less often

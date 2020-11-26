@@ -2661,7 +2661,7 @@ namespace FargowiltasSouls.NPCs
                     if (cap > 20) //prevent meme scaling at super low life
                         cap = 20;
                     Counter[0] += Main.rand.Next(2 + cap) + 1;
-                    if (Counter[0] >= Main.rand.Next(1400, 26000))
+                    if (Counter[0] >= Main.rand.Next(2800, 28000))
                     {
                         Counter[0] = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
