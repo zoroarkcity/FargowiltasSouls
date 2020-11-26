@@ -45,4 +45,9 @@ prime p2 rework
 	normalized limb damage (all ~100)
 echdeath
 
-made destroyer fire dark stars less often
+added some OOB checks for galactic reformer
+nerfed landslide damage and homing
+buffed blender damage slightly
+destroyer's dark stars will stop-and-go a little further from you, should give more dodging space
+nerfed destroyer segment fire rate
+nerfed destroyer dark star homing mobility slightly

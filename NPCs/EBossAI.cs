@@ -2658,10 +2658,10 @@ namespace FargowiltasSouls.NPCs
                 {
                     npc.localAI[0] = 0f;
                     int cap = Main.npc[npc.realLife].lifeMax / Main.npc[npc.realLife].life;
-                    if (cap > 20) //prevent meme scaling at super low life
-                        cap = 20;
+                    if (cap > 15) //prevent meme scaling at super low life
+                        cap = 15;
                     Counter[0] += Main.rand.Next(2 + cap) + 1;
-                    if (Counter[0] >= Main.rand.Next(2800, 28000))
+                    if (Counter[0] >= Main.rand.Next(3600, 36000))
                     {
                         Counter[0] = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
@@ -2679,8 +2679,8 @@ namespace FargowiltasSouls.NPCs
                             //Projectile.NewProjectile(npc.Center, distance.RotatedBy(angleModifier), type, npc.damage / 4, 0f, Main.myPlayer);*/
 
                             float modifier = 28f * (1f - (float)Main.npc[npc.realLife].life / Main.npc[npc.realLife].lifeMax);
-                            if (modifier < 14)
-                                modifier = 14;
+                            if (modifier < 7)
+                                modifier = 7;
 
                             int delay = (int)(distance.Length() / modifier) / 2;
                             if (delay < 0)
@@ -3062,10 +3062,9 @@ namespace FargowiltasSouls.NPCs
                     Vector2 baseVel = npc.DirectionTo(Main.player[npc.target].Center);
                     for (int j = -2; j <= 2; j++)
                     {
-                        float speed = 6.5f + 0.5f * (3 - Math.Abs(j));
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile.NewProjectile(npc.Center, speed * baseVel.RotatedBy(MathHelper.ToRadians(0.7f) * j),
+                            Projectile.NewProjectile(npc.Center, 7f * baseVel.RotatedBy(MathHelper.ToRadians(1f) * j),
                                 ProjectileID.DeathLaser, Main.npc[ai1].defDamage / 4, 0f, Main.myPlayer);
                         }
                     }
@@ -3225,9 +3224,9 @@ namespace FargowiltasSouls.NPCs
                 {
                     void ActiveDust()
                     {
-                        for (int i = 0; i < 5; i++)
+                        for (int i = 0; i < 4; i++)
                         {
-                            int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Fire, -npc.velocity.X * 0.25f, -npc.velocity.Y * 0.25f, Scale: 3f);
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, DustID.Fire, -npc.velocity.X * 0.25f, -npc.velocity.Y * 0.25f, Scale: 2f);
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity *= 4f;
                         }
@@ -3281,10 +3280,9 @@ namespace FargowiltasSouls.NPCs
                                     Vector2 baseVel = npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(MathHelper.ToRadians(20) * i);
                                     for (int j = -3; j <= 3; j++)
                                     {
-                                        float speed = 6.5f + 0.5f * (3 - Math.Abs(j));
                                         if (Main.netMode != NetmodeID.MultiplayerClient)
                                         {
-                                            Projectile.NewProjectile(npc.Center, speed * baseVel.RotatedBy(MathHelper.ToRadians(1f) * j),
+                                            Projectile.NewProjectile(npc.Center, 7.5f * baseVel.RotatedBy(MathHelper.ToRadians(1f) * j),
                                                   ProjectileID.DeathLaser, npc.damage / 4, 0f, Main.myPlayer);
                                         }
                                     }
@@ -3297,10 +3295,9 @@ namespace FargowiltasSouls.NPCs
                                 Vector2 baseVel = npc.DirectionTo(Main.player[npc.target].Center);
                                 for (int j = -3; j <= 3; j++)
                                 {
-                                    float speed = 6.5f + 0.5f * (3 - Math.Abs(j));
                                     if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        Projectile.NewProjectile(npc.Center, speed * baseVel.RotatedBy(MathHelper.ToRadians(1f) * j),
+                                        Projectile.NewProjectile(npc.Center, 7.5f * baseVel.RotatedBy(MathHelper.ToRadians(1f) * j),
                                             ProjectileID.DeathLaser, npc.damage / 4, 0f, Main.myPlayer);
                                     }
                                 }
