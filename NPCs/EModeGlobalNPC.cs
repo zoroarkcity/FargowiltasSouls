@@ -18,6 +18,7 @@ using FargowiltasSouls.Items.Tiles;
 using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Buffs.Souls;
 using Fargowiltas;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace FargowiltasSouls.NPCs
 {
@@ -9081,7 +9082,5 @@ namespace FargowiltasSouls.NPCs
                 }
             });
         }
-
-
     }
 }

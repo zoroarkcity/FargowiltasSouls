@@ -33,4 +33,14 @@ buffed penetrator damage 1700 to 2000 because i can
 
 destroyer still does coil stars when you have lightning rod but only half as often
 fixed lightning rod not doing damage to the player
+prime p2 rework
+	removed head firing rockets
+	alternates between using two arms at a time, the other two are folded when not in use
+	cannon behaves like normal
+	laser fires not random lasers and also hopefully doesn't drift so far from prime
+	vice slashes down on you reliably
+	saw stabs at you reliably
+	the primary limbs burn with fire to hopefully indicate them better
+	cornerswipe limbs attack less often when prime isn't spinning
+	normalized limb damage (all ~100)
 echdeath
