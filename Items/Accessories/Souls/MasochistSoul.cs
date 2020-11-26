@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 Increases max life by 100%, damage by 50%, and damage reduction by 10%
 Increases life regen drastically, increases max number of minions and sentries by 10
 Grants gravity control, fastfall, and immunity to knockback, almost all Eternity Mode debuffs, and more
-Grants autofire to all weapons, modifier protection, and you automatically use mana potions when needed
+Grants autofire to all weapons and you automatically use mana potions when needed
 Makes armed and magic skeletons less hostile outside the Dungeon, zoom with right click
 Your attacks create additional attacks, hearts, and inflict a cocktail of Eternity Mode debuffs
 Press the Fireball Dash key to perform a short invincible dash

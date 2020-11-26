@@ -16,7 +16,7 @@ Grants immunity to Flames of the Universe, Clipped Wings, Crippled, Webbed, and 
 Grants immunity to Lovestruck, Stinky, Midas, Hexed, cactus damage, and enemies that steal items
 Your attacks can inflict Clipped Wings, spawn Frostfireballs, and produce hearts
 You have autofire, improved night vision, and faster respawn when no boss is alive
-Automatically use mana potions when needed and gives modifier protection
+Automatically use mana potions when needed
 Attacks have a chance to squeak and deal 1 damage to you
 You erupt into Shadowflame tentacles when injured and respawn with more life
 Certain enemies will drop potions when defeated and 50% discount on reforges

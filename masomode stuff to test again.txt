@@ -53,3 +53,4 @@ nerfed destroyer segment fire rate
 nerfed destroyer dark star homing mobility slightly
 
 mutant uses a new homing phantasmal eye when spinning spear
+removed security wallet wack modifier thing

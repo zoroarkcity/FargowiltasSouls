@@ -238,7 +238,7 @@ namespace FargowiltasSouls.Items
 
         public override bool NewPreReforge(Item item)
         {
-            if (Main.player[item.owner].GetModPlayer<FargoPlayer>().SecurityWallet)
+            /*if (Main.player[item.owner].GetModPlayer<FargoPlayer>().SecurityWallet)
             {
                 switch(item.prefix)
                 {
@@ -258,7 +258,7 @@ namespace FargowiltasSouls.Items
                     case PrefixID.Rapid:    if (SoulConfig.Instance.walletToggles.Rapid)    return false; break;
                     default: break;
                 }
-            }
+            }*/
             return true;
         }
 
