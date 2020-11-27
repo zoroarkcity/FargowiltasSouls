@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 float targetAngle = vel.ToRotation();
                 projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, 0.2f));
 
-                if (vel.Length() < 250 || !Main.player[(int)projectile.ai[0]].active || Main.player[(int)projectile.ai[0]].dead || Main.player[(int)projectile.ai[0]].ghost)
+                if (vel.Length() < 300 || !Main.player[(int)projectile.ai[0]].active || Main.player[(int)projectile.ai[0]].dead || Main.player[(int)projectile.ai[0]].ghost)
                 {
                     projectile.ai[1] = 1;
                     projectile.netUpdate = true;
@@ -34,12 +34,12 @@ namespace FargowiltasSouls.Projectiles.Masomode
             {
                 if (++projectile.ai[1] < 100)
                 {
-                    projectile.velocity *= 1.04f;
+                    projectile.velocity *= 1.035f;
 
                     float rotation = projectile.velocity.ToRotation();
                     Vector2 vel = Main.player[(int)projectile.ai[0]].Center - projectile.Center;
                     float targetAngle = vel.ToRotation();
-                    projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, 0.04f));
+                    projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, 0.035f));
                 }
             }
             else //ai1 below 0 rn

@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Buffs.Masomode
             if (player.GetModPlayer<FargoPlayer>().lightningRodTimer >= 60)
             {
                 player.GetModPlayer<FargoPlayer>().lightningRodTimer = 0;
-                SpawnLightning(player, mod.ProjectileType("LightningVortexHostile"), 0);
+                SpawnLightning(player, mod.ProjectileType("LightningVortexHostile"), 60 / 4);
             }
 
             //if (Main.rand.Next(60) == 1)
