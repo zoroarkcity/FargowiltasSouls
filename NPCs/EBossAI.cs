@@ -2667,7 +2667,7 @@ namespace FargowiltasSouls.NPCs
                             float speed = 2f + npc.Distance(Main.player[npc.target].Center) / 240;
                             if (speed > 16f)
                                 speed = 16f;
-                            int p = Projectile.NewProjectile(npc.Center, speed * npc.DirectionTo(Main.player[npc.target].Center + Main.rand.NextVector2Circular(100, 100)),
+                            int p = Projectile.NewProjectile(npc.Center, speed * npc.DirectionTo(Main.player[npc.target].Center + Main.rand.NextVector2Circular(50, 50)),
                                 ProjectileID.DeathLaser, npc.damage / 4, 0f, Main.myPlayer);
                             if (p != Main.maxProjectiles)
                                 Main.projectile[p].timeLeft = Math.Min((int)(npc.Distance(Main.player[npc.target].Center) / speed) + 180, 600);
