@@ -35,7 +35,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             int d = Dust.NewDust(projectile.Center - Vector2.One * 5f, 10, 10, 229, -projectile.velocity.X / 3f, -projectile.velocity.Y / 3f, 150, Color.Transparent, 1.2f);
             Main.dust[d].noGravity = true;
 
-            if (--projectile.ai[1] < 0 && projectile.ai[1] > -300)
+            if (--projectile.ai[1] < 0 && projectile.ai[1] > -60)
             {
                 if (projectile.ai[0] >= 0 && projectile.ai[0] < Main.maxPlayers)
                 {
@@ -43,7 +43,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     
                     Vector2 target = p.Center;
 
-                    if (Math.Abs(p.Center.Y - projectile.Center.Y) > 150)
+                    if (Math.Abs(p.Center.Y - projectile.Center.Y) > 250)
                     {
                         Vector2 distance = target - projectile.Center;
 
@@ -57,7 +57,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     }
                     else
                     {
-                        projectile.ai[1] = -300;
+                        projectile.ai[1] = -60;
                     }
                 }
                 else
@@ -67,7 +67,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             }
 
             if (projectile.ai[1] < 0)
-                projectile.velocity = Vector2.Normalize(projectile.velocity) * MathHelper.Lerp(projectile.velocity.Length(), 12f, 0.035f);
+                projectile.velocity = Vector2.Normalize(projectile.velocity) * MathHelper.Lerp(projectile.velocity.Length(), 10f, 0.035f);
 
             projectile.rotation = projectile.velocity.ToRotation() + 1.570796f;
         }

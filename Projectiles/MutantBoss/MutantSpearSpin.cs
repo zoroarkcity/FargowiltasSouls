@@ -63,7 +63,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     Vector2 speed = Vector2.UnitY.RotatedByRandom(Math.PI / 2) * Main.rand.NextFloat(6f, 9f);
                     if (mutant.Center.Y < Main.player[mutant.target].Center.Y)
                         speed *= -1f;
-                    float ai1 = 150 + Main.rand.Next(30);
+                    float ai1 = 120;
                     Projectile.NewProjectile(projectile.position + Main.rand.NextVector2Square(0f, projectile.width),
                         speed, ModContent.ProjectileType<MutantEyeHoming>(), projectile.damage, 0f, projectile.owner, mutant.target, ai1);
                 }

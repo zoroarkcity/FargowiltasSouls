@@ -1088,6 +1088,62 @@ namespace FargowiltasSouls.NPCs
                             {
                                 if (npc.localAI[0] > 30)
                                     npc.localAI[0] = -30;
+
+                                if (++Counter[0] > 120) //choose a direction to orbit in
+                                {
+                                    Counter[0] = 0;
+                                    Counter[1] = Main.rand.Next(2) == 0 ? 1 : -1;
+
+                                    if (Main.netMode == NetmodeID.Server)
+                                    {
+                                        npc.netUpdate = true;
+                                        NetUpdateMaso(npc.whoAmI);
+                                    }
+                                }
+
+                                if (npc.HasValidTarget)
+                                {
+                                    Vector2 vel = Main.player[npc.target].Center - npc.Center;
+                                    vel += 200f * Main.player[npc.target].DirectionTo(npc.Center).RotatedBy(MathHelper.ToRadians(20) * Counter[1]);
+
+                                    npc.position += (Main.player[npc.target].position - Main.player[npc.target].oldPosition) / 3;
+
+                                    if (npc.Distance(Main.player[npc.target].Center) < 150) //snap away really fast if too close
+                                    {
+                                        npc.velocity = vel / 20;
+                                    }
+                                    else //regular movement
+                                    {
+                                        vel.Normalize();
+                                        vel *= 12f;
+
+                                        const float moveSpeed = 0.7f;
+                                        if (npc.velocity.X < vel.X)
+                                        {
+                                            npc.velocity.X += moveSpeed;
+                                            if (npc.velocity.X < 0 && vel.X > 0)
+                                                npc.velocity.X += moveSpeed;
+                                        }
+                                        else if (npc.velocity.X > vel.X)
+                                        {
+                                            npc.velocity.X -= moveSpeed;
+                                            if (npc.velocity.X > 0 && vel.X < 0)
+                                                npc.velocity.X -= moveSpeed;
+                                        }
+                                        if (npc.velocity.Y < vel.Y)
+                                        {
+                                            npc.velocity.Y += moveSpeed;
+                                            if (npc.velocity.Y < 0 && vel.Y > 0)
+                                                npc.velocity.Y += moveSpeed;
+                                        }
+                                        else if (npc.velocity.Y > vel.Y)
+                                        {
+                                            npc.velocity.Y -= moveSpeed;
+                                            if (npc.velocity.Y > 0 && vel.Y < 0)
+                                                npc.velocity.Y -= moveSpeed;
+                                        }
+                                    }
+                                }
                             }
                             break;
 
