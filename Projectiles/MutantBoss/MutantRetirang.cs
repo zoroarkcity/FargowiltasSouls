@@ -15,7 +15,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Retirang");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 20;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 24;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
@@ -75,9 +75,9 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
             int add = 150;
             Color glowColor = new Color(add + Main.DiscoR / 3, add + Main.DiscoG / 3, add + Main.DiscoB / 3);
-            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i += 2)
             {
-                Color color27 = glowColor;
+                Color color27 = glowColor * 0.9f;
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 Vector2 value4 = projectile.oldPos[i];
                 float num165 = projectile.oldRot[i];

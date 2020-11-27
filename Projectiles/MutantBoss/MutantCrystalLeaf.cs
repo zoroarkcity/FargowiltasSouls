@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.hostile = true;
             projectile.timeLeft = 420;
             projectile.aiStyle = -1;
-            projectile.scale = 2f;
+            projectile.scale = 2.5f;
             cooldownSlot = 1;
         }
 
@@ -46,7 +46,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
             Lighting.AddLight(projectile.Center, 0.1f, 0.4f, 0.2f);
             projectile.scale = (Main.mouseTextColor / 200f - 0.35f) * 0.2f + 0.95f;
-            projectile.scale *= 2f;
+            projectile.scale *= 2.5f;
 
             int ai0 = (int)projectile.ai[0];
             Vector2 offset = new Vector2(125, 0).RotatedBy(projectile.ai[1]);
@@ -85,10 +85,9 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
             Color color26 = lightColor;
             color26 = projectile.GetAlpha(color26);
-
-            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i += 2)
+            
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
             {
-                Color color27 = color26 * .75f;
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 Vector2 value4 = projectile.oldPos[i];
                 float num165 = projectile.oldRot[i];
