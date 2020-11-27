@@ -57,3 +57,7 @@ removed security wallet wack modifier thing
 destroyer probes move funny (try to avoid hitting you, just orbit you)
 destroyer lasers now have much better (read: consistent) aim and change velocity based on distance
 nerfed prime melee limb aggression slightly
+
+destroyer lasers fire more aggressively but weaker speed scaling
+destroyer purges lasers when beginning coil
+destroyer probes x1.5 life

@@ -2474,7 +2474,7 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     for (int i = 0; i < Main.maxProjectiles; i++)
                                     {
-                                        if (Main.projectile[i].active && Main.projectile[i].type == ModContent.ProjectileType<DarkStarHoming>())
+                                        if (Main.projectile[i].active && (Main.projectile[i].type == ModContent.ProjectileType<DarkStarHoming>() || Main.projectile[i].type == ProjectileID.DeathLaser))
                                             Main.projectile[i].Kill();
                                     }
                                 }
@@ -2664,7 +2664,7 @@ namespace FargowiltasSouls.NPCs
                         npc.TargetClosest();
                         if (Collision.CanHit(npc.Center, 0, 0, Main.player[npc.target].Center, 0, 0) && Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            float speed = 2f + npc.Distance(Main.player[npc.target].Center) / 240;
+                            float speed = 2f + npc.Distance(Main.player[npc.target].Center) / 360;
                             if (speed > 16f)
                                 speed = 16f;
                             int p = Projectile.NewProjectile(npc.Center, speed * npc.DirectionTo(Main.player[npc.target].Center + Main.rand.NextVector2Circular(50, 50)),
@@ -2678,8 +2678,8 @@ namespace FargowiltasSouls.NPCs
                 else
                 {
                     int cap = Main.npc[npc.realLife].lifeMax / Main.npc[npc.realLife].life;
-                    if (cap > 15) //prevent meme scaling at super low life
-                        cap = 15;
+                    if (cap > 20) //prevent meme scaling at super low life
+                        cap = 20;
                     Counter[0] += Main.rand.Next(2 + cap) + 1;
                     if (Counter[0] >= Main.rand.Next(3600, 36000))
                     {

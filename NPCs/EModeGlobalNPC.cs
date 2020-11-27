@@ -553,10 +553,13 @@ namespace FargowiltasSouls.NPCs
                     npc.buffImmune[BuffID.OnFire] = true;
                     break;
 
+                case NPCID.Probe:
+                    npc.lifeMax = (int)(npc.lifeMax * 1.5);
+                    goto case NPCID.TheDestroyer;
+
                 case NPCID.TheDestroyer:
                 case NPCID.TheDestroyerBody:
                 case NPCID.TheDestroyerTail:
-                case NPCID.Probe:
                     npc.buffImmune[BuffID.Suffocation] = true;
                     npc.buffImmune[ModContent.BuffType<TimeFrozen>()] = false;
                     npc.buffImmune[BuffID.Chilled] = false;
