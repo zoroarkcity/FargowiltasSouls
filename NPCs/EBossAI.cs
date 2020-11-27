@@ -2869,6 +2869,7 @@ namespace FargowiltasSouls.NPCs
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             const int max = 8;
+                            Main.PlaySound(SoundID.Item, (int)npc.position.X, (int)npc.position.Y, 105, 2f, -0.3f);
                             for (int i = 0; i < max; i++)
                             {
                                 Vector2 speed = 12f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(2 * Math.PI / max * i);
@@ -2876,6 +2877,7 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     int p = Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(2f) * j),
                                         ModContent.ProjectileType<DarkStar>(), damage, 0f, Main.myPlayer);
+                                    Main.projectile[p].soundDelay = -1; //dont play sounds
                                     if (p != Main.maxProjectiles)
                                         Main.projectile[p].timeLeft = 480;
                                 }
@@ -3112,6 +3114,8 @@ namespace FargowiltasSouls.NPCs
                         npc.velocity = (target - npc.Center) / 30;
                         if (npc.ai[2] == 140)
                         {
+                            float pitch = -0.3f + Main.rand.Next(-20, 21) / 100;
+                            Main.PlaySound(SoundID.Item, (int)npc.position.X, (int)npc.position.Y, 15, 1.5f, pitch);
                             for (int i = 0; i < 20; i++)
                             {
                                 int d = Dust.NewDust(npc.position, npc.width, npc.height, 112, npc.velocity.X * .4f, npc.velocity.Y * .4f, 0, Color.White, 2);
@@ -3125,6 +3129,7 @@ namespace FargowiltasSouls.NPCs
                     }
                     else if (npc.ai[2] == 180)
                     {
+                        Main.PlaySound(SoundID.Item, (int)npc.position.X, (int)npc.position.Y, 18, 1.25f, 1f);
                         npc.velocity = npc.DirectionTo(Main.player[npc.target].Center) * 20f;
                         npc.netUpdate = true;
                         Counter[0] *= -1;
@@ -3358,6 +3363,7 @@ namespace FargowiltasSouls.NPCs
                             }
                             else if (Counter[2] == 80)
                             {
+                                Main.PlaySound(SoundID.Item, (int)npc.position.X, (int)npc.position.Y, 18, 1.25f, -0.5f);
                                 npc.velocity = npc.DirectionTo(Main.player[npc.target].Center) * 20f;
                                 npc.rotation = npc.velocity.ToRotation() - (float)Math.PI / 2;
                                 if (Main.netMode == NetmodeID.Server)
@@ -3395,6 +3401,7 @@ namespace FargowiltasSouls.NPCs
                             }
                             else if (Counter[2] == 70) //slash down
                             {
+                                Main.PlaySound(SoundID.Item, (int)npc.position.X, (int)npc.position.Y, 1, 1.25f, 0.5f);
                                 Vector2 vel = Main.player[npc.target].Center - npc.Center;
                                 vel.Y += Math.Abs(vel.X) * 0.25f;
                                 vel.X *= 0.75f;
