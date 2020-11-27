@@ -1157,7 +1157,7 @@ namespace FargowiltasSouls.NPCs
             {
                 if (masoBool[2] && ++Counter[2] > 600)
                 {
-                    if (Counter[2] < 690) //slow down
+                    if (Counter[2] < 660) //slow down
                     {
                         if (!masoBool[3])
                         {
