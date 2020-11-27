@@ -69,3 +69,4 @@ mutant rangs move slower and have glowing trail, fixed crystal leaf hitboxes bei
 mutant DR removed
 adjusted landslide homing
 moon lord socket ray telegraph slightly shortened, but rays persist less time
+nerfed flesh hand by 2 damage
