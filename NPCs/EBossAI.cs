@@ -5261,7 +5261,7 @@ namespace FargowiltasSouls.NPCs
                     && Main.npc[(int)npc.ai[3]].GetGlobalNPC<EModeGlobalNPC>().masoBool[0]) //only during p3
                 {
                     Counter[2]++;
-                    if (Counter[2] == 1) //spawn telegraph
+                    if (Counter[2] == 2) //spawn telegraph
                     {
                         NetUpdateMaso(npc.whoAmI);
 

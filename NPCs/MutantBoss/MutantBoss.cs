@@ -1931,14 +1931,14 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         {
                             const float retiRad = 525; //500
                             const float spazRad = 350; //250
-                            float retiSpeed = 2 * (float)Math.PI * retiRad / 240;
-                            float spazSpeed = 2 * (float)Math.PI * spazRad / 120;
+                            float retiSpeed = 2 * (float)Math.PI * retiRad / 300;
+                            float spazSpeed = 2 * (float)Math.PI * spazRad / 180;
                             float retiAcc = retiSpeed * retiSpeed / retiRad * npc.ai[2];
                             float spazAcc = spazSpeed * spazSpeed / spazRad * -npc.ai[2];
                             for (int i = 0; i < 4; i++)
                             {
-                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i) * retiSpeed, ModContent.ProjectileType<MutantRetirang>(), npc.damage / 4, 0f, Main.myPlayer, retiAcc, 240);
-                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i + Math.PI / 4) * spazSpeed, ModContent.ProjectileType<MutantSpazmarang>(), npc.damage / 4, 0f, Main.myPlayer, spazAcc, 120);
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i) * retiSpeed, ModContent.ProjectileType<MutantRetirang>(), npc.damage / 4, 0f, Main.myPlayer, retiAcc, 300);
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i + Math.PI / 4) * spazSpeed, ModContent.ProjectileType<MutantSpazmarang>(), npc.damage / 4, 0f, Main.myPlayer, spazAcc, 180);
                             }
                         }
                     }
@@ -2146,12 +2146,6 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 Main.dust[d].noLight = true;
                 Main.dust[d].velocity *= 3f;
             }
-        }
-
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
-        {
-            damage *= 0.9;
-            return true;
         }
 
         public override bool CheckDead()

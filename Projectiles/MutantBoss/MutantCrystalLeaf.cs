@@ -27,6 +27,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.hostile = true;
             projectile.timeLeft = 420;
             projectile.aiStyle = -1;
+            projectile.scale = 2f;
             cooldownSlot = 1;
         }
 
@@ -45,7 +46,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
             Lighting.AddLight(projectile.Center, 0.1f, 0.4f, 0.2f);
             projectile.scale = (Main.mouseTextColor / 200f - 0.35f) * 0.2f + 0.95f;
-            projectile.scale *= 2;
+            projectile.scale *= 2f;
 
             int ai0 = (int)projectile.ai[0];
             Vector2 offset = new Vector2(125, 0).RotatedBy(projectile.ai[1]);
