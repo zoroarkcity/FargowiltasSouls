@@ -2657,7 +2657,7 @@ namespace FargowiltasSouls.NPCs
                 }
                 else if (npc.ai[2] == 0)
                 {
-                    Counter[2] += Main.rand.Next(4);
+                    Counter[2] += Main.rand.Next(6);
                     if (Counter[2] > Main.rand.Next(1200, 22000)) //replacement for vanilla lasers
                     {
                         Counter[2] = 0;
@@ -2684,6 +2684,7 @@ namespace FargowiltasSouls.NPCs
                     if (Counter[0] >= Main.rand.Next(3600, 36000))
                     {
                         Counter[0] = 0;
+                        npc.TargetClosest();
                         if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                         {
                             Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 15f;
