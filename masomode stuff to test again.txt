@@ -61,3 +61,4 @@ nerfed prime melee limb aggression slightly
 destroyer lasers fire more aggressively but weaker speed scaling
 destroyer purges lasers when beginning coil
 destroyer probes x1.5 life
+fixed prime having triple stars on the first salvo every spin

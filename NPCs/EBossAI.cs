@@ -2856,14 +2856,32 @@ namespace FargowiltasSouls.NPCs
             else //in phase 2
             {
                 npc.dontTakeDamage = false;
-
-                int timeToShoot = 300;
-
+                
                 if (npc.ai[1] == 1f && npc.ai[2] > 2f) //spinning
                 {
-                    timeToShoot = 120;
                     if (npc.HasValidTarget)
                         npc.position += npc.DirectionTo(Main.player[npc.target].Center) * 5;
+
+                    if (--Counter[2] < 0) //projectile attack
+                    {
+                        Counter[2] = 120;
+                        int damage = npc.defDamage * 2 / 7;
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            const int max = 8;
+                            for (int i = 0; i < max; i++)
+                            {
+                                Vector2 speed = 12f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(2 * Math.PI / max * i);
+                                for (int j = -5; j <= 5; j++)
+                                {
+                                    int p = Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(2f) * j),
+                                        ModContent.ProjectileType<DarkStar>(), damage, 0f, Main.myPlayer);
+                                    if (p != Main.maxProjectiles)
+                                        Main.projectile[p].timeLeft = 480;
+                                }
+                            }
+                        }
+                    }
 
                     masoBool[0] = true;
                 }
@@ -2881,7 +2899,7 @@ namespace FargowiltasSouls.NPCs
                 }
                 else //not spinning
                 {
-                    Counter[2] = timeToShoot; //buffer this to shoot immediately when spin begins
+                    Counter[2] = 0; //buffer this to shoot immediately when spin begins
 
                     npc.position += npc.velocity / 4f;
 
@@ -2907,45 +2925,6 @@ namespace FargowiltasSouls.NPCs
                                 default:
                                     break;
                             }
-                        }*/
-                    }
-                }
-
-                if (++Counter[2] >= timeToShoot) //projectile attack
-                {
-                    Counter[2] = 0;
-                    int damage = npc.defDamage * 2 / 7;
-                    if (npc.ai[1] != 2 && npc.HasPlayerTarget) //dont do during DG
-                    {
-                        if (npc.ai[1] == 1) //spinning, do stars instead
-                        {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                const int max = 8;
-                                for (int i = 0; i < max; i++)
-                                {
-                                    Vector2 speed = 12f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(2 * Math.PI / max * i);
-                                    for (int j = -5; j <= 5; j++)
-                                    {
-                                        int p = Projectile.NewProjectile(npc.Center, speed.RotatedBy(MathHelper.ToRadians(2f) * j), 
-                                            ModContent.ProjectileType<DarkStar>(), damage, 0f, Main.myPlayer);
-                                        if (p != Main.maxProjectiles)
-                                            Main.projectile[p].timeLeft = 480;
-                                    }
-                                }
-                            }
-                        }
-                        /*else //rockets
-                        {
-                            Vector2 speed = Main.player[npc.target].Center - npc.Center;
-                            speed.Normalize();
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                Projectile.NewProjectile(npc.Center, 4f * speed, ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center, 4f * speed.RotatedBy(MathHelper.ToRadians(2f)), ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
-                                Projectile.NewProjectile(npc.Center, 4f * speed.RotatedBy(MathHelper.ToRadians(-2f)), ProjectileID.RocketSkeleton, damage, 0f, Main.myPlayer);
-                            }
-                            Main.PlaySound(SoundID.Item11, npc.Center);
                         }*/
                     }
                 }
