@@ -217,7 +217,7 @@ namespace FargowiltasSouls
             AddToggle("MasoPouchConfig", "Tentacles On Hit", "WretchedPouch", "ffffff");
             AddToggle("MasoClippedConfig", "Inflict Clipped Wings", "WyvernFeather", "ffffff");
             AddToggle("TribalCharmConfig", "Tribal Charm Auto Swing", "TribalCharm", "ffffff");
-            AddToggle("WalletHeader", "Security Wallet", "SecurityWallet", "ffffff");
+            //AddToggle("WalletHeader", "Security Wallet", "SecurityWallet", "ffffff");
 
             //dubious 
             AddToggle("DubiousHeader", "Dubious Circuitry", "DubiousCircuitry", "ffffff");

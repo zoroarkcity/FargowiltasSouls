@@ -3498,6 +3498,7 @@ namespace FargowiltasSouls
                 case ItemID.StarCannon:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.SnowmanCannon:
+                case ItemID.DemonScythe:
                     return 2f / 3f;
 
                 case ItemID.Razorpine:
@@ -3516,7 +3517,6 @@ namespace FargowiltasSouls
                 case ItemID.HellwingBow:
                 case ItemID.Beenade:
                 case ItemID.Handgun:
-                case ItemID.DemonScythe:
                 case ItemID.SpikyBall:
                 case ItemID.SDMG:
                 case ItemID.Xenopopper:

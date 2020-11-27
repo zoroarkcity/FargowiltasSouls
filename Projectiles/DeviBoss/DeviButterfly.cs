@@ -77,7 +77,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             {
                 if (projectile.localAI[0] > (npc.localAI[3] > 1 ? 120 : 105))
                 {
-                    projectile.localAI[0] = 30;
+                    projectile.localAI[0] = npc.localAI[3] > 1 ? 30 : 45;
                 }
 
                 if (++projectile.localAI[1] > 3)

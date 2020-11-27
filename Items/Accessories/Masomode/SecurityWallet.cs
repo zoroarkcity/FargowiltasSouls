@@ -10,10 +10,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         {
             DisplayName.SetDefault("Security Wallet");
             Tooltip.SetDefault(@"Grants immunity to Midas and enemies that steal items
-Prevents you from reforging items with certain modifiers
-Protected modifiers can be chosen in the toggles menu
 50% discount on reforges
-'Results not guaranteed in multiplayer'");
+'Not secure against being looted off of one's corpse'");
             DisplayName.AddTranslation(GameCulture.Chinese, "安全钱包");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'无法保证在多人游戏中的效果'
 免疫点金手和偷取物品的敌人

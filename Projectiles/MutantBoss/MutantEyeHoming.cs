@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.MutantBoss
 {
-    public class MutantEye : ModProjectile
+    public class MutantEyeHoming : ModProjectile
     {
         public override string Texture => "Terraria/Projectile_452";
 
@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.aiStyle = -1;
             projectile.hostile = true;
             projectile.penetrate = 1;
-            projectile.timeLeft = 300;
+            projectile.timeLeft = 600;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.alpha = 0;
@@ -34,16 +34,42 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void AI()
         {
-            projectile.rotation = projectile.velocity.ToRotation() + 1.570796f;
 
-            if(projectile.ai[0] < ProjectileID.Sets.TrailCacheLength[projectile.type])
+            if (--projectile.ai[1] < 0 && projectile.ai[1] > -60)
             {
-                projectile.ai[0] += 0.1f;
-            }
-            else
-                projectile.ai[0] = ProjectileID.Sets.TrailCacheLength[projectile.type];
+                if (projectile.ai[0] >= 0 && projectile.ai[0] < Main.maxPlayers)
+                {
+                    Player p = Main.player[(int)projectile.ai[0]];
+                    
+                    Vector2 target = p.Center;
 
-            projectile.ai[1] += 0.25f;
+                    if (Math.Abs(p.Center.Y - projectile.Center.Y) > 250)
+                    {
+                        Vector2 distance = target - projectile.Center;
+
+                        double angle = distance.ToRotation() - projectile.velocity.ToRotation();
+                        if (angle > Math.PI)
+                            angle -= 2.0 * Math.PI;
+                        if (angle < -Math.PI)
+                            angle += 2.0 * Math.PI;
+
+                        projectile.velocity = projectile.velocity.RotatedBy(angle * 0.2);
+                    }
+                    else
+                    {
+                        projectile.ai[1] = -60;
+                    }
+                }
+                else
+                {
+                    projectile.ai[0] = Player.FindClosest(projectile.Center, 0, 0);
+                }
+            }
+
+            if (projectile.ai[1] < 0)
+                projectile.velocity = Vector2.Normalize(projectile.velocity) * MathHelper.Lerp(projectile.velocity.Length(), 10f, 0.035f);
+
+            projectile.rotation = projectile.velocity.ToRotation() + 1.570796f;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -105,23 +131,15 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     glowcolor, projectile.velocity.ToRotation() + MathHelper.PiOver2, gloworigin2, projectile.scale, SpriteEffects.None, 0f);
             }
 
-            for (float i = projectile.ai[0] - 1; i > 0; i -= projectile.ai[0]/6) //trail grows in length as projectile travels
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
             {
 
-                float lerpamount = 0.2f;
-                if (i > 5 && i < 10)
-                    lerpamount = 0.4f;
-                if (i >= 10)
-                    lerpamount = 0.6f;
-
-                Color color27 = Color.Lerp(glowcolor, Color.Transparent, 0.1f + lerpamount);
-
-                color27 *= ((int)((projectile.ai[0] - i) / projectile.ai[0]) ^ 2);
-                float scale = projectile.scale * (float)(projectile.ai[0] - i) / projectile.ai[0];
-                scale += (float)Math.Sin(projectile.ai[1]) / 10;
-                Vector2 value4 = projectile.oldPos[(int)i] - (projectile.velocity.SafeNormalize(Vector2.UnitX) * 14);
+                Color color27 = glowcolor;
+                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                float scale = projectile.scale * (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                Vector2 value4 = projectile.oldPos[i] - (projectile.velocity.SafeNormalize(Vector2.UnitX) * 14);
                 Main.spriteBatch.Draw(glow, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(glowrectangle), color27,
-                    projectile.velocity.ToRotation() + MathHelper.PiOver2, gloworigin2, scale * 0.8f, SpriteEffects.None, 0f);
+                    projectile.velocity.ToRotation() + MathHelper.PiOver2, gloworigin2, scale, SpriteEffects.None, 0f);
             }
 
             return false;
