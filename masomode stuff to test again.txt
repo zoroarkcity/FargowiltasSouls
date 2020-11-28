@@ -62,3 +62,12 @@ destroyer lasers fire more aggressively but weaker speed scaling
 destroyer purges lasers when beginning coil
 destroyer probes x1.5 life
 fixed prime having triple stars on the first salvo every spin
+dark stars use regular iframes (can no longer combo you)
+hentai spears have cool glow
+mutant's phantasmal eyes have cool glow
+mutant rangs move slower and have glowing trail, fixed crystal leaf hitboxes being too small
+mutant DR removed
+adjusted landslide homing
+moon lord socket ray telegraph slightly shortened, but rays persist less time
+nerfed flesh hand by 2 damage
+queen bee slightly more startup before doing bees
