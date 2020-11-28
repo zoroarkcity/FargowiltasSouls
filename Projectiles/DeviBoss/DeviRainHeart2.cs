@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             base.Kill(timeLeft);
 
             int ai1 = (int)projectile.ai[1];
-            if (projectile.ai[1] >= 0f && projectile.ai[1] < 200f &&
+            if (projectile.ai[1] >= 0f && projectile.ai[1] < Main.maxNPCs &&
                 Main.npc[ai1].active && Main.npc[ai1].type == mod.NPCType("DeviBoss"))
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)

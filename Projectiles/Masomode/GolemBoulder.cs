@@ -106,6 +106,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
+            if (vel == 0) //use the first bounce block code above, doesn't seem to work otherwise
+                return true;
+
+            if (projectile.velocity.Y != oldVelocity.Y && oldVelocity.Y > 1) //bouncy
+                projectile.velocity.Y = -oldVelocity.Y * 0.8f;
             return false;
         }
 

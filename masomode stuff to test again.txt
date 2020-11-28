@@ -80,3 +80,15 @@ golem
 	reduced laser accel
 	jumps alternate between doing boulders and doing floor/ceiling geysers simultaneously
 	boulders spawn in instantly and are bouncy but move a little slower horizontally
+
+nerfed optic staff EX damage slightly
+fixed king slime doing double spikes during high jumps in mp
+fixed golem boulders not working lol
+nerfed how often golem spawns spiky balls in temple (much more often outside)
+deviantt
+	fixed spawning double nados in mp
+	adjusted stoning warning line to actually go eye to eye
+	medusa head appears over player on successful stone
+	heart rain auto-breaks when its far enough below you
+	adjusted how sparkling love is swung so the center of the laser pattern is always where you were
+	always throws big set of paladin hammers

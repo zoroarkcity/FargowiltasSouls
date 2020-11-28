@@ -120,7 +120,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         const int time = 10;
-                        const int max = 16;
+                        const int max = 12;
                         for (int i = 0; i < max; i++)
                         {
                             int p = Projectile.NewProjectile(projectile.Center, range / time * Vector2.UnitX.RotatedBy(Math.PI * 2 / max * i), ProjectileID.PoisonSeedPlantera, projectile.damage, projectile.knockBack, projectile.owner);

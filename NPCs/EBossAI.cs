@@ -79,15 +79,18 @@ namespace FargowiltasSouls.NPCs
                     {
                         npc.velocity.Y *= 2f;
 
-                        const float gravity = 0.15f;
-                        float time = 90f;
-                        Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 30f;
-                        distance.X = distance.X / time;
-                        distance.Y = distance.Y / time - 0.5f * gravity * time;
-                        for (int i = 0; i < 15; i++)
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            Projectile.NewProjectile(npc.Center, distance + Main.rand.NextVector2Square(-1f, 1f),
-                                ModContent.ProjectileType<SlimeSpike>(), npc.damage / 4, 0f, Main.myPlayer);
+                            const float gravity = 0.15f;
+                            float time = 90f;
+                            Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 30f;
+                            distance.X = distance.X / time;
+                            distance.Y = distance.Y / time - 0.5f * gravity * time;
+                            for (int i = 0; i < 15; i++)
+                            {
+                                Projectile.NewProjectile(npc.Center, distance + Main.rand.NextVector2Square(-1f, 1f),
+                                    ModContent.ProjectileType<SlimeSpike>(), npc.damage / 4, 0f, Main.myPlayer);
+                            }
                         }
                     }
                 }
@@ -3527,15 +3530,15 @@ namespace FargowiltasSouls.NPCs
 
                 if (--Counter[2] < 0)
                 {
-                    //explode time * explode repetitions + spread delay * propagations
-                    Counter[2] = 150 * 3 + 25 * 7;
+                    //explode time * explode repetitions + spread delay * propagations + extra delay
+                    Counter[2] = 150 * 3 + 25 * 7 + 60;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DicerPlantera>(), npc.damage / 4, 0f, Main.myPlayer, 0, 0);
                         for (int i = 0; i < 3; i++)
                         {
                             Projectile.NewProjectile(npc.Center, 20f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(2 * (float)Math.PI / 3 * i),
-                              ModContent.ProjectileType<DicerPlantera>(), npc.damage / 4, 0f, Main.myPlayer, 1, 8);
+                              ModContent.ProjectileType<DicerPlantera>(), npc.damage / 4, 0f, Main.myPlayer, 1, 7);
                         }
                     }
                 }
@@ -3712,7 +3715,7 @@ namespace FargowiltasSouls.NPCs
                                     {
                                         int tilePosX = (int)Main.player[npc.target].Center.X / 16;
                                         int tilePosY = (int)Main.player[npc.target].Center.Y / 16;// + 1;
-                                        tilePosX += 8 * i;
+                                        tilePosX += 10 * i;
 
                                         if (Main.tile[tilePosX, tilePosY] == null)
                                             Main.tile[tilePosX, tilePosY] = new Tile();
@@ -3822,7 +3825,7 @@ namespace FargowiltasSouls.NPCs
                 masoBool[0] = true;
             }
 
-            if (++Counter[1] >= 540 && npc.velocity.Y == 0) //spray spiky balls, only when on ground
+            if (++Counter[1] >= 660 && npc.velocity.Y == 0) //spray spiky balls, only when on ground
             {
                 Counter[1] = 0;
                 if (Main.tile[(int)npc.Center.X / 16, (int)npc.Center.Y / 16] != null && //in temple
@@ -3834,6 +3837,7 @@ namespace FargowiltasSouls.NPCs
                 }
                 else //outside temple
                 {
+                    Counter[1] = 330; //do it more often
                     for (int i = 0; i < 16; i++)
                         Projectile.NewProjectile(npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
                             Main.rand.NextFloat(-1f, 1f), Main.rand.Next(-20, -9), ModContent.ProjectileType<GolemSpikyBall>(), npc.damage / 4, 0f, Main.myPlayer);
