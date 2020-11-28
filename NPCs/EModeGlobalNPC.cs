@@ -114,6 +114,7 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.Plantera:
                     npc.lifeMax = (int)(npc.lifeMax * 1.5);
+                    Counter[2] = 0;
                     break;
 
                 case NPCID.Pixie:
@@ -406,7 +407,7 @@ namespace FargowiltasSouls.NPCs
                     break;
 
                 case NPCID.Golem:
-                    npc.lifeMax *= 3;
+                    npc.lifeMax *= 4;
                     npc.trapImmune = true;
                     break;
                 case NPCID.GolemHead:
@@ -593,6 +594,7 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.GolemHead:
                 case NPCID.GolemHeadFree:
                     npc.buffImmune[BuffID.Poisoned] = true;
+                    npc.buffImmune[BuffID.Suffocation] = true;
                     break;
 
                 case NPCID.CultistBoss:

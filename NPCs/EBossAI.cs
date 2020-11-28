@@ -3461,6 +3461,9 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
             }
+
+            if (!npc.HasValidTarget)
+                npc.velocity.Y++;
             
             if (npc.life <= npc.lifeMax / 2) //phase 2
             {
@@ -3522,13 +3525,18 @@ namespace FargowiltasSouls.NPCs
                     }
                 }
 
-                if (++Counter[2] > 135)
+                if (--Counter[2] < 0)
                 {
-                    Counter[2] = 0;
+                    //explode time * explode repetitions + spread delay * propagations
+                    Counter[2] = 150 * 3 + 25 * 7;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        Projectile.NewProjectile(npc.position + new Vector2(Main.rand.Next(npc.width), Main.rand.Next(npc.height)),
-                            Vector2.Zero, ModContent.ProjectileType<DicerPlantera>(), npc.damage / 4, 0f, Main.myPlayer, 120);//, 300);
+                        Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DicerPlantera>(), npc.damage / 4, 0f, Main.myPlayer, 0, 0);
+                        for (int i = 0; i < 3; i++)
+                        {
+                            Projectile.NewProjectile(npc.Center, 20f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(2 * (float)Math.PI / 3 * i),
+                              ModContent.ProjectileType<DicerPlantera>(), npc.damage / 4, 0f, Main.myPlayer, 1, 8);
+                        }
                     }
                 }
 
@@ -3654,9 +3662,9 @@ namespace FargowiltasSouls.NPCs
                         if (masoBool[3]) //in temple
                         {
                             Counter[0]++;
-                            if (Counter[0] == 1) //plant geysers on floor
+                            if (Counter[0] == 1) //plant geysers
                             {
-                                Vector2 spawnPos = new Vector2(npc.position.X, npc.Center.Y);
+                                Vector2 spawnPos = new Vector2(npc.position.X, npc.Center.Y); //floor geysers
                                 spawnPos.X -= npc.width * 7;
                                 for (int i = 0; i < 6; i++)
                                 {
@@ -3675,34 +3683,8 @@ namespace FargowiltasSouls.NPCs
 
                                     Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser2>(), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
                                 }
-                            }
-                            else if (Counter[0] == 2) //rocks fall and ceiling geysers
-                            {
-                                Counter[0] = 0;
-                                if (npc.HasPlayerTarget)
-                                {
-                                    for (int i = -2; i <= 2; i++)
-                                    {
-                                        int tilePosX = (int)Main.player[npc.target].Center.X / 16;
-                                        int tilePosY = (int)Main.player[npc.target].Center.Y / 16;// + 1;
-                                        tilePosX += 6 * i;
 
-                                        if (Main.tile[tilePosX, tilePosY] == null)
-                                            Main.tile[tilePosX, tilePosY] = new Tile();
-
-                                        while (!(Main.tile[tilePosX, tilePosY].nactive() && Main.tileSolid[Main.tile[tilePosX, tilePosY].type]))
-                                        {
-                                            tilePosY--;
-                                            if (Main.tile[tilePosX, tilePosY] == null)
-                                                Main.tile[tilePosX, tilePosY] = new Tile();
-                                        }
-
-                                        Vector2 spawn = new Vector2(tilePosX * 16 + 8, tilePosY * 16 + 8);
-                                        Projectile.NewProjectile(spawn, Vector2.Zero, ModContent.ProjectileType<GolemBoulder>(), npc.damage / 5, 0f, Main.myPlayer);
-                                    }
-                                }
-
-                                Vector2 spawnPos = npc.Center;
+                                spawnPos = npc.Center;
                                 for (int i = -3; i <= 3; i++)
                                 {
                                     int tilePosX = (int)spawnPos.X / 16 + npc.width * i * 3 / 16;
@@ -3719,6 +3701,40 @@ namespace FargowiltasSouls.NPCs
                                     }*/
 
                                     Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser>(), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
+                                }
+                            }
+                            else if (Counter[0] == 2) //rocks fall and ceiling geysers
+                            {
+                                Counter[0] = 0;
+                                if (npc.HasPlayerTarget)
+                                {
+                                    for (int i = -2; i <= 2; i++)
+                                    {
+                                        int tilePosX = (int)Main.player[npc.target].Center.X / 16;
+                                        int tilePosY = (int)Main.player[npc.target].Center.Y / 16;// + 1;
+                                        tilePosX += 8 * i;
+
+                                        if (Main.tile[tilePosX, tilePosY] == null)
+                                            Main.tile[tilePosX, tilePosY] = new Tile();
+
+                                        //first move up through solid tiles
+                                        while (Main.tile[tilePosX, tilePosY].nactive() && Main.tileSolid[Main.tile[tilePosX, tilePosY].type])
+                                        {
+                                            tilePosY--;
+                                            if (Main.tile[tilePosX, tilePosY] == null)
+                                                Main.tile[tilePosX, tilePosY] = new Tile();
+                                        }
+                                        //then move up through air until next ceiling reached
+                                        while (!(Main.tile[tilePosX, tilePosY].nactive() && Main.tileSolid[Main.tile[tilePosX, tilePosY].type]))
+                                        {
+                                            tilePosY--;
+                                            if (Main.tile[tilePosX, tilePosY] == null)
+                                                Main.tile[tilePosX, tilePosY] = new Tile();
+                                        }
+
+                                        Vector2 spawn = new Vector2(tilePosX * 16 + 8, tilePosY * 16 + 8);
+                                        Projectile.NewProjectile(spawn, Vector2.Zero, ModContent.ProjectileType<GolemBoulder>(), npc.damage / 5, 0f, Main.myPlayer);
+                                    }
                                 }
                             }
                         }

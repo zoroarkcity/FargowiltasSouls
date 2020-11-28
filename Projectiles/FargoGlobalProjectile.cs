@@ -864,7 +864,7 @@ namespace FargowiltasSouls.Projectiles
                             {
                                 if (++projectile.localAI[1] < 90)
                                 {
-                                    projectile.velocity *= 1.05f;
+                                    projectile.velocity *= 1.04f;
                                 }
                             }
                         }
