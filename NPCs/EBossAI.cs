@@ -4034,7 +4034,7 @@ namespace FargowiltasSouls.NPCs
                     {
                         bool inTemple = Framing.GetTileSafely(npc.Center).wall == WallID.LihzahrdBrickUnsafe;
                         int max = inTemple ? 6 : 10;
-                        int speed = inTemple ? 8 : -11;
+                        int speed = inTemple ? 9 : -12;
                         for (int i = -max; i <= max; i++)
                         {
                             int p = Projectile.NewProjectile(npc.Center, speed * Vector2.UnitY.RotatedBy(Math.PI / 2 / max * i),
