@@ -51,7 +51,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 157);
+                    int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, Main.rand.Next(2) == 0 ? 107 : 157);
                     Main.dust[d].noGravity = true;
                     Main.dust[d].velocity *= 0.2f;
                     Main.dust[d].scale = 1.5f;
@@ -78,7 +78,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
                     for (int index1 = 0; index1 < 30; ++index1)
                     {
-                        int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 157, 0f, 0f, 0, new Color(), 2f);
+                        int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, Main.rand.Next(2) == 0 ? 107 : 157, 0f, 0f, 0, new Color(), 2f);
                         Main.dust[index2].noGravity = true;
                         Main.dust[index2].velocity *= 5f;
                     }

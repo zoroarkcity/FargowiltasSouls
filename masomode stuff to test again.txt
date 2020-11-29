@@ -115,3 +115,5 @@ golem
 	jumps slightly higher
 	ACTUALLY reduced duration of geyser hitbox
 	removed vanilla bouncy fireballs in p2
+increased eow head defense more (24 to 44)
+lihzahrd treasure box spiky balls on hit replaced with slimy shield-style boulder stomp
