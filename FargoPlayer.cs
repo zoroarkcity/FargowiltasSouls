@@ -1862,6 +1862,8 @@ namespace FargowiltasSouls
             if (TinEnchant)
             {
                 AllCritEquals(TinCrit);
+                if (SpiderEnchant && !TerraForce && !WizardEnchant)
+                    SummonCrit /= 2;
 
                 if (Eternity)
                 {
@@ -2626,7 +2628,7 @@ namespace FargowiltasSouls
             if (SolarEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.SolarFlare) && Main.rand.Next(4) == 0)
                 target.AddBuff(ModContent.BuffType<SolarFlare>(), 300);
 
-            if (tinCD == 0)
+            if (tinCD <= 0)
             {
                 if (Eternity)
                 {
@@ -2656,7 +2658,7 @@ namespace FargowiltasSouls
                     if (crit && TinCrit < 100)
                     {
                         TinCrit += 5;
-                        tinCD = 15;
+                        tinCD = 10;
                     }
                     else if (TinCrit >= 100)
                     {
@@ -2666,6 +2668,9 @@ namespace FargowiltasSouls
                             {
                                 player.statLife += damage / 25;
                                 player.HealEffect(damage / 25);
+                                int max = MutantNibble ? StatLifePrevious : player.statLifeMax2;
+                                if (player.statLife > max)
+                                    player.statLife = max;
                             }
                             HealTimer = 10;
                         }
@@ -2680,7 +2685,7 @@ namespace FargowiltasSouls
                     if (TerraForce || WizardEnchant)
                     {
                         TinCrit += 5;
-                        tinCD = 30;
+                        tinCD = 20;
                     }
                     else
                     {
@@ -2688,6 +2693,9 @@ namespace FargowiltasSouls
                         tinCD = 30;
                     }
                 }
+
+                if (TinCrit > 100)
+                    TinCrit = 100;
             }
             
 

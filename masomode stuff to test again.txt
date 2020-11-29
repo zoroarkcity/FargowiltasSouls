@@ -94,3 +94,8 @@ deviantt
 	always throws big set of paladin hammers
 
 fixed pumpkin enchant probably
+fiddled with tin numbers
+	force version of tin has 20t cooldown (was 30, same as regular tin)
+	sot version of tin has 10t cooldown (was 15)
+	clamped tin crit to 100
+	unstated spider ench synergy nerfed, summons only get half crit (full with force+)
