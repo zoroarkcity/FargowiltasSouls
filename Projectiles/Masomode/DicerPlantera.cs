@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
     {
         public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/DicerProj2";
 
-        private const int range = 220;
+        private const float range = 200;
 
         public override void SetDefaults()
         {
@@ -83,8 +83,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                         Main.dust[index2].velocity *= 5f;
                     }
 
-                    if (projectile.ai[1] % 2 == 0)
-                        projectile.localAI[0] = 68;
+                    projectile.localAI[0] = 50 * (projectile.ai[1] % 3);
 
                     projectile.velocity = Vector2.Zero;
                     projectile.netUpdate = true;
@@ -95,16 +94,29 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 projectile.tileCollide = false;
 
                 projectile.localAI[0]--;
-                if (projectile.localAI[0] >= -60) //delay
+                if (projectile.localAI[0] >= -30) //delay
                 {
                     projectile.scale = 1f;
                 }
-                if (projectile.localAI[0] < -60 && projectile.localAI[0] > -120)
+                if (projectile.localAI[0] < -30 && projectile.localAI[0] > -120)
                 {
-                    projectile.scale += 0.09f;
-                    projectile.rotation += 0.45f * projectile.localAI[0];
+                    projectile.scale += 0.06f;
+                    projectile.rotation += 0.3f * projectile.localAI[0];
                 }
-                else if (projectile.localAI[0] < -135) //explode
+                else if (projectile.localAI[0] == -120)
+                {
+                    const int max = 30; //make some indicator dusts
+                    for (int i = 0; i < max; i++)
+                    {
+                        Vector2 vector6 = Vector2.UnitY * 5f;
+                        vector6 = vector6.RotatedBy((i - (max / 2 - 1)) * 6.28318548f / max) + projectile.Center;
+                        Vector2 vector7 = vector6 - projectile.Center;
+                        int d = Dust.NewDust(vector6 + vector7, 0, 0, 107, 0f, 0f, 0, default(Color), 2f);
+                        Main.dust[d].noGravity = true;
+                        Main.dust[d].velocity = vector7;
+                    }
+                }
+                else if (projectile.localAI[0] < -150) //explode
                 {
                     projectile.localAI[0] = 0;
                     projectile.netUpdate = true;
@@ -122,7 +134,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
                         const int max = 16;
                         for (int i = 0; i < max; i++)
                         {
-                            int p = Projectile.NewProjectile(projectile.Center, (float)range / time * Vector2.UnitX.RotatedBy(Math.PI * 2 / max * i), ProjectileID.PoisonSeedPlantera, projectile.damage, projectile.knockBack, projectile.owner);
+                            int p = Projectile.NewProjectile(projectile.Center, range / time * Vector2.UnitX.RotatedBy(Math.PI * 2 / max * i), 
+                                ModContent.ProjectileType<PoisonSeed2>(), projectile.damage, projectile.knockBack, projectile.owner);
                             if (p != Main.maxProjectiles)
                                 Main.projectile[p].timeLeft = time;
                         }

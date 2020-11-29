@@ -3531,7 +3531,7 @@ namespace FargowiltasSouls.NPCs
                 if (--Counter[2] < 0)
                 {
                     //explode time * explode repetitions + spread delay * propagations + extra delay
-                    Counter[2] = 135 * 3 + 25 * 8;
+                    Counter[2] = 150 * 3 + 25 * 8;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DicerPlantera>(), npc.damage / 4, 0f, Main.myPlayer, 0, 0);
@@ -3715,7 +3715,7 @@ namespace FargowiltasSouls.NPCs
                                     {
                                         int tilePosX = (int)Main.player[npc.target].Center.X / 16;
                                         int tilePosY = (int)Main.player[npc.target].Center.Y / 16;// + 1;
-                                        tilePosX += 10 * i;
+                                        tilePosX += 5 * i;
 
                                         if (Main.tile[tilePosX, tilePosY] == null)
                                             Main.tile[tilePosX, tilePosY] = new Tile();
@@ -3775,11 +3775,11 @@ namespace FargowiltasSouls.NPCs
                             }
                             if (npc.HasPlayerTarget)
                             {
-                                for (int i = -2; i <= 2; i++)
+                                for (int i = -3; i <= 3; i++)
                                 {
                                     int tilePosX = (int)Main.player[npc.target].Center.X / 16;
                                     int tilePosY = (int)Main.player[npc.target].Center.Y / 16;// + 1;
-                                    tilePosX += 6 * i;
+                                    tilePosX += 10 * i;
 
                                     if (Main.tile[tilePosX, tilePosY] == null)
                                         Main.tile[tilePosX, tilePosY] = new Tile();

@@ -84,7 +84,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     projectile.tileCollide = true;
             }
 
-            if (projectile.velocity.Y < 0 && projectile.velocity.X == 0) //on first bounce, roll at nearby player
+            if (projectile.velocity.Y < 0 && projectile.velocity.X == 0 && vel == 0) //on first bounce, roll at nearby player
             {
                 int p = Player.FindClosest(projectile.Center, 0, 0);
                 if (p != -1)
