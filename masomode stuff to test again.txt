@@ -114,3 +114,4 @@ golem
 	slowed down fists more
 	jumps slightly higher
 	ACTUALLY reduced duration of geyser hitbox
+	removed vanilla bouncy fireballs in p2
