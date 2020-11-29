@@ -3674,39 +3674,19 @@ namespace FargowiltasSouls.NPCs
                                     int tilePosX = (int)spawnPos.X / 16 + npc.width * i * 3 / 16;
                                     int tilePosY = (int)spawnPos.Y / 16;// + 1;
 
-                                    /*if (Main.tile[tilePosX, tilePosY] == null)
-                                        Main.tile[tilePosX, tilePosY] = new Tile();
-
-                                    while (!(Main.tile[tilePosX, tilePosY].nactive() && Main.tileSolid[Main.tile[tilePosX, tilePosY].type]))
-                                    {
-                                        tilePosY++;
-                                        if (Main.tile[tilePosX, tilePosY] == null)
-                                            Main.tile[tilePosX, tilePosY] = new Tile();
-                                    }*/
-
                                     Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser2>(), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
                                 }
 
                                 spawnPos = npc.Center;
-                                for (int i = -3; i <= 3; i++)
+                                for (int i = -3; i <= 3; i++) //ceiling geysers
                                 {
                                     int tilePosX = (int)spawnPos.X / 16 + npc.width * i * 3 / 16;
                                     int tilePosY = (int)spawnPos.Y / 16;// + 1;
 
-                                    /*if (Main.tile[tilePosX, tilePosY] == null)
-                                        Main.tile[tilePosX, tilePosY] = new Tile();
-
-                                    while (!(Main.tile[tilePosX, tilePosY].nactive() && Main.tileSolid[(int)Main.tile[tilePosX, tilePosY].type]))
-                                    {
-                                        tilePosY++;
-                                        if (Main.tile[tilePosX, tilePosY] == null)
-                                            Main.tile[tilePosX, tilePosY] = new Tile();
-                                    }*/
-
                                     Projectile.NewProjectile(tilePosX * 16 + 8, tilePosY * 16 + 8, 0f, 0f, ModContent.ProjectileType<GolemGeyser>(), npc.damage / 5, 0f, Main.myPlayer, npc.whoAmI);
                                 }
                             }
-                            else if (Counter[0] == 2) //rocks fall and ceiling geysers
+                            else if (Counter[0] == 2) //rocks fall
                             {
                                 Counter[0] = 0;
                                 if (npc.HasPlayerTarget)
@@ -3979,9 +3959,12 @@ namespace FargowiltasSouls.NPCs
 
                     npc.noTileCollide = true;
 
-                    const int fireTime = 120;
+                    const int fireTime = 150;
                     if (++Counter[0] < fireTime) //move to above golem
                     {
+                        if (Counter[0] == 1)
+                            Main.PlaySound(SoundID.Roar, npc.Center, 0);
+
                         Vector2 target = Main.npc[NPC.golemBoss].Center;
                         target.Y -= 250;
                         if (target.Y > Counter[1]) //counter2 stores lowest remembered golem position
@@ -4013,7 +3996,7 @@ namespace FargowiltasSouls.NPCs
                     }
                     else if (Counter[0] < fireTime + 150)
                     {
-                        npc.velocity.X += masoBool[1] ? -.18f : .18f;
+                        npc.velocity.X += masoBool[1] ? -.15f : .15f;
 
                         Tile tile = Framing.GetTileSafely(npc.Center); //stop if reached a wall, but only 1sec after started firing
                         if (Counter[0] > fireTime + 60 & tile.nactive() && tile.type == TileID.LihzahrdBrick && tile.wall == WallID.LihzahrdBrickUnsafe)
