@@ -3715,7 +3715,7 @@ namespace FargowiltasSouls.NPCs
                                     {
                                         int tilePosX = (int)Main.player[npc.target].Center.X / 16;
                                         int tilePosY = (int)Main.player[npc.target].Center.Y / 16;// + 1;
-                                        tilePosX += 5 * i;
+                                        tilePosX += 4 * i;
 
                                         if (Main.tile[tilePosX, tilePosY] == null)
                                             Main.tile[tilePosX, tilePosY] = new Tile();
@@ -3912,8 +3912,8 @@ namespace FargowiltasSouls.NPCs
             }
             masoBool[0] = npc.ai[0] != 0f;
 
-            if (npc.velocity.Length() > 14)
-                npc.position -= Vector2.Normalize(npc.velocity) * (npc.velocity.Length() - 14);
+            if (npc.velocity.Length() > 12)
+                npc.position -= Vector2.Normalize(npc.velocity) * (npc.velocity.Length() - 12);
 
             if (npc.life < npc.lifeMax / 2 && NPC.golemBoss > -1 && NPC.golemBoss < 200 && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem)
             {
@@ -4041,6 +4041,9 @@ namespace FargowiltasSouls.NPCs
                         int speed = inTemple ? -6 : -11;
                         for (int i = -max; i <= max; i++)
                         {
+                            if (inTemple) //dont do in temple
+                                continue;
+
                             int p = Projectile.NewProjectile(npc.Center, speed * Vector2.UnitY.RotatedBy(Math.PI / 2 / max * i),
                                 ModContent.ProjectileType<EyeBeam2>(), npc.damage / 5, 0f, Main.myPlayer);
                             if (p != Main.maxProjectiles)

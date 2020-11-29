@@ -90,7 +90,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 if (p != -1)
                 {
                     projectile.velocity.X = vel = projectile.Center.X < Main.player[p].Center.X ? 4f : -4f;
-                    projectile.velocity.Y *= 2f;
+                    projectile.velocity.Y *= Main.rand.NextFloat(1.9f, 2.1f);
                 }
                 else
                 {
