@@ -100,3 +100,6 @@ fiddled with tin numbers
 	clamped tin crit to 100
 	unstated spider ench synergy nerfed, summons only get half crit (full with force+)
 fixed draw issue with mutant's spear dash
+plantera
+	buffed mines a bunch
+	p2 has 12 ring instead of 10

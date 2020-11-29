@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
     {
         public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/DicerProj2";
 
-        private const int range = 200;
+        private const int range = 220;
 
         public override void SetDefaults()
         {
@@ -84,7 +84,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     }
 
                     if (projectile.ai[1] % 2 == 0)
-                        projectile.localAI[0] = 75;
+                        projectile.localAI[0] = 68;
 
                     projectile.velocity = Vector2.Zero;
                     projectile.netUpdate = true;
@@ -95,18 +95,19 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 projectile.tileCollide = false;
 
                 projectile.localAI[0]--;
-                if (projectile.localAI[0] >= -75) //delay
+                if (projectile.localAI[0] >= -60) //delay
                 {
                     projectile.scale = 1f;
                 }
-                if (projectile.localAI[0] < -75 && projectile.localAI[0] > -135)
+                if (projectile.localAI[0] < -60 && projectile.localAI[0] > -120)
                 {
                     projectile.scale += 0.09f;
                     projectile.rotation += 0.45f * projectile.localAI[0];
                 }
-                else if (projectile.localAI[0] < -150) //explode
+                else if (projectile.localAI[0] < -135) //explode
                 {
                     projectile.localAI[0] = 0;
+                    projectile.netUpdate = true;
 
                     bool planteraAlive = NPC.plantBoss > -1 && NPC.plantBoss < Main.maxNPCs && Main.npc[NPC.plantBoss].active && Main.npc[NPC.plantBoss].type == NPCID.Plantera;
                     if (projectile.localAI[1]-- < -3 || !planteraAlive) //die after this many explosions
@@ -115,15 +116,13 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     }
 
                     Main.PlaySound(SoundID.Item, projectile.Center, 14); //spray
-                    projectile.netUpdate = true;
-
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         const int time = 10;
-                        const int max = 12;
+                        const int max = 16;
                         for (int i = 0; i < max; i++)
                         {
-                            int p = Projectile.NewProjectile(projectile.Center, range / time * Vector2.UnitX.RotatedBy(Math.PI * 2 / max * i), ProjectileID.PoisonSeedPlantera, projectile.damage, projectile.knockBack, projectile.owner);
+                            int p = Projectile.NewProjectile(projectile.Center, (float)range / time * Vector2.UnitX.RotatedBy(Math.PI * 2 / max * i), ProjectileID.PoisonSeedPlantera, projectile.damage, projectile.knockBack, projectile.owner);
                             if (p != Main.maxProjectiles)
                                 Main.projectile[p].timeLeft = time;
                         }

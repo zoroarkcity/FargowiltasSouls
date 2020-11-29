@@ -3479,7 +3479,7 @@ namespace FargowiltasSouls.NPCs
                     masoBool[2] = true;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        const int max = 10;
+                        const int max = 12;
                         const float distance = 250;
                         float rotation = 2f * (float)Math.PI / max;
                         for (int i = 0; i < max; i++)
@@ -3531,14 +3531,14 @@ namespace FargowiltasSouls.NPCs
                 if (--Counter[2] < 0)
                 {
                     //explode time * explode repetitions + spread delay * propagations + extra delay
-                    Counter[2] = 150 * 3 + 25 * 7 + 60;
+                    Counter[2] = 135 * 3 + 25 * 8;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DicerPlantera>(), npc.damage / 4, 0f, Main.myPlayer, 0, 0);
                         for (int i = 0; i < 3; i++)
                         {
                             Projectile.NewProjectile(npc.Center, 20f * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(2 * (float)Math.PI / 3 * i),
-                              ModContent.ProjectileType<DicerPlantera>(), npc.damage / 4, 0f, Main.myPlayer, 1, 7);
+                              ModContent.ProjectileType<DicerPlantera>(), npc.damage / 4, 0f, Main.myPlayer, 1, 8);
                         }
                     }
                 }
