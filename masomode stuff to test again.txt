@@ -92,3 +92,5 @@ deviantt
 	heart rain auto-breaks when its far enough below you
 	adjusted how sparkling love is swung so the center of the laser pattern is always where you were
 	always throws big set of paladin hammers
+
+fixed pumpkin enchant probably
