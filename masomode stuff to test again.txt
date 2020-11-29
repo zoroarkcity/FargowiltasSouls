@@ -110,3 +110,4 @@ golem
 	slightly more startup on ray sweep
 	slowed down fists more
 	TIIINY bit of rng on boulder bounce height and packed them closer together
+	removed spiky balls

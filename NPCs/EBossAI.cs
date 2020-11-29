@@ -3811,9 +3811,9 @@ namespace FargowiltasSouls.NPCs
                 if (Main.tile[(int)npc.Center.X / 16, (int)npc.Center.Y / 16] != null && //in temple
                     Main.tile[(int)npc.Center.X / 16, (int)npc.Center.Y / 16].wall == WallID.LihzahrdBrickUnsafe)
                 {
-                    for (int i = 0; i < 8; i++)
+                    /*for (int i = 0; i < 8; i++)
                         Projectile.NewProjectile(npc.position.X + Main.rand.Next(npc.width), npc.position.Y + Main.rand.Next(npc.height),
-                            Main.rand.NextFloat(-0.1f, 0.1f), Main.rand.NextFloat(-10, -6), ModContent.ProjectileType<GolemSpikyBall>(), npc.damage / 5, 0f, Main.myPlayer);
+                            Main.rand.NextFloat(-0.1f, 0.1f), Main.rand.NextFloat(-10, -6), ModContent.ProjectileType<GolemSpikyBall>(), npc.damage / 5, 0f, Main.myPlayer);*/
                 }
                 else //outside temple
                 {
