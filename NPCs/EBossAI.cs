@@ -3641,7 +3641,7 @@ namespace FargowiltasSouls.NPCs
             if (Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].Distance(npc.Center) < 2000)
                 Main.player[Main.myPlayer].AddBuff(ModContent.BuffType<LowGround>(), 2);
 
-            if (!masoBool[3])
+            if (!masoBool[3]) //temple enrage, more horiz move and fast jumps
             {
                 npc.position.X += npc.velocity.X / 2f;
                 if (npc.velocity.Y < 0)
@@ -3650,6 +3650,19 @@ namespace FargowiltasSouls.NPCs
                     if (npc.velocity.Y > -2)
                         npc.velocity.Y = 20;
                 }
+            }
+
+            if (npc.velocity.Y < 0) //jumping up
+            {
+                if (!masoBool[2])
+                {
+                    masoBool[2] = true;
+                    npc.velocity.Y *= 1.25f;
+                }
+            }
+            else
+            {
+                masoBool[2] = false;
             }
 
             if (masoBool[0])
@@ -3892,8 +3905,8 @@ namespace FargowiltasSouls.NPCs
             }
             masoBool[0] = npc.ai[0] != 0f;
 
-            if (npc.velocity.Length() > 12)
-                npc.position -= Vector2.Normalize(npc.velocity) * (npc.velocity.Length() - 12);
+            if (npc.velocity.Length() > 10)
+                npc.position -= Vector2.Normalize(npc.velocity) * (npc.velocity.Length() - 10);
 
             if (npc.life < npc.lifeMax / 2 && NPC.golemBoss > -1 && NPC.golemBoss < 200 && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem)
             {
@@ -4021,12 +4034,9 @@ namespace FargowiltasSouls.NPCs
                     {
                         bool inTemple = Framing.GetTileSafely(npc.Center).wall == WallID.LihzahrdBrickUnsafe;
                         int max = inTemple ? 6 : 10;
-                        int speed = inTemple ? -6 : -11;
+                        int speed = inTemple ? 8 : -11;
                         for (int i = -max; i <= max; i++)
                         {
-                            if (inTemple) //dont do in temple
-                                continue;
-
                             int p = Projectile.NewProjectile(npc.Center, speed * Vector2.UnitY.RotatedBy(Math.PI / 2 / max * i),
                                 ModContent.ProjectileType<EyeBeam2>(), npc.damage / 5, 0f, Main.myPlayer);
                             if (p != Main.maxProjectiles)

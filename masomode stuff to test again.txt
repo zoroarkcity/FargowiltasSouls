@@ -104,10 +104,11 @@ plantera
 	messed with mines a bunch
 	p2 has 12 ring instead of 10
 golem
-	removed laser spray after ray sweep
+	laser spray after ray sweep aims down
 	reduced acceleration of head during ray sweep
 	head roars when it starts preparing to ray sweep
 	slightly more startup on ray sweep
-	slowed down fists more
 	TIIINY bit of rng on boulder bounce height and packed them closer together
 	removed spiky balls
+	slowed down fists more
+	jumps slightly higher
