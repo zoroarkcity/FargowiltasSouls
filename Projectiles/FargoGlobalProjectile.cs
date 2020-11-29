@@ -799,6 +799,17 @@ namespace FargowiltasSouls.Projectiles
                     }
                     break;
 
+                case ProjectileID.GeyserTrap:
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
+                        if (NPC.golemBoss > -1 && NPC.golemBoss < Main.maxNPCs && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem)
+                        {
+                            if (++counter > 45)
+                                projectile.Kill();
+                        }
+                    }
+                    break;
+
                 case ProjectileID.NebulaSphere:
                     if (FargoSoulsWorld.MasochistMode)
                     {

@@ -3964,7 +3964,7 @@ namespace FargowiltasSouls.NPCs
                 }
                 else //deathray time
                 {
-                    if (!(NPC.golemBoss > -1 && NPC.golemBoss < 200 && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem))
+                    if (!(NPC.golemBoss > -1 && NPC.golemBoss < Main.maxNPCs && Main.npc[NPC.golemBoss].active && Main.npc[NPC.golemBoss].type == NPCID.Golem))
                     {
                         npc.StrikeNPCNoInteraction(9999, 0f, 0); //die if golem is dead
                         return false;
@@ -3972,7 +3972,7 @@ namespace FargowiltasSouls.NPCs
 
                     npc.noTileCollide = true;
 
-                    const int fireTime = 150;
+                    const int fireTime = 120;
                     if (++Counter[0] < fireTime) //move to above golem
                     {
                         if (Counter[0] == 1)
@@ -4007,7 +4007,11 @@ namespace FargowiltasSouls.NPCs
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                             Projectile.NewProjectile(npc.Center, Vector2.UnitY, ModContent.ProjectileType<PhantasmalDeathrayGolem>(), npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
                     }
-                    else if (Counter[0] < fireTime + 150)
+                    else if (Counter[0] < fireTime + 20)
+                    {
+                        //do nothing
+                    }
+                    else if (Counter[0] < fireTime + 180)
                     {
                         npc.velocity.X += masoBool[1] ? -.15f : .15f;
 
@@ -4030,11 +4034,11 @@ namespace FargowiltasSouls.NPCs
                         masoBool[0] = false;
                     }
 
-                    if (!masoBool[0] && Main.netMode != NetmodeID.MultiplayerClient) //spray overhead lasers after dash
+                    if (!masoBool[0] && Main.netMode != NetmodeID.MultiplayerClient) //spray lasers after dash
                     {
                         bool inTemple = Framing.GetTileSafely(npc.Center).wall == WallID.LihzahrdBrickUnsafe;
                         int max = inTemple ? 6 : 10;
-                        int speed = inTemple ? 9 : -12;
+                        int speed = inTemple ? 9 : -12; //down in temple, up outside it
                         for (int i = -max; i <= max; i++)
                         {
                             int p = Projectile.NewProjectile(npc.Center, speed * Vector2.UnitY.RotatedBy(Math.PI / 2 / max * i),
@@ -4048,7 +4052,10 @@ namespace FargowiltasSouls.NPCs
                     {
                         npc.netUpdate = false;
                         if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc.whoAmI);
                             NetUpdateMaso(npc.whoAmI);
+                        }
                     }
                     return false;
                 }

@@ -107,8 +107,10 @@ golem
 	laser spray after ray sweep aims down
 	reduced acceleration of head during ray sweep
 	head roars when it starts preparing to ray sweep
+	adjusted how ray sweep is begun (more lenient)
 	slightly more startup on ray sweep
 	TIIINY bit of rng on boulder bounce height and packed them closer together
 	removed spiky balls
 	slowed down fists more
 	jumps slightly higher
+	ACTUALLY reduced duration of geyser hitbox
