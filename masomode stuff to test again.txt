@@ -121,4 +121,4 @@ lihzahrd treasure box spiky balls on hit replaced with slimy shield-style boulde
 flesh hand adjustment: now magic, with adjusted stats and middling homing
 fish stick adjustment: now ranged, with adjusted stats and a pretty tall nado (also dust)
 destroyer gun: same as before but nerfed damage (55 to 45) and a bit dumber but it can shoot lasers
-destroyer gun EX: same as before but it can shoot homing dark stars
+destroyer gun EX: same as before but it can shoot homing dark stars, also steep nerf because meme kill time?
