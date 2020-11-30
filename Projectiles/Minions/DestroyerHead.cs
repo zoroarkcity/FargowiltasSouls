@@ -117,7 +117,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 projectile.ai[aislotHomingCooldown] = homingDelay; //cap this value 
 
                 int foundTarget = HomeOnTarget();
-                if (foundTarget != -1)
+                if (foundTarget != -1 && projectile.Distance(Main.npc[foundTarget].Center) > 50)
                 {
                     NPC n = Main.npc[foundTarget];
                     Vector2 desiredVelocity = projectile.DirectionTo(n.Center) * desiredFlySpeedInPixelsPerFrame;

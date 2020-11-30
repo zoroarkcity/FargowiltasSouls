@@ -71,3 +71,56 @@ adjusted landslide homing
 moon lord socket ray telegraph slightly shortened, but rays persist less time
 nerfed flesh hand by 2 damage
 queen bee slightly more startup before doing bees
+plantera
+	despawns faster when you're dead
+	dicer mines are now recursively spread throughout arena in phase 2
+	dicer mines have longer delay and less blast range to compensate for being FUCKING INESCAPABLE
+golem
+	body life modifier x3 to x4
+	reduced laser accel
+	jumps alternate between doing boulders and doing floor/ceiling geysers simultaneously
+	boulders spawn in instantly and are bouncy but move a little slower horizontally
+
+nerfed optic staff EX damage slightly
+fixed king slime doing double spikes during high jumps in mp
+fixed golem boulders not working lol
+nerfed how often golem spawns spiky balls in temple (much more often outside)
+deviantt
+	fixed spawning double nados in mp
+	adjusted stoning warning line to actually go eye to eye
+	medusa head appears over player on successful stone
+	heart rain auto-breaks when its far enough below you
+	adjusted how sparkling love is swung so the center of the laser pattern is always where you were
+	always throws big set of paladin hammers
+
+fixed pumpkin enchant probably
+fiddled with tin numbers
+	force version of tin has 20t cooldown (was 30, same as regular tin)
+	sot version of tin has 10t cooldown (was 15)
+	clamped tin crit to 100
+	unstated spider ench synergy nerfed, summons only get half crit (full with force+)
+fixed draw issue with mutant's spear dash
+plantera
+	messed with mines a bunch
+	p2 has 12 ring instead of 10
+golem
+	laser spray after ray sweep aims down
+	reduced acceleration of head during ray sweep
+	head roars when it starts preparing to ray sweep
+	adjusted how ray sweep is begun (more lenient)
+	slightly more startup on ray sweep
+	TIIINY bit of rng on boulder bounce height and packed them closer together
+	removed spiky balls
+	slowed down fists more
+	jumps slightly higher
+	ACTUALLY reduced duration of geyser hitbox
+	removed vanilla bouncy fireballs in p2
+increased eow head defense more (24 to 44)
+lihzahrd treasure box spiky balls on hit replaced with slimy shield-style boulder stomp
+
+flesh hand adjustment: now magic, with adjusted stats and middling homing
+fish stick adjustment: now ranged, with adjusted stats and a pretty tall nado (also dust)
+destroyer gun: same as before but nerfed damage (55 to 45) and a bit dumber but it can shoot lasers
+destroyer gun EX: same as before but it can shoot homing dark stars, also steep nerf because meme kill time?
+
+nerfed blizzard staff to -33% damage, -50% speed because its still overpowered

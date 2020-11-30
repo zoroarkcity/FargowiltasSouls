@@ -86,12 +86,7 @@ namespace FargowiltasSouls.NPCs.EternityMode
                             Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 30f;
                             distance.Normalize();
                             distance *= 16f;
-                            int damage = 24;
-                            if (!Main.player[npc.target].ZoneJungle)
-                                damage = damage * 2;
-                            else if (Main.expertMode)
-                                damage = damage * 9 / 10;
-                            Projectile.NewProjectile(npc.Center, distance, mod.ProjectileType("CrystalLeafShot"), damage, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, distance, mod.ProjectileType("CrystalLeafShot"), npc.damage / 4, 0f, Main.myPlayer);
                         }
                         for (int index1 = 0; index1 < 30; ++index1)
                         {

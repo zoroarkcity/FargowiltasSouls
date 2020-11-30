@@ -54,6 +54,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             NPC mutant = Main.npc[(int)projectile.ai[0]];
             if (mutant.active && mutant.type == mod.NPCType("MutantBoss") && (mutant.ai[0] == 6 || mutant.ai[0] == 15 || mutant.ai[0] == 23))
             {
+                projectile.velocity = Vector2.Normalize(mutant.velocity);
+                projectile.position -= projectile.velocity;
                 projectile.rotation = mutant.velocity.ToRotation() + MathHelper.ToRadians(135f);
                 projectile.Center = mutant.Center + mutant.velocity;
                 if (projectile.ai[1] == 0f && --projectile.localAI[0] < 0)

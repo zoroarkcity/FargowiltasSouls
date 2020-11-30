@@ -1264,9 +1264,9 @@ namespace FargowiltasSouls
                             {
                                 GroundPound = 0;
 
-                                int baseDamage = 80;
+                                int baseDamage = 60;
                                 if (MasochistSoul)
-                                    baseDamage *= 2;
+                                    baseDamage *= 3;
                                 Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<ExplosionSmall>(), baseDamage * 2, 12f, player.whoAmI);
                                 y -= 2;
                                 for (int i = -3; i <= 3; i++)
@@ -1581,7 +1581,7 @@ namespace FargowiltasSouls
                 player.meleeCrit = 0;
             }
 
-            if (SlimyShield)
+            if (SlimyShield || LihzahrdTreasureBox)
             {
                 //player.justJumped use this tbh
                 if (SlimyShieldFalling) //landing
@@ -1592,23 +1592,38 @@ namespace FargowiltasSouls
                     if (player.velocity.Y == 0f)
                     {
                         SlimyShieldFalling = false;
-                        if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SlimyShield) && player.whoAmI == Main.myPlayer && player.gravDir > 0)
+                        if (player.whoAmI == Main.myPlayer && player.gravDir > 0)
                         {
-                            Main.PlaySound(SoundID.Item21, player.Center);
-                            Vector2 mouse = Main.MouseWorld;
-                            int damage = 15;
-                            if (SupremeDeathbringerFairy)
-                                damage = 25;
-                            if (MasochistSoul)
-                                damage = 50;
-                            damage = (int)(damage * player.meleeDamage);
-                            for (int i = 0; i < 3; i++)
+                            if (SlimyShield && SoulConfig.Instance.GetValue(SoulConfig.Instance.SlimyShield))
                             {
-                                Vector2 spawn = new Vector2(mouse.X + Main.rand.Next(-200, 201), mouse.Y - Main.rand.Next(600, 901));
-                                Vector2 speed = mouse - spawn;
-                                speed.Normalize();
-                                speed *= 10f;
-                                Projectile.NewProjectile(spawn, speed, ModContent.ProjectileType<SlimeBall>(), damage, 1f, Main.myPlayer);
+                                Main.PlaySound(SoundID.Item21, player.Center);
+                                Vector2 mouse = Main.MouseWorld;
+                                int damage = 15;
+                                if (SupremeDeathbringerFairy)
+                                    damage = 25;
+                                if (MasochistSoul)
+                                    damage = 50;
+                                damage = (int)(damage * player.meleeDamage);
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    Vector2 spawn = new Vector2(mouse.X + Main.rand.Next(-200, 201), mouse.Y - Main.rand.Next(600, 901));
+                                    Vector2 speed = mouse - spawn;
+                                    speed.Normalize();
+                                    speed *= 10f;
+                                    Projectile.NewProjectile(spawn, speed, ModContent.ProjectileType<SlimeBall>(), damage, 1f, Main.myPlayer);
+                                }
+                            }
+
+                            if (LihzahrdTreasureBox && SoulConfig.Instance.GetValue(SoulConfig.Instance.LihzahrdBoxBoulders))
+                            {
+                                int dam = 60;
+                                if (MasochistSoul)
+                                    dam *= 3;
+                                for (int i = -5; i <= 5; i += 2)
+                                {
+                                    Projectile.NewProjectile(player.Center, -12f * Vector2.UnitY.RotatedBy(Math.PI / 2 / 6 * i),
+                                        ModContent.ProjectileType<LihzahrdBoulderFriendly>(), (int)(dam * player.meleeDamage), 7.5f, player.whoAmI);
+                                }
                             }
                         }
                     }
@@ -1862,6 +1877,8 @@ namespace FargowiltasSouls
             if (TinEnchant)
             {
                 AllCritEquals(TinCrit);
+                if (SpiderEnchant && !TerraForce && !WizardEnchant)
+                    SummonCrit /= 2;
 
                 if (Eternity)
                 {
@@ -2626,7 +2643,7 @@ namespace FargowiltasSouls
             if (SolarEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.SolarFlare) && Main.rand.Next(4) == 0)
                 target.AddBuff(ModContent.BuffType<SolarFlare>(), 300);
 
-            if (tinCD == 0)
+            if (tinCD <= 0)
             {
                 if (Eternity)
                 {
@@ -2656,7 +2673,7 @@ namespace FargowiltasSouls
                     if (crit && TinCrit < 100)
                     {
                         TinCrit += 5;
-                        tinCD = 15;
+                        tinCD = 10;
                     }
                     else if (TinCrit >= 100)
                     {
@@ -2666,6 +2683,9 @@ namespace FargowiltasSouls
                             {
                                 player.statLife += damage / 25;
                                 player.HealEffect(damage / 25);
+                                int max = MutantNibble ? StatLifePrevious : player.statLifeMax2;
+                                if (player.statLife > max)
+                                    player.statLife = max;
                             }
                             HealTimer = 10;
                         }
@@ -2680,7 +2700,7 @@ namespace FargowiltasSouls
                     if (TerraForce || WizardEnchant)
                     {
                         TinCrit += 5;
-                        tinCD = 30;
+                        tinCD = 20;
                     }
                     else
                     {
@@ -2688,6 +2708,9 @@ namespace FargowiltasSouls
                         tinCD = 30;
                     }
                 }
+
+                if (TinCrit > 100)
+                    TinCrit = 100;
             }
             
 
@@ -3094,7 +3117,7 @@ namespace FargowiltasSouls
                         (int)(40 * player.minionDamage), 3f, player.whoAmI);
                 }
 
-                if (LihzahrdTreasureBox && SoulConfig.Instance.GetValue(SoulConfig.Instance.LihzahrdBoxSpikyBalls))
+                /*if (LihzahrdTreasureBox && SoulConfig.Instance.GetValue(SoulConfig.Instance.LihzahrdBoxSpikyBalls))
                 {
                     int dam = 60;
                     if (MasochistSoul)
@@ -3102,7 +3125,7 @@ namespace FargowiltasSouls
                     for (int i = 0; i < 9; i++)
                         Projectile.NewProjectile(player.Center.X, player.Center.Y, Main.rand.Next(-10, 11), Main.rand.Next(-10, 11),
                             ModContent.ProjectileType<LihzahrdSpikyBallFriendly>(), (int)(dam * player.meleeDamage), 2f, player.whoAmI);
-                }
+                }*/
 
                 if (WretchedPouch && SoulConfig.Instance.GetValue(SoulConfig.Instance.WretchedPouch))
                 {
@@ -3494,16 +3517,19 @@ namespace FargowiltasSouls
         {
             switch (type)
             {
+                case ItemID.BlizzardStaff:
+                    AttackSpeed *= 0.5f;
+                    return 2f / 3f;
+
+                case ItemID.Razorpine:
+                    AttackSpeed *= 2f / 3f;
+                    return 2f / 3f;
+
                 case ItemID.DaedalusStormbow:
                 case ItemID.StarCannon:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.SnowmanCannon:
                 case ItemID.DemonScythe:
-                    return 2f / 3f;
-
-                case ItemID.Razorpine:
-                case ItemID.BlizzardStaff:
-                    AttackSpeed *= 2f / 3f;
                     return 2f / 3f;
 
                 case ItemID.DD2BetsyBow:

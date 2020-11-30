@@ -469,9 +469,9 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool LihzahrdBoxGeysers;
 
-        [Label("$Mods.FargowiltasSouls.MasoSpikeConfig")]
+        [Label("$Mods.FargowiltasSouls.MasoBoulderConfig")]
         [DefaultValue(true)]
-        public bool LihzahrdBoxSpikyBalls;
+        public bool LihzahrdBoxBoulders;
 
         [Label("$Mods.FargowiltasSouls.MasoCelestConfig")]
         [DefaultValue(true)]
