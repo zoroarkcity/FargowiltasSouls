@@ -117,3 +117,8 @@ golem
 	removed vanilla bouncy fireballs in p2
 increased eow head defense more (24 to 44)
 lihzahrd treasure box spiky balls on hit replaced with slimy shield-style boulder stomp
+
+flesh hand adjustment: now magic, with adjusted stats and middling homing
+fish stick adjustment: now ranged, with adjusted stats and a pretty tall nado (also dust)
+destroyer gun: same as before but nerfed damage (55 to 45) and a bit dumber but it can shoot lasers
+destroyer gun EX: same as before but it can shoot homing dark stars

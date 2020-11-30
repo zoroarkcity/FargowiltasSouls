@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fish Stick");
-            Tooltip.SetDefault("Sharknado becomes taller with up to 4 empty minion slots\n'The carcass of a defeated foe shoved violently on a stick..'");
+            Tooltip.SetDefault("'The carcass of a defeated foe shoved violently on a stick..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "鱼杖");
             Tooltip.AddTranslation(GameCulture.Chinese, "'一个被打败的敌人的尸体,用棍子粗暴地串起来..'");
         }
@@ -18,8 +18,8 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override void SetDefaults()
         {
             item.damage = 66;
-            item.summon = true;
-            item.mana = 10;
+            item.ranged = true;
+            //item.mana = 10;
             item.width = 24;
             item.height = 24;
             item.useTime = 15;
