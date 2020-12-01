@@ -135,3 +135,4 @@ hellzone is now bone vomit (old one is retained too for now)
 
 fixed desgun ex having comedic nonpierce
 epic animated penetrator inv sprite
+new big sting
