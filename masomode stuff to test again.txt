@@ -124,3 +124,8 @@ destroyer gun: same as before but nerfed damage (55 to 45) and a bit dumber but 
 destroyer gun EX: same as before but it can shoot homing dark stars, also steep nerf because meme kill time?
 
 nerfed blizzard staff to -33% damage, -50% speed because its still overpowered
+adjusted eri armour so ring always has fragment right above player instead of to one side
+desgun (EX) targets cursor now (TEST IN MP)
+fishron
+	cthulhunados have 1/3rd second delay on actually spawning to reduce instagibs
+	p3 bubble trail made more spacious and slower, but indestructible

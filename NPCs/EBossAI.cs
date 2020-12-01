@@ -2117,7 +2117,7 @@ namespace FargowiltasSouls.NPCs
             spazBoss = npc.whoAmI;
             bool retiAlive = BossIsAlive(ref retiBoss, NPCID.Retinazer);
 
-            canHitPlayer = true;
+            canHurt = true;
 
             if (!masoBool[0]) //spawn in phase 2
             {
@@ -2188,7 +2188,7 @@ namespace FargowiltasSouls.NPCs
                         if (++Counter[2] < 30) //snap to reti, don't do contact damage
                         {
                             npc.rotation = npc.DirectionTo(Main.npc[retiBoss].Center).ToRotation() - (float)Math.PI / 2;
-                            canHitPlayer = false;
+                            canHurt = false;
                         }
                         else if (++Counter[0] > 5) //rings of fire
                         {
@@ -3086,10 +3086,10 @@ namespace FargowiltasSouls.NPCs
                 if (Main.npc[ai1].ai[1] == 3 || !npc.HasValidTarget) //return to normal AI
                     return true;
 
-                canHitPlayer = true;
+                canHurt = true;
                 if (Counter[3] > 0)
                 {
-                    canHitPlayer = false;
+                    canHurt = false;
                     Counter[3]--;
                 }
 
@@ -4532,7 +4532,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case 10: //phase 3
-                        Counter[2]++;
+                        //Counter[2]++;
                         /*if (Timer >= 600) //spawn cthulhunado
                         {
                             Timer = 0;
@@ -4541,16 +4541,39 @@ namespace FargowiltasSouls.NPCs
                         }*/
                         if (!Main.player[npc.target].ZoneBeach)
                             npc.ai[2]++;
+                        /*if (npc.ai[0] == 10)
+                        {
+                            if (++Counter[1] == 15)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    const float delay = 15;
+                                    Vector2 baseVel = 100f / delay * npc.DirectionTo(Main.player[npc.target].Center);
+
+                                    const int max = 10;
+                                    for (int i = 0; i < max; i++)
+                                    {
+                                        Projectile.NewProjectile(npc.Center, baseVel.RotatedBy(2 * Math.PI / max * i),
+                                            ModContent.ProjectileType<FishronBubble>(), npc.damage / 5, 0f, Main.myPlayer, delay);
+                                    }
+                                }
+                            }
+                        }*/
                         break;
 
                     case 11: //p3 dash
-                        Counter[0]++;
-                        if (Counter[0] > 2)
+                        //Counter[1] = 0;
+                        if (--Counter[0] < 0)
                         {
-                            Counter[0] = 0;
+                            Counter[0] = 5;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<DetonatingBubble>());
+                                for (int i = -1; i <= 1; i+= 2)
+                                {
+                                    Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2 * i),
+                                        ModContent.ProjectileType<FishronBubble>(), npc.damage / 5, 0f, Main.myPlayer);
+                                }
+                                /*int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<DetonatingBubble>());
                                 if (n < 200)
                                 {
                                     Main.npc[n].velocity = npc.velocity.RotatedBy(Math.PI / 2);
@@ -4567,12 +4590,13 @@ namespace FargowiltasSouls.NPCs
                                     Main.npc[n].netUpdate = true;
                                     if (Main.netMode == NetmodeID.Server)
                                         NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
-                                }
+                                }*/
                             }
                         }
                         goto case 10;
 
                     case 12: //p3 *teleports behind you*
+                        Counter[0] = 0;
                         if (npc.ai[2] == 15f)
                         {
                             SpawnRazorbladeRing(6, 8f, npc.damage / 4, -0.75f);
