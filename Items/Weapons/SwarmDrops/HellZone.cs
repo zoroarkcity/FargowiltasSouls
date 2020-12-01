@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Projectiles.BossWeapons;
+using System.Diagnostics;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
@@ -29,13 +30,13 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
             item.useStyle = 5;
             item.autoReuse = true;
-            item.useAnimation = 30; //
+            item.useAnimation = 5; //
             item.useTime = 5; //
             item.width = 54;
             item.height = 14;
-            item.shoot = ModContent.ProjectileType<HellSkeletron>();
+            item.shoot = ModContent.ProjectileType<HellSkull2>();
             item.useAmmo = ItemID.Bone;
-            item.UseSound = SoundID.Item2;//SoundID.Item34;
+            item.UseSound = SoundID.Item38;//SoundID.Item34;
 
             item.noMelee = true;
             item.value = Item.sellPrice(0, 10); //
@@ -43,6 +44,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.ranged = true;
         }
 
+        int counter;
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             /*Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
@@ -55,19 +57,27 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
             Vector2 speed = new Vector2(speedX, speedY);
             position += Vector2.Normalize(speed) * 40f;
-            int max = Main.rand.Next(1, 4);
-            float rotation = MathHelper.Pi / 4f / max * Main.rand.NextFloat(0.25f, 1f);
+            int max = Main.rand.Next(1, 3);
+            float rotation = MathHelper.Pi / 4f / max * Main.rand.NextFloat(0.25f, 0.75f);
+            counter++;
             for (int i = -max; i <= max; i++)
             {
                 int newType;
-                switch (Main.rand.Next(4))
+                switch (Main.rand.Next(3))
                 {
-                    case 0: newType = ModContent.ProjectileType<HellSkull2>(); break;
-                    case 1: newType = ModContent.ProjectileType<HellBone>(); break;
-                    case 2: newType = ModContent.ProjectileType<HellBonez>(); break;
+                    case 0: newType = ModContent.ProjectileType<HellBone>(); break;
+                    case 1: newType = ModContent.ProjectileType<HellBonez>(); break;
                     default: newType = ModContent.ProjectileType<HellSkeletron>(); break;
                 }
                 Projectile.NewProjectile(position, Main.rand.NextFloat(0.8f, 1.2f) * speed.RotatedBy(rotation * i + Main.rand.NextFloat(-rotation, rotation)), newType, damage, knockBack, player.whoAmI);
+            }
+            if (counter > 4)
+            {
+                for (int j = -1; j <= 1; j += 2)
+                {
+                    Projectile.NewProjectile(position, speed * 1.25f, ModContent.ProjectileType<HellSkull2>(), damage, knockBack, player.whoAmI, 0, j);
+                }
+                counter = 0;
             }
             return false;
         }

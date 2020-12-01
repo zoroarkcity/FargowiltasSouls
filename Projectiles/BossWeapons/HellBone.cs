@@ -66,5 +66,15 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, effects, 0f);
             return false;
         }
+
+        public override void Kill(int timeLeft)
+        {
+            Main.PlaySound(SoundID.Dig, (int)projectile.position.X, (int)projectile.position.Y);
+            for (int i = 0; i < 8; i++)
+            {
+                int d = Dust.NewDust(projectile.position, projectile.width / 2, projectile.height / 2, 190, projectile.velocity.X * 0.75f, projectile.velocity.Y * 0.75f, 0, default(Color), 2f);
+                Main.dust[d].noGravity = true;
+            }
+        }
     }
 }
