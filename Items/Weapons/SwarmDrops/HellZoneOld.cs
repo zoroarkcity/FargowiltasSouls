@@ -15,7 +15,10 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hell Zone (Old)");
-            Tooltip.SetDefault("Uses gel for ammo\n66% chance to not consume ammo\n'The reward for slaughtering many...'");
+            Tooltip.SetDefault(@"[c/ff0000:DEPRECATED]
+Uses gel for ammo
+66% chance to not consume ammo
+'The reward for slaughtering many...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "地狱领域");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励...'");
         }
@@ -65,7 +68,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             return new Vector2(-30, -5);
         }
 
-        public override void AddRecipes()
+        /*public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(null, "BoneZone");
@@ -74,6 +77,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
+        }*/
     }
 }
