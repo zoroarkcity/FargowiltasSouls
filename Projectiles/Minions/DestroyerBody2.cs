@@ -12,6 +12,8 @@ namespace FargowiltasSouls.Projectiles.Minions
     {
         public override string Texture => "Terraria/NPC_135";
 
+        public int attackTimer;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Destroyer Body");
@@ -129,6 +131,34 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.Center = projectile.position;
             if (vector134 != Vector2.Zero) projectile.Center = value67 - Vector2.Normalize(vector134) * 36;
             projectile.spriteDirection = vector134.X > 0f ? 1 : -1;
+
+            if (--attackTimer <= 0)
+            {
+                attackTimer = Main.rand.Next(90) + 90;
+            }
+
+            if (attackTimer == 1)
+            {
+                if (projectile.owner == Main.myPlayer)
+                {
+                    int selectedTarget = -1; //pick target
+                    const float maxRange = 750f;
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        if (Main.npc[i].CanBeChasedBy(projectile) && Collision.CanHit(projectile.Center, 0, 0, Main.npc[i].Center, 0, 0))
+                        {
+                            if (projectile.Distance(Main.npc[i].Center) <= maxRange && Main.rand.Next(2) == 0) //random because destroyer
+                                selectedTarget = i;
+                        }
+                    }
+
+                    if (selectedTarget != -1) //shoot
+                    {
+                        Projectile.NewProjectile(projectile.Center, projectile.DirectionTo(Main.npc[selectedTarget].Center).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)),
+                            ModContent.ProjectileType<DarkStarHomingFriendly>(), projectile.damage, projectile.knockBack, projectile.owner, selectedTarget);
+                    }
+                }
+            }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

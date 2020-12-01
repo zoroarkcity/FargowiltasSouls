@@ -32,23 +32,11 @@ namespace FargowiltasSouls.Projectiles.Souls
                 projectile.velocity.Y = 16f;
             }
 
-            for (int i = 0; i < 200; i++)
-            {
-                NPC npc = Main.npc[i];
+            Player player = Main.player[projectile.owner];
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-                if (npc.active && !npc.friendly && npc.Hitbox.Intersects(projectile.Hitbox))
-                {
-                    Player player = Main.player[projectile.owner];
-                    FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-
-                    //bonus damage if fully grown
-                    int damage = projectile.frame == 4 ? 50 : 15;
-
-                    npc.StrikeNPC(modPlayer.HighestDamageTypeScaling(damage), 1, 0);
-
-                    projectile.Kill();
-                }
-            }
+            //bonus damage if fully grown
+            projectile.damage = modPlayer.HighestDamageTypeScaling(projectile.frame == 4 ? 50 : 15);
 
             if (projectile.frame != 4)
             {
@@ -76,9 +64,6 @@ namespace FargowiltasSouls.Projectiles.Souls
             }
             else
             {
-                Player player = Main.player[projectile.owner];
-                FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-
                 if (player.Hitbox.Intersects(projectile.Hitbox))
                 {
                     int heal = 25;
@@ -135,7 +120,8 @@ namespace FargowiltasSouls.Projectiles.Souls
 
         public override void Kill(int timeLeft)
         {
-            if (projectile.scale <= 0) //dont do fire explosion on death if it dies from scale thing
+            //dont do fire explosion on death if it dies from scale thing or isnt full grown
+            if (projectile.scale <= 0 || projectile.frame != 4)
                 return;
 
             Player player = Main.player[projectile.owner];

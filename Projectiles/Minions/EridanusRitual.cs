@@ -96,7 +96,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 if (x < projectile.localAI[0])
                     continue;
                 Vector2 drawOffset = new Vector2(0f, -threshold * projectile.scale);
-                drawOffset = drawOffset.RotatedBy(x * PI / max * 2).RotatedBy(projectile.ai[0]);
+                drawOffset = drawOffset.RotatedBy((x + 1) * PI / max * 2).RotatedBy(projectile.ai[0]);
                 spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
             }
 

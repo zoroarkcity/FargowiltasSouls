@@ -358,8 +358,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                             for (int i = 0; i < 4; i++)
                             {
-                                if (npc.localAI[3] > 1) //p2 throw another set of hammers
-                                    Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i) * retiSpeed, ModContent.ProjectileType<DeviHammer>(), projectileDamage, 0f, Main.myPlayer, retiAcc, retiTime);
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i) * retiSpeed, ModContent.ProjectileType<DeviHammer>(), projectileDamage, 0f, Main.myPlayer, retiAcc, retiTime);
                                 Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i + Math.PI / 4) * spazSpeed, ModContent.ProjectileType<DeviHammer>(), projectileDamage, 0f, Main.myPlayer, spazAcc, spazTime);
                             }
                         }
@@ -581,7 +580,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         Vector2 target = player.Center;
                         target.X += player.velocity.X * 90;
                         target.Y -= 150;
-                        Projectile.NewProjectile(target, Vector2.Zero, ProjectileID.SandnadoHostileMark, 0, 0f, Main.myPlayer);
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.NewProjectile(target, Vector2.Zero, ProjectileID.SandnadoHostileMark, 0, 0f, Main.myPlayer);
 
                         int length = (int)npc.Distance(target) / 10;
                         Vector2 offset = npc.DirectionTo(target) * 10f;
@@ -1131,12 +1131,15 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     if (npc.ai[3] < 4 && npc.Distance(Main.LocalPlayer.Center) < 3000 && Collision.CanHitLine(npc.Center, 0, 0, Main.LocalPlayer.Center, 0, 0)
                         && Math.Sign(Main.LocalPlayer.direction) == Math.Sign(npc.Center.X - Main.LocalPlayer.Center.X))
                     {
-                        Vector2 target = Main.LocalPlayer.Center;
-                        int length = (int)npc.Distance(target) / 10;
-                        Vector2 offset = npc.DirectionTo(target) * 10f;
-                        for (int i = 0; i < length; i++) //dust indicator
+                        Vector2 target = Main.LocalPlayer.Center - Vector2.UnitY * 12;
+                        Vector2 source = npc.Center - Vector2.UnitY * 6;
+                        Vector2 distance = target - source;
+
+                        int length = (int)distance.Length() / 10;
+                        Vector2 offset = Vector2.Normalize(distance) * 10f;
+                        for (int i = 0; i <= length; i++) //dust indicator
                         {
-                            int d = Dust.NewDust(npc.Center + offset * i, 0, 0, DustID.GoldFlame, 0f, 0f, 0, new Color());
+                            int d = Dust.NewDust(source + offset * i, 0, 0, DustID.GoldFlame, 0f, 0f, 0, new Color());
                             Main.dust[d].noLight = true;
                             Main.dust[d].noGravity = true;
                             Main.dust[d].scale = 1f;
@@ -1186,18 +1189,16 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             if (npc.Distance(Main.LocalPlayer.Center) < 3000 && Collision.CanHitLine(npc.Center, 0, 0, Main.LocalPlayer.Center, 0, 0)
                                 && Math.Sign(Main.LocalPlayer.direction) == Math.Sign(npc.Center.X - Main.LocalPlayer.Center.X))
                             {
-                                for (int i = 0; i < 50; i++) //petrify dust
+                                for (int i = 0; i < 40; i++) //petrify dust
                                 {
-                                    int d = Dust.NewDust(Main.LocalPlayer.Center, 0, 0, DustID.GoldFlame, 0f, 0f, 0, default(Color), 2f);
-                                    Main.dust[d].noGravity = true;
-                                    Main.dust[d].velocity *= 6f;
+                                    int d = Dust.NewDust(Main.LocalPlayer.Center, 0, 0, DustID.Stone, 0f, 0f, 0, default(Color), 2f);
+                                    Main.dust[d].velocity *= 3f;
                                 }
 
                                 Main.LocalPlayer.AddBuff(BuffID.Stoned, 300);
-                            }
 
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(npc.Center, new Vector2(0, -1), ModContent.ProjectileType<DeviMedusa>(), 0, 0, Main.myPlayer);
+                                Projectile.NewProjectile(Main.LocalPlayer.Center, new Vector2(0, -1), ModContent.ProjectileType<DeviMedusa>(), 0, 0, Main.myPlayer);
+                            }
                         }
                         else if (npc.ai[3] < 7) //ray warning
                         {
@@ -1291,7 +1292,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             bool wasOnLeft = npc.Center.X < player.Center.X;
                             npc.Center = player.Center;
                             npc.position.X += wasOnLeft ? -300 : 300;
-                            npc.position.Y -= 150;
+                            npc.position.Y -= 100;
                             npc.netUpdate = true;
                         }
                         TeleportDust();
@@ -1334,7 +1335,8 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     else if (npc.ai[1] == 150) //start swinging
                     {
                         targetPos = player.Center;
-                        targetPos.X -= 200 * npc.ai[2];
+                        targetPos.X -= 250 * Math.Sign(npc.ai[2]);
+                        targetPos.Y -= 200;
                         npc.velocity = (targetPos - npc.Center) / 30;
                         npc.netUpdate = true;
 

@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phantasmal Eye");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 16;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
@@ -121,6 +121,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             Rectangle glowrectangle = new Rectangle(0, rect2, glow.Width, rect1);
             Vector2 gloworigin2 = glowrectangle.Size() / 2f;
             Color glowcolor = Color.Lerp(new Color(31, 187, 192, 0), Color.Transparent, 0.84f);
+            glowcolor *= 0.5f;
             Vector2 drawCenter = projectile.Center - (projectile.velocity.SafeNormalize(Vector2.UnitX) * 14);
 
             for (int i = 0; i < 3; i++) //create multiple transparent trail textures ahead of the projectile
@@ -133,7 +134,6 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
             {
-
                 Color color27 = glowcolor;
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 float scale = projectile.scale * (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];

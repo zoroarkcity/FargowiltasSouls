@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
             if (projectile.ai[0] == 0)
             {
                 int ai1 = (int)projectile.ai[1];
-                if (projectile.ai[1] >= 0f && projectile.ai[1] < 200f &&
+                if (projectile.ai[1] >= 0f && projectile.ai[1] < Main.maxNPCs &&
                     Main.npc[ai1].active && Main.npc[ai1].type == mod.NPCType("DeviBoss") &&
                     projectile.position.Y >= Main.npc[ai1].position.Y)
                 {
@@ -56,6 +56,14 @@ namespace FargowiltasSouls.Projectiles.DeviBoss
                 if (++projectile.ai[0] < 61)
                 {
                     projectile.velocity *= 1.06f;
+                }
+
+                int ai1 = (int)projectile.ai[1];
+                if (projectile.ai[1] >= 0f && projectile.ai[1] < Main.maxNPCs &&
+                    Main.npc[ai1].active && Main.npc[ai1].type == mod.NPCType("DeviBoss") &&
+                    projectile.Center.Y > Main.player[Main.npc[ai1].target].Center.Y + 480) //break when far below player
+                {
+                    projectile.Kill();
                 }
             }
 

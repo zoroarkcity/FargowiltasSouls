@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
@@ -16,6 +17,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             Tooltip.SetDefault("Right click to sunder reality\n'The reward for embracing eternity...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "洞察者");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励...'");
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(3, 10));
         }
 
         public override void SetDefaults()
@@ -26,9 +28,9 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.useTime = 16;
             item.shootSpeed = 6f;
             item.knockBack = 7f;
-            item.width = 32;
-            item.height = 32;
-            item.scale = 1f;
+            item.width = 24;
+            item.height = 24;
+            item.scale = 1.3f;
             item.rare = 11;
             item.UseSound = SoundID.Item1;
             item.shoot = mod.ProjectileType("HentaiSpear");

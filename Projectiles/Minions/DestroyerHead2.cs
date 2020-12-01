@@ -13,6 +13,8 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override string Texture => "Terraria/NPC_134";
 
         public float modifier;
+        private int syncTimer;
+        private Vector2 mousePos;
 
         public override void SetStaticDefaults()
         {
@@ -40,6 +42,9 @@ namespace FargowiltasSouls.Projectiles.Minions
             writer.Write(projectile.localAI[0]);
             writer.Write(projectile.localAI[1]);
             writer.Write(modifier);
+
+            writer.Write(mousePos.X);
+            writer.Write(mousePos.Y);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -47,6 +52,14 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.localAI[0] = reader.ReadSingle();
             projectile.localAI[1] = reader.ReadSingle();
             modifier = reader.ReadSingle();
+
+            Vector2 buffer;
+            buffer.X = reader.ReadSingle();
+            buffer.Y = reader.ReadSingle();
+            if (projectile.owner != Main.myPlayer)
+            {
+                mousePos = buffer;
+            }
         }
 
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles,
@@ -78,6 +91,19 @@ namespace FargowiltasSouls.Projectiles.Minions
 
         public override void AI()
         {
+            Player player = Main.player[projectile.owner];
+
+            if (player.whoAmI == Main.myPlayer)
+            {
+                mousePos = Main.MouseWorld;
+
+                if (++syncTimer > 20)
+                {
+                    syncTimer = 0;
+                    projectile.netUpdate = true;
+                }
+            }
+
             if (projectile.localAI[0] == 0)
             {
                 projectile.localAI[0] = 1;
@@ -123,17 +149,20 @@ namespace FargowiltasSouls.Projectiles.Minions
             {
                 projectile.ai[aislotHomingCooldown] = homingDelay; //cap this value 
 
-                int foundTarget = HomeOnTarget();
+                /*int foundTarget = HomeOnTarget();
                 if (foundTarget != -1)
                 {
                     NPC n = Main.npc[foundTarget];
                     Vector2 desiredVelocity = projectile.DirectionTo(n.Center) * desiredFlySpeedInPixelsPerFrame;
                     projectile.velocity = Vector2.Lerp(projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
-                }
+                }*/
+
+                Vector2 desiredVelocity = projectile.DirectionTo(mousePos) * desiredFlySpeedInPixelsPerFrame;
+                projectile.velocity = Vector2.Lerp(projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
             }
         }
 
-        private int HomeOnTarget()
+        /*private int HomeOnTarget()
         {
             NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
             if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile))
@@ -159,7 +188,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             }
 
             return selectedTarget;
-        }
+        }*/
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {

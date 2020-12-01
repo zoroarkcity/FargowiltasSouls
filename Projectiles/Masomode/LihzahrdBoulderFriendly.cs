@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.Masomode
 {
-    public class GolemBoulder : ModProjectile
+    public class LihzahrdBoulderFriendly : ModProjectile
     {
         public override string Texture => "Terraria/Projectile_261";
 
@@ -26,10 +26,13 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             projectile.CloneDefaults(ProjectileID.BoulderStaffOfEarth);
             aiType = ProjectileID.BoulderStaffOfEarth;
-            projectile.hostile = true;
+            projectile.penetrate = -1;
             projectile.magic = false;
-            projectile.friendly = false;
-            projectile.tileCollide = false;
+            projectile.melee = true;
+            projectile.timeLeft = 150;
+
+            projectile.usesIDStaticNPCImmunity = true;
+            projectile.idStaticNPCHitCooldown = 20;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -49,14 +52,14 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 spawned = true;
                 Main.PlaySound(SoundID.Item, projectile.Center, 14);
 
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     int dust = Dust.NewDust(projectile.position, projectile.width,
                         projectile.height, 31, 0f, 0f, 100, default(Color), 3f);
                     Main.dust[dust].velocity *= 1.4f;
                 }
 
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     int dust = Dust.NewDust(projectile.position, projectile.width,
                         projectile.height, 6, 0f, 0f, 100, default(Color), 3.5f);
@@ -68,34 +71,12 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 }
 
                 float scaleFactor9 = 0.5f;
-                for (int j = 0; j < 3; j++)
-                {
-                    int gore = Gore.NewGore(new Vector2(projectile.Center.X, projectile.Center.Y), default(Vector2), Main.rand.Next(61, 64));
-                    Main.gore[gore].velocity *= scaleFactor9;
-                    Main.gore[gore].velocity.X += 1f;
-                    Main.gore[gore].velocity.Y += 1f;
-                }
-            }
+                int gore = Gore.NewGore(new Vector2(projectile.Center.X, projectile.Center.Y), default(Vector2), Main.rand.Next(61, 64));
+                Main.gore[gore].velocity *= scaleFactor9;
+                Main.gore[gore].velocity.X += 1f;
+                Main.gore[gore].velocity.Y += 1f;
 
-            if (!projectile.tileCollide)
-            {
-                Tile tile = Framing.GetTileSafely(projectile.Center - Vector2.UnitY * 26);
-                if (!(tile.nactive() && Main.tileSolid[tile.type]))
-                    projectile.tileCollide = true;
-            }
-
-            if (projectile.velocity.Y < 0 && projectile.velocity.X == 0 && vel == 0) //on first bounce, roll at nearby player
-            {
-                int p = Player.FindClosest(projectile.Center, 0, 0);
-                if (p != -1)
-                {
-                    projectile.velocity.X = vel = projectile.Center.X < Main.player[p].Center.X ? 4f : -4f;
-                    projectile.velocity.Y *= Main.rand.NextFloat(1.9f, 2.1f);
-                }
-                else
-                {
-                    projectile.timeLeft = 0;
-                }
+                vel = projectile.velocity.X;
             }
 
             if (Math.Sign(projectile.velocity.X) == Math.Sign(vel))
@@ -106,9 +87,6 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (vel == 0) //use the first bounce block code above, doesn't seem to work otherwise
-                return true;
-
             if (projectile.velocity.Y != oldVelocity.Y && oldVelocity.Y > 1) //bouncy
                 projectile.velocity.Y = -oldVelocity.Y * 0.8f;
             return false;
@@ -126,13 +104,6 @@ namespace FargowiltasSouls.Projectiles.Masomode
             Main.PlaySound(0, (int)projectile.position.X, (int)projectile.position.Y, 1, 1f, 0.0f);
             for (int index = 0; index < 5; ++index)
                 Dust.NewDust(projectile.position, projectile.width, projectile.height, 148, 0.0f, 0.0f, 0, new Color(), 1f);
-        }
-
-        public override void OnHitPlayer(Player target, int damage, bool crit)
-        {
-            target.AddBuff(BuffID.BrokenArmor, 600);
-            target.AddBuff(mod.BuffType("Defenseless"), 600);
-            target.AddBuff(BuffID.WitheredArmor, 600);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

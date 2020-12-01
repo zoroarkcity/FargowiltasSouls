@@ -4,79 +4,74 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.NPCs;
 
-namespace FargowiltasSouls.Projectiles.MutantBoss
+namespace FargowiltasSouls.Projectiles.Masomode
 {
-    public class MutantCrystalLeaf : ModProjectile
+    public class FishronBubble : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_226";
+        public override string Texture => "Terraria/NPC_371";
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crystal Leaf");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 8;
+            DisplayName.SetDefault("Detonating Bubble");
+            Main.projFrames[projectile.type] = 2;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            projectile.width = 20;
-            projectile.height = 20;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = false;
+            projectile.width = 36;
+            projectile.height = 36;
             projectile.hostile = true;
-            projectile.timeLeft = 420;
+            projectile.tileCollide = false;
+            projectile.timeLeft = 240;
+            projectile.alpha = 255;
             projectile.aiStyle = -1;
-            projectile.scale = 2.5f;
-            cooldownSlot = 1;
         }
 
         public override void AI()
         {
-            if (projectile.localAI[0] == 0)
+            projectile.velocity *= 1.035f;
+
+            if (projectile.alpha > 50)
+                projectile.alpha -= 30;
+            else
+                projectile.alpha = 50;
+
+            if (++projectile.frameCounter > 3)
             {
-                projectile.localAI[0] = 1;
-                for (int index1 = 0; index1 < 30; ++index1)
-                {
-                    int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 157, 0f, 0f, 0, new Color(), 2f);
-                    Main.dust[index2].noGravity = true;
-                    Main.dust[index2].velocity *= 5f;
-                }
+                projectile.frameCounter = 0;
+                if (++projectile.frame >= Main.projFrames[projectile.type])
+                    projectile.frame = 0;
             }
+        }
 
-            Lighting.AddLight(projectile.Center, 0.1f, 0.4f, 0.2f);
-            projectile.scale = (Main.mouseTextColor / 200f - 0.35f) * 0.2f + 0.95f;
-            projectile.scale *= 2.5f;
-
-            int ai0 = (int)projectile.ai[0];
-            Vector2 offset = new Vector2(125, 0).RotatedBy(projectile.ai[1]);
-            projectile.Center = Main.projectile[ai0].Center + offset;
-            projectile.ai[1] += 0.09f;
-            projectile.rotation = projectile.ai[1] + (float)Math.PI / 2f;
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White * projectile.Opacity;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(BuffID.Poisoned, Main.rand.Next(60, 300));
-            target.AddBuff(mod.BuffType("Infested"), Main.rand.Next(60, 300));
-            if (FargoSoulsWorld.MasochistMode)
-            {
-                target.AddBuff(mod.BuffType("IvyVenom"), Main.rand.Next(60, 300));
-                target.AddBuff(mod.BuffType("MutantFang"), 180);
-            }
+            target.AddBuff(BuffID.Wet, 420);
+            //target.AddBuff(mod.BuffType("SqueakyToy"), Main.rand.Next(60, 180));
+            target.AddBuff(mod.BuffType("OceanicMaul"), 1800);
+            target.GetModPlayer<FargoPlayer>().MaxLifeReduction += EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.fishBossEX, NPCID.DukeFishron) ? 10 : 50;
         }
 
-        public override Color? GetAlpha(Color drawColor)
+        public override void Kill(int timeLeft)
         {
-            float num4 = Main.mouseTextColor / 200f - 0.3f;
-            int num5 = (int)(byte.MaxValue * num4) + 50;
-            if (num5 > byte.MaxValue)
-                num5 = byte.MaxValue;
-            return new Color(num5, num5, num5, 200);
+            Main.PlaySound(SoundID.NPCHit3, projectile.Center);
+            Main.PlaySound(SoundID.NPCDeath3, projectile.Center);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+
             Texture2D texture2D13 = Main.projectileTexture[projectile.type];
             int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
             int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
@@ -85,7 +80,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
             Color color26 = lightColor;
             color26 = projectile.GetAlpha(color26);
-            
+
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
             {
                 Color color27 = color26;
@@ -96,6 +91,9 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             }
 
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
             return false;
         }
     }

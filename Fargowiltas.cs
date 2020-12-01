@@ -238,7 +238,7 @@ namespace FargowiltasSouls
             AddToggle("MasoCultistConfig", "Cultist Minion", "ChaliceoftheMoon", "ffffff");
             AddToggle("MasoPlantConfig", "Plantera Minion", "MagicalBulb", "ffffff");
             AddToggle("MasoGolemConfig", "Lihzahrd Ground Pound", "LihzahrdTreasureBox", "ffffff");
-            AddToggle("MasoSpikeConfig", "Spiky Balls On Hit", "LihzahrdTreasureBox", "ffffff");
+            AddToggle("MasoBoulderConfig", "Boulder Spray", "LihzahrdTreasureBox", "ffffff");
             AddToggle("MasoCelestConfig", "Celestial Rune Support", "CelestialRune", "ffffff");
             AddToggle("MasoVisionConfig", "Ancient Visions On Hit", "CelestialRune", "ffffff");
 

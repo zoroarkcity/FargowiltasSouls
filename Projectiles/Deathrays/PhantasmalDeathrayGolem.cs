@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
 {
     public class PhantasmalDeathrayGolem : BaseDeathray
     {
-        public PhantasmalDeathrayGolem() : base(150, "PhantasmalDeathrayGolem") { }
+        public PhantasmalDeathrayGolem() : base(300, "PhantasmalDeathrayGolem") { }
 
         public override void SetStaticDefaults()
         {

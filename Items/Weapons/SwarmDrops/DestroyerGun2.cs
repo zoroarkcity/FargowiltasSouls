@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 285;
+            item.damage = 260;
             item.mana = 30;
             item.summon = true;
             item.width = 24;
