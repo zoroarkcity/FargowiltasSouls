@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Projectiles.BossWeapons;
-using System.Diagnostics;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
