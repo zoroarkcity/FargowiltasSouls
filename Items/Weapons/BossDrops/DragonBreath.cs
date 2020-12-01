@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dragon's Breath");
-            Tooltip.SetDefault("'The carcass of a defeated foe shoved violently on a stick..'");
+            Tooltip.SetDefault("33% chance to not consume ammo\n'The carcass of a defeated foe shoved violently on a stick..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "鱼杖");
             Tooltip.AddTranslation(GameCulture.Chinese, "'一个被打败的敌人的尸体,用棍子粗暴地串起来..'");
         }
@@ -32,7 +32,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.knockBack = 1.5f;
             item.UseSound = SoundID.DD2_BetsyFlameBreath;
             item.useAmmo = AmmoID.Gel;
-            Item.staff[item.type] = true;
+            //Item.staff[item.type] = true;
             item.value = 50000;
             item.rare = ItemRarityID.Yellow;
             item.autoReuse = false;
@@ -41,12 +41,23 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.noUseGraphic = false;
         }
 
+        //make them hold it different
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-30, 0);
+        }
+
         public override bool CanUseItem(Player player)
         {
             if (player.ownedProjectileCounts[item.shoot] > 0)
                 return false;
 
             return true;
+        }
+
+        public override bool ConsumeAmmo(Player player)
+        {
+            return Main.rand.Next(3) != 0;
         }
     }
 }

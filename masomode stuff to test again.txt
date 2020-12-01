@@ -135,6 +135,8 @@ hellzone is now bone vomit (old one is retained too for now)
 
 fixed desgun ex having comedic nonpierce
 epic animated penetrator inv sprite
-new big sting
+big sting reworked
 duke staff drop rate increases 0.5% for every defeated champ
 adjusted abom flocko rain spam attack so the frost shards hopefully despawn faster/earlier
+hellzone is now statted for pre-abom
+dragons breath item sprite! (im stupid and dont know held offsets, help)
