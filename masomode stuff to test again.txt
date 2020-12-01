@@ -129,3 +129,6 @@ desgun (EX) targets cursor now (TEST IN MP)
 fishron
 	cthulhunados have 1/3rd second delay on actually spawning to reduce instagibs
 	p3 bubble trail made more spacious and slower, but indestructible
+
+dragon's breath POG
+hellzone is now pre abom bone vomit (old one is retained too for now)

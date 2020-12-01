@@ -21,9 +21,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			projectile.alpha = 255;
 			projectile.penetrate = -1;
 			projectile.friendly = true;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 8;
-			projectile.hostile = false;
+			//projectile.usesLocalNPCImmunity = true;
+			//projectile.localNPCHitCooldown = 8;
 			projectile.ranged = true;
 			projectile.tileCollide = false;
 		}
@@ -49,11 +48,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
 			if (player.channel)
 			{
-				projectile.velocity = Vector2.Lerp(Vector2.Normalize(projectile.velocity), Vector2.Normalize(Main.MouseWorld - player.MountedCenter), 0.06f); //slowly move towards direction of cursor
+				projectile.velocity = Vector2.Lerp(Vector2.Normalize(projectile.velocity), 
+                    Vector2.Normalize(Main.MouseWorld - player.MountedCenter), 0.12f); //slowly move towards direction of cursor
 				projectile.velocity.Normalize();
 
 				timer++;
-				if (timer > 60)
+				if (timer > 12)
 				{
 					Main.PlaySound(SoundID.DD2_BetsyFlameBreath, projectile.Center + (projectile.velocity * 600)); //dd2 sound effects are weird so this is temporary(?) fix to sound effect being too loud
 					int shoot = 0; //dummy values so i can use pickammo
@@ -91,14 +91,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			Utils.PlotTileLine(projectile.Center + projectile.rotation.ToRotationVector2().RotatedBy(0.19634954631328583, default(Vector2)) * 400f * num3, projectile.Center + projectile.rotation.ToRotationVector2().RotatedBy(0.19634954631328583, default(Vector2)) * 400f * num2, 16f, new Utils.PerLinePoint(DelegateMethods.CastLight));
 			Utils.PlotTileLine(projectile.Center + projectile.rotation.ToRotationVector2().RotatedBy(-0.19634954631328583, default(Vector2)) * 400f * num3, projectile.Center + projectile.rotation.ToRotationVector2().RotatedBy(-0.19634954631328583, default(Vector2)) * 400f * num2, 16f, new Utils.PerLinePoint(DelegateMethods.CastLight));
 
-			if (Main.rand.Next(4) == 0 && projectile.ai[0] >= 25f)
+			/*if (Main.rand.Next(4) == 0 && projectile.ai[0] >= 25f)
 			{
 				Vector2 vector = projectile.Center + projectile.rotation.ToRotationVector2() * 600f;
 				vector -= Utils.RandomVector2(Main.rand, -40f, 40f);
 				Gore gore = Gore.NewGoreDirect(vector, Vector2.Zero, 61 + Main.rand.Next(3), 1f);
 				gore.velocity *= 0.6f;
 				gore.velocity += projectile.rotation.ToRotationVector2() * 4f;
-			}
+			}*/
 			//projectile.frameCounter++;
 			projectile.ai[0] += 1f;
 			if (player.channel && projectile.ai[0] > 50 && player.HasAmmo(player.inventory[player.selectedItem], true))

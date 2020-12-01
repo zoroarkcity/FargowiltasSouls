@@ -76,19 +76,6 @@ namespace FargowiltasSouls.Projectiles.Minions
             Player player = Main.player[projectile.owner];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-            projectile.timeLeft = 2;
-            if (!player.active || player.dead || player.ghost)
-            {
-                projectile.Kill();
-                return;
-            }
-
-            if (player.whoAmI == Main.myPlayer && !player.controlUseItem)
-            {
-                projectile.Kill();
-                return;
-            }
-
             if ((int)Main.time % 120 == 0) projectile.netUpdate = true;
 
             int num1038 = 30;
