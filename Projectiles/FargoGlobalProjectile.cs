@@ -66,8 +66,12 @@ namespace FargowiltasSouls.Projectiles
 
         public int ModProjID;
 
+        public bool canHurt;
+
         public override void SetDefaults(Projectile projectile)
         {
+            canHurt = true;
+
             switch (projectile.type)
             {
                 case ProjectileID.StardustGuardian:
@@ -75,10 +79,10 @@ namespace FargowiltasSouls.Projectiles
                     TimeFreezeImmune = true;
                     break;
 
-                case ProjectileID.PhantasmalDeathray:
-                case ProjectileID.SaucerDeathray:
                 case ProjectileID.Sharknado:
                 case ProjectileID.Cthulunado:
+                case ProjectileID.PhantasmalDeathray:
+                case ProjectileID.SaucerDeathray:
                 case ProjectileID.SandnadoHostile:
                 case ProjectileID.SandnadoHostileMark:
                     if (FargoSoulsWorld.MasochistMode)
@@ -534,7 +538,8 @@ namespace FargowiltasSouls.Projectiles
             if (TimeFrozen > 0 && !firstTick && !TimeFreezeImmune)
             {
                 projectile.position = projectile.oldPosition;
-                projectile.frameCounter--;
+                if (projectile.frameCounter > 0)
+                    projectile.frameCounter--;
                 projectile.timeLeft++;
                 TimeFrozen--;
                 retVal = false;
@@ -561,7 +566,16 @@ namespace FargowiltasSouls.Projectiles
             }
 
             if (firstTick)
+            {
+                if (FargoSoulsWorld.MasochistMode && projectile.type == ProjectileID.Cthulunado && projectile.ai[1] == 24)
+                {
+                    TimeFrozen = 20;
+                    canHurt = false;
+                    retVal = false;
+                }
+
                 firstTick = false;
+            }
 
             return retVal;
         }
@@ -786,6 +800,14 @@ namespace FargowiltasSouls.Projectiles
                 case ProjectileID.SpiritHeal:
                     if (FargoSoulsWorld.MasochistMode)
                         projectile.position -= projectile.velocity / 4;
+                    break;
+
+                case ProjectileID.Sharknado: //ai0 15 ai1 15
+                case ProjectileID.Cthulunado: //ai0 15 ai1 24
+                    if (FargoSoulsWorld.MasochistMode)
+                    {
+                        canHurt = true;
+                    }
                     break;
 
                 case ProjectileID.WireKite:
@@ -1294,6 +1316,19 @@ namespace FargowiltasSouls.Projectiles
             }
 
             return base.TileCollideStyle(projectile, ref width, ref height, ref fallThrough);
+        }
+
+        public override bool CanHitPlayer(Projectile projectile, Player target)
+        {
+            return canHurt;
+        }
+
+        public override bool? CanHitNPC(Projectile projectile, NPC target)
+        {
+            if (!canHurt)
+                return false;
+
+            return null;
         }
 
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)

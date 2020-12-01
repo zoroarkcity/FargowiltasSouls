@@ -48,7 +48,7 @@ namespace FargowiltasSouls.NPCs
         public int[] Counter = new int[4];
         public byte SharkCount = 0;
         private bool applyDebuff;
-        public bool canHitPlayer;
+        public bool canHurt;
 
         public static int boss = -1;
         public static int slimeBoss = -1;
@@ -96,7 +96,7 @@ namespace FargowiltasSouls.NPCs
 
             Counter[2] = 600; //legacy
 
-            canHitPlayer = true;
+            canHurt = true;
 
             if (!FargoSoulsWorld.MasochistMode) return;
 
@@ -462,7 +462,7 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.CultistBoss:
                     npc.lifeMax = (int)(npc.lifeMax * 1.5);
-                    canHitPlayer = false;
+                    canHurt = false;
                     Counter[2] = 0;
                     break;
                 case NPCID.CultistBossClone:
@@ -480,7 +480,7 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.MoonLordCore:
                     isMasoML = true;
-                    canHitPlayer = false;
+                    canHurt = false;
                     break;
 
                 case NPCID.MoonLordHead:
@@ -491,7 +491,7 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.MoonLordLeechBlob:
                     npc.buffImmune[ModContent.BuffType<ClippedWings>()] = true;
                     isMasoML = true;
-                    canHitPlayer = false;
+                    canHurt = false;
                     break;
 
                 #endregion
@@ -696,7 +696,15 @@ namespace FargowiltasSouls.NPCs
 
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
         {
-            return canHitPlayer;
+            return canHurt;
+        }
+
+        public override bool? CanHitNPC(NPC npc, NPC target)
+        {
+            if (!canHurt)
+                return false;
+
+            return null;
         }
 
         public override bool PreAI(NPC npc)
@@ -1276,7 +1284,7 @@ namespace FargowiltasSouls.NPCs
                                 Vector2 pivot = new Vector2(npc.ai[2], npc.ai[3]);
                                 npc.velocity = Vector2.Normalize(pivot - npc.Center).RotatedBy(Math.PI / 2) * 6f;
                             }
-                            canHitPlayer = ++npc.localAI[3] > 120;
+                            canHurt = ++npc.localAI[3] > 120;
                             break;
 
                         case NPCID.AncientLight:

@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Buffs.Masomode
             DisplayName.SetDefault("Oceanic Maul");
             Description.SetDefault("Defensive stats and max life are savaged");
             Main.debuff[Type] = true;
-            Main.buffNoSave[Type] = true;
+            Main.buffNoSave[Type] = false;
             canBeCleared = true;
             DisplayName.AddTranslation(GameCulture.Chinese, "海洋重击");
             Description.AddTranslation(GameCulture.Chinese, "降低防御力和最大生命值");
