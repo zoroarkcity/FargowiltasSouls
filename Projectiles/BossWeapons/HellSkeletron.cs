@@ -19,15 +19,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
 		public override void SetDefaults()
 		{
-			projectile.width = 80;
-			projectile.height = 80;
+			projectile.width = 42;
+			projectile.height = 42;
             projectile.aiStyle = -1;
 			projectile.friendly = true;
 			projectile.ranged = true;
 			projectile.penetrate = -1;
-			projectile.tileCollide = false;
+			projectile.tileCollide = true;
 			projectile.timeLeft = 120;
             projectile.extraUpdates = 1;
+            projectile.scale = 1.25f;
             projectile.hide = true;
 		}
 		
@@ -38,12 +39,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 projectile.localAI[0] = 1;
                 projectile.rotation = Main.rand.NextFloat(0, 2 * (float)Math.PI);
                 projectile.hide = false;
-
-                for (int i = 0; i < 20; i++)
-                {
-                    int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Blood, 0, 0, 100, default(Color), 2f);
-                    Main.dust[d].noGravity = true;
-                }
             }
 
             projectile.rotation += 1f * Math.Sign(projectile.velocity.X);

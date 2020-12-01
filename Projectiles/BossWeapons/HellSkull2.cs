@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hell Skull");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 20;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
             Main.projFrames[projectile.type] = Main.projFrames[ProjectileID.ClothiersCurse];
         }
@@ -36,18 +36,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.ranged = true;
             projectile.penetrate = -1;
             projectile.scale = 2f;
-
-            projectile.extraUpdates = 1;
         }
 
         public override void AI()
         {
-            const int period = 30;
+            const int period = 60;
 
             if (projectile.localAI[0] == 0.0)
             {
                 projectile.localAI[0] = 1f;
-                projectile.localAI[1] = Main.rand.Next(period);
+                projectile.localAI[1] = 50;
                 targetRotation = projectile.velocity.ToRotation();
 
                 Main.PlaySound(SoundID.Item8, projectile.position);
@@ -64,7 +62,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
 
             float speed = projectile.velocity.Length();
-            float rotation = targetRotation + (float)Math.PI / 4 * (float)Math.Sin(2 * (float)Math.PI * projectile.localAI[1] / period);
+            float rotation = targetRotation + (float)Math.PI / 4 * (float)Math.Sin(2 * (float)Math.PI * projectile.localAI[1] / period) * projectile.ai[1];
             if (++projectile.localAI[1] > period)
                 projectile.localAI[1] = 0;
             projectile.velocity = speed * rotation.ToRotationVector2();
@@ -81,12 +79,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 projectile.frame = 6 - projectile.frame;
             
             Lighting.AddLight(projectile.Center, NPCID.Sets.MagicAuraColor[54].ToVector3());
-            
-            int index = Dust.NewDust(projectile.position, (int)(projectile.width * projectile.scale), (int)(projectile.height * projectile.scale), 27, projectile.velocity.X, projectile.velocity.Y, 100, new Color(), 1.5f);
-            Main.dust[index].position = (Main.dust[index].position + projectile.Center) / 2f;
-            Main.dust[index].noGravity = true;
-            Main.dust[index].velocity = Main.dust[index].velocity * 0.3f;
-            Main.dust[index].velocity = Main.dust[index].velocity - projectile.velocity * 0.1f;
 
             projectile.spriteDirection = projectile.direction = projectile.velocity.X < 0 ? -1 : 1;
             projectile.rotation = projectile.velocity.ToRotation();
@@ -152,7 +144,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.NPCDeath52, projectile.Center);
+            Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 52, 0.5f, 0.2f);
 
             for (int i = 0; i < 15; i++)
             {
@@ -186,21 +178,21 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
 
-            Color color26 = lightColor;
-            color26 = projectile.GetAlpha(color26);
-
             SpriteEffects effects = projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
             {
-                Color color27 = Color.White * projectile.Opacity * 0.75f * 0.5f;
+                Color color27 = new Color(212, 148, 255) * projectile.Opacity * 0.75f * 0.5f;
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                float scale = projectile.scale;
+                scale *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 Vector2 value4 = projectile.oldPos[i];
                 float num165 = projectile.oldRot[i];
-                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, effects, 0f);
+                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), 
+                    color27, num165, origin2, scale, effects, 0f);
             }
 
-            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, effects, 0f);
+            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, projectile.rotation, origin2, projectile.scale, effects, 0f);
             return false;
         }
     }
