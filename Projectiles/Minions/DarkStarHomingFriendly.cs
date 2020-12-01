@@ -16,6 +16,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             base.SetDefaults();
             projectile.timeLeft = 180;
             projectile.hostile = false;
+            projectile.friendly = true;
             projectile.minion = true;
         }
 
