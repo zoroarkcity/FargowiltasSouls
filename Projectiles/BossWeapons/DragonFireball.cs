@@ -28,8 +28,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.timeLeft = 600;
             projectile.alpha = 60;
             projectile.ignoreWater = true;
-            projectile.usesIDStaticNPCImmunity = true;
-            projectile.idStaticNPCHitCooldown = 10;
+            projectile.penetrate = 1;
             //cooldownSlot = 1;
         }
 
@@ -41,23 +40,27 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             if (initialvel.Length() < 36)
                 initialvel *= 1.03f;
 
+            const int interval = 15;
             if (projectile.ai[0] == 0)
             {
                 initialvel = projectile.velocity;
                 projectile.ai[0]++;
+                projectile.ai[1] = Main.rand.Next(interval);
                 projectile.localAI[1] = Main.rand.NextBool() ? 1 : -1;
                 projectile.netUpdate = true;
             }
             else
             {
-                projectile.velocity = initialvel.RotatedBy(projectile.localAI[1] * Math.PI / 10 * Math.Sin(projectile.ai[1] / 4));
+                projectile.velocity = initialvel.RotatedBy(projectile.localAI[1] * Math.PI / 8 * Math.Sin(2f * MathHelper.Pi * projectile.ai[1] / interval));
             }
 
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Buffs.Souls.HellFire>(), 300);
+            target.AddBuff(BuffID.OnFire, 180, false);
+            target.AddBuff(BuffID.Oiled, 180, false);
+            target.AddBuff(BuffID.BetsysCurse, 180, false);
         }
 
         public override void Kill(int timeLeft)
@@ -104,7 +107,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
 
-            Color color26 = Color.OrangeRed;
+            Color color26 = Color.Fuchsia;
             color26 = projectile.GetAlpha(color26);
             color26.A = (byte)projectile.alpha;
 

@@ -7,8 +7,10 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class DragonBreath2 : BossDrops.DragonBreath
+    public class DragonBreath2 : ModItem
     {
+        public int skullTimer;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dragon's Breath EX");
@@ -19,30 +21,57 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 210;
-            item.ranged = true;
-            item.width = 24;
-            item.height = 24;
-            item.useTime = 45;
-            item.useAnimation = 45;
-            item.channel = true;
+            item.damage = 175;
+            item.knockBack = 1f;
+            item.shootSpeed = 12f;
+
             item.useStyle = ItemUseStyleID.HoldingOut;
-            item.noMelee = true;
-            item.knockBack = 1.5f;
-            item.UseSound = SoundID.DD2_BetsyFlameBreath;
+            item.autoReuse = true;
+            item.useAnimation = 30;
+            item.useTime = 3;
+            item.width = 54;
+            item.height = 14;
+            item.shoot = mod.ProjectileType("HellFlame");
             item.useAmmo = AmmoID.Gel;
-            //Item.staff[item.type] = true;
+            item.UseSound = SoundID.DD2_BetsyFlameBreath;
+
+            item.noMelee = true;
             item.value = Item.sellPrice(0, 15);
             item.rare = 11;
-            item.autoReuse = false;
-            item.shoot = ModContent.ProjectileType<DragonBreathProj2>();
-            item.shootSpeed = 35f;
-            item.noUseGraphic = false;
+            item.ranged = true;
+        }
+
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {
+            Vector2 speed = new Vector2(speedX, speedY);
+            Projectile.NewProjectile(position + Vector2.Normalize(speed) * 60f, speed, type, damage, knockBack, player.whoAmI);
+            if (--skullTimer < 0)
+            {
+                skullTimer = 5;
+                Main.PlaySound(SoundID.DD2_BetsyFireballShot);
+                //float ai = Main.rand.NextFloat((float)Math.PI * 2);
+                /*for (int i = 0; i <= 4; i++)
+                {
+                    int p = Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedByRandom(MathHelper.Pi / 18),
+                        mod.ProjectileType("DragonFireball"), damage * 3, knockBack, player.whoAmI);
+                    Main.projectile[p].netUpdate = true;
+                }*/
+                int p = Projectile.NewProjectile(position, 2f * new Vector2(speedX, speedY),//.RotatedByRandom(MathHelper.Pi / 18),
+                    mod.ProjectileType("DragonFireball"), damage, knockBack * 6f, player.whoAmI);
+                Main.projectile[p].netUpdate = true;
+            }
+            return false;
         }
 
         public override bool ConsumeAmmo(Player player)
         {
             return Main.rand.Next(3) == 0;
+        }
+
+        //make them hold it different
+        public override Vector2? HoldoutOffset()
+        {
+            return new Vector2(-30, 0);
         }
 
         public override void AddRecipes()

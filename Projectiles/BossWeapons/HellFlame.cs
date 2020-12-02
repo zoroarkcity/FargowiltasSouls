@@ -55,6 +55,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void AI()
         {
+            if (projectile.localAI[0] == 0)
+            {
+                projectile.localAI[0] = 1;
+                projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
+            }
+
             if (projectile.timeLeft > 120) projectile.timeLeft = 120;
             projectile.ai[1]++;
             projectile.scale = 1f + projectile.ai[1] / 80;
@@ -86,11 +92,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     int possibleTarget = -1;
                     float closestDistance = 300f;
 
-                    for (int i = 0; i < 200; i++)
+                    for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];
 
-                        if (npc.active && npc.chaseable && npc.lifeMax > 5 && !npc.dontTakeDamage && !npc.friendly && !npc.immortal)
+                        if (npc.active && npc.CanBeChasedBy())
                         {
                             float distance = Vector2.Distance(projectile.Center, npc.Center);
 
@@ -114,7 +120,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 NPC npc = Main.npc[targetID];
 
-                if (npc.active && npc.chaseable && !npc.dontTakeDamage /*&& npc.immune[projectile.owner] == 0*/) //target is still valid
+                if (npc.active && npc.CanBeChasedBy()) //target is still valid
                 {
                     Vector2 distance = npc.Center - projectile.Center;
                     double angle = distance.ToRotation() - projectile.velocity.ToRotation();
@@ -167,7 +173,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 5;
-            target.AddBuff(ModContent.BuffType<HellFire>(), 300);
+            target.AddBuff(BuffID.OnFire, 180, false);
+            target.AddBuff(BuffID.Oiled, 180, false);
+            target.AddBuff(BuffID.BetsysCurse, 180, false);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -182,7 +190,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             for (int i = 0; i < 2; i++)
             {
-                Color color27 = Color.OrangeRed * projectile.Opacity * 0.75f * 0.5f;
+                Color color27 = Color.Fuchsia * projectile.Opacity * 0.75f * 0.5f;
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 float scale = projectile.scale * 0.9f;
                 scale *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
@@ -192,8 +200,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     color27, num165, origin2, scale, effects, 0f);
             }
 
-            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.Black * projectile.Opacity, 
-                projectile.rotation + (Main.GlobalTime * 0.6f), origin2, projectile.scale, effects, 0f);
+            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), 
+                Color.Black * projectile.Opacity, projectile.rotation + (Main.GlobalTime * 0.6f), origin2, projectile.scale, effects, 0f);
             return false;
         }
     }

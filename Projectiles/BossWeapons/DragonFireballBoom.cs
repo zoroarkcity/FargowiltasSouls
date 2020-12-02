@@ -15,7 +15,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fireball");
-
             Main.projFrames[projectile.type] = Main.projFrames[ProjectileID.SolarWhipSwordExplosion];
         }
 
@@ -27,13 +26,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.friendly = true;
             projectile.timeLeft = 600;
             projectile.scale = 2;
-            projectile.ignoreWater = true;
+            projectile.tileCollide = false;
             //cooldownSlot = 1;
         }
         public override void AI()
         {
             projectile.frameCounter++;
-            if (projectile.frameCounter > 5)
+            if (projectile.frameCounter > 3)
             {
                 projectile.frame++;
                 projectile.frameCounter = 0;
@@ -41,7 +40,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             if (projectile.frame > Main.projFrames[projectile.type])
                 projectile.Kill();
-
         }
     }
 }
