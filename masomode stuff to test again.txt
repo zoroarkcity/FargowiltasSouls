@@ -144,7 +144,7 @@ dragon's breath EX!!! (literally just old hell zone without aim assist, recipe w
 moved nuke fishron to pre mutant and rebalanced for it, also visual tweaks
 tweaked graze dust so its consistent sized
 nerfed optic staff EX damage and hit rate, too autonomous
-
+nerfed staff of unleashed ocean hit rate and it has optic EX's anti-multiclass nerf, but buffed damage (overall nerf)
 eri armor
 	fixed a typo that caused hat to give 50% damage instead of 5% bruhbruhbruhbruhbruhbruhbruh
-	increased set bonus specific class bonus from 40% to 60% (still a net -25%)
+	increased set bonus specific class bonus from 40% to 50% (still a net -35%)
