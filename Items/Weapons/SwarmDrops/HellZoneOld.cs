@@ -22,19 +22,19 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 205; //
+            item.damage = 150; //
             item.knockBack = 0.5f;
             item.shootSpeed = 12f; //
 
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.autoReuse = true;
             item.useAnimation = 30; //
-            item.useTime = 6; //
+            item.useTime = 3; //
             item.width = 54;
             item.height = 14;
             item.shoot = mod.ProjectileType("HellFlame");
             item.useAmmo = AmmoID.Gel;
-            item.UseSound = SoundID.Item34; //
+            item.UseSound = SoundID.DD2_BetsyFlameBreath; //
 
             item.noMelee = true;
             item.value = Item.sellPrice(0, 15); //
@@ -47,9 +47,15 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
             if (--skullTimer < 0)
             {
-                skullTimer = 10;
+                skullTimer = 20;
                 //float ai = Main.rand.NextFloat((float)Math.PI * 2);
-                Projectile.NewProjectile(position, 1.5f * new Vector2(speedX, speedY), mod.ProjectileType("HellSkull"), damage / 2, knockBack, player.whoAmI, -1);
+                Main.PlaySound(SoundID.DD2_BetsyFireballShot);
+                for (int i = 0; i <= 4; i++)
+                {
+                    int p = Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedByRandom(MathHelper.Pi / 18), 
+                        mod.ProjectileType("DragonFireball"), damage * 4, knockBack, player.whoAmI);
+                    Main.projectile[p].netUpdate = true;
+                }
             }
             return false;
         }
