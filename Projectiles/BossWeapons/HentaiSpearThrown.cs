@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.height = 58;
             projectile.aiStyle = -1;
             projectile.friendly = true;
-            projectile.penetrate = -1;
+            projectile.penetrate = 1; //to not interact with piercing iframes
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.timeLeft = 180;
@@ -35,9 +35,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.scale = 1.3f;
             projectile.alpha = 0;
             projectile.ranged = true;
-
-            projectile.localNPCHitCooldown = 0;
-            projectile.usesLocalNPCImmunity = true;
         }
 
         float scaletimer;
@@ -106,6 +103,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            projectile.penetrate = 2; //pierce through anyway, dont die on hit, do damage every tick
+
             if (projectile.owner == Main.myPlayer)
             {
                 int p = Projectile.NewProjectile(target.position + new Vector2(Main.rand.Next(target.width), Main.rand.Next(target.height)), Vector2.Zero, ModContent.ProjectileType<PhantasmalBlast>(), projectile.damage, 0f, projectile.owner);

@@ -148,3 +148,4 @@ nerfed staff of unleashed ocean hit rate and it has optic EX's anti-multiclass n
 eri armor
 	fixed a typo that caused hat to give 50% damage instead of 5% bruhbruhbruhbruhbruhbruhbruh
 	increased set bonus specific class bonus from 40% to 50% (still a net -35%)
+fiddled with penetrator, thrown spear can always hit enemies even through iframes but removed raw damage up
