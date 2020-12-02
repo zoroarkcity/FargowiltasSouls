@@ -18,6 +18,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.hostile = false;
             projectile.friendly = true;
             projectile.minion = true;
+            projectile.penetrate = -1;
         }
 
         public override void AI()
