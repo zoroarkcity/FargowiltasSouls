@@ -149,3 +149,5 @@ eri armor
 	fixed a typo that caused hat to give 50% damage instead of 5% bruhbruhbruhbruhbruhbruhbruh
 	increased set bonus specific class bonus from 40% to 50% (still a net -35%)
 fiddled with penetrator, spear can always hit enemies even through iframes but removed raw damage up
+
+carrot zoom ignores mutant presence
