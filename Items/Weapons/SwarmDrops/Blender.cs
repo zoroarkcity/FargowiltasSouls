@@ -38,6 +38,12 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.rare = 11;
         }
 
+        public override void HoldItem(Player player)
+        {
+            player.counterWeight = 556 + Main.rand.Next(6);
+            player.stringColor = 5;
+        }
+
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);

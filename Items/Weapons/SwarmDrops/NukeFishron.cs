@@ -14,32 +14,32 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Nuke Fishron");
-            Tooltip.SetDefault("'The highly weaponized remains of a defeated foe...'");
+            Tooltip.SetDefault("Uses rockets for ammo\n'The highly weaponized remains of a defeated foe...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "核子猪鲨");
             Tooltip.AddTranslation(GameCulture.Chinese, "'高度武器化的遗骸...'");
         }
 
         public override void SetDefaults()
         {
-            item.damage = 850;
+            item.damage = 480;
             item.ranged = true;
             item.width = 24;
             item.height = 24;
-            item.useTime = 17;
-            item.useAnimation = 17;
+            item.useTime = 37;
+            item.useAnimation = 37;
             item.useStyle = 5;
             item.noMelee = true;
             item.knockBack = 7.7f;
             item.UseSound = new LegacySoundStyle(2, 62);
             item.useAmmo = AmmoID.Rocket;
-            item.value = Item.sellPrice(0, 70);
+            item.value = Item.sellPrice(0, 15);
             item.rare = 11;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("FishNuke");
-            item.shootSpeed = 7.7f;
+            item.shootSpeed = 7f;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        /*public override void ModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine line2 in list)
             {
@@ -48,7 +48,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                     line2.overrideColor = new Color(Main.DiscoR, 51, 255 - (int)(Main.DiscoR * 0.4));
                 }
             }
-        }
+        }*/
 
         //make them hold it different
         public override Vector2? HoldoutOffset()
@@ -58,7 +58,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            Vector2 speed = new Vector2(speedX, speedY).RotatedBy((Main.rand.NextDouble() - 0.5) * MathHelper.ToRadians(15));
+            Vector2 speed = new Vector2(speedX, speedY);//.RotatedBy((Main.rand.NextDouble() - 0.5) * MathHelper.ToRadians(15));
             Projectile.NewProjectile(position, speed, item.shoot, damage, knockBack, player.whoAmI, -1f, 0f);
             return false;
         }
@@ -66,11 +66,9 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-
             recipe.AddIngredient(mod.ItemType("FishStick"));
+            recipe.AddIngredient(mod.ItemType("MutantScale"), 10);
             recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerFish"));
-            recipe.AddIngredient(mod.ItemType("Sadism"), 15);
-            
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
             recipe.SetResult(this);
             recipe.AddRecipe();

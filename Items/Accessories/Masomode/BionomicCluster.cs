@@ -65,7 +65,7 @@ Use to teleport to your last death point and right click to zoom
             fargoPlayer.TribalCharm = true;
             fargoPlayer.NymphsPerfumeRespawn = true;
             player.nightVision = true;
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot, false))
                 player.scope = true;
         }
 
@@ -122,7 +122,7 @@ Use to teleport to your last death point and right click to zoom
 
             //carrot
             player.nightVision = true;
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot, false))
                 player.scope = true;
 
             //nymph's perfume

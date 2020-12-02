@@ -253,11 +253,13 @@ namespace FargowiltasSouls.Patreon.DemonKing
         {
             if (target.defense > 0)
                 damage += target.defense / 2;
+
+            if (!Main.player[projectile.owner].HeldItem.summon)
+                damage /= 4;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 8;
             target.AddBuff(mod.BuffType("MutantNibble"), 900);
 
             if (projectile.localAI[1] <= 0)
@@ -267,8 +269,9 @@ namespace FargowiltasSouls.Patreon.DemonKing
                 Main.PlaySound(SoundID.Item84, projectile.Center); //rings on hit
                 if (projectile.owner == Main.myPlayer)
                 {
-                    SpawnRazorbladeRing(8, 10f, -0.5f);
-                    SpawnRazorbladeRing(8, 10f, 0.5f);
+                    int modifier = Main.rand.NextBool() ? -1 : 1;
+                    SpawnRazorbladeRing(8, 24f, -0.75f * modifier);
+                    SpawnRazorbladeRing(8, 24f, 1.5f * modifier);
                 }
             }
         }

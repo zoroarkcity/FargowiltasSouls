@@ -26,11 +26,12 @@ namespace FargowiltasSouls.Projectiles
             projectile.friendly = true;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
-            projectile.timeLeft = 600;
+            projectile.timeLeft = 60;
             projectile.alpha = 100;
             projectile.penetrate = -1;
 
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+            projectile.ranged = true;
         }
 
         public override void AI()
@@ -38,7 +39,7 @@ namespace FargowiltasSouls.Projectiles
             if (projectile.localAI[1] == 0f)
             {
                 projectile.localAI[1] = 1f;
-                switch ((int)projectile.ai[1])
+                /*switch ((int)projectile.ai[1])
                 {
                     case 1: projectile.melee = true; break;
                     case 2: projectile.ranged = true; break;
@@ -47,32 +48,29 @@ namespace FargowiltasSouls.Projectiles
                     case 5: projectile.thrown = true; break;
                     case 6: projectile.ranged = true; projectile.timeLeft -= 420; break;
                     default: break;
-                }
+                }*/
                 projectile.ai[1] = projectile.velocity.Length();
                 projectile.netUpdate = true;
             }
             projectile.velocity = projectile.velocity.RotatedBy(projectile.ai[1] / (2 * Math.PI * projectile.ai[0] * ++projectile.localAI[0]));
 
             //vanilla typhoon dust (ech)
-            int cap = Main.rand.Next(3);
-            for (int index1 = 0; index1 < cap; ++index1)
-            {
-                Vector2 vector2_1 = projectile.velocity;
-                vector2_1.Normalize();
-                vector2_1.X *= projectile.width;
-                vector2_1.Y *= projectile.height;
-                vector2_1 /= 2;
-                vector2_1 = vector2_1.RotatedBy((index1 - 2) * Math.PI / 6);
-                vector2_1 += projectile.Center;
-                Vector2 vector2_2 = (Main.rand.NextFloat() * (float)Math.PI - (float)Math.PI / 2f).ToRotationVector2();
-                vector2_2 *= Main.rand.Next(3, 8);
-                int index2 = Dust.NewDust(vector2_1 + vector2_2, 0, 0, 172, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
-                Main.dust[index2].noGravity = true;
-                Main.dust[index2].noLight = true;
-                Main.dust[index2].velocity /= 4f;
-                Main.dust[index2].velocity -= projectile.velocity;
-            }
-            projectile.rotation += 0.2f * (projectile.velocity.X > 0f ? 1f : -1f);
+            Vector2 vector2_1 = projectile.velocity;
+            vector2_1.Normalize();
+            vector2_1.X *= projectile.width;
+            vector2_1.Y *= projectile.height;
+            vector2_1 /= 2;
+            vector2_1 = vector2_1.RotatedBy(-1 * Math.PI / 6);
+            vector2_1 += projectile.Center;
+            Vector2 vector2_2 = (Main.rand.NextFloat() * (float)Math.PI - (float)Math.PI / 2f).ToRotationVector2();
+            vector2_2 *= Main.rand.Next(3, 8);
+            int index2 = Dust.NewDust(vector2_1 + vector2_2, 0, 0, 172, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
+            Main.dust[index2].noGravity = true;
+            Main.dust[index2].noLight = true;
+            Main.dust[index2].velocity /= 4f;
+            Main.dust[index2].velocity -= projectile.velocity;
+            
+            projectile.rotation += 0.2f;// * (projectile.velocity.X > 0f ? 1f : -1f);
             projectile.frame++;
             if (projectile.frame > 2)
                 projectile.frame = 0;
@@ -80,9 +78,10 @@ namespace FargowiltasSouls.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 1;
-            target.AddBuff(mod.BuffType("OceanicMaul"), 900);
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 900);
+            //target.immune[projectile.owner] = 1;
+            /*target.AddBuff(mod.BuffType("OceanicMaul"), 900);
+            target.AddBuff(mod.BuffType("CurseoftheMoon"), 900);*/
+            target.AddBuff(BuffID.Frostburn, 300);
         }
 
         public override void Kill(int timeLeft)

@@ -37,15 +37,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.height = 58;
             projectile.aiStyle = 19;
             projectile.friendly = true;
-            projectile.penetrate = -1;
+            projectile.penetrate = 1; //to not interact with piercing iframes
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.scale = 1.3f;
             projectile.hide = true;
             projectile.melee = true;
             projectile.alpha = 0;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 0;
         }
         // It appears that for this AI, only the ai0 field is used!
 
@@ -124,6 +122,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            projectile.penetrate = 2; //pierce through anyway, dont die on hit, do damage every tick
+
             if (projectile.owner == Main.myPlayer)
             {
                 if (projectile.ai[1] != 0f)

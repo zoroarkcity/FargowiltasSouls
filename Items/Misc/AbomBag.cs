@@ -30,7 +30,13 @@ namespace FargowiltasSouls.Items.Misc
         {
             player.QuickSpawnItem(mod.ItemType("MutantScale"), Main.rand.Next(11) + 10);
 
-            if (SoulConfig.Instance.PatreonFishron && Main.rand.Next(100) < 3)
+            float chance = 3f;
+            for (int i = 0; i < FargoSoulsWorld.downedChampions.Length; i++)
+            {
+                if (FargoSoulsWorld.downedChampions[i])
+                    chance += 0.5f;
+            }
+            if (SoulConfig.Instance.PatreonFishron && Main.rand.NextFloat(100) < chance)
                 player.QuickSpawnItem(mod.ItemType("StaffOfUnleashedOcean"));
         }
     }

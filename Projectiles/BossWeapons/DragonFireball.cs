@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
+using Terraria.Graphics.Shaders;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
@@ -28,8 +29,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.timeLeft = 600;
             projectile.alpha = 60;
             projectile.ignoreWater = true;
-            projectile.usesIDStaticNPCImmunity = true;
-            projectile.idStaticNPCHitCooldown = 10;
+            projectile.penetrate = 1;
             //cooldownSlot = 1;
         }
 
@@ -41,23 +41,27 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             if (initialvel.Length() < 36)
                 initialvel *= 1.03f;
 
+            const int interval = 15;
             if (projectile.ai[0] == 0)
             {
                 initialvel = projectile.velocity;
                 projectile.ai[0]++;
+                projectile.ai[1] = Main.rand.Next(interval);
                 projectile.localAI[1] = Main.rand.NextBool() ? 1 : -1;
                 projectile.netUpdate = true;
             }
             else
             {
-                projectile.velocity = initialvel.RotatedBy(projectile.localAI[1] * Math.PI / 10 * Math.Sin(projectile.ai[1] / 4));
+                projectile.velocity = initialvel.RotatedBy(projectile.localAI[1] * Math.PI / 8 * Math.Sin(2f * MathHelper.Pi * projectile.ai[1] / interval));
             }
 
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Buffs.Souls.HellFire>(), 300);
+            target.AddBuff(BuffID.OnFire, 180, false);
+            target.AddBuff(BuffID.Oiled, 180, false);
+            target.AddBuff(BuffID.BetsysCurse, 180, false);
         }
 
         public override void Kill(int timeLeft)
@@ -78,9 +82,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     projectile.height, 6, 0f, 0f, 100, default(Color), 3.5f);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].velocity *= 7f;
-                dust = Dust.NewDust(projectile.position, projectile.width,
+                Main.dust[dust].shader = GameShaders.Armor.GetSecondaryShader(41, Main.LocalPlayer);
+                int dust2 = Dust.NewDust(projectile.position, projectile.width,
                     projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
-                Main.dust[dust].velocity *= 3f;
+                Main.dust[dust2].velocity *= 3f;
+                Main.dust[dust2].shader = GameShaders.Armor.GetSecondaryShader(41, Main.LocalPlayer);
             }
 
             float scaleFactor9 = 0.5f;
@@ -104,7 +110,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
 
-            Color color26 = Color.OrangeRed;
+            Color color26 = Color.Fuchsia;
             color26 = projectile.GetAlpha(color26);
             color26.A = (byte)projectile.alpha;
 
@@ -118,7 +124,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 if (i >= 5)
                     lerpamount = 0.8f;
                     
-                Color color27 = Color.Lerp(Color.White, Color.Black, lerpamount) * 0.75f * 0.5f;
+                Color color27 = Color.Lerp(Color.Fuchsia, Color.Black, lerpamount) * 0.75f * 0.5f;
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 float scale = projectile.scale * (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 Vector2 value4 = projectile.oldPos[i];

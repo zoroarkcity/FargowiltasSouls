@@ -12,6 +12,7 @@ using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Minions;
 using FargowiltasSouls.Projectiles.Souls;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -580,6 +581,41 @@ namespace FargowiltasSouls.Projectiles
             return retVal;
         }
 
+        public override bool PreDraw(Projectile projectile, SpriteBatch spriteBatch, Color lightColor)
+        {
+            switch(projectile.type)
+            {
+                case ProjectileID.RedCounterweight:
+                case ProjectileID.BlackCounterweight:
+                case ProjectileID.BlueCounterweight:
+                case ProjectileID.GreenCounterweight:
+                case ProjectileID.PurpleCounterweight:
+                case ProjectileID.YellowCounterweight:
+                    {
+                        Player player = Main.player[projectile.owner];
+                        if(player.HeldItem.type == mod.ItemType("Blender"))
+                        {
+                            Texture2D texture2D13 = mod.GetTexture("Projectiles/PlanteraTentacle");
+                            Rectangle rectangle = new Rectangle(0, 0, texture2D13.Width, texture2D13.Height);
+                            Vector2 origin2 = rectangle.Size() / 2f;
+
+                            SpriteEffects spriteEffects = projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+                            Vector2 toPlayer = projectile.Center - player.Center;
+                            float drawRotation = toPlayer.ToRotation() + MathHelper.Pi;
+                            if (projectile.spriteDirection < 0)
+                                drawRotation += (float)Math.PI;
+                            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), 
+                                drawRotation, origin2, projectile.scale * 0.8f, spriteEffects, 0f);
+                            return false;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return base.PreDraw(projectile, spriteBatch, lightColor);
+        }
         public static void SplitProj(Projectile projectile, int number, float maxSpread, float damageRatio)
         {
             if (projectile.type == ModContent.ProjectileType<SpawnProj>())
@@ -1289,7 +1325,8 @@ namespace FargowiltasSouls.Projectiles
                             vector6 = vector6.RotatedBy((i - (max / 2 - 1)) * 6.28318548f / max) + Main.LocalPlayer.Center;
                             Vector2 vector7 = vector6 - Main.LocalPlayer.Center;
                             //changes color when bonus is maxed
-                            int d = Dust.NewDust(vector6 + vector7, 0, 0, fargoPlayer.GrazeBonus >= grazeCap ? 86 : 228, 0f, 0f, 0, default(Color), 2f);
+                            int d = Dust.NewDust(vector6 + vector7, 0, 0, fargoPlayer.GrazeBonus >= grazeCap ? 86 : 228, 0f, 0f, 0, default(Color));
+                            Main.dust[d].scale = 1.5f;
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity = vector7;
                         }

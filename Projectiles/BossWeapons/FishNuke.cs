@@ -15,8 +15,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void SetDefaults()
         {
-            projectile.width = 20;
-            projectile.height = 24;
+            projectile.width = 22;
+            projectile.height = 22;
             projectile.aiStyle = -1;
             projectile.friendly = true;
             projectile.ranged = true;
@@ -25,11 +25,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.ignoreWater = true;
             projectile.extraUpdates = 1;
             //aiType = ProjectileID.Bullet;
+            projectile.scale = 2f;
         }
 
         public override void AI()
         {
-            if (projectile.ai[0] >= 0 && projectile.ai[0] < 200)
+            if (projectile.ai[0] >= 0 && projectile.ai[0] < Main.maxNPCs)
             {
                 int ai0 = (int)projectile.ai[0];
                 if (Main.npc[ai0].CanBeChasedBy())
@@ -75,21 +76,22 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             if (++projectile.localAI[0] >= 24f)
             {
                 projectile.localAI[0] = 0f;
-                for (int index1 = 0; index1 < 12; ++index1)
+                const int max = 18;
+                for (int index1 = 0; index1 < max; ++index1)
                 {
-                    Vector2 vector2 = (Vector2.UnitX * (float)-projectile.width / 2f + -Vector2.UnitY.RotatedBy((double)index1 * 3.14159274101257 / 6.0, new Vector2()) * new Vector2(8f, 16f)).RotatedBy((double)projectile.rotation - 1.57079637050629, new Vector2());
+                    Vector2 vector2 = (Vector2.UnitX * (float)-projectile.width / 2f + -Vector2.UnitY.RotatedBy((double)index1 * 2 * 3.14159274101257 / max, new Vector2()) * new Vector2(8f, 16f)).RotatedBy((double)projectile.rotation - 1.57079637050629, new Vector2());
                     int index2 = Dust.NewDust(projectile.Center, 0, 0, 135, 0.0f, 0.0f, 160, new Color(), 1f);
-                    Main.dust[index2].scale = 1.1f;
+                    Main.dust[index2].scale = 2f;
                     Main.dust[index2].noGravity = true;
-                    Main.dust[index2].position = projectile.Center + vector2;
-                    Main.dust[index2].velocity = projectile.velocity * 0.1f;
+                    Main.dust[index2].position = projectile.Center + vector2 * 2f;
                     Main.dust[index2].velocity = Vector2.Normalize(projectile.Center - projectile.velocity * 3f - Main.dust[index2].position) * 1.25f;
+                    //Main.dust[index2].velocity *= 2f;
                 }
             }
             Vector2 vector21 = Vector2.UnitY.RotatedBy(projectile.rotation, new Vector2()) * 8f * 2;
             int index21 = Dust.NewDust(projectile.Center, 0, 0, 6, 0.0f, 0.0f, 0, new Color(), 1f);
             Main.dust[index21].position = projectile.Center + vector21;
-            Main.dust[index21].scale = 1f;
+            Main.dust[index21].scale = 1.25f;
             Main.dust[index21].noGravity = true;
 
             projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2f;
@@ -116,9 +118,10 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("FishNukeExplosion"),
                     damage, projectile.knockBack * 2f, projectile.owner);*/
 
-            target.AddBuff(mod.BuffType("OceanicMaul"), 900);
+            /*target.AddBuff(mod.BuffType("OceanicMaul"), 900);
             target.AddBuff(mod.BuffType("MutantNibble"), 900);
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 900);
+            target.AddBuff(mod.BuffType("CurseoftheMoon"), 900);*/
+            target.AddBuff(BuffID.Frostburn, 300);
         }
 
         /*public override bool OnTileCollide(Vector2 oldVelocity)
@@ -134,11 +137,18 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Main.PlaySound(SoundID.Item84, projectile.Center);
             if (projectile.owner == Main.myPlayer)
             {
-                SpawnRazorbladeRing(6, 17f, -1f);
-                SpawnRazorbladeRing(6, 17f, 1f);
-                if (projectile.owner == Main.myPlayer)
-                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("FishNukeExplosion"),
-                        projectile.damage, projectile.knockBack * 2f, projectile.owner);
+                int modifier = Main.rand.NextBool() ? 1 : -1;
+                SpawnRazorbladeRing(6, 17f, 1f * -modifier);
+                SpawnRazorbladeRing(6, 17f, 0.5f * modifier);
+                /*const int max = 16;
+                Vector2 baseVel = Vector2.UnitX.RotatedByRandom(2 * Math.PI);
+                for (int i = 0; i < max; i++)
+                {
+                    float speed = i % 2 == 0 ? 16f : 14f;
+                    Projectile.NewProjectile(projectile.Center, speed * baseVel.RotatedBy(2 * Math.PI / max * i),
+                        ModContent.ProjectileType<RazorbladeTyphoonFriendly>(), projectile.damage / 2, projectile.knockBack, projectile.owner);
+                }*/
+                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<FishNukeExplosion>(), projectile.damage / 2, projectile.knockBack * 2f, projectile.owner);
             }
             int num1 = 36;
             for (int index1 = 0; index1 < num1; ++index1)
@@ -155,14 +165,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         private void SpawnRazorbladeRing(int max, float speed, float rotationModifier)
         {
             float rotation = 2f * (float)Math.PI / max;
-            Vector2 vel = projectile.velocity;
-            vel.Normalize();
+            Vector2 vel = Vector2.UnitX.RotatedByRandom(2 * Math.PI); //projectile.velocity; vel.Normalize();
             vel *= speed;
-            int type = mod.ProjectileType("RazorbladeTyphoonFriendly");
+            int type = ModContent.ProjectileType<RazorbladeTyphoonFriendly>();
             for (int i = 0; i < max; i++)
             {
                 vel = vel.RotatedBy(rotation);
-                Projectile.NewProjectile(projectile.Center, vel, type, projectile.damage,
+                Projectile.NewProjectile(projectile.Center, vel, type, projectile.damage / 2,
                     projectile.knockBack, projectile.owner, rotationModifier, 6f);
             }
         }

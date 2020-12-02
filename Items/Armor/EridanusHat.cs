@@ -29,7 +29,7 @@ Increases your max number of sentries by 2");
 
         public override void UpdateEquip(Player player)
         {
-            player.GetModPlayer<FargoPlayer>().AllDamageUp(0.5f);
+            player.GetModPlayer<FargoPlayer>().AllDamageUp(0.05f);
             player.GetModPlayer<FargoPlayer>().AllCritUp(5);
 
             player.maxMinions += 3;
@@ -51,7 +51,7 @@ Increases your max number of sentries by 2");
             player.setBonus = @"The blessing of Eridanus empowers your attacks
 The empowered class changes every 20 seconds
 Eridanus fights alongside you when you use the empowered class
-40% increased damage for the empowered class
+50% increased damage for the empowered class
 20% increased weapon use speed";
 
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
@@ -110,10 +110,10 @@ Eridanus fights alongside you when you use the empowered class
 
             switch (fargoPlayer.EridanusTimer / (60 * 20)) //damage boost according to current class
             {
-                case 0: player.meleeDamage += 0.4f; break;
-                case 1: player.rangedDamage += 0.4f; break;
-                case 2: player.magicDamage += 0.4f; break;
-                default: player.minionDamage += 0.4f; break;
+                case 0: player.meleeDamage += 0.5f; break;
+                case 1: player.rangedDamage += 0.5f; break;
+                case 2: player.magicDamage += 0.5f; break;
+                default: player.minionDamage += 0.5f; break;
             }
 
             fargoPlayer.AttackSpeed += .2f;

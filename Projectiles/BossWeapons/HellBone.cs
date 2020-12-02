@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 5;
+            target.immune[projectile.owner] = 8;
             target.AddBuff(ModContent.BuffType<Buffs.Souls.HellFire>(), 300);
         }
 

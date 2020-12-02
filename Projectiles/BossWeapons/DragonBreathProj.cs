@@ -27,7 +27,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			projectile.tileCollide = false;
 		}
 
-		int timer;
+		public int timer;
+        public float lerp = 0.12f;
+
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Dragon's Breath");
@@ -49,7 +51,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			if (player.channel)
 			{
 				projectile.velocity = Vector2.Lerp(Vector2.Normalize(projectile.velocity), 
-                    Vector2.Normalize(Main.MouseWorld - player.MountedCenter), 0.12f); //slowly move towards direction of cursor
+                    Vector2.Normalize(Main.MouseWorld - player.MountedCenter), lerp); //slowly move towards direction of cursor
 				projectile.velocity.Normalize();
 
 				timer++;
