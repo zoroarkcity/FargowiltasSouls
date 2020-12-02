@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
+using Terraria.Graphics.Shaders;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
@@ -81,9 +82,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     projectile.height, 6, 0f, 0f, 100, default(Color), 3.5f);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].velocity *= 7f;
-                dust = Dust.NewDust(projectile.position, projectile.width,
+                Main.dust[dust].shader = GameShaders.Armor.GetSecondaryShader(41, Main.LocalPlayer);
+                int dust2 = Dust.NewDust(projectile.position, projectile.width,
                     projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
-                Main.dust[dust].velocity *= 3f;
+                Main.dust[dust2].velocity *= 3f;
+                Main.dust[dust2].shader = GameShaders.Armor.GetSecondaryShader(41, Main.LocalPlayer);
             }
 
             float scaleFactor9 = 0.5f;
@@ -121,7 +124,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 if (i >= 5)
                     lerpamount = 0.8f;
                     
-                Color color27 = Color.Lerp(Color.White, Color.Black, lerpamount) * 0.75f * 0.5f;
+                Color color27 = Color.Lerp(Color.Fuchsia, Color.Black, lerpamount) * 0.75f * 0.5f;
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 float scale = projectile.scale * (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 Vector2 value4 = projectile.oldPos[i];

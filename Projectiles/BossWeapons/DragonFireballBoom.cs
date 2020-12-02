@@ -29,6 +29,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.tileCollide = false;
             //cooldownSlot = 1;
         }
+
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.Fuchsia;
+        }
         public override void AI()
         {
             projectile.frameCounter++;

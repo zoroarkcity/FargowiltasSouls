@@ -15,7 +15,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             // Vanilla values range from 3f(Wood) to 16f(Chik), and defaults to -1f. Leaving as -1 will make the time infinite.
             ProjectileID.Sets.YoyosLifeTimeMultiplier[projectile.type] = -1f;
             // Vanilla values range from 130f(Wood) to 400f(Terrarian), and defaults to 200f
-            ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 1500f;
+            ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 550f;
             // Vanilla values range from 9f(Wood) to 17.5f(Terrarian), and defaults to 10f
             ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 25f;
         }
@@ -34,7 +34,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             projectile.extraUpdates = 1;
         }
-
+        int soundtimer;
         public override void AI()
         {
             if (!yoyosSpawned)
@@ -49,6 +49,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                 yoyosSpawned = true;
             }
+            if (soundtimer > 0)
+                soundtimer--;
+
         }
 
         public override void PostAI()
@@ -64,6 +67,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 6;
+            if(soundtimer == 0)
+            {
+                soundtimer = 15;
+                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 22, 1.5f, 1f);
+            }
+            Vector2 velocity = Vector2.Normalize(projectile.Center - target.Center) * 10;
+            int proj2 = mod.ProjectileType("BlenderProj3");
+            Projectile.NewProjectile(new Vector2(projectile.Center.X, projectile.Center.Y), velocity, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
         }
     }
 }
