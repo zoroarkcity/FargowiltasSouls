@@ -20,6 +20,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hell Flame");
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 2;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
             Main.projFrames[projectile.type] = Main.projFrames[ProjectileID.LunarFlare];
         }
@@ -188,12 +189,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             SpriteEffects effects = projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
             {
-                Color color27 = Color.Fuchsia * projectile.Opacity * 0.75f * 0.5f;
+                Color color27 = Color.Fuchsia * projectile.Opacity * 0.75f;
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
-                float scale = projectile.scale * 0.9f;
-                scale *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                float scale = projectile.scale;// * 0.9f;
+                //scale *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 Vector2 value4 = projectile.oldPos[i];
                 float num165 = projectile.oldRot[i] + (Main.GlobalTime * 0.6f);
                 Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle),
