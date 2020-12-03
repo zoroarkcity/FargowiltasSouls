@@ -156,3 +156,12 @@ moon lord
 	adjust how horiz vel is nerfed for phantasmal eyes
 	changed visual for ritual
 buffed dragon breath damage
+renames
+	dragon's breath -> dragon's fire
+	dragon's breath EX -> dragon's demise
+	optic staff EX -> omniscience staff
+	destroyer gun EX -> destruction cannon
+resprites
+	broken hilt
+	styx gazer
+	staff of unleashed ocean
