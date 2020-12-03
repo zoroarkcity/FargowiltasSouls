@@ -151,3 +151,4 @@ eri armor
 fiddled with penetrator, spear can always hit enemies even through iframes but removed raw damage up
 
 carrot zoom ignores mutant presence
+fixed true eyes sliding everywhere in p1
