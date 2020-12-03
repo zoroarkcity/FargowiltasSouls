@@ -12,7 +12,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 {
     public class HellFlame : ModProjectile
     {
-
         public int targetID = -1;
         public int searchTimer = 18;
 
@@ -189,17 +188,26 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             SpriteEffects effects = projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+            /*for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
             {
-                Color color27 = Color.Fuchsia * projectile.Opacity * 0.75f;
+                Color color27 = Color.Fuchsia * projectile.Opacity;
                 color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 float scale = projectile.scale;// * 0.9f;
-                //scale *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                scale *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 Vector2 value4 = projectile.oldPos[i];
                 float num165 = projectile.oldRot[i] + (Main.GlobalTime * 0.6f);
                 Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle),
                     color27, num165, origin2, scale, effects, 0f);
-            }
+            }*/
+
+            Color color27 = Color.Fuchsia * projectile.Opacity;
+            float scale = projectile.scale;
+            Vector2 value4 = projectile.Center;
+            if (projectile.velocity != Vector2.Zero && !projectile.velocity.HasNaNs())
+                value4 -= Vector2.Normalize(projectile.velocity) * 4f;
+            float num165 = projectile.rotation + (Main.GlobalTime * 0.6f);
+            Main.spriteBatch.Draw(texture2D13, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle),
+                color27, num165, origin2, scale, effects, 0f);
 
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), 
                 Color.Black * projectile.Opacity, projectile.rotation + (Main.GlobalTime * 0.6f), origin2, projectile.scale, effects, 0f);
