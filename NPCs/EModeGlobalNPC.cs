@@ -1327,7 +1327,10 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     masoBool[1] = !masoBool[1];
                                     if (masoBool[1])
+                                    {
+                                        npc.position -= npc.velocity;
                                         return false;
+                                    }
                                 }
                             }
                             break;

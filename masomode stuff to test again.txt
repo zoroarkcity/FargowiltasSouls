@@ -151,3 +151,17 @@ eri armor
 fiddled with penetrator, spear can always hit enemies even through iframes but removed raw damage up
 
 carrot zoom ignores mutant presence
+moon lord
+	fixed true eyes sliding everywhere in p1
+	adjust how horiz vel is nerfed for phantasmal eyes
+	changed visual for ritual
+buffed dragon breath damage
+renames
+	dragon's breath -> dragon's fire
+	dragon's breath EX -> dragon's demise
+	optic staff EX -> omniscience staff
+	destroyer gun EX -> destruction cannon
+resprites
+	broken hilt
+	styx gazer
+	staff of unleashed ocean
