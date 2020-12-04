@@ -15,14 +15,15 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 		public override string Texture => "FargowiltasSouls/Items/Weapons/SwarmDrops/RefractorBlaster2";
 		public override void SetDefaults()
 		{
-			projectile.width = 30;
-			projectile.height = 30;
+			projectile.width = 76;
+			projectile.height = 38;
 			//projectile.aiStyle = 136;
 			projectile.alpha = 0;
 			projectile.penetrate = -1;
 			//projectile.usesLocalNPCImmunity = true;
 			//projectile.localNPCHitCooldown = 8;
 			projectile.tileCollide = false;
+			projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
 		}
 
 		public int timer;
@@ -45,11 +46,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			Vector2 center = player.MountedCenter;
 			projectile.Center = center;
 			projectile.rotation = projectile.velocity.ToRotation();
+			Vector2 HoldOffset = new Vector2(projectile.width/4, 0).RotatedBy(projectile.velocity.ToRotation());
+			projectile.Center += HoldOffset;
 
 			if (player.channel)
 			{
-				projectile.velocity = Vector2.Lerp(Vector2.Normalize(projectile.velocity), 
-                    Vector2.Normalize(Main.MouseWorld - player.MountedCenter), lerp); //slowly move towards direction of cursor
+				projectile.velocity = Vector2.Lerp(Vector2.Normalize(projectile.velocity),
+					Vector2.Normalize(Main.MouseWorld - player.MountedCenter), lerp); //slowly move towards direction of cursor
 				projectile.velocity.Normalize();
 
 				timer++;
@@ -61,11 +64,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 						projectile.Kill();
 
 				}
-				if(timer > 60)
+				if (timer > 60)
 				{
 					int type = ModContent.ProjectileType<DarkStarFriendly>();
 
-					int p = Projectile.NewProjectile(projectile.Center, projectile.velocity * 18, type, projectile.damage, projectile.knockBack, player.whoAmI);
+					int p = Projectile.NewProjectile(projectile.Center + HoldOffset * 2, projectile.velocity * 18, type, projectile.damage, projectile.knockBack, player.whoAmI);
 					Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 105, 1f, -0.3f);
 					if (p < 1000)
 					{
@@ -75,7 +78,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 				}
 				projectile.timeLeft++;
 
-				if(projectile.ai[1] == 0)
+				if (projectile.ai[1] == 0)
 				{
 					int type = ModContent.ProjectileType<PrimeDeathray>();
 
@@ -87,14 +90,21 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 					}
 					projectile.ai[1]++;
 				}
+				else if (player.ownedProjectileCounts[ModContent.ProjectileType<PrimeDeathray>()] < 12)
+				{
+					projectile.Kill();
+				}
 			}
 
 			float extrarotate = (projectile.direction < 0) ? MathHelper.Pi : 0; 
-			player.itemRotation = projectile.velocity.ToRotation() + extrarotate;
+			player.itemRotation = projectile.velocity.ToRotation() + extrarotate; 
+			player.itemRotation = MathHelper.WrapAngle(player.itemRotation);
 			player.ChangeDir(projectile.direction);
+			projectile.spriteDirection = projectile.direction;
+			projectile.rotation -= extrarotate;
 			player.heldProj = projectile.whoAmI;
-			player.itemTime = 2;
-			player.itemAnimation = 2;
+			player.itemTime = 10;
+			player.itemAnimation = 10;
 
 			projectile.Center += projectile.velocity * 20;
 
@@ -119,8 +129,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 				for (int j = 0; j < 2; j++)
 				{
 					int factor = (j == 0) ? 1 : -1;
+					float ai0 = (projectile.type == ModContent.ProjectileType<PrimeDeathray>()) ? (i + 1) * factor : 0;
 					Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(factor * spread * (i + 1)), projectile.type, projectile.damage, projectile.knockBack, projectile.owner, 
-						(i+1) * factor, projectile.ai[1]);
+						ai0, projectile.ai[1]);
 				}
 			}
 

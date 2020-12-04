@@ -25,6 +25,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			//projectile.localNPCHitCooldown = 8;
 			projectile.ranged = true;
 			projectile.tileCollide = false;
+			projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
 		}
 
 		public int timer;
@@ -71,12 +72,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
 			float extrarotate = (projectile.direction < 0) ? MathHelper.Pi : 0; 
 			player.itemRotation = projectile.velocity.ToRotation() + extrarotate;
+			player.itemRotation = MathHelper.WrapAngle(player.itemRotation);
 			player.ChangeDir(projectile.direction);
 			player.heldProj = projectile.whoAmI;
 			player.itemTime = 2;
 			player.itemAnimation = 2;
 
-			projectile.Center += projectile.velocity * 20;
+			Vector2 HoldOffset = new Vector2(60, 0).RotatedBy(projectile.velocity.ToRotation());
+			projectile.Center += HoldOffset;
 
 			DelegateMethods.v3_1 = new Vector3(1.2f, 1f, 0.3f);
 			float num2 = projectile.ai[0] / 40f;

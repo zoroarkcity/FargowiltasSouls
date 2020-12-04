@@ -11,8 +11,8 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Refractor Blaster EX");
-            Tooltip.SetDefault("'Modified from the arm of a defeated foe..'");
+            DisplayName.SetDefault("Diffractor Blater");
+            Tooltip.SetDefault("'The reward for slaughtering many...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "暗星炮");
             Tooltip.AddTranslation(GameCulture.Chinese, "'由一个被击败的敌人的武器改装而来..'");
         }
@@ -24,6 +24,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.channel = true;
             item.useTime = 24;
             item.useAnimation = 24;
+            item.reuseDelay = 20;
             item.shootSpeed = 15f;
             item.UseSound = SoundID.Item15;
             item.value = 100000;
