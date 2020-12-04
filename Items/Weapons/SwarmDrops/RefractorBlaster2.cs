@@ -32,5 +32,16 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.noUseGraphic = true;
             //item.mana = 10;
         }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(null, "RefractorBlaster");
+            recipe.AddIngredient(null, "MutantScale", 10);
+            recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerPrime"));
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
     }
 }
