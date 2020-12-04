@@ -3,6 +3,7 @@ using IL.Terraria.Chat.Commands;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
+using System.ComponentModel;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,6 +25,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			//projectile.localNPCHitCooldown = 8;
 			projectile.tileCollide = false;
 			projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+			Main.projFrames[projectile.type] = 7;
 		}
 
 		public int timer;
@@ -44,11 +46,32 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 				projectile.Kill();
 
 			Vector2 center = player.MountedCenter;
+
 			projectile.Center = center;
 			projectile.rotation = projectile.velocity.ToRotation();
-			Vector2 HoldOffset = new Vector2(projectile.width/4, 0).RotatedBy(projectile.velocity.ToRotation());
-			projectile.Center += HoldOffset;
 
+			float extrarotate = (projectile.direction < 0) ? MathHelper.Pi : 0;
+			player.itemRotation = projectile.velocity.ToRotation() + extrarotate;
+			player.itemRotation = MathHelper.WrapAngle(player.itemRotation);
+			player.ChangeDir(projectile.direction);
+			player.heldProj = projectile.whoAmI;
+			player.itemTime = 10;
+			player.itemAnimation = 10;
+			Vector2 HoldOffset = new Vector2(projectile.width/3, 0).RotatedBy(MathHelper.WrapAngle(projectile.velocity.ToRotation()));
+
+			projectile.Center += HoldOffset;
+			projectile.spriteDirection = projectile.direction;
+			projectile.rotation -= extrarotate;
+
+			projectile.frameCounter++;
+			if(projectile.frameCounter > 7)
+			{
+				projectile.frame++;
+				if (projectile.frame > Main.projFrames[projectile.type] - 1)
+					projectile.frame = 0;
+
+				projectile.frameCounter = 0;
+			}
 			if (player.channel)
 			{
 				projectile.velocity = Vector2.Lerp(Vector2.Normalize(projectile.velocity),
@@ -96,16 +119,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 				}
 			}
 
-			float extrarotate = (projectile.direction < 0) ? MathHelper.Pi : 0; 
-			player.itemRotation = projectile.velocity.ToRotation() + extrarotate; 
-			player.itemRotation = MathHelper.WrapAngle(player.itemRotation);
-			player.ChangeDir(projectile.direction);
-			projectile.spriteDirection = projectile.direction;
-			projectile.rotation -= extrarotate;
-			player.heldProj = projectile.whoAmI;
-			player.itemTime = 10;
-			player.itemAnimation = 10;
-
 			projectile.Center += projectile.velocity * 20;
 
 			if (!player.channel)
@@ -136,6 +149,29 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			}
 
 			projectile.active = false;
+		}
+
+		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			Texture2D texture2D = Main.projectileTexture[projectile.type];
+			int height = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type];
+			int width = Main.projectileTexture[projectile.type].Width;
+			int frame = height * projectile.frame;
+			SpriteEffects flipdirection = projectile.direction < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+			Rectangle Origin = new Rectangle(0, frame, width, height);
+			spriteBatch.Draw(texture2D, projectile.Center - Main.screenPosition, Origin, lightColor, projectile.rotation, new Vector2(width/2, height/2), projectile.scale, flipdirection, 0f);
+			return false;
+		}
+
+		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			Texture2D texture2D = mod.GetTexture("Items/Weapons/SwarmDrops/RefractorBlaster2Glow");
+			int height = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type];
+			int width = Main.projectileTexture[projectile.type].Width;
+			int frame = height * projectile.frame;
+			SpriteEffects flipdirection = projectile.direction < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+			Rectangle Origin = new Rectangle(0, frame, width, height);
+			spriteBatch.Draw(texture2D, projectile.Center - Main.screenPosition, Origin, Color.White, projectile.rotation, new Vector2(width / 2, height / 2), projectile.scale, flipdirection, 0f);
 		}
 	}
 }
