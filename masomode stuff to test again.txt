@@ -165,3 +165,9 @@ resprites
 	broken hilt
 	styx gazer
 	staff of unleashed ocean
+
+champion of will
+	reduced random variation on spear barrage as they spawn in (occupy less space)
+	reduced duration of p3 fireball trail by a few ticks and reduced dust
+champion of shadows
+	tweaked p3 flameburst to be equidistant spreads (was biased towards you)
