@@ -40,7 +40,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void HoldItem(Player player)
         {
-            player.counterWeight = 556 + Main.rand.Next(6);
+            //player.counterWeight = 556 + Main.rand.Next(6);
             player.stringColor = 5;
         }
 

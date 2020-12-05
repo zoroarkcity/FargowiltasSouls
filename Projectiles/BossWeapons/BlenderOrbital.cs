@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             projectile.width = 46;
             projectile.height = 46;
-            projectile.friendly = true;
+            //projectile.friendly = true;
             projectile.penetrate = -1;
             projectile.melee = true;
             projectile.scale = 1f;
