@@ -26,7 +26,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.CloneDefaults(ItemID.LaserRifle);
             item.width = 98;
             item.height = 38;
-            item.damage = 400;
+            item.damage = 405;
             item.channel = true;
             item.useTime = 24;
             item.useAnimation = 24;
@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.rare = ItemRarityID.Purple;
             item.shoot = mod.ProjectileType("RefractorBlaster2Held");
             item.noUseGraphic = true;
-            item.mana = 24;
+            item.mana = 18;
             item.knockBack = 0.5f;
         }
 
