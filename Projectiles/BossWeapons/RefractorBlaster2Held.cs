@@ -55,8 +55,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			projectile.Center = center;
 			projectile.rotation = projectile.velocity.ToRotation();
 
-			float extrarotate = (projectile.direction < 0) ? MathHelper.Pi : 0;
-			player.itemRotation = projectile.velocity.ToRotation() + extrarotate;
+			float extrarotate = ((projectile.direction * player.gravDir) < 0) ? MathHelper.Pi : 0;
+			float itemrotate = projectile.direction < 0 ? MathHelper.Pi : 0;
+			player.itemRotation = projectile.velocity.ToRotation() + itemrotate;
 			player.itemRotation = MathHelper.WrapAngle(player.itemRotation);
 			player.ChangeDir(projectile.direction);
 			player.heldProj = projectile.whoAmI;
@@ -65,7 +66,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			Vector2 HoldOffset = new Vector2(projectile.width/3, 0).RotatedBy(MathHelper.WrapAngle(projectile.velocity.ToRotation()));
 
 			projectile.Center += HoldOffset;
-			projectile.spriteDirection = projectile.direction;
+			projectile.spriteDirection = projectile.direction * (int)player.gravDir;
 			projectile.rotation -= extrarotate;
 
 			projectile.frameCounter++;
@@ -168,7 +169,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			int height = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type];
 			int width = Main.projectileTexture[projectile.type].Width;
 			int frame = height * projectile.frame;
-			SpriteEffects flipdirection = projectile.direction < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+			SpriteEffects flipdirection = projectile.spriteDirection < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 			Rectangle Origin = new Rectangle(0, frame, width, height);
 			spriteBatch.Draw(texture2D, projectile.Center - Main.screenPosition, Origin, lightColor, projectile.rotation, new Vector2(width/2, height/2), projectile.scale, flipdirection, 0f);
 			return false;
@@ -180,7 +181,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			int height = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type];
 			int width = Main.projectileTexture[projectile.type].Width;
 			int frame = height * projectile.frame;
-			SpriteEffects flipdirection = projectile.direction < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+			SpriteEffects flipdirection = projectile.spriteDirection < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 			Rectangle Origin = new Rectangle(0, frame, width, height);
 			spriteBatch.Draw(texture2D, projectile.Center - Main.screenPosition, Origin, Color.White, projectile.rotation, new Vector2(width / 2, height / 2), projectile.scale, flipdirection, 0f);
 		}

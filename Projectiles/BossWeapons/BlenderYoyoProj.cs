@@ -15,7 +15,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             // Vanilla values range from 3f(Wood) to 16f(Chik), and defaults to -1f. Leaving as -1 will make the time infinite.
             ProjectileID.Sets.YoyosLifeTimeMultiplier[projectile.type] = -1f;
             // Vanilla values range from 130f(Wood) to 400f(Terrarian), and defaults to 200f
-            ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 550f;
+            ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 750f;
             // Vanilla values range from 9f(Wood) to 17.5f(Terrarian), and defaults to 10f
             ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 25f;
         }
@@ -49,6 +49,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                 yoyosSpawned = true;
             }
+
             if (soundtimer > 0)
                 soundtimer--;
 
@@ -64,10 +65,21 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }*/
         }
 
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            return (projectile.Distance(targetHitbox.Center()) <= 70);
+        }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             //target.immune[projectile.owner] = 6;
-
+            Player player = Main.player[projectile.owner];
+            projectile.ai[1]++;
+            if (projectile.ai[1] > 3 && player.ownedProjectileCounts[ProjectileID.BlackCounterweight] < 3)
+            {
+                Projectile.NewProjectile(player.Center, Main.rand.NextVector2Circular(10, 10), ProjectileID.BlackCounterweight, projectile.damage, projectile.knockBack, projectile.owner);
+                projectile.ai[1] = 0;
+            }
             if(soundtimer == 0)
             {
                 soundtimer = 15;
