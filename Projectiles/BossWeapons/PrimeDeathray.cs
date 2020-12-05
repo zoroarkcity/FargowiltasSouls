@@ -97,7 +97,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
             num807 /= num805;
             float amount = 0.5f;
-            projectile.localAI[1] = MathHelper.Lerp(projectile.localAI[1], 2000, amount);
+            projectile.localAI[1] = MathHelper.Lerp(projectile.localAI[1], num807, amount);
             /*Vector2 vector79 = projectile.Center + projectile.velocity * (projectile.localAI[1] - 14f);
             for (int num809 = 0; num809 < 2; num809 = num3 + 1)
             {
