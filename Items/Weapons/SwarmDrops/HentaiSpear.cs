@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             DisplayName.SetDefault("The Penetrator");
             Tooltip.SetDefault(@"Left click to charge forward
 Left click while dashing for a super charge
-Left click while holding up to spin
+Left click while holding up to spin and reflect projectiles
 Right click to sunder reality
 'The reward for embracing eternity...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "洞察者");

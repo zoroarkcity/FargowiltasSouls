@@ -193,3 +193,9 @@ destroyer gun EX microbuff
 tweaked destruction cannon proj movement to not vibrate directly on the mouse
 diffractor blaster rays have collision detection and star spread adjusted
 altered implementation of penerator dash to fix weird downwards movement
+penetrator spin
+	proper circular hitbox
+	epic trail
+	makes less explosions on hit
+	tweaked eye homing
+	CAN REFLECT PROJS (DOES THIS WORK IN MP??????????????)

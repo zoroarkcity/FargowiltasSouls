@@ -33,12 +33,13 @@ namespace FargowiltasSouls.Projectiles.Souls
             if (projectile.localAI[0] == 0)
             {
                 projectile.localAI[0] = 1;
+                projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
                 Main.PlaySound(SoundID.NPCHit4, projectile.Center);
             }
 
-            projectile.Center = Main.player[projectile.owner].Center;
+            //projectile.Center = Main.player[projectile.owner].Center + new Vector2(projectile.ai[0], projectile.ai[1]);
 
-            if (++projectile.frameCounter >= 2)
+            if (++projectile.frameCounter >= 3)
             {
                 projectile.frameCounter = 0;
                 if (++projectile.frame >= Main.projFrames[projectile.type])
