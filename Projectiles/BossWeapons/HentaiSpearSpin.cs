@@ -36,13 +36,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         float scaletimer;
         public override void AI()
         {
-            //dust!
-            int dustId = Dust.NewDust(projectile.position, projectile.width, projectile.height, 15, projectile.velocity.X * 0.2f,
-                projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-            Main.dust[dustId].noGravity = true;
-            int dustId3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 15, projectile.velocity.X * 0.2f,
-                projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-            Main.dust[dustId3].noGravity = true;
 
             Player player = Main.player[projectile.owner];
             Vector2 ownerMountedCenter = player.RotatedRelativePoint(player.MountedCenter);
@@ -61,8 +54,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             projectile.rotation = (float)Math.Atan2(projectile.velocity.Y, projectile.velocity.X);
             projectile.rotation += (float)Math.PI / 6.85f * player.direction;
+            projectile.ai[0] += MathHelper.Pi/45;
             projectile.velocity = projectile.rotation.ToRotationVector2();
             projectile.position -= projectile.velocity;
+            player.itemRotation = projectile.rotation;
+            player.itemRotation = MathHelper.WrapAngle(player.itemRotation);
 
             if (++projectile.localAI[0] > 10)
             {
@@ -70,8 +66,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Main.PlaySound(SoundID.Item1, projectile.Center);
                 if (projectile.owner == Main.myPlayer)
                 {
-                    Vector2 speed = -Vector2.UnitY.RotatedByRandom(Math.PI / 2) * Main.rand.NextFloat(4f, 8f);
-                    float ai1 = Main.rand.Next(60, 120);
+                    Vector2 speed = -Vector2.UnitY.RotatedByRandom(Math.PI / 2) * Main.rand.NextFloat(14f, 20f);
+                    float ai1 = Main.rand.Next(30, 60);
                     Projectile.NewProjectile(projectile.position + Main.rand.NextVector2Square(0f, projectile.width),
                         speed, ModContent.ProjectileType<PhantasmalEyeHoming>(), projectile.damage, 0f, projectile.owner, -1, ai1);
                 }
@@ -112,16 +108,39 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Color color26 = lightColor;
             color26 = projectile.GetAlpha(color26);
 
-            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+            for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i += 0.1f)
             {
-                Color color27 = color26 * 0.5f;
-                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
-                Vector2 value4 = projectile.oldPos[i];
-                float num165 = projectile.oldRot[i];
-                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
+                Player player = Main.player[projectile.owner];
+                Texture2D glow = mod.GetTexture("Projectiles/BossWeapons/HentaiSpearSpinGlow");
+                Color color27 = Color.Lerp(new Color(51, 255, 191, 210), Color.Transparent, (float)Math.Cos(projectile.ai[0]) / 3 + 0.3f);
+                float scale = projectile.scale - (float)Math.Cos(projectile.ai[0]) / 5;
+                scale *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                int max0 = Math.Max((int)i - 1, 0);
+                Vector2 center = Vector2.Lerp(projectile.oldPos[(int)i], projectile.oldPos[max0], (1 - i % 1));
+                float smoothtrail = i % 1 * (float)Math.PI / 6.85f;
+                bool withinangle = projectile.rotation > -Math.PI / 2 && projectile.rotation < Math.PI / 2;
+                if (withinangle && player.direction == 1)
+                    smoothtrail *= -1;
+                else if (!withinangle && player.direction == -1)
+                    smoothtrail *= -1;
+
+                center += projectile.Size / 2;
+
+                Vector2 offset = (projectile.Size/4).RotatedBy(projectile.oldRot[(int)i] - smoothtrail * (-projectile.direction));
+                Main.spriteBatch.Draw(
+                    glow,
+                    center - offset - Main.screenPosition + new Vector2(0, projectile.gfxOffY),
+                    null,
+                    color27,
+                    projectile.rotation,
+                    glow.Size() / 2,
+                    scale * 0.4f,
+                    SpriteEffects.None,
+                    0f);
             }
 
-            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), 
+                projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
             return false;
         }
     }
