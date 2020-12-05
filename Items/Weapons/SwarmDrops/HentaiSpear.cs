@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             DisplayName.SetDefault("The Penetrator");
             Tooltip.SetDefault(@"Left click to charge forward
 Left click while dashing for a super charge
-Left click while holding up to spin
+Left click while holding up to spin and reflect projectiles
 Right click to sunder reality
 'The reward for embracing eternity...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "洞察者");
@@ -111,15 +111,17 @@ Right click to sunder reality
                 else if (player.ownedProjectileCounts[mod.ProjectileType("Dash")] < 1)
                 {
                     float dashAi1 = 0;
-                    float speedModifier = 4f;
+                    float speedModifier = 2;
                     if (player.dashDelay == -1) //mid dash
                     {
                         dashAi1 = 1;
-                        speedModifier = 5f;
+                        speedModifier = 3;
                         player.dashDelay = 0;
                     }
-                    Projectile.NewProjectile(position.X, position.Y, speedX * speedModifier, speedY * speedModifier, mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI, 0, dashAi1);
-                    Projectile.NewProjectile(position.X, position.Y, speedX, speedY, item.shoot, damage, knockBack, item.owner, 0f, 1f);
+                    Vector2 speed = new Vector2(speedX, speedY);
+                    Projectile.NewProjectile(position, Vector2.Normalize(speed) * speedModifier * item.shootSpeed, 
+                        mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI, speed.ToRotation(), dashAi1);
+                    Projectile.NewProjectile(position, speed, item.shoot, damage, knockBack, item.owner, 0f, 1f);
                 }
             }
             return false;

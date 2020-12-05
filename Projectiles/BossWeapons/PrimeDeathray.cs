@@ -86,9 +86,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 samplingPoint = vector78.Value;
             }
             float[] array3 = new float[(int)num805];
-            //Collision.LaserScan(samplingPoint, projectile.velocity, num806 * projectile.scale, 3000f, array3);
-            for (int i = 0; i < array3.Length; i++)
-                array3[i] = projectile.localAI[0] * projectile.ai[1];
+            Collision.LaserScan(samplingPoint, projectile.velocity, num806 * projectile.scale, 2000f, array3);
+            //for (int i = 0; i < array3.Length; i++) array3[i] = projectile.localAI[0] * projectile.ai[1];
             float num807 = 0f;
             int num3;
             for (int num808 = 0; num808 < array3.Length; num808 = num3 + 1)
@@ -98,7 +97,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
             num807 /= num805;
             float amount = 0.5f;
-            projectile.localAI[1] = MathHelper.Lerp(projectile.localAI[1], 2000, amount);
+            projectile.localAI[1] = MathHelper.Lerp(projectile.localAI[1], num807, amount);
             /*Vector2 vector79 = projectile.Center + projectile.velocity * (projectile.localAI[1] - 14f);
             for (int num809 = 0; num809 < 2; num809 = num3 + 1)
             {

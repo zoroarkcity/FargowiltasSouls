@@ -96,14 +96,20 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 				if (timer > 60)
 				{
 					int type = ModContent.ProjectileType<DarkStarFriendly>();
-
-					int p = Projectile.NewProjectile(projectile.Center + HoldOffset * 2, projectile.velocity * 22, type, projectile.damage, projectile.knockBack, player.whoAmI);
-					Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 105, 1f, -0.3f);
+                    const int max = 10;
+                    double spread = MathHelper.PiOver4 / max;
+                    for (int i = -max; i <= max; i++)
+                    {
+                        Projectile.NewProjectile(projectile.Center + HoldOffset * 2, 22f * projectile.velocity.RotatedBy(spread * i),
+                            type, projectile.damage, projectile.knockBack, projectile.owner);
+                    }
+                    Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 105, 1f, -0.3f);
+                    /*int p = Projectile.NewProjectile(projectile.Center + HoldOffset * 2, projectile.velocity * 22, type, projectile.damage, projectile.knockBack, player.whoAmI);
 					if (p < 1000)
 					{
 						SplitProj(Main.projectile[p], 21);
-					}
-					timer = 0;
+					}*/
+                    timer = 0;
 				}
 				projectile.timeLeft++;
 

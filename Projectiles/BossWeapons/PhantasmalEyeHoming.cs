@@ -86,7 +86,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                         if (angle < -Math.PI)
                             angle += 2.0 * Math.PI;
 
-                        projectile.velocity = projectile.velocity.RotatedBy(angle * 0.1);
+                        float modifier = Math.Min(projectile.velocity.Length() / 100f, 1f);
+                        projectile.velocity = projectile.velocity.RotatedBy(angle * modifier);
                     }
                     else //target lost, reset
                     {
