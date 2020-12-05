@@ -1,0 +1,182 @@
+reduced abom life slightly
+reduced eridanus life slightly
+reduced champion of timber p2 life slightly
+demon scythe nerf from -25% to -33%
+king slime jumps higher + spike spray if you're noticeably above him (to reduce need to babysit him into not enraging)
+eoc
+	fixed(?) rarely spamming sickles way too much in p3
+	nerfed p3 threshold to 10% life
+eow
+	cursed fireballs are translucent until they redirect at you
+	increased head defense (so body is more likely to die, meaning splits are more likely)
+brain
+	p2 clone is immune to knockback if it's too far from you (this will make it pressure you better)
+	p2 fires another set of lasers when your confusion wears off
+fixed qb shooting stinger sprays in p1 while dashing
+deviantt
+	p1 heart rain is denser
+	waits an extra half second after sparkling love
+	slightly less startup/endlag between teleports on rune blast attack
+	buffed p1 butterflies to not be effortless
+fixed typo that caused retinazer to do dark stars at 10% life (should be 1 life)
+destroyer ALL stars now have boc p1 ichor's stop-and-go homing properties, fight adjusted for it
+made deathray sound self repeat for
+	mutant's penetrator rays
+	mutant's reti ray fan
+	abom's mega ray run
+	styx gazer right click
+	penetrator right click
+sparkling adoration adjusted, nerfed max bonus from 30% to 25% crit damage and total grazes needed from 15 to 20
+abominable wand nerfed, no longer gives higher max crit damage, instead doubles crit damage gain per graze
+mutant eye nerfed, no longer gives extra crit damage gain per graze and max crit damage bonus reduced from +50% to +25%
+buffed penetrator damage 1700 to 2000 because i can
+
+destroyer still does coil stars when you have lightning rod but only half as often
+fixed lightning rod not doing damage to the player
+prime p2 rework
+	removed head firing rockets
+	alternates between using two arms at a time, the other two are folded when not in use
+	cannon behaves like normal
+	laser fires not random lasers and also hopefully doesn't drift so far from prime
+	vice slashes down on you reliably
+	saw stabs at you reliably
+	the primary limbs burn with fire to hopefully indicate them better
+	cornerswipe limbs attack less often when prime isn't spinning
+	normalized limb damage (all ~100)
+echdeath
+
+added some OOB checks for galactic reformer
+nerfed landslide damage and homing
+buffed blender damage slightly
+destroyer's dark stars will stop-and-go a little further from you, should give more dodging space
+nerfed destroyer segment fire rate
+nerfed destroyer dark star homing mobility slightly
+
+mutant uses a new homing phantasmal eye when spinning spear
+removed security wallet wack modifier thing
+destroyer probes move funny (try to avoid hitting you, just orbit you)
+destroyer lasers now have much better (read: consistent) aim and change velocity based on distance
+nerfed prime melee limb aggression slightly
+
+destroyer lasers fire more aggressively but weaker speed scaling
+destroyer purges lasers when beginning coil
+destroyer probes x1.5 life
+fixed prime having triple stars on the first salvo every spin
+dark stars use regular iframes (can no longer combo you)
+hentai spears have cool glow
+mutant's phantasmal eyes have cool glow
+mutant rangs move slower and have glowing trail, fixed crystal leaf hitboxes being too small
+mutant DR removed
+adjusted landslide homing
+moon lord socket ray telegraph slightly shortened, but rays persist less time
+nerfed flesh hand by 2 damage
+queen bee slightly more startup before doing bees
+plantera
+	despawns faster when you're dead
+	dicer mines are now recursively spread throughout arena in phase 2
+	dicer mines have longer delay and less blast range to compensate for being FUCKING INESCAPABLE
+golem
+	body life modifier x3 to x4
+	reduced laser accel
+	jumps alternate between doing boulders and doing floor/ceiling geysers simultaneously
+	boulders spawn in instantly and are bouncy but move a little slower horizontally
+
+nerfed optic staff EX damage slightly
+fixed king slime doing double spikes during high jumps in mp
+fixed golem boulders not working lol
+nerfed how often golem spawns spiky balls in temple (much more often outside)
+deviantt
+	fixed spawning double nados in mp
+	adjusted stoning warning line to actually go eye to eye
+	medusa head appears over player on successful stone
+	heart rain auto-breaks when its far enough below you
+	adjusted how sparkling love is swung so the center of the laser pattern is always where you were
+	always throws big set of paladin hammers
+
+fixed pumpkin enchant probably
+fiddled with tin numbers
+	force version of tin has 20t cooldown (was 30, same as regular tin)
+	sot version of tin has 10t cooldown (was 15)
+	clamped tin crit to 100
+	unstated spider ench synergy nerfed, summons only get half crit (full with force+)
+fixed draw issue with mutant's spear dash
+plantera
+	messed with mines a bunch
+	p2 has 12 ring instead of 10
+golem
+	laser spray after ray sweep aims down
+	reduced acceleration of head during ray sweep
+	head roars when it starts preparing to ray sweep
+	adjusted how ray sweep is begun (more lenient)
+	slightly more startup on ray sweep
+	TIIINY bit of rng on boulder bounce height and packed them closer together
+	removed spiky balls
+	slowed down fists more
+	jumps slightly higher
+	ACTUALLY reduced duration of geyser hitbox
+	removed vanilla bouncy fireballs in p2
+increased eow head defense more (24 to 44)
+lihzahrd treasure box spiky balls on hit replaced with slimy shield-style boulder stomp
+
+flesh hand adjustment: now magic, with adjusted stats and middling homing
+fish stick adjustment: now ranged, with adjusted stats and a pretty tall nado (also dust)
+destroyer gun: same as before but nerfed damage (55 to 45) and a bit dumber but it can shoot lasers
+destroyer gun EX: same as before but it can shoot homing dark stars, also steep nerf because meme kill time?
+
+nerfed blizzard staff to -33% damage, -50% speed because its still overpowered
+adjusted eri armour so ring always has fragment right above player instead of to one side
+desgun (EX) targets cursor now (TEST IN MP)
+fishron
+	cthulhunados have 1/3rd second delay on actually spawning to reduce instagibs
+	p3 bubble trail made more spacious and slower, but indestructible
+
+dragon's breath POG
+hellzone is now bone vomit (old one is retained too for now)
+
+fixed desgun ex having comedic nonpierce
+epic animated penetrator inv sprite
+big sting reworked, cooler stingers that have small sting gimmick w/ stinger spray and 22 summon
+duke staff drop rate increases 0.5% for every defeated champ
+adjusted abom flocko rain spam attack so the frost shards hopefully despawn faster/earlier
+hellzone is now statted for pre-abom
+dragon's breath item sprite! (im stupid and dont know held offsets, help)
+dragon's breath EX!!! (literally just old hell zone without aim assist, recipe will fix itself when betsy energizer added)
+moved nuke fishron to pre mutant and rebalanced for it, also visual tweaks
+tweaked graze dust so its consistent sized
+nerfed optic staff EX damage and hit rate, too autonomous
+nerfed staff of unleashed ocean hit rate and it has optic EX's anti-multiclass nerf, but buffed damage (overall nerf)
+eri armor
+	fixed a typo that caused hat to give 50% damage instead of 5% bruhbruhbruhbruhbruhbruhbruh
+	increased set bonus specific class bonus from 40% to 50% (still a net -35%)
+fiddled with penetrator, spear can always hit enemies even through iframes but removed raw damage up
+
+carrot zoom ignores mutant presence
+moon lord
+	fixed true eyes sliding everywhere in p1
+	adjust how horiz vel is nerfed for phantasmal eyes
+	changed visual for ritual
+buffed dragon breath damage
+renames
+	dragon's breath -> dragon's fire
+	dragon's breath EX -> dragon's demise
+	optic staff EX -> omniscience staff
+	destroyer gun EX -> destruction cannon
+resprites
+	broken hilt
+	styx gazer
+	staff of unleashed ocean
+
+champion of will
+	reduced random variation on spear barrage as they spawn in (occupy less space)
+	reduced duration of p3 fireball trail by a few ticks and reduced dust
+champion of shadows
+	tweaked p3 flameburst to be equidistant spreads (was biased towards you)
+
+tweaked mutant eye glow
+diffractor blaster exists
+NERFED blender, higher base damage but lower hit rate
+fixed soul of siblings carrot zoom not ignoring mutant presence as intended when equipped as accessory
+penetrator is god
+	left click is regular dash
+	left click while dashing (e.g. tabi) for super dash
+	up+left click to spin

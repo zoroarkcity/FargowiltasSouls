@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dragon's Breath EX");
+            DisplayName.SetDefault("Dragon's Demise");
             Tooltip.SetDefault(@"Uses gel for ammo
 66% chance to not consume ammo
 'The reward for slaughtering many..'");

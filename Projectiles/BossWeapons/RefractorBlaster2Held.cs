@@ -35,8 +35,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 		{
 			DisplayName.SetDefault("Refractor Blaster Ex");
 		}
-		
-		public override void AI()
+
+        public override bool CanDamage()
+        {
+            return false;
+        }
+
+        public override void AI()
 		{
 			Player player = Main.player[projectile.owner];
 			if (Main.myPlayer != player.whoAmI)
@@ -64,7 +69,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			projectile.rotation -= extrarotate;
 
 			projectile.frameCounter++;
-			if(projectile.frameCounter > 7)
+			if(projectile.frameCounter > 3)
 			{
 				projectile.frame++;
 				if (projectile.frame > Main.projFrames[projectile.type] - 1)
@@ -79,7 +84,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 				projectile.velocity.Normalize();
 
 				timer++;
-				if (timer % 20 == 0)
+				if (timer % 6 == 0)
 				{
 					Main.PlaySound(player.inventory[player.selectedItem].UseSound, projectile.Center);
 					bool checkmana = player.CheckMana(player.inventory[player.selectedItem].mana, true, false);
@@ -91,7 +96,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 				{
 					int type = ModContent.ProjectileType<DarkStarFriendly>();
 
-					int p = Projectile.NewProjectile(projectile.Center + HoldOffset * 2, projectile.velocity * 18, type, projectile.damage, projectile.knockBack, player.whoAmI);
+					int p = Projectile.NewProjectile(projectile.Center + HoldOffset * 2, projectile.velocity * 22, type, projectile.damage, projectile.knockBack, player.whoAmI);
 					Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 105, 1f, -0.3f);
 					if (p < 1000)
 					{

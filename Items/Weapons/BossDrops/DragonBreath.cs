@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Dragon's Breath");
+            DisplayName.SetDefault("Dragon's Fire");
             Tooltip.SetDefault("Uses gel for ammo\n33% chance to not consume ammo\n'The carcass of a defeated foe shoved violently on a stick..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "鱼杖");
             Tooltip.AddTranslation(GameCulture.Chinese, "'一个被打败的敌人的尸体,用棍子粗暴地串起来..'");
@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 
         public override void SetDefaults()
         {
-            item.damage = 80;
+            item.damage = 110;
             item.ranged = true;
             //item.mana = 10;
             item.width = 24;

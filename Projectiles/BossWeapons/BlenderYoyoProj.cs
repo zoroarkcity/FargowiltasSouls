@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         int soundtimer;
         public override void AI()
         {
-            if (!yoyosSpawned)
+            if (!yoyosSpawned && projectile.owner == Main.myPlayer)
             {
                 int maxYoyos = 5;
                 for (int i = 0; i < maxYoyos; i++)
@@ -66,7 +66,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 6;
+            //target.immune[projectile.owner] = 6;
+
             if(soundtimer == 0)
             {
                 soundtimer = 15;

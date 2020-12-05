@@ -14,7 +14,11 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Penetrator");
-            Tooltip.SetDefault("Right click to sunder reality\n'The reward for embracing eternity...'");
+            Tooltip.SetDefault(@"Left click to charge forward
+Left click while dashing for a super charge
+Left click while holding up to spin
+Right click to sunder reality
+'The reward for embracing eternity...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "洞察者");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励...'");
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(3, 10));
@@ -35,8 +39,8 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.UseSound = SoundID.Item1;
             item.shoot = mod.ProjectileType("HentaiSpear");
             item.value = Item.sellPrice(0, 70);
-            item.noMelee = true; // Important because the spear is acutally a projectile instead of an item. This prevents the melee hitbox of this item.
-            item.noUseGraphic = true; // Important, it's kind of wired if people see two spears at one time. This prevents the melee animation of this item.
+            item.noMelee = true;
+            item.noUseGraphic = true;
             item.melee = true;
             item.autoReuse = true;
         }
@@ -48,6 +52,8 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override bool CanUseItem(Player player)
         {
+            item.useTurn = false;
+
             if (player.altFunctionUse == 2)
             {
                 item.shoot = mod.ProjectileType("HentaiSpearThrown");
@@ -59,26 +65,23 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             }
             else
             {
-                item.shoot = mod.ProjectileType("HentaiSpear");
-                item.shootSpeed = 6f;
+                if (player.controlUp)
+                {
+                    item.shoot = mod.ProjectileType("HentaiSpearSpin");
+                    item.shootSpeed = 1f;
+                    item.useTurn = true;
+                }
+                else
+                {
+                    item.shoot = mod.ProjectileType("HentaiSpear");
+                    item.shootSpeed = 6f;
+                }
                 item.useAnimation = 16;
                 item.useTime = 16;
                 item.ranged = false;
                 item.melee = true;
             }
             return true;
-
-            /*if (player.altFunctionUse == 2) //right click
-            {
-                item.useAnimation = 32;
-                item.useTime = 32;
-            }
-            else
-            {
-                item.useAnimation = 16;
-                item.useTime = 16;
-            }
-            return player.ownedProjectileCounts[item.shoot] < 1; // This is to ensure the spear doesn't bug out when using autoReuse = true*/
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)
@@ -96,16 +99,28 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             if (player.altFunctionUse == 2) //right click
             {
-                //damage /= 4;
                 return true;
             }
 
-            if (player.ownedProjectileCounts[item.shoot] < 1 && player.ownedProjectileCounts[mod.ProjectileType("Dash")] < 1)
+            if (player.ownedProjectileCounts[item.shoot] < 1)
             {
-                //Vector2 target = (Main.MouseWorld - player.Center) / 37;
-                //Projectile.NewProjectile(position.X, position.Y, target.X, target.Y, mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI);
-                Projectile.NewProjectile(position.X, position.Y, speedX * 4, speedY * 4, mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI);
-                Projectile.NewProjectile(position.X, position.Y, speedX, speedY, item.shoot, damage, knockBack, item.owner, 0f, 1f);
+                if (player.controlUp)
+                {
+                    return true;
+                }
+                else if (player.ownedProjectileCounts[mod.ProjectileType("Dash")] < 1)
+                {
+                    float dashAi1 = 0;
+                    float speedModifier = 4f;
+                    if (player.dashDelay == -1) //mid dash
+                    {
+                        dashAi1 = 1;
+                        speedModifier = 5f;
+                        player.dashDelay = 0;
+                    }
+                    Projectile.NewProjectile(position.X, position.Y, speedX * speedModifier, speedY * speedModifier, mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI, 0, dashAi1);
+                    Projectile.NewProjectile(position.X, position.Y, speedX, speedY, item.shoot, damage, knockBack, item.owner, 0f, 1f);
+                }
             }
             return false;
         }

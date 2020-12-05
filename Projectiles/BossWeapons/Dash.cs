@@ -36,6 +36,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.penetrate = -1;
         }
 
+        public override bool CanDamage()
+        {
+            return false;
+        }
+
         public override void AI()
         {
             Player player = Main.player[projectile.owner];
@@ -63,7 +68,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                 DashStep = (projectile.Center - player.Center) / DASH_STEP_COUNT;
 
-                projectile.velocity = Vector2.Zero;
+                if (projectile.owner == Main.myPlayer && projectile.ai[1] == 1) //super dash
+                {
+                    Vector2 speed = Vector2.Normalize(DashStep);
+                    Projectile.NewProjectile(player.Center + speed * 1500, speed, mod.ProjectileType("HentaiSpearDeathray2"), projectile.damage, projectile.knockBack, player.whoAmI);
+                    Projectile.NewProjectile(player.Center + speed * 1500, -speed, mod.ProjectileType("HentaiSpearDeathray2"), projectile.damage, projectile.knockBack, player.whoAmI);
+                }
             }
 
             // Dash towards location
@@ -71,7 +81,20 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 //spawn along path
                 if (projectile.owner == Main.myPlayer)
-                    Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack, projectile.owner);
+                {
+                    if (projectile.ai[1] == 0) //regular dash
+                    {
+                        Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    }
+                    else //super dash
+                    {
+                        Vector2 baseVel = Vector2.Normalize(DashStep).RotatedBy(Math.PI / 2);
+                        Projectile.NewProjectile(player.Center, 16f * baseVel,
+                            ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack / 2, projectile.owner, 1f);
+                        Projectile.NewProjectile(player.Center, 16f * -baseVel,
+                            ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack / 2, projectile.owner, 1f);
+                    }
+                }
 
                 if (UpdateCount == DASH_STEP_DELAY)
                 {
@@ -80,7 +103,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 }
 
                 // freeze in swing
-                player.itemAnimation = player.itemAnimationMax - 2;
+                player.itemAnimation = player.itemAnimationMax;
 
                 // dash, change position to influence camera lerp
                 player.position += Collision.TileCollision(player.position,

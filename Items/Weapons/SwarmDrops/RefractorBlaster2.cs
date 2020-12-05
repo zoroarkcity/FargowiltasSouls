@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             DisplayName.AddTranslation(GameCulture.Chinese, "暗星炮");
             Tooltip.AddTranslation(GameCulture.Chinese, "'由一个被击败的敌人的武器改装而来..'");
 
-            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(7, 7));
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(3, 7));
         }
 
         public override void SetDefaults()
@@ -26,7 +26,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.CloneDefaults(ItemID.LaserRifle);
             item.width = 98;
             item.height = 38;
-            item.damage = 300;
+            item.damage = 400;
             item.channel = true;
             item.useTime = 24;
             item.useAnimation = 24;
@@ -37,8 +37,10 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.rare = ItemRarityID.Purple;
             item.shoot = mod.ProjectileType("RefractorBlaster2Held");
             item.noUseGraphic = true;
-            //item.mana = 10;
+            item.mana = 24;
+            item.knockBack = 0.5f;
         }
+
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
         {
             Texture2D texture2D = mod.GetTexture("Items/Weapons/SwarmDrops/RefractorBlaster2Glow");

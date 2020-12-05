@@ -76,7 +76,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 6;
+            //target.immune[projectile.owner] = 6;
 
             Vector2 velocity = Vector2.Normalize(projectile.Center - target.Center) * 10;
 

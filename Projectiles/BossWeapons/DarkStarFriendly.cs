@@ -18,8 +18,8 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.hostile = false;
             projectile.friendly = true;
             projectile.magic = true;
-            projectile.usesIDStaticNPCImmunity = true;
-            projectile.idStaticNPCHitCooldown = 10;
+            /*projectile.usesIDStaticNPCImmunity = true;
+            projectile.idStaticNPCHitCooldown = 10;*/
             projectile.penetrate = -1;
         }
 
