@@ -217,7 +217,7 @@ Summons the aid of all Eternity Mode bosses to your side
 
             //carrot
             player.nightVision = true;
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot, false))
                 player.scope = true;
 
             //squeaky toy

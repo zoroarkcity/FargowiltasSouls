@@ -5,9 +5,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Projectiles.MutantBoss
+namespace FargowiltasSouls.Projectiles.BossWeapons
 {
-    public class MutantEyeHoming : ModProjectile
+    public class PhantasmalEyeHoming : ModProjectile
     {
         public override string Texture => "Terraria/Projectile_452";
 
@@ -23,51 +23,81 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.width = 4;
             projectile.height = 4;
             projectile.aiStyle = -1;
-            projectile.hostile = true;
-            projectile.penetrate = 1;
-            projectile.timeLeft = 600;
+            projectile.friendly = true;
+            projectile.melee = true;
+            projectile.penetrate = 2;
+            projectile.timeLeft = 300;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
             projectile.alpha = 0;
-            cooldownSlot = 1;
         }
 
         public override void AI()
         {
-
-            if (--projectile.ai[1] < 0 && projectile.ai[1] > -60)
+            if (--projectile.ai[1] < 0)
             {
-                if (projectile.ai[0] >= 0 && projectile.ai[0] < Main.maxPlayers)
+                projectile.tileCollide = true;
+
+                if (projectile.ai[0] == -1) //no target atm
                 {
-                    Player p = Main.player[(int)projectile.ai[0]];
-                    
-                    Vector2 target = p.Center;
-
-                    if (Math.Abs(p.Center.Y - projectile.Center.Y) > 250)
+                    if (projectile.ai[1] % 6 == 0)
                     {
-                        Vector2 distance = target - projectile.Center;
+                        int possibleTarget = -1;
+                        float closestDistance = 3000f;
 
+                        for (int i = 0; i < Main.maxNPCs; i++)
+                        {
+                            NPC npc = Main.npc[i];
+
+                            if (npc.active && npc.CanBeChasedBy())
+                            {
+                                float distance = Vector2.Distance(projectile.Center, npc.Center);
+
+                                if (closestDistance > distance)
+                                {
+                                    closestDistance = distance;
+                                    possibleTarget = i;
+                                }
+                            }
+                        }
+
+                        if (possibleTarget != -1)
+                        {
+                            projectile.ai[0] = possibleTarget;
+                            projectile.netUpdate = true;
+                        }
+                        else
+                        {
+                            projectile.Kill();
+                            return;
+                        }
+                    }
+                }
+                else //currently have target
+                {
+                    NPC npc = Main.npc[(int)projectile.ai[0]];
+
+                    if (npc.active && npc.CanBeChasedBy()) //target is still valid
+                    {
+                        Vector2 distance = npc.Center - projectile.Center;
                         double angle = distance.ToRotation() - projectile.velocity.ToRotation();
                         if (angle > Math.PI)
                             angle -= 2.0 * Math.PI;
                         if (angle < -Math.PI)
                             angle += 2.0 * Math.PI;
 
-                        projectile.velocity = projectile.velocity.RotatedBy(angle * 0.2);
+                        projectile.velocity = projectile.velocity.RotatedBy(angle * 0.1);
                     }
-                    else
+                    else //target lost, reset
                     {
-                        projectile.ai[1] = -60;
+                        projectile.ai[0] = -1;
+                        projectile.netUpdate = true;
                     }
-                }
-                else
-                {
-                    projectile.ai[0] = Player.FindClosest(projectile.Center, 0, 0);
                 }
             }
 
             if (projectile.ai[1] < 0)
-                projectile.velocity = Vector2.Normalize(projectile.velocity) * MathHelper.Lerp(projectile.velocity.Length(), 10f, 0.035f);
+                projectile.velocity = Vector2.Normalize(projectile.velocity) * MathHelper.Lerp(projectile.velocity.Length(), 24f, 0.02f);
 
             projectile.rotation = projectile.velocity.ToRotation() + 1.570796f;
 
@@ -81,17 +111,10 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.localAI[1] += 0.25f;
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (target.GetModPlayer<FargoPlayer>().BetsyDashing)
-                return;
-            if (FargoSoulsWorld.MasochistMode)
-            {
-                target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
-                target.AddBuff(mod.BuffType("OceanicMaul"), 5400);
-                target.AddBuff(mod.BuffType("MutantFang"), 180);
-            }
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 360);
+            target.AddBuff(ModContent.BuffType<Buffs.Masomode.CurseoftheMoon>(), 600);
+            target.immune[projectile.owner] = 1;
             projectile.timeLeft = 0;
         }
 
@@ -114,6 +137,12 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 Dust dust2 = Main.dust[index3];
                 dust2.velocity = dust2.velocity * 2f;
                 Main.dust[index3].noGravity = true;
+            }
+
+            if (projectile.penetrate >= 0)
+            {
+                projectile.penetrate = -1;
+                projectile.Damage();
             }
         }
 

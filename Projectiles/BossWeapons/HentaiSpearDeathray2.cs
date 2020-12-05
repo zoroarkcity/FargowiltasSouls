@@ -9,13 +9,13 @@ using FargowiltasSouls.Buffs.Masomode;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
-    public class PrimeDeathray : Deathrays.BaseDeathray
+    public class HentaiSpearDeathray2 : Deathrays.BaseDeathray
     {
-        public PrimeDeathray() : base(90, "PhantasmalDeathray") { }
+        public HentaiSpearDeathray2() : base(90, "PhantasmalDeathrayML") { }
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blazing Deathray");
+            DisplayName.SetDefault("Phantasmal Deathray");
         }
 
         public override void SetDefaults()
@@ -24,9 +24,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             cooldownSlot = -1;
             projectile.hostile = false;
             projectile.friendly = true;
-            projectile.magic = true;
-            /*projectile.usesIDStaticNPCImmunity = true;
-            projectile.idStaticNPCHitCooldown = 10;*/
+            projectile.melee = true;
+
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
 
             projectile.hide = true;
@@ -44,32 +43,39 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            if (Main.projectile[(int)projectile.ai[1]].active && Main.projectile[(int)projectile.ai[1]].type == ModContent.ProjectileType<RefractorBlaster2Held>())
+            /*if (Main.npc[(int)projectile.ai[1]].active && Main.npc[(int)projectile.ai[1]].type == mod.NPCType("MutantBoss"))
             {
-                Vector2 Offset = new Vector2(Main.projectile[(int)projectile.ai[1]].width * 0.4f, 0).RotatedBy(Main.projectile[(int)projectile.ai[1]].velocity.ToRotation());
-                projectile.Center = Main.projectile[(int)projectile.ai[1]].Center + Offset;
-                projectile.timeLeft++;
-                float rotdir = (projectile.ai[0] > 0) ? 1 : -1;
-                Vector2 vel = Main.projectile[(int)projectile.ai[1]].velocity.RotatedBy(rotdir * MathHelper.Pi/6);
-                float rotspeed = projectile.localAI[0] / 5 + 0.5f;
-                if (rotspeed > 1.5f)
-                    rotspeed = 1.5f;
-                rotspeed *= 6;
-
-                projectile.velocity = vel.RotatedBy(Math.Sin(projectile.localAI[0] * rotspeed + (Math.Abs(projectile.ai[0])/6 * MathHelper.TwoPi)) * rotdir * MathHelper.Pi/14) ;
+                projectile.Center = Main.npc[(int)projectile.ai[1]].Center;
             }
             else
             {
                 projectile.Kill();
                 return;
-            }
+            }*/
             if (projectile.velocity.HasNaNs() || projectile.velocity == Vector2.Zero)
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            float num801 = .2f;
-            projectile.localAI[0] += 0.01f;
-            projectile.scale = Math.Min(projectile.localAI[0], num801);
+            if (projectile.localAI[0] == 0f)
+            {
+                if (!Main.dedServ)
+                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Zombie_104").WithVolume(0.6f), projectile.Center);
+                //Main.PlaySound(SoundID.Item12, projectile.Center);
+                //Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 6, 1f, 0.0f);
+            }
+            float num801 = .5f;
+            projectile.localAI[0] += 1f;
+            if (projectile.localAI[0] >= maxTime)
+            {
+                projectile.Kill();
+                return;
+            }
+            //projectile.scale = num801;
+            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 2.5f * num801;
+            if (projectile.scale > num801)
+            {
+                projectile.scale = num801;
+            }
             //float num804 = projectile.velocity.ToRotation();
             //num804 += projectile.ai[0];
             //projectile.rotation = num804 - 1.57079637f;
@@ -88,7 +94,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             float[] array3 = new float[(int)num805];
             //Collision.LaserScan(samplingPoint, projectile.velocity, num806 * projectile.scale, 3000f, array3);
             for (int i = 0; i < array3.Length; i++)
-                array3[i] = projectile.localAI[0] * projectile.ai[1];
+                array3[i] = 3000;
             float num807 = 0f;
             int num3;
             for (int num808 = 0; num808 < array3.Length; num808 = num3 + 1)
@@ -98,7 +104,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
             num807 /= num805;
             float amount = 0.5f;
-            projectile.localAI[1] = MathHelper.Lerp(projectile.localAI[1], 2000, amount);
+            projectile.localAI[1] = MathHelper.Lerp(projectile.localAI[1], num807, amount);
             /*Vector2 vector79 = projectile.Center + projectile.velocity * (projectile.localAI[1] - 14f);
             for (int num809 = 0; num809 < 2; num809 = num3 + 1)
             {
@@ -124,53 +130,78 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.position -= projectile.velocity;
             projectile.rotation = projectile.velocity.ToRotation() - 1.57079637f;
 
-            DelegateMethods.v3_1 = new Vector3(0.8f, 0f, 0f);
-            Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * (projectile.localAI[1]), 10, DelegateMethods.CastLight);
+            const int increment = 100;
+            for (int i = 0; i < array3[0]; i += increment)
+            {
+                if (Main.rand.Next(3) != 0)
+                    continue;
+                float offset = i + Main.rand.NextFloat(-increment, increment);
+                if (offset < 0)
+                    offset = 0;
+                if (offset > array3[0])
+                    offset = array3[0];
+                int d = Dust.NewDust(projectile.position + projectile.velocity * offset,
+                    projectile.width, projectile.height, 229, 0f, 0f, 0, default(Color), 1.5f);
+                Main.dust[d].noGravity = true;
+                Main.dust[d].velocity *= 4.5f;
+            }
+
+            if (++projectile.frameCounter > 3)
+            {
+                if (++projectile.frame > 15)
+                    projectile.frame = 0;
+
+                switch (projectile.frame)
+                {
+                    case 1:
+                    case 3:
+                    case 9:
+                    case 11: projectile.frameCounter = 2; break;
+                    default: projectile.frameCounter = 0; break;
+                }
+            }
         }
         
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(BuffID.OnFire, 600);
+            target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 600);
+            target.immune[projectile.owner] = 1;
         }
 
-        public override Color? GetAlpha(Color lightColor)
-        {
-            return new Color(255, 0, 0);
-        }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             if (projectile.velocity == Vector2.Zero)
             {
                 return false;
             }
-            Texture2D texture2D19 = Main.projectileTexture[projectile.type];
-            Texture2D texture2D20 = mod.GetTexture("Projectiles/Deathrays/" + texture + "2");
+            Texture2D texture2D19 = mod.GetTexture("Projectiles/Deathrays/Mutant/MutantDeathray_" + projectile.frame.ToString());
+            Texture2D texture2D20 = mod.GetTexture("Projectiles/Deathrays/Mutant/MutantDeathray2_" + projectile.frame.ToString());
             Texture2D texture2D21 = mod.GetTexture("Projectiles/Deathrays/" + texture + "3");
             float num223 = projectile.localAI[1];
-            Microsoft.Xna.Framework.Color color44 = new Microsoft.Xna.Framework.Color(255, 0, 0, 0);
-            //color44 = Color.Lerp(color44, Color.Transparent, transparency);
+            Color color44 = new Color(255, 255, 255, 0) * 0.95f;
             SpriteBatch arg_ABD8_0 = Main.spriteBatch;
             Texture2D arg_ABD8_1 = texture2D19;
             Vector2 arg_ABD8_2 = projectile.Center - Main.screenPosition;
-            Microsoft.Xna.Framework.Rectangle? sourceRectangle2 = null;
-            arg_ABD8_0.Draw(arg_ABD8_1, arg_ABD8_2, sourceRectangle2, color44, projectile.rotation, texture2D19.Size() / 2f, projectile.scale, SpriteEffects.None, 1f);
-            num223 -= (float)(texture2D19.Height / 2 + texture2D21.Height) * projectile.scale;
+            Rectangle? sourceRectangle2 = null;
+            arg_ABD8_0.Draw(arg_ABD8_1, arg_ABD8_2, sourceRectangle2, color44, projectile.rotation, texture2D19.Size() / 2f, projectile.scale, SpriteEffects.None, 0f);
+            num223 -= (texture2D19.Height / 2 + texture2D21.Height) * projectile.scale;
             Vector2 value20 = projectile.Center;
-            value20 += projectile.velocity * projectile.scale * (float)texture2D19.Height / 2f;
+            value20 += projectile.velocity * projectile.scale * texture2D19.Height / 2f;
             if (num223 > 0f)
             {
                 float num224 = 0f;
-                Microsoft.Xna.Framework.Rectangle rectangle7 = new Microsoft.Xna.Framework.Rectangle(0, 16 * (projectile.timeLeft / 3 % 5), texture2D20.Width, 16);
+                Rectangle rectangle7 = new Rectangle(0, 0, texture2D20.Width, 30);
                 while (num224 + 1f < num223)
                 {
-                    if (num223 - num224 < (float)rectangle7.Height)
+                    if (num223 - num224 < rectangle7.Height)
                     {
                         rectangle7.Height = (int)(num223 - num224);
                     }
-                    Main.spriteBatch.Draw(texture2D20, value20 - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(rectangle7), color44, projectile.rotation, new Vector2((float)(rectangle7.Width / 2), 0f), projectile.scale, SpriteEffects.None, 1f);
-                    num224 += (float)rectangle7.Height * projectile.scale;
-                    value20 += projectile.velocity * (float)rectangle7.Height * projectile.scale;
-                    rectangle7.Y += 16;
+
+                    Main.spriteBatch.Draw(texture2D20, value20 - Main.screenPosition, new Microsoft.Xna.Framework.Rectangle?(rectangle7), color44, projectile.rotation, new Vector2(rectangle7.Width / 2, 0f), projectile.scale, SpriteEffects.None, 0f);
+                    num224 += rectangle7.Height * projectile.scale;
+                    value20 += projectile.velocity * rectangle7.Height * projectile.scale;
+                    rectangle7.Y += 30;
                     if (rectangle7.Y + rectangle7.Height > texture2D20.Height)
                     {
                         rectangle7.Y = 0;
@@ -181,7 +212,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Texture2D arg_AE2D_1 = texture2D21;
             Vector2 arg_AE2D_2 = value20 - Main.screenPosition;
             sourceRectangle2 = null;
-            arg_AE2D_0.Draw(arg_AE2D_1, arg_AE2D_2, sourceRectangle2, color44, projectile.rotation, texture2D21.Frame(1, 1, 0, 0).Top(), projectile.scale, SpriteEffects.None, 1f);
+            arg_AE2D_0.Draw(arg_AE2D_1, arg_AE2D_2, sourceRectangle2, color44, projectile.rotation, texture2D21.Frame(1, 1, 0, 0).Top(), projectile.scale, SpriteEffects.None, 0f);
             return false;
         }
     }

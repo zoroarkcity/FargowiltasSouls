@@ -171,3 +171,12 @@ champion of will
 	reduced duration of p3 fireball trail by a few ticks and reduced dust
 champion of shadows
 	tweaked p3 flameburst to be equidistant spreads (was biased towards you)
+
+tweaked mutant eye glow
+diffractor blaster exists
+NERFED blender, higher base damage but lower hit rate
+fixed soul of siblings carrot zoom not ignoring mutant presence as intended when equipped as accessory
+penetrator is god
+	left click is regular dash
+	left click while dashing (e.g. tabi) for super dash
+	up+left click to spin
