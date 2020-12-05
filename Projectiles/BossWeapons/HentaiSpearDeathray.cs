@@ -130,7 +130,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.position -= projectile.velocity;
             projectile.rotation = projectile.velocity.ToRotation() - 1.57079637f;
 
-            const int increment = 100;
+            /*const int increment = 100;
             for (int i = 0; i < array3[0]; i += increment)
             {
                 if (Main.rand.Next(3) != 0)
@@ -144,7 +144,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     projectile.width, projectile.height, 229, 0f, 0f, 0, default(Color), 1.5f);
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity *= 4.5f;
-            }
+            }*/
 
             if (++projectile.frameCounter > 3)
             {

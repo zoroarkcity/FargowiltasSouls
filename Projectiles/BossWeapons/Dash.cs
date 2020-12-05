@@ -7,33 +7,21 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 {
     public class Dash : ModProjectile
     {
-        public const float DASH_STEP_COUNT = 15;
-        public const float DASH_STEP_DELAY = 0;
-
-        private bool _playedLocalSound = false;
-        public Vector2 DashStep;
-
-        public float UpdateCount
-        {
-            get
-            {
-                return projectile.ai[0];
-            }
-            set
-            {
-                projectile.ai[0] = value;
-            }
-        }
-
-        public float DashCount => projectile.ai[0] - 20;
-
         public override void SetDefaults()
         {
-            projectile.melee = true;
             projectile.width = Player.defaultWidth;
             projectile.height = Player.defaultHeight;
-
+            projectile.melee = true;
+            projectile.aiStyle = -1;
+            projectile.friendly = true;
+            projectile.melee = true;
+            projectile.ignoreWater = true;
             projectile.penetrate = -1;
+            projectile.hide = true;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+
+            projectile.extraUpdates = 5; //more granular movement, less likely to clip through surfaces
+            projectile.timeLeft = 15 * (projectile.extraUpdates + 1);
         }
 
         public override bool CanDamage()
@@ -50,107 +38,77 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 return;
             }
 
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = player.GetModPlayer<FargoPlayer>().StardustEnchant;
+
             if (player.mount.Active)
                 player.mount.Dismount(player);
 
-            // Get dash location
-            if (UpdateCount == 0)
+            player.Center = projectile.Center;
+            //if (projectile.timeLeft > 1) player.position += projectile.velocity; //trying to avoid wallclipping
+            player.velocity = projectile.velocity;
+
+            player.ChangeDir(projectile.velocity.X > 0 ? 1 : -1);
+            player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * projectile.direction, projectile.velocity.X * projectile.direction);
+
+            player.controlLeft = false;
+            player.controlRight = false;
+            player.controlJump = false;
+            player.controlDown = false;
+            //player.controlUseItem = false;
+            player.controlUseTile = false;
+            player.controlHook = false;
+            player.controlMount = false;
+
+            player.itemTime = 2;
+            player.itemAnimation = 2;
+
+            player.immune = true;
+            player.immuneTime = Math.Max(player.immuneTime, 2);
+            player.hurtCooldowns[0] = Math.Max(player.hurtCooldowns[0], 2);
+            player.hurtCooldowns[1] = Math.Max(player.hurtCooldowns[1], 2);
+            player.immuneNoBlink = true;
+            player.fallStart = (int)(player.position.Y / 16f);
+            player.fallStart2 = player.fallStart;
+
+            if (projectile.owner == Main.myPlayer && projectile.timeLeft % projectile.MaxUpdates == 0) //only run once per tick
             {
-                for (int i = 0; i < DASH_STEP_COUNT * 8; i++)
+                if (projectile.localAI[0] == 0)
                 {
-                    Vector2 move = Collision.TileCollision(
-                        projectile.position, projectile.velocity / 2,
-                        projectile.width, projectile.height,
-                        true, true, (int)player.gravDir);
-                    if (move == Vector2.Zero) break;
-                    projectile.position += move / 2;
-                }
+                    projectile.localAI[0] = 1;
 
-                DashStep = (projectile.Center - player.Center) / DASH_STEP_COUNT;
-
-                if (projectile.owner == Main.myPlayer && projectile.ai[1] == 1) //super dash
-                {
-                    Vector2 speed = Vector2.Normalize(DashStep);
-                    Projectile.NewProjectile(player.Center + speed * 1500, speed, mod.ProjectileType("HentaiSpearDeathray2"), projectile.damage, projectile.knockBack, player.whoAmI);
-                    Projectile.NewProjectile(player.Center + speed * 1500, -speed, mod.ProjectileType("HentaiSpearDeathray2"), projectile.damage, projectile.knockBack, player.whoAmI);
-                }
-            }
-
-            // Dash towards location
-            if (UpdateCount >= DASH_STEP_DELAY)
-            {
-                //spawn along path
-                if (projectile.owner == Main.myPlayer)
-                {
-                    if (projectile.ai[1] == 0) //regular dash
+                    if (projectile.ai[1] == 1) //super dash rays
                     {
-                        Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack, projectile.owner);
-                    }
-                    else //super dash
-                    {
-                        Vector2 baseVel = Vector2.Normalize(DashStep).RotatedBy(Math.PI / 2);
-                        Projectile.NewProjectile(player.Center, 16f * baseVel,
-                            ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack / 2, projectile.owner, 1f);
-                        Projectile.NewProjectile(player.Center, 16f * -baseVel,
-                            ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack / 2, projectile.owner, 1f);
+                        Vector2 speed = projectile.ai[0].ToRotationVector2();
+                        Projectile.NewProjectile(player.Center + speed * 1500, speed, mod.ProjectileType("HentaiSpearDeathray2"), projectile.damage, projectile.knockBack, player.whoAmI);
+                        Projectile.NewProjectile(player.Center + speed * 1500, -speed, mod.ProjectileType("HentaiSpearDeathray2"), projectile.damage, projectile.knockBack, player.whoAmI);
                     }
                 }
 
-                if (UpdateCount == DASH_STEP_DELAY)
+                if (projectile.ai[1] == 0) //regular dash trail
                 {
-                    DashStep = (projectile.Center - player.Center) / DASH_STEP_COUNT;
-                    player.inventory[player.selectedItem].useStyle = 3;
+                    Projectile.NewProjectile(player.Center.X, player.Center.Y, 0, 0, ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack, projectile.owner);
                 }
-
-                // freeze in swing
-                player.itemAnimation = player.itemAnimationMax;
-
-                // dash, change position to influence camera lerp
-                player.position += Collision.TileCollision(player.position,
-                    DashStep / 2,
-                    player.width,
-                    player.height,
-                    true, true, (int)player.gravDir);
-                player.velocity = Collision.TileCollision(player.position,
-                    DashStep * 0.8f,
-                    player.width,
-                    player.height,
-                    true, true, (int)player.gravDir);
-
-                // Set immunities
-                player.immune = true;
-                player.immuneTime = Math.Max(player.immuneTime, 2);
-                player.hurtCooldowns[0] = Math.Max(player.hurtCooldowns[0], 2);
-                player.hurtCooldowns[1] = Math.Max(player.hurtCooldowns[1], 2);
-                player.immuneNoBlink = true;
-                player.fallStart = (int)(player.position.Y / 16f);
-                player.fallStart2 = player.fallStart;
-
-                //point in direction
-                if (DashStep.X > 0) player.direction = 1;
-                if (DashStep.X < 0) player.direction = -1;
-
-                if (UpdateCount >= DASH_STEP_DELAY + DASH_STEP_COUNT - 1) projectile.timeLeft = 0;
+                else //super dash trail
+                {
+                    Vector2 baseVel = projectile.ai[0].ToRotationVector2().RotatedBy(Math.PI / 2);
+                    Projectile.NewProjectile(player.Center, 16f * baseVel,
+                        ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack / 2, projectile.owner, 1f);
+                    Projectile.NewProjectile(player.Center, 16f * -baseVel,
+                        ModContent.ProjectileType<PhantasmalSphere>(), projectile.damage, projectile.knockBack / 2, projectile.owner, 1f);
+                }
             }
-            else
-            {
-                // slow until move
-                player.velocity *= 0.8f;
-            }
-
-            UpdateCount++;
         }
 
         public override void Kill(int timeLeft)
         {
             Player player = Main.player[projectile.owner];
-            player.velocity = DashStep / DASH_STEP_COUNT;
             player.itemAnimation = 0;
+            player.itemTime = 0;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            return false; // slide not stop on tiles
+            return false;
         }
     }
 }

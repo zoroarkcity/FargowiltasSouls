@@ -58,6 +58,12 @@ namespace FargowiltasSouls.NPCs
             potionType = mod.ItemType("Sadism");
         }
 
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            cooldownSlot = 1;
+            return true;
+        }
+
         public override void AI()
         {
             if (!npc.HasValidTarget)

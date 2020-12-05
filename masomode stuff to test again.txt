@@ -189,3 +189,7 @@ dragon's demise micronerf
 diffractor blaster buff
 blender microbuff
 destroyer gun EX microbuff
+
+tweaked destruction cannon proj movement to not vibrate directly on the mouse
+diffractor blaster rays have collision detection and star spread adjusted
+altered implementation of penerator dash to fix weird downwards movement

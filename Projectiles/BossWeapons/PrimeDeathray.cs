@@ -86,9 +86,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 samplingPoint = vector78.Value;
             }
             float[] array3 = new float[(int)num805];
-            //Collision.LaserScan(samplingPoint, projectile.velocity, num806 * projectile.scale, 3000f, array3);
-            for (int i = 0; i < array3.Length; i++)
-                array3[i] = projectile.localAI[0] * projectile.ai[1];
+            Collision.LaserScan(samplingPoint, projectile.velocity, num806 * projectile.scale, 2000f, array3);
+            //for (int i = 0; i < array3.Length; i++) array3[i] = projectile.localAI[0] * projectile.ai[1];
             float num807 = 0f;
             int num3;
             for (int num808 = 0; num808 < array3.Length; num808 = num3 + 1)
