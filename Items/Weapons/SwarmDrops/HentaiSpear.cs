@@ -14,11 +14,8 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Penetrator");
-            Tooltip.SetDefault(@"Left click to charge forward
-Left click while dashing for a super charge
-Left click while holding up to spin and reflect projectiles
-Right click to sunder reality
-Right click while holding up to throw spinning and reflecting
+            Tooltip.SetDefault(@"Has differents attack when using left or right click
+Has different attacks when used while dashing or holding up
 'The reward for embracing eternity...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "洞察者");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励...'");
@@ -60,6 +57,13 @@ Right click while holding up to throw spinning and reflecting
                 if (player.controlUp)
                 {
                     item.shoot = mod.ProjectileType("HentaiSpearSpinThrown");
+                    item.shootSpeed = 6f;
+                    item.useAnimation = 16;
+                    item.useTime = 16;
+                }
+                else if (player.dashDelay == -1)
+                {
+                    item.shoot = mod.ProjectileType("HentaiSpearWand");
                     item.shootSpeed = 6f;
                     item.useAnimation = 16;
                     item.useTime = 16;
@@ -118,6 +122,17 @@ Right click while holding up to throw spinning and reflecting
                         if (speed.Length() < 360)
                             speed = Vector2.Normalize(speed) * 360;
                         Projectile.NewProjectile(position, Vector2.Normalize(speed), item.shoot, damage, knockBack, player.whoAmI, speed.X, speed.Y);
+                    }
+                    return false;
+                }
+
+                if (player.dashDelay == -1) //mid dash
+                {
+                    if (player.ownedProjectileCounts[item.shoot] < 1)
+                    {
+                        Vector2 speed = new Vector2(speedX, speedY);
+                        Projectile.NewProjectile(position, Vector2.Normalize(speed), mod.ProjectileType("HentaiSpearBigDeathray"), damage, knockBack, player.whoAmI);
+                        return true;
                     }
                     return false;
                 }

@@ -211,3 +211,4 @@ penetrator
 
 mutant final gigabeam ignores timestop
 blender, diffractor update damage in realtime
+dash+right click to perform MUTANT'S FINAL GIGABEAM (TEST IN MP)
