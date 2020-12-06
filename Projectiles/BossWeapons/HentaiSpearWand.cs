@@ -68,8 +68,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             if (projectile.localAI[0]++ == 0)
             {
-                Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<HentaiSpearBigDeathray>(), 
-                    projectile.damage, projectile.knockBack, player.whoAmI, 0, projectile.whoAmI);
+                if (projectile.owner == Main.myPlayer)
+                {
+                    Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<HentaiSpearBigDeathray>(),
+                      projectile.damage, projectile.knockBack, player.whoAmI, 0, projectile.whoAmI);
+                }
             }
 
             player.velocity *= 0.9f; //move slower while holding it
