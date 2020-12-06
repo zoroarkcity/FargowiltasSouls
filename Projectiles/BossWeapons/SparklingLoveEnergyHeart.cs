@@ -21,6 +21,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.height = 30;
             projectile.penetrate = -1;
             projectile.friendly = true;
+            projectile.minion = true;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.aiStyle = -1;

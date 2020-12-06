@@ -18,6 +18,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 Left click while dashing for a super charge
 Left click while holding up to spin and reflect projectiles
 Right click to sunder reality
+Right click while holding up to throw spinning and reflecting
 'The reward for embracing eternity...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "洞察者");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励...'");
@@ -56,10 +57,20 @@ Right click to sunder reality
 
             if (player.altFunctionUse == 2)
             {
-                item.shoot = mod.ProjectileType("HentaiSpearThrown");
-                item.shootSpeed = 25f;
-                item.useAnimation = 100;
-                item.useTime = 100;
+                if (player.controlUp)
+                {
+                    item.shoot = mod.ProjectileType("HentaiSpearSpinThrown");
+                    item.shootSpeed = 6f;
+                    item.useAnimation = 16;
+                    item.useTime = 16;
+                }
+                else
+                {
+                    item.shoot = mod.ProjectileType("HentaiSpearThrown");
+                    item.shootSpeed = 25f;
+                    item.useAnimation = 85;
+                    item.useTime = 85;
+                }
                 item.ranged = true;
                 item.melee = false;
             }
@@ -99,6 +110,17 @@ Right click to sunder reality
         {
             if (player.altFunctionUse == 2) //right click
             {
+                if (player.controlUp)
+                {
+                    if (player.ownedProjectileCounts[item.shoot] < 1) //remember to transfer any changes here to hentaispearspinthrown!
+                    {
+                        Vector2 speed = Main.MouseWorld - player.MountedCenter;
+                        if (speed.Length() < 360)
+                            speed = Vector2.Normalize(speed) * 360;
+                        Projectile.NewProjectile(position, Vector2.Normalize(speed), item.shoot, damage, knockBack, player.whoAmI, speed.X, speed.Y);
+                    }
+                    return false;
+                }
                 return true;
             }
 
