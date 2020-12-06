@@ -44,16 +44,18 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            if (Main.projectile[(int)projectile.ai[1]].active && Main.projectile[(int)projectile.ai[1]].type == ModContent.ProjectileType<RefractorBlaster2Held>())
+            Player player = Main.player[projectile.owner];
+            if (player.active && !player.dead && player.heldProj > -1 && player.heldProj < Main.maxProjectiles
+                && Main.projectile[player.heldProj].active && Main.projectile[player.heldProj].type == ModContent.ProjectileType<RefractorBlaster2Held>())
             {
-                projectile.damage = Main.projectile[(int)projectile.ai[1]].damage;
-                projectile.knockBack = Main.projectile[(int)projectile.ai[1]].knockBack;
+                projectile.damage = Main.projectile[player.heldProj].damage;
+                projectile.knockBack = Main.projectile[player.heldProj].knockBack;
 
-                Vector2 Offset = new Vector2(Main.projectile[(int)projectile.ai[1]].width * 0.4f, 0).RotatedBy(Main.projectile[(int)projectile.ai[1]].velocity.ToRotation());
-                projectile.Center = Main.projectile[(int)projectile.ai[1]].Center + Offset;
+                Vector2 Offset = new Vector2(Main.projectile[player.heldProj].width * 0.4f, 0).RotatedBy(Main.projectile[player.heldProj].velocity.ToRotation());
+                projectile.Center = Main.projectile[player.heldProj].Center + Offset;
                 projectile.timeLeft++;
                 float rotdir = (projectile.ai[0] > 0) ? 1 : -1;
-                Vector2 vel = Main.projectile[(int)projectile.ai[1]].velocity.RotatedBy(rotdir * MathHelper.Pi/6);
+                Vector2 vel = Main.projectile[player.heldProj].velocity.RotatedBy(rotdir * MathHelper.Pi/6);
                 float rotspeed = projectile.localAI[0] / 5 + 0.5f;
                 if (rotspeed > 1.5f)
                     rotspeed = 1.5f;
@@ -61,7 +63,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                 projectile.velocity = vel.RotatedBy(Math.Sin(projectile.localAI[0] * rotspeed + (Math.Abs(projectile.ai[0])/6 * MathHelper.TwoPi)) * rotdir * MathHelper.Pi/14) ;
             }
-            else
+            else if (projectile.localAI[0] > 0.05f) //leeway for mp lag
             {
                 projectile.Kill();
                 return;

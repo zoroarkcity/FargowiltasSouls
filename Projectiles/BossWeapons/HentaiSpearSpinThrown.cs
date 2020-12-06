@@ -122,10 +122,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             
             Vector2 baseVel = new Vector2(projectile.ai[0], projectile.ai[1]);
             Vector2 straightVel = baseVel * straightModifier;
-            /*float sideModifier = (baseVel.Length() / 2 - Math.Abs(baseVel.Length() / 2 - straightVel.Length())) * player.direction;
-            if (projectile.localAI[1] > maxTime / 2)
-                sideModifier *= -1;*/
-            Vector2 sideVel = baseVel.RotatedBy(Math.PI / 2) * sideModifier; //Vector2.Normalize(baseVel).RotatedBy(Math.PI / 2) * sideModifier;
+            Vector2 sideVel = baseVel.RotatedBy(Math.PI / 2) * sideModifier;
 
             projectile.Center = player.Center + baseVel / 2f;
             projectile.velocity = straightVel + sideVel;

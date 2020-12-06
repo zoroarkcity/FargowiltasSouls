@@ -211,4 +211,13 @@ penetrator
 
 mutant final gigabeam ignores timestop
 blender, diffractor update damage in realtime
-dash+right click to perform MUTANT'S FINAL GIGABEAM (TEST IN MP)
+dash+right click to perform MUTANT'S FINAL GIGABEAM
+
+friendly penetrator spin homing eyes have bigger hitbox (you wont notice anything probably)
+changed penetrator input from dash to up+down (easy to misinput gigabeam when trying to toss spear in combat)
+fucked with deathray sync in mp, relevant to
+	styx gazer
+	penetrator gigabeam
+	diffractor blaster
+fixed weird dragon's demise fireball explosions in mp
+did SOMETHING to alleviate ghost fireballs from dragon's demise in mp

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,6 +12,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
     public class HentaiSpearWand : ModProjectile
     {
         public override string Texture => "FargowiltasSouls/Projectiles/BossWeapons/HentaiSpear";
+
+        private int syncTimer;
+        private Vector2 mousePos;
 
         public override void SetStaticDefaults()
         {
@@ -34,8 +38,27 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.alpha = 0;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
+
+            projectile.netImportant = true;
         }
-        
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(mousePos.X);
+            writer.Write(mousePos.Y);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            Vector2 buffer;
+            buffer.X = reader.ReadSingle();
+            buffer.Y = reader.ReadSingle();
+            if (projectile.owner != Main.myPlayer)
+            {
+                mousePos = buffer;
+            }
+        }
+
         public override void AI()
         {
             //dust!
@@ -84,9 +107,20 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.Center = ownerMountedCenter;
             projectile.timeLeft = 2;
 
+            if (projectile.owner == Main.myPlayer)
+            {
+                mousePos = Main.MouseWorld;
+
+                if (++syncTimer > 20)
+                {
+                    syncTimer = 0;
+                    projectile.netUpdate = true;
+                }
+            }
+
             const float lerp = 0.06f;
             projectile.velocity = Vector2.Lerp(Vector2.Normalize(projectile.velocity),
-                Vector2.Normalize(Main.MouseWorld - player.MountedCenter), lerp); //slowly move towards direction of cursor
+                Vector2.Normalize(mousePos - player.MountedCenter), lerp); //slowly move towards direction of cursor
             projectile.velocity.Normalize();
 
             projectile.position += projectile.velocity * 164 * 1.3f / 4f; //offset by part of spear's length

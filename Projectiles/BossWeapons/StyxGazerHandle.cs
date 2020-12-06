@@ -26,6 +26,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.magic = true;
             projectile.extraUpdates = 1;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
         }
 
         public override void AI()
@@ -35,29 +36,17 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            int ai1 = (int)projectile.ai[1];
-            if (Main.projectile[ai1].active && Main.projectile[ai1].type == ModContent.ProjectileType<StyxGazer>())
+            Player player = Main.player[projectile.owner];
+            if (player.active && !player.dead && player.heldProj > -1 && player.heldProj < Main.maxProjectiles
+                && Main.projectile[player.heldProj].active && Main.projectile[player.heldProj].type == ModContent.ProjectileType<StyxGazer>())
             {
-                projectile.Center = Main.projectile[ai1].Center + Main.projectile[ai1].velocity * 75;
-                projectile.velocity = Main.projectile[ai1].velocity.RotatedBy(projectile.ai[0]);
+                projectile.Center = Main.projectile[player.heldProj].Center;
+                projectile.position += Main.projectile[player.heldProj].velocity * 75;
+                projectile.velocity = Main.projectile[player.heldProj].velocity.RotatedBy(projectile.ai[0]);
             }
-            else
+            else if (projectile.localAI[0] > 5 * projectile.MaxUpdates) //leeway for mp lag
             {
-                if (projectile.localAI[0] == 15)
-                {
-                    for (int i = 0; i < Main.maxProjectiles; i++)
-                    {
-                        if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].type == ModContent.ProjectileType<StyxGazer>())
-                        {
-                            projectile.ai[1] = i;
-                            return;
-                        }
-                    }
-                }
-                else if (projectile.localAI[0] > 15 || Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    projectile.Kill();
-                }
+                projectile.Kill();
                 return;
             }
             if (projectile.velocity.HasNaNs() || projectile.velocity == Vector2.Zero)

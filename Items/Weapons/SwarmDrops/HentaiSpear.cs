@@ -15,7 +15,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             DisplayName.SetDefault("The Penetrator");
             Tooltip.SetDefault(@"Has differents attack when using left or right click
-Has different attacks when used while dashing or holding up
+Has different attacks when used while holding up or both up and down
 'The reward for embracing eternity...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "洞察者");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励...'");
@@ -56,17 +56,20 @@ Has different attacks when used while dashing or holding up
             {
                 if (player.controlUp)
                 {
-                    item.shoot = mod.ProjectileType("HentaiSpearSpinThrown");
-                    item.shootSpeed = 6f;
-                    item.useAnimation = 16;
-                    item.useTime = 16;
-                }
-                else if (player.dashDelay == -1)
-                {
-                    item.shoot = mod.ProjectileType("HentaiSpearWand");
-                    item.shootSpeed = 6f;
-                    item.useAnimation = 16;
-                    item.useTime = 16;
+                    if (player.controlDown)
+                    {
+                        item.shoot = mod.ProjectileType("HentaiSpearWand");
+                        item.shootSpeed = 6f;
+                        item.useAnimation = 16;
+                        item.useTime = 16;
+                    }
+                    else
+                    {
+                        item.shoot = mod.ProjectileType("HentaiSpearSpinThrown");
+                        item.shootSpeed = 6f;
+                        item.useAnimation = 16;
+                        item.useTime = 16;
+                    }
                 }
                 else
                 {
@@ -80,7 +83,7 @@ Has different attacks when used while dashing or holding up
             }
             else
             {
-                if (player.controlUp)
+                if (player.controlUp && !player.controlDown)
                 {
                     item.shoot = mod.ProjectileType("HentaiSpearSpin");
                     item.shootSpeed = 1f;
@@ -116,6 +119,15 @@ Has different attacks when used while dashing or holding up
             {
                 if (player.controlUp)
                 {
+                    if (player.controlDown) //giga beam
+                    {
+                        if (player.ownedProjectileCounts[item.shoot] < 1)
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+
                     if (player.ownedProjectileCounts[item.shoot] < 1) //remember to transfer any changes here to hentaispearspinthrown!
                     {
                         Vector2 speed = Main.MouseWorld - player.MountedCenter;
@@ -123,17 +135,7 @@ Has different attacks when used while dashing or holding up
                             speed = Vector2.Normalize(speed) * 360;
                         Projectile.NewProjectile(position, Vector2.Normalize(speed), item.shoot, damage, knockBack, player.whoAmI, speed.X, speed.Y);
                     }
-                    return false;
-                }
 
-                if (player.dashDelay == -1) //mid dash
-                {
-                    if (player.ownedProjectileCounts[item.shoot] < 1)
-                    {
-                        Vector2 speed = new Vector2(speedX, speedY);
-                        Projectile.NewProjectile(position, Vector2.Normalize(speed), mod.ProjectileType("HentaiSpearBigDeathray"), damage, knockBack, player.whoAmI);
-                        return true;
-                    }
                     return false;
                 }
                 return true;
@@ -141,18 +143,19 @@ Has different attacks when used while dashing or holding up
 
             if (player.ownedProjectileCounts[item.shoot] < 1)
             {
-                if (player.controlUp)
+                if (player.controlUp && !player.controlDown)
                 {
                     return true;
                 }
-                else if (player.ownedProjectileCounts[mod.ProjectileType("Dash")] < 1)
+
+                if (player.ownedProjectileCounts[mod.ProjectileType("Dash")] < 1)
                 {
                     float dashAi1 = 0;
-                    float speedModifier = 2;
-                    if (player.dashDelay == -1) //mid dash
+                    float speedModifier = 2f;
+                    if (player.controlUp && player.controlDown) //super dash
                     {
                         dashAi1 = 1;
-                        speedModifier = 3;
+                        speedModifier = 2.5f;
                         player.dashDelay = 0;
                     }
                     Vector2 speed = new Vector2(speedX, speedY);

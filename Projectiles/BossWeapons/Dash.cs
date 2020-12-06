@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             player.Center = projectile.Center;
             //if (projectile.timeLeft > 1) player.position += projectile.velocity; //trying to avoid wallclipping
-            player.velocity = projectile.velocity;
+            player.velocity = projectile.velocity * 0.5f;
 
             player.ChangeDir(projectile.velocity.X > 0 ? 1 : -1);
             player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * projectile.direction, projectile.velocity.X * projectile.direction);

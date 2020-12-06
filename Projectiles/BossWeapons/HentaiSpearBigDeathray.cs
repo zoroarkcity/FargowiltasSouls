@@ -52,20 +52,19 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            if (player.active && !player.dead && projectile.ai[1] > -1 && projectile.ai[1] < Main.maxProjectiles
-                && Main.projectile[(int)projectile.ai[1]].active && Main.projectile[(int)projectile.ai[1]].type == ModContent.ProjectileType<HentaiSpearWand>()
-                && Main.projectile[(int)projectile.ai[1]].owner == projectile.owner)
+            if (player.active && !player.dead && player.heldProj > -1 && player.heldProj < Main.maxProjectiles
+                && Main.projectile[player.heldProj].active && Main.projectile[player.heldProj].type == ModContent.ProjectileType<HentaiSpearWand>())
             {
-                projectile.Center = Main.projectile[(int)projectile.ai[1]].Center + Main.rand.NextVector2Circular(5, 5);
+                projectile.Center = Main.projectile[player.heldProj].Center + Main.rand.NextVector2Circular(5, 5);
                 projectile.timeLeft = 2;
 
-                projectile.velocity = Main.projectile[(int)projectile.ai[1]].velocity;
+                projectile.velocity = Main.projectile[player.heldProj].velocity;
                 projectile.position += projectile.velocity * 164 * 1.3f * 0.75f; //part of penetrator's length
 
-                projectile.damage = Main.projectile[(int)projectile.ai[1]].damage;
-                projectile.knockBack = Main.projectile[(int)projectile.ai[1]].knockBack;
+                projectile.damage = Main.projectile[player.heldProj].damage;
+                projectile.knockBack = Main.projectile[player.heldProj].knockBack;
             }
-            else
+            else if (projectile.localAI[0] > 5) //leeway for mp lag
             {
                 projectile.Kill();
                 return;
@@ -190,8 +189,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                 if (projectile.owner == Main.myPlayer)
                 {
-                    projectile.netUpdate = true;
-
                     const int ringMax = 10;
                     const float speed = 12f;
                     const float rotation = 0.5f;
@@ -225,12 +222,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 1; //balanceing
-
-            if (projectile.owner == Main.myPlayer)
-            {
-                Projectile.NewProjectile(target.position + new Vector2(Main.rand.Next(target.width), Main.rand.Next(target.height)),
-                    Vector2.Zero, ModContent.ProjectileType<PhantasmalBlast>(), projectile.damage, projectile.knockBack * 3f, projectile.owner);
-            }
             target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 600);
         }
 
