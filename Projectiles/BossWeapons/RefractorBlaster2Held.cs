@@ -50,7 +50,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			if (player.dead || !player.active)
 				projectile.Kill();
 
-			Vector2 center = player.MountedCenter;
+            if (Main.player[projectile.owner].HeldItem.type == ModContent.ItemType<Items.Weapons.SwarmDrops.RefractorBlaster2>())
+            {
+                projectile.damage = Main.player[projectile.owner].GetWeaponDamage(Main.player[projectile.owner].HeldItem);
+                projectile.knockBack = Main.player[projectile.owner].GetWeaponKnockback(Main.player[projectile.owner].HeldItem, Main.player[projectile.owner].HeldItem.knockBack);
+            }
+
+            Vector2 center = player.MountedCenter;
 
 			projectile.Center = center;
 			projectile.rotation = projectile.velocity.ToRotation();

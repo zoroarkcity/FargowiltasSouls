@@ -46,6 +46,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
             if (Main.projectile[(int)projectile.ai[1]].active && Main.projectile[(int)projectile.ai[1]].type == ModContent.ProjectileType<RefractorBlaster2Held>())
             {
+                projectile.damage = Main.projectile[(int)projectile.ai[1]].damage;
+                projectile.knockBack = Main.projectile[(int)projectile.ai[1]].knockBack;
+
                 Vector2 Offset = new Vector2(Main.projectile[(int)projectile.ai[1]].width * 0.4f, 0).RotatedBy(Main.projectile[(int)projectile.ai[1]].velocity.ToRotation());
                 projectile.Center = Main.projectile[(int)projectile.ai[1]].Center + Offset;
                 projectile.timeLeft++;

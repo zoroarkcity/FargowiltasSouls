@@ -208,3 +208,6 @@ penetrator
 	base right click fires faster
 	up+right to throw spinning reflecting penetrator
 	you can up+right to begin throwing, then release up but continue throwing spinners (THIS MIGHT BE BUGGY)
+
+mutant final gigabeam ignores timestop
+blender, diffractor update damage in realtime

@@ -30,7 +30,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.timeLeft++;
             projectile.rotation += 0.5f;
 
-            if (!proj.active || proj.type != ModContent.ProjectileType<BlenderYoyoProj>())
+            if (!proj.active || proj.type != ModContent.ProjectileType<BlenderYoyoProj>() || proj.owner != projectile.owner)
             {
                 projectile.Kill();
                 return;
@@ -54,7 +54,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 }
             }
 
-
+            projectile.damage = proj.damage;
+            projectile.knockBack = proj.knockBack;
 
             if (++Counter > 60)
             {
