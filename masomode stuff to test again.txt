@@ -221,3 +221,5 @@ fucked with deathray sync in mp, relevant to
 	diffractor blaster
 fixed weird dragon's demise fireball explosions in mp
 did SOMETHING to alleviate ghost fireballs from dragon's demise in mp
+
+brain staff rework

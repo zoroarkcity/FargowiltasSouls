@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.height = 20;
             projectile.netImportant = true;
             projectile.friendly = true;
-            projectile.minionSlots = 0.5f;
+            projectile.minionSlots = 1f;
             projectile.timeLeft = 18000;
             ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
             ProjectileID.Sets.Homing[projectile.type] = true;
