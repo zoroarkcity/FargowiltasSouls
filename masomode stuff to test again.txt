@@ -229,3 +229,5 @@ valhalla and squire heavily adjusted
 	internal implementation changed
 	now on debuff cooldown
 	buff makes you glow
+
+echdeath phase 2
