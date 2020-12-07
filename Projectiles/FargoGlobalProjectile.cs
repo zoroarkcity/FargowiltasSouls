@@ -1316,17 +1316,20 @@ namespace FargowiltasSouls.Projectiles
                         fargoPlayer.GrazeCounter = -1; //reset counter whenever successful graze
 
                         if (!Main.dedServ)
-                            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Graze").WithVolume(1f), Main.LocalPlayer.Center);
+                        {
+                            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Graze").WithVolume(0.5f), Main.LocalPlayer.Center);
+                        }
 
-                        const int max = 30; //make some indicator dusts
+                        Vector2 baseVel = Vector2.UnitX.RotatedByRandom(2 * Math.PI);
+                        const int max = 36; //make some indicator dusts
                         for (int i = 0; i < max; i++)
                         {
-                            Vector2 vector6 = Vector2.UnitY * 5f;
+                            Vector2 vector6 = baseVel * 4f;
                             vector6 = vector6.RotatedBy((i - (max / 2 - 1)) * 6.28318548f / max) + Main.LocalPlayer.Center;
                             Vector2 vector7 = vector6 - Main.LocalPlayer.Center;
                             //changes color when bonus is maxed
                             int d = Dust.NewDust(vector6 + vector7, 0, 0, fargoPlayer.GrazeBonus >= grazeCap ? 86 : 228, 0f, 0f, 0, default(Color));
-                            Main.dust[d].scale = 1.5f;
+                            Main.dust[d].scale = fargoPlayer.GrazeBonus >= grazeCap ? 2f : 0.75f;
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity = vector7;
                         }

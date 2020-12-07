@@ -58,8 +58,7 @@ namespace FargowiltasSouls.NPCs
 
         private int necroDamage = 0;
         
-
-        private int squireCounter = 0;
+        
         public bool SpecialEnchantImmune;
 
         public static bool Revengeance => CalamityMod.World.CalamityWorld.revenge;
@@ -926,81 +925,6 @@ namespace FargowiltasSouls.NPCs
 
             //normal damage calc
             return true;
-        }
-
-        public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
-        {
-            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-
-            if ((modPlayer.SquireEnchant || modPlayer.ValhallaEnchant) && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaEffect)
-                 && !(player.HasBuff(ModContent.BuffType<ValhallaBuff>()) || player.HasBuff(ModContent.BuffType<SquireBuff>())))
-            {
-                squireCounter += 5;
-
-                if (squireCounter >= 250)
-                {
-                    if (modPlayer.ValhallaEnchant)
-                    {
-                        int duration = 300;
-
-                        if (modPlayer.WillForce || modPlayer.WizardEnchant)
-                        {
-                            duration = 480;
-                        }
-
-                        player.AddBuff(ModContent.BuffType<ValhallaBuff>(), duration);
-                    }
-                    else if (modPlayer.SquireEnchant)
-                    {
-                        player.AddBuff(ModContent.BuffType<SquireBuff>(), 300);
-                    }
-
-                    squireCounter = 0;
-                }
-            }
-        }
-
-        public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
-        {
-            Player player = Main.player[projectile.owner];
-            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-
-            if ((modPlayer.SquireEnchant || modPlayer.ValhallaEnchant) && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaEffect))
-            {
-                if (player.HasBuff(ModContent.BuffType<ValhallaBuff>()) && npc.immune[projectile.owner] > 2)
-                {
-                    npc.immune[projectile.owner] = 2;
-                }
-                else if (player.HasBuff(ModContent.BuffType<SquireBuff>()) && npc.immune[projectile.owner] > 5)
-                {
-                    npc.immune[projectile.owner] = 5;
-                }
-                else
-                {
-                    squireCounter++;
-
-                    if (squireCounter >= 250)
-                    {
-                        if (modPlayer.ValhallaEnchant)
-                        {
-                            int duration = 300;
-
-                            if (modPlayer.WillForce || modPlayer.WizardEnchant)
-                            {
-                                duration = 480;
-                            }
-
-                            player.AddBuff(ModContent.BuffType<ValhallaBuff>(), duration);
-                        }
-                        else if (modPlayer.SquireEnchant)
-                        {
-                            player.AddBuff(ModContent.BuffType<SquireBuff>(), 300);
-                        }
-
-                        squireCounter = 0;
-                    }
-                }
-            }
         }
 
         public override void SetupShop(int type, Chest shop, ref int nextSlot)
