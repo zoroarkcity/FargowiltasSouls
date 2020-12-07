@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 
         public override void SetDefaults()
         {
-            item.damage = 14;
+            item.damage = 12;
             item.summon = true;
             item.mana = 10;
             item.width = 26;
@@ -48,11 +48,8 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             {
                 Projectile.NewProjectile(spawnPos, Vector2.Zero, type, damage, knockBack, player.whoAmI);
             }
-
-            for (int i = 0; i < 2; i++) //spawn 2 creeper minions every use
-            {
-                Projectile.NewProjectile(spawnPos, Main.rand.NextVector2Circular(10, 10), mod.ProjectileType("CreeperMinion"), damage, knockBack, player.whoAmI);
-            }
+            
+            Projectile.NewProjectile(spawnPos, Main.rand.NextVector2Circular(10, 10), mod.ProjectileType("CreeperMinion"), damage, knockBack, player.whoAmI);
             return false;
         }
     }
