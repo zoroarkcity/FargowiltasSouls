@@ -1,17 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using FargowiltasSouls.Buffs.Masomode;
 
-namespace FargowiltasSouls.Projectiles.MutantBoss
+namespace FargowiltasSouls.Projectiles.BossWeapons
 {
-    public class MutantGiantDeathray2 : Deathrays.BaseDeathray
+    public class HentaiSpearBigDeathray : Deathrays.BaseDeathray
     {
-        public MutantGiantDeathray2() : base(600, "PhantasmalDeathrayML") { }
+        public HentaiSpearBigDeathray() : base(60, "PhantasmalDeathrayML") { }
 
-        public int dustTimer;
+        int dustTimer;
 
         public override void SetStaticDefaults()
         {
@@ -21,17 +23,27 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         public override void SetDefaults()
         {
             base.SetDefaults();
+            cooldownSlot = -1;
+            projectile.hostile = false;
+            projectile.friendly = true;
+            projectile.ranged = true;
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
-            projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
+
+            projectile.hide = true;
+            projectile.penetrate = -1;
         }
 
-        public override bool CanDamage()
+        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
         {
-            return projectile.scale >= 10f;
+            drawCacheProjsBehindProjectiles.Add(index);
         }
 
         public override void AI()
         {
+            Player player = Main.player[projectile.owner];
+
             if (!Main.dedServ && Main.LocalPlayer.active)
                 Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 2;
 
@@ -40,11 +52,19 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            if (Main.npc[(int)projectile.ai[1]].active && Main.npc[(int)projectile.ai[1]].type == mod.NPCType("MutantBoss"))
+            if (player.active && !player.dead && player.heldProj > -1 && player.heldProj < Main.maxProjectiles
+                && Main.projectile[player.heldProj].active && Main.projectile[player.heldProj].type == ModContent.ProjectileType<HentaiSpearWand>())
             {
-                projectile.Center = Main.npc[(int)projectile.ai[1]].Center + Vector2.UnitX.RotatedBy(Main.npc[(int)projectile.ai[1]].ai[3]) * 175 + Main.rand.NextVector2Circular(5, 5);
+                projectile.Center = Main.projectile[player.heldProj].Center + Main.rand.NextVector2Circular(5, 5);
+                projectile.timeLeft = 2;
+
+                projectile.velocity = Main.projectile[player.heldProj].velocity;
+                projectile.position += projectile.velocity * 164 * 1.3f * 0.75f; //part of penetrator's length
+
+                projectile.damage = Main.projectile[player.heldProj].damage;
+                projectile.knockBack = Main.projectile[player.heldProj].knockBack;
             }
-            else
+            else if (projectile.localAI[0] > 5) //leeway for mp lag
             {
                 projectile.Kill();
                 return;
@@ -55,16 +75,30 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             }
             if (projectile.localAI[0] == 0f)
             {
-                Main.PlaySound(SoundID.Zombie, (int)Main.player[Main.myPlayer].Center.X, (int)Main.player[Main.myPlayer].Center.Y, 104, 1f, 0f);
+                if (!Main.dedServ)
+                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Zombie_104"), projectile.Center);
             }
             float num801 = 10f;
-            projectile.localAI[0] += 1f;
+
+            if (projectile.localAI[0] == maxTime / 2)
+            {
+                if (projectile.owner == Main.myPlayer && !(player.controlUseTile && player.altFunctionUse == 2 && player.HeldItem.type == mod.ItemType("HentaiSpear")))
+                    projectile.localAI[0] += 1f; //if stop firing, proceed to die
+                else
+                    projectile.localAI[0] -= 1f; //otherwise, stay (also for multiplayer!)
+            }
+            else
+            {
+                projectile.localAI[0] += 1f;
+            }
+
             if (projectile.localAI[0] >= maxTime)
             {
                 projectile.Kill();
                 return;
             }
-            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 5f * num801;
+            //projectile.scale = num801;
+            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 1.5f * num801;
             if (projectile.scale > num801)
             {
                 projectile.scale = num801;
@@ -72,11 +106,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             //float num804 = projectile.velocity.ToRotation();
             //num804 += projectile.ai[0];
             //projectile.rotation = num804 - 1.57079637f;
-            float num804 = Main.npc[(int)projectile.ai[1]].ai[3] - 1.57079637f;
+            //float num804 = Main.npc[(int)projectile.ai[1]].ai[3] - 1.57079637f;
             //if (projectile.ai[0] != 0f) num804 -= (float)Math.PI;
-            projectile.rotation = num804;
-            num804 += 1.57079637f;
-            projectile.velocity = num804.ToRotationVector2();
+            //projectile.rotation = num804;
+            //num804 += 1.57079637f;
+            //projectile.velocity = num804.ToRotationVector2();
             float num805 = 3f;
             float num806 = (float)projectile.width;
             Vector2 samplingPoint = projectile.Center;
@@ -120,6 +154,9 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
             //Utils.PlotTileLine(projectile.Center, projectile.Center + projectile.velocity * projectile.localAI[1], (float)projectile.width * projectile.scale, new Utils.PerLinePoint(DelegateMethods.CastLight));
 
+            projectile.position -= projectile.velocity;
+            projectile.rotation = projectile.velocity.ToRotation() - 1.57079637f;
+
             if (++dustTimer > 30)
             {
                 dustTimer = 0;
@@ -144,6 +181,28 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 }
             }
 
+            if (++projectile.ai[0] > 60)
+            {
+                projectile.ai[0] = 0;
+
+                Main.PlaySound(SoundID.Item84, player.Center);
+
+                if (projectile.owner == Main.myPlayer)
+                {
+                    const int ringMax = 10;
+                    const float speed = 12f;
+                    const float rotation = 0.5f;
+                    for (int i = 0; i < ringMax; i++)
+                    {
+                        Vector2 vel = speed * projectile.velocity.RotatedBy(2 * Math.PI / ringMax * i);
+                        Projectile.NewProjectile(player.Center, vel, ModContent.ProjectileType<HentaiSphereRing>(),
+                            projectile.damage, projectile.knockBack, projectile.owner, rotation, speed);
+                        Projectile.NewProjectile(player.Center, vel, ModContent.ProjectileType<HentaiSphereRing>(),
+                            projectile.damage, projectile.knockBack, projectile.owner, -rotation, speed);
+                    }
+                }
+            }
+
             if (++projectile.frameCounter > 3)
             {
                 if (++projectile.frame > 15)
@@ -159,25 +218,11 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 }
             }
         }
-
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (FargoSoulsWorld.MasochistMode)
-            {
-                target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
-                target.AddBuff(mod.BuffType("OceanicMaul"), 5400);
-                target.AddBuff(mod.BuffType("MutantFang"), 180);
-            }
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 600);
-            target.ClearBuff(mod.BuffType("GoldenStasis"));
-            
-            if (Fargowiltas.Instance.MasomodeEXLoaded)
-                target.AddBuff(ModLoader.GetMod("MasomodeEX").BuffType("MutantJudgement"), 3600);
-
-            target.immune = false;
-            target.immuneTime = 0;
-            target.hurtCooldowns[0] = 0;
-            target.hurtCooldowns[1] = 0;
+            target.immune[projectile.owner] = 1; //balanceing
+            target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 600);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

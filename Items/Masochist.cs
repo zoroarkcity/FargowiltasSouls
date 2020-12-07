@@ -69,7 +69,18 @@ Cannot be used while a boss is alive
                 }
 
                 if (FargoSoulsWorld.MasochistMode && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Deviantt")))
-                    NPC.SpawnOnPlayer(player.whoAmI, ModLoader.GetMod("Fargowiltas").NPCType("Deviantt"));
+                {
+                    //NPC.SpawnOnPlayer(player.whoAmI, ModLoader.GetMod("Fargowiltas").NPCType("Deviantt"));
+                    int projType = ModLoader.GetMod("Fargowiltas").ProjectileType("SpawnProj");
+                    int spawnType = ModLoader.GetMod("Fargowiltas").NPCType("Deviantt");
+                    Projectile.NewProjectile(player.Center - 1000 * Vector2.UnitY, Vector2.Zero,
+                        projType, 0, 0, Main.myPlayer, spawnType);
+
+                    if (Main.netMode == NetmodeID.Server)
+                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Deviantt has awoken!"), new Color(175, 75, 255));
+                    else if (Main.netMode != NetmodeID.MultiplayerClient)
+                        Main.NewText("Deviantt has awoken!", new Color(175, 75, 255));
+                }
 
                 Main.PlaySound(SoundID.Roar, (int)player.position.X, (int)player.position.Y, 0);
 

@@ -1,20 +1,27 @@
 using FargowiltasSouls.Projectiles.Minions;
-using IL.Terraria.Chat.Commands;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Graphics;
-using System.ComponentModel;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI.Chat;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
 	public class RefractorBlaster2Held : ModProjectile
 	{
 		public override string Texture => "FargowiltasSouls/Items/Weapons/SwarmDrops/RefractorBlaster2";
-		public override void SetDefaults()
+
+        private int syncTimer;
+        private Vector2 mousePos;
+
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Diffractor Blaster");
+            Main.projFrames[projectile.type] = 7;
+        }
+
+        public override void SetDefaults()
 		{
 			projectile.width = 76;
 			projectile.height = 38;
@@ -25,32 +32,49 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 			//projectile.localNPCHitCooldown = 8;
 			projectile.tileCollide = false;
 			projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
-			Main.projFrames[projectile.type] = 7;
-		}
+
+            projectile.netImportant = true;
+        }
 
 		public int timer;
         public float lerp = 0.12f;
-
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Refractor Blaster Ex");
-		}
 
         public override bool CanDamage()
         {
             return false;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(mousePos.X);
+            writer.Write(mousePos.Y);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            Vector2 buffer;
+            buffer.X = reader.ReadSingle();
+            buffer.Y = reader.ReadSingle();
+            if (projectile.owner != Main.myPlayer)
+            {
+                mousePos = buffer;
+            }
+        }
+
         public override void AI()
 		{
 			Player player = Main.player[projectile.owner];
-			if (Main.myPlayer != player.whoAmI)
-				return;
 
 			if (player.dead || !player.active)
 				projectile.Kill();
 
-			Vector2 center = player.MountedCenter;
+            if (Main.player[projectile.owner].HeldItem.type == ModContent.ItemType<Items.Weapons.SwarmDrops.RefractorBlaster2>())
+            {
+                projectile.damage = Main.player[projectile.owner].GetWeaponDamage(Main.player[projectile.owner].HeldItem);
+                projectile.knockBack = Main.player[projectile.owner].GetWeaponKnockback(Main.player[projectile.owner].HeldItem, Main.player[projectile.owner].HeldItem.knockBack);
+            }
+
+            Vector2 center = player.MountedCenter;
 
 			projectile.Center = center;
 			projectile.rotation = projectile.velocity.ToRotation();
@@ -78,13 +102,30 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
 				projectile.frameCounter = 0;
 			}
-			if (player.channel)
-			{
-				projectile.velocity = Vector2.Lerp(Vector2.Normalize(projectile.velocity),
-					Vector2.Normalize(Main.MouseWorld - player.MountedCenter), lerp); //slowly move towards direction of cursor
-				projectile.velocity.Normalize();
 
-				timer++;
+            projectile.velocity = Vector2.Lerp(Vector2.Normalize(projectile.velocity),
+                Vector2.Normalize(mousePos - player.MountedCenter), lerp); //slowly move towards direction of cursor
+            projectile.velocity.Normalize();
+            
+            if (projectile.owner == Main.myPlayer)
+            {
+                mousePos = Main.MouseWorld;
+
+                if (++syncTimer > 20)
+                {
+                    syncTimer = 0;
+                    projectile.netUpdate = true;
+                }
+            }
+            else
+            {
+                projectile.Center += projectile.velocity * 20;
+                return;
+            }
+
+            if (player.channel)
+			{
+                timer++;
 				if (timer % 6 == 0)
 				{
 					Main.PlaySound(player.inventory[player.selectedItem].UseSound, projectile.Center);

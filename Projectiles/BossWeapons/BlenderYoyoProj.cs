@@ -53,6 +53,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             if (soundtimer > 0)
                 soundtimer--;
 
+            if (Main.player[projectile.owner].HeldItem.type == ModContent.ItemType<Items.Weapons.SwarmDrops.Blender>())
+            {
+                projectile.damage = Main.player[projectile.owner].GetWeaponDamage(Main.player[projectile.owner].HeldItem);
+                projectile.knockBack = Main.player[projectile.owner].GetWeaponKnockback(Main.player[projectile.owner].HeldItem, Main.player[projectile.owner].HeldItem.knockBack);
+            }
         }
 
         public override void PostAI()

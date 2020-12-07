@@ -14,10 +14,8 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Penetrator");
-            Tooltip.SetDefault(@"Left click to charge forward
-Left click while dashing for a super charge
-Left click while holding up to spin and reflect projectiles
-Right click to sunder reality
+            Tooltip.SetDefault(@"Has differents attack when using left or right click
+Has different attacks when used while holding up or both up and down
 'The reward for embracing eternity...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "洞察者");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励...'");
@@ -56,16 +54,36 @@ Right click to sunder reality
 
             if (player.altFunctionUse == 2)
             {
-                item.shoot = mod.ProjectileType("HentaiSpearThrown");
-                item.shootSpeed = 25f;
-                item.useAnimation = 100;
-                item.useTime = 100;
+                if (player.controlUp)
+                {
+                    if (player.controlDown)
+                    {
+                        item.shoot = mod.ProjectileType("HentaiSpearWand");
+                        item.shootSpeed = 6f;
+                        item.useAnimation = 16;
+                        item.useTime = 16;
+                    }
+                    else
+                    {
+                        item.shoot = mod.ProjectileType("HentaiSpearSpinThrown");
+                        item.shootSpeed = 6f;
+                        item.useAnimation = 16;
+                        item.useTime = 16;
+                    }
+                }
+                else
+                {
+                    item.shoot = mod.ProjectileType("HentaiSpearThrown");
+                    item.shootSpeed = 25f;
+                    item.useAnimation = 85;
+                    item.useTime = 85;
+                }
                 item.ranged = true;
                 item.melee = false;
             }
             else
             {
-                if (player.controlUp)
+                if (player.controlUp && !player.controlDown)
                 {
                     item.shoot = mod.ProjectileType("HentaiSpearSpin");
                     item.shootSpeed = 1f;
@@ -99,23 +117,45 @@ Right click to sunder reality
         {
             if (player.altFunctionUse == 2) //right click
             {
+                if (player.controlUp)
+                {
+                    if (player.controlDown) //giga beam
+                    {
+                        if (player.ownedProjectileCounts[item.shoot] < 1)
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+
+                    if (player.ownedProjectileCounts[item.shoot] < 1) //remember to transfer any changes here to hentaispearspinthrown!
+                    {
+                        Vector2 speed = Main.MouseWorld - player.MountedCenter;
+                        if (speed.Length() < 360)
+                            speed = Vector2.Normalize(speed) * 360;
+                        Projectile.NewProjectile(position, Vector2.Normalize(speed), item.shoot, damage, knockBack, player.whoAmI, speed.X, speed.Y);
+                    }
+
+                    return false;
+                }
                 return true;
             }
 
             if (player.ownedProjectileCounts[item.shoot] < 1)
             {
-                if (player.controlUp)
+                if (player.controlUp && !player.controlDown)
                 {
                     return true;
                 }
-                else if (player.ownedProjectileCounts[mod.ProjectileType("Dash")] < 1)
+
+                if (player.ownedProjectileCounts[mod.ProjectileType("Dash")] < 1)
                 {
                     float dashAi1 = 0;
-                    float speedModifier = 2;
-                    if (player.dashDelay == -1) //mid dash
+                    float speedModifier = 2f;
+                    if (player.controlUp && player.controlDown) //super dash
                     {
                         dashAi1 = 1;
-                        speedModifier = 3;
+                        speedModifier = 2.5f;
                         player.dashDelay = 0;
                     }
                     Vector2 speed = new Vector2(speedX, speedY);
