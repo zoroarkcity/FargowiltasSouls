@@ -3,10 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Fargowiltas.Items.Tiles;
+using FargowiltasSouls.Items.Weapons.BossDrops;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class MechFlail : ModItem
+    public class MechanicalLeashOfCthulhu : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -30,7 +31,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.useTime = 25;
             item.knockBack = 6f;
             item.noUseGraphic = true;
-            item.shoot = mod.ProjectileType("MechFlail");
+            item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.MechFlail>();
             item.shootSpeed = 50f;
             item.UseSound = SoundID.Item1;
             item.melee = true;
@@ -39,7 +40,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(null, "EyeFlail");
+            recipe.AddIngredient(ModContent.ItemType<LeashOfCthulhu>());
             recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerEye"));
             recipe.AddIngredient(ItemID.LunarBar, 10);
 

@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"Icicles will start to appear around you
 Attacking will launch them towards the cursor
 When 10 or more hit an enemy, they are frozen solid and take 20% extra damage for 5 seconds
-You have a small area around you that will slow projectiles to 2/3 speed
+You have a small area around you that will slow projectiles to 1/2 speed
 Summons several pets
 'Let's coat the world in a deep freeze'";
 

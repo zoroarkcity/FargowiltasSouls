@@ -59,7 +59,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             }
             else
             {
-                item.shoot = mod.ProjectileType("HentaiSpear");
+                item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.HentaiSpear>();
                 item.shootSpeed = 6f;
                 item.useAnimation = 16;
                 item.useTime = 16;

@@ -7,12 +7,13 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
-    public class Spazmarang : ModProjectile
+    public class Spazmaglaive : ModProjectile
     {
+        bool empowered = false;
         bool hitSomething = false;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spazmarang");
+            DisplayName.SetDefault("Spazmaglaive");
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
@@ -31,6 +32,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void AI()
         {
+            if (projectile.ai[0] == ModContent.ProjectileType<Retiglaive>())
+            {
+                empowered = true;
+            }
+
             //travelling out
             if (projectile.ai[0] == 0)
             {
@@ -43,7 +49,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 }
             }
             //travel back to player
-            else 
+            else
             {
                 projectile.extraUpdates = 0;
                 projectile.velocity = Vector2.Normalize(Main.player[projectile.owner].Center - projectile.Center) * 45;

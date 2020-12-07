@@ -20,7 +20,7 @@ When you are hurt, you violently explode to damage nearby enemies
 Grants immunity to Wet
 A miniature storm will appear after damaging enemies
 Icicles will start to appear around you
-You have a small area around you that will slow projectiles to 2/3 speed
+You have a small area around you that will slow projectiles to 1/2 speed
 Summons a ring of leaf crystals to shoot at nearby enemies
 Jumping will release a lingering spore explosion
 All herb collection is doubled
