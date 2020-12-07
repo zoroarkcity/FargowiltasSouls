@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Projectiles.Minions;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -56,7 +57,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                     if (empowered)
                     {
-                        FargoGlobalProjectile.XWay(12, projectile.Center, ModContent.ProjectileType<DarkStar>());
+                        FargoGlobalProjectile.XWay(12, projectile.Center, ModContent.ProjectileType<DarkStarFriendly>(), 5, projectile.damage / 2, 1);
                     }
                 }
 
@@ -71,6 +72,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             if (projectile.ai[0] == ModContent.ProjectileType<Spazmaglaive>())
             {
                 empowered = true;
+                projectile.ai[0] = 0;
+            }
+            else if (projectile.ai[0] == ModContent.ProjectileType<Retiglaive>())
+            {
+                projectile.ai[0] = 0;
             }
 
             //travelling out

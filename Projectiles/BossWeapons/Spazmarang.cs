@@ -85,7 +85,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            spawnFire();
+            if (projectile.Distance(Main.player[projectile.owner].Center) >= 50)
+            {
+                spawnFire();
+            }
+            
             return false;
         }
 

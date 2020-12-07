@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using FargowiltasSouls.Projectiles.BossWeapons;
 
-namespace FargowiltasSouls.Items.Weapons.BossDrops
+namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
     public class GeminiGlaives : ModItem
     {
