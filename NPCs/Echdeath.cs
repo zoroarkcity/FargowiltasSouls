@@ -149,6 +149,7 @@ namespace FargowiltasSouls.NPCs
             {
                 Main.NewText(":echdeath:", Color.Red);
                 Main.LocalPlayer.ResetEffects();
+                Main.LocalPlayer.ghost = true;
                 Main.LocalPlayer.KillMe(PlayerDeathReason.ByNPC(npc.whoAmI), npc.damage, 0);
                 for (int i = 0; i < 100; i++)
                     CombatText.NewText(Main.LocalPlayer.Hitbox, Color.Red, Main.rand.Next(npc.damage), true);
@@ -182,6 +183,7 @@ namespace FargowiltasSouls.NPCs
             {
                 Main.NewText(":echdeath:", Color.Red);
                 target.ResetEffects();
+                target.ghost = true;
                 target.KillMe(PlayerDeathReason.ByNPC(npc.whoAmI), npc.damage, 0);
                 for (int i = 0; i < 100; i++)
                     CombatText.NewText(target.Hitbox, Color.Red, Main.rand.Next(npc.damage), true);
