@@ -34,16 +34,25 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.UseSound = SoundID.Item44;
             item.shoot = ModContent.ProjectileType<BrainProj>();
             item.shootSpeed = 10f;
-            item.buffType = ModContent.BuffType<BrainMinion>();
+            //item.buffType = ModContent.BuffType<BrainMinion>();
             item.autoReuse = true;
             item.value = Item.sellPrice(0, 2);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            player.AddBuff(item.buffType, 2);
+            player.AddBuff(ModContent.BuffType<BrainMinion>(), 2);
             Vector2 spawnPos = Main.MouseWorld;
-            Projectile.NewProjectile(spawnPos, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, 1f);
+
+            if (player.ownedProjectileCounts[type] == 0) //only spawn brain minion itself when the player doesnt have any
+            {
+                Projectile.NewProjectile(spawnPos, Vector2.Zero, type, damage, knockBack, player.whoAmI);
+            }
+
+            for (int i = 0; i < 2; i++) //spawn 2 creeper minions every use
+            {
+                Projectile.NewProjectile(spawnPos, Main.rand.NextVector2Circular(10, 10), mod.ProjectileType("CreeperMinion"), damage, knockBack, player.whoAmI);
+            }
             return false;
         }
     }
