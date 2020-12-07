@@ -223,3 +223,9 @@ fixed weird dragon's demise fireball explosions in mp
 did SOMETHING to alleviate ghost fireballs from dragon's demise in mp
 
 brain staff rework
+tweaked graze volume and light ring
+nerfed hellzone damage
+valhalla and squire heavily adjusted
+	internal implementation changed
+	now on debuff cooldown
+	buff makes you glow
