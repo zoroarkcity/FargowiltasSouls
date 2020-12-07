@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using FargowiltasSouls.Projectiles.Minions;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
@@ -32,7 +33,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.value = 50000;
             item.rare = 5;
             item.autoReuse = true;
-            item.shoot = mod.ProjectileType("DestroyerHead");
+            item.shoot = ModContent.ProjectileType<DestroyerHead>();
             item.shootSpeed = 10f;
         }
     }

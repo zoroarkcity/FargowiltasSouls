@@ -94,6 +94,7 @@ Has different attacks when used while holding up or both up and down
                     item.shoot = mod.ProjectileType("HentaiSpear");
                     item.shootSpeed = 6f;
                 }
+
                 item.useAnimation = 16;
                 item.useTime = 16;
                 item.ranged = false;

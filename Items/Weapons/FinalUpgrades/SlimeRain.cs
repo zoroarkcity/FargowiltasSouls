@@ -29,7 +29,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             item.useStyle = 1;
             item.melee = true;
             item.knockBack = 6;
-            item.value = Item.sellPrice(0, 70);
+            item.value = Item.sellPrice(1);
             item.rare = 11;
             item.UseSound = SoundID.Item34;
             item.autoReuse = true;

@@ -689,7 +689,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.EyeofCthulhu:
-                        Item.NewItem(npc.Hitbox, ModContent.ItemType<EyeFlail>());
+                        Item.NewItem(npc.Hitbox, ModContent.ItemType<LeashOfCthulhu>());
                         break;
 
                     case NPCID.EaterofWorldsHead:

@@ -68,8 +68,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 distance = num169 / distance;
                 num166 *= distance;
                 num167 *= distance;
-                projectile.velocity.X = num166;
-                projectile.velocity.Y = num167;
+                projectile.velocity.X = num166 * 2;
+                projectile.velocity.Y = num167 * 2;
                 if (projectile.velocity.X < 0f)
                     projectile.spriteDirection = 1;
                 else
@@ -77,7 +77,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
 
             //Spew eye
-            if ((int)projectile.ai[0] == 1f && projectile.owner == Main.myPlayer && eyeSpawn)
+            /*if ((int)projectile.ai[0] == 1f && projectile.owner == Main.myPlayer && eyeSpawn)
             {
                 Vector2 vector54 = Main.player[projectile.owner].Center - projectile.Center;
                 Vector2 vector55 = vector54 * -1f;
@@ -88,11 +88,35 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     projectile.owner, -10f);
 
                 eyeSpawn = false;
-            }
+            }*/
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            if (projectile.ai[0] != 1f)
+            {
+                int dist = 1000;
+
+                for (int i = 0; i < Main.rand.Next(2, 4); i++)
+                {
+                    Vector2 offset = new Vector2();
+                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                    offset.X += (float)(Math.Sin(angle) * dist);
+                    offset.Y += (float)(Math.Cos(angle) * dist);
+
+                    Vector2 position = target.Center + offset - new Vector2(4, 4);
+                    Vector2 velocity = Vector2.Normalize(target.Center - position) * 25;
+
+                    int p = Projectile.NewProjectile(position, velocity,
+                        ModContent.ProjectileType<EyeProjectile>(), projectile.damage, projectile.knockBack, projectile.owner, -10f);
+
+                    if (p != Main.maxProjectiles)
+                    {
+                        Main.projectile[p].tileCollide = false;
+                    }
+                }
+            }
+
             //retract
             projectile.ai[0] = 1f;
         }

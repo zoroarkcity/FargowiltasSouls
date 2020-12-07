@@ -7,11 +7,12 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
-    public class Retirang : ModProjectile
+    public class Retiglaive : ModProjectile
     {
+        bool empowered = false;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Retirang");
+            DisplayName.SetDefault("Retiglaive");
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
@@ -52,6 +53,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 if (projectile.ai[1] > 15)
                 {
                     projectile.ai[0] = 2;
+
+                    if (empowered)
+                    {
+                        FargoGlobalProjectile.XWay(12, projectile.Center, ModContent.ProjectileType<DarkStar>());
+                    }
                 }
 
                 return false;
@@ -62,6 +68,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void AI()
         {
+            if (projectile.ai[0] == ModContent.ProjectileType<Spazmaglaive>())
+            {
+                empowered = true;
+            }
+
             //travelling out
             if (projectile.ai[0] == 0)
             {
