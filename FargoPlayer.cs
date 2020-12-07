@@ -167,6 +167,7 @@ namespace FargowiltasSouls
         public bool AncientCobaltEnchant;
         public bool AncientShadowEnchant;
         public bool SquireEnchant;
+        public bool squireReduceIframes;
         public bool ApprenticeEnchant;
         public bool HuntressEnchant;
         public bool MonkEnchant;
@@ -693,6 +694,7 @@ namespace FargowiltasSouls
             AncientCobaltEnchant = false;
             AncientShadowEnchant = false;
             SquireEnchant = false;
+            squireReduceIframes = false;
             ApprenticeEnchant = false;
             HuntressEnchant = false;
             MonkEnchant = false;
@@ -2057,6 +2059,26 @@ namespace FargowiltasSouls
 
         public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
+            if (squireReduceIframes && (SquireEnchant || ValhallaEnchant))
+            {
+                if (Main.rand.Next(2) == 0)
+                {
+                    float scale = ValhallaEnchant ? 3f : 1.5f;
+                    int type = ValhallaEnchant ? 87 : 91;
+                    int dust = Dust.NewDust(player.position, player.width, player.height, type, player.velocity.X * 0.4f, player.velocity.Y * 0.4f, 87, default(Color), scale);
+                    Main.dust[dust].noGravity = true;
+                    Main.dust[dust].velocity *= 1.8f;
+                    Main.dust[dust].velocity.Y -= 0.5f;
+                    if (Main.rand.Next(4) == 0)
+                    {
+                        Main.dust[dust].noGravity = false;
+                        Main.dust[dust].scale *= 0.5f;
+                    }
+                    Main.playerDrawDust.Add(dust);
+                }
+                fullBright = true;
+            }
+
             if (Shadowflame)
             {
                 if (Main.rand.Next(4) == 0 && drawInfo.shadow == 0f)
@@ -2522,6 +2544,38 @@ namespace FargowiltasSouls
 
         public void OnHitNPCEither(NPC target, int damage, float knockback, bool crit, int projectile = -1)
         {
+            if ((SquireEnchant || ValhallaEnchant) && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaEffect))
+            {
+                if (squireReduceIframes)
+                {
+                    if (ValhallaEnchant && target.immune[player.whoAmI] > 3)
+                        target.immune[player.whoAmI] = 3;
+                    else if (SquireEnchant && target.immune[player.whoAmI] > 6)
+                        target.immune[player.whoAmI] = 6;
+                }
+                else if (!player.HasBuff(ModContent.BuffType<ValhallaCD>()))
+                {
+                    int duration = 240;
+                    int cooldown = 1200;
+                    if (ValhallaEnchant)
+                    {
+                        if (WillForce || WizardEnchant)
+                        {
+                            duration = 360;
+                            cooldown = 900;
+                        }
+
+                        player.AddBuff(ModContent.BuffType<ValhallaBuff>(), duration);
+                    }
+                    else if (SquireEnchant)
+                    {
+                        player.AddBuff(ModContent.BuffType<SquireBuff>(), duration);
+                    }
+
+                    player.AddBuff(ModContent.BuffType<ValhallaCD>(), duration + cooldown);
+                }
+            }
+
             if (QueenStinger && QueenStingerCD <= 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.QueenStingerHoney))
             {
                 QueenStingerCD = SupremeDeathbringerFairy ? 300 : 600;

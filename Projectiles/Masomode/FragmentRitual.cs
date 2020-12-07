@@ -66,8 +66,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
             projectile.hide = Main.npc[ai1].ai[0] == 2f; //hide when ml is dead
 
-            projectile.localAI[0] = Main.npc[ai1].GetGlobalNPC<NPCs.EModeGlobalNPC>().Counter[0] / 112.5f; //number to hide
-            projectile.localAI[0] /= 4f;
+            projectile.localAI[0] = Main.npc[ai1].GetGlobalNPC<NPCs.EModeGlobalNPC>().Counter[0] / 56.25f; //number to hide
             projectile.localAI[0]--;
 
             switch (NPCs.EModeGlobalNPC.masoStateML) //match ML vulnerability to fragment
@@ -103,13 +102,13 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
             Color color26 = projectile.GetAlpha(lightColor);
 
-            const int max = 24;
+            const int max = 32;
             for (int x = 0; x < max; x++)
             {
-                if (x % 4 < projectile.localAI[0])
+                if (x < projectile.localAI[0])
                     continue;
-                Vector2 drawOffset = new Vector2(threshold * projectile.scale / 2f, 0f).RotatedBy(projectile.ai[0]);
-                drawOffset = drawOffset.RotatedBy(2f * PI / max * x);
+                Vector2 drawOffset = new Vector2(threshold * projectile.scale / 2f, 0f);//.RotatedBy(projectile.ai[0]);
+                drawOffset = drawOffset.RotatedBy(2f * PI / max * (x + 1) - PI / 2);
                 /*const int max = 4;
                 for (int i = 0; i < max; i++)
                 {

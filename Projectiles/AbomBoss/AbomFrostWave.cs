@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             aiType = ProjectileID.FrostWave;
             projectile.hostile = true;
             projectile.extraUpdates = 1;
-            projectile.timeLeft = 600;
+            projectile.timeLeft = 180;
             projectile.penetrate = -1;
             cooldownSlot = 1;
         }

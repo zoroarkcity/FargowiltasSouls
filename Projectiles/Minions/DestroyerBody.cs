@@ -144,13 +144,9 @@ namespace FargowiltasSouls.Projectiles.Minions
 
                     if (selectedTarget != -1) //shoot
                     {
-                        int p = Projectile.NewProjectile(projectile.Center, 10f * projectile.DirectionTo(Main.npc[selectedTarget].Center),
-                            ProjectileID.PurpleLaser, projectile.damage, projectile.knockBack, projectile.owner);
-                        if (p != Main.maxProjectiles)
-                        {
-                            Main.projectile[p].magic = false;
-                            Main.projectile[p].minion = true;
-                        }
+                        Projectile.NewProjectile(projectile.Center, 10f * projectile.DirectionTo(Main.npc[selectedTarget].Center),
+                            ProjectileID.MiniRetinaLaser, projectile.damage, projectile.knockBack, projectile.owner);
+                        Main.PlaySound(SoundID.Item12, projectile.Center);
                     }
                 }
             }

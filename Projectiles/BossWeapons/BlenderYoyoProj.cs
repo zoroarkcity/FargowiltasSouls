@@ -15,7 +15,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             // Vanilla values range from 3f(Wood) to 16f(Chik), and defaults to -1f. Leaving as -1 will make the time infinite.
             ProjectileID.Sets.YoyosLifeTimeMultiplier[projectile.type] = -1f;
             // Vanilla values range from 130f(Wood) to 400f(Terrarian), and defaults to 200f
-            ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 1500f;
+            ProjectileID.Sets.YoyosMaximumRange[projectile.type] = 750f;
             // Vanilla values range from 9f(Wood) to 17.5f(Terrarian), and defaults to 10f
             ProjectileID.Sets.YoyosTopSpeed[projectile.type] = 25f;
         }
@@ -34,10 +34,10 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             projectile.extraUpdates = 1;
         }
-
+        int soundtimer;
         public override void AI()
         {
-            if (!yoyosSpawned)
+            if (!yoyosSpawned && projectile.owner == Main.myPlayer)
             {
                 int maxYoyos = 5;
                 for (int i = 0; i < maxYoyos; i++)
@@ -48,6 +48,15 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 }
 
                 yoyosSpawned = true;
+            }
+
+            if (soundtimer > 0)
+                soundtimer--;
+
+            if (Main.player[projectile.owner].HeldItem.type == ModContent.ItemType<Items.Weapons.SwarmDrops.Blender>())
+            {
+                projectile.damage = Main.player[projectile.owner].GetWeaponDamage(Main.player[projectile.owner].HeldItem);
+                projectile.knockBack = Main.player[projectile.owner].GetWeaponKnockback(Main.player[projectile.owner].HeldItem, Main.player[projectile.owner].HeldItem.knockBack);
             }
         }
 
@@ -61,9 +70,29 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }*/
         }
 
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            return (projectile.Distance(targetHitbox.Center()) <= 70);
+        }
+
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 6;
+            //target.immune[projectile.owner] = 6;
+            Player player = Main.player[projectile.owner];
+            projectile.ai[1]++;
+            if (projectile.ai[1] > 3 && player.ownedProjectileCounts[ProjectileID.BlackCounterweight] < 3)
+            {
+                Projectile.NewProjectile(player.Center, Main.rand.NextVector2Circular(10, 10), ProjectileID.BlackCounterweight, projectile.damage, projectile.knockBack, projectile.owner);
+                projectile.ai[1] = 0;
+            }
+            if(soundtimer == 0)
+            {
+                soundtimer = 15;
+                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 22, 1.5f, 1f);
+            }
+            Vector2 velocity = Vector2.Normalize(projectile.Center - target.Center) * 10;
+            int proj2 = mod.ProjectileType("BlenderProj3");
+            Projectile.NewProjectile(new Vector2(projectile.Center.X, projectile.Center.Y), velocity, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
         }
     }
 }

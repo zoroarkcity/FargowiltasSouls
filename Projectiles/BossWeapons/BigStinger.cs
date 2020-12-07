@@ -110,7 +110,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     {
                         const float range = 220f; //stinger spray
                         const int time = 22;
-                        const int max = 12;
+                        const int max = 8;
                         Vector2 baseVel = Vector2.UnitX.RotatedByRandom(Math.PI * 2 / max);
                         for (int j = 0; j < max; j++)
                         {
@@ -128,7 +128,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                         targetPos.X += Main.rand.NextFloat(target.width);
                         targetPos.Y += Main.rand.NextFloat(target.height);
                         Vector2 vel = 22f * Vector2.Normalize(targetPos - spawn);
-                        Projectile.NewProjectile(spawn, vel, ModContent.ProjectileType<BigSting22>(), projectile.damage / 2, projectile.knockBack * 2f, projectile.owner);
+                        Projectile.NewProjectile(spawn, vel, ModContent.ProjectileType<BigSting22>(), projectile.damage / 2, projectile.knockBack * 2f, projectile.owner, -1);
                     }
                     break;
                 }

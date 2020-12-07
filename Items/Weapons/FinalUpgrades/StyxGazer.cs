@@ -89,7 +89,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             if (player.altFunctionUse == 2) //right click
             {
                 speed = speed.RotatedBy(Math.PI / 2 * (flip ? 1 : -1));
-                Projectile.NewProjectile(position, speed, type, damage, knockBack, item.owner, (float)Math.PI / 120 * (flip ? -1 : 1));
+                Projectile.NewProjectile(position, speed, type, damage, knockBack, player.whoAmI, (float)Math.PI / 120 * (flip ? -1 : 1));
             }
             else
             {
@@ -97,7 +97,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
                 for (int i = 0; i < max; i++)
                 {
                     Projectile.NewProjectile(position, speed.RotatedBy(2 * Math.PI / max * i), type,
-                        damage, knockBack, item.owner, 0, (Main.MouseWorld - position).Length() * (flip ? 1 : -1));
+                        damage, knockBack, player.whoAmI, 0, (Main.MouseWorld - position).Length() * (flip ? 1 : -1));
                 }
             }
             return false;

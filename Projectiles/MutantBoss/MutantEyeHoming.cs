@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phantasmal Eye");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
@@ -70,6 +70,15 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 projectile.velocity = Vector2.Normalize(projectile.velocity) * MathHelper.Lerp(projectile.velocity.Length(), 10f, 0.035f);
 
             projectile.rotation = projectile.velocity.ToRotation() + 1.570796f;
+
+            if (projectile.localAI[0] < ProjectileID.Sets.TrailCacheLength[projectile.type])
+            {
+                projectile.localAI[0] += 0.1f;
+            }
+            else
+                projectile.localAI[0] = ProjectileID.Sets.TrailCacheLength[projectile.type];
+
+            projectile.localAI[1] += 0.25f;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -120,26 +129,36 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             int rect2 = rect1 * projectile.frame;
             Rectangle glowrectangle = new Rectangle(0, rect2, glow.Width, rect1);
             Vector2 gloworigin2 = glowrectangle.Size() / 2f;
-            Color glowcolor = Color.Lerp(new Color(31, 187, 192, 0), Color.Transparent, 0.84f);
-            glowcolor *= 0.5f;
+            Color glowcolor = Color.Lerp(new Color(31, 187, 192, 0), Color.Transparent, 0.74f);
             Vector2 drawCenter = projectile.Center - (projectile.velocity.SafeNormalize(Vector2.UnitX) * 14);
 
             for (int i = 0; i < 3; i++) //create multiple transparent trail textures ahead of the projectile
             {
                 Vector2 drawCenter2 = drawCenter + (projectile.velocity.SafeNormalize(Vector2.UnitX) * 8).RotatedBy(MathHelper.Pi / 5 - (i * MathHelper.Pi / 5)); //use a normalized version of the projectile's velocity to offset it at different angles
                 drawCenter2 -= (projectile.velocity.SafeNormalize(Vector2.UnitX) * 8); //then move it backwards
+                float scale = projectile.scale;
+                scale += (float)Math.Sin(projectile.localAI[1]) / 10;
                 Main.spriteBatch.Draw(glow, drawCenter2 - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(glowrectangle),
-                    glowcolor, projectile.velocity.ToRotation() + MathHelper.PiOver2, gloworigin2, projectile.scale, SpriteEffects.None, 0f);
+                    glowcolor, projectile.velocity.ToRotation() + MathHelper.PiOver2, gloworigin2, scale, SpriteEffects.None, 0f);
             }
 
-            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+            for (float i = projectile.localAI[0] - 1; i > 0; i -= projectile.localAI[0] / 5) //trail grows in length as projectile travels
             {
-                Color color27 = glowcolor;
-                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
-                float scale = projectile.scale * (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
-                Vector2 value4 = projectile.oldPos[i] - (projectile.velocity.SafeNormalize(Vector2.UnitX) * 14);
+
+                float lerpamount = 0.2f;
+                if (i > 5 && i < 10)
+                    lerpamount = 0.4f;
+                if (i >= 10)
+                    lerpamount = 0.6f;
+
+                Color color27 = Color.Lerp(glowcolor, Color.Transparent, 0.1f + lerpamount);
+
+                color27 *= ((int)((projectile.localAI[0] - i) / projectile.localAI[0]) ^ 2);
+                float scale = projectile.scale * (float)(projectile.localAI[0] - i) / projectile.localAI[0];
+                scale += (float)Math.Sin(projectile.localAI[1]) / 10;
+                Vector2 value4 = projectile.oldPos[(int)i] - (projectile.velocity.SafeNormalize(Vector2.UnitX) * 14);
                 Main.spriteBatch.Draw(glow, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(glowrectangle), color27,
-                    projectile.velocity.ToRotation() + MathHelper.PiOver2, gloworigin2, scale, SpriteEffects.None, 0f);
+                    projectile.velocity.ToRotation() + MathHelper.PiOver2, gloworigin2, scale * 0.8f, SpriteEffects.None, 0f);
             }
 
             return false;

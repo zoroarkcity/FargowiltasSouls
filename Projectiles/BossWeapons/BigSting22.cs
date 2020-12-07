@@ -49,6 +49,47 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
             if (projectile.frame >= 4)
                 projectile.frame = 0;
+
+            int ai0 = (int)projectile.ai[0];
+            if (ai0 > -1 && ai0 < Main.maxNPCs && Main.npc[ai0].active && Main.npc[ai0].CanBeChasedBy())
+            {
+                if (projectile.Distance(Main.npc[ai0].Center) < Math.Max(Main.npc[ai0].width, Main.npc[ai0].height) / 2)
+                {
+                    projectile.ai[0] = -1;
+                    projectile.netUpdate = true;
+                }
+                else
+                {
+                    projectile.velocity = projectile.velocity.Length() * projectile.DirectionTo(Main.npc[ai0].Center);
+                }
+
+                projectile.ai[1] = 1;
+            }
+            else if (projectile.ai[1] == 0 && ++projectile.localAI[0] == 22)
+            {
+                int possibleTarget = -1;
+                float closestDistance = 1220f;
+
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    NPC npc = Main.npc[i];
+
+                    if (npc.active && npc.CanBeChasedBy())
+                    {
+                        float distance = Vector2.Distance(projectile.Center, npc.Center);
+
+                        if (closestDistance > distance)
+                        {
+                            closestDistance = distance;
+                            possibleTarget = i;
+                        }
+                    }
+                }
+
+                projectile.ai[0] = possibleTarget;
+                projectile.ai[1] = 1;
+                projectile.netUpdate = true;
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

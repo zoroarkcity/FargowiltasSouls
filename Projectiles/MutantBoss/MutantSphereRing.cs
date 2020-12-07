@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 Vector2 adjustedPos = projectile.Center - target.Center;
                 if (Math.Abs(adjustedPos.X) > target.width / 2)
                     adjustedPos.X = target.width / 2 * Math.Sign(adjustedPos.X);
-                if (Math.Abs(adjustedPos.Y) > target.width / 2)
+                if (Math.Abs(adjustedPos.Y) > target.width / 2) //pretend this is intentional because more forgiving
                     adjustedPos.Y = target.width / 2 * Math.Sign(adjustedPos.Y);
 
                 if (projectile.Distance(target.Center + adjustedPos) <= projectile.width / 2)

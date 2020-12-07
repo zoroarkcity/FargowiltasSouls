@@ -32,10 +32,16 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 			item.useTime = 25;
 			item.shootSpeed = 16f;
 			item.knockBack = 2.5f;
-			item.damage = 285;
+			item.damage = 435;
 
             item.value = Item.sellPrice(0, 25);
             item.rare = 11;
+        }
+
+        public override void HoldItem(Player player)
+        {
+            //player.counterWeight = 556 + Main.rand.Next(6);
+            player.stringColor = 5;
         }
 
         public override void AddRecipes()

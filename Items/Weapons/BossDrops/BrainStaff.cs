@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 
         public override void SetDefaults()
         {
-            item.damage = 14;
+            item.damage = 12;
             item.summon = true;
             item.mana = 10;
             item.width = 26;
@@ -34,16 +34,22 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.UseSound = SoundID.Item44;
             item.shoot = ModContent.ProjectileType<BrainProj>();
             item.shootSpeed = 10f;
-            item.buffType = ModContent.BuffType<BrainMinion>();
+            //item.buffType = ModContent.BuffType<BrainMinion>();
             item.autoReuse = true;
             item.value = Item.sellPrice(0, 2);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            player.AddBuff(item.buffType, 2);
+            player.AddBuff(ModContent.BuffType<BrainMinion>(), 2);
             Vector2 spawnPos = Main.MouseWorld;
-            Projectile.NewProjectile(spawnPos, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, 1f);
+
+            if (player.ownedProjectileCounts[type] == 0) //only spawn brain minion itself when the player doesnt have any
+            {
+                Projectile.NewProjectile(spawnPos, Vector2.Zero, type, damage, knockBack, player.whoAmI);
+            }
+            
+            Projectile.NewProjectile(spawnPos, Main.rand.NextVector2Circular(10, 10), mod.ProjectileType("CreeperMinion"), damage, knockBack, player.whoAmI);
             return false;
         }
     }

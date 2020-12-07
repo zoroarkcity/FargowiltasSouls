@@ -28,8 +28,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.tileCollide = false;
             //projectile.extraUpdates = 5;
             projectile.penetrate = -1;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 0;
             projectile.scale = 1f;
             projectile.alpha = 0;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
