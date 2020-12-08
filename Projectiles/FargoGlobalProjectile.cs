@@ -642,7 +642,9 @@ namespace FargowiltasSouls.Projectiles
 
                     if (split != null)
                     {
-                        split.friendly = true;
+                        split.friendly = projectile.friendly;
+                        split.hostile = projectile.hostile;
+                        split.timeLeft = projectile.timeLeft;
                         split.GetGlobalProjectile<FargoGlobalProjectile>().numSplits = projectile.GetGlobalProjectile<FargoGlobalProjectile>().numSplits;
                         //split.GetGlobalProjectile<FargoGlobalProjectile>().firstTick = false;
                         split.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;

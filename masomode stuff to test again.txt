@@ -231,3 +231,8 @@ valhalla and squire heavily adjusted
 	buff makes you glow
 
 echdeath phase 2
+adamantite ench has a timeleft check (splits won't persist longer than the source)
+bee enchantment copies the source proj class
+penetrator tooltip typo
+tweaked internal implementation of twinrangs (facilitates future balancing if needed)
+fixed retirang shooting magic lasers not melee
