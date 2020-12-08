@@ -133,7 +133,7 @@ namespace FargowiltasSouls.NPCs
 
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
-                    if (Main.npc[i].active && Main.npc[i].type != npc.type && npc.Distance(Main.npc[i].Center) < fullSize)
+                    if (Main.npc[i].active && Main.npc[i].type != npc.type && npc.Distance(Main.npc[i].Center) < fullSize / 2)
                     {
                         if (Main.netMode == NetmodeID.SinglePlayer)
                             Main.NewText(":echdeath:", Color.Red);
