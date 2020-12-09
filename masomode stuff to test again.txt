@@ -238,3 +238,4 @@ tweaked internal implementation of twinrangs (facilitates future balancing if ne
 fixed retirang shooting magic lasers not melee
 
 extra check for distance on lihzahrd blessing
+spin penetrator will stop spinning immediately if you input up+down (so its easier to immediately superdash)

@@ -46,7 +46,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Main.dust[dustId3].noGravity = true;
 
             Player player = Main.player[projectile.owner];
-            if (projectile.owner == Main.myPlayer && !player.controlUseItem)
+            if (projectile.owner == Main.myPlayer && (!player.controlUseItem || (player.controlUp && player.controlDown)))
             {
                 projectile.Kill();
                 return;
