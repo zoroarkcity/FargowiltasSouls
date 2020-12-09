@@ -236,3 +236,5 @@ bee enchantment copies the source proj class
 penetrator tooltip typo
 tweaked internal implementation of twinrangs (facilitates future balancing if needed)
 fixed retirang shooting magic lasers not melee
+
+extra check for distance on lihzahrd blessing
