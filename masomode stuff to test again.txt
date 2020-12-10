@@ -238,4 +238,9 @@ tweaked internal implementation of twinrangs (facilitates future balancing if ne
 fixed retirang shooting magic lasers not melee
 
 extra check for distance on lihzahrd blessing
-spin penetrator will stop spinning immediately if you input up+down (so its easier to immediately superdash)
+spin penetrators will stop spinning immediately if you input up+down (so up+down attacks are easier to input)
+fixed spazmarang doing magic damage i think
+mutant 
+	charging visual on spear throws and aims the first one earlier in the throws before twinrangs
+	removed dust from spears
+	fixed miniscule visual error where mutant was drawn in front of his weapons on late p2 cycle attacks
