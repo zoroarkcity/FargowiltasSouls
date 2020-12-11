@@ -42,6 +42,8 @@ namespace FargowiltasSouls
         public int QueenStingerCD;
         public bool EridanusEmpower;
         public int EridanusTimer;
+        public bool GaiaSet;
+        public bool GaiaOffense;
 
         //minions
         public bool BrainMinion;
@@ -207,7 +209,7 @@ namespace FargowiltasSouls
         public int HealTimer;
         public int HurtTimer;
         public bool Eternity;
-        private float eternityDamage = 0;
+        public float eternityDamage = 0;
 
         //maso items
         public bool SlimyShield;
@@ -615,6 +617,7 @@ namespace FargowiltasSouls
 
             QueenStinger = false;
             EridanusEmpower = false;
+            GaiaSet = false;
 
             BrainMinion = false;
             EaterMinion = false;
@@ -850,6 +853,8 @@ namespace FargowiltasSouls
 
             EridanusEmpower = false;
             EridanusTimer = 0;
+            GaiaSet = false;
+            GaiaOffense = false;
 
             //debuffs
             Hexed = false;
@@ -1336,6 +1341,16 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (OceanicMaul)
+            {
+                player.statLifeMax2 /= 5;
+                if (player.statLifeMax2 < 100)
+                    player.statLifeMax2 = 100;
+            }
+
+            if (GaiaOffense && !GaiaSet)
+                GaiaOffense = false;
+
             if (QueenStinger && QueenStingerCD > 0)
             {
                 QueenStingerCD--;
@@ -3755,6 +3770,8 @@ namespace FargowiltasSouls
                 if (RangedSoul && Main.rand.Next(5) == 0)
                     return false;
             }
+            if (GaiaSet && Main.rand.Next(10) == 0)
+                return false;
             return true;
         }
 

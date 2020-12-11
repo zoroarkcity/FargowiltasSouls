@@ -85,20 +85,23 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             projectile.penetrate = 2;
 
-            int dist = 1200;
-
-            for (int i = 0; i < Main.rand.Next(25, 36); i++)
+            int type = ModContent.ProjectileType<PhantasmalEyeLeashProj>();
+            if (Main.player[projectile.owner].ownedProjectileCounts[type] < 100)
             {
-                Vector2 offset = new Vector2();
-                double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                offset.X += (float)(Math.Sin(angle) * dist);
-                offset.Y += (float)(Math.Cos(angle) * dist);
+                int dist = 1200;
+                for (int i = 0; i < 15; i++)
+                {
+                    Vector2 offset = new Vector2();
+                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                    offset.X += (float)(Math.Sin(angle) * dist);
+                    offset.Y += (float)(Math.Cos(angle) * dist);
 
-                Vector2 position = target.Center + offset - new Vector2(4, 4);
-                Vector2 velocity = Vector2.Normalize(target.Center - position) * 50;
+                    Vector2 position = target.Center + offset - new Vector2(4, 4);
+                    Vector2 velocity = Vector2.Normalize(target.Center - position) * 50;
 
-                int p = Projectile.NewProjectile(position, velocity,
-                    ModContent.ProjectileType<PhantasmalEyeLeashProj>(), projectile.damage, projectile.knockBack, projectile.owner, -10f);
+                    int p = Projectile.NewProjectile(position, velocity,
+                        type, projectile.damage / 2, projectile.knockBack, projectile.owner, -10f);
+                }
             }
 
             /*const int max = 10;

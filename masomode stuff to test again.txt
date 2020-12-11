@@ -244,3 +244,28 @@ mutant
 	charging visual on spear throws and aims the first one earlier in the throws before twinrangs
 	removed dust from spears
 	fixed miniscule visual error where mutant was drawn in front of his weapons on late p2 cycle attacks
+
+gaia armour: post-golem omniclass set, actual option for pillars and moon lord
+	net stats:
+		+30% all damage
+		+15% crit chance
+		+2 regen
+		+10% damage reduction
+		+1 minion/sentry slot
+		+10% movement speed
+		50 defense
+	set bonus:
+		+10% melee speed
+		+10% ammo reservation
+		+10% mana reservation
+		+1 minion/sentry slot
+	can activate glass cannon mode:
+		-20 defense
+		-20% damage reduction
+		-20% max life
+		+20% all damage
+		+10% crit chance
+		+10 armor penetration
+	recipe: beetle shells + shroomite bars + spectre bars + spooky wood, at mythril anvil
+fiddled with phantasmal leash to be not gutbustingly impossibly x100 stronger than everything else
+i got bored, fishron ex is a post-soe god of destruction
