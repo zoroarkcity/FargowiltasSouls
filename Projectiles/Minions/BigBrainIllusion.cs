@@ -60,10 +60,10 @@ namespace FargowiltasSouls.Projectiles.Minions
                 damage /= 4;
         }
 
-        public override Color? GetAlpha(Color lightColor)
+        /*public override Color? GetAlpha(Color lightColor)
         {
             return Color.White * projectile.Opacity;
-        }
+        }*/
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
