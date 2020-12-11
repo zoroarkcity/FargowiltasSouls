@@ -1,25 +1,27 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using FargowiltasSouls.Projectiles.BossWeapons;
 
-namespace FargowiltasSouls.Items.Weapons.BossDrops
+namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class TwinRangs : ModItem
+    public class GeminiGlaives : ModItem
     {
+        int lastThrown = 0;
+
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Twinrangs");
+            DisplayName.SetDefault("Gemini Glaives");
             Tooltip.SetDefault("'The compressed forms of defeated foes..'");
-            DisplayName.AddTranslation(GameCulture.Chinese, "双子");
+
             Tooltip.AddTranslation(GameCulture.Chinese, "被打败的敌人的压缩形态..");
         }
 
         public override void SetDefaults()
         {
-            item.damage = 60;
+            item.damage = 200; //
             item.melee = true;
             item.width = 30;
             item.height = 30;
@@ -45,12 +47,12 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         {
             if (player.altFunctionUse == 2)
             {
-                item.shoot = ModContent.ProjectileType<Retirang>();
+                item.shoot = ModContent.ProjectileType<Retiglaive>();
                 item.shootSpeed = 15f;
             }
             else
             {
-                item.shoot = ModContent.ProjectileType<Spazmarang>();
+                item.shoot = ModContent.ProjectileType<Spazmaglaive>();
                 item.shootSpeed = 45f;
             }
             return true;
@@ -58,7 +60,15 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
+            if (player.altFunctionUse == 2)
+            {
+                damage = 0;
+            }
+
+            Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, lastThrown);
+
+            lastThrown = type;
+
             return false;
         }
     }

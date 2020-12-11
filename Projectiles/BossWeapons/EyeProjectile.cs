@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.friendly = true;
             projectile.melee = true;
             projectile.penetrate = 1;
-            projectile.timeLeft = 120;
+            projectile.timeLeft = 180;
             aiType = ProjectileID.Bullet;
         }
 

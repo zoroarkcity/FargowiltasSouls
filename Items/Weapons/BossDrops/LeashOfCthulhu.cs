@@ -2,10 +2,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using FargowiltasSouls.Projectiles.BossWeapons;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class EyeFlail : ModItem
+    public class LeashOfCthulhu : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -28,10 +29,11 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.useTime = 25;
             item.knockBack = 4f;
             item.noUseGraphic = true;
-            item.shoot = mod.ProjectileType("LeashFlail");
-            item.shootSpeed = 15f;
+            item.shoot = ModContent.ProjectileType<LeashFlail>();
+            item.shootSpeed = 25f;
             item.UseSound = SoundID.Item1;
             item.melee = true;
+            item.autoReuse = true;
         }
     }
 }

@@ -29,8 +29,6 @@ namespace FargowiltasSouls.NPCs
             npc.noTileCollide = true;
             npc.knockBackResist = 0f;
             npc.lavaImmune = true;
-            for (int i = 0; i < npc.buffImmune.Length; i++)
-                npc.buffImmune[i] = true;
             npc.aiStyle = -1;
             npc.boss = true;
             npc.GetGlobalNPC<FargoSoulsGlobalNPC>().SpecialEnchantImmune = true;
@@ -77,7 +75,7 @@ namespace FargowiltasSouls.NPCs
                 }*/
             }
 
-            npc.life = npc.lifeMax;
+            //npc.life = npc.lifeMax;
             npc.damage = npc.defDamage;
             npc.defense = npc.defDefense;
 
@@ -87,7 +85,8 @@ namespace FargowiltasSouls.NPCs
             {
                 Player player = Main.player[npc.target];
                 npc.direction = npc.spriteDirection = npc.Center.X < player.Center.X ? 1 : -1;
-                npc.position += (player.position - player.oldPosition) * 0.25f;
+                if (npc.ai[1] == 1)
+                    npc.position += (player.position - player.oldPosition) * 0.25f;
                 npc.velocity = npc.DirectionTo(player.Center) * npc.ai[0];
                 if (npc.velocity.Length() > npc.Distance(player.Center))
                     npc.Center = player.Center;
@@ -106,23 +105,27 @@ namespace FargowiltasSouls.NPCs
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int fullSize = (int)(40 * npc.scale);
-                for (int i = -fullSize / 2; i <= fullSize / 2; i += 8)
-                {
-                    for (int j = -fullSize / 2; j <= fullSize / 2; j += 8)
-                    {
-                        int tileX = (int)(npc.Center.X + i) / 16;
-                        int tileY = (int)(npc.Center.Y + j) / 16;
 
-                        //out of bounds checks
-                        if (tileX > -1 && tileX < Main.maxTilesX && tileY > -1 && tileY < Main.maxTilesY)
+                if (npc.ai[1] == 1)
+                {
+                    for (int i = -fullSize / 2; i <= fullSize / 2; i += 8)
+                    {
+                        for (int j = -fullSize / 2; j <= fullSize / 2; j += 8)
                         {
-                            Tile tile = Framing.GetTileSafely(tileX, tileY);
-                            if (tile.type != 0 || tile.wall != 0)
+                            int tileX = (int)(npc.Center.X + i) / 16;
+                            int tileY = (int)(npc.Center.Y + j) / 16;
+
+                            //out of bounds checks
+                            if (tileX > -1 && tileX < Main.maxTilesX && tileY > -1 && tileY < Main.maxTilesY)
                             {
-                                WorldGen.KillTile(tileX, tileY);
-                                WorldGen.KillWall(tileX, tileY);
-                                if (Main.netMode == NetmodeID.Server)
-                                    NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, tileX, tileY);
+                                Tile tile = Framing.GetTileSafely(tileX, tileY);
+                                if (tile.type != 0 || tile.wall != 0)
+                                {
+                                    WorldGen.KillTile(tileX, tileY, noItem: true);
+                                    WorldGen.KillWall(tileX, tileY);
+                                    if (Main.netMode == NetmodeID.Server)
+                                        NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, tileX, tileY);
+                                }
                             }
                         }
                     }
@@ -130,7 +133,7 @@ namespace FargowiltasSouls.NPCs
 
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
-                    if (Main.npc[i].active && Main.npc[i].type != npc.type && npc.Distance(Main.npc[i].Center) < fullSize)
+                    if (Main.npc[i].active && Main.npc[i].type != npc.type && npc.Distance(Main.npc[i].Center) < fullSize / 2)
                     {
                         if (Main.netMode == NetmodeID.SinglePlayer)
                             Main.NewText(":echdeath:", Color.Red);
@@ -155,13 +158,37 @@ namespace FargowiltasSouls.NPCs
                     CombatText.NewText(Main.LocalPlayer.Hitbox, Color.Red, Main.rand.Next(npc.damage), true);
             }
 
-            if (!Main.dedServ && Main.LocalPlayer.active)
-                Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 2;
+            if (npc.ai[1] == 1)
+            {
+                if (!Main.dedServ && Main.LocalPlayer.active)
+                    Main.LocalPlayer.GetModPlayer<FargoPlayer>().Screenshake = 2;
+
+                if (npc.localAI[0] == 0)
+                {
+                    Main.NewText("Echdeath has enraged.", Color.DarkRed);
+                    npc.localAI[0] = 1;
+                    for (int i = 0; i < npc.buffImmune.Length; i++)
+                        npc.buffImmune[i] = true;
+                }
+                while (npc.buffType[0] != 0)
+                    npc.DelBuff(0);
+                if (npc.ai[2] == 0) //force life back to max until it works
+                {
+                    if (npc.life == npc.lifeMax)
+                        npc.ai[2] = 1;
+                    npc.life = npc.lifeMax;
+                }
+            }
+            else
+            {
+                if (npc.ai[0] > 30)
+                    npc.ai[0] = 30;
+            }
         }
 
         public override void FindFrame(int frameHeight)
         {
-            if (++npc.frameCounter > 20 - npc.ai[0])
+            if (++npc.frameCounter > 34 - npc.ai[0])
             {
                 npc.frameCounter = 0;
                 npc.frame.Y += frameHeight;
@@ -172,9 +199,16 @@ namespace FargowiltasSouls.NPCs
 
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
         {
-            damage = 0;
-            crit = false;
-            return false;
+            if (npc.ai[1] == 1)
+            {
+                while (npc.buffType[0] != 0)
+                    npc.DelBuff(0);
+
+                damage = 1;
+                crit = false;
+                return false;
+            }
+            return true;
         }
 
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
@@ -192,8 +226,19 @@ namespace FargowiltasSouls.NPCs
 
         public override bool CheckDead()
         {
-            npc.life = npc.lifeMax;
+            if (npc.ai[1] == 1 && npc.ai[2] == 1)
+                return true;
+
             npc.active = true;
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                npc.life = 1;
+            }
+            else
+            {
+                npc.life = npc.lifeMax;
+                npc.ai[1] = 1;
+            }
             return false;
         }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Projectiles.Minions;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -7,11 +8,12 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
-    public class Retirang : ModProjectile
+    public class Retiglaive : ModProjectile
     {
+        bool empowered = false;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Retirang");
+            DisplayName.SetDefault("Retiglaive");
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
@@ -26,11 +28,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.height = 50;
             projectile.penetrate = -1;
             projectile.aiStyle = -1;
-        }
-
-        public override bool CanDamage()
-        {
-            return false;
         }
 
         public override bool PreAI()
@@ -51,20 +48,17 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     Vector2 velocity = Vector2.Normalize(cursor - projectile.Center) * 15;
                     Player player = Main.player[projectile.owner];
 
-                    if (projectile.owner == Main.myPlayer)
-                    {
-                        int p = Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<PrimeLaser>(), projectile.damage, projectile.knockBack, projectile.owner);
-                        if (p != Main.maxProjectiles)
-                        {
-                            Main.projectile[p].magic = false;
-                            Main.projectile[p].melee = true;
-                        }
-                    }
+                    Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<PrimeLaser>(), (int)(60 * player.meleeDamage), 1f, projectile.owner);
                 }
 
                 if (projectile.ai[1] > 15)
                 {
                     projectile.ai[0] = 2;
+
+                    if (empowered)
+                    {
+                        FargoGlobalProjectile.XWay(12, projectile.Center, ModContent.ProjectileType<DarkStarFriendly>(), 5, projectile.damage / 2, 1);
+                    }
                 }
 
                 return false;
@@ -75,6 +69,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void AI()
         {
+            if (projectile.ai[0] == ModContent.ProjectileType<Spazmaglaive>())
+            {
+                empowered = true;
+                projectile.ai[0] = 0;
+            }
+            else if (projectile.ai[0] == ModContent.ProjectileType<Retiglaive>())
+            {
+                projectile.ai[0] = 0;
+            }
+
             //travelling out
             if (projectile.ai[0] == 0)
             {

@@ -148,6 +148,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void Kill(int timeLeft) //self reuse so you dont need to hold up always while autofiring
         {
             if (projectile.owner == Main.myPlayer && Main.player[projectile.owner].controlUseTile && Main.player[projectile.owner].altFunctionUse == 2
+                && !(Main.player[projectile.owner].controlUp && Main.player[projectile.owner].controlDown)
                 && Main.player[projectile.owner].HeldItem.type == mod.ItemType("HentaiSpear")
                 && Main.player[projectile.owner].ownedProjectileCounts[projectile.type] == 1)
             {

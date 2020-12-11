@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework; 
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
@@ -8,8 +8,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 {
     public class PhantasmalFlail : ModProjectile
     {
-        private int eyeSpawn;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phantasmal Flail");
@@ -20,8 +18,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.width = 58;
             projectile.height = 52;
             projectile.friendly = true;
-            projectile.penetrate = -1;
+            projectile.penetrate = 1;
             projectile.melee = true;
+            projectile.tileCollide = false;
+            //projectile.usesLocalNPCImmunity = true;
+            //projectile.localNPCHitCooldown = 0;
         }
 
         public override void AI()
@@ -71,82 +72,57 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 distance = num169 / distance;
                 num166 *= distance;
                 num167 *= distance;
-                projectile.velocity.X = num166;
-                projectile.velocity.Y = num167;
+                projectile.velocity.X = num166 * 2;
+                projectile.velocity.Y = num167 * 2;
                 if (projectile.velocity.X < 0f)
                     projectile.spriteDirection = 1;
                 else
                     projectile.spriteDirection = -1;
             }
-
-            if (eyeSpawn != 0) eyeSpawn--;
-
-            //Spew eyes
-            if (projectile.ai[0] == 1f && projectile.owner == Main.myPlayer && eyeSpawn == 0)
-            {
-                /*Vector2 vector54 = Main.player[projectile.owner].Center - projectile.Center;
-                Vector2 vector55 = vector54 * -1f;
-                vector55.Normalize();
-                vector55 *= Main.rand.Next(45, 65) * 0.1f;
-                vector55 = vector55.RotatedBy((Main.rand.NextDouble() - 0.5) * 1.5707963705062866);
-                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vector55.X, vector55.Y, mod.ProjectileType("MechEyeProjectile"), projectile.damage, projectile.knockBack,
-                    projectile.owner, -10f);
-
-                eyeSpawn = 4;*/
-            }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            projectile.penetrate = 2;
+
+            int type = ModContent.ProjectileType<PhantasmalEyeLeashProj>();
+            if (Main.player[projectile.owner].ownedProjectileCounts[type] < 100)
+            {
+                int dist = 1200;
+                for (int i = 0; i < 15; i++)
+                {
+                    Vector2 offset = new Vector2();
+                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                    offset.X += (float)(Math.Sin(angle) * dist);
+                    offset.Y += (float)(Math.Cos(angle) * dist);
+
+                    Vector2 position = target.Center + offset - new Vector2(4, 4);
+                    Vector2 velocity = Vector2.Normalize(target.Center - position) * 50;
+
+                    int p = Projectile.NewProjectile(position, velocity,
+                        type, projectile.damage / 2, projectile.knockBack, projectile.owner, -10f);
+                }
+            }
+
+            /*const int max = 10;
+            for (int i = 0; i < max; i++)
+            {
+                Vector2 vector55 = Vector2.UnitX.RotatedBy(Math.PI * 2 / max * (i + Main.rand.NextDouble()));
+                vector55 *= 50;
+                int p = Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vector55.X, vector55.Y,
+                    ModContent.ProjectileType<PhantasmalEyeLeashProj>(), projectile.damage, projectile.knockBack, projectile.owner, -10f);
+                if (p != Main.maxProjectiles)
+                    Main.projectile[p].penetrate = 3;
+            }*/
+
             //retract
-            projectile.ai[0] = 1f;
-
-            //uh yea make better later just for now
-            Vector2 pos = new Vector2(projectile.Center.X + 200, projectile.Center.Y);
-            Vector2 velocity = Vector2.Normalize(target.Center - pos) * 8;
-
-            Projectile.NewProjectile(pos.X, pos.Y, velocity.X, velocity.Y, mod.ProjectileType("MechEyeProjectile"), projectile.damage, projectile.knockBack,
-                    projectile.owner, -10f);
-
-            pos = new Vector2(projectile.Center.X - 200, projectile.Center.Y);
-            velocity = Vector2.Normalize(target.Center - pos) * 8;
-
-            Projectile.NewProjectile(pos.X, pos.Y, velocity.X, velocity.Y, mod.ProjectileType("MechEyeProjectile"), projectile.damage, projectile.knockBack,
-                    projectile.owner, -10f);
-
-            pos = new Vector2(projectile.Center.X, projectile.Center.Y + 200);
-            velocity = Vector2.Normalize(target.Center - pos) * 8;
-
-            Projectile.NewProjectile(pos.X, pos.Y, velocity.X, velocity.Y, mod.ProjectileType("MechEyeProjectile"), projectile.damage, projectile.knockBack,
-                    projectile.owner, -10f);
-
-            pos = new Vector2(projectile.Center.X, projectile.Center.Y - 200);
-            velocity = Vector2.Normalize(target.Center - pos) * 8;
-
-            Projectile.NewProjectile(pos.X, pos.Y, velocity.X, velocity.Y, mod.ProjectileType("MechEyeProjectile"), projectile.damage, projectile.knockBack,
-                    projectile.owner, -10f);
+            projectile.ai[0] = 1f; 
         }
-
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
-        {
-            //smaller tile hitbox
-            width = 30;
-            height = 30;
-            return true;
-        }
-
-        public override bool OnTileCollide(Vector2 oldVelocity)
-        {
-            //retract
-            projectile.ai[0] = 1f;
-            return false;
-        }
-
 
         // chain voodoo
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture = ModContent.GetTexture("FargowiltasSouls/Projectiles/BossWeapons/MechFlailChain");
+            Texture2D texture = ModContent.GetTexture("FargowiltasSouls/Projectiles/BossWeapons/PhantasmalLeashFlailChain");
 
             Vector2 position = projectile.Center;
             Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;

@@ -114,14 +114,20 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
 
             //while fishron is first spawning, has made the noise, and every 6 ticks
-            if (fishron.ai[0] < 4f && projectile.timeLeft <= 240 && projectile.timeLeft > 180 && projectile.timeLeft % 6 == 0)
+            if (fishron.ai[0] < 4f && projectile.timeLeft <= 240 && projectile.timeLeft >= 180)// && projectile.timeLeft % 6 == 0)
             {
-                int heal = /*9*/ 49 * (int)(projectile.ai[0] * Main.rand.NextFloat(0.1f, 0.12f));
-                fishron.lifeMax += heal;
-                int max = (int)projectile.ai[0] * 10;
-                if (fishron.lifeMax > max)
-                    fishron.lifeMax = max;
-                fishron.life = fishron.lifeMax;
+                fishron.GetGlobalNPC<FargoSoulsGlobalNPC>().MutantNibble = false;
+                fishron.GetGlobalNPC<FargoSoulsGlobalNPC>().LifePrevious = int.MaxValue;
+                while (fishron.buffType[0] != 0)
+                    fishron.DelBuff(0);
+
+                fishron.lifeMax = (int)projectile.ai[0] * 5000; //10;
+                if (fishron.lifeMax <= 0)
+                    fishron.lifeMax = int.MaxValue;
+                int heal = /*9*/ /*49*/ /*499999*/ (int)(fishron.lifeMax / 30 /*10*/ * Main.rand.NextFloat(1f, 1.1f));
+                fishron.life += heal;
+                if (fishron.life > fishron.lifeMax)
+                    fishron.life = fishron.lifeMax;
                 CombatText.NewText(fishron.Hitbox, CombatText.HealLife, heal);
                 fishron.netUpdate = true;
             }

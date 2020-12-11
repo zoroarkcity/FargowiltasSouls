@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Projectiles.Minions;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -7,12 +8,13 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
-    public class Spazmarang : ModProjectile
+    public class Spazmaglaive : ModProjectile
     {
+        bool empowered = false;
         bool hitSomething = false;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spazmarang");
+            DisplayName.SetDefault("Spazmaglaive");
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
@@ -29,8 +31,50 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.aiStyle = -1;
         }
 
+        public override bool PreAI()
+        {
+            if (projectile.ai[0] == 1)
+            {
+                projectile.ai[1]++;
+
+                //stay in place
+                projectile.position = projectile.oldPosition;
+                projectile.velocity = Vector2.Zero;
+                projectile.rotation += projectile.direction * -0.4f;
+
+                //fire stars at cursor
+                if (projectile.ai[1] % 5 == 0)
+                {
+                    Vector2 cursor = Main.MouseWorld;
+                    Vector2 velocity = Vector2.Normalize(cursor - projectile.Center) * 15;
+                    Player player = Main.player[projectile.owner];
+
+                    Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<DarkStarFriendly>(), (int)(60 * player.meleeDamage), 1f, projectile.owner);
+                }
+
+                if (projectile.ai[1] > 15)
+                {
+                    projectile.ai[0] = 2;
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
         public override void AI()
         {
+            if (projectile.ai[0] == ModContent.ProjectileType<Retiglaive>())
+            {
+                empowered = true;
+                projectile.ai[0] = 0;
+            }
+            else if (projectile.ai[0] == ModContent.ProjectileType<Spazmaglaive>())
+            {
+                projectile.ai[0] = 0;
+            }
+
             //travelling out
             if (projectile.ai[0] == 0)
             {
@@ -38,12 +82,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                 if (projectile.ai[1] > 20)
                 {
-                    projectile.ai[0] = 1;
+                    projectile.ai[0] = empowered ? 1: 2;
+                    projectile.ai[1] = 0;
                     projectile.netUpdate = true;
                 }
             }
             //travel back to player
-            else 
+            else if (projectile.ai[0] == 2)
             {
                 projectile.extraUpdates = 0;
                 projectile.velocity = Vector2.Normalize(Main.player[projectile.owner].Center - projectile.Center) * 45;
@@ -71,7 +116,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 {
                     FargoGlobalProjectile.XWay(12, projectile.Center, ModContent.ProjectileType<EyeFireFriendly>(), 5, projectile.damage / 2, 0);
                 }
-                projectile.ai[0] = 1;
+                projectile.ai[0] = empowered ? 1 : 2;
+                projectile.ai[1] = 0;
                 projectile.penetrate = 4;
                 projectile.netUpdate = true;
             }
@@ -89,7 +135,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 spawnFire();
             }
-            
             return false;
         }
 
