@@ -269,3 +269,5 @@ gaia armour: post-golem omniclass set, actual option for pillars and moon lord
 	recipe: beetle shells + shroomite bars + spectre bars + spooky wood, at mythril anvil
 fiddled with phantasmal leash to be not gutbustingly impossibly x100 stronger than everything else
 i got bored, fishron ex is a post-soe god of destruction
+
+rain cloud disappears if toggle is disabled

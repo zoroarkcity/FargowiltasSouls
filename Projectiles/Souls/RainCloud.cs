@@ -16,6 +16,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rain Cloud");
+            Main.projFrames[projectile.type] = 6;
         }
 
         public override void SetDefaults()
@@ -25,8 +26,6 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
 
             projectile.timeLeft = 600;
-
-            Main.projFrames[projectile.type] = 6;
         }
 
         public override void AI()
@@ -39,7 +38,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
 
             //destroy duplicates if they somehow spawn
-            if (player.ownedProjectileCounts[projectile.type] > 1)
+            if (player.ownedProjectileCounts[projectile.type] > 1
+                || (projectile.owner == Main.myPlayer && !SoulConfig.Instance.GetValue(SoulConfig.Instance.RainCloud)))
             {
                 projectile.Kill();
             }
