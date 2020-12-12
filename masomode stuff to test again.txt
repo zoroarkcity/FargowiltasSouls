@@ -272,3 +272,5 @@ i got bored, fishron ex is a post-soe god of destruction
 
 rain cloud disappears if toggle is disabled
 fishron typo corrections
+
+lengthened qb delay before bee swarm
