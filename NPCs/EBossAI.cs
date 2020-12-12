@@ -4347,7 +4347,7 @@ namespace FargowiltasSouls.NPCs
                 }
             }
 
-                npc.position += npc.velocity * 0.25f; //fishron regular
+            npc.position += npc.velocity * 0.25f; //fishron regular
             switch ((int)npc.ai[0])
             {
                 case -1: //just spawned
@@ -4444,7 +4444,7 @@ namespace FargowiltasSouls.NPCs
                             Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2),
                                 ModContent.ProjectileType<RazorbladeTyphoon2>(), npc.damage / 4, 0f, Main.myPlayer, .03f);
                             Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(-Math.PI / 2),
-                                ModContent.ProjectileType<RazorbladeTyphoon2>(), npc.damage / 4, 0f, Main.myPlayer, .03f);
+                                ModContent.ProjectileType<RazorbladeTyphoon2>(), npc.damage / 4, 0f, Main.myPlayer, .02f);
 
                             if (Fargowiltas.Instance.MasomodeEXLoaded) //lol
                             {
