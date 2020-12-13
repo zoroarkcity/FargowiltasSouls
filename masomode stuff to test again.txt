@@ -275,3 +275,4 @@ fishron typo corrections
 
 lengthened qb delay before bee swarm
 slowed down moon lord phantasmal eyes more
+did something to fix the obscenely eldritch heldproj/soul of terraria glitch (test diffractor/pen-gigabeam in mp)
