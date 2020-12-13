@@ -274,3 +274,4 @@ rain cloud disappears if toggle is disabled
 fishron typo corrections
 
 lengthened qb delay before bee swarm
+slowed down moon lord phantasmal eyes more
