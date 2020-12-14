@@ -448,7 +448,7 @@ namespace FargowiltasSouls.NPCs
                     npc.buffImmune[ModContent.BuffType<ClippedWings>()] = true;
                     if (BossIsAlive(ref fishBossEX, NPCID.DukeFishron))
                     {
-                        npc.lifeMax *= 20;//2;
+                        npc.lifeMax *= 5000;//20;//2;
                         npc.buffImmune[ModContent.BuffType<FlamesoftheUniverse>()] = true;
                         npc.buffImmune[ModContent.BuffType<LightningRod>()] = true;
                     }

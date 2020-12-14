@@ -37,14 +37,6 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         float scaletimer;
         public override void AI()
         {
-            //dust!
-            int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width / 2, projectile.height + 5, 15, projectile.velocity.X * 0.2f,
-                projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-            Main.dust[dustId].noGravity = true;
-            int dustId3 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width / 2, projectile.height + 5, 15, projectile.velocity.X * 0.2f,
-                projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-            Main.dust[dustId3].noGravity = true;
-
             if (projectile.localAI[1] == 0f)
             {
                 projectile.localAI[1] = 1f;

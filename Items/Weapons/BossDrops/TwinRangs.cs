@@ -58,13 +58,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            if (player.altFunctionUse == 2)
-            {
-                damage = 0;
-            }
-
             Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
-
             return false;
         }
     }

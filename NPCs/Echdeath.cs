@@ -121,7 +121,7 @@ namespace FargowiltasSouls.NPCs
                                 Tile tile = Framing.GetTileSafely(tileX, tileY);
                                 if (tile.type != 0 || tile.wall != 0)
                                 {
-                                    WorldGen.KillTile(tileX, tileY);
+                                    WorldGen.KillTile(tileX, tileY, noItem: true);
                                     WorldGen.KillWall(tileX, tileY);
                                     if (Main.netMode == NetmodeID.Server)
                                         NetMessage.SendData(MessageID.TileChange, -1, -1, null, 0, tileX, tileY);
@@ -133,7 +133,7 @@ namespace FargowiltasSouls.NPCs
 
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
-                    if (Main.npc[i].active && Main.npc[i].type != npc.type && npc.Distance(Main.npc[i].Center) < fullSize)
+                    if (Main.npc[i].active && Main.npc[i].type != npc.type && npc.Distance(Main.npc[i].Center) < fullSize / 2)
                     {
                         if (Main.netMode == NetmodeID.SinglePlayer)
                             Main.NewText(":echdeath:", Color.Red);

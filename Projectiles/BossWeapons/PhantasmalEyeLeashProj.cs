@@ -24,17 +24,15 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void SetDefaults()
         {
-            projectile.width = 4;
-            projectile.height = 4;
+            projectile.width = 12;
+            projectile.height = 12;
             projectile.aiStyle = 1;
             projectile.friendly = true;
             projectile.melee = true;
-            projectile.penetrate = 1;
-            projectile.timeLeft = 300;
+            projectile.penetrate = 2;
+            projectile.timeLeft = 180;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
-            projectile.usesIDStaticNPCImmunity = true;
-            projectile.idStaticNPCHitCooldown = 0;
         }
 
         public override void AI()
@@ -53,8 +51,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 if (foundTarget != -1)
                 {
                     NPC n = Main.npc[foundTarget];
-                    Vector2 desiredVelocity = projectile.DirectionTo(n.Center) * desiredFlySpeedInPixelsPerFrame;
-                    projectile.velocity = Vector2.Lerp(projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
+                    if (projectile.Distance(n.Center) > Math.Max(n.width, n.height))
+                    {
+                        Vector2 desiredVelocity = projectile.DirectionTo(n.Center) * desiredFlySpeedInPixelsPerFrame;
+                        projectile.velocity = Vector2.Lerp(projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
+                    }
                 }
             }
         }
@@ -85,11 +86,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            target.immune[projectile.owner] = 1;
+            projectile.timeLeft = 0;
             if (projectile.owner == Main.myPlayer)
             {
                 int p = Projectile.NewProjectile(target.position + new Vector2(Main.rand.Next(target.width), Main.rand.Next(target.height)),
-                        Vector2.Zero, ModContent.ProjectileType<PhantasmalBlast>(), projectile.damage, projectile.knockBack * 3f, projectile.owner);
-
+                    Vector2.Zero, ModContent.ProjectileType<PhantasmalBlast>(), projectile.damage, projectile.knockBack * 3f, projectile.owner);
             }
         }
 

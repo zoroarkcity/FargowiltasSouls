@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         public override void AI()
         {
             int ai1 = (int)projectile.ai[1];
-            if (projectile.ai[1] >= 0f && projectile.ai[1] < 200f &&
+            if (projectile.ai[1] >= 0f && projectile.ai[1] < Main.maxNPCs &&
                 Main.npc[ai1].active && Main.npc[ai1].type == npcType)
             {
                 projectile.Center = Main.npc[ai1].Center;
@@ -63,9 +63,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     case 22:
                     case 23:
                     case 25:
-                    case 35:
-                    case 38:
-                    case 40:
+                    case 36:
+                    case 41:
                         projectile.hide = true;
                         break;
 

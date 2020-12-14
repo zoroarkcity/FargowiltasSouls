@@ -19,6 +19,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             aiType = ProjectileID.EyeFire;
             projectile.friendly = true;
             projectile.hostile = false;
+            projectile.magic = false;
             projectile.melee = true;
         }
 
