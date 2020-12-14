@@ -24,7 +24,10 @@ namespace FargowiltasSouls.Buffs.Masomode
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<FargoPlayer>().MutantPresence = true; //LUL
+            player.GetModPlayer<FargoPlayer>().OceanicMaul = true;
+            player.GetModPlayer<FargoPlayer>().eternityDamage = 0; //fuck it
+
+            //player.GetModPlayer<FargoPlayer>().MutantPresence = true; //LUL
 
             player.GetModPlayer<FargoPlayer>().noDodge = true;
             player.GetModPlayer<FargoPlayer>().noSupersonic = true;

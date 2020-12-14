@@ -28,6 +28,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.aiStyle = -1;
         }
 
+        public override bool CanDamage()
+        {
+            return false;
+        }
+
         public override bool PreAI()
         {
             if (projectile.ai[0] == 1)
@@ -46,7 +51,15 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     Vector2 velocity = Vector2.Normalize(cursor - projectile.Center) * 15;
                     Player player = Main.player[projectile.owner];
 
-                    Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<PrimeLaser>(), (int)(60 * player.meleeDamage), 1f, projectile.owner);
+                    if (projectile.owner == Main.myPlayer)
+                    {
+                        int p = Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<PrimeLaser>(), projectile.damage, projectile.knockBack, projectile.owner);
+                        if (p != Main.maxProjectiles)
+                        {
+                            Main.projectile[p].magic = false;
+                            Main.projectile[p].melee = true;
+                        }
+                    }
                 }
 
                 if (projectile.ai[1] > 15)

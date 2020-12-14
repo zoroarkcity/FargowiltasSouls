@@ -52,17 +52,31 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 projectile.velocity = -Vector2.UnitY;
             }
-            if (player.active && !player.dead && player.heldProj > -1 && player.heldProj < Main.maxProjectiles
-                && Main.projectile[player.heldProj].active && Main.projectile[player.heldProj].type == ModContent.ProjectileType<HentaiSpearWand>())
+            //if (player.active && !player.dead && player.heldProj > -1 && player.heldProj < Main.maxProjectiles && Main.projectile[player.heldProj].active && Main.projectile[player.heldProj].type == ModContent.ProjectileType<HentaiSpearWand>())
+            if (player.active && !player.dead
+                && player.HeldItem.type == ModContent.ItemType<Items.Weapons.SwarmDrops.HentaiSpear>()
+                && player.ownedProjectileCounts[ModContent.ProjectileType<HentaiSpearWand>()] > 0)
             {
-                projectile.Center = Main.projectile[player.heldProj].Center + Main.rand.NextVector2Circular(5, 5);
                 projectile.timeLeft = 2;
 
-                projectile.velocity = Main.projectile[player.heldProj].velocity;
+                float itemrotate = player.direction < 0 ? MathHelper.Pi : 0;
+                projectile.velocity = (player.itemRotation + itemrotate).ToRotationVector2();
+                projectile.Center = player.Center + Main.rand.NextVector2Circular(5, 5);
+
+                projectile.position += projectile.velocity * 164 * 1.3f / 4f; //offset by part of spear's length (wand)
+                projectile.position += projectile.velocity * 164 * 1.3f * 0.75f; //part of penetrator's length (ray)
+
+                projectile.damage = player.GetWeaponDamage(player.HeldItem);
+                projectile.knockBack = player.GetWeaponKnockback(player.HeldItem, player.HeldItem.knockBack);
+
+                /*projectile.Center = Main.projectile[player.heldProj].Center + Main.rand.NextVector2Circular(5, 5);
+                projectile.timeLeft = 2;
+
+                projectile.velocity = Vector2.Normalize(Main.projectile[player.heldProj].velocity);
                 projectile.position += projectile.velocity * 164 * 1.3f * 0.75f; //part of penetrator's length
 
                 projectile.damage = Main.projectile[player.heldProj].damage;
-                projectile.knockBack = Main.projectile[player.heldProj].knockBack;
+                projectile.knockBack = Main.projectile[player.heldProj].knockBack;*/
             }
             else if (projectile.localAI[0] > 5) //leeway for mp lag
             {

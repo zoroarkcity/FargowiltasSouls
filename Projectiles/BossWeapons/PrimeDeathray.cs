@@ -45,17 +45,24 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 projectile.velocity = -Vector2.UnitY;
             }
             Player player = Main.player[projectile.owner];
-            if (player.active && !player.dead && player.heldProj > -1 && player.heldProj < Main.maxProjectiles
-                && Main.projectile[player.heldProj].active && Main.projectile[player.heldProj].type == ModContent.ProjectileType<RefractorBlaster2Held>())
+            //if (player.active && !player.dead && player.heldProj > -1 && player.heldProj < Main.maxProjectiles && Main.projectile[player.heldProj].active && Main.projectile[player.heldProj].type == ModContent.ProjectileType<RefractorBlaster2Held>())
+            if (player.active && !player.dead
+                && player.HeldItem.type == ModContent.ItemType<Items.Weapons.SwarmDrops.RefractorBlaster2>()
+                && player.ownedProjectileCounts[ModContent.ProjectileType<RefractorBlaster2Held>()] > 0)
             {
-                projectile.damage = Main.projectile[player.heldProj].damage;
+                /*projectile.damage = Main.projectile[player.heldProj].damage;
                 projectile.knockBack = Main.projectile[player.heldProj].knockBack;
 
                 Vector2 Offset = new Vector2(Main.projectile[player.heldProj].width * 0.4f, 0).RotatedBy(Main.projectile[player.heldProj].velocity.ToRotation());
-                projectile.Center = Main.projectile[player.heldProj].Center + Offset;
+                projectile.Center = Main.projectile[player.heldProj].Center + Offset;*/
+
+                float rotation = player.itemRotation + (player.direction < 0 ? MathHelper.Pi : 0);
+                projectile.velocity = rotation.ToRotationVector2();
+                projectile.Center = player.MountedCenter + 87f * projectile.velocity;
+
                 projectile.timeLeft++;
                 float rotdir = (projectile.ai[0] > 0) ? 1 : -1;
-                Vector2 vel = Main.projectile[player.heldProj].velocity.RotatedBy(rotdir * MathHelper.Pi/6);
+                Vector2 vel = projectile.velocity.RotatedBy(rotdir * MathHelper.Pi/6);
                 float rotspeed = projectile.localAI[0] / 5 + 0.5f;
                 if (rotspeed > 1.5f)
                     rotspeed = 1.5f;

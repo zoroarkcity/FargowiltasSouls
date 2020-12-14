@@ -36,14 +36,6 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void AI()
         {
-            //dust!
-            int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width / 2, projectile.height + 5, 15, projectile.velocity.X * 0.2f,
-                projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-            Main.dust[dustId].noGravity = true;
-            int dustId3 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width / 2, projectile.height + 5, 15, projectile.velocity.X * 0.2f,
-                projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-            Main.dust[dustId3].noGravity = true;
-
             NPC mutant = Main.npc[(int)projectile.ai[0]];
             if (mutant.active && mutant.type == mod.NPCType("MutantBoss"))
             {
@@ -62,7 +54,10 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             {
                 projectile.localAI[0] = 1;
                 if (projectile.ai[1] == 1)
+                {
                     projectile.timeLeft -= 30;
+                    projectile.localAI[1] = 30;
+                }
             }
         }
 
@@ -99,6 +94,12 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             }
 
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+
+            Texture2D glow = mod.GetTexture("Projectiles/MutantBoss/MutantSpearAimGlow");
+            float modifier = projectile.timeLeft / (60f - projectile.localAI[1]);
+            Color glowColor = new Color(51, 255, 191, 210) * (1f - modifier);
+            float glowScale = projectile.scale * 5f * modifier;
+            Main.spriteBatch.Draw(glow, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), glowColor, 0, origin2, glowScale, SpriteEffects.None, 0f);
             return false;
         }
     }

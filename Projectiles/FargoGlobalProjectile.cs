@@ -642,7 +642,9 @@ namespace FargowiltasSouls.Projectiles
 
                     if (split != null)
                     {
-                        split.friendly = true;
+                        split.friendly = projectile.friendly;
+                        split.hostile = projectile.hostile;
+                        split.timeLeft = projectile.timeLeft;
                         split.GetGlobalProjectile<FargoGlobalProjectile>().numSplits = projectile.GetGlobalProjectile<FargoGlobalProjectile>().numSplits;
                         //split.GetGlobalProjectile<FargoGlobalProjectile>().firstTick = false;
                         split.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
@@ -1156,11 +1158,11 @@ namespace FargowiltasSouls.Projectiles
                             {
                                 if (++counter > 60)
                                 {
-                                    projectile.velocity.Y = 9;
+                                    projectile.velocity.Y = 7;
                                     projectile.velocity.X = 0;
                                 }
                             }
-                            projectile.position.X -= projectile.velocity.X * 0.75f;
+                            projectile.position.X -= projectile.velocity.X * 0.9f;
                         }
                     }
                     break;

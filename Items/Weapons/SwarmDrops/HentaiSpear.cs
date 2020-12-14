@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Penetrator");
-            Tooltip.SetDefault(@"Has differents attack when using left or right click
+            Tooltip.SetDefault(@"Has different attacks when using left or right click
 Has different attacks when used while holding up or both up and down
 'The reward for embracing eternity...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "洞察者");

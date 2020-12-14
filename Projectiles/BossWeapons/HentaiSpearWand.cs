@@ -70,7 +70,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Main.dust[dustId3].noGravity = true;*/
 
             Player player = Main.player[projectile.owner];
-            if (projectile.owner == Main.myPlayer && projectile.localAI[0] > 15
+            if (projectile.owner == Main.myPlayer && projectile.localAI[0] > 5
                 && player.ownedProjectileCounts[ModContent.ProjectileType<HentaiSpearBigDeathray>()] < 1)
             {
                 projectile.Kill();
@@ -93,7 +93,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 if (projectile.owner == Main.myPlayer)
                 {
-                    Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<HentaiSpearBigDeathray>(),
+                    Projectile.NewProjectile(projectile.Center, Vector2.Normalize(projectile.velocity), ModContent.ProjectileType<HentaiSpearBigDeathray>(),
                       projectile.damage, projectile.knockBack, player.whoAmI, 0, projectile.whoAmI);
                 }
             }
