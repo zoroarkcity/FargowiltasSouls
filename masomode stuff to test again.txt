@@ -273,6 +273,7 @@ i got bored, fishron ex is a post-soe god of destruction
 rain cloud disappears if toggle is disabled
 fishron typo corrections
 
+reduced eoc p3 from 10% to 6%
 lengthened qb delay before bee swarm
 slowed down moon lord phantasmal eyes more
 did something to fix the obscenely eldritch heldproj/soul of terraria glitch (test diffractor/pen-gigabeam in mp)
