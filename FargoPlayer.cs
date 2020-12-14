@@ -1341,7 +1341,7 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
-            if (OceanicMaul)
+            if (OceanicMaul && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.fishBossEX, NPCID.DukeFishron))
             {
                 player.statLifeMax2 /= 5;
                 if (player.statLifeMax2 < 100)
