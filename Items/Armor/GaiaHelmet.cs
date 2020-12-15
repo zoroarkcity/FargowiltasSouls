@@ -102,7 +102,7 @@ Reduces max life and damage reduction by 20%";
                 player.statLifeMax2 -= player.statLifeMax / 5;
                 player.endurance -= 0.2f;
                 Lighting.AddLight(player.Center, new Vector3(1, 1, 1));
-                /*if (Main.rand.Next(2) == 0) //visual dust
+                if (Main.rand.Next(3) == 0) //visual dust
                 {
                     float scale = 2f;
                     int type = Main.rand.Next(2) == 0 ? 107 : 110;
@@ -115,7 +115,7 @@ Reduces max life and damage reduction by 20%";
                         Main.dust[dust].noGravity = false;
                         Main.dust[dust].scale *= 0.5f;
                     }
-                }*/
+                }
             }
         }
 

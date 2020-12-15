@@ -293,4 +293,4 @@ added hypothermia debuff (increased damage taken from cold attacks)
 	ice queens crown immunes
 	replaces blizzard chilled
 	replaces chilled/frozen on various enemies
-blender rework (poggers!)
+gaia offense mode shader
