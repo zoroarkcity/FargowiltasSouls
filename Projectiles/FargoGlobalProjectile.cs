@@ -353,7 +353,31 @@ namespace FargowiltasSouls.Projectiles
                     TungstenProjectile = false;
                 }
 
-                if (tikiMinion)
+                switch (projectile.type)
+                {
+                    case ProjectileID.RedCounterweight:
+                    case ProjectileID.BlackCounterweight:
+                    case ProjectileID.BlueCounterweight:
+                    case ProjectileID.GreenCounterweight:
+                    case ProjectileID.PurpleCounterweight:
+                    case ProjectileID.YellowCounterweight:
+                        {
+                            if (player.HeldItem.type == mod.ItemType("Blender"))
+                            {
+                                projectile.localAI[0]++;
+                                if(projectile.localAI[0] > 60)
+                                {
+                                    projectile.Kill();
+                                    Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 11, 0.5f);
+                                    int proj2 = mod.ProjectileType("BlenderProj3");
+                                    Projectile.NewProjectile(new Vector2(projectile.Center.X, projectile.Center.Y), projectile.DirectionFrom(player.Center) * 8, proj2, projectile.damage, projectile.knockBack, projectile.owner);
+                                }
+                            }
+                        }
+                        break;
+                }
+
+                                if (tikiMinion)
                 {
                     projectile.alpha = 120;
 
