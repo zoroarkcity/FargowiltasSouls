@@ -319,6 +319,7 @@ namespace FargowiltasSouls.NPCs
                             npc.Center = Main.player[npc.target].Center;
                             npc.position.X += Main.rand.Next(2) == 0 ? -600 : 600;
                             npc.position.Y += Main.rand.Next(2) == 0 ? -400 : 400;
+                            npc.TargetClosest(false);
                             NetUpdateMaso(npc.whoAmI);
                             npc.netUpdate = true;
                         }

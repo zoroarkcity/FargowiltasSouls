@@ -500,13 +500,14 @@ namespace FargowiltasSouls
             Item.NewItem(player.Center, ItemID.LifeCrystal, 4);
             Item.NewItem(player.Center, ItemID.ManaCrystal, 4);
             Item.NewItem(player.Center, ItemID.RecallPotion, 15);
-            if (Main.netMode != 0)
+            if (Main.netMode != NetmodeID.SinglePlayer)
             {
                 Item.NewItem(player.Center, ItemID.WormholePotion, 15);
             }
             Item.NewItem(player.Center, ModContent.ItemType<DevianttsSundial>());
             Item.NewItem(player.Center, ModContent.ItemType<AutoHouse>(), 3);
             Item.NewItem(player.Center, ModContent.ItemType<EurusSock>());
+            Item.NewItem(player.Center, ModContent.ItemType<PuffInABottle>());
 
             //only give once per world
             if (ModLoader.GetMod("MagicStorage") != null && !FargoSoulsWorld.ReceivedTerraStorage)

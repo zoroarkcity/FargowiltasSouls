@@ -3608,6 +3608,14 @@ namespace FargowiltasSouls
                 case ItemID.DemonScythe:
                     return 2f / 3f;
 
+                case ItemID.SpaceGun:
+                    if (!NPC.downedBoss2)
+                    {
+                        AttackSpeed *= 0.75f;
+                        return 0.75f;
+                    }
+                    return 1f;
+
                 case ItemID.DD2BetsyBow:
                 case ItemID.Uzi:
                 case ItemID.BeesKnees:

@@ -176,8 +176,19 @@ namespace FargowiltasSouls
 
         public override void PostUpdate()
         {
-            if (!Main.expertMode && MasochistMode)
-                MasochistMode = false;
+            if (MasochistMode)
+            {
+                if (!Main.expertMode)
+                    MasochistMode = false;
+
+                if (!NPC.downedSlimeKing && !NPC.downedBoss1 && !Main.hardMode //pre boss, disable rain and sandstorm
+                    && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn")))
+                {
+                    Main.raining = false;
+                    Sandstorm.Happening = false;
+                    Sandstorm.TimeLeft = 0;
+                }
+            }
 
             SwarmActive = (bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive");
 

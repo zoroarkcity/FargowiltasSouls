@@ -1433,8 +1433,7 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.Snatcher:
-                        case NPCID.ManEater:
-
+                        //case NPCID.ManEater:
                             if (++Counter[0] > 60 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 500)
                             {
                                 Player target = Main.player[npc.target];
@@ -1674,7 +1673,8 @@ namespace FargowiltasSouls.NPCs
                             if (Counter[0] >= 300)
                             {
                                 Counter[0] = 0;
-                                int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
+                                Shoot(npc, 30, 800, 14, ProjectileID.Bubble, npc.damage / 4, 1, true);
+                                /*int t = npc.HasPlayerTarget ? npc.target : npc.FindClosestPlayer();
                                 if (t != -1)
                                 {
                                     Player player = Main.player[t];
@@ -1690,7 +1690,7 @@ namespace FargowiltasSouls.NPCs
                                                 NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, bubble);
                                         }
                                     }
-                                }
+                                }*/
                             }
                             break;
 
@@ -6945,7 +6945,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.GoblinSorcerer:
                     case NPCID.GoblinThief:
                         if (Main.netMode != NetmodeID.MultiplayerClient)
-                            Projectile.NewProjectile(npc.Center, new Vector2(Main.rand.NextFloat(-2f, 2f), -5), ModContent.ProjectileType<GoblinSpikyBall>(), 15, 0, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, new Vector2(Main.rand.NextFloat(-2f, 2f), -5), ModContent.ProjectileType<GoblinSpikyBall>(), npc.damage / 4, 0, Main.myPlayer);
                         break;
 
                     case NPCID.AngryBones:
@@ -7438,7 +7438,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.FungoFish:
                     case NPCID.FungiBulb:
                     case NPCID.GiantFungiBulb:
-                        if (Main.netMode != NetmodeID.MultiplayerClient)// && Main.hardMode)
+                        if (Main.netMode != NetmodeID.MultiplayerClient && Main.hardMode)
                         {
                             for (int i = 0; i < 10; i++)
                             {
