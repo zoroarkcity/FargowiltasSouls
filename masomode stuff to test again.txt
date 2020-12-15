@@ -289,3 +289,7 @@ deviantt's gift now contains puff in a bottle (cloud in a bottle, but no recipes
 piranha/arapaima/shark
 	adjusted vfx of jump
 	will jump away from you if you're dead
+added hypothermia debuff (increased damage taken from cold attacks)
+	ice queens crown immunes
+	replaces blizzard chilled
+	replaces chilled/frozen on various enemies

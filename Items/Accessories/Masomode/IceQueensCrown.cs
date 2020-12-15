@@ -11,7 +11,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ice Queen's Crown");
-            Tooltip.SetDefault(@"Grants immunity to Frozen
+            Tooltip.SetDefault(@"Grants immunity to Frozen and Hypothermia
 Increases damage reduction by 5%
 Summons a friendly super Flocko
 'The royal symbol of a defeated foe'");

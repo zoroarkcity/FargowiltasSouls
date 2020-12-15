@@ -4452,7 +4452,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.IceSlime:
                     case NPCID.SpikedIceSlime:
                         target.AddBuff(BuffID.Slimed, 120);
-                        target.AddBuff(BuffID.Frostburn, 120);
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 300);
                         break;
 
                     case NPCID.JungleSlime:
@@ -4640,7 +4640,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.SnowFlinx:
-                        target.AddBuff(BuffID.Chilled, 300);
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 600);
                         break;
 
                     case NPCID.Medusa:
@@ -5025,7 +5025,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.ZombieEskimo:
                     case NPCID.ArmedZombieEskimo:
-                        target.AddBuff(BuffID.Chilled, 240);
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 300);
                         goto case NPCID.Zombie;
 
                     case NPCID.Corruptor:
@@ -5112,12 +5112,12 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.Flocko:
-                        target.AddBuff(BuffID.Chilled, 180);
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 300);
                         target.AddBuff(BuffID.Frostburn, 180);
                         break;
 
                     case NPCID.IceQueen:
-                        target.AddBuff(BuffID.Chilled, 180);
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 600);
                         target.AddBuff(BuffID.Frostburn, 180);
                         AddBuffNoStack(target, BuffID.Frozen);
                         break;
@@ -5311,12 +5311,12 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.MisterStabby:
                         target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 180);
-                        target.AddBuff(BuffID.Chilled, 180);
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 300);
                         break;
 
                     case NPCID.SnowBalla:
                     case NPCID.SnowmanGangsta:
-                        target.AddBuff(BuffID.Chilled, 180);
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 300);
                         target.AddBuff(BuffID.Frostburn, 300);
                         break;
 
