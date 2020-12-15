@@ -3439,6 +3439,16 @@ namespace FargowiltasSouls
             {
                 player.bodyFrame.Y = player.bodyFrame.Height * 10;
             }
+            if(GaiaOffense)
+            {
+                drawInfo.bodyArmorShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye")); //set armor and accessory shaders to gaia shader if set bonus is triggered
+                drawInfo.headArmorShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.legArmorShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.wingShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.handOnShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.handOffShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.shoeShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+            }
         }
 
         public void AddPet(bool toggle, bool vanityToggle, int buff, int proj)

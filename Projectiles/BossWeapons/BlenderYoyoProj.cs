@@ -74,25 +74,31 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             return (projectile.Distance(targetHitbox.Center()) <= 70);
         }
-
+        int hitcounter;
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             //target.immune[projectile.owner] = 6;
             Player player = Main.player[projectile.owner];
-            projectile.ai[1]++;
-            if (projectile.ai[1] > 3 && player.ownedProjectileCounts[ProjectileID.BlackCounterweight] < 3)
+            hitcounter++;
+            if (player.ownedProjectileCounts[ProjectileID.BlackCounterweight] < 5)
             {
                 Projectile.NewProjectile(player.Center, Main.rand.NextVector2Circular(10, 10), ProjectileID.BlackCounterweight, projectile.damage, projectile.knockBack, projectile.owner);
-                projectile.ai[1] = 0;
+            }
+            if(hitcounter % 5 == 0)
+            {
+                Vector2 velocity = Vector2.UnitY;
+                velocity = velocity.RotatedByRandom(Math.PI / 4);
+                for (int i = 0; i < 8; i++)
+                {
+                    Vector2 newvel = velocity.RotatedBy(i * Math.PI / 4);
+                    Projectile.NewProjectile(projectile.Center, newvel * 8, mod.ProjectileType("BlenderPetal"), projectile.damage, projectile.knockBack, projectile.owner);
+                }
             }
             if(soundtimer == 0)
             {
                 soundtimer = 15;
                 Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 22, 1.5f, 1f);
             }
-            Vector2 velocity = Vector2.Normalize(projectile.Center - target.Center) * 10;
-            int proj2 = mod.ProjectileType("BlenderProj3");
-            Projectile.NewProjectile(new Vector2(projectile.Center.X, projectile.Center.Y), velocity, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
         }
     }
 }
