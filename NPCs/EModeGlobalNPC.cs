@@ -1777,7 +1777,11 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     const float gravity = 0.3f;
                                     const float time = 120f;
-                                    Vector2 distance = Main.player[t].Center - npc.Center;
+                                    Vector2 distance;
+                                    if (Main.player[t].active && !Main.player[t].dead && !Main.player[t].ghost)
+                                        distance = Main.player[t].Center - npc.Center;
+                                    else
+                                        distance = new Vector2(npc.Center.X < Main.player[t].Center.X ? -300 : 300, -100);
                                     distance.X = distance.X / time;
                                     distance.Y = distance.Y / time - 0.5f * gravity * time;
                                     npc.ai[1] = 120f;
@@ -1795,13 +1799,11 @@ namespace FargowiltasSouls.NPCs
                                 npc.ai[3] += 0.3f;
                                 masoBool[0] = false;
 
-                                int num22 = 7;
+                                int num22 = 5;
                                 for (int index1 = 0; index1 < num22; ++index1)
                                 {
-                                    Vector2 vector2_1 = (Vector2.Normalize(npc.velocity) * new Vector2((npc.width + 50) / 2f, npc.height) * 0.75f).RotatedBy((index1 - (num22 / 2 - 1)) * Math.PI / num22, new Vector2()) + npc.Center;
                                     Vector2 vector2_2 = ((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2() * Main.rand.Next(3, 8);
-                                    Vector2 vector2_3 = vector2_2;
-                                    int index2 = Dust.NewDust(vector2_1 + vector2_3, 0, 0, 172, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
+                                    int index2 = Dust.NewDust(npc.position, npc.width, npc.height, 172, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
                                     Main.dust[index2].noGravity = true;
                                     Main.dust[index2].noLight = true;
                                     Main.dust[index2].velocity /= 4f;
@@ -1823,7 +1825,11 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     const float gravity = 0.3f;
                                     const float time = 120f;
-                                    Vector2 distance = Main.player[t].Center - npc.Center;
+                                    Vector2 distance;
+                                    if (Main.player[t].active && !Main.player[t].dead && !Main.player[t].ghost)
+                                        distance = Main.player[t].Center - npc.Center;
+                                    else
+                                        distance = new Vector2(npc.Center.X < Main.player[t].Center.X ? -300 : 300, -100);
                                     distance.X = distance.X / time;
                                     distance.Y = distance.Y / time - 0.5f * gravity * time;
                                     npc.ai[1] = 120f;
@@ -1840,13 +1846,11 @@ namespace FargowiltasSouls.NPCs
                                 npc.velocity.Y = npc.ai[3];
                                 npc.ai[3] += 0.3f;
 
-                                int num22 = 7;
+                                int num22 = 5;
                                 for (int index1 = 0; index1 < num22; ++index1)
                                 {
-                                    Vector2 vector2_1 = (Vector2.Normalize(npc.velocity) * new Vector2((npc.width + 50) / 2f, npc.height) * 0.75f).RotatedBy((index1 - (num22 / 2 - 1)) * Math.PI / num22, new Vector2()) + npc.Center;
                                     Vector2 vector2_2 = ((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2() * Main.rand.Next(3, 8);
-                                    Vector2 vector2_3 = vector2_2;
-                                    int index2 = Dust.NewDust(vector2_1 + vector2_3, 0, 0, 172, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
+                                    int index2 = Dust.NewDust(npc.position, npc.width, npc.height, 172, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
                                     Main.dust[index2].noGravity = true;
                                     Main.dust[index2].noLight = true;
                                     Main.dust[index2].velocity /= 4f;
@@ -1868,7 +1872,11 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     const float gravity = 0.3f;
                                     const float time = 90;
-                                    Vector2 distance = Main.player[t].Center - npc.Center;
+                                    Vector2 distance;
+                                    if (Main.player[t].active && !Main.player[t].dead && !Main.player[t].ghost)
+                                        distance = Main.player[t].Center - npc.Center;
+                                    else
+                                        distance = new Vector2(npc.Center.X < Main.player[t].Center.X ? -300 : 300, -100);
                                     distance.X = distance.X / time;
                                     distance.Y = distance.Y / time - 0.5f * gravity * time;
                                     npc.ai[1] = time;
@@ -1885,13 +1893,11 @@ namespace FargowiltasSouls.NPCs
                                 npc.velocity.Y = npc.ai[3];
                                 npc.ai[3] += 0.3f;
 
-                                int num22 = 7;
+                                int num22 = 5;
                                 for (int index1 = 0; index1 < num22; ++index1)
                                 {
-                                    Vector2 vector2_1 = (Vector2.Normalize(npc.velocity) * new Vector2((npc.width + 50) / 2f, npc.height) * 0.75f).RotatedBy((index1 - (num22 / 2 - 1)) * Math.PI / num22, new Vector2()) + npc.Center;
                                     Vector2 vector2_2 = ((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2() * Main.rand.Next(3, 8);
-                                    Vector2 vector2_3 = vector2_2;
-                                    int index2 = Dust.NewDust(vector2_1 + vector2_3, 0, 0, 172, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
+                                    int index2 = Dust.NewDust(npc.position, npc.width, npc.height, 172, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
                                     Main.dust[index2].noGravity = true;
                                     Main.dust[index2].noLight = true;
                                     Main.dust[index2].velocity /= 4f;

@@ -285,3 +285,7 @@ nerfed damage of hostile red spiky balls dropped by goblins
 eoc p3 retargets whenever it tps
 rain and sandstorm disabled until ks/eoc/wof defeated (or you have abom)
 deviantt's gift now contains puff in a bottle (cloud in a bottle, but no recipes)
+
+piranha/arapaima/shark
+	adjusted vfx of jump
+	will jump away from you if you're dead
