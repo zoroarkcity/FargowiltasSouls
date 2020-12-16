@@ -679,6 +679,11 @@ namespace FargowiltasSouls.NPCs
                 Item.NewItem(npc.Hitbox, ModContent.ItemType<Patreon.Catsounds.MedallionoftheFallenKing>());
             }
 
+            if (SoulConfig.Instance.PatreonPlant && npc.type == NPCID.Dryad && Main.bloodMoon && player.ZoneJungle)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<Patreon.LaBonez.PiranhaPlantVoodooDoll>());
+            }
+
             //boss drops
             if (Main.rand.Next(FargoSoulsWorld.MasochistMode ? 3 : 10) == 0)
             {

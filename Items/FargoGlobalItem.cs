@@ -15,10 +15,10 @@ namespace FargowiltasSouls.Items
     {
         public override void SetDefaults(Item item)
         {
-            /*if (item.type == ItemID.Stinger)
+            if (item.type == ItemID.Acorn)
             {
                 item.ammo = item.type;
-            }*/
+            }
         }
 
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
@@ -128,7 +128,7 @@ namespace FargowiltasSouls.Items
             }
 
             //non weapons and weapons with no ammo begone
-            if (item.damage <= 0 || !player.HasAmmo(item, true) || (item.mana > 0 && player.statMana < item.mana)) return true;
+            if (item.damage <= 0 || !player.HasAmmo(item, true) || (item.mana > 0 && player.statMana < item.mana) || item.type == ItemID.ExplosiveBunny || item.type == ItemID.Cannonball) return true;
 
             if (modPlayer.AdditionalAttacks && modPlayer.AdditionalAttacksTimer <= 0)
             {

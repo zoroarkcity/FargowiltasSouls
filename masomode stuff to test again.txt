@@ -277,3 +277,20 @@ reduced eoc p3 from 10% to 6%
 lengthened qb delay before bee swarm
 slowed down moon lord phantasmal eyes more
 did something to fix the obscenely eldritch heldproj/soul of terraria glitch (test diffractor/pen-gigabeam in mp)
+removed man eater dash
+nerfed crawdad bubble blowing to crab bubble
+mushroom enemies only burst into spores when killed in hm
+space gun nerfed -25% damage, -25% speed if used pre-eow/boc
+nerfed damage of hostile red spiky balls dropped by goblins
+eoc p3 retargets whenever it tps
+rain and sandstorm disabled until ks/eoc/wof defeated (or you have abom)
+deviantt's gift now contains puff in a bottle (cloud in a bottle, but no recipes)
+
+piranha/arapaima/shark
+	adjusted vfx of jump
+	will jump away from you if you're dead
+added hypothermia debuff (increased damage taken from cold attacks)
+	ice queens crown immunes
+	replaces blizzard chilled
+	replaces chilled/frozen on various enemies
+gaia offense mode shader

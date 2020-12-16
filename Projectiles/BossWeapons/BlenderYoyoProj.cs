@@ -33,6 +33,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.scale = 1f;
 
             projectile.extraUpdates = 1;
+
+            projectile.usesIDStaticNPCImmunity = true;
+            projectile.idStaticNPCHitCooldown = 15;
         }
         int soundtimer;
         public override void AI()
