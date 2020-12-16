@@ -96,6 +96,7 @@ namespace FargowiltasSouls
             AddToggle("PatreonDove", "Fig Branch", "FigBranch", "ffffff");
             AddToggle("PatreonKingSlime", "Medallion of the Fallen King", "MedallionoftheFallenKing", "ffffff");
             AddToggle("PatreonFishron", "Staff Of Unleashed Ocean", "StaffOfUnleashedOcean", "ffffff");
+            AddToggle("PatreonPlant", "Piranha Plant Voodoo Doll", "PiranhaPlantVoodooDoll", "ffffff");
 
 
 

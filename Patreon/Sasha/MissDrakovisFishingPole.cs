@@ -72,8 +72,8 @@ namespace FargowiltasSouls.Patreon.Sasha
                     break;
                 //range
                 case 2:
-                    int num129 = 4;
-                    for (int num130 = 0; num130 < num129; num130++)
+                    int numBullets = 5;
+                    for (int num130 = 0; num130 < numBullets; num130++)
                     {
                         float num131 = (float)Main.mouseX + Main.screenPosition.X - position.X;
                         float num132 = (float)Main.mouseY + Main.screenPosition.Y - position.Y;
@@ -117,12 +117,12 @@ namespace FargowiltasSouls.Patreon.Sasha
                     item.shoot = mod.ProjectileType("PufferRang");
 
                     item.useStyle = 1;
-                    item.useTime = 15;
-                    item.useAnimation = 15;
+                    item.useTime = 12;
+                    item.useAnimation = 12;
                     item.UseSound = SoundID.Item1;
                     item.knockBack = 6;
                     item.noMelee = false;
-                    item.shootSpeed = 2f;
+                    item.shootSpeed = 3f;
                     break;
                 //range
                 case 2:
@@ -131,8 +131,8 @@ namespace FargowiltasSouls.Patreon.Sasha
 
                     item.knockBack = 6.5f;
                     item.useStyle = 5;
-                    item.useAnimation = 60;
-                    item.useTime = 60;
+                    item.useAnimation = 55;
+                    item.useTime = 55;
                     item.useAmmo = AmmoID.Bullet;
                     item.UseSound = SoundID.Item36;
                     item.shootSpeed = 7f;

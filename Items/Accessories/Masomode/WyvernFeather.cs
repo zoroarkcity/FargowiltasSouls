@@ -4,7 +4,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    [AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Face)]
     public class WyvernFeather : ModItem
     {
         public override void SetStaticDefaults()

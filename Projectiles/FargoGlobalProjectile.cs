@@ -246,7 +246,11 @@ namespace FargowiltasSouls.Projectiles
                         TungstenProjectile = true;
                         modPlayer.TungstenCD = 30;
 
-                        if (modPlayer.TerraForce || modPlayer.WizardEnchant)
+                        if (modPlayer.Eternity)
+                        {
+                            modPlayer.TungstenCD = 0;
+                        }
+                        else if (modPlayer.TerraForce || modPlayer.WizardEnchant)
                         {
                             modPlayer.TungstenCD /= 2;
                         }
@@ -409,6 +413,35 @@ namespace FargowiltasSouls.Projectiles
                             num469 = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), projectile.width, projectile.height, 44, -projectile.velocity.X * 0.2f,
                                 -projectile.velocity.Y * 0.2f, 100, Color.LimeGreen, .5f);
                             Main.dust[num469].velocity *= 2f;
+                        }
+
+                        //stardust dragon fix
+                        if (projectile.type == ProjectileID.StardustDragon2)
+                        {
+                            int tailIndex = -1;
+                            for (int i = 0; i < Main.maxProjectiles; i++)
+                            {
+                                Projectile p = Main.projectile[i];
+
+                                if (p.active && p.type == ProjectileID.StardustDragon4)
+                                {
+                                    tailIndex = i;
+                                    break;
+                                }
+                            }
+
+                            Projectile prev = Main.projectile[tailIndex];
+                            List<int> list = new List<int>();
+                            list.Add(prev.whoAmI);
+
+                            while (prev.type != ProjectileID.StardustDragon1)
+                            {
+                                list.Add((int)prev.ai[0]);
+                                prev = Main.projectile[(int)prev.ai[0]];
+                            }
+
+                            int listIndex = list.IndexOf(projectile.whoAmI);
+                            Main.projectile[list[listIndex - 2]].ai[0] = list[listIndex + 1];
                         }
 
                         projectile.Kill();
