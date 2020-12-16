@@ -16,8 +16,8 @@ namespace FargowiltasSouls.Projectiles.JungleMimic
     	
         public override void SetDefaults()
         {
-            projectile.width = 60;
-            projectile.height = 60;
+            projectile.width = 140;
+            projectile.height = 140;
             projectile.friendly = true;
             projectile.ignoreWater = false;
             projectile.tileCollide = false;
@@ -29,7 +29,7 @@ namespace FargowiltasSouls.Projectiles.JungleMimic
         public override void Kill(int timeLeft)
         {
         	Lighting.AddLight(projectile.Center, ((255 - projectile.alpha) * 0.35f) / 255f, ((255 - projectile.alpha) * 0.35f) / 255f, ((255 - projectile.alpha) * 0f) / 255f);
-			for (int d = 0; d < 15; d++)
+			for (int d = 0; d < 30; d++)
                     {
 	                int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0f, 0f, 150, default(Color), 1.5f);
                     Main.dust[dust].noGravity = true;

@@ -62,8 +62,8 @@ namespace FargowiltasSouls.Projectiles.JungleMimic
         	Main.PlaySound(SoundID.Item62, projectile.position);
 			projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
 			projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-			projectile.width = 60;
-			projectile.height = 60;
+			projectile.width = 120;
+			projectile.height = 120;
 			projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
 			projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
         }
