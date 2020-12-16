@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Patreon.Sasha
             projectile.CloneDefaults(ProjectileID.Bubble);
             aiType = ProjectileID.Bubble;
 
-            projectile.penetrate = 4;
+            projectile.penetrate = 1;
         }
 
         public override void Kill(int timeLeft)

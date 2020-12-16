@@ -792,6 +792,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool PatreonFishron;
 
+        [Label("$Mods.FargowiltasSouls.PatreonPlant")]
+        [DefaultValue(true)]
+        public bool PatreonPlant;
+
 
 
 

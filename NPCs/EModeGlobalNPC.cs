@@ -19,6 +19,7 @@ using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Buffs.Souls;
 using Fargowiltas;
 using Microsoft.Xna.Framework.Graphics;
+using FargowiltasSouls.Items.Weapons.Misc;
 
 namespace FargowiltasSouls.NPCs
 {
@@ -6337,6 +6338,23 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.BigMimicJungle:
                         if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<TribalCharm>());
+
+                        int rand = Main.rand.Next(3);
+
+                        switch (rand)
+                        {
+                            case 0:
+                                Item.NewItem(npc.Hitbox, ModContent.ItemType<Vineslinger>());
+                                break;
+                            case 1:
+                                Item.NewItem(npc.Hitbox, ModContent.ItemType<Mahoguny>());
+                                break;
+                            case 2:
+                                Item.NewItem(npc.Hitbox, ModContent.ItemType<OvergrownKey>());
+                                break;
+                        }
+
+
                         goto case NPCID.BigMimicCrimson;
 
                     case NPCID.IceGolem:

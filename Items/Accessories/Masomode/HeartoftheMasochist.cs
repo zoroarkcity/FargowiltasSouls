@@ -7,7 +7,7 @@ using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    [AutoloadEquip(/*EquipType.Head, */EquipType.Front, EquipType.Back)]
+    [AutoloadEquip(EquipType.Face, EquipType.Front, EquipType.Back)]
     public class HeartoftheMasochist : ModItem
     {
         public override void SetStaticDefaults()
