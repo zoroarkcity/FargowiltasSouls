@@ -66,7 +66,10 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 npc.velocity = Vector2.Zero;
 
                 if (npc.ai[3] == 0) //store angle for attack
+                {
+                    npc.localAI[2] = npc.Distance(Main.player[npc.target].Center);
                     npc.ai[3] = npc.DirectionTo(Main.player[npc.target].Center).ToRotation();
+                }
 
                 if (npc.ai[1] > 120) //attack and reset
                 {
@@ -77,7 +80,9 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         {
                             Vector2 speed = 16f * npc.ai[3].ToRotationVector2().RotatedBy((Main.rand.NextDouble() - 0.5) * 0.785398185253143 / 12.0);
                             speed *= Main.rand.NextFloat(0.9f, 1.1f);
-                            Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomLaser"), abom.damage / 4, 0f, Main.myPlayer);
+                            int p = Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomLaser"), abom.damage / 4, 0f, Main.myPlayer);
+                            if (p != Main.maxProjectiles)
+                                Main.projectile[p].timeLeft = (int)(npc.localAI[2] / speed.Length());
                         }
                     }
                     npc.netUpdate = true;
