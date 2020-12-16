@@ -21,8 +21,6 @@ namespace FargowiltasSouls.Projectiles.JungleMimic
             projectile.penetrate = -1; 
             projectile.melee = true; 
             projectile.aiStyle = 15;
-            projectile.localNPCHitCooldown = -1;
-            projectile.localNPCHitCooldown = 10;
         }
 
         public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)

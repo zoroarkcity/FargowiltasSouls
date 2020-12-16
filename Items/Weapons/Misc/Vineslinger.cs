@@ -23,7 +23,7 @@ namespace FargowiltasSouls.Items.Weapons.Misc
             item.useAnimation = 40;
             item.useTime = 40; 
             item.knockBack = 5.5f;
-            item.damage = 26;
+            item.damage = 52;
             item.scale = 1.1f;
             item.noUseGraphic = true; 
             item.shoot = mod.ProjectileType("VineslingerBall");
