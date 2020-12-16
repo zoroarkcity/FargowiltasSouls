@@ -294,3 +294,9 @@ added hypothermia debuff (increased damage taken from cold attacks)
 	replaces blizzard chilled
 	replaces chilled/frozen on various enemies
 gaia offense mode shader
+
+nerfed how much faster qb throws hives when no royal subjects alive, won't throw hives while dashing
+nerfed velocity of qb hive toss
+nerfed duration of electrified inflicted by martian saucer lasers
+leash of cthulhu eye projs don't glow when inside solid blocks
+ajusted moon lord homing eye behaviour again

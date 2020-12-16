@@ -1211,15 +1211,19 @@ namespace FargowiltasSouls.Projectiles
                     {
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore) && !FargoSoulsWorld.SwarmActive)
                         {
-                            if (projectile.ai[0] == 2) //diving down and homing
+                            if (projectile.ai[0] == 2 && ++counter > 60) //diving down and homing
                             {
-                                if (++counter > 60)
-                                {
-                                    projectile.velocity.Y = 7;
-                                    projectile.velocity.X = 0;
-                                }
+                                projectile.velocity.Y = 6;
                             }
-                            projectile.position.X -= projectile.velocity.X * 0.9f;
+                            else
+                            {
+                                projectile.position.Y -= projectile.velocity.Y / 4;
+                            }
+
+                            if (projectile.velocity.X > 1)
+                                projectile.velocity.X = 1;
+                            else if (projectile.velocity.X < -1)
+                                projectile.velocity.X = -1;
                         }
                     }
                     break;
@@ -1779,7 +1783,7 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.SaucerLaser:
-                        target.AddBuff(BuffID.Electrified, 600);
+                        target.AddBuff(BuffID.Electrified, 300);
                         break;
 
                     case ProjectileID.UFOLaser:

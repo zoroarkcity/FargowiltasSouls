@@ -97,7 +97,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 int dist = 1000;
 
-                for (int i = 0; i < Main.rand.Next(2, 4); i++)
+                for (int i = 0; i < 2; i++)
                 {
                     Vector2 offset = new Vector2();
                     double angle = Main.rand.NextDouble() * 2d * Math.PI;
