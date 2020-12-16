@@ -21,6 +21,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             projectile.extraUpdates = 1;
             projectile.tileCollide = false;
+
+            projectile.usesIDStaticNPCImmunity = true;
+            projectile.idStaticNPCHitCooldown = 15;
         }
 
         public override void AI()

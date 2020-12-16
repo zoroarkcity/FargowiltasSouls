@@ -296,6 +296,7 @@ namespace FargowiltasSouls
         public bool Shadowflame;
         public bool Oiled;
         public bool DeathMarked;
+        public bool Hypothermia;
         public bool noDodge;
         public bool noSupersonic;
         public bool Bloodthirsty;
@@ -814,6 +815,7 @@ namespace FargowiltasSouls
             CurseoftheMoon = false;
             OceanicMaul = false;
             DeathMarked = false;
+            Hypothermia = false;
             Midas = false;
             MutantPresence = MutantPresence ? player.HasBuff(ModContent.BuffType<Buffs.Boss.MutantPresence>()) : false;
             DevianttPresence = false;
@@ -898,6 +900,7 @@ namespace FargowiltasSouls
             CurseoftheMoon = false;
             OceanicMaul = false;
             DeathMarked = false;
+            Hypothermia = false;
             Midas = false;
             Bloodthirsty = false;
             SinisterIcon = false;
@@ -1059,7 +1062,7 @@ namespace FargowiltasSouls
                     if (currentTile.wall == WallID.None)
                     {
                         if (player.ZoneSnow)
-                            player.AddBuff(BuffID.Chilled, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
+                            player.AddBuff(ModContent.BuffType<Hypothermia>(), 2);
                         else
                             player.AddBuff(BuffID.Wet, 2);
                         /*if (Main.hardMode)
@@ -3047,8 +3050,17 @@ namespace FargowiltasSouls
 
         public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
         {
+            if (npc.coldDamage && Hypothermia)
+                damage = (int)(damage * 1.2);
+
             if (npc.GetGlobalNPC<FargoSoulsGlobalNPC>().CurseoftheMoon)
                 damage = (int)(damage * 0.8);
+        }
+
+        public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit)
+        {
+            if (proj.coldDamage && Hypothermia)
+                damage = (int)(damage * 1.2);
         }
 
         public override void OnHitByNPC(NPC npc, int damage, bool crit)
@@ -3427,6 +3439,16 @@ namespace FargowiltasSouls
             {
                 player.bodyFrame.Y = player.bodyFrame.Height * 10;
             }
+            if(GaiaOffense)
+            {
+                drawInfo.bodyArmorShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye")); //set armor and accessory shaders to gaia shader if set bonus is triggered
+                drawInfo.headArmorShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.legArmorShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.wingShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.handOnShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.handOffShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.shoeShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+            }
         }
 
         public void AddPet(bool toggle, bool vanityToggle, int buff, int proj)
@@ -3607,6 +3629,14 @@ namespace FargowiltasSouls
                 case ItemID.SnowmanCannon:
                 case ItemID.DemonScythe:
                     return 2f / 3f;
+
+                case ItemID.SpaceGun:
+                    if (!NPC.downedBoss2)
+                    {
+                        AttackSpeed *= 0.75f;
+                        return 0.75f;
+                    }
+                    return 1f;
 
                 case ItemID.DD2BetsyBow:
                 case ItemID.Uzi:

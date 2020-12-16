@@ -30,4 +30,18 @@ namespace FargowiltasSouls.Items.Dyes
             item.rare = ItemRarityID.Orange;
         }
     }
+
+    public class GaiaDye : ModItem
+    {
+        //public override string Texture => "FargowiltasSouls/Items/Dyes/LifeDye";
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Gaia Dye");
+        }
+        public override void SetDefaults()
+        {
+            item.maxStack = 99;
+            item.rare = ItemRarityID.Orange;
+        }
+    }
 }

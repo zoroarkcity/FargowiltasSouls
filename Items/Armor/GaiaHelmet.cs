@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -42,7 +43,12 @@ Increases max number of minions and sentries by 1");
 
         public override void ArmorSetShadows(Player player)
         {
-            player.armorEffectDrawShadow = true;
+            FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
+            if (fargoPlayer.GaiaOffense)
+            {
+                player.armorEffectDrawOutlinesForbidden = true;
+                player.armorEffectDrawShadow = true;
+            }
         }
 
         public override void UpdateArmorSet(Player player)
@@ -95,8 +101,8 @@ Reduces max life and damage reduction by 20%";
                 player.statDefense -= 20;
                 player.statLifeMax2 -= player.statLifeMax / 5;
                 player.endurance -= 0.2f;
-
-                if (Main.rand.Next(2) == 0) //visual dust
+                Lighting.AddLight(player.Center, new Vector3(1, 1, 1));
+                if (Main.rand.Next(3) == 0) //visual dust
                 {
                     float scale = 2f;
                     int type = Main.rand.Next(2) == 0 ? 107 : 110;

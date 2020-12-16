@@ -357,7 +357,31 @@ namespace FargowiltasSouls.Projectiles
                     TungstenProjectile = false;
                 }
 
-                if (tikiMinion)
+                switch (projectile.type)
+                {
+                    case ProjectileID.RedCounterweight:
+                    case ProjectileID.BlackCounterweight:
+                    case ProjectileID.BlueCounterweight:
+                    case ProjectileID.GreenCounterweight:
+                    case ProjectileID.PurpleCounterweight:
+                    case ProjectileID.YellowCounterweight:
+                        {
+                            if (player.HeldItem.type == mod.ItemType("Blender"))
+                            {
+                                projectile.localAI[0]++;
+                                if(projectile.localAI[0] > 60)
+                                {
+                                    projectile.Kill();
+                                    Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 11, 0.5f);
+                                    int proj2 = mod.ProjectileType("BlenderProj3");
+                                    Projectile.NewProjectile(new Vector2(projectile.Center.X, projectile.Center.Y), projectile.DirectionFrom(player.Center) * 8, proj2, projectile.damage, projectile.knockBack, projectile.owner);
+                                }
+                            }
+                        }
+                        break;
+                }
+
+                                if (tikiMinion)
                 {
                     projectile.alpha = 120;
 
@@ -1685,7 +1709,7 @@ namespace FargowiltasSouls.Projectiles
                     case ProjectileID.CultistBossIceMist:
                         if (!target.HasBuff(BuffID.Frozen))
                             target.AddBuff(BuffID.Frozen, 60);
-                        target.AddBuff(BuffID.Chilled, 120);
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 600);
                         break;
 
                     case ProjectileID.CultistBossFireBall:
@@ -1904,13 +1928,18 @@ namespace FargowiltasSouls.Projectiles
                         target.AddBuff(ModContent.BuffType<LivingWasteland>(), 900);
                         break;
 
+                    case ProjectileID.FrostWave:
+                    case ProjectileID.FrostShard:
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 600);
+                        break;
+
                     case ProjectileID.SnowBallHostile:
                         if (!target.HasBuff(BuffID.Frozen) && Main.rand.Next(2) == 0)
                             target.AddBuff(BuffID.Frozen, 60);
                         break;
                         
                     case ProjectileID.BulletSnowman:
-                        target.AddBuff(BuffID.Chilled, 180);
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 600);
                         break;
 
                     case ProjectileID.UnholyTridentHostile:
@@ -1959,7 +1988,7 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.IceSpike:
                         //target.AddBuff(BuffID.Slimed, 120);
-                        target.AddBuff(BuffID.Frostburn, 120);
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 300);
                         break;
 
                     case ProjectileID.JungleSpike:
