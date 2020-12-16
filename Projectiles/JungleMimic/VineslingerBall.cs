@@ -68,7 +68,7 @@ namespace FargowiltasSouls.Projectiles.JungleMimic
                 for (int i = 0; i < 2; i++)
                 {
                     float speedX = -projectile.velocity.X * Main.rand.NextFloat(.2f, .3f) + Main.rand.NextFloat(-4f, 4f);
-                    float speedY = -projectile.velocity.Y * Main.rand.Next(40, 70) * 0.01f + Main.rand.Next(-20, 21) * 0.4f;
+                    float speedY = -projectile.velocity.Y * Main.rand.NextFloat(.2f, .3f) + Main.rand.NextFloat(-4f, 4f);
                     Projectile.NewProjectile(projectile.position.X + speedX, projectile.position.Y + speedY, speedX, speedY, mod.ProjectileType("VineslingerProjectileFriendly"), (int)(projectile.damage * 0.5), 0f, projectile.owner, 0f, 0f);
                     Main.PlaySound(SoundID.Grass, projectile.position);
                 }

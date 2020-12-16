@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Projectiles.JungleMimic
             if (projectile.velocity.X != oldVelocity.X && Math.Abs (oldVelocity.X) > 0.1f) {
                 projectile.velocity.X = oldVelocity.X * -0.8f;
             }
-            if (projectile.velocity.Y != oldVelocity.Y && Math.Abs (oldVelocity.X) > 0.1f) {
+            if (projectile.velocity.Y != oldVelocity.Y && Math.Abs (oldVelocity.Y) > 0.1f) {
                 projectile.velocity.Y = oldVelocity.Y * -0.8f;
             }
             
@@ -48,6 +48,10 @@ namespace FargowiltasSouls.Projectiles.JungleMimic
 		public override void AI()
         {
 			projectile.rotation += 0.2f * (float)projectile.direction;
+            if (projectile.velocity.Y < 0)
+                projectile.velocity.Y += 0.3f;
+            else
+                projectile.velocity.Y += 0.4f;
 		}
 		public override void Kill(int timeLeft)
         {
