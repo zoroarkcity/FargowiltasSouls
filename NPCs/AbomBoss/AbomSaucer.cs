@@ -82,7 +82,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             speed *= Main.rand.NextFloat(0.9f, 1.1f);
                             int p = Projectile.NewProjectile(npc.Center, speed, mod.ProjectileType("AbomLaser"), abom.damage / 4, 0f, Main.myPlayer);
                             if (p != Main.maxProjectiles)
-                                Main.projectile[p].timeLeft = (int)(npc.localAI[2] / speed.Length());
+                                Main.projectile[p].timeLeft = (int)(npc.localAI[2] / speed.Length()) + 1;
                         }
                     }
                     npc.netUpdate = true;
