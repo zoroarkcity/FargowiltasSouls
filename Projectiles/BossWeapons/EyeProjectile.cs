@@ -15,7 +15,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetDefaults()
         {
             projectile.width = 16;
-            projectile.height = 26;
+            projectile.height = 16;
             projectile.aiStyle = 1;
             projectile.friendly = true;
             projectile.melee = true;
@@ -26,10 +26,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void AI()
         {
-            //dust!
-            int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width, projectile.height + 5, 60, projectile.velocity.X * 0.2f,
-                projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-            Main.dust[dustId].noGravity = true;
+            if (!Collision.SolidCollision(projectile.position, projectile.width, projectile.height))
+            {
+                //dust!
+                int dustId = Dust.NewDust(projectile.position, projectile.width, projectile.height, 60, projectile.velocity.X * 0.2f,
+                  projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
+                Main.dust[dustId].noGravity = true;
+            }
 
             const int aislotHomingCooldown = 0;
             const int homingDelay = 10;

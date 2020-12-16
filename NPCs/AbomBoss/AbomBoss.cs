@@ -911,7 +911,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.netUpdate = true;
                         npc.ai[0]++;
                         npc.ai[1] = 0;
-                        npc.velocity.X = (player.Center.X - npc.Center.X) / 90 / 4;
+                        npc.velocity.X = 0f;//(player.Center.X - npc.Center.X) / 90 / 4;
                         npc.velocity.Y = 30;
                     }
                     break;

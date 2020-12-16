@@ -1113,7 +1113,8 @@ namespace FargowiltasSouls.NPCs
             }
             else if (npc.life < npc.lifeMax / 2)
             {
-                Counter[0]++; //throw hives faster when no royal subjects alive
+                if (Counter[0] % 2 == 0)
+                    Counter[0]++; //throw hives faster when no royal subjects alive
             }
 
             if (npc.life > npc.lifeMax / 2)
@@ -1140,11 +1141,11 @@ namespace FargowiltasSouls.NPCs
             }
             else
             {
-                if (++Counter[0] > 570 && Counter[2] <= 600) //lobs hives below 50%
+                if (++Counter[0] > 570 && Counter[2] <= 600 && (npc.ai[0] == 3f || npc.ai[0] == 1f)) //lobs hives below 50%, not dashing
                 {
                     Counter[0] = 0;
                     const float gravity = 0.25f;
-                    float time = 45f;
+                    float time = 60f;
                     Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 30f;
                     distance.X = distance.X / time;
                     distance.Y = distance.Y / time - 0.5f * gravity * time;

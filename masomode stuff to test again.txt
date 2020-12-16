@@ -294,3 +294,20 @@ added hypothermia debuff (increased damage taken from cold attacks)
 	replaces blizzard chilled
 	replaces chilled/frozen on various enemies
 gaia offense mode shader
+
+nerfed how much faster qb throws hives when no royal subjects alive, won't throw hives while dashing
+nerfed velocity of qb hive toss
+nerfed duration of electrified inflicted by martian saucer lasers
+leash of cthulhu eye projs don't glow when inside solid blocks
+ajusted moon lord homing eye behaviour again
+rebalanced vineslinger, mahoguny, overgrown key
+drakovi's fishing pole rework
+	generally much better range
+	melee puffers explode into smaller puffers when they hit something
+	ranger shoots less bullets per spread, but an extra weaker bullet at every nearby enemy
+	magic shoots a v spread of bubbles
+	summon fishe are much bigger and move much more aggressively
+	stats adjusted across the board
+abom nerfs
+	third styx gazer is always straight down vertical (dodgeable underneath)
+	saucer lasers die when they meet in the middle
