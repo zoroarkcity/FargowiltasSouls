@@ -21,10 +21,11 @@ namespace FargowiltasSouls.Projectiles.JungleMimic
             projectile.height = 18;
             projectile.friendly = true;
             projectile.hostile = false;
-            projectile.magic = true;
+            projectile.melee = true;
             projectile.ignoreWater = false;
             projectile.tileCollide = false;
             aiType = 88;
+            projectile.timeLeft = 120;
         }
 
         public override void Kill(int timeLeft)
@@ -36,6 +37,8 @@ namespace FargowiltasSouls.Projectiles.JungleMimic
                 Dust.NewDust(projectile.position, projectile.width, projectile.height, mod.DustType("Leaf_Dust"), projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 150, default(Color), 0.7f);
             }
         }
+
+        public override bool CanDamage() => (projectile.ai[0] >= 20f);
 
         public override void AI()
         {
