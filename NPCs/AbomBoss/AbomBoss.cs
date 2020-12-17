@@ -327,7 +327,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             npc.ai[3] = 1;
                             if (Main.netMode != NetmodeID.MultiplayerClient) //phase 2 saucers
                             {
-                                int max = 3;// npc.localAI[3] > 1 ? 5 : 3;
+                                int max = npc.localAI[3] > 1 ? 5 : 3;
                                 for (int i = 0; i < max; i++)
                                 {
                                     float ai2 = i * 2 * (float)Math.PI / max; //rotation offset

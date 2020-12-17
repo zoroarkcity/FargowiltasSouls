@@ -318,3 +318,6 @@ your gigabeam spheres disappear when you stop firing
 did something to fix an edge case with gigabeam firing the wrong way for a tick
 mutant/abom backgrounds are emode exclusive
 darkened mutant background
+
+abom spawns 5 saucers at a time in phase 2 and saucers have reticle and trail
+abom's scythe during saucer attack is bigger
