@@ -63,7 +63,7 @@ namespace FargowiltasSouls.Sky
         {
             if (maxDepth >= 0 && minDepth < 0)
             {
-                Color color = /*SoulConfig.Instance.GetValue(SoulConfig.Instance.MutantBackground, false) ? Color.White :*/ new Color(200, 200, 200);
+                Color color = /*SoulConfig.Instance.GetValue(SoulConfig.Instance.MutantBackground, false) ? Color.White :*/ new Color(180, 180, 180);
 
                 spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantSky"),
                     new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color * (intensity * 0.5f + lifeIntensity * 0.5f));
