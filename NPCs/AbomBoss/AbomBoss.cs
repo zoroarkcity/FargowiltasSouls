@@ -235,7 +235,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.DelBuff(0);
                     if (++npc.ai[1] > 120)
                     {
-                        if (!SkyManager.Instance["FargowiltasSouls:AbomBoss"].IsActive())
+                        if (FargoSoulsWorld.MasochistMode && !SkyManager.Instance["FargowiltasSouls:AbomBoss"].IsActive())
                             SkyManager.Instance.Activate("FargowiltasSouls:AbomBoss");
 
                         for (int i = 0; i < 5; i++)

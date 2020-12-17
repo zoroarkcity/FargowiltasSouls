@@ -474,7 +474,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     break;
 
                 case -1: //defeated
-                    if (!SkyManager.Instance["FargowiltasSouls:MutantBoss"].IsActive())
+                    if (FargoSoulsWorld.MasochistMode && !SkyManager.Instance["FargowiltasSouls:MutantBoss"].IsActive())
                         SkyManager.Instance.Activate("FargowiltasSouls:MutantBoss");
 
                     npc.dontTakeDamage = true;
@@ -902,7 +902,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     if (++npc.ai[1] > 120)
                     {
-                        if (!SkyManager.Instance["FargowiltasSouls:MutantBoss"].IsActive())
+                        if (FargoSoulsWorld.MasochistMode && !SkyManager.Instance["FargowiltasSouls:MutantBoss"].IsActive())
                             SkyManager.Instance.Activate("FargowiltasSouls:MutantBoss");
 
                         for (int i = 0; i < 5; i++)

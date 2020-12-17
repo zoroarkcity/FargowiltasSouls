@@ -18,26 +18,23 @@ namespace FargowiltasSouls.Sky
 
         public override void Update(GameTime gameTime)
         {
-            if (increase)
+            const float increment = 0.01f;
+            if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.mutantBoss, ModContent.NPCType<MutantBoss>())
+                && (Main.npc[EModeGlobalNPC.mutantBoss].ai[0] < 0 || Main.npc[EModeGlobalNPC.mutantBoss].ai[0] > 10
+                || (Main.npc[EModeGlobalNPC.mutantBoss].ai[0] == 10 && Main.npc[EModeGlobalNPC.mutantBoss].ai[1] > 120)))
             {
-                float increment = 0.04f;
-
                 intensity += increment;
                 if (intensity > 1f)
                 {
                     intensity = 1f;
-                    increase = false;
                 }
             }
             else
             {
-                float increment = 0.01f;
-
                 intensity -= increment;
                 if (intensity < 0f)
                 {
                     intensity = 0f;
-                    increase = true;
                     Deactivate();
                 }
             }
@@ -48,7 +45,7 @@ namespace FargowiltasSouls.Sky
             if (maxDepth >= 0 && minDepth < 0)
             {
                 spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantSky2"),
-                    new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White * intensity * 0.5f);
+                    new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White * intensity * 0.9f);
             }
         }
 

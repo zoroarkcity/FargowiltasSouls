@@ -63,8 +63,10 @@ namespace FargowiltasSouls.Sky
         {
             if (maxDepth >= 0 && minDepth < 0)
             {
+                Color color = /*SoulConfig.Instance.GetValue(SoulConfig.Instance.MutantBackground, false) ? Color.White :*/ new Color(160, 160, 160);
+
                 spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantSky"),
-                    new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White * (intensity * 0.5f + lifeIntensity * 0.5f));
+                    new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color * (intensity * 0.5f + lifeIntensity * 0.5f));
 
                 if (--delay < 0)
                 {
@@ -81,7 +83,7 @@ namespace FargowiltasSouls.Sky
                     int width = Main.rand.Next(3, 251);
                     spriteBatch.Draw(ModContent.GetTexture("FargowiltasSouls/Sky/MutantStatic"),
                     new Rectangle(xPos[i] - width / 2, yPos[i], width, 3),
-                    Color.White * lifeIntensity * 0.75f);
+                    color * lifeIntensity * 0.75f);
                 }
             }
         }
