@@ -321,3 +321,4 @@ darkened mutant background
 
 abom spawns 5 saucers at a time in phase 2 and saucers have reticle and trail
 abom's scythe during saucer attack is bigger
+reduced some mutant dusts
