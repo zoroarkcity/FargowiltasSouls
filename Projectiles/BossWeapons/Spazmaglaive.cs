@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,8 +16,20 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spazmaglaive");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(empowered);
+            writer.Write(hitSomething);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            empowered = reader.ReadBoolean();
+            hitSomething = reader.ReadBoolean();
         }
 
         public override void SetDefaults()
@@ -24,43 +37,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.melee = true;
             projectile.friendly = true;
             projectile.light = 0.4f;
-
+            projectile.tileCollide = false;
             projectile.width = 50;
             projectile.height = 50;
-            projectile.penetrate = 1;
+            projectile.penetrate = -1;
             projectile.aiStyle = -1;
-        }
-
-        public override bool PreAI()
-        {
-            if (projectile.ai[0] == 1)
-            {
-                projectile.ai[1]++;
-
-                //stay in place
-                projectile.position = projectile.oldPosition;
-                projectile.velocity = Vector2.Zero;
-                projectile.rotation += projectile.direction * -0.4f;
-
-                //fire stars at cursor
-                if (projectile.ai[1] % 5 == 0)
-                {
-                    Vector2 cursor = Main.MouseWorld;
-                    Vector2 velocity = Vector2.Normalize(cursor - projectile.Center) * 15;
-                    Player player = Main.player[projectile.owner];
-
-                    Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<DarkStarFriendly>(), (int)(60 * player.meleeDamage), 1f, projectile.owner);
-                }
-
-                if (projectile.ai[1] > 15)
-                {
-                    projectile.ai[0] = 2;
-                }
-
-                return false;
-            }
-
-            return true;
         }
 
         public override void AI()
@@ -74,76 +55,59 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 projectile.ai[0] = 0;
             }
-
-            //travelling out
-            if (projectile.ai[0] == 0)
+            if(projectile.ai[1] == 0)
             {
-                projectile.ai[1]++;
-
-                if (projectile.ai[1] > 20)
-                {
-                    projectile.ai[0] = empowered ? 1: 2;
-                    projectile.ai[1] = 0;
-                    projectile.netUpdate = true;
-                }
+                projectile.ai[1] = Main.rand.NextFloat(-MathHelper.Pi / 6, MathHelper.Pi / 6);
             }
-            //travel back to player
-            else if (projectile.ai[0] == 2)
-            {
-                projectile.extraUpdates = 0;
-                projectile.velocity = Vector2.Normalize(Main.player[projectile.owner].Center - projectile.Center) * 45;
-
-                //kill when back to player
-                if (projectile.Distance(Main.player[projectile.owner].Center) <= 30)
-                    projectile.Kill();
-            }
-
-            //spin
-            projectile.rotation += projectile.direction * -0.8f;
-
-            //dust!
-            int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width, projectile.height + 5, 75, projectile.velocity.X * 0.2f,
-                projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-            Main.dust[dustId].noGravity = true;
+            projectile.rotation += projectile.direction * -0.4f;
+            projectile.ai[0]++;
+            Vector2 DistanceOffset = new Vector2(900 * (float)Math.Sin(projectile.ai[0] * Math.PI/30), 0).RotatedBy(projectile.velocity.ToRotation());
+            DistanceOffset = DistanceOffset.RotatedBy(projectile.ai[1] - (projectile.ai[1] * projectile.ai[0] / 15));
+            projectile.Center = Main.player[projectile.owner].Center + DistanceOffset;
+            if (projectile.ai[0] > 30)
+                projectile.Kill();
         }
 
-        private void spawnFire()
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if (!hitSomething)
-            {
-                hitSomething = true;
-                if (projectile.owner == Main.myPlayer)
-                {
-                    FargoGlobalProjectile.XWay(12, projectile.Center, ModContent.ProjectileType<EyeFireFriendly>(), 5, projectile.damage / 2, 0);
-                }
-                projectile.ai[0] = empowered ? 1 : 2;
-                projectile.ai[1] = 0;
-                projectile.penetrate = 4;
-                projectile.netUpdate = true;
-            }
+            return projectile.Distance(new Vector2(targetHitbox.X, targetHitbox.Y)) < 150; //big circular hitbox because otherwise it misses too often
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffID.CursedInferno, 120);
-            spawnFire();
-        }
 
-        public override bool OnTileCollide(Vector2 oldVelocity)
-        {
-            if (projectile.Distance(Main.player[projectile.owner].Center) >= 50)
+            if (!hitSomething)
             {
-                spawnFire();
+                hitSomething = true;
+                if (projectile.owner == Main.myPlayer)
+                {
+                    Main.PlaySound(SoundID.Item74, projectile.Center);
+                    Vector2 baseVel = Main.rand.NextVector2CircularEdge(1, 1);
+                    for(int i = 0; i < 5; i++)
+                    {
+                        Vector2 newvel = baseVel.RotatedBy(i * MathHelper.TwoPi / 5);
+                        Projectile.NewProjectile(target.Center, newvel, mod.ProjectileType("SpazmaglaiveExplosion"), projectile.damage, projectile.knockBack, projectile.owner, 0, target.whoAmI);
+                    }
+                    if (empowered)
+                    {
+                        for (int i = 0; i < 12; i++)
+                        {
+                            Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 105, 1f, -0.3f);
+                            Vector2 newvel = baseVel.RotatedBy(i * MathHelper.TwoPi / 12);
+                            int p = Projectile.NewProjectile(target.Center, newvel/2, mod.ProjectileType("DarkStarFriendly"), projectile.damage, projectile.knockBack, projectile.owner, 0, target.whoAmI);
+                            if(p < 1000)
+                            {
+                                Main.projectile[p].magic = false;
+                                Main.projectile[p].melee = true;
+                                Main.projectile[p].timeLeft = 30;
+                                Main.projectile[p].netUpdate = true;
+                            }
+                        }
+                    }
+                }
+                projectile.netUpdate = true;
             }
-            return false;
-        }
-
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
-        {
-            //smaller tile hitbox
-            width = 22;
-            height = 22;
-            return true;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -157,13 +121,24 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Color color26 = lightColor;
             color26 = projectile.GetAlpha(color26);
 
-            for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+            for (float i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i += 0.33f)
             {
-                Color color27 = color26;
-                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
-                Vector2 value4 = projectile.oldPos[i];
-                float num165 = projectile.oldRot[i];
-                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
+                int max0 = Math.Max((int)i - 1, 0);
+                Vector2 center = Vector2.Lerp(projectile.oldPos[(int)i], projectile.oldPos[max0], (1 - i % 1));
+                if (i < 4)
+                {
+                    Color color27 = color26;
+                    color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                    Main.spriteBatch.Draw(texture2D13, center + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, projectile.oldRot[(int)i], origin2, projectile.scale, SpriteEffects.None, 0f);
+                }
+                if (empowered)
+                {
+                    Texture2D glow = mod.GetTexture("Projectiles/BossWeapons/HentaiSpearSpinGlow");
+                    Color glowcolor = new Color(142, 250, 176);
+                    glowcolor = Color.Lerp(glowcolor, Color.Transparent, 0.6f);
+                    float glowscale = projectile.scale * (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                    Main.spriteBatch.Draw(glow, center + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), null, glowcolor, 0, glow.Size() / 2, glowscale, SpriteEffects.None, 0f);
+                }
             }
 
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);

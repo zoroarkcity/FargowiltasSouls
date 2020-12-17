@@ -69,6 +69,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 hitSomething = true;
                 if (projectile.owner == Main.myPlayer)
                 {
+                    Main.PlaySound(SoundID.Item74, projectile.Center);
                     FargoGlobalProjectile.XWay(12, projectile.Center, ModContent.ProjectileType<EyeFireFriendly>(), 5, projectile.damage / 2, 0);
                 }
                 projectile.ai[0] = 1;
@@ -89,6 +90,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 spawnFire();
             }
+            projectile.tileCollide = false;
             
             return false;
         }

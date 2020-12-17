@@ -15,20 +15,20 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             DisplayName.SetDefault("Gemini Glaives");
             Tooltip.SetDefault("Fire a different glaive depending on mouse click" +
-                "Alternating clicks will enhance attacks" +
-                "'The compressed forms of defeated foes..'");
+                "\nAlternating clicks will enhance attacks" +
+                "\n'The compressed forms of defeated foes..'");
 
             Tooltip.AddTranslation(GameCulture.Chinese, "被打败的敌人的压缩形态..");
         }
 
         public override void SetDefaults()
         {
-            item.damage = 200; //
+            item.damage = 600; //
             item.melee = true;
             item.width = 30;
             item.height = 30;
-            item.useTime = 25;
-            item.useAnimation = 25;
+            item.useTime = 40;
+            item.useAnimation = 40;
             item.noUseGraphic = true;
             item.useStyle = 1;
             item.knockBack = 3;
@@ -47,6 +47,10 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override bool CanUseItem(Player player)
         {
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<Retiglaive>()] > 0 || player.ownedProjectileCounts[ModContent.ProjectileType<Spazmaglaive>()] > 0)
+                return false;
+
+
             if (player.altFunctionUse == 2)
             {
                 item.shoot = ModContent.ProjectileType<Retiglaive>();
@@ -62,11 +66,8 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            if (player.altFunctionUse == 2)
-            {
-                damage = 0;
-            }
-
+            if (lastThrown != type)
+                damage = (int)(damage * 1.2); //additional damage boost for switching
             Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, lastThrown);
 
             lastThrown = type;

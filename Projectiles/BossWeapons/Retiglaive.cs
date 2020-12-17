@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
+using System.Runtime.Remoting.Messaging;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,8 +16,18 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Retiglaive");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 10;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(empowered);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            empowered = reader.ReadBoolean();
         }
 
         public override void SetDefaults()
@@ -28,7 +40,10 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.height = 50;
             projectile.penetrate = -1;
             projectile.aiStyle = -1;
+            projectile.tileCollide = false;
         }
+
+        public override bool CanDamage() => false;
 
         public override bool PreAI()
         {
@@ -36,29 +51,56 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 projectile.ai[1]++;
 
-                //stay in place
-                projectile.position = projectile.oldPosition;
-                projectile.velocity = Vector2.Zero;
                 projectile.rotation += projectile.direction * -0.4f;
 
-                //fire lasers at cursor
-                if (projectile.ai[1] % 5 == 0)
+                if (projectile.ai[1] <= 50)
                 {
-                    Vector2 cursor = Main.MouseWorld;
-                    Vector2 velocity = Vector2.Normalize(cursor - projectile.Center) * 15;
-                    Player player = Main.player[projectile.owner];
+                    projectile.velocity = Vector2.Lerp(projectile.velocity, Vector2.Zero, 0.1f);
+                    //fire lasers at cursor
+                    if (projectile.ai[1] % 10 == 0)
+                    {
+                        Vector2 cursor = Main.MouseWorld;
+                        Vector2 velocity = Vector2.Normalize(cursor - projectile.Center);
 
-                    Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<PrimeLaser>(), (int)(60 * player.meleeDamage), 1f, projectile.owner);
+                        if (projectile.ai[1] > 10)
+                            velocity = velocity.RotatedByRandom(Math.PI / 24);
+
+                        float num = 24f;
+                        for (int index1 = 0; index1 < num; ++index1)
+                        {
+                            int type = 235;
+
+                            Vector2 v = (Vector2.UnitX * 0.0f + -Vector2.UnitY.RotatedBy(index1 * (MathHelper.TwoPi / num), new Vector2()) * new Vector2(1f, 4f)).RotatedBy(velocity.ToRotation());
+                            int index2 = Dust.NewDust(projectile.Center, 0, 0, type, 0.0f, 0.0f, 150, new Color(255, 153, 145), 1f);
+                            Main.dust[index2].scale = 1.5f;
+                            Main.dust[index2].fadeIn = 1.3f;
+                            Main.dust[index2].noGravity = true;
+                            Main.dust[index2].position = projectile.Center + (v * projectile.scale * 1.5f);
+                            Main.dust[index2].velocity = v.SafeNormalize(Vector2.UnitY);
+                        }
+
+                        Player player = Main.player[projectile.owner];
+
+                        Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<RetiDeathray>(), projectile.damage, 1f, projectile.owner, 0, projectile.whoAmI);
+                        projectile.velocity = -velocity * 8;
+
+
+                        if (empowered)
+                        {
+                            int p = Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<DarkStarHomingFriendly>(), projectile.damage, 1f, projectile.owner, 0, 0);
+                            if(p < 1000)
+                            {
+                                Main.projectile[p].minion = false;
+                                Main.projectile[p].melee = true;
+                            }
+                        }
+                    }
                 }
 
-                if (projectile.ai[1] > 15)
+                if (projectile.ai[1] > 60)
                 {
+                    projectile.ai[1] = 15;
                     projectile.ai[0] = 2;
-
-                    if (empowered)
-                    {
-                        FargoGlobalProjectile.XWay(12, projectile.Center, ModContent.ProjectileType<DarkStarFriendly>(), 5, projectile.damage / 2, 1);
-                    }
                 }
 
                 return false;
@@ -86,6 +128,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                 if (projectile.ai[1] > 30)
                 {
+                    //projectile.velocity /= 3;
                     projectile.ai[0] = 1;
                     projectile.ai[1] = 0;
                     projectile.netUpdate = true;
@@ -94,8 +137,10 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             //travel back to player
             else if (projectile.ai[0] == 2)
             {
-                projectile.extraUpdates = 0;
-                projectile.velocity = Vector2.Normalize(Main.player[projectile.owner].Center - projectile.Center) * 15;
+                projectile.ai[1] += 0.6f;
+                projectile.extraUpdates = (projectile.ai[1] < 40) ? 0 : 1;
+                float lerpspeed = (projectile.ai[1] < 40) ? 0.07f : 0.3f;
+                projectile.velocity = Vector2.Lerp(projectile.velocity, Vector2.Normalize(Main.player[projectile.owner].Center - projectile.Center) * projectile.ai[1], lerpspeed);
 
                 //kill when back to player
                 if (projectile.Distance(Main.player[projectile.owner].Center) <= 30)
@@ -104,28 +149,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             //spin
             projectile.rotation += projectile.direction * -0.4f;
-
-            //dust!
-            int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width, projectile.height + 5, 60, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-            Main.dust[dustId].noGravity = true;
-
-            if (projectile.ai[0] == 1)
-            {
-                projectile.localAI[0] += 0.1f;
-                projectile.position += projectile.DirectionTo(Main.player[projectile.owner].Center) * projectile.localAI[0];
-
-                if (projectile.Distance(Main.player[projectile.owner].Center) <= projectile.localAI[0])
-                    projectile.Kill();
-            }
-        }
-
-        public override bool OnTileCollide(Vector2 oldVelocity)
-        {
-            projectile.ai[0] = 1;
-            projectile.ai[1] = 0;
-            projectile.tileCollide = false;
-
-            return false;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -182,11 +205,22 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
             {
-                Color color27 = color26;
-                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
                 Vector2 value4 = projectile.oldPos[i];
                 float num165 = projectile.oldRot[i];
-                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
+                if (i < 4)
+                {
+                    Color color27 = color26;
+                    color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                    Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
+                }
+                if(empowered)
+                {
+                    Texture2D glow = mod.GetTexture("Projectiles/BossWeapons/HentaiSpearSpinGlow");
+                    Color glowcolor = new Color(255, 50, 50);
+                    glowcolor = Color.Lerp(glowcolor, Color.Transparent, 0.6f);
+                    float glowscale = projectile.scale * (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                    Main.spriteBatch.Draw(glow, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), null, glowcolor, num165, glow.Size()/2, glowscale, SpriteEffects.None, 0f);
+                }
             }
 
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
