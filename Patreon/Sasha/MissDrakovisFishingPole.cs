@@ -24,10 +24,10 @@ namespace FargowiltasSouls.Patreon.Sasha
 
         public override void SetDefaults()
         {
-            item.damage = 280;
+            item.damage = 300;
             item.width = 24;
             item.height = 28;
-            item.value = Item.sellPrice(0, 10);
+            item.value = Item.sellPrice(0, 15);
             item.rare = 10;
             item.autoReuse = true;
 

@@ -93,7 +93,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             else
             {
                 Vector2 target = Main.player[npc.target].Center; //targeting
-                target += Vector2.UnitX.RotatedBy(npc.ai[2]) * 400;
+                target += Vector2.UnitX.RotatedBy(npc.ai[2]) * 500;
 
                 Vector2 distance = target - npc.Center;
                 float length = distance.Length();

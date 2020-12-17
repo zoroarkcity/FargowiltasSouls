@@ -311,3 +311,7 @@ drakovi's fishing pole rework
 abom nerfs
 	third styx gazer is always straight down vertical (dodgeable underneath)
 	saucer lasers die when they meet in the middle
+
+nerfed rockeater bonus to x1.5 (was x2)
+slight drakovi buff because patreon privilege
+your gigabeam spheres disappear when you stop firing
