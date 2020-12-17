@@ -6,25 +6,25 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Patreon.Sasha
 {
-    public class PufferRang : ModProjectile
+    public class PufferSpray : ModProjectile
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("PufferRang");
+            DisplayName.SetDefault("PufferSpray");
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(ProjectileID.EnchantedBoomerang);
-            aiType = ProjectileID.EnchantedBoomerang;
+            projectile.CloneDefaults(ProjectileID.BoneGloveProj);
+            aiType = ProjectileID.BoneGloveProj;
 
             projectile.width = 32;
             projectile.height = 32;
-            projectile.scale = 2f;
+            projectile.scale = 1.5f;
             projectile.penetrate = 4;
-            projectile.extraUpdates = 1;
+            projectile.timeLeft = 60;
         }
 
         public override void AI()
@@ -34,26 +34,14 @@ namespace FargowiltasSouls.Patreon.Sasha
             Main.dust[dustId].noGravity = true;
         }
 
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
-        {
-            //smaller tile hitbox
-            width = 20;
-            height = 20;
-            return true;
-        }
-
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 7;
-            Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 14);
+        }
 
-            if (projectile.owner == Main.myPlayer)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    int p = Projectile.NewProjectile(target.Center, Main.rand.NextVector2Circular(12f, 12f), ModContent.ProjectileType<PufferSpray>(), projectile.damage, projectile.knockBack, projectile.owner);
-                }
-            }
+        public override void Kill(int timeLeft)
+        {
+            Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 14);
 
             for (int i = 0; i < 20; i++)
             {

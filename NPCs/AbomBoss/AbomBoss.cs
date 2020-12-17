@@ -235,7 +235,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.DelBuff(0);
                     if (++npc.ai[1] > 120)
                     {
-                        if (!SkyManager.Instance["FargowiltasSouls:AbomBoss"].IsActive())
+                        if (FargoSoulsWorld.MasochistMode && !SkyManager.Instance["FargowiltasSouls:AbomBoss"].IsActive())
                             SkyManager.Instance.Activate("FargowiltasSouls:AbomBoss");
 
                         for (int i = 0; i < 5; i++)
@@ -327,7 +327,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             npc.ai[3] = 1;
                             if (Main.netMode != NetmodeID.MultiplayerClient) //phase 2 saucers
                             {
-                                int max = 3;// npc.localAI[3] > 1 ? 5 : 3;
+                                int max = npc.localAI[3] > 1 ? 5 : 3;
                                 for (int i = 0; i < max; i++)
                                 {
                                     float ai2 = i * 2 * (float)Math.PI / max; //rotation offset
@@ -911,7 +911,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.netUpdate = true;
                         npc.ai[0]++;
                         npc.ai[1] = 0;
-                        npc.velocity.X = (player.Center.X - npc.Center.X) / 90 / 4;
+                        npc.velocity.X = 0f;//(player.Center.X - npc.Center.X) / 90 / 4;
                         npc.velocity.Y = 30;
                     }
                     break;
