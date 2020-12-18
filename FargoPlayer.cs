@@ -979,6 +979,11 @@ namespace FargowiltasSouls
                     player.fallStart = (int)(player.position.Y / 16f);
                 }
 
+                if (!NPC.downedBoss3 && player.ZoneDungeon && !NPC.AnyNPCs(NPCID.DungeonGuardian))
+                {
+                    NPC.SpawnOnPlayer(player.whoAmI, NPCID.DungeonGuardian);
+                }
+
                 if (player.ZoneUnderworldHeight)
                 {
                     if (!(player.fireWalk || PureHeart))
@@ -3628,6 +3633,7 @@ namespace FargowiltasSouls
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.SnowmanCannon:
                 case ItemID.DemonScythe:
+                case ItemID.BeesKnees:
                     return 2f / 3f;
 
                 case ItemID.SpaceGun:
@@ -3640,7 +3646,6 @@ namespace FargowiltasSouls
 
                 case ItemID.DD2BetsyBow:
                 case ItemID.Uzi:
-                case ItemID.BeesKnees:
                 case ItemID.PhoenixBlaster:
                 case ItemID.LastPrism:
                 case ItemID.Tsunami:

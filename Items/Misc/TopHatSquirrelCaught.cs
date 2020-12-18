@@ -36,5 +36,14 @@ namespace FargowiltasSouls.Items.Misc
             item.makeNPC = (short)ModContent.NPCType<TophatSquirrelCritter>();
             //Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, Main.npcFrameCount[ModContent.NPCType<TophatSquirrelCritter>()]));
         }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddRecipeGroup("FargowiltasSouls:AnySquirrel");
+            recipe.AddIngredient(ItemID.TopHat);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
     }
 }

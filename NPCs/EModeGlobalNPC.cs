@@ -683,6 +683,9 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.WaterSphere:
                 case NPCID.Frog:
                 case NPCID.GoldFrog:
+                case NPCID.Grubby:
+                case NPCID.Sluggy:
+                case NPCID.Buggy:
                     isWaterEnemy = true;
                     break;
 
@@ -6240,6 +6243,11 @@ namespace FargowiltasSouls.NPCs
             {
                 switch (npc.type)
                 {
+                    case NPCID.DiggerHead:
+                    case NPCID.GiantWormHead:
+                        Item.NewItem(npc.Hitbox, ItemID.WormTooth, Main.rand.Next(3, 9));
+                        break;
+
                     case NPCID.BrainScrambler:
                         if (Main.rand.Next(100) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.BrainScrambler);

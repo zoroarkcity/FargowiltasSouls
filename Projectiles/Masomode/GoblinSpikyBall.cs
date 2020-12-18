@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,6 +22,17 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.thrown = false;
             projectile.penetrate = 1;
             projectile.timeLeft /= 6;
+            projectile.scale = 1.5f;
+        }
+
+        public override void AI()
+        {
+            if (Main.invasionType != 1 && projectile.timeLeft > 90)
+                projectile.timeLeft = 90; //despawn fast outside goblin event
+
+            int dustId = Dust.NewDust(projectile.position, projectile.width, projectile.height, 60, projectile.velocity.X * 0.2f,
+                projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
+            Main.dust[dustId].noGravity = true;
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)

@@ -58,7 +58,7 @@ Increases jump height and negates fall damage
             recipe.AddIngredient(mod.ItemType("EurusSock"));
             recipe.AddIngredient(mod.ItemType("DeviatingEnergy"), 10);
 
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
