@@ -1020,6 +1020,10 @@ namespace FargowiltasSouls
             group = new RecipeGroup(() => Lang.misc[37] + " Squirrel", ItemID.Squirrel, ItemID.SquirrelRed);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnySquirrel", group);
 
+            //vanilla squirrels
+            group = new RecipeGroup(() => Lang.misc[37] + " Common Fish", ItemID.AtlanticCod, ItemID.Bass, ItemID.Trout, ItemID.RedSnapper, ItemID.Salmon, ItemID.Tuna);
+            RecipeGroup.RegisterGroup("FargowiltasSouls:AnyCommonFish", group);
+
             //vanilla birds
             group = new RecipeGroup(() => Lang.misc[37] + " Bird", ItemID.Bird, ItemID.BlueJay, ItemID.Cardinal, ItemID.GoldBird, ItemID.Duck, ItemID.MallardDuck);
             RecipeGroup.RegisterGroup("FargowiltasSouls:AnyBird", group);

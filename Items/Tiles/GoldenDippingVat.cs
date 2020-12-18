@@ -43,16 +43,23 @@ namespace FargowiltasSouls.Items.Tiles
 
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddRecipeGroup("FargowiltasSouls:AnyButterfly");
-            recipe.AddIngredient(ItemID.GoldDust, 500);
+            recipe.AddIngredient(ItemID.GoldDust, 100);
             recipe.AddTile(mod.TileType("GoldenDippingVatSheet"));
             recipe.SetResult(ItemID.GoldButterfly);
             recipe.AddRecipe();
 
             recipe = new ModRecipe(mod);
             recipe.AddRecipeGroup("FargowiltasSouls:AnySquirrel");
-            recipe.AddIngredient(ItemID.GoldDust, 500);
+            recipe.AddIngredient(ItemID.GoldDust, 100);
             recipe.AddTile(mod.TileType("GoldenDippingVatSheet"));
             recipe.SetResult(ItemID.SquirrelGold);
+            recipe.AddRecipe();
+
+            recipe = new ModRecipe(mod);
+            recipe.AddRecipeGroup("FargowiltasSouls:AnyCommonFish");
+            recipe.AddIngredient(ItemID.GoldDust, 100);
+            recipe.AddTile(mod.TileType("GoldenDippingVatSheet"));
+            recipe.SetResult(ItemID.GoldenCarp);
             recipe.AddRecipe();
         }
 
@@ -60,7 +67,7 @@ namespace FargowiltasSouls.Items.Tiles
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(critterID);
-            recipe.AddIngredient(ItemID.GoldDust, 500);
+            recipe.AddIngredient(ItemID.GoldDust, 100);
             recipe.AddTile(mod.TileType("GoldenDippingVatSheet"));
             recipe.SetResult(goldCritterID);
             recipe.AddRecipe();

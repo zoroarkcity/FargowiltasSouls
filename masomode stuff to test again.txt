@@ -354,3 +354,17 @@ adjusted arena visuals so the sprites alternate, also fixed devi arena
 made abom's saucer scythe a bit smaller
 dg teleports at you if its too far away, ensures it doesnt insta despawn when force spawned
 all arenas are more faded when you aren't the target (this is for mp)
+
+golden dipping vat recipe costs reduced to use 100 gold dust, was 500
+golden carp can be crafted at vat
+you suffocate normally in water in space
+lava charm prevents underworld on fire
+hallow cactus inflicts confused again, was flipped
+nerfed overgrown key damage
+marginal mahoguny buff
+breaking demon altars no longer forces pirates
+retinazer's aura only burns player if theyre being targeted by itself or spaz
+rainbow slimes immune to knockback so they dont spam spikes every time they get hit
+nerfed speed of laser spray from killed gastropods
+increased number of potions per kill from certain enemies with tim's coc (mainly minibosses)
+nerfed mythril ench from 20% speed to 15% speed and adjusted internal implementation of disrupted focus

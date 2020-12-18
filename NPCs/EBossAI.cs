@@ -1890,7 +1890,8 @@ namespace FargowiltasSouls.NPCs
                 Player p = Main.player[Main.myPlayer];
                 float auraDistance = 2000 - 1200 * Counter[3] / 180f;
                 float range = npc.Distance(p.Center);
-                if (range > auraDistance && range < 12000)
+                bool isTarget = p.whoAmI == npc.target || (spazAlive && p.whoAmI == Main.npc[spazBoss].target);
+                if (range > auraDistance && range < 12000 && isTarget)
                 {
                     p.AddBuff(ModContent.BuffType<Oiled>(), 2);
                     p.AddBuff(BuffID.OnFire, 2);
