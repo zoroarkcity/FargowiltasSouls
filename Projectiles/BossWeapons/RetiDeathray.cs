@@ -30,6 +30,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
 
             projectile.hide = true;
+            projectile.extraUpdates = 1;
         }
 
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
@@ -62,14 +63,14 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 if (!Main.dedServ)
                     Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Zombie_104").WithVolume(0.3f), projectile.Center);
             }
-            float num801 = .5f;
+            float num801 = .3f;
             projectile.localAI[0] += 1f;
             if (projectile.localAI[0] >= maxTime)
             {
                 projectile.Kill();
                 return;
             }
-            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 2.5f * num801;
+            projectile.scale = (float)Math.Sin(projectile.localAI[0] * 3.14159274f / maxTime) * 3f * num801;
             if (projectile.scale > num801)
             {
                 projectile.scale = num801;
@@ -103,6 +104,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             target.AddBuff(BuffID.OnFire, 600);
         }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             if (projectile.velocity == Vector2.Zero)
@@ -114,6 +116,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Texture2D texture2D21 = mod.GetTexture("Projectiles/Deathrays/" + texture + "3");
             float num223 = projectile.localAI[1];
             Microsoft.Xna.Framework.Color color44 = new Microsoft.Xna.Framework.Color(255, 50, 50, 50);
+            color44 *= 0.75f;
             //color44 = Color.Lerp(color44, Color.Transparent, transparency);
             SpriteBatch arg_ABD8_0 = Main.spriteBatch;
             Texture2D arg_ABD8_1 = texture2D19;

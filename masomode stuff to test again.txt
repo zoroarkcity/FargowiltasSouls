@@ -345,3 +345,4 @@ MASSIVE refactor for arenas, check all of them and make sure they work, some rel
 YOU CAN NOW GRAZE ARENAS
 all projectiles can be grazed up to twice per second (was once per second)
 internal rewrite of abom, mutant, eri clearing projs at certain points, they wont do it if any other boss is alive
+gemini glaives exist and are POGGERS
