@@ -32,7 +32,7 @@ Cannot be used while a boss is alive
         {
             item.width = 20;
             item.height = 20;
-            item.maxStack = 999;
+            item.maxStack = 1;
             item.rare = 1;
             item.useAnimation = 30;
             item.useTime = 30;
