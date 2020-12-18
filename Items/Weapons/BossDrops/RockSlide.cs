@@ -5,16 +5,19 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using FargowiltasSouls.Projectiles.BossWeapons;
+using System.Collections.Generic;
+using System.Linq;
+using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
     public class RockSlide : ModItem
     {
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Rockslide");
             Tooltip.SetDefault("'The crumbling remains of a defeated foe..'");
+
             DisplayName.AddTranslation(GameCulture.Chinese, "山崩");
             Tooltip.AddTranslation(GameCulture.Chinese, "'被击败的敌人的破碎残骸'");
         }
@@ -27,11 +30,11 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.height = 28;
             item.useTime = 12;
             item.useAnimation = 12;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 2;
             item.value = 100000;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.mana = 10;
             item.UseSound = SoundID.Item21;
             item.autoReuse = true;
@@ -42,59 +45,69 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY,
             ref int type, ref int damage, ref float knockBack)
         {
-            float shootspeed = item.shootSpeed;
-            int dmg = item.damage;
-            float kb = item.knockBack;
-            kb = player.GetWeaponKnockback(item, kb);
+            float itemShootSpeed = item.shootSpeed;
+            int itemDamage = item.damage;
+            float itemKnockBack = item.knockBack;
+            itemKnockBack = player.GetWeaponKnockback(item, itemKnockBack);
             player.itemTime = item.useTime;
-            Vector2 vector2 = player.RotatedRelativePoint(player.MountedCenter);
+
+            Vector2 mountedCenterRotation = player.RotatedRelativePoint(player.MountedCenter);
             Vector2.UnitX.RotatedBy(player.fullRotation);
-            float num78 = Main.mouseX + Main.screenPosition.X - vector2.X;
-            float num79 = Main.mouseY + Main.screenPosition.Y - vector2.Y;
-            if (player.gravDir == -1f) num79 = Main.screenPosition.Y + Main.screenHeight - Main.mouseY - vector2.Y;
 
-            float num80 = (float)Math.Sqrt(num78 * num78 + num79 * num79);
+            float localX = Main.mouseX + Main.screenPosition.X - mountedCenterRotation.X;
+            float localY = Main.mouseY + Main.screenPosition.Y - mountedCenterRotation.Y;
 
-            if (float.IsNaN(num78) && float.IsNaN(num79) || num78 == 0f && num79 == 0f)
+            if (player.gravDir == -1f)
+                localY = Main.screenPosition.Y + Main.screenHeight - Main.mouseY - mountedCenterRotation.Y;
+
+            float sqrtSpeed = (float)Math.Sqrt(localX * localX + localY * localY);
+
+            if (float.IsNaN(localX) && float.IsNaN(localY) || localX == 0f && localY == 0f)
             {
-                num78 = player.direction;
-                num79 = 0f;
-                num80 = shootspeed;
+                localX = player.direction;
+                localY = 0f;
+                sqrtSpeed = itemShootSpeed;
             }
             else
+                sqrtSpeed = itemShootSpeed / sqrtSpeed;
+
+            localX *= sqrtSpeed;
+            localY *= sqrtSpeed;
+
+            int projCount = 2;
+
+            if (Main.rand.NextBool(2))
+                projCount++;
+
+            if (Main.rand.NextBool(4))
+                projCount++;
+
+            if (Main.rand.NextBool(8))
+                projCount++;
+
+            if (Main.rand.NextBool(16))
+                projCount++;
+
+            for (int i = 0; i < projCount; i++)
             {
-                num80 = shootspeed / num80;
-            }
+                float localProjX = localX;
+                float localProjY = localY;
+                float multiplier = 0.05f * i;
+                localProjX += Main.rand.Next(-25, 26) * multiplier;
+                localProjY += Main.rand.Next(-25, 26) * multiplier;
 
-            num78 *= num80;
-            num79 *= num80;
-            int num146 = 2;
-            if (Main.rand.Next(2) == 0) num146++;
+                sqrtSpeed = (float)Math.Sqrt(localProjX * localProjX + localProjY * localProjY);
+                sqrtSpeed = itemShootSpeed / sqrtSpeed;
 
-            if (Main.rand.Next(4) == 0) num146++;
+                localProjX *= sqrtSpeed;
+                localProjY *= sqrtSpeed;
 
-            if (Main.rand.Next(8) == 0) num146++;
-
-            if (Main.rand.Next(16) == 0) num146++;
-
-            for (int num147 = 0; num147 < num146; num147++)
-            {
-                float num148 = num78;
-                float num149 = num79;
-                float num150 = 0.05f * num147;
-                num148 += Main.rand.Next(-25, 26) * num150;
-                num149 += Main.rand.Next(-25, 26) * num150;
-                num80 = (float)Math.Sqrt(num148 * num148 + num149 * num149);
-                num80 = shootspeed / num80;
-                num148 *= num80;
-                num149 *= num80;
-                float x4 = vector2.X;
-                float y4 = vector2.Y;
-
-                Projectile.NewProjectile(position.X, position.Y, num148, num149, ModContent.ProjectileType<GolemGib>(), dmg, kb, Main.myPlayer, 0, Main.rand.Next(1, 12));
+                Projectile.NewProjectile(position.X, position.Y, localProjX, localProjY, ModContent.ProjectileType<GolemGib>(), itemDamage, itemKnockBack, Main.myPlayer, 0, Main.rand.Next(1, 12));
             }
 
             return false;
         }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips) => tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
     }
 }
