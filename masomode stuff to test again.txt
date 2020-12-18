@@ -331,3 +331,17 @@ giant worm/digger drop worm tooth
 goblin hostile spiky balls emit light, are bigger, despawn faster after event ends
 dungeon guardian will instantly spawn when player enters dungeon pre-skeletron
 grubby, sluggy, buggy immune to water debuffs (mainly jungle poisoned)
+added a few more checks to ancient shadow orbs so they dont eat neutral projectiles
+MASSIVE refactor for arenas, check all of them and make sure they work, some relevant ones
+	eridanus
+	cultist
+	moon lord
+	champion of will
+	champion of life
+	abominationn
+	deviantt
+	duke fishron ex
+	mutant
+YOU CAN NOW GRAZE ARENAS
+all projectiles can be grazed up to twice per second (was once per second)
+internal rewrite of abom, mutant, eri clearing projs at certain points, they wont do it if any other boss is alive

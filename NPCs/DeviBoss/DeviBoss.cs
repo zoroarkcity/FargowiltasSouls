@@ -970,7 +970,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         if (Main.netMode != NetmodeID.MultiplayerClient) //spawn ritual for strong attacks
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                     }
 
@@ -1040,7 +1040,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         if (Main.netMode != NetmodeID.MultiplayerClient) //spawn ritual for strong attacks
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                     }
 
@@ -1103,7 +1103,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         if (Main.netMode != NetmodeID.MultiplayerClient) //spawn ritual for strong attacks
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                     }
 
@@ -1124,7 +1124,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         if (Main.netMode != NetmodeID.MultiplayerClient) //spawn ritual for strong attacks
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                     }
 
@@ -1300,7 +1300,7 @@ namespace FargowiltasSouls.NPCs.DeviBoss
 
                         if (Main.netMode != NetmodeID.MultiplayerClient) //spawn ritual for strong attacks
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<DeviRitual>(), npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                     }
                     
