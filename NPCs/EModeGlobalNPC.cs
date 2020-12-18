@@ -3395,6 +3395,33 @@ namespace FargowiltasSouls.NPCs
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                     Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<SkeletronBone>(), npc.damage / 4, 0f, Main.myPlayer);
                             }*/
+
+                            if (!masoBool[2]) //teleport closer
+                            {
+                                masoBool[2] = true;
+                                npc.TargetClosest(false);
+                                if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) > 800)
+                                {
+                                    for (int i = 0; i < 50; i++)
+                                    {
+                                        int d = Dust.NewDust(npc.position, npc.width, npc.height, 112, 0f, 0f, 0, Color.White, 2.5f);
+                                        Main.dust[d].noGravity = true;
+                                        Main.dust[d].velocity *= 12f;
+                                    }
+
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        npc.Center = Main.player[npc.target].Center + 800 * Vector2.UnitX.RotatedByRandom(2 * Math.PI);
+
+                                    for (int i = 0; i < 50; i++)
+                                    {
+                                        int d = Dust.NewDust(npc.position, npc.width, npc.height, 112, 0f, 0f, 0, Color.White, 2.5f);
+                                        Main.dust[d].noGravity = true;
+                                        Main.dust[d].velocity *= 12f;
+                                    }
+                                }
+                                npc.netUpdate = true;
+                            }
+
                             if (++Counter[0] < 90)
                             {
                                 if (!masoBool[0] && npc.HasValidTarget)
@@ -3626,6 +3653,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 masoBool[0] = false;
                                 masoBool[1] = false;
+                                masoBool[2] = false;
                                 Counter[0] = 0;
                             }
                             break;

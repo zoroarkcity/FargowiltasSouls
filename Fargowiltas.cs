@@ -245,7 +245,7 @@ namespace FargowiltasSouls
             AddToggle("MasoVisionConfig", "Ancient Visions On Hit", "CelestialRune", "ffffff");
 
             //heart of the masochist
-            AddToggle("HeartHeader", "Heart of the Masochist", "HeartoftheMasochist", "ffffff");
+            AddToggle("HeartHeader", "Heart of the Eternal", "HeartoftheMasochist", "ffffff");
             AddToggle("MasoPump", "Pumpking's Cape Support", "PumpkingsCape", "ffffff");
             AddToggle("MasoFlockoConfig", "Flocko Minion", "IceQueensCrown", "ffffff");
             AddToggle("MasoUfoConfig", "Saucer Minion", "SaucerControlConsole", "ffffff");

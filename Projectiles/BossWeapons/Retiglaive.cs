@@ -97,7 +97,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                                 {
                                     Main.projectile[p].minion = false;
                                     Main.projectile[p].melee = true;
-                                    Main.projectile[p].timeLeft = 60;
+                                    Main.projectile[p].timeLeft = 75;
                                 }
                             }
                         }

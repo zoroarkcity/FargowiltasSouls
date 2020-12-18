@@ -29,7 +29,7 @@ namespace FargowiltasSouls.Projectiles.AbomBoss
             projectile.tileCollide = false;
             cooldownSlot = 1;
 
-            projectile.scale = 2f;
+            projectile.scale = 1.5f;
         }
 
         public override void AI()

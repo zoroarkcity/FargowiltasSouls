@@ -3661,9 +3661,9 @@ namespace FargowiltasSouls
                 case ItemID.LaserMachinegun:
                 case ItemID.PainterPaintballGun:
                 case ItemID.XenoStaff:
-                    return 0.75f;
-
                 case ItemID.MoltenFury:
+                    return 0.75f;
+                    
                 case ItemID.DartPistol:
                 case ItemID.DartRifle:
                 case ItemID.VampireKnives:

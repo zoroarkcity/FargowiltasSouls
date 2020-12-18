@@ -49,6 +49,9 @@ namespace FargowiltasSouls.Projectiles
                     return CanDamage() && targetPlayer == Main.myPlayer && Math.Abs((Main.LocalPlayer.Center - projectile.Center).Length() - threshold) < projectile.width / 2 * projectile.scale + Player.defaultHeight + 100;
                 };
 
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 4;
+            ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+
             projectile.hide = true;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
@@ -171,21 +174,25 @@ namespace FargowiltasSouls.Projectiles
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * projectile.Opacity;
+            return Color.White * projectile.Opacity * (targetPlayer == Main.myPlayer ? 1f : 0.2f);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture2D13 = Main.projectileTexture[projectile.type];
             int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
-            int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
-            Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
-            Vector2 origin2 = rectangle.Size() / 2f;
 
             Color color26 = projectile.GetAlpha(lightColor);
 
             for (int x = 0; x < 32; x++)
             {
+                int frame = (projectile.frame + x) % Main.projFrames[projectile.type];
+                int y3 = num156 * frame; //ypos of upper left corner of sprite to draw
+                Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
+                Vector2 origin2 = rectangle.Size() / 2f;
+
+                float rotation = 2f * MathHelper.Pi / 32 * x + projectile.ai[0];
+
                 Vector2 drawOffset = new Vector2(threshold * projectile.scale / 2f, 0f).RotatedBy(projectile.ai[0]);
                 drawOffset = drawOffset.RotatedBy(2f * MathHelper.Pi / 32f * x);
                 const int max = 4;
@@ -194,10 +201,12 @@ namespace FargowiltasSouls.Projectiles
                     Color color27 = color26;
                     color27 *= (float)(max - i) / max;
                     Vector2 value4 = projectile.Center + drawOffset.RotatedBy(rotationPerTick * -i);
-                    float num165 = projectile.rotation;
-                    Main.spriteBatch.Draw(texture2D13, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
+                    float rot = rotation + projectile.oldRot[i];
+                    Main.spriteBatch.Draw(texture2D13, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, rot, origin2, projectile.scale, SpriteEffects.None, 0f);
                 }
-                Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+
+                float finalRot = rotation + projectile.rotation;
+                Main.spriteBatch.Draw(texture2D13, projectile.Center + drawOffset - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color26, finalRot, origin2, projectile.scale, SpriteEffects.None, 0f);
             }
             return false;
         }

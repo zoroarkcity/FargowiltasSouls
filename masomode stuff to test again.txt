@@ -346,3 +346,11 @@ YOU CAN NOW GRAZE ARENAS
 all projectiles can be grazed up to twice per second (was once per second)
 internal rewrite of abom, mutant, eri clearing projs at certain points, they wont do it if any other boss is alive
 gemini glaives exist and are POGGERS
+
+renamed heart of masochist toggle header to heart of the eternal
+gemini glaives tweaks
+molten fury nerfed (-25%, was -15%)
+adjusted arena visuals so the sprites alternate, also fixed devi arena
+made abom's saucer scythe a bit smaller
+dg teleports at you if its too far away, ensures it doesnt insta despawn when force spawned
+all arenas are more faded when you aren't the target (this is for mp)

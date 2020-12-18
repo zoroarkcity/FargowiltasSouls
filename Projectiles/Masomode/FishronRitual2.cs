@@ -44,7 +44,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return new Color(150, 50 + (int)(100.0 * Main.DiscoG / 255.0), 255, 150) * (targetPlayer == Main.myPlayer ? 1f : 0.15f);
+            return new Color(150, 50 + (int)(100.0 * Main.DiscoG / 255.0), 255, 150) * (targetPlayer == Main.myPlayer ? 1f : 0.2f);
         }
     }
 }
