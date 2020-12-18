@@ -41,6 +41,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.penetrate = -1;
             projectile.aiStyle = -1;
             projectile.tileCollide = false;
+
+            projectile.extraUpdates = 1;
         }
 
         public override bool CanDamage() => false;
@@ -87,11 +89,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                         if (empowered)
                         {
-                            int p = Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<DarkStarHomingFriendly>(), projectile.damage, 1f, projectile.owner, 0, 0);
-                            if(p < 1000)
+                            for (int i = -1; i <= 1; i += 2)
                             {
-                                Main.projectile[p].minion = false;
-                                Main.projectile[p].melee = true;
+                                int p = Projectile.NewProjectile(projectile.Center, 1.25f * velocity.RotatedBy(MathHelper.ToRadians(90) * i), 
+                                    ModContent.ProjectileType<DarkStarHomingFriendly>(), projectile.damage, 1f, projectile.owner, -1, 0);
+                                if (p != Main.maxProjectiles)
+                                {
+                                    Main.projectile[p].minion = false;
+                                    Main.projectile[p].melee = true;
+                                    Main.projectile[p].timeLeft = 60;
+                                }
                             }
                         }
                     }
@@ -138,7 +145,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             else if (projectile.ai[0] == 2)
             {
                 projectile.ai[1] += 0.6f;
-                projectile.extraUpdates = (projectile.ai[1] < 40) ? 0 : 1;
+                //projectile.extraUpdates = (projectile.ai[1] < 40) ? 0 : 1;
                 float lerpspeed = (projectile.ai[1] < 40) ? 0.07f : 0.3f;
                 projectile.velocity = Vector2.Lerp(projectile.velocity, Vector2.Normalize(Main.player[projectile.owner].Center - projectile.Center) * projectile.ai[1], lerpspeed);
 

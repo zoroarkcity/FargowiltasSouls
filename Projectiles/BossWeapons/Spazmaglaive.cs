@@ -61,11 +61,31 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
             projectile.rotation += projectile.direction * -0.4f;
             projectile.ai[0]++;
-            Vector2 DistanceOffset = new Vector2(900 * (float)Math.Sin(projectile.ai[0] * Math.PI/30), 0).RotatedBy(projectile.velocity.ToRotation());
-            DistanceOffset = DistanceOffset.RotatedBy(projectile.ai[1] - (projectile.ai[1] * projectile.ai[0] / 15));
+
+            const int maxTime = 45;
+            Vector2 DistanceOffset = new Vector2(1000 * (float)Math.Sin(projectile.ai[0] * Math.PI / maxTime), 0).RotatedBy(projectile.velocity.ToRotation());
+            DistanceOffset = DistanceOffset.RotatedBy(projectile.ai[1] - (projectile.ai[1] * projectile.ai[0] / (maxTime / 2)));
             projectile.Center = Main.player[projectile.owner].Center + DistanceOffset;
-            if (projectile.ai[0] > 30)
+            if (projectile.ai[0] > maxTime)
                 projectile.Kill();
+
+            if (empowered && projectile.ai[0] == maxTime / 2 && projectile.owner == Main.myPlayer) //star spray on the rebound
+            {
+                Vector2 baseVel = Main.rand.NextVector2CircularEdge(1, 1);
+                for (int i = 0; i < 12; i++)
+                {
+                    Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 105, 1f, -0.3f);
+                    Vector2 newvel = baseVel.RotatedBy(i * MathHelper.TwoPi / 12);
+                    int p = Projectile.NewProjectile(projectile.Center, newvel / 2, mod.ProjectileType("DarkStarFriendly"), projectile.damage, projectile.knockBack, projectile.owner);
+                    if (p < Main.maxProjectiles)
+                    {
+                        Main.projectile[p].magic = false;
+                        Main.projectile[p].melee = true;
+                        Main.projectile[p].timeLeft = 30;
+                        Main.projectile[p].netUpdate = true;
+                    }
+                }
+            }
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -84,12 +104,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 {
                     Main.PlaySound(SoundID.Item74, projectile.Center);
                     Vector2 baseVel = Main.rand.NextVector2CircularEdge(1, 1);
+                    float ai0 = empowered ? 120 : 78;
                     for(int i = 0; i < 5; i++)
                     {
                         Vector2 newvel = baseVel.RotatedBy(i * MathHelper.TwoPi / 5);
-                        Projectile.NewProjectile(target.Center, newvel, mod.ProjectileType("SpazmaglaiveExplosion"), projectile.damage, projectile.knockBack, projectile.owner, 0, target.whoAmI);
+                        Projectile.NewProjectile(target.Center, newvel, mod.ProjectileType("SpazmaglaiveExplosion"), projectile.damage, projectile.knockBack, projectile.owner, ai0, target.whoAmI);
                     }
-                    if (empowered)
+                    /*if (empowered)
                     {
                         for (int i = 0; i < 12; i++)
                         {
@@ -104,7 +125,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                                 Main.projectile[p].netUpdate = true;
                             }
                         }
-                    }
+                    }*/
                 }
                 projectile.netUpdate = true;
             }

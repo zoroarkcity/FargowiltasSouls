@@ -683,6 +683,9 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.WaterSphere:
                 case NPCID.Frog:
                 case NPCID.GoldFrog:
+                case NPCID.Grubby:
+                case NPCID.Sluggy:
+                case NPCID.Buggy:
                     isWaterEnemy = true;
                     break;
 
@@ -6732,6 +6735,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.DiggerHead:
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.WormholePotion, Main.rand.Next(0, 2) + 1);
+                        Item.NewItem(npc.Hitbox, ItemID.WormTooth, Main.rand.Next(3, 9));
                         break;
 
                     case NPCID.IceSlime:
@@ -9078,6 +9082,16 @@ namespace FargowiltasSouls.NPCs
             float range = npc.Distance(p.Center);
             if (reverse ? range > distance && range < 3000f : range < distance)
                 p.AddBuff(buff, checkDuration && Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
+        }
+
+        public static bool OtherBossAlive(int npcID)
+        {
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                if (Main.npc[i].active && Main.npc[i].boss && i != npcID)
+                    return true;
+            }
+            return false;
         }
 
         private void Shoot(NPC npc, int delay, float distance, int speed, int proj, int dmg, float kb, bool hostile = false, int dustID = -1)

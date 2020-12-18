@@ -1065,7 +1065,7 @@ namespace FargowiltasSouls.Projectiles
                                             break;
                                         }
                                     }
-                                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<CultistRitual>(), 0, 0f, Main.myPlayer, 0f, projectile.whoAmI);
+                                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<CultistRitual>(), cultist.damage / 4, 0f, Main.myPlayer, 0f, cultist.whoAmI);
                                 }
                             }
 
@@ -1372,7 +1372,7 @@ namespace FargowiltasSouls.Projectiles
                         if (fargoPlayer.CyclonicFin)
                             grazeGain *= 2;
 
-                        GrazeCD = 60;
+                        GrazeCD = 30;
                         fargoPlayer.GrazeBonus += grazeGain;
                         if (fargoPlayer.GrazeBonus > grazeCap)
                             fargoPlayer.GrazeBonus = grazeCap;

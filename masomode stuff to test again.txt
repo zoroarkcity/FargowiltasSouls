@@ -322,3 +322,27 @@ darkened mutant background
 abom spawns 5 saucers at a time in phase 2 and saucers have reticle and trail
 abom's scythe during saucer attack is bigger
 reduced some mutant dusts
+nerfed royal subject hp slightly and mp scaling significantly
+moved aeolus boots from anvil to tinkerer's
+top hat squirrel (critter) craftable with any squirrel + a top hat
+nerfed bees knees further (-33%, was -25%)
+slight small sting buff
+giant worm/digger drop worm tooth
+goblin hostile spiky balls emit light, are bigger, despawn faster after event ends
+dungeon guardian will instantly spawn when player enters dungeon pre-skeletron
+grubby, sluggy, buggy immune to water debuffs (mainly jungle poisoned)
+added a few more checks to ancient shadow orbs so they dont eat neutral projectiles
+MASSIVE refactor for arenas, check all of them and make sure they work, some relevant ones
+	eridanus
+	cultist
+	moon lord
+	champion of will
+	champion of life
+	abominationn
+	deviantt
+	duke fishron ex
+	mutant
+YOU CAN NOW GRAZE ARENAS
+all projectiles can be grazed up to twice per second (was once per second)
+internal rewrite of abom, mutant, eri clearing projs at certain points, they wont do it if any other boss is alive
+gemini glaives exist and are POGGERS

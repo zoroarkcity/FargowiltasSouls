@@ -24,7 +24,7 @@ namespace FargowiltasSouls.NPCs.EternityMode
             aiType = NPCID.QueenBee;
             npc.damage = 15;
             npc.defense = 8;
-            npc.lifeMax = 800;
+            npc.lifeMax = 750;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
             npc.knockBackResist = 0f;
@@ -38,7 +38,7 @@ namespace FargowiltasSouls.NPCs.EternityMode
 
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
-            npc.lifeMax = (int)(npc.lifeMax * 0.7 * bossLifeScale);
+            npc.lifeMax = (int)(npc.lifeMax * 0.7 * System.Math.Max(1.0, bossLifeScale / 2));
             npc.damage = (int)(npc.damage * 0.9);
         }
 

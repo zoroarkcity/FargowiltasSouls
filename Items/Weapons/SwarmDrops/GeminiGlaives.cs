@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Gemini Glaives");
-            Tooltip.SetDefault("Fire a different glaive depending on mouse click" +
+            Tooltip.SetDefault("Fire different glaives depending on mouse click" +
                 "\nAlternating clicks will enhance attacks" +
                 "\n'The compressed forms of defeated foes..'");
 
@@ -23,7 +23,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 600; //
+            item.damage = 340; //
             item.melee = true;
             item.width = 30;
             item.height = 30;
@@ -32,8 +32,8 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.noUseGraphic = true;
             item.useStyle = 1;
             item.knockBack = 3;
-            item.value = 100000;
-            item.rare = 5;
+            item.value = Item.sellPrice(0, 25);
+            item.rare = 11;
             item.shootSpeed = 20;
             item.shoot = 1;
             item.UseSound = SoundID.Item1;
@@ -68,11 +68,27 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             if (lastThrown != type)
                 damage = (int)(damage * 1.2); //additional damage boost for switching
-            Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, lastThrown);
+
+            Vector2 speed = new Vector2(speedX, speedY);
+            for (int i = -1; i <= 1; i++)
+            {
+                Projectile.NewProjectile(position, speed.RotatedBy(MathHelper.ToRadians(30) * i), type, damage, knockBack, player.whoAmI, lastThrown);
+            }
 
             lastThrown = type;
-
             return false;
+        }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.OpticStaff);
+            recipe.AddIngredient(null, "TwinRangs");
+            recipe.AddIngredient(null, "MutantScale", 10);
+            recipe.AddIngredient(ModLoader.GetMod("Fargowiltas").ItemType("EnergizerTwins"));
+            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }
