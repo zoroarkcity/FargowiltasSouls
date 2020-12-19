@@ -382,3 +382,5 @@ increased spawn rate of top hat squirrels though
 removed kill cooldown on bone zone projectiles (probably wont affect dps)
 stardust dragon + tiki nerf, dragon damage caps at 1 segment above your normal cap
 fixed tick 1 edge case swarm thing, prominently moon lord arena
+marginal nerf to fishron p3 bubble trail acceleration
+more obnoxious text when an item is stolen from you and a visual buff for thieving cooldown, also 10 seconds (was 5)

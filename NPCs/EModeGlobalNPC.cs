@@ -4957,9 +4957,12 @@ namespace FargowiltasSouls.NPCs
                             bool stolen = StealFromInventory(target, ref Main.mouseItem);
                             if (!stolen)
                                 stolen = StealFromInventory(target, ref target.inventory[target.selectedItem]);
-                            
+
                             if (stolen)
-                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
+                            {
+                                Main.NewText("An item was stolen from you!", new Color(255, 50, 50));
+                                CombatText.NewText(target.Hitbox, new Color(255, 50, 50), "An item was stolen from you!", true);
+                            }
 
                             /*byte extraTries = 30;
                             for (int i = 0; i < 3; i++)
@@ -4991,7 +4994,10 @@ namespace FargowiltasSouls.NPCs
                             if (!stolen)
                                 stolen = StealFromInventory(target, ref target.inventory[target.selectedItem]);
                             if (stolen)
-                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
+                            {
+                                Main.NewText("An item was stolen from you!", new Color(255, 50, 50));
+                                CombatText.NewText(target.Hitbox, new Color(255, 50, 50), "An item was stolen from you!", true);
+                            }
                         }
 
                         target.AddBuff(ModContent.BuffType<Midas>(), 600);
@@ -5196,7 +5202,10 @@ namespace FargowiltasSouls.NPCs
                             }
 
                             if (stolen)
-                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
+                            {
+                                Main.NewText("An item was stolen from you!", new Color(255, 50, 50));
+                                CombatText.NewText(target.Hitbox, new Color(255, 50, 50), "An item was stolen from you!", true);
+                            }
                         }
                         break;
 
@@ -5217,7 +5226,10 @@ namespace FargowiltasSouls.NPCs
                             }
 
                             if (stolen)
-                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
+                            {
+                                Main.NewText("An item was stolen from you!", new Color(255, 50, 50));
+                                CombatText.NewText(target.Hitbox, new Color(255, 50, 50), "An item was stolen from you!", true);
+                            }
                         }
                         break;
 
@@ -5237,7 +5249,10 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
                             if (stolen)
-                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
+                            {
+                                Main.NewText("An item was stolen from you!", new Color(255, 50, 50));
+                                CombatText.NewText(target.Hitbox, new Color(255, 50, 50), "An item was stolen from you!", true);
+                            }
                         }
                         break;
 
@@ -5261,7 +5276,10 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
                             if (stolen)
-                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
+                            {
+                                Main.NewText("An item was stolen from you!", new Color(255, 50, 50));
+                                CombatText.NewText(target.Hitbox, new Color(255, 50, 50), "An item was stolen from you!", true);
+                            }
                         }
                         break;
 
@@ -8523,7 +8541,8 @@ namespace FargowiltasSouls.NPCs
         {
             if (target.GetModPlayer<FargoPlayer>().StealingCooldown <= 0 && !item.IsAir)
             {
-                target.GetModPlayer<FargoPlayer>().StealingCooldown = 300;
+                target.GetModPlayer<FargoPlayer>().StealingCooldown = 600;
+                target.AddBuff(ModContent.BuffType<ThiefCD>(), 600);
 
                 int i = Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, item.type, 1, false, 0, false, false);
                 Main.item[i].netDefaults(item.netID);
