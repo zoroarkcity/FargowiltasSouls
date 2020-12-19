@@ -372,3 +372,4 @@ reduced mutant's gift stack to 1
 RESTORED CRATE DROPS FOR ICE GOLEM AND WOF
 
 something about syncing swarm in mp?????????????
+arenas are a little more faded when you're not target

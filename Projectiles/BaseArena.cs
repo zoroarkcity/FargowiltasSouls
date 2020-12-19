@@ -174,7 +174,7 @@ namespace FargowiltasSouls.Projectiles
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * projectile.Opacity * (targetPlayer == Main.myPlayer ? 1f : 0.2f);
+            return Color.White * projectile.Opacity * (targetPlayer == Main.myPlayer ? 1f : 0.15f);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
