@@ -140,7 +140,7 @@ namespace FargowiltasSouls
         public int TinCrit = 4;
         public bool TikiEnchant;
         public bool TikiMinion;
-        private int actualMinions;
+        public int actualMinions;
         public bool SolarEnchant;
         public bool ShinobiEnchant;
         public bool ValhallaEnchant;

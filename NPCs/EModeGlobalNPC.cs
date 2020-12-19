@@ -564,8 +564,6 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.TheDestroyerBody:
                 case NPCID.TheDestroyerTail:
                     npc.buffImmune[BuffID.Suffocation] = true;
-                    npc.buffImmune[ModContent.BuffType<TimeFrozen>()] = false;
-                    npc.buffImmune[BuffID.Chilled] = false;
                     break;
 
                 case NPCID.SkeletronPrime:
@@ -1192,9 +1190,17 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.PlanterasTentacle:
-                            npc.lifeMax = 1;
-                            if (npc.life > npc.lifeMax)
-                                npc.life = npc.lifeMax;
+                            if (npc.HasValidTarget)
+                            {
+                                if (npc.Distance(Main.player[npc.target].Center) < 200) //snap away really fast if too close
+                                {
+                                    npc.position += (Main.player[npc.target].position - Main.player[npc.target].oldPosition) / 3;
+
+                                    Vector2 vel = Main.player[npc.target].Center - npc.Center;
+                                    vel += 200f * Main.player[npc.target].DirectionTo(npc.Center);
+                                    npc.velocity = vel / 15;
+                                }
+                            }
                             break;
 
                         case NPCID.Golem:

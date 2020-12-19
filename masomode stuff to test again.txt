@@ -373,3 +373,11 @@ RESTORED CRATE DROPS FOR ICE GOLEM AND WOF
 
 something about syncing swarm in mp?????????????
 arenas are a little more faded when you're not target
+dragon's demise recolored
+plantera tentacle life restored, but they now avoid inflicting contact damage
+adjusted numbers of shroomite shrooms and fixed them being melee, now ranged damage
+destroyer is vulnerable to timestop and chilled in all modes (was emode only)
+squirrels cant become top hat squirrels when placed by you or spawned from statues, sorry
+increased spawn rate of top hat squirrels though
+removed kill cooldown on bone zone projectiles (probably wont affect dps)
+stardust dragon + tiki nerf, dragon damage caps at 1 segment above your normal cap

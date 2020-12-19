@@ -380,8 +380,8 @@ namespace FargowiltasSouls.Projectiles
                         }
                         break;
                 }
-
-                                if (tikiMinion)
+                
+                if (tikiMinion)
                 {
                     projectile.alpha = 120;
 
@@ -537,7 +537,7 @@ namespace FargowiltasSouls.Projectiles
                                 shroomiteMushroomCD = 8;
                             }
 
-                            int p = Projectile.NewProjectile(projectile.position.X + (float)(projectile.width / 2), projectile.position.Y + (float)(projectile.height / 2), projectile.velocity.X, projectile.velocity.Y, ModContent.ProjectileType<ShroomiteShroom>(), projectile.damage / 3, 0f, projectile.owner, 0f, 0f);
+                            int p = Projectile.NewProjectile(projectile.position.X + (float)(projectile.width / 2), projectile.position.Y + (float)(projectile.height / 2), projectile.velocity.X, projectile.velocity.Y, ModContent.ProjectileType<ShroomiteShroom>(), projectile.damage / 2, 0f, projectile.owner, 0f, 0f);
                         }
                         shroomiteMushroomCD--;
                     }
@@ -1432,6 +1432,18 @@ namespace FargowiltasSouls.Projectiles
                 return false;
 
             return null;
+        }
+
+        public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (projectile.type >= ProjectileID.StardustDragon1 && projectile.type <= ProjectileID.StardustDragon4
+                && Main.player[projectile.owner].GetModPlayer<FargoPlayer>().TikiMinion
+                && Main.player[projectile.owner].ownedProjectileCounts[ProjectileID.StardustDragon2] > Main.player[projectile.owner].GetModPlayer<FargoPlayer>().actualMinions)
+            {
+                int newDamage = (int)(projectile.damage * (1.69 + 0.46 * Main.player[projectile.owner].GetModPlayer<FargoPlayer>().actualMinions));
+                if (damage > newDamage)
+                    damage = newDamage;
+            }
         }
 
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
