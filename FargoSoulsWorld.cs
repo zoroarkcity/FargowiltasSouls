@@ -121,6 +121,8 @@ namespace FargowiltasSouls
         {
             skipMutantP1 = reader.ReadInt32();
 
+            SwarmActive = reader.ReadBoolean();
+
             BitsByte flags = reader.ReadByte();
             downedBetsy = flags[0];
             _downedBoss = flags[1];
@@ -145,6 +147,8 @@ namespace FargowiltasSouls
         public override void NetSend(BinaryWriter writer)
         {
             writer.Write(skipMutantP1);
+
+            writer.Write((bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive"));
 
             BitsByte flags = new BitsByte
             {

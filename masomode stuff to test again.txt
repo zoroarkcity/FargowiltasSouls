@@ -370,3 +370,5 @@ increased number of potions per kill from certain enemies with tim's coc (mainly
 nerfed mythril ench from 20% speed to 15% speed and adjusted internal implementation of disrupted focus
 reduced mutant's gift stack to 1
 RESTORED CRATE DROPS FOR ICE GOLEM AND WOF
+
+something about syncing swarm in mp?????????????
