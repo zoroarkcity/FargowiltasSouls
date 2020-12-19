@@ -11,7 +11,7 @@ namespace FargowiltasSouls
     // ReSharper disable once ClassNeverInstantiated.Global
     public class FargoSoulsWorld : ModWorld
     {
-        public static bool SwarmActive;
+        public static bool SwarmActive => (bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive");
 
         public static bool downedBetsy;
         private static bool _downedBoss;
@@ -59,8 +59,6 @@ namespace FargowiltasSouls
 
             for (int i = 0; i < downedChampions.Length; i++)
                 downedChampions[i] = false;
-
-            SwarmActive = false;
         }
 
         public override TagCompound Save()
@@ -121,8 +119,6 @@ namespace FargowiltasSouls
         {
             skipMutantP1 = reader.ReadInt32();
 
-            SwarmActive = reader.ReadBoolean();
-
             BitsByte flags = reader.ReadByte();
             downedBetsy = flags[0];
             _downedBoss = flags[1];
@@ -147,8 +143,6 @@ namespace FargowiltasSouls
         public override void NetSend(BinaryWriter writer)
         {
             writer.Write(skipMutantP1);
-
-            writer.Write((bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive"));
 
             BitsByte flags = new BitsByte
             {
@@ -193,8 +187,6 @@ namespace FargowiltasSouls
                     Sandstorm.TimeLeft = 0;
                 }
             }
-
-            SwarmActive = (bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive");
 
             //Main.NewText(BuilderMode);
 
