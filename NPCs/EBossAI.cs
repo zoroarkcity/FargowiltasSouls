@@ -4581,7 +4581,7 @@ namespace FargowiltasSouls.NPCs
                          //Counter[1] = 0;
                     if (--Counter[0] < 0)
                     {
-                        Counter[0] = 5;
+                        Counter[0] = 6;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = -1; i <= 1; i += 2)

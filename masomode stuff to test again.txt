@@ -408,3 +408,5 @@ slight blender nerf
 reduced tin cooldowns again, SOT 5 ticks and terra force 15t (was 10, 20)
 snatcher and man eater can dash but WAY less often
 doubled delay between angry trapper dashes
+
+nerfed fishron p3 bubble trail accel and spacing a bit more
