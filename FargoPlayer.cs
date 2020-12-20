@@ -1377,7 +1377,7 @@ namespace FargowiltasSouls
                 player.buffImmune[BuffID.Rabies] = true;
             }
 
-            if (StealingCooldown > 0)
+            if (StealingCooldown > 0 && !player.dead)
                 StealingCooldown--;
 
             if (LihzahrdCurse)

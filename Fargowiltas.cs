@@ -1218,6 +1218,64 @@ namespace FargowiltasSouls
                     }
                     break;
 
+                case 16: //client requesting a client side item from server
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        int p = reader.ReadInt32();
+                        int type = reader.ReadInt32();
+                        int netID = reader.ReadInt32();
+                        byte prefix = reader.ReadByte();
+                        int stack = reader.ReadInt32();
+
+                        int i = Item.NewItem(Main.player[p].Hitbox, type, stack, true, prefix);
+                        Main.itemLockoutTime[i] = 54000;
+
+                        var netMessage = GetPacket();
+                        netMessage.Write((byte)17);
+                        netMessage.Write(p);
+                        netMessage.Write(type);
+                        netMessage.Write(netID);
+                        netMessage.Write(prefix);
+                        netMessage.Write(stack);
+                        netMessage.Write(i);
+                        netMessage.Send();
+
+                        Main.item[i].active = false;
+                    }
+                    break;
+
+                case 17: //client-server handshake, spawn client-side item
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        int p = reader.ReadInt32();
+                        int type = reader.ReadInt32();
+                        int netID = reader.ReadInt32();
+                        byte prefix = reader.ReadByte();
+                        int stack = reader.ReadInt32();
+                        int i = reader.ReadInt32();
+
+                        if (Main.myPlayer == p)
+                        {
+                            Main.item[i].netDefaults(netID);
+
+                            Main.item[i].active = true;
+                            Main.item[i].spawnTime = 0;
+                            Main.item[i].owner = p;
+
+                            Main.item[i].Prefix(prefix);
+                            Main.item[i].stack = stack;
+                            Main.item[i].velocity.X = Main.rand.Next(-20, 21) * 0.2f;
+                            Main.item[i].velocity.Y = Main.rand.Next(-20, 1) * 0.2f;
+                            Main.item[i].noGrabDelay = 100;
+                            Main.item[i].newAndShiny = false;
+
+                            Main.item[i].position = Main.player[p].position;
+                            Main.item[i].position.X += Main.rand.NextFloat(Main.player[p].Hitbox.Width);
+                            Main.item[i].position.Y += Main.rand.NextFloat(Main.player[p].Hitbox.Height);
+                        }
+                    }
+                    break; 
+
                 case 77: //server side spawning fishron EX
                     if (Main.netMode == NetmodeID.Server)
                     {
@@ -1232,8 +1290,10 @@ namespace FargowiltasSouls
                     break;
 
                 case 78: //confirming fish EX max life
-                    int f = reader.ReadInt32();
-                    Main.npc[f].lifeMax = reader.ReadInt32();
+                    {
+                        int f = reader.ReadInt32();
+                        Main.npc[f].lifeMax = reader.ReadInt32();
+                    }
                     break;
 
                 default:

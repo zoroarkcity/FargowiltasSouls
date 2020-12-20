@@ -14,6 +14,7 @@ namespace FargowiltasSouls.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Nuke");
+            Main.projFrames[projectile.type] = 5;
         }
 
         public override void SetDefaults()
@@ -24,14 +25,13 @@ namespace FargowiltasSouls.Projectiles
             projectile.friendly = true;
             projectile.penetrate = -1;
             projectile.timeLeft = 1000;
-            Main.projFrames[projectile.type] = 5;
         }
 
         public override void AI()
         {
             if (projectile.timeLeft % 200 == 0)
             {
-                Main.NewText(countdown.ToString(), 51, 102, 0);
+                CombatText.NewText(projectile.Hitbox, new Color(51, 102, 0), countdown, true);
                 countdown--;
             }
         }
@@ -52,10 +52,30 @@ namespace FargowiltasSouls.Projectiles
             return true;
         }
 
+        private const int radius = 300; //bigger = boomer
+        private bool die;
+
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            if (die)
+                return (targetHitbox.Center.ToVector2() - projHitbox.Center.ToVector2()).Length() < projectile.width / 2;
+            return null;
+        }
+
         public override void Kill(int timeLeft)
         {
+            if (!die)
+            {
+                die = true;
+                projectile.position = projectile.Center;
+                projectile.width = projectile.height = (radius * 16 + 8) * 2;
+                projectile.Center = projectile.position;
+                projectile.hostile = true;
+                projectile.damage = 2000;
+                projectile.Damage();
+            }
+
             Vector2 position = projectile.Center;
-            int radius = 300;     //bigger = boomer
 
             for (int x = -radius; x <= (radius); x++)
             {
@@ -83,15 +103,6 @@ namespace FargowiltasSouls.Projectiles
                     }
 
                     //NetMessage.SendTileSquare(-1, xPosition, yPosition, 1);
-                }
-            }
-
-            for (int i = 0; i < 200; i++)
-            {
-                NPC npc = Main.npc[i];
-                if (npc.active && !npc.boss)
-                {
-                    npc.StrikeNPC(1000, 0, 0, true);
                 }
             }
 

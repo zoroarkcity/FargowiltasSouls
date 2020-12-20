@@ -8541,20 +8541,33 @@ namespace FargowiltasSouls.NPCs
         {
             if (target.GetModPlayer<FargoPlayer>().StealingCooldown <= 0 && !item.IsAir)
             {
-                target.GetModPlayer<FargoPlayer>().StealingCooldown = 600;
-                target.AddBuff(ModContent.BuffType<ThiefCD>(), 600);
+                target.GetModPlayer<FargoPlayer>().StealingCooldown = 360; //trust me, keep these separate
+                target.AddBuff(ModContent.BuffType<ThiefCD>(), 360);
 
-                int i = Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, item.type, 1, false, 0, false, false);
-                Main.item[i].netDefaults(item.netID);
-                Main.item[i].Prefix(item.prefix);
-                Main.item[i].stack = item.stack;
-                Main.item[i].velocity.X = Main.rand.Next(-20, 21) * 0.2f;
-                Main.item[i].velocity.Y = Main.rand.Next(-20, 1) * 0.2f;
-                Main.item[i].noGrabDelay = 100;
-                Main.item[i].newAndShiny = false;
-
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    NetMessage.SendData(MessageID.SyncItem, -1, -1, null, i, 0.0f, 0.0f, 0.0f, 0, 0, 0);
+                if (Main.netMode == NetmodeID.MultiplayerClient) //ask server to instance an item
+                {
+                    //NetMessage.SendData(MessageID.SyncItem, -1, -1, null, i, 0.0f, 0.0f, 0.0f, 0, 0, 0);
+                    
+                    var netMessage = mod.GetPacket();
+                    netMessage.Write((byte)16);
+                    netMessage.Write(target.whoAmI);
+                    netMessage.Write(item.type);
+                    netMessage.Write(item.netID);
+                    netMessage.Write(item.prefix);
+                    netMessage.Write(item.stack);
+                    netMessage.Send();
+                }
+                else if (Main.netMode == NetmodeID.SinglePlayer)
+                {
+                    int i = Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, item.type, 1, false, 0, false, false);
+                    Main.item[i].netDefaults(item.netID);
+                    Main.item[i].Prefix(item.prefix);
+                    Main.item[i].stack = item.stack;
+                    Main.item[i].velocity.X = Main.rand.Next(-20, 21) * 0.2f;
+                    Main.item[i].velocity.Y = Main.rand.Next(-20, 1) * 0.2f;
+                    Main.item[i].noGrabDelay = 100;
+                    Main.item[i].newAndShiny = false;
+                }
 
                 item = new Item();
 

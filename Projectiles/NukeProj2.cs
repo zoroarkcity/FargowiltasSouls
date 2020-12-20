@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,6 +14,7 @@ namespace FargowiltasSouls.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Nuke");
+            Main.projFrames[projectile.type] = 4;
         }
 
         public override void SetDefaults()
@@ -23,14 +25,13 @@ namespace FargowiltasSouls.Projectiles
             projectile.friendly = true;
             projectile.penetrate = -1;
             projectile.timeLeft = 2400;
-            Main.projFrames[projectile.type] = 4;
         }
 
         public override void AI()
         {
             if (projectile.timeLeft % 600 == 0)
             {
-                Main.NewText(countdown.ToString(), 51, 102, 0);
+                CombatText.NewText(projectile.Hitbox, new Color(51, 102, 0), countdown, true);
                 countdown--;
             }
             
@@ -65,7 +66,19 @@ namespace FargowiltasSouls.Projectiles
                         Main.Map.Update(i, j, 255);
                 }
             }
-            
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (npc.active && !npc.boss && !npc.dontTakeDamage)
+                {
+                    npc.StrikeNPC(npc.lifeMax + npc.defense, 0, 0, true);
+                }
+            }
+
+            if (Main.LocalPlayer.active && !Main.LocalPlayer.dead && !Main.LocalPlayer.ghost)
+                Main.LocalPlayer.KillMe(PlayerDeathReason.ByProjectile(Main.LocalPlayer.whoAmI, projectile.whoAmI), projectile.damage, 0);
+
             Main.refreshMap = true;
             
             //custom sound when
