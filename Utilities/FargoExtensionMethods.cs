@@ -25,5 +25,28 @@ namespace FargowiltasSouls.Utilities
             itemName.text = string.Join(" ", splitName);
             return itemName;
         }
+
+        /// <summary>
+        /// Uses <see cref="Enumerable.First{TSource}(IEnumerable{TSource}, System.Func{TSource, bool})"/> to find the specified tooltip line. <br />
+        /// Returns true if the tooltipLine isn't null and false if it is. <br />
+        /// Assumes Terraria as the mod.
+        /// </summary>
+        public static bool TryFindTooltipLine(this List<TooltipLine> tooltips, string tooltipName, out TooltipLine tooltipLine)
+        {
+            tooltips.TryFindTooltipLine(tooltipName, "Terraria", out tooltipLine);
+
+            return tooltipLine != null;
+        }
+
+        /// <summary>
+        /// Uses <see cref="Enumerable.First{TSource}(IEnumerable{TSource}, System.Func{TSource, bool})"/> to find the specified tooltip line. <br />
+        /// Returns true if the tooltipLine isn't null and false if it is.
+        /// </summary>
+        public static bool TryFindTooltipLine(this List<TooltipLine> tooltips, string tooltipName, string tooltipMod, out TooltipLine tooltipLine)
+        {
+            tooltipLine = tooltips.First(line => line.Name == tooltipName && line.mod == tooltipMod);
+
+            return tooltipLine != null;
+        }
     }
 }
