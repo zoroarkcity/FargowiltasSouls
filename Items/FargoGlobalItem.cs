@@ -130,7 +130,7 @@ namespace FargowiltasSouls.Items
             if (modPlayer.AdditionalAttacks && modPlayer.AdditionalAttacksTimer <= 0 //non weapons and weapons with no ammo begone
                 && item.damage > 0 && player.HasAmmo(item, true) && !(item.mana > 0 && player.statMana < item.mana)
                 && item.type != ItemID.ExplosiveBunny && item.type != ItemID.Cannonball
-                && item.useTime > 0 && item.createTile == -1 && item.createWall == -1)
+                && item.useTime > 0 && item.createTile == -1 && item.createWall == -1 && item.ammo == AmmoID.None)
             {
                 modPlayer.AdditionalAttacksTimer = 60;
 
