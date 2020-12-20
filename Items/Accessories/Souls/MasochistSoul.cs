@@ -53,7 +53,6 @@ Summons the aid of all Eternity Mode bosses to your side
             item.rare = 11;
             item.value = 5000000;
             item.defense = 30;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)

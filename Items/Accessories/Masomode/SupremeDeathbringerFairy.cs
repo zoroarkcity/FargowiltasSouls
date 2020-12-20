@@ -41,7 +41,6 @@ Summons 2 Skeletron arms to whack enemies
             item.rare = 5;
             item.value = Item.sellPrice(0, 4);
             item.defense = 2;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

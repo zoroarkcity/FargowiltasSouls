@@ -30,7 +30,6 @@ Summons a friendly super Flocko
             item.rare = 8;
             item.value = Item.sellPrice(0, 6);
             item.defense = 5;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -35,7 +35,6 @@ Creeper respawn speed increases when not moving
             item.accessory = true;
             item.rare = 6;
             item.value = Item.sellPrice(0, 4);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

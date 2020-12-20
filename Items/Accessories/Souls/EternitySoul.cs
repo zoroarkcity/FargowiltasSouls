@@ -432,7 +432,6 @@ Additionally grants:");
             item.useTime = 1;
             item.UseSound = SoundID.Item6;
             item.useAnimation = 1;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override bool UseItem(Player player)

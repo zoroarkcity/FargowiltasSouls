@@ -30,7 +30,6 @@ When you land after a jump, slime will fall from the sky over your cursor
             item.rare = 2;
             item.value = Item.sellPrice(0, 1);
             item.defense = 2;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

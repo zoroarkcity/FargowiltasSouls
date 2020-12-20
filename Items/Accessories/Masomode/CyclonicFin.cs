@@ -43,7 +43,6 @@ Endurance recovers when you reach full life again
             item.accessory = true;
             item.rare = 11;
             item.value = Item.sellPrice(0, 17);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)

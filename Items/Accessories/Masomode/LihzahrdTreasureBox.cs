@@ -31,7 +31,6 @@ When you land after a jump, you create a burst of boulders
             item.rare = 8;
             item.value = Item.sellPrice(0, 6);
             item.defense = 8;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

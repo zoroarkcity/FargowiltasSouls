@@ -52,7 +52,6 @@ Use to teleport to your last death point and right click to zoom
             item.useStyle = 4;
             item.useTurn = true;
             item.UseSound = SoundID.Item6;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateInventory(Player player)

@@ -26,7 +26,6 @@ Reduces damage taken by 5%
             item.rare = 6;
             item.value = Item.sellPrice(0, 4);
             item.defense = 15;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
