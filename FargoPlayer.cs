@@ -2760,7 +2760,7 @@ namespace FargowiltasSouls
                     if (crit && TinCrit < 100)
                     {
                         TinCrit += 5;
-                        tinCD = 10;
+                        tinCD = 5;
                     }
                     else if (TinCrit >= 100)
                     {
@@ -2787,7 +2787,7 @@ namespace FargowiltasSouls
                     if (TerraForce || WizardEnchant)
                     {
                         TinCrit += 5;
-                        tinCD = 20;
+                        tinCD = 15;
                     }
                     else
                     {

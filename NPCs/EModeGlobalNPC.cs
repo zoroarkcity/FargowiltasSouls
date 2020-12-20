@@ -1444,8 +1444,8 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.Snatcher:
-                        //case NPCID.ManEater:
-                            if (++Counter[0] > 60 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 500)
+                        case NPCID.ManEater:
+                            if (++Counter[0] > 300 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 500)
                             {
                                 Player target = Main.player[npc.target];
                                 Vector2 velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 15;
@@ -1460,7 +1460,7 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.AngryTrapper:
-                            if (++Counter[0] > 60 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 1000)
+                            if (++Counter[0] > 120 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 1000 && npc.HasValidTarget)
                             {
                                 Player target = Main.player[npc.target];
                                 Vector2 velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 15;
@@ -6606,14 +6606,10 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<OrdinaryCarrot>());
                         break;
 
-                    case NPCID.BigMossHornet:
-                    case NPCID.GiantMossHornet:
-                    case NPCID.LittleMossHornet:
-                    case NPCID.MossHornet:
-                    case NPCID.TinyMossHornet:
+                    case NPCID.AngryTrapper:
                         if (Main.rand.Next(2) == 0)
-                            Item.NewItem(npc.Hitbox, ItemID.Stinger);
-                        goto case NPCID.Hornet;
+                            Item.NewItem(npc.Hitbox, ItemID.Vine);
+                        break;
 
                     case NPCID.Hornet:
                     case NPCID.HornetFatty:
@@ -6742,10 +6738,12 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, ItemID.NightOwlPotion, Main.rand.Next(0, 2) + 1);
                         break;
 
-                    case NPCID.BloodZombie:
+                    case NPCID.MossHornet:
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.RagePotion, Main.rand.Next(0, 2) + 1);
-                        break;
+                        if (Main.rand.Next(2) == 0)
+                            Item.NewItem(npc.Hitbox, ItemID.Stinger);
+                        goto case NPCID.Hornet;
 
                     case NPCID.PinkJellyfish:
                     case NPCID.BlueJellyfish:

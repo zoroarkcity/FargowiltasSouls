@@ -400,3 +400,11 @@ sprites
 	fishron minion icon
 fixed diffractor beams not updating damage
 fixed being able to hold hungry and switch to other weapons after running out of mana
+tim's coc makes moss hornet drop rage potion instead of blood zombie (funny joke)
+angry trappers drop vines
+fixed jungle mimic minion coin being classless
+phanleash does things on miss
+slight blender nerf
+reduced tin cooldowns again, SOT 5 ticks and terra force 15t (was 10, 20)
+snatcher and man eater can dash but WAY less often
+doubled delay between angry trapper dashes
