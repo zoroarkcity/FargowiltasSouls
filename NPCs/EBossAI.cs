@@ -5068,7 +5068,7 @@ namespace FargowiltasSouls.NPCs
                                     if (bodyPart.active)
                                     {
                                         int damage = 25;
-                                        for (int j = -3; j <= 3; j++)
+                                        for (int j = -2; j <= 2; j++)
                                         {
                                             Projectile.NewProjectile(bodyPart.Center,
                                                 6f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI / 2 / 3 * j),
