@@ -25,6 +25,7 @@ Attacks have a chance to squeak and deal 1 damage to you
             item.accessory = true;
             item.rare = 4;
             item.value = Item.sellPrice(0, 3);
+            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

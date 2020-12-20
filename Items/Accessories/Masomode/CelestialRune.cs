@@ -27,6 +27,7 @@ Taking damage creates a friendly Ancient Vision to attack enemies
             item.accessory = true;
             item.rare = 9;
             item.value = Item.sellPrice(0, 7);
+            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

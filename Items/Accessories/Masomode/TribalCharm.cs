@@ -29,6 +29,7 @@ Grants autofire to all weapons
             item.rare = 5;
             item.value = Item.sellPrice(0, 4);
             item.defense = 6;
+            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateInventory(Player player)
