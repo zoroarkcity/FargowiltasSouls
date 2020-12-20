@@ -393,3 +393,4 @@ universal collapse hits you for 9999 damage (more if you might survive) ignoring
 dark caster and post-plant dungeon mage skeletons can teleport sluggishly outside dungeon
 some more checks to prevent items like platinum coin working with boreal/pumpking cape/celestial rune
 adjusted check for fishron for angler ench
+fixed being able to dupe souls/potions with wraith/harpy by holding them with your mouse

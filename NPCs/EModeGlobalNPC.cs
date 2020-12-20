@@ -5225,14 +5225,21 @@ namespace FargowiltasSouls.NPCs
                         if (target.whoAmI == Main.myPlayer && !target.GetModPlayer<FargoPlayer>().SecurityWallet)
                         {
                             bool stolen = false;
-                            for (int j = 0; j < target.inventory.Length; j++)
+                            if (Main.mouseItem.healLife > 0 && StealFromInventory(target, ref Main.mouseItem))
                             {
-                                Item item = target.inventory[j];
-                                if (item.healLife > 0)
+                                stolen = true;
+                            }
+                            else
+                            {
+                                for (int j = 0; j < target.inventory.Length; j++)
                                 {
-                                    if (StealFromInventory(target, ref target.inventory[j]))
-                                        stolen = true;
-                                    break;
+                                    Item item = target.inventory[j];
+                                    if (item.healLife > 0)
+                                    {
+                                        if (StealFromInventory(target, ref target.inventory[j]))
+                                            stolen = true;
+                                        break;
+                                    }
                                 }
                             }
 
@@ -5248,17 +5255,31 @@ namespace FargowiltasSouls.NPCs
                         target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
                         if (target.whoAmI == Main.myPlayer && !target.GetModPlayer<FargoPlayer>().SecurityWallet)
                         {
-                            bool stolen = false;
-                            for (int j = 0; j < target.inventory.Length; j++)
+                            bool IsSoul(int type)
                             {
-                                Item item = target.inventory[j];
+                                return type == ItemID.SoulofFlight || type == ItemID.SoulofFright || type == ItemID.SoulofLight || type == ItemID.SoulofMight || type == ItemID.SoulofNight || type == ItemID.SoulofSight;
+                            };
 
-                                if (item.type == ItemID.SoulofFlight || item.type == ItemID.SoulofFright || item.type == ItemID.SoulofLight || item.type == ItemID.SoulofMight || item.type == ItemID.SoulofNight || item.type == ItemID.SoulofSight)
+                            bool stolen = false;
+                            if (IsSoul(Main.mouseItem.type) && StealFromInventory(target, ref Main.mouseItem))
+                            {
+                                stolen = true;
+                            }
+                            else
+                            {
+                                for (int j = 0; j < target.inventory.Length; j++)
                                 {
-                                    if (StealFromInventory(target, ref target.inventory[j]))
-                                        stolen = true;
+                                    Item item = target.inventory[j];
+
+                                    if (IsSoul(item.type))
+                                    {
+                                        if (StealFromInventory(target, ref target.inventory[j]))
+                                            stolen = true;
+                                        break;
+                                    }
                                 }
                             }
+
                             if (stolen)
                             {
                                 Main.NewText("An item was stolen from you!", new Color(255, 50, 50));
