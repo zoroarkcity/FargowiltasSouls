@@ -35,6 +35,11 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.velocity *= 1.02f;
         }
 
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.immune[projectile.owner] = 6;
+        }
+
         public override bool PreKill(int timeleft)
         {
             int num1 = 10;

@@ -410,3 +410,4 @@ snatcher and man eater can dash but WAY less often
 doubled delay between angry trapper dashes
 
 nerfed fishron p3 bubble trail accel and spacing a bit more
+fixed diffractor being weird and weak
