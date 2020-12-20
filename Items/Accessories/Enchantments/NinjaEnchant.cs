@@ -28,7 +28,7 @@ First Strike ensures your next attack is a crit dealing 3x damage
 召唤一只黑色小猫咪");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

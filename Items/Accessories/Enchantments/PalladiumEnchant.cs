@@ -23,7 +23,7 @@ You spawn an orb of damaging life energy every 80 life regenerated
 一次攻击获得每秒5%的生命窃取,上限为5点");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

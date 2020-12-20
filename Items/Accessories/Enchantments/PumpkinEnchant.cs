@@ -26,7 +26,7 @@ Summons a pet Squashling
 召唤一个宠物南瓜娃娃");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

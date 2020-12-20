@@ -26,7 +26,7 @@ Summons a pet Companion Cube
 召唤一个伙伴方块");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 在海洋或沙漠中,它的攻击速度翻倍");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

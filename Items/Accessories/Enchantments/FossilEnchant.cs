@@ -25,7 +25,7 @@ Summons a pet Baby Dino
 召唤一只小恐龙");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

@@ -20,6 +20,7 @@ namespace FargowiltasSouls.Items
                 item.ammo = item.type;
             }
         }
+
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
             if (player.manaCost <= 0f) player.manaCost = 0f;
@@ -27,7 +28,7 @@ namespace FargowiltasSouls.Items
 
         public override void GrabRange(Item item, Player player, ref int grabRange)
         {
-            FargoPlayer p = (FargoPlayer) player.GetModPlayer(mod, "FargoPlayer");
+            FargoPlayer p = (FargoPlayer)player.GetModPlayer(mod, "FargoPlayer");
             //ignore money, hearts, mana stars
             if (p.IronEnchant && item.type != ItemID.CopperCoin && item.type != ItemID.SilverCoin && item.type != ItemID.GoldCoin && item.type != ItemID.PlatinumCoin && item.type != ItemID.HermesBoots && item.type != ItemID.CandyApple && item.type != ItemID.SoulCake &&
                 item.type != ItemID.Star && item.type != ItemID.CandyCane && item.type != ItemID.SugarPlum) grabRange += (p.TerraForce || p.WizardEnchant) ? 1000 : 250;
@@ -97,9 +98,9 @@ namespace FargowiltasSouls.Items
 
             if (FargoSoulsWorld.MasochistMode)
             {
-                if (item.type == ItemID.RodofDiscord && 
-                    (modPlayer.LihzahrdCurse || 
-                    (Framing.GetTileSafely(Main.MouseWorld).wall == WallID.LihzahrdBrickUnsafe 
+                if (item.type == ItemID.RodofDiscord &&
+                    (modPlayer.LihzahrdCurse ||
+                    (Framing.GetTileSafely(Main.MouseWorld).wall == WallID.LihzahrdBrickUnsafe
                     && !player.buffImmune[ModContent.BuffType<Buffs.Masomode.LihzahrdCurse>()])))
                 {
                     return false;

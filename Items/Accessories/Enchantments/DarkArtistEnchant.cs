@@ -25,7 +25,7 @@ Summons a pet Flickerwick
             DisplayName.AddTranslation(GameCulture.Chinese, "暗黑艺术家魔石");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

@@ -55,7 +55,7 @@ Summons the aid of all Eternity Mode bosses to your side
             item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine line2 in list)
             {

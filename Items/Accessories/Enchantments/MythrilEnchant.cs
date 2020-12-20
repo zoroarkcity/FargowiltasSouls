@@ -22,7 +22,7 @@ Taking damage temporarily removes this weapon use speed increase
 增加25%武器使用速度");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

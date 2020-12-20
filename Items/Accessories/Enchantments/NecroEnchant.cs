@@ -26,7 +26,7 @@ Summons a pet Skeletron Head
 召唤一个小骷髅头");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

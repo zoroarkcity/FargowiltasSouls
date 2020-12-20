@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 在丛林时,所有抓钩会定期向敌人发射追踪射击");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

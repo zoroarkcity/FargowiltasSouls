@@ -20,7 +20,7 @@ Set oiled enemies on fire for extra damage
 'The Hunt is On'");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

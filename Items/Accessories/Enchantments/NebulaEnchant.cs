@@ -22,7 +22,7 @@ Buff booster stacking capped at 2
 杀死敌人有概率产生增益效果");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

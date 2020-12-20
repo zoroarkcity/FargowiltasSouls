@@ -25,7 +25,7 @@ When you are hurt, you violently explode to damage nearby enemies
 死亡时剧烈爆炸, 造成大量伤害");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

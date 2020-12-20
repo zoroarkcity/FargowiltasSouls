@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Items.Pets
             item.buffType = mod.BuffType("BabyAbomBuff");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine line2 in list)
             {

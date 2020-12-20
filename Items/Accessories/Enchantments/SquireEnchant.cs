@@ -24,7 +24,7 @@ Ballista pierces more targets and panics when you take damage
 分裂出的抛射物同样可以分裂");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

@@ -24,7 +24,7 @@ Summons a pet Face Monster and Crimson Heart
 召唤巨脸怪宝宝和血腥心脏");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

@@ -158,7 +158,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             return false;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine tooltipItemNameLine = tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria");
             tooltipItemNameLine.ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });

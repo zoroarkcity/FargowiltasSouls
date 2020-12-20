@@ -30,7 +30,7 @@ Summons a pet Lizard and Turtle
 召唤一只宠物蜥蜴和宠物海龟");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

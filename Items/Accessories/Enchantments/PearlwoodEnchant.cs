@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 在神圣地形中,彩虹路径持续时间变长");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

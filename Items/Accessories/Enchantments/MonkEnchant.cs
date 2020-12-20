@@ -17,7 +17,7 @@ Lightning Aura can now crit and strikes faster
 'Hours of Meditation have led to this…'");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

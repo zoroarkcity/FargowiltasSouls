@@ -23,7 +23,7 @@ Enemies may explode into needles on death
 敌人在死亡时可能会爆出刺");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

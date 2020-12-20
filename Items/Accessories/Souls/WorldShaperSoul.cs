@@ -58,7 +58,7 @@ Summons a pet Magic Lantern
             item.useAnimation = 1;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 在攻击敌人后的瞬间无敌");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

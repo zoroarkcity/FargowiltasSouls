@@ -36,7 +36,7 @@ namespace FargowiltasSouls.Patreon.DemonKing
             item.value = Item.sellPrice(0, 25);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
             line.overrideColor = Color.Orange;

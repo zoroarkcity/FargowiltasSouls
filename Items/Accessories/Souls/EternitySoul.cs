@@ -401,7 +401,7 @@ Additionally grants:");
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, 10));
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
             tooltipsFull.AddRange(vanillaTooltips);
 

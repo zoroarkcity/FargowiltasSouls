@@ -43,7 +43,7 @@ Mutant Bomb有60秒的冷却");
             item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine line2 in list)
             {

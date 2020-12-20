@@ -24,7 +24,7 @@ Attacks may inflict the Solar Flare debuff
 近战攻击概率造成耀斑效果");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

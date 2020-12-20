@@ -25,7 +25,7 @@ Summons a pet Eater of Souls and Shadow Orb
 召唤一只噬魂者宝宝和阴影珍珠");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

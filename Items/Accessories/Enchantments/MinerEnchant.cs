@@ -27,7 +27,7 @@ Summons a pet Magic Lantern
 召唤一个魔法灯笼");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

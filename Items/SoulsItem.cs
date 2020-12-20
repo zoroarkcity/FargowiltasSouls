@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Items
 
         /// <summary>
         /// Allows you to modify all the tooltips that display for this item. <br />
-        /// Called directly after the code in <see cref="ModifyTooltips(List{TooltipLine})"/>.
+        /// Called directly after the code in <see cref="SafeModifyTooltips(List{TooltipLine})"/>.
         /// </summary>
         /// <param name="tooltips"></param>
         public virtual void SafeModifyTooltips(List<TooltipLine> tooltips)

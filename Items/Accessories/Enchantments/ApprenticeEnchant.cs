@@ -17,7 +17,7 @@ Flameburst field of view and range are dramatically increased
 'A long way to perfection'");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

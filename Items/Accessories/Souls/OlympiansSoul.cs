@@ -44,7 +44,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             item.rare = ItemRarityID.Purple;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

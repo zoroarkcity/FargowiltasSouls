@@ -23,7 +23,7 @@ Enemies struck while Bleeding spew damaging blood
 在血腥地形时,被击中会使敌人造成大出血");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

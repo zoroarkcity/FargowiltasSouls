@@ -24,7 +24,7 @@ Effects of Angler Tackle Bag
 所有鱼竿将会增加4个额外的鱼饵");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

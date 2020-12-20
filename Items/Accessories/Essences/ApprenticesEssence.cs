@@ -25,7 +25,7 @@ Increases your maximum mana by 50
 增加50最大法力值");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

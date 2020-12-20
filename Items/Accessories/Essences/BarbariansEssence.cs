@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Items.Accessories.Essences
 增加5%近战暴击率");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

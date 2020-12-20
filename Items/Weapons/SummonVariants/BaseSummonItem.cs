@@ -51,7 +51,7 @@ namespace FargowiltasSouls.Items.Weapons.SummonVariants
             return false;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine line = new TooltipLine(mod, "help", "Right click to convert");
             tooltips.Add(line);

@@ -71,7 +71,7 @@ Right click pattern becomes denser with up to 5 empty minion slots
             return true;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine line2 in list)
             {

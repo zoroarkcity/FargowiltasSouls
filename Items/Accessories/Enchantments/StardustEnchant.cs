@@ -27,7 +27,7 @@ There is a 60 second cooldown for this effect
 60秒的冷却时间, 冷却结束时会播放音效");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
