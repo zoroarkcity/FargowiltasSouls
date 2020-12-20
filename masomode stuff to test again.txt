@@ -386,4 +386,7 @@ marginal nerf to fishron p3 bubble trail acceleration
 more obnoxious text when an item is stolen from you and a visual buff for thieving cooldown, also 6 seconds (was 5)
 fuck it. stolen items in mp use a new handshake (TEST THIS)
 galactic reformer no longer hurts npcs outside its radius, but it can hit you too
-universal collapse instagibs everything including you
+universal collapse instagibs everything
+
+reformer cant hurt bosses either
+universal collapse hits you for 9999 damage (more if you might survive) ignoring defenses but you can revive

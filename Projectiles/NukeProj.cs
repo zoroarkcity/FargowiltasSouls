@@ -62,6 +62,13 @@ namespace FargowiltasSouls.Projectiles
             return null;
         }
 
+        public override bool? CanHitNPC(NPC target)
+        {
+            if (target.boss)
+                return false;
+            return null;
+        }
+
         public override void Kill(int timeLeft)
         {
             if (!die)

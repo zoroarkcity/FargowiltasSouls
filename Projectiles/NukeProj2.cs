@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -77,7 +78,18 @@ namespace FargowiltasSouls.Projectiles
             }
 
             if (Main.LocalPlayer.active && !Main.LocalPlayer.dead && !Main.LocalPlayer.ghost)
-                Main.LocalPlayer.KillMe(PlayerDeathReason.ByProjectile(Main.LocalPlayer.whoAmI, projectile.whoAmI), projectile.damage, 0);
+            {
+                int def = Main.LocalPlayer.statDefense;
+                float dr = Main.LocalPlayer.endurance;
+                Main.LocalPlayer.statDefense = 0;
+                Main.LocalPlayer.endurance = 0f;
+
+                int damage = Math.Max(9999, Main.LocalPlayer.statLifeMax2 * 2);
+                Main.LocalPlayer.Hurt(PlayerDeathReason.ByProjectile(Main.LocalPlayer.whoAmI, projectile.whoAmI), damage, 0);
+
+                Main.LocalPlayer.statDefense = def;
+                Main.LocalPlayer.endurance = dr;
+            }
 
             Main.refreshMap = true;
             
