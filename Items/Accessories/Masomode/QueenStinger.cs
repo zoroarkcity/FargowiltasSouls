@@ -10,6 +10,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class QueenStinger : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Queen's Stinger");
@@ -35,7 +37,6 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             item.accessory = true;
             item.rare = ItemRarityID.LightRed;
             item.value = Item.sellPrice(0, 3);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

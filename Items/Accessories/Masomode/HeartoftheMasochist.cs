@@ -9,6 +9,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
     [AutoloadEquip(EquipType.Face, EquipType.Front, EquipType.Back)]
     public class HeartoftheMasochist : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Heart of the Eternal");
@@ -46,7 +48,6 @@ Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu
             item.rare = ItemRarityID.Purple;
             item.value = Item.sellPrice(0, 9);
             item.defense = 10;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

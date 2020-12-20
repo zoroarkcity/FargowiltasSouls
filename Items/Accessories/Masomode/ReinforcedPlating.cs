@@ -6,6 +6,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class ReinforcedPlating : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Reinforced Plating");
@@ -26,7 +28,6 @@ Reduces damage taken by 5%
             item.rare = ItemRarityID.LightPurple;
             item.value = Item.sellPrice(0, 4);
             item.defense = 15;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -8,6 +8,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
     [AutoloadEquip(EquipType.Shield)]
     public class SlimyShield : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Slimy Shield");
@@ -30,7 +32,6 @@ When you land after a jump, slime will fall from the sky over your cursor
             item.rare = ItemRarityID.Green;
             item.value = Item.sellPrice(0, 1);
             item.defense = 2;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

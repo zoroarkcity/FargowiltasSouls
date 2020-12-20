@@ -8,6 +8,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
     [AutoloadEquip(EquipType.Waist)]
     public class WretchedPouch : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Wretched Pouch");
@@ -28,7 +30,6 @@ You erupt into Shadowflame tentacles when injured
             item.accessory = true;
             item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

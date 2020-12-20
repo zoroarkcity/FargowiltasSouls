@@ -14,13 +14,13 @@ namespace FargowiltasSouls.Items
         /// Whether or not this item is excluse to Eternity Mode. <br />
         /// If it is, the item's text color will automatically be set to a custom color (can manually be overriden) and "Eternity" will be added to the end of the item's tooltips.
         /// </summary>
-        public virtual bool Eternity { get; set; } = false;
+        public virtual bool Eternity => false;
 
         /// <summary>
         /// A list of articles that this item may begin with depending on localization. <br />
         /// Used for the prefix-article fix.
         /// </summary>
-        public virtual List<string> Articles { get; set; } = new List<string> { "The" };
+        public virtual List<string> Articles => new List<string> { "The" };
 
         /// <summary>
         /// Allows you to modify all the tooltips that display for this item. <br />

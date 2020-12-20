@@ -6,6 +6,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class NymphsPerfume : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Nymph's Perfume");
@@ -26,7 +28,6 @@ Your attacks occasionally produce hearts
             item.accessory = true;
             item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateInventory(Player player)

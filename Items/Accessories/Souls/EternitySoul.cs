@@ -326,6 +326,8 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             "Effects of Arcanum of the Caster"
         };
 
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul of Eternity");
@@ -432,7 +434,6 @@ Additionally grants:");
             item.useTime = 1;
             item.UseSound = SoundID.Item6;
             item.useAnimation = 1;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override bool UseItem(Player player)

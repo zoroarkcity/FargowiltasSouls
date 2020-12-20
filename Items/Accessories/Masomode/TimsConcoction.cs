@@ -5,6 +5,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class TimsConcoction : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tim's Concoction");
@@ -19,7 +21,6 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             item.accessory = true;
             item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -8,6 +8,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
     [AutoloadEquip(EquipType.Waist)]
     public class TribalCharm : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tribal Charm");
@@ -29,7 +31,6 @@ Grants autofire to all weapons
             item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
             item.defense = 6;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateInventory(Player player)

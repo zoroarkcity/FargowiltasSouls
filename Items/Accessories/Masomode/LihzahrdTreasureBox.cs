@@ -6,6 +6,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class LihzahrdTreasureBox : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lihzahrd Treasure Box");
@@ -30,7 +32,6 @@ When you land after a jump, you create a burst of boulders
             item.rare = ItemRarityID.Yellow;
             item.value = Item.sellPrice(0, 6);
             item.defense = 8;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

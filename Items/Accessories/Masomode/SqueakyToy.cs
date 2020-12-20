@@ -6,6 +6,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class SqueakyToy : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Squeaky Toy");
@@ -25,7 +27,6 @@ Attacks have a chance to squeak and deal 1 damage to you
             item.accessory = true;
             item.rare = ItemRarityID.LightRed;
             item.value = Item.sellPrice(0, 3);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

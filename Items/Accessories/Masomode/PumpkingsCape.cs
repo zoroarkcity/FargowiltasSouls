@@ -8,6 +8,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
     [AutoloadEquip(EquipType.Front, EquipType.Back)]
     public class PumpkingsCape : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pumpking's Cape");
@@ -31,7 +33,6 @@ You may periodically fire additional attacks depending on weapon type
             item.accessory = true;
             item.rare = ItemRarityID.Yellow;
             item.value = Item.sellPrice(0, 6);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

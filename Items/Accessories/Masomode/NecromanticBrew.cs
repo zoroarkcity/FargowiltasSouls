@@ -6,6 +6,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class NecromanticBrew : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Necromantic Brew");
@@ -26,7 +28,6 @@ Summons 2 Skeletron arms to whack enemies
             item.accessory = true;
             item.rare = ItemRarityID.LightRed;
             item.value = Item.sellPrice(0, 3);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

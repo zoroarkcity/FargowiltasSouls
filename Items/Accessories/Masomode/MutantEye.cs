@@ -10,6 +10,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class MutantEye : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mutant Eye");
@@ -40,7 +42,6 @@ Mutant Bomb有60秒的冷却");
             item.accessory = true;
             item.rare = ItemRarityID.Purple;
             item.value = Item.sellPrice(1);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void SafeModifyTooltips(List<TooltipLine> list)

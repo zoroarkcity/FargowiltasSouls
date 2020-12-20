@@ -11,6 +11,8 @@ namespace FargowiltasSouls.Items.Accessories.Souls
     [AutoloadEquip(/*EquipType.Head, */EquipType.Front, EquipType.Back, EquipType.Shield)]
     public class MasochistSoul : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul of the Siblings");
@@ -52,7 +54,6 @@ Summons the aid of all Eternity Mode bosses to your side
             item.rare = ItemRarityID.Purple;
             item.value = 5000000;
             item.defense = 30;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void SafeModifyTooltips(List<TooltipLine> list)

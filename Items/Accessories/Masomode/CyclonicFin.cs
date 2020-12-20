@@ -10,6 +10,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class CyclonicFin : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Abominable Wand");
@@ -42,7 +44,6 @@ Endurance recovers when you reach full life again
             item.accessory = true;
             item.rare = ItemRarityID.Purple;
             item.value = Item.sellPrice(0, 17);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void SafeModifyTooltips(List<TooltipLine> list)

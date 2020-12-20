@@ -6,6 +6,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class ConcentratedRainbowMatter : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Concentrated Rainbow Matter");
@@ -25,7 +27,6 @@ Summons a baby rainbow slime
             item.accessory = true;
             item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

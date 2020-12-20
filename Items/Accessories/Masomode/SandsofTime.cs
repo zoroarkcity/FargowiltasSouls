@@ -7,6 +7,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class SandsofTime : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sands of Time");
@@ -36,7 +38,6 @@ Use to teleport to your last death point
             item.useStyle = ItemUseStyleID.HoldingUp;
             item.useTurn = true;
             item.UseSound = SoundID.Item6;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateInventory(Player player)

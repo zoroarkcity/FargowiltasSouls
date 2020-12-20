@@ -6,6 +6,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class PungentEyeball : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pungent Eyeball");
@@ -27,7 +29,6 @@ Increases your max number of sentries by 2
             item.accessory = true;
             item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

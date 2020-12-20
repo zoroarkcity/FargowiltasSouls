@@ -6,6 +6,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class CorruptHeart : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Corrupt Heart");
@@ -27,7 +29,6 @@ You spawn mini eaters to seek out enemies every few attacks
             item.accessory = true;
             item.rare = ItemRarityID.Orange;
             item.value = Item.sellPrice(0, 2);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

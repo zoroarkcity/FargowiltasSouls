@@ -7,6 +7,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class ChaliceoftheMoon : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Chalice of the Moon");
@@ -39,7 +41,6 @@ Summons a friendly Cultist and plant to fight at your side
             item.rare = ItemRarityID.Cyan;
             item.value = Item.sellPrice(0, 7);
             item.defense = 8;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -8,6 +8,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
     [AutoloadEquip(EquipType.Face)]
     public class IceQueensCrown : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ice Queen's Crown");
@@ -30,7 +32,6 @@ Summons a friendly super Flocko
             item.rare = ItemRarityID.Yellow;
             item.value = Item.sellPrice(0, 6);
             item.defense = 5;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

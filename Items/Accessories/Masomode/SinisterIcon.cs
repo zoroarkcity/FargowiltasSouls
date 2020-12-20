@@ -6,6 +6,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class SinisterIcon : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sinister Icon");
@@ -29,7 +31,6 @@ Enemies with 2000 or less max life will drop doubled loot but zero coins
             item.accessory = true;
             item.rare = ItemRarityID.LightRed;
             item.value = Item.sellPrice(0, 3);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -8,6 +8,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
     [AutoloadEquip(EquipType.Shield)]
     public class SupremeDeathbringerFairy : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Supreme Deathbringer Fairy");
@@ -41,7 +43,6 @@ Summons 2 Skeletron arms to whack enemies
             item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
             item.defense = 2;
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

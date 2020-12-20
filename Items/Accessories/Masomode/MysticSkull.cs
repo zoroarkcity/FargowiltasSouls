@@ -7,6 +7,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     public class MysticSkull : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mystic Skull");
@@ -32,7 +34,6 @@ Automatically use mana potions when needed
             item.accessory = true;
             item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateInventory(Player player)
