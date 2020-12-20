@@ -239,6 +239,7 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.RainbowSlime:
                     npc.scale = 3f;
                     npc.lifeMax *= 5;
+                    npc.knockBackResist = 0f;
                     break;
 
                 case NPCID.Hellhound:
@@ -563,8 +564,6 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.TheDestroyerBody:
                 case NPCID.TheDestroyerTail:
                     npc.buffImmune[BuffID.Suffocation] = true;
-                    npc.buffImmune[ModContent.BuffType<TimeFrozen>()] = false;
-                    npc.buffImmune[BuffID.Chilled] = false;
                     break;
 
                 case NPCID.SkeletronPrime:
@@ -1191,9 +1190,17 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.PlanterasTentacle:
-                            npc.lifeMax = 1;
-                            if (npc.life > npc.lifeMax)
-                                npc.life = npc.lifeMax;
+                            if (npc.HasValidTarget)
+                            {
+                                if (npc.Distance(Main.player[npc.target].Center) < 200) //snap away really fast if too close
+                                {
+                                    npc.position += (Main.player[npc.target].position - Main.player[npc.target].oldPosition) / 3;
+
+                                    Vector2 vel = Main.player[npc.target].Center - npc.Center;
+                                    vel += 200f * Main.player[npc.target].DirectionTo(npc.Center);
+                                    npc.velocity = vel / 15;
+                                }
+                            }
                             break;
 
                         case NPCID.Golem:
@@ -1437,8 +1444,8 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.Snatcher:
-                        //case NPCID.ManEater:
-                            if (++Counter[0] > 60 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 500)
+                        case NPCID.ManEater:
+                            if (++Counter[0] > 300 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 500)
                             {
                                 Player target = Main.player[npc.target];
                                 Vector2 velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 15;
@@ -1453,7 +1460,7 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         case NPCID.AngryTrapper:
-                            if (++Counter[0] > 60 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 1000)
+                            if (++Counter[0] > 120 && npc.Distance(new Vector2((int)npc.ai[0] * 16, (int)npc.ai[1] * 16)) < 1000 && npc.HasValidTarget)
                             {
                                 Player target = Main.player[npc.target];
                                 Vector2 velocity = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 15;
@@ -3395,6 +3402,33 @@ namespace FargowiltasSouls.NPCs
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                     Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<SkeletronBone>(), npc.damage / 4, 0f, Main.myPlayer);
                             }*/
+
+                            if (!masoBool[2]) //teleport closer
+                            {
+                                masoBool[2] = true;
+                                npc.TargetClosest(false);
+                                if (npc.HasValidTarget && npc.Distance(Main.player[npc.target].Center) > 800)
+                                {
+                                    for (int i = 0; i < 50; i++)
+                                    {
+                                        int d = Dust.NewDust(npc.position, npc.width, npc.height, 112, 0f, 0f, 0, Color.White, 2.5f);
+                                        Main.dust[d].noGravity = true;
+                                        Main.dust[d].velocity *= 12f;
+                                    }
+
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                                        npc.Center = Main.player[npc.target].Center + 800 * Vector2.UnitX.RotatedByRandom(2 * Math.PI);
+
+                                    for (int i = 0; i < 50; i++)
+                                    {
+                                        int d = Dust.NewDust(npc.position, npc.width, npc.height, 112, 0f, 0f, 0, Color.White, 2.5f);
+                                        Main.dust[d].noGravity = true;
+                                        Main.dust[d].velocity *= 12f;
+                                    }
+                                }
+                                npc.netUpdate = true;
+                            }
+
                             if (++Counter[0] < 90)
                             {
                                 if (!masoBool[0] && npc.HasValidTarget)
@@ -3626,6 +3660,7 @@ namespace FargowiltasSouls.NPCs
                             {
                                 masoBool[0] = false;
                                 masoBool[1] = false;
+                                masoBool[2] = false;
                                 Counter[0] = 0;
                             }
                             break;
@@ -4038,6 +4073,17 @@ namespace FargowiltasSouls.NPCs
                                         Projectile.NewProjectile(npc.Center, Main.rand.NextVector2CircularEdge(-4.5f, 4.5f), ModContent.ProjectileType<WaterBoltHostile>(), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
+                            goto case NPCID.DiabolistRed;
+                        case NPCID.DiabolistRed:
+                        case NPCID.DiabolistWhite:
+                        case NPCID.Necromancer:
+                        case NPCID.NecromancerArmored:
+                        case NPCID.RaggedCaster:
+                        case NPCID.RaggedCasterOpenCoat:
+                            if (npc.HasValidTarget && !Main.player[npc.target].ZoneDungeon && Counter[1] == 0)
+                            {
+                                Counter[1] = 420; //occasionally teleport outside dungeon
+                            }
                             goto case NPCID.FireImp;
                         case NPCID.FireImp:
                             if (Counter[1] > 0)
@@ -4069,9 +4115,9 @@ namespace FargowiltasSouls.NPCs
                                                 if ((index2 < num2 - 4 || index2 > num2 + 4 || (index1 < num1 - 4 || index1 > num1 + 4)) && (index2 < num4 - 1 || index2 > num4 + 1 || (index1 < num3 - 1 || index1 > num3 + 1)) && Main.tile[index1, index2].nactive())
                                                 {
                                                     bool flag2 = true;
-                                                    if ((npc.type == NPCID.DarkCaster || npc.type >= NPCID.RaggedCaster && npc.type <= NPCID.DiabolistWhite) && !Main.wallDungeon[(int)Main.tile[index1, index2 - 1].wall])
+                                                    if (npc.HasValidTarget && Main.player[npc.target].ZoneDungeon && (npc.type == NPCID.DarkCaster || npc.type >= NPCID.RaggedCaster && npc.type <= NPCID.DiabolistWhite) && !Main.wallDungeon[(int)Main.tile[index1, index2 - 1].wall])
                                                         flag2 = false;
-                                                    else if (Main.tile[index1, index2 - 1].lava())
+                                                    if (Main.tile[index1, index2 - 1].lava())
                                                         flag2 = false;
                                                     if (flag2 && Main.tileSolid[(int)Main.tile[index1, index2].type] && !Collision.SolidTiles(index1 - 1, index1 + 1, index2 - 4, index2 - 1))
                                                     {
@@ -4922,9 +4968,12 @@ namespace FargowiltasSouls.NPCs
                             bool stolen = StealFromInventory(target, ref Main.mouseItem);
                             if (!stolen)
                                 stolen = StealFromInventory(target, ref target.inventory[target.selectedItem]);
-                            
+
                             if (stolen)
-                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
+                            {
+                                Main.NewText("An item was stolen from you!", new Color(255, 50, 50));
+                                CombatText.NewText(target.Hitbox, new Color(255, 50, 50), "An item was stolen from you!", true);
+                            }
 
                             /*byte extraTries = 30;
                             for (int i = 0; i < 3; i++)
@@ -4956,7 +5005,10 @@ namespace FargowiltasSouls.NPCs
                             if (!stolen)
                                 stolen = StealFromInventory(target, ref target.inventory[target.selectedItem]);
                             if (stolen)
-                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
+                            {
+                                Main.NewText("An item was stolen from you!", new Color(255, 50, 50));
+                                CombatText.NewText(target.Hitbox, new Color(255, 50, 50), "An item was stolen from you!", true);
+                            }
                         }
 
                         target.AddBuff(ModContent.BuffType<Midas>(), 600);
@@ -5161,7 +5213,10 @@ namespace FargowiltasSouls.NPCs
                             }
 
                             if (stolen)
-                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
+                            {
+                                Main.NewText("An item was stolen from you!", new Color(255, 50, 50));
+                                CombatText.NewText(target.Hitbox, new Color(255, 50, 50), "An item was stolen from you!", true);
+                            }
                         }
                         break;
 
@@ -5170,19 +5225,29 @@ namespace FargowiltasSouls.NPCs
                         if (target.whoAmI == Main.myPlayer && !target.GetModPlayer<FargoPlayer>().SecurityWallet)
                         {
                             bool stolen = false;
-                            for (int j = 0; j < target.inventory.Length; j++)
+                            if (Main.mouseItem.healLife > 0 && StealFromInventory(target, ref Main.mouseItem))
                             {
-                                Item item = target.inventory[j];
-                                if (item.healLife > 0)
+                                stolen = true;
+                            }
+                            else
+                            {
+                                for (int j = 0; j < target.inventory.Length; j++)
                                 {
-                                    if (StealFromInventory(target, ref target.inventory[j]))
-                                        stolen = true;
-                                    break;
+                                    Item item = target.inventory[j];
+                                    if (item.healLife > 0)
+                                    {
+                                        if (StealFromInventory(target, ref target.inventory[j]))
+                                            stolen = true;
+                                        break;
+                                    }
                                 }
                             }
 
                             if (stolen)
-                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
+                            {
+                                Main.NewText("An item was stolen from you!", new Color(255, 50, 50));
+                                CombatText.NewText(target.Hitbox, new Color(255, 50, 50), "An item was stolen from you!", true);
+                            }
                         }
                         break;
 
@@ -5190,19 +5255,36 @@ namespace FargowiltasSouls.NPCs
                         target.AddBuff(ModContent.BuffType<LivingWasteland>(), 600);
                         if (target.whoAmI == Main.myPlayer && !target.GetModPlayer<FargoPlayer>().SecurityWallet)
                         {
-                            bool stolen = false;
-                            for (int j = 0; j < target.inventory.Length; j++)
+                            bool IsSoul(int type)
                             {
-                                Item item = target.inventory[j];
+                                return type == ItemID.SoulofFlight || type == ItemID.SoulofFright || type == ItemID.SoulofLight || type == ItemID.SoulofMight || type == ItemID.SoulofNight || type == ItemID.SoulofSight;
+                            };
 
-                                if (item.type == ItemID.SoulofFlight || item.type == ItemID.SoulofFright || item.type == ItemID.SoulofLight || item.type == ItemID.SoulofMight || item.type == ItemID.SoulofNight || item.type == ItemID.SoulofSight)
+                            bool stolen = false;
+                            if (IsSoul(Main.mouseItem.type) && StealFromInventory(target, ref Main.mouseItem))
+                            {
+                                stolen = true;
+                            }
+                            else
+                            {
+                                for (int j = 0; j < target.inventory.Length; j++)
                                 {
-                                    if (StealFromInventory(target, ref target.inventory[j]))
-                                        stolen = true;
+                                    Item item = target.inventory[j];
+
+                                    if (IsSoul(item.type))
+                                    {
+                                        if (StealFromInventory(target, ref target.inventory[j]))
+                                            stolen = true;
+                                        break;
+                                    }
                                 }
                             }
+
                             if (stolen)
-                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
+                            {
+                                Main.NewText("An item was stolen from you!", new Color(255, 50, 50));
+                                CombatText.NewText(target.Hitbox, new Color(255, 50, 50), "An item was stolen from you!", true);
+                            }
                         }
                         break;
 
@@ -5226,7 +5308,10 @@ namespace FargowiltasSouls.NPCs
                                 }
                             }
                             if (stolen)
-                                Main.NewText("An item was stolen from you!", new Color(175, 75, 255));
+                            {
+                                Main.NewText("An item was stolen from you!", new Color(255, 50, 50));
+                                CombatText.NewText(target.Hitbox, new Color(255, 50, 50), "An item was stolen from you!", true);
+                            }
                         }
                         break;
 
@@ -6347,33 +6432,22 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.BigMimicJungle:
                         if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<TribalCharm>());
-
-                        int rand = Main.rand.Next(3);
-
-                        switch (rand)
+                        switch (Main.rand.Next(3))
                         {
-                            case 0:
-                                Item.NewItem(npc.Hitbox, ModContent.ItemType<Vineslinger>());
-                                break;
-                            case 1:
-                                Item.NewItem(npc.Hitbox, ModContent.ItemType<Mahoguny>());
-                                break;
-                            case 2:
-                                Item.NewItem(npc.Hitbox, ModContent.ItemType<OvergrownKey>());
-                                break;
+                            case 0: Item.NewItem(npc.Hitbox, ModContent.ItemType<Vineslinger>()); break;
+                            case 1: Item.NewItem(npc.Hitbox, ModContent.ItemType<Mahoguny>()); break;
+                            case 2: Item.NewItem(npc.Hitbox, ModContent.ItemType<OvergrownKey>()); break;
                         }
-
-
                         goto case NPCID.BigMimicCrimson;
 
                     case NPCID.IceGolem:
-                        //Item.NewItem(npc.Hitbox, ModLoader.GetMod("Fargowiltas").ItemType("IceCrate"));
+                        Item.NewItem(npc.Hitbox, ModLoader.GetMod("Fargowiltas").ItemType("IceCrate"));
                         if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<FrigidGemstone>());
                         if (Main.rand.Next(20) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.BlizzardinaBottle);
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
-                            Item.NewItem(npc.Hitbox, ItemID.TitanPotion, Main.rand.Next(2, 5) + 1);
+                            Item.NewItem(npc.Hitbox, ItemID.TitanPotion, Main.rand.Next(4, 10) + 1);
                         break;
 
                     case NPCID.WyvernHead:
@@ -6383,7 +6457,7 @@ namespace FargowiltasSouls.NPCs
                         if (Main.rand.Next(20) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.CloudinaBottle);
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
-                            Item.NewItem(npc.Hitbox, ItemID.GravitationPotion, Main.rand.Next(2, 5) + 1);
+                            Item.NewItem(npc.Hitbox, ItemID.GravitationPotion, Main.rand.Next(4, 10) + 1);
                         break;
 
                     case NPCID.RainbowSlime:
@@ -6399,7 +6473,7 @@ namespace FargowiltasSouls.NPCs
                         if (Main.rand.Next(20) == 0)
                             Item.NewItem(npc.Hitbox, ItemID.SandstorminaBottle);
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
-                            Item.NewItem(npc.Hitbox, ItemID.WrathPotion, Main.rand.Next(2, 5) + 1);
+                            Item.NewItem(npc.Hitbox, ItemID.WrathPotion, Main.rand.Next(4, 10) + 1);
                         break;
 
                     case NPCID.GoblinPeon:
@@ -6430,14 +6504,14 @@ namespace FargowiltasSouls.NPCs
                         if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<WretchedPouch>());
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
-                            Item.NewItem(npc.Hitbox, ItemID.SummoningPotion, Main.rand.Next(2, 5) + 1);
+                            Item.NewItem(npc.Hitbox, ItemID.SummoningPotion, Main.rand.Next(4, 10) + 1);
                         goto case NPCID.GoblinPeon;
 
                     case NPCID.PirateCaptain:
                         if (Main.rand.Next(15) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<GoldenDippingVat>());
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
-                            Item.NewItem(npc.Hitbox, ItemID.AmmoReservationPotion, Main.rand.Next(2, 5) + 1);
+                            Item.NewItem(npc.Hitbox, ItemID.AmmoReservationPotion, Main.rand.Next(4, 10) + 1);
                         break;
 
                     case NPCID.PirateShip:
@@ -6454,7 +6528,7 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<NymphsPerfume>());
 
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
-                            Item.NewItem(npc.Hitbox, ItemID.LovePotion, Main.rand.Next(2, 5) + 1);
+                            Item.NewItem(npc.Hitbox, ItemID.LovePotion, Main.rand.Next(4, 10) + 1);
                         break;
 
                     case NPCID.MourningWood:
@@ -6515,14 +6589,14 @@ namespace FargowiltasSouls.NPCs
                         if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<TimsConcoction>());
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
-                            Item.NewItem(npc.Hitbox, ItemID.ManaRegenerationPotion, Main.rand.Next(2, 5) + 1);
+                            Item.NewItem(npc.Hitbox, ItemID.ManaRegenerationPotion, Main.rand.Next(4, 10) + 1);
                         break;
 
                     case NPCID.RuneWizard:
                         if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<MysticSkull>());
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
-                            Item.NewItem(npc.Hitbox, ItemID.MagicPowerPotion, Main.rand.Next(2, 5) + 1);
+                            Item.NewItem(npc.Hitbox, ItemID.MagicPowerPotion, Main.rand.Next(4, 10) + 1);
                         break;
 
                     case NPCID.SnowBalla:
@@ -6532,14 +6606,10 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<OrdinaryCarrot>());
                         break;
 
-                    case NPCID.BigMossHornet:
-                    case NPCID.GiantMossHornet:
-                    case NPCID.LittleMossHornet:
-                    case NPCID.MossHornet:
-                    case NPCID.TinyMossHornet:
+                    case NPCID.AngryTrapper:
                         if (Main.rand.Next(2) == 0)
-                            Item.NewItem(npc.Hitbox, ItemID.Stinger);
-                        goto case NPCID.Hornet;
+                            Item.NewItem(npc.Hitbox, ItemID.Vine);
+                        break;
 
                     case NPCID.Hornet:
                     case NPCID.HornetFatty:
@@ -6668,10 +6738,12 @@ namespace FargowiltasSouls.NPCs
                             Item.NewItem(npc.Hitbox, ItemID.NightOwlPotion, Main.rand.Next(0, 2) + 1);
                         break;
 
-                    case NPCID.BloodZombie:
+                    case NPCID.MossHornet:
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
                             Item.NewItem(npc.Hitbox, ItemID.RagePotion, Main.rand.Next(0, 2) + 1);
-                        break;
+                        if (Main.rand.Next(2) == 0)
+                            Item.NewItem(npc.Hitbox, ItemID.Stinger);
+                        goto case NPCID.Hornet;
 
                     case NPCID.PinkJellyfish:
                     case NPCID.BlueJellyfish:
@@ -6762,7 +6834,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.BigMimicCrimson:
                     case NPCID.BigMimicHallow:
                         if (Main.player[npc.lastInteraction].GetModPlayer<FargoPlayer>().TimsConcoction)
-                            Item.NewItem(npc.Hitbox, ItemID.LifeforcePotion, Main.rand.Next(2, 5) + 1);
+                            Item.NewItem(npc.Hitbox, ItemID.LifeforcePotion, Main.rand.Next(4, 10) + 1);
                         break;
 
                     #endregion
@@ -6831,7 +6903,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.WallofFlesh:
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<PungentEyeball>());
                         npc.DropItemInstanced(npc.position, npc.Size, ItemID.HallowedFishingCrate, 5);
-                        //npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<ShadowCrate>(), 5);
+                        npc.DropItemInstanced(npc.position, npc.Size, ModLoader.GetMod("Fargowiltas").ItemType("ShadowCrate"), 5);
                         if (!Main.player[Main.myPlayer].GetModPlayer<FargoPlayer>().MutantsDiscountCard)
                             npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<MutantsDiscountCard>());
                         break;
@@ -7624,9 +7696,9 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.Gastropod:
                         if (Main.netMode != NetmodeID.MultiplayerClient && npc.HasPlayerTarget)
                         {
-                            Vector2 vel = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 7f;
+                            Vector2 vel = Vector2.Normalize(Main.player[npc.target].Center - npc.Center) * 4f;
                             for (int i = 0; i < 12; i++)
-                                Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / 12 * i), ProjectileID.PinkLaser, 25, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / 12 * i), ProjectileID.PinkLaser, npc.damage / 5, 0f, Main.myPlayer);
                         }
                         break;
 
@@ -8076,7 +8148,7 @@ namespace FargowiltasSouls.NPCs
 
         public override bool? CanBeHitByItem(NPC npc, Player player, Item item)
         {
-            if (isMasoML && masoStateML > 0 && masoStateML < 4 && !player.buffImmune[ModContent.BuffType<NullificationCurse>()])
+            if (isMasoML && masoStateML > 0 && masoStateML < 4 && !player.buffImmune[ModContent.BuffType<NullificationCurse>()] && !FargoSoulsWorld.SwarmActive)
                 return false;
 
             return null;
@@ -8084,7 +8156,7 @@ namespace FargowiltasSouls.NPCs
 
         public override bool? CanBeHitByProjectile(NPC npc, Projectile projectile)
         {
-            if (isMasoML && !Main.player[projectile.owner].buffImmune[ModContent.BuffType<NullificationCurse>()])
+            if (isMasoML && !Main.player[projectile.owner].buffImmune[ModContent.BuffType<NullificationCurse>()] && !FargoSoulsWorld.SwarmActive)
             {
                 switch (masoStateML)
                 {
@@ -8499,19 +8571,33 @@ namespace FargowiltasSouls.NPCs
         {
             if (target.GetModPlayer<FargoPlayer>().StealingCooldown <= 0 && !item.IsAir)
             {
-                target.GetModPlayer<FargoPlayer>().StealingCooldown = 300;
+                target.GetModPlayer<FargoPlayer>().StealingCooldown = 360; //trust me, keep these separate
+                target.AddBuff(ModContent.BuffType<ThiefCD>(), 360);
 
-                int i = Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, item.type, 1, false, 0, false, false);
-                Main.item[i].netDefaults(item.netID);
-                Main.item[i].Prefix(item.prefix);
-                Main.item[i].stack = item.stack;
-                Main.item[i].velocity.X = Main.rand.Next(-20, 21) * 0.2f;
-                Main.item[i].velocity.Y = Main.rand.Next(-20, 1) * 0.2f;
-                Main.item[i].noGrabDelay = 100;
-                Main.item[i].newAndShiny = false;
-
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    NetMessage.SendData(MessageID.SyncItem, -1, -1, null, i, 0.0f, 0.0f, 0.0f, 0, 0, 0);
+                if (Main.netMode == NetmodeID.MultiplayerClient) //ask server to instance an item
+                {
+                    //NetMessage.SendData(MessageID.SyncItem, -1, -1, null, i, 0.0f, 0.0f, 0.0f, 0, 0, 0);
+                    
+                    var netMessage = mod.GetPacket();
+                    netMessage.Write((byte)16);
+                    netMessage.Write(target.whoAmI);
+                    netMessage.Write(item.type);
+                    netMessage.Write(item.netID);
+                    netMessage.Write(item.prefix);
+                    netMessage.Write(item.stack);
+                    netMessage.Send();
+                }
+                else if (Main.netMode == NetmodeID.SinglePlayer)
+                {
+                    int i = Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, item.type, 1, false, 0, false, false);
+                    Main.item[i].netDefaults(item.netID);
+                    Main.item[i].Prefix(item.prefix);
+                    Main.item[i].stack = item.stack;
+                    Main.item[i].velocity.X = Main.rand.Next(-20, 21) * 0.2f;
+                    Main.item[i].velocity.Y = Main.rand.Next(-20, 1) * 0.2f;
+                    Main.item[i].noGrabDelay = 100;
+                    Main.item[i].newAndShiny = false;
+                }
 
                 item = new Item();
 

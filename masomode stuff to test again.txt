@@ -346,3 +346,67 @@ YOU CAN NOW GRAZE ARENAS
 all projectiles can be grazed up to twice per second (was once per second)
 internal rewrite of abom, mutant, eri clearing projs at certain points, they wont do it if any other boss is alive
 gemini glaives exist and are POGGERS
+
+renamed heart of masochist toggle header to heart of the eternal
+gemini glaives tweaks
+molten fury nerfed (-25%, was -15%)
+adjusted arena visuals so the sprites alternate, also fixed devi arena
+made abom's saucer scythe a bit smaller
+dg teleports at you if its too far away, ensures it doesnt insta despawn when force spawned
+all arenas are more faded when you aren't the target (this is for mp)
+
+golden dipping vat recipe costs reduced to use 100 gold dust, was 500
+golden carp can be crafted at vat
+you suffocate normally in water in space
+lava charm prevents underworld on fire
+hallow cactus inflicts confused again, was flipped
+nerfed overgrown key damage
+marginal mahoguny buff
+breaking demon altars no longer forces pirates
+retinazer's aura only burns player if theyre being targeted by itself or spaz
+rainbow slimes immune to knockback so they dont spam spikes every time they get hit
+nerfed speed of laser spray from killed gastropods
+increased number of potions per kill from certain enemies with tim's coc (mainly minibosses)
+nerfed mythril ench from 20% speed to 15% speed and adjusted internal implementation of disrupted focus
+reduced mutant's gift stack to 1
+RESTORED CRATE DROPS FOR ICE GOLEM AND WOF
+
+something about syncing swarm in mp?????????????
+arenas are a little more faded when you're not target
+dragon's demise recolored
+plantera tentacle life restored, but they now avoid inflicting contact damage
+adjusted numbers of shroomite shrooms and fixed them being melee, now ranged damage
+destroyer is vulnerable to timestop and chilled in all modes (was emode only)
+squirrels cant become top hat squirrels when placed by you or spawned from statues, sorry
+increased spawn rate of top hat squirrels though
+removed kill cooldown on bone zone projectiles (probably wont affect dps)
+stardust dragon + tiki nerf, dragon damage caps at 1 segment above your normal cap
+fixed tick 1 edge case swarm thing, prominently moon lord arena
+marginal nerf to fishron p3 bubble trail acceleration
+more obnoxious text when an item is stolen from you and a visual buff for thieving cooldown, also 6 seconds (was 5)
+fuck it. stolen items in mp use a new handshake (TEST THIS)
+galactic reformer no longer hurts npcs outside its radius, but it can hit you too
+universal collapse instagibs everything
+
+reformer cant hurt bosses either
+universal collapse hits you for 9999 damage (more if you might survive) ignoring defenses but can trigger revives
+dark caster and post-plant dungeon mage skeletons can teleport sluggishly outside dungeon
+some more checks to prevent items like platinum coin working with boreal/pumpking cape/celestial rune
+adjusted check for fishron for angler ench
+fixed being able to dupe souls/potions with wraith/harpy by holding them with your mouse
+sprites
+	sinister icon
+	hypothermia icon
+	fishron minion icon
+fixed diffractor beams not updating damage
+fixed being able to hold hungry and switch to other weapons after running out of mana
+tim's coc makes moss hornet drop rage potion instead of blood zombie (funny joke)
+angry trappers drop vines
+fixed jungle mimic minion coin being classless
+phanleash does things on miss
+slight blender nerf
+reduced tin cooldowns again, SOT 5 ticks and terra force 15t (was 10, 20)
+snatcher and man eater can dash but WAY less often
+doubled delay between angry trapper dashes
+
+nerfed fishron p3 bubble trail accel and spacing a bit more

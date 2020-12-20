@@ -56,6 +56,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Vector2 Offset = new Vector2(Main.projectile[player.heldProj].width * 0.4f, 0).RotatedBy(Main.projectile[player.heldProj].velocity.ToRotation());
                 projectile.Center = Main.projectile[player.heldProj].Center + Offset;*/
 
+                projectile.damage = Main.player[projectile.owner].GetWeaponDamage(Main.player[projectile.owner].HeldItem);
+                projectile.knockBack = Main.player[projectile.owner].GetWeaponKnockback(Main.player[projectile.owner].HeldItem, Main.player[projectile.owner].HeldItem.knockBack);
+
                 float rotation = player.itemRotation + (player.direction < 0 ? MathHelper.Pi : 0);
                 projectile.velocity = rotation.ToRotationVector2();
                 projectile.Center = player.MountedCenter + 87f * projectile.velocity;

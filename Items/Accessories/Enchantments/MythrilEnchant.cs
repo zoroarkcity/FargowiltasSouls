@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             DisplayName.SetDefault("Mythril Enchantment");
             Tooltip.SetDefault(
-@"20% increased weapon use speed
+@"15% increased weapon use speed
 Taking damage temporarily removes this weapon use speed increase
 'You feel the knowledge of your weapons seep into your mind'");
             DisplayName.AddTranslation(GameCulture.Chinese, "秘银魔石");
@@ -45,9 +45,11 @@ Taking damage temporarily removes this weapon use speed increase
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().MythrilEnchant = true;
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MythrilSpeed))
-                player.GetModPlayer<FargoPlayer>().AttackSpeed += .2f;
+            FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
+
+            fargoPlayer.MythrilEnchant = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MythrilSpeed) && !fargoPlayer.DisruptedFocus)
+                fargoPlayer.AttackSpeed += fargoPlayer.WizardEnchant ? .2f : .15f;
         }
 
         public override void AddRecipes()

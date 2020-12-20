@@ -140,7 +140,7 @@ namespace FargowiltasSouls
         public int TinCrit = 4;
         public bool TikiEnchant;
         public bool TikiMinion;
-        private int actualMinions;
+        public int actualMinions;
         public bool SolarEnchant;
         public bool ShinobiEnchant;
         public bool ValhallaEnchant;
@@ -300,6 +300,7 @@ namespace FargowiltasSouls
         public bool noDodge;
         public bool noSupersonic;
         public bool Bloodthirsty;
+        public bool DisruptedFocus;
         public bool SinisterIcon;
         public bool SinisterIconDrops;
 
@@ -796,6 +797,7 @@ namespace FargowiltasSouls
             noDodge = false;
             noSupersonic = false;
             Bloodthirsty = false;
+            DisruptedFocus = false;
             SinisterIcon = false;
             SinisterIconDrops = false;
 
@@ -903,6 +905,7 @@ namespace FargowiltasSouls
             Hypothermia = false;
             Midas = false;
             Bloodthirsty = false;
+            DisruptedFocus = false;
             SinisterIcon = false;
             SinisterIconDrops = false;
             Graze = false;
@@ -986,7 +989,7 @@ namespace FargowiltasSouls
 
                 if (player.ZoneUnderworldHeight)
                 {
-                    if (!(player.fireWalk || PureHeart))
+                    if (!(player.fireWalk || PureHeart || player.lavaMax > 0))
                         player.AddBuff(BuffID.OnFire, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
                 }
 
@@ -1099,7 +1102,7 @@ namespace FargowiltasSouls
                 if (!PureHeart && !player.buffImmune[BuffID.Suffocation] && player.ZoneSkyHeight && player.whoAmI == Main.myPlayer)
                 {
                     bool inLiquid = Collision.DrownCollision(player.position, player.width, player.height, player.gravDir);
-                    if (!inLiquid || !player.gills)
+                    if (!inLiquid)
                     {
                         player.breath -= 3;
                         if (++MasomodeSpaceBreathTimer > 10)
@@ -1162,7 +1165,7 @@ namespace FargowiltasSouls
                         if (player.ZoneHoly)
                         {
                             damage = 40;
-                            player.AddBuff(ModContent.BuffType<Flipped>(), Main.expertMode && Main.expertDebuffTime > 1 ? 150 : 300);
+                            player.AddBuff(BuffID.Confused, Main.expertMode && Main.expertDebuffTime > 1 ? 150 : 300);
                         }
                         if (player.hurtCooldowns[0] <= 0) //same i-frames as spike tiles
                             player.Hurt(PlayerDeathReason.ByCustomReason(player.name + " was pricked by a Cactus."), damage, 0, false, false, false, 0);
@@ -1374,7 +1377,7 @@ namespace FargowiltasSouls
                 player.buffImmune[BuffID.Rabies] = true;
             }
 
-            if (StealingCooldown > 0)
+            if (StealingCooldown > 0 && !player.dead)
                 StealingCooldown--;
 
             if (LihzahrdCurse)
@@ -2757,7 +2760,7 @@ namespace FargowiltasSouls
                     if (crit && TinCrit < 100)
                     {
                         TinCrit += 5;
-                        tinCD = 10;
+                        tinCD = 5;
                     }
                     else if (TinCrit >= 100)
                     {
@@ -2784,7 +2787,7 @@ namespace FargowiltasSouls
                     if (TerraForce || WizardEnchant)
                     {
                         TinCrit += 5;
-                        tinCD = 20;
+                        tinCD = 15;
                     }
                     else
                     {
@@ -3661,9 +3664,9 @@ namespace FargowiltasSouls
                 case ItemID.LaserMachinegun:
                 case ItemID.PainterPaintballGun:
                 case ItemID.XenoStaff:
-                    return 0.75f;
-
                 case ItemID.MoltenFury:
+                    return 0.75f;
+                    
                 case ItemID.DartPistol:
                 case ItemID.DartRifle:
                 case ItemID.VampireKnives:

@@ -63,7 +63,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.ai[0]++;
 
             const int maxTime = 45;
-            Vector2 DistanceOffset = new Vector2(1000 * (float)Math.Sin(projectile.ai[0] * Math.PI / maxTime), 0).RotatedBy(projectile.velocity.ToRotation());
+            Vector2 DistanceOffset = new Vector2(950 * (float)Math.Sin(projectile.ai[0] * Math.PI / maxTime), 0).RotatedBy(projectile.velocity.ToRotation());
             DistanceOffset = DistanceOffset.RotatedBy(projectile.ai[1] - (projectile.ai[1] * projectile.ai[0] / (maxTime / 2)));
             projectile.Center = Main.player[projectile.owner].Center + DistanceOffset;
             if (projectile.ai[0] > maxTime)
@@ -72,7 +72,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             if (empowered && projectile.ai[0] == maxTime / 2 && projectile.owner == Main.myPlayer) //star spray on the rebound
             {
                 Vector2 baseVel = Main.rand.NextVector2CircularEdge(1, 1);
-                for (int i = 0; i < 12; i++)
+                for (int i = 0; i < 16; i++)
                 {
                     Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 105, 1f, -0.3f);
                     Vector2 newvel = baseVel.RotatedBy(i * MathHelper.TwoPi / 12);
@@ -104,7 +104,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 {
                     Main.PlaySound(SoundID.Item74, projectile.Center);
                     Vector2 baseVel = Main.rand.NextVector2CircularEdge(1, 1);
-                    float ai0 = empowered ? 120 : 78;
+                    float ai0 = 78;//empowered ? 120 : 78;
                     for(int i = 0; i < 5; i++)
                     {
                         Vector2 newvel = baseVel.RotatedBy(i * MathHelper.TwoPi / 5);

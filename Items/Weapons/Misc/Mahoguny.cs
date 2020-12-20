@@ -13,7 +13,7 @@ namespace FargowiltasSouls.Items.Weapons.Misc
             "Fires leaves and acorns");
         }
         public override void SetDefaults() {
-			item.damage = 40;
+			item.damage = 45;
 			item.ranged = true;
 			item.width = 58;
 			item.height = 26;

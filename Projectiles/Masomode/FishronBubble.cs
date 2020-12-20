@@ -33,7 +33,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void AI()
         {
-            projectile.velocity *= 1.035f;
+            projectile.velocity *= 1.03f;
 
             if (projectile.alpha > 50)
                 projectile.alpha -= 30;

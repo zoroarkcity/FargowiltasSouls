@@ -97,6 +97,13 @@ namespace FargowiltasSouls.NPCs
             {
                 switch (npc.type)
                 {
+                    case NPCID.TheDestroyer:
+                    case NPCID.TheDestroyerBody:
+                    case NPCID.TheDestroyerTail:
+                        npc.buffImmune[ModContent.BuffType<TimeFrozen>()] = false;
+                        npc.buffImmune[BuffID.Chilled] = false;
+                        break;
+
                     case NPCID.WallofFlesh:
                     case NPCID.WallofFleshEye:
                     case NPCID.MoonLordCore:
@@ -114,8 +121,12 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.Squirrel:
                     case NPCID.SquirrelRed:
-                        if (Main.rand.Next(8) == 0)
-                            npc.Transform(ModContent.NPCType<TophatSquirrelCritter>());
+                        if (!npc.SpawnedFromStatue)
+                        {
+                            int p = Player.FindClosest(npc.position, npc.width, npc.height);
+                            if ((p == -1 || npc.Distance(Main.player[p].Center) > 800) && Main.rand.Next(5) == 0)
+                                npc.Transform(ModContent.NPCType<TophatSquirrelCritter>());
+                        }
                         break;
 
                     default:

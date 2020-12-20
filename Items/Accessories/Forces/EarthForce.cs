@@ -52,7 +52,7 @@ Briefly become invulnerable after striking an enemy
             modPlayer.EarthForce = true;
             //mythril
             modPlayer.MythrilEnchant = true;
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MythrilSpeed))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MythrilSpeed) && !modPlayer.DisruptedFocus)
                 modPlayer.AttackSpeed += .2f;
             //shards
             modPlayer.CobaltEnchant = true;
