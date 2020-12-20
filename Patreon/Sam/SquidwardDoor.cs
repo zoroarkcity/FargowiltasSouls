@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Items;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria.ModLoader;
 

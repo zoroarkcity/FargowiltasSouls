@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using FargowiltasSouls.Items;
 
 namespace FargowiltasSouls.Patreon.Daawnz
 {

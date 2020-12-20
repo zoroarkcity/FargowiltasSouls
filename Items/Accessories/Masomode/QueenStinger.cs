@@ -60,7 +60,5 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             // Stringer immune
             player.GetModPlayer<FargoPlayer>().QueenStinger = true;
         }
-
-        public override void SafeModifyTooltips(List<TooltipLine> tooltips) => tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
     }
 }

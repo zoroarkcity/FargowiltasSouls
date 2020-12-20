@@ -4,6 +4,7 @@ using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria.ID;
+using FargowiltasSouls.Items;
 
 namespace FargowiltasSouls.Patreon.LaBonez
 {

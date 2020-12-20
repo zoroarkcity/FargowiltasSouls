@@ -47,8 +47,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             player.stringColor = 5;
         }
 
-        public override void SafeModifyTooltips(List<TooltipLine> tooltips) => tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
-
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);

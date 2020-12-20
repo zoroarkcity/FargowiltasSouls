@@ -42,7 +42,5 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         }
 
         public override void HoldItem(Player player) => player.stringColor = 5;
-
-        public override void SafeModifyTooltips(List<TooltipLine> tooltips) => tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
     }
 }

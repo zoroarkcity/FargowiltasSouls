@@ -5,6 +5,7 @@ using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using FargowiltasSouls.Items;
 
 namespace FargowiltasSouls.Patreon.Sasha
 {

@@ -47,13 +47,8 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             return true;
         }
 
-        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
-        {
-            // Remove the Crit Chance line because of a custom crit method
-            tooltips.Remove(tooltips.FirstOrDefault(line => line.Name == "CritChance" && line.mod == "Terraria"));
-
-            tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
-        }
+        // Remove the Crit Chance line because of a custom crit method
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips) => tooltips.Remove(tooltips.FirstOrDefault(line => line.Name == "CritChance" && line.mod == "Terraria"));
 
         //make them hold it different
         public override Vector2? HoldoutOffset() => new Vector2(-10, 0);

@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using FargowiltasSouls.Items;
 
 namespace FargowiltasSouls.Patreon.ManliestDove
 {

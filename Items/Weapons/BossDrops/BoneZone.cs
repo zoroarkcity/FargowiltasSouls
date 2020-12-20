@@ -68,7 +68,5 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         }
 
         public override bool ConsumeAmmo(Player player) => Main.rand.Next(3) != 0;
-
-        public override void SafeModifyTooltips(List<TooltipLine> tooltips) => tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
     }
 }

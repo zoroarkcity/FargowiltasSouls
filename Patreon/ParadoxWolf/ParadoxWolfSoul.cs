@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using Terraria.ID;
+using FargowiltasSouls.Items;
 
 namespace FargowiltasSouls.Patreon.ParadoxWolf
 {
