@@ -47,6 +47,7 @@ Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu
             item.rare = 11;
             item.value = Item.sellPrice(0, 9);
             item.defense = 10;
+            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

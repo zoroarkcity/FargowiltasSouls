@@ -31,6 +31,7 @@ Increases flight time by 100%
             item.accessory = true;
             item.rare = 10;
             item.value = Item.sellPrice(0, 8);
+            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

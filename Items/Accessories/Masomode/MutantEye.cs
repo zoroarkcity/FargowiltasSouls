@@ -40,6 +40,7 @@ Mutant Bomb有60秒的冷却");
             item.accessory = true;
             item.rare = 11;
             item.value = Item.sellPrice(1);
+            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)

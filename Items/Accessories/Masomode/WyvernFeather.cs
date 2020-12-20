@@ -26,6 +26,7 @@ Your attacks have a 10% chance to inflict Clipped Wings on non-boss enemies
             item.accessory = true;
             item.rare = 5;
             item.value = Item.sellPrice(0, 4);
+            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

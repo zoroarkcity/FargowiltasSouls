@@ -35,6 +35,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             item.accessory = true;
             item.rare = ItemRarityID.LightRed;
             item.value = Item.sellPrice(0, 3);
+            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
