@@ -5,12 +5,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     [AutoloadEquip(EquipType.Shield)]
-    public class TerrariaSoul : ModItem
+    public class TerrariaSoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -37,7 +36,6 @@ Your attacks inflict Midas, Enemies explode into needles
 You violently explode to damage nearby enemies when hurt and revive with 200 HP when killed
 Effects of Flower Boots, Master Ninja Gear, Greedy Ring, Celestial Shell, and Shiny Stone
 'A true master of Terraria'";
-
 
             string tooltip_ch =
 @"'真·泰拉之主'
@@ -115,7 +113,6 @@ Effects of Flower Boots, Master Ninja Gear, Greedy Ring, Celestial Shell, and Sh
             //COSMOS
             mod.GetItem("CosmoForce").UpdateAccessory(player, hideVisual);
         }
-
 
         public override void AddRecipes()
         {

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class MinerEnchant : ModItem
+    public class MinerEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -19,7 +19,7 @@ Light is emitted from the player
 Summons a pet Magic Lantern
 'The planet trembles with each swing of your pick'");
             DisplayName.AddTranslation(GameCulture.Chinese, "矿工魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'你每挥一下镐子, 行星都会震动'
 增加50%采掘速度
 显示敌人, 陷阱和宝藏
@@ -44,7 +44,7 @@ Summons a pet Magic Lantern
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.value = 20000;
         }
 
@@ -67,7 +67,6 @@ Summons a pet Magic Lantern
             recipe.AddIngredient(ItemID.MoltenPickaxe);
             //gem critter? or minecart
             recipe.AddIngredient(ItemID.MagicLantern);
-            
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

@@ -8,7 +8,7 @@ using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class Dicer : ModItem
+    public class Dicer : SoulsItem
     {
         public override void SetStaticDefaults()
         {

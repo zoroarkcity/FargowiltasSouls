@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class EbonwoodEnchant : ModItem
+    public class EbonwoodEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,7 +16,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"You have an aura of Shadowflame
 'Untapped potential'");
             DisplayName.AddTranslation(GameCulture.Chinese, "乌木魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'未开发的潜力'
 环绕一个暗影烈焰光环
 在腐地时, 半径加倍");
@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.value = 10000;
         }
 

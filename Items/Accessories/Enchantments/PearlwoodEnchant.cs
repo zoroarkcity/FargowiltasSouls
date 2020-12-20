@@ -7,16 +7,16 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class PearlwoodEnchant : ModItem
+    public class PearlwoodEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pearlwood Enchantment");
             Tooltip.SetDefault(
 @"Projectiles may spawn a star when they hit something
-'Too little, too late…'"); 
+'Too little, too late…'");
             DisplayName.AddTranslation(GameCulture.Chinese, "珍珠木魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'为时已晚'
 留下一道使敌人退缩的彩虹路径
 在神圣地形中,彩虹路径持续时间变长");
@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = 20000;
         }
 

@@ -2,11 +2,10 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Pets
 {
-    public class BabyScythe : ModItem
+    public class BabyScythe : SoulsItem
     {
         public override void SetStaticDefaults()
         {

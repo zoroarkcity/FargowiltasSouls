@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Patreon.Catsounds
 {
-    public class MedallionoftheFallenKing : ModItem
+    public class MedallionoftheFallenKing : SoulsItem
     {
         public override void SetStaticDefaults()
         {

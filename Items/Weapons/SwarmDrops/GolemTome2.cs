@@ -2,14 +2,13 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 using System.Collections.Generic;
 using System.Linq;
 using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class GolemTome2 : ModItem
+    public class GolemTome2 : SoulsItem
     {
         public override void SetStaticDefaults()
         {

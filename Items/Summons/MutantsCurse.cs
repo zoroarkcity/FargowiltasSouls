@@ -8,7 +8,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Summons
 {
-    public class MutantsCurse : ModItem
+    public class MutantsCurse : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -23,11 +23,11 @@ namespace FargowiltasSouls.Items.Summons
         {
             item.width = 20;
             item.height = 20;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.maxStack = 999;
             item.useAnimation = 30;
             item.useTime = 30;
-            item.useStyle = 4;
+            item.useStyle = ItemUseStyleID.HoldingUp;
             item.consumable = true;
             item.value = Item.buyPrice(1);
 

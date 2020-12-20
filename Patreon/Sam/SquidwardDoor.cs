@@ -1,11 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Patreon.Sam
 {
-    public class SquidwardDoor : ModItem
+    public class SquidwardDoor : SoulsItem
     {
         public override void SetStaticDefaults()
         {

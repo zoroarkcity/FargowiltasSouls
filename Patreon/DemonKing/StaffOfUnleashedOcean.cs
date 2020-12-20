@@ -2,12 +2,11 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 using System.Collections.Generic;
 
 namespace FargowiltasSouls.Patreon.DemonKing
 {
-    public class StaffOfUnleashedOcean : ModItem
+    public class StaffOfUnleashedOcean : SoulsItem
     {
         public override void SetStaticDefaults()
         {

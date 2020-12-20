@@ -8,11 +8,11 @@ using Terraria.Localization;
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     //[AutoloadEquip(EquipType.Back)]
-    public class TrawlerSoul : ModItem
+    public class TrawlerSoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Trawler Soul"); 
+            DisplayName.SetDefault("Trawler Soul");
 
             string tooltip =
 @"Increases fishing skill substantially
@@ -40,7 +40,7 @@ Effects of Angler Tackle Bag
             item.height = 20;
             item.accessory = true;
             item.value = 750000;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)

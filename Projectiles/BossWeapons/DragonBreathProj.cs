@@ -1,16 +1,12 @@
-using FargowiltasSouls.Projectiles.Minions;
-using IL.Terraria.Chat.Commands;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI.Chat;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
-	public class DragonBreathProj : ModProjectile
+    public class DragonBreathProj : ModProjectile
 	{
 		public override string Texture => "Terraria/Projectile_687";
 		public override void SetDefaults()

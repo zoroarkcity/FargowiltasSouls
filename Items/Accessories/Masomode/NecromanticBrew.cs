@@ -1,10 +1,10 @@
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class NecromanticBrew : ModItem
+    public class NecromanticBrew : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -24,7 +24,7 @@ Summons 2 Skeletron arms to whack enemies
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.value = Item.sellPrice(0, 3);
             item.GetGlobalItem<EternityItem>().Eternity = true;
         }

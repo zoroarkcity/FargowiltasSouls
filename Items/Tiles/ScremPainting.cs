@@ -3,10 +3,11 @@ using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Tiles
 {
-    public class ScremPainting : ModItem
+    public class ScremPainting : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -36,9 +37,9 @@ namespace FargowiltasSouls.Items.Tiles
             item.autoReuse = true;
             item.useAnimation = 15;
             item.useTime = 10;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.consumable = true;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.createTile = mod.TileType("ScremPaintingSheet");
         }
     }

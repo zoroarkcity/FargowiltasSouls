@@ -1,14 +1,14 @@
-﻿using Fargowiltas.Items.Tiles;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Armor
 {
     [AutoloadEquip(EquipType.Body)]
-    public class MutantBody : ModItem
+    public class MutantBody : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -28,7 +28,7 @@ Drastically increases life regen");
         {
             item.width = 18;
             item.height = 18;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = Item.sellPrice(0, 70);
             item.defense = 70;
         }

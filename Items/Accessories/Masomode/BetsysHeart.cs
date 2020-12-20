@@ -6,7 +6,7 @@ using Terraria.Localization;
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     [AutoloadEquip(EquipType.Neck)]
-    public class BetsysHeart : ModItem
+    public class BetsysHeart : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -27,7 +27,7 @@ Press the Fireball Dash key to perform a short invincible dash
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 9;
+            item.rare = ItemRarityID.Cyan;
             item.value = Item.sellPrice(0, 7);
             item.GetGlobalItem<EternityItem>().Eternity = true;
         }

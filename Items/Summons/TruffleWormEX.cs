@@ -2,13 +2,12 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Fargowiltas.Items.Tiles;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Summons
 {
-    public class TruffleWormEX : ModItem
+    public class TruffleWormEX : SoulsItem
     {
         public override string Texture => "Terraria/Item_2673";
 
@@ -23,7 +22,7 @@ namespace FargowiltasSouls.Items.Summons
         public override void SetDefaults()
         {
             item.maxStack = 20;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.width = 12;
             item.height = 12;
             item.consumable = true;

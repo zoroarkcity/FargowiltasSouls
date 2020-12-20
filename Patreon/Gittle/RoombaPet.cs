@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Patreon.Gittle
 {
-    public class RoombaPet : ModItem
+    public class RoombaPet : SoulsItem
     {
         public override void SetStaticDefaults()
         {

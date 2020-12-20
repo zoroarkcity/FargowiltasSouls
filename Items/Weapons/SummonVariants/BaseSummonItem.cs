@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Weapons.SummonVariants
 {
-    public abstract class BaseSummonItem : ModItem
+    public abstract class BaseSummonItem : SoulsItem
     {
         public abstract int Type
         {

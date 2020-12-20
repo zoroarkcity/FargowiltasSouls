@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class NinjaEnchant : ModItem
+    public class NinjaEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,7 +18,7 @@ Using the Rod of Discord will also grant this buff
 First Strike ensures your next attack is a crit dealing 3x damage
 'Now you see me, now you don’t'");
             DisplayName.AddTranslation(GameCulture.Chinese, "忍者魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'你看到我了,现在又不见了'
 扔烟雾弹进行传送,获得先发制人Buff
 使用裂位法杖也会获得该Buff
@@ -45,7 +45,7 @@ First Strike ensures your next attack is a crit dealing 3x damage
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.value = 30000;
         }
 
@@ -66,7 +66,7 @@ First Strike ensures your next attack is a crit dealing 3x damage
             //throwing knives
             recipe.AddIngredient(ItemID.SmokeBomb, 50);
             recipe.AddIngredient(ItemID.SlimeHook);
-            
+
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();

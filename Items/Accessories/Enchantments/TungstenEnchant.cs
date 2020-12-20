@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class TungstenEnchant : ModItem
+    public class TungstenEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -47,7 +47,7 @@ Enlarged swords and projectiles deal 15% more damage on crits
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.value = 40000;
         }
 

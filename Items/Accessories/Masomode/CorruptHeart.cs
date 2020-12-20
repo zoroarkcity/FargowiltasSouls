@@ -1,10 +1,10 @@
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class CorruptHeart : ModItem
+    public class CorruptHeart : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -25,7 +25,7 @@ You spawn mini eaters to seek out enemies every few attacks
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = Item.sellPrice(0, 2);
             item.GetGlobalItem<EternityItem>().Eternity = true;
         }

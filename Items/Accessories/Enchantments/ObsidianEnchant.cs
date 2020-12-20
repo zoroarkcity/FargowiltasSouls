@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class ObsidianEnchant : ModItem
+    public class ObsidianEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,8 +18,7 @@ You have normal movement and can swim in lava
 While standing in lava, your attacks spawn explosions
 'The earth calls'");
             DisplayName.AddTranslation(GameCulture.Chinese, "黑曜石魔石");
-            //Effects of Molten Skull Rose 
-
+            //Effects of Molten Skull Rose
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)
@@ -39,7 +38,7 @@ While standing in lava, your attacks spawn explosions
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = 50000;
         }
 

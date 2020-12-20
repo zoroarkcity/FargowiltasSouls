@@ -79,7 +79,7 @@ namespace FargowiltasSouls.Projectiles
                 {
                     num274++;
                 }
-                int luminiteArrow = Projectile.NewProjectile(projectile.localAI[0], projectile.localAI[1], velocity.X, velocity.Y, 640, projectile.damage, projectile.knockBack, projectile.owner, 0f, (float)num274);
+                int luminiteArrow = Projectile.NewProjectile(projectile.localAI[0], projectile.localAI[1], velocity.X, velocity.Y, ProjectileID.MoonlordArrowTrail, projectile.damage, projectile.knockBack, projectile.owner, 0f, (float)num274);
                 timer = 0;
 
                 Main.projectile[luminiteArrow].localNPCHitCooldown = 5;
@@ -150,7 +150,7 @@ namespace FargowiltasSouls.Projectiles
             num483 *= num486;
             num484 *= num486;
             int num487 = projectile.damage;
-            int num488 = Projectile.NewProjectile(x, y, num483, num484, 92, num487, projectile.knockBack, projectile.owner, 0f, 0f);
+            int num488 = Projectile.NewProjectile(x, y, num483, num484, ProjectileID.HallowStar, num487, projectile.knockBack, projectile.owner, 0f, 0f);
             Main.projectile[num488].ai[1] = projectile.position.Y;
             Main.projectile[num488].ai[0] = 1f;
 

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class ShadowEnchant : ModItem
+    public class ShadowEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,7 +18,7 @@ Darkened enemies occasionally fire shadowflame tentacles at other enemies
 Summons a pet Eater of Souls and Shadow Orb
 'You feel your body slip into the deepest of shadows'");
             DisplayName.AddTranslation(GameCulture.Chinese, "暗影魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'你感觉身体陷入了最深的阴影中'
 攻击概率造成黑暗
 陷入黑暗的敌人偶尔会向其他敌人发射暗影烈焰触手
@@ -42,7 +42,7 @@ Summons a pet Eater of Souls and Shadow Orb
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = 50000;
         }
 
@@ -64,7 +64,7 @@ Summons a pet Eater of Souls and Shadow Orb
             //fisher of souls
             recipe.AddIngredient(ItemID.EatersBone);
             recipe.AddIngredient(ItemID.ShadowOrb);
-            
+
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();

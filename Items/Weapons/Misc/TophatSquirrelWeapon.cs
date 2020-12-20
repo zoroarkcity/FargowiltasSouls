@@ -2,14 +2,13 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.ID;
-using FargowiltasSouls.NPCs.Critters;
 using FargowiltasSouls.Projectiles;
 using Microsoft.Xna.Framework;
 using FargowiltasSouls.Items.Misc;
 
 namespace FargowiltasSouls.Items.Weapons.Misc
 {
-    public class TophatSquirrelWeapon : ModItem
+    public class TophatSquirrelWeapon : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -25,14 +24,14 @@ namespace FargowiltasSouls.Items.Weapons.Misc
 
             item.width = 20;
             item.height = 20;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.useAnimation = 45;
             item.useTime = 45;
 
             item.magic = true;
             item.noMelee = true;
             item.noUseGraphic = true;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 6.6f;
 
             item.mana = 66;
@@ -55,7 +54,7 @@ namespace FargowiltasSouls.Items.Weapons.Misc
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            
+
             recipe.AddIngredient(ModContent.ItemType<TopHatSquirrelCaught>(), 10);
             recipe.AddIngredient(ItemID.ChlorophyteBar, 5);
             recipe.AddIngredient(ItemID.SoulofFright, 3);

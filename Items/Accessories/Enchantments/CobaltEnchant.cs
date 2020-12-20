@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class CobaltEnchant : ModItem
+    public class CobaltEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 This can only happen once every second
 'I can't believe it's not Palladium'");
             DisplayName.AddTranslation(GameCulture.Chinese, "钴蓝魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'真不敢相信这不是钯金'
 25%概率使你的抛射物爆炸成碎片
 仅限每2秒一次");
@@ -40,7 +40,7 @@ This can only happen once every second
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 100000;
         }
 
@@ -59,7 +59,7 @@ This can only happen once every second
             recipe.AddIngredient(ItemID.Chik);
             recipe.AddIngredient(ItemID.CrystalStorm);
             recipe.AddIngredient(ItemID.CrystalVileShard);
-            
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

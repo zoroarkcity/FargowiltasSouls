@@ -8,7 +8,7 @@ using Terraria.Localization;
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     //[AutoloadEquip(EquipType.Shield)]
-    public class ColossusSoul : ModItem
+    public class ColossusSoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -45,7 +45,7 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell
             item.accessory = true;
             item.defense = 10;
             item.value = 1000000;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.shieldSlot = 4;
         }
 
@@ -81,7 +81,6 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell
             recipe.AddIngredient(ItemID.StarVeil);
             recipe.AddIngredient(ItemID.FleshKnuckles); //hero shield
             recipe.AddIngredient(ItemID.SporeSac);
-
 
             recipe.AddIngredient(ItemID.FrozenTurtleShell); //frozen shield
             recipe.AddIngredient(ItemID.PaladinsShield);

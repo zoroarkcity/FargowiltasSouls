@@ -1,10 +1,10 @@
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class GuttedHeart : ModItem
+    public class GuttedHeart : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -28,7 +28,7 @@ Creeper respawn speed increases when not moving
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = Item.sellPrice(0, 2);
             item.GetGlobalItem<EternityItem>().Eternity = true;
         }

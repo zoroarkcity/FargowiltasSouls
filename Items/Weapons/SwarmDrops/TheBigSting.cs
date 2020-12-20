@@ -9,7 +9,7 @@ using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class TheBigSting : ModItem
+    public class TheBigSting : SoulsItem
     {
         public override void SetStaticDefaults()
         {

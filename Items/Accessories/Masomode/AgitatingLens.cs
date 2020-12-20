@@ -1,15 +1,11 @@
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.Localization;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class AgitatingLens : ModItem
+    public class AgitatingLens : SoulsItem
     {
-
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Agitating Lens");
@@ -29,7 +25,7 @@ While dashing or running quickly you will create a trail of demon scythes
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.value = Item.sellPrice(0, 1);
             item.GetGlobalItem<EternityItem>().Eternity = true;
         }

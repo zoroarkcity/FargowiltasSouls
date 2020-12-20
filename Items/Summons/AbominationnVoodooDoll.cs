@@ -4,11 +4,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Summons
 {
-    public class AbominationnVoodooDoll : ModItem
+    public class AbominationnVoodooDoll : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -22,10 +21,10 @@ namespace FargowiltasSouls.Items.Summons
         {
             item.width = 20;
             item.height = 20;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.useAnimation = 30;
             item.useTime = 30;
-            item.useStyle = 4;
+            item.useStyle = ItemUseStyleID.HoldingUp;
             item.maxStack = 20;
             item.value = Item.sellPrice(0, 1);
         }
@@ -63,7 +62,6 @@ namespace FargowiltasSouls.Items.Summons
                                 else if (Main.netMode == NetmodeID.Server)
                                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Mutant has been enraged by the death of his brother!"), new Color(175, 75, 255));
                             }
-
                         }
                     }
                 }

@@ -80,7 +80,7 @@ namespace FargowiltasSouls.NPCs.EternityMode
                     npc.netUpdate = true;
                     if (npc.ai[1] == 130 && plantera.life > plantera.lifeMax / 2)
                     {
-                        Main.PlaySound(6, (int)npc.position.X, (int)npc.position.Y);
+                        Main.PlaySound(SoundID.Grass, (int)npc.position.X, (int)npc.position.Y);
                         if (Main.netMode != -1)
                         {
                             Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 30f;

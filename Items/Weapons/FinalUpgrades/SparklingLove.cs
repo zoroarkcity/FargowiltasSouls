@@ -1,14 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
 {
-    public class SparklingLove : ModItem
+    public class SparklingLove : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -29,7 +27,7 @@ Right click pattern becomes denser with up to 5 empty minion slots
             item.width = 32;
             item.height = 32;
             item.scale = 2f;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.UseSound = SoundID.Item1;
             item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.SparklingLove>();
             item.value = Item.sellPrice(0, 70);

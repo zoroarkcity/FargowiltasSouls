@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Essences
 {
-    public class ApprenticesEssence : ModItem
+    public class ApprenticesEssence : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,7 +18,7 @@ namespace FargowiltasSouls.Items.Accessories.Essences
 Increases your maximum mana by 50
 'This is only the beginning..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "学徒精华");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'这才刚刚开始..'
 增加18%魔法伤害
 增加5%魔法暴击率
@@ -42,7 +42,7 @@ Increases your maximum mana by 50
             item.height = 20;
             item.accessory = true;
             item.value = 150000;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

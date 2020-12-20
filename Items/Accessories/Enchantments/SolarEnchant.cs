@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class SolarEnchant : ModItem
+    public class SolarEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,7 +18,7 @@ Solar shield is not depleted on hit, but has reduced damage reduction
 Attacks may inflict the Solar Flare debuff
 'Too hot to handle'");
             DisplayName.AddTranslation(GameCulture.Chinese, "日耀魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'太烫了'
 日耀护盾允许你向敌人冲刺
 近战攻击概率造成耀斑效果");
@@ -41,7 +41,7 @@ Attacks may inflict the Solar Flare debuff
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 10;
+            item.rare = ItemRarityID.Red;
             item.value = 400000;
         }
 

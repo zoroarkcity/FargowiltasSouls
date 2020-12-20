@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class RedRidingEnchant : ModItem
+    public class RedRidingEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -21,7 +21,7 @@ Effects of Celestial Shell
 Summons a pet Puppy
 'Big Bad Red Riding Hood'");
             DisplayName.AddTranslation(GameCulture.Chinese, "红色游侠魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'大坏红帽'
 满月时,攻击概率造成大出血
 对低血量的敌人伤害增加
@@ -47,7 +47,7 @@ Summons a pet Puppy
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = 250000;
         }
 
@@ -71,7 +71,7 @@ Summons a pet Puppy
             //eventide
             recipe.AddIngredient(ItemID.DD2BetsyBow);
             recipe.AddIngredient(ItemID.DogWhistle); //werewolf pet
-            
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

@@ -1,13 +1,12 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class CrystalAssassinEnchant : ModItem
+    public class CrystalAssassinEnchant : SoulsItem
     {
         public override bool Autoload(ref string name)
         {
@@ -42,7 +41,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 150000;
         }
 

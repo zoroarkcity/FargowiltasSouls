@@ -7,7 +7,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class GoldEnchant : ModItem
+    public class GoldEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -50,7 +50,7 @@ Summons a pet Parrot
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 150000;
         }
 

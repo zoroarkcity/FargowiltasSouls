@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
 {
-    public class StyxGazer : ModItem
+    public class StyxGazer : SoulsItem
     {
         public bool flip;
 
@@ -30,7 +29,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             item.width = 32;
             item.height = 32;
             item.scale = 1f;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.UseSound = SoundID.Item1;
             item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.StyxScythe>();
             item.value = Item.sellPrice(0, 70);

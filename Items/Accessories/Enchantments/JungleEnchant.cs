@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class JungleEnchant : ModItem
+    public class JungleEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -47,13 +47,13 @@ Effects of Guide to Plant Fiber Cordage
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = 50000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().JungleEffect();            
+            player.GetModPlayer<FargoPlayer>().JungleEffect();
         }
 
         public override void AddRecipes()

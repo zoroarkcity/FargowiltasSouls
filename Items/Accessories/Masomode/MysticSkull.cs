@@ -1,12 +1,11 @@
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.DataStructures;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class MysticSkull : ModItem
+    public class MysticSkull : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -31,7 +30,7 @@ Automatically use mana potions when needed
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
             item.GetGlobalItem<EternityItem>().Eternity = true;
         }

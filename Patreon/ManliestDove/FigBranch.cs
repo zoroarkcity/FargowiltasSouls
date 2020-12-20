@@ -1,13 +1,12 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
 namespace FargowiltasSouls.Patreon.ManliestDove
 {
-    public class FigBranch : ModItem
+    public class FigBranch : SoulsItem
     {
         public override void SetStaticDefaults()
         {

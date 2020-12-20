@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class HallowEnchant : ModItem
+    public class HallowEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -19,7 +19,7 @@ Summons an Enchanted Sword familiar that scales with minion damage
 Summons a magical fairy
 'Hallowed be your sword and shield'");
             DisplayName.AddTranslation(GameCulture.Chinese, "神圣魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'愿人都尊你的剑与盾为圣'
 获得一个可以反射抛射物的护盾
 召唤一柄附魔剑
@@ -43,7 +43,7 @@ Summons a magical fairy
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 6;
+            item.rare = ItemRarityID.LightPurple;
             item.value = 180000;
         }
 
@@ -55,7 +55,7 @@ Summons a magical fairy
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            
+
             recipe.AddRecipeGroup("FargowiltasSouls:AnyHallowHead"); //add summon helm here
             recipe.AddIngredient(ItemID.HallowedPlateMail);
             recipe.AddIngredient(ItemID.HallowedGreaves);
@@ -67,7 +67,7 @@ Summons a magical fairy
             //any caught fairy
             //any horse mount
             recipe.AddIngredient(ItemID.FairyBell);
-            
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

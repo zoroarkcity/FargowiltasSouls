@@ -1,14 +1,13 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class SnowEnchant : ModItem
-    {        
+    public class SnowEnchant : SoulsItem
+    {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Snow Enchantment");
@@ -35,7 +34,7 @@ Summons a pet Penguin
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.value = 50000;
         }
 

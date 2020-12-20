@@ -2,12 +2,10 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class BigBrainBuster : ModItem
+    public class BigBrainBuster : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -25,7 +23,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.height = 28;
             item.useTime = 36;
             item.useAnimation = 36;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.noMelee = true;
             item.knockBack = 3;
             item.rare = ItemRarityID.Purple;
@@ -49,13 +47,13 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             else
             {
                 float usedslots = 0;
-                for(int i = 0; i < Main.projectile.Length; i++)
+                for (int i = 0; i < Main.projectile.Length; i++)
                 {
                     Projectile proj = Main.projectile[i];
-                    if(proj.owner == player.whoAmI && proj.minionSlots > 0 && proj.active)
+                    if (proj.owner == player.whoAmI && proj.minionSlots > 0 && proj.active)
                     {
                         usedslots += proj.minionSlots;
-                        if(usedslots < player.maxMinions && proj.type == type)
+                        if (usedslots < player.maxMinions && proj.type == type)
                         {
                             proj.minionSlots++;
                         }

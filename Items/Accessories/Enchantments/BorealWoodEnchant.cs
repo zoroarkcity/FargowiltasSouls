@@ -7,16 +7,16 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class BorealWoodEnchant : ModItem
+    public class BorealWoodEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Boreal Wood Enchantment");
             Tooltip.SetDefault(
 @"Attacks will periodically be accompanied by several snowballs
-'The cooler wood'"); 
+'The cooler wood'");
             DisplayName.AddTranslation(GameCulture.Chinese, "针叶木魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'冷木'
 每5次攻击附带着一个雪球
 在冰雪地形时, 发射5个雪球");
@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.value = 10000;
         }
 

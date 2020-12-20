@@ -113,13 +113,13 @@ namespace FargowiltasSouls
                 Item item = player.inventory[m];
                 if(item != null) 
                 {
-                    if (item.type == 71) { totalSum += item.stack; }
+                    if (item.type == ItemID.CopperCoin) { totalSum += item.stack; }
                     else
-                        if (item.type == 72) { totalSum += item.stack * 100; }
+                        if (item.type == ItemID.SilverCoin) { totalSum += item.stack * 100; }
                         else
-                            if (item.type == 73) { totalSum += item.stack * 10000; }
+                            if (item.type == ItemID.GoldCoin) { totalSum += item.stack * 10000; }
                             else
-                                if (item.type == 74) { totalSum += item.stack * 1000000; }
+                                if (item.type == ItemID.PlatinumCoin) { totalSum += item.stack * 1000000; }
                 }
             }
             return totalSum;

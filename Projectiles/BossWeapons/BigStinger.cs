@@ -104,7 +104,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     target.AddBuff(BuffID.Venom, 600);
                     DustRing(p, 24);
                     p.Kill();
-                    Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 27, 1f, -0.4f);
+                    Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 27, 1f, -0.4f);
 
                     if (projectile.owner == Main.myPlayer)
                     {

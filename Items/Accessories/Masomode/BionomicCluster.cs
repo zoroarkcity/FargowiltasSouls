@@ -6,7 +6,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class BionomicCluster : ModItem
+    public class BionomicCluster : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -43,13 +43,13 @@ Use to teleport to your last death point and right click to zoom
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = Item.sellPrice(0, 6);
             item.defense = 6;
 
             item.useTime = 90;
             item.useAnimation = 90;
-            item.useStyle = 4;
+            item.useStyle = ItemUseStyleID.HoldingUp;
             item.useTurn = true;
             item.UseSound = SoundID.Item6;
             item.GetGlobalItem<EternityItem>().Eternity = true;
@@ -171,7 +171,7 @@ Use to teleport to your last death point and right click to zoom
                 player.Teleport(player.lastDeathPostion, 1);
                 player.velocity = Vector2.Zero;
                 if (Main.netMode == NetmodeID.MultiplayerClient)
-                    NetMessage.SendData(65, -1, -1, null, 0, player.whoAmI, player.lastDeathPostion.X, player.lastDeathPostion.Y, 1);
+                    NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, player.lastDeathPostion.X, player.lastDeathPostion.Y, 1);
             }
 
             for (int index = 0; index < 70; ++index)

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class ShinobiEnchant : ModItem
+    public class ShinobiEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -30,7 +30,7 @@ Summons a pet Gato
 大大加强闪电光环的效果
 召唤一只宠物小喵和黑色小猫咪";
 
-            Tooltip.SetDefault(tooltip); 
+            Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "潜行忍者魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
@@ -52,7 +52,7 @@ Summons a pet Gato
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = 250000;
         }
 
@@ -87,7 +87,7 @@ Summons a pet Gato
             //flower pow
             //stynger
             recipe.AddIngredient(ItemID.DD2PetGato);
-            
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

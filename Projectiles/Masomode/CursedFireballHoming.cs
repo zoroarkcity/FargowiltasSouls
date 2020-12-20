@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -43,7 +42,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             if (projectile.localAI[0] == 0f)
             {
                 projectile.localAI[0] = 1;
-                Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 20, 2, 0);
+                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 20, 2, 0);
             }
 
             if (Main.rand.Next(3) == 0 && projectile.velocity.Length() > 0)
@@ -70,7 +69,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
             else if (projectile.localAI[1] == 120 + projectile.ai[1]) //shoot at player much faster
             {
-                Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 20, 2, 0);
+                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 20, 2, 0);
                 float num = 24f;
                 for (int index1 = 0; index1 < num; ++index1)
                 {

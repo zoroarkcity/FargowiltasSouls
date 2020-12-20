@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class BeetleEnchant : ModItem
+    public class BeetleEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"Beetles protect you from damage, up to 15% damage reduction only
 Increases flight time by 50%
 'The unseen life of dung courses through your veins'";
-            string tooltip_ch = 
+            string tooltip_ch =
 @"'你的血管里流淌着看不见的粪便生命'
 甲虫保护你免受伤害
 增加100%飞行时间";
@@ -44,7 +44,7 @@ Increases flight time by 50%
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = 250000;
         }
 
@@ -69,7 +69,7 @@ Increases flight time by 50%
             //breaker blade
             //amarok
             //beetle minecart
-              
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

@@ -1,7 +1,4 @@
-﻿using CalamityMod.Items.Armor;
-using CalamityMod.Items.Placeables.Furniture;
-using Terraria;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 
 namespace FargowiltasSouls.ModCompatibilities
 {

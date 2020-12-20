@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class SpookyEnchant : ModItem
+    public class SpookyEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 Summons a pet Cursed Sapling and Eyeball Spring
 'Melting souls since 1902'");
             DisplayName.AddTranslation(GameCulture.Chinese, "阴森魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"自1902年以来融化的灵魂
 召唤物偶尔会发射巨大镰刀
 召唤一只万圣小树妖和弹簧眼球");
@@ -40,7 +40,7 @@ Summons a pet Cursed Sapling and Eyeball Spring
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = 250000;
         }
 
@@ -62,7 +62,7 @@ Summons a pet Cursed Sapling and Eyeball Spring
             //dark harvest
             recipe.AddIngredient(ItemID.CursedSapling);
             recipe.AddIngredient(ItemID.EyeSpring);
-            
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

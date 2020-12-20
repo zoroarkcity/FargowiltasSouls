@@ -6,7 +6,7 @@ using FargowiltasSouls.Projectiles.BossWeapons;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class LeashOfCthulhu : ModItem
+    public class LeashOfCthulhu : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -22,9 +22,9 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.width = 30;
             item.height = 10;
             item.value = Item.sellPrice(0, 1);
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.noMelee = true;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.useAnimation = 25;
             item.useTime = 25;
             item.knockBack = 4f;

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
 {
-    public class PhantasmalLeashOfCthulhu : ModItem
+    public class PhantasmalLeashOfCthulhu : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -24,9 +24,9 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             item.width = 30;
             item.height = 10;
             item.value = Item.sellPrice(1);
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.noMelee = true;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.autoReuse = true;
             item.useAnimation = 25;
             item.useTime = 25;

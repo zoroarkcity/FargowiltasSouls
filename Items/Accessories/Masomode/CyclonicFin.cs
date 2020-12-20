@@ -1,15 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class CyclonicFin : ModItem
+    public class CyclonicFin : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -23,7 +22,7 @@ You can endure any attack and survive with 1 life
 Once triggered, you cannot heal for 10 seconds
 Endurance recovers when you reach full life again
 'Seems like something's missing'");
-//Upgrades Cute Fishron to Cute Fishron EX");
+            //Upgrades Cute Fishron to Cute Fishron EX");
             DisplayName.AddTranslation(GameCulture.Chinese, "憎恶手杖");
             Tooltip.AddTranslation(GameCulture.Chinese, @"免疫憎恶毒牙
 擦弹增加暴击伤害的上限增加20%
@@ -41,7 +40,7 @@ Endurance recovers when you reach full life again
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = Item.sellPrice(0, 17);
             item.GetGlobalItem<EternityItem>().Eternity = true;
         }

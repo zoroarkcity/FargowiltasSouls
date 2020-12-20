@@ -7,20 +7,19 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class AdamantiteEnchant : ModItem
+    public class AdamantiteEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Adamantite Enchantment");
             Tooltip.SetDefault(
 @"One of your projectiles will split into 3 every second
-'Three degrees of seperation'"); 
+'Three degrees of seperation'");
             DisplayName.AddTranslation(GameCulture.Chinese, "精金魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'谁需要瞄准?'
 第8个抛射物将会分裂成3个
 分裂出的抛射物同样可以分裂");
-
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)
@@ -40,7 +39,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 7;
+            item.rare = ItemRarityID.Lime;
             item.value = 100000;
         }
 
@@ -62,7 +61,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             //seedler
             recipe.AddIngredient(ItemID.CrystalSerpent);
             recipe.AddIngredient(ItemID.VenomStaff);
-            
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

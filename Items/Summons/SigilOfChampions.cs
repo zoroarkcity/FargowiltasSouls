@@ -2,13 +2,12 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using FargowiltasSouls.NPCs.Champions;
 
 namespace FargowiltasSouls.Items.Summons
 {
-    public class SigilOfChampions : ModItem
+    public class SigilOfChampions : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -23,11 +22,11 @@ Not consumed on use");
         {
             item.width = 40;
             item.height = 40;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.maxStack = 1;
             item.useAnimation = 45;
             item.useTime = 45;
-            item.useStyle = 4;
+            item.useStyle = ItemUseStyleID.HoldingUp;
             item.consumable = false;
             item.value = Item.buyPrice(1);
         }
@@ -124,7 +123,7 @@ Not consumed on use");
                     else
                         NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<ShadowChampion>());
                 }
-                else if (!player.ZoneHoly && !player.ZoneCorrupt && !player.ZoneCrimson 
+                else if (!player.ZoneHoly && !player.ZoneCorrupt && !player.ZoneCrimson
                     && !player.ZoneDesert && !player.ZoneSnow && !player.ZoneJungle && Main.dayTime) //purity day
                 {
                     if (player.altFunctionUse == 2)

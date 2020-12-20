@@ -1,13 +1,12 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class HuntressEnchant : ModItem
+    public class HuntressEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -38,7 +37,7 @@ Set oiled enemies on fire for extra damage
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = 200000;
         }
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Drawing.Imaging;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;

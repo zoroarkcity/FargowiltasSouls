@@ -9,7 +9,7 @@ using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class Blender : ModItem
+    public class Blender : SoulsItem
     {
         public override void SetStaticDefaults()
         {

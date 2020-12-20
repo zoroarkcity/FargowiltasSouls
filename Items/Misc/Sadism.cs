@@ -7,7 +7,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Misc
 {
-    public class Sadism : ModItem
+    public class Sadism : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -25,8 +25,8 @@ namespace FargowiltasSouls.Items.Misc
             item.width = 20;
             item.height = 20;
             item.maxStack = 30;
-            item.rare = 11;
-            item.useStyle = 2;
+            item.rare = ItemRarityID.Purple;
+            item.useStyle = ItemUseStyleID.EatingUsing;
             item.useAnimation = 17;
             item.useTime = 17;
             item.consumable = true;

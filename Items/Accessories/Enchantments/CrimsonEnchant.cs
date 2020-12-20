@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class CrimsonEnchant : ModItem
+    public class CrimsonEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,7 +18,7 @@ If you take another hit before it's healed, you lose the heal in addition to nor
 Summons a pet Face Monster and Crimson Heart
 'The blood of your enemy is your rebirth'");
             DisplayName.AddTranslation(GameCulture.Chinese, "血腥魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'你从敌人的血中重生'
 大幅度增加生命回复速度
 召唤巨脸怪宝宝和血腥心脏");
@@ -41,7 +41,7 @@ Summons a pet Face Monster and Crimson Heart
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = 50000;
         }
 
@@ -63,7 +63,7 @@ Summons a pet Face Monster and Crimson Heart
             //flesh catcher rod
             recipe.AddIngredient(ItemID.BoneRattle);
             recipe.AddIngredient(ItemID.CrimsonHeart);
-            
+
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();

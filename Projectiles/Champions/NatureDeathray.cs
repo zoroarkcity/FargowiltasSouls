@@ -1,10 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.Enums;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.NPCs.Champions;
 

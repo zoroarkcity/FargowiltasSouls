@@ -7,26 +7,26 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Misc
 {
-	public class CelestialSeal : ModItem
-	{
+    public class CelestialSeal : SoulsItem
+    {
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Celestial Seal");
+        {
+            DisplayName.SetDefault("Celestial Seal");
             Tooltip.SetDefault(@"Permanently increases the number of accessory slots
 Only usable after Demon Heart");
             DisplayName.AddTranslation(GameCulture.Chinese, "天篆");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"永久增加饰品栏
 只能在使用恶魔之心之后使用");
-		}
+        }
 
-		public override void SetDefaults()
-		{
+        public override void SetDefaults()
+        {
             item.width = 20;
             item.height = 20;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.maxStack = 99;
-            item.useStyle = 4;
+            item.useStyle = ItemUseStyleID.HoldingUp;
             item.useAnimation = 30;
             item.useTime = 30;
             item.consumable = true;

@@ -1,15 +1,13 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class NukeFishron : ModItem
+    public class NukeFishron : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -27,13 +25,13 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.height = 24;
             item.useTime = 37;
             item.useAnimation = 37;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 7.7f;
             item.UseSound = new LegacySoundStyle(2, 62);
             item.useAmmo = AmmoID.Rocket;
             item.value = Item.sellPrice(0, 15);
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("FishNuke");
             item.shootSpeed = 7f;

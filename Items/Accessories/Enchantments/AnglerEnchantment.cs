@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class AnglerEnchantment : ModItem
+    public class AnglerEnchantment : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,9 +16,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"Increases fishing skill
 You catch fish almost instantly
 Effects of Angler Tackle Bag
-'As long as they aren't all shoes, you can go home happily'"); 
+'As long as they aren't all shoes, you can go home happily'");
             DisplayName.AddTranslation(GameCulture.Chinese, "渔夫魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'只要不全是鞋子, 你可以高高兴兴地回家'
 增加钓鱼技能
 所有鱼竿将会增加4个额外的鱼饵");
@@ -42,7 +42,7 @@ Effects of Angler Tackle Bag
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.value = 100000;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

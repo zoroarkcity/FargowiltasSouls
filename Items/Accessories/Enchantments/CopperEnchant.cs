@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class CopperEnchant : ModItem
+    public class CopperEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -44,7 +44,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = 100000;
         }
 
@@ -66,7 +66,6 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             recipe.AddIngredient(ItemID.Wire, 20);
             //daybloom
             recipe.AddIngredient(ItemID.FirstEncounter);
-            
 
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

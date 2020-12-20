@@ -1,11 +1,12 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     [AutoloadEquip(EquipType.Face)]
-    public class WyvernFeather : ModItem
+    public class WyvernFeather : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -24,7 +25,7 @@ Your attacks have a 10% chance to inflict Clipped Wings on non-boss enemies
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
             item.GetGlobalItem<EternityItem>().Eternity = true;
         }

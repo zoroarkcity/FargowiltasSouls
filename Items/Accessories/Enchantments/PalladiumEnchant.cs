@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class PalladiumEnchant : ModItem
+    public class PalladiumEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 You spawn an orb of damaging life energy every 80 life regenerated
 'You feel your wounds slowly healing' ");
             DisplayName.AddTranslation(GameCulture.Chinese, "钯金魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'你感到你的伤口在慢慢愈合'
 攻击敌人后大大增加生命回复
 一次攻击获得每秒5%的生命窃取,上限为5点");
@@ -40,7 +40,7 @@ You spawn an orb of damaging life energy every 80 life regenerated
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 100000;
         }
 

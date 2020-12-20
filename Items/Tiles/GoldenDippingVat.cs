@@ -5,7 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Tiles
 {
-    public class GoldenDippingVat : ModItem
+    public class GoldenDippingVat : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -22,11 +22,11 @@ namespace FargowiltasSouls.Items.Tiles
             item.maxStack = 99;
             item.useTurn = true;
             item.autoReuse = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = Item.sellPrice(0, 10);
             item.useAnimation = 15;
             item.useTime = 15;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.consumable = true;
             item.createTile = mod.TileType("GoldenDippingVatSheet");
         }

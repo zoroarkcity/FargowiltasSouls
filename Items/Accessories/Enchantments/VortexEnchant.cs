@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class VortexEnchant : ModItem
+    public class VortexEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -19,7 +19,7 @@ While in stealth, your own projectiles will not be sucked in
 Summons a pet Companion Cube
 'Tear into reality'");
             DisplayName.AddTranslation(GameCulture.Chinese, "星旋魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'撕裂现实'
 双击'下'键切换潜行,减少敌人攻击你的机会,但减慢移动速度
 进入潜行状态时,会产生一个漩涡,吸引敌人并造成巨大伤害
@@ -43,7 +43,7 @@ Summons a pet Companion Cube
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 10;
+            item.rare = ItemRarityID.Red;
             item.value = 400000;
         }
 

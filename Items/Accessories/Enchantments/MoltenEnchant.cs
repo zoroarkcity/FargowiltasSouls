@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class MoltenEnchant : ModItem
+    public class MoltenEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,7 +18,7 @@ The closer they are to you the more damage they take
 When you are hurt, you violently explode to damage nearby enemies
 'They shall know the fury of hell' ");
             DisplayName.AddTranslation(GameCulture.Chinese, "熔融魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"他们将感受到地狱的愤怒.'
 点燃附近敌人
 敌人距离越近, 收到的伤害越多
@@ -42,7 +42,7 @@ When you are hurt, you violently explode to damage nearby enemies
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = 50000;
         }
 

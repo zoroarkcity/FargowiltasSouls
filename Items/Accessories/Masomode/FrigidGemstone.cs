@@ -1,12 +1,11 @@
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class FrigidGemstone : ModItem
-    {   
+    public class FrigidGemstone : SoulsItem
+    {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frigid Gemstone");
@@ -24,7 +23,7 @@ Your attacks summon Frostfireballs to attack your enemies
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
             item.GetGlobalItem<EternityItem>().Eternity = true;
         }

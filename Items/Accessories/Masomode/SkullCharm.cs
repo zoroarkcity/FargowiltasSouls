@@ -6,7 +6,7 @@ using Terraria.Localization;
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     [AutoloadEquip(EquipType.Neck)]
-    public class SkullCharm : ModItem
+    public class SkullCharm : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -29,7 +29,7 @@ Makes armed and magic skeletons less hostile outside the Dungeon
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = Item.sellPrice(0, 6);
             item.GetGlobalItem<EternityItem>().Eternity = true;
         }

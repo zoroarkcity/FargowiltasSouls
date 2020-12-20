@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Patreon.Sasha
 {
-    public class MissDrakovisFishingPole : ModItem
+    public class MissDrakovisFishingPole : SoulsItem
     {
         private int mode = 1;
 
@@ -102,7 +102,7 @@ namespace FargowiltasSouls.Patreon.Sasha
                         for (int i = -2; i <= 2; i++)
                         {
                             float modifier = 1f - 0.75f / 2f * Math.Abs(i);
-                            Projectile.NewProjectile(position, modifier * speed.RotatedBy(MathHelper.ToRadians(9) * i), 
+                            Projectile.NewProjectile(position, modifier * speed.RotatedBy(MathHelper.ToRadians(9) * i),
                                 mod.ProjectileType("Bubble"), damage, knockBack, player.whoAmI);
                         }
                     }

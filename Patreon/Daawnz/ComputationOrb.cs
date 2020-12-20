@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Patreon.Daawnz
 {
-    public class ComputationOrb : ModItem
+    public class ComputationOrb : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,9 +16,8 @@ namespace FargowiltasSouls.Patreon.Daawnz
 Non-magic/summon weapons require 10 mana to use
 'Within the core, a spark of hope remains.'");
             DisplayName.AddTranslation(GameCulture.Chinese, "演算宝珠");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"非魔法攻击将额外造成25%伤害, 并消耗10法力");
-
         }
 
         public override void SetDefaults()

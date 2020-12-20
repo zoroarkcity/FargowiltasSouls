@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class TheSmallSting : ModItem
+    public class TheSmallSting : SoulsItem
     {
         public override void SetStaticDefaults()
         {

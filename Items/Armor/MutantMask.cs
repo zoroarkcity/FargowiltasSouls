@@ -1,14 +1,14 @@
-﻿using Fargowiltas.Items.Tiles;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Armor
 {
     [AutoloadEquip(EquipType.Head)]
-    public class MutantMask : ModItem
+    public class MutantMask : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -28,7 +28,7 @@ Increases max number of minions and sentries by 10
         {
             item.width = 18;
             item.height = 18;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = Item.sellPrice(0, 50);
             item.defense = 50;
         }

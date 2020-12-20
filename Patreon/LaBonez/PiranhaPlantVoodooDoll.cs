@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace FargowiltasSouls.Patreon.LaBonez
 {
-    public class PiranhaPlantVoodooDoll : ModItem
+    public class PiranhaPlantVoodooDoll : SoulsItem
     {
         public override void SetStaticDefaults()
         {

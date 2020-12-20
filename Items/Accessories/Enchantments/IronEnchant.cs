@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
     [AutoloadEquip(EquipType.Shield)]
-    public class IronEnchant : ModItem
+    public class IronEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -26,7 +26,7 @@ You attract items from a larger range
 拾取物品半径增大
 '趁热打铁'";
 
-            Tooltip.SetDefault(tooltip); 
+            Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "铁魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
@@ -48,7 +48,7 @@ You attract items from a larger range
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.value = 40000;
             //item.shieldSlot = 5;
         }

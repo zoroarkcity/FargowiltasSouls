@@ -4,12 +4,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     [AutoloadEquip(EquipType.Wings)]
-    public class FlightMasterySoul : ModItem
+    public class FlightMasterySoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,7 +17,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 @"Allows for very long lasting flight
 'Ascend'");
             DisplayName.AddTranslation(GameCulture.Chinese, "飞行大师之魂");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'飞升'
 允许超长时间飞行");
         }
@@ -29,7 +28,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             item.height = 20;
             item.accessory = true;
             item.value = 1000000;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
         }
 
         public override void ModifyTooltips(List<TooltipLine> list)

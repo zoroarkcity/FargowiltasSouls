@@ -1,10 +1,10 @@
 ﻿using Terraria;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class CelestialRune : ModItem
+    public class CelestialRune : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -12,7 +12,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             Tooltip.SetDefault(@"Grants immunity to Marked for Death
 You may periodically fire additional attacks depending on weapon type
 Taking damage creates a friendly Ancient Vision to attack enemies
-'A fallen enemy's spells, repurposed'"); 
+'A fallen enemy's spells, repurposed'");
             DisplayName.AddTranslation(GameCulture.Chinese, "天界符文");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'堕落的敌人的咒语,被改换用途'
 免疫死亡标记
@@ -25,7 +25,7 @@ Taking damage creates a friendly Ancient Vision to attack enemies
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 9;
+            item.rare = ItemRarityID.Cyan;
             item.value = Item.sellPrice(0, 7);
             item.GetGlobalItem<EternityItem>().Eternity = true;
         }

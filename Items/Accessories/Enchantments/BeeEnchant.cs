@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class BeeEnchant : ModItem
+    public class BeeEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -46,7 +46,7 @@ Summons a pet Baby Hornet
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = 50000;
         }
 
@@ -70,7 +70,7 @@ Summons a pet Baby Hornet
             //honey bomb
             recipe.AddIngredient(ItemID.Honeyfin);
             recipe.AddIngredient(ItemID.Nectar);
-            
+
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();

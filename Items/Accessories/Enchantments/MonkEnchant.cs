@@ -1,13 +1,12 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class MonkEnchant : ModItem
+    public class MonkEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -35,7 +34,7 @@ Lightning Aura can now crit and strikes faster
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = 150000;
         }
 

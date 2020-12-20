@@ -5,7 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class DubiousCircuitry : ModItem
+    public class DubiousCircuitry : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -30,7 +30,7 @@ Reduces damage taken by 5%
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 7;
+            item.rare = ItemRarityID.Lime;
             item.value = Item.sellPrice(0, 5);
             item.defense = 10;
             item.GetGlobalItem<EternityItem>().Eternity = true;

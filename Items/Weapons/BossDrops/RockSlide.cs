@@ -11,7 +11,7 @@ using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class RockSlide : ModItem
+    public class RockSlide : SoulsItem
     {
         public override void SetStaticDefaults()
         {

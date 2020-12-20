@@ -8,7 +8,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class MutantEye : ModItem
+    public class MutantEye : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -38,7 +38,7 @@ Mutant Bomb有60秒的冷却");
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = Item.sellPrice(1);
             item.GetGlobalItem<EternityItem>().Eternity = true;
         }

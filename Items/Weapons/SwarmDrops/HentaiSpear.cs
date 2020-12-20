@@ -5,13 +5,12 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 using System.Linq;
 using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class HentaiSpear : ModItem
+    public class HentaiSpear : SoulsItem
     {
         public override void SetStaticDefaults()
         {

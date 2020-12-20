@@ -7,12 +7,12 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class FrostEnchant : ModItem
+    public class FrostEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Frost Enchantment");
-            
+
             string tooltip =
 @"Icicles will start to appear around you
 Attacking will launch them towards the cursor
@@ -50,7 +50,7 @@ Summons several pets
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 150000;
         }
 

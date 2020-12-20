@@ -1,15 +1,12 @@
-using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
-    public class UniverseSoul : ModItem
+    public class UniverseSoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -73,7 +70,7 @@ Effects of Sniper Scope, Celestial Cuffs and Mana Flower
             modPlayer.AllCritUp(25);
             //use speed, velocity, debuffs, crit dmg, mana up, double knockback
             modPlayer.UniverseEffect = true;
-            
+
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.UniverseAttackSpeed))
             {
                 modPlayer.AttackSpeed += .5f;

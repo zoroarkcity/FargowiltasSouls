@@ -5,7 +5,7 @@ using FargowiltasSouls.Projectiles.BossWeapons;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class FishStick : ModItem
+    public class FishStick : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -24,12 +24,12 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.height = 24;
             item.useTime = 15;
             item.useAnimation = 15;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 1.5f;
             item.UseSound = SoundID.Item1;
             item.value = 50000;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<FishStickProj>();
             item.shootSpeed = 35f;

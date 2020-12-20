@@ -2,11 +2,10 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Pets
 {
-    public class ChibiHat : ModItem
+    public class ChibiHat : SoulsItem
     {
         public override void SetStaticDefaults()
         {

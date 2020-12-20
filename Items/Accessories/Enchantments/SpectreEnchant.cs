@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class SpectreEnchant : ModItem
+    public class SpectreEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -47,7 +47,7 @@ Summons a pet Wisp
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = 250000;
         }
 

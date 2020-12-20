@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class FleshCannon : ModItem
+    public class FleshCannon : SoulsItem
     {
         public int counter;
 

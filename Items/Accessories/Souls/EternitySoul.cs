@@ -10,14 +10,14 @@ using Microsoft.Xna.Framework;
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     [AutoloadEquip(EquipType.Wings)]
-    public class EternitySoul : ModItem
+    public class EternitySoul : SoulsItem
     {
         public static int tooltipIndex = 0;
         public static int Counter = 10;
 
-        List<String> tooltipsFull = new List<String>();
+        private List<String> tooltipsFull = new List<String>();
 
-        String[] vanillaTooltips = new String[]
+        private String[] vanillaTooltips = new String[]
         {
     "250% increased damage",
     "250% increased attack speed",
@@ -153,7 +153,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
     "Effects of Builder Mode"
         };
 
-        String[] thoriumTooltips = new String[]
+        private String[] thoriumTooltips = new String[]
         {
             "Armor bonuses from Living Wood",
             "Armor bonuses from Life Bloom",
@@ -232,7 +232,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             "Effects of Weighted Winglets"
         };
 
-        String[] calamityTooltips = new String[]
+        private String[] calamityTooltips = new String[]
         {
             "Armor bonuses from Aerospec",
             "Armor bonuses from Statigel",
@@ -291,13 +291,13 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             "Effects of Asgardian Aegis"
         };
 
-        String[] dbtTooltips = new String[]
+        private String[] dbtTooltips = new String[]
         {
             "Effects of Zenkai Charm",
             "Effects of Aspera Crystallite"
         };
 
-        String[] soaTooltips = new String[]
+        private String[] soaTooltips = new String[]
         {
             "Armor bonuses from Bismuth",
             "Armor bonuses from Frosthunter",
@@ -330,7 +330,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
         {
             DisplayName.SetDefault("Soul of Eternity");
 
-            //oh no idk even for translate 
+            //oh no idk even for translate
             String tooltip_ch =
 @"'不论凡人或不朽, 都承认你的神性'
 大幅增加生命回复, 最大法力值增至999 ,+30最大召唤栏, +20最大哨兵栏, 增加500%最大生命值 , 50%伤害减免
@@ -374,10 +374,10 @@ Escudo de bengala solar te permite embestir, embestir bloques sólidos te teletr
 Ser golpeado refleja el daño, suelta una exploción de esporas, inflije super sangrado, puede chillar y causa que erupciones en varias cosas cuando seas dañado
 Otorga regeneración carmesí, inmunidad al fuego, daño por caída, y lava, duplica la colección de hierbas
 50% probabilidad de Abejas gigantes, 15% probabilidad de críticos de súbditos, 20% probabilidad de botín extra
-Otorga inmunidad a la mayoría de estados alterados; Permite velocidad Supersónica y vuelo infinito; Incrementa poder de pesca substancialmente y todas las cañas de pescar tienen 10 señuelos extra 
+Otorga inmunidad a la mayoría de estados alterados; Permite velocidad Supersónica y vuelo infinito; Incrementa poder de pesca substancialmente y todas las cañas de pescar tienen 10 señuelos extra
 Revives 10x más rapido; Evita invocación de jefes, incrementa generación de enemigos, reduce la hostilidad de esqueletos fuera de la mazmorra y fortalece a Cute Fishron
 Otorga ataque continuo, protección de modificadores, control de gravedad, caída rápida, e inmunidad a retroceso, todos los estados alterados del Modo Masoquista, mejora ganchos y más
-Incrementa velocidad de colocación de bloques y paredes por 50%, Casi infinito alcance de colocación de bloques y alcance de minar, Velocidad de minería duplicada 
+Incrementa velocidad de colocación de bloques y paredes por 50%, Casi infinito alcance de colocación de bloques y alcance de minar, Velocidad de minería duplicada
 Invoca un anillo de la muerte inpenetrable alrededor de tí y tu reflejas todos los projectiles; Cuando mueres, explotas y revives con vida al máximo
 Efectos del Guantelete de fuego, Bolsa yoyó, Mira de francotirador, Esposas celestiales, Flor de maná, Cerebro de confusión, Velo estelar, Collar del cariño, y Capa de abejas
 Efectos del Saco de esporas, Escudo de paladín, Caparazón de tortuga congelado, Equipo de buceo ártico, Anca de rana, Alfombra voladora, Katiuskas de lava, y Bolsa de aparejos de pescador
@@ -423,12 +423,12 @@ Additionally grants:");
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 10;
+            item.rare = ItemRarityID.Red;
             item.value = 100000000;
             item.shieldSlot = 5;
             item.defense = 100;
 
-            item.useStyle = 4;
+            item.useStyle = ItemUseStyleID.HoldingUp;
             item.useTime = 1;
             item.UseSound = SoundID.Item6;
             item.useAnimation = 1;
@@ -517,7 +517,6 @@ Additionally grants:");
 
             //MASOCHIST
             mod.GetItem("MasochistSoul").UpdateAccessory(player, hideVisual);
-
         }
 
         public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,

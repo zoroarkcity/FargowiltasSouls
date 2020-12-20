@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class QueenStinger : ModItem
+    public class QueenStinger : SoulsItem
     {
         public override void SetStaticDefaults()
         {
