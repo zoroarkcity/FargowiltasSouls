@@ -394,5 +394,9 @@ dark caster and post-plant dungeon mage skeletons can teleport sluggishly outsid
 some more checks to prevent items like platinum coin working with boreal/pumpking cape/celestial rune
 adjusted check for fishron for angler ench
 fixed being able to dupe souls/potions with wraith/harpy by holding them with your mouse
+sprites
+	sinister icon
+	hypothermia icon
+	fishron minion icon
 fixed diffractor beams not updating damage
 fixed being able to hold hungry and switch to other weapons after running out of mana
