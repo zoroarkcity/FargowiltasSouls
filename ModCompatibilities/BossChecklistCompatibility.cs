@@ -314,7 +314,7 @@ namespace FargowiltasSouls.ModCompatibilities
                 items.Add(item);
 
             foreach (string npc in npcs)
-                ModInstance.Call("AddToBossList", modName, npc, items);
+                ModInstance.Call("AddToBossLoot", modName, npc, items);
         }
 
         public void AddToBossLoot(string npc, string modName, params int[] itemIDs) => AddToBossLoot(new string[1] { npc }, modName, itemIDs);
