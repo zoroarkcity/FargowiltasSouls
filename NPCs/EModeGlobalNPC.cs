@@ -4073,6 +4073,17 @@ namespace FargowiltasSouls.NPCs
                                         Projectile.NewProjectile(npc.Center, Main.rand.NextVector2CircularEdge(-4.5f, 4.5f), ModContent.ProjectileType<WaterBoltHostile>(), npc.damage / 4, 0f, Main.myPlayer);
                                 }
                             }
+                            goto case NPCID.DiabolistRed;
+                        case NPCID.DiabolistRed:
+                        case NPCID.DiabolistWhite:
+                        case NPCID.Necromancer:
+                        case NPCID.NecromancerArmored:
+                        case NPCID.RaggedCaster:
+                        case NPCID.RaggedCasterOpenCoat:
+                            if (npc.HasValidTarget && !Main.player[npc.target].ZoneDungeon && Counter[1] == 0)
+                            {
+                                Counter[1] = 420; //occasionally teleport outside dungeon
+                            }
                             goto case NPCID.FireImp;
                         case NPCID.FireImp:
                             if (Counter[1] > 0)
@@ -4104,9 +4115,9 @@ namespace FargowiltasSouls.NPCs
                                                 if ((index2 < num2 - 4 || index2 > num2 + 4 || (index1 < num1 - 4 || index1 > num1 + 4)) && (index2 < num4 - 1 || index2 > num4 + 1 || (index1 < num3 - 1 || index1 > num3 + 1)) && Main.tile[index1, index2].nactive())
                                                 {
                                                     bool flag2 = true;
-                                                    if ((npc.type == NPCID.DarkCaster || npc.type >= NPCID.RaggedCaster && npc.type <= NPCID.DiabolistWhite) && !Main.wallDungeon[(int)Main.tile[index1, index2 - 1].wall])
+                                                    if (npc.HasValidTarget && Main.player[npc.target].ZoneDungeon && (npc.type == NPCID.DarkCaster || npc.type >= NPCID.RaggedCaster && npc.type <= NPCID.DiabolistWhite) && !Main.wallDungeon[(int)Main.tile[index1, index2 - 1].wall])
                                                         flag2 = false;
-                                                    else if (Main.tile[index1, index2 - 1].lava())
+                                                    if (Main.tile[index1, index2 - 1].lava())
                                                         flag2 = false;
                                                     if (flag2 && Main.tileSolid[(int)Main.tile[index1, index2].type] && !Collision.SolidTiles(index1 - 1, index1 + 1, index2 - 4, index2 - 1))
                                                     {
