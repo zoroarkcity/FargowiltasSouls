@@ -896,25 +896,6 @@ namespace FargowiltasSouls
                 ErrorLogger.Log("FargowiltasSouls PostSetupContent Error: " + e.StackTrace + e.Message);
             }
         }
-        static float ColorTimer;
-        public static Color EModeColor()
-        {
-            Color mutantColor = new Color(28, 222, 152);
-            Color abomColor = new Color(255, 224, 53);
-            Color deviColor = new Color(255, 51, 153);
-            ColorTimer += 0.5f;
-            if (ColorTimer >= 300)
-            {
-                ColorTimer = 0;
-            }
-
-            if (ColorTimer < 100)
-                return Color.Lerp(mutantColor, abomColor, ColorTimer / 100);
-            else if (ColorTimer < 200)
-                return Color.Lerp(abomColor, deviColor, (ColorTimer - 100) / 100);
-            else
-                return Color.Lerp(deviColor, mutantColor, (ColorTimer - 200) / 100);
-        }
 
 
         public override void AddRecipes()
