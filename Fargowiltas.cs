@@ -21,11 +21,9 @@ using FargowiltasSouls.NPCs.EternityMode;
 using FargowiltasSouls.Sky;
 using Fargowiltas.Items.Summons.Deviantt;
 using Fargowiltas.Items.Misc;
-using Fargowiltas.Items.Tiles;
 using Fargowiltas.Items.Explosives;
 using Microsoft.Xna.Framework.Graphics;
 using FargowiltasSouls.Items.Dyes;
-using FargowiltasSouls.Items.Misc;
 
 namespace FargowiltasSouls
 {
@@ -46,6 +44,25 @@ namespace FargowiltasSouls
         public UserInterface CustomResources;
 
         internal static readonly Dictionary<int, int> ModProjDict = new Dictionary<int, int>();
+
+        #region Compatibilities
+
+        public CalamityCompatibility CalamityCompatibility { get; private set; }
+        public bool CalamityLoaded => CalamityCompatibility != null;
+
+        public ThoriumCompatibility ThoriumCompatibility { get; private set; }
+        public bool ThoriumLoaded => ThoriumCompatibility != null;
+
+        public SoACompatibility SoACompatibility { get; private set; }
+        public bool SoALoaded => SoACompatibility != null;
+
+        public MasomodeEXCompatibility MasomodeEXCompatibility { get; private set; }
+        public bool MasomodeEXLoaded => MasomodeEXCompatibility != null;
+
+        public BossChecklistCompatibility BossChecklistCompatibility { get; private set; }
+        public bool BossChecklistLoaded => BossChecklistCompatibility != null;
+
+        #endregion Compatibilities
 
         public Fargowiltas()
         {
@@ -529,8 +546,10 @@ namespace FargowiltasSouls
                 CalamityCompatibility = new CalamityCompatibility(this).TryLoad() as CalamityCompatibility;
                 ThoriumCompatibility = new ThoriumCompatibility(this).TryLoad() as ThoriumCompatibility;
                 SoACompatibility = new SoACompatibility(this).TryLoad() as SoACompatibility;
-
                 MasomodeEXCompatibility = new MasomodeEXCompatibility(this).TryLoad() as MasomodeEXCompatibility;
+                BossChecklistCompatibility = (BossChecklistCompatibility)new BossChecklistCompatibility(this).TryLoad();
+
+                BossChecklistCompatibility.Initialize();
 
                 DebuffIDs = new List<int> { 20, 22, 23, 24, 36, 39, 44, 46, 47, 67, 68, 69, 70, 80,
                     88, 94, 103, 137, 144, 145, 148, 149, 156, 160, 163, 164, 195, 196, 197, 199 };
@@ -592,321 +611,6 @@ namespace FargowiltasSouls
                     bossHealthBar.Call("RegisterHealthBarMini", ModContent.NPCType<NatureChampion>());
                 }
 
-                Mod bossChecklist = ModLoader.GetMod("BossChecklist");
-                Mod musicMod = ModLoader.GetMod("FargowiltasMusic");
-                if (bossChecklist != null)
-                {
-                    // Add Souls boss information
-                    bossChecklist.Call(
-                        "AddBoss",
-                        5.01f,
-                        ModContent.NPCType<DeviBoss>(),
-                        this,
-                        "Deviantt",
-                        (Func<bool>)(() => FargoSoulsWorld.downedDevi),
-                        ModContent.ItemType<Items.Summons.DevisCurse>(),
-                        musicMod != null ? new List<int> { ModContent.ItemType<Items.Tiles.DeviTrophy>(), musicMod.ItemType("DeviMusicBox") }
-                        : new List<int> { ModContent.ItemType<Items.Tiles.DeviTrophy>() },
-                        new List<int> { ModContent.ItemType<Items.Misc.DeviatingEnergy>() },
-                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.DevisCurse>() + "].",
-                        "Deviantt is satisfied with its show of love.",
-                        "FargowiltasSouls/NPCs/DeviBoss/DeviBoss_Still",
-                        "FargowiltasSouls/NPCs/DeviBoss/DeviBoss_Head_Boss"
-                    );
-                    bossChecklist.Call(
-                        "AddMiniBoss",
-                        14.0001f,
-                        ModContent.NPCType<TimberChampion>(),
-                        this,
-                        "Champion of Timber",
-                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[0]),
-                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
-                        new List<int> { },
-                        new List<int> {
-                            ModContent.ItemType<WoodEnchant>(),
-                            ModContent.ItemType<BorealWoodEnchant>(),
-                            ModContent.ItemType<RichMahoganyEnchant>(),
-                            ModContent.ItemType<EbonwoodEnchant>(),
-                            ModContent.ItemType<ShadewoodEnchant>(),
-                            ModContent.ItemType<PalmWoodEnchant>(),
-                            ModContent.ItemType<PearlwoodEnchant>()
-                        },
-                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] on the surface at day.",
-                        "Champion of Timber returns to its squirrel clan...",
-                        "FargowiltasSouls/NPCs/Champions/TimberChampion_Still",
-                        "FargowiltasSouls/NPCs/Champions/TimberChampion_Head_Boss"
-                    );
-                    bossChecklist.Call(
-                        "AddMiniBoss",
-                        14.001f,
-                        ModContent.NPCType<TerraChampion>(),
-                        this,
-                        "Champion of Terra",
-                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[1]),
-                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
-                        new List<int> { },
-                        new List<int> {
-                            ModContent.ItemType<CopperEnchant>(),
-                            ModContent.ItemType<TinEnchant>(),
-                            ModContent.ItemType<IronEnchant>(),
-                            ModContent.ItemType<LeadEnchant>(),
-                            ModContent.ItemType<TungstenEnchant>(),
-                            ModContent.ItemType<ObsidianEnchant>()
-                        },
-                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] underground.",
-                        "Champion of Terra vanishes into the caverns...",
-                        "FargowiltasSouls/NPCs/Champions/TerraChampion_Still",
-                        "FargowiltasSouls/NPCs/Champions/TerraChampion_Head_Boss"
-                    );
-                    bossChecklist.Call(
-                        "AddMiniBoss",
-                        14.002f,
-                        ModContent.NPCType<EarthChampion>(),
-                        this,
-                        "Champion of Earth",
-                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[2]),
-                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
-                        new List<int> { },
-                        new List<int> {
-                            ModContent.ItemType<CobaltEnchant>(),
-                            ModContent.ItemType<PalladiumEnchant>(),
-                            ModContent.ItemType<MythrilEnchant>(),
-                            ModContent.ItemType<OrichalcumEnchant>(),
-                            ModContent.ItemType<AdamantiteEnchant>(),
-                            ModContent.ItemType<TitaniumEnchant>()
-                        },
-                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in the underworld.",
-                        "Champion of Earth disappears beneath the magma...",
-                        "FargowiltasSouls/NPCs/Champions/EarthChampion_Still",
-                        "FargowiltasSouls/NPCs/Champions/EarthChampion_Head_Boss"
-                    );
-                    bossChecklist.Call(
-                        "AddMiniBoss",
-                        14.003f,
-                        ModContent.NPCType<NatureChampion>(),
-                        this,
-                        "Champion of Nature",
-                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[3]),
-                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
-                        new List<int> { },
-                        new List<int> {
-                            ModContent.ItemType<CrimsonEnchant>(),
-                            ModContent.ItemType<MoltenEnchant>(),
-                            ModContent.ItemType<RainEnchant>(),
-                            ModContent.ItemType<FrostEnchant>(),
-                            ModContent.ItemType<ChlorophyteEnchant>(),
-                            ModContent.ItemType<ShroomiteEnchant>()
-                        },
-                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in underground snow.",
-                        "Champion of Nature returns to its slumber...",
-                        "FargowiltasSouls/NPCs/Champions/NatureChampion_Still",
-                        "FargowiltasSouls/NPCs/Champions/NatureChampionHead_Head_Boss"
-                    );
-                    bossChecklist.Call(
-                        "AddMiniBoss",
-                        14.004f,
-                        ModContent.NPCType<LifeChampion>(),
-                        this,
-                        "Champion of Life",
-                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[4]),
-                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
-                        new List<int> { },
-                        new List<int> {
-                            ModContent.ItemType<PumpkinEnchant>(),
-                            ModContent.ItemType<BeeEnchant>(),
-                            ModContent.ItemType<SpiderEnchant>(),
-                            ModContent.ItemType<TurtleEnchant>(),
-                            ModContent.ItemType<BeetleEnchant>()
-                        },
-                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in the Hallow at day.",
-                        "Champion of Life fades away...",
-                        "FargowiltasSouls/NPCs/Champions/LifeChampion_Still",
-                        "FargowiltasSouls/NPCs/Champions/LifeChampion_Head_Boss"
-                    );
-                    bossChecklist.Call(
-                        "AddMiniBoss",
-                        14.005f,
-                        ModContent.NPCType<ShadowChampion>(),
-                        this,
-                        "Champion of Shadow",
-                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[5]),
-                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
-                        new List<int> { },
-                        new List<int> {
-                            ModContent.ItemType<AncientShadowEnchant>(),
-                            ModContent.ItemType<NecroEnchant>(),
-                            ModContent.ItemType<SpookyEnchant>(),
-                            ModContent.ItemType<ShinobiEnchant>(),
-                            ModContent.ItemType<DarkArtistEnchant>()
-                        },
-                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in the Corruption or Crimson at night.",
-                        "Champion of Shadow fades away...",
-                        "FargowiltasSouls/NPCs/Champions/ShadowChampion_Still",
-                        "FargowiltasSouls/NPCs/Champions/ShadowChampion_Head_Boss"
-                    );
-                    bossChecklist.Call(
-                        "AddMiniBoss",
-                        14.006f,
-                        ModContent.NPCType<SpiritChampion>(),
-                        this,
-                        "Champion of Spirit",
-                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[6]),
-                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
-                        new List<int> { },
-                        new List<int> {
-                            ModContent.ItemType<FossilEnchant>(),
-                            ModContent.ItemType<ForbiddenEnchant>(),
-                            ModContent.ItemType<HallowEnchant>(),
-                            ModContent.ItemType<TikiEnchant>(),
-                            ModContent.ItemType<SpectreEnchant>()
-                        },
-                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in underground desert.",
-                        "Champion of Spirit vanishes into the desert...",
-                        "FargowiltasSouls/NPCs/Champions/SpiritChampion_Still",
-                        "FargowiltasSouls/NPCs/Champions/SpiritChampion_Head_Boss"
-                    );
-                    bossChecklist.Call(
-                        "AddMiniBoss",
-                        14.007f,
-                        ModContent.NPCType<WillChampion>(),
-                        this,
-                        "Champion of Will",
-                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[7]),
-                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
-                        new List<int> { },
-                        new List<int> {
-                            ModContent.ItemType<GoldEnchant>(),
-                            ModContent.ItemType<PlatinumEnchant>(),
-                            ModContent.ItemType<GladiatorEnchant>(),
-                            ModContent.ItemType<RedRidingEnchant>(),
-                            ModContent.ItemType<ValhallaKnightEnchant>()
-                        },
-                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] at the ocean.",
-                        "Champion of Will returns to the depths...",
-                        "FargowiltasSouls/NPCs/Champions/WillChampion_Still",
-                        "FargowiltasSouls/NPCs/Champions/WillChampion_Head_Boss"
-                    );
-                    bossChecklist.Call(
-                        "AddBoss",
-                        14.008f,
-                        ModContent.NPCType<CosmosChampion>(),
-                        this,
-                        "Eridanus, Champion of Cosmos",
-                        (Func<bool>)(() => FargoSoulsWorld.downedChampions[8]),
-                        ModContent.ItemType<Items.Summons.SigilOfChampions>(),
-                        new List<int> { },
-                        new List<int> {
-                            ModContent.ItemType<SolarEnchant>(),
-                            ModContent.ItemType<NebulaEnchant>(),
-                            ModContent.ItemType<VortexEnchant>(),
-                            ModContent.ItemType<StardustEnchant>(),
-                            ModContent.ItemType<MeteorEnchant>()
-                        },
-                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.SigilOfChampions>() + "] in space.",
-                        "Eridanus, Champion of Cosmos returns to the stars...",
-                        "FargowiltasSouls/NPCs/Champions/CosmosChampion_Still",
-                        "FargowiltasSouls/NPCs/Champions/CosmosChampion_Head_Boss"
-                    );
-                    bossChecklist.Call(
-                        "AddBoss",
-                        14.01f,
-                        ModContent.NPCType<AbomBoss>(),
-                        this,
-                        "Abominationn",
-                        (Func<bool>)(() => FargoSoulsWorld.downedAbom),
-                        ModContent.ItemType<Items.Summons.AbomsCurse>(),
-                        musicMod != null ? new List<int> { ModContent.ItemType<Items.Tiles.AbomTrophy>(), musicMod.ItemType("AbomMusicBox") }
-                        : new List<int> { ModContent.ItemType<Items.Tiles.AbomTrophy>() },
-                        new List<int> { ModContent.ItemType<Items.Misc.MutantScale>() },
-                        "Spawn by using [i:" + ModContent.ItemType<Items.Summons.AbomsCurse>() + "].",
-                        "Abominationn has destroyed everyone.",
-                        "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Still",
-                        "FargowiltasSouls/NPCs/AbomBoss/AbomBoss_Head_Boss"
-                    );
-                    /*bossChecklist.Call(                  this code crashes the game when you scroll down to the boss in the checklist
-                        "AddBoss",                         probably has something to do with the NPC line...
-                        14.6f,
-                        NPCID.DukeFishron,                 ...because fish.
-                        this,
-                        "Duke Fishron EX",
-                        (Func<bool>)(() => FargoSoulsWorld.downedFishronEX),
-                        ModContent.ItemType<Items.Misc.TruffleWormEX>(),
-                        ModContent.ItemType<Items.Misc.AbomMusicBox>(),
-                        ModContent.ItemType<Items.Misc.MutatingEnergy>(),
-                        "Fish using the Truffle Worm EX.",
-                        "The Duke returns to the depths victoriously...",
-                        "FargowiltasSouls/NPCs/Vanilla/NPC_370",
-                        "FargowiltasSouls/NPCs/Vanilla/NPC_Head_Boss_4"
-                    );*/
-                    //bossChecklist.Call("AddBossWithInfo", "Duke Fishron EX", 14.02f, (Func<bool>)(() => FargoSoulsWorld.downedFishronEX), "Fish using a [i:" + ItemType("TruffleWormEX") + "]");
-                    if (ModLoader.GetMod("CalamityMod") != null)
-                    {
-                        bossChecklist.Call(
-                            "AddBoss",
-                            20.0f,
-                            ModContent.NPCType<MutantBoss>(),
-                            this,
-                            "Mutant",
-                            (Func<bool>)(() => FargoSoulsWorld.downedMutant),
-                            ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
-                            musicMod != null ? new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), musicMod.ItemType("MutantMusicBox") }
-                            : new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>() },
-                            ModContent.ItemType<Items.Misc.Sadism>(),
-                            "Throw [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while Abominationn is alive, in Mutant's presence.",
-                            "Mutant has eviscerated everyone under its hands.",
-                            "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
-                            "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
-                        );
-                    }
-                    else
-                    {
-                        bossChecklist.Call(
-                            "AddBoss",
-                            14.03f,
-                            ModContent.NPCType<MutantBoss>(),
-                            this,
-                            "Mutant",
-                            (Func<bool>)(() => FargoSoulsWorld.downedMutant),
-                            ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>(),
-                            musicMod != null ? new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>(), musicMod.ItemType("MutantMusicBox") }
-                            : new List<int> { ModContent.ItemType<Items.Tiles.MutantTrophy>() },
-                            ModContent.ItemType<Items.Misc.Sadism>(),
-                            "Throw [i:" + ModContent.ItemType<Items.Summons.AbominationnVoodooDoll>() + "] into a pool of lava while Abominationn is alive, in Mutant's presence.",
-                            "Mutant has eviscerated everyone under its hands.",
-                            "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Still",
-                            "FargowiltasSouls/NPCs/MutantBoss/MutantBoss_Head_Boss"
-                        );
-                    }
-
-                    // Add vanilla boss information
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "PirateShip", new List<int> { ModContent.ItemType<SecurityWallet>() }); // Coin gun & lucky coin are already dropped
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "MourningWood", new List<int> { ItemID.BloodyMachete });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "Pumpking", new List<int> { ItemID.BladedGlove, ModContent.ItemType<PumpkingsCape>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "IceQueen", new List<int> { ModContent.ItemType<IceQueensCrown>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "MartianSaucerCore", new List<int> { ModContent.ItemType<SaucerControlConsole>() });
-
-                    // Should we shoe presents? They contribute virtually nothing
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "Everscream", new List<int> { ItemID.Present }); // TODO: Extension methods to reduce boilerplate
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "SantaNK1", new List<int> { ItemID.Present });
-
-                    // Only include important drops, crates and stuff hardly matter
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "KingSlime", new List<int> { ModContent.ItemType<SlimyShield>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "EyeofCthulhu", new List<int> { ModContent.ItemType<AgitatingLens>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "EaterofWorldsHead", new List<int> { ModContent.ItemType<CorruptHeart>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "BrainofCthulhu", new List<int> { ModContent.ItemType<GuttedHeart>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "SkeletronHead", new List<int> { ModContent.ItemType<NecromanticBrew>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "QueenBee", new List<int> { ModContent.ItemType<QueenStinger>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "WallofFlesh", new List<int> { ModContent.ItemType<PungentEyeball>(), ModContent.ItemType<MutantsDiscountCard>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "TheTwins", new List<int> { ModContent.ItemType<FusedLens>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "TheDestroyer", new List<int> { ModContent.ItemType<GroundStick>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "SkeletronPrime", new List<int> { ModContent.ItemType<ReinforcedPlating>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "Plantera", new List<int> { ModContent.ItemType<MagicalBulb>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "Golem", new List<int> { ModContent.ItemType<LihzahrdTreasureBox>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "DD2Betsy", new List<int> { ModContent.ItemType<BetsysHeart>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "DukeFishron", new List<int> { ModContent.ItemType<MutantAntibodies>(), ModContent.ItemType<MutantsPact>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "CultistBoss", new List<int> { ModContent.ItemType<CelestialRune>(), ModContent.ItemType<CelestialSeal>() });
-                    bossChecklist.Call("AddToBossLoot", "Terraria", "MoonLord", new List<int> { ModContent.ItemType<GalacticGlobe>() });
-                }
                 //mutant shop
                 Mod fargos = ModLoader.GetMod("Fargowiltas");
                 fargos.Call("AddSummon", 5.01f, "FargowiltasSouls", "DevisCurse", (Func<bool>)(() => FargoSoulsWorld.downedDevi), Item.buyPrice(0, 17, 50));
@@ -1360,22 +1064,6 @@ namespace FargowiltasSouls
         {
             return NormalSpawn(spawnInfo) && NoBiome(spawnInfo) && NoZone(spawnInfo);
         }
-
-        #region Compatibilities
-
-        internal CalamityCompatibility CalamityCompatibility { get; private set; }
-        internal bool CalamityLoaded => CalamityCompatibility != null;
-
-        internal ThoriumCompatibility ThoriumCompatibility { get; private set; }
-        internal bool ThoriumLoaded => ThoriumCompatibility != null;
-
-        internal SoACompatibility SoACompatibility { get; private set; }
-        internal bool SoALoaded => SoACompatibility != null;
-
-        internal MasomodeEXCompatibility MasomodeEXCompatibility { get; private set; }
-        internal bool MasomodeEXLoaded => MasomodeEXCompatibility != null;
-
-        #endregion Compatibilities
     }
 
     internal enum MsgType : byte
