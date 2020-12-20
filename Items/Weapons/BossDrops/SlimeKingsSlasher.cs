@@ -10,6 +10,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
     public class SlimeKingsSlasher : ModItem
     {
+        int numSpikes = 3;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Slime King's Slasher");
@@ -40,7 +41,21 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         {
             int p = Projectile.NewProjectile(player.Center, new Vector2(speedX, speedY), type, damage, knockback, player.whoAmI);
 
-            FargoGlobalProjectile.SplitProj(Main.projectile[p], Main.rand.Next(3, 6), MathHelper.Pi / 5, 1);
+            float spread = MathHelper.Pi / 8;
+
+            if(numSpikes == 5)
+            {
+                spread = MathHelper.Pi / 5;
+            }
+
+            FargoGlobalProjectile.SplitProj(Main.projectile[p], numSpikes, spread, 1);
+
+            numSpikes += 2;
+
+            if(numSpikes > 5)
+            {
+                numSpikes = 3;
+            }
 
             return false;
         }

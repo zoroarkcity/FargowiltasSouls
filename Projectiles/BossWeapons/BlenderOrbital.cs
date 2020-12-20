@@ -14,13 +14,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         {
             projectile.width = 46;
             projectile.height = 46;
-            projectile.friendly = true;
+            //projectile.friendly = true;
             projectile.penetrate = -1;
             projectile.melee = true;
             projectile.scale = 1f;
 
             projectile.extraUpdates = 1;
             projectile.tileCollide = false;
+
+            projectile.usesIDStaticNPCImmunity = true;
+            projectile.idStaticNPCHitCooldown = 15;
         }
 
         public override void AI()
@@ -30,7 +33,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.timeLeft++;
             projectile.rotation += 0.5f;
 
-            if (!proj.active || proj.type != ModContent.ProjectileType<BlenderYoyoProj>())
+            if (!proj.active || proj.type != ModContent.ProjectileType<BlenderYoyoProj>() || proj.owner != projectile.owner)
             {
                 projectile.Kill();
                 return;
@@ -54,7 +57,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 }
             }
 
-
+            projectile.damage = proj.damage;
+            projectile.knockBack = proj.knockBack;
 
             if (++Counter > 60)
             {
@@ -76,7 +80,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 6;
+            //target.immune[projectile.owner] = 6;
 
             Vector2 velocity = Vector2.Normalize(projectile.Center - target.Center) * 10;
 

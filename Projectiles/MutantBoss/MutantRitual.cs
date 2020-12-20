@@ -7,13 +7,11 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.MutantBoss
 {
-    public class MutantRitual : ModProjectile
+    public class MutantRitual : BaseArena
     {
         public override string Texture => "Terraria/Projectile_454";
 
-        private const float PI = (float)Math.PI;
-        private const float rotationPerTick = PI / 140f;
-        private const float threshold = 1200f;
+        public MutantRitual() : base(MathHelper.Pi / 140f, 1200f, ModContent.NPCType<NPCs.MutantBoss.MutantBoss>()) { }
 
         public override void SetStaticDefaults()
         {
@@ -21,102 +19,23 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             Main.projFrames[projectile.type] = 2;
         }
 
-        public override void SetDefaults()
+        protected override void Movement(NPC npc)
         {
-            projectile.width = 46;
-            projectile.height = 46;
-            projectile.ignoreWater = true;
-            projectile.tileCollide = false;
-            projectile.alpha = 255;
+            //stationary during pillar (commented out is slime rain)
+            if (npc.ai[0] == 19 /*|| Main.npc[ai1].ai[0] == 37 || Main.npc[ai1].ai[0] == 38 || Main.npc[ai1].ai[0] == 39*/)
+            {
+                projectile.velocity = Vector2.Zero;
+            }
+            else
+            {
+                projectile.velocity = npc.Center - projectile.Center;
+                projectile.velocity /= 60f;
+            }
         }
 
         public override void AI()
         {
-            int ai1 = (int)projectile.ai[1];
-            if (projectile.ai[1] >= 0f && projectile.ai[1] < 200f &&
-                Main.npc[ai1].active && Main.npc[ai1].type == mod.NPCType("MutantBoss"))
-            {
-                projectile.alpha -= 2;
-                if (projectile.alpha < 0)
-                    projectile.alpha = 0;
-
-                //stationary during pillar (commented out is slime rain)
-                if (Main.npc[ai1].ai[0] == 19 /*|| Main.npc[ai1].ai[0] == 37 || Main.npc[ai1].ai[0] == 38 || Main.npc[ai1].ai[0] == 39*/)
-                {
-                    projectile.velocity = Vector2.Zero;
-                }
-                else
-                {
-                    projectile.velocity = Main.npc[ai1].Center - projectile.Center;
-                    projectile.velocity /= 60f;
-                }
-
-                Player player = Main.player[Main.myPlayer];
-                if (player.active && !player.dead)
-                {
-                    float distance = player.Distance(projectile.Center);
-                    if (Math.Abs(distance - threshold) < 46f && player.hurtCooldowns[0] == 0 && projectile.alpha == 0 && player.whoAmI == Main.npc[ai1].target)
-                    {
-                        int hitDirection = projectile.Center.X > player.Center.X ? 1 : -1;
-                        player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, projectile.whoAmI),
-                            projectile.damage, hitDirection, false, false, false, 0);
-                        if (FargoSoulsWorld.MasochistMode)
-                        {
-                            player.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
-                            player.AddBuff(mod.BuffType("OceanicMaul"), 5400);
-                            player.AddBuff(mod.BuffType("MutantFang"), 180);
-                        }
-                        player.AddBuff(mod.BuffType("CurseoftheMoon"), 600);
-                    }
-                    if (distance > threshold && distance < threshold * 5f)
-                    {
-                        if (distance > threshold * 2f)
-                        {
-                            player.frozen = true;
-                            player.controlHook = false;
-                            player.controlUseItem = false;
-                            if (player.mount.Active)
-                                player.mount.Dismount(player);
-                            player.velocity.X = 0f;
-                            player.velocity.Y = -0.4f;
-                        }
-
-                        Vector2 movement = projectile.Center - player.Center;
-                        float difference = movement.Length() - threshold;
-                        movement.Normalize();
-                        movement *= difference < 17f ? difference : 17f;
-                        player.position += movement;
-
-                        for (int i = 0; i < 20; i++)
-                        {
-                            int d = Dust.NewDust(player.position, player.width, player.height, 135, 0f, 0f, 0, default(Color), 2.5f);
-                            Main.dust[d].noGravity = true;
-                            Main.dust[d].noLight = true;
-                            Main.dust[d].velocity *= 5f;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                projectile.velocity = Vector2.Zero;
-                projectile.alpha += 2;
-                if (projectile.alpha > 255)
-                {
-                    projectile.Kill();
-                    return;
-                }
-            }
-
-            projectile.timeLeft = 2;
-            projectile.scale = (1f - projectile.alpha / 255f) * 2f;
-            projectile.ai[0] -= rotationPerTick;
-            if (projectile.ai[0] < -PI)
-            {
-                projectile.ai[0] += 2f * PI;
-                projectile.netUpdate = true;
-            }
-
+            base.AI();
             projectile.frameCounter++;
             if (projectile.frameCounter >= 6)
             {
@@ -127,9 +46,15 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             }
         }
 
-        public override bool CanDamage()
+        public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            return false;
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                target.GetModPlayer<FargoPlayer>().MaxLifeReduction += 100;
+                target.AddBuff(mod.BuffType("OceanicMaul"), 5400);
+                target.AddBuff(mod.BuffType("MutantFang"), 180);
+            }
+            target.AddBuff(mod.BuffType("CurseoftheMoon"), 600);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -151,13 +76,13 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             for (int x = 0; x < 32; x++)
             {
                 Vector2 drawOffset = new Vector2(threshold * projectile.scale / 2f, 0f).RotatedBy(projectile.ai[0]);
-                drawOffset = drawOffset.RotatedBy(2f * PI / 32f * x);
+                drawOffset = drawOffset.RotatedBy(2f * MathHelper.Pi / 32f * x);
                 const int max = 4;
                 for (int i = 0; i < max; i++)
                 {
                     Color color27 = color26;
                     color27 *= (float)(max - i) / max;
-                    Vector2 value4 = projectile.Center + drawOffset.RotatedBy(rotationPerTick * i);
+                    Vector2 value4 = projectile.Center + drawOffset.RotatedBy(rotationPerTick * -i);
                     float num165 = projectile.rotation;
                     Main.spriteBatch.Draw(texture2D13, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, projectile.scale, SpriteEffects.None, 0f);
                     Main.spriteBatch.Draw(glow, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(glowrectangle), glowcolor * ((float)(max - i) / max),
@@ -168,11 +93,6 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     projectile.rotation, gloworigin2, projectile.scale * 1.3f, SpriteEffects.None, 0f);
             }
             return false;
-        }
-
-        public override Color? GetAlpha(Color lightColor)
-        {
-            return Color.White * projectile.Opacity;
         }
     }
 }

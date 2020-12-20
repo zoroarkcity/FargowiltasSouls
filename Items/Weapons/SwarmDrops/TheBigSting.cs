@@ -3,7 +3,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
+using System.Collections.Generic;
+using System.Linq;
+using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
@@ -12,7 +14,10 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Big Sting");
-            Tooltip.SetDefault("Uses darts for ammo\n66% chance to not consume ammo\n'The reward for slaughtering many..'");
+            Tooltip.SetDefault("Uses darts for ammo" +
+                "\n66% chance to not consume ammo" +
+                "\n'The reward for slaughtering many..'");
+
             DisplayName.AddTranslation(GameCulture.Chinese, "大螫刺");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励..'");
         }
@@ -25,11 +30,11 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.height = 24;
             item.useTime = 11;
             item.useAnimation = 11;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 2.2f;
             item.value = 500000;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.BigStinger>();
             item.useAmmo = AmmoID.Dart;
@@ -69,16 +74,11 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             return true;
         }
 
-        //make them hold it different
-        public override Vector2? HoldoutOffset()
-        {
-            return new Vector2(-10, 0);
-        }
+        public override Vector2? HoldoutOffset() => new Vector2(-10, 0);
 
-        public override bool ConsumeAmmo(Player player)
-        {
-            return Main.rand.Next(3) == 0;
-        }
+        public override bool ConsumeAmmo(Player player) => Main.rand.Next(3) == 0;
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips) => tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
 
         public override void AddRecipes()
         {

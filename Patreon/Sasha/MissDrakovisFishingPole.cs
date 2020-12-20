@@ -3,8 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Microsoft.Xna.Framework;
-using FargowiltasSouls.Projectiles;
-using Fargowiltas.Items.Tiles;
+using System;
 using System.Collections.Generic;
 
 namespace FargowiltasSouls.Patreon.Sasha
@@ -18,17 +17,17 @@ namespace FargowiltasSouls.Patreon.Sasha
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Miss Drakovi's Fishing Pole");
-            Tooltip.SetDefault("Right click to cycle through options of attack \nEvery damage type has one");
+            Tooltip.SetDefault("Right click to cycle through options of attack\nEvery damage type has one");
             DisplayName.AddTranslation(GameCulture.Chinese, "Drakovi小姐的钓竿");
-            Tooltip.AddTranslation(GameCulture.Chinese, "右键循环切换攻击模式 \n每种伤害类型对应一种模式");
+            Tooltip.AddTranslation(GameCulture.Chinese, "右键循环切换攻击模式\n每种伤害类型对应一种模式");
         }
 
         public override void SetDefaults()
         {
-            item.damage = 200;
+            item.damage = 300;
             item.width = 24;
             item.height = 28;
-            item.value = 100000;
+            item.value = Item.sellPrice(0, 15);
             item.rare = 10;
             item.autoReuse = true;
 
@@ -70,34 +69,55 @@ namespace FargowiltasSouls.Patreon.Sasha
                 case 1:
                     Projectile.NewProjectile(position, new Vector2(speedX, speedY), mod.ProjectileType("PufferRang"), damage, knockBack, player.whoAmI);
                     break;
+
                 //range
                 case 2:
-                    int num129 = 4;
-                    for (int num130 = 0; num130 < num129; num130++)
                     {
-                        float num131 = (float)Main.mouseX + Main.screenPosition.X - position.X;
-                        float num132 = (float)Main.mouseY + Main.screenPosition.Y - position.Y;
-                        num131 += (float)Main.rand.Next(-40, 41) * 0.4f;
-                        num132 += (float)Main.rand.Next(-40, 41) * 0.4f;
-                        Projectile.NewProjectile(position, new Vector2(num131, num132), type, damage, knockBack, player.whoAmI);
+                        Vector2 speed = new Vector2(speedX, speedY);
+
+                        int numBullets = 4;
+                        for (int num130 = 0; num130 < numBullets; num130++) //shotgun blast
+                        {
+                            Vector2 bulletSpeed = speed;
+                            bulletSpeed.X += Main.rand.NextFloat(-1f, 1f);
+                            bulletSpeed.Y += Main.rand.NextFloat(-1f, 1f);
+                            Projectile.NewProjectile(position, bulletSpeed, type, damage, knockBack, player.whoAmI);
+                        }
+
+                        for (int i = 0; i < Main.maxNPCs; i++) //shoot an extra bullet at every nearby enemy
+                        {
+                            if (Main.npc[i].active && Main.npc[i].CanBeChasedBy() && player.Distance(Main.npc[i].Center) < 1000f)
+                            {
+                                Vector2 bulletSpeed = 2f * speed.Length() * player.DirectionTo(Main.npc[i].Center);
+                                Projectile.NewProjectile(position, bulletSpeed, type, damage / 2, knockBack, player.whoAmI);
+                            }
+                        }
                     }
                     break;
+
                 //magic
                 case 3:
-                    int p = Projectile.NewProjectile(position, new Vector2(speedX, speedY), item.shoot = mod.ProjectileType("Bubble"), damage, knockBack, player.whoAmI);
-
-                    FargoGlobalProjectile.SplitProj(Main.projectile[p], 5, MathHelper.Pi / 5, 1);
-
+                    {
+                        Vector2 speed = new Vector2(speedX, speedY);
+                        for (int i = -2; i <= 2; i++)
+                        {
+                            float modifier = 1f - 0.75f / 2f * Math.Abs(i);
+                            Projectile.NewProjectile(position, modifier * speed.RotatedBy(MathHelper.ToRadians(9) * i), 
+                                mod.ProjectileType("Bubble"), damage, knockBack, player.whoAmI);
+                        }
+                    }
                     break;
+
                 //summon
                 case 4:
                     Projectile.NewProjectile(position, new Vector2(speedX, speedY), mod.ProjectileType("FishMinion"), damage, knockBack, player.whoAmI);
                     break;
+
                 //throwing
                 default:
                     for (int i = 0; i < 10; i++)
                     {
-                        Projectile.NewProjectile(position, new Vector2(speedX + Main.rand.Next(-2, 2), speedY + Main.rand.Next(-2, 2)), mod.ProjectileType("SpikyLure"), damage, knockBack, player.whoAmI);
+                        Projectile.NewProjectile(position, 4f * new Vector2(speedX + Main.rand.Next(-2, 2), speedY + Main.rand.Next(-2, 2)), mod.ProjectileType("SpikyLure"), damage, knockBack, player.whoAmI);
                     }
                     break;
             }
@@ -117,13 +137,14 @@ namespace FargowiltasSouls.Patreon.Sasha
                     item.shoot = mod.ProjectileType("PufferRang");
 
                     item.useStyle = 1;
-                    item.useTime = 15;
-                    item.useAnimation = 15;
+                    item.useTime = 12;
+                    item.useAnimation = 12;
                     item.UseSound = SoundID.Item1;
                     item.knockBack = 6;
                     item.noMelee = false;
-                    item.shootSpeed = 2f;
+                    item.shootSpeed = 15f;
                     break;
+
                 //range
                 case 2:
                     item.ranged = true;
@@ -131,13 +152,14 @@ namespace FargowiltasSouls.Patreon.Sasha
 
                     item.knockBack = 6.5f;
                     item.useStyle = 5;
-                    item.useAnimation = 60;
-                    item.useTime = 60;
+                    item.useAnimation = 40;
+                    item.useTime = 40;
                     item.useAmmo = AmmoID.Bullet;
                     item.UseSound = SoundID.Item36;
-                    item.shootSpeed = 7f;
+                    item.shootSpeed = 12f;
                     item.noMelee = true;
                     break;
+
                 //magic
                 case 3:
                     item.magic = true;
@@ -149,10 +171,10 @@ namespace FargowiltasSouls.Patreon.Sasha
                     item.useAnimation = 25;
                     item.useTime = 25;
                     item.UseSound = SoundID.Item85;
-                    item.shootSpeed = 11f;
+                    item.shootSpeed = 30f;
                     item.noMelee = true;
-
                     break;
+
                 //minion
                 case 4:
                     item.summon = true;
@@ -170,6 +192,7 @@ namespace FargowiltasSouls.Patreon.Sasha
                     item.buffTime = 3600;
                     item.autoReuse = true;
                     break;
+
                 //throwing
                 case 5:
                     item.thrown = true;

@@ -14,7 +14,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phantasmal Eye");
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 6;
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 4;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
         }
 
@@ -69,7 +69,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.position.Y -= (float)(projectile.height / 2);
             for (int index = 0; index < 2; ++index)
                 Dust.NewDust(projectile.position, projectile.width, projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);
-            for (int index1 = 0; index1 < 20; ++index1)
+            for (int index1 = 0; index1 < 5; ++index1)
             {
                 int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 229, 0.0f, 0.0f, 0, new Color(), 2.5f);
                 Main.dust[index2].noGravity = true;
@@ -94,19 +94,20 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             int rect2 = rect1 * projectile.frame;
             Rectangle glowrectangle = new Rectangle(0, rect2, glow.Width, rect1);
             Vector2 gloworigin2 = glowrectangle.Size() / 2f;
-            Color glowcolor = Color.Lerp(new Color(31, 187, 192, 0), Color.Transparent, 0.84f);
-            glowcolor *= 0.5f;
+            Color glowcolor = Color.Lerp(new Color(31, 187, 192, 0), Color.Transparent, 0.74f);
             Vector2 drawCenter = projectile.Center - (projectile.velocity.SafeNormalize(Vector2.UnitX) * 14);
 
             for (int i = 0; i < 3; i++) //create multiple transparent trail textures ahead of the projectile
             {
                 Vector2 drawCenter2 = drawCenter + (projectile.velocity.SafeNormalize(Vector2.UnitX) * 8).RotatedBy(MathHelper.Pi / 5 - (i * MathHelper.Pi / 5)); //use a normalized version of the projectile's velocity to offset it at different angles
                 drawCenter2 -= (projectile.velocity.SafeNormalize(Vector2.UnitX) * 8); //then move it backwards
+                float scale = projectile.scale;
+                scale += (float)Math.Sin(projectile.ai[1]) / 10;
                 Main.spriteBatch.Draw(glow, drawCenter2 - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(glowrectangle),
-                    glowcolor, projectile.velocity.ToRotation() + MathHelper.PiOver2, gloworigin2, projectile.scale, SpriteEffects.None, 0f);
+                    glowcolor, projectile.velocity.ToRotation() + MathHelper.PiOver2, gloworigin2, scale, SpriteEffects.None, 0f);
             }
 
-            for (float i = projectile.ai[0] - 1; i > 0; i -= projectile.ai[0]/6) //trail grows in length as projectile travels
+            for (float i = projectile.ai[0] - 1; i > 0; i -= projectile.ai[0]/5) //trail grows in length as projectile travels
             {
 
                 float lerpamount = 0.2f;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -8,9 +9,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 {
     public class Retirang : ModProjectile
     {
-        private int counter = 0;
-        private bool hitSomething;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Retirang");
@@ -20,45 +18,89 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(ProjectileID.EnchantedBoomerang);
-            aiType = ProjectileID.EnchantedBoomerang;
+            projectile.melee = true;
+            projectile.friendly = true;
+            projectile.light = 0.4f;
 
             projectile.width = 50;
             projectile.height = 50;
-            projectile.penetrate = 4;
+            projectile.penetrate = -1;
+            projectile.aiStyle = -1;
+        }
+
+        public override bool CanDamage()
+        {
+            return false;
+        }
+
+        public override bool PreAI()
+        {
+            if (projectile.ai[0] == 1)
+            {
+                projectile.ai[1]++;
+
+                //stay in place
+                projectile.position = projectile.oldPosition;
+                projectile.velocity = Vector2.Zero;
+                projectile.rotation += projectile.direction * -0.4f;
+
+                //fire lasers at cursor
+                if (projectile.ai[1] % 5 == 0)
+                {
+                    Vector2 cursor = Main.MouseWorld;
+                    Vector2 velocity = Vector2.Normalize(cursor - projectile.Center) * 15;
+                    Player player = Main.player[projectile.owner];
+
+                    if (projectile.owner == Main.myPlayer)
+                    {
+                        Main.PlaySound(SoundID.Item12, projectile.Center);
+                        int p = Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<PrimeLaser>(), projectile.damage, projectile.knockBack, projectile.owner);
+                        if (p != Main.maxProjectiles)
+                        {
+                            Main.projectile[p].magic = false;
+                            Main.projectile[p].melee = true;
+                        }
+                    }
+                }
+
+                if (projectile.ai[1] > 15)
+                {
+                    projectile.ai[0] = 2;
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
         public override void AI()
         {
-            counter++;
-
-            if (counter >= 15)
+            //travelling out
+            if (projectile.ai[0] == 0)
             {
-                counter = 0;
+                projectile.ai[1]++;
 
-                if (projectile.owner == Main.myPlayer)
+                if (projectile.ai[1] > 30)
                 {
-                    for (int k = 0; k < Main.maxNPCs; k++)
-                    {
-                        NPC npc = Main.npc[k];
-                        float distance = Vector2.Distance(npc.Center, projectile.Center);
-
-                        if ((distance < 500) && Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height))
-                        {
-                            Vector2 velocity = (npc.Center - projectile.Center) * 20;
-
-                            int p = Projectile.NewProjectile(projectile.Center, velocity, ProjectileID.PurpleLaser, projectile.damage, 0, projectile.owner);
-                            if (p != Main.maxProjectiles)
-                            {
-                                Main.projectile[p].melee = true;
-                                Main.projectile[p].magic = false;
-                            }
-
-                            break;
-                        }
-                    }
+                    projectile.ai[0] = 1;
+                    projectile.ai[1] = 0;
+                    projectile.netUpdate = true;
                 }
             }
+            //travel back to player
+            else if (projectile.ai[0] == 2)
+            {
+                projectile.extraUpdates = 0;
+                projectile.velocity = Vector2.Normalize(Main.player[projectile.owner].Center - projectile.Center) * 15;
+
+                //kill when back to player
+                if (projectile.Distance(Main.player[projectile.owner].Center) <= 30)
+                    projectile.Kill();
+            }
+
+            //spin
+            projectile.rotation += projectile.direction * -0.4f;
 
             //dust!
             int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width, projectile.height + 5, 60, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
@@ -76,38 +118,19 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (!hitSomething)
+            if (projectile.ai[0] == 0)
             {
-                hitSomething = true;
-                if (projectile.owner == Main.myPlayer)
-                {
-                    for (int k = 0; k < Main.maxNPCs; k++)
-                    {
-                        NPC npc = Main.npc[k];
-                        float distance = Vector2.Distance(npc.Center, projectile.Center);
-
-                        if ((distance < 500) && Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height))
-                        {
-                            Vector2 velocity = (npc.Center - projectile.Center) * 20;
-
-                            int p = Projectile.NewProjectile(projectile.Center, velocity, ProjectileID.PurpleLaser, projectile.damage, 0, projectile.owner);
-                            if (p != Main.maxProjectiles)
-                            {
-                                Main.projectile[p].melee = true;
-                                Main.projectile[p].magic = false;
-                            }
-
-                            break;
-                        }
-                    }
-                }
+                projectile.ai[0] = 1;
+                projectile.ai[1] = 0;
             }
-            return true;
+            projectile.tileCollide = false;
+
+            return false;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (!hitSomething)
+            /*if (!hitSomething)
             {
                 hitSomething = true;
                 if (projectile.owner == Main.myPlayer)
@@ -135,7 +158,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                         }
                     }
                 }
-            }
+            }*/
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)

@@ -218,9 +218,10 @@ namespace FargowiltasSouls
         public override void NearbyEffects(int i, int j, int type, bool closer)
         {
             if (type == TileID.LihzahrdAltar && Collision.CanHit(new Vector2(i * 16 + 8, j * 16 + 8), 0, 0, Main.LocalPlayer.Center, 0, 0)
+                && Main.LocalPlayer.Distance(new Vector2(i * 16 + 8, j * 16 + 8)) < 3000
                 && Framing.GetTileSafely(Main.LocalPlayer.Center).wall == WallID.LihzahrdBrickUnsafe)
             {
-                Main.LocalPlayer.AddBuff(mod.BuffType("LihzahrdBlessing"), 60 * 60 * 10); //10mins
+                Main.LocalPlayer.AddBuff(mod.BuffType("LihzahrdBlessing"), 60 * 60 * 10 + 60); //10mins
             }
         }
 
@@ -269,7 +270,7 @@ namespace FargowiltasSouls
                         break;
 
                     case TileID.DemonAltar:
-                        if (Main.hardMode && Main.invasionType == 0 && !NPC.downedPirates && WorldGen.altarCount > 2)
+                        /*if (Main.hardMode && Main.invasionType == 0 && !NPC.downedPirates && WorldGen.altarCount > 2)
                         {
                             int p = Player.FindClosest(new Vector2(i * 16, j * 16), 0, 0);
                             if (p != -1 && Main.player[p].statLifeMax2 >= 200)
@@ -284,7 +285,7 @@ namespace FargowiltasSouls
                                     NetMessage.SendData(61, -1, -1, null, p, -1f);
                                 }
                             }
-                        }
+                        }*/
                         break;
 
                     /*case TileID.Trees:

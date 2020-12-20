@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +26,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.friendly = true;
             projectile.minion = true;
             projectile.penetrate = -1;
-            projectile.timeLeft = 600;
+            projectile.timeLeft = 30;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.aiStyle = -1;
@@ -36,11 +37,11 @@ namespace FargowiltasSouls.Projectiles.Minions
 
         public override void AI()
         {
-            if (projectile.localAI[0] == 0)
-            {
-                projectile.localAI[0] = 1;
-                Main.PlaySound(SoundID.Item8, projectile.Center);
-            }
+            //if (projectile.localAI[0] == 0)
+            //{
+            //    projectile.localAI[0] = 1;
+            //    Main.PlaySound(SoundID.Item8, projectile.Center);
+            //}
 
             projectile.frameCounter++;
             if (projectile.frameCounter >= 5)
@@ -48,6 +49,9 @@ namespace FargowiltasSouls.Projectiles.Minions
                 projectile.frameCounter = 0;
                 projectile.frame = (projectile.frame + 1) % 12;
             }
+
+            projectile.ai[0]++;
+            projectile.alpha = 255 - (int)(Math.Sin(projectile.ai[0] * MathHelper.Pi / 30) * 100);
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -56,10 +60,10 @@ namespace FargowiltasSouls.Projectiles.Minions
                 damage /= 4;
         }
 
-        public override Color? GetAlpha(Color lightColor)
+        /*public override Color? GetAlpha(Color lightColor)
         {
             return Color.White * projectile.Opacity;
-        }
+        }*/
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {

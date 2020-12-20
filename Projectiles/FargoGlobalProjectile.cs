@@ -246,7 +246,11 @@ namespace FargowiltasSouls.Projectiles
                         TungstenProjectile = true;
                         modPlayer.TungstenCD = 30;
 
-                        if (modPlayer.TerraForce || modPlayer.WizardEnchant)
+                        if (modPlayer.Eternity)
+                        {
+                            modPlayer.TungstenCD = 0;
+                        }
+                        else if (modPlayer.TerraForce || modPlayer.WizardEnchant)
                         {
                             modPlayer.TungstenCD /= 2;
                         }
@@ -353,6 +357,30 @@ namespace FargowiltasSouls.Projectiles
                     TungstenProjectile = false;
                 }
 
+                switch (projectile.type)
+                {
+                    case ProjectileID.RedCounterweight:
+                    case ProjectileID.BlackCounterweight:
+                    case ProjectileID.BlueCounterweight:
+                    case ProjectileID.GreenCounterweight:
+                    case ProjectileID.PurpleCounterweight:
+                    case ProjectileID.YellowCounterweight:
+                        {
+                            if (player.HeldItem.type == mod.ItemType("Blender"))
+                            {
+                                projectile.localAI[0]++;
+                                if(projectile.localAI[0] > 60)
+                                {
+                                    projectile.Kill();
+                                    Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 11, 0.5f);
+                                    int proj2 = mod.ProjectileType("BlenderProj3");
+                                    Projectile.NewProjectile(new Vector2(projectile.Center.X, projectile.Center.Y), projectile.DirectionFrom(player.Center) * 8, proj2, projectile.damage, projectile.knockBack, projectile.owner);
+                                }
+                            }
+                        }
+                        break;
+                }
+                
                 if (tikiMinion)
                 {
                     projectile.alpha = 120;
@@ -385,6 +413,35 @@ namespace FargowiltasSouls.Projectiles
                             num469 = Dust.NewDust(new Vector2(projectile.Center.X, projectile.Center.Y), projectile.width, projectile.height, 44, -projectile.velocity.X * 0.2f,
                                 -projectile.velocity.Y * 0.2f, 100, Color.LimeGreen, .5f);
                             Main.dust[num469].velocity *= 2f;
+                        }
+
+                        //stardust dragon fix
+                        if (projectile.type == ProjectileID.StardustDragon2)
+                        {
+                            int tailIndex = -1;
+                            for (int i = 0; i < Main.maxProjectiles; i++)
+                            {
+                                Projectile p = Main.projectile[i];
+
+                                if (p.active && p.type == ProjectileID.StardustDragon4)
+                                {
+                                    tailIndex = i;
+                                    break;
+                                }
+                            }
+
+                            Projectile prev = Main.projectile[tailIndex];
+                            List<int> list = new List<int>();
+                            list.Add(prev.whoAmI);
+
+                            while (prev.type != ProjectileID.StardustDragon1)
+                            {
+                                list.Add((int)prev.ai[0]);
+                                prev = Main.projectile[(int)prev.ai[0]];
+                            }
+
+                            int listIndex = list.IndexOf(projectile.whoAmI);
+                            Main.projectile[list[listIndex - 2]].ai[0] = list[listIndex + 1];
                         }
 
                         projectile.Kill();
@@ -480,7 +537,7 @@ namespace FargowiltasSouls.Projectiles
                                 shroomiteMushroomCD = 8;
                             }
 
-                            int p = Projectile.NewProjectile(projectile.position.X + (float)(projectile.width / 2), projectile.position.Y + (float)(projectile.height / 2), projectile.velocity.X, projectile.velocity.Y, ModContent.ProjectileType<ShroomiteShroom>(), projectile.damage / 3, 0f, projectile.owner, 0f, 0f);
+                            int p = Projectile.NewProjectile(projectile.position.X + (float)(projectile.width / 2), projectile.position.Y + (float)(projectile.height / 2), projectile.velocity.X, projectile.velocity.Y, ModContent.ProjectileType<ShroomiteShroom>(), projectile.damage / 2, 0f, projectile.owner, 0f, 0f);
                         }
                         shroomiteMushroomCD--;
                     }
@@ -642,7 +699,9 @@ namespace FargowiltasSouls.Projectiles
 
                     if (split != null)
                     {
-                        split.friendly = true;
+                        split.friendly = projectile.friendly;
+                        split.hostile = projectile.hostile;
+                        split.timeLeft = projectile.timeLeft;
                         split.GetGlobalProjectile<FargoGlobalProjectile>().numSplits = projectile.GetGlobalProjectile<FargoGlobalProjectile>().numSplits;
                         //split.GetGlobalProjectile<FargoGlobalProjectile>().firstTick = false;
                         split.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
@@ -1006,7 +1065,7 @@ namespace FargowiltasSouls.Projectiles
                                             break;
                                         }
                                     }
-                                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<CultistRitual>(), 0, 0f, Main.myPlayer, 0f, projectile.whoAmI);
+                                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<CultistRitual>(), cultist.damage / 4, 0f, Main.myPlayer, 0f, cultist.whoAmI);
                                 }
                             }
 
@@ -1152,15 +1211,19 @@ namespace FargowiltasSouls.Projectiles
                     {
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.moonBoss, NPCID.MoonLordCore) && !FargoSoulsWorld.SwarmActive)
                         {
-                            if (projectile.ai[0] == 2) //diving down and homing
+                            if (projectile.ai[0] == 2 && ++counter > 60) //diving down and homing
                             {
-                                if (++counter > 60)
-                                {
-                                    projectile.velocity.Y = 9;
-                                    projectile.velocity.X = 0;
-                                }
+                                projectile.velocity.Y = 6;
                             }
-                            projectile.position.X -= projectile.velocity.X * 0.75f;
+                            else
+                            {
+                                projectile.position.Y -= projectile.velocity.Y / 4;
+                            }
+
+                            if (projectile.velocity.X > 1)
+                                projectile.velocity.X = 1;
+                            else if (projectile.velocity.X < -1)
+                                projectile.velocity.X = -1;
                         }
                     }
                     break;
@@ -1275,8 +1338,9 @@ namespace FargowiltasSouls.Projectiles
 
             if (projectile.bobber && modPlayer.FishSoul1)
             {
-                if (projectile.wet && projectile.ai[0] == 0 && projectile.localAI[1] < 655) //ai0 = in water, localai1 = counter up to catching an item
-                    projectile.localAI[1] = 655; //quick catch. not 660 and up (that breaks fishron summoning)
+                //ai0 = in water, localai1 = counter up to catching an item
+                if (projectile.wet && projectile.ai[0] == 0 && projectile.localAI[1] < 655 && Main.player[projectile.owner].FishingLevel() != -1) //fishron check
+                    projectile.localAI[1] = 655; //quick catch. not 660 and up, may break things
             }
         }
 
@@ -1309,24 +1373,27 @@ namespace FargowiltasSouls.Projectiles
                         if (fargoPlayer.CyclonicFin)
                             grazeGain *= 2;
 
-                        GrazeCD = 60;
+                        GrazeCD = 30;
                         fargoPlayer.GrazeBonus += grazeGain;
                         if (fargoPlayer.GrazeBonus > grazeCap)
                             fargoPlayer.GrazeBonus = grazeCap;
                         fargoPlayer.GrazeCounter = -1; //reset counter whenever successful graze
 
                         if (!Main.dedServ)
-                            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Graze").WithVolume(1f), Main.LocalPlayer.Center);
+                        {
+                            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Graze").WithVolume(0.5f), Main.LocalPlayer.Center);
+                        }
 
-                        const int max = 30; //make some indicator dusts
+                        Vector2 baseVel = Vector2.UnitX.RotatedByRandom(2 * Math.PI);
+                        const int max = 36; //make some indicator dusts
                         for (int i = 0; i < max; i++)
                         {
-                            Vector2 vector6 = Vector2.UnitY * 5f;
+                            Vector2 vector6 = baseVel * 4f;
                             vector6 = vector6.RotatedBy((i - (max / 2 - 1)) * 6.28318548f / max) + Main.LocalPlayer.Center;
                             Vector2 vector7 = vector6 - Main.LocalPlayer.Center;
                             //changes color when bonus is maxed
                             int d = Dust.NewDust(vector6 + vector7, 0, 0, fargoPlayer.GrazeBonus >= grazeCap ? 86 : 228, 0f, 0f, 0, default(Color));
-                            Main.dust[d].scale = 1.5f;
+                            Main.dust[d].scale = fargoPlayer.GrazeBonus >= grazeCap ? 2f : 0.75f;
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity = vector7;
                         }
@@ -1366,6 +1433,18 @@ namespace FargowiltasSouls.Projectiles
                 return false;
 
             return null;
+        }
+
+        public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (projectile.type >= ProjectileID.StardustDragon1 && projectile.type <= ProjectileID.StardustDragon4
+                && Main.player[projectile.owner].GetModPlayer<FargoPlayer>().TikiMinion
+                && Main.player[projectile.owner].ownedProjectileCounts[ProjectileID.StardustDragon2] > Main.player[projectile.owner].GetModPlayer<FargoPlayer>().actualMinions)
+            {
+                int newDamage = (int)(projectile.damage * (1.69 + 0.46 * Main.player[projectile.owner].GetModPlayer<FargoPlayer>().actualMinions));
+                if (damage > newDamage)
+                    damage = newDamage;
+            }
         }
 
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
@@ -1647,7 +1726,7 @@ namespace FargowiltasSouls.Projectiles
                     case ProjectileID.CultistBossIceMist:
                         if (!target.HasBuff(BuffID.Frozen))
                             target.AddBuff(BuffID.Frozen, 60);
-                        target.AddBuff(BuffID.Chilled, 120);
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 600);
                         break;
 
                     case ProjectileID.CultistBossFireBall:
@@ -1717,7 +1796,7 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.SaucerLaser:
-                        target.AddBuff(BuffID.Electrified, 600);
+                        target.AddBuff(BuffID.Electrified, 300);
                         break;
 
                     case ProjectileID.UFOLaser:
@@ -1866,13 +1945,18 @@ namespace FargowiltasSouls.Projectiles
                         target.AddBuff(ModContent.BuffType<LivingWasteland>(), 900);
                         break;
 
+                    case ProjectileID.FrostWave:
+                    case ProjectileID.FrostShard:
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 600);
+                        break;
+
                     case ProjectileID.SnowBallHostile:
                         if (!target.HasBuff(BuffID.Frozen) && Main.rand.Next(2) == 0)
                             target.AddBuff(BuffID.Frozen, 60);
                         break;
                         
                     case ProjectileID.BulletSnowman:
-                        target.AddBuff(BuffID.Chilled, 180);
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 600);
                         break;
 
                     case ProjectileID.UnholyTridentHostile:
@@ -1921,7 +2005,7 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.IceSpike:
                         //target.AddBuff(BuffID.Slimed, 120);
-                        target.AddBuff(BuffID.Frostburn, 120);
+                        target.AddBuff(ModContent.BuffType<Hypothermia>(), 300);
                         break;
 
                     case ProjectileID.JungleSpike:

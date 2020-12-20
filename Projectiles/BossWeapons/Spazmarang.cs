@@ -9,9 +9,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 {
     public class Spazmarang : ModProjectile
     {
-        private int counter = 0;
-        private bool hitSomething;
-
+        bool hitSomething = false;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spazmarang");
@@ -21,58 +19,80 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void SetDefaults()
         {
-            projectile.CloneDefaults(ProjectileID.EnchantedBoomerang);
-            aiType = ProjectileID.EnchantedBoomerang;
+            projectile.melee = true;
+            projectile.friendly = true;
+            projectile.light = 0.4f;
 
             projectile.width = 50;
             projectile.height = 50;
-            projectile.penetrate = 4;
+            projectile.penetrate = 1;
+            projectile.aiStyle = -1;
         }
 
         public override void AI()
         {
-            counter++;
-
-            if (counter >= 30)
+            //travelling out
+            if (projectile.ai[0] == 0)
             {
-                counter = 0;
+                projectile.ai[1]++;
 
-                if (projectile.owner == Main.myPlayer)
+                if (projectile.ai[1] > 20)
                 {
-                    Vector2[] velocity = { projectile.velocity / 2, -projectile.velocity / 2, projectile.velocity.RotatedBy(Math.PI / 2) / 2, -projectile.velocity.RotatedBy(Math.PI / 2) / 2 };
-                    for (int i = 0; i < 4; i++)
-                        Projectile.NewProjectile(projectile.Center, velocity[i], ModContent.ProjectileType<EyeFireFriendly>(), projectile.damage, 0, projectile.owner);
+                    projectile.ai[0] = 1;
+                    projectile.netUpdate = true;
                 }
             }
+            //travel back to player
+            else 
+            {
+                projectile.extraUpdates = 0;
+                projectile.velocity = Vector2.Normalize(Main.player[projectile.owner].Center - projectile.Center) * 45;
+
+                //kill when back to player
+                if (projectile.Distance(Main.player[projectile.owner].Center) <= 30)
+                    projectile.Kill();
+            }
+
+            //spin
+            projectile.rotation += projectile.direction * -0.8f;
 
             //dust!
             int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width, projectile.height + 5, 75, projectile.velocity.X * 0.2f,
                 projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
             Main.dust[dustId].noGravity = true;
-
-            if (projectile.ai[0] == 1)
-            {
-                projectile.localAI[0] += 0.1f;
-                projectile.position += projectile.DirectionTo(Main.player[projectile.owner].Center) * projectile.localAI[0];
-
-                if (projectile.Distance(Main.player[projectile.owner].Center) <= projectile.localAI[0])
-                    projectile.Kill();
-            }
         }
 
-        public override bool OnTileCollide(Vector2 oldVelocity)
+        private void spawnFire()
         {
             if (!hitSomething)
             {
                 hitSomething = true;
                 if (projectile.owner == Main.myPlayer)
                 {
-                    Vector2[] velocity = { projectile.velocity / 2, -projectile.velocity / 2, projectile.velocity.RotatedBy(Math.PI / 2) / 2, -projectile.velocity.RotatedBy(Math.PI / 2) / 2 };
-                    for (int i = 0; i < 4; i++)
-                        Projectile.NewProjectile(projectile.Center, velocity[i], ModContent.ProjectileType<EyeFireFriendly>(), projectile.damage, 0, projectile.owner);
+                    Main.PlaySound(SoundID.Item74, projectile.Center);
+                    FargoGlobalProjectile.XWay(12, projectile.Center, ModContent.ProjectileType<EyeFireFriendly>(), 5, projectile.damage / 2, 0);
                 }
+                projectile.ai[0] = 1;
+                projectile.penetrate = 4;
+                projectile.netUpdate = true;
             }
-            return true;
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.AddBuff(BuffID.CursedInferno, 120);
+            spawnFire();
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (projectile.Distance(Main.player[projectile.owner].Center) >= 50)
+            {
+                spawnFire();
+            }
+            projectile.tileCollide = false;
+            
+            return false;
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
@@ -81,21 +101,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             width = 22;
             height = 22;
             return true;
-        }
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            target.AddBuff(BuffID.CursedInferno, 120);
-            if (!hitSomething)
-            {
-                hitSomething = true;
-                if (projectile.owner == Main.myPlayer)
-                {
-                    Vector2[] velocity = { projectile.velocity / 2, -projectile.velocity / 2, projectile.velocity.RotatedBy(Math.PI / 2) / 2, -projectile.velocity.RotatedBy(Math.PI / 2) / 2 };
-                    for (int i = 0; i < 4; i++)
-                        Projectile.NewProjectile(projectile.Center, velocity[i], ModContent.ProjectileType<EyeFireFriendly>(), projectile.damage, 0, projectile.owner);
-                }
-            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

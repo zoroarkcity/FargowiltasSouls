@@ -391,9 +391,9 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.localAI[0] = 2;
                         if (Main.netMode != NetmodeID.MultiplayerClient && npc.localAI[3] == 1)
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2), 
+                            Projectile.NewProjectile(npc.Center, 1.5f * Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2), 
                                 ModContent.ProjectileType<WillFireball2>(), npc.damage / 4, 0f, Main.myPlayer);
-                            Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(-Math.PI / 2),
+                            Projectile.NewProjectile(npc.Center, 1.5f * Vector2.Normalize(npc.velocity).RotatedBy(-Math.PI / 2),
                                 ModContent.ProjectileType<WillFireball2>(), npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
@@ -499,7 +499,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     for (int i = 0; i < 15; i++)
                                     {
-                                        float speed = Main.rand.NextFloat(4f, 12f);
+                                        float speed = Main.rand.NextFloat(4f, 8f);
                                         Vector2 velocity = speed * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * -Math.PI);
                                         float ai1 = speed / 120f;
                                         Projectile.NewProjectile(npc.Center, velocity, ModContent.ProjectileType<WillJavelin>(), npc.defDamage / 4, 0f, Main.myPlayer, 0f, ai1);

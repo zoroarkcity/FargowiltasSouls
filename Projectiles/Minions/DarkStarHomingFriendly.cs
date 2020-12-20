@@ -30,14 +30,30 @@ namespace FargowiltasSouls.Projectiles.Minions
             {
                 if (++projectile.ai[1] < 60)
                 {
-                    projectile.velocity *= 1.065f;
-
                     float rotation = projectile.velocity.ToRotation();
                     Vector2 vel = Main.npc[ai0].Center - projectile.Center;
                     float targetAngle = vel.ToRotation();
                     projectile.velocity = new Vector2(projectile.velocity.Length(), 0f).RotatedBy(rotation.AngleLerp(targetAngle, 0.05f));
                 }
             }
+            else
+            {
+                float maxRange = 750f;
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    if (Main.npc[i].CanBeChasedBy(projectile) && Collision.CanHit(projectile.Center, 0, 0, Main.npc[i].Center, 0, 0))
+                    {
+                        if (projectile.Distance(Main.npc[i].Center) <= maxRange)
+                        {
+                            maxRange = projectile.Distance(Main.npc[i].Center);
+                            projectile.ai[0] = i;
+                        }
+                    }
+                }
+            }
+
+            if(projectile.ai[0] < 60)
+                projectile.velocity *= 1.065f;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

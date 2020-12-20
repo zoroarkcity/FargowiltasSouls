@@ -6,6 +6,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Fargowiltas.Items.Tiles;
+using System.Linq;
+using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
@@ -14,16 +16,20 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Penetrator");
-            Tooltip.SetDefault("Right click to sunder reality\n'The reward for embracing eternity...'");
+            Tooltip.SetDefault("Has different attacks when using left or right click" +
+                "\nHas different attacks when used while holding up or both up and down" +
+                "\n'The reward for embracing eternity...'");
+
             DisplayName.AddTranslation(GameCulture.Chinese, "洞察者");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励...'");
+
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(3, 10));
         }
 
         public override void SetDefaults()
         {
             item.damage = 1700;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.useAnimation = 16;
             item.useTime = 16;
             item.shootSpeed = 6f;
@@ -31,83 +37,133 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.width = 24;
             item.height = 24;
             item.scale = 1.3f;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.UseSound = SoundID.Item1;
             item.shoot = mod.ProjectileType("HentaiSpear");
             item.value = Item.sellPrice(0, 70);
-            item.noMelee = true; // Important because the spear is acutally a projectile instead of an item. This prevents the melee hitbox of this item.
-            item.noUseGraphic = true; // Important, it's kind of wired if people see two spears at one time. This prevents the melee animation of this item.
+            item.noMelee = true;
+            item.noUseGraphic = true;
             item.melee = true;
             item.autoReuse = true;
         }
 
-        public override bool AltFunctionUse(Player player)
-        {
-            return true;
-        }
+        public override bool AltFunctionUse(Player player) => true;
 
         public override bool CanUseItem(Player player)
         {
+            item.useTurn = false;
+
             if (player.altFunctionUse == 2)
             {
-                item.shoot = mod.ProjectileType("HentaiSpearThrown");
-                item.shootSpeed = 25f;
-                item.useAnimation = 100;
-                item.useTime = 100;
+                if (player.controlUp)
+                {
+                    if (player.controlDown)
+                    {
+                        item.shoot = mod.ProjectileType("HentaiSpearWand");
+                        item.shootSpeed = 6f;
+                        item.useAnimation = 16;
+                        item.useTime = 16;
+                    }
+                    else
+                    {
+                        item.shoot = mod.ProjectileType("HentaiSpearSpinThrown");
+                        item.shootSpeed = 6f;
+                        item.useAnimation = 16;
+                        item.useTime = 16;
+                    }
+                }
+                else
+                {
+                    item.shoot = mod.ProjectileType("HentaiSpearThrown");
+                    item.shootSpeed = 25f;
+                    item.useAnimation = 85;
+                    item.useTime = 85;
+                }
+
                 item.ranged = true;
                 item.melee = false;
             }
             else
             {
-                item.shoot = mod.ProjectileType("HentaiSpear");
-                item.shootSpeed = 6f;
+                if (player.controlUp && !player.controlDown)
+                {
+                    item.shoot = mod.ProjectileType("HentaiSpearSpin");
+                    item.shootSpeed = 1f;
+                    item.useTurn = true;
+                }
+                else
+                {
+                    item.shoot = mod.ProjectileType("HentaiSpear");
+                    item.shootSpeed = 6f;
+                }
+
                 item.useAnimation = 16;
                 item.useTime = 16;
                 item.ranged = false;
                 item.melee = true;
             }
+
             return true;
-
-            /*if (player.altFunctionUse == 2) //right click
-            {
-                item.useAnimation = 32;
-                item.useTime = 32;
-            }
-            else
-            {
-                item.useAnimation = 16;
-                item.useTime = 16;
-            }
-            return player.ownedProjectileCounts[item.shoot] < 1; // This is to ensure the spear doesn't bug out when using autoReuse = true*/
-        }
-
-        public override void ModifyTooltips(List<TooltipLine> list)
-        {
-            foreach (TooltipLine line2 in list)
-            {
-                if (line2.mod == "Terraria" && line2.Name == "ItemName")
-                {
-                    line2.overrideColor = new Color(0, 255, Main.DiscoB);
-                }
-            }
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            if (player.altFunctionUse == 2) //right click
+            if (player.altFunctionUse == 2) // Right-click
             {
-                //damage /= 4;
+                if (player.controlUp)
+                {
+                    if (player.controlDown) // Giga-beam
+                        return player.ownedProjectileCounts[item.shoot] < 1;
+
+                    if (player.ownedProjectileCounts[item.shoot] < 1) // Remember to transfer any changes here to hentaispearspinthrown!
+                    {
+                        Vector2 speed = Main.MouseWorld - player.MountedCenter;
+
+                        if (speed.Length() < 360)
+                            speed = Vector2.Normalize(speed) * 360;
+
+                        Projectile.NewProjectile(position, Vector2.Normalize(speed), item.shoot, damage, knockBack, player.whoAmI, speed.X, speed.Y);
+                    }
+
+                    return false;
+                }
+
                 return true;
             }
 
-            if (player.ownedProjectileCounts[item.shoot] < 1 && player.ownedProjectileCounts[mod.ProjectileType("Dash")] < 1)
+            if (player.ownedProjectileCounts[item.shoot] < 1)
             {
-                //Vector2 target = (Main.MouseWorld - player.Center) / 37;
-                //Projectile.NewProjectile(position.X, position.Y, target.X, target.Y, mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI);
-                Projectile.NewProjectile(position.X, position.Y, speedX * 4, speedY * 4, mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI);
-                Projectile.NewProjectile(position.X, position.Y, speedX, speedY, item.shoot, damage, knockBack, item.owner, 0f, 1f);
+                if (player.controlUp && !player.controlDown)
+                    return true;
+
+                if (player.ownedProjectileCounts[mod.ProjectileType("Dash")] < 1)
+                {
+                    float dashAI = 0;
+                    float speedModifier = 2f;
+
+                    if (player.controlUp && player.controlDown) // Super-dash
+                    {
+                        dashAI = 1;
+                        speedModifier = 2.5f;
+                        player.dashDelay = 0;
+                    }
+
+                    Vector2 speed = new Vector2(speedX, speedY);
+
+                    Projectile.NewProjectile(position, Vector2.Normalize(speed) * speedModifier * item.shootSpeed,
+                        mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI, speed.ToRotation(), dashAI);
+                    Projectile.NewProjectile(position, speed, item.shoot, damage, knockBack, item.owner, 0f, 1f);
+                }
             }
+
             return false;
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            TooltipLine tooltipItemNameLine = tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria");
+            tooltipItemNameLine.ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
+            tooltipItemNameLine.overrideColor = new Color(0, 255, Main.DiscoB);
         }
 
         public override void AddRecipes()

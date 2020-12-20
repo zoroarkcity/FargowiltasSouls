@@ -26,7 +26,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.height = 30;
             projectile.aiStyle = -1;
             projectile.friendly = true;
-            projectile.timeLeft = 600;
+            projectile.ranged = true;
+            projectile.timeLeft = 180;
             projectile.alpha = 60;
             projectile.ignoreWater = true;
             projectile.penetrate = 1;
@@ -40,6 +41,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.ai[1]++;
             if (initialvel.Length() < 36)
                 initialvel *= 1.03f;
+
+            if (projectile.velocity == Vector2.Zero)
+                projectile.active = false;
 
             const int interval = 15;
             if (projectile.ai[0] == 0)
@@ -66,7 +70,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void Kill(int timeLeft)
         {
-            Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("DragonFireballBoom"), 0, 0, Main.myPlayer);
+            if (projectile.owner == Main.myPlayer)
+                Projectile.NewProjectile(projectile.Center, Vector2.Zero, mod.ProjectileType("DragonFireballBoom"), 0, 0, Main.myPlayer);
             Main.PlaySound(SoundID.DD2_BetsysWrathImpact, projectile.Center);
 
             for (int i = 0; i < 30; i++)

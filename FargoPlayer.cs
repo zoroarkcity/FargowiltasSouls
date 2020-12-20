@@ -42,6 +42,8 @@ namespace FargowiltasSouls
         public int QueenStingerCD;
         public bool EridanusEmpower;
         public int EridanusTimer;
+        public bool GaiaSet;
+        public bool GaiaOffense;
 
         //minions
         public bool BrainMinion;
@@ -138,7 +140,7 @@ namespace FargowiltasSouls
         public int TinCrit = 4;
         public bool TikiEnchant;
         public bool TikiMinion;
-        private int actualMinions;
+        public int actualMinions;
         public bool SolarEnchant;
         public bool ShinobiEnchant;
         public bool ValhallaEnchant;
@@ -167,6 +169,7 @@ namespace FargowiltasSouls
         public bool AncientCobaltEnchant;
         public bool AncientShadowEnchant;
         public bool SquireEnchant;
+        public bool squireReduceIframes;
         public bool ApprenticeEnchant;
         public bool HuntressEnchant;
         public bool MonkEnchant;
@@ -206,7 +209,7 @@ namespace FargowiltasSouls
         public int HealTimer;
         public int HurtTimer;
         public bool Eternity;
-        private float eternityDamage = 0;
+        public float eternityDamage = 0;
 
         //maso items
         public bool SlimyShield;
@@ -293,9 +296,11 @@ namespace FargowiltasSouls
         public bool Shadowflame;
         public bool Oiled;
         public bool DeathMarked;
+        public bool Hypothermia;
         public bool noDodge;
         public bool noSupersonic;
         public bool Bloodthirsty;
+        public bool DisruptedFocus;
         public bool SinisterIcon;
         public bool SinisterIconDrops;
 
@@ -614,6 +619,7 @@ namespace FargowiltasSouls
 
             QueenStinger = false;
             EridanusEmpower = false;
+            GaiaSet = false;
 
             BrainMinion = false;
             EaterMinion = false;
@@ -693,6 +699,7 @@ namespace FargowiltasSouls
             AncientCobaltEnchant = false;
             AncientShadowEnchant = false;
             SquireEnchant = false;
+            squireReduceIframes = false;
             ApprenticeEnchant = false;
             HuntressEnchant = false;
             MonkEnchant = false;
@@ -790,6 +797,7 @@ namespace FargowiltasSouls
             noDodge = false;
             noSupersonic = false;
             Bloodthirsty = false;
+            DisruptedFocus = false;
             SinisterIcon = false;
             SinisterIconDrops = false;
 
@@ -809,6 +817,7 @@ namespace FargowiltasSouls
             CurseoftheMoon = false;
             OceanicMaul = false;
             DeathMarked = false;
+            Hypothermia = false;
             Midas = false;
             MutantPresence = MutantPresence ? player.HasBuff(ModContent.BuffType<Buffs.Boss.MutantPresence>()) : false;
             DevianttPresence = false;
@@ -848,6 +857,8 @@ namespace FargowiltasSouls
 
             EridanusEmpower = false;
             EridanusTimer = 0;
+            GaiaSet = false;
+            GaiaOffense = false;
 
             //debuffs
             Hexed = false;
@@ -891,8 +902,10 @@ namespace FargowiltasSouls
             CurseoftheMoon = false;
             OceanicMaul = false;
             DeathMarked = false;
+            Hypothermia = false;
             Midas = false;
             Bloodthirsty = false;
+            DisruptedFocus = false;
             SinisterIcon = false;
             SinisterIconDrops = false;
             Graze = false;
@@ -969,9 +982,14 @@ namespace FargowiltasSouls
                     player.fallStart = (int)(player.position.Y / 16f);
                 }
 
+                if (!NPC.downedBoss3 && player.ZoneDungeon && !NPC.AnyNPCs(NPCID.DungeonGuardian))
+                {
+                    NPC.SpawnOnPlayer(player.whoAmI, NPCID.DungeonGuardian);
+                }
+
                 if (player.ZoneUnderworldHeight)
                 {
-                    if (!(player.fireWalk || PureHeart))
+                    if (!(player.fireWalk || PureHeart || player.lavaMax > 0))
                         player.AddBuff(BuffID.OnFire, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
                 }
 
@@ -1052,7 +1070,7 @@ namespace FargowiltasSouls
                     if (currentTile.wall == WallID.None)
                     {
                         if (player.ZoneSnow)
-                            player.AddBuff(BuffID.Chilled, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
+                            player.AddBuff(ModContent.BuffType<Hypothermia>(), 2);
                         else
                             player.AddBuff(BuffID.Wet, 2);
                         /*if (Main.hardMode)
@@ -1084,7 +1102,7 @@ namespace FargowiltasSouls
                 if (!PureHeart && !player.buffImmune[BuffID.Suffocation] && player.ZoneSkyHeight && player.whoAmI == Main.myPlayer)
                 {
                     bool inLiquid = Collision.DrownCollision(player.position, player.width, player.height, player.gravDir);
-                    if (!inLiquid || !player.gills)
+                    if (!inLiquid)
                     {
                         player.breath -= 3;
                         if (++MasomodeSpaceBreathTimer > 10)
@@ -1147,7 +1165,7 @@ namespace FargowiltasSouls
                         if (player.ZoneHoly)
                         {
                             damage = 40;
-                            player.AddBuff(ModContent.BuffType<Flipped>(), Main.expertMode && Main.expertDebuffTime > 1 ? 150 : 300);
+                            player.AddBuff(BuffID.Confused, Main.expertMode && Main.expertDebuffTime > 1 ? 150 : 300);
                         }
                         if (player.hurtCooldowns[0] <= 0) //same i-frames as spike tiles
                             player.Hurt(PlayerDeathReason.ByCustomReason(player.name + " was pricked by a Cactus."), damage, 0, false, false, false, 0);
@@ -1334,6 +1352,16 @@ namespace FargowiltasSouls
 
         public override void PostUpdateMiscEffects()
         {
+            if (OceanicMaul && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.fishBossEX, NPCID.DukeFishron))
+            {
+                player.statLifeMax2 /= 5;
+                if (player.statLifeMax2 < 100)
+                    player.statLifeMax2 = 100;
+            }
+
+            if (GaiaOffense && !GaiaSet)
+                GaiaOffense = false;
+
             if (QueenStinger && QueenStingerCD > 0)
             {
                 QueenStingerCD--;
@@ -1349,7 +1377,7 @@ namespace FargowiltasSouls
                 player.buffImmune[BuffID.Rabies] = true;
             }
 
-            if (StealingCooldown > 0)
+            if (StealingCooldown > 0 && !player.dead)
                 StealingCooldown--;
 
             if (LihzahrdCurse)
@@ -2057,6 +2085,26 @@ namespace FargowiltasSouls
 
         public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
+            if (squireReduceIframes && (SquireEnchant || ValhallaEnchant))
+            {
+                if (Main.rand.Next(2) == 0)
+                {
+                    float scale = ValhallaEnchant ? 3f : 1.5f;
+                    int type = ValhallaEnchant ? 87 : 91;
+                    int dust = Dust.NewDust(player.position, player.width, player.height, type, player.velocity.X * 0.4f, player.velocity.Y * 0.4f, 87, default(Color), scale);
+                    Main.dust[dust].noGravity = true;
+                    Main.dust[dust].velocity *= 1.8f;
+                    Main.dust[dust].velocity.Y -= 0.5f;
+                    if (Main.rand.Next(4) == 0)
+                    {
+                        Main.dust[dust].noGravity = false;
+                        Main.dust[dust].scale *= 0.5f;
+                    }
+                    Main.playerDrawDust.Add(dust);
+                }
+                fullBright = true;
+            }
+
             if (Shadowflame)
             {
                 if (Main.rand.Next(4) == 0 && drawInfo.shadow == 0f)
@@ -2350,8 +2398,15 @@ namespace FargowiltasSouls
                 bool force = LifeForce || WizardEnchant;
                 if (force || Main.rand.Next(2) == 0)
                 {
-                    Projectile.NewProjectile(target.Center.X, target.Center.Y, Main.rand.Next(-35, 36) * 0.2f, Main.rand.Next(-35, 36) * 0.2f,
+                    int p = Projectile.NewProjectile(target.Center.X, target.Center.Y, Main.rand.Next(-35, 36) * 0.2f, Main.rand.Next(-35, 36) * 0.2f,
                         force ? ProjectileID.GiantBee : player.beeType(), proj.damage, player.beeKB(0f), player.whoAmI);
+                    if (p != Main.maxProjectiles)
+                    {
+                        Main.projectile[p].melee = proj.melee;
+                        Main.projectile[p].ranged = proj.ranged;
+                        Main.projectile[p].magic = proj.magic;
+                        Main.projectile[p].minion = proj.minion;
+                    }
                     beeCD = 15;
                 }
             }
@@ -2522,6 +2577,38 @@ namespace FargowiltasSouls
 
         public void OnHitNPCEither(NPC target, int damage, float knockback, bool crit, int projectile = -1)
         {
+            if ((SquireEnchant || ValhallaEnchant) && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaEffect))
+            {
+                if (squireReduceIframes)
+                {
+                    if (ValhallaEnchant && target.immune[player.whoAmI] > 3)
+                        target.immune[player.whoAmI] = 3;
+                    else if (SquireEnchant && target.immune[player.whoAmI] > 6)
+                        target.immune[player.whoAmI] = 6;
+                }
+                else if (!player.HasBuff(ModContent.BuffType<ValhallaCD>()))
+                {
+                    int duration = 240;
+                    int cooldown = 1200;
+                    if (ValhallaEnchant)
+                    {
+                        if (WillForce || WizardEnchant)
+                        {
+                            duration = 360;
+                            cooldown = 900;
+                        }
+
+                        player.AddBuff(ModContent.BuffType<ValhallaBuff>(), duration);
+                    }
+                    else if (SquireEnchant)
+                    {
+                        player.AddBuff(ModContent.BuffType<SquireBuff>(), duration);
+                    }
+
+                    player.AddBuff(ModContent.BuffType<ValhallaCD>(), duration + cooldown);
+                }
+            }
+
             if (QueenStinger && QueenStingerCD <= 0 && SoulConfig.Instance.GetValue(SoulConfig.Instance.QueenStingerHoney))
             {
                 QueenStingerCD = SupremeDeathbringerFairy ? 300 : 600;
@@ -2673,7 +2760,7 @@ namespace FargowiltasSouls
                     if (crit && TinCrit < 100)
                     {
                         TinCrit += 5;
-                        tinCD = 10;
+                        tinCD = 5;
                     }
                     else if (TinCrit >= 100)
                     {
@@ -2700,7 +2787,7 @@ namespace FargowiltasSouls
                     if (TerraForce || WizardEnchant)
                     {
                         TinCrit += 5;
-                        tinCD = 20;
+                        tinCD = 15;
                     }
                     else
                     {
@@ -2971,8 +3058,17 @@ namespace FargowiltasSouls
 
         public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
         {
+            if (npc.coldDamage && Hypothermia)
+                damage = (int)(damage * 1.2);
+
             if (npc.GetGlobalNPC<FargoSoulsGlobalNPC>().CurseoftheMoon)
                 damage = (int)(damage * 0.8);
+        }
+
+        public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit)
+        {
+            if (proj.coldDamage && Hypothermia)
+                damage = (int)(damage * 1.2);
         }
 
         public override void OnHitByNPC(NPC npc, int damage, bool crit)
@@ -3351,6 +3447,16 @@ namespace FargowiltasSouls
             {
                 player.bodyFrame.Y = player.bodyFrame.Height * 10;
             }
+            if(GaiaOffense)
+            {
+                drawInfo.bodyArmorShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye")); //set armor and accessory shaders to gaia shader if set bonus is triggered
+                drawInfo.headArmorShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.legArmorShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.wingShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.handOnShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.handOffShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+                drawInfo.shoeShader = GameShaders.Armor.GetShaderIdFromItemId(mod.ItemType("GaiaDye"));
+            }
         }
 
         public void AddPet(bool toggle, bool vanityToggle, int buff, int proj)
@@ -3530,11 +3636,19 @@ namespace FargowiltasSouls
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.SnowmanCannon:
                 case ItemID.DemonScythe:
+                case ItemID.BeesKnees:
                     return 2f / 3f;
+
+                case ItemID.SpaceGun:
+                    if (!NPC.downedBoss2)
+                    {
+                        AttackSpeed *= 0.75f;
+                        return 0.75f;
+                    }
+                    return 1f;
 
                 case ItemID.DD2BetsyBow:
                 case ItemID.Uzi:
-                case ItemID.BeesKnees:
                 case ItemID.PhoenixBlaster:
                 case ItemID.LastPrism:
                 case ItemID.Tsunami:
@@ -3550,9 +3664,9 @@ namespace FargowiltasSouls
                 case ItemID.LaserMachinegun:
                 case ItemID.PainterPaintballGun:
                 case ItemID.XenoStaff:
-                    return 0.75f;
-
                 case ItemID.MoltenFury:
+                    return 0.75f;
+                    
                 case ItemID.DartPistol:
                 case ItemID.DartRifle:
                 case ItemID.VampireKnives:
@@ -3694,6 +3808,8 @@ namespace FargowiltasSouls
                 if (RangedSoul && Main.rand.Next(5) == 0)
                     return false;
             }
+            if (GaiaSet && Main.rand.Next(10) == 0)
+                return false;
             return true;
         }
 

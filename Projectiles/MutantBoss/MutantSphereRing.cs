@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 Vector2 adjustedPos = projectile.Center - target.Center;
                 if (Math.Abs(adjustedPos.X) > target.width / 2)
                     adjustedPos.X = target.width / 2 * Math.Sign(adjustedPos.X);
-                if (Math.Abs(adjustedPos.Y) > target.width / 2)
+                if (Math.Abs(adjustedPos.Y) > target.width / 2) //pretend this is intentional because more forgiving
                     adjustedPos.Y = target.width / 2 * Math.Sign(adjustedPos.Y);
 
                 if (projectile.Distance(target.Center + adjustedPos) <= projectile.width / 2)
@@ -109,7 +109,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);
                 Main.dust[index2].position = new Vector2((float)(projectile.width / 2), 0.0f).RotatedBy(6.28318548202515 * Main.rand.NextDouble(), new Vector2()) * (float)Main.rand.NextDouble() + projectile.Center;
             }
-            for (int index1 = 0; index1 < 5; ++index1)
+            for (int index1 = 0; index1 < 4; ++index1)
             {
                 int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 229, 0.0f, 0.0f, 0, new Color(), 2.5f);
                 Main.dust[index2].position = new Vector2((float)(projectile.width / 2), 0.0f).RotatedBy(6.28318548202515 * Main.rand.NextDouble(), new Vector2()) * (float)Main.rand.NextDouble() + projectile.Center;

@@ -21,6 +21,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         public override void SetDefaults()
         {
             base.SetDefaults();
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
         }
 

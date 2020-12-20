@@ -384,7 +384,20 @@ namespace FargowiltasSouls.NPCs.Champions
 
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            if (npc.localAI[3] > 1) //p2 and p3, fire them to both sides
+                            if (npc.localAI[3] == 3) //p3, triangle fire
+                            {
+                                for (int j = 0; j < 3; j++)
+                                {
+                                    for (int i = 0; i < 20; i++)
+                                    {
+                                        Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5) + 2 * Math.PI / 3 * j);
+                                        float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
+                                        float ai1 = Main.rand.NextFloat(0.05f);
+                                        Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 3, 0f, Main.myPlayer, ai0, ai1);
+                                    }
+                                }
+                            }
+                            else if (npc.localAI[3] == 2) //p2, fire them to both sides
                             {
                                 for (int j = -1; j <= 1; j++)
                                 {
@@ -399,20 +412,8 @@ namespace FargowiltasSouls.NPCs.Champions
                                         Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 3, 0f, Main.myPlayer, ai0, ai1);
                                     }
                                 }
-
-                                if (npc.localAI[3] == 3) //p3 shoot straight
-                                {
-                                    for (int i = 0; i < 25; i++)
-                                    {
-                                        Vector2 vel = npc.DirectionTo(player.Center).RotatedBy(Math.PI / 6 * (Main.rand.NextDouble() - 0.5));
-                                        float max = 0.006f;
-                                        float ai0 = Main.rand.NextFloat(1.04f, 1.06f);
-                                        float ai1 = Main.rand.NextFloat(-max, max);
-                                        Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<ShadowFlameburst>(), npc.damage / 3, 0f, Main.myPlayer, ai0, ai1);
-                                    }
-                                }
                             }
-                            else //p1, p2
+                            else //p1
                             {
                                 for (int i = 0; i < 40; i++)
                                 {

@@ -165,3 +165,248 @@ resprites
 	broken hilt
 	styx gazer
 	staff of unleashed ocean
+
+champion of will
+	reduced random variation on spear barrage as they spawn in (occupy less space)
+	reduced duration of p3 fireball trail by a few ticks and reduced dust
+champion of shadows
+	tweaked p3 flameburst to be equidistant spreads (was biased towards you)
+
+tweaked mutant eye glow
+diffractor blaster exists
+NERFED blender, higher base damage but lower hit rate
+fixed soul of siblings carrot zoom not ignoring mutant presence as intended when equipped as accessory
+penetrator is god
+	left click is regular dash
+	left click while dashing (e.g. tabi) for super dash
+	up+left click to spin
+
+slime slinging slasher microbuff
+rockeater launcher BIG buff
+hellzone nerf
+big brain buster nerf
+dragon's demise micronerf
+diffractor blaster buff
+blender microbuff
+destroyer gun EX microbuff
+
+tweaked destruction cannon proj movement to not vibrate directly on the mouse
+diffractor blaster rays have collision detection and star spread adjusted
+altered implementation of penerator dash to fix weird downwards movement
+penetrator spin
+	proper circular hitbox
+	epic trail
+	makes less explosions on hit
+	tweaked eye homing
+	can reflect projs
+
+dragons fire tooltip
+mutant's gift always spawns deviantt above you
+fixed sparkling love energy hearts being classless (should be minion)
+reduced diffractor blaster dark star timeleft
+penetrator
+	base right click fires faster
+	up+right to throw spinning reflecting penetrator
+	you can up+right to begin throwing, then release up but continue throwing spinners (THIS MIGHT BE BUGGY)
+
+mutant final gigabeam ignores timestop
+blender, diffractor update damage in realtime
+dash+right click to perform MUTANT'S FINAL GIGABEAM
+
+friendly penetrator spin homing eyes have bigger hitbox (you wont notice anything probably)
+changed penetrator input from dash to up+down (easy to misinput gigabeam when trying to toss spear in combat)
+fucked with deathray sync in mp, relevant to
+	styx gazer
+	penetrator gigabeam
+	diffractor blaster
+fixed weird dragon's demise fireball explosions in mp
+did SOMETHING to alleviate ghost fireballs from dragon's demise in mp
+
+brain staff rework
+tweaked graze volume and light ring
+nerfed hellzone damage
+valhalla and squire heavily adjusted
+	internal implementation changed
+	now on debuff cooldown
+	buff makes you glow
+
+echdeath phase 2
+adamantite ench has a timeleft check (splits won't persist longer than the source)
+bee enchantment copies the source proj class
+penetrator tooltip typo
+tweaked internal implementation of twinrangs (facilitates future balancing if needed)
+fixed retirang shooting magic lasers not melee
+
+extra check for distance on lihzahrd blessing
+spin penetrators will stop spinning immediately if you input up+down (so up+down attacks are easier to input)
+fixed spazmarang doing magic damage i think
+mutant 
+	charging visual on spear throws and aims the first one earlier in the throws before twinrangs
+	removed dust from spears
+	fixed miniscule visual error where mutant was drawn in front of his weapons on late p2 cycle attacks
+
+gaia armour: post-golem omniclass set, actual option for pillars and moon lord
+	net stats:
+		+30% all damage
+		+15% crit chance
+		+2 regen
+		+10% damage reduction
+		+1 minion/sentry slot
+		+10% movement speed
+		50 defense
+	set bonus:
+		+10% melee speed
+		+10% ammo reservation
+		+10% mana reservation
+		+1 minion/sentry slot
+	can activate glass cannon mode:
+		-20 defense
+		-20% damage reduction
+		-20% max life
+		+20% all damage
+		+10% crit chance
+		+10 armor penetration
+	recipe: beetle shells + shroomite bars + spectre bars + spooky wood, at mythril anvil
+fiddled with phantasmal leash to be not gutbustingly impossibly x100 stronger than everything else
+i got bored, fishron ex is a post-soe god of destruction
+
+rain cloud disappears if toggle is disabled
+fishron typo corrections
+
+reduced eoc p3 from 10% to 6%
+lengthened qb delay before bee swarm
+slowed down moon lord phantasmal eyes more
+did something to fix the obscenely eldritch heldproj/soul of terraria glitch (test diffractor/pen-gigabeam in mp)
+removed man eater dash
+nerfed crawdad bubble blowing to crab bubble
+mushroom enemies only burst into spores when killed in hm
+space gun nerfed -25% damage, -25% speed if used pre-eow/boc
+nerfed damage of hostile red spiky balls dropped by goblins
+eoc p3 retargets whenever it tps
+rain and sandstorm disabled until ks/eoc/wof defeated (or you have abom)
+deviantt's gift now contains puff in a bottle (cloud in a bottle, but no recipes)
+
+piranha/arapaima/shark
+	adjusted vfx of jump
+	will jump away from you if you're dead
+added hypothermia debuff (increased damage taken from cold attacks)
+	ice queens crown immunes
+	replaces blizzard chilled
+	replaces chilled/frozen on various enemies
+gaia offense mode shader
+
+nerfed how much faster qb throws hives when no royal subjects alive, won't throw hives while dashing
+nerfed velocity of qb hive toss
+nerfed duration of electrified inflicted by martian saucer lasers
+leash of cthulhu eye projs don't glow when inside solid blocks
+ajusted moon lord homing eye behaviour again
+rebalanced vineslinger, mahoguny, overgrown key
+drakovi's fishing pole rework
+	generally much better range
+	melee puffers explode into smaller puffers when they hit something
+	ranger shoots less bullets per spread, but an extra weaker bullet at every nearby enemy
+	magic shoots a v spread of bubbles
+	summon fishe are much bigger and move much more aggressively
+	stats adjusted across the board
+abom nerfs
+	third styx gazer is always straight down vertical (dodgeable underneath)
+	saucer lasers die when they meet in the middle
+
+nerfed rockeater bonus to x1.5 (was x2)
+slight drakovi buff because patreon privilege
+your gigabeam spheres disappear when you stop firing
+did something to fix an edge case with gigabeam firing the wrong way for a tick
+mutant/abom backgrounds are emode exclusive
+darkened mutant background
+
+abom spawns 5 saucers at a time in phase 2 and saucers have reticle and trail
+abom's scythe during saucer attack is bigger
+reduced some mutant dusts
+nerfed royal subject hp slightly and mp scaling significantly
+moved aeolus boots from anvil to tinkerer's
+top hat squirrel (critter) craftable with any squirrel + a top hat
+nerfed bees knees further (-33%, was -25%)
+slight small sting buff
+giant worm/digger drop worm tooth
+goblin hostile spiky balls emit light, are bigger, despawn faster after event ends
+dungeon guardian will instantly spawn when player enters dungeon pre-skeletron
+grubby, sluggy, buggy immune to water debuffs (mainly jungle poisoned)
+added a few more checks to ancient shadow orbs so they dont eat neutral projectiles
+MASSIVE refactor for arenas, check all of them and make sure they work, some relevant ones
+	eridanus
+	cultist
+	moon lord
+	champion of will
+	champion of life
+	abominationn
+	deviantt
+	duke fishron ex
+	mutant
+YOU CAN NOW GRAZE ARENAS
+all projectiles can be grazed up to twice per second (was once per second)
+internal rewrite of abom, mutant, eri clearing projs at certain points, they wont do it if any other boss is alive
+gemini glaives exist and are POGGERS
+
+renamed heart of masochist toggle header to heart of the eternal
+gemini glaives tweaks
+molten fury nerfed (-25%, was -15%)
+adjusted arena visuals so the sprites alternate, also fixed devi arena
+made abom's saucer scythe a bit smaller
+dg teleports at you if its too far away, ensures it doesnt insta despawn when force spawned
+all arenas are more faded when you aren't the target (this is for mp)
+
+golden dipping vat recipe costs reduced to use 100 gold dust, was 500
+golden carp can be crafted at vat
+you suffocate normally in water in space
+lava charm prevents underworld on fire
+hallow cactus inflicts confused again, was flipped
+nerfed overgrown key damage
+marginal mahoguny buff
+breaking demon altars no longer forces pirates
+retinazer's aura only burns player if theyre being targeted by itself or spaz
+rainbow slimes immune to knockback so they dont spam spikes every time they get hit
+nerfed speed of laser spray from killed gastropods
+increased number of potions per kill from certain enemies with tim's coc (mainly minibosses)
+nerfed mythril ench from 20% speed to 15% speed and adjusted internal implementation of disrupted focus
+reduced mutant's gift stack to 1
+RESTORED CRATE DROPS FOR ICE GOLEM AND WOF
+
+something about syncing swarm in mp?????????????
+arenas are a little more faded when you're not target
+dragon's demise recolored
+plantera tentacle life restored, but they now avoid inflicting contact damage
+adjusted numbers of shroomite shrooms and fixed them being melee, now ranged damage
+destroyer is vulnerable to timestop and chilled in all modes (was emode only)
+squirrels cant become top hat squirrels when placed by you or spawned from statues, sorry
+increased spawn rate of top hat squirrels though
+removed kill cooldown on bone zone projectiles (probably wont affect dps)
+stardust dragon + tiki nerf, dragon damage caps at 1 segment above your normal cap
+fixed tick 1 edge case swarm thing, prominently moon lord arena
+marginal nerf to fishron p3 bubble trail acceleration
+more obnoxious text when an item is stolen from you and a visual buff for thieving cooldown, also 6 seconds (was 5)
+fuck it. stolen items in mp use a new handshake (TEST THIS)
+galactic reformer no longer hurts npcs outside its radius, but it can hit you too
+universal collapse instagibs everything
+
+reformer cant hurt bosses either
+universal collapse hits you for 9999 damage (more if you might survive) ignoring defenses but can trigger revives
+dark caster and post-plant dungeon mage skeletons can teleport sluggishly outside dungeon
+some more checks to prevent items like platinum coin working with boreal/pumpking cape/celestial rune
+adjusted check for fishron for angler ench
+fixed being able to dupe souls/potions with wraith/harpy by holding them with your mouse
+sprites
+	sinister icon
+	hypothermia icon
+	fishron minion icon
+fixed diffractor beams not updating damage
+fixed being able to hold hungry and switch to other weapons after running out of mana
+tim's coc makes moss hornet drop rage potion instead of blood zombie (funny joke)
+angry trappers drop vines
+fixed jungle mimic minion coin being classless
+phanleash does things on miss
+slight blender nerf
+reduced tin cooldowns again, SOT 5 ticks and terra force 15t (was 10, 20)
+snatcher and man eater can dash but WAY less often
+doubled delay between angry trapper dashes
+
+nerfed fishron p3 bubble trail accel and spacing a bit more

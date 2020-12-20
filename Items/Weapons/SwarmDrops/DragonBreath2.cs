@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override void SetDefaults()
         {
-            item.damage = 200;
+            item.damage = 190;
             item.knockBack = 1f;
             item.shootSpeed = 12f;
 
@@ -56,9 +56,8 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                         mod.ProjectileType("DragonFireball"), damage * 3, knockBack, player.whoAmI);
                     Main.projectile[p].netUpdate = true;
                 }*/
-                int p = Projectile.NewProjectile(position, 2f * new Vector2(speedX, speedY),//.RotatedByRandom(MathHelper.Pi / 18),
+                Projectile.NewProjectile(position, 2f * new Vector2(speedX, speedY),//.RotatedByRandom(MathHelper.Pi / 18),
                     mod.ProjectileType("DragonFireball"), damage, knockBack * 6f, player.whoAmI);
-                Main.projectile[p].netUpdate = true;
             }
             return false;
         }

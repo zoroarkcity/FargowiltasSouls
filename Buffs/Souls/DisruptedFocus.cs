@@ -19,7 +19,7 @@ namespace FargowiltasSouls.Buffs.Souls
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<FargoPlayer>().AttackSpeed -= .2f;
+            player.GetModPlayer<FargoPlayer>().DisruptedFocus = true;
         }
     }
 }
