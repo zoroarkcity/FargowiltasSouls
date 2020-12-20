@@ -413,4 +413,6 @@ nerfed fishron p3 bubble trail accel and spacing a bit more
 fixed diffractor being weird and weak
 in emode, archery potion, magic quiver, shroomite helmets are all additive damage modifiers AND NOT FUCKING MULTIPLICATIVE
 some fiddling with numbers on emode nerfs
-reduced number/spread of fireballs fired by ml core melee phase
+ml core phase
+	reduced number/spread of fireballs
+	increased spread of nebula blaze from 6 to 8, but adjusted aim so it's never directly at you

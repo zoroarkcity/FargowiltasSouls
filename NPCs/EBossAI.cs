@@ -5133,11 +5133,11 @@ namespace FargowiltasSouls.NPCs
                                         bodyPart.type == NPCID.MoonLordHand))
                                     {
                                         int damage = 35;
-                                        const int max = 6;
+                                        const int max = 8;
                                         for (int j = 0; j < max; j++)
                                         {
                                             Projectile.NewProjectile(bodyPart.Center,
-                                                2.5f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * 2 / max * j),
+                                                2.5f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * 2 / max * (j + 0.5)),
                                                 ModContent.ProjectileType<MoonLordNebulaBlaze>(), damage, 0f, Main.myPlayer);
                                         }
 
