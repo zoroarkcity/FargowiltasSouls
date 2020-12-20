@@ -39,6 +39,7 @@ Summons a friendly Cultist and plant to fight at your side
             item.rare = 9;
             item.value = Item.sellPrice(0, 7);
             item.defense = 8;
+            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

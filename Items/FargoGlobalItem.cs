@@ -20,7 +20,6 @@ namespace FargowiltasSouls.Items
                 item.ammo = item.type;
             }
         }
-
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
             if (player.manaCost <= 0f) player.manaCost = 0f;

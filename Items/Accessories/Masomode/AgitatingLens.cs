@@ -1,6 +1,8 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
@@ -29,6 +31,7 @@ While dashing or running quickly you will create a trail of demon scythes
             item.accessory = true;
             item.rare = 2;
             item.value = Item.sellPrice(0, 1);
+            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
