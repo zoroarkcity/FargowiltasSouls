@@ -8,8 +8,10 @@ using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class QueenStinger : ModItem
+    public class QueenStinger : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Queen's Stinger");
@@ -35,7 +37,6 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             item.accessory = true;
             item.rare = ItemRarityID.LightRed;
             item.value = Item.sellPrice(0, 3);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -59,7 +60,5 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             // Stringer immune
             player.GetModPlayer<FargoPlayer>().QueenStinger = true;
         }
-
-        public override void ModifyTooltips(List<TooltipLine> tooltips) => tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
     }
 }

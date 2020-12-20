@@ -6,8 +6,10 @@ using Terraria.Localization;
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     [AutoloadEquip(EquipType.Face)]
-    public class MagicalBulb : ModItem
+    public class MagicalBulb : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Magical Bulb");
@@ -27,9 +29,8 @@ Attracts a legendary plant's offspring which flourishes in combat
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = Item.sellPrice(0, 6);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

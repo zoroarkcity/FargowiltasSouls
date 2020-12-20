@@ -1,19 +1,23 @@
+using Fargowiltas.Items.Tiles;
+using FargowiltasSouls.Items.Misc;
+using FargowiltasSouls.Utilities;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Summons
 {
-    public class AbominationnVoodooDoll : ModItem
+    public class AbominationnVoodooDoll : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Abominationn Voodoo Doll");
-            Tooltip.SetDefault("Summons Abominationn to your town\n'You are a terrible person'");
+            Tooltip.SetDefault("Summons Abominationn to your town" +
+                "\n'You are a terrible person'");
+
             DisplayName.AddTranslation(GameCulture.Chinese, "憎恶巫毒娃娃");
             Tooltip.AddTranslation(GameCulture.Chinese, "你可真是个坏东西");
         }
@@ -22,22 +26,20 @@ namespace FargowiltasSouls.Items.Summons
         {
             item.width = 20;
             item.height = 20;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.useAnimation = 30;
             item.useTime = 30;
-            item.useStyle = 4;
+            item.useStyle = ItemUseStyleID.HoldingUp;
             item.maxStack = 20;
-            item.value = Item.sellPrice(0, 1);
+            item.value = Item.sellPrice(gold: 1);
         }
 
-        public override bool CanUseItem(Player player)
-        {
-            return !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
-        }
+        public override bool CanUseItem(Player player) => !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
 
         public override bool UseItem(Player player)
         {
             NPC.SpawnOnPlayer(player.whoAmI, ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
+
             return true;
         }
 
@@ -47,48 +49,49 @@ namespace FargowiltasSouls.Items.Summons
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    int abominationn = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
+                    int abom = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
                     int mutant = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
-                    if (abominationn > -1 && Main.npc[abominationn].active)
+
+                    if (abom > -1 && Main.npc[abom].active)
                     {
-                        Main.npc[abominationn].StrikeNPC(9999, 0f, 0);
+                        Main.npc[abom].StrikeNPC(9999, 0f, 0);
+
                         if (mutant > -1 && Main.npc[mutant].active)
                         {
-                            Main.npc[abominationn].StrikeNPC(9999, 0f, 0);
+                            Main.npc[abom].StrikeNPC(9999, 0f, 0);
+
                             if (mutant > -1 && Main.npc[mutant].active)
                             {
-                                Main.npc[mutant].Transform(mod.NPCType("MutantBoss"));
-                                if (Main.netMode == NetmodeID.SinglePlayer)
-                                    Main.NewText("Mutant has been enraged by the death of his brother!", 175, 75, 255);
-                                else if (Main.netMode == NetmodeID.Server)
-                                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Mutant has been enraged by the death of his brother!"), new Color(175, 75, 255));
-                            }
+                                // TODO: Localization
+                                string message = "Mutant has been enraged by the death of his brother!";
 
+                                Main.npc[mutant].Transform(mod.NPCType("MutantBoss"));
+
+                                if (Main.netMode == NetmodeID.SinglePlayer)
+                                    Main.NewText(message, 175, 75, 255);
+                                else if (Main.netMode == NetmodeID.Server)
+                                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(message), new Color(175, 75, 255));
+                            }
                         }
                     }
                 }
+
                 item.TurnToAir();
             }
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
-            foreach (TooltipLine line2 in list)
-            {
-                if (line2.mod == "Terraria" && line2.Name == "ItemName")
-                {
-                    line2.overrideColor = new Color(Main.DiscoR, 51, 255 - (int)(Main.DiscoR * 0.4));
-                }
-            }
+            if (tooltips.TryFindTooltipLine("ItemName", out TooltipLine itemNameLine))
+                itemNameLine.overrideColor = new Color(Main.DiscoR, 51, 255 - (int)(Main.DiscoR * 0.4));
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(null, "MutantScale", 5);
+            recipe.AddIngredient(ModContent.ItemType<MutantScale>(), 5);
             recipe.AddIngredient(ItemID.GuideVoodooDoll);
-            recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
-
+            recipe.AddTile(ModContent.TileType<CrucibleCosmosSheet>());
             recipe.SetResult(this, 5);
             recipe.AddRecipe();
         }

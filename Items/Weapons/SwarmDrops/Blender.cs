@@ -9,7 +9,7 @@ using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class Blender : ModItem
+    public class Blender : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -46,8 +46,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             //player.counterWeight = 556 + Main.rand.Next(6);
             player.stringColor = 5;
         }
-
-        public override void ModifyTooltips(List<TooltipLine> tooltips) => tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
 
         public override void AddRecipes()
         {

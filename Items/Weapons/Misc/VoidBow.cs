@@ -2,12 +2,11 @@ using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Weapons.Misc
 {
-    public class VoidBow : ModItem
+    public class VoidBow : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -26,11 +25,11 @@ namespace FargowiltasSouls.Items.Weapons.Misc
             item.height = 20;
             item.useTime = 6;
             item.useAnimation = 20;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 3;
             item.value = 1000;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.UseSound = SoundID.Item5;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("VoidArrow");

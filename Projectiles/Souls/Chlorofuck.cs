@@ -107,7 +107,7 @@ namespace FargowiltasSouls.Projectiles.Souls
 					num406 = 10f / num406;
 					num404 *= num406;
 					num405 *= num406;
-					Projectile.NewProjectile(projectile.Center.X - 4f, projectile.Center.Y, num404, num405, 227, projectile.damage, projectile.knockBack, projectile.owner);
+					Projectile.NewProjectile(projectile.Center.X - 4f, projectile.Center.Y, num404, num405, ProjectileID.CrystalLeafShot, projectile.damage, projectile.knockBack, projectile.owner);
 					projectile.ai[0] = cooldown;
                 }
 			}

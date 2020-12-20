@@ -1,12 +1,10 @@
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class PuffInABottle : ModItem
-    {   
+    public class PuffInABottle : SoulsItem
+    {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Puff in a Bottle");

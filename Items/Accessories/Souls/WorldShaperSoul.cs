@@ -4,22 +4,21 @@ using Terraria.ID;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     //[AutoloadEquip(EquipType.Back)]
-    public class WorldShaperSoul : ModItem
+    public class WorldShaperSoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("World Shaper Soul");
             Tooltip.SetDefault(
-@"Increased block and wall placement speed by 50% 
+@"Increased block and wall placement speed by 50%
 Near infinite block placement and mining reach
-Mining speed tripled 
+Mining speed tripled
 Shows the location of enemies, traps, and treasures
-Auto paint and actuator effect 
+Auto paint and actuator effect
 Provides light and allows gravity control
 Grants the ability to enable Builder Mode:
 Anything that creates a tile will not be consumed and can be used much faster
@@ -29,7 +28,7 @@ Effects of the Cell Phone and Royal Gel
 Summons a pet Magic Lantern
 'Limitless possibilities'");
             DisplayName.AddTranslation(GameCulture.Chinese, "铸世者之魂");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'无限的可能性'
 增加50%放置物块及墙壁的速度
 近乎无限的放置和采掘距离
@@ -51,15 +50,15 @@ Summons a pet Magic Lantern
             item.height = 20;
             item.accessory = true;
             item.value = 750000;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
 
-            item.useStyle = 4;
+            item.useStyle = ItemUseStyleID.HoldingUp;
             item.useTime = 1;
             item.UseSound = SoundID.Item6;
             item.useAnimation = 1;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

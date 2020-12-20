@@ -1,11 +1,12 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     [AutoloadEquip(EquipType.Shoes)]
-    public class EurusSock : ModItem
+    public class EurusSock : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -22,7 +23,7 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             item.height = 20;
             item.accessory = true;
             item.value = 50000;
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

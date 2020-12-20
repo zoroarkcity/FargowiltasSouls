@@ -5,7 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Forces
 {
-    public class TimberForce : ModItem
+    public class TimberForce : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -21,7 +21,7 @@ Double tap down to spawn a palm tree sentry that throws nuts at enemies
 Projectiles may spawn a star when they hit something
 'Extremely rigid'");
             DisplayName.AddTranslation(GameCulture.Chinese, "森林之力");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'很刚'
 大幅增加动物防御力
 杀死动物不会再获得内疚Debuff
@@ -40,7 +40,7 @@ Projectiles may spawn a star when they hit something
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = 600000;
         }
 

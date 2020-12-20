@@ -9,7 +9,7 @@ using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class TheBigSting : ModItem
+    public class TheBigSting : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -77,8 +77,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         public override Vector2? HoldoutOffset() => new Vector2(-10, 0);
 
         public override bool ConsumeAmmo(Player player) => Main.rand.Next(3) == 0;
-
-        public override void ModifyTooltips(List<TooltipLine> tooltips) => tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
 
         public override void AddRecipes()
         {

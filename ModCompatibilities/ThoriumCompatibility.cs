@@ -1,8 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using ThoriumMod.Items.MeleeItems;
-using ThoriumMod.Items.NPCItems;
-using ThoriumMod.Items.Steel;
 using ThoriumMod.Tiles;
 
 namespace FargowiltasSouls.ModCompatibilities

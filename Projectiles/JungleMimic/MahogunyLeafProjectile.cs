@@ -1,13 +1,11 @@
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
-using Terraria.GameContent.Achievements;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.JungleMimic
 {
-	public class MahogunyLeafProjectile : ModProjectile
+    public class MahogunyLeafProjectile : ModProjectile
 	{
 		public override void SetStaticDefaults(){
 			Main.projFrames[projectile.type] = 4;

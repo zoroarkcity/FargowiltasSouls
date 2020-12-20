@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class DragonBreath : ModItem
+    public class DragonBreath : SoulsItem
     {
         public override void SetStaticDefaults()
         {

@@ -4,12 +4,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     //[AutoloadEquip(EquipType.Neck)]
-    public class SnipersSoul : ModItem
+    public class SnipersSoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -39,10 +38,10 @@ Effects of Sniper Scope
             item.height = 20;
             item.accessory = true;
             item.value = 1000000;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -75,7 +74,6 @@ Effects of Sniper Scope
             recipe.AddIngredient(null, "SharpshootersEssence");
             recipe.AddIngredient(ItemID.MagicQuiver); //molten quiver
             recipe.AddIngredient(ItemID.SniperScope); //recon scope
-
 
             recipe.AddIngredient(ItemID.DartPistol);
             recipe.AddIngredient(ItemID.Megashark);

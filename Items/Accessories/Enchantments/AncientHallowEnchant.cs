@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class AncientHallowEnchant : ModItem
+    public class AncientHallowEnchant : SoulsItem
     {
         public override bool Autoload(ref string name)
         {
@@ -31,7 +31,7 @@ Summons a magical fairy
 召唤魔法妖精");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -48,7 +48,7 @@ Summons a magical fairy
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 6;
+            item.rare = ItemRarityID.LightPurple;
             item.value = 180000;
         }
 
@@ -71,7 +71,6 @@ Summons a magical fairy
             //paladin hammer
             //nightglow
             //terraprisma
-
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

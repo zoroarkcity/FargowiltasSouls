@@ -1,5 +1,4 @@
-﻿using FargowiltasSouls.Items.Summons;
-using FargowiltasSouls.Projectiles;
+﻿using FargowiltasSouls.Projectiles;
 using FargowiltasSouls.Projectiles.Deathrays;
 using FargowiltasSouls.Projectiles.Masomode;
 using Microsoft.Xna.Framework;

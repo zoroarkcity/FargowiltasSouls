@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class SquireEnchant : ModItem
+    public class SquireEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,13 +18,13 @@ You will reduce enemy immunity frames during this time
 Ballista pierces more targets and panics when you take damage
 'Squire, will you hurry?'");
             DisplayName.AddTranslation(GameCulture.Chinese, "精金魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'谁需要瞄准?'
 第8个抛射物将会分裂成3个
 分裂出的抛射物同样可以分裂");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -41,7 +41,7 @@ Ballista pierces more targets and panics when you take damage
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = 150000;
         }
 

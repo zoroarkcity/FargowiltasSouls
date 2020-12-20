@@ -1,13 +1,11 @@
 ﻿using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
-using FargowiltasSouls.Projectiles.BossWeapons;
 using Terraria;
 using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class DragonBreath2 : ModItem
+    public class DragonBreath2 : SoulsItem
     {
         public int skullTimer;
 
@@ -37,7 +35,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
             item.noMelee = true;
             item.value = Item.sellPrice(0, 15);
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.ranged = true;
         }
 

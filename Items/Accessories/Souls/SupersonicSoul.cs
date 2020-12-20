@@ -1,20 +1,18 @@
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     //[AutoloadEquip(EquipType.Shoes)]
-    public class SupersonicSoul : ModItem
+    public class SupersonicSoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Supersonic Soul"); 
+            DisplayName.SetDefault("Supersonic Soul");
 
             string tooltip =
 @"Allows Supersonic running, flight, and extra mobility on ice
@@ -46,10 +44,10 @@ Effects of Flying Carpet
             item.height = 20;
             item.accessory = true;
             item.value = 750000;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

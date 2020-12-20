@@ -1,14 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Armor
 {
     [AutoloadEquip(EquipType.Head)]
-    public class GaiaHelmet : ModItem
+    public class GaiaHelmet : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -71,7 +70,7 @@ Reduces max life and damage reduction by 20%";
             player.maxMinions += 1;
             player.maxTurrets += 1;
 
-            if (player.whoAmI == Main.myPlayer && player.controlUp && player.controlDown && player.releaseDown 
+            if (player.whoAmI == Main.myPlayer && player.controlUp && player.controlDown && player.releaseDown
                 && player.doubleTapCardinalTimer[0] > 0 && player.doubleTapCardinalTimer[0] != 15)
             {
                 fargoPlayer.GaiaOffense = !fargoPlayer.GaiaOffense;

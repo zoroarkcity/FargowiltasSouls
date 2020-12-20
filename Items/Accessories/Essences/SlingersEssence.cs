@@ -7,13 +7,12 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Essences
 {
-    public class SlingersEssence : ModItem
+    public class SlingersEssence : SoulsItem
     {
         public override bool Autoload(ref string name)
         {
             return false;
         }
-
 
         public override void SetStaticDefaults()
         {
@@ -35,7 +34,7 @@ namespace FargowiltasSouls.Items.Accessories.Essences
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -52,7 +51,7 @@ namespace FargowiltasSouls.Items.Accessories.Essences
             item.height = 20;
             item.accessory = true;
             item.value = 150000;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

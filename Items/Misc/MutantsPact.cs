@@ -6,21 +6,21 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Misc
 {
-	public class MutantsPact : ModItem
-	{
+    public class MutantsPact : SoulsItem
+    {
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Mutant's Pact");
+        {
+            DisplayName.SetDefault("Mutant's Pact");
             Tooltip.SetDefault(@"Permanently reduces Mutant's shop prices by 30%");
-		}
+        }
 
-		public override void SetDefaults()
-		{
+        public override void SetDefaults()
+        {
             item.width = 20;
             item.height = 20;
-            item.rare = 9;
+            item.rare = ItemRarityID.Cyan;
             item.maxStack = 1;
-            item.useStyle = 4;
+            item.useStyle = ItemUseStyleID.HoldingUp;
             item.useAnimation = 17;
             item.useTime = 17;
             item.consumable = true;
@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Items.Misc
             return true;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine line2 in list)
             {

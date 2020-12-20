@@ -1,10 +1,10 @@
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Misc
 {
-    public class LunarCrystal : ModItem
+    public class LunarCrystal : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Items.Misc
         public override void SetDefaults()
         {
             item.maxStack = 99;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.width = 12;
             item.height = 12;
             item.value = Item.sellPrice(0, 5, 0, 0);

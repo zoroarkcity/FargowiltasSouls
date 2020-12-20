@@ -6,7 +6,7 @@ using FargowiltasSouls.Items.Accessories.Enchantments;
 
 namespace FargowiltasSouls.Items.Accessories.Forces
 {
-    public class WillForce : ModItem
+    public class WillForce : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,7 +17,7 @@ namespace FargowiltasSouls.Items.Accessories.Forces
 Press the Gold hotkey to be encased in a Golden Shell
 You will not be able to move or attack, but will be immune to all damage
 20% chance for enemies to drop 5x loot
-Spears will rain down on struck enemies 
+Spears will rain down on struck enemies
 Double tap down to create a localized rain of arrows
 Continually attacking an enemy will grant you the Power of Valhalla buff
 Greatly enhances Ballista and Explosive Traps effectiveness
@@ -48,7 +48,7 @@ Summons several pets
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = 600000;
         }
 
@@ -56,7 +56,7 @@ Summons several pets
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             //super bleed on all
-            modPlayer.WillForce = true; 
+            modPlayer.WillForce = true;
             //midas, greedy ring, pet, zhonyas
             modPlayer.GoldEffect(hideVisual);
             //loot multiply

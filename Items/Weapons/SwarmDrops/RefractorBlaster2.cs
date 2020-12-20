@@ -1,5 +1,4 @@
-﻿using FargowiltasSouls.Projectiles.BossWeapons;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -9,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class RefractorBlaster2 : ModItem
+    public class RefractorBlaster2 : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -50,7 +49,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             int frame = height * Main.itemFrame[whoAmI];
             SpriteEffects flipdirection = thisitem.direction < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             Rectangle Origin = new Rectangle(0, frame, width, height);
-            spriteBatch.Draw(texture2D, thisitem.Center - Main.screenPosition, Origin, Color.White, rotation, Origin.Size()/2, scale, flipdirection, 0f);
+            spriteBatch.Draw(texture2D, thisitem.Center - Main.screenPosition, Origin, Color.White, rotation, Origin.Size() / 2, scale, flipdirection, 0f);
         }
 
         public override void AddRecipes()

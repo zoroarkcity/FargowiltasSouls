@@ -2,14 +2,13 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 using System.Collections.Generic;
 using System.Linq;
 using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class GolemTome2 : ModItem
+    public class GolemTome2 : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -39,8 +38,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.shoot = mod.ProjectileType("GolemHeadProj");
             item.shootSpeed = 20f;
         }
-
-        public override void ModifyTooltips(List<TooltipLine> tooltips) => tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
 
         public override void AddRecipes()
         {

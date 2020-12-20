@@ -1,13 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Audio;
-using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class HiveStaff : ModItem
+    public class HiveStaff : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -25,11 +23,11 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.height = 24;
             item.useTime = 15;
             item.useAnimation = 15;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.noMelee = true;
             item.UseSound = SoundID.Item78;
             item.value = 50000;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.shoot = mod.ProjectileType("HiveSentry");
             item.shootSpeed = 20f;
         }

@@ -2,12 +2,11 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Items.Weapons.BossDrops;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class MechanicalLeashOfCthulhu : ModItem
+    public class MechanicalLeashOfCthulhu : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -23,9 +22,9 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.width = 30;
             item.height = 10;
             item.value = Item.sellPrice(0, 10);
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.noMelee = true;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.autoReuse = true;
             item.useAnimation = 25;
             item.useTime = 25;

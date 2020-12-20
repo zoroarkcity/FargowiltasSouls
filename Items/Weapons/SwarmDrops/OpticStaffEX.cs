@@ -1,5 +1,4 @@
-﻿using Fargowiltas.Items.Tiles;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -7,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class OpticStaffEX : ModItem
+    public class OpticStaffEX : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -25,12 +24,12 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.height = 24;
             item.useAnimation = 37;
             item.useTime = 37;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.noMelee = true;
             item.knockBack = 3f;
             item.UseSound = SoundID.Item82;
             item.value = Item.sellPrice(0, 25);
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.buffType = mod.BuffType("TwinsEX");
             item.shoot = mod.ProjectileType("OpticRetinazer");
             item.shootSpeed = 10f;

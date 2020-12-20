@@ -4,10 +4,11 @@ using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria.ID;
+using FargowiltasSouls.Items;
 
 namespace FargowiltasSouls.Patreon.LaBonez
 {
-    public class PiranhaPlantVoodooDoll : ModItem
+    public class PiranhaPlantVoodooDoll : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -28,7 +29,7 @@ namespace FargowiltasSouls.Patreon.LaBonez
             item.consumable = false;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
             line.overrideColor = Color.Orange;

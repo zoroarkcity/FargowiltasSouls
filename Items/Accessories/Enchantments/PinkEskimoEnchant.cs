@@ -5,20 +5,20 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class PinkEskimoEnchant : ModItem
+    public class PinkEskimoEnchant : SoulsItem
     {
-    public override bool Autoload(ref string name)
+        public override bool Autoload(ref string name)
         {
             return false;
         }
-        
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pink Eskimo Enchantment");
             Tooltip.SetDefault(
 @"''");
             DisplayName.AddTranslation(GameCulture.Chinese, "爱斯基摩魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"''
 变为霜冻魔石
 可以水上行走,如此做时,水会结冰并产生尖刺
@@ -31,7 +31,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 7;
+            item.rare = ItemRarityID.Lime;
             item.value = 100000;
         }
 
@@ -63,7 +63,7 @@ if(modPlayer.EskimoEnchant && tile.type == IceRodBlock)
             recipe.AddIngredient(ItemID.FrostMinnow);
             recipe.AddIngredient(ItemID.AtlanticCod);
             recipe.AddIngredient(ItemID.MarshmallowonaStick);
-            
+
             //grinch pet? or steal pets from frost??!
 
             recipe.AddTile(TileID.CrystalBall);

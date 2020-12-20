@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class WoodEnchant : ModItem
+    public class WoodEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -15,9 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             Tooltip.SetDefault(
 @"Critters will explode 1 second after being released
 Grants immunity to Guilty
-'Humble beginnings…'"); 
+'Humble beginnings…'");
             DisplayName.AddTranslation(GameCulture.Chinese, "木魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'卑微的开始...'
 大幅增加动物防御力
 杀死动物不会再获得内疚Debuff
@@ -26,7 +26,7 @@ Grants immunity to Guilty
             //Effects of Critter guide tm
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -43,7 +43,7 @@ Grants immunity to Guilty
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.value = 10000;
         }
 
@@ -64,7 +64,7 @@ Grants immunity to Guilty
             recipe.AddIngredient(ItemID.LivingWoodWand);
             recipe.AddIngredient(ItemID.Bunny);
             recipe.AddRecipeGroup("FargowiltasSouls:AnySquirrel"); //squirrel hook
-            recipe.AddRecipeGroup("FargowiltasSouls:AnyBird"); 
+            recipe.AddRecipeGroup("FargowiltasSouls:AnyBird");
             //sugar glider pet
 
             recipe.AddTile(TileID.DemonAltar);

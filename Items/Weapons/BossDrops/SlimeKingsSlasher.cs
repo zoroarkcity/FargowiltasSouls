@@ -8,9 +8,10 @@ using FargowiltasSouls.Projectiles;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class SlimeKingsSlasher : ModItem
+    public class SlimeKingsSlasher : SoulsItem
     {
-        int numSpikes = 3;
+        private int numSpikes = 3;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Slime King's Slasher");
@@ -27,10 +28,10 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.height = 40;
             item.useTime = 25;
             item.useAnimation = 25;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 6;
             item.value = 10000;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<SlimeSpikeFriendly>();
@@ -43,7 +44,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 
             float spread = MathHelper.Pi / 8;
 
-            if(numSpikes == 5)
+            if (numSpikes == 5)
             {
                 spread = MathHelper.Pi / 5;
             }
@@ -52,7 +53,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 
             numSpikes += 2;
 
-            if(numSpikes > 5)
+            if (numSpikes > 5)
             {
                 numSpikes = 3;
             }

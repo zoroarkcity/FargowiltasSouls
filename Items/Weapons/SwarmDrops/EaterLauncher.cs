@@ -4,11 +4,10 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class EaterLauncher : ModItem
+    public class EaterLauncher : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -26,13 +25,13 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.height = 24;
             item.useTime = 16;
             item.useAnimation = 16;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 5f;
             item.UseSound = new LegacySoundStyle(2, 62);
             item.useAmmo = AmmoID.Rocket;
             item.value = Item.sellPrice(0, 10);
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("EaterRocket");
             item.shootSpeed = 16f;

@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class FleshCannon : ModItem
+    public class FleshCannon : SoulsItem
     {
         public int counter;
 
@@ -62,8 +62,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
             return false;
         }
-
-        public override void ModifyTooltips(List<TooltipLine> tooltips) => tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
 
         public override void AddRecipes()
         {

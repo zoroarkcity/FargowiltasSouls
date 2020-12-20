@@ -10,7 +10,7 @@ using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class BoneZone : ModItem
+    public class BoneZone : SoulsItem
     {
         private int counter = 1;
 
@@ -68,7 +68,5 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         }
 
         public override bool ConsumeAmmo(Player player) => Main.rand.Next(3) != 0;
-
-        public override void ModifyTooltips(List<TooltipLine> tooltips) => tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
     }
 }

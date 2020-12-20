@@ -1,5 +1,4 @@
-﻿using IL.Terraria.Audio;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
@@ -99,7 +98,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     target.AddBuff(BuffID.Poisoned, 600);
                     DustRing(p, 16);
                     p.Kill();
-                    Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 27, 1f, -0.4f);
+                    Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 27, 1f, -0.4f);
                     break;
                 }
             }

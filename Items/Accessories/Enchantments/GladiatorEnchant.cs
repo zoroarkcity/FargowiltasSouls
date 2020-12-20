@@ -7,23 +7,23 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class GladiatorEnchant : ModItem
+    public class GladiatorEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Gladiator Enchantment");
             Tooltip.SetDefault(
-@"Spears will rain down on struck enemies 
+@"Spears will rain down on struck enemies
 Summons a pet Minotaur
 'Are you not entertained?'");
             DisplayName.AddTranslation(GameCulture.Chinese, "角斗士魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'你难道不高兴吗?'
 长矛将倾泄在被攻击的敌人身上
 召唤一个小牛头人");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -40,7 +40,7 @@ Summons a pet Minotaur
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.value = 40000;
         }
 
@@ -63,7 +63,7 @@ Summons a pet Minotaur
             //storm spear
             recipe.AddIngredient(ItemID.AngelStatue);
             recipe.AddIngredient(ItemID.TartarSauce);
- 
+
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();

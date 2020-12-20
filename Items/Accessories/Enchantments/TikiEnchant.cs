@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class TikiEnchant : ModItem
+    public class TikiEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,13 +17,13 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 Summons a pet Tiki Spirit
 'Aku Aku!'");
             DisplayName.AddTranslation(GameCulture.Chinese, "提基魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'Aku Aku!'
 召唤数量达到上限后, 仍然可以召唤临时召唤物
 召唤提基之灵");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -40,7 +40,7 @@ Summons a pet Tiki Spirit
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 7;
+            item.rare = ItemRarityID.Lime;
             item.value = 150000;
         }
 
@@ -62,7 +62,7 @@ Summons a pet Tiki Spirit
             recipe.AddIngredient(ItemID.PygmyStaff);
             //kaledoscope
             recipe.AddIngredient(ItemID.TikiTotem);
-            
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

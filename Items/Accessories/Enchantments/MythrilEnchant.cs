@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class MythrilEnchant : ModItem
+    public class MythrilEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,12 +17,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 Taking damage temporarily removes this weapon use speed increase
 'You feel the knowledge of your weapons seep into your mind'");
             DisplayName.AddTranslation(GameCulture.Chinese, "秘银魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"你感觉你对武器的知识渗透到脑海中'
 增加25%武器使用速度");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -39,7 +39,7 @@ Taking damage temporarily removes this weapon use speed increase
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 100000;
         }
 

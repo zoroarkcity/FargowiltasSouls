@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class TwinLaser : ModItem
+    public class TwinLaser : SoulsItem
     {
         public override bool Autoload(ref string name)
         {
@@ -31,25 +31,19 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.useTime = 20;
             item.useAnimation = 20; //
             item.reuseDelay = 20;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             //item.UseSound = new LegacySoundStyle(4, 13);
             item.value = 50000;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("GeminiLaser1");
             item.shootSpeed = 14f;
-
-
-
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-
             //Main.NewText("mouse:" + Main.MouseWorld + " pos:" + position);
-
-
 
             Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
 
