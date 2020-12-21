@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -7,7 +6,6 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using Microsoft.Xna.Framework.Graphics;
 using FargowiltasSouls.Utilities;
-using Terraria.Graphics.Shaders;
 
 namespace FargowiltasSouls.Items.Summons
 {
@@ -36,7 +34,6 @@ namespace FargowiltasSouls.Items.Summons
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.consumable = true;
             item.value = Item.buyPrice(0, 2);
-            item.alpha = 255;
             item.noUseGraphic = true;
         }
 
@@ -58,14 +55,20 @@ namespace FargowiltasSouls.Items.Summons
             return true;
         }
 
+        int framecounter;
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            ExtraUtilities.DrawItem(whoAmI, Main.itemTexture[item.type], rotation, 7, Color.White);
-            return true;
-        }
-        public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-        {
-            Main.spriteBatch.Draw(Main.itemTexture[item.type], position, frame, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0f); //manually draw item icon because item alpha is set to 255
+            framecounter++;
+            if (framecounter > 3)
+            {
+                Main.itemFrame[whoAmI]++;
+                if (Main.itemFrame[whoAmI] > 6)
+                    Main.itemFrame[whoAmI] = 0;
+
+                framecounter = 0;
+            }
+            ExtraUtilities.DrawItem(whoAmI, Main.itemTexture[item.type], rotation, 7, Color.White); //item draws in wrong position by default so this is necessary
+            return false;
         }
 
         public override void AddRecipes()

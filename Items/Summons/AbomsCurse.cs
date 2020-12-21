@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -9,7 +8,6 @@ using FargowiltasSouls.NPCs.AbomBoss;
 using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Utilities;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.Graphics.Shaders;
 
 namespace FargowiltasSouls.Items.Summons
 {
@@ -34,7 +32,6 @@ namespace FargowiltasSouls.Items.Summons
             item.consumable = true;
             item.value = Item.buyPrice(gold: 8);
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.alpha = 255;
             item.noUseGraphic = true;
         }
 
@@ -59,18 +56,25 @@ namespace FargowiltasSouls.Items.Summons
 
             return true;
         }
+
+        int framecounter;
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            ExtraUtilities.DrawItem(whoAmI, Main.itemTexture[item.type], rotation, 10, lightColor);
-            return true;
+            framecounter++;
+            if (framecounter > 4)
+            {
+                Main.itemFrame[whoAmI]++;
+                if (Main.itemFrame[whoAmI] > 9)
+                    Main.itemFrame[whoAmI] = 0;
+
+                framecounter = 0;
+            }
+            ExtraUtilities.DrawItem(whoAmI, Main.itemTexture[item.type], rotation, 10, lightColor); //item draws in wrong position by default so this is necessary
+            return false;
         }
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
         {
             ExtraUtilities.DrawItem(whoAmI, mod.GetTexture("Items/Summons/AbomsCurse_glow"), rotation, 10, Color.White);
-        }
-        public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-        {
-            Main.spriteBatch.Draw(Main.itemTexture[item.type], position, frame, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0f); //manually draw item icon because item alpha is set to 255
         }
 
         public override void AddRecipes() // Make this harder again when changed to abom's gift

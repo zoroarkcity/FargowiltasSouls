@@ -1,12 +1,8 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.Graphics.Shaders;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
