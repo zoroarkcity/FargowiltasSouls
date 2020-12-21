@@ -5,6 +5,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.Graphics.Shaders;
+using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Summons
 {
@@ -28,9 +31,10 @@ namespace FargowiltasSouls.Items.Summons
             item.useAnimation = 30;
             item.useTime = 30;
             item.useStyle = ItemUseStyleID.HoldingUp;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
             item.consumable = true;
             item.value = Item.buyPrice(1);
-
+            item.alpha = 255; //returning false on predraw prevents item from animating at all, this was simplest method i could think of to work around that
             item.noUseGraphic = true;
         }
 
@@ -53,16 +57,19 @@ namespace FargowiltasSouls.Items.Summons
 
             return true;
         }
-
-        public override void SafeModifyTooltips(List<TooltipLine> list)
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            foreach (TooltipLine line2 in list)
-            {
-                if (line2.mod == "Terraria" && line2.Name == "ItemName")
-                {
-                    line2.overrideColor = new Color(Main.DiscoR, 51, 255 - (int)(Main.DiscoR * 0.4));
-                }
-            }
+            ExtraUtilities.DrawItem(whoAmI, Main.itemTexture[item.type], rotation, 11, lightColor); //item draws in wrong position by default so this is necessary
+            return true;
+        }
+        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+        {
+            ExtraUtilities.DrawItem(whoAmI, mod.GetTexture("Items/Summons/MutantsCurse_glow"), rotation, 11, Color.White);
+        }
+
+        public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            Main.spriteBatch.Draw(Main.itemTexture[item.type], position, frame, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0f); //manually draw item icon because item alpha is set to 255
         }
     }
 }

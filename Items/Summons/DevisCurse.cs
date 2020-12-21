@@ -5,6 +5,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Microsoft.Xna.Framework.Graphics;
+using FargowiltasSouls.Utilities;
+using Terraria.Graphics.Shaders;
 
 namespace FargowiltasSouls.Items.Summons
 {
@@ -25,14 +28,15 @@ namespace FargowiltasSouls.Items.Summons
         {
             item.width = 20;
             item.height = 20;
-            item.rare = ItemRarityID.Purple;
+            item.rare = ItemRarityID.LightRed;
             item.maxStack = 999;
             item.useAnimation = 30;
             item.useTime = 30;
             item.useStyle = ItemUseStyleID.HoldingUp;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
             item.consumable = true;
             item.value = Item.buyPrice(0, 2);
-
+            item.alpha = 255;
             item.noUseGraphic = true;
         }
 
@@ -54,15 +58,14 @@ namespace FargowiltasSouls.Items.Summons
             return true;
         }
 
-        public override void SafeModifyTooltips(List<TooltipLine> list)
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            foreach (TooltipLine line2 in list)
-            {
-                if (line2.mod == "Terraria" && line2.Name == "ItemName")
-                {
-                    line2.overrideColor = Main.DiscoColor;
-                }
-            }
+            ExtraUtilities.DrawItem(whoAmI, Main.itemTexture[item.type], rotation, 7, Color.White);
+            return true;
+        }
+        public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            Main.spriteBatch.Draw(Main.itemTexture[item.type], position, frame, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0f); //manually draw item icon because item alpha is set to 255
         }
 
         public override void AddRecipes()
