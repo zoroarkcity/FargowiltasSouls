@@ -1,13 +1,12 @@
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using Terraria.GameContent.Achievements;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.JungleMimic
 {
-	public class AcornProjectile : ModProjectile
+    public class AcornProjectile : ModProjectile
 	{
         public float bounce = 1;
         public override void SetStaticDefaults()

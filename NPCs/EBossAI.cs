@@ -1,5 +1,4 @@
-﻿using FargowiltasSouls.Items.Summons;
-using FargowiltasSouls.Projectiles;
+﻿using FargowiltasSouls.Projectiles;
 using FargowiltasSouls.Projectiles.Deathrays;
 using FargowiltasSouls.Projectiles.Masomode;
 using Microsoft.Xna.Framework;
@@ -5069,7 +5068,7 @@ namespace FargowiltasSouls.NPCs
                                     if (bodyPart.active)
                                     {
                                         int damage = 25;
-                                        for (int j = -3; j <= 3; j++)
+                                        for (int j = -2; j <= 2; j++)
                                         {
                                             Projectile.NewProjectile(bodyPart.Center,
                                                 6f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI / 2 / 3 * j),
@@ -5134,11 +5133,11 @@ namespace FargowiltasSouls.NPCs
                                         bodyPart.type == NPCID.MoonLordHand))
                                     {
                                         int damage = 35;
-                                        const int max = 6;
+                                        const int max = 8;
                                         for (int j = 0; j < max; j++)
                                         {
                                             Projectile.NewProjectile(bodyPart.Center,
-                                                2.5f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * 2 / max * j),
+                                                2.5f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * 2 / max * (j + 0.5)),
                                                 ModContent.ProjectileType<MoonLordNebulaBlaze>(), damage, 0f, Main.myPlayer);
                                         }
 

@@ -6,7 +6,7 @@ using Terraria.Localization;
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     [AutoloadEquip(EquipType.Shoes)]
-    public class AeolusBoots : ModItem
+    public class AeolusBoots : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -29,7 +29,7 @@ Increases jump height and negates fall damage
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = Item.sellPrice(0, 10);
         }
 
@@ -49,7 +49,7 @@ Increases jump height and negates fall damage
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            
+
             recipe.AddIngredient(ItemID.FrostsparkBoots); //terraspark
             //amphibian
             //fairy boots

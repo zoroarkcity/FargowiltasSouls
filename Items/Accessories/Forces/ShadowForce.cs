@@ -5,7 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Forces
 {
-    public class ShadowForce : ModItem
+    public class ShadowForce : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -49,7 +49,7 @@ Summons several pets
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = 600000;
         }
 

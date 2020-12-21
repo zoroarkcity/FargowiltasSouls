@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class BrainStaff : ModItem
+    public class BrainStaff : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -27,10 +27,10 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.height = 28;
             item.useTime = 36;
             item.useAnimation = 36;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.noMelee = true;
             item.knockBack = 3;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.UseSound = SoundID.Item44;
             item.shoot = ModContent.ProjectileType<BrainProj>();
             item.shootSpeed = 10f;
@@ -48,7 +48,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             {
                 Projectile.NewProjectile(spawnPos, Vector2.Zero, type, damage, knockBack, player.whoAmI);
             }
-            
+
             Projectile.NewProjectile(spawnPos, Main.rand.NextVector2Circular(10, 10), mod.ProjectileType("CreeperMinion"), damage, knockBack, player.whoAmI);
             return false;
         }

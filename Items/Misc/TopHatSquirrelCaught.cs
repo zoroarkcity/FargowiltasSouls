@@ -1,17 +1,10 @@
 ﻿using FargowiltasSouls.NPCs.Critters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Misc
 {
-    public class TopHatSquirrelCaught : ModItem
+    public class TopHatSquirrelCaught : SoulsItem
     {
         public override string Texture => "FargowiltasSouls/Items/Weapons/Misc/TophatSquirrelWeapon";
 
@@ -25,8 +18,8 @@ namespace FargowiltasSouls.Items.Misc
             item.width = 20;
             item.height = 20;
             item.maxStack = 10;
-            item.rare = 1;
-            item.useStyle = 1;
+            item.rare = ItemRarityID.Blue;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.useAnimation = 15;
             item.useTime = 10;
             item.consumable = true;

@@ -11,7 +11,7 @@ using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class RockSlide : ModItem
+    public class RockSlide : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -107,7 +107,5 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
 
             return false;
         }
-
-        public override void ModifyTooltips(List<TooltipLine> tooltips) => tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
     }
 }

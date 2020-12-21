@@ -5,9 +5,7 @@ using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 using System.IO;
-using Microsoft.Xna.Framework.Graphics;
 using FargowiltasSouls.Projectiles.AbomBoss;
 using FargowiltasSouls.Items.Summons;
 

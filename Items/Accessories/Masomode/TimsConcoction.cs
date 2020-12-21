@@ -1,10 +1,12 @@
 ﻿using Terraria;
-using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class TimsConcoction : ModItem
+    public class TimsConcoction : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tim's Concoction");
@@ -17,9 +19,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

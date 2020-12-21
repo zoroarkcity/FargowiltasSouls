@@ -5,8 +5,10 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class LumpOfFlesh : ModItem
+    public class LumpOfFlesh : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lump of Flesh");
@@ -34,9 +36,8 @@ Makes armed and magic skeletons less hostile outside the Dungeon
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 9;
+            item.rare = ItemRarityID.Cyan;
             item.value = Item.sellPrice(0, 7);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

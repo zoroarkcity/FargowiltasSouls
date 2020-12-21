@@ -4,10 +4,11 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using FargowiltasSouls.Items;
 
 namespace FargowiltasSouls.Patreon.Gittle
 {
-    public class RoombaPet : ModItem
+    public class RoombaPet : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -24,7 +25,7 @@ namespace FargowiltasSouls.Patreon.Gittle
             item.buffType = mod.BuffType("RoombaPetBuff");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
             line.overrideColor = Color.Orange;

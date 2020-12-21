@@ -2,8 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
-using FargowiltasSouls.Projectiles.DeviBoss;
 
 namespace FargowiltasSouls.NPCs.Champions
 {

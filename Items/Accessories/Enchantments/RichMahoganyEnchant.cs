@@ -7,22 +7,22 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class RichMahoganyEnchant : ModItem
+    public class RichMahoganyEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rich Mahogany Enchantment");
             Tooltip.SetDefault(
 @"All grappling hooks shoot, pull, and retract 1.5x as fast
-'Guaranteed to keep you hooked'"); 
+'Guaranteed to keep you hooked'");
             DisplayName.AddTranslation(GameCulture.Chinese, "红木魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'保证能勾住你'
 所有抓钩速度翻倍
 在丛林时,所有抓钩会定期向敌人发射追踪射击");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.value = 10000;
         }
 

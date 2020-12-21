@@ -5,10 +5,11 @@ using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using FargowiltasSouls.Items;
 
 namespace FargowiltasSouls.Patreon.Sasha
 {
-    public class MissDrakovisFishingPole : ModItem
+    public class MissDrakovisFishingPole : SoulsItem
     {
         private int mode = 1;
 
@@ -34,7 +35,7 @@ namespace FargowiltasSouls.Patreon.Sasha
             SetUpItem();
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
             line.overrideColor = Color.Orange;
@@ -102,7 +103,7 @@ namespace FargowiltasSouls.Patreon.Sasha
                         for (int i = -2; i <= 2; i++)
                         {
                             float modifier = 1f - 0.75f / 2f * Math.Abs(i);
-                            Projectile.NewProjectile(position, modifier * speed.RotatedBy(MathHelper.ToRadians(9) * i), 
+                            Projectile.NewProjectile(position, modifier * speed.RotatedBy(MathHelper.ToRadians(9) * i),
                                 mod.ProjectileType("Bubble"), damage, knockBack, player.whoAmI);
                         }
                     }

@@ -4,13 +4,12 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 using System.Linq;
 using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class GuardianTome : ModItem
+    public class GuardianTome : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -42,10 +41,9 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.shootSpeed = 18f;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine tooltipItemNameLine = tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria");
-            tooltipItemNameLine.ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
             tooltipItemNameLine.overrideColor = new Color(255, Main.DiscoG, 0);
         }
 

@@ -1437,6 +1437,24 @@ namespace FargowiltasSouls.Projectiles
 
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                if (projectile.arrow) //change archery and quiver to additive damage
+                {
+                    if (Main.player[projectile.owner].archery)
+                    {
+                        damage = (int)(damage / 1.2);
+                        damage = (int)((double)damage * (1.0 + 0.2 / Main.player[projectile.owner].rangedDamage));
+                    }
+
+                    if (Main.player[projectile.owner].magicQuiver)
+                    {
+                        damage = (int)(damage / 1.1);
+                        damage = (int)((double)damage * (1.0 + 0.1 / Main.player[projectile.owner].rangedDamage));
+                    }
+                }
+            }
+
             if (projectile.type >= ProjectileID.StardustDragon1 && projectile.type <= ProjectileID.StardustDragon4
                 && Main.player[projectile.owner].GetModPlayer<FargoPlayer>().TikiMinion
                 && Main.player[projectile.owner].ownedProjectileCounts[ProjectileID.StardustDragon2] > Main.player[projectile.owner].GetModPlayer<FargoPlayer>().actualMinions)

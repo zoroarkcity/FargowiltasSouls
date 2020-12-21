@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Mounts
 {
-    public class AcornConstruct : ModItem
+    public class AcornConstruct : SoulsItem
     {
         public override string Texture => "FargowiltasSouls/Items/Placeholder";
 
@@ -18,9 +18,9 @@ namespace FargowiltasSouls.Items.Mounts
             item.height = 30;
             item.useTime = 20;
             item.useAnimation = 20;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.value = 30000;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.UseSound = SoundID.Item79;
             item.noMelee = true;
             item.mountType = ModContent.MountType<TrojanSquirrelMount>();

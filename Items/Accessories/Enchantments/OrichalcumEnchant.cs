@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class OrichalcumEnchant : ModItem
+    public class OrichalcumEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,13 +17,13 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 Damaging debuffs deal 3x damage
 'Nature blesses you'");
             DisplayName.AddTranslation(GameCulture.Chinese, "山铜魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'自然祝福着你'
 花瓣对你的目标造成额外伤害
 召唤6个环绕你的火球");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -40,7 +40,7 @@ Damaging debuffs deal 3x damage
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 100000;
         }
 

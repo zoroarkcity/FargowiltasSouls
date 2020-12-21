@@ -1,13 +1,13 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using FargowiltasSouls.Items;
 
 namespace FargowiltasSouls.Patreon.ManliestDove
 {
-    public class FigBranch : ModItem
+    public class FigBranch : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Patreon.ManliestDove
             item.buffType = ModContent.BuffType<DoveBuff>();
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
             line.overrideColor = Color.Orange;

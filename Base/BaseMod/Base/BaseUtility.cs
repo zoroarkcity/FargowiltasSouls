@@ -75,20 +75,20 @@ namespace FargowiltasSouls
 			if(tile.frameY != 0) top--;
 			if(player.sign >= 0)
 			{
-				Main.PlaySound(11, -1, -1, 1);
+				Main.PlaySound(SoundID.MenuClose, -1, -1, 1);
 				player.sign = -1;
 				Main.editSign = false;
 				Main.npcChatText = "";
 			}
 			if(Main.editChest)
 			{
-				Main.PlaySound(12, -1, -1, 1);
+				Main.PlaySound(SoundID.MenuTick, -1, -1, 1);
 				Main.editChest = false;
 				Main.npcChatText = "";
 			}
 			if(player.editedChestName)
 			{
-				NetMessage.SendData(33, -1, -1, NetworkText.FromLiteral(Main.chest[player.chest].name), player.chest, 1f, 0f, 0f, 0, 0, 0);
+				NetMessage.SendData(MessageID.SyncPlayerChest, -1, -1, NetworkText.FromLiteral(Main.chest[player.chest].name), player.chest, 1f, 0f, 0f, 0, 0, 0);
 				player.editedChestName = false;
 			}
 			if(Main.netMode == NetmodeID.MultiplayerClient)
@@ -97,10 +97,10 @@ namespace FargowiltasSouls
 				{
 					player.chest = -1;
 					Recipe.FindRecipes();
-					Main.PlaySound(11, -1, -1, 1);
+					Main.PlaySound(SoundID.MenuClose, -1, -1, 1);
 				}else
 				{
-					NetMessage.SendData(31, -1, -1, NetworkText.FromLiteral(""), left, top, 0f, 0f, 0, 0, 0);
+					NetMessage.SendData(MessageID.RequestChestOpen, -1, -1, NetworkText.FromLiteral(""), left, top, 0f, 0f, 0, 0, 0);
 					Main.stackSplit = 600;
 				}
 			}else
@@ -112,7 +112,7 @@ namespace FargowiltasSouls
 					if(chest == player.chest)
 					{
 						player.chest = -1;
-						Main.PlaySound(11, -1, -1, 1);
+						Main.PlaySound(SoundID.MenuClose, -1, -1, 1);
 					}else
 					{
 						player.chest = chest;

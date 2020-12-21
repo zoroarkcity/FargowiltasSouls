@@ -5,7 +5,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 
 namespace FargowiltasSouls.Projectiles
 {

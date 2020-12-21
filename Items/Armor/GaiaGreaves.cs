@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace FargowiltasSouls.Items.Armor
 {
     [AutoloadEquip(EquipType.Legs)]
-    public class GaiaGreaves : ModItem
+    public class GaiaGreaves : SoulsItem
     {
         public override void SetStaticDefaults()
         {

@@ -15,10 +15,6 @@ using FargowiltasSouls.Items.Accessories.Masomode;
 using FargowiltasSouls.Items.Misc;
 using Fargowiltas.NPCs;
 using FargowiltasSouls.Items.Tiles;
-using Fargowiltas.Items.Tiles;
-using FargowiltasSouls.Buffs.Souls;
-using Fargowiltas;
-using Microsoft.Xna.Framework.Graphics;
 using FargowiltasSouls.Items.Weapons.Misc;
 
 namespace FargowiltasSouls.NPCs
@@ -6864,7 +6860,7 @@ namespace FargowiltasSouls.NPCs
                         bool dropItems = true;
                         for (int i = 0; i < 200; i++)
                         {
-                            if (Main.npc[i].active && i != npc.whoAmI && (Main.npc[i].type == 13 || Main.npc[i].type == 14 || Main.npc[i].type == 15))
+                            if (Main.npc[i].active && i != npc.whoAmI && (Main.npc[i].type == NPCID.EaterofWorldsHead || Main.npc[i].type == NPCID.EaterofWorldsBody || Main.npc[i].type == NPCID.EaterofWorldsTail))
                             {
                                 dropItems = false;
                                 break;
@@ -6990,7 +6986,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.CultistBoss:
                         npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<CelestialRune>());
-                        if (Main.player[Main.myPlayer].extraAccessorySlots == 1 || Main.netMode != 0)
+                        if (Main.player[Main.myPlayer].extraAccessorySlots == 1 || Main.netMode != NetmodeID.SinglePlayer)
                             npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<CelestialSeal>());
                         break;
 

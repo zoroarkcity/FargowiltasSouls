@@ -1,11 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Items;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Patreon.Catsounds
 {
-    public class MedallionoftheFallenKing : ModItem
+    public class MedallionoftheFallenKing : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -23,7 +24,7 @@ namespace FargowiltasSouls.Patreon.Catsounds
             item.value = 50000;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
             line.overrideColor = Color.Orange;

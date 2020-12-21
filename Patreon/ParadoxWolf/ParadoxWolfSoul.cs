@@ -1,13 +1,14 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Terraria.ID;
 using System;
 using System.Collections.Generic;
+using Terraria.ID;
+using FargowiltasSouls.Items;
 
 namespace FargowiltasSouls.Patreon.ParadoxWolf
 {
-    public class ParadoxWolfSoul : ModItem
+    public class ParadoxWolfSoul : SoulsItem
     {
         private int dashTime = 0;
         private int dashCD = 0;
@@ -29,7 +30,7 @@ There is a cooldown of 5 seconds between uses");
             item.value = 100000;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
             line.overrideColor = Color.Orange;
@@ -88,9 +89,9 @@ There is a cooldown of 5 seconds between uses");
                 {
                     player.velocity *= 0.5f;
                     player.dashDelay = 0;
-                    dashCD = 300; 
+                    dashCD = 300;
                 }
-                
+
                 return;
             }
 
@@ -122,7 +123,7 @@ There is a cooldown of 5 seconds between uses");
 
                 Projectile.NewProjectile(player.Center, new Vector2(player.velocity.X, 0), ModContent.ProjectileType<WolfDashProj>(), (int)(50 * player.meleeDamage), 0f, player.whoAmI);
 
-                Main.PlaySound(4, (int)player.Center.X, (int)player.Center.Y, 8);
+                Main.PlaySound(SoundID.NPCKilled, (int)player.Center.X, (int)player.Center.Y, 8);
             }
         }
     }

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class MeteorEnchant : ModItem
+    public class MeteorEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -42,7 +42,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 100000;
         }
 

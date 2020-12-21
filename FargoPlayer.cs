@@ -3616,7 +3616,29 @@ namespace FargowiltasSouls
         public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat)
         {
             if (FargoSoulsWorld.MasochistMode)
+            {
                 mult *= MasoItemNerfs(item.type);
+
+                if (item.ranged) //change all of these to additive
+                {
+                    //shroomite headpieces
+                    if (item.useAmmo == AmmoID.Arrow || item.useAmmo == AmmoID.Stake)
+                    {
+                        mult /= player.arrowDamage;
+                        add += player.arrowDamage - 1f;
+                    }
+                    if (item.useAmmo == AmmoID.Bullet || item.useAmmo == AmmoID.CandyCorn)
+                    {
+                        mult /= player.bulletDamage;
+                        add += player.bulletDamage - 1f;
+                    }
+                    if (item.useAmmo == AmmoID.Rocket || item.useAmmo == AmmoID.StyngerBolt || item.useAmmo == AmmoID.JackOLantern || item.useAmmo == AmmoID.NailFriendly)
+                    {
+                        mult /= player.bulletDamage;
+                        add += player.bulletDamage - 1f;
+                    }
+                }
+            }
         }
 
         private float MasoItemNerfs(int type)
@@ -3630,31 +3652,19 @@ namespace FargowiltasSouls
                 case ItemID.Razorpine:
                     AttackSpeed *= 2f / 3f;
                     return 2f / 3f;
-
-                case ItemID.DaedalusStormbow:
+                    
                 case ItemID.StarCannon:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.SnowmanCannon:
                 case ItemID.DemonScythe:
-                case ItemID.BeesKnees:
+                case ItemID.DaedalusStormbow:
                     return 2f / 3f;
-
-                case ItemID.SpaceGun:
-                    if (!NPC.downedBoss2)
-                    {
-                        AttackSpeed *= 0.75f;
-                        return 0.75f;
-                    }
-                    return 1f;
 
                 case ItemID.DD2BetsyBow:
                 case ItemID.Uzi:
                 case ItemID.PhoenixBlaster:
                 case ItemID.LastPrism:
-                case ItemID.Tsunami:
-                case ItemID.Phantasm:
                 case ItemID.OnyxBlaster:
-                case ItemID.HellwingBow:
                 case ItemID.Beenade:
                 case ItemID.Handgun:
                 case ItemID.SpikyBall:
@@ -3665,12 +3675,24 @@ namespace FargowiltasSouls
                 case ItemID.PainterPaintballGun:
                 case ItemID.XenoStaff:
                 case ItemID.MoltenFury:
+                case ItemID.BeesKnees:
                     return 0.75f;
+
+                case ItemID.SpaceGun:
+                    if (!NPC.downedBoss2)
+                    {
+                        AttackSpeed *= 0.75f;
+                        return 0.75f;
+                    }
+                    return 0.85f;
                     
+                case ItemID.Tsunami:
+                case ItemID.ChlorophyteShotbow:
+                case ItemID.Phantasm:
+                case ItemID.HellwingBow:
                 case ItemID.DartPistol:
                 case ItemID.DartRifle:
                 case ItemID.VampireKnives:
-                case ItemID.ChlorophyteShotbow:
                 case ItemID.Megashark:
                 case ItemID.BatScepter:
                 case ItemID.ChainGun:

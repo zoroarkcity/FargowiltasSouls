@@ -1,12 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Misc
 {
-    public class RabiesVaccine : ModItem
+    public class RabiesVaccine : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,9 +16,9 @@ namespace FargowiltasSouls.Items.Misc
         {
             item.width = 20;
             item.height = 20;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.maxStack = 1;
-            item.useStyle = 2;
+            item.useStyle = ItemUseStyleID.EatingUsing;
             item.useAnimation = 17;
             item.useTime = 17;
             item.consumable = true;

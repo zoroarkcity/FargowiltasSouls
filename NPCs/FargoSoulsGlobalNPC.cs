@@ -5,7 +5,6 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
-using FargowiltasSouls.Items.Misc;
 using FargowiltasSouls.Items.Weapons.BossDrops;
 using FargowiltasSouls.NPCs.Critters;
 using FargowiltasSouls.Projectiles.Souls;
@@ -714,7 +713,7 @@ namespace FargowiltasSouls.NPCs
                         bool dropItems = true;
                         for (int i = 0; i < 200; i++)
                         {
-                            if (Main.npc[i].active && i != npc.whoAmI && (Main.npc[i].type == 13 || Main.npc[i].type == 14 || Main.npc[i].type == 15))
+                            if (Main.npc[i].active && i != npc.whoAmI && (Main.npc[i].type == NPCID.EaterofWorldsHead || Main.npc[i].type == NPCID.EaterofWorldsBody || Main.npc[i].type == NPCID.EaterofWorldsTail))
                             {
                                 dropItems = false;
                                 break;

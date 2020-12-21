@@ -4,11 +4,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
 {
-    public class SlimeRain : ModItem
+    public class SlimeRain : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -26,11 +25,11 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             item.height = 90;
             item.useTime = 10;
             item.useAnimation = 20;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.melee = true;
             item.knockBack = 6;
             item.value = Item.sellPrice(1);
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.UseSound = SoundID.Item34;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("SlimeBall");
@@ -40,7 +39,7 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             item.reuseDelay = 14;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine line2 in list)
             {

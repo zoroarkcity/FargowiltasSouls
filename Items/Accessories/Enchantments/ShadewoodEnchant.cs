@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class ShadewoodEnchant : ModItem
+    public class ShadewoodEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -15,15 +15,15 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             Tooltip.SetDefault(
 @"You have an aura of Bleeding
 Enemies struck while Bleeding spew damaging blood
-'Surprisingly clean'"); 
+'Surprisingly clean'");
             DisplayName.AddTranslation(GameCulture.Chinese, "阴影木魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'出奇的干净'
 受到伤害时会鲜血四溅
 在血腥地形时,被击中会使敌人造成大出血");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -40,7 +40,7 @@ Enemies struck while Bleeding spew damaging blood
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.value = 10000;
         }
 
@@ -52,7 +52,7 @@ Enemies struck while Bleeding spew damaging blood
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            
+
             recipe.AddIngredient(ItemID.ShadewoodHelmet);
             recipe.AddIngredient(ItemID.ShadewoodBreastplate);
             recipe.AddIngredient(ItemID.ShadewoodGreaves);

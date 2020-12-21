@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class RefractorBlaster : ModItem
+    public class RefractorBlaster : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.useAnimation = 24;
             item.shootSpeed = 15f;
             item.value = 100000;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
 
             //item.mana = 10;
         }
@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         //cuts out the middle 5: num of 21 means 8 proj on each side
         public static void SplitProj(Projectile projectile, int number)
         {
-            //if its odd, we just keep the original 
+            //if its odd, we just keep the original
             if (number % 2 != 0)
             {
                 number--;

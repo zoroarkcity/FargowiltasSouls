@@ -8,7 +8,7 @@ using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class Dicer : ModItem
+    public class Dicer : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -42,7 +42,5 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         }
 
         public override void HoldItem(Player player) => player.stringColor = 5;
-
-        public override void ModifyTooltips(List<TooltipLine> tooltips) => tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria").ArticlePrefixAdjustment(item.prefix, new string[1] { "The" });
     }
 }

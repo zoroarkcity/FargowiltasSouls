@@ -1,13 +1,13 @@
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class SparklingAdoration : ModItem
+    public class SparklingAdoration : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sparkling Adoration");
@@ -24,9 +24,8 @@ Your attacks periodically summon life-draining hearts
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.value = Item.sellPrice(0, 3);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

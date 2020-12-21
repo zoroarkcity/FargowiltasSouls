@@ -1,16 +1,12 @@
-﻿using FargowiltasSouls.Projectiles.Minions;
-using IL.Terraria.Chat.Commands;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI.Chat;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
-	public class SpazmaglaiveExplosion : ModProjectile
+    public class SpazmaglaiveExplosion : ModProjectile
 	{
 		public override void SetDefaults()
 		{

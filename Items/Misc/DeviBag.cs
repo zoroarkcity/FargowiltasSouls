@@ -1,11 +1,11 @@
 ﻿using Terraria;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Misc
 {
-    public class DeviBag : ModItem
+    public class DeviBag : SoulsItem
     {
         public override int BossBagNPC => ModContent.NPCType<NPCs.DeviBoss.DeviBoss>();
 
@@ -23,13 +23,12 @@ namespace FargowiltasSouls.Items.Misc
             item.consumable = true;
             item.width = 24;
             item.height = 24;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
         }
 
         public override void OpenBossBag(Player player)
         {
             player.QuickSpawnItem(mod.ItemType("DeviatingEnergy"), Main.rand.Next(11) + 10);
-
         }
     }
 }

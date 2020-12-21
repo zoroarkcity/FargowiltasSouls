@@ -1,5 +1,4 @@
-﻿using Fargowiltas.Items.Tiles;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -51,10 +50,10 @@ namespace FargowiltasSouls
                 for (int j = y; j < y + 2; j++)
                     ClearTile(i, j);
 
-            if (Main.netMode != 0)
+            if (Main.netMode != NetmodeID.SinglePlayer)
             {
                 if (chest != -1)
-                    NetMessage.SendData(34, -1, -1, null, chestType, x, y, 0f, chest, Main.tile[x, y].type, 0);
+                    NetMessage.SendData(MessageID.ChestUpdates, -1, -1, null, chestType, x, y, 0f, chest, Main.tile[x, y].type, 0);
 
                 NetMessage.SendTileSquare(-1, x, y, 3);
             }
@@ -146,7 +145,7 @@ namespace FargowiltasSouls
         }
         internal static void SquareUpdate(int x, int y)
         {
-            if (Main.netMode != 0)
+            if (Main.netMode != NetmodeID.SinglePlayer)
                 NetMessage.SendTileSquare(-1, x, y, 1);
         }
         internal static bool NoDungeon(int x, int y) => NoBlueDungeon(x, y) && NoGreenDungeon(x, y) && NoPinkDungeon(x, y);
@@ -263,7 +262,7 @@ namespace FargowiltasSouls
                                 }
                                 else
                                 {
-                                    NetMessage.SendData(61, -1, -1, null, p, -1f);
+                                    NetMessage.SendData(MessageID.SpawnBoss, -1, -1, null, p, -1f);
                                 }
                             }
                         }

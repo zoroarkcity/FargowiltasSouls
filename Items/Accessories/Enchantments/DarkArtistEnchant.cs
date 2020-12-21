@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class DarkArtistEnchant : ModItem
+    public class DarkArtistEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -21,11 +21,11 @@ Greatly enhances Flameburst effectiveness
 Summons a pet Flickerwick
 'The shadows hold more than they seem'";
 
-            Tooltip.SetDefault(tooltip); 
+            Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "暗黑艺术家魔石");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -42,7 +42,7 @@ Summons a pet Flickerwick
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = 250000;
         }
 
@@ -66,7 +66,6 @@ Summons a pet Flickerwick
             //Razorpine
             //staff of earth
             recipe.AddIngredient(ItemID.DD2PetGhost);
-
 
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);

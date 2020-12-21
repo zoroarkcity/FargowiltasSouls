@@ -1,13 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class DestroyerGun2 : ModItem
+    public class DestroyerGun2 : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -26,12 +25,12 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.height = 24;
             item.useAnimation = 70;
             item.useTime = 70;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 1.5f;
             item.UseSound = new LegacySoundStyle(4, 13);
             item.value = Item.sellPrice(0, 25);
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("DestroyerHead2");
             item.shootSpeed = 18f;

@@ -7,7 +7,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
-    public class ConjuristsSoul : ModItem
+    public class ConjuristsSoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -37,10 +37,10 @@ Increased minion knockback
             item.height = 20;
             item.accessory = true;
             item.value = 1000000;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -65,8 +65,7 @@ Increased minion knockback
             recipe.AddIngredient(null, "OccultistsEssence");
             recipe.AddIngredient(ItemID.PapyrusScarab);
 
-
-           //blade staff
+            //blade staff
             recipe.AddIngredient(ItemID.PirateStaff);
             recipe.AddIngredient(ItemID.OpticStaff);
             recipe.AddIngredient(ItemID.DeadlySphereStaff);

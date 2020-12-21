@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class ShroomiteEnchant : ModItem
+    public class ShroomiteEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -25,12 +25,12 @@ Summons a pet Truffle
 潜行时, 暴击造成3倍伤害
 召唤一个小蘑菇人";
 
-            Tooltip.SetDefault(tooltip); 
+            Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "蘑菇魔石");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -47,7 +47,7 @@ Summons a pet Truffle
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = 250000;
         }
 
@@ -69,7 +69,7 @@ Summons a pet Truffle
             //venus magnum
             recipe.AddIngredient(ItemID.TacticalShotgun);
             recipe.AddIngredient(ItemID.StrangeGlowingMushroom);
-            
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

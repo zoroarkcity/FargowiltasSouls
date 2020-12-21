@@ -7,27 +7,27 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Misc
 {
-	public class MutantsFury : ModItem
-	{
+    public class MutantsFury : SoulsItem
+    {
         public override string Texture => "FargowiltasSouls/Items/Placeholder";
 
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Mutant's Fury");
+        {
+            DisplayName.SetDefault("Mutant's Fury");
             Tooltip.SetDefault("'REALLY enrages Mutant... or doesn't'");
             DisplayName.AddTranslation(GameCulture.Chinese, "突变狂怒");
             Tooltip.AddTranslation(GameCulture.Chinese, "'真·正激怒突变体... 也许并不'");
-		}
+        }
 
-		public override void SetDefaults()
-		{
+        public override void SetDefaults()
+        {
             item.width = 20;
             item.height = 20;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.maxStack = 999;
             item.useAnimation = 30;
             item.useTime = 30;
-            item.useStyle = 4;
+            item.useStyle = ItemUseStyleID.HoldingUp;
             item.consumable = false;
             item.value = Item.buyPrice(1);
         }
@@ -49,7 +49,7 @@ namespace FargowiltasSouls.Items.Misc
             return true;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine line2 in list)
             {

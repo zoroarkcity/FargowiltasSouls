@@ -74,7 +74,7 @@ namespace FargowiltasSouls.Projectiles.Champions
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(0, projectile.Center);
+            Main.PlaySound(SoundID.Dig, projectile.Center);
 
             for (int i = 0; i < 16; ++i)
             {

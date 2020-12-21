@@ -7,7 +7,7 @@ using FargowiltasSouls.Projectiles.BossWeapons;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class TwinRangs : ModItem
+    public class TwinRangs : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -27,12 +27,12 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.useTime = 25;
             item.useAnimation = 25;
             item.noUseGraphic = true;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 3;
             item.value = 100000;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.shootSpeed = 20;
-            item.shoot = 1;
+            item.shoot = ProjectileID.WoodenArrowFriendly;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
         }

@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargowiltasSouls.Items;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Patreon.Sam
 {
-    public class SquidwardDoor : ModItem
+    public class SquidwardDoor : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Patreon.Sam
             item.createTile = mod.TileType("SquidwardDoorClosed");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
             line.overrideColor = Color.Orange;

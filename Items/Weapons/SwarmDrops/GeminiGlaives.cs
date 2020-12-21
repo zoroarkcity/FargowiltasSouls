@@ -7,9 +7,9 @@ using FargowiltasSouls.Projectiles.BossWeapons;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class GeminiGlaives : ModItem
+    public class GeminiGlaives : SoulsItem
     {
-        int lastThrown = 0;
+        private int lastThrown = 0;
 
         public override void SetStaticDefaults()
         {
@@ -30,12 +30,12 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.useTime = 40;
             item.useAnimation = 40;
             item.noUseGraphic = true;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 3;
             item.value = Item.sellPrice(0, 25);
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.shootSpeed = 20;
-            item.shoot = 1;
+            item.shoot = ProjectileID.WoodenArrowFriendly;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
         }
@@ -49,7 +49,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             if (player.ownedProjectileCounts[ModContent.ProjectileType<Retiglaive>()] > 0 || player.ownedProjectileCounts[ModContent.ProjectileType<Spazmaglaive>()] > 0)
                 return false;
-
 
             if (player.altFunctionUse == 2)
             {

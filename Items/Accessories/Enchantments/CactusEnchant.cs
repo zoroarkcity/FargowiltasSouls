@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class CactusEnchant : ModItem
+    public class CactusEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,13 +17,13 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 Enemies may explode into needles on death
 'It's the quenchiest!'");
             DisplayName.AddTranslation(GameCulture.Chinese, "仙人掌魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'太解渴了!'
 反射25%接触伤害
 敌人在死亡时可能会爆出刺");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -40,7 +40,7 @@ Enemies may explode into needles on death
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.value = 20000;
         }
 
@@ -63,7 +63,7 @@ Enemies may explode into needles on death
             //any dragonfly
             // flounder
             recipe.AddIngredient(ItemID.SecretoftheSands);
-            
+
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();

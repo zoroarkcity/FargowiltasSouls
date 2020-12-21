@@ -4,7 +4,6 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Buffs.Masomode;
 using Terraria.Graphics.Shaders;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons

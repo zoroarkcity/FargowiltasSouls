@@ -1,12 +1,13 @@
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class FusedLens : ModItem
+    public class FusedLens : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fused Lens");
@@ -24,9 +25,8 @@ Your attacks inflict Cursed Inferno and Ichor
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 6;
+            item.rare = ItemRarityID.LightPurple;
             item.value = Item.sellPrice(0, 4);
-            item.GetGlobalItem<EternityItem>().Eternity = true;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

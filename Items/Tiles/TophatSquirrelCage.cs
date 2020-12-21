@@ -1,14 +1,11 @@
 using FargowiltasSouls.Items.Misc;
-using Microsoft.Xna.Framework;
-using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace FargowiltasSouls.Items.Tiles
 {
-    public class TophatSquirrelCage : ModItem
+    public class TophatSquirrelCage : SoulsItem
     {
         public override void SetStaticDefaults()
         {

@@ -1,13 +1,12 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class AncientCobaltEnchant : ModItem
+    public class AncientCobaltEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,7 +17,7 @@ This can only happen once every second
 'The jungle of old empowers you'");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -35,7 +34,7 @@ This can only happen once every second
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = 50000;
         }
 

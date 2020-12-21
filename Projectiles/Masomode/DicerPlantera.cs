@@ -63,7 +63,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
                     if (projectile.ai[1] > 0) //propagate
                     {
-                        Main.PlaySound(6, projectile.Center);
+                        Main.PlaySound(SoundID.Grass, projectile.Center);
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Projectile.NewProjectile(projectile.Center, projectile.velocity,

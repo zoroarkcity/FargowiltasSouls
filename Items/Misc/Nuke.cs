@@ -6,7 +6,7 @@ using FargowiltasSouls.Projectiles;
 
 namespace FargowiltasSouls.Items.Misc
 {
-    public class Nuke : ModItem
+    public class Nuke : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -24,8 +24,8 @@ namespace FargowiltasSouls.Items.Misc
             item.height = 32;
             item.maxStack = 99;
             item.consumable = true;
-            item.useStyle = 1;
-            item.rare = 4;
+            item.useStyle = ItemUseStyleID.SwingThrow;
+            item.rare = ItemRarityID.LightRed;
             item.UseSound = SoundID.Item1;
             item.useAnimation = 20;
             item.useTime = 20;
