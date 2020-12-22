@@ -93,6 +93,25 @@ Effects of Sniper Scope, Celestial Cuffs and Mana Flower
             player.manaFlower = true;
             player.manaMagnet = true;
             player.magicCuffs = true;
+
+            if (ModLoader.GetMod("FargowiltasSoulsDLC") != null)
+            {
+                Mod fargoDLC = ModLoader.GetMod("FargowiltasSoulsDLC");
+
+                if (ModLoader.GetMod("ThoriumMod") != null)
+                {
+                    fargoDLC.GetItem("GuardianAngelsSoul").UpdateAccessory(player, hideVisual);
+                    fargoDLC.GetItem("BardSoul").UpdateAccessory(player, hideVisual);
+                }
+                if (ModLoader.GetMod("CalamityMod") != null)
+                {
+                    fargoDLC.GetItem("RogueSoul").UpdateAccessory(player, hideVisual);
+                }
+                if (ModLoader.GetMod("DBZMOD") != null)
+                {
+                    fargoDLC.GetItem("KiSoul").UpdateAccessory(player, hideVisual);
+                }
+            }
         }
 
         public override void AddRecipes()
