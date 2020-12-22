@@ -517,6 +517,23 @@ Additionally grants:");
             //MASOCHIST
             mod.GetItem("MasochistSoul").UpdateAccessory(player, hideVisual);
 
+            if (ModLoader.GetMod("FargowiltasSoulsDLC") != null)
+            {
+                Mod fargoDLC = ModLoader.GetMod("FargowiltasSoulsDLC");
+
+                if (ModLoader.GetMod("ThoriumMod") != null)
+                {
+                    fargoDLC.GetItem("ThoriumSoul").UpdateAccessory(player, hideVisual);
+                }
+                if (ModLoader.GetMod("CalamityMod") != null)
+                {
+                    fargoDLC.GetItem("CalamitySoul").UpdateAccessory(player, hideVisual);
+                }
+                if (ModLoader.GetMod("SacredTools") != null)
+                {
+                    fargoDLC.GetItem("SoASoul").UpdateAccessory(player, hideVisual);
+                }
+            }
         }
 
         public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,

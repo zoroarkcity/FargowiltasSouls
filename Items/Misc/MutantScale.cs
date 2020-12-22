@@ -8,7 +8,7 @@ namespace FargowiltasSouls.Items.Misc
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Abominable Scale");
+			DisplayName.SetDefault("Abominable Energy");
         }
 
 		public override void SetDefaults()
