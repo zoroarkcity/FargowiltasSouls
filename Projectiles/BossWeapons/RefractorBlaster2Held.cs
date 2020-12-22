@@ -218,7 +218,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
 		public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture2D = mod.GetTexture("Items/Weapons/SwarmDrops/RefractorBlaster2Glow");
+			Texture2D texture2D = mod.GetTexture("Items/Weapons/SwarmDrops/RefractorBlaster2_glow");
 			int height = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type];
 			int width = Main.projectileTexture[projectile.type].Width;
 			int frame = height * projectile.frame;
