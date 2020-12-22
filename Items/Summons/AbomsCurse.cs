@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -8,6 +7,7 @@ using Terraria.Localization;
 using FargowiltasSouls.NPCs.AbomBoss;
 using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Utilities;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace FargowiltasSouls.Items.Summons
 {
@@ -31,6 +31,7 @@ namespace FargowiltasSouls.Items.Summons
             item.useStyle = ItemUseStyleID.HoldingUp;
             item.consumable = true;
             item.value = Item.buyPrice(gold: 8);
+            ItemID.Sets.ItemNoGravity[item.type] = true;
             item.noUseGraphic = true;
         }
 
@@ -56,10 +57,24 @@ namespace FargowiltasSouls.Items.Summons
             return true;
         }
 
-        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
+        int framecounter;
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            if (tooltips.TryFindTooltipLine("ItemName", out TooltipLine itemNameLine))
-                itemNameLine.overrideColor = Main.DiscoColor;
+            framecounter++;
+            if (framecounter > 4)
+            {
+                Main.itemFrame[whoAmI]++;
+                if (Main.itemFrame[whoAmI] > 9)
+                    Main.itemFrame[whoAmI] = 0;
+
+                framecounter = 0;
+            }
+            ExtraUtilities.DrawItem(whoAmI, Main.itemTexture[item.type], rotation, 10, lightColor); //item draws in wrong position by default so this is necessary
+            return false;
+        }
+        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+        {
+            ExtraUtilities.DrawItem(whoAmI, mod.GetTexture("Items/Summons/AbomsCurse_glow"), rotation, 10, Color.White);
         }
 
         public override void AddRecipes() // Make this harder again when changed to abom's gift

@@ -1,10 +1,11 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Microsoft.Xna.Framework.Graphics;
+using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Summons
 {
@@ -25,14 +26,14 @@ namespace FargowiltasSouls.Items.Summons
         {
             item.width = 20;
             item.height = 20;
-            item.rare = ItemRarityID.Purple;
+            item.rare = ItemRarityID.LightRed;
             item.maxStack = 999;
             item.useAnimation = 30;
             item.useTime = 30;
             item.useStyle = ItemUseStyleID.HoldingUp;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
             item.consumable = true;
             item.value = Item.buyPrice(0, 2);
-
             item.noUseGraphic = true;
         }
 
@@ -54,15 +55,20 @@ namespace FargowiltasSouls.Items.Summons
             return true;
         }
 
-        public override void SafeModifyTooltips(List<TooltipLine> list)
+        int framecounter;
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            foreach (TooltipLine line2 in list)
+            framecounter++;
+            if (framecounter > 3)
             {
-                if (line2.mod == "Terraria" && line2.Name == "ItemName")
-                {
-                    line2.overrideColor = Main.DiscoColor;
-                }
+                Main.itemFrame[whoAmI]++;
+                if (Main.itemFrame[whoAmI] > 6)
+                    Main.itemFrame[whoAmI] = 0;
+
+                framecounter = 0;
             }
+            ExtraUtilities.DrawItem(whoAmI, Main.itemTexture[item.type], rotation, 7, Color.White); //item draws in wrong position by default so this is necessary
+            return false;
         }
 
         public override void AddRecipes()
