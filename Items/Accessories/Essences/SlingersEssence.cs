@@ -44,7 +44,7 @@ namespace FargowiltasSouls.Items.Accessories.Essences
                 }
             }
         }
-
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void SetDefaults()
         {
             item.width = 20;

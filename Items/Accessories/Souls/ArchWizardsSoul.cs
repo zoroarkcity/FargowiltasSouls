@@ -41,7 +41,7 @@ Effects of Celestial Cuffs and Mana Flower
             item.value = 1000000;
             item.rare = ItemRarityID.Purple;
         }
-
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)

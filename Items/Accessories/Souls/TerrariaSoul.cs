@@ -94,6 +94,7 @@ Effects of Flower Boots, Master Ninja Gear, Greedy Ring, Celestial Shell, and Sh
             item.rare = -12;
         }
 
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();

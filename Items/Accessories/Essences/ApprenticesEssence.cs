@@ -45,6 +45,8 @@ Increases your maximum mana by 50
             item.rare = ItemRarityID.LightRed;
         }
 
+        public override Color? GetAlpha(Color lightColor) => Color.White;
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.magicDamage += .18f;

@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Graphics.Shaders;
+using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
@@ -32,9 +33,9 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.useTime = 16;
             item.shootSpeed = 6f;
             item.knockBack = 7f;
-            item.width = 24;
-            item.height = 24;
-            item.scale = 1.3f;
+            item.width = 72;
+            item.height = 72;
+            //item.scale = 1.3f;
             item.rare = ItemRarityID.Purple;
             item.UseSound = SoundID.Item1;
             item.shoot = mod.ProjectileType("HentaiSpear");
@@ -44,6 +45,8 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.melee = true;
             item.autoReuse = true;
         }
+
+        public override Color? GetAlpha(Color lightColor) => Color.White;
 
         public override bool AltFunctionUse(Player player) => true;
 

@@ -6,8 +6,6 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using FargowiltasSouls.NPCs.AbomBoss;
 using Fargowiltas.Items.Tiles;
-using FargowiltasSouls.Utilities;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace FargowiltasSouls.Items.Summons
 {
@@ -22,8 +20,8 @@ namespace FargowiltasSouls.Items.Summons
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 20;
+            item.width = 42;
+            item.height = 48;
             item.rare = ItemRarityID.Purple;
             item.maxStack = 999;
             item.useAnimation = 30;
@@ -33,6 +31,7 @@ namespace FargowiltasSouls.Items.Summons
             item.value = Item.buyPrice(gold: 8);
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.noUseGraphic = true;
+            NumFrames = 10;
         }
 
         public override bool UseItem(Player player)
@@ -55,26 +54,6 @@ namespace FargowiltasSouls.Items.Summons
                 NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<AbomBoss>());
 
             return true;
-        }
-
-        int framecounter;
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-        {
-            framecounter++;
-            if (framecounter > 4)
-            {
-                Main.itemFrame[whoAmI]++;
-                if (Main.itemFrame[whoAmI] > 9)
-                    Main.itemFrame[whoAmI] = 0;
-
-                framecounter = 0;
-            }
-            ExtraUtilities.DrawItem(whoAmI, Main.itemTexture[item.type], rotation, 10, lightColor); //item draws in wrong position by default so this is necessary
-            return false;
-        }
-        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
-        {
-            ExtraUtilities.DrawItem(whoAmI, mod.GetTexture("Items/Summons/AbomsCurse_glow"), rotation, 10, Color.White);
         }
 
         public override void AddRecipes() // Make this harder again when changed to abom's gift

@@ -4,8 +4,6 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Microsoft.Xna.Framework.Graphics;
-using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Summons
 {
@@ -36,6 +34,7 @@ namespace FargowiltasSouls.Items.Summons
             item.value = Item.buyPrice(0, 2);
             item.noUseGraphic = true;
         }
+        public override Color? GetAlpha(Color lightColor) => Color.White;
 
         public override bool UseItem(Player player)
         {
@@ -53,22 +52,6 @@ namespace FargowiltasSouls.Items.Summons
                 NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("DeviBoss"));
             }
             return true;
-        }
-
-        int framecounter;
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-        {
-            framecounter++;
-            if (framecounter > 3)
-            {
-                Main.itemFrame[whoAmI]++;
-                if (Main.itemFrame[whoAmI] > 6)
-                    Main.itemFrame[whoAmI] = 0;
-
-                framecounter = 0;
-            }
-            ExtraUtilities.DrawItem(whoAmI, Main.itemTexture[item.type], rotation, 7, Color.White); //item draws in wrong position by default so this is necessary
-            return false;
         }
 
         public override void AddRecipes()

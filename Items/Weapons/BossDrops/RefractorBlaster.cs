@@ -26,7 +26,6 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.shootSpeed = 15f;
             item.value = 100000;
             item.rare = ItemRarityID.Pink;
-
             //item.mana = 10;
         }
 

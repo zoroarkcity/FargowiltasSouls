@@ -59,7 +59,7 @@ Effects of Sniper Scope, Celestial Cuffs and Mana Flower
             item.value = 5000000;
             item.rare = -12;
             item.expert = true;
-
+            NumFrames = 10;
             ItemID.Sets.ItemNoGravity[item.type] = true;
         }
 
