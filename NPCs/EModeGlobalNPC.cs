@@ -5807,7 +5807,7 @@ namespace FargowiltasSouls.NPCs
                             if (Main.bloodMoon)
                             {
                                 pool[NPCID.ChatteringTeethBomb] = .1f;
-                                if (!sinisterIcon && !AnyBossAlive())
+                                if (!sinisterIcon && !NPC.downedMechBoss2 && !AnyBossAlive())
                                     pool[NPCID.EyeofCthulhu] = .04f;
 
                                 if (NPC.downedPlantBoss)
@@ -5849,7 +5849,7 @@ namespace FargowiltasSouls.NPCs
                                         }
                                     }
 
-                                    if (!sinisterIcon && !AnyBossAlive())
+                                    if (!sinisterIcon && !NPC.downedMechBoss2 && !AnyBossAlive())
                                         pool[NPCID.EyeofCthulhu] = .01f;
 
                                     if (NPC.downedMechBossAny)
