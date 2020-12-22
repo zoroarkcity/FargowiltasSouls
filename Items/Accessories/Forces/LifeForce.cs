@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,7 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Forces
 {
-    public class LifeForce : ModItem
+    public class LifeForce : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -48,7 +47,7 @@ Summons several pets
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = 600000;
         }
 
@@ -63,7 +62,7 @@ Summons several pets
             modPlayer.SpiderEffect(hideVisual);
             //defense beetle bois
             modPlayer.BeetleEffect();
-            if(!modPlayer.TerrariaSoul)
+            if (!modPlayer.TerrariaSoul)
                 modPlayer.wingTimeModifier += .5f;
             //flame trail, pie heal, pet
             modPlayer.PumpkinEffect(hideVisual);
@@ -72,7 +71,7 @@ Summons several pets
             player.thorns = 1f;
             player.turtleThorns = true;
             //needle spray
-            modPlayer.CactusEffect();         
+            modPlayer.CactusEffect();
         }
 
         public override void AddRecipes()

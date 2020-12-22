@@ -1,39 +1,42 @@
 ﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.Graphics.Shaders;
+using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class HentaiSpear : ModItem
+    public class HentaiSpear : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Penetrator");
-            Tooltip.SetDefault(@"Has different attacks when using left or right click
-Has different attacks when used while holding up or both up and down
-'The reward for embracing eternity...'");
+            Tooltip.SetDefault("Has different attacks when using left or right click" +
+                "\nHas different attacks when used while holding up or both up and down" +
+                "\n'The reward for embracing eternity...'");
+
             DisplayName.AddTranslation(GameCulture.Chinese, "洞察者");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励...'");
+
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(3, 10));
         }
 
         public override void SetDefaults()
         {
             item.damage = 1700;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.useAnimation = 16;
             item.useTime = 16;
             item.shootSpeed = 6f;
             item.knockBack = 7f;
-            item.width = 24;
-            item.height = 24;
-            item.scale = 1.3f;
-            item.rare = 11;
+            item.width = 72;
+            item.height = 72;
+            //item.scale = 1.3f;
+            item.rare = ItemRarityID.Purple;
             item.UseSound = SoundID.Item1;
             item.shoot = mod.ProjectileType("HentaiSpear");
             item.value = Item.sellPrice(0, 70);
@@ -43,10 +46,9 @@ Has different attacks when used while holding up or both up and down
             item.autoReuse = true;
         }
 
-        public override bool AltFunctionUse(Player player)
-        {
-            return true;
-        }
+        public override Color? GetAlpha(Color lightColor) => Color.White;
+
+        public override bool AltFunctionUse(Player player) => true;
 
         public override bool CanUseItem(Player player)
         {
@@ -78,6 +80,7 @@ Has different attacks when used while holding up or both up and down
                     item.useAnimation = 85;
                     item.useTime = 85;
                 }
+
                 item.ranged = true;
                 item.melee = false;
             }
@@ -100,72 +103,77 @@ Has different attacks when used while holding up or both up and down
                 item.ranged = false;
                 item.melee = true;
             }
-            return true;
-        }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
-        {
-            foreach (TooltipLine line2 in list)
-            {
-                if (line2.mod == "Terraria" && line2.Name == "ItemName")
-                {
-                    line2.overrideColor = new Color(0, 255, Main.DiscoB);
-                }
-            }
+            return true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            if (player.altFunctionUse == 2) //right click
+            if (player.altFunctionUse == 2) // Right-click
             {
                 if (player.controlUp)
                 {
-                    if (player.controlDown) //giga beam
-                    {
-                        if (player.ownedProjectileCounts[item.shoot] < 1)
-                        {
-                            return true;
-                        }
-                        return false;
-                    }
+                    if (player.controlDown) // Giga-beam
+                        return player.ownedProjectileCounts[item.shoot] < 1;
 
-                    if (player.ownedProjectileCounts[item.shoot] < 1) //remember to transfer any changes here to hentaispearspinthrown!
+                    if (player.ownedProjectileCounts[item.shoot] < 1) // Remember to transfer any changes here to hentaispearspinthrown!
                     {
                         Vector2 speed = Main.MouseWorld - player.MountedCenter;
+
                         if (speed.Length() < 360)
                             speed = Vector2.Normalize(speed) * 360;
+
                         Projectile.NewProjectile(position, Vector2.Normalize(speed), item.shoot, damage, knockBack, player.whoAmI, speed.X, speed.Y);
                     }
 
                     return false;
                 }
+
                 return true;
             }
 
             if (player.ownedProjectileCounts[item.shoot] < 1)
             {
                 if (player.controlUp && !player.controlDown)
-                {
                     return true;
-                }
 
                 if (player.ownedProjectileCounts[mod.ProjectileType("Dash")] < 1)
                 {
-                    float dashAi1 = 0;
+                    float dashAI = 0;
                     float speedModifier = 2f;
-                    if (player.controlUp && player.controlDown) //super dash
+
+                    if (player.controlUp && player.controlDown) // Super-dash
                     {
-                        dashAi1 = 1;
+                        dashAI = 1;
                         speedModifier = 2.5f;
                         player.dashDelay = 0;
                     }
+
                     Vector2 speed = new Vector2(speedX, speedY);
-                    Projectile.NewProjectile(position, Vector2.Normalize(speed) * speedModifier * item.shootSpeed, 
-                        mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI, speed.ToRotation(), dashAi1);
+
+                    Projectile.NewProjectile(position, Vector2.Normalize(speed) * speedModifier * item.shootSpeed,
+                        mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI, speed.ToRotation(), dashAI);
                     Projectile.NewProjectile(position, speed, item.shoot, damage, knockBack, item.owner, 0f, 1f);
                 }
             }
+
             return false;
+        }
+
+        public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
+        {
+            if (line.mod == "Terraria" && line.Name == "ItemName")
+            {
+                Main.spriteBatch.End(); //end and begin main.spritebatch to apply a shader
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+                var lineshader = GameShaders.Misc["PulseUpwards"].UseColor(new Color(28, 222, 152)).UseSecondaryColor(new Color(168, 245, 228));
+                lineshader.Apply(null);
+                Utils.DrawBorderString(Main.spriteBatch, line.text, new Vector2(line.X, line.Y), Color.White, 1); //draw the tooltip manually
+                Main.spriteBatch.End(); //then end and begin again to make remaining tooltip lines draw in the default way
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+                return false;
+            }
+            return true;
         }
 
         public override void AddRecipes()

@@ -380,8 +380,8 @@ namespace FargowiltasSouls.Projectiles
                         }
                         break;
                 }
-
-                                if (tikiMinion)
+                
+                if (tikiMinion)
                 {
                     projectile.alpha = 120;
 
@@ -537,7 +537,7 @@ namespace FargowiltasSouls.Projectiles
                                 shroomiteMushroomCD = 8;
                             }
 
-                            int p = Projectile.NewProjectile(projectile.position.X + (float)(projectile.width / 2), projectile.position.Y + (float)(projectile.height / 2), projectile.velocity.X, projectile.velocity.Y, ModContent.ProjectileType<ShroomiteShroom>(), projectile.damage / 3, 0f, projectile.owner, 0f, 0f);
+                            int p = Projectile.NewProjectile(projectile.position.X + (float)(projectile.width / 2), projectile.position.Y + (float)(projectile.height / 2), projectile.velocity.X, projectile.velocity.Y, ModContent.ProjectileType<ShroomiteShroom>(), projectile.damage / 2, 0f, projectile.owner, 0f, 0f);
                         }
                         shroomiteMushroomCD--;
                     }
@@ -1065,7 +1065,7 @@ namespace FargowiltasSouls.Projectiles
                                             break;
                                         }
                                     }
-                                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<CultistRitual>(), 0, 0f, Main.myPlayer, 0f, projectile.whoAmI);
+                                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<CultistRitual>(), cultist.damage / 4, 0f, Main.myPlayer, 0f, cultist.whoAmI);
                                 }
                             }
 
@@ -1338,8 +1338,9 @@ namespace FargowiltasSouls.Projectiles
 
             if (projectile.bobber && modPlayer.FishSoul1)
             {
-                if (projectile.wet && projectile.ai[0] == 0 && projectile.localAI[1] < 655) //ai0 = in water, localai1 = counter up to catching an item
-                    projectile.localAI[1] = 655; //quick catch. not 660 and up (that breaks fishron summoning)
+                //ai0 = in water, localai1 = counter up to catching an item
+                if (projectile.wet && projectile.ai[0] == 0 && projectile.localAI[1] < 655 && Main.player[projectile.owner].FishingLevel() != -1) //fishron check
+                    projectile.localAI[1] = 655; //quick catch. not 660 and up, may break things
             }
         }
 
@@ -1372,7 +1373,7 @@ namespace FargowiltasSouls.Projectiles
                         if (fargoPlayer.CyclonicFin)
                             grazeGain *= 2;
 
-                        GrazeCD = 60;
+                        GrazeCD = 30;
                         fargoPlayer.GrazeBonus += grazeGain;
                         if (fargoPlayer.GrazeBonus > grazeCap)
                             fargoPlayer.GrazeBonus = grazeCap;
@@ -1432,6 +1433,36 @@ namespace FargowiltasSouls.Projectiles
                 return false;
 
             return null;
+        }
+
+        public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                if (projectile.arrow) //change archery and quiver to additive damage
+                {
+                    if (Main.player[projectile.owner].archery)
+                    {
+                        damage = (int)(damage / 1.2);
+                        damage = (int)((double)damage * (1.0 + 0.2 / Main.player[projectile.owner].rangedDamage));
+                    }
+
+                    if (Main.player[projectile.owner].magicQuiver)
+                    {
+                        damage = (int)(damage / 1.1);
+                        damage = (int)((double)damage * (1.0 + 0.1 / Main.player[projectile.owner].rangedDamage));
+                    }
+                }
+            }
+
+            if (projectile.type >= ProjectileID.StardustDragon1 && projectile.type <= ProjectileID.StardustDragon4
+                && Main.player[projectile.owner].GetModPlayer<FargoPlayer>().TikiMinion
+                && Main.player[projectile.owner].ownedProjectileCounts[ProjectileID.StardustDragon2] > Main.player[projectile.owner].GetModPlayer<FargoPlayer>().actualMinions)
+            {
+                int newDamage = (int)(projectile.damage * (1.69 + 0.46 * Main.player[projectile.owner].GetModPlayer<FargoPlayer>().actualMinions));
+                if (damage > newDamage)
+                    damage = newDamage;
+            }
         }
 
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)

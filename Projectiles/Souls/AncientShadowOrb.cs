@@ -103,7 +103,7 @@ namespace FargowiltasSouls.Projectiles.Souls
                 {
                     Projectile proj = Main.projectile[i];
 
-                    if (proj.active && !proj.hostile && proj.owner == projectile.owner && proj.type != mod.ProjectileType("AncientShadowBall") && !proj.minion && proj.damage > 0 && proj.Hitbox.Intersects(projectile.Hitbox))
+                    if (proj.active && proj.friendly && !proj.hostile && proj.owner == projectile.owner && proj.type != mod.ProjectileType("AncientShadowBall") && !proj.minion && proj.damage > 0 && proj.Hitbox.Intersects(projectile.Hitbox))
                     {
                         int numBalls = 10;
 

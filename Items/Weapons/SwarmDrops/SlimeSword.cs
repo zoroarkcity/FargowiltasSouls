@@ -3,11 +3,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class SlimeSword : ModItem
+    public class SlimeSword : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -25,10 +24,10 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.height = 40;
             item.useTime = 12;
             item.useAnimation = 12;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 6;
             item.value = 50000;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("SlimeBallHoming");

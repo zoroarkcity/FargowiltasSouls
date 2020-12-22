@@ -5,12 +5,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using System.Collections.Generic;
-using Fargowiltas.Items.Tiles;
+using Terraria.Graphics.Shaders;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     [AutoloadEquip(EquipType.Shield)]
-    public class TerrariaSoul : ModItem
+    public class TerrariaSoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -37,7 +38,6 @@ Your attacks inflict Midas, Enemies explode into needles
 You violently explode to damage nearby enemies when hurt and revive with 200 HP when killed
 Effects of Flower Boots, Master Ninja Gear, Greedy Ring, Celestial Shell, and Shiny Stone
 'A true master of Terraria'";
-
 
             string tooltip_ch =
 @"'真·泰拉之主'
@@ -68,15 +68,19 @@ Effects of Flower Boots, Master Ninja Gear, Greedy Ring, Celestial Shell, and Sh
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, 24));
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
         {
-            foreach (TooltipLine tooltipLine in list)
+            if (line.mod == "Terraria" && line.Name == "ItemName")
             {
-                if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
-                {
-                    tooltipLine.overrideColor = new Color?(new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB));
-                }
+                Main.spriteBatch.End(); //end and begin main.spritebatch to apply a shader
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+                GameShaders.Armor.Apply(GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingRainbowDye), item, null); //use living rainbow dye shader
+                Utils.DrawBorderString(Main.spriteBatch, line.text, new Vector2(line.X, line.Y), Color.White, 1); //draw the tooltip manually
+                Main.spriteBatch.End(); //then end and begin again to make remaining tooltip lines draw in the default way
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+                return false;
             }
+            return true;
         }
 
         public override void SetDefaults()
@@ -90,6 +94,7 @@ Effects of Flower Boots, Master Ninja Gear, Greedy Ring, Celestial Shell, and Sh
             item.rare = -12;
         }
 
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
@@ -115,7 +120,6 @@ Effects of Flower Boots, Master Ninja Gear, Greedy Ring, Celestial Shell, and Sh
             //COSMOS
             mod.GetItem("CosmoForce").UpdateAccessory(player, hideVisual);
         }
-
 
         public override void AddRecipes()
         {

@@ -118,6 +118,19 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             return id > -1 && id < Main.maxProjectiles && Main.projectile[id].active && Main.projectile[id].type == type;
         }
 
+        private void KillProjs()
+        {
+            if (!EModeGlobalNPC.OtherBossAlive(npc.whoAmI))
+            {
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && Main.projectile[i].hostile && i != ritualProj)
+                        Main.projectile[i].Kill();
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && Main.projectile[i].hostile && i != ritualProj)
+                        Main.projectile[i].Kill();
+            }
+        }
+
         public override void AI()
         {
             EModeGlobalNPC.mutantBoss = npc.whoAmI;
@@ -162,7 +175,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             if (Main.netMode != NetmodeID.MultiplayerClient) //checks for needed projs
             {
                 if ((npc.ai[0] < 0 || npc.ai[0] > 10) && !ProjectileExists(ritualProj, ModContent.ProjectileType<MutantRitual>()))
-                    ritualProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                    ritualProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual>(), npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
 
                 if (!ProjectileExists(ringProj, ModContent.ProjectileType<MutantRitual5>()))
                     ringProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual5>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
@@ -240,7 +253,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Mutant")))
                         {
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
-                            if (n != 200 && Main.netMode == NetmodeID.Server)
+                            if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
                         //EdgyBossText("Oh, right... my revive...");
@@ -474,7 +487,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     break;
 
                 case -1: //defeated
-                    if (!SkyManager.Instance["FargowiltasSouls:MutantBoss"].IsActive())
+                    if (FargoSoulsWorld.MasochistMode && !SkyManager.Instance["FargowiltasSouls:MutantBoss"].IsActive())
                         SkyManager.Instance.Activate("FargowiltasSouls:MutantBoss");
 
                     npc.dontTakeDamage = true;
@@ -902,7 +915,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     if (++npc.ai[1] > 120)
                     {
-                        if (!SkyManager.Instance["FargowiltasSouls:MutantBoss"].IsActive())
+                        if (FargoSoulsWorld.MasochistMode && !SkyManager.Instance["FargowiltasSouls:MutantBoss"].IsActive())
                             SkyManager.Instance.Activate("FargowiltasSouls:MutantBoss");
 
                         for (int i = 0; i < 5; i++)
@@ -947,7 +960,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 Main.projectile[i].Kill();
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            ritualProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            ritualProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual>(), npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                         Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         for (int i = 0; i < 50; i++)
@@ -1124,13 +1137,13 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<MutantIllusion>(), npc.whoAmI, npc.whoAmI, -1, 1, 60);
-                        if (n != 200 && Main.netMode == NetmodeID.Server)
+                        if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<MutantIllusion>(), npc.whoAmI, npc.whoAmI, 1, -1, 120);
-                        if (n != 200 && Main.netMode == NetmodeID.Server)
+                        if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<MutantIllusion>(), npc.whoAmI, npc.whoAmI, 1, 1, 180);
-                        if (n != 200 && Main.netMode == NetmodeID.Server)
+                        if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                     npc.ai[0]++;
@@ -2046,14 +2059,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             npc.position.Y = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Mutant")))
                         {
-                            for (int i = 0; i < 1000; i++)
-                                if (Main.projectile[i].active && Main.projectile[i].hostile)
-                                    Main.projectile[i].Kill();
-                            for (int i = 0; i < 1000; i++)
-                                if (Main.projectile[i].active && Main.projectile[i].hostile)
-                                    Main.projectile[i].Kill();
+                            KillProjs();
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
-                            if (n != 200 && Main.netMode == NetmodeID.Server)
+                            if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
                     }
@@ -2076,12 +2084,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     npc.ai[2] = 0;
                     npc.ai[3] = 0;
                     npc.netUpdate = true;
-                    for (int i = 0; i < 1000; i++)
-                        if (Main.projectile[i].active && Main.projectile[i].hostile)
-                            Main.projectile[i].Kill();
-                    for (int i = 0; i < 1000; i++)
-                        if (Main.projectile[i].active && Main.projectile[i].hostile)
-                            Main.projectile[i].Kill();
+                    KillProjs();
                     //EdgyBossText("Time to stop playing around.");
                 }
                 return true;
@@ -2172,12 +2175,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 npc.localAI[1] = 0;
                 npc.dontTakeDamage = true;
                 npc.netUpdate = true;
-                for (int i = 0; i < 1000; i++)
-                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && (Main.projectile[i].hostile || Main.projectile[i].friendly))
-                        Main.projectile[i].Kill();
-                for (int i = 0; i < 1000; i++)
-                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && (Main.projectile[i].hostile || Main.projectile[i].friendly))
-                        Main.projectile[i].Kill();
+                KillProjs();
                 //EdgyBossText("You're pretty good...");
             }
             return false;

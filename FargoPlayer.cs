@@ -140,7 +140,7 @@ namespace FargowiltasSouls
         public int TinCrit = 4;
         public bool TikiEnchant;
         public bool TikiMinion;
-        private int actualMinions;
+        public int actualMinions;
         public bool SolarEnchant;
         public bool ShinobiEnchant;
         public bool ValhallaEnchant;
@@ -300,6 +300,7 @@ namespace FargowiltasSouls
         public bool noDodge;
         public bool noSupersonic;
         public bool Bloodthirsty;
+        public bool DisruptedFocus;
         public bool SinisterIcon;
         public bool SinisterIconDrops;
 
@@ -796,6 +797,7 @@ namespace FargowiltasSouls
             noDodge = false;
             noSupersonic = false;
             Bloodthirsty = false;
+            DisruptedFocus = false;
             SinisterIcon = false;
             SinisterIconDrops = false;
 
@@ -903,6 +905,7 @@ namespace FargowiltasSouls
             Hypothermia = false;
             Midas = false;
             Bloodthirsty = false;
+            DisruptedFocus = false;
             SinisterIcon = false;
             SinisterIconDrops = false;
             Graze = false;
@@ -979,9 +982,14 @@ namespace FargowiltasSouls
                     player.fallStart = (int)(player.position.Y / 16f);
                 }
 
+                if (!NPC.downedBoss3 && player.ZoneDungeon && !NPC.AnyNPCs(NPCID.DungeonGuardian))
+                {
+                    NPC.SpawnOnPlayer(player.whoAmI, NPCID.DungeonGuardian);
+                }
+
                 if (player.ZoneUnderworldHeight)
                 {
-                    if (!(player.fireWalk || PureHeart))
+                    if (!(player.fireWalk || PureHeart || player.lavaMax > 0))
                         player.AddBuff(BuffID.OnFire, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
                 }
 
@@ -1094,7 +1102,7 @@ namespace FargowiltasSouls
                 if (!PureHeart && !player.buffImmune[BuffID.Suffocation] && player.ZoneSkyHeight && player.whoAmI == Main.myPlayer)
                 {
                     bool inLiquid = Collision.DrownCollision(player.position, player.width, player.height, player.gravDir);
-                    if (!inLiquid || !player.gills)
+                    if (!inLiquid)
                     {
                         player.breath -= 3;
                         if (++MasomodeSpaceBreathTimer > 10)
@@ -1157,7 +1165,7 @@ namespace FargowiltasSouls
                         if (player.ZoneHoly)
                         {
                             damage = 40;
-                            player.AddBuff(ModContent.BuffType<Flipped>(), Main.expertMode && Main.expertDebuffTime > 1 ? 150 : 300);
+                            player.AddBuff(BuffID.Confused, Main.expertMode && Main.expertDebuffTime > 1 ? 150 : 300);
                         }
                         if (player.hurtCooldowns[0] <= 0) //same i-frames as spike tiles
                             player.Hurt(PlayerDeathReason.ByCustomReason(player.name + " was pricked by a Cactus."), damage, 0, false, false, false, 0);
@@ -1369,7 +1377,7 @@ namespace FargowiltasSouls
                 player.buffImmune[BuffID.Rabies] = true;
             }
 
-            if (StealingCooldown > 0)
+            if (StealingCooldown > 0 && !player.dead)
                 StealingCooldown--;
 
             if (LihzahrdCurse)
@@ -2752,7 +2760,7 @@ namespace FargowiltasSouls
                     if (crit && TinCrit < 100)
                     {
                         TinCrit += 5;
-                        tinCD = 10;
+                        tinCD = 5;
                     }
                     else if (TinCrit >= 100)
                     {
@@ -2779,7 +2787,7 @@ namespace FargowiltasSouls
                     if (TerraForce || WizardEnchant)
                     {
                         TinCrit += 5;
-                        tinCD = 20;
+                        tinCD = 15;
                     }
                     else
                     {
@@ -3608,7 +3616,29 @@ namespace FargowiltasSouls
         public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat)
         {
             if (FargoSoulsWorld.MasochistMode)
+            {
                 mult *= MasoItemNerfs(item.type);
+
+                if (item.ranged) //change all of these to additive
+                {
+                    //shroomite headpieces
+                    if (item.useAmmo == AmmoID.Arrow || item.useAmmo == AmmoID.Stake)
+                    {
+                        mult /= player.arrowDamage;
+                        add += player.arrowDamage - 1f;
+                    }
+                    if (item.useAmmo == AmmoID.Bullet || item.useAmmo == AmmoID.CandyCorn)
+                    {
+                        mult /= player.bulletDamage;
+                        add += player.bulletDamage - 1f;
+                    }
+                    if (item.useAmmo == AmmoID.Rocket || item.useAmmo == AmmoID.StyngerBolt || item.useAmmo == AmmoID.JackOLantern || item.useAmmo == AmmoID.NailFriendly)
+                    {
+                        mult /= player.bulletDamage;
+                        add += player.bulletDamage - 1f;
+                    }
+                }
+            }
         }
 
         private float MasoItemNerfs(int type)
@@ -3622,31 +3652,19 @@ namespace FargowiltasSouls
                 case ItemID.Razorpine:
                     AttackSpeed *= 2f / 3f;
                     return 2f / 3f;
-
-                case ItemID.DaedalusStormbow:
+                    
                 case ItemID.StarCannon:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.SnowmanCannon:
                 case ItemID.DemonScythe:
+                case ItemID.DaedalusStormbow:
                     return 2f / 3f;
-
-                case ItemID.SpaceGun:
-                    if (!NPC.downedBoss2)
-                    {
-                        AttackSpeed *= 0.75f;
-                        return 0.75f;
-                    }
-                    return 1f;
 
                 case ItemID.DD2BetsyBow:
                 case ItemID.Uzi:
-                case ItemID.BeesKnees:
                 case ItemID.PhoenixBlaster:
                 case ItemID.LastPrism:
-                case ItemID.Tsunami:
-                case ItemID.Phantasm:
                 case ItemID.OnyxBlaster:
-                case ItemID.HellwingBow:
                 case ItemID.Beenade:
                 case ItemID.Handgun:
                 case ItemID.SpikyBall:
@@ -3656,13 +3674,25 @@ namespace FargowiltasSouls
                 case ItemID.LaserMachinegun:
                 case ItemID.PainterPaintballGun:
                 case ItemID.XenoStaff:
+                case ItemID.MoltenFury:
+                case ItemID.BeesKnees:
                     return 0.75f;
 
-                case ItemID.MoltenFury:
+                case ItemID.SpaceGun:
+                    if (!NPC.downedBoss2)
+                    {
+                        AttackSpeed *= 0.75f;
+                        return 0.75f;
+                    }
+                    return 0.85f;
+                    
+                case ItemID.Tsunami:
+                case ItemID.ChlorophyteShotbow:
+                case ItemID.Phantasm:
+                case ItemID.HellwingBow:
                 case ItemID.DartPistol:
                 case ItemID.DartRifle:
                 case ItemID.VampireKnives:
-                case ItemID.ChlorophyteShotbow:
                 case ItemID.Megashark:
                 case ItemID.BatScepter:
                 case ItemID.ChainGun:

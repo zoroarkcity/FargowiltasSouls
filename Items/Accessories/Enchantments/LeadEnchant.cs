@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class LeadEnchant : ModItem
+    public class LeadEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -27,7 +27,7 @@ Lead Poisoning deals damage over time and spreads to nearby enemies
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -44,7 +44,7 @@ Lead Poisoning deals damage over time and spreads to nearby enemies
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.value = 20000;
         }
 
@@ -66,7 +66,7 @@ Lead Poisoning deals damage over time and spreads to nearby enemies
             //black paint
             recipe.AddIngredient(ItemID.GrayPaint, 100);
             recipe.AddIngredient(ItemID.SulphurButterfly);
-            
+
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();

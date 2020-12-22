@@ -2,12 +2,11 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class EaterStaff : ModItem
+    public class EaterStaff : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -25,7 +24,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         {
             item.mana = 10;
             item.damage = 10;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.shootSpeed = 10f;
             item.shoot = mod.ProjectileType("EaterHead");
             item.width = 26;
@@ -33,7 +32,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.UseSound = SoundID.Item44;
             item.useAnimation = 36;
             item.useTime = 36;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.noMelee = true;
             item.knockBack = 2f;
             item.buffType = mod.BuffType("EaterMinion");

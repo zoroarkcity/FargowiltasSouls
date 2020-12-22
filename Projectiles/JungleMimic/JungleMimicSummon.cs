@@ -1,12 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using FargowiltasSouls.Projectiles.Minions;
-using System.Runtime.Remoting.Messaging;
 
 namespace FargowiltasSouls.Projectiles.JungleMimic
 {
@@ -85,7 +82,7 @@ namespace FargowiltasSouls.Projectiles.JungleMimic
                     {
                         Vector2 shootVel = projectile.DirectionTo(targetNPC.Center);
                         Main.PlaySound(SoundID.Item11, projectile.Center);
-                        Projectile.NewProjectile(projectile.Center, shootVel * 14f + targetNPC.velocity/2, mod.ProjectileType("JungleMimicSummonCoin"), projectile.damage / 3, projectile.knockBack, Main.myPlayer);
+                        Projectile.NewProjectile(projectile.Center, shootVel * 14f + targetNPC.velocity/2, mod.ProjectileType("JungleMimicSummonCoin"), projectile.damage / 4, projectile.knockBack, Main.myPlayer);
                     }
                 }
             }

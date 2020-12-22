@@ -1,14 +1,14 @@
-﻿using Fargowiltas.Items.Tiles;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Armor
 {
     [AutoloadEquip(EquipType.Legs)]
-    public class MutantPants : ModItem
+    public class MutantPants : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -26,7 +26,7 @@ Hold DOWN and JUMP to hover");
         {
             item.width = 18;
             item.height = 18;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = Item.sellPrice(0, 50);
             item.defense = 50;
         }
@@ -56,7 +56,7 @@ Hold DOWN and JUMP to hover");
             }
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine line2 in list)
             {

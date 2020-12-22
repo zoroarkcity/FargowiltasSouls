@@ -1,9 +1,6 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.Minions
 {
@@ -33,6 +30,11 @@ namespace FargowiltasSouls.Projectiles.Minions
                 projectile.velocity *= 22;
             }
             projectile.velocity *= 1.02f;
+        }
+
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        {
+            target.immune[projectile.owner] = 6;
         }
 
         public override bool PreKill(int timeleft)

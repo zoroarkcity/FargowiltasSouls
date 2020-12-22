@@ -52,7 +52,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             float distance = (float)Math.Sqrt(num166 * num166 + num167 * num167);
             if (projectile.ai[0] == 0f)
             {
-                if (distance > 500f) projectile.ai[0] = 1f;
+                if (distance > 600f) projectile.ai[0] = 1f;
                 projectile.rotation = (float)Math.Atan2(projectile.velocity.Y, projectile.velocity.X) + 1.57f;
                 projectile.ai[1] += 1f;
                 if (projectile.ai[1] > 8f) projectile.ai[1] = 8f;
@@ -60,10 +60,33 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     projectile.spriteDirection = -1;
                 else
                     projectile.spriteDirection = 1;
+
+                if (projectile.owner == Main.myPlayer)
+                {
+                    Vector2 speed = 5f * Vector2.Normalize(projectile.velocity).RotatedBy(Math.PI / 2);
+                    Projectile.NewProjectile(projectile.Center, speed, ModContent.ProjectileType<PhantasmalBolt>(), projectile.damage / 2, projectile.knockBack, projectile.owner);
+                    Projectile.NewProjectile(projectile.Center, -speed, ModContent.ProjectileType<PhantasmalBolt>(), projectile.damage / 2, projectile.knockBack, projectile.owner);
+                }
             }
             //plz retract sir
             else if (projectile.ai[0] == 1f)
             {
+                if (projectile.localAI[1] == 0)
+                {
+                    projectile.localAI[1] = 1f;
+                    if (projectile.owner == Main.myPlayer)
+                    {
+                        const int max = 6;
+                        const float dist = 100f;
+                        const float rotation = 2f * (float)Math.PI / max;
+                        for (int i = 0; i < max; i++)
+                        {
+                            Vector2 spawnPos = projectile.Center + new Vector2(dist, 0f).RotatedBy(rotation * i);
+                            Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<PhantasmalSphere2>(), projectile.damage / 2, projectile.knockBack, projectile.owner);
+                        }
+                    }
+                }
+
                 projectile.tileCollide = false;
                 projectile.rotation = (float)Math.Atan2(num167, num166) - 1.57f;
                 float num169 = 30f;
@@ -83,7 +106,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            projectile.penetrate = 2;
+            if (projectile.penetrate < 0)
+                target.immune[projectile.owner] = 1;
+
+            projectile.penetrate = -1;
+            projectile.maxPenetrate = -1;
 
             int type = ModContent.ProjectileType<PhantasmalEyeLeashProj>();
             if (Main.player[projectile.owner].ownedProjectileCounts[type] < 100)

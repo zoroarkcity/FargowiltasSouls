@@ -1,27 +1,26 @@
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
+using Terraria.ID;
+using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Misc
 {
-	public class PhantasmalEnergy : ModItem
-	{
+    public class PhantasmalEnergy : SoulsItem
+    {
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Phantasmal Energy");
-		}
-
-		public override void SetDefaults()
-		{
-            item.width = 30;
-            item.height = 30;
-            item.rare = 11;
+        {
+            DisplayName.SetDefault("Phantasmal Energy");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SetDefaults()
+        {
+            item.width = 30;
+            item.height = 30;
+            item.rare = ItemRarityID.Purple;
+        }
+        public override Color? GetAlpha(Color lightColor) => Color.White;
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine line2 in list)
             {

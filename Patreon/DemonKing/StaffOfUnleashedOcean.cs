@@ -2,12 +2,12 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 using System.Collections.Generic;
+using FargowiltasSouls.Items;
 
 namespace FargowiltasSouls.Patreon.DemonKing
 {
-    public class StaffOfUnleashedOcean : ModItem
+    public class StaffOfUnleashedOcean : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -37,7 +37,7 @@ namespace FargowiltasSouls.Patreon.DemonKing
             item.value = Item.sellPrice(0, 25);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine line = new TooltipLine(mod, "tooltip", ">> Patreon Item <<");
             line.overrideColor = Color.Orange;

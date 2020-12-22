@@ -1,10 +1,9 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
-using System.IO;
 
 namespace FargowiltasSouls.NPCs.AbomBoss
 {
@@ -13,6 +12,8 @@ namespace FargowiltasSouls.NPCs.AbomBoss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mini Saucer");
+            NPCID.Sets.TrailCacheLength[npc.type] = 6;
+            NPCID.Sets.TrailingMode[npc.type] = 1;
         }
 
         public override void SetDefaults()
@@ -69,6 +70,11 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 {
                     npc.localAI[2] = npc.Distance(Main.player[npc.target].Center);
                     npc.ai[3] = npc.DirectionTo(Main.player[npc.target].Center).ToRotation();
+
+                    if (npc.whoAmI == NPC.FindFirstNPC(npc.type) && Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Projectile.NewProjectile(Main.player[npc.target].Center, Vector2.Zero, mod.ProjectileType("AbomReticle"), 0, 0f, Main.myPlayer);
+                    }
                 }
 
                 if (npc.ai[1] > 120) //attack and reset
@@ -93,7 +99,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             else
             {
                 Vector2 target = Main.player[npc.target].Center; //targeting
-                target += Vector2.UnitX.RotatedBy(npc.ai[2]) * 400;
+                target += Vector2.UnitX.RotatedBy(npc.ai[2]) * 600;
 
                 Vector2 distance = target - npc.Center;
                 float length = distance.Length();
@@ -138,6 +144,32 @@ namespace FargowiltasSouls.NPCs.AbomBoss
 
         public override bool CheckActive()
         {
+            return false;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            Texture2D texture2D13 = Main.npcTexture[npc.type];
+            //int num156 = Main.npcTexture[npc.type].Height / Main.npcFrameCount[npc.type]; //ypos of lower right corner of sprite to draw
+            //int y3 = num156 * npc.frame.Y; //ypos of upper left corner of sprite to draw
+            Rectangle rectangle = npc.frame;//new Rectangle(0, y3, texture2D13.Width, num156);
+            Vector2 origin2 = rectangle.Size() / 2f;
+
+            Color color26 = lightColor;
+            color26 = npc.GetAlpha(color26);
+
+            SpriteEffects effects = npc.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            for (int i = 0; i < NPCID.Sets.TrailCacheLength[npc.type]; i++)
+            {
+                Color color27 = color26 * 0.5f;
+                color27 *= (float)(NPCID.Sets.TrailCacheLength[npc.type] - i) / NPCID.Sets.TrailCacheLength[npc.type];
+                Vector2 value4 = npc.oldPos[i];
+                float num165 = npc.rotation; //npc.oldRot[i];
+                Main.spriteBatch.Draw(texture2D13, value4 + npc.Size / 2f - Main.screenPosition + new Vector2(0, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), color27, num165, origin2, npc.scale, effects, 0f);
+            }
+
+            Main.spriteBatch.Draw(texture2D13, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), npc.GetAlpha(lightColor), npc.rotation, origin2, npc.scale, effects, 0f);
             return false;
         }
     }

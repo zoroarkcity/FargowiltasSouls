@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -53,6 +52,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                     if (projectile.owner == Main.myPlayer)
                     {
+                        Main.PlaySound(SoundID.Item12, projectile.Center);
                         int p = Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<PrimeLaser>(), projectile.damage, projectile.knockBack, projectile.owner);
                         if (p != Main.maxProjectiles)
                         {
@@ -117,8 +117,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            projectile.ai[0] = 1;
-            projectile.ai[1] = 0;
+            if (projectile.ai[0] == 0)
+            {
+                projectile.ai[0] = 1;
+                projectile.ai[1] = 0;
+            }
             projectile.tileCollide = false;
 
             return false;

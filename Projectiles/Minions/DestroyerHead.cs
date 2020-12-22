@@ -200,7 +200,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             }
             int g = Gore.NewGore(projectile.Center, projectile.velocity / 2, mod.GetGoreSlot("Gores/DestroyerGun/DestroyerHead"), projectile.scale);
             Main.gore[g].timeLeft = 20;
-            Main.PlaySound(4, projectile.Center, 14);
+            Main.PlaySound(SoundID.NPCKilled, projectile.Center, 14);
         }
     }
 }

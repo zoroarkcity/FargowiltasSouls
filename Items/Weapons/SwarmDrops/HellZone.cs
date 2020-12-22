@@ -1,15 +1,13 @@
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Projectiles.BossWeapons;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class HellZone : ModItem
+    public class HellZone : SoulsItem
     {
         public int skullTimer;
 
@@ -27,7 +25,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.knockBack = 4f;
             item.shootSpeed = 12f; //
 
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.autoReuse = true;
             item.useAnimation = 5; //
             item.useTime = 5; //
@@ -39,11 +37,12 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
             item.noMelee = true;
             item.value = Item.sellPrice(0, 10); //
-            item.rare = 11; //
+            item.rare = ItemRarityID.Purple; //
             item.ranged = true;
         }
 
-        int counter;
+        private int counter;
+
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             /*Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);

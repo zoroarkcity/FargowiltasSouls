@@ -1,5 +1,4 @@
-﻿using FargowiltasSouls.Items.Summons;
-using FargowiltasSouls.Projectiles;
+﻿using FargowiltasSouls.Projectiles;
 using FargowiltasSouls.Projectiles.Deathrays;
 using FargowiltasSouls.Projectiles.Masomode;
 using Microsoft.Xna.Framework;
@@ -1890,7 +1889,8 @@ namespace FargowiltasSouls.NPCs
                 Player p = Main.player[Main.myPlayer];
                 float auraDistance = 2000 - 1200 * Counter[3] / 180f;
                 float range = npc.Distance(p.Center);
-                if (range > auraDistance && range < 12000)
+                bool isTarget = p.whoAmI == npc.target || (spazAlive && p.whoAmI == Main.npc[spazBoss].target);
+                if (range > auraDistance && range < 12000 && isTarget)
                 {
                     p.AddBuff(ModContent.BuffType<Oiled>(), 2);
                     p.AddBuff(BuffID.OnFire, 2);
@@ -4580,7 +4580,7 @@ namespace FargowiltasSouls.NPCs
                          //Counter[1] = 0;
                     if (--Counter[0] < 0)
                     {
-                        Counter[0] = 5;
+                        Counter[0] = 6;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             for (int i = -1; i <= 1; i += 2)
@@ -5018,8 +5018,7 @@ namespace FargowiltasSouls.NPCs
                 masoStateML = 0;
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<LunarRitual>(),
-                          100, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                    Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<LunarRitual>(), 25, 0f, Main.myPlayer, 0f, npc.whoAmI);
                     Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<FragmentRitual>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
                 }
             }
@@ -5069,7 +5068,7 @@ namespace FargowiltasSouls.NPCs
                                     if (bodyPart.active)
                                     {
                                         int damage = 25;
-                                        for (int j = -3; j <= 3; j++)
+                                        for (int j = -2; j <= 2; j++)
                                         {
                                             Projectile.NewProjectile(bodyPart.Center,
                                                 6f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI / 2 / 3 * j),
@@ -5134,11 +5133,11 @@ namespace FargowiltasSouls.NPCs
                                         bodyPart.type == NPCID.MoonLordHand))
                                     {
                                         int damage = 35;
-                                        const int max = 6;
+                                        const int max = 8;
                                         for (int j = 0; j < max; j++)
                                         {
                                             Projectile.NewProjectile(bodyPart.Center,
-                                                2.5f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * 2 / max * j),
+                                                2.5f * bodyPart.DirectionFrom(Main.player[npc.target].Center).RotatedBy(Math.PI * 2 / max * (j + 0.5)),
                                                 ModContent.ProjectileType<MoonLordNebulaBlaze>(), damage, 0f, Main.myPlayer);
                                         }
 

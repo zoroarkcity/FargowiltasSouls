@@ -7,25 +7,25 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Essences
 {
-    public class BarbariansEssence : ModItem
+    public class BarbariansEssence : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Barbarian's Essence");
             Tooltip.SetDefault(
-@"18% increased melee damage 
-10% increased melee speed 
+@"18% increased melee damage
+10% increased melee speed
 5% increased melee crit chance
 'This is only the beginning..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "野蛮人精华");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'这才刚刚开始..'
 增加18%近战伤害
 增加10%近战速度
 增加5%近战暴击率");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -42,9 +42,9 @@ namespace FargowiltasSouls.Items.Accessories.Essences
             item.height = 20;
             item.accessory = true;
             item.value = 150000;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
         }
-
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.meleeDamage += .18f;

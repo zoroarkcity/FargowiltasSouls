@@ -1,6 +1,8 @@
-using Fargowiltas.Items.Tiles;
+using FargowiltasSouls.Utilities;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -8,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class FleshCannon : ModItem
+    public class FleshCannon : SoulsItem
     {
         public int counter;
 
@@ -27,12 +29,12 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.height = 24;
             item.useTime = 8;
             item.useAnimation = 8;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 2f;
             item.UseSound = SoundID.Item12;
             item.value = Item.sellPrice(0, 10);
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("Hungry2");
             item.shootSpeed = 20f;
@@ -40,25 +42,23 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
+            const int FACTOR = 14; // (Make sure this is even)
+
             Vector2 speed = new Vector2(speedX, speedY);
 
-            const int factor = 14; //make sure this is even number btw
-
             counter++;
-            if (player.ownedProjectileCounts[type] < 1 && counter == factor)
+            if (player.ownedProjectileCounts[type] < 1 && counter == FACTOR)
             {
                 Projectile.NewProjectile(position, speed * 2f, type, damage, knockBack, player.whoAmI, 0f, damage);
                 Main.PlaySound(new LegacySoundStyle(4, 13), position);
             }
 
-            float rotation = MathHelper.ToRadians(10) * (float)Math.Sin((counter + 0.2) * Math.PI / (factor / 2));
+            float rotation = MathHelper.ToRadians(10) * (float)Math.Sin((counter + 0.2) * Math.PI / (FACTOR / 2));
             Projectile.NewProjectile(position, speed.RotatedBy(rotation) * 0.4f, ProjectileID.PurpleLaser, damage, knockBack, player.whoAmI);
             Projectile.NewProjectile(position, speed.RotatedBy(-rotation) * 0.4f, mod.ProjectileType("FleshLaser"), damage, knockBack, player.whoAmI);
 
-            if (counter >= factor) //reset
-            {
+            if (counter >= FACTOR) //reset
                 counter = 0;
-            }
 
             return false;
         }

@@ -1,6 +1,5 @@
 using Terraria;
 using Terraria.ModLoader;
-using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Buffs.Boss
 {

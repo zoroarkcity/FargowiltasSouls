@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class FossilEnchant : ModItem
+    public class FossilEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,14 +18,14 @@ Collect the bones once they stop moving to heal for 15 HP each
 Summons a pet Baby Dino
 'Beyond a forgotten age'");
             DisplayName.AddTranslation(GameCulture.Chinese, "化石魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'被遗忘的记忆'
 血量为0时避免死亡, 以20点生命值重生
 在复活后的几秒钟内, 免疫所有伤害, 并且可以产生骨头
 召唤一只小恐龙");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -42,7 +42,7 @@ Summons a pet Baby Dino
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.value = 40000;
         }
 
@@ -63,9 +63,9 @@ Summons a pet Baby Dino
             recipe.AddIngredient(ItemID.AmberStaff);
             recipe.AddIngredient(ItemID.AntlionClaw);
             //orange phaseblade
-            //snake charmers flute    
+            //snake charmers flute
             recipe.AddIngredient(ItemID.AmberMosquito);
-            
+
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();

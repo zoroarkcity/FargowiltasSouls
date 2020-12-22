@@ -1,15 +1,12 @@
-using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
-    public class UniverseSoul : ModItem
+    public class UniverseSoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -62,7 +59,7 @@ Effects of Sniper Scope, Celestial Cuffs and Mana Flower
             item.value = 5000000;
             item.rare = -12;
             item.expert = true;
-
+            NumFrames = 10;
             ItemID.Sets.ItemNoGravity[item.type] = true;
         }
 

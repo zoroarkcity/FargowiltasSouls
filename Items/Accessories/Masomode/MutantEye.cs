@@ -1,15 +1,15 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class MutantEye : ModItem
+    public class MutantEye : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mutant Eye");
@@ -38,20 +38,10 @@ Mutant Bomb有60秒的冷却");
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = Item.sellPrice(1);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
-        {
-            foreach (TooltipLine line2 in list)
-            {
-                if (line2.mod == "Terraria" && line2.Name == "ItemName")
-                {
-                    line2.overrideColor = new Color(Main.DiscoR, 51, 255 - (int)(Main.DiscoR * 0.4));
-                }
-            }
-        }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {

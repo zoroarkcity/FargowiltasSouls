@@ -1,7 +1,4 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
 
@@ -28,6 +25,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             base.AI();
             if (projectile.timeLeft % projectile.MaxUpdates == 0)
                 projectile.position += Main.player[projectile.owner].position - Main.player[projectile.owner].oldPosition;
+
+            if (projectile.owner == Main.myPlayer && Main.player[projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<HentaiSpearWand>()] < 1)
+            {
+                projectile.Kill();
+                return;
+            }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

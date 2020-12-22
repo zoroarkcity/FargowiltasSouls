@@ -1,11 +1,13 @@
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class ConcentratedRainbowMatter : ModItem
-    {        
+    public class ConcentratedRainbowMatter : SoulsItem
+    {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Concentrated Rainbow Matter");
@@ -23,7 +25,7 @@ Summons a baby rainbow slime
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
         }
 

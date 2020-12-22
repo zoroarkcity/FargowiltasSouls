@@ -14,12 +14,14 @@ namespace FargowiltasSouls
 
         private void SetAll(bool val)
         {
+            //bool backgroundValue = MutantBackground;
             bool recolorsValue = BossRecolors;
             IEnumerable<FieldInfo> configs = typeof(SoulConfig).GetFields(BindingFlags.Public | BindingFlags.Instance).Where(i => i.FieldType == true.GetType());
             foreach (FieldInfo config in configs)
             {
                 config.SetValue(this, val);
             }
+            //MutantBackground = backgroundValue;
             BossRecolors = recolorsValue;
 
             /*IEnumerable<FieldInfo> walletConfigs = typeof(WalletToggles).GetFields(BindingFlags.Public | BindingFlags.Instance).Where(i => i.FieldType == true.GetType());
@@ -351,6 +353,10 @@ namespace FargowiltasSouls
         #region maso accessories
 
         [Header("$Mods.FargowiltasSouls.MasoHeader")]
+        /*[Label("$Mods.FargowiltasSouls.MasoBossBG")]
+        [DefaultValue(true)]
+        public bool MutantBackground;*/
+
         [Label("$Mods.FargowiltasSouls.MasoBossRecolors")]
         [DefaultValue(true)]
         public bool BossRecolors;

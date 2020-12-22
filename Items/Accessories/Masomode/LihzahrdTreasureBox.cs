@@ -1,12 +1,13 @@
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class LihzahrdTreasureBox : ModItem
+    public class LihzahrdTreasureBox : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lihzahrd Treasure Box");
@@ -28,7 +29,7 @@ When you land after a jump, you create a burst of boulders
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = Item.sellPrice(0, 6);
             item.defense = 8;
         }

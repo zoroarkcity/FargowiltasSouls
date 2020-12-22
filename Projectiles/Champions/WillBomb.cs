@@ -77,7 +77,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (FargoSoulsWorld.MasochistMode)
-                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<WillRitual>(), 0, 0f, Main.myPlayer, 0f, projectile.ai[1]);
+                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<WillRitual>(), projectile.damage, 0f, Main.myPlayer, 0f, projectile.ai[1]);
 
                 if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.championBoss, ModContent.NPCType<NPCs.Champions.WillChampion>())
                     && Main.npc[EModeGlobalNPC.championBoss].ai[0] > -1)

@@ -1,13 +1,12 @@
 ﻿using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Ammos
 {
-    public class FargoArrow : ModItem
+    public class FargoArrow : SoulsItem
     {
-        Mod fargos = ModLoader.GetMod("Fargowiltas");
+        private Mod fargos = ModLoader.GetMod("Fargowiltas");
 
         public override bool Autoload(ref string name)
         {
@@ -33,9 +32,9 @@ namespace FargowiltasSouls.Items.Ammos
             item.width = 26;
             item.height = 26;
             item.knockBack = 8f; //same as hellfire
-            item.rare = 10;
+            item.rare = ItemRarityID.Red;
             item.shoot = mod.ProjectileType("FargoArrowProj");
-            item.shootSpeed = 6.5f; // same as hellfire arrow          
+            item.shootSpeed = 6.5f; // same as hellfire arrow
             item.ammo = AmmoID.Arrow;
         }
 

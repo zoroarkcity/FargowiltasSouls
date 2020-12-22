@@ -79,7 +79,7 @@ namespace FargowiltasSouls.Projectiles
             if (cursedCounter > 10)
             {
                 cursedCounter = 0;
-                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, 480, (int)((double)projectile.damage * 0.8), projectile.knockBack * 0.5f, projectile.owner, 0f, 0f);
+                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, ProjectileID.CursedDartFlame, (int)((double)projectile.damage * 0.8), projectile.knockBack * 0.5f, projectile.owner, 0f, 0f);
             }
 
 
@@ -234,7 +234,7 @@ namespace FargowiltasSouls.Projectiles
             //cursed
             if (projectile.owner == Main.myPlayer)
             {
-                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, 480, (int)((double)projectile.damage * 0.8), projectile.knockBack * 0.5f, projectile.owner, 0f, 0f);
+                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, ProjectileID.CursedDartFlame, (int)((double)projectile.damage * 0.8), projectile.knockBack * 0.5f, projectile.owner, 0f, 0f);
             }
 
             OnHit();

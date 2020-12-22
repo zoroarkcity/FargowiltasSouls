@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -8,11 +7,11 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Summons
 {
-	public class DevisCurse : ModItem
-	{
+    public class DevisCurse : SoulsItem
+    {
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Deviantt's Curse");
+        {
+            DisplayName.SetDefault("Deviantt's Curse");
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(4, 7));
         }
 
@@ -22,47 +21,37 @@ namespace FargowiltasSouls.Items.Summons
         }*/
 
         public override void SetDefaults()
-		{
+        {
             item.width = 20;
             item.height = 20;
-            item.rare = 11;
+            item.rare = ItemRarityID.LightRed;
             item.maxStack = 999;
             item.useAnimation = 30;
             item.useTime = 30;
-            item.useStyle = 4;
+            item.useStyle = ItemUseStyleID.HoldingUp;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
             item.consumable = true;
             item.value = Item.buyPrice(0, 2);
-
             item.noUseGraphic = true;
         }
+        public override Color? GetAlpha(Color lightColor) => Color.White;
 
         public override bool UseItem(Player player)
         {
             int mutant = NPC.FindFirstNPC(ModLoader.GetMod("Fargowiltas").NPCType("Deviantt"));
-                if (mutant > -1 && Main.npc[mutant].active)
-                {
-                    Main.npc[mutant].Transform(mod.NPCType("DeviBoss"));
-                    if (Main.netMode == NetmodeID.SinglePlayer)
-                        Main.NewText("Deviantt has awoken!", 175, 75, 255);
-                    else if (Main.netMode == NetmodeID.Server)
-                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Deviantt has awoken!"), new Color(175, 75, 255));
-                }
-                else
-                {
-                    NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("DeviBoss"));
-                }
-            return true;
-        }
-
-        public override void ModifyTooltips(List<TooltipLine> list)
-        {
-            foreach (TooltipLine line2 in list)
+            if (mutant > -1 && Main.npc[mutant].active)
             {
-                if (line2.mod == "Terraria" && line2.Name == "ItemName")
-                {
-                    line2.overrideColor = Main.DiscoColor;
-                }
+                Main.npc[mutant].Transform(mod.NPCType("DeviBoss"));
+                if (Main.netMode == NetmodeID.SinglePlayer)
+                    Main.NewText("Deviantt has awoken!", 175, 75, 255);
+                else if (Main.netMode == NetmodeID.Server)
+                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Deviantt has awoken!"), new Color(175, 75, 255));
             }
+            else
+            {
+                NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("DeviBoss"));
+            }
+            return true;
         }
 
         public override void AddRecipes()

@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
             if (dist > 300 && dist < 500)
             {
-                damage *= 2;
+                damage = (int)(damage * 1.5);
                 crit = true;
             }
         }

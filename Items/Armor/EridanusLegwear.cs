@@ -1,12 +1,12 @@
 ﻿using FargowiltasSouls.Items.Misc;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Armor
 {
     [AutoloadEquip(EquipType.Legs)]
-    public class EridanusLegwear : ModItem
+    public class EridanusLegwear : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Items.Armor
         {
             item.width = 18;
             item.height = 18;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = Item.sellPrice(0, 14);
             item.defense = 20;
         }

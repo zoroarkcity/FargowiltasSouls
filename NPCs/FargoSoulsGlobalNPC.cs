@@ -5,7 +5,6 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
-using FargowiltasSouls.Items.Misc;
 using FargowiltasSouls.Items.Weapons.BossDrops;
 using FargowiltasSouls.NPCs.Critters;
 using FargowiltasSouls.Projectiles.Souls;
@@ -97,6 +96,13 @@ namespace FargowiltasSouls.NPCs
             {
                 switch (npc.type)
                 {
+                    case NPCID.TheDestroyer:
+                    case NPCID.TheDestroyerBody:
+                    case NPCID.TheDestroyerTail:
+                        npc.buffImmune[ModContent.BuffType<TimeFrozen>()] = false;
+                        npc.buffImmune[BuffID.Chilled] = false;
+                        break;
+
                     case NPCID.WallofFlesh:
                     case NPCID.WallofFleshEye:
                     case NPCID.MoonLordCore:
@@ -114,8 +120,12 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.Squirrel:
                     case NPCID.SquirrelRed:
-                        if (Main.rand.Next(8) == 0)
-                            npc.Transform(ModContent.NPCType<TophatSquirrelCritter>());
+                        if (!npc.SpawnedFromStatue)
+                        {
+                            int p = Player.FindClosest(npc.position, npc.width, npc.height);
+                            if ((p == -1 || npc.Distance(Main.player[p].Center) > 800) && Main.rand.Next(5) == 0)
+                                npc.Transform(ModContent.NPCType<TophatSquirrelCritter>());
+                        }
                         break;
 
                     default:
@@ -703,7 +713,7 @@ namespace FargowiltasSouls.NPCs
                         bool dropItems = true;
                         for (int i = 0; i < 200; i++)
                         {
-                            if (Main.npc[i].active && i != npc.whoAmI && (Main.npc[i].type == 13 || Main.npc[i].type == 14 || Main.npc[i].type == 15))
+                            if (Main.npc[i].active && i != npc.whoAmI && (Main.npc[i].type == NPCID.EaterofWorldsHead || Main.npc[i].type == NPCID.EaterofWorldsBody || Main.npc[i].type == NPCID.EaterofWorldsTail))
                             {
                                 dropItems = false;
                                 break;

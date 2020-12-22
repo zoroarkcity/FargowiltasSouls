@@ -22,6 +22,7 @@ namespace FargowiltasSouls.Projectiles.JungleMimic
             projectile.height = 4;
             projectile.aiStyle = 1;
             projectile.friendly = true;
+            projectile.minion = true;
             projectile.timeLeft = 600;
             projectile.extraUpdates = 1;
             projectile.alpha = 255;
@@ -44,7 +45,7 @@ namespace FargowiltasSouls.Projectiles.JungleMimic
         }
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(0, (int)projectile.position.X, (int)projectile.position.Y, 1, 1f, 0.0f);
+            Main.PlaySound(SoundID.Dig, (int)projectile.position.X, (int)projectile.position.Y, 1, 1f, 0.0f);
             int dusttype;
             switch (coinType)
             {

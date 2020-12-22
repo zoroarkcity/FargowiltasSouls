@@ -1,12 +1,13 @@
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class NymphsPerfume : ModItem
-    {        
+    public class NymphsPerfume : SoulsItem
+    {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Nymph's Perfume");
@@ -25,7 +26,7 @@ Your attacks occasionally produce hearts
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
         }
 

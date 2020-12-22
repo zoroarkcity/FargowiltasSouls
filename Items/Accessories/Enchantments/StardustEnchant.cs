@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class StardustEnchant : ModItem
+    public class StardustEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -19,7 +19,7 @@ While time is frozen, your guardian will continue to attack
 There is a 60 second cooldown for this effect
 'The power of the Stand is yours'");
             DisplayName.AddTranslation(GameCulture.Chinese, "星尘魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'屎蛋多帕瓦!'
 双击'下'键指挥你的强化替身
 按下时间冻结热键时停5秒
@@ -27,7 +27,7 @@ There is a 60 second cooldown for this effect
 60秒的冷却时间, 冷却结束时会播放音效");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -44,7 +44,7 @@ There is a 60 second cooldown for this effect
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 10;
+            item.rare = ItemRarityID.Red;
             item.value = 400000;
         }
 

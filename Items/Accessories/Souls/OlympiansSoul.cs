@@ -1,14 +1,14 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     //[AutoloadEquip(EquipType.HandsOn, EquipType.HandsOff)]
-    public class OlympiansSoul : ModItem
+    public class OlympiansSoul : SoulsItem
     {
         public override bool Autoload(ref string name)
         {
@@ -41,10 +41,11 @@ namespace FargowiltasSouls.Items.Accessories.Souls
             item.height = 20;
             item.accessory = true;
             item.value = 1000000;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
         }
-
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override Color? GetAlpha(Color lightColor) => Color.White;
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {

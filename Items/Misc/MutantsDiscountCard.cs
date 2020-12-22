@@ -6,21 +6,21 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Misc
 {
-	public class MutantsDiscountCard : ModItem
-	{
+    public class MutantsDiscountCard : SoulsItem
+    {
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Mutant's Discount Card");
+        {
+            DisplayName.SetDefault("Mutant's Discount Card");
             Tooltip.SetDefault(@"Permanently reduces Mutant's shop prices by 20%");
-		}
+        }
 
-		public override void SetDefaults()
-		{
+        public override void SetDefaults()
+        {
             item.width = 20;
             item.height = 20;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.maxStack = 1;
-            item.useStyle = 2;
+            item.useStyle = ItemUseStyleID.EatingUsing;
             item.useAnimation = 17;
             item.useTime = 17;
             item.consumable = true;
@@ -41,7 +41,7 @@ namespace FargowiltasSouls.Items.Misc
             return true;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine line2 in list)
             {

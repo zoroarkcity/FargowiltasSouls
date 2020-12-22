@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace FargowiltasSouls.Items.Armor
 {
     [AutoloadEquip(EquipType.Head)]
-    public class EridanusHat : ModItem
+    public class EridanusHat : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -22,7 +22,7 @@ Increases your max number of sentries by 2");
         {
             item.width = 18;
             item.height = 18;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = Item.sellPrice(0, 14);
             item.defense = 20;
         }

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class NecroEnchant : ModItem
+    public class NecroEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -20,13 +20,13 @@ Bosses will drop bones every 10% of their HP lost
 Summons a pet Skeletron Head
 'Welcome to the bone zone'");
             DisplayName.AddTranslation(GameCulture.Chinese, "死灵魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'欢迎来到骸骨领域'
 地牢守卫者偶尔会在你受到攻击时消灭敌人
 召唤一个小骷髅头");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -43,7 +43,7 @@ Summons a pet Skeletron Head
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = 50000;
         }
 
@@ -65,7 +65,7 @@ Summons a pet Skeletron Head
             //maggot
             recipe.AddIngredient(ItemID.TheGuardiansGaze);
             recipe.AddIngredient(ItemID.BoneKey);
-            
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

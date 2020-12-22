@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -61,13 +60,19 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             if (projectile.ai[0] == 0)
             {
                 Player player = Main.player[projectile.owner];
-                if (!(player.active && !player.dead && player.controlUseItem))
+                if (player.active && !player.dead && player.controlUseItem && player.HeldItem.type == ModContent.ItemType<Items.Weapons.SwarmDrops.FleshCannon>())
+                {
+                    projectile.damage = player.GetWeaponDamage(player.HeldItem);
+                    projectile.knockBack = player.GetWeaponKnockback(player.HeldItem, player.HeldItem.knockBack);
+                }
+                else
                 {
                     Main.PlaySound(new LegacySoundStyle(4, 13), projectile.Center);
                     projectile.ai[0] = 1;
                     projectile.penetrate = 1;
                     projectile.maxPenetrate = 1;
                     projectile.netUpdate = true;
+                    return;
                 }
 
                 if (projectile.scale < 5f)

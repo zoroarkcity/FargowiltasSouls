@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     [AutoloadEquip(EquipType.Wings)]
-    public class DimensionSoul : ModItem
+    public class DimensionSoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -23,8 +23,8 @@ Grants immunity to knockback and several debuffs
 Enemies are more likely to target you
 Allows Supersonic running and infinite flight
 Increases fishing skill substantially, All fishing rods will have 10 extra lures
-Increased block and wall placement speed by 50% 
-Near infinite block placement and mining reach, Mining speed tripled 
+Increased block and wall placement speed by 50%
+Near infinite block placement and mining reach, Mining speed tripled
 Shine, Spelunker, Hunter, and Dangersense effects
 Auto paint and actuator effect
 Grants the ability to enable Builder Mode
@@ -67,10 +67,11 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
             item.rare = -12;
             item.expert = true;
 
-            item.useStyle = 4;
+            item.useStyle = ItemUseStyleID.HoldingUp;
             item.useTime = 1;
             item.UseSound = SoundID.Item6;
             item.useAnimation = 1;
+            NumFrames = 18;
         }
 
         public override bool UseItem(Player player)
@@ -115,11 +116,11 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
         public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,
             ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
         {
-            ascentWhenFalling = 1f; 
-            ascentWhenRising = 0.3f; 
+            ascentWhenFalling = 1f;
+            ascentWhenRising = 0.3f;
             maxCanAscendMultiplier = 1.5f;
             maxAscentMultiplier = 3f;
-            constantAscend = 0.15f; 
+            constantAscend = 0.15f;
         }
 
         public override void HorizontalWingSpeeds(Player player, ref float speed, ref float acceleration)
@@ -140,7 +141,7 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
             recipe.AddIngredient(null, "MutantScale", 10);
 
             recipe.AddTile(ModLoader.GetMod("Fargowiltas").TileType("CrucibleCosmosSheet"));
-                
+
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

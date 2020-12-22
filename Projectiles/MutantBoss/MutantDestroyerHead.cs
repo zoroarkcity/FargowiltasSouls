@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Projectiles.MutantBoss
 {
@@ -99,7 +100,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             }
             //int g = Gore.NewGore(projectile.Center, projectile.velocity / 2, mod.GetGoreSlot("Gores/DestroyerGun/DestroyerHead"), projectile.scale);
            // Main.gore[g].timeLeft = 20;
-            Main.PlaySound(4, projectile.Center, 14);
+            Main.PlaySound(SoundID.NPCKilled, projectile.Center, 14);
         }
     }
 }

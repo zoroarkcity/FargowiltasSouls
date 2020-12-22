@@ -1,13 +1,12 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.Graphics.Effects;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items
 {
-    public class Masochist : ModItem
+    public class Masochist : SoulsItem
     {
         public override string Texture => "FargowiltasSouls/Items/Placeholder";
 
@@ -32,11 +31,11 @@ Cannot be used while a boss is alive
         {
             item.width = 20;
             item.height = 20;
-            item.maxStack = 999;
-            item.rare = 1;
+            item.maxStack = 1;
+            item.rare = ItemRarityID.Blue;
             item.useAnimation = 30;
             item.useTime = 30;
-            item.useStyle = 4;
+            item.useStyle = ItemUseStyleID.HoldingUp;
             item.consumable = false;
         }
 

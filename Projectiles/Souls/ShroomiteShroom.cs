@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,8 +19,10 @@ namespace FargowiltasSouls.Projectiles.Souls
             aiType = ProjectileID.Mushroom;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
 
+            projectile.melee = false;
+            projectile.ranged = true;
             projectile.usesIDStaticNPCImmunity = true;
-            projectile.idStaticNPCHitCooldown = 30;
+            projectile.idStaticNPCHitCooldown = 20;
         }
 
         public override void AI()

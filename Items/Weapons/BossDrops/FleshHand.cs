@@ -1,11 +1,10 @@
 using Terraria.Audio;
-using Terraria.ModLoader;
 using Terraria.Localization;
-using Terraria;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class FleshHand : ModItem
+    public class FleshHand : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -24,12 +23,12 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.height = 24;
             item.useTime = 32;
             item.useAnimation = 32;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 2f;
             item.UseSound = new LegacySoundStyle(4, 13);
             item.value = 50000;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("Hungry");
             item.shootSpeed = 20f;

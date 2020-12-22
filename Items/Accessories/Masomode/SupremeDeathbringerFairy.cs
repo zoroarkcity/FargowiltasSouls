@@ -6,8 +6,10 @@ using Terraria.Localization;
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     [AutoloadEquip(EquipType.Shield)]
-    public class SupremeDeathbringerFairy : ModItem
+    public class SupremeDeathbringerFairy : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Supreme Deathbringer Fairy");
@@ -38,7 +40,7 @@ Summons 2 Skeletron arms to whack enemies
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
             item.defense = 2;
         }

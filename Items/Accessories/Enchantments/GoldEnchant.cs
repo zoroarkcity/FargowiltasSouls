@@ -7,7 +7,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class GoldEnchant : ModItem
+    public class GoldEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -33,7 +33,7 @@ Summons a pet Parrot
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -50,7 +50,7 @@ Summons a pet Parrot
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 150000;
         }
 

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class NebulaEnchant : ModItem
+    public class NebulaEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,12 +17,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 Buff booster stacking capped at 2
 'The pillars of creation have shined upon you'");
             DisplayName.AddTranslation(GameCulture.Chinese, "星云魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'创造之柱照耀着你'
 杀死敌人有概率产生增益效果");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -39,7 +39,7 @@ Buff booster stacking capped at 2
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 10;
+            item.rare = ItemRarityID.Red;
             item.value = 400000;
         }
 
