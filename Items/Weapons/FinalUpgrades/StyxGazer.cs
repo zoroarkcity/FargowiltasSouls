@@ -27,8 +27,8 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             item.useTime = 22;
             item.shootSpeed = 16f;
             item.knockBack = 14f;
-            item.width = 32;
-            item.height = 32;
+            item.width = 20;
+            item.height = 20;
             item.scale = 1f;
             item.rare = ItemRarityID.Purple;
             item.UseSound = SoundID.Item1;
@@ -39,7 +39,6 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             item.melee = true;
             item.autoReuse = true;
         }
-
         public override bool AltFunctionUse(Player player)
         {
             return true;
@@ -85,6 +84,8 @@ namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
             }
             return true;
         }
+
+        public override string Texture => base.Texture;
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {

@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -19,6 +20,8 @@ namespace FargowiltasSouls.Items.Misc
             item.rare = ItemRarityID.Orange;
             item.value = Item.sellPrice(0, 1, 0, 0);
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, 10));
+            ItemID.Sets.ItemNoGravity[item.type] = true;
         }
+        public override Color? GetAlpha(Color lightColor) => Color.White;
     }
 }

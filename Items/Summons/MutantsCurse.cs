@@ -4,8 +4,6 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Microsoft.Xna.Framework.Graphics;
-using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Summons
 {
@@ -22,8 +20,8 @@ namespace FargowiltasSouls.Items.Summons
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 20;
+            item.width = 52;
+            item.height = 52;
             item.rare = ItemRarityID.Purple;
             item.maxStack = 999;
             item.useAnimation = 30;
@@ -33,6 +31,7 @@ namespace FargowiltasSouls.Items.Summons
             item.consumable = true;
             item.value = Item.buyPrice(1);
             item.noUseGraphic = true;
+            NumFrames = 11;
         }
 
         public override bool UseItem(Player player)
@@ -53,26 +52,6 @@ namespace FargowiltasSouls.Items.Summons
             }
 
             return true;
-        }
-
-        int framecounter;
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-        {
-            framecounter++;
-            if(framecounter > 2)
-            {
-                Main.itemFrame[whoAmI]++;
-                if (Main.itemFrame[whoAmI] > 10)
-                    Main.itemFrame[whoAmI] = 0;
-
-                framecounter = 0;
-            }
-            ExtraUtilities.DrawItem(whoAmI, Main.itemTexture[item.type], rotation, 11, lightColor); //item draws in wrong position by default so this is necessary
-            return false;
-        }
-        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
-        {
-            ExtraUtilities.DrawItem(whoAmI, mod.GetTexture("Items/Summons/MutantsCurse_glow"), rotation, 11, Color.White);
         }
     }
 }

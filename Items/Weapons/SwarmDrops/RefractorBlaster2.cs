@@ -1,7 +1,4 @@
-﻿using FargowiltasSouls.Utilities;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
+﻿using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -39,11 +36,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.noUseGraphic = true;
             item.mana = 18;
             item.knockBack = 0.5f;
-        }
-
-        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
-        {
-            ExtraUtilities.DrawItem(whoAmI, mod.GetTexture("Items/Weapons/SwarmDrops/RefractorBlaster2Glow"), rotation, 7, Color.White);
+            NumFrames = 7;
         }
 
         public override void AddRecipes()
