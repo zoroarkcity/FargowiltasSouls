@@ -1,5 +1,9 @@
 ﻿using FargowiltasSouls.Utilities;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items
@@ -29,6 +33,39 @@ namespace FargowiltasSouls.Items
         /// <param name="tooltips"></param>
         public virtual void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
+        }
+
+        /// <summary>
+        /// The location of the item's glowmask texture, defaults to the item's internal texture name with _glow
+        /// </summary>
+        public virtual string glowmaskstring => Texture.Remove(0, "FargowiltasSouls/".Length) + "_glow";
+
+        /// <summary>
+        /// The amount of frames in the item's animation. <br />
+        /// </summary>
+        public int NumFrames = 1;
+
+        /// <summary>
+        /// Allows you to draw things in front of this item. This method is called even if PreDrawInWorld returns false. <br />
+        /// Runs directly after the code for PostDrawInWorld in SoulsItem.
+        /// </summary>
+        public virtual void SafePostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) { }
+
+        public sealed override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+        {
+            if(mod.TextureExists(glowmaskstring))
+            {
+                Item item = Main.item[whoAmI];
+                Texture2D texture = mod.GetTexture(glowmaskstring);
+                int height = texture.Height / NumFrames;
+                int width = texture.Width;
+                int frame = (NumFrames > 1) ? (height * Main.itemFrame[whoAmI]) : 0;
+                SpriteEffects flipdirection = item.direction < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+                Rectangle Origin = new Rectangle(0, frame, width, height);
+                Vector2 DrawCenter = new Vector2(item.Center.X, item.position.Y + item.height - height/2);
+                Main.spriteBatch.Draw(texture, DrawCenter - Main.screenPosition, Origin, Color.White, rotation, Origin.Size() / 2, scale, flipdirection, 0f);
+            }
+            SafePostDrawInWorld(spriteBatch, lightColor, alphaColor, rotation, scale, whoAmI);
         }
 
         public sealed override void ModifyTooltips(List<TooltipLine> tooltips)

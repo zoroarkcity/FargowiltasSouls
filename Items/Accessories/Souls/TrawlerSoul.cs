@@ -41,8 +41,9 @@ Effects of Angler Tackle Bag
             item.accessory = true;
             item.value = 750000;
             item.rare = ItemRarityID.Purple;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
         }
-
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)

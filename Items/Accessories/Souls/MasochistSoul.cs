@@ -81,7 +81,7 @@ Summons the aid of all Eternity Mode bosses to your side
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot, false))
                 player.scope = true;
         }
-
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();

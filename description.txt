@@ -2,32 +2,13 @@ Fargo's Souls Mod is a content mod that adds the powerful Enchantments and Souls
 Features the highly challenging Eternity Mode!
 
 NEW UPDATE - V 1.3.93
-
-
--Updated Slime King's Slasher sprite
--Slime King's Slasher no longer RNG, swaps between shooting 3 and 5 spikes
--Leash of Cthulhu travels much faster, is now auto use, and spawns eyes on hit instead of always at max distance
+-Added Gaia Armor
+-Added Dragon's Breath
+-Added Vineslinger, Mahoguny, Overgrown Key
+-Added Gemini Glaives, Diffractor Blaster, Dragon's Demise
 -Added Phantasmal Leash of Cthulhu
--Reworked Twinrangs: Left click now only throws Spazmarangs. Spazmarangs travel much faster and spawn more flames than before but only on hit, Right click throws Retirangs. Retirangs deal no damage, stop in place after travelling a certain distance then fire a burst of lasers at the cursor
-
-
-
--Added Gemini Glaives (kind of not really, just the empowerments when switching between rangs)
-
--Moved Echdeath to DLC
--Added Vineslinger, Mahoguny, and Overgrown Key (Dropped by Jungle Mimic) (probably need some sprite improvements)
--Dragon's Fire is Dragon's Breath 
--Buffed Miss Drakovi's Fishing Rod: melee increased attack speed and projectile speed, ranged increased attack speed and bullet amount from 4 to 5, magic bubbles no longer pierce
--Added Piranha Plant Voodoo Doll 
--Explosive Bunny will no longer trigger extra attacks such as Boreal snowballs
--Soul of Eternity has no Tungsten cooldown
--Tiki Enchant no longer breaks with Stardust Dragon
--Fixed Wyvern Feather, Magical Bulb, Ice Queen's Crown vanities not showing up right
-
-
-
--Added Moon Bow
--Added Void Bow
-
+-Added Puff in a Bottle and Piranha Plant Voodoo Doll
+-Various weapon reworks
+-Various Eternity Mode reworks and fixes
 
 -See the wiki for full details

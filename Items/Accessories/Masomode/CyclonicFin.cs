@@ -1,8 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using Terraria;
+﻿using Terraria;
 using Terraria.DataStructures;
-using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.ID;
 
@@ -44,17 +41,6 @@ Endurance recovers when you reach full life again
             item.accessory = true;
             item.rare = ItemRarityID.Purple;
             item.value = Item.sellPrice(0, 17);
-        }
-
-        public override void SafeModifyTooltips(List<TooltipLine> list)
-        {
-            foreach (TooltipLine line2 in list)
-            {
-                if (line2.mod == "Terraria" && line2.Name == "ItemName")
-                {
-                    line2.overrideColor = new Color(Main.DiscoR, 51, 255 - (int)(Main.DiscoR * 0.4));
-                }
-            }
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

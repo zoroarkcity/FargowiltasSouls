@@ -56,8 +56,9 @@ Summons a pet Magic Lantern
             item.useTime = 1;
             item.UseSound = SoundID.Item6;
             item.useAnimation = 1;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
         }
-
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)

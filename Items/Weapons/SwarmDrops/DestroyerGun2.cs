@@ -21,8 +21,8 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.damage = 275;
             item.mana = 30;
             item.summon = true;
-            item.width = 24;
-            item.height = 24;
+            item.width = 126;
+            item.height = 38;
             item.useAnimation = 70;
             item.useTime = 70;
             item.useStyle = ItemUseStyleID.HoldingOut;

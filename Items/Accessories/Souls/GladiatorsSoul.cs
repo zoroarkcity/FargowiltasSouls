@@ -40,6 +40,7 @@ Effects of the Fire Gauntlet and Yoyo Bag
             item.accessory = true;
             item.value = 1000000;
             item.rare = ItemRarityID.Purple;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
         }
 
         public override void SafeModifyTooltips(List<TooltipLine> list)
@@ -52,7 +53,7 @@ Effects of the Fire Gauntlet and Yoyo Bag
                 }
             }
         }
-
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.meleeDamage += .3f;

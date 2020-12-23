@@ -5689,7 +5689,7 @@ namespace FargowiltasSouls.NPCs
                                 if (jungle)
                                     pool[NPCID.DoctorBones] = .05f;
 
-                                if (NPC.downedBoss3 && !sinisterIcon && !AnyBossAlive())
+                                if (NPC.downedBoss3 && !NPC.downedMechBoss2 && !sinisterIcon && !AnyBossAlive())
                                     pool[NPCID.EyeofCthulhu] = Main.bloodMoon ? .004f : .002f;
                             }
                         }
@@ -5807,7 +5807,7 @@ namespace FargowiltasSouls.NPCs
                             if (Main.bloodMoon)
                             {
                                 pool[NPCID.ChatteringTeethBomb] = .1f;
-                                if (!sinisterIcon && !AnyBossAlive())
+                                if (!sinisterIcon && !NPC.downedMechBoss2 && !AnyBossAlive())
                                     pool[NPCID.EyeofCthulhu] = .04f;
 
                                 if (NPC.downedPlantBoss)
@@ -5849,7 +5849,7 @@ namespace FargowiltasSouls.NPCs
                                         }
                                     }
 
-                                    if (!sinisterIcon && !AnyBossAlive())
+                                    if (!sinisterIcon && !NPC.downedMechBoss2 && !AnyBossAlive())
                                         pool[NPCID.EyeofCthulhu] = .01f;
 
                                     if (NPC.downedMechBossAny)
@@ -6428,12 +6428,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.BigMimicJungle:
                         if (Main.rand.Next(5) == 0)
                             Item.NewItem(npc.Hitbox, ModContent.ItemType<TribalCharm>());
-                        switch (Main.rand.Next(3))
-                        {
-                            case 0: Item.NewItem(npc.Hitbox, ModContent.ItemType<Vineslinger>()); break;
-                            case 1: Item.NewItem(npc.Hitbox, ModContent.ItemType<Mahoguny>()); break;
-                            case 2: Item.NewItem(npc.Hitbox, ModContent.ItemType<OvergrownKey>()); break;
-                        }
+                        
                         goto case NPCID.BigMimicCrimson;
 
                     case NPCID.IceGolem:

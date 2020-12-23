@@ -71,6 +71,7 @@ Effects of Lava Waders, Angler Tackle Bag, Paint Sprayer, Presserator, Cell Phon
             item.useTime = 1;
             item.UseSound = SoundID.Item6;
             item.useAnimation = 1;
+            NumFrames = 18;
         }
 
         public override bool UseItem(Player player)

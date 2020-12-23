@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -7,7 +6,6 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using FargowiltasSouls.NPCs.AbomBoss;
 using Fargowiltas.Items.Tiles;
-using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Summons
 {
@@ -22,8 +20,8 @@ namespace FargowiltasSouls.Items.Summons
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 20;
+            item.width = 42;
+            item.height = 48;
             item.rare = ItemRarityID.Purple;
             item.maxStack = 999;
             item.useAnimation = 30;
@@ -31,7 +29,9 @@ namespace FargowiltasSouls.Items.Summons
             item.useStyle = ItemUseStyleID.HoldingUp;
             item.consumable = true;
             item.value = Item.buyPrice(gold: 8);
+            ItemID.Sets.ItemNoGravity[item.type] = true;
             item.noUseGraphic = true;
+            NumFrames = 10;
         }
 
         public override bool UseItem(Player player)
@@ -54,12 +54,6 @@ namespace FargowiltasSouls.Items.Summons
                 NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<AbomBoss>());
 
             return true;
-        }
-
-        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
-        {
-            if (tooltips.TryFindTooltipLine("ItemName", out TooltipLine itemNameLine))
-                itemNameLine.overrideColor = Main.DiscoColor;
         }
 
         public override void AddRecipes() // Make this harder again when changed to abom's gift

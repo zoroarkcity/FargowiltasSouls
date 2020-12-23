@@ -1402,13 +1402,14 @@ namespace FargowiltasSouls
             {
                 Item heldItem = player.HeldItem;
 
-                if (apprenticeCD == 0 && heldItem.damage > 0 && player.controlUseItem && player.itemAnimation != 0 && prevPosition != null)
+                if (apprenticeCD == 0 && heldItem.damage > 0 && player.controlUseItem && player.itemAnimation != 0 && prevPosition != null && heldItem.type != ItemID.ExplosiveBunny && heldItem.type != ItemID.Cannonball
+                && heldItem.createTile == -1 && heldItem.createWall == -1 && heldItem.ammo == AmmoID.None)
                 {
                     if (prevPosition != null)
                     {
                         Vector2 vel = (Main.MouseWorld - prevPosition).SafeNormalize(-Vector2.UnitY) * 15;
 
-                        Projectile.NewProjectile(prevPosition, vel, ProjectileID.DD2FlameBurstTowerT3Shot, heldItem.damage / 2, 1, player.whoAmI);
+                        Projectile.NewProjectile(prevPosition, vel, ProjectileID.DD2FlameBurstTowerT3Shot, HighestDamageTypeScaling(heldItem.damage / 2), 1, player.whoAmI);
 
                         for (int i = 0; i < 5; i++)
                         {

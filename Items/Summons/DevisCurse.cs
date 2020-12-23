@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -25,16 +24,17 @@ namespace FargowiltasSouls.Items.Summons
         {
             item.width = 20;
             item.height = 20;
-            item.rare = ItemRarityID.Purple;
+            item.rare = ItemRarityID.LightRed;
             item.maxStack = 999;
             item.useAnimation = 30;
             item.useTime = 30;
             item.useStyle = ItemUseStyleID.HoldingUp;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
             item.consumable = true;
             item.value = Item.buyPrice(0, 2);
-
             item.noUseGraphic = true;
         }
+        public override Color? GetAlpha(Color lightColor) => Color.White;
 
         public override bool UseItem(Player player)
         {
@@ -52,17 +52,6 @@ namespace FargowiltasSouls.Items.Summons
                 NPC.SpawnOnPlayer(player.whoAmI, mod.NPCType("DeviBoss"));
             }
             return true;
-        }
-
-        public override void SafeModifyTooltips(List<TooltipLine> list)
-        {
-            foreach (TooltipLine line2 in list)
-            {
-                if (line2.mod == "Terraria" && line2.Name == "ItemName")
-                {
-                    line2.overrideColor = Main.DiscoColor;
-                }
-            }
         }
 
         public override void AddRecipes()

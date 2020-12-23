@@ -47,8 +47,9 @@ Effects of Bee Cloak, Spore Sac, Paladin's Shield, and Frozen Turtle Shell
             item.value = 1000000;
             item.rare = ItemRarityID.Purple;
             item.shieldSlot = 4;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
         }
-
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)

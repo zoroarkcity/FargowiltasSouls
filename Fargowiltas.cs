@@ -356,6 +356,7 @@ namespace FargowiltasSouls
                 Ref<Effect> lcRef = new Ref<Effect>(GetEffect("Effects/LifeChampionShader"));
                 Ref<Effect> wcRef = new Ref<Effect>(GetEffect("Effects/WillChampionShader"));
                 Ref<Effect> gaiaRef = new Ref<Effect>(GetEffect("Effects/GaiaShader"));
+                Ref<Effect> textRef = new Ref<Effect>(GetEffect("Effects/TextShader"));
 
                 //loading shaders from refs
                 GameShaders.Misc["LCWingShader"] = new MiscShaderData(lcRef, "LCWings");
@@ -366,6 +367,10 @@ namespace FargowiltasSouls
 
                 GameShaders.Misc["GaiaShader"] = new MiscShaderData(gaiaRef, "GaiaGlow");
                 GameShaders.Armor.BindShader(ModContent.ItemType<GaiaDye>(), new ArmorShaderData(gaiaRef, "GaiaArmor").UseColor(new Color(0.44f, 1, 0.09f)).UseSecondaryColor(new Color(0.5f, 1f, 0.9f)));
+
+                GameShaders.Misc["PulseUpwards"] = new MiscShaderData(textRef, "PulseUpwards");
+                GameShaders.Misc["PulseDiagonal"] = new MiscShaderData(textRef, "PulseDiagonal");
+                GameShaders.Misc["PulseCircle"] = new MiscShaderData(textRef, "PulseCircle");
 
                 #endregion shaders
             }

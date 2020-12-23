@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -21,17 +20,18 @@ namespace FargowiltasSouls.Items.Summons
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 20;
+            item.width = 52;
+            item.height = 52;
             item.rare = ItemRarityID.Purple;
             item.maxStack = 999;
             item.useAnimation = 30;
             item.useTime = 30;
             item.useStyle = ItemUseStyleID.HoldingUp;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
             item.consumable = true;
             item.value = Item.buyPrice(1);
-
             item.noUseGraphic = true;
+            NumFrames = 11;
         }
 
         public override bool UseItem(Player player)
@@ -52,17 +52,6 @@ namespace FargowiltasSouls.Items.Summons
             }
 
             return true;
-        }
-
-        public override void SafeModifyTooltips(List<TooltipLine> list)
-        {
-            foreach (TooltipLine line2 in list)
-            {
-                if (line2.mod == "Terraria" && line2.Name == "ItemName")
-                {
-                    line2.overrideColor = new Color(Main.DiscoR, 51, 255 - (int)(Main.DiscoR * 0.4));
-                }
-            }
         }
     }
 }

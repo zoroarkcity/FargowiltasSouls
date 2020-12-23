@@ -44,7 +44,7 @@ Increases your max number of sentries by 1
             item.value = 150000;
             item.rare = ItemRarityID.LightRed;
         }
-
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.minionDamage += 0.18f;
