@@ -10,6 +10,7 @@ using FargowiltasSouls.NPCs.Critters;
 using FargowiltasSouls.Projectiles.Souls;
 using FargowiltasSouls.Buffs.Souls;
 using Fargowiltas.NPCs;
+using FargowiltasSouls.Items.Weapons.Misc;
 
 namespace FargowiltasSouls.NPCs
 {
@@ -774,6 +775,16 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.DukeFishron:
                         Item.NewItem(npc.Hitbox, ModContent.ItemType<FishStick>());
                         break;
+                }
+            }
+
+            if (npc.type == NPCID.BigMimicJungle)
+            {
+                switch (Main.rand.Next(3))
+                {
+                    case 0: Item.NewItem(npc.Hitbox, ModContent.ItemType<Vineslinger>()); break;
+                    case 1: Item.NewItem(npc.Hitbox, ModContent.ItemType<Mahoguny>()); break;
+                    case 2: Item.NewItem(npc.Hitbox, ModContent.ItemType<OvergrownKey>()); break;
                 }
             }
 
