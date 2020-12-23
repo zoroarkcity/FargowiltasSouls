@@ -132,12 +132,18 @@ namespace FargowiltasSouls.Projectiles
                 case ProjectileID.CultistBossFireBall:
                     if (FargoSoulsWorld.MasochistMode && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss)
                         && Main.npc[EModeGlobalNPC.cultBoss].life < Main.npc[EModeGlobalNPC.cultBoss].lifeMax / 2)
+                    {
                         projectile.timeLeft = 1;
+                        canHurt = false;
+                    }
                     break;
 
                 case ProjectileID.CultistBossFireBallClone:
                     if (FargoSoulsWorld.MasochistMode && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss))
+                    {
                         projectile.timeLeft = 1;
+                        canHurt = false;
+                    }
                     break;
 
                 case ProjectileID.CursedFlameHostile:
@@ -2043,7 +2049,7 @@ namespace FargowiltasSouls.Projectiles
             {
                 if (Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer <= 60)
                 {
-                    Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer += 12;
+                    Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer += 15;
                     return true;
                 }
                 else

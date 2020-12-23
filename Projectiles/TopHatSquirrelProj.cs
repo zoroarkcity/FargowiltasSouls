@@ -43,7 +43,7 @@ namespace FargowiltasSouls.Projectiles
             {
                 int proj2 = ModContent.ProjectileType<TopHatSquirrelLaser>();
 
-                FargoGlobalProjectile.XWay(16, projectile.Center, proj2, projectile.velocity.Length() * 2f, projectile.damage * 5, projectile.knockBack);
+                FargoGlobalProjectile.XWay(16, projectile.Center, proj2, projectile.velocity.Length() * 2f, projectile.damage * 4, projectile.knockBack);
 
                 for (int i = 0; i < 50; i++)
                 {
@@ -51,7 +51,7 @@ namespace FargowiltasSouls.Projectiles
                         Vector2.Normalize(projectile.velocity.RotatedBy(MathHelper.Pi / 2)) * Main.rand.NextFloat(-900, 900);
 
                     Projectile.NewProjectile(pos, -projectile.velocity * Main.rand.NextFloat(2f, 3f), proj2,
-                        projectile.damage * 5, projectile.knockBack, Main.myPlayer);
+                        projectile.damage * 4, projectile.knockBack, Main.myPlayer);
                 }
             }
         }
