@@ -4850,18 +4850,18 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.AncientDoom:
-                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 120);
+                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 300);
                         target.AddBuff(ModContent.BuffType<Shadowflame>(), 300);
                         break;
                     case NPCID.AncientLight:
                         target.AddBuff(ModContent.BuffType<Purified>(), 300);
                         break;
                     case NPCID.CultistBossClone:
-                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 180);
+                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 360);
                         target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 360);
                         break;
                     case NPCID.CultistBoss:
-                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 180);
+                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 360);
                         target.AddBuff(ModContent.BuffType<CurseoftheMoon>(), 360);
                         break;
 
@@ -5391,11 +5391,11 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.DesertScorpionWalk:
                     case NPCID.DesertScorpionWall:
-                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 180);
+                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 300);
                         break;
 
                     case NPCID.MisterStabby:
-                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 180);
+                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 300);
                         target.AddBuff(ModContent.BuffType<Hypothermia>(), 300);
                         break;
 

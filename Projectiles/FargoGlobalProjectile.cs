@@ -1688,7 +1688,7 @@ namespace FargowiltasSouls.Projectiles
                             target.AddBuff(BuffID.Cursed, 60);
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.guardBoss, NPCID.DungeonGuardian))
                         {
-                            target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 300);
+                            target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 600);
                             /*target.AddBuff(ModContent.BuffType<GodEater>(), 420);
                             target.AddBuff(ModContent.BuffType<FlamesoftheUniverse>(), 420);
                             target.immune = false;
@@ -1704,7 +1704,7 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.DeathSickle:
-                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 300);
+                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 600);
                         break;
 
                     case ProjectileID.DrManFlyFlask:
@@ -1825,7 +1825,7 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.UFOLaser:
                     case ProjectileID.SaucerDeathray:
-                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 180);
+                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 360);
                         break;
 
                     case ProjectileID.FlamingWood:
@@ -2006,7 +2006,7 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.AncientDoomProjectile:
-                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 120);
+                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 300);
                         target.AddBuff(ModContent.BuffType<Shadowflame>(), 300);
                         break;
 

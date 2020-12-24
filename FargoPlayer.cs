@@ -3116,7 +3116,7 @@ namespace FargowiltasSouls
 
             if (DeathMarked)
             {
-                damage *= 3;
+                damage = (int)(damage * 1.5);
             }
 
             if (CrimsonEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CrimsonRegen))

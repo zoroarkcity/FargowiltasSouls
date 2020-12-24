@@ -7,3 +7,4 @@ gutted heart creepers arent hurt by falling sand/silt/slush/etc (is hurt by antl
 fixed cultist fireballs and shadowflame fireballs hurting when they shouldnt exist
 crystal bullets, holy arrows have kill cooldown of 4 per second (was 5)
 mutant reticle and true eyes no longer give graze since they cant hurt you anyway
+marked for death is now x1.5 damage (was x3) but durations are longer
