@@ -3,8 +3,23 @@ twinrang buffs
 	retirang lasers move faster
 nerfed top hat squirrel laser damage (now x4 base, was x5)
 changed use style for fish stick from pointing to throwing
-gutted heart creepers arent hurt by falling sand/silt/slush/etc (is hurt by antlion sand)
+gutted heart creepers arent hurt by falling sand/silt/slush/etc (is still hurt by antlion sand)
 fixed cultist fireballs and shadowflame fireballs hurting when they shouldnt exist
 crystal bullets, holy arrows have kill cooldown of 4 per second (was 5)
 mutant reticle and true eyes no longer give graze since they cant hurt you anyway
 marked for death is now x1.5 damage (was x3) but durations are longer
+reverted implementation of thieving enemies in multiplayer to fix bugs
+removed moss hornet horde
+ice/giant tortoise can horde
+atrophied gives -50% use speed to melee instead of the fucky wucky thing it did before
+fixed emode fall damage code running for dead or ghost players
+fixed jungle temple traps (blazing wheel, spike ball) spawning outside temple
+slight diffractor buff
+plantera's crystal leaves target plantera's target
+buffed dicer damage, spike spread has better coverage, and made less laggy in mp
+nerfed ice queen new attacks rate of fire
+reduced spread of ice queen flocko frost waves
+ice queen flocko frost waves despawn in the middle
+nerfed retaliation aggression of angry bones
+fixed betsy not dropping dragon's breath
+lava and honey no longer apply water debuffs in emode

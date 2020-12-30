@@ -72,6 +72,8 @@ namespace FargowiltasSouls.NPCs.EternityMode
                 return;
             }
 
+            npc.target = plantera.target;
+
             if (npc.HasPlayerTarget && Main.player[npc.target].active)
             {
                 if (--npc.localAI[2] < 0) //projectile timer
@@ -96,10 +98,6 @@ namespace FargowiltasSouls.NPCs.EternityMode
                         }
                     }
                 }
-            }
-            else
-            {
-                npc.TargetClosest(false);
             }
 
             Lighting.AddLight(npc.Center, 0.1f, 0.4f, 0.2f);

@@ -798,7 +798,8 @@ namespace FargowiltasSouls.NPCs
                                 Horde(npc, 5);
                             break;
 
-                        case NPCID.MossHornet:
+                        case NPCID.GiantTortoise:
+                        case NPCID.IceTortoise:
                             if (Main.rand.Next(4) == 0)
                                 Horde(npc, 5);
                             break;
@@ -2363,7 +2364,7 @@ namespace FargowiltasSouls.NPCs
 
                             if (npc.ai[0] == 2) //stationary, spinning
                             {
-                                if (++Counter[2] > 60)
+                                if (++Counter[2] > 75)
                                 {
                                     Counter[2] = 0;
                                     if (npc.whoAmI == NPC.FindFirstNPC(npc.type) && Main.netMode != NetmodeID.MultiplayerClient)
@@ -2378,7 +2379,7 @@ namespace FargowiltasSouls.NPCs
                             }
                             else
                             {
-                                if (++Counter[3] > 90)
+                                if (++Counter[3] > 120)
                                 {
                                     Counter[3] = 0;
 
@@ -4235,7 +4236,7 @@ namespace FargowiltasSouls.NPCs
                                     Counter[0] = 0;
                             }
                             if (npc.justHit)
-                                Counter[2] += 60;
+                                Counter[2] += 20;
                             if (++Counter[2] > 300) //shoot baby guardians
                             {
                                 Counter[2] = 0;
@@ -6138,7 +6139,7 @@ namespace FargowiltasSouls.NPCs
                         }
                     }
 
-                    if (spawnInfo.lihzahrd)
+                    if (spawnInfo.lihzahrd && spawnInfo.spawnTileType == TileID.LihzahrdBrick)
                     {
                         pool[NPCID.BlazingWheel] = .1f;
                         pool[NPCID.SpikeBall] = .1f;
@@ -8565,10 +8566,18 @@ namespace FargowiltasSouls.NPCs
                 target.GetModPlayer<FargoPlayer>().StealingCooldown = 360; //trust me, keep these separate
                 target.AddBuff(ModContent.BuffType<ThiefCD>(), 360);
 
-                if (Main.netMode == NetmodeID.MultiplayerClient) //ask server to instance an item
+                int i = Item.NewItem((int)target.position.X, (int)target.position.Y, target.width, target.height, item.type, 1, false, 0, false, false);
+                Main.item[i].netDefaults(item.netID);
+                Main.item[i].Prefix(item.prefix);
+                Main.item[i].stack = item.stack;
+                Main.item[i].velocity.X = Main.rand.Next(-20, 21) * 0.2f;
+                Main.item[i].velocity.Y = Main.rand.Next(-20, 1) * 0.2f;
+                Main.item[i].noGrabDelay = 100;
+                Main.item[i].newAndShiny = false;
+                NetMessage.SendData(MessageID.SyncItem, -1, -1, null, i, 0.0f, 0.0f, 0.0f, 0, 0, 0);
+
+                /*if (Main.netMode == NetmodeID.MultiplayerClient) //ask server to instance an item
                 {
-                    //NetMessage.SendData(MessageID.SyncItem, -1, -1, null, i, 0.0f, 0.0f, 0.0f, 0, 0, 0);
-                    
                     var netMessage = mod.GetPacket();
                     netMessage.Write((byte)16);
                     netMessage.Write(target.whoAmI);
@@ -8588,7 +8597,7 @@ namespace FargowiltasSouls.NPCs
                     Main.item[i].velocity.Y = Main.rand.Next(-20, 1) * 0.2f;
                     Main.item[i].noGrabDelay = 100;
                     Main.item[i].newAndShiny = false;
-                }
+                }*/
 
                 item = new Item();
 
