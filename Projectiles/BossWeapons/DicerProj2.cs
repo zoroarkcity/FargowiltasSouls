@@ -39,7 +39,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 int proj2 = mod.ProjectileType("DicerSpray"); //374;
                 Vector2 baseVel = Main.rand.NextBool() ? Vector2.UnitX : Vector2.UnitX.RotatedBy(Math.PI * 2 / 8 * 0.5);
                 for (int i = 0; i < 8; i++)
-                    Projectile.NewProjectile(projectile.Center, baseVel.RotatedBy(Math.PI * 2 / 8 * i), proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
+                    Projectile.NewProjectile(projectile.Center, 5f * baseVel.RotatedBy(Math.PI * 2 / 8 * i), proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
             }
         }
     }
