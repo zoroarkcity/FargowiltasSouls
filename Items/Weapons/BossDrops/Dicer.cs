@@ -40,6 +40,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.value = Item.sellPrice(0, 30);
             item.rare = ItemRarityID.Yellow;
         }
+
         public override void HoldItem(Player player) => player.stringColor = 5;
     }
 }
