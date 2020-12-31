@@ -335,14 +335,18 @@ namespace FargowiltasSouls.NPCs.Champions
                                     vel = vel.RotatedBy(MathHelper.ToRadians(5) * (Main.rand.NextDouble() - 0.5)); //random variation
                                     if (j != 0)
                                         vel *= 1.75f;
-                                    Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<ShadowGuardian>(), npc.damage / 3, 0f, Main.myPlayer);
+                                    int p = Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<ShadowGuardian>(), npc.damage / 3, 0f, Main.myPlayer);
+                                    if (p != Main.maxProjectiles)
+                                        Main.projectile[p].timeLeft = 240;
                                 }
 
                                 if (npc.localAI[3] == 3) //p3 also spawns one stream from above/below
                                 {
                                     Vector2 wallSpawn = player.Center + i * Vector2.UnitY * 1000;
-                                    Projectile.NewProjectile(wallSpawn, Main.rand.NextFloat(20, 25f) * Vector2.Normalize(player.Center - wallSpawn),
+                                    int p = Projectile.NewProjectile(wallSpawn, Main.rand.NextFloat(20, 25f) * Vector2.Normalize(player.Center - wallSpawn),
                                         ModContent.ProjectileType<ShadowGuardian>(), npc.damage / 3, 0f, Main.myPlayer);
+                                    if (p != Main.maxProjectiles)
+                                        Main.projectile[p].timeLeft = 240;
                                 }
                             }
                         }

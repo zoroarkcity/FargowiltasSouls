@@ -23,3 +23,7 @@ ice queen flocko frost waves despawn in the middle
 nerfed retaliation aggression of angry bones
 fixed betsy not dropping dragon's breath
 lava and honey no longer apply water debuffs in emode
+eoc p3 transition more clear and more rigid p2 teleport positions
+skeletron spins cause X waves of guardians
+prime spins cause + waves of guardians (p1 only)
+adjusted damage of prime's dark stars
