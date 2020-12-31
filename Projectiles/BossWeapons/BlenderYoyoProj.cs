@@ -52,7 +52,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
                 yoyosSpawned = true;
             }
-
             if (soundtimer > 0)
                 soundtimer--;
 
@@ -80,7 +79,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         int hitcounter;
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            //target.immune[projectile.owner] = 6;
+            target.immune[projectile.owner] = 6;
             Player player = Main.player[projectile.owner];
             hitcounter++;
             if (player.ownedProjectileCounts[ProjectileID.BlackCounterweight] < 5)
@@ -102,6 +101,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 soundtimer = 15;
                 Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 22, 1.5f, 1f);
             }
+            Vector2 velocity = Vector2.Normalize(projectile.Center - target.Center) * 10;
+            int proj2 = mod.ProjectileType("BlenderProj3");
+            Projectile.NewProjectile(new Vector2(projectile.Center.X, projectile.Center.Y), velocity, proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
         }
     }
 }
