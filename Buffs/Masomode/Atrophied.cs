@@ -22,6 +22,8 @@ namespace FargowiltasSouls.Buffs.Masomode
         {
             //melee silence hopefully plus damage reduced 99%, -all crit just in case
             player.GetModPlayer<FargoPlayer>().Atrophied = true;
+            if (player.HeldItem.melee)
+                player.GetModPlayer<FargoPlayer>().AttackSpeed -= 0.5f;
         }
     }
 }

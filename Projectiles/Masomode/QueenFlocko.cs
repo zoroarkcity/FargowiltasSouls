@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
 
@@ -57,8 +58,15 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Vector2 vel = projectile.DirectionTo(player.Center) * 7f;
+                    float xDistance = Math.Abs(player.Center.X - projectile.Center.X);
                     for (int i = -1; i <= 1; i++)
-                        Projectile.NewProjectile(projectile.Center, vel.RotatedBy(MathHelper.ToRadians(5) * i), ProjectileID.FrostWave, projectile.damage, projectile.knockBack, projectile.owner);
+                    {
+                        Vector2 velocity = vel.RotatedBy(MathHelper.ToRadians(4) * i);
+                        velocity.X = (player.Center.X - projectile.Center.X) / 100f;
+                        int p = Projectile.NewProjectile(projectile.Center, velocity, ProjectileID.FrostWave, projectile.damage, projectile.knockBack, projectile.owner);
+                        if (p != Main.maxProjectiles)
+                            Main.projectile[p].timeLeft = 101;
+                    }
                 }
             }
 

@@ -950,7 +950,7 @@ namespace FargowiltasSouls
             if (FargoSoulsWorld.MasochistMode)
             {
                 //falling gives you dazed. wings save you
-                if (player.velocity.Y == 0f && player.wingsLogic == 0 && !player.noFallDmg)
+                if (player.velocity.Y == 0f && player.wingsLogic == 0 && !player.noFallDmg && !player.ghost && !player.dead)
                 {
                     int num21 = 25;
                     num21 += player.extraFall;
@@ -998,7 +998,7 @@ namespace FargowiltasSouls
                     if (Framing.GetTileSafely(player.Center).wall == WallID.LihzahrdBrickUnsafe)
                         player.AddBuff(ModContent.BuffType<LihzahrdCurse>(), 2);
 
-                    if (player.wet && !MutantAntibodies)
+                    if (player.wet && !player.lavaWet && !player.honeyWet && !MutantAntibodies)
                         player.AddBuff(BuffID.Poisoned, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
                 }
 
@@ -1007,7 +1007,7 @@ namespace FargowiltasSouls
                     //if (!PureHeart && !Main.dayTime && Framing.GetTileSafely(player.Center).wall == WallID.None)
                     //    player.AddBuff(BuffID.Chilled, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
 
-                    if (player.wet && !MutantAntibodies)
+                    if (player.wet && !player.lavaWet && !player.honeyWet && !MutantAntibodies)
                     {
                         //player.AddBuff(BuffID.Frostburn, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
                         MasomodeFreezeTimer++;
@@ -1044,7 +1044,7 @@ namespace FargowiltasSouls
                 {
                     if (!PureHeart)
                         player.AddBuff(BuffID.Darkness, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
-                    if(player.wet && !MutantAntibodies)
+                    if (player.wet && !player.lavaWet && !player.honeyWet && !MutantAntibodies)
                         player.AddBuff(BuffID.CursedInferno, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
                 }
 
@@ -1052,7 +1052,7 @@ namespace FargowiltasSouls
                 {
                     if (!PureHeart)
                         player.AddBuff(BuffID.Bleeding, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
-                    if (player.wet && !MutantAntibodies)
+                    if (player.wet && !player.lavaWet && !player.honeyWet && !MutantAntibodies)
                         player.AddBuff(BuffID.Ichor, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
                 }
 
@@ -1060,7 +1060,7 @@ namespace FargowiltasSouls
                 {
                     if (!PureHeart)
                         player.AddBuff(ModContent.BuffType<FlippedHallow>(), 120);
-                    if (player.wet && !MutantAntibodies)
+                    if (player.wet && !player.lavaWet && !player.honeyWet && !MutantAntibodies)
                         player.AddBuff(BuffID.Confused, Main.expertMode && Main.expertDebuffTime > 1 ? 1 : 2);
                 }
 
@@ -1096,7 +1096,7 @@ namespace FargowiltasSouls
                     } 
                 }
 
-                if (player.wet && !(player.accFlipper || player.gills || MutantAntibodies))
+                if (player.wet && !player.lavaWet && !player.honeyWet && !(player.accFlipper || player.gills || MutantAntibodies))
                     player.AddBuff(ModContent.BuffType<Lethargic>(), 2);
 
                 if (!PureHeart && !player.buffImmune[BuffID.Suffocation] && player.ZoneSkyHeight && player.whoAmI == Main.myPlayer)
@@ -1603,8 +1603,6 @@ namespace FargowiltasSouls
 
             if (Atrophied)
             {
-                player.meleeSpeed = 0.01f; //melee silence
-                //just in case
                 player.meleeDamage = 0.01f;
                 player.meleeCrit = 0;
             }
@@ -3116,7 +3114,7 @@ namespace FargowiltasSouls
 
             if (DeathMarked)
             {
-                damage *= 3;
+                damage = (int)(damage * 1.5);
             }
 
             if (CrimsonEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.CrimsonRegen))
