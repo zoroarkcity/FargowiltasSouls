@@ -531,10 +531,12 @@ namespace FargowiltasSouls.NPCs
                                     distance.X = 1200 * Math.Sign(distance.X);
                                 else if (Math.Abs(distance.X) < 600)
                                     distance.X = 600 * Math.Sign(distance.X);
-                                if (distance.Y < 0)
+                                if (distance.Y > 0) //always ensure eoc teleports above player
                                     distance.Y *= -1;
-                                if (Math.Abs(distance.Y) < 250)
-                                    distance.Y = 250 * Math.Sign(distance.Y);
+                                if (Math.Abs(distance.Y) > 450)
+                                    distance.Y = 450 * Math.Sign(distance.Y);
+                                if (Math.Abs(distance.Y) < 150)
+                                    distance.Y = 150 * Math.Sign(distance.Y);
                                 npc.Center = Main.player[npc.target].Center + distance;
 
                                 npc.netUpdate = true;
