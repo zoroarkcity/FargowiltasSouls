@@ -28,7 +28,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.aiStyle = -1;
             cooldownSlot = 1;
 
-            projectile.timeLeft = 300;
+            projectile.timeLeft = 600;
             projectile.hide = true;
             projectile.light = 0.5f;
         }

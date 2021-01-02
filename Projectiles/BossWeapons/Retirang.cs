@@ -47,7 +47,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 if (projectile.ai[1] % 5 == 0)
                 {
                     Vector2 cursor = Main.MouseWorld;
-                    Vector2 velocity = Vector2.Normalize(cursor - projectile.Center) * 15;
+                    Vector2 velocity = Vector2.Normalize(cursor - projectile.Center) * 20;
                     Player player = Main.player[projectile.owner];
 
                     if (projectile.owner == Main.myPlayer)

@@ -16,6 +16,7 @@ namespace FargowiltasSouls.Items.Summons
             DisplayName.SetDefault("Abominationn's Curse");
 
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5, 10));
+            NumFrames = 10;
         }
 
         public override void SetDefaults()
@@ -31,7 +32,6 @@ namespace FargowiltasSouls.Items.Summons
             item.value = Item.buyPrice(gold: 8);
             ItemID.Sets.ItemNoGravity[item.type] = true;
             item.noUseGraphic = true;
-            NumFrames = 10;
         }
 
         public override bool UseItem(Player player)

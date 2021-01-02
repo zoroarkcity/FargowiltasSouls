@@ -16,6 +16,7 @@ namespace FargowiltasSouls.Items.Summons
             DisplayName.AddTranslation(GameCulture.Chinese, "突变体的诅咒");
             Tooltip.AddTranslation(GameCulture.Chinese, "'至少不需要用娃娃了'");
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(3, 11));
+            NumFrames = 11;
         }
 
         public override void SetDefaults()
@@ -31,7 +32,6 @@ namespace FargowiltasSouls.Items.Summons
             item.consumable = true;
             item.value = Item.buyPrice(1);
             item.noUseGraphic = true;
-            NumFrames = 11;
         }
 
         public override bool UseItem(Player player)

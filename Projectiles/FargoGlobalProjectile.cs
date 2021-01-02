@@ -132,12 +132,18 @@ namespace FargowiltasSouls.Projectiles
                 case ProjectileID.CultistBossFireBall:
                     if (FargoSoulsWorld.MasochistMode && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss)
                         && Main.npc[EModeGlobalNPC.cultBoss].life < Main.npc[EModeGlobalNPC.cultBoss].lifeMax / 2)
+                    {
                         projectile.timeLeft = 1;
+                        canHurt = false;
+                    }
                     break;
 
                 case ProjectileID.CultistBossFireBallClone:
                     if (FargoSoulsWorld.MasochistMode && EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.cultBoss, NPCID.CultistBoss))
+                    {
                         projectile.timeLeft = 1;
+                        canHurt = false;
+                    }
                     break;
 
                 case ProjectileID.CursedFlameHostile:
@@ -1682,7 +1688,7 @@ namespace FargowiltasSouls.Projectiles
                             target.AddBuff(BuffID.Cursed, 60);
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.guardBoss, NPCID.DungeonGuardian))
                         {
-                            target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 300);
+                            target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 600);
                             /*target.AddBuff(ModContent.BuffType<GodEater>(), 420);
                             target.AddBuff(ModContent.BuffType<FlamesoftheUniverse>(), 420);
                             target.immune = false;
@@ -1698,7 +1704,7 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.DeathSickle:
-                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 300);
+                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 600);
                         break;
 
                     case ProjectileID.DrManFlyFlask:
@@ -1819,7 +1825,7 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.UFOLaser:
                     case ProjectileID.SaucerDeathray:
-                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 180);
+                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 360);
                         break;
 
                     case ProjectileID.FlamingWood:
@@ -2000,7 +2006,7 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.AncientDoomProjectile:
-                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 120);
+                        target.AddBuff(ModContent.BuffType<MarkedforDeath>(), 300);
                         target.AddBuff(ModContent.BuffType<Shadowflame>(), 300);
                         break;
 
@@ -2043,7 +2049,7 @@ namespace FargowiltasSouls.Projectiles
             {
                 if (Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer <= 60)
                 {
-                    Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer += 12;
+                    Main.player[projectile.owner].GetModPlayer<FargoPlayer>().MasomodeCrystalTimer += 15;
                     return true;
                 }
                 else

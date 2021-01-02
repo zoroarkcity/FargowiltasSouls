@@ -334,6 +334,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
         {
             DisplayName.SetDefault("Soul of Eternity");
 
+            NumFrames = 10;
             //oh no idk even for translate
             String tooltip_ch =
 @"'不论凡人或不朽, 都承认你的神性'
@@ -426,12 +427,12 @@ Additionally grants:");
             if (line.mod == "Terraria" && line.Name == "ItemName")
             {
                 Main.spriteBatch.End(); //end and begin main.spritebatch to apply a shader
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, Main.UIScaleMatrix);
                 var lineshader = GameShaders.Misc["PulseUpwards"].UseColor(new Color(42, 42, 99)).UseSecondaryColor(Fargowiltas.EModeColor());
                 lineshader.Apply(null);
                 Utils.DrawBorderString(Main.spriteBatch, line.text, new Vector2(line.X, line.Y), Color.White, 1); //draw the tooltip manually
                 Main.spriteBatch.End(); //then end and begin again to make remaining tooltip lines draw in the default way
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.UIScaleMatrix);
                 return false;
             }
             return true;
@@ -452,7 +453,6 @@ Additionally grants:");
             item.useTime = 1;
             item.UseSound = SoundID.Item6;
             item.useAnimation = 1;
-            NumFrames = 10;
         }
 
         public override bool UseItem(Player player)

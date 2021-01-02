@@ -34,6 +34,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToGuttedHeart = true;
 
             projectile.hide = true;
+
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().GrazeCheck = projectile => { return false; };
         }
 
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
@@ -41,7 +43,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             drawCacheProjsBehindProjectiles.Add(index);
         }
 
-        public override bool CanHitPlayer(Player target)
+        public override bool CanDamage()
         {
             return false;
         }

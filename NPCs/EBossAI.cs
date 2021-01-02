@@ -490,6 +490,18 @@ namespace FargowiltasSouls.NPCs
                     {
                         npc.alpha = 255;
                         masoBool[0] = true;
+
+                        Main.PlaySound(SoundID.Roar, npc.HasValidTarget ? Main.player[npc.target].Center : npc.Center, 0);
+
+                        for (int i = 0; i < 36; i++) //telegraphing dust ring
+                        {
+                            Vector2 vector6 = Vector2.UnitY * 9f;
+                            vector6 = vector6.RotatedBy((i - (36 / 2 - 1)) * 6.28318548f / 36) + npc.Center;
+                            Vector2 vector7 = vector6 - npc.Center;
+                            int d = Dust.NewDust(vector6 + vector7, 0, 0, 229, 0f, 0f, 0, default(Color), 4f);
+                            Main.dust[d].noGravity = true;
+                            Main.dust[d].velocity = vector7;
+                        }
                     }
                     return false;
                 }
@@ -514,17 +526,19 @@ namespace FargowiltasSouls.NPCs
                                 npc.ai[2] = 60;
                                 npc.ai[1] = 5f;
 
-                                Vector2 distance = npc.Center - Main.player[npc.target].Center;
-                                npc.Center = Main.player[npc.target].Center;
-                                distance.X *= 1.5f;
-                                if (distance.X > 1200)
-                                    distance.X = 1200;
-                                else if (distance.X < -1200)
-                                    distance.X = -1200;
-                                if (distance.Y > 0)
+                                Vector2 distance = Main.player[npc.target].Center - npc.Center;
+                                if (Math.Abs(distance.X) > 1200)
+                                    distance.X = 1200 * Math.Sign(distance.X);
+                                else if (Math.Abs(distance.X) < 600)
+                                    distance.X = 600 * Math.Sign(distance.X);
+                                if (distance.Y > 0) //always ensure eoc teleports above player
                                     distance.Y *= -1;
-                                npc.position.X -= distance.X;
-                                npc.position.Y += distance.Y;
+                                if (Math.Abs(distance.Y) > 450)
+                                    distance.Y = 450 * Math.Sign(distance.Y);
+                                if (Math.Abs(distance.Y) < 150)
+                                    distance.Y = 150 * Math.Sign(distance.Y);
+                                npc.Center = Main.player[npc.target].Center + distance;
+
                                 npc.netUpdate = true;
                             }
                         }
@@ -1341,9 +1355,38 @@ namespace FargowiltasSouls.NPCs
                         }
                     }
                 }
+
+                if (!masoBool[0] && npc.ai[1] == 1f) //X pinch of guardians
+                {
+                    masoBool[0] = true;
+
+                    for (int i = 0; i < Main.maxProjectiles; i++) //also clear leftover babies
+                    {
+                        if (Main.projectile[i].active && Main.projectile[i].hostile && Main.projectile[i].type == ModContent.ProjectileType<SkeletronGuardian2>())
+                            Main.projectile[i].Kill();
+                    }
+
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            for (int j = -2; j <= 2; j++)
+                            {
+                                Vector2 spawnPos = new Vector2(1200, 80 * j);
+                                Vector2 vel = -8 * Vector2.UnitX;
+                                spawnPos = Main.player[npc.target].Center + spawnPos.RotatedBy(Math.PI / 2 * (i + 0.5));
+                                vel = vel.RotatedBy(Math.PI / 2 * (i + 0.5));
+                                Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<Projectiles.Champions.ShadowGuardian>(),
+                                    npc.damage / 4, 0f, Main.myPlayer);
+                            }
+                        }
+                    }
+                }
             }
             else
             {
+                masoBool[0] = false;
+
                 if (npc.life < npc.lifeMax * .75 && --Counter[0] < 0)
                 {
                     Counter[0] = 240;
@@ -2741,6 +2784,8 @@ namespace FargowiltasSouls.NPCs
             
             if (npc.ai[1] == 0f && npc.ai[2] == 600 - 90) //telegraph spin
             {
+                masoBool[2] = false;
+
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<TargetingReticle>(), 0, 0f, Main.myPlayer, npc.whoAmI, npc.type);
@@ -2749,6 +2794,26 @@ namespace FargowiltasSouls.NPCs
 
             if (npc.ai[0] != 2f) //in phase 1
             {
+                if (!masoBool[2] && npc.ai[1] == 1f && npc.ai[2] > 2f) //spinning, do wave of guardians
+                {
+                    masoBool[2] = true;
+
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            for (int j = -2; j <= 2; j++)
+                            {
+                                Vector2 spawnPos = new Vector2(1200, 80 * j);
+                                Vector2 vel = -10 * Vector2.UnitX;
+                                spawnPos = Main.player[npc.target].Center + spawnPos.RotatedBy(Math.PI / 2 * i);
+                                vel = vel.RotatedBy(Math.PI / 2 * i);
+                                Projectile.NewProjectile(spawnPos, vel, ModContent.ProjectileType<PrimeGuardian>(), npc.damage / 4, 0f, Main.myPlayer);
+                            }
+                        }
+                    }
+                }
+
                 if (npc.life < npc.lifeMax * .75) //enter phase 2
                 {
                     npc.ai[0] = 2f;
@@ -2870,7 +2935,7 @@ namespace FargowiltasSouls.NPCs
                     if (--Counter[2] < 0) //projectile attack
                     {
                         Counter[2] = 120;
-                        int damage = npc.defDamage * 2 / 7;
+                        int damage = npc.defDamage / 3;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             const int max = 8;

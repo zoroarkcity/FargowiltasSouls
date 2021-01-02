@@ -14,6 +14,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             Tooltip.SetDefault("'The reward for slaughtering many...'");
             DisplayName.AddTranslation(GameCulture.Chinese, "暗星炮");
             Tooltip.AddTranslation(GameCulture.Chinese, "'由一个被击败的敌人的武器改装而来..'");
+            NumFrames = 7;
 
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(3, 7));
         }
@@ -23,7 +24,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.CloneDefaults(ItemID.LaserRifle);
             item.width = 98;
             item.height = 38;
-            item.damage = 400;
+            item.damage = 420;
             item.channel = true;
             item.useTime = 24;
             item.useAnimation = 24;
@@ -36,7 +37,6 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.noUseGraphic = true;
             item.mana = 18;
             item.knockBack = 0.5f;
-            NumFrames = 7;
         }
 
         public override void AddRecipes()

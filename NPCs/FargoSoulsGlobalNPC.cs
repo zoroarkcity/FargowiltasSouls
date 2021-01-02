@@ -775,6 +775,10 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.DukeFishron:
                         Item.NewItem(npc.Hitbox, ModContent.ItemType<FishStick>());
                         break;
+
+                    case NPCID.DD2Betsy:
+                        Item.NewItem(npc.Hitbox, ModContent.ItemType<DragonBreath>());
+                        break;
                 }
             }
 

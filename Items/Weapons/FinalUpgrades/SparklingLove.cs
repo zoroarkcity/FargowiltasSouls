@@ -77,12 +77,12 @@ Right click pattern becomes denser with up to 5 empty minion slots
             if (line.mod == "Terraria" && line.Name == "ItemName")
             {
                 Main.spriteBatch.End(); //end and begin main.spritebatch to apply a shader
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, Main.UIScaleMatrix);
                 var lineshader = GameShaders.Misc["PulseCircle"].UseColor(new Color(255, 48, 154)).UseSecondaryColor(new Color(255, 169, 240));
                 lineshader.Apply(null);
                 Utils.DrawBorderString(Main.spriteBatch, line.text, new Vector2(line.X, line.Y), new Color(255, 169, 240), 1); //draw the tooltip manually
                 Main.spriteBatch.End(); //then end and begin again to make remaining tooltip lines draw in the default way
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.UIScaleMatrix);
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.UIScaleMatrix);
                 return false;
             }
             return true;
