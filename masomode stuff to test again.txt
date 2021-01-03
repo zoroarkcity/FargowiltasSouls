@@ -41,3 +41,5 @@ wof
 	ichor reworked, pushes you to far side of arena (previously forced you up)
 	nerfed max speed more (the above would fuck you up otherwise)
 marked for death places a skull above you
+
+eow head DR only applies when less than 5 heads alive

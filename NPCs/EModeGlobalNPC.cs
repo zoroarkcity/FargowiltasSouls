@@ -8255,9 +8255,11 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.EaterofWorldsHead:
-                        damage /= 2;
+                        if (NPC.CountNPCS(NPCID.EaterofWorldsHead) < 5)
+                            damage /= 2;
                         break;
                     case NPCID.EaterofWorldsBody:
+                        if (NPC.CountNPCS(NPCID.EaterofWorldsHead) < 5)
                         {
                             int ai1 = (int)npc.ai[1];
                             if (ai1 > -1 && ai1 < Main.maxNPCs && Main.npc[ai1].active && Main.npc[ai1].type == NPCID.EaterofWorldsHead)
