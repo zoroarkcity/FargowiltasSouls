@@ -32,7 +32,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.alpha = 0;
         }
 
-        float scaletimer;
+        public float scaletimer;
         public override void AI()
         {
             //dust!

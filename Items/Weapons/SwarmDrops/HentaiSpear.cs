@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -16,7 +17,7 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
         {
             DisplayName.SetDefault("The Penetrator");
             Tooltip.SetDefault("Has different attacks when using left or right click" +
-                "\nHas different attacks when used while holding up or both up and down" +
+                "\nHas different attacks when used while holding up, down, or both" +
                 "\n'The reward for embracing eternity...'");
 
             DisplayName.AddTranslation(GameCulture.Chinese, "洞察者");
@@ -56,23 +57,27 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 
             if (player.altFunctionUse == 2)
             {
-                if (player.controlUp)
+                if (player.controlUp && player.controlDown)
                 {
-                    if (player.controlDown)
-                    {
-                        item.shoot = mod.ProjectileType("HentaiSpearWand");
-                        item.shootSpeed = 6f;
-                        item.useAnimation = 16;
-                        item.useTime = 16;
-                    }
-                    else
-                    {
-                        item.shoot = mod.ProjectileType("HentaiSpearSpinThrown");
-                        item.shootSpeed = 6f;
-                        item.useAnimation = 16;
-                        item.useTime = 16;
-                    }
+                    item.shoot = mod.ProjectileType("HentaiSpearWand");
+                    item.shootSpeed = 6f;
+                    item.useAnimation = 16;
+                    item.useTime = 16;
                 }
+                else if (player.controlUp && !player.controlDown)
+                {
+                    item.shoot = mod.ProjectileType("HentaiSpearSpinThrown");
+                    item.shootSpeed = 6f;
+                    item.useAnimation = 16;
+                    item.useTime = 16;
+                }
+                /*else if (player.controlDown && player.controlUp)
+                {
+                    item.shoot = mod.ProjectileType("HentaiSpearWandBoundary");
+                    item.shootSpeed = 6f;
+                    item.useAnimation = 16;
+                    item.useTime = 16;
+                }*/
                 else
                 {
                     item.shoot = mod.ProjectileType("HentaiSpearThrown");
@@ -91,6 +96,11 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                     item.shoot = mod.ProjectileType("HentaiSpearSpin");
                     item.shootSpeed = 1f;
                     item.useTurn = true;
+                }
+                else if (player.controlDown && !player.controlUp)
+                {
+                    item.shoot = mod.ProjectileType("HentaiSpearDive");
+                    item.shootSpeed = 6f;
                 }
                 else
                 {
@@ -146,10 +156,15 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                     {
                         dashAI = 1;
                         speedModifier = 2.5f;
-                        player.dashDelay = 0;
                     }
 
                     Vector2 speed = new Vector2(speedX, speedY);
+
+                    if (player.controlDown && !player.controlUp) //dive
+                    {
+                        dashAI = 2;
+                        speed = new Vector2(Math.Sign(speedX) * 0.01f, speed.Length());
+                    }
 
                     Projectile.NewProjectile(position, Vector2.Normalize(speed) * speedModifier * item.shootSpeed,
                         mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI, speed.ToRotation(), dashAI);

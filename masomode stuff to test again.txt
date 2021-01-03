@@ -44,3 +44,5 @@ marked for death places a skull above you
 
 eow head DR only applies when less than 5 heads alive
 demon scythe conditional nerf: -25% speed and -50% damage pre-eow/boc, only -33% damage after
+added dedserv checks for terra/cosmos champ (to fix potential mp glitch despawn bugs they may have had before)
+penetrator dive exists, use it with down+m1 (no i haven't finished down+m2 yet)

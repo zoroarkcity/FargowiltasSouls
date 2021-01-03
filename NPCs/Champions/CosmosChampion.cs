@@ -392,7 +392,8 @@ namespace FargowiltasSouls.NPCs.Champions
                             type = 229;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Thunder").WithVolume(0.8f).WithPitchVariance(-0.5f), npc.Center);
+                                if (!Main.dedServ)
+                                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Thunder").WithVolume(0.8f).WithPitchVariance(-0.5f), npc.Center);
                                 const int max = 12;
                                 for (int i = 0; i < max; i++)
                                 {

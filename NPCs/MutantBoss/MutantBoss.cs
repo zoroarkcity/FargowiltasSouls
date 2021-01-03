@@ -92,7 +92,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
         public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
         {
             npc.damage = (int)(npc.damage * 0.5f);
-            npc.lifeMax = (int)(npc.lifeMax * 0.5f * bossLifeScale);
+            npc.lifeMax = (int)(npc.lifeMax /* 0.5f */ * bossLifeScale);
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
