@@ -71,13 +71,13 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                     item.useAnimation = 16;
                     item.useTime = 16;
                 }
-                /*else if (player.controlDown && player.controlUp)
+                else if (player.controlDown && !player.controlUp)
                 {
-                    item.shoot = mod.ProjectileType("HentaiSpearWandBoundary");
+                    item.shoot = mod.ProjectileType("HentaiSpearSpinBoundary");
                     item.shootSpeed = 6f;
                     item.useAnimation = 16;
                     item.useTime = 16;
-                }*/
+                }
                 else
                 {
                     item.shoot = mod.ProjectileType("HentaiSpearThrown");
@@ -147,10 +147,11 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 if (player.controlUp && !player.controlDown)
                     return true;
 
-                if (player.ownedProjectileCounts[mod.ProjectileType("Dash")] < 1)
+                if (player.ownedProjectileCounts[mod.ProjectileType("Dash")] < 1 && player.ownedProjectileCounts[mod.ProjectileType("Dash2")] < 1)
                 {
                     float dashAI = 0;
                     float speedModifier = 2f;
+                    int dashType = mod.ProjectileType("Dash");
 
                     if (player.controlUp && player.controlDown) // Super-dash
                     {
@@ -164,10 +165,11 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                     {
                         dashAI = 2;
                         speed = new Vector2(Math.Sign(speedX) * 0.01f, speed.Length());
+                        dashType = mod.ProjectileType("Dash2");
                     }
 
                     Projectile.NewProjectile(position, Vector2.Normalize(speed) * speedModifier * item.shootSpeed,
-                        mod.ProjectileType("Dash"), damage, knockBack, player.whoAmI, speed.ToRotation(), dashAI);
+                        dashType, damage, knockBack, player.whoAmI, speed.ToRotation(), dashAI);
                     Projectile.NewProjectile(position, speed, item.shoot, damage, knockBack, item.owner, 0f, 1f);
                 }
             }

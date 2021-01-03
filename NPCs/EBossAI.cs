@@ -1548,27 +1548,20 @@ namespace FargowiltasSouls.NPCs
                                 masoBool[2] = true;
                                 Counter[2] = (int)(npc.Center.X + Math.Sign(npc.velocity.X) * 2500);
                             }
-                            if (Math.Abs(npc.Center.X - Counter[2]) > 800)
+                            float xDistance = (2500f - 1700f * Counter[0] / 240f) * Math.Sign(npc.velocity.X);
+                            Vector2 spawnPos = new Vector2(npc.Center.X + xDistance, npc.Center.Y);
+                            Main.PlaySound(SoundID.Item34, spawnPos);
+                            const int offsetY = 800;
+                            const int speed = 14;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Vector2 spawnPos = new Vector2(Counter[2], npc.Center.Y);
-                                Main.PlaySound(SoundID.Item34, spawnPos);
-                                Counter[2] += Math.Sign(npc.velocity.X) * -24; //wall of flame advances closer
-                                const int offsetY = 800;
-                                const int speed = 14;
-                                if (Main.netMode != NetmodeID.MultiplayerClient)
-                                {
-                                    Projectile.NewProjectile(spawnPos + Vector2.UnitY * offsetY, Vector2.UnitY * -speed, ModContent.ProjectileType<CursedFlamethrower>(), npc.damage / 4, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(spawnPos + Vector2.UnitY * offsetY / 2, Vector2.UnitY * speed, ModContent.ProjectileType<CursedFlamethrower>(), npc.damage / 4, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(spawnPos + Vector2.UnitY * -offsetY / 2, Vector2.UnitY * -speed, ModContent.ProjectileType<CursedFlamethrower>(), npc.damage / 4, 0f, Main.myPlayer);
-                                    Projectile.NewProjectile(spawnPos + Vector2.UnitY * -offsetY, Vector2.UnitY * speed, ModContent.ProjectileType<CursedFlamethrower>(), npc.damage / 4, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(spawnPos + Vector2.UnitY * offsetY, Vector2.UnitY * -speed, ModContent.ProjectileType<CursedFlamethrower>(), npc.damage / 4, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(spawnPos + Vector2.UnitY * offsetY / 2, Vector2.UnitY * speed, ModContent.ProjectileType<CursedFlamethrower>(), npc.damage / 4, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(spawnPos + Vector2.UnitY * -offsetY / 2, Vector2.UnitY * -speed, ModContent.ProjectileType<CursedFlamethrower>(), npc.damage / 4, 0f, Main.myPlayer);
+                                Projectile.NewProjectile(spawnPos + Vector2.UnitY * -offsetY, Vector2.UnitY * speed, ModContent.ProjectileType<CursedFlamethrower>(), npc.damage / 4, 0f, Main.myPlayer);
 
-                                    //Projectile.NewProjectile(spawnPos + Vector2.UnitY * offsetY, Vector2.UnitY * -speed, ProjectileID.CursedFlameHostile, npc.damage / 4, 0f, Main.myPlayer);
-                                    //Projectile.NewProjectile(spawnPos + Vector2.UnitY * -offsetY, Vector2.UnitY * speed, ProjectileID.CursedFlameHostile, npc.damage / 4, 0f, Main.myPlayer);
-                                }
-                            }
-                            else
-                            {
-                                Counter[0] = 240; //immediately end
+                                //Projectile.NewProjectile(spawnPos + Vector2.UnitY * offsetY, Vector2.UnitY * -speed, ProjectileID.CursedFlameHostile, npc.damage / 4, 0f, Main.myPlayer);
+                                //Projectile.NewProjectile(spawnPos + Vector2.UnitY * -offsetY, Vector2.UnitY * speed, ProjectileID.CursedFlameHostile, npc.damage / 4, 0f, Main.myPlayer);
                             }
                         }
                     }
