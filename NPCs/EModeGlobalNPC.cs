@@ -510,7 +510,7 @@ namespace FargowiltasSouls.NPCs
 
                 case NPCID.EaterofWorldsHead:
                     npc.buffImmune[BuffID.CursedInferno] = true;
-                    npc.defense += 40;
+                    npc.defense += 10;
                     break;
                 case NPCID.EaterofWorldsBody:
                     npc.buffImmune[BuffID.CursedInferno] = true;
