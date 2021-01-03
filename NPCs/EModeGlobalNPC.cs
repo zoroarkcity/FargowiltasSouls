@@ -8259,29 +8259,9 @@ namespace FargowiltasSouls.NPCs
                         break;
                     case NPCID.EaterofWorldsBody:
                         {
-                            int prev = npc.whoAmI;
-                            int segment = (int)npc.ai[1];
-                            int i = 0;
-                            const int maxLength = 2;
-                            for (; i < maxLength; i++) //iterate upwards along body
-                            {
-                                if (segment > -1 && segment < Main.maxNPCs && Main.npc[segment].active && Main.npc[segment].type == NPCID.EaterofWorldsBody
-                                    && Main.npc[segment].ai[3] == npc.ai[3] && Main.npc[segment].ai[0] == Main.npc[prev].whoAmI)
-                                {
-                                    prev = segment;
-                                    segment = (int)Main.npc[segment].ai[1]; //continue if next is a valid BODY segment
-                                }
-                                else
-                                {
-                                    break; //stop otherwise (this includes if head is found early, which is okay!)
-                                }
-                            }
-
-                            //if last segment seen is indeed head
-                            if (segment > -1 && segment < Main.maxNPCs && Main.npc[segment].active && Main.npc[segment].type == NPCID.EaterofWorldsHead)
-                            {
-                                damage = (int)(damage * 0.75);
-                            }
+                            int ai1 = (int)npc.ai[1];
+                            if (ai1 > -1 && ai1 < Main.maxNPCs && Main.npc[ai1].active && Main.npc[ai1].type == NPCID.EaterofWorldsHead)
+                                damage /= 2;
                         }
                         goto case NPCID.EaterofWorldsTail;
                     case NPCID.EaterofWorldsTail:

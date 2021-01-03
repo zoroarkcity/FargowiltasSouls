@@ -36,7 +36,7 @@ prime
 	p2 spin star delay adjusted
 	p2 active limbs use a different dust for better visibility
 	p2 melee limb delay adjusted
-eow has 50% DR on head, 25% DR on the two BODY segments behind head (doesn't apply to tail segments)
+eow has 50% DR on head and the one BODY segment behind it (doesn't apply to tail segments)
 wof
 	ichor reworked, pushes you to far side of arena (previously forced you up)
 	nerfed max speed more (the above would fuck you up otherwise)
