@@ -30,6 +30,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.extraUpdates = 2;
         }
 
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
+
         public override void AI()
         {
             if (projectile.localAI[1] == 0)
