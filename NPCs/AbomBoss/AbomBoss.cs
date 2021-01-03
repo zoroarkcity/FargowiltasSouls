@@ -35,7 +35,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.height = 120;
             npc.damage = 260;
             npc.defense = 80;
-            npc.lifeMax = 700000;
+            npc.lifeMax = 650000;
             npc.value = Item.buyPrice(1);
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
