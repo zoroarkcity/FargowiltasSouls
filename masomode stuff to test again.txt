@@ -43,3 +43,4 @@ wof
 marked for death places a skull above you
 
 eow head DR only applies when less than 5 heads alive
+demon scythe conditional nerf: -25% speed and -50% damage pre-eow/boc, only -33% damage after

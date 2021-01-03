@@ -3650,11 +3650,18 @@ namespace FargowiltasSouls
                 case ItemID.Razorpine:
                     AttackSpeed *= 2f / 3f;
                     return 2f / 3f;
-                    
+
+                case ItemID.DemonScythe:
+                    if (!NPC.downedBoss2)
+                    {
+                        AttackSpeed *= 0.75f;
+                        return 0.5f;
+                    }
+                    return 2f / 3f;
+
                 case ItemID.StarCannon:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.SnowmanCannon:
-                case ItemID.DemonScythe:
                 case ItemID.DaedalusStormbow:
                     return 2f / 3f;
 
