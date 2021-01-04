@@ -55,3 +55,6 @@ adjusted behaviour of wof ichor to be denser, hopefully less odds of player pass
 penetrator boundary changes spin direction based on your direction
 nerfed attack speed of drakovi ranger
 drakovi puffer rangs speed up over time so you cant have them out infinitely
+
+added minimal effects toggle
+patreon toggles ignore presets
