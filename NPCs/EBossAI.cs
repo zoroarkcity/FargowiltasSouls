@@ -1599,13 +1599,13 @@ namespace FargowiltasSouls.NPCs
                                     Projectile.NewProjectile(npc.Center, speed, ProjectileID.GoldenShowerHostile, npc.damage / 5, 0f, Main.myPlayer);
                                 }*/
 
-                                for (int i = 0; i < 3; i++)
+                                for (int i = 0; i < 5; i++)
                                 {
                                     Vector2 target = npc.Center;
-                                    target.X += Math.Sign(npc.velocity.X) * 1300f * Counter[0] / 240f; //gradually targets further and further
+                                    target.X += Math.Sign(npc.velocity.X) * 1200f * Counter[0] / 240f; //gradually targets further and further
                                     target.Y += Main.rand.NextFloat(-450, 450);
-                                    const float gravity = 0.2f;
-                                    float time = 120f;
+                                    const float gravity = 0.5f;
+                                    float time = 60f;
                                     Vector2 distance = target - npc.Center;
                                     distance.X = distance.X / time;
                                     distance.Y = distance.Y / time - 0.5f * gravity * time;

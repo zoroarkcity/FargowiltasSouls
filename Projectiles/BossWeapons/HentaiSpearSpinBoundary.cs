@@ -65,7 +65,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 Main.PlaySound(SoundID.Item12, projectile.Center);
                 projectile.localAI[0] = 0;
-                projectile.localAI[1] += (float)Math.PI / 4 / 360 * ++projectile.ai[1];
+                projectile.localAI[1] += (float)Math.PI / 4 / 360 * ++projectile.ai[1] * player.direction;
                 if (projectile.localAI[1] > (float)Math.PI)
                     projectile.localAI[1] -= (float)Math.PI * 2;
                 if (projectile.owner == Main.myPlayer)

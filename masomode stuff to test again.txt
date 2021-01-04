@@ -50,3 +50,8 @@ penetrator dive can dive down longer
 penetrator down+m2 exists
 eow head DR always applies, but 100% DR during u turn only applies to heads too (this will make fight much faster)
 fixed wof cursed flame wall not behaving properly in desperation
+
+adjusted behaviour of wof ichor to be denser, hopefully less odds of player passing through it
+penetrator boundary changes spin direction based on your direction
+nerfed attack speed of drakovi ranger
+drakovi puffer rangs speed up over time so you cant have them out infinitely
