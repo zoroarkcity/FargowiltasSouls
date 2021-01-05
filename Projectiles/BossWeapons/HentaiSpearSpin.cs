@@ -33,6 +33,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.melee = true;
             projectile.alpha = 0;
             projectile.timeLeft = 45;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
         }
         
         public override void AI()

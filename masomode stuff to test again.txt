@@ -58,3 +58,4 @@ drakovi puffer rangs speed up over time so you cant have them out infinitely
 
 added minimal effects toggle
 patreon toggles ignore presets
+added The Lightning Rod

@@ -74,9 +74,10 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
                 else if (player.controlDown && !player.controlUp)
                 {
                     item.shoot = mod.ProjectileType("HentaiSpearSpinBoundary");
-                    item.shootSpeed = 6f;
+                    item.shootSpeed = 1f;
                     item.useAnimation = 16;
                     item.useTime = 16;
+                    item.useTurn = true;
                 }
                 else
                 {

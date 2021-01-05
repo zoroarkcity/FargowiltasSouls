@@ -84,6 +84,7 @@ namespace FargowiltasSouls
                     MythrilSpeed = true;
                     PalladiumHeal = true;
                     IronMagnet = true;
+                    CthulhuShield = true;
                     TinCrit = true;
                     BeetleEffect = true;
                     SpiderCrits = true;
