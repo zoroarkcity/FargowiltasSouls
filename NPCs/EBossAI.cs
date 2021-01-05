@@ -3474,7 +3474,7 @@ namespace FargowiltasSouls.NPCs
                                     NetUpdateMaso(npc.whoAmI);
                                 }
                             }
-                            else if (Counter[2] > 140)
+                            else if (Counter[2] > 120)
                             {
                                 Counter[2] = 0;
                                 if (Main.netMode == NetmodeID.Server)
@@ -3507,7 +3507,7 @@ namespace FargowiltasSouls.NPCs
                                 Vector2 vel = Main.player[npc.target].Center - npc.Center;
                                 vel.Y += Math.Abs(vel.X) * 0.25f;
                                 vel.X *= 0.75f;
-                                npc.velocity = Vector2.Normalize(vel) * 14f;
+                                npc.velocity = Vector2.Normalize(vel) * 20f;
 
                                 if (Main.netMode == NetmodeID.Server)
                                 {
@@ -3515,7 +3515,7 @@ namespace FargowiltasSouls.NPCs
                                     NetUpdateMaso(npc.whoAmI);
                                 }
                             }
-                            else if (Counter[2] > 140)
+                            else if (Counter[2] > 120)
                             {
                                 Counter[2] = 0;
                                 if (Main.netMode == NetmodeID.Server)
