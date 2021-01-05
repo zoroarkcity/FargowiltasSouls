@@ -8137,7 +8137,7 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.QueenBee:
                         if (!FargoSoulsWorld.SwarmActive && NPC.AnyNPCs(ModContent.NPCType<RoyalSubject>()))
-                            damage /= 3;
+                            damage /= 2;
                         break;
 
                     default:
