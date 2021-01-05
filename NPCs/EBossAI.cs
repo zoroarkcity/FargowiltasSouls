@@ -3436,7 +3436,7 @@ namespace FargowiltasSouls.NPCs
                                 vel.Y -= 150f;
                                 vel.Normalize();
                                 vel *= 10f;
-                                const float moveSpeed = 0.25f;
+                                const float moveSpeed = 0.3f;
                                 if (npc.velocity.X < vel.X)
                                 {
                                     npc.velocity.X += moveSpeed;
@@ -3466,7 +3466,7 @@ namespace FargowiltasSouls.NPCs
                             else if (Counter[2] == 90)
                             {
                                 Main.PlaySound(SoundID.Item, (int)npc.position.X, (int)npc.position.Y, 18, 1.25f, -0.5f);
-                                npc.velocity = npc.DirectionTo(Main.player[npc.target].Center) * 20f;
+                                npc.velocity = npc.DirectionTo(Main.player[npc.target].Center) * 22f;
                                 npc.rotation = npc.velocity.ToRotation() - (float)Math.PI / 2;
                                 if (Main.netMode == NetmodeID.Server)
                                 {
