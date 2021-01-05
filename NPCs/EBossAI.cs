@@ -1123,7 +1123,12 @@ namespace FargowiltasSouls.NPCs
             if (NPC.AnyNPCs(ModContent.NPCType<RoyalSubject>()))
             {
                 npc.HitSound = SoundID.NPCHit4;
-                npc.color = new Color(200, 200, 0);
+                npc.color = new Color(127, 127, 127);
+
+                int dustId = Dust.NewDust(npc.position, npc.width, npc.height, 1, 0f, 0f, 100, default(Color), 2f);
+                Main.dust[dustId].noGravity = true;
+                int dustId3 = Dust.NewDust(npc.position, npc.width, npc.height, 1, 0f, 0f, 100, default(Color), 2f);
+                Main.dust[dustId3].noGravity = true;
 
                 npc.ai[0] = 3; //always shoot stingers mode
             }
