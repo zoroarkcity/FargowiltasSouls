@@ -58,4 +58,7 @@ drakovi puffer rangs speed up over time so you cant have them out infinitely
 
 added minimal effects toggle
 patreon toggles ignore presets
-added The Lightning Rod
+added The Lightning Rod (TEST IN MULTIPLAYER)
+queen bee turns metallic, gaining 66% DR when any royal subjects are alive
+internal refactoring for effects that trigger when you hit enemies, hopefully nothing changed
+removed skeletron bee DR (this exists!?)

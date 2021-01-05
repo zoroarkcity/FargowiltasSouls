@@ -20,8 +20,8 @@ namespace FargowiltasSouls.Projectiles.ChallengerItems
 
         public override void SetDefaults()
         {
-            projectile.width = 94;
-            projectile.height = 94;
+            projectile.width = 132;
+            projectile.height = 132;
             projectile.aiStyle = -1;
             projectile.friendly = true;
             projectile.penetrate = -1;
@@ -108,26 +108,40 @@ namespace FargowiltasSouls.Projectiles.ChallengerItems
             }
             else //while thrown
             {
-                projectile.rotation += modifier * player.direction * 1.25f;
-
-                projectile.direction = Math.Sign(projectile.Center.X - player.Center.X);
-                player.ChangeDir(projectile.direction);
-                player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * projectile.direction, projectile.velocity.X * projectile.direction);
-
                 const int maxTime = 80;
-                float distanceModifier = (float)Math.Sin(Math.PI / maxTime * projectile.localAI[0]);
-                projectile.velocity = Vector2.Normalize(projectile.velocity) * distanceModifier * projectile.localAI[1];
 
                 if (projectile.localAI[0] > maxTime)
+                {
                     projectile.Kill();
+                }
+                else //player faces where this was thrown
+                {
+                    projectile.direction = Math.Sign(projectile.Center.X - player.Center.X);
+                    player.ChangeDir(projectile.direction);
+                    player.itemRotation = (float)Math.Atan2(projectile.velocity.Y * projectile.direction, projectile.velocity.X * projectile.direction);
+                }
+
+                projectile.rotation += modifier * player.direction * 1.25f; //spin faster when thrown
+
+                float distanceModifier = (float)Math.Sin(Math.PI / maxTime * projectile.localAI[0]); //fly out and back
+                projectile.velocity = Vector2.Normalize(projectile.velocity) * distanceModifier * projectile.localAI[1];
+
+                if (projectile.localAI[0] % 10 == 0 && projectile.owner == Main.myPlayer) //rain lightning
+                {
+                    Vector2 spawnPos = projectile.Center + Main.rand.NextVector2Circular(projectile.width / 2, projectile.height / 2);
+                    spawnPos.Y -= 900;
+
+                    Projectile.NewProjectile(spawnPos, Vector2.UnitY * 7f, ModContent.ProjectileType<TheLightning>(),
+                        projectile.damage, projectile.knockBack / 2, projectile.owner, Vector2.UnitY.ToRotation(), Main.rand.Next(80));
+                }
             }
 
             if (projectile.ai[1] != 0f)
             {
                 //dust!
-                int dustId = Dust.NewDust(projectile.position, projectile.width, projectile.height, 87, 0f, 0f, 100, default(Color), 1.5f);
+                int dustId = Dust.NewDust(projectile.position, projectile.width, projectile.height, 156, 0f, 0f, 100, default(Color), 1f);
                 Main.dust[dustId].noGravity = true;
-                int dustId3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 87, 0f, 0f, 100, default(Color), 1.5f);
+                int dustId3 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 156, 0f, 0f, 100, default(Color), 1f);
                 Main.dust[dustId3].noGravity = true;
             }
 

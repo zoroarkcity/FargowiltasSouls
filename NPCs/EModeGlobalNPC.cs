@@ -13,6 +13,7 @@ using Terraria.ModLoader;
 using FargowiltasSouls.Projectiles;
 using FargowiltasSouls.Items.Accessories.Masomode;
 using FargowiltasSouls.Items.Misc;
+using FargowiltasSouls.NPCs.EternityMode;
 using Fargowiltas.NPCs;
 using FargowiltasSouls.Items.Tiles;
 using FargowiltasSouls.Items.Weapons.Misc;
@@ -7922,7 +7923,32 @@ namespace FargowiltasSouls.NPCs
             }
         }
 
-        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        public override bool? CanBeHitByItem(NPC npc, Player player, Item item)
+        {
+            if (isMasoML && masoStateML > 0 && masoStateML < 4 && !player.buffImmune[ModContent.BuffType<NullificationCurse>()] && !FargoSoulsWorld.SwarmActive)
+                return false;
+
+            return null;
+        }
+
+        public override bool? CanBeHitByProjectile(NPC npc, Projectile projectile)
+        {
+            if (isMasoML && !Main.player[projectile.owner].buffImmune[ModContent.BuffType<NullificationCurse>()] && !FargoSoulsWorld.SwarmActive)
+            {
+                switch (masoStateML)
+                {
+                    case 0: if (!projectile.melee) return false; break;
+                    case 1: if (!projectile.ranged) return false; break;
+                    case 2: if (!projectile.magic) return false; break;
+                    case 3: if (!projectile.minion) return false; break;
+                    default: break;
+                }
+            }
+
+            return null;
+        }
+
+        private void ModifyHitEither(NPC npc, Player player, ref int damage, ref float knockback, ref bool crit)
         {
             if (FargoSoulsWorld.MasochistMode)
             {
@@ -7932,7 +7958,10 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.LunarTowerSolar:
                     case NPCID.LunarTowerStardust:
                     case NPCID.LunarTowerVortex:
-                        damage = (int)(2.0 / 3.0 * damage);
+                        if (npc.Distance(player.Center) > 2500)
+                            damage = 0;
+                        else
+                            damage = (int)(2.0 / 3.0 * damage);
                         break;
 
                     case NPCID.Salamander:
@@ -7961,7 +7990,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.BoneLee:
-                        if (Main.rand.Next(10) == 0)
+                        if (Main.rand.Next(10) == 0 && npc.HasPlayerTarget && player.whoAmI == npc.target && player.active && !player.dead && !player.ghost)
                         {
                             Vector2 teleportTarget = player.Center;
                             float offset = 100f * -player.direction;
@@ -7981,52 +8010,35 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.ForceBubble:
-                        if (Main.rand.Next(2) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                        if (Main.rand.Next(3) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 velocity = player.Center - npc.Center;
                             velocity.Normalize();
-                            velocity *= 14f;
+                            velocity *= 10f;
                             int Damage = Main.expertMode ? 28 : 35;
                             Projectile.NewProjectile(npc.Center, velocity, ProjectileID.MartianTurretBolt, Damage, 0f, Main.myPlayer);
                         }
                         break;
 
-                    case NPCID.SolarSolenian:
-                        /*if (npc.ai[2] <= -6f)
-                        {
-                            damage /= 3;
-                            if (npc.HasPlayerTarget && npc.Distance(Main.player[npc.target].Center) > 250)
-                                npc.ai[2] = -6f;
-                        }*/
+                    case NPCID.EaterofWorldsHead:
+                        if (eaterResist > 0)
+                            damage = 0;
+                        else
+                            damage /= 2;
                         break;
-
-                    case NPCID.SkeletronPrime:
-                        /*if (npc.ai[0] != 2f) //in phase 1
+                    case NPCID.EaterofWorldsBody:
+                        if (eaterResist > 0)
                         {
-                            int armCount = 0;
-                            for (int i = 0; i < 200; i++)
-                            {
-                                if (Main.npc[i].active && Main.npc[i].type >= NPCID.PrimeCannon && Main.npc[i].type <= NPCID.PrimeLaser && Main.npc[i].ai[1] == npc.whoAmI)
-                                    armCount++;
-                            }
-                            switch (armCount)
-                            {
-                                case 4:
-                                    damage = 0;
-                                    break;
-                                case 3:
-                                    damage = damage / 2;
-                                    break;
-                                case 2:
-                                    damage = (int)(damage * 0.75);
-                                    break;
-                                case 1:
-                                    damage = (int)(damage * 0.9);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }*/
+                            damage = 0;
+                        }
+                        else
+                        {
+                            int ai1 = (int)npc.ai[1];
+                            if (ai1 > -1 && ai1 < Main.maxNPCs && Main.npc[ai1].active && Main.npc[ai1].type == NPCID.EaterofWorldsHead)
+                                damage /= 2;
+                        }
+                        break;
+                    case NPCID.EaterofWorldsTail:
                         break;
 
                     case NPCID.Golem:
@@ -8040,18 +8052,9 @@ namespace FargowiltasSouls.NPCs
                         damage = (int)(damage * reduction);
                         break;
 
-                    case NPCID.GiantTortoise:
-                        player.Hurt(PlayerDeathReason.ByCustomReason(player.name + " was impaled by a Giant Tortoise."), damage / 2, 0);
-                        break;
-
                     case NPCID.DukeFishron:
                         if (masoBool[2])
                             damage = 0;
-                        break;
-
-                    case NPCID.Plantera:
-                        if (item.type == ItemID.FetidBaghnakhs)
-                            damage /= 4;
                         break;
 
                     case NPCID.GoblinSummoner:
@@ -8092,8 +8095,11 @@ namespace FargowiltasSouls.NPCs
                         }
                         break;
 
-                    case NPCID.CultistBoss:
-                        Counter[1] += damage / 10;
+                    case NPCID.MoonLordCore:
+                        damage = damage * 2 / 3;
+                        break;
+                    case NPCID.MoonLordHead:
+                        //damage = damage * 2;
                         break;
 
                     case NPCID.DarkCaster:
@@ -8129,6 +8135,38 @@ namespace FargowiltasSouls.NPCs
                         }
                         break;
 
+                    case NPCID.QueenBee:
+                        if (!FargoSoulsWorld.SwarmActive && NPC.AnyNPCs(ModContent.NPCType<RoyalSubject>()))
+                            damage /= 3;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
+        {
+            ModifyHitEither(npc, player, ref damage, ref knockback, ref crit);
+
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                switch (npc.type)
+                {
+                    case NPCID.GiantTortoise:
+                        player.Hurt(PlayerDeathReason.ByCustomReason(player.name + " was impaled by a Giant Tortoise."), damage / 2, 0);
+                        break;
+
+                    case NPCID.Plantera:
+                        if (item.type == ItemID.FetidBaghnakhs)
+                            damage /= 4;
+                        break;
+
+                    case NPCID.CultistBoss:
+                        Counter[1] += damage / 10;
+                        break;
+
                     default:
                         break;
                 }
@@ -8138,143 +8176,16 @@ namespace FargowiltasSouls.NPCs
             }
         }
 
-        public override bool? CanBeHitByItem(NPC npc, Player player, Item item)
-        {
-            if (isMasoML && masoStateML > 0 && masoStateML < 4 && !player.buffImmune[ModContent.BuffType<NullificationCurse>()] && !FargoSoulsWorld.SwarmActive)
-                return false;
-
-            return null;
-        }
-
-        public override bool? CanBeHitByProjectile(NPC npc, Projectile projectile)
-        {
-            if (isMasoML && !Main.player[projectile.owner].buffImmune[ModContent.BuffType<NullificationCurse>()] && !FargoSoulsWorld.SwarmActive)
-            {
-                switch (masoStateML)
-                {
-                    case 0: if (!projectile.melee) return false; break;
-                    case 1: if (!projectile.ranged) return false; break;
-                    case 2: if (!projectile.magic) return false; break;
-                    case 3: if (!projectile.minion) return false; break;
-                    default: break;
-                }
-            }
-
-            return null;
-        }
-
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             Player player = Main.player[projectile.owner];
+
+            ModifyHitEither(npc, player, ref damage, ref knockback, ref crit);
 
             if (FargoSoulsWorld.MasochistMode)
             {
                 switch (npc.type)
                 {
-                    case NPCID.LunarTowerNebula:
-                    case NPCID.LunarTowerSolar:
-                    case NPCID.LunarTowerStardust:
-                    case NPCID.LunarTowerVortex:
-                        if (npc.Distance(Main.player[projectile.owner].Center) > 2500)
-                            damage = 0;
-                        else
-                            damage = (int)(2.0 / 3.0 * damage);
-                        break;
-
-                    case NPCID.Salamander:
-                    case NPCID.Salamander2:
-                    case NPCID.Salamander3:
-                    case NPCID.Salamander4:
-                    case NPCID.Salamander5:
-                    case NPCID.Salamander6:
-                    case NPCID.Salamander7:
-                    case NPCID.Salamander8:
-                    case NPCID.Salamander9:
-                        if (!masoBool[0])
-                        {
-                            masoBool[0] = true;
-                            npc.Opacity *= 5;
-                        }
-                        break;
-
-                    case NPCID.MisterStabby:
-                    case NPCID.AnglerFish:
-                        if (!masoBool[0])
-                        {
-                            masoBool[0] = true;
-                            npc.Opacity *= 5;
-                        }
-                        break;
-
-                    case NPCID.BoneLee:
-                        if (Main.rand.Next(10) == 0 && npc.HasPlayerTarget)
-                        {
-                            Player target = Main.player[npc.target];
-                            if (target.active && !target.dead)
-                            {
-                                Vector2 teleportTarget = target.Center;
-                                float offset = 100f * -target.direction;
-                                teleportTarget.X += offset;
-                                teleportTarget.Y -= 50f;
-                                if (!Collision.CanHit(teleportTarget, 1, 1, target.position, target.width, target.height))
-                                {
-                                    teleportTarget.X -= offset * 2f;
-                                    if (!Collision.CanHit(teleportTarget, 1, 1, target.position, target.width, target.height))
-                                        break;
-                                }
-                                GrossVanillaDodgeDust(npc);
-                                npc.Center = teleportTarget;
-                                npc.netUpdate = true;
-                                GrossVanillaDodgeDust(npc);
-                            }
-                        }
-                        break;
-
-                    case NPCID.ForceBubble:
-                        if (Main.rand.Next(2) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            int closest = npc.FindClosestPlayer();
-                            if (closest != -1)
-                            {
-                                Player target = Main.player[closest];
-                                Vector2 velocity = target.Center - npc.Center;
-                                velocity.Normalize();
-                                velocity *= 14f;
-                                int Damage = Main.expertMode ? 28 : 35;
-                                Projectile.NewProjectile(npc.Center, velocity, ProjectileID.MartianTurretBolt, Damage, 0f, Main.myPlayer);
-                            }
-                        }
-                        break;
-
-                    case NPCID.SolarSolenian:
-                        /*if (npc.ai[2] <= -6f)
-                        {
-                            damage /= 3;
-                            npc.ai[2] = -6f;
-                        }*/
-                        break;
-
-                    case NPCID.EaterofWorldsHead:
-                        if (eaterResist > 0)
-                            damage = 0;
-                        else
-                            damage /= 2;
-                        break;
-                    case NPCID.EaterofWorldsBody:
-                        if (eaterResist > 0)
-                        {
-                            damage = 0;
-                        }
-                        else
-                        {
-                            int ai1 = (int)npc.ai[1];
-                            if (ai1 > -1 && ai1 < Main.maxNPCs && Main.npc[ai1].active && Main.npc[ai1].type == NPCID.EaterofWorldsHead)
-                                damage /= 2;
-                        }
-                        break;
-                    case NPCID.EaterofWorldsTail:
-                        break;
-
                     case NPCID.TheDestroyer:
                     case NPCID.TheDestroyerBody:
                     case NPCID.TheDestroyerTail:
@@ -8283,71 +8194,10 @@ namespace FargowiltasSouls.NPCs
                             damage = (int)(damage * (0.5 + 0.5 * 1 / projectile.numHits));
                         break;
 
-                    case NPCID.Golem:
-                        damage = (int)(damage * 0.9);
-                        break;
-
                     case NPCID.GolemFistLeft:
                     case NPCID.GolemFistRight:
                         if (projectile.maxPenetrate != 1 && !projectile.minion)
                             projectile.active = false;
-                        break;
-
-                    case NPCID.SkeletronPrime:
-                        /*if (npc.ai[0] != 2f)
-                        {
-                            int armCount = 0;
-                            for (int i = 0; i < 200; i++)
-                            {
-                                if (Main.npc[i].active && Main.npc[i].type >= NPCID.PrimeCannon && Main.npc[i].type <= NPCID.PrimeLaser && Main.npc[i].ai[1] == npc.whoAmI)
-                                    armCount++;
-                            }
-                            switch (armCount)
-                            {
-                                case 4:
-                                    damage = 0;
-                                    break;
-                                case 3:
-                                    damage = damage / 2;
-                                    break;
-                                case 2:
-                                    damage = (int)(damage * 0.75);
-                                    break;
-                                case 1:
-                                    damage = (int)(damage * 0.9);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }*/
-                        /*if (projectile.type == ProjectileID.HallowStar)
-                            damage /= 4;*/
-                        break;
-
-                    case NPCID.IceTortoise:
-                        float reduction = (float)npc.life / npc.lifeMax;
-                        if (reduction < 0.5f)
-                            reduction = 0.5f;
-                        damage = (int)(damage * reduction);
-                        break;
-
-                    case NPCID.SkeletronHead:
-                    case NPCID.SkeletronHand:
-                        if (projectile.type == ProjectileID.Bee || projectile.type == ProjectileID.GiantBee)
-                            damage = (int)(damage * .75);
-                        break;
-
-                    /*case NPCID.WallofFlesh:
-                    case NPCID.WallofFleshEye:
-                        if (projectile.type == ProjectileID.Bee || projectile.type == ProjectileID.GiantBee)
-                            damage /= 2;
-                        break;*/
-
-                    case NPCID.MoonLordCore:
-                        damage = damage * 2 / 3;
-                        break;
-                    case NPCID.MoonLordHead:
-                        //damage = damage * 2;
                         break;
 
                     case NPCID.CultistDragonBody1:
@@ -8361,49 +8211,6 @@ namespace FargowiltasSouls.NPCs
                             damage /= 4;
                         break;
 
-                    case NPCID.DukeFishron:
-                        if (masoBool[2])
-                            damage = 0;
-                        break;
-
-                    case NPCID.GoblinSummoner:
-                        if (Main.rand.Next(4) == 0 && Main.netMode != NetmodeID.MultiplayerClient)
-                        {
-                            Vector2 vel = new Vector2(12f, 0f).RotatedByRandom(2 * Math.PI);
-                            for (int i = 0; i < 6; i++)
-                            {
-                                Vector2 speed = vel.RotatedBy(2 * Math.PI / 6 * (i + Main.rand.NextDouble() - 0.5));
-                                float ai1 = Main.rand.Next(10, 80) * (1f / 1000f);
-                                if (Main.rand.Next(2) == 0)
-                                    ai1 *= -1f;
-                                float ai0 = Main.rand.Next(10, 80) * (1f / 1000f);
-                                if (Main.rand.Next(2) == 0)
-                                    ai0 *= -1f;
-                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<ShadowflameTentacleHostile>(), npc.damage / 4, 0f, Main.myPlayer, ai0, ai1);
-                            }
-                        }
-                        break;
-
-                    case NPCID.DungeonGuardian:
-                        damage = 1;
-                        break;
-
-                    case NPCID.Psycho:
-                        Counter[0] = 0;
-                        break;
-
-                    case NPCID.Nymph:
-                        if (Main.player[projectile.owner].loveStruck)
-                        {
-                            npc.life += damage;
-                            if (npc.life > npc.lifeMax)
-                                npc.life = npc.lifeMax;
-                            CombatText.NewText(npc.Hitbox, CombatText.HealLife, damage);
-                            damage = 0;
-                            npc.netUpdate = true;
-                        }
-                        break;
-
                     case NPCID.CultistBoss: //track damage types
                         if (projectile.melee || projectile.thrown)
                             Counter[1] += damage / 10;
@@ -8413,39 +8220,6 @@ namespace FargowiltasSouls.NPCs
                             Counter[0] += damage / 10;
                         else if (projectile.minion)
                             npc.localAI[3] += damage / 10;
-                        break;
-
-                    case NPCID.DarkCaster:
-                    case NPCID.FireImp:
-                    case NPCID.GoblinSorcerer:
-                        if (Counter[1] == 0)
-                        {
-                            Counter[1] = 180;
-                            if (Main.netMode == NetmodeID.MultiplayerClient)
-                            {
-                                var netMessage = mod.GetPacket();
-                                netMessage.Write((byte)7);
-                                netMessage.Write((byte)npc.whoAmI);
-                                netMessage.Write(Counter[1]);
-                                netMessage.Send();
-                            }
-                        }
-                        break;
-
-                    case NPCID.Tim:
-                    case NPCID.RuneWizard:
-                        if (Counter[1] == 0)
-                        {
-                            Counter[1] = 90;
-                            if (Main.netMode == NetmodeID.MultiplayerClient)
-                            {
-                                var netMessage = mod.GetPacket();
-                                netMessage.Write((byte)7);
-                                netMessage.Write((byte)npc.whoAmI);
-                                netMessage.Write(Counter[1]);
-                                netMessage.Send();
-                            }
-                        }
                         break;
 
                     default:

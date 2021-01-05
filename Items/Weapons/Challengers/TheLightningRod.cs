@@ -20,7 +20,7 @@ namespace FargowiltasSouls.Items.Weapons.Challengers
 
         public override void SetDefaults()
         {
-            item.damage = 70;
+            item.damage = 33;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.useAnimation = 30;
             item.useTime = 30;
@@ -28,7 +28,7 @@ namespace FargowiltasSouls.Items.Weapons.Challengers
             item.knockBack = 6f;
             item.width = 68;
             item.height = 68;
-            item.rare = ItemRarityID.Orange;
+            item.rare = ItemRarityID.Green;
             item.UseSound = SoundID.Item1;
             item.shoot = mod.ProjectileType("TheLightningRodProj");
             item.value = Item.sellPrice(0, 2);
@@ -47,17 +47,21 @@ namespace FargowiltasSouls.Items.Weapons.Challengers
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
-            recipe.AddIngredient(ItemID.DemoniteBar, 3);
-            recipe.AddIngredient(ItemID.ShadowScale, 3);
+            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 10);
+            recipe.AddIngredient(ItemID.Diamond);
+            recipe.AddIngredient(ItemID.Topaz, 2);
+            recipe.AddIngredient(ItemID.DemoniteBar, 7);
+            recipe.AddIngredient(ItemID.ShadowScale, 7);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
 
             recipe = new ModRecipe(mod);
-            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
-            recipe.AddIngredient(ItemID.CrimtaneBar, 3);
-            recipe.AddIngredient(ItemID.TissueSample, 3);
+            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 10);
+            recipe.AddIngredient(ItemID.Diamond);
+            recipe.AddIngredient(ItemID.Topaz, 2);
+            recipe.AddIngredient(ItemID.CrimtaneBar, 7);
+            recipe.AddIngredient(ItemID.TissueSample, 7);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();

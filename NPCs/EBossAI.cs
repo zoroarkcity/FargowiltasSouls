@@ -1122,11 +1122,17 @@ namespace FargowiltasSouls.NPCs
 
             if (NPC.AnyNPCs(ModContent.NPCType<RoyalSubject>()))
             {
+                npc.HitSound = SoundID.NPCHit4;
+                npc.color = new Color(200, 200, 0);
+
                 npc.ai[0] = 3; //always shoot stingers mode
             }
-            else if (npc.life < npc.lifeMax / 2)
+            else
             {
-                if (Counter[0] % 2 == 0)
+                npc.HitSound = SoundID.NPCHit1;
+                npc.color = default;
+
+                if (npc.life < npc.lifeMax / 2 && Counter[0] % 2 == 0)
                     Counter[0]++; //throw hives faster when no royal subjects alive
             }
 
