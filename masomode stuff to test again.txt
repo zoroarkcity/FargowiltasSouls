@@ -74,4 +74,10 @@ various work on prime:
 	synchronized saw and vice movement
 lightning rod depreciates damage on hit when thrown, -15% multiplicative (minimum damage 33% of original)
 
+mutant
+	always fires destroyers mostly away from you (spares you the cheapshots)
+	movement during sickle mines and destroyers adjusted to hopefully not cross you up
+	refactor of how invincibility is checked, hopefully nothing changed
+	EMODE P2 STARTS AT A RANDOM ATTACK OH NO
+	someone should test in mp, make sure he doesn't do desynced attacks or become invincible forever or smth
 dragon's demise resprite
