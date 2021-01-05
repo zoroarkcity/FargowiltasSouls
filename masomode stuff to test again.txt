@@ -81,3 +81,5 @@ mutant
 	EMODE P2 STARTS AT A RANDOM ATTACK OH NO
 	someone should test in mp, make sure he doesn't do desynced attacks or become invincible forever or smth
 dragon's demise resprite
+
+skeletron (prime) guardian walls disappear after overlapping
