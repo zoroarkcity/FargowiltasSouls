@@ -73,3 +73,5 @@ various work on prime:
 	increased movement speed of saw when repositioning
 	synchronized saw and vice movement
 lightning rod depreciates damage on hit when thrown, -15% multiplicative (minimum damage 33% of original)
+
+dragon's demise resprite
