@@ -11,6 +11,8 @@ namespace FargowiltasSouls.Projectiles.ChallengerItems
 {
     public class TheLightningRodProj : ModProjectile
     {
+        public int damage;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Lightning Rod");
@@ -87,7 +89,7 @@ namespace FargowiltasSouls.Projectiles.ChallengerItems
                 projectile.velocity = projectile.rotation.ToRotationVector2();
                 projectile.position -= projectile.velocity;
                 player.itemRotation = MathHelper.WrapAngle(projectile.rotation);
-
+                
                 if (projectile.localAI[0] == 40)
                 {
                     projectile.ai[1] = 1f;
@@ -136,8 +138,17 @@ namespace FargowiltasSouls.Projectiles.ChallengerItems
                 }
             }
 
-            if (projectile.ai[1] != 0f)
+            if (projectile.ai[1] == 0f)
             {
+                damage = projectile.damage;
+                projectile.numHits = 0;
+            }
+            else
+            {
+                projectile.damage = (int)(damage * Math.Pow(0.85, projectile.numHits));
+                if (projectile.damage < damage / 2)
+                    projectile.damage = damage / 2;
+
                 //dust!
                 int dustId = Dust.NewDust(projectile.position, projectile.width, projectile.height, 156, 0f, 0f, 100, default(Color), 1f);
                 Main.dust[dustId].noGravity = true;
