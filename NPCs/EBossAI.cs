@@ -3327,15 +3327,28 @@ namespace FargowiltasSouls.NPCs
                         }
                     }
                     npc.rotation = Main.npc[ai1].DirectionTo(npc.Center).ToRotation() - (float)Math.PI / 2;
+
+                    if (npc.type == NPCID.PrimeLaser)
+                        npc.localAI[1] = 0;
+
+                    if (npc.netUpdate)
+                    {
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc.whoAmI);
+                            NetUpdateMaso(npc.whoAmI);
+                        }
+                        npc.netUpdate = false;
+                    }
                     return false;
                 }
                 else //regular limb ai
                 {
                     void ActiveDust()
                     {
-                        for (int i = 0; i < 3; i++)
+                        for (int i = 0; i < 2; i++)
                         {
-                            int d = Dust.NewDust(npc.position, npc.width, npc.height, 229, -npc.velocity.X * 0.25f, -npc.velocity.Y * 0.25f, Scale: 2f);
+                            int d = Dust.NewDust(npc.position, npc.width, npc.height, 229, -npc.velocity.X * 0.25f, -npc.velocity.Y * 0.25f, Scale: 1.5f);
                             Main.dust[d].noGravity = true;
                             Main.dust[d].velocity *= 2f;
                         }
@@ -3382,7 +3395,7 @@ namespace FargowiltasSouls.NPCs
                             }
 
                             npc.localAI[0] = 0;
-                            if (++npc.localAI[1] == 85) //v spread shot
+                            if (++npc.localAI[1] == 95) //v spread shot
                             {
                                 for (int i = -1; i <= 1; i += 2)
                                 {
@@ -3397,7 +3410,7 @@ namespace FargowiltasSouls.NPCs
                                     }
                                 }
                             }
-                            else if (npc.localAI[1] > 170) //direct spread shot
+                            else if (npc.localAI[1] > 190) //direct spread shot
                             {
                                 npc.localAI[1] = 0;
 
@@ -3432,11 +3445,11 @@ namespace FargowiltasSouls.NPCs
                                 if (!npc.HasValidTarget)
                                     npc.TargetClosest(false);
                                 Vector2 vel = Main.player[npc.target].Center - npc.Center;
-                                vel.X -= 450 * Math.Sign(vel.X);
+                                vel.X -= 450f * Math.Sign(vel.X);
                                 vel.Y -= 150f;
                                 vel.Normalize();
-                                vel *= 10f;
-                                const float moveSpeed = 0.3f;
+                                vel *= 20f;
+                                const float moveSpeed = 0.75f;
                                 if (npc.velocity.X < vel.X)
                                 {
                                     npc.velocity.X += moveSpeed;
@@ -3466,7 +3479,7 @@ namespace FargowiltasSouls.NPCs
                             else if (Counter[2] == 90)
                             {
                                 Main.PlaySound(SoundID.Item, (int)npc.position.X, (int)npc.position.Y, 18, 1.25f, -0.5f);
-                                npc.velocity = npc.DirectionTo(Main.player[npc.target].Center) * 22f;
+                                npc.velocity = npc.DirectionTo(Main.player[npc.target].Center) * 25f;
                                 npc.rotation = npc.velocity.ToRotation() - (float)Math.PI / 2;
                                 if (Main.netMode == NetmodeID.Server)
                                 {

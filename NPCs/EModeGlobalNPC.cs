@@ -7301,7 +7301,7 @@ namespace FargowiltasSouls.NPCs
                         if (npc.ai[1] != 2f && !FargoSoulsWorld.SwarmActive)
                         {
                             Main.PlaySound(SoundID.Roar, (int)npc.position.X, (int)npc.position.Y, 0);
-                            npc.life = npc.lifeMax / 420;
+                            npc.life = npc.lifeMax / 630;
                             if (npc.life < 100)
                                 npc.life = 100;
                             npc.defDefense = 9999;

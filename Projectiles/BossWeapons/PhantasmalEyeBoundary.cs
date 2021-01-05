@@ -16,8 +16,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             base.SetDefaults();
             projectile.melee = false;
             projectile.ranged = true;
-            projectile.timeLeft = 120;
-            projectile.extraUpdates = 1;
+            projectile.timeLeft = 180;
+            projectile.extraUpdates = 2;
         }
 
         public override void AI()

@@ -63,3 +63,12 @@ queen bee turns metallic, gaining 50% DR when any royal subjects are alive
 buffed royal subject contact damage a lot (45, was 27)
 internal refactoring for effects that trigger when you hit enemies, hopefully nothing changed
 removed skeletron bee DR (this exists!?)
+
+penetrator boundary has better range and speed
+various work on prime:
+	reduced default guardian mode life to 100 (was 150, intended to always be 100 but it scaled when prime life increased)
+	marginally increased delay between prime lasers
+	prime laser always starts its pattern with a spread shot
+	increased dashing velocity of saw
+	increased movement speed of saw when repositioning
+	synchronized saw and vice movement
