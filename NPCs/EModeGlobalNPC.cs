@@ -1230,8 +1230,8 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     Lighting.AddLight(npc.Center, 1f, 1f, 1f);
 
-                                    if (Main.npc[cultist].ai[2] > -1 && Main.npc[cultist].ai[2] < Main.maxProjectiles
-                                        && Main.npc[cultist].ai[3] == -1 && Main.npc[cultist].ai[0] == 5) //during ritual
+                                    //during ritual
+                                    if (Main.npc[cultist].ai[3] == -1 && Main.npc[cultist].ai[0] == 5) //&& Main.npc[cultist].ai[2] > -1 && Main.npc[cultist].ai[2] < Main.maxProjectiles)
                                     {
                                         if (npc.alpha > 0)
                                         {
@@ -1247,12 +1247,18 @@ namespace FargowiltasSouls.NPCs
                                             }
                                         }
 
-                                        int ritual = (int)Main.npc[cultist].ai[2]; //rotate around ritual
+                                        if (Main.npc[cultist].ai[1] > 30f && Main.npc[cultist].ai[1] < 330f)
+                                        {
+                                            Vector2 offset = Main.npc[cultist].Center - Main.player[Main.npc[cultist].target].Center;
+                                            npc.Center = Main.player[Main.npc[cultist].target].Center + offset.RotatedBy(2 * Math.PI / Counter[0] * Counter[1]);
+                                        }
+
+                                        /*int ritual = (int)Main.npc[cultist].ai[2]; //rotate around ritual
                                         if (Main.projectile[ritual].active && Main.projectile[ritual].type == ProjectileID.CultistRitual)
                                         {
                                             Vector2 offset = Main.npc[cultist].Center - Main.projectile[ritual].Center;
                                             npc.Center = Main.projectile[ritual].Center + offset.RotatedBy(2 * Math.PI / Counter[0] * Counter[1]);
-                                        }
+                                        }*/
                                     }
                                     else
                                     {
@@ -5407,27 +5413,28 @@ namespace FargowiltasSouls.NPCs
                         target.AddBuff(BuffID.Frostburn, 300);
                         break;
 
-                    case NPCID.NebulaHeadcrab:
-                    case NPCID.NebulaBrain:
-                        target.AddBuff(ModContent.BuffType<Flipped>(), 30);
-                        break;
-
                     case NPCID.NebulaBeast:
                         target.AddBuff(BuffID.Rabies, 3600);
+                        goto case NPCID.NebulaBrain;
+                    case NPCID.NebulaHeadcrab:
+                    case NPCID.NebulaBrain:
+                    case NPCID.NebulaSoldier:
+                        target.AddBuff(ModContent.BuffType<Berserked>(), 300);
+                        target.AddBuff(ModContent.BuffType<Lethargic>(), 300);
                         break;
 
                     case NPCID.StardustCellBig:
                     case NPCID.StardustCellSmall:
-                        target.AddBuff(ModContent.BuffType<Buffs.Masomode.SqueakyToy>(), 120);
-                        target.AddBuff(BuffID.Frostburn, 180);
-                        break;
-
                     case NPCID.StardustWormHead:
                     case NPCID.StardustWormBody:
                     case NPCID.StardustWormTail:
                     case NPCID.StardustSpiderBig:
                     case NPCID.StardustSpiderSmall:
-                        target.AddBuff(BuffID.Frostburn, 180);
+                    case NPCID.StardustJellyfishBig:
+                    case NPCID.StardustJellyfishSmall:
+                    case NPCID.StardustSoldier:
+                        target.AddBuff(BuffID.Obstructed, 20);
+                        target.AddBuff(BuffID.Blackout, 300);
                         break;
 
                     case NPCID.MoonLordFreeEye:
@@ -7255,7 +7262,7 @@ namespace FargowiltasSouls.NPCs
                             return false;
                         }
 
-                        if ((bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive"))
+                        if (FargoSoulsWorld.SwarmActive)
                         {
                             break;
                         }

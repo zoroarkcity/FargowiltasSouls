@@ -1942,20 +1942,16 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.NebulaSphere:
-                        target.AddBuff(BuffID.VortexDebuff, 300);
-                        break;
-
                     case ProjectileID.NebulaLaser:
                     case ProjectileID.NebulaBolt:
-                        target.AddBuff(ModContent.BuffType<Hexed>(), 120);
+                        target.AddBuff(ModContent.BuffType<Berserked>(), 300);
+                        target.AddBuff(ModContent.BuffType<Lethargic>(), 300);
                         break;
 
                     case ProjectileID.StardustJellyfishSmall:
-                        target.AddBuff(BuffID.Frostburn, 180);
-                        break;
-
                     case ProjectileID.StardustSoldierLaser:
-                        target.AddBuff(BuffID.VortexDebuff, 120);
+                        target.AddBuff(BuffID.Obstructed, 20);
+                        target.AddBuff(BuffID.Blackout, 300);
                         break;
 
                     case ProjectileID.Sharknado:

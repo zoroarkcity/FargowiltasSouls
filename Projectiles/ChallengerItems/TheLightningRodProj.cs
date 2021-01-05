@@ -84,6 +84,9 @@ namespace FargowiltasSouls.Projectiles.ChallengerItems
             
             if (projectile.ai[0] == 0f) //while held
             {
+                damage = projectile.damage;
+                projectile.numHits = 0;
+
                 projectile.rotation = (float)Math.Atan2(projectile.velocity.Y, projectile.velocity.X);
                 projectile.rotation += modifier * player.direction;
                 projectile.velocity = projectile.rotation.ToRotationVector2();
@@ -110,6 +113,10 @@ namespace FargowiltasSouls.Projectiles.ChallengerItems
             }
             else //while thrown
             {
+                projectile.damage = (int)(damage * Math.Pow(0.85, projectile.numHits));
+                if (projectile.damage < damage / 2)
+                    projectile.damage = damage / 2;
+
                 const int maxTime = 80;
 
                 if (projectile.localAI[0] > maxTime)
@@ -138,17 +145,8 @@ namespace FargowiltasSouls.Projectiles.ChallengerItems
                 }
             }
 
-            if (projectile.ai[1] == 0f)
+            if (projectile.ai[1] != 0f)
             {
-                damage = projectile.damage;
-                projectile.numHits = 0;
-            }
-            else
-            {
-                projectile.damage = (int)(damage * Math.Pow(0.85, projectile.numHits));
-                if (projectile.damage < damage / 2)
-                    projectile.damage = damage / 2;
-
                 //dust!
                 int dustId = Dust.NewDust(projectile.position, projectile.width, projectile.height, 156, 0f, 0f, 100, default(Color), 1f);
                 Main.dust[dustId].noGravity = true;
