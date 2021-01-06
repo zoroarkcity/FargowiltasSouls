@@ -90,3 +90,4 @@ nebula pillar enemies inflict berserked and lethargic always
 stardust pillar enemies inflict obstructed and blackout instead of frostburn and squeaky toy
 fixed the lightning rod losing damage while held
 refactored cultist ritual positioning code to fix not moving properly during rituals in multiplayer
+made fishron fishron hitboxes bigger
