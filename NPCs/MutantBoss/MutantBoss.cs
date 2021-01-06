@@ -939,7 +939,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         {
                             if (FargoSoulsWorld.MasochistMode)
                             {
-                                float[] options = { 11, 16, 18, 24, 26, 29, 35, 37, 39 };
+                                float[] options = { 11, 16, 18, 24, 26, 31, 35, 37, 39 };
                                 npc.ai[0] = options[Main.rand.Next(options.Length)];
                             }
                             else
@@ -1384,7 +1384,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         break;
                     targetPos = player.Center;
                     targetPos.X += 600 * (npc.Center.X < targetPos.X ? -1 : 1);
-                    if (npc.Distance(targetPos) > 50)
+                    if (npc.Distance(targetPos) > 25)
                     {
                         Movement(targetPos, 0.5f);
                     }
@@ -1427,9 +1427,11 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         npc.ai[1] = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            float rotation = MathHelper.ToRadians(255) / 100f * npc.ai[2];
-                            Projectile.NewProjectile(npc.Center, Vector2.UnitX, ModContent.ProjectileType<MutantDeathray3>(), npc.damage / 4, 0, Main.myPlayer, rotation, npc.whoAmI);
-                            Projectile.NewProjectile(npc.Center, -Vector2.UnitX, ModContent.ProjectileType<MutantDeathray3>(), npc.damage / 4, 0, Main.myPlayer, -rotation, npc.whoAmI);
+                            float rotation = MathHelper.ToRadians(245) / 100f * npc.ai[2];
+                            Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(MathHelper.ToRadians(8 * npc.ai[2])), 
+                                ModContent.ProjectileType<MutantDeathray3>(), npc.damage / 4, 0, Main.myPlayer, rotation, npc.whoAmI);
+                            Projectile.NewProjectile(npc.Center, -Vector2.UnitX.RotatedBy(MathHelper.ToRadians(-8 * npc.ai[2])), 
+                                ModContent.ProjectileType<MutantDeathray3>(), npc.damage / 4, 0, Main.myPlayer, -rotation, npc.whoAmI);
                         }
                     }
                     if (npc.ai[3] == 90 && Main.netMode != NetmodeID.MultiplayerClient)

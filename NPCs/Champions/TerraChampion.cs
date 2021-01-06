@@ -202,9 +202,29 @@ namespace FargowiltasSouls.NPCs.Champions
                             break;
                         }
                         
-                        float num14 = 18f;    //max speed?
-                        float num15 = 0.2f;   //turn speed?
-                        float num16 = 0.25f;   //acceleration?
+                        float num14 = 20f;      //max speed?
+                        float num15 = 0.22f;     //turn speed?
+                        float num16 = 0.25f;    //acceleration?
+
+                        float comparisonSpeed = player.velocity.Length() * 1.5f;
+                        float rotationDifference = MathHelper.WrapAngle(npc.velocity.ToRotation() - npc.DirectionTo(player.Center).ToRotation());
+                        bool inFrontOfMe = Math.Abs(rotationDifference) < MathHelper.ToRadians(90 / 2);
+                        if (num14 < comparisonSpeed && inFrontOfMe) //player is moving faster than my top speed
+                        {
+                                num14 = comparisonSpeed; //outspeed them
+                        }
+
+                        if (npc.Distance(player.Center) > 1500f) //better turning when out of range
+                        {
+                            num15 *= 2f;
+                            num16 *= 2f;
+
+                            if (inFrontOfMe && num14 < 30f) //much higher top speed to return to the fight
+                                num14 = 30f;
+                        }
+
+                        if (npc.velocity.Length() > num14) //decelerate if over top speed
+                            npc.velocity *= 0.99f;
 
                         Vector2 target = player.Center;
                         float num17 = target.X;

@@ -141,14 +141,14 @@ namespace FargowiltasSouls.NPCs.Champions
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            for (int i = 0; i < 3; i++)
+                            for (int i = 0; i < 4; i++)
                             {
                                 Vector2 spawnPos = player.Center;
                                 spawnPos.X += Main.rand.NextFloat(-1000, 1000);
                                 spawnPos.Y -= Main.rand.NextFloat(600, 800);
                                 Vector2 speed = Main.rand.NextFloat(7.5f, 12.5f) * Vector2.UnitY;
                                 Projectile.NewProjectile(spawnPos, speed, ModContent.ProjectileType<TimberLaser>(), 
-                                    npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 100f);
+                                    npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 80f);
                             }
                         }
                     }
@@ -212,37 +212,48 @@ namespace FargowiltasSouls.NPCs.Champions
 
                     if (--npc.ai[2] < 0)
                     {
-                        npc.ai[2] = 65;
-                        
-                        for (int i = 0; i < 5; i++) //spawn trees
+                        npc.ai[2] = 70;
+
+                        if (npc.ai[1] < 300)
                         {
-                            Vector2 spawnPos = player.Center;
-                            spawnPos.X += Main.rand.NextFloat(-1500, 1500) + player.velocity.X * 75;
-                            spawnPos.Y -= Main.rand.NextFloat(300);
-                            for (int j = 0; j < 100; j++) //go down until solid tile found
+                            for (int i = 0; i < 5; i++) //spawn trees
                             {
-                                Tile tile = Main.tile[(int)spawnPos.X / 16, (int)spawnPos.Y / 16];
-                                if (tile == null)
-                                    tile = new Tile();
-                                if (tile.nactive() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type]))
-                                    break;
-                                spawnPos.Y += 16;
+                                Vector2 spawnPos = player.Center;
+                                spawnPos.X += Main.rand.NextFloat(-1500, 1500) + player.velocity.X * 75;
+                                spawnPos.Y -= Main.rand.NextFloat(300);
+                                for (int j = 0; j < 100; j++) //go down until solid tile found
+                                {
+                                    Tile tile = Main.tile[(int)spawnPos.X / 16, (int)spawnPos.Y / 16];
+                                    if (tile == null)
+                                        tile = new Tile();
+                                    if (tile.nactive() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type]))
+                                        break;
+                                    spawnPos.Y += 16;
+                                }
+                                for (int j = 0; j < 50; j++) //go up until non-solid tile found
+                                {
+                                    Tile tile = Main.tile[(int)spawnPos.X / 16, (int)spawnPos.Y / 16];
+                                    if (tile == null)
+                                        tile = new Tile();
+                                    if (!(tile.nactive() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type])))
+                                        break;
+                                    spawnPos.Y -= 16;
+                                }
+
+                                const float gravity = 0.2f;
+                                float time = 90f;
+                                Vector2 distance = spawnPos - npc.Center;
+                                distance.X = distance.X / time;
+                                distance.Y = distance.Y / time - 0.5f * gravity * time;
+                                Projectile.NewProjectile(npc.Center, distance, ModContent.ProjectileType<TimberTreeAcorn>(), npc.damage / 4, 0f, Main.myPlayer, npc.target);
+
+                                //spawnPos.Y -= 152; //offset for height of tree
+                                //Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<TimberTree>(), npc.damage / 4, 0f, Main.myPlayer, npc.target);
                             }
-                            for (int j = 0; j < 50; j++) //go up until non-solid tile found
-                            {
-                                Tile tile = Main.tile[(int)spawnPos.X / 16, (int)spawnPos.Y / 16];
-                                if (tile == null)
-                                    tile = new Tile();
-                                if (!(tile.nactive() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type])))
-                                    break;
-                                spawnPos.Y -= 16;
-                            }
-                            spawnPos.Y -= 152; //offset for height of tree
-                            Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<TimberTree>(), npc.damage / 4, 0f, Main.myPlayer, npc.target);
                         }
                     }
 
-                    if (++npc.ai[1] > 300)
+                    if (++npc.ai[1] > 390)
                     {
                         npc.TargetClosest();
                         npc.ai[0]++;
@@ -257,8 +268,11 @@ namespace FargowiltasSouls.NPCs.Champions
                     goto case 0;
 
                 case 7: //chains
-                    targetPos = player.Center + npc.DirectionFrom(player.Center) * 150;
-                    Movement(targetPos, 0.3f, 24f);
+                    targetPos = player.Center + 150 * npc.DirectionFrom(player.Center);
+                    Movement(targetPos, 0.25f, 24f);
+                    if (npc.Distance(player.Center) < 150)
+                        Movement(targetPos, 0.5f, 24f);
+                    npc.position += (player.position - player.oldPosition) / 3;
 
                     if (npc.ai[1] < 240)
                     {
@@ -324,7 +338,7 @@ namespace FargowiltasSouls.NPCs.Champions
                     targetPos = player.Center;
                     targetPos.X += player.velocity.X * 45f;
                     targetPos.Y -= 200;
-                    Movement(targetPos, 0.45f, 32f);
+                    Movement(targetPos, 0.5f, 32f);
                     
                     if (++npc.ai[2] > 5)
                     {
@@ -336,7 +350,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             for (int i = -2; i <= 2; i++)
                             {
                                 Vector2 speed = new Vector2(5f * i, -20f);
-                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<Snowball2>(), damage, 0f, Main.myPlayer, npc.target);
+                                Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<Snowball2>(), damage, 0f, Main.myPlayer, npc.target, npc.whoAmI);
                             }
                         }
                     }

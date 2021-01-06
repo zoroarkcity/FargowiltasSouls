@@ -1513,8 +1513,32 @@ namespace FargowiltasSouls.NPCs.Champions
             Vector2 origin2 = rectangle.Size() / 2f;
             SpriteEffects effects = npc.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Color npcColor = npc.GetAlpha(drawColor);
-            int add = 150;
-            Color glowColor = new Color(add + Main.DiscoR / 3, add + Main.DiscoG / 3, add + Main.DiscoB / 3);
+
+            Color glowColor = new Color(Main.DiscoR / 3 + 150, Main.DiscoG / 3 + 150, Main.DiscoB / 3 + 150);
+            /*Color glowColor = new Color(Main.DiscoR / 3, Main.DiscoG / 3, Main.DiscoB / 3);
+            switch (npc.ai[0])
+            {
+                case -3:
+                    if (npc.ai[3] == 0) goto case 5;
+                    else if (npc.ai[3] == 1) goto case 9;
+                    else if (npc.ai[3] == 2) goto case 13;
+                    else if (npc.ai[3] == 3) goto case 1;
+                    goto default;
+
+                case 0: if (npc.localAI[2] == 0) goto case default; else goto case 1;
+                case 1: glowColor.G += 100; glowColor.B += 150; break;
+
+                case 4: if (npc.localAI[2] == 0) goto case default; else goto case 5;
+                case 5: glowColor.R += 150; glowColor.G += 50; glowColor.B += 50; break;
+
+                case 8: if (npc.localAI[2] == 0) goto case default; else goto case 9;
+                case 9: glowColor.G += 150; glowColor.B += 100; break;
+
+                case 12: if (npc.localAI[2] == 0) goto case default; else goto case 13;
+                case 13: glowColor.R += 125; glowColor.B += 125; break;
+
+                default: glowColor.R += 150; glowColor.G += 150; glowColor.B += 150; break;
+            }*/
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);

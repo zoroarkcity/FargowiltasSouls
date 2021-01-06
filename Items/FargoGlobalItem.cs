@@ -320,6 +320,35 @@ namespace FargowiltasSouls.Items
                 TooltipLine helperLine = new TooltipLine(mod, "help", "Right click to convert");
                 tooltips.Add(helperLine);
             }
+
+            if (FargoSoulsWorld.MasochistMode)
+            {
+                if (item.ammo != AmmoID.None)
+                {
+                    if (item.ammo == AmmoID.Arrow || item.ammo == AmmoID.Bullet || item.ammo == AmmoID.Dart)
+                        tooltips.Add(new TooltipLine(mod, "masoNerf", "[c/ff0000:Eternity Mode:] Contributes 80% less damage to weapons"));
+                    else
+                        tooltips.Add(new TooltipLine(mod, "masoNerf", "[c/ff0000:Eternity Mode:] Contributes 20% less damage to weapons"));
+                }
+
+                if (item.type == ItemID.CrystalBullet || item.type == ItemID.HolyArrow)
+                    tooltips.Add(new TooltipLine(mod, "masoNerf2", "[c/ff0000:Eternity Mode:] Can only split 4 times per second"));
+
+                if (item.type == ItemID.ChlorophyteBullet)
+                    tooltips.Add(new TooltipLine(mod, "masoNerf2", "[c/ff0000:Eternity Mode:] Reduced speed and duration"));
+
+                if (item.type == ItemID.WaterBolt && !NPC.downedBoss3)
+                    tooltips.Add(new TooltipLine(mod, "masoNerf", "[c/ff0000:Eternity Mode:] Cannot be used until Skeletron is defeated"));
+
+                if (item.type >= 1215 && item.type <= 1219) //titanium pieces
+                    tooltips.Add(new TooltipLine(mod, "masoNerf", "[c/ff0000:Eternity Mode:] Shadow Dodge activation will temporarily reduce your damage"));
+
+                if (item.type == ItemID.SpectreHood)
+                    tooltips.Add(new TooltipLine(mod, "masoNerf", "[c/ff0000:Eternity Mode:] Healing orbs move slower and disappear quickly"));
+
+                if (item.type == ItemID.FrozenTurtleShell)
+                    tooltips.Add(new TooltipLine(mod, "masoNerf", "[c/ff0000:Eternity Mode:] Damage reduction is 15% instead of 25%"));
+            }
         }
     }
 }

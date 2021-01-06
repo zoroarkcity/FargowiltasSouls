@@ -450,7 +450,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                     Vector2 speed = Main.rand.NextFloat(1, 2) * Vector2.UnitX.RotatedByRandom(Math.PI * 2);
                                     float ai1 = 60 + Main.rand.Next(30);
                                     Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<SpiritSpirit>(),
-                                        npc.damage / 4, 0f, Main.myPlayer, npc.target, ai1);
+                                        npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, ai1);
                                 }
                             }
                         }
@@ -545,41 +545,44 @@ namespace FargowiltasSouls.NPCs.Champions
                             dust.noGravity = true;
                         }
 
-                        Main.projectile.Where(x => x.active && x.friendly && !x.minion).ToList().ForEach(x => //reflect projectiles
+                        if (npc.ai[1] > 60)
                         {
-                            if (Vector2.Distance(x.Center, npc.Center) <= distance)
+                            Main.projectile.Where(x => x.active && x.friendly && !x.minion).ToList().ForEach(x => //reflect projectiles
                             {
-                                for (int i = 0; i < 5; i++)
+                                if (Vector2.Distance(x.Center, npc.Center) <= distance)
                                 {
-                                    int dustId = Dust.NewDust(x.position, x.width, x.height, 87,
-                                        x.velocity.X * 0.2f, x.velocity.Y * 0.2f, 100, default(Color), 1.5f);
-                                    Main.dust[dustId].noGravity = true;
-                                }
+                                    for (int i = 0; i < 5; i++)
+                                    {
+                                        int dustId = Dust.NewDust(x.position, x.width, x.height, 87,
+                                            x.velocity.X * 0.2f, x.velocity.Y * 0.2f, 100, default(Color), 1.5f);
+                                        Main.dust[dustId].noGravity = true;
+                                    }
 
-                            // Set ownership
-                            x.hostile = true;
-                                x.friendly = false;
-                                x.owner = Main.myPlayer;
-                            x.damage /= 4;
+                                // Set ownership
+                                x.hostile = true;
+                                    x.friendly = false;
+                                    x.owner = Main.myPlayer;
+                                    x.damage /= 4;
 
-                            // Turn around
-                            x.velocity *= -1f;
+                                // Turn around
+                                x.velocity *= -1f;
 
-                            // Flip sprite
-                            if (x.Center.X > npc.Center.X * 0.5f)
-                                {
-                                    x.direction = 1;
-                                    x.spriteDirection = 1;
-                                }
-                                else
-                                {
-                                    x.direction = -1;
-                                    x.spriteDirection = -1;
-                                }
+                                // Flip sprite
+                                if (x.Center.X > npc.Center.X * 0.5f)
+                                    {
+                                        x.direction = 1;
+                                        x.spriteDirection = 1;
+                                    }
+                                    else
+                                    {
+                                        x.direction = -1;
+                                        x.spriteDirection = -1;
+                                    }
 
-                            //x.netUpdate = true;
+                                //x.netUpdate = true;
+                            }
+                            });
                         }
-                        });
 
                         if (npc.ai[1] == 0)
                         {

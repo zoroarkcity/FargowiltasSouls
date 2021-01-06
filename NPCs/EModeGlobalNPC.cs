@@ -799,6 +799,11 @@ namespace FargowiltasSouls.NPCs
                                 Horde(npc, 5);
                             break;
 
+                        case NPCID.ChaosElemental:
+                            if (Main.rand.Next(4) == 0)
+                                Horde(npc, 5);
+                            break;
+
                         case NPCID.GiantTortoise:
                         case NPCID.IceTortoise:
                             if (Main.rand.Next(4) == 0)

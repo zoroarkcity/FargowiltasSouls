@@ -229,10 +229,11 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (npc.Distance(targetPos) > 50)
                             Movement(targetPos, 0.2f, 12f, true);
 
-                        if (++npc.ai[2] > 75)
+                        if (--npc.ai[2] < 0)
                         {
-                            npc.ai[2] = 0;
-                            if (Main.netMode != NetmodeID.MultiplayerClient) //shoot spread of fireballs
+                            npc.ai[2] = 75;
+                            Main.PlaySound(4, npc.Center, 13);
+                            if (npc.ai[1] > 10 && Main.netMode != NetmodeID.MultiplayerClient) //shoot spread of fireballs, but not the first time
                             {
                                 for (int i = -1; i <= 1; i++)
                                 {

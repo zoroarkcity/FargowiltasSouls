@@ -91,3 +91,42 @@ stardust pillar enemies inflict obstructed and blackout instead of frostburn and
 fixed the lightning rod losing damage while held
 refactored cultist ritual positioning code to fix not moving properly during rituals in multiplayer
 made fishron fishron hitboxes bigger
+timber
+	gave damaging acorns trails to help differentiate from acorns used below
+	p2 laser rain makes sparks when its blocked by squrrl head
+	p2 trees are spawned by harmless acorns and no longer give graze
+	p2 chain movement adjusted to reduce chance of contact damage more
+	p2 chains dont give graze until they do damage, have proper graze detection, and slightly less dust
+	p2 snowballs track head's own movement perfectly
+life beetles no longer do damage while spawning
+earth burps fireballs + 1 burp with no fireballs at the start as a sound telegraph
+terra movement heavily adjusted
+	marginally higher base top speed
+	top speed increases to outrun you
+	much better movement when too far away from you so it doesn't take five years to recorrect
+spirit
+	spectre spirit max speed slightly increased and they stop tracking you when the grab attack ends
+	hallowed reflect has a 1 second grace period startup where it doesnt actually reflect
+cosmos vortex lightning buffed back to originally intended rotation speed
+deviantt
+	rain hearts always break at a specific height no matter what
+	axe swing reverted to old movement, but axe spawns hearts slightly earlier so it's not offset below you
+abom saucers briefly pulse closer between attacks, new dust for lasers hitting reticle
+mutant
+	replaced fishron dash in emode p2 with true eyes dash to reduce chance of instagib
+	destroyers move much more aggressively if they're too far from you
+	adjusted reti fan so it's physically offset instead of clearly touching you when spawned
+	reti fan CAN hit you on spawn
+	reti fan slightly more lenient range to avoid primes
+fixed spazmatism not changing colour in phase 3 if triggered during deathray spin until after spin ended
+rune wizard and deviantt aura now actually glows for better visibility
+chaos elemental can horde up to 5 at once
+new emode tooltips for the following vanilla nerfs
+	all ammos
+	crystal bullet and holy arrow
+	chlorophyte bullet
+	water bolt (appears pre skeletron only)
+	titanium armor
+	spectre hood
+	frozen turtle shell
+mild slap on the wrist nerf for hell zone
