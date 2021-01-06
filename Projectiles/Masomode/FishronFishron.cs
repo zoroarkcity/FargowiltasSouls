@@ -13,9 +13,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void SetDefaults()
         {
+            base.SetDefaults();
             projectile.scale *= 0.75f;
-            projectile.hostile = true;
-            projectile.tileCollide = false;
         }
 
         public override bool PreAI()
