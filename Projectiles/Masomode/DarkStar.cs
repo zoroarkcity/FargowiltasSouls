@@ -64,7 +64,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             Lighting.AddLight(projectile.Center, 0.9f, 0.8f, 0.1f);
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.primeBoss, NPCID.SkeletronPrime))
                 target.AddBuff(ModContent.BuffType<NanoInjection>(), 360);

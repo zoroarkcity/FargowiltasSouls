@@ -337,6 +337,7 @@ namespace FargowiltasSouls.Items
                 if (item.type == ItemID.ChlorophyteBullet)
                     tooltips.Add(new TooltipLine(mod, "masoNerf2", "[c/ff0000:Eternity Mode:] Reduced speed and duration"));
 
+
                 if (item.type == ItemID.WaterBolt && !NPC.downedBoss3)
                     tooltips.Add(new TooltipLine(mod, "masoNerf", "[c/ff0000:Eternity Mode:] Cannot be used until Skeletron is defeated"));
 
@@ -348,6 +349,9 @@ namespace FargowiltasSouls.Items
 
                 if (item.type == ItemID.FrozenTurtleShell)
                     tooltips.Add(new TooltipLine(mod, "masoNerf", "[c/ff0000:Eternity Mode:] Damage reduction is 15% instead of 25%"));
+
+                if (item.type == ItemID.VampireKnives)
+                    tooltips.Add(new TooltipLine(mod, "masoNerf2", "[c/ff0000:Eternity Mode:] Reduced chance of lifesteal"));
             }
         }
     }

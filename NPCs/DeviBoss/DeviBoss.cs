@@ -1353,6 +1353,9 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                         npc.netUpdate = true;
 
                         npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
+
+                        if (Math.Sign(targetPos.X - npc.Center.X) != Math.Sign(npc.ai[2]))
+                            npc.velocity.X *= 0.5f; //worse movement if you're behind her
                     }
                     else if (npc.ai[1] < 180)
                     {

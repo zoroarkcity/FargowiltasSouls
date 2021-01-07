@@ -1950,6 +1950,7 @@ namespace FargowiltasSouls.Projectiles
 
                     case ProjectileID.StardustJellyfishSmall:
                     case ProjectileID.StardustSoldierLaser:
+                    case ProjectileID.Twinkle:
                         target.AddBuff(BuffID.Obstructed, 20);
                         target.AddBuff(BuffID.Blackout, 300);
                         break;

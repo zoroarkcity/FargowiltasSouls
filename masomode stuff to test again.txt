@@ -85,7 +85,6 @@ dragon's demise resprite
 skeletron (prime) guardian walls disappear after overlapping
 adjusted spawn/death vfx for guardian-type attacks
 guardian attacks ignore gutted heart creepers
-dark stars inflict corresponding debuffs during prime/twins fights
 nebula pillar enemies inflict berserked and lethargic always
 stardust pillar enemies inflict obstructed and blackout instead of frostburn and squeaky toy
 fixed the lightning rod losing damage while held
@@ -129,4 +128,9 @@ new emode tooltips for the following vanilla nerfs
 	titanium armor
 	spectre hood
 	frozen turtle shell
-mild slap on the wrist nerf for hell zone
+
+hell zone nerfed more
+added emode tooltip for vampire knives nerf
+dark stars inflict corresponding debuffs during prime/twins fights (actually this time)
+fixed twinkle popper twinkles not inflicting debuffs
+adjusted deviantt to have much worse aim when you're behind her
