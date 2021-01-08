@@ -136,3 +136,4 @@ fixed twinkle popper twinkles not inflicting debuffs
 adjusted deviantt to have much worse aim when you're behind her
 
 reduced nano injection debuffs to 10 (was 15)
+all forces must be crafted at crucible (post ml now)
