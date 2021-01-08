@@ -134,3 +134,5 @@ added emode tooltip for vampire knives nerf
 dark stars inflict corresponding debuffs during prime/twins fights (actually this time)
 fixed twinkle popper twinkles not inflicting debuffs
 adjusted deviantt to have much worse aim when you're behind her
+
+reduced nano injection debuffs to 10 (was 15)
