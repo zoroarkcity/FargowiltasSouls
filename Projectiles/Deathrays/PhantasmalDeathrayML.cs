@@ -42,10 +42,23 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             }
             float num801 = 1f;
             projectile.localAI[0] += 1f;
-            if (projectile.localAI[0] > 20 && projectile.localAI[0] < maxTime - 20 && 
-                (Main.player[projectile.owner].ownedProjectileCounts[ProjectileID.PhantasmalDeathray] > 0 || EModeGlobalNPC.masoStateML != 3))
+            if (projectile.localAI[0] > 20 && projectile.localAI[0] < maxTime - 20)
             {
-                projectile.localAI[0] = maxTime - 20;
+                bool skip = false;
+                if (EModeGlobalNPC.masoStateML != 3) //no longer in stardust phase
+                    skip = true;
+                for (int i = 0; i < Main.maxNPCs; i++) //if any eye firing a deathray
+                {
+                    if (Main.npc[i].active && Main.npc[i].type == NPCID.MoonLordFreeEye
+                        && Main.npc[i].ai[0] == 4 && Main.npc[i].ai[1] > 970)
+                    {
+                        skip = true;
+                        break;
+                    }
+                }
+
+                if (skip)
+                    projectile.localAI[0] = maxTime - 20;
             }
             if (projectile.localAI[0] >= maxTime)
             {

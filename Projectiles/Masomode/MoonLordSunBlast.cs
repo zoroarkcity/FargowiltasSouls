@@ -66,8 +66,19 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 }*/
                 if (EModeGlobalNPC.masoStateML == 0)
                 {
+                    bool sustainBlast = true;
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        if (Main.npc[i].active && Main.npc[i].type == NPCID.MoonLordFreeEye
+                            && Main.npc[i].ai[0] == 4 && Main.npc[i].ai[1] > 970)
+                        {
+                            sustainBlast = false;
+                            break;
+                        }
+                    }
+
                     //don't do sustained blasts in one place if deathrays are firing
-                    if (Main.player[projectile.owner].ownedProjectileCounts[ProjectileID.PhantasmalDeathray] <= 0)
+                    if (sustainBlast)
                     {
                         Projectile.NewProjectile(projectile.Center + Main.rand.NextVector2Circular(20, 20), Vector2.Zero, projectile.type,
                         projectile.damage, 0f, projectile.owner, 22, projectile.ai[1] - 1); //22

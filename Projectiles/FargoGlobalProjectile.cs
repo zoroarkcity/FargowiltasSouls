@@ -89,8 +89,7 @@ namespace FargowiltasSouls.Projectiles
                 case ProjectileID.SaucerDeathray:
                 case ProjectileID.SandnadoHostile:
                 case ProjectileID.SandnadoHostileMark:
-                    if (FargoSoulsWorld.MasochistMode)
-                        ImmuneToGuttedHeart = true;
+                    ImmuneToGuttedHeart = true;
                     break;
 
                 case ProjectileID.SpiritHeal:
