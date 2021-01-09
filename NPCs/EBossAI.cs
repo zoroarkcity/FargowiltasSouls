@@ -2467,6 +2467,8 @@ namespace FargowiltasSouls.NPCs
                                     NetUpdateMaso(npc.whoAmI);
                                 }
                             }
+
+                            Counter[0]++;
                         }
                         else
                         {

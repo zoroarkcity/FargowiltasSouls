@@ -163,8 +163,9 @@ destroyer's attacks all inflict brief electrified
 destroyer 10% desperation is real.
 fixed emode ammo nerf tooltip displaying on ammos that had no damage
 
-destroyer desperation DR reduced
 fixed ml p2 nebula not working
 reduced mutant calamity stats to 177M, 720def
 fixed ice queen crown and upgrades not having hypothermia immune
 prime has real visual trails on p2 spin limbs
+
+destroyer desperation DR starts at 100% and degrades to 50% over 10 seconds

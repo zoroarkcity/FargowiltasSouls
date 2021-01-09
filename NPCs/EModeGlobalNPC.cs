@@ -8078,7 +8078,8 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.TheDestroyer:
                         if (npc.life < npc.lifeMax / 10)
                         {
-                            damage /= 2;
+                            float modifier = Math.Min(0.5f, Counter[0] / 600f * 0.5f);
+                            damage = (int)(damage * modifier);
                         }
                         break;
                     case NPCID.TheDestroyerBody:
@@ -8086,7 +8087,8 @@ namespace FargowiltasSouls.NPCs
                         if (npc.realLife > -1 && npc.realLife < Main.maxNPCs && Main.npc[npc.realLife].life > 0 && npc.life > 0
                             && Main.npc[npc.realLife].life < Main.npc[npc.realLife].lifeMax / 10)
                         {
-                            damage /= 2;
+                            float modifier = Math.Min(0.5f, Main.npc[npc.realLife].GetGlobalNPC<EModeGlobalNPC>().Counter[0] / 600f * 0.5f);
+                            damage = (int)(damage * modifier);
                         }
                         break;
 
