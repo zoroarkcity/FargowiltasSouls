@@ -3272,6 +3272,8 @@ namespace FargowiltasSouls.NPCs
                                 Main.dust[d].velocity *= 3f;
                                 Main.dust[d].noGravity = true;
                             }
+
+                            //if (Main.netMode != NetmodeID.MultiplayerClient) Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<PrimeTrail>(), 0, 0f, Main.myPlayer, npc.whoAmI, 0f);
                         }
 
                         npc.damage = 0;
@@ -3312,8 +3314,7 @@ namespace FargowiltasSouls.NPCs
                 }
                 else if (Main.npc[ai1].ai[1] == 1 || Main.npc[ai1].ai[1] == 2) //other limbs while prime spinning
                 {
-                    int d = Dust.NewDust(npc.position, npc.width, npc.height, 112, npc.velocity.X * .4f, npc.velocity.Y * .4f, 0, Color.White, 2);
-                    Main.dust[d].noGravity = true;
+                    //int d = Dust.NewDust(npc.position, npc.width, npc.height, 112, npc.velocity.X * .4f, npc.velocity.Y * .4f, 0, Color.White, 2); Main.dust[d].noGravity = true;
                     if (!masoBool[2]) //AND STRETCH HIS ARMS OUT JUST FOR YOU
                     {
                         Counter[3] = 2; //no damage while moving into position
@@ -3335,6 +3336,9 @@ namespace FargowiltasSouls.NPCs
                         Vector2 target = Main.npc[ai1].Center + offset;
 
                         npc.velocity = (target - npc.Center) / 20;
+
+                        if (Counter[0] == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<PrimeTrail>(), 0, 0f, Main.myPlayer, npc.whoAmI, 1f);
 
                         if (++Counter[0] > 60)
                         {
