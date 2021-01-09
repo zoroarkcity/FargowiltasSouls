@@ -7,7 +7,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
 {
     public class PhantasmalDeathrayML : BaseDeathray
     {
-        public PhantasmalDeathrayML() : base(90, "PhantasmalDeathrayML") { }
+        public PhantasmalDeathrayML() : base(60, "PhantasmalDeathrayML") { }
 
         public override void SetStaticDefaults()
         {

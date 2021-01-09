@@ -1,7 +1,8 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.Deathrays
 {
@@ -12,6 +13,11 @@ namespace FargowiltasSouls.Projectiles.Deathrays
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Phantasmal Deathray II");
+        }
+
+        public override bool CanDamage()
+        {
+            return false;
         }
 
         public override void AI()
@@ -25,7 +31,8 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             if (Main.npc[ai1].active && (Main.npc[ai1].type == NPCID.MoonLordHand || Main.npc[ai1].type == NPCID.MoonLordHead))
             {
                 projectile.Center = Main.npc[ai1].Center;
-                projectile.velocity = Main.npc[ai1].localAI[0].ToRotationVector2();
+                if (projectile.localAI[0] < maxTime - 60)
+                    projectile.velocity = Main.npc[ai1].DirectionTo(Main.player[Main.npc[(int)projectile.ai[0]].target].Center);
             }
             else
             {
@@ -44,6 +51,12 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             projectile.localAI[0] += 1f;
             if (projectile.localAI[0] >= maxTime)
             {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(projectile.Center, projectile.velocity, ModContent.ProjectileType<PhantasmalDeathrayML>(), 
+                        projectile.damage, projectile.knockBack, projectile.owner, 0, projectile.ai[1]);
+                }
+
                 projectile.Kill();
                 return;
             }
