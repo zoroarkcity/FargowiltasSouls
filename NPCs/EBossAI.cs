@@ -5350,13 +5350,13 @@ namespace FargowiltasSouls.NPCs
                                     Projectile.NewProjectile(Main.npc[(int)npc.localAI[0]].Center, Vector2.Zero, ModContent.ProjectileType<MoonLordSun>(),
                                         60, 0f, Main.myPlayer, npc.whoAmI, npc.localAI[0]);
                             }
-                            else if (Counter[2] == 60)
+                            else if (Counter[2] == 30 + 150)
                             {
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                     Projectile.NewProjectile(Main.npc[(int)npc.localAI[1]].Center, Vector2.Zero, ModContent.ProjectileType<MoonLordSun>(),
                                         60, 0f, Main.myPlayer, npc.whoAmI, npc.localAI[1]);
                             }
-                            else if (Counter[2] > 200)
+                            else if (Counter[2] > 300)
                             {
                                 Counter[2] = 0;
                             }

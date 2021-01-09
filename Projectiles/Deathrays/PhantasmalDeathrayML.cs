@@ -1,7 +1,8 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ID;
+using FargowiltasSouls.NPCs;
 
 namespace FargowiltasSouls.Projectiles.Deathrays
 {
@@ -41,7 +42,8 @@ namespace FargowiltasSouls.Projectiles.Deathrays
             }
             float num801 = 1f;
             projectile.localAI[0] += 1f;
-            if (projectile.localAI[0] > 20 && projectile.localAI[0] < maxTime - 20 && Main.player[projectile.owner].ownedProjectileCounts[ProjectileID.PhantasmalDeathray] > 0)
+            if (projectile.localAI[0] > 20 && projectile.localAI[0] < maxTime - 20 && 
+                (Main.player[projectile.owner].ownedProjectileCounts[ProjectileID.PhantasmalDeathray] > 0 || EModeGlobalNPC.masoStateML != 3))
             {
                 projectile.localAI[0] = maxTime - 20;
             }

@@ -171,3 +171,6 @@ prime has real visual trails on p2 spin limbs
 destroyer desperation DR starts at 100% and degrades to 50% over 10 seconds
 destroyer coil lasers die when they overlap in middle (was only in desperation), BUT higher rate now
 ml p2 vortex bolts have slight random variation
+ml core has halved defense to compensate for its DR
+ml suns reworked, now create sustained cross blasts but thrown much slower (not sustained if deathrays are happening)
+fixed projectiles with high extraUpdates giving graze more often
