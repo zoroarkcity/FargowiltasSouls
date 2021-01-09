@@ -149,3 +149,15 @@ moon lord total rework
 	no weakness pulls the arena in close
 	true eyes will never EVER go outside arena
 sparkling adoration adjusted so that it wont generate graze from any modded projs that cant hurt you yet
+
+moon lord
+	sun is a sun instead of a moon
+	sun chain explosion no longer inflicts burning (the sun itself will though)
+	stardust attack now attacks your sides, rays disappear faster if true eyes are also raying
+	much MUCH more spread for phantasmal bolts, you must dodge in between now, homing adjusted
+	reduced accel of p1 spheres slightly
+	increased fall speed of phanteyes so they dont clog up airspace as much
+	slightly more space between true eyes and arena border
+	PHASE 1 HAS THE OLD SUPPORT ATTACKS (slightly nerfed)
+destroyer's attacks all inflict brief electrified
+fixed emode ammo nerf tooltip displaying on ammos that had no damage

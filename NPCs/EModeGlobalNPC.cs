@@ -1367,7 +1367,7 @@ namespace FargowiltasSouls.NPCs
                                 if (Counter[1] > -1 && Counter[1] < Main.maxProjectiles && Main.projectile[Counter[1]].active
                                     && Main.projectile[Counter[1]].type == ModContent.ProjectileType<LunarRitual>() && Main.projectile[Counter[1]].ai[1] == npc.ai[3])
                                 {
-                                    int threshold = (int)Main.projectile[Counter[1]].localAI[0] - 125;
+                                    int threshold = (int)Main.projectile[Counter[1]].localAI[0] - 150;
                                     if (npc.Distance(Main.projectile[Counter[1]].Center) > threshold) //stay within ritual range
                                     {
                                         npc.Center = Main.projectile[Counter[1]].Center + npc.DirectionFrom(Main.projectile[Counter[1]].Center) * threshold;
@@ -5137,6 +5137,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.TheDestroyer:
                     case NPCID.TheDestroyerBody:
                     case NPCID.TheDestroyerTail:
+                        target.AddBuff(BuffID.Electrified, 90);
                         target.AddBuff(ModContent.BuffType<LightningRod>(), 600);
                         break;
 

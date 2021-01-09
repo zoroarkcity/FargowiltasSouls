@@ -34,7 +34,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().ImmuneToMutantBomb = true;
             projectile.penetrate = -1;
 
-            projectile.scale = 0.5f;
+            projectile.scale = 0.75f;
             projectile.alpha = 255;
         }
 
@@ -169,7 +169,13 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
                 if (Main.netMode != NetmodeID.MultiplayerClient) //chain explosions
                 {
-                    const int max = 12;
+                    //perpendicular
+                    /*Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<MoonLordSunBlast>(),
+                        projectile.damage, projectile.knockBack, projectile.owner, projectile.velocity.ToRotation() + MathHelper.PiOver2, 5);
+                    Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<MoonLordSunBlast>(),
+                        projectile.damage, projectile.knockBack, projectile.owner, projectile.velocity.ToRotation() - MathHelper.PiOver2, 5);*/
+
+                    const int max = 12; //spread
                     for (int i = 0; i < max; i++)
                     {
                         Vector2 offset = Main.rand.NextFloat(projectile.width / 4) * Vector2.UnitX.RotatedBy(Math.PI * 2 / max * i);
@@ -203,8 +209,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
             int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
-            Color glow = new Color(Main.DiscoR + 210, Main.DiscoG + 210, Main.DiscoB + 210) * projectile.Opacity;
-            Color glow2 = new Color(Main.DiscoR + 50, Main.DiscoG + 50, Main.DiscoB + 50) * projectile.Opacity;
+            Color glow = new Color(255, Main.DiscoG + 105, Main.DiscoB / 2 + 105) * projectile.Opacity;
+            Color glow2 = new Color(255, Main.DiscoG + 25, Main.DiscoB / 2 + 25) * projectile.Opacity;
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);

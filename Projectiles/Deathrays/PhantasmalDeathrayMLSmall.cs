@@ -8,7 +8,7 @@ namespace FargowiltasSouls.Projectiles.Deathrays
 {
     public class PhantasmalDeathrayMLSmall : BaseDeathray
     {
-        public PhantasmalDeathrayMLSmall() : base(150, "PhantasmalDeathrayML") { }
+        public PhantasmalDeathrayMLSmall() : base(120, "PhantasmalDeathrayML") { }
 
         public override void SetStaticDefaults()
         {
@@ -28,11 +28,14 @@ namespace FargowiltasSouls.Projectiles.Deathrays
                 projectile.velocity = -Vector2.UnitY;
             }
             int ai1 = (int)projectile.ai[1];
-            if (Main.npc[ai1].active && (Main.npc[ai1].type == NPCID.MoonLordHand || Main.npc[ai1].type == NPCID.MoonLordHead))
+            if (Main.npc[ai1].active && (Main.npc[ai1].type == NPCID.MoonLordHand || Main.npc[ai1].type == NPCID.MoonLordHead || Main.npc[ai1].type == NPCID.MoonLordCore))
             {
                 projectile.Center = Main.npc[ai1].Center;
-                if (projectile.localAI[0] < maxTime - 60)
-                    projectile.velocity = Main.npc[ai1].DirectionTo(Main.player[Main.npc[(int)projectile.ai[0]].target].Center);
+                if (projectile.localAI[0] < maxTime - 30)
+                {
+                    int target = Main.npc[ai1].type == NPCID.MoonLordCore ? Main.npc[ai1].target : Main.npc[(int)Main.npc[ai1].ai[3]].target;
+                    projectile.velocity = Main.npc[ai1].DirectionTo(Main.player[target].Center).RotatedBy(projectile.ai[0]);
+                }
             }
             else
             {
