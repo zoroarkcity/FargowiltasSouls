@@ -8075,6 +8075,21 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.EaterofWorldsTail:
                         break;
 
+                    case NPCID.TheDestroyer:
+                        if (npc.life < npc.lifeMax / 10)
+                        {
+                            damage /= 4;
+                        }
+                        break;
+                    case NPCID.TheDestroyerBody:
+                    case NPCID.TheDestroyerTail:
+                        if (npc.realLife > -1 && npc.realLife < Main.maxNPCs && Main.npc[npc.realLife].life > 0 && npc.life > 0
+                            && Main.npc[npc.realLife].life < Main.npc[npc.realLife].lifeMax / 10)
+                        {
+                            damage /= 4;
+                        }
+                        break;
+
                     case NPCID.Golem:
                         damage = (int)(damage * 0.9);
                         break;

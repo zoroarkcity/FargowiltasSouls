@@ -160,4 +160,5 @@ moon lord
 	slightly more space between true eyes and arena border
 	PHASE 1 HAS THE OLD SUPPORT ATTACKS (slightly nerfed)
 destroyer's attacks all inflict brief electrified
+destroyer 10% desperation is real.
 fixed emode ammo nerf tooltip displaying on ammos that had no damage
