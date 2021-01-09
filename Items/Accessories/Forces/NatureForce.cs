@@ -5,7 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Forces
 {
-    public class NatureForce : ModItem
+    public class NatureForce : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -20,7 +20,7 @@ When you are hurt, you violently explode to damage nearby enemies
 Grants immunity to Wet
 A miniature storm will appear after damaging enemies
 Icicles will start to appear around you
-You have a small area around you that will slow projectiles to 2/3 speed
+You have a small area around you that will slow projectiles to 1/2 speed
 Summons a ring of leaf crystals to shoot at nearby enemies
 Jumping will release a lingering spore explosion
 All herb collection is doubled
@@ -58,7 +58,7 @@ Summons several pets
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = 600000;
         }
 

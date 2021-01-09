@@ -1,6 +1,5 @@
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace FargowiltasSouls.Buffs.Masomode
 {
@@ -24,7 +23,7 @@ namespace FargowiltasSouls.Buffs.Masomode
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.bleed = true;
+            player.GetModPlayer<FargoPlayer>().NanoInjection = true;
             player.GetModPlayer<FargoPlayer>().AllDamageUp(-0.15f);
             player.moveSpeed -= 0.15f;
             player.statDefense -= 15;

@@ -8,7 +8,7 @@ using Terraria.ID;
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     //[AutoloadEquip(EquipType.Waist)]
-    public class GladiatorsSoul : ModItem
+    public class GladiatorsSoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -39,10 +39,11 @@ Effects of the Fire Gauntlet and Yoyo Bag
             item.height = 20;
             item.accessory = true;
             item.value = 1000000;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -52,7 +53,7 @@ Effects of the Fire Gauntlet and Yoyo Bag
                 }
             }
         }
-
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.meleeDamage += .3f;
@@ -64,7 +65,7 @@ Effects of the Fire Gauntlet and Yoyo Bag
             {
                 player.magmaStone = true;
             }
-            
+
             player.kbGlove = true;
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.YoyoBag))
@@ -72,7 +73,7 @@ Effects of the Fire Gauntlet and Yoyo Bag
                 player.counterWeight = 556 + Main.rand.Next(6);
                 player.yoyoGlove = true;
                 player.yoyoString = true;
-            }           
+            }
 
             //berserker glove effect, auto swing thing
         }
@@ -89,7 +90,7 @@ Effects of the Fire Gauntlet and Yoyo Bag
             recipe.AddIngredient(ItemID.IceSickle);
             //drippler crippler
             //
-            recipe.AddIngredient(ItemID.ScourgeoftheCorruptor); 
+            recipe.AddIngredient(ItemID.ScourgeoftheCorruptor);
             recipe.AddIngredient(ItemID.Kraken);
             recipe.AddIngredient(ItemID.Flairon);
             recipe.AddIngredient(ItemID.MonkStaffT3);

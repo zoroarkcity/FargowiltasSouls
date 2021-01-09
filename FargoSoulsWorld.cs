@@ -11,7 +11,7 @@ namespace FargowiltasSouls
     // ReSharper disable once ClassNeverInstantiated.Global
     public class FargoSoulsWorld : ModWorld
     {
-        public static bool SwarmActive;
+        public static bool SwarmActive => (bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive");
 
         public static bool downedBetsy;
         private static bool _downedBoss;
@@ -59,8 +59,6 @@ namespace FargowiltasSouls
 
             for (int i = 0; i < downedChampions.Length; i++)
                 downedChampions[i] = false;
-
-            SwarmActive = false;
         }
 
         public override TagCompound Save()
@@ -176,10 +174,19 @@ namespace FargowiltasSouls
 
         public override void PostUpdate()
         {
-            if (!Main.expertMode && MasochistMode)
-                MasochistMode = false;
+            if (MasochistMode)
+            {
+                if (!Main.expertMode)
+                    MasochistMode = false;
 
-            SwarmActive = (bool)ModLoader.GetMod("Fargowiltas").Call("SwarmActive");
+                if (!NPC.downedSlimeKing && !NPC.downedBoss1 && !Main.hardMode //pre boss, disable rain and sandstorm
+                    && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn")))
+                {
+                    Main.raining = false;
+                    Sandstorm.Happening = false;
+                    Sandstorm.TimeLeft = 0;
+                }
+            }
 
             //Main.NewText(BuilderMode);
 

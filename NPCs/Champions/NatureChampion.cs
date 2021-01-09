@@ -6,10 +6,8 @@ using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using FargowiltasSouls.Buffs.Masomode;
+using Terraria.Localization;
 using FargowiltasSouls.Items.Accessories.Enchantments;
-using FargowiltasSouls.Projectiles.Masomode;
-using FargowiltasSouls.Projectiles.Champions;
 
 namespace FargowiltasSouls.NPCs.Champions
 {
@@ -41,6 +39,7 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Nature");
+            DisplayName.AddTranslation(GameCulture.Chinese, "自然英灵");
             Main.npcFrameCount[npc.type] = 14;
         }
 

@@ -28,7 +28,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.scale = 0.5f;
             projectile.alpha = 255;
             projectile.ignoreWater = true;
-            projectile.minion = true;
+            projectile.ranged = true;
         }
 
         public override void AI()

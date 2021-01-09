@@ -105,7 +105,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                             if (projectile.localAI[0] == 1f) //spawn orb ring
                             {
                                 const int max = 6;
-                                const float distance = 100f;
+                                const float distance = 50f;
                                 const float rotation = 2f * (float)Math.PI / max;
                                 for (int i = 0; i < max; i++)
                                 {
@@ -131,7 +131,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                         case 2: //ramming
                             if (projectile.localAI[0] == 1f)
                             {
-                                Main.PlaySound(SoundID.Zombie, (int)projectile.Center.X, (int)projectile.Center.Y, 102, 1f, 0.0f);
+                                Main.PlaySound(SoundID.Zombie, (int)projectile.Center.X, (int)projectile.Center.Y, 102, 0.75f, 0.0f);
                                 projectile.velocity = npc.Center - projectile.Center;
                                 if (projectile.velocity != Vector2.Zero)
                                 {

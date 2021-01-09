@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
-    public class ArchWizardsSoul : ModItem
+    public class ArchWizardsSoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -39,10 +39,10 @@ Effects of Celestial Cuffs and Mana Flower
             item.height = 20;
             item.accessory = true;
             item.value = 1000000;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
         }
-
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override Color? GetAlpha(Color lightColor) => Color.White;
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -83,7 +83,7 @@ Effects of Celestial Cuffs and Mana Flower
             recipe.AddIngredient(ItemID.ApprenticeStaffT3);
             //stellar tune
             recipe.AddIngredient(ItemID.RazorbladeTyphoon);
-            
+
             recipe.AddIngredient(ItemID.BlizzardStaff);
             recipe.AddIngredient(ItemID.LaserMachinegun);
             recipe.AddIngredient(ItemID.LastPrism);

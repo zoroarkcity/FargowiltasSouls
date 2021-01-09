@@ -179,7 +179,7 @@ namespace FargowiltasSouls.Projectiles
         public void OnHit()
         {
             //crystal 
-            Main.PlaySound(0, (int) projectile.position.X, (int) projectile.position.Y);
+            Main.PlaySound(SoundID.Dig, (int) projectile.position.X, (int) projectile.position.Y);
             for (int i = 0; i < 5; i++)
             {
                 int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 68);

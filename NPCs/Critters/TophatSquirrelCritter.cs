@@ -23,7 +23,7 @@ namespace FargowiltasSouls.NPCs.Critters
             npc.defense = 0;
             npc.lifeMax = 100;
             Main.npcCatchable[npc.type] = true;
-            npc.catchItem = (short)mod.ItemType("TophatSquirrelCritter");
+            npc.catchItem = (short)mod.ItemType("TopHatSquirrelCaught");
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
             npc.value = 0f;
@@ -36,8 +36,6 @@ namespace FargowiltasSouls.NPCs.Critters
             aiType = NPCID.Squirrel;
 
             NPCID.Sets.TownCritter[npc.type] = true;
-
-            //npc.closeDoor;
         }
 
         public override void HitEffect(int hitDirection, double damage)

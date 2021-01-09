@@ -5,13 +5,15 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    //[AutoloadEquip(EquipType.Head)]
-    public class IceQueensCrown : ModItem
+    [AutoloadEquip(EquipType.Face)]
+    public class IceQueensCrown : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ice Queen's Crown");
-            Tooltip.SetDefault(@"Grants immunity to Frozen
+            Tooltip.SetDefault(@"Grants immunity to Frozen and Hypothermia
 Increases damage reduction by 5%
 Summons a friendly super Flocko
 'The royal symbol of a defeated foe'");
@@ -27,7 +29,7 @@ Summons a friendly super Flocko
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = Item.sellPrice(0, 6);
             item.defense = 5;
         }

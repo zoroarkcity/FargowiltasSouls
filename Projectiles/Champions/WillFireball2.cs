@@ -24,7 +24,7 @@ namespace FargowiltasSouls.Projectiles.Champions
             projectile.height = 30;
             projectile.aiStyle = -1;
             projectile.hostile = true;
-            projectile.timeLeft = 60;
+            projectile.timeLeft = 40;
             projectile.ignoreWater = true;
             cooldownSlot = 1;
         }
@@ -109,14 +109,14 @@ namespace FargowiltasSouls.Projectiles.Champions
                 projectile.penetrate = -1;
                 projectile.position = projectile.Center;
                 Main.PlaySound(SoundID.Item14, projectile.position);
-                projectile.width = projectile.height = 176;
+                projectile.width = projectile.height = 120;
                 projectile.Center = projectile.position;
-                for (int index1 = 0; index1 < 4; ++index1)
+                for (int index1 = 0; index1 < 2; ++index1)
                 {
                     int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 31, 0.0f, 0.0f, 100, new Color(), 1.5f);
                     Main.dust[index2].position = projectile.Center + Vector2.UnitY.RotatedByRandom(3.14159274101257) * (float)Main.rand.NextDouble() * (float)projectile.width / 2f;
                 }
-                for (int index1 = 0; index1 < 30; ++index1)
+                for (int index1 = 0; index1 < 15; ++index1)
                 {
                     int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0.0f, 0.0f, 200, new Color(), 3.7f);
                     Main.dust[index2].position = projectile.Center + Vector2.UnitY.RotatedByRandom(3.14159274101257) * (float)Main.rand.NextDouble() * (float)projectile.width / 2f;
@@ -130,7 +130,7 @@ namespace FargowiltasSouls.Projectiles.Champions
                     Main.dust[index3].noGravity = true;
                     Main.dust[index3].fadeIn = 2.5f;
                 }
-                for (int index1 = 0; index1 < 10; ++index1)
+                for (int index1 = 0; index1 < 5; ++index1)
                 {
                     int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0.0f, 0.0f, 0, new Color(), 2.7f);
                     Main.dust[index2].position = projectile.Center + Vector2.UnitX.RotatedByRandom(3.14159274101257).RotatedBy((double)projectile.velocity.ToRotation(), new Vector2()) * (float)projectile.width / 2f;
@@ -138,22 +138,13 @@ namespace FargowiltasSouls.Projectiles.Champions
                     Dust dust = Main.dust[index2];
                     dust.velocity = dust.velocity * 3f;
                 }
-                for (int index1 = 0; index1 < 10; ++index1)
+                for (int index1 = 0; index1 < 5; ++index1)
                 {
                     int index2 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 31, 0.0f, 0.0f, 0, new Color(), 1.5f);
                     Main.dust[index2].position = projectile.Center + Vector2.UnitX.RotatedByRandom(3.14159274101257).RotatedBy((double)projectile.velocity.ToRotation(), new Vector2()) * (float)projectile.width / 2f;
                     Main.dust[index2].noGravity = true;
                     Dust dust = Main.dust[index2];
                     dust.velocity = dust.velocity * 3f;
-                }
-                for (int index1 = 0; index1 < 2; ++index1)
-                {
-                    int index2 = Gore.NewGore(projectile.position + new Vector2((float)(projectile.width * Main.rand.Next(100)) / 100f, (float)(projectile.height * Main.rand.Next(100)) / 100f) - Vector2.One * 10f, new Vector2(), Main.rand.Next(61, 64), 1f);
-                    Main.gore[index2].position = projectile.Center + Vector2.UnitY.RotatedByRandom(3.14159274101257) * (float)Main.rand.NextDouble() * (float)projectile.width / 2f;
-                    Gore gore = Main.gore[index2];
-                    gore.velocity = gore.velocity * 0.3f;
-                    Main.gore[index2].velocity.X += (float)Main.rand.Next(-10, 11) * 0.05f;
-                    Main.gore[index2].velocity.Y += (float)Main.rand.Next(-10, 11) * 0.05f;
                 }
             }
         }

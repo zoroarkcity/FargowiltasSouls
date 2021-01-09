@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class SpiderEnchant : ModItem
+    public class SpiderEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -27,7 +27,7 @@ Summons a pet Spider
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -44,7 +44,7 @@ Summons a pet Spider
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 6;
+            item.rare = ItemRarityID.LightPurple;
             item.value = 150000;
         }
 
@@ -66,7 +66,7 @@ Summons a pet Spider
             //rainbow string
             //fried egg
             recipe.AddIngredient(ItemID.SpiderEgg);
-            
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

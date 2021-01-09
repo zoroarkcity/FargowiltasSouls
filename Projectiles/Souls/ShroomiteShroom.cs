@@ -1,10 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace FargowiltasSouls.Projectiles.Masomode
+namespace FargowiltasSouls.Projectiles.Souls
 {
     public class ShroomiteShroom : ModProjectile
     {
@@ -21,6 +19,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
             aiType = ProjectileID.Mushroom;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
 
+            projectile.melee = false;
+            projectile.ranged = true;
             projectile.usesIDStaticNPCImmunity = true;
             projectile.idStaticNPCHitCooldown = 20;
         }

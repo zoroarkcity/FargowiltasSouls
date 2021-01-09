@@ -27,13 +27,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void AI()
         {
-            projectile.position += projectile.velocity * 0.5f;
+            //projectile.position += projectile.velocity * 0.5f;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffID.Venom, 600);
-            target.immune[projectile.owner] = 8;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

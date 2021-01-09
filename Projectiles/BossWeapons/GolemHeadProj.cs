@@ -21,7 +21,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void AI()
         {
             const int aislotHomingCooldown = 0;
-            const int homingDelay = 10;
+            const int homingDelay = 15;
             const float desiredFlySpeedInPixelsPerFrame = 60;
             const float amountOfFramesToLerpBy = 30; // minimum of 1, please keep in full numbers even though it's a float!
 
@@ -45,7 +45,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         private int HomeOnTarget()
         {
             const bool homingCanAimAtWetEnemies = true;
-            const float homingMaximumRangeInPixels = 2000;
+            const float homingMaximumRangeInPixels = 600;
 
             int selectedTarget = -1;
             for (int i = 0; i < Main.maxNPCs; i++)

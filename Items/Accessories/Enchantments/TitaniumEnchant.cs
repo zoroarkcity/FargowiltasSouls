@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class TitaniumEnchant : ModItem
+    public class TitaniumEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,12 +16,12 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"Briefly become invulnerable after striking an enemy
 'Hit me with your best shot'");
             DisplayName.AddTranslation(GameCulture.Chinese, "钛金魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'Hit Me With Your Best Shot(歌名)'
 在攻击敌人后的瞬间无敌");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -38,7 +38,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 100000;
         }
 

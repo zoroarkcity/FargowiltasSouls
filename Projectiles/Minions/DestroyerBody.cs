@@ -3,12 +3,15 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Projectiles.Minions
 {
     public class DestroyerBody : ModProjectile
     {
+        public int attackTimer;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Destroyer Body");
@@ -118,6 +121,35 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.Center = projectile.position;
             if (vector134 != Vector2.Zero) projectile.Center = value67 - Vector2.Normalize(vector134) * 36;
             projectile.spriteDirection = vector134.X > 0f ? 1 : -1;
+
+            if (--attackTimer <= 0)
+            {
+                attackTimer = Main.rand.Next(150) + 150;
+            }
+
+            if (attackTimer == 1)
+            {
+                if (projectile.owner == Main.myPlayer)
+                {
+                    int selectedTarget = -1; //pick target
+                    const float maxRange = 750f;
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        if (Main.npc[i].CanBeChasedBy(projectile) && Collision.CanHit(projectile.Center, 0, 0, Main.npc[i].Center, 0, 0))
+                        {
+                            if (projectile.Distance(Main.npc[i].Center) <= maxRange && Main.rand.Next(2) == 0) //random because destroyer
+                                selectedTarget = i;
+                        }
+                    }
+
+                    if (selectedTarget != -1) //shoot
+                    {
+                        Projectile.NewProjectile(projectile.Center, 10f * projectile.DirectionTo(Main.npc[selectedTarget].Center),
+                            ProjectileID.MiniRetinaLaser, projectile.damage, projectile.knockBack, projectile.owner);
+                        Main.PlaySound(SoundID.Item12, projectile.Center);
+                    }
+                }
+            }
         }
 
         public override void Kill(int timeLeft)

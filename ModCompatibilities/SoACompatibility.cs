@@ -1,7 +1,4 @@
-﻿using SacredTools.Items.Armor.Asthraltite;
-using SacredTools.Items.Armor.Dragon;
-using Terraria;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 
 namespace FargowiltasSouls.ModCompatibilities
 {

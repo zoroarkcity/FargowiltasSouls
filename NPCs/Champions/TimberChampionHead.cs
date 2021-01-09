@@ -5,7 +5,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using FargowiltasSouls.Items.Accessories.Enchantments;
-using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -17,6 +16,7 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Timber");
+            DisplayName.AddTranslation(GameCulture.Chinese, "木英灵");
             Main.npcFrameCount[npc.type] = 3;
             NPCID.Sets.TrailCacheLength[npc.type] = 6;
             NPCID.Sets.TrailingMode[npc.type] = 1;
@@ -28,7 +28,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.height = 76;
             npc.damage = 130;
             npc.defense = 50;
-            npc.lifeMax = 270000;
+            npc.lifeMax = 240000;
             npc.HitSound = SoundID.NPCHit7;
             npc.DeathSound = SoundID.NPCDeath1;
             npc.noGravity = true;

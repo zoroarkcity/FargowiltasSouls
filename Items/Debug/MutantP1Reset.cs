@@ -1,28 +1,26 @@
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Debug
 {
-	public class MutantP1Reset : ModItem
-	{
+    public class MutantP1Reset : SoulsItem
+    {
         public override string Texture => "FargowiltasSouls/Items/Placeholder";
 
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Mutant P1 Reset");
+        {
+            DisplayName.SetDefault("Mutant P1 Reset");
             Tooltip.SetDefault(@"Makes Mutant forget you have defeated his first phase
 Results not guaranteed in multiplayer
 You probably shouldn't be reading this...");
-		}
+        }
 
-		public override void SetDefaults()
-		{
+        public override void SetDefaults()
+        {
             item.width = 20;
             item.height = 20;
-            item.rare = 1;
-            item.useStyle = 4;
+            item.rare = ItemRarityID.Blue;
+            item.useStyle = ItemUseStyleID.HoldingUp;
             item.useAnimation = 45;
             item.useTime = 45;
             item.consumable = true;

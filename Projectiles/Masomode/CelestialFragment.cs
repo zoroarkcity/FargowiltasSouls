@@ -22,7 +22,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.hostile = true;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
-            projectile.timeLeft = 300;
+            projectile.timeLeft = 420;
             cooldownSlot = 1;
         }
 
@@ -71,8 +71,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            target.AddBuff(mod.BuffType("Hexed"), 120);
-            target.AddBuff(mod.BuffType("CurseoftheMoon"), 360);
+            target.AddBuff(mod.BuffType("MarkedForDeath"), 300);
+            target.AddBuff(mod.BuffType("CurseoftheMoon"), 300);
             switch ((int)projectile.ai[0])
             {
                 case 0: target.AddBuff(mod.BuffType("ReverseManaFlow"), 180); break; //nebula

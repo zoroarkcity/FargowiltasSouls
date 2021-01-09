@@ -1,5 +1,4 @@
-﻿using Fargowiltas.Items.Tiles;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -7,30 +6,30 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class OpticStaffEX : ModItem
+    public class OpticStaffEX : SoulsItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Optic Staff EX");
+            DisplayName.SetDefault("Omniscience Staff");
             Tooltip.SetDefault("Summons the real twins to fight for you\nNeeds 4 minion slots\nMinions do reduced damage when not holding a summon weapon\n'The reward for slaughtering many...'");
             ItemID.Sets.StaffMinionSlotsRequired[item.type] = 4;
         }
 
         public override void SetDefaults()
         {
-            item.damage = 260;
+            item.damage = 265;
             item.mana = 10;
             item.summon = true;
             item.width = 24;
             item.height = 24;
             item.useAnimation = 37;
             item.useTime = 37;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.noMelee = true;
             item.knockBack = 3f;
             item.UseSound = SoundID.Item82;
             item.value = Item.sellPrice(0, 25);
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.buffType = mod.BuffType("TwinsEX");
             item.shoot = mod.ProjectileType("OpticRetinazer");
             item.shootSpeed = 10f;

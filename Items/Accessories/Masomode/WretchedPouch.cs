@@ -5,8 +5,11 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class WretchedPouch : ModItem
+    [AutoloadEquip(EquipType.Waist)]
+    public class WretchedPouch : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Wretched Pouch");
@@ -25,7 +28,7 @@ You erupt into Shadowflame tentacles when injured
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
         }
 

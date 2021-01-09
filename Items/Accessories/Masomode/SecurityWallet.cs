@@ -1,19 +1,19 @@
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class SecurityWallet : ModItem
+    public class SecurityWallet : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Security Wallet");
             Tooltip.SetDefault(@"Grants immunity to Midas and enemies that steal items
-Prevents you from reforging items with certain modifiers
-Protected modifiers can be chosen in the toggles menu
 50% discount on reforges
-'Results not guaranteed in multiplayer'");
+'Not secure against being looted off of one's corpse'");
             DisplayName.AddTranslation(GameCulture.Chinese, "安全钱包");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'无法保证在多人游戏中的效果'
 免疫点金手和偷取物品的敌人
@@ -27,7 +27,7 @@ Protected modifiers can be chosen in the toggles menu
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = Item.sellPrice(0, 4);
         }
 

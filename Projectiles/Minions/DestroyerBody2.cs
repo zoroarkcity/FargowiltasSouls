@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -10,6 +10,8 @@ namespace FargowiltasSouls.Projectiles.Minions
     public class DestroyerBody2 : ModProjectile
     {
         public override string Texture => "Terraria/NPC_135";
+
+        public int attackTimer;
 
         public override void SetStaticDefaults()
         {
@@ -46,7 +48,7 @@ namespace FargowiltasSouls.Projectiles.Minions
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * projectile.Opacity;
+            return lightColor;
         }
 
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles,
@@ -58,11 +60,17 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture2D13 = Main.projectileTexture[projectile.type];
+            Texture2D glow = mod.GetTexture("Projectiles/Minions/DestroyerBody2_glow");
             int num214 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type];
             int y6 = num214 * projectile.frame;
+            Color color25 = Lighting.GetColor((int)(projectile.Center.X / 16), (int)(projectile.Center.Y / 16));
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Rectangle(0, y6, texture2D13.Width, num214),
-                projectile.GetAlpha(Color.White), projectile.rotation, new Vector2(texture2D13.Width / 2f, num214 / 2f), projectile.scale,
+                color25, projectile.rotation, new Vector2(texture2D13.Width / 2f, num214 / 2f), projectile.scale,
                 projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            Main.spriteBatch.Draw(glow, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Rectangle(0, y6, texture2D13.Width, num214),
+                Color.White, projectile.rotation, new Vector2(texture2D13.Width / 2f, num214 / 2f), projectile.scale,
+                projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+
             return false;
         }
 
@@ -122,6 +130,34 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.Center = projectile.position;
             if (vector134 != Vector2.Zero) projectile.Center = value67 - Vector2.Normalize(vector134) * 36;
             projectile.spriteDirection = vector134.X > 0f ? 1 : -1;
+
+            if (--attackTimer <= 0)
+            {
+                attackTimer = Main.rand.Next(90) + 90;
+            }
+
+            if (attackTimer == 1)
+            {
+                if (projectile.owner == Main.myPlayer)
+                {
+                    int selectedTarget = -1; //pick target
+                    const float maxRange = 750f;
+                    for (int i = 0; i < Main.maxNPCs; i++)
+                    {
+                        if (Main.npc[i].CanBeChasedBy(projectile) && Collision.CanHit(projectile.Center, 0, 0, Main.npc[i].Center, 0, 0))
+                        {
+                            if (projectile.Distance(Main.npc[i].Center) <= maxRange && Main.rand.Next(2) == 0) //random because destroyer
+                                selectedTarget = i;
+                        }
+                    }
+
+                    if (selectedTarget != -1) //shoot
+                    {
+                        Projectile.NewProjectile(projectile.Center, projectile.DirectionTo(Main.npc[selectedTarget].Center).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)),
+                            ModContent.ProjectileType<DarkStarHomingFriendly>(), projectile.damage, projectile.knockBack, projectile.owner, selectedTarget);
+                    }
+                }
+            }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -142,6 +178,8 @@ namespace FargowiltasSouls.Projectiles.Minions
                     -projectile.velocity.Y * 0.2f, 100);
                 Main.dust[dust].velocity *= 2f;
             }
+            int g = Gore.NewGore(projectile.Center, projectile.velocity / 2, mod.GetGoreSlot("Gores/DestroyerGun/DestroyerGunEXBody"), projectile.scale);
+            Main.gore[g].timeLeft = 20;
         }
     }
 }

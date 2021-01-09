@@ -1,11 +1,13 @@
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class ReinforcedPlating : ModItem
+    public class ReinforcedPlating : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Reinforced Plating");
@@ -23,7 +25,7 @@ Reduces damage taken by 5%
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 6;
+            item.rare = ItemRarityID.LightPurple;
             item.value = Item.sellPrice(0, 4);
             item.defense = 15;
         }

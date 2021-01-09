@@ -3,20 +3,21 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    [AutoloadEquip(/*EquipType.Head, */EquipType.Front, EquipType.Back)]
-    public class HeartoftheMasochist : ModItem
+    [AutoloadEquip(EquipType.Face, EquipType.Front, EquipType.Back)]
+    public class HeartoftheMasochist : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Heart of the Eternal");
-            Tooltip.SetDefault(@"Grants immunity to Living Wasteland, Frozen, Oozed, Withered Weapon, and Withered Armor
+            Tooltip.SetDefault(@"Grants immunity to Living Wasteland, Frozen, Hypothermia, Oozed, Withered Weapon, and Withered Armor
 Grants immunity to Feral Bite, Mutant Nibble, Flipped, Unstable, Distorted, and Curse of the Moon
 Grants immunity to Wet, Electrified, Oceanic Maul, Moon Leech, Nullification Curse, and water debuffs
-Increases damage, critical strike chance, and damage reduction by 5%, 
+Increases damage, critical strike chance, and damage reduction by 5%,
 Increases flight time by 100%
 You may periodically fire additional attacks depending on weapon type
 Your critical strikes inflict Rotting and Betsy's Curse
@@ -44,7 +45,7 @@ Summons a friendly super Flocko, Mini Saucer, and true eyes of Cthulhu
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = Item.sellPrice(0, 9);
             item.defense = 10;
         }

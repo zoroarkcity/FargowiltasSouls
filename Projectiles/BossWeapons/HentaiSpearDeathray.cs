@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
 
@@ -58,7 +57,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
             if (projectile.localAI[0] == 0f)
             {
-                Main.PlaySound(SoundID.Item12, projectile.Center);
+                if (!Main.dedServ)
+                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Zombie_104").WithVolume(0.6f), projectile.Center);
+                //Main.PlaySound(SoundID.Item12, projectile.Center);
                 //Main.PlaySound(SoundID.NPCKilled, (int)projectile.Center.X, (int)projectile.Center.Y, 6, 1f, 0.0f);
             }
             float num801 = .5f;
@@ -128,7 +129,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.position -= projectile.velocity;
             projectile.rotation = projectile.velocity.ToRotation() - 1.57079637f;
 
-            const int increment = 100;
+            /*const int increment = 100;
             for (int i = 0; i < array3[0]; i += increment)
             {
                 if (Main.rand.Next(3) != 0)
@@ -142,7 +143,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     projectile.width, projectile.height, 229, 0f, 0f, 0, default(Color), 1.5f);
                 Main.dust[d].noGravity = true;
                 Main.dust[d].velocity *= 4.5f;
-            }
+            }*/
 
             if (++projectile.frameCounter > 3)
             {

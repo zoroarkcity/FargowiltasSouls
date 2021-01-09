@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -8,7 +7,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Summons
 {
-    public class MutantsCurse : ModItem
+    public class MutantsCurse : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,20 +16,21 @@ namespace FargowiltasSouls.Items.Summons
             DisplayName.AddTranslation(GameCulture.Chinese, "突变体的诅咒");
             Tooltip.AddTranslation(GameCulture.Chinese, "'至少不需要用娃娃了'");
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(3, 11));
+            NumFrames = 11;
         }
 
         public override void SetDefaults()
         {
-            item.width = 20;
-            item.height = 20;
-            item.rare = 11;
+            item.width = 52;
+            item.height = 52;
+            item.rare = ItemRarityID.Purple;
             item.maxStack = 999;
             item.useAnimation = 30;
             item.useTime = 30;
-            item.useStyle = 4;
+            item.useStyle = ItemUseStyleID.HoldingUp;
+            ItemID.Sets.ItemNoGravity[item.type] = true;
             item.consumable = true;
             item.value = Item.buyPrice(1);
-
             item.noUseGraphic = true;
         }
 
@@ -52,17 +52,6 @@ namespace FargowiltasSouls.Items.Summons
             }
 
             return true;
-        }
-
-        public override void ModifyTooltips(List<TooltipLine> list)
-        {
-            foreach (TooltipLine line2 in list)
-            {
-                if (line2.mod == "Terraria" && line2.Name == "ItemName")
-                {
-                    line2.overrideColor = new Color(Main.DiscoR, 51, 255 - (int)(Main.DiscoR * 0.4));
-                }
-            }
         }
     }
 }

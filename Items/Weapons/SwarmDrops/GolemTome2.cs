@@ -2,38 +2,41 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
+using System.Collections.Generic;
+using System.Linq;
+using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class GolemTome2 : ModItem
+    public class GolemTome2 : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Landslide");
             Tooltip.SetDefault("'The reward for slaughtering many...'");
+
             DisplayName.AddTranslation(GameCulture.Chinese, "山崩 EX");
             Tooltip.AddTranslation(GameCulture.Chinese, "'屠戮众多的奖励'");
         }
 
         public override void SetDefaults()
         {
-            item.damage = 275;//
+            item.damage = 255;
             item.magic = true;
             item.width = 24;
             item.height = 28;
-            item.useTime = 60;//
-            item.useAnimation = 60;//
-            item.useStyle = 5;
+            item.useTime = 60;
+            item.useAnimation = 60;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 2;
             item.value = Item.sellPrice(0, 25);
-            item.rare = 11;//
-            item.mana = 24;//
-            item.UseSound = SoundID.Item21;//
+            item.rare = ItemRarityID.Purple;
+            item.mana = 24;
+            item.UseSound = SoundID.Item21;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("GolemHeadProj");
-            item.shootSpeed = 20f;//
+            item.shootSpeed = 20f;
         }
 
         public override void AddRecipes()

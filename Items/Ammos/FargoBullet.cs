@@ -1,13 +1,12 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Ammos
 {
-    public class FargoBullet : ModItem
+    public class FargoBullet : SoulsItem
     {
-        Mod fargos = ModLoader.GetMod("Fargowiltas");
+        private Mod fargos = ModLoader.GetMod("Fargowiltas");
 
         public override bool Autoload(ref string name)
         {
@@ -36,9 +35,9 @@ namespace FargowiltasSouls.Items.Ammos
             item.width = 26;
             item.height = 26;
             item.knockBack = 4f; //same as explosive
-            item.rare = 10;
+            item.rare = ItemRarityID.Red;
             item.shoot = mod.ProjectileType("FargoBulletProj");
-            item.shootSpeed = 15f; // same as high velocity bullets                 
+            item.shootSpeed = 15f; // same as high velocity bullets
             item.ammo = AmmoID.Bullet;
         }
 

@@ -7,8 +7,8 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class RainEnchant : ModItem
-    {        
+    public class RainEnchant : SoulsItem
+    {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rain Enchantment");
@@ -21,7 +21,7 @@ At maximum size, attacks will turn into lightning bolts
             DisplayName.AddTranslation(GameCulture.Chinese, "云雨魔石");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -38,7 +38,7 @@ At maximum size, attacks will turn into lightning bolts
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 6;
+            item.rare = ItemRarityID.LightPurple;
             item.value = 150000;
         }
 

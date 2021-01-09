@@ -4,16 +4,18 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
+using System.Linq;
+using FargowiltasSouls.Utilities;
 
 namespace FargowiltasSouls.Items.Weapons.SwarmDrops
 {
-    public class GuardianTome : ModItem
+    public class GuardianTome : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Guardian");
             Tooltip.SetDefault("'It's their turn to run'");
+
             DisplayName.AddTranslation(GameCulture.Chinese, "守卫者");
             Tooltip.AddTranslation(GameCulture.Chinese, "现在轮到他们跑了");
         }
@@ -26,28 +28,23 @@ namespace FargowiltasSouls.Items.Weapons.SwarmDrops
             item.height = 28;
             item.useTime = 50;
             item.useAnimation = 50;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.useTurn = true;
             item.noMelee = true;
             item.knockBack = 2;
             item.value = Item.sellPrice(0, 70);
-            item.rare = 11; //
-            item.mana = 100; //           
-            item.UseSound = SoundID.Item21; //
+            item.rare = ItemRarityID.Purple;
+            item.mana = 100;
+            item.UseSound = SoundID.Item21;
             item.autoReuse = true;
             item.shoot = mod.ProjectileType("DungeonGuardian");
             item.shootSpeed = 18f;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> tooltips)
         {
-            foreach (TooltipLine line2 in list)
-            {
-                if (line2.mod == "Terraria" && line2.Name == "ItemName")
-                {
-                    line2.overrideColor = new Color(255, Main.DiscoG, 0);
-                }
-            }
+            TooltipLine tooltipItemNameLine = tooltips.FirstOrDefault(line => line.Name == "ItemName" && line.mod == "Terraria");
+            tooltipItemNameLine.overrideColor = new Color(255, Main.DiscoG, 0);
         }
 
         public override void AddRecipes()

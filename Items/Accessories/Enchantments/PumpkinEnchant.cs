@@ -7,26 +7,26 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class PumpkinEnchant : ModItem
+    public class PumpkinEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pumpkin Enchantment");
             Tooltip.SetDefault(
 @"You will grow pumpkins while walking on the ground
-When fully grown, they will heal 15 HP
+When fully grown, they will heal 25 HP and spawn damaging embers
 Enemies that touch them will destroy them and take damage
 Summons a pet Squashling
 'Your sudden pumpkin craving will never be satisfied'");
             DisplayName.AddTranslation(GameCulture.Chinese, "南瓜魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'你对南瓜的突发渴望永远不会得到满足'
 走路时会留下一道火焰路径
 南瓜派会使你回满血, 并获得3分钟的抗药性
 召唤一个宠物南瓜娃娃");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -43,7 +43,7 @@ Summons a pet Squashling
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.value = 20000;
         }
 
@@ -65,7 +65,7 @@ Summons a pet Squashling
             recipe.AddIngredient(ItemID.PumpkinPie);
             //jack o lantern
             recipe.AddIngredient(ItemID.MagicalPumpkinSeed);
-            
+
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();

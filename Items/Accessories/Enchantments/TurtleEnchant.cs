@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class TurtleEnchant : ModItem
+    public class TurtleEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -19,9 +19,9 @@ Taking 10 hits will break your shell
 100% of contact damage is reflected
 Enemies may explode into needles on death
 Summons a pet Lizard and Turtle
-'You suddenly have the urge to hide in a shell'"); 
+'You suddenly have the urge to hide in a shell'");
             DisplayName.AddTranslation(GameCulture.Chinese, "乌龟魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'你突然有一种想躲进壳里的冲动'
 当站立不动且不攻击时,获得缩壳Buff
 缩壳能阻挡所有抛射物,但是增加接触伤害
@@ -30,7 +30,7 @@ Summons a pet Lizard and Turtle
 召唤一只宠物蜥蜴和宠物海龟");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -47,7 +47,7 @@ Summons a pet Lizard and Turtle
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = 250000;
         }
 
@@ -73,7 +73,7 @@ Summons a pet Lizard and Turtle
             //jungle turtle
             recipe.AddIngredient(ItemID.Seaweed);
             recipe.AddIngredient(ItemID.LizardEgg);
-            
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

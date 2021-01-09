@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -10,8 +9,10 @@ using FargowiltasSouls.Buffs.Masomode;
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
     [AutoloadEquip(/*EquipType.Head, */EquipType.Front, EquipType.Back, EquipType.Shield)]
-    public class MasochistSoul : ModItem
+    public class MasochistSoul : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Soul of the Siblings");
@@ -20,7 +21,7 @@ namespace FargowiltasSouls.Items.Accessories.Souls
 Increases max life by 100%, damage by 50%, and damage reduction by 10%
 Increases life regen drastically, increases max number of minions and sentries by 10
 Grants gravity control, fastfall, and immunity to knockback, almost all Eternity Mode debuffs, and more
-Grants autofire to all weapons, modifier protection, and you automatically use mana potions when needed
+Grants autofire to all weapons and you automatically use mana potions when needed
 Makes armed and magic skeletons less hostile outside the Dungeon, zoom with right click
 Your attacks create additional attacks, hearts, and inflict a cocktail of Eternity Mode debuffs
 Press the Fireball Dash key to perform a short invincible dash
@@ -31,7 +32,7 @@ Summons the aid of all Eternity Mode bosses to your side
 'Embrace eternity'");
 
             DisplayName.AddTranslation(GameCulture.Chinese, "受虐之魂");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'要制造痛苦,首先必须接受它'
 增加200%飞行时间, 50点护甲穿透, 20%移动速度
 增加100%最大生命值, 50%伤害, 10%伤害减免
@@ -50,12 +51,12 @@ Summons the aid of all Eternity Mode bosses to your side
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = 5000000;
             item.defense = 30;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine line2 in list)
             {
@@ -77,10 +78,10 @@ Summons the aid of all Eternity Mode bosses to your side
             fargoPlayer.TribalCharm = true;
             fargoPlayer.NymphsPerfumeRespawn = true;
             player.nightVision = true;
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot, false))
                 player.scope = true;
         }
-
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
@@ -103,9 +104,14 @@ Summons the aid of all Eternity Mode bosses to your side
 
             //slimy shield
             player.buffImmune[BuffID.Slimed] = true;
+
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SlimyFalling))
+            {
+                player.maxFallSpeed *= 1.5f;
+            }
+
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SlimyShield))
             {
-                player.maxFallSpeed *= 2f;
                 fargoPlayer.SlimyShield = true;
             }
 
@@ -212,7 +218,7 @@ Summons the aid of all Eternity Mode bosses to your side
 
             //carrot
             player.nightVision = true;
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.Carrot, false))
                 player.scope = true;
 
             //squeaky toy

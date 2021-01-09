@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.ID;
@@ -12,6 +13,8 @@ namespace FargowiltasSouls.Projectiles.Minions
         public override string Texture => "Terraria/NPC_134";
 
         public float modifier;
+        private int syncTimer;
+        private Vector2 mousePos;
 
         public override void SetStaticDefaults()
         {
@@ -39,6 +42,9 @@ namespace FargowiltasSouls.Projectiles.Minions
             writer.Write(projectile.localAI[0]);
             writer.Write(projectile.localAI[1]);
             writer.Write(modifier);
+
+            writer.Write(mousePos.X);
+            writer.Write(mousePos.Y);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -46,26 +52,58 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.localAI[0] = reader.ReadSingle();
             projectile.localAI[1] = reader.ReadSingle();
             modifier = reader.ReadSingle();
+
+            Vector2 buffer;
+            buffer.X = reader.ReadSingle();
+            buffer.Y = reader.ReadSingle();
+            if (projectile.owner != Main.myPlayer)
+            {
+                mousePos = buffer;
+            }
+        }
+
+        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles,
+           List<int> drawCacheProjsOverWiresUI)
+        {
+            drawCacheProjsBehindProjectiles.Add(index);
         }
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White;
+            return lightColor;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture2D13 = Main.projectileTexture[projectile.type];
+            Texture2D glow = mod.GetTexture("Projectiles/Minions/DestroyerHead2_glow");
             int num214 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type];
             int y6 = num214 * projectile.frame;
+            Color color25 = Lighting.GetColor((int)(projectile.Center.X / 16), (int)(projectile.Center.Y / 16));
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Rectangle(0, y6, texture2D13.Width, num214),
-                projectile.GetAlpha(Color.White), projectile.rotation, new Vector2(texture2D13.Width / 2f, num214 / 2f), projectile.scale,
+                color25, projectile.rotation, new Vector2(texture2D13.Width / 2f, num214 / 2f), projectile.scale,
+                projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            Main.spriteBatch.Draw(glow, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Rectangle(0, y6, texture2D13.Width, num214),
+                Color.White, projectile.rotation, new Vector2(texture2D13.Width / 2f, num214 / 2f), projectile.scale,
                 projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             return false;
         }
 
         public override void AI()
         {
+            Player player = Main.player[projectile.owner];
+
+            if (player.whoAmI == Main.myPlayer)
+            {
+                mousePos = Main.MouseWorld;
+
+                if (++syncTimer > 20)
+                {
+                    syncTimer = 0;
+                    projectile.netUpdate = true;
+                }
+            }
+
             if (projectile.localAI[0] == 0)
             {
                 projectile.localAI[0] = 1;
@@ -111,17 +149,23 @@ namespace FargowiltasSouls.Projectiles.Minions
             {
                 projectile.ai[aislotHomingCooldown] = homingDelay; //cap this value 
 
-                int foundTarget = HomeOnTarget();
+                /*int foundTarget = HomeOnTarget();
                 if (foundTarget != -1)
                 {
                     NPC n = Main.npc[foundTarget];
                     Vector2 desiredVelocity = projectile.DirectionTo(n.Center) * desiredFlySpeedInPixelsPerFrame;
                     projectile.velocity = Vector2.Lerp(projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
+                }*/
+
+                if (projectile.Distance(mousePos) > 50)
+                {
+                    Vector2 desiredVelocity = projectile.DirectionTo(mousePos) * desiredFlySpeedInPixelsPerFrame;
+                    projectile.velocity = Vector2.Lerp(projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
                 }
             }
         }
 
-        private int HomeOnTarget()
+        /*private int HomeOnTarget()
         {
             NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
             if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile))
@@ -147,7 +191,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             }
 
             return selectedTarget;
-        }
+        }*/
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
@@ -167,6 +211,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                     -projectile.velocity.Y * 0.2f, 100);
                 Main.dust[dust].velocity *= 2f;
             }
+            Main.PlaySound(SoundID.NPCKilled, projectile.Center, 14);
         }
     }
 }

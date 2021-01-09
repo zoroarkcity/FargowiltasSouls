@@ -72,6 +72,8 @@ namespace FargowiltasSouls.NPCs.EternityMode
                 return;
             }
 
+            npc.target = plantera.target;
+
             if (npc.HasPlayerTarget && Main.player[npc.target].active)
             {
                 if (--npc.localAI[2] < 0) //projectile timer
@@ -80,18 +82,13 @@ namespace FargowiltasSouls.NPCs.EternityMode
                     npc.netUpdate = true;
                     if (npc.ai[1] == 130 && plantera.life > plantera.lifeMax / 2)
                     {
-                        Main.PlaySound(6, (int)npc.position.X, (int)npc.position.Y);
+                        Main.PlaySound(SoundID.Grass, (int)npc.position.X, (int)npc.position.Y);
                         if (Main.netMode != -1)
                         {
                             Vector2 distance = Main.player[npc.target].Center - npc.Center + Main.player[npc.target].velocity * 30f;
                             distance.Normalize();
                             distance *= 16f;
-                            int damage = 24;
-                            if (!Main.player[npc.target].ZoneJungle)
-                                damage = damage * 2;
-                            else if (Main.expertMode)
-                                damage = damage * 9 / 10;
-                            Projectile.NewProjectile(npc.Center, distance, mod.ProjectileType("CrystalLeafShot"), damage, 0f, Main.myPlayer);
+                            Projectile.NewProjectile(npc.Center, distance, mod.ProjectileType("CrystalLeafShot"), npc.damage / 4, 0f, Main.myPlayer);
                         }
                         for (int index1 = 0; index1 < 30; ++index1)
                         {
@@ -101,10 +98,6 @@ namespace FargowiltasSouls.NPCs.EternityMode
                         }
                     }
                 }
-            }
-            else
-            {
-                npc.TargetClosest(false);
             }
 
             Lighting.AddLight(npc.Center, 0.1f, 0.4f, 0.2f);

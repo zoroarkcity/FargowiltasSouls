@@ -7,22 +7,22 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class MythrilEnchant : ModItem
+    public class MythrilEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mythril Enchantment");
             Tooltip.SetDefault(
-@"20% increased weapon use speed
+@"15% increased weapon use speed
 Taking damage temporarily removes this weapon use speed increase
 'You feel the knowledge of your weapons seep into your mind'");
             DisplayName.AddTranslation(GameCulture.Chinese, "秘银魔石");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"你感觉你对武器的知识渗透到脑海中'
 增加25%武器使用速度");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -39,15 +39,17 @@ Taking damage temporarily removes this weapon use speed increase
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 100000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<FargoPlayer>().MythrilEnchant = true;
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MythrilSpeed))
-                player.GetModPlayer<FargoPlayer>().AttackSpeed += .2f;
+            FargoPlayer fargoPlayer = player.GetModPlayer<FargoPlayer>();
+
+            fargoPlayer.MythrilEnchant = true;
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MythrilSpeed) && !fargoPlayer.DisruptedFocus)
+                fargoPlayer.AttackSpeed += fargoPlayer.WizardEnchant ? .2f : .15f;
         }
 
         public override void AddRecipes()

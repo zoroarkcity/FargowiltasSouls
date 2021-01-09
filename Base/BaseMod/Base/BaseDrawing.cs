@@ -10,6 +10,7 @@ using Terraria.DataStructures;
 using Terraria.UI;
 using Terraria.ModLoader;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
 
 namespace FargowiltasSouls
 {
@@ -687,7 +688,7 @@ namespace FargowiltasSouls
          */
         public static bool ShouldDrawHeldItem(Item item, int itemAnimation, bool isWet, bool isDead = false)
         {
-            return ((itemAnimation > 0 || item.holdStyle > 0) && item.type > 0 && !isDead && !item.noUseGraphic && (!isWet || !item.noWet));
+            return ((itemAnimation > 0 || item.holdStyle > 0) && item.type > ItemID.None && !isDead && !item.noUseGraphic && (!isWet || !item.noWet));
         }
 
         /*
@@ -1859,7 +1860,7 @@ namespace FargowiltasSouls
 
 		public virtual void Draw(SpriteBatch sb, Color color, Item item, Vector2 pos, float sc) 
         {
-            if(Main.playerInventory || item.type <= 0 || item.stack <= 0 || item.type != itemType) return;
+            if(Main.playerInventory || item.type <= ItemID.None || item.stack <= 0 || item.type != itemType) return;
             int totalItemCount = 0;
             if(ammoItemTypes != default(int[])){ totalItemCount += BasePlayer.GetItemstackSum(Main.player[Main.myPlayer], ammoItemTypes, false, true, true); }
             if(ammoTypes != default(int[])){ totalItemCount += BasePlayer.GetItemstackSum(Main.player[Main.myPlayer], ammoTypes, true, true, true); }

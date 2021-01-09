@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Enums;
 
 namespace FargowiltasSouls.Projectiles.BossWeapons
 {
@@ -27,9 +26,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.magic = true;
             projectile.extraUpdates = 1;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
+            projectile.GetGlobalProjectile<FargoGlobalProjectile>().TimeFreezeImmune = true;
 
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 0;
+            projectile.penetrate = 1; //ignore iframes
         }
 
         public override void AI()
@@ -54,7 +53,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
             if (projectile.localAI[0] == 0f)
             {
-                Main.PlaySound(SoundID.Zombie, (int)projectile.position.X, (int)projectile.position.Y, 104, 1f, 0f);
+                if (!Main.dedServ)
+                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Zombie_104").WithVolume(0.6f), projectile.Center);
             }
             float num801 = 1f;
             projectile.localAI[0] += 1f;
@@ -134,7 +134,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             if (!spawnedHandle)
             {
                 spawnedHandle = true;
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (projectile.owner == Main.myPlayer)
                 {
                     Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<StyxGazerHandle>(), 
                         projectile.damage, projectile.knockBack, projectile.owner, (float)Math.PI / 2, projectile.whoAmI);
@@ -151,7 +151,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             }
 
             int direction = projectile.velocity.X < 0 ? -1 : 1;
-            Main.player[projectile.owner].phantasmTime = 17;
             Main.player[projectile.owner].heldProj = projectile.whoAmI;
             Main.player[projectile.owner].itemTime = 17;
             Main.player[projectile.owner].itemAnimation = 17;
@@ -168,6 +167,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            projectile.penetrate = 2; //dont die on hit, ignore iframes
+
             Projectile.NewProjectile(target.Center + Main.rand.NextVector2Circular(100, 100), Vector2.Zero, ModContent.ProjectileType<Projectiles.AbomBoss.AbomBlast>(), 0, 0f, projectile.owner);
 
             target.AddBuff(BuffID.ShadowFlame, 300);

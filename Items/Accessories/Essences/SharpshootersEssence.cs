@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Essences
 {
-    public class SharpshootersEssence : ModItem
+    public class SharpshootersEssence : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,14 +18,14 @@ namespace FargowiltasSouls.Items.Accessories.Essences
 5% increased ranged critical chance
 'This is only the beginning..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "狙击手精华");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'这才刚刚开始..'
 增加18%远程伤害
 增加5%远程暴击率
 增加5%开火速度");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -42,9 +42,9 @@ namespace FargowiltasSouls.Items.Accessories.Essences
             item.height = 20;
             item.accessory = true;
             item.value = 150000;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
         }
-
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.rangedDamage += .18f;

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -56,6 +57,27 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             return projectile.localAI[0] > 55;
         }
 
+        public override bool PreAI()
+        {
+            if (projectile.localAI[0] > 85) //dust during dash
+            {
+                int num22 = 5;
+                for (int index1 = 0; index1 < num22; ++index1)
+                {
+                    Vector2 vector2_1 = (Vector2.Normalize(projectile.velocity) * new Vector2((projectile.width + 50) / 2f, projectile.height) * 0.75f).RotatedBy((index1 - (num22 / 2 - 1)) * Math.PI / num22, new Vector2()) + projectile.Center;
+                    Vector2 vector2_2 = ((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2() * Main.rand.Next(3, 8);
+                    Vector2 vector2_3 = vector2_2;
+                    int index2 = Dust.NewDust(vector2_1 + vector2_3, 0, 0, 172, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
+                    Main.dust[index2].noGravity = true;
+                    Main.dust[index2].noLight = true;
+                    Main.dust[index2].shader = GameShaders.Armor.GetSecondaryShader(41, Main.LocalPlayer);
+                    Main.dust[index2].velocity /= 4f;
+                    Main.dust[index2].velocity -= projectile.velocity;
+                }
+            }
+            return true;
+        }
+
         public override void AI()
         {
             if (projectile.localAI[1] == 0f)
@@ -72,20 +94,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 projectile.direction = projectile.spriteDirection = projectile.velocity.X > 0 ? 1 : -1;
                 projectile.frameCounter = 5;
                 projectile.frame = 6;
-
-                int num22 = 7;
-                for (int index1 = 0; index1 < num22; ++index1)
-                {
-                    Vector2 vector2_1 = (Vector2.Normalize(projectile.velocity) * new Vector2((projectile.width + 50) / 2f, projectile.height) * 0.75f).RotatedBy((index1 - (num22 / 2 - 1)) * Math.PI / num22, new Vector2()) + projectile.Center;
-                    Vector2 vector2_2 = ((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2() * Main.rand.Next(3, 8);
-                    Vector2 vector2_3 = vector2_2;
-                    int index2 = Dust.NewDust(vector2_1 + vector2_3, 0, 0, 172, vector2_2.X * 2f, vector2_2.Y * 2f, 100, new Color(), 1.4f);
-                    Main.dust[index2].noGravity = true;
-                    Main.dust[index2].noLight = true;
-                    Main.dust[index2].velocity /= 4f;
-                    Main.dust[index2].velocity -= projectile.velocity;
-                }
             }
+
             else //preparing to dash
             {
                 int ai0 = p;
@@ -94,7 +104,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                 {
                     projectile.velocity = Main.player[ai0].Center - projectile.Center;
                     projectile.velocity.Normalize();
-                    projectile.velocity *= 24f;
+                    projectile.velocity *= projectile.type == ModContent.ProjectileType<MutantFishron>() ? 24f : 20f;
                     projectile.rotation = projectile.velocity.ToRotation();
                     projectile.direction = projectile.spriteDirection = projectile.velocity.X > 0 ? 1 : -1;
                     projectile.frameCounter = 5;
@@ -154,6 +164,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             }
         }
 
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             if (FargoSoulsWorld.MasochistMode)
@@ -208,8 +219,8 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i += 2)
             {
-                Color color27 = Color.Lerp(color26, Color.Blue, 0.5f);
-                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                Color color27 = Color.Lerp(color26, Color.Pink, 0.25f);
+                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / (1.5f * ProjectileID.Sets.TrailCacheLength[projectile.type]);
                 Vector2 value4 = projectile.oldPos[i];
                 float num165 = projectile.oldRot[i];
                 if (projectile.spriteDirection < 0)
@@ -227,10 +238,10 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         public override Color? GetAlpha(Color lightColor)
         {
             float ratio = (255 - projectile.alpha) / 255f;
-            float blue = MathHelper.Lerp(ratio, 1f, 0.25f);
-            if (blue > 1f)
-                blue = 1f;
-            return new Color((int)(lightColor.R * ratio), (int)(lightColor.G * ratio), (int)(lightColor.B * blue), (int)(lightColor.A * ratio));
+            float white = MathHelper.Lerp(ratio, 1f, 0.25f);
+            if (white > 1f)
+                white = 1f;
+            return new Color((int)(lightColor.R * white), (int)(lightColor.G * white), (int)(lightColor.B * white), (int)(lightColor.A * ratio));
         }
     }
 }

@@ -1,11 +1,13 @@
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class SinisterIcon : ModItem
+    public class SinisterIcon : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sinister Icon");
@@ -13,8 +15,8 @@ namespace FargowiltasSouls.Items.Accessories.Masomode
 Increases spawn rate
 Enemies with 2000 or less max life will drop doubled loot but zero coins
 'Most definitely not alive'");
-/*Graze projectiles to gain up to 30% increased crit damage
-Crit damage bonus decreases over time and is fully lost on hit");*/
+            /*Graze projectiles to gain up to 30% increased crit damage
+            Crit damage bonus decreases over time and is fully lost on hit");*/
             DisplayName.AddTranslation(GameCulture.Chinese, "邪恶画像");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'肯定不是活着的'
 阻止受虐模式导致的Boss自然生成
@@ -27,7 +29,7 @@ Crit damage bonus decreases over time and is fully lost on hit");*/
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.value = Item.sellPrice(0, 3);
         }
 

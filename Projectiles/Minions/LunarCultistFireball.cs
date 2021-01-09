@@ -27,7 +27,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.minion = true;
             projectile.ignoreWater = true;
             projectile.extraUpdates = 1;
-            projectile.timeLeft = 600;
+            projectile.timeLeft = 360;
             projectile.penetrate = 1;
         }
 
@@ -191,7 +191,7 @@ namespace FargowiltasSouls.Projectiles.Minions
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return new Color(255, 255, 255, 255) * (1f - projectile.alpha / 255f);
+            return new Color(255, 150, 150, 255) * (1f - projectile.alpha / 255f);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

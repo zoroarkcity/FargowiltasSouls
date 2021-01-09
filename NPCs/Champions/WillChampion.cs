@@ -7,7 +7,6 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Items.Accessories.Enchantments;
-using FargowiltasSouls.Projectiles.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
 using System.IO;
 using Terraria.Graphics.Shaders;
@@ -22,6 +21,7 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Champion of Will");
+            DisplayName.AddTranslation(GameCulture.Chinese, "意志英灵");
             Main.npcFrameCount[npc.type] = 8;
             NPCID.Sets.TrailCacheLength[npc.type] = 10;
             NPCID.Sets.TrailingMode[npc.type] = 1;
@@ -391,9 +391,9 @@ namespace FargowiltasSouls.NPCs.Champions
                         npc.localAI[0] = 2;
                         if (Main.netMode != NetmodeID.MultiplayerClient && npc.localAI[3] == 1)
                         {
-                            Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2), 
+                            Projectile.NewProjectile(npc.Center, 1.5f * Vector2.Normalize(npc.velocity).RotatedBy(Math.PI / 2), 
                                 ModContent.ProjectileType<WillFireball2>(), npc.damage / 4, 0f, Main.myPlayer);
-                            Projectile.NewProjectile(npc.Center, Vector2.Normalize(npc.velocity).RotatedBy(-Math.PI / 2),
+                            Projectile.NewProjectile(npc.Center, 1.5f * Vector2.Normalize(npc.velocity).RotatedBy(-Math.PI / 2),
                                 ModContent.ProjectileType<WillFireball2>(), npc.damage / 4, 0f, Main.myPlayer);
                         }
                     }
@@ -499,7 +499,7 @@ namespace FargowiltasSouls.NPCs.Champions
                                 {
                                     for (int i = 0; i < 15; i++)
                                     {
-                                        float speed = Main.rand.NextFloat(4f, 12f);
+                                        float speed = Main.rand.NextFloat(4f, 8f);
                                         Vector2 velocity = speed * Vector2.UnitX.RotatedBy(Main.rand.NextDouble() * -Math.PI);
                                         float ai1 = speed / 120f;
                                         Projectile.NewProjectile(npc.Center, velocity, ModContent.ProjectileType<WillJavelin>(), npc.defDamage / 4, 0f, Main.myPlayer, 0f, ai1);
@@ -760,8 +760,8 @@ namespace FargowiltasSouls.NPCs.Champions
             Main.spriteBatch.Draw(glowmask, npc.Center - Main.screenPosition + new Vector2(0f, npc.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), Color.White, npc.rotation, origin2, npc.scale, effects, 0f);
             
             Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp/*.PointWrap*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-
+            //Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp/*.PointWrap*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.EffectMatrix);
             ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(ItemID.NebulaDye);
             shader.Apply(npc, new Terraria.DataStructures.DrawData?());
 

@@ -1,17 +1,14 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.Enums;
-using FargowiltasSouls.NPCs.Champions;
 
 namespace FargowiltasSouls.Projectiles.Minions
 {
     public class EridanusDeathray : Deathrays.BaseDeathray
     {
-        public EridanusDeathray() : base(20, "ShadowDeathray") { }
+        public EridanusDeathray() : base(20, "ShadowDeathray", 0.7f) { }
 
         public override void SetStaticDefaults()
         {
@@ -104,6 +101,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 int num812 = Dust.NewDust(vector79, 0, 0, 244, vector80.X, vector80.Y, 0, default(Color), 1f);
                 Main.dust[num812].noGravity = true;
                 Main.dust[num812].scale = 1.7f;
+                Main.dust[num812].alpha = 150;
                 num3 = num809;
             }
             if (Main.rand.Next(5) == 0)
@@ -112,6 +110,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                 int num813 = Dust.NewDust(vector79 + value29 - Vector2.One * 4f, 8, 8, 244, 0f, 0f, 100, default(Color), 1.5f);
                 Dust dust = Main.dust[num813];
                 dust.velocity *= 0.5f;
+                dust.alpha = 150;
                 Main.dust[num813].velocity.Y = -Math.Abs(Main.dust[num813].velocity.Y);
             }
             //DelegateMethods.v3_1 = new Vector3(0.3f, 0.65f, 0.7f);
@@ -126,6 +125,7 @@ namespace FargowiltasSouls.Projectiles.Minions
                     int d = Dust.NewDust(projectile.position + projectile.velocity * Main.rand.NextFloat(6000),
                         projectile.width, projectile.height, 254, 0f, 0f, 0, default(Color), 1.5f);
                     Main.dust[d].noGravity = true;
+                    Main.dust[d].alpha = 150;
                     Main.dust[d].velocity *= 6f;
                 }
             }

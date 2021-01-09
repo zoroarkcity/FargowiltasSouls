@@ -3,17 +3,17 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using FargowiltasSouls.Projectiles.BossWeapons;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class TwinRangs : ModItem
+    public class TwinRangs : SoulsItem
     {
-        private int shoot;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Twinrangs");
-            Tooltip.SetDefault("'The compressed forms of defeated foes..'");
+            Tooltip.SetDefault("Fire a different twinrang depending on mouse click" +
+                "\n'The compressed forms of defeated foes..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "双子");
             Tooltip.AddTranslation(GameCulture.Chinese, "被打败的敌人的压缩形态..");
         }
@@ -27,31 +27,39 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.useTime = 25;
             item.useAnimation = 25;
             item.noUseGraphic = true;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 3;
             item.value = 100000;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.shootSpeed = 20;
-            item.shoot = 1;
+            item.shoot = ProjectileID.WoodenArrowFriendly;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
         }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        public override bool AltFunctionUse(Player player)
         {
-            if (shoot == 0)
+            return true;
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            if (player.altFunctionUse == 2)
             {
-                type = mod.ProjectileType("Retirang");
-                shoot = 1;
+                item.shoot = ModContent.ProjectileType<Retirang>();
+                item.shootSpeed = 15f;
             }
             else
             {
-                type = mod.ProjectileType("Spazmarang");
-                shoot = 0;
+                item.shoot = ModContent.ProjectileType<Spazmarang>();
+                item.shootSpeed = 45f;
             }
+            return true;
+        }
 
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {
             Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI);
-
             return false;
         }
     }

@@ -1,26 +1,33 @@
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Collections.Generic;
+using System.Linq;
+using FargowiltasSouls.Utilities;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class QueenStinger : ModItem
+    public class QueenStinger : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Queen's Stinger");
-            Tooltip.SetDefault(@"Grants immunity to Infested
-Increases armor penetration by 10
-Your attacks inflict Poisoned and spray honey that increases your life regeneration
-Bees and weak Hornets become friendly
-'Ripped right off of a defeated foe'");
+            Tooltip.SetDefault("Grants immunity to Infested" +
+                "\nIncreases armor penetration by 10" +
+                "\nYour attacks inflict Poisoned and spray honey that increases your life regeneration" +
+                "\nBees and weak Hornets become friendly" +
+                "\n'Ripped right off of a defeated foe'");
+
             DisplayName.AddTranslation(GameCulture.Chinese, "女王的毒刺");
-            Tooltip.AddTranslation(GameCulture.Chinese, @"'从一个被打败的敌人身上撕下来'
-免疫感染
-增加10点护甲穿透
-攻击造成中毒效果
-永久蜂蜜Buff效果
-蜜蜂和虚弱黄蜂变得友好");
+            Tooltip.AddTranslation(GameCulture.Chinese, "'从一个被打败的敌人身上撕下来'" +
+                "\n免疫感染" +
+                "\n增加10点护甲穿透" +
+                "\n攻击造成中毒效果" +
+                "\n永久蜂蜜Buff效果" +
+                "\n蜜蜂和虚弱黄蜂变得友好");
         }
 
         public override void SetDefaults()
@@ -28,30 +35,29 @@ Bees and weak Hornets become friendly
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.value = Item.sellPrice(0, 3);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            //pen
-            player.armorPenetration += 10;
             //player.honey = true;
+            player.armorPenetration += 10;
             player.buffImmune[mod.BuffType("Infested")] = true;
 
-            //bees
-            player.npcTypeNoAggro[210] = true;
-            player.npcTypeNoAggro[211] = true;
+            // Bees
+            player.npcTypeNoAggro[NPCID.Bee] = true;
+            player.npcTypeNoAggro[NPCID.BeeSmall] = true;
 
-            //hornets
-            player.npcTypeNoAggro[42] = true;
-            player.npcTypeNoAggro[231] = true;
-            player.npcTypeNoAggro[232] = true;
-            player.npcTypeNoAggro[233] = true;
-            player.npcTypeNoAggro[234] = true;
-            player.npcTypeNoAggro[235] = true;
+            // Hornets
+            player.npcTypeNoAggro[NPCID.Hornet] = true;
+            player.npcTypeNoAggro[NPCID.HornetFatty] = true;
+            player.npcTypeNoAggro[NPCID.HornetHoney] = true;
+            player.npcTypeNoAggro[NPCID.HornetLeafy] = true;
+            player.npcTypeNoAggro[NPCID.HornetSpikey] = true;
+            player.npcTypeNoAggro[NPCID.HornetStingy] = true;
 
-            //stinger immmune
+            // Stringer immune
             player.GetModPlayer<FargoPlayer>().QueenStinger = true;
         }
     }

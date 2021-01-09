@@ -1,27 +1,26 @@
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Misc
 {
-	public class RabiesShot : ModItem
-	{
+    public class RabiesShot : SoulsItem
+    {
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Rabies Shot");
+        {
+            DisplayName.SetDefault("Rabies Shot");
             Tooltip.SetDefault("Cures Feral Bite");
             DisplayName.AddTranslation(GameCulture.Chinese, "狂犬疫苗");
             Tooltip.AddTranslation(GameCulture.Chinese, "治愈野性咬噬");
-		}
+        }
 
-		public override void SetDefaults()
-		{
+        public override void SetDefaults()
+        {
             item.width = 20;
             item.height = 20;
             item.maxStack = 30;
-            item.rare = 3;
-            item.useStyle = 2;
+            item.rare = ItemRarityID.Orange;
+            item.useStyle = ItemUseStyleID.EatingUsing;
             item.useAnimation = 17;
             item.useTime = 17;
             item.consumable = true;

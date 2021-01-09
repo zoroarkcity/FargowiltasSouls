@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class WizardEnchant : ModItem
+    public class WizardEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -15,10 +15,9 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
 @"Enhances the power of all other equipped Enchantments
 Summons a pet Black Cat
 'I'm a what?'");
-
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -35,8 +34,8 @@ Summons a pet Black Cat
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 1;
-            item.value = 10000;
+            item.rare = ItemRarityID.LightRed;
+            item.value = 100000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

@@ -148,8 +148,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 target.mount.Dismount(target);
             target.velocity.X = projectile.velocity.X < 0 ? -15f : 15f;
             target.velocity.Y = -10f;
-            target.AddBuff(mod.BuffType("Stunned"), 60);
-            target.AddBuff(mod.BuffType("MarkedforDeath"), 240);
+            target.AddBuff(mod.BuffType("MarkedforDeath"), 300);
             target.AddBuff(mod.BuffType("CurseoftheMoon"), 600);
             switch ((int)projectile.ai[0])
             {
@@ -194,7 +193,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     Vector2 speed = new Vector2(0f, 8f * (j + 1) + 4f).RotatedBy(projectile.rotation);
                     for (int i = 0; i < max; i++)
                         Projectile.NewProjectile(projectile.Center, speed.RotatedBy(rotationInterval * i),
-                            mod.ProjectileType("CelestialFragment"), projectile.damage / 2, 0f, Main.myPlayer, projectile.ai[0]);
+                            mod.ProjectileType("CelestialFragment"), projectile.damage / 3, 0f, Main.myPlayer, projectile.ai[0]);
                 }
             }
         }

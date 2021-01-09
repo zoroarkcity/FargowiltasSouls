@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Projectiles.MutantBoss
 {
@@ -89,7 +90,7 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
         {
             for (int i = 0; i < 20; i++)
             {
-                int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 60, -projectile.velocity.X * 0.2f,
+                int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, 62, -projectile.velocity.X * 0.2f,
                     -projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].velocity *= 2f;
@@ -97,6 +98,9 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
                     -projectile.velocity.Y * 0.2f, 100);
                 Main.dust[dust].velocity *= 2f;
             }
+            //int g = Gore.NewGore(projectile.Center, projectile.velocity / 2, mod.GetGoreSlot("Gores/DestroyerGun/DestroyerHead"), projectile.scale);
+           // Main.gore[g].timeLeft = 20;
+            Main.PlaySound(SoundID.NPCKilled, projectile.Center, 14);
         }
     }
 }

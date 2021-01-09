@@ -1,11 +1,13 @@
 using Terraria;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class GroundStick : ModItem
+    public class GroundStick : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Remote Control");
@@ -25,7 +27,7 @@ Two friendly probes fight by your side
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 6;
+            item.rare = ItemRarityID.LightPurple;
             item.value = Item.sellPrice(0, 4);
         }
 

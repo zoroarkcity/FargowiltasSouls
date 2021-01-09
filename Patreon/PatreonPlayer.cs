@@ -24,6 +24,8 @@ namespace FargowiltasSouls
 
         public bool WolfDashing;
 
+        public bool PiranhaPlantMode;
+
         public override void ResetEffects()
         {
             Gittle = false;
@@ -169,6 +171,25 @@ namespace FargowiltasSouls
                         -target.velocity.Y * 0.2f, 100);
                     Main.dust[num469].velocity *= 2f;
                 }
+            }
+        }
+
+        public override void OnHitByNPC(NPC npc, int damage, bool crit)
+        {
+            OnHitByEither();
+        }
+
+        public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
+        {
+            OnHitByEither();
+        }
+
+        private void OnHitByEither()
+        {
+            if (PiranhaPlantMode)
+            {
+                int index = Main.rand.Next(Fargowiltas.DebuffIDs.Count);
+                player.AddBuff(Fargowiltas.DebuffIDs[index], 180);
             }
         }
 

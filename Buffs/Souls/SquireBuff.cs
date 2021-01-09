@@ -1,6 +1,5 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace FargowiltasSouls.Buffs.Souls
 {
@@ -11,6 +10,11 @@ namespace FargowiltasSouls.Buffs.Souls
             DisplayName.SetDefault("Power of Squire");
             Description.SetDefault("Removing some enemy immunity frames");
             Main.buffNoSave[Type] = true;
+        }
+
+        public override void Update(Player player, ref int buffIndex)
+        {
+            player.GetModPlayer<FargoPlayer>().squireReduceIframes = true;
         }
     }
 }

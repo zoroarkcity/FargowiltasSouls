@@ -1,3 +1,5 @@
+using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -32,16 +34,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void Kill(int timeLeft)
         {
-            int proj2 = mod.ProjectileType("DicerSpray"); //374;
-
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 5f, proj2, projectile.damage, 2 /*kb*/, Main.myPlayer);
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 5f, 0f, proj2, projectile.damage, 2, Main.myPlayer);
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, -5f, proj2, projectile.damage, 2, Main.myPlayer);
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -5f, 0f, proj2, projectile.damage, 2, Main.myPlayer);
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4f, 4f, proj2, projectile.damage, 2, Main.myPlayer);
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4f, -4f, proj2, projectile.damage, 2, Main.myPlayer);
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 4f, -4f, proj2, projectile.damage, 2, Main.myPlayer);
-            Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, -4f, 4f, proj2, projectile.damage, 2, Main.myPlayer);
+            if (projectile.owner == Main.myPlayer)
+            {
+                int proj2 = mod.ProjectileType("DicerSpray"); //374;
+                Vector2 baseVel = Main.rand.NextBool() ? Vector2.UnitX : Vector2.UnitX.RotatedBy(Math.PI * 2 / 8 * 0.5);
+                for (int i = 0; i < 8; i++)
+                    Projectile.NewProjectile(projectile.Center, 5f * baseVel.RotatedBy(Math.PI * 2 / 8 * i), proj2, projectile.damage, projectile.knockBack, Main.myPlayer);
+            }
         }
     }
 }

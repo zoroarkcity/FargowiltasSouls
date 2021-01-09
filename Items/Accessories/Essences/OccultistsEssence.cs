@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Essences
 {
-    public class OccultistsEssence : ModItem
+    public class OccultistsEssence : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,14 +18,14 @@ Increases your max number of minions by 1
 Increases your max number of sentries by 1
 'This is only the beginning..'");
             DisplayName.AddTranslation(GameCulture.Chinese, "术士精华");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'这才刚刚开始..'
 增加18%召唤伤害
 +1最大召唤栏
 +1最大哨兵栏");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -42,9 +42,9 @@ Increases your max number of sentries by 1
             item.height = 20;
             item.accessory = true;
             item.value = 150000;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
         }
-
+        public override Color? GetAlpha(Color lightColor) => Color.White;
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.minionDamage += 0.18f;

@@ -1,19 +1,20 @@
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class LihzahrdTreasureBox : ModItem
+    public class LihzahrdTreasureBox : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lihzahrd Treasure Box");
             Tooltip.SetDefault(@"Grants immunity to Burning, Fused, and Low Ground
-You erupt into spiky balls when injured
 Press down in the air to fastfall
 Fastfall will create a fiery eruption on impact after falling a certain distance
+When you land after a jump, you create a burst of boulders
 'Too many booby traps to open'");
             DisplayName.AddTranslation(GameCulture.Chinese, "神庙蜥蜴宝藏盒");
             Tooltip.AddTranslation(GameCulture.Chinese, @"'陷阱太多,打不开'
@@ -28,7 +29,7 @@ Fastfall will create a fiery eruption on impact after falling a certain distance
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = Item.sellPrice(0, 6);
             item.defense = 8;
         }

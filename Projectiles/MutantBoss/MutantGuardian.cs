@@ -19,15 +19,18 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void SetDefaults()
         {
-            projectile.width = 40;
-            projectile.height = 50;
-            projectile.aiStyle = 0;
-            aiType = ProjectileID.Bullet;
-            projectile.hostile = true;
+            projectile.width = 70;
+            projectile.height = 70;
             projectile.penetrate = -1;
+            projectile.hostile = true;
             projectile.tileCollide = false;
-            projectile.timeLeft = 300;
+            projectile.ignoreWater = true;
+            projectile.aiStyle = -1;
             cooldownSlot = 1;
+
+            projectile.timeLeft = 300;
+            projectile.hide = true;
+            projectile.light = 0.5f;
         }
 
         public override bool CanHitPlayer(Player target)
@@ -37,8 +40,23 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void AI()
         {
+            if (projectile.localAI[0] == 0)
+            {
+                projectile.localAI[0] = 1;
+                projectile.rotation = Main.rand.NextFloat(0, 2 * (float)Math.PI);
+                projectile.hide = false;
+
+                for (int i = 0; i < 50; i++)
+                {
+                    Vector2 pos = new Vector2(projectile.Center.X + Main.rand.Next(-20, 20), projectile.Center.Y + Main.rand.Next(-20, 20));
+                    int dust = Dust.NewDust(pos, projectile.width, projectile.height, DustID.Blood, 0, 0, 100, default(Color), 2f);
+                    Main.dust[dust].noGravity = true;
+                }
+            }
+
             projectile.frame = 2;
-            projectile.rotation += 0.2f * Math.Sign(projectile.velocity.X);
+            projectile.direction = projectile.velocity.X < 0 ? -1 : 1;
+            projectile.rotation += projectile.direction * .3f;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

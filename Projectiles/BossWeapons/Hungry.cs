@@ -1,4 +1,3 @@
-using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -9,13 +8,12 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 {
     public class Hungry : ModProjectile
     {
-        public float modifier;
+        //public float modifier;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hungry");
             ProjectileID.Sets.Homing[projectile.type] = true;
-            ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
         }
 
         public override void SetDefaults()
@@ -24,13 +22,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.height = 24;
             projectile.aiStyle = 1; 
             projectile.friendly = true;
-            projectile.minion = true; 
+            projectile.magic = true; 
             projectile.penetrate = 4;
-            projectile.timeLeft = 300;
+            projectile.timeLeft = 240;
             aiType = ProjectileID.Bullet;
         }
 
-        public override void SendExtraAI(BinaryWriter writer)
+        /*public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(modifier);
         }
@@ -38,11 +36,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             modifier = reader.ReadSingle();
-        }
+        }*/
 
         public override void AI()
         {
-            if (projectile.localAI[0] == 0)
+            /*if (projectile.localAI[0] == 0)
             {
                 projectile.localAI[0] = 1;
 
@@ -63,7 +61,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 {
                     projectile.netUpdate = true;
                 }
-            }
+            }*/
 
             //dust!
             int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width, projectile.height + 5, 60, projectile.velocity.X * 0.2f,
@@ -74,10 +72,10 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             Main.dust[dustId3].noGravity = true;
 
             const int aislotHomingCooldown = 0;
-            const int homingDelay = 10;
+            const int homingDelay = 15;
             const float desiredFlySpeedInPixelsPerFrame = 60;
-            
-            float amountOfFramesToLerpBy = 120 - 33 * modifier; // minimum of 1, please keep in full numbers even though it's a float!
+
+            float amountOfFramesToLerpBy = 65; //120 - 33 * modifier; // minimum of 1, please keep in full numbers even though it's a float!
 
             projectile.ai[aislotHomingCooldown]++;
             if (projectile.ai[aislotHomingCooldown] > homingDelay)
@@ -96,13 +94,13 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         protected int HomeOnTarget()
         {
-            NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
+            /*NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
             if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile)
                 && Collision.CanHitLine(projectile.Center, 0, 0, minionAttackTargetNpc.Center, 0, 0))
-                return minionAttackTargetNpc.whoAmI;
+                return minionAttackTargetNpc.whoAmI;*/
 
             const bool homingCanAimAtWetEnemies = true;
-            const float homingMaximumRangeInPixels = 1000;
+            const float homingMaximumRangeInPixels = 600;//1000;
 
             int selectedTarget = -1;
             for (int i = 0; i < Main.maxNPCs; i++)

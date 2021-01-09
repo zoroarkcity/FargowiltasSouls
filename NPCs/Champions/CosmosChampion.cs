@@ -6,7 +6,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using FargowiltasSouls.Items.Accessories.Enchantments;
-using FargowiltasSouls.Items.Armor;
 using FargowiltasSouls.Buffs.Masomode;
 using FargowiltasSouls.Projectiles.Champions;
 using System.IO;
@@ -22,6 +21,7 @@ namespace FargowiltasSouls.NPCs.Champions
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Eridanus, Champion of Cosmos");
+            DisplayName.AddTranslation(GameCulture.Chinese, "厄里达诺斯, 宇宙英灵");
             Main.npcFrameCount[npc.type] = 9;
             NPCID.Sets.TrailCacheLength[npc.type] = 6;
             NPCID.Sets.TrailingMode[npc.type] = 1;
@@ -33,7 +33,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.height = 100;
             npc.damage = 160;
             npc.defense = 70;
-            npc.lifeMax = 600000;
+            npc.lifeMax = 550000;
             npc.HitSound = SoundID.NPCHit5;
             npc.DeathSound = SoundID.NPCDeath7;
             npc.noGravity = true;
@@ -126,7 +126,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.ai[3] = buffer;
                 npc.netUpdate = true;
 
-                if (Main.netMode != NetmodeID.MultiplayerClient) //clear projs
+                if (Main.netMode != NetmodeID.MultiplayerClient && !EModeGlobalNPC.OtherBossAlive(npc.whoAmI)) //clear projs
                 {
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
@@ -151,7 +151,7 @@ namespace FargowiltasSouls.NPCs.Champions
                 npc.localAI[1] = 0;
                 npc.netUpdate = true;
 
-                if (Main.netMode != NetmodeID.MultiplayerClient) //clear projs
+                if (Main.netMode != NetmodeID.MultiplayerClient && !EModeGlobalNPC.OtherBossAlive(npc.whoAmI)) //clear projs
                 {
                     for (int i = 0; i < Main.maxProjectiles; i++)
                     {
@@ -271,7 +271,7 @@ namespace FargowiltasSouls.NPCs.Champions
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             if (FargoSoulsWorld.MasochistMode)
-                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<CosmosRitual>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<CosmosRitual>(), npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
 
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<CosmosMoon>(), npc.damage / 4, 0f, Main.myPlayer, 1, npc.whoAmI);
                             Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<CosmosMoon>(), npc.damage / 4, 0f, Main.myPlayer, -1, npc.whoAmI);
@@ -394,13 +394,14 @@ namespace FargowiltasSouls.NPCs.Champions
                             type = 229;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
+                                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Thunder").WithVolume(0.8f).WithPitchVariance(-0.5f), npc.Center);
                                 const int max = 12;
                                 for (int i = 0; i < max; i++)
                                 {
                                     Vector2 dir = npc.DirectionTo(player.Center).RotatedBy(2 * (float)Math.PI / max * i);
-                                    float ai1New = Main.rand.Next(100);
-                                    Vector2 vel = Vector2.Normalize(dir.RotatedByRandom(Math.PI / 4)) * 6f;
-                                    Projectile.NewProjectile(npc.Center, vel, ProjectileID.CultistBossLightningOrbArc,
+                                    float ai1New = (Main.rand.Next(2) == 0) ? 1 : -1; //randomize starting direction
+                                    Vector2 vel = Vector2.Normalize(dir) * 6f;
+                                    Projectile.NewProjectile(npc.Center, vel * 4, mod.ProjectileType("CosmosLightning"),
                                         npc.damage / 4, 0, Main.myPlayer, dir.ToRotation(), ai1New);
                                 }
                             }
@@ -433,6 +434,12 @@ namespace FargowiltasSouls.NPCs.Champions
                                     Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(2 * Math.PI / max * (i + 0.5)),
                                         ModContent.ProjectileType<CosmosInvader>(), npc.damage / 4, 0f, Main.myPlayer, 180, 0.025f);
                                 }
+                                for(int j = 0; j < 5; j++)
+                                {
+                                    Vector2 vel = -Vector2.UnitY.RotatedBy(MathHelper.Pi * 0.4f * j);
+                                    Projectile.NewProjectile(npc.Center, vel, mod.ProjectileType("CosmosGlowything"), 0, 0f, Main.myPlayer);
+                                }
+                                Main.PlaySound(SoundID.NPCKilled, (int)npc.position.X, (int)npc.position.Y, 7, 1f, 0.0f);
                             }
                         }
 

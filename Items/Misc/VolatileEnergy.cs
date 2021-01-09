@@ -5,25 +5,25 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Misc
 {
-	public class VolatileEnergy : ModItem
-	{
+    public class VolatileEnergy : SoulsItem
+    {
         public override bool Autoload(ref string name)
         {
             return false;
         }
 
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Volatile Energy");
+        {
+            DisplayName.SetDefault("Volatile Energy");
             DisplayName.AddTranslation(GameCulture.Chinese, "不稳定能量");
-		}
+        }
 
-		public override void SetDefaults()
-		{
+        public override void SetDefaults()
+        {
             item.width = 20;
             item.height = 20;
             item.maxStack = 99;
-            item.rare = 6;
+            item.rare = ItemRarityID.LightPurple;
             item.value = Item.sellPrice(0, 0, 3, 0);
         }
 

@@ -115,8 +115,28 @@ namespace FargowiltasSouls.NPCs.EternityMode
 
         public override bool? CanBeHitByProjectile(Projectile projectile)
         {
-            if (projectile.type == ProjectileID.RottenEgg)
-                return false;
+            switch (projectile.type)
+            {
+                case ProjectileID.RottenEgg:
+                    return false;
+
+                case ProjectileID.AshBallFalling:
+                case ProjectileID.CrimsandBallFalling:
+                case ProjectileID.DirtBall:
+                case ProjectileID.EbonsandBallFalling:
+                case ProjectileID.MudBall:
+                case ProjectileID.PearlSandBallFalling:
+                case ProjectileID.SandBallFalling:
+                case ProjectileID.SiltBall:
+                case ProjectileID.SlushBall:
+                    if (projectile.velocity.X == 0)
+                        return false;
+                    break;
+
+                default:
+                    break;
+            }
+
             return null;
         }
 

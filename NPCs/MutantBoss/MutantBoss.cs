@@ -118,6 +118,19 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             return id > -1 && id < Main.maxProjectiles && Main.projectile[id].active && Main.projectile[id].type == type;
         }
 
+        private void KillProjs()
+        {
+            if (!EModeGlobalNPC.OtherBossAlive(npc.whoAmI))
+            {
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && Main.projectile[i].hostile && i != ritualProj)
+                        Main.projectile[i].Kill();
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && Main.projectile[i].hostile && i != ritualProj)
+                        Main.projectile[i].Kill();
+            }
+        }
+
         public override void AI()
         {
             EModeGlobalNPC.mutantBoss = npc.whoAmI;
@@ -162,7 +175,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             if (Main.netMode != NetmodeID.MultiplayerClient) //checks for needed projs
             {
                 if ((npc.ai[0] < 0 || npc.ai[0] > 10) && !ProjectileExists(ritualProj, ModContent.ProjectileType<MutantRitual>()))
-                    ritualProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                    ritualProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual>(), npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
 
                 if (!ProjectileExists(ringProj, ModContent.ProjectileType<MutantRitual5>()))
                     ringProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual5>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
@@ -240,7 +253,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Mutant")))
                         {
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
-                            if (n != 200 && Main.netMode == NetmodeID.Server)
+                            if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
                         //EdgyBossText("Oh, right... my revive...");
@@ -474,7 +487,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     break;
 
                 case -1: //defeated
-                    if (!SkyManager.Instance["FargowiltasSouls:MutantBoss"].IsActive())
+                    if (FargoSoulsWorld.MasochistMode && !SkyManager.Instance["FargowiltasSouls:MutantBoss"].IsActive())
                         SkyManager.Instance.Activate("FargowiltasSouls:MutantBoss");
 
                     npc.dontTakeDamage = true;
@@ -902,7 +915,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     }
                     if (++npc.ai[1] > 120)
                     {
-                        if (!SkyManager.Instance["FargowiltasSouls:MutantBoss"].IsActive())
+                        if (FargoSoulsWorld.MasochistMode && !SkyManager.Instance["FargowiltasSouls:MutantBoss"].IsActive())
                             SkyManager.Instance.Activate("FargowiltasSouls:MutantBoss");
 
                         for (int i = 0; i < 5; i++)
@@ -947,7 +960,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 Main.projectile[i].Kill();
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            ritualProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                            ritualProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantRitual>(), npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
                         }
                         Main.PlaySound(SoundID.Roar, (int)npc.Center.X, (int)npc.Center.Y, 0);
                         for (int i = 0; i < 50; i++)
@@ -1124,13 +1137,13 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<MutantIllusion>(), npc.whoAmI, npc.whoAmI, -1, 1, 60);
-                        if (n != 200 && Main.netMode == NetmodeID.Server)
+                        if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<MutantIllusion>(), npc.whoAmI, npc.whoAmI, 1, -1, 120);
-                        if (n != 200 && Main.netMode == NetmodeID.Server)
+                        if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<MutantIllusion>(), npc.whoAmI, npc.whoAmI, 1, 1, 180);
-                        if (n != 200 && Main.netMode == NetmodeID.Server)
+                        if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
                             NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                     }
                     npc.ai[0]++;
@@ -1381,7 +1394,16 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     {
                         npc.ai[2] = Main.rand.Next(2) == 0 ? -1 : 1; //randomly aim either up or down
                     }
-                    if (npc.ai[3] < 240 && ++npc.ai[1] > 10)
+                    if(npc.ai[3] == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        int max = 7;
+                        for(int i = 0; i <= max; i++)
+                        {
+                            Vector2 dir = Vector2.UnitX.RotatedBy(npc.ai[2] * i * MathHelper.Pi / max) * 6; //rotate initial velocity of telegraphs by 180 degrees depending on velocity of lasers
+                            Projectile.NewProjectile(npc.Center + dir, Vector2.Zero, mod.ProjectileType("MutantGlowything"), 0, 0f, Main.myPlayer, dir.ToRotation(), npc.whoAmI);
+                        }
+                    }
+                    if (npc.ai[3] > 20 && npc.ai[3] < 240 && ++npc.ai[1] > 10)
                     {
                         npc.ai[1] = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -1394,7 +1416,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     if (npc.ai[3] == 90 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Vector2 spawnPos = npc.Center;
-                        spawnPos.Y += player.Center.Y < npc.Center.Y ? -600 : 600;
+                        spawnPos.Y -= npc.ai[2] * 600;
                         for (int i = -3; i <= 3; i++)
                         {
                             Projectile.NewProjectile(spawnPos + Vector2.UnitY * 120 * i, Vector2.Zero,
@@ -1416,11 +1438,11 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
                             Vector2 spawnPos = npc.Center;
-                            spawnPos.Y += player.Center.Y < npc.Center.Y ? -600 : 600;
+                            spawnPos.Y -= npc.ai[2] * 600;
                             spawnPos.X += Main.rand.NextFloat(-400, 400);
                             spawnPos.Y -= 1000 * npc.localAI[1];
                             Vector2 vel = npc.Center;
-                            vel.Y += player.Center.Y < npc.Center.Y ? -600 : 600;
+                            vel.Y -= npc.ai[2] * 600;
                             vel -= spawnPos;
                             vel.Normalize();
                             vel *= 18;
@@ -1714,15 +1736,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                                 Vector2 spawnPos = basePos;
                                 spawnPos.X += xOffset;
                                 Vector2 velocity = new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(30f, 40f));
-                                if (Main.rand.Next(2) == 0)
-                                {
-                                    spawnPos.Y -= 1300;
-                                }
-                                else
-                                {
-                                    spawnPos.Y += 1300;
-                                    velocity *= -1f;
-                                }
+                                spawnPos.Y -= 1300;
+
                                 Projectile.NewProjectile(spawnPos, velocity, ModContent.ProjectileType<MutantSlimeBall>(), npc.damage / 5, 0f, Main.myPlayer);
                             }
                         }
@@ -1879,9 +1894,15 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             Projectile.NewProjectile(npc.Center, vel, ModContent.ProjectileType<MutantSpearThrown>(), npc.damage / 4, 0f, Main.myPlayer, npc.target);
                         }
                     }
-                    else if (npc.ai[1] == 211 && npc.ai[2] < 5 && Main.netMode != NetmodeID.MultiplayerClient)
+                    else if (npc.ai[1] == 211)
                     {
-                        Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSpearAim>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 1);
+                        if (npc.ai[2] > 0 && npc.ai[2] < 5 && Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSpearAim>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI, 1);
+                    }
+                    else if (npc.ai[1] == 180)
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<MutantSpearAim>(), npc.damage / 4, 0f, Main.myPlayer, npc.whoAmI);
                     }
                     break;
 
@@ -1929,14 +1950,14 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                         {
                             const float retiRad = 525; //500
                             const float spazRad = 350; //250
-                            float retiSpeed = 2 * (float)Math.PI * retiRad / 240;
-                            float spazSpeed = 2 * (float)Math.PI * spazRad / 120;
+                            float retiSpeed = 2 * (float)Math.PI * retiRad / 300;
+                            float spazSpeed = 2 * (float)Math.PI * spazRad / 180;
                             float retiAcc = retiSpeed * retiSpeed / retiRad * npc.ai[2];
                             float spazAcc = spazSpeed * spazSpeed / spazRad * -npc.ai[2];
                             for (int i = 0; i < 4; i++)
                             {
-                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i) * retiSpeed, ModContent.ProjectileType<MutantRetirang>(), npc.damage / 4, 0f, Main.myPlayer, retiAcc, 240);
-                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i + Math.PI / 4) * spazSpeed, ModContent.ProjectileType<MutantSpazmarang>(), npc.damage / 4, 0f, Main.myPlayer, spazAcc, 120);
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i) * retiSpeed, ModContent.ProjectileType<MutantRetirang>(), npc.damage / 4, 0f, Main.myPlayer, retiAcc, 300);
+                                Projectile.NewProjectile(npc.Center, Vector2.UnitX.RotatedBy(Math.PI / 2 * i + Math.PI / 4) * spazSpeed, ModContent.ProjectileType<MutantSpazmarang>(), npc.damage / 4, 0f, Main.myPlayer, spazAcc, 180);
                             }
                         }
                     }
@@ -2038,14 +2059,9 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                             npc.position.Y = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Mutant")))
                         {
-                            for (int i = 0; i < 1000; i++)
-                                if (Main.projectile[i].active && Main.projectile[i].hostile)
-                                    Main.projectile[i].Kill();
-                            for (int i = 0; i < 1000; i++)
-                                if (Main.projectile[i].active && Main.projectile[i].hostile)
-                                    Main.projectile[i].Kill();
+                            KillProjs();
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Mutant"));
-                            if (n != 200 && Main.netMode == NetmodeID.Server)
+                            if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
                     }
@@ -2068,12 +2084,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     npc.ai[2] = 0;
                     npc.ai[3] = 0;
                     npc.netUpdate = true;
-                    for (int i = 0; i < 1000; i++)
-                        if (Main.projectile[i].active && Main.projectile[i].hostile)
-                            Main.projectile[i].Kill();
-                    for (int i = 0; i < 1000; i++)
-                        if (Main.projectile[i].active && Main.projectile[i].hostile)
-                            Main.projectile[i].Kill();
+                    KillProjs();
                     //EdgyBossText("Time to stop playing around.");
                 }
                 return true;
@@ -2146,12 +2157,6 @@ namespace FargowiltasSouls.NPCs.MutantBoss
             }
         }
 
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
-        {
-            damage *= 0.9;
-            return true;
-        }
-
         public override bool CheckDead()
         {
             if (npc.ai[0] == -7)
@@ -2170,12 +2175,7 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                 npc.localAI[1] = 0;
                 npc.dontTakeDamage = true;
                 npc.netUpdate = true;
-                for (int i = 0; i < 1000; i++)
-                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && (Main.projectile[i].hostile || Main.projectile[i].friendly))
-                        Main.projectile[i].Kill();
-                for (int i = 0; i < 1000; i++)
-                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && (Main.projectile[i].hostile || Main.projectile[i].friendly))
-                        Main.projectile[i].Kill();
+                KillProjs();
                 //EdgyBossText("You're pretty good...");
             }
             return false;

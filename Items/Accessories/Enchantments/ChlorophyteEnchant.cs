@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class ChlorophyteEnchant : ModItem
+    public class ChlorophyteEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -34,7 +34,7 @@ Summons a pet Seedling
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -51,7 +51,7 @@ Summons a pet Seedling
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 7;
+            item.rare = ItemRarityID.Lime;
             item.value = 150000;
         }
 
@@ -76,7 +76,7 @@ Summons a pet Seedling
             //grape juice
             recipe.AddIngredient(ItemID.Seedling);
             //plantero pet
-            
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

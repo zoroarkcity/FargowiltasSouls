@@ -1,16 +1,13 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.Enums;
 
 namespace FargowiltasSouls.Projectiles.Deathrays
 {
     public class PhantasmalDeathrayGolem : BaseDeathray
     {
-        public PhantasmalDeathrayGolem() : base(150, "PhantasmalDeathrayGolem") { }
+        public PhantasmalDeathrayGolem() : base(300, "PhantasmalDeathrayGolem") { }
 
         public override void SetStaticDefaults()
         {

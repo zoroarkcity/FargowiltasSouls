@@ -1,14 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Weapons.FinalUpgrades
 {
-    public class SparklingLove : ModItem
+    public class SparklingLove : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -29,7 +28,7 @@ Right click pattern becomes denser with up to 5 empty minion slots
             item.width = 32;
             item.height = 32;
             item.scale = 2f;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.UseSound = SoundID.Item1;
             item.shoot = ModContent.ProjectileType<Projectiles.BossWeapons.SparklingLove>();
             item.value = Item.sellPrice(0, 70);
@@ -73,15 +72,20 @@ Right click pattern becomes denser with up to 5 empty minion slots
             return true;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
         {
-            foreach (TooltipLine line2 in list)
+            if (line.mod == "Terraria" && line.Name == "ItemName")
             {
-                if (line2.mod == "Terraria" && line2.Name == "ItemName")
-                {
-                    line2.overrideColor = new Color(255, 0, Main.DiscoB);
-                }
+                Main.spriteBatch.End(); //end and begin main.spritebatch to apply a shader
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, null, null, null, null, null, Main.UIScaleMatrix);
+                var lineshader = GameShaders.Misc["PulseCircle"].UseColor(new Color(255, 48, 154)).UseSecondaryColor(new Color(255, 169, 240));
+                lineshader.Apply(null);
+                Utils.DrawBorderString(Main.spriteBatch, line.text, new Vector2(line.X, line.Y), new Color(255, 169, 240), 1); //draw the tooltip manually
+                Main.spriteBatch.End(); //then end and begin again to make remaining tooltip lines draw in the default way
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.UIScaleMatrix);
+                return false;
             }
+            return true;
         }
 
         public override void AddRecipes()

@@ -23,7 +23,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.timeLeft = 90;
 
             projectile.tileCollide = false;
-            projectile.minion = true;
+            projectile.ranged = true;
         }
 
         public override void AI()
@@ -33,8 +33,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.immune[projectile.owner] = 3;
-            projectile.Kill();
+            projectile.timeLeft = 0;
         }
 
         public override void Kill(int timeLeft)

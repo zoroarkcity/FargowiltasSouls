@@ -4,10 +4,9 @@ using System;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
+using Terraria.ModLoader;
 using System.IO;
-using Microsoft.Xna.Framework.Graphics;
 using FargowiltasSouls.Projectiles.AbomBoss;
 using FargowiltasSouls.Items.Summons;
 
@@ -23,6 +22,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Abominationn");
+            DisplayName.AddTranslation(GameCulture.Chinese, "憎恶");
             Main.npcFrameCount[npc.type] = 4;
         }
 
@@ -37,7 +37,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             npc.height = 120;
             npc.damage = 260;
             npc.defense = 80;
-            npc.lifeMax = 750000;
+            npc.lifeMax = 700000;
             npc.value = Item.buyPrice(1);
             npc.HitSound = SoundID.NPCHit57;
             npc.noGravity = true;
@@ -98,6 +98,19 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             return id > -1 && id < Main.maxProjectiles && Main.projectile[id].active && Main.projectile[id].type == type;
         }
 
+        private void KillProjs()
+        {
+            if (!EModeGlobalNPC.OtherBossAlive(npc.whoAmI))
+            {
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && Main.projectile[i].hostile && i != ritualProj)
+                        Main.projectile[i].Kill();
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && Main.projectile[i].hostile && i != ritualProj)
+                        Main.projectile[i].Kill();
+            }
+        }
+
         public override void AI()
         {
             EModeGlobalNPC.abomBoss = npc.whoAmI;
@@ -121,7 +134,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (npc.localAI[3] == 2 && !ProjectileExists(ritualProj, ModContent.ProjectileType<AbomRitual>()))
-                    ritualProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<AbomRitual>(), npc.damage / 2, 0f, Main.myPlayer, 0f, npc.whoAmI);
+                    ritualProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<AbomRitual>(), npc.damage / 4, 0f, Main.myPlayer, 0f, npc.whoAmI);
 
                 if (!ProjectileExists(ringProj, ModContent.ProjectileType<AbomRitual2>()))
                     ringProj = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<AbomRitual2>(), 0, 0f, Main.myPlayer, 0f, npc.whoAmI);
@@ -200,7 +213,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             if (!NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn")))
                             {
                                 int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
-                                if (n != 200 && Main.netMode == NetmodeID.Server)
+                                if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
                                     NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                             }
                         }
@@ -235,7 +248,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.DelBuff(0);
                     if (++npc.ai[1] > 120)
                     {
-                        if (!SkyManager.Instance["FargowiltasSouls:AbomBoss"].IsActive())
+                        if (FargoSoulsWorld.MasochistMode && !SkyManager.Instance["FargowiltasSouls:AbomBoss"].IsActive())
                             SkyManager.Instance.Activate("FargowiltasSouls:AbomBoss");
 
                         for (int i = 0; i < 5; i++)
@@ -327,7 +340,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             npc.ai[3] = 1;
                             if (Main.netMode != NetmodeID.MultiplayerClient) //phase 2 saucers
                             {
-                                int max = 3;// npc.localAI[3] > 1 ? 5 : 3;
+                                int max = npc.localAI[3] > 1 ? 5 : 3;
                                 for (int i = 0; i < max; i++)
                                 {
                                     float ai2 = i * 2 * (float)Math.PI / max; //rotation offset
@@ -911,7 +924,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                         npc.netUpdate = true;
                         npc.ai[0]++;
                         npc.ai[1] = 0;
-                        npc.velocity.X = (player.Center.X - npc.Center.X) / 90 / 4;
+                        npc.velocity.X = 0f;//(player.Center.X - npc.Center.X) / 90 / 4;
                         npc.velocity.Y = 30;
                     }
                     break;
@@ -1015,14 +1028,9 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                             npc.position.Y = 0;
                         if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.AnyNPCs(ModLoader.GetMod("Fargowiltas").NPCType("Abominationn")))
                         {
-                            for (int i = 0; i < 1000; i++)
-                                if (Main.projectile[i].active && Main.projectile[i].hostile)
-                                    Main.projectile[i].Kill();
-                            for (int i = 0; i < 1000; i++)
-                                if (Main.projectile[i].active && Main.projectile[i].hostile)
-                                    Main.projectile[i].Kill();
+                            KillProjs();
                             int n = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModLoader.GetMod("Fargowiltas").NPCType("Abominationn"));
-                            if (n != 200 && Main.netMode == NetmodeID.Server)
+                            if (n != Main.maxNPCs && Main.netMode == NetmodeID.Server)
                                 NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, n);
                         }
                     }
@@ -1048,12 +1056,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                     npc.ai[2] = 0;
                     npc.ai[3] = 0;
                     npc.netUpdate = true;
-                    for (int i = 0; i < 1000; i++)
-                        if (Main.projectile[i].active && Main.projectile[i].hostile)
-                            Main.projectile[i].Kill();
-                    for (int i = 0; i < 1000; i++)
-                        if (Main.projectile[i].active && Main.projectile[i].hostile)
-                            Main.projectile[i].Kill();
+                    KillProjs();
                 }
                 return true;
             }
@@ -1162,12 +1165,7 @@ namespace FargowiltasSouls.NPCs.AbomBoss
                 npc.localAI[2] = 0;
                 npc.dontTakeDamage = true;
                 npc.netUpdate = true;
-                for (int i = 0; i < 1000; i++)
-                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && Main.projectile[i].hostile)
-                        Main.projectile[i].Kill();
-                for (int i = 0; i < 1000; i++)
-                    if (Main.projectile[i].active && Main.projectile[i].damage > 0 && Main.projectile[i].hostile)
-                        Main.projectile[i].Kill();
+                KillProjs();
             }
             return false;
         }

@@ -7,14 +7,14 @@ using Terraria.ModLoader;
 
 namespace FargowiltasSouls.Items.Weapons.BossDrops
 {
-    public class RefractorBlaster : ModItem
+    public class RefractorBlaster : SoulsItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Refractor Blaster");
             Tooltip.SetDefault("'Modified from the arm of a defeated foe..'");
-            DisplayName.AddTranslation(GameCulture.Chinese, "暗星炮");
-            Tooltip.AddTranslation(GameCulture.Chinese, "'由一个被击败的敌人的武器改装而来..'");
+            DisplayName.AddTranslation(GameCulture.Chinese, "变轨激光炮");
+            Tooltip.AddTranslation(GameCulture.Chinese, "'由一个被击败的敌人的手臂改装而来..'");
         }
 
         public override void SetDefaults()
@@ -25,8 +25,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
             item.useAnimation = 24;
             item.shootSpeed = 15f;
             item.value = 100000;
-            item.rare = 5;
-
+            item.rare = ItemRarityID.Pink;
             //item.mana = 10;
         }
 
@@ -47,7 +46,7 @@ namespace FargowiltasSouls.Items.Weapons.BossDrops
         //cuts out the middle 5: num of 21 means 8 proj on each side
         public static void SplitProj(Projectile projectile, int number)
         {
-            //if its odd, we just keep the original 
+            //if its odd, we just keep the original
             if (number % 2 != 0)
             {
                 number--;

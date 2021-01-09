@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 
 namespace FargowiltasSouls.Items.Accessories.Enchantments
 {
-    public class ForbiddenEnchant : ModItem
+    public class ForbiddenEnchant : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -27,7 +27,7 @@ Any projectiles shot through your storm gain 30% damage
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine tooltipLine in list)
             {
@@ -44,7 +44,7 @@ Any projectiles shot through your storm gain 30% damage
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 150000;
         }
 
@@ -67,7 +67,7 @@ Any projectiles shot through your storm gain 30% damage
 
             recipe.AddRecipeGroup("FargowiltasSouls:AnyScorpion");
             //fennec fox pet
-            
+
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();

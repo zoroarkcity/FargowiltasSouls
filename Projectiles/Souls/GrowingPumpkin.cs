@@ -1,6 +1,4 @@
-﻿using FargowiltasSouls.Buffs.Souls;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,34 +22,19 @@ namespace FargowiltasSouls.Projectiles.Souls
 
         public override void AI()
         {
+            projectile.ai[0]++;
+
             projectile.velocity.Y = projectile.velocity.Y + 0.2f;
             if (projectile.velocity.Y > 16f)
             {
                 projectile.velocity.Y = 16f;
             }
 
-            for (int i = 0; i < 200; i++)
-            {
-                NPC npc = Main.npc[i];
+            Player player = Main.player[projectile.owner];
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
 
-                if (npc.active && !npc.friendly && npc.Hitbox.Intersects(projectile.Hitbox))
-                {
-                    Player player = Main.player[projectile.owner];
-                    FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-
-                    //bonus damage if fully grown
-                    int damage = projectile.frame == 4 ? 50 : 15;
-
-                    if (modPlayer.LifeForce || modPlayer.WizardEnchant)
-                    {
-                        damage *= 2;
-                    }
-
-                    npc.StrikeNPC(modPlayer.HighestDamageTypeScaling(damage), 1, 0);
-                    projectile.Kill();
-                }
-            }
-
+            //bonus damage if fully grown
+            projectile.damage = modPlayer.HighestDamageTypeScaling(projectile.frame == 4 ? 50 : 15);
 
             if (projectile.frame != 4)
             {
@@ -79,12 +62,9 @@ namespace FargowiltasSouls.Projectiles.Souls
             }
             else
             {
-                Player player = Main.player[projectile.owner];
-                FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-
                 if (player.Hitbox.Intersects(projectile.Hitbox))
                 {
-                    int heal = 15;
+                    int heal = 25;
 
                     if (modPlayer.LifeForce || modPlayer.WizardEnchant)
                     {
@@ -93,9 +73,34 @@ namespace FargowiltasSouls.Projectiles.Souls
 
                     player.statLife += heal;
                     player.HealEffect(heal);
+                    Main.PlaySound(SoundID.Item2, player.Center);
                     projectile.Kill();
                 }
             }
+
+            projectile.width = (int)(32 * projectile.scale);
+            projectile.height = (int)(32 * projectile.scale); //make it not float when shrinking
+
+            if (projectile.ai[0] > 1800) //make projectile shrink and disappear after 30 seconds instead of lasting forever
+                projectile.scale -= 0.01f;
+
+            if(projectile.scale <= 0)
+                projectile.Kill();
+        }
+
+        private void SpawnFire(FargoPlayer modPlayer)
+        {
+            int damage = 50;
+
+            if (modPlayer.LifeForce || modPlayer.WizardEnchant)
+            {
+                damage *= 2;
+            }
+
+            //leave some fire behind
+            Projectile[] fires = FargoGlobalProjectile.XWay(5, projectile.Center, ModContent.ProjectileType<PumpkinFlame>(), 3, modPlayer.HighestDamageTypeScaling(damage), 0);
+            Main.PlaySound(SoundID.Item74, projectile.Center);
+
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
@@ -113,6 +118,13 @@ namespace FargowiltasSouls.Projectiles.Souls
 
         public override void Kill(int timeLeft)
         {
+            //dont do fire explosion on death if it dies from scale thing or isnt full grown
+            if (projectile.scale <= 0 || projectile.frame != 4)
+                return;
+
+            Player player = Main.player[projectile.owner];
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+            SpawnFire(modPlayer);
             const int max = 16;
             for (int i = 0; i < max; i++)
             {

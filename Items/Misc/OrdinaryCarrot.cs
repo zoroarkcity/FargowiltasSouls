@@ -1,36 +1,35 @@
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Misc
 {
-	public class OrdinaryCarrot : ModItem
-	{
+    public class OrdinaryCarrot : SoulsItem
+    {
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Ordinary Carrot");
+        {
+            DisplayName.SetDefault("Ordinary Carrot");
             Tooltip.SetDefault(@"Increases night vision
 Minor improvements to all stats
 1 minute duration
 Right click to increase view range while in inventory
 'Plucked from the face of a defeated foe'");
             DisplayName.AddTranslation(GameCulture.Chinese, "普通的胡萝卜");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'从被打败的敌人的脸上拔下来的'
 提高夜视能力
 小幅提升所有属性
 1分钟持续时间
 (失落军团掉落)");
-		}
+        }
 
-		public override void SetDefaults()
-		{
+        public override void SetDefaults()
+        {
             item.width = 20;
             item.height = 20;
             item.maxStack = 30;
-            item.rare = 4;
-            item.useStyle = 2;
+            item.rare = ItemRarityID.LightRed;
+            item.useStyle = ItemUseStyleID.EatingUsing;
             item.useAnimation = 17;
             item.useTime = 17;
             item.consumable = true;

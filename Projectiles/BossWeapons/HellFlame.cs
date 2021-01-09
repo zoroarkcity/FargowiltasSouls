@@ -1,9 +1,8 @@
-﻿using FargowiltasSouls.Buffs.Souls;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using Terraria;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,15 +10,16 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 {
     public class HellFlame : ModProjectile
     {
-        private static int _currentShade = 76; //77;//79;//83;//82;
-
         public int targetID = -1;
         public int searchTimer = 18;
 
+        public override string Texture => "Terraria/Projectile_687";
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hell Flame");
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 2;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
+            Main.projFrames[projectile.type] = Main.projFrames[ProjectileID.LunarFlare];
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -37,9 +37,9 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.width = 16;
             projectile.height = 16;
             projectile.friendly = true;
-            projectile.alpha = 255;
+            projectile.alpha = 0;
             projectile.penetrate = 4;
-            projectile.extraUpdates = 2;
+            projectile.extraUpdates = 1;
             projectile.ranged = true;
             projectile.aiStyle = -1;
             projectile.ignoreWater = true;
@@ -53,65 +53,33 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void AI()
         {
+            if (projectile.localAI[0] == 0)
+            {
+                projectile.localAI[0] = 1;
+                projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
+            }
+
             if (projectile.timeLeft > 120) projectile.timeLeft = 120;
-            if (projectile.ai[1] > 2f)
-            {
-                projectile.ai[1] = 0;
-                Dust dust;
-                int dustIndex;
-                
-                dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.SolarFlare, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100);
-                dust = Main.dust[dustIndex];
-                dust.noGravity = true;
-                dust.shader = GameShaders.Armor.GetSecondaryShader(56, Main.LocalPlayer);
-
-                if (Main.rand.Next(3) != 0) dust.scale *= 2f;
-
-                if (Main.rand.Next(2) == 0)
-                {
-                    dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.SolarFlare, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100);
-                    dust = Main.dust[dustIndex];
-                    dust.noGravity = true;
-                    dust.shader = GameShaders.Armor.GetSecondaryShader(56, Main.LocalPlayer);
-
-                    if (Main.rand.Next(3) != 0) dust.scale *= 2f;
-                }
-
-                if (Main.rand.Next(3) == 0)
-                {
-                    dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Fire, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 0, default(Color),
-                      1f);
-                    dust = Main.dust[dustIndex];
-
-                    if (Main.rand.Next(3) != 0)
-                    {
-                        dust.scale *= 1.5f;
-                        dust.velocity *= 2f;
-                    }
-
-                    dust.velocity *= 1.2f;
-                }
-
-                if (Main.rand.Next(3) == 0)
-                {
-                    dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.Smoke, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 0,
-                      default(Color), .5f);
-                    dust = Main.dust[dustIndex];
-                    if (Main.rand.Next(3) != 0)
-                    {
-                        dust.scale *= 2f;
-                        dust.velocity *= 2f;
-                    }
-
-                    dust.velocity *= 1.2f;
-                }
-            }
-            else
-            {
-                projectile.ai[1] += 1f;
-            }
+            projectile.ai[1]++;
+            projectile.scale = 1f + projectile.ai[1] / 80;
 
             projectile.rotation += 0.3f * projectile.direction;
+
+            projectile.frameCounter++;
+            if (projectile.frameCounter > 17)
+            {
+                projectile.frame++;
+                projectile.frameCounter = 0;
+            }
+
+            if (projectile.frame > 6)
+                projectile.Kill();
+
+            if (projectile.frame > 4)
+            {
+                projectile.alpha = 155;
+                return;
+            }
 
             if (targetID == -1) //no target atm
             {
@@ -122,11 +90,11 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                     int possibleTarget = -1;
                     float closestDistance = 300f;
 
-                    for (int i = 0; i < 200; i++)
+                    for (int i = 0; i < Main.maxNPCs; i++)
                     {
                         NPC npc = Main.npc[i];
 
-                        if (npc.active && npc.chaseable && npc.lifeMax > 5 && !npc.dontTakeDamage && !npc.friendly && !npc.immortal)
+                        if (npc.active && npc.CanBeChasedBy())
                         {
                             float distance = Vector2.Distance(projectile.Center, npc.Center);
 
@@ -150,7 +118,7 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             {
                 NPC npc = Main.npc[targetID];
 
-                if (npc.active && npc.chaseable && !npc.dontTakeDamage /*&& npc.immune[projectile.owner] == 0*/) //target is still valid
+                if (npc.active && npc.CanBeChasedBy()) //target is still valid
                 {
                     Vector2 distance = npc.Center - projectile.Center;
                     double angle = distance.ToRotation() - projectile.velocity.ToRotation();
@@ -203,7 +171,45 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.immune[projectile.owner] = 5;
-            target.AddBuff(ModContent.BuffType<HellFire>(), 300);
+            target.AddBuff(BuffID.OnFire, 180, false);
+            target.AddBuff(BuffID.Oiled, 180, false);
+            target.AddBuff(BuffID.BetsysCurse, 180, false);
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            Texture2D texture2D13 = Main.projectileTexture[projectile.type];
+            int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
+            int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
+            Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
+            Vector2 origin2 = rectangle.Size() / 2f;
+
+            SpriteEffects effects = projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            /*for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i++)
+            {
+                Color color27 = Color.Fuchsia * projectile.Opacity;
+                color27 *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                float scale = projectile.scale;// * 0.9f;
+                scale *= (float)(ProjectileID.Sets.TrailCacheLength[projectile.type] - i) / ProjectileID.Sets.TrailCacheLength[projectile.type];
+                Vector2 value4 = projectile.oldPos[i];
+                float num165 = projectile.oldRot[i] + (Main.GlobalTime * 0.6f);
+                Main.spriteBatch.Draw(texture2D13, value4 + projectile.Size / 2f - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle),
+                    color27, num165, origin2, scale, effects, 0f);
+            }*/
+
+            Color color27 = Color.Fuchsia * projectile.Opacity;
+            float scale = projectile.scale;
+            Vector2 value4 = projectile.Center;
+            if (projectile.velocity != Vector2.Zero && !projectile.velocity.HasNaNs())
+                value4 -= Vector2.Normalize(projectile.velocity) * 4f;
+            float num165 = projectile.rotation + (Main.GlobalTime * 0.6f);
+            Main.spriteBatch.Draw(texture2D13, value4 - Main.screenPosition + new Vector2(0, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle),
+                color27, num165, origin2, scale, effects, 0f);
+
+            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), 
+                Color.Black * projectile.Opacity, projectile.rotation + (Main.GlobalTime * 0.6f), origin2, projectile.scale, effects, 0f);
+            return false;
         }
     }
 }

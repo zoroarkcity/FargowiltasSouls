@@ -2,12 +2,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 using FargowiltasSouls.Items.Misc;
 
 namespace FargowiltasSouls.Items.Accessories.Forces
 {
-    public class CosmoForce : ModItem
+    public class CosmoForce : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -49,14 +48,14 @@ Summons a pet Companion Cube
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = 600000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            //meme speed, solar flare, 
+            //meme speed, solar flare,
             modPlayer.CosmoForce = true;
 
             //meteor shower

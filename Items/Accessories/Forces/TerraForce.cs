@@ -6,7 +6,7 @@ using Terraria.Localization;
 namespace FargowiltasSouls.Items.Accessories.Forces
 {
     [AutoloadEquip(EquipType.Shield)]
-    public class TerraForce : ModItem
+    public class TerraForce : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -44,7 +44,7 @@ Your attacks spawn explosions
 铅中毒随时间造成伤害,并传播给附近敌人
 免疫火焰,坠落伤害和岩浆
 在岩浆中时,获得20点护甲穿透,15%攻击速度,攻击会点燃敌人";
-                
+
             Tooltip.SetDefault(tooltip);
             DisplayName.AddTranslation(GameCulture.Chinese, "泰拉之力");
             Tooltip.AddTranslation(GameCulture.Chinese, tooltip_ch);
@@ -56,7 +56,7 @@ Your attacks spawn explosions
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = 600000;
             //item.shieldSlot = 5;
         }
@@ -81,7 +81,7 @@ Your attacks spawn explosions
             {
                 player.dash = 2;
             }
-            
+
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.IronShield))
             {
                 //shield

@@ -10,6 +10,8 @@ namespace FargowiltasSouls.Projectiles.Minions
     public class DestroyerHead : ModProjectile
     {
         public float modifier;
+        private int syncTimer;
+        private Vector2 mousePos;
 
         public override void SetStaticDefaults()
         {
@@ -37,6 +39,9 @@ namespace FargowiltasSouls.Projectiles.Minions
             writer.Write(projectile.localAI[0]);
             writer.Write(projectile.localAI[1]);
             writer.Write(modifier);
+
+            writer.Write(mousePos.X);
+            writer.Write(mousePos.Y);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
@@ -44,6 +49,14 @@ namespace FargowiltasSouls.Projectiles.Minions
             projectile.localAI[0] = reader.ReadSingle();
             projectile.localAI[1] = reader.ReadSingle();
             modifier = reader.ReadSingle();
+
+            Vector2 buffer;
+            buffer.X = reader.ReadSingle();
+            buffer.Y = reader.ReadSingle();
+            if (projectile.owner != Main.myPlayer)
+            {
+                mousePos = buffer;
+            }
         }
 
         public override Color? GetAlpha(Color lightColor)
@@ -69,6 +82,19 @@ namespace FargowiltasSouls.Projectiles.Minions
 
         public override void AI()
         {
+            Player player = Main.player[projectile.owner];
+            
+            if (player.whoAmI == Main.myPlayer)
+            {
+                mousePos = Main.MouseWorld;
+
+                if (++syncTimer > 20)
+                {
+                    syncTimer = 0;
+                    projectile.netUpdate = true;
+                }
+            }
+
             if (projectile.localAI[0] == 0)
             {
                 projectile.localAI[0] = 1;
@@ -116,17 +142,23 @@ namespace FargowiltasSouls.Projectiles.Minions
             {
                 projectile.ai[aislotHomingCooldown] = homingDelay; //cap this value 
 
-                int foundTarget = HomeOnTarget();
-                if (foundTarget != -1)
+                /*int foundTarget = HomeOnTarget();
+                if (foundTarget != -1 && projectile.Distance(Main.npc[foundTarget].Center) > 50)
                 {
                     NPC n = Main.npc[foundTarget];
                     Vector2 desiredVelocity = projectile.DirectionTo(n.Center) * desiredFlySpeedInPixelsPerFrame;
+                    projectile.velocity = Vector2.Lerp(projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
+                }*/
+
+                if (projectile.Distance(mousePos) > 50)
+                {
+                    Vector2 desiredVelocity = projectile.DirectionTo(mousePos) * desiredFlySpeedInPixelsPerFrame;
                     projectile.velocity = Vector2.Lerp(projectile.velocity, desiredVelocity, 1f / amountOfFramesToLerpBy);
                 }
             }
         }
 
-        private int HomeOnTarget()
+        /*private int HomeOnTarget()
         {
             NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
             if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile))
@@ -152,7 +184,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             }
 
             return selectedTarget;
-        }
+        }*/
 
         public override void Kill(int timeLeft)
         {
@@ -168,7 +200,7 @@ namespace FargowiltasSouls.Projectiles.Minions
             }
             int g = Gore.NewGore(projectile.Center, projectile.velocity / 2, mod.GetGoreSlot("Gores/DestroyerGun/DestroyerHead"), projectile.scale);
             Main.gore[g].timeLeft = 20;
-            Main.PlaySound(4, projectile.Center, 14);
+            Main.PlaySound(SoundID.NPCKilled, projectile.Center, 14);
         }
     }
 }

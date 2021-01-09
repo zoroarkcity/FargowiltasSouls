@@ -28,8 +28,6 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
             projectile.tileCollide = false;
             //projectile.extraUpdates = 5;
             projectile.penetrate = -1;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 0;
             projectile.scale = 1f;
             projectile.alpha = 0;
             projectile.GetGlobalProjectile<FargoGlobalProjectile>().CanSplit = false;
@@ -80,8 +78,8 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
 
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 4; ++i)
-                Dust.NewDust(projectile.position, projectile.width, projectile.height, 31, 0f, 0f, 100, new Color(), 1.5f);
+            //for (int i = 0; i < 4; ++i)
+            //    Dust.NewDust(projectile.position, projectile.width, projectile.height, 31, 0f, 0f, 100, new Color(), 1.5f);
             /*for (int i = 0; i < 4; ++i)
             {
                 int d = Dust.NewDust(projectile.position, projectile.width, projectile.height, 229, 0f, 0f, 0, new Color(), 2.5f);
@@ -93,10 +91,10 @@ namespace FargowiltasSouls.Projectiles.BossWeapons
                 Main.dust[d].noGravity = true;
                 Main.dust[d].noLight = true;
             }*/
-            int i2 = Gore.NewGore(projectile.position + new Vector2(projectile.width * Main.rand.Next(100) / 100f, projectile.height * Main.rand.Next(100) / 100f) - Vector2.One * 10f, new Vector2(), Main.rand.Next(61, 64), 1f);
+            /*int i2 = Gore.NewGore(projectile.position + new Vector2(projectile.width * Main.rand.Next(100) / 100f, projectile.height * Main.rand.Next(100) / 100f) - Vector2.One * 10f, new Vector2(), Main.rand.Next(61, 64), 1f);
             Main.gore[i2].velocity *= 0.3f;
             Main.gore[i2].velocity.X += Main.rand.Next(-10, 11) * 0.05f;
-            Main.gore[i2].velocity.Y += Main.rand.Next(-10, 11) * 0.05f;
+            Main.gore[i2].velocity.Y += Main.rand.Next(-10, 11) * 0.05f;*/
         }
 
         public override Color? GetAlpha(Color lightColor)

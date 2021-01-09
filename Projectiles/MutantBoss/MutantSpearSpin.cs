@@ -36,27 +36,6 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
 
         public override void AI()
         {
-            //dust!
-            int dustId = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width / 2, projectile.height + 5, 15, projectile.velocity.X * 0.2f,
-                projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-            Main.dust[dustId].noGravity = true;
-            int dustId3 = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y + 2f), projectile.width / 2, projectile.height + 5, 15, projectile.velocity.X * 0.2f,
-                projectile.velocity.Y * 0.2f, 100, default(Color), 2f);
-            Main.dust[dustId3].noGravity = true;
-
-            if (++projectile.localAI[0] > 8)
-            {
-                projectile.localAI[0] = 0;
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                    Projectile.NewProjectile(projectile.position + Main.rand.NextVector2Square(0f, projectile.width), Vector2.UnitX.RotatedByRandom(Math.PI) * 6f, ProjectileID.PhantasmalEye, projectile.damage, 0f, projectile.owner);
-            }
-
-            if (--projectile.localAI[1] < 0f)
-            {
-                projectile.localAI[1] = 20f;
-                Main.PlaySound(SoundID.Item1, projectile.Center);
-            }
-
             NPC mutant = Main.npc[(int)projectile.ai[0]];
             if (mutant.active && mutant.type == mod.NPCType("MutantBoss") && (mutant.ai[0] == 4 || mutant.ai[0] == 13 || mutant.ai[0] == 21))
             {
@@ -66,6 +45,26 @@ namespace FargowiltasSouls.Projectiles.MutantBoss
             else
             {
                 projectile.Kill();
+            }
+
+            if (++projectile.localAI[0] > 8)
+            {
+                projectile.localAI[0] = 0;
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Vector2 speed = Vector2.UnitY.RotatedByRandom(Math.PI / 2) * Main.rand.NextFloat(6f, 9f);
+                    if (mutant.Center.Y < Main.player[mutant.target].Center.Y)
+                        speed *= -1f;
+                    float ai1 = 120;
+                    Projectile.NewProjectile(projectile.position + Main.rand.NextVector2Square(0f, projectile.width),
+                        speed, ModContent.ProjectileType<MutantEyeHoming>(), projectile.damage, 0f, projectile.owner, mutant.target, ai1);
+                }
+            }
+
+            if (--projectile.localAI[1] < 0f)
+            {
+                projectile.localAI[1] = 20f;
+                Main.PlaySound(SoundID.Item1, projectile.Center);
             }
         }
 

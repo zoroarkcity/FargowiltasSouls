@@ -6,8 +6,10 @@ using Terraria.Localization;
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
     [AutoloadEquip(EquipType.Shield)]
-    public class SlimyShield : ModItem
+    public class SlimyShield : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Slimy Shield");
@@ -27,7 +29,7 @@ When you land after a jump, slime will fall from the sky over your cursor
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.value = Item.sellPrice(0, 1);
             item.defense = 2;
         }
@@ -35,7 +37,12 @@ When you land after a jump, slime will fall from the sky over your cursor
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.buffImmune[BuffID.Slimed] = true;
-            player.maxFallSpeed *= 2f;
+
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.SlimyFalling))
+            {
+                player.maxFallSpeed *= 1.5f;
+            }
+
             player.GetModPlayer<FargoPlayer>().SlimyShield = true;
         }
     }

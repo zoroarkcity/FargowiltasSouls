@@ -1,18 +1,18 @@
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class SparklingAdoration : ModItem
+    public class SparklingAdoration : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sparkling Adoration");
             Tooltip.SetDefault(@"Grants immunity to Lovestruck and Fake Hearts
-Graze projectiles to gain up to 30% increased critical damage
+Graze projectiles to gain up to 25% increased critical damage
 Critical damage bonus decreases over time and is fully lost on hit
 Your attacks periodically summon life-draining hearts
 'With all of your emotion!'");
@@ -24,7 +24,7 @@ Your attacks periodically summon life-draining hearts
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.value = Item.sellPrice(0, 3);
         }
 

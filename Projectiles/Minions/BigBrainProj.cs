@@ -11,170 +11,136 @@ namespace FargowiltasSouls.Projectiles.Minions
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Big Brain Proj");
+            DisplayName.SetDefault("Big Brain");
             Main.projFrames[projectile.type] = 12;
-            ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-            ProjectileID.Sets.Homing[projectile.type] = true;
-            ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
         }
-
         public override void SetDefaults()
         {
+            projectile.width = 74;
+            projectile.height = 70;
             projectile.netImportant = true;
-            projectile.width = 110;
-            projectile.height = 110;
             projectile.friendly = true;
-            projectile.minion = true;
-            projectile.minionSlots = 2;
+            projectile.minionSlots = 1f;
+            projectile.timeLeft = 18000;
+            ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
+            ProjectileID.Sets.Homing[projectile.type] = true;
+            ProjectileID.Sets.MinionTargettingFeature[base.projectile.type] = true;
             projectile.penetrate = -1;
-            projectile.timeLeft = 60;
+            projectile.minion = true;
             projectile.tileCollide = false;
-            projectile.ignoreWater = true;
+            projectile.alpha = 0;
+            /*projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = 10;*/
         }
-
         public override void AI()
         {
             Player player = Main.player[projectile.owner];
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-            if (player.active && !player.dead && player.GetModPlayer<FargoPlayer>().BigBrainMinion)
-                projectile.timeLeft = 2;
-
-            if (projectile.ai[0] >= 0 && projectile.ai[0] < 200) //has target
-            {
-                NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
-                if (minionAttackTargetNpc != null && projectile.ai[0] != minionAttackTargetNpc.whoAmI && minionAttackTargetNpc.CanBeChasedBy(projectile))
-                    projectile.ai[0] = minionAttackTargetNpc.whoAmI;
-
-                NPC npc = Main.npc[(int)projectile.ai[0]];
-                if (npc.CanBeChasedBy(projectile))
-                {
-                    if (projectile.Distance(npc.Center) > 300)
-                    {
-                        Movement(npc.Center, 0.5f);
-                    }
-
-                    if (++projectile.localAI[0] > 100)
-                    {
-                        projectile.localAI[0] = 0;
-                        if (projectile.owner == Main.myPlayer)
-                            Projectile.NewProjectile(projectile.Center, projectile.DirectionTo(npc.Center) * 16, mod.ProjectileType("CreeperProj2"), projectile.damage, projectile.knockBack, projectile.owner, 0, projectile.ai[0]);
-                    }
-
-                    if (++projectile.localAI[1] > 35)
-                    {
-                        projectile.localAI[1] = 0;
-                        if (projectile.owner == Main.myPlayer)
-                            Projectile.NewProjectile(projectile.Center, projectile.DirectionTo(npc.Center) * 16, mod.ProjectileType("BigBrainIllusion"), projectile.damage, projectile.knockBack, projectile.owner);
-                    }
-                }
-                else //forget target
-                {
-                    projectile.ai[0] = HomeOnTarget();
-                    projectile.netUpdate = true;
-                }
-            }
-            else //no target
-            {
-                Vector2 targetPos = player.Center;
-                if (projectile.Distance(targetPos) > 3000)
-                    projectile.Center = player.Center;
-                else if (projectile.Distance(targetPos) > 300)
-                    Movement(targetPos, 0.5f);
-
-                if (++projectile.localAI[1] > 6)
-                {
-                    projectile.localAI[1] = 0;
-                    projectile.ai[0] = HomeOnTarget();
-                    if (projectile.ai[0] != -1)
-                        projectile.netUpdate = true;
-                }
-            }
-
-            projectile.rotation = projectile.velocity.X * 0.02f;
+            if (player.dead) modPlayer.BigBrainMinion = false;
+            if (modPlayer.BigBrainMinion) projectile.timeLeft = 2;
 
             projectile.frameCounter++;
-            if (projectile.frameCounter >= 5)
+            if (projectile.frameCounter >= 8)
             {
                 projectile.frameCounter = 0;
                 projectile.frame = (projectile.frame + 1) % 12;
             }
-        }
 
-        private void Movement(Vector2 targetPos, float speedModifier)
-        {
-            if (projectile.Center.X < targetPos.X)
-            {
-                projectile.velocity.X += speedModifier;
-                if (projectile.velocity.X < 0)
-                    projectile.velocity.X += speedModifier * 2;
-            }
-            else
-            {
-                projectile.velocity.X -= speedModifier;
-                if (projectile.velocity.X > 0)
-                    projectile.velocity.X -= speedModifier * 2;
-            }
-            if (projectile.Center.Y < targetPos.Y)
-            {
-                projectile.velocity.Y += speedModifier;
-                if (projectile.velocity.Y < 0)
-                    projectile.velocity.Y += speedModifier * 2;
-            }
-            else
-            {
-                projectile.velocity.Y -= speedModifier;
-                if (projectile.velocity.Y > 0)
-                    projectile.velocity.Y -= speedModifier * 2;
-            }
-            if (Math.Abs(projectile.velocity.X) > 24)
-                projectile.velocity.X = 24 * Math.Sign(projectile.velocity.X);
-            if (Math.Abs(projectile.velocity.Y) > 24)
-                projectile.velocity.Y = 24 * Math.Sign(projectile.velocity.Y);
-        }
+            projectile.ai[0] += 0.4f;
+            projectile.alpha = (int)(Math.Cos(projectile.ai[0] * MathHelper.TwoPi / 180) * 60) + 60;
 
-        private int HomeOnTarget()
-        {
+            if (projectile.minionSlots <= 6) //projectile scale increases with minion slots consumed, caps at 6 slots
+                projectile.scale = 0.75f + projectile.minionSlots / 12;
+            else
+                projectile.scale = 1.25f;
+
+            bool targetting = false; //targetting code, prioritize targetted npcs, then look for closest if none is found
+            NPC targetnpc = null;
             NPC minionAttackTargetNpc = projectile.OwnerMinionAttackTargetNPC;
-            if (minionAttackTargetNpc != null && minionAttackTargetNpc.CanBeChasedBy(projectile))
-                return minionAttackTargetNpc.whoAmI;
-
-            const float homingMaximumRangeInPixels = 2000;
-            int selectedTarget = -1;
-            for (int i = 0; i < Main.maxNPCs; i++)
+            if (minionAttackTargetNpc != null && minionAttackTargetNpc.CanBeChasedBy((object)this, false))
             {
-                NPC n = Main.npc[i];
-                if (n.CanBeChasedBy(projectile))
+                Vector2 distancetotarget = minionAttackTargetNpc.Center - projectile.Center;
+                if (distancetotarget.Length() < 1500)
                 {
-                    float distance = projectile.Distance(n.Center);
-                    if (distance <= homingMaximumRangeInPixels &&
-                        (
-                            selectedTarget == -1 || //there is no selected target
-                            projectile.Distance(Main.npc[selectedTarget].Center) > distance) //or we are closer to this target than the already selected target
-                    )
-                        selectedTarget = i;
+                    targetnpc = minionAttackTargetNpc;
+                    targetting = true;
+                }
+            }
+            else if (!targetting)
+            {
+                float distancemax = 1500;
+                for (int index = 0; index < 200; ++index)
+                {
+                    if (Main.npc[index].CanBeChasedBy((object)this, false))
+                    {
+                        Vector2 distancetotarget = Main.npc[index].Center - projectile.Center;
+                        if (distancetotarget.Length() < distancemax)
+                        {
+                            distancemax = distancetotarget.Length();
+                            targetnpc = Main.npc[index];
+                            targetting = true;
+                        }
+                    }
                 }
             }
 
-            return selectedTarget;
-        }
+            if(targetting)
+            {
+                projectile.localAI[0]++;
+                if (projectile.localAI[0] > 7)
+                {
+                    Vector2 spawnpos = targetnpc.Center + Main.rand.NextVector2CircularEdge(150, 150);
+                    Main.PlaySound(SoundID.Item, (int)spawnpos.X, (int)spawnpos.Y, 104, 0.5f, -0.2f);
+                    Vector2 totarget = Vector2.Normalize(targetnpc.Center - spawnpos);
+                    int p = Projectile.NewProjectile(spawnpos, totarget * 12, mod.ProjectileType("BigBrainIllusion"), (int)(projectile.damage * projectile.scale), projectile.knockBack, projectile.owner); //damage directly proportional to projectile scale, change later???
+                    if (p < 1000)
+                    {
+                        Main.projectile[p].scale = projectile.scale * 0.75f;
+                        Main.projectile[p].netUpdate = true; //sync because randomized spawn position
+                    }
+                    projectile.localAI[0] = 0;
+                }
+            }
 
+            projectile.Center = player.Center + new Vector2(0, (200 + projectile.alpha) * projectile.scale).RotatedBy(projectile.ai[1] + projectile.ai[0]/MathHelper.TwoPi);
+        }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (!Main.player[projectile.owner].HeldItem.summon)
                 damage /= 4;
+
+            damage = (int) (damage * projectile.scale);
+        }
+
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            for(int i = 0; i <= 3; i++) //simulate collision of 4 projectiles orbiting because i didnt want to make orbiting illusions seperate projectiles, also makes collision with scale changes better
+            {
+                Player player = Main.player[projectile.owner];
+                Vector2 newCenter = player.Center + new Vector2(0, (200 + projectile.alpha) * projectile.scale).RotatedBy((i * MathHelper.PiOver2) + projectile.ai[1] + projectile.ai[0] / MathHelper.TwoPi);
+                int width = (int)(projectile.scale * projectile.width);
+                int height = (int)(projectile.scale * projectile.height);
+                Rectangle newprojhitbox = new Rectangle((int)newCenter.X - width/2, (int)newCenter.Y - height/2, width, height);
+                if (newprojhitbox.Intersects(targetHitbox))
+                    return true;
+            }
+            return false;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            Texture2D texture2D13 = Main.projectileTexture[projectile.type];
-            int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
-            int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
-            Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
-            Vector2 origin2 = rectangle.Size() / 2f;
+            Texture2D texture = Main.projectileTexture[projectile.type];
+            int frameheight = texture.Height / Main.projFrames[projectile.type];
+            Rectangle rectangle = new Rectangle(0, projectile.frame * frameheight, texture.Width, frameheight);
+            Main.spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, rectangle.Size() / 2, projectile.scale, SpriteEffects.None, 0);
+            for(int i = 1; i <= 3; i++)
+            {
+                Player player = Main.player[projectile.owner];
+                Vector2 newCenter = player.Center + new Vector2(0, (200 + projectile.alpha) * projectile.scale).RotatedBy((i * MathHelper.PiOver2) + projectile.ai[1] + projectile.ai[0] / MathHelper.TwoPi);
+                Color newcolor = Color.Lerp(lightColor, Color.Transparent, 0.85f);
 
-            SpriteEffects effects = projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-
-            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, effects, 0f);
+                Main.spriteBatch.Draw(texture, newCenter - Main.screenPosition, new Rectangle?(rectangle), newcolor, projectile.rotation, rectangle.Size() / 2, projectile.scale, SpriteEffects.None, 0);
+            }
             return false;
         }
     }

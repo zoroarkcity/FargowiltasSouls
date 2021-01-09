@@ -5,8 +5,10 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Masomode
 {
-    public class ChaliceoftheMoon : ModItem
+    public class ChaliceoftheMoon : SoulsItem
     {
+        public override bool Eternity => true;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Chalice of the Moon");
@@ -15,8 +17,8 @@ Grants immunity to Swarming, Atrophied, Jammed, Reverse Mana Flow, and Antisocia
 Increases life regeneration
 Press down in the air to fastfall
 Fastfall will create a fiery eruption on impact after falling a certain distance
-You periodically fire additional attacks depending on weapon type
-You erupt into spiky balls and Ancient Visions when injured
+When you land after a jump, you create a burst of boulders
+You fire additional attacks depending on weapon type and erupt into Ancient Visions when injured
 Summons a friendly Cultist and plant to fight at your side
 'The moon smiles'");
             DisplayName.AddTranslation(GameCulture.Chinese, "月之杯");
@@ -36,7 +38,7 @@ Summons a friendly Cultist and plant to fight at your side
             item.width = 20;
             item.height = 20;
             item.accessory = true;
-            item.rare = 9;
+            item.rare = ItemRarityID.Cyan;
             item.value = Item.sellPrice(0, 7);
             item.defense = 8;
         }

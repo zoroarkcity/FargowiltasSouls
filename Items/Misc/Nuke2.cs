@@ -2,11 +2,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Misc
 {
-    public class Nuke2 : ModItem
+    public class Nuke2 : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -22,7 +21,7 @@ namespace FargowiltasSouls.Items.Misc
             item.height = 32;
             item.maxStack = 99;
             item.consumable = true;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.expert = true;
             item.UseSound = SoundID.Item1;
             item.useAnimation = 20;

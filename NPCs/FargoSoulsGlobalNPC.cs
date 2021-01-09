@@ -5,12 +5,12 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using FargowiltasSouls.Buffs.Masomode;
-using FargowiltasSouls.Items.Misc;
 using FargowiltasSouls.Items.Weapons.BossDrops;
 using FargowiltasSouls.NPCs.Critters;
 using FargowiltasSouls.Projectiles.Souls;
 using FargowiltasSouls.Buffs.Souls;
 using Fargowiltas.NPCs;
+using FargowiltasSouls.Items.Weapons.Misc;
 
 namespace FargowiltasSouls.NPCs
 {
@@ -58,8 +58,7 @@ namespace FargowiltasSouls.NPCs
 
         private int necroDamage = 0;
         
-
-        private int squireCounter = 0;
+        
         public bool SpecialEnchantImmune;
 
         public static bool Revengeance => CalamityMod.World.CalamityWorld.revenge;
@@ -98,6 +97,13 @@ namespace FargowiltasSouls.NPCs
             {
                 switch (npc.type)
                 {
+                    case NPCID.TheDestroyer:
+                    case NPCID.TheDestroyerBody:
+                    case NPCID.TheDestroyerTail:
+                        npc.buffImmune[ModContent.BuffType<TimeFrozen>()] = false;
+                        npc.buffImmune[BuffID.Chilled] = false;
+                        break;
+
                     case NPCID.WallofFlesh:
                     case NPCID.WallofFleshEye:
                     case NPCID.MoonLordCore:
@@ -115,8 +121,12 @@ namespace FargowiltasSouls.NPCs
 
                     case NPCID.Squirrel:
                     case NPCID.SquirrelRed:
-                        if (Main.rand.Next(8) == 0)
-                            npc.Transform(ModContent.NPCType<TophatSquirrelCritter>());
+                        if (!npc.SpawnedFromStatue)
+                        {
+                            int p = Player.FindClosest(npc.position, npc.width, npc.height);
+                            if ((p == -1 || npc.Distance(Main.player[p].Center) > 800) && Main.rand.Next(5) == 0)
+                                npc.Transform(ModContent.NPCType<TophatSquirrelCritter>());
+                        }
                         break;
 
                     default:
@@ -598,15 +608,15 @@ namespace FargowiltasSouls.NPCs
 
             if (modPlayer.NecroEnchant && SoulConfig.Instance.GetValue(SoulConfig.Instance.NecroGuardian) && !npc.boss && modPlayer.NecroCD == 0 && player.ownedProjectileCounts[ModContent.ProjectileType<NecroGrave>()] < 5)
             {
-                Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, npc.lifeMax / 5);
+                Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, npc.lifeMax / 4);
 
                 if (modPlayer.ShadowForce || modPlayer.WizardEnchant)
                 {
-                    modPlayer.NecroCD = 30;
+                    modPlayer.NecroCD = 15;
                 }
                 else
                 {
-                    modPlayer.NecroCD = 60;
+                    modPlayer.NecroCD = 30;
                 }
             }
 
@@ -680,6 +690,11 @@ namespace FargowiltasSouls.NPCs
                 Item.NewItem(npc.Hitbox, ModContent.ItemType<Patreon.Catsounds.MedallionoftheFallenKing>());
             }
 
+            if (SoulConfig.Instance.PatreonPlant && npc.type == NPCID.Dryad && Main.bloodMoon && player.ZoneJungle)
+            {
+                Item.NewItem(npc.Hitbox, ModContent.ItemType<Patreon.LaBonez.PiranhaPlantVoodooDoll>());
+            }
+
             //boss drops
             if (Main.rand.Next(FargoSoulsWorld.MasochistMode ? 3 : 10) == 0)
             {
@@ -690,7 +705,7 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.EyeofCthulhu:
-                        Item.NewItem(npc.Hitbox, ModContent.ItemType<EyeFlail>());
+                        Item.NewItem(npc.Hitbox, ModContent.ItemType<LeashOfCthulhu>());
                         break;
 
                     case NPCID.EaterofWorldsHead:
@@ -699,7 +714,7 @@ namespace FargowiltasSouls.NPCs
                         bool dropItems = true;
                         for (int i = 0; i < 200; i++)
                         {
-                            if (Main.npc[i].active && i != npc.whoAmI && (Main.npc[i].type == 13 || Main.npc[i].type == 14 || Main.npc[i].type == 15))
+                            if (Main.npc[i].active && i != npc.whoAmI && (Main.npc[i].type == NPCID.EaterofWorldsHead || Main.npc[i].type == NPCID.EaterofWorldsBody || Main.npc[i].type == NPCID.EaterofWorldsTail))
                             {
                                 dropItems = false;
                                 break;
@@ -760,6 +775,20 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.DukeFishron:
                         Item.NewItem(npc.Hitbox, ModContent.ItemType<FishStick>());
                         break;
+
+                    case NPCID.DD2Betsy:
+                        Item.NewItem(npc.Hitbox, ModContent.ItemType<DragonBreath>());
+                        break;
+                }
+            }
+
+            if (npc.type == NPCID.BigMimicJungle)
+            {
+                switch (Main.rand.Next(3))
+                {
+                    case 0: Item.NewItem(npc.Hitbox, ModContent.ItemType<Vineslinger>()); break;
+                    case 1: Item.NewItem(npc.Hitbox, ModContent.ItemType<Mahoguny>()); break;
+                    case 2: Item.NewItem(npc.Hitbox, ModContent.ItemType<OvergrownKey>()); break;
                 }
             }
 
@@ -871,7 +900,7 @@ namespace FargowiltasSouls.NPCs
                 {
                     necroDamage = 0;
 
-                    Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, npc.lifeMax / 50);
+                    Projectile.NewProjectile(npc.Center, new Vector2(0, -3), ModContent.ProjectileType<NecroGrave>(), 0, 0, player.whoAmI, npc.lifeMax / 40);
                 }
             }
         }
@@ -926,81 +955,6 @@ namespace FargowiltasSouls.NPCs
 
             //normal damage calc
             return true;
-        }
-
-        public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
-        {
-            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-
-            if ((modPlayer.SquireEnchant || modPlayer.ValhallaEnchant) && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaEffect)
-                 && !(player.HasBuff(ModContent.BuffType<ValhallaBuff>()) || player.HasBuff(ModContent.BuffType<SquireBuff>())))
-            {
-                squireCounter += 5;
-
-                if (squireCounter >= 250)
-                {
-                    if (modPlayer.ValhallaEnchant)
-                    {
-                        int duration = 300;
-
-                        if (modPlayer.WillForce || modPlayer.WizardEnchant)
-                        {
-                            duration = 480;
-                        }
-
-                        player.AddBuff(ModContent.BuffType<ValhallaBuff>(), duration);
-                    }
-                    else if (modPlayer.SquireEnchant)
-                    {
-                        player.AddBuff(ModContent.BuffType<SquireBuff>(), 300);
-                    }
-
-                    squireCounter = 0;
-                }
-            }
-        }
-
-        public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
-        {
-            Player player = Main.player[projectile.owner];
-            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
-
-            if ((modPlayer.SquireEnchant || modPlayer.ValhallaEnchant) && SoulConfig.Instance.GetValue(SoulConfig.Instance.ValhallaEffect))
-            {
-                if (player.HasBuff(ModContent.BuffType<ValhallaBuff>()) && npc.immune[projectile.owner] > 2)
-                {
-                    npc.immune[projectile.owner] = 2;
-                }
-                else if (player.HasBuff(ModContent.BuffType<SquireBuff>()) && npc.immune[projectile.owner] > 5)
-                {
-                    npc.immune[projectile.owner] = 5;
-                }
-                else
-                {
-                    squireCounter++;
-
-                    if (squireCounter >= 250)
-                    {
-                        if (modPlayer.ValhallaEnchant)
-                        {
-                            int duration = 300;
-
-                            if (modPlayer.WillForce || modPlayer.WizardEnchant)
-                            {
-                                duration = 480;
-                            }
-
-                            player.AddBuff(ModContent.BuffType<ValhallaBuff>(), duration);
-                        }
-                        else if (modPlayer.SquireEnchant)
-                        {
-                            player.AddBuff(ModContent.BuffType<SquireBuff>(), 300);
-                        }
-
-                        squireCounter = 0;
-                    }
-                }
-            }
         }
 
         public override void SetupShop(int type, Chest shop, ref int nextSlot)

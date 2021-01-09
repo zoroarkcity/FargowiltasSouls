@@ -1,27 +1,25 @@
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Misc
 {
-	public class BrokenHilt : ModItem
-	{
+    public class BrokenHilt : SoulsItem
+    {
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Broken Hilt");
-		}
-
-		public override void SetDefaults()
-		{
-            item.width = 30;
-            item.height = 30;
-            item.rare = 11;
+        {
+            DisplayName.SetDefault("Broken Hilt");
         }
 
-        public override void ModifyTooltips(List<TooltipLine> list)
+        public override void SetDefaults()
+        {
+            item.width = 30;
+            item.height = 30;
+            item.rare = ItemRarityID.Purple;
+        }
+
+        public override void SafeModifyTooltips(List<TooltipLine> list)
         {
             foreach (TooltipLine line2 in list)
             {

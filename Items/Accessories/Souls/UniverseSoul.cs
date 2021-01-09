@@ -1,15 +1,12 @@
-using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using Fargowiltas.Items.Tiles;
 
 namespace FargowiltasSouls.Items.Accessories.Souls
 {
-    public class UniverseSoul : ModItem
+    public class UniverseSoul : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -48,6 +45,7 @@ Effects of Sniper Scope, Celestial Cuffs and Mana Flower
 拥有狙击镜, 星体手铐和魔力花的效果";
 
             Tooltip.SetDefault(tooltip);
+            NumFrames = 10;
 
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(6, 10));
             DisplayName.AddTranslation(GameCulture.Chinese, "寰宇之魂");
@@ -62,7 +60,6 @@ Effects of Sniper Scope, Celestial Cuffs and Mana Flower
             item.value = 5000000;
             item.rare = -12;
             item.expert = true;
-
             ItemID.Sets.ItemNoGravity[item.type] = true;
         }
 
@@ -73,7 +70,7 @@ Effects of Sniper Scope, Celestial Cuffs and Mana Flower
             modPlayer.AllCritUp(25);
             //use speed, velocity, debuffs, crit dmg, mana up, double knockback
             modPlayer.UniverseEffect = true;
-            
+
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.UniverseAttackSpeed))
             {
                 modPlayer.AttackSpeed += .5f;
@@ -96,6 +93,25 @@ Effects of Sniper Scope, Celestial Cuffs and Mana Flower
             player.manaFlower = true;
             player.manaMagnet = true;
             player.magicCuffs = true;
+
+            if (ModLoader.GetMod("FargowiltasSoulsDLC") != null)
+            {
+                Mod fargoDLC = ModLoader.GetMod("FargowiltasSoulsDLC");
+
+                if (ModLoader.GetMod("ThoriumMod") != null)
+                {
+                    fargoDLC.GetItem("GuardianAngelsSoul").UpdateAccessory(player, hideVisual);
+                    fargoDLC.GetItem("BardSoul").UpdateAccessory(player, hideVisual);
+                }
+                if (ModLoader.GetMod("CalamityMod") != null)
+                {
+                    fargoDLC.GetItem("RogueSoul").UpdateAccessory(player, hideVisual);
+                }
+                if (ModLoader.GetMod("DBZMOD") != null)
+                {
+                    fargoDLC.GetItem("KiSoul").UpdateAccessory(player, hideVisual);
+                }
+            }
         }
 
         public override void AddRecipes()

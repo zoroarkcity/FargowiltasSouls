@@ -5,7 +5,7 @@ using Terraria.Localization;
 
 namespace FargowiltasSouls.Items.Accessories.Forces
 {
-    public class EarthForce : ModItem
+    public class EarthForce : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -14,16 +14,16 @@ namespace FargowiltasSouls.Items.Accessories.Forces
             Tooltip.SetDefault(
 @"25% chance for your projectiles to explode into shards
 20% increased weapon use speed
-Greatly increases life regeneration after striking an enemy 
+Greatly increases life regeneration after striking an enemy
 You spawn an orb of damaging life energy every 80 life regenerated
-Flower petals will cause extra damage to your target 
+Flower petals will cause extra damage to your target
 Damaging debuffs deal 5x damage
 One of your projectiles will split into 3 every 3/4 of a second
 Briefly become invulnerable after striking an enemy
 'Gaia's blessing shines upon you'");
 
             DisplayName.AddTranslation(GameCulture.Chinese, "大地之力");
-            Tooltip.AddTranslation(GameCulture.Chinese, 
+            Tooltip.AddTranslation(GameCulture.Chinese,
 @"'盖亚的祝福照耀着你'
 你的抛射物有25%概率爆炸成碎片
 增加25%武器使用速度
@@ -42,7 +42,7 @@ Briefly become invulnerable after striking an enemy
             item.height = 20;
             item.accessory = true;
             ItemID.Sets.ItemNoGravity[item.type] = true;
-            item.rare = 11;
+            item.rare = ItemRarityID.Purple;
             item.value = 600000;
         }
 
@@ -52,7 +52,7 @@ Briefly become invulnerable after striking an enemy
             modPlayer.EarthForce = true;
             //mythril
             modPlayer.MythrilEnchant = true;
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MythrilSpeed))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MythrilSpeed) && !modPlayer.DisruptedFocus)
                 modPlayer.AttackSpeed += .2f;
             //shards
             modPlayer.CobaltEnchant = true;

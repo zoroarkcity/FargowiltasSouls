@@ -1,8 +1,9 @@
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace FargowiltasSouls.Items.Tiles
 {
-    public class MutantStatueGift : ModItem
+    public class MutantStatueGift : SoulsItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,10 +17,10 @@ namespace FargowiltasSouls.Items.Tiles
             item.maxStack = 99;
             item.useTurn = true;
             item.autoReuse = true;
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.useAnimation = 15;
             item.useTime = 15;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.consumable = true;
             item.createTile = mod.TileType("MutantStatueGift");
         }

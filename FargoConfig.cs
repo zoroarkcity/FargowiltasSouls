@@ -14,19 +14,21 @@ namespace FargowiltasSouls
 
         private void SetAll(bool val)
         {
+            //bool backgroundValue = MutantBackground;
             bool recolorsValue = BossRecolors;
             IEnumerable<FieldInfo> configs = typeof(SoulConfig).GetFields(BindingFlags.Public | BindingFlags.Instance).Where(i => i.FieldType == true.GetType());
             foreach (FieldInfo config in configs)
             {
                 config.SetValue(this, val);
             }
+            //MutantBackground = backgroundValue;
             BossRecolors = recolorsValue;
 
-            IEnumerable<FieldInfo> walletConfigs = typeof(WalletToggles).GetFields(BindingFlags.Public | BindingFlags.Instance).Where(i => i.FieldType == true.GetType());
+            /*IEnumerable<FieldInfo> walletConfigs = typeof(WalletToggles).GetFields(BindingFlags.Public | BindingFlags.Instance).Where(i => i.FieldType == true.GetType());
             foreach (FieldInfo walletConfig in walletConfigs)
             {
                 walletConfig.SetValue(walletToggles, val);
-            }
+            }*/
 
             /*IEnumerable<FieldInfo> thoriumConfigs = typeof(ThoriumToggles).GetFields(BindingFlags.Public | BindingFlags.Instance).Where(i => i.FieldType == true.GetType());
             foreach (FieldInfo thoriumConfig in thoriumConfigs)
@@ -351,6 +353,10 @@ namespace FargowiltasSouls
         #region maso accessories
 
         [Header("$Mods.FargowiltasSouls.MasoHeader")]
+        /*[Label("$Mods.FargowiltasSouls.MasoBossBG")]
+        [DefaultValue(true)]
+        public bool MutantBackground;*/
+
         [Label("$Mods.FargowiltasSouls.MasoBossRecolors")]
         [DefaultValue(true)]
         public bool BossRecolors;
@@ -375,6 +381,10 @@ namespace FargowiltasSouls
         [Label("$Mods.FargowiltasSouls.MasoSlimeConfig")]
         [DefaultValue(true)]
         public bool SlimyShield;
+
+        [Label("$Mods.FargowiltasSouls.SlimeFallingConfig")]
+        [DefaultValue(true)]
+        public bool SlimyFalling;
 
         [Label("$Mods.FargowiltasSouls.MasoEyeConfig")]
         [DefaultValue(true)]
@@ -426,8 +436,8 @@ namespace FargowiltasSouls
         public bool TribalCharm;
 
 
-        [Label("$Mods.FargowiltasSouls.WalletHeader")]
-        public WalletToggles walletToggles = new WalletToggles();
+        /*[Label("$Mods.FargowiltasSouls.WalletHeader")]
+        public WalletToggles walletToggles = new WalletToggles();*/
 
         [Header("$Mods.FargowiltasSouls.DubiousHeader")]
         [Label("$Mods.FargowiltasSouls.MasoLightningConfig")]
@@ -465,9 +475,9 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool LihzahrdBoxGeysers;
 
-        [Label("$Mods.FargowiltasSouls.MasoSpikeConfig")]
+        [Label("$Mods.FargowiltasSouls.MasoBoulderConfig")]
         [DefaultValue(true)]
-        public bool LihzahrdBoxSpikyBalls;
+        public bool LihzahrdBoxBoulders;
 
         [Label("$Mods.FargowiltasSouls.MasoCelestConfig")]
         [DefaultValue(true)]
@@ -788,6 +798,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool PatreonFishron;
 
+        [Label("$Mods.FargowiltasSouls.PatreonPlant")]
+        [DefaultValue(true)]
+        public bool PatreonPlant;
+
 
 
 
@@ -824,7 +838,7 @@ namespace FargowiltasSouls
         }
     }
 
-    public class WalletToggles
+    /*public class WalletToggles
     {
         [Label("Warding")]
         [DefaultValue(true)]
@@ -881,7 +895,7 @@ namespace FargowiltasSouls
         [Label("Rapid")]
         [DefaultValue(true)]
         public bool Rapid;
-    }
+    }*/
 
     public class ThoriumToggles
     {
