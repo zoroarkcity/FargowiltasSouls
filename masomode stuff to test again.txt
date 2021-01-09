@@ -169,4 +169,5 @@ fixed ice queen crown and upgrades not having hypothermia immune
 prime has real visual trails on p2 spin limbs
 
 destroyer desperation DR starts at 100% and degrades to 50% over 10 seconds
+destroyer coil lasers die when they overlap in middle (was only in desperation), BUT higher rate now
 ml p2 vortex bolts have slight random variation

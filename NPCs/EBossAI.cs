@@ -2502,7 +2502,7 @@ namespace FargowiltasSouls.NPCs
                         Vector2 pivot = npc.Center;
                         pivot += Vector2.Normalize(npc.velocity.RotatedBy(Math.PI / 2)) * 600;
                         
-                        if (++Counter[2] > 100)
+                        if (++Counter[2] > 80)
                         {
                             Counter[2] = 0;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -2515,7 +2515,7 @@ namespace FargowiltasSouls.NPCs
                                     Vector2 speed = npc.DirectionTo(pivot).RotatedBy(2 * Math.PI / max * i);
                                     Vector2 spawnPos = pivot - speed * 600;
                                     int p = Projectile.NewProjectile(spawnPos, speed, ModContent.ProjectileType<DestroyerLaser>(), projDamage, 0f, Main.myPlayer);
-                                    if (npc.life < npc.lifeMax / 10 && p != Main.maxProjectiles)
+                                    if (p != Main.maxProjectiles)
                                         Main.projectile[p].timeLeft = 81;
                                 }
                             }
