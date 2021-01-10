@@ -2583,9 +2583,12 @@ namespace FargowiltasSouls.NPCs
                                 Counter[0] = 0;
                                 Counter[1] = (int)npc.Distance(Main.player[npc.target].Center);
                                 masoBool[1] = true;
+                                npc.localAI[2] = 0;
                                 npc.velocity = 22 * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(-Math.PI / 2);
                                 NetUpdateMaso(npc.whoAmI);
-                                Main.PlaySound(SoundID.Roar, (int)Main.player[npc.target].position.X, (int)Main.player[npc.target].position.Y, 0);
+                                Main.PlaySound(SoundID.Roar, Main.player[npc.target].Center, 0);
+                                if (npc.life < npc.lifeMax / 10)
+                                    Main.PlaySound(SoundID.ForceRoar, Main.player[npc.target].Center, -1); //eoc roar
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     for (int i = 0; i < Main.maxProjectiles; i++)
@@ -2598,10 +2601,9 @@ namespace FargowiltasSouls.NPCs
                         }
                         else
                         {
-                            if (npc.life < npc.lifeMax / 10) //force begin desperation
+                            if (npc.life < npc.lifeMax / 10 && Counter[0] < 900 - 120) //force begin desperation
                             {
-                                Counter[0] = 300;
-                                masoBool[2] = true;
+                                Counter[0] = 900 - 120;
                                 NetUpdateMaso(npc.whoAmI);
                                 Main.PlaySound(SoundID.ForceRoar, Main.player[npc.target].Center, -1); //eoc roar
                             }
@@ -2742,6 +2744,9 @@ namespace FargowiltasSouls.NPCs
                     if (!masoBool[0])
                         masoBool[0] = true;
 
+                    if (Main.npc[npc.realLife].life < Main.npc[npc.realLife].lifeMax / 10)
+                        npc.defense = 0;
+
                     Counter[1] = 180;
                     Vector2 pivot = Main.npc[npc.realLife].Center;
                     pivot += Vector2.Normalize(Main.npc[npc.realLife].velocity.RotatedBy(Math.PI / 2)) * 600;
@@ -2775,10 +2780,6 @@ namespace FargowiltasSouls.NPCs
                 if (Counter[1] > 0) //no lasers or stars while or shortly after spinning
                 {
                     Counter[1]--;
-                    if (Main.npc[npc.realLife].life < Main.npc[npc.realLife].lifeMax / 10)
-                        npc.defense = 0;
-                    else
-                        npc.defense = 9999; //boosted defense during this same duration
                     if (Counter[2] > 1000)
                         Counter[2] = 1000;
                 }

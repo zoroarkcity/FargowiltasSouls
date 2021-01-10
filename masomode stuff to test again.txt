@@ -178,4 +178,6 @@ phantasm damage is -25% (was -15%)
 fixed ml sun sustained chain blast and stardust deathrays not being nerfed while true eyes deathray in mp
 ml sun chain blast spread adjusted, should never have gaps, also reduced hitbox size
 nvm, ml has full defense again fuck phantasm lmao
-destroyer coil can fire more lasers at max, fires stars more often
+destroyer coil can fire more lasers at max, fires stars slightly more often
+destroyer accel lasers can no longer combo you with other hits
+adjusted destroyer defenses, now has proper 99% DR when coiling (was 9999 defense), has DR while preparing to coil

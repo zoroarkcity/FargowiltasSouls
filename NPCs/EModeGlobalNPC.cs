@@ -8076,19 +8076,45 @@ namespace FargowiltasSouls.NPCs
                         break;
 
                     case NPCID.TheDestroyer:
-                        if (npc.life < npc.lifeMax / 10)
+                        if (masoBool[1])
                         {
-                            float modifier = Math.Min(0.5f, Counter[0] / 600f * 0.5f);
-                            damage = (int)(damage * modifier);
+                            if (npc.life < npc.lifeMax / 10)
+                            {
+                                float modifier = Math.Min(0.5f, Counter[0] / 600f * 0.5f);
+                                damage = (int)(damage * modifier);
+                            }
+                            else
+                            {
+                                damage = (int)(damage * 0.01);
+                            }
+                        }
+                        else if (masoBool[2] || Counter[0] >= 900 - 120)
+                        {
+                            damage = (int)(damage * 0.01);
                         }
                         break;
                     case NPCID.TheDestroyerBody:
                     case NPCID.TheDestroyerTail:
-                        if (npc.realLife > -1 && npc.realLife < Main.maxNPCs && Main.npc[npc.realLife].life > 0 && npc.life > 0
-                            && Main.npc[npc.realLife].life < Main.npc[npc.realLife].lifeMax / 10)
+                        if (npc.realLife > -1 && npc.realLife < Main.maxNPCs && Main.npc[npc.realLife].life > 0 && npc.life > 0)
                         {
-                            float modifier = Math.Min(0.5f, Main.npc[npc.realLife].GetGlobalNPC<EModeGlobalNPC>().Counter[0] / 600f * 0.5f);
-                            damage = (int)(damage * modifier);
+                            if (Main.npc[npc.realLife].GetGlobalNPC<EModeGlobalNPC>().masoBool[1])
+                            {
+                                if (Main.npc[npc.realLife].life < Main.npc[npc.realLife].lifeMax / 10)
+                                {
+                                    float modifier = Math.Min(0.5f, Main.npc[npc.realLife].GetGlobalNPC<EModeGlobalNPC>().Counter[0] / 600f * 0.5f);
+                                    damage = (int)(damage * modifier);
+                                }
+                                else
+                                {
+                                    damage = (int)(damage * 0.01);
+                                }
+                            }
+                            else if (Main.npc[npc.realLife].GetGlobalNPC<EModeGlobalNPC>().masoBool[2]
+                                || Main.npc[npc.realLife].GetGlobalNPC<EModeGlobalNPC>().Counter[0] >= 900 - 120
+                                || Counter[1] > 0)
+                            {
+                                damage = (int)(damage * 0.01);
+                            }
                         }
                         break;
 
