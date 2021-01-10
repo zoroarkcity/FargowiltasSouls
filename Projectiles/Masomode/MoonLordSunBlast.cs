@@ -17,6 +17,13 @@ namespace FargowiltasSouls.Projectiles.Masomode
             DisplayName.SetDefault("Sun Blast");
         }
 
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            projectile.width = 70;
+            projectile.height = 70;
+        }
+
         public override void AI()
         {
             if (projectile.position.HasNaNs())
@@ -41,7 +48,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
             //if (++projectile.ai[0] > Main.projFrames[projectile.type] * 3) projectile.Kill();
 
-            if (++projectile.localAI[1] == 8 && projectile.ai[1] > 0 && Main.netMode != NetmodeID.MultiplayerClient)
+            if (++projectile.localAI[1] == 6 && projectile.ai[1] > 0 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 projectile.ai[1]--;
                 
@@ -86,7 +93,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
                     if (projectile.ai[0] != 22) //no real reason for this number, just some unique identifier
                     {
-                        Vector2 offset = projectile.width * 0.75f * baseDirection.RotatedBy(Main.rand.NextFloat(-random, random));
+                        //10f / 7f is to compensate for shrunken hitbox
+                        float length = projectile.width / projectile.scale * 10f / 7f;
+                        Vector2 offset = length * baseDirection.RotatedBy(Main.rand.NextFloat(-random, random));
                         Projectile.NewProjectile(projectile.Center + offset, Vector2.Zero, projectile.type,
                               projectile.damage, 0f, projectile.owner, projectile.ai[0], projectile.ai[1]);
                     }
@@ -99,7 +108,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 Main.PlaySound(SoundID.Item88, projectile.Center);
 
                 projectile.position = projectile.Center;
-                projectile.scale = Main.rand.NextFloat(1f, 4f);
+                projectile.scale = Main.rand.NextFloat(1.5f, 4f); //ensure no gaps
                 projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
                 projectile.width = (int)(projectile.width * projectile.scale);
                 projectile.height = (int)(projectile.height * projectile.scale);

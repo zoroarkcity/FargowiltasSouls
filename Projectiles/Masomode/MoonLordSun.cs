@@ -96,8 +96,8 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
             else if (projectile.localAI[0] == 120) //launch at player
             {
-                projectile.velocity = (Main.player[Main.npc[ai0].target].Center - projectile.Center) / 50;
-                projectile.timeLeft = 51;
+                projectile.velocity = (Main.player[Main.npc[ai0].target].Center - projectile.Center) / 60;
+                projectile.timeLeft = 61;
                 projectile.netUpdate = true;
             }
             else
@@ -188,7 +188,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     {
                         Vector2 offset = projectile.width / 2 * Vector2.UnitX.RotatedBy(Math.PI * 2 / max * i);
                         Projectile.NewProjectile(projectile.Center + Main.rand.NextVector2Circular(projectile.width / 2, projectile.height / 2), Vector2.Zero, ModContent.ProjectileType<MoonLordSunBlast>(),
-                            projectile.damage, projectile.knockBack, projectile.owner, MathHelper.WrapAngle(offset.ToRotation()), 24);
+                            projectile.damage, projectile.knockBack, projectile.owner, MathHelper.WrapAngle(offset.ToRotation()), 32);
                     }
                 }
             }

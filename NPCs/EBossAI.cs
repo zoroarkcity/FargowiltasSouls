@@ -2446,7 +2446,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             if (--npc.localAI[2] < 0)
                             {
-                                npc.localAI[2] = 6;
+                                npc.localAI[2] = 5;
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Vector2 distance = npc.DirectionTo(Main.player[npc.target].Center) * 14f;
@@ -2474,7 +2474,7 @@ namespace FargowiltasSouls.NPCs
                         {
                             if (--npc.localAI[2] < 0) //shoot star spreads into the circle
                             {
-                                npc.localAI[2] = Main.player[npc.target].HasBuff(ModContent.BuffType<LightningRod>()) ? 120 : 60;
+                                npc.localAI[2] = Main.player[npc.target].HasBuff(ModContent.BuffType<LightningRod>()) ? 110 : 65;
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     Vector2 distance = Main.player[npc.target].Center - npc.Center;
@@ -2502,12 +2502,12 @@ namespace FargowiltasSouls.NPCs
                         Vector2 pivot = npc.Center;
                         pivot += Vector2.Normalize(npc.velocity.RotatedBy(Math.PI / 2)) * 600;
                         
-                        if (++Counter[2] > 80)
+                        if (++Counter[2] > 70)
                         {
                             Counter[2] = 0;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int max = (int)(12f - 8f * npc.life / npc.lifeMax);
+                                int max = (int)(14f - 10f * npc.life / npc.lifeMax);
                                 if (max % 2 != 0) //always shoot even number
                                     max++;
                                 for (int i = 0; i < max; i++)

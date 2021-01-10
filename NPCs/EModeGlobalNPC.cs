@@ -478,7 +478,6 @@ namespace FargowiltasSouls.NPCs
                     break;
 
                 case NPCID.MoonLordCore:
-                    npc.defense /= 2;
                     isMasoML = true;
                     canHurt = false;
                     break;
