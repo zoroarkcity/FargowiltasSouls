@@ -50,7 +50,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.destroyBoss, NPCID.TheDestroyer))
-                target.AddBuff(BuffID.Electrified, 90);
+                target.AddBuff(BuffID.Electrified, 60);
         }
 
         public override Color? GetAlpha(Color lightColor)

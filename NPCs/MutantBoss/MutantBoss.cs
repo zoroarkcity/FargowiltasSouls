@@ -427,8 +427,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     {
                         npc.ai[1] = 0;
                         float rotation = MathHelper.ToRadians(45) * (npc.ai[3] - 60) / 240 * npc.ai[2];
-                        SpawnSphereRing(12, 10f, npc.damage / 4, -0.75f, rotation);
-                        SpawnSphereRing(12, 10f, npc.damage / 4, 0.75f, rotation);
+                        SpawnSphereRing(11, 10f, npc.damage / 4, -0.75f, rotation);
+                        SpawnSphereRing(11, 10f, npc.damage / 4, 0.75f, rotation);
                     }
                     if (npc.ai[2] == 0)
                     {
@@ -1860,8 +1860,8 @@ namespace FargowiltasSouls.NPCs.MutantBoss
                     {
                         npc.ai[1] = 0;
                         float rotation = MathHelper.ToRadians(60) * (npc.ai[3] - 45) / 240 * npc.ai[2];
-                        SpawnSphereRing(10, 10f, npc.damage / 4, -1f, rotation);
-                        SpawnSphereRing(10, 10f, npc.damage / 4, 1f, rotation);
+                        SpawnSphereRing(9, 10f, npc.damage / 4, -1f, rotation);
+                        SpawnSphereRing(9, 10f, npc.damage / 4, 1f, rotation);
                     }
                     if (npc.ai[2] == 0)
                     {

@@ -183,5 +183,7 @@ destroyer accel lasers can no longer combo you with other hits
 adjusted destroyer defenses, now has proper 99% DR when coiling (was 9999 defense), has DR while preparing to coil
 
 mutant spheres use proper spherical collision now, hitbox marginally shrunk
+nerfed how many spheres mutant uses in okuus to compensate them having real hitboxes
 moon lord phantasmal spheres can't hurt you until fully opaque
 a bunch of changes to fix projs that no longer give graze when they should due to above graze change
+reduced destroyer electrified duration to 1sec (was 1.5)

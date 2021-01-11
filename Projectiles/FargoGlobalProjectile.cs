@@ -1249,7 +1249,7 @@ namespace FargowiltasSouls.Projectiles
                             }
                         }
 
-                        canHurt = projectile.alpha > 0;
+                        canHurt = projectile.alpha == 0;
 
                         if (projectile.ai[0] == -1 && projectile.localAI[0] > 0) //sent to fly, flagged as from hand
                         {
@@ -1999,7 +1999,7 @@ namespace FargowiltasSouls.Projectiles
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.retiBoss, NPCID.Retinazer))
                             target.AddBuff(BuffID.Ichor, 600);
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.destroyBoss, NPCID.TheDestroyer))
-                            target.AddBuff(BuffID.Electrified, 90);
+                            target.AddBuff(BuffID.Electrified, 60);
                         break;
 
                     case ProjectileID.BulletDeadeye:

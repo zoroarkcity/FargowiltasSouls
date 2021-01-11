@@ -5137,7 +5137,7 @@ namespace FargowiltasSouls.NPCs
                     case NPCID.TheDestroyer:
                     case NPCID.TheDestroyerBody:
                     case NPCID.TheDestroyerTail:
-                        target.AddBuff(BuffID.Electrified, 90);
+                        target.AddBuff(BuffID.Electrified, 60);
                         target.AddBuff(ModContent.BuffType<LightningRod>(), 600);
                         break;
 
