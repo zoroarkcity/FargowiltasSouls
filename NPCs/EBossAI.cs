@@ -2436,7 +2436,7 @@ namespace FargowiltasSouls.NPCs
                     if (masoBool[1]) //spinning
                     {
                         npc.netUpdate = true;
-                        npc.velocity = Vector2.Normalize(npc.velocity) * 22f;
+                        npc.velocity = Vector2.Normalize(npc.velocity) * 20f;
                         npc.velocity += npc.velocity.RotatedBy(Math.PI / 2) * npc.velocity.Length() / Counter[1];
                         npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) + 1.57f;
 
@@ -2584,7 +2584,7 @@ namespace FargowiltasSouls.NPCs
                                 Counter[1] = (int)npc.Distance(Main.player[npc.target].Center);
                                 masoBool[1] = true;
                                 npc.localAI[2] = 0;
-                                npc.velocity = 22 * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(-Math.PI / 2);
+                                npc.velocity = 20 * npc.DirectionTo(Main.player[npc.target].Center).RotatedBy(-Math.PI / 2);
                                 NetUpdateMaso(npc.whoAmI);
                                 Main.PlaySound(SoundID.Roar, Main.player[npc.target].Center, 0);
                                 if (npc.life < npc.lifeMax / 10)
