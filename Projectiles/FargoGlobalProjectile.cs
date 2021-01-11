@@ -1249,6 +1249,8 @@ namespace FargowiltasSouls.Projectiles
                             }
                         }
 
+                        canHurt = projectile.alpha > 0;
+
                         if (projectile.ai[0] == -1 && projectile.localAI[0] > 0) //sent to fly, flagged as from hand
                         {
                             if (++projectile.localAI[1] < 150)

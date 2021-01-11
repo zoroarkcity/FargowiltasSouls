@@ -41,9 +41,20 @@ namespace FargowiltasSouls.Projectiles.Champions
             return projectile.alpha == 0;
         }
 
-        public override bool CanHitPlayer(Player target) //round hitbox
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            return projectile.Distance(target.Center) < projectile.width / 2 * projectile.scale;
+            int clampedX = projHitbox.Center.X - targetHitbox.Center.X;
+            int clampedY = projHitbox.Center.Y - targetHitbox.Center.Y;
+
+            if (Math.Abs(clampedX) > targetHitbox.Width / 2)
+                clampedX = targetHitbox.Width / 2 * Math.Sign(clampedX);
+            if (Math.Abs(clampedY) > targetHitbox.Height / 2)
+                clampedY = targetHitbox.Height / 2 * Math.Sign(clampedY);
+
+            int dX = projHitbox.Center.X - targetHitbox.Center.X - clampedX;
+            int dY = projHitbox.Center.Y - targetHitbox.Center.Y - clampedY;
+
+            return Math.Sqrt(dX * dX + dY * dY) <= projectile.width / 2;
         }
 
         public override void SendExtraAI(BinaryWriter writer)

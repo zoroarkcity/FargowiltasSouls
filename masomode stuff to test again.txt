@@ -181,3 +181,7 @@ nvm, ml has full defense again fuck phantasm lmao
 destroyer coil can fire more lasers at max, fires stars slightly more often
 destroyer accel lasers can no longer combo you with other hits
 adjusted destroyer defenses, now has proper 99% DR when coiling (was 9999 defense), has DR while preparing to coil
+
+mutant spheres use proper spherical collision now, hitbox marginally shrunk
+moon lord phantasmal spheres can't hurt you until fully opaque
+a bunch of changes to fix projs that no longer give graze when they should due to above graze change
