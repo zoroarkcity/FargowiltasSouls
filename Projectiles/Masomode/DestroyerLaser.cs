@@ -10,7 +10,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
 {
     public class DestroyerLaser : ModProjectile
     {
-        public override string Texture => "Terraria/Projectile_100";
+        public override string Texture => "Terraria/Projectile_658";
         
         public override void SetStaticDefaults()
         {
@@ -25,7 +25,7 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.hostile = true;
             projectile.alpha = 255;
             projectile.scale = 1.8f;
-            projectile.timeLeft = 180;
+            projectile.timeLeft = 190;
             projectile.tileCollide = false;
         }
 
@@ -39,11 +39,16 @@ namespace FargowiltasSouls.Projectiles.Masomode
             projectile.rotation = projectile.velocity.ToRotation() + (float)Math.PI / 2;
             if (++projectile.localAI[1] > 20 && projectile.localAI[1] < 90)
                 projectile.velocity *= 1.06f;
-            if (projectile.alpha > 0)
+            if (projectile.alpha > 0 && projectile.timeLeft > 10)
             {
-                projectile.alpha -= 8;
+                projectile.alpha -= 14;
                 if (projectile.alpha < 0)
                     projectile.alpha = 0;
+            }
+            else if(projectile.timeLeft <= 10)
+            {
+                projectile.velocity *= 0.7f;
+                projectile.alpha += 25;
             }
         }
 
@@ -53,19 +58,29 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 target.AddBuff(BuffID.Electrified, 60);
         }
 
+        public override bool CanDamage() => projectile.timeLeft > 10;
+
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * projectile.Opacity;
+            return Color.Red * projectile.Opacity;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture2D13 = Main.projectileTexture[projectile.type];
+            Texture2D hitboxindicator = mod.GetTexture("Projectiles/MutantBoss/MutantSphereGlow");
             int num156 = Main.projectileTexture[projectile.type].Height / Main.projFrames[projectile.type]; //ypos of lower right corner of sprite to draw
             int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
-            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, SpriteEffects.None, 0f);
+            Vector2 scale = new Vector2(1, 1 + projectile.velocity.Length()/4);
+            Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, scale, SpriteEffects.None, 0f);
+            
+            if(projectile.timeLeft > 10)
+                Main.spriteBatch.Draw(hitboxindicator, projectile.Center - Main.screenPosition, new Rectangle(0, 0, hitboxindicator.Width, hitboxindicator.Height), 
+                    new Color(255, 133, 149) * projectile.Opacity, 
+                    0, hitboxindicator.Size() / 2, 0.2f, SpriteEffects.None, 0);
+            
             return false;
         }
     }
