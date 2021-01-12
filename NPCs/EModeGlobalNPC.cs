@@ -1405,7 +1405,7 @@ namespace FargowiltasSouls.NPCs
                                     speed.Normalize();
                                     speed *= 12f;
 
-                                    Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<CultistArrow>(), npc.damage / 3, 0f, Main.myPlayer);
+                                    Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<CultistArrow>(), npc.damage * 4 / 9, 0f, Main.myPlayer);
                                 }
                             }
                             break;
