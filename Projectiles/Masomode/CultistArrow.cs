@@ -35,6 +35,11 @@ namespace FargowiltasSouls.Projectiles.Masomode
                 Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<MoonLordSunBlast>(), projectile.damage, projectile.knockBack, projectile.owner);
         }
 
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White * projectile.Opacity;
+        }
+
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
             Texture2D texture2D13 = Main.projectileTexture[projectile.type];
@@ -48,6 +53,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
             Color color26 = lightColor;
             color26 = projectile.GetAlpha(color26);
 
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
+
             for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[projectile.type]; i += 2)
             {
                 Color color27 = color26 * 0.75f;
@@ -58,6 +66,9 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
 
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, projectile.scale, spriteEffects, 0f);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);
             return false;
         }
     }
