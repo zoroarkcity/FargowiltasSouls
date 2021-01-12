@@ -314,6 +314,8 @@ namespace FargowiltasSouls.NPCs
                 case NPCID.CultistArcherWhite:
                     npc.chaseable = true;
                     npc.lavaImmune = false;
+                    npc.value = Item.buyPrice(0, 1);
+                    npc.lifeMax *= 2;
                     break;
 
                 case NPCID.Reaper:
@@ -1388,6 +1390,25 @@ namespace FargowiltasSouls.NPCs
                             break;
 
                         //other
+                        case NPCID.CultistArcherWhite:
+                            if (npc.ai[1] > 0)
+                            {
+                                if (npc.ai[1] == 41) //skip vanilla shooting
+                                    npc.ai[1] = 39;
+
+                                if (npc.ai[1] > 10 && npc.ai[1] < 40 && npc.ai[1] % 10 == 5 && Main.netMode != NetmodeID.MultiplayerClient)
+                                {
+                                    Vector2 speed = Main.player[npc.target].Center - npc.Center;
+                                    speed.Y -= Math.Abs(speed.X) * 0.1f; //account for gravity
+                                    speed.X += Main.rand.Next(-20, 21);
+                                    speed.Y += Main.rand.Next(-20, 21);
+                                    speed.Normalize();
+                                    speed *= 12f;
+
+                                    Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<CultistArrow>(), npc.damage / 3, 0f, Main.myPlayer);
+                                }
+                            }
+                            break;
 
                         case NPCID.DD2EterniaCrystal:
                             if (DD2Event.Ongoing && DD2Event.TimeLeftBetweenWaves > 600)

@@ -2085,9 +2085,9 @@ namespace FargowiltasSouls
         {
             if (squireReduceIframes && (SquireEnchant || ValhallaEnchant))
             {
-                if (Main.rand.Next(2) == 0)
+                if (Main.rand.Next(3) == 0)
                 {
-                    float scale = ValhallaEnchant ? 3f : 1.5f;
+                    float scale = ValhallaEnchant ? 2f : 1.5f;
                     int type = ValhallaEnchant ? 87 : 91;
                     int dust = Dust.NewDust(player.position, player.width, player.height, type, player.velocity.X * 0.4f, player.velocity.Y * 0.4f, 87, default(Color), scale);
                     Main.dust[dust].noGravity = true;

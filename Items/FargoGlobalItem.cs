@@ -327,7 +327,7 @@ namespace FargowiltasSouls.Items
                 {
                     if (item.ammo == AmmoID.Arrow || item.ammo == AmmoID.Bullet || item.ammo == AmmoID.Dart)
                         tooltips.Add(new TooltipLine(mod, "masoNerf", "[c/ff0000:Eternity Mode:] Contributes 80% less damage to weapons"));
-                    else
+                    else if (!(item.type >= 71 && item.type <= 74)) //dont show for coins
                         tooltips.Add(new TooltipLine(mod, "masoNerf", "[c/ff0000:Eternity Mode:] Contributes 20% less damage to weapons"));
                 }
 
@@ -336,7 +336,6 @@ namespace FargowiltasSouls.Items
 
                 if (item.type == ItemID.ChlorophyteBullet)
                     tooltips.Add(new TooltipLine(mod, "masoNerf2", "[c/ff0000:Eternity Mode:] Reduced speed and duration"));
-
 
                 if (item.type == ItemID.WaterBolt && !NPC.downedBoss3)
                     tooltips.Add(new TooltipLine(mod, "masoNerf", "[c/ff0000:Eternity Mode:] Cannot be used until Skeletron is defeated"));
