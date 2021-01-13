@@ -3454,6 +3454,19 @@ namespace FargowiltasSouls.NPCs
                                     Projectile.NewProjectile(npc.Center, speed, ModContent.ProjectileType<SkeletronBone>(), npc.damage / 4, 0f, Main.myPlayer);
                             }*/
 
+                            if (npc.HasValidTarget && npc.ai[1] == 2f) //while actually attacking
+                            {
+                                npc.position -= npc.velocity; //offset regular velocity
+
+                                float speed = 6f; //base speed
+                                float compareSpeed = Math.Max(Math.Abs(Main.player[npc.target].velocity.X), Math.Abs(Main.player[npc.target].velocity.Y));
+                                compareSpeed *= 1.02f; //always outrun slightly (player can move diagonally)
+                                if (speed < compareSpeed)
+                                    speed = compareSpeed;
+
+                                npc.position += Vector2.Normalize(npc.velocity) * speed;
+                            }
+
                             if (!masoBool[2]) //teleport closer
                             {
                                 masoBool[2] = true;
