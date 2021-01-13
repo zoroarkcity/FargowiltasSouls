@@ -31,6 +31,12 @@ namespace FargowiltasSouls.Projectiles.Masomode
 
         public override void AI()
         {
+            if (projectile.ai[0] == 1f)
+            {
+                if (projectile.timeLeft > 91) //mp sync is important for this, which is why i do it this way
+                    projectile.timeLeft = 91;
+            }
+
             if (projectile.localAI[0] == 0)
             {
                 projectile.localAI[0] = 1;
@@ -56,6 +62,15 @@ namespace FargowiltasSouls.Projectiles.Masomode
         {
             if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.destroyBoss, NPCID.TheDestroyer))
                 target.AddBuff(BuffID.Electrified, 60);
+            if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.brainBoss, NPCID.BrainofCthulhu))
+            {
+                target.AddBuff(BuffID.Poisoned, 120);
+                target.AddBuff(BuffID.Darkness, 120);
+                target.AddBuff(BuffID.Bleeding, 120);
+                target.AddBuff(BuffID.Slow, 120);
+                target.AddBuff(BuffID.Weak, 120);
+                target.AddBuff(BuffID.BrokenArmor, 120);
+            }
         }
 
         public override bool CanDamage() => projectile.timeLeft > 10;
@@ -73,13 +88,14 @@ namespace FargowiltasSouls.Projectiles.Masomode
             int y3 = num156 * projectile.frame; //ypos of upper left corner of sprite to draw
             Rectangle rectangle = new Rectangle(0, y3, texture2D13.Width, num156);
             Vector2 origin2 = rectangle.Size() / 2f;
-            Vector2 scale = new Vector2(1, 1 + projectile.velocity.Length()/4);
+            Vector2 scale = new Vector2(1, 1 + projectile.velocity.Length() / 5);
             Main.spriteBatch.Draw(texture2D13, projectile.Center - Main.screenPosition + new Vector2(0f, projectile.gfxOffY), new Microsoft.Xna.Framework.Rectangle?(rectangle), projectile.GetAlpha(lightColor), projectile.rotation, origin2, scale, SpriteEffects.None, 0f);
-            
-            if(projectile.timeLeft > 10)
-                Main.spriteBatch.Draw(hitboxindicator, projectile.Center - Main.screenPosition, new Rectangle(0, 0, hitboxindicator.Width, hitboxindicator.Height), 
-                    new Color(255, 133, 149) * projectile.Opacity, 
-                    0, hitboxindicator.Size() / 2, 0.2f, SpriteEffects.None, 0);
+
+            if (projectile.timeLeft > 10)
+            {
+                Main.spriteBatch.Draw(hitboxindicator, projectile.Center - Main.screenPosition, new Rectangle(0, 0, hitboxindicator.Width, hitboxindicator.Height),
+                    new Color(255, 133, 149) * projectile.Opacity, 0, hitboxindicator.Size() / 2, 0.25f, SpriteEffects.None, 0);
+            }
             
             return false;
         }

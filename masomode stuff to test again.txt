@@ -199,3 +199,6 @@ white cultist archer has more health, fires a triple burst of exploding arrows, 
 aeolus jump toggle exists
 reduced dungeon guardian base speed, but its speed can scale with yours
 moon lord sun stationary chain blasts actually stop for good if deathrays occur at any point during them
+
+tweaked destroyer accel laser mp sync
+boc's accel lasers debuff you

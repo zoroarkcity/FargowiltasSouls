@@ -2514,9 +2514,7 @@ namespace FargowiltasSouls.NPCs
                                 {
                                     Vector2 speed = npc.DirectionTo(pivot).RotatedBy(2 * Math.PI / max * i);
                                     Vector2 spawnPos = pivot - speed * 600;
-                                    int p = Projectile.NewProjectile(spawnPos, speed, ModContent.ProjectileType<DestroyerLaser>(), projDamage, 0f, Main.myPlayer);
-                                    if (p != Main.maxProjectiles)
-                                        Main.projectile[p].timeLeft = 91;
+                                    Projectile.NewProjectile(spawnPos, speed, ModContent.ProjectileType<DestroyerLaser>(), projDamage, 0f, Main.myPlayer, 1f);
                                 }
                             }
                         }
