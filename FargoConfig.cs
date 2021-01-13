@@ -399,6 +399,10 @@ namespace FargowiltasSouls
         [DefaultValue(true)]
         public bool BossRecolors;
 
+        [Label("$Mods.FargowiltasSouls.MasoAeolusConfig")]
+        [DefaultValue(true)]
+        public bool AeolusJump;
+
         [Label("$Mods.FargowiltasSouls.MasoIconConfig")]
         [DefaultValue(true)]
         public bool SinisterIcon;

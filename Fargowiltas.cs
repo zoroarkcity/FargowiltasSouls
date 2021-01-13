@@ -201,7 +201,8 @@ namespace FargowiltasSouls
             AddToggle("MasoHeader", "Eternity Mode", "MutantStatue", "ffffff");
             //AddToggle("MasoBossBG", "Mutant Bright Background", "Masochist", "ffffff");
             AddToggle("MasoBossRecolors", "Boss Recolors (Toggle needs restart)", "Masochist", "ffffff");
-            AddToggle("MasoIconConfig", "Sinister Icon", "SinisterIcon", "ffffff");
+            AddToggle("MasoAeolusConfig", "Aeolus Jump", "AeolusBoots", "ffffff");
+            AddToggle("MasoIconConfig", "Sinister Icon Spawn Rates", "SinisterIcon", "ffffff");
             AddToggle("MasoIconDropsConfig", "Sinister Icon Drops", "SinisterIcon", "ffffff");
             AddToggle("MasoGrazeConfig", "Graze", "SparklingAdoration", "ffffff");
             AddToggle("MasoDevianttHeartsConfig", "Attacks Spawn Homing Hearts", "SparklingAdoration", "ffffff");
