@@ -48,6 +48,17 @@ namespace FargowiltasSouls.Projectiles.Masomode
             }
             //if (++projectile.ai[0] > Main.projFrames[projectile.type] * 3) projectile.Kill();
 
+            if (projectile.localAI[1] == 0)
+            {
+                Main.PlaySound(SoundID.Item88, projectile.Center);
+                projectile.position = projectile.Center;
+                projectile.scale = Main.rand.NextFloat(1.5f, 4f); //ensure no gaps
+                projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
+                projectile.width = (int)(projectile.width * projectile.scale);
+                projectile.height = (int)(projectile.height * projectile.scale);
+                projectile.Center = projectile.position;
+            }
+
             if (++projectile.localAI[1] == 6 && projectile.ai[1] > 0 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 projectile.ai[1]--;
@@ -85,34 +96,30 @@ namespace FargowiltasSouls.Projectiles.Masomode
                     }
 
                     //don't do sustained blasts in one place if deathrays are firing
-                    if (sustainBlast)
+                    if (sustainBlast && projectile.localAI[0] != 2f)
                     {
-                        Projectile.NewProjectile(projectile.Center + Main.rand.NextVector2Circular(20, 20), Vector2.Zero, projectile.type,
-                        projectile.damage, 0f, projectile.owner, 22, projectile.ai[1] - 1); //22
+                        int p = Projectile.NewProjectile(projectile.Center + Main.rand.NextVector2Circular(20, 20), Vector2.Zero, projectile.type,
+                            projectile.damage, 0f, projectile.owner, projectile.ai[0], projectile.ai[1] - 1);
+                        if (p != Main.maxProjectiles)
+                        {
+                            Main.projectile[p].localAI[0] = 1f; //only make more stationaries, don't propagate forward
+                        }
                     }
 
-                    if (projectile.ai[0] != 22) //no real reason for this number, just some unique identifier
+                    if (projectile.localAI[0] != 1f)
                     {
                         //10f / 7f is to compensate for shrunken hitbox
                         float length = projectile.width / projectile.scale * 10f / 7f;
                         Vector2 offset = length * baseDirection.RotatedBy(Main.rand.NextFloat(-random, random));
-                        Projectile.NewProjectile(projectile.Center + offset, Vector2.Zero, projectile.type,
+                        int p = Projectile.NewProjectile(projectile.Center + offset, Vector2.Zero, projectile.type,
                               projectile.damage, 0f, projectile.owner, projectile.ai[0], projectile.ai[1]);
+                        if (p != Main.maxProjectiles)
+                        {
+                            if (!sustainBlast || projectile.localAI[0] == 2f)
+                                Main.projectile[p].localAI[0] = 2f; //if don't sustain, then mark the next as not leaving behind a blast
+                        }
                     }
                 }
-            }
-
-            if (projectile.localAI[0] == 0f)
-            {
-                projectile.localAI[0] = 1f;
-                Main.PlaySound(SoundID.Item88, projectile.Center);
-
-                projectile.position = projectile.Center;
-                projectile.scale = Main.rand.NextFloat(1.5f, 4f); //ensure no gaps
-                projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
-                projectile.width = (int)(projectile.width * projectile.scale);
-                projectile.height = (int)(projectile.height * projectile.scale);
-                projectile.Center = projectile.position;
             }
         }
 

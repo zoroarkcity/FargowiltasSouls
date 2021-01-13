@@ -198,3 +198,4 @@ all essences require hallowed bars
 white cultist archer has more health, fires a triple burst of exploding arrows, drops coins and vanity
 aeolus jump toggle exists
 reduced dungeon guardian base speed, but its speed can scale with yours
+moon lord sun stationary chain blasts actually stop for good if deathrays occur at any point during them

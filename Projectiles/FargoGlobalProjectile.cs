@@ -52,10 +52,10 @@ namespace FargowiltasSouls.Projectiles
         public bool ChilledProj = false;
         public int ChilledTimer;
 
-        public Func<Projectile, bool> GrazeCheck = projectile => 
-            (projectile.modProjectile == null ? true : projectile.modProjectile.CanDamage() && projectile.modProjectile.CanHitPlayer(Main.LocalPlayer))
-            && projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + 100 
-            && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0);
+        public Func<Projectile, bool> GrazeCheck = projectile =>
+            projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + 100
+            && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0)
+            && (projectile.modProjectile == null ? true : projectile.modProjectile.CanDamage() && projectile.modProjectile.CanHitPlayer(Main.LocalPlayer));
 
         private bool firstTick = true;
         private bool squeakyToy = false;
@@ -1435,7 +1435,12 @@ namespace FargowiltasSouls.Projectiles
 
         public override bool CanHitPlayer(Projectile projectile, Player target)
         {
-            return canHurt;
+            if (!canHurt)
+            {
+                GrazeCD = 2; //dont run graze checks
+                return false;
+            }
+            return true;
         }
 
         public override bool? CanHitNPC(Projectile projectile, NPC target)
