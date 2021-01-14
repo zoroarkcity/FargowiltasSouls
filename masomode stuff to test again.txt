@@ -202,3 +202,6 @@ moon lord sun stationary chain blasts actually stop for good if deathrays occur 
 
 tweaked destroyer accel laser mp sync
 boc's accel lasers debuff you
+white cultist archers can spawn in hordes post-golem
+reduced white cultist archer spawn rate
+blood moon no longer increases natural boss spawn rates

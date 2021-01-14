@@ -811,6 +811,11 @@ namespace FargowiltasSouls.NPCs
                             if (Main.rand.Next(4) == 0)
                                 Horde(npc, 5);
                             break;
+                            
+                        case NPCID.CultistArcherWhite:
+                            if (Main.rand.Next(5) == 0 && NPC.downedGolemBoss)
+                                Horde(npc, 7);
+                            break;
 
                         case NPCID.FlyingAntlion:
                             if (Main.rand.Next(3) == 0)
@@ -5865,7 +5870,7 @@ namespace FargowiltasSouls.NPCs
                                     pool[NPCID.KingSlime] = Main.slimeRain ? .004f : .002f;
 
                                 if (NPC.downedMechBossAny && (noBiome || dungeon))
-                                    pool[NPCID.CultistArcherWhite] = .025f;
+                                    pool[NPCID.CultistArcherWhite] = .01f;
 
                                 if(jungle)
                                     pool[NPCID.Parrot] = .05f;
@@ -5877,7 +5882,7 @@ namespace FargowiltasSouls.NPCs
                             if (Main.bloodMoon)
                             {
                                 pool[NPCID.ChatteringTeethBomb] = .1f;
-                                if (!sinisterIcon && !NPC.downedMechBoss2 && !AnyBossAlive())
+                                /*if (!sinisterIcon && !NPC.downedMechBoss2 && !AnyBossAlive())
                                     pool[NPCID.EyeofCthulhu] = .04f;
 
                                 if (NPC.downedPlantBoss)
@@ -5889,58 +5894,56 @@ namespace FargowiltasSouls.NPCs
                                         pool[NPCID.TheDestroyer] = .02f;
                                         pool[NPCID.SkeletronPrime] = .02f;
                                     }
-                                }
+                                }*/
                             }
-                            else //not blood moon
+                            
+                            if (noInvasion && !oldOnesArmy && !sinisterIcon)
+                                pool[NPCID.Clown] = 0.01f;
+
+                            if (normalSpawn)
                             {
-                                if (noInvasion && !oldOnesArmy && !sinisterIcon)
-                                    pool[NPCID.Clown] = 0.01f;
-
-                                if (normalSpawn)
+                                if (NPC.downedBoss1)
                                 {
-                                    if (NPC.downedBoss1)
+                                    if (noBiome)
                                     {
-                                        if (noBiome)
-                                        {
-                                            pool[NPCID.CorruptBunny] = .05f;
-                                            pool[NPCID.CrimsonBunny] = .05f;
-                                        }
-
-                                        if (snow)
-                                        {
-                                            pool[NPCID.CorruptPenguin] = .05f;
-                                            pool[NPCID.CrimsonPenguin] = .05f;
-                                        }
-
-                                        if (ocean || Main.raining)
-                                        {
-                                            pool[NPCID.CorruptGoldfish] = .05f;
-                                            pool[NPCID.CrimsonGoldfish] = .05f;
-                                        }
+                                        pool[NPCID.CorruptBunny] = .05f;
+                                        pool[NPCID.CrimsonBunny] = .05f;
                                     }
 
-                                    if (!sinisterIcon && !NPC.downedMechBoss2 && !AnyBossAlive())
-                                        pool[NPCID.EyeofCthulhu] = .01f;
-
-                                    if (NPC.downedMechBossAny)
-                                        pool[NPCID.Probe] = 0.1f;
-
-                                    if (NPC.downedPlantBoss) //GODLUL
+                                    if (snow)
                                     {
-                                        if (!sinisterIcon && !AnyBossAlive())
-                                        {
-                                            pool[NPCID.Retinazer] = .001f;
-                                            pool[NPCID.Spazmatism] = .001f;
-                                            pool[NPCID.TheDestroyer] = .001f;
-                                            pool[NPCID.SkeletronPrime] = .001f;
-                                        }
+                                        pool[NPCID.CorruptPenguin] = .05f;
+                                        pool[NPCID.CrimsonPenguin] = .05f;
+                                    }
 
-                                        if (!spawnInfo.player.GetModPlayer<FargoPlayer>().SkullCharm)
-                                        {
-                                            pool[NPCID.SkeletonSniper] = .02f;
-                                            pool[NPCID.SkeletonCommando] = .02f;
-                                            pool[NPCID.TacticalSkeleton] = .02f;
-                                        }
+                                    if (ocean || Main.raining)
+                                    {
+                                        pool[NPCID.CorruptGoldfish] = .05f;
+                                        pool[NPCID.CrimsonGoldfish] = .05f;
+                                    }
+                                }
+
+                                if (!sinisterIcon && !NPC.downedMechBoss2 && !AnyBossAlive())
+                                    pool[NPCID.EyeofCthulhu] = .01f;
+
+                                if (NPC.downedMechBossAny)
+                                    pool[NPCID.Probe] = 0.1f;
+
+                                if (NPC.downedPlantBoss) //GODLUL
+                                {
+                                    if (!sinisterIcon && !AnyBossAlive())
+                                    {
+                                        pool[NPCID.Retinazer] = .001f;
+                                        pool[NPCID.Spazmatism] = .001f;
+                                        pool[NPCID.TheDestroyer] = .001f;
+                                        pool[NPCID.SkeletronPrime] = .001f;
+                                    }
+
+                                    if (!spawnInfo.player.GetModPlayer<FargoPlayer>().SkullCharm)
+                                    {
+                                        pool[NPCID.SkeletonSniper] = .02f;
+                                        pool[NPCID.SkeletonCommando] = .02f;
+                                        pool[NPCID.TacticalSkeleton] = .02f;
                                     }
                                 }
                             }
