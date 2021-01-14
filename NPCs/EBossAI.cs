@@ -616,8 +616,12 @@ namespace FargowiltasSouls.NPCs
             eaterBoss = npc.whoAmI;
             boss = npc.whoAmI;
 
-            if (!npc.HasValidTarget)
+            if (!npc.HasValidTarget || npc.Distance(Main.player[npc.target].Center) > 3000)
+            {
                 npc.velocity.Y += 0.25f;
+                if (npc.timeLeft > 120)
+                    npc.timeLeft = 120;
+            }
 
             if (eaterResist > 0 && npc.whoAmI == NPC.FindFirstNPC(npc.type))
                 eaterResist--;
@@ -665,18 +669,37 @@ namespace FargowiltasSouls.NPCs
                 }
             }
 
-            if (!masoBool[0])
+            if (++Counter[0] >= 6)
             {
-                if (++Counter[0] >= 6) //cursed flamethrower, roughly same direction as head
+                Counter[0] = 0;
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Counter[0] = 0;
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (!masoBool[0]) //cursed flamethrower, roughly same direction as head, dont do when u-turning
                     {
                         Vector2 velocity = new Vector2(5f, 0f).RotatedBy(npc.rotation - Math.PI / 2.0 + MathHelper.ToRadians(Main.rand.Next(-15, 16)));
                         Projectile.NewProjectile(npc.Center, velocity, ProjectileID.EyeFire, npc.damage / 5, 0f, Main.myPlayer);
                     }
-                }
 
+                    //die if segment behind me is invalid, check is in here to avoid spawn edge case
+                    int ai0 = (int)npc.ai[0];
+                    if (!(ai0 > -1 && ai0 < Main.maxNPCs && Main.npc[ai0].active && Main.npc[ai0].ai[1] == npc.whoAmI
+                        && (Main.npc[ai0].type == NPCID.EaterofWorldsBody || Main.npc[ai0].type == NPCID.EaterofWorldsTail)))
+                    {
+                        //Main.NewText("ai0 npc invalid");
+                        npc.life = 0;
+                        npc.HitEffect();
+                        npc.checkDead();
+                        npc.active = false;
+                        npc.netUpdate = false;
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc.whoAmI);
+                        return false;
+                    }
+                }
+            }
+
+            if (!masoBool[0])
+            {
                 if (Counter[1] == 700 - 90) //roar telegraph
                     Main.PlaySound(SoundID.Roar, Main.player[npc.target].Center, 0);
 
@@ -865,8 +888,12 @@ namespace FargowiltasSouls.NPCs
         {
             brainBoss = npc.whoAmI;
 
-            if (!npc.HasValidTarget)
+            if (!npc.HasValidTarget || npc.Distance(Main.player[npc.target].Center) > 3000)
+            {
                 npc.velocity.Y += 0.75f;
+                if (npc.timeLeft > 120)
+                    npc.timeLeft = 120;
+            }
 
             if (npc.alpha == 0)
             {

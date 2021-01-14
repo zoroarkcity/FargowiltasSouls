@@ -8110,6 +8110,12 @@ namespace FargowiltasSouls.NPCs
                         }
                         break;
                     case NPCID.EaterofWorldsTail:
+                        if (eaterResist > 0)
+                        {
+                            int ai1 = (int)npc.ai[1];
+                            if (ai1 > -1 && ai1 < Main.maxNPCs && Main.npc[ai1].active && Main.npc[ai1].type == NPCID.EaterofWorldsHead)
+                                damage = 0;
+                        }
                         break;
 
                     case NPCID.TheDestroyer:
