@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FargowiltasSouls.Buffs.Souls;
 using FargowiltasSouls.Projectiles;
+using FargowiltasSouls.Projectiles.Critters;
 using FargowiltasSouls.Projectiles.Masomode;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -219,6 +220,37 @@ namespace FargowiltasSouls.Items
                 }
             }
 
+            //critter attack timer
+            if (modPlayer.WoodEnchant && player.altFunctionUse == ItemAlternativeFunctionID.ActivatedAndUsed && item.makeNPC >= 0)
+            {
+                if (modPlayer.CritterAttackTimer == 0)
+                {
+                    Vector2 vel = Vector2.Normalize(Main.MouseWorld - player.Center);
+
+                    switch (item.type)
+                    {
+                        case ItemID.Bunny:
+                            Projectile.NewProjectile(player.Center, vel * 10f, ProjectileID.ExplosiveBunny, 10, 2, player.whoAmI);
+                            modPlayer.CritterAttackTimer = 10;
+
+                            break;
+
+                        case ItemID.Bird:
+                            Projectile.NewProjectile(player.Center, vel * 2f, ModContent.ProjectileType<BirdProj>(), 10, 2, player.whoAmI);
+                            modPlayer.CritterAttackTimer = 10;
+                            break;
+
+                    }
+                }
+
+                
+
+
+
+                return false;
+            }
+
+
             return true;
         }
 
@@ -234,6 +266,26 @@ namespace FargowiltasSouls.Items
             if (modPlayer.UniverseEffect && item.damage > 0) item.shootSpeed *= modPlayer.Eternity ? 2f : 1.5f;
 
             return false;
+        }
+
+        public override bool AltFunctionUse(Item item, Player player)
+        {
+            FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
+
+            if (modPlayer.WoodEnchant)
+            {
+                switch (item.type)
+                {
+                    case ItemID.Bunny:
+                    case ItemID.Bird:
+                        return true;
+
+                }
+            }
+
+
+
+            return base.AltFunctionUse(item, player);
         }
 
         public override bool NewPreReforge(Item item)

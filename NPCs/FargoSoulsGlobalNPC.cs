@@ -138,10 +138,21 @@ namespace FargowiltasSouls.NPCs
                 {
                     Player player = Main.player[Main.myPlayer];
 
-                    if ( npc.releaseOwner == player.whoAmI && player.GetModPlayer<FargoPlayer>().WoodEnchant)
+                    /*if ( npc.releaseOwner == player.whoAmI && player.GetModPlayer<FargoPlayer>().WoodEnchant)
                     {
+                        switch (npc.type)
+                        {
+                            case NPCID.Bunny:
+                                
+                                
+                                npc.active = false;
+                                break;
+                        }
+
+
+
                         ExplosiveCritter = true;
-                    }
+                    }*/
                 }
 
                 FirstTick = true;

@@ -157,6 +157,7 @@ namespace FargowiltasSouls
         public bool MahoganyEnchant;
         public bool BorealEnchant;
         public bool WoodEnchant;
+        public int CritterAttackTimer = 0;
         public bool PalmEnchant;
         public bool ShadeEnchant;
         private int shadewoodCD = 0;
@@ -1855,6 +1856,11 @@ namespace FargowiltasSouls
 
             if (AdditionalAttacks && AdditionalAttacksTimer > 0)
                 AdditionalAttacksTimer--;
+
+            if (WoodEnchant && CritterAttackTimer > 0)
+            {
+                CritterAttackTimer--;
+            }
 
             if (player.whoAmI == Main.myPlayer && player.controlUseItem && player.HeldItem.type == ModContent.ItemType<EaterLauncher>())
             {

@@ -518,11 +518,11 @@ namespace FargowiltasSouls
         {
             HallowEnchant = true;
 
-            int dmg = 80;
+            int dmg = 100;
 
             if (SpiritForce || WizardEnchant)
             {
-                dmg = 120;
+                dmg = 250;
             }
 
             AddMinion(SoulConfig.Instance.HallowSword, ModContent.ProjectileType<HallowSword>(), (int)(dmg * player.minionDamage), 0f);
