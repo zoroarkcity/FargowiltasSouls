@@ -1989,7 +1989,7 @@ namespace FargowiltasSouls
                     player.lifeRegen = 0;
 
                 player.lifeRegenTime = 0;
-                player.lifeRegen -= 12;
+                player.lifeRegen -= 10;
             }
 
             if (Shadowflame)
@@ -2085,9 +2085,9 @@ namespace FargowiltasSouls
         {
             if (squireReduceIframes && (SquireEnchant || ValhallaEnchant))
             {
-                if (Main.rand.Next(2) == 0)
+                if (Main.rand.Next(3) == 0)
                 {
-                    float scale = ValhallaEnchant ? 3f : 1.5f;
+                    float scale = ValhallaEnchant ? 2f : 1.5f;
                     int type = ValhallaEnchant ? 87 : 91;
                     int dust = Dust.NewDust(player.position, player.width, player.height, type, player.velocity.X * 0.4f, player.velocity.Y * 0.4f, 87, default(Color), scale);
                     Main.dust[dust].noGravity = true;
@@ -3650,11 +3650,18 @@ namespace FargowiltasSouls
                 case ItemID.Razorpine:
                     AttackSpeed *= 2f / 3f;
                     return 2f / 3f;
-                    
+
+                case ItemID.DemonScythe:
+                    if (!NPC.downedBoss2)
+                    {
+                        AttackSpeed *= 0.75f;
+                        return 0.5f;
+                    }
+                    return 2f / 3f;
+
                 case ItemID.StarCannon:
                 case ItemID.ElectrosphereLauncher:
                 case ItemID.SnowmanCannon:
-                case ItemID.DemonScythe:
                 case ItemID.DaedalusStormbow:
                     return 2f / 3f;
 
@@ -3674,6 +3681,7 @@ namespace FargowiltasSouls
                 case ItemID.XenoStaff:
                 case ItemID.MoltenFury:
                 case ItemID.BeesKnees:
+                case ItemID.Phantasm:
                     return 0.75f;
 
                 case ItemID.SpaceGun:
@@ -3686,7 +3694,6 @@ namespace FargowiltasSouls
                     
                 case ItemID.Tsunami:
                 case ItemID.ChlorophyteShotbow:
-                case ItemID.Phantasm:
                 case ItemID.HellwingBow:
                 case ItemID.DartPistol:
                 case ItemID.DartRifle:

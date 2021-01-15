@@ -605,15 +605,6 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             Main.LocalPlayer.AddBuff(BuffID.Dazed, 2);
                             Main.LocalPlayer.AddBuff(BuffID.OgreSpit, 2);
                         }
-
-                        Aura(150, mod.BuffType("Hexed"), false, 119);
-                        if (npc.Distance(Main.LocalPlayer.Center) < 150)
-                        {
-                            Main.LocalPlayer.AddBuff(mod.BuffType("Crippled"), 2);
-                            Main.LocalPlayer.AddBuff(BuffID.Dazed, 2);
-                            Main.LocalPlayer.AddBuff(BuffID.OgreSpit, 2);
-                        }
-
                         for (int i = 0; i < 20; i++)
                         {
                             Vector2 offset = new Vector2();
@@ -622,13 +613,36 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                             offset.Y += (float)(Math.Cos(angle) * 450);
                             Dust dust = Main.dust[Dust.NewDust(
                                 npc.Center + offset - new Vector2(4, 4), 0, 0,
-                                DustID.BubbleBlock, 0, 0, 100, default(Color), 1f
+                                74, 0, 0, 100, default(Color), 1f
                                 )];
                             dust.velocity = npc.velocity;
                             if (Main.rand.Next(3) == 0)
                                 dust.velocity += Vector2.Normalize(offset) * 5f;
                             dust.noGravity = true;
                             dust.color = Color.GreenYellow;
+                        }
+                        
+                        if (npc.Distance(Main.LocalPlayer.Center) < 150)
+                        {
+                            Main.LocalPlayer.AddBuff(mod.BuffType("Hexed"), 2);
+                            Main.LocalPlayer.AddBuff(mod.BuffType("Crippled"), 2);
+                            Main.LocalPlayer.AddBuff(BuffID.Dazed, 2);
+                            Main.LocalPlayer.AddBuff(BuffID.OgreSpit, 2);
+                        }
+                        for (int i = 0; i < 10; i++)
+                        {
+                            Vector2 offset = new Vector2();
+                            double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                            offset.X += (float)(Math.Sin(angle) * 150);
+                            offset.Y += (float)(Math.Cos(angle) * 150);
+                            Dust dust = Main.dust[Dust.NewDust(
+                                npc.Center + offset - new Vector2(4, 4), 0, 0,
+                                73, 0, 0, 100, default(Color), 1f
+                                )];
+                            dust.velocity = npc.velocity;
+                            if (Main.rand.Next(3) == 0)
+                                dust.velocity -= Vector2.Normalize(offset) * 5f;
+                            dust.noGravity = true;
                         }
                     }
 
@@ -1333,12 +1347,15 @@ namespace FargowiltasSouls.NPCs.DeviBoss
                     else if (npc.ai[1] == 150) //start swinging
                     {
                         targetPos = player.Center;
-                        targetPos.X -= 250 * Math.Sign(npc.ai[2]);
-                        targetPos.Y -= 200;
+                        targetPos.X -= 265 * Math.Sign(npc.ai[2]);
+                        //targetPos.Y -= 200;
                         npc.velocity = (targetPos - npc.Center) / 30;
                         npc.netUpdate = true;
 
                         npc.direction = npc.spriteDirection = Math.Sign(npc.ai[2]);
+
+                        if (Math.Sign(targetPos.X - npc.Center.X) != Math.Sign(npc.ai[2]))
+                            npc.velocity.X *= 0.5f; //worse movement if you're behind her
                     }
                     else if (npc.ai[1] < 180)
                     {

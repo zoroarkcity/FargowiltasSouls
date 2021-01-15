@@ -33,7 +33,7 @@ namespace FargowiltasSouls.NPCs.Champions
             npc.height = 100;
             npc.damage = 160;
             npc.defense = 70;
-            npc.lifeMax = 550000;
+            npc.lifeMax = 500000;
             npc.HitSound = SoundID.NPCHit5;
             npc.DeathSound = SoundID.NPCDeath7;
             npc.noGravity = true;
@@ -394,7 +394,8 @@ namespace FargowiltasSouls.NPCs.Champions
                             type = 229;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Thunder").WithVolume(0.8f).WithPitchVariance(-0.5f), npc.Center);
+                                if (!Main.dedServ)
+                                    Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Thunder").WithVolume(0.8f).WithPitchVariance(-0.5f), npc.Center);
                                 const int max = 12;
                                 for (int i = 0; i < max; i++)
                                 {
@@ -443,7 +444,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             }
                         }
 
-                        const int num226 = 150;
+                        /*const int num226 = 150;
                         for (int num227 = 0; num227 < num226; num227++)
                         {
                             Vector2 vector6 = Vector2.UnitX * 50f;
@@ -453,7 +454,7 @@ namespace FargowiltasSouls.NPCs.Champions
                             Main.dust[num228].scale = 3f;
                             Main.dust[num228].noGravity = true;
                             Main.dust[num228].velocity = vector7;
-                        }
+                        }*/
 
                         /*for (int index = 0; index < 50; ++index) //dust
                         {
@@ -1514,8 +1515,32 @@ namespace FargowiltasSouls.NPCs.Champions
             Vector2 origin2 = rectangle.Size() / 2f;
             SpriteEffects effects = npc.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Color npcColor = npc.GetAlpha(drawColor);
-            int add = 150;
-            Color glowColor = new Color(add + Main.DiscoR / 3, add + Main.DiscoG / 3, add + Main.DiscoB / 3);
+
+            Color glowColor = new Color(Main.DiscoR / 3 + 150, Main.DiscoG / 3 + 150, Main.DiscoB / 3 + 150);
+            /*Color glowColor = new Color(Main.DiscoR / 3, Main.DiscoG / 3, Main.DiscoB / 3);
+            switch (npc.ai[0])
+            {
+                case -3:
+                    if (npc.ai[3] == 0) goto case 5;
+                    else if (npc.ai[3] == 1) goto case 9;
+                    else if (npc.ai[3] == 2) goto case 13;
+                    else if (npc.ai[3] == 3) goto case 1;
+                    goto default;
+
+                case 0: if (npc.localAI[2] == 0) goto case default; else goto case 1;
+                case 1: glowColor.G += 100; glowColor.B += 150; break;
+
+                case 4: if (npc.localAI[2] == 0) goto case default; else goto case 5;
+                case 5: glowColor.R += 150; glowColor.G += 50; glowColor.B += 50; break;
+
+                case 8: if (npc.localAI[2] == 0) goto case default; else goto case 9;
+                case 9: glowColor.G += 150; glowColor.B += 100; break;
+
+                case 12: if (npc.localAI[2] == 0) goto case default; else goto case 13;
+                case 13: glowColor.R += 125; glowColor.B += 125; break;
+
+                default: glowColor.R += 150; glowColor.G += 150; glowColor.B += 150; break;
+            }*/
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.ZoomMatrix);

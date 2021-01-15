@@ -52,7 +52,10 @@ namespace FargowiltasSouls.Projectiles
         public bool ChilledProj = false;
         public int ChilledTimer;
 
-        public Func<Projectile, bool> GrazeCheck = projectile => projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + 100 && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0);
+        public Func<Projectile, bool> GrazeCheck = projectile =>
+            projectile.Distance(Main.LocalPlayer.Center) < Math.Min(projectile.width, projectile.height) / 2 + Player.defaultHeight + 100
+            && Collision.CanHit(projectile.Center, 0, 0, Main.LocalPlayer.Center, 0, 0)
+            && (projectile.modProjectile == null ? true : projectile.modProjectile.CanDamage() && projectile.modProjectile.CanHitPlayer(Main.LocalPlayer));
 
         private bool firstTick = true;
         private bool squeakyToy = false;
@@ -86,8 +89,7 @@ namespace FargowiltasSouls.Projectiles
                 case ProjectileID.SaucerDeathray:
                 case ProjectileID.SandnadoHostile:
                 case ProjectileID.SandnadoHostileMark:
-                    if (FargoSoulsWorld.MasochistMode)
-                        ImmuneToGuttedHeart = true;
+                    ImmuneToGuttedHeart = true;
                     break;
 
                 case ProjectileID.SpiritHeal:
@@ -213,7 +215,8 @@ namespace FargowiltasSouls.Projectiles
             ProjectileID.MedusaHead,
             ProjectileID.WireKite,
             ProjectileID.DD2PhoenixBow,
-            ProjectileID.LaserMachinegun
+            ProjectileID.LaserMachinegun,
+            ProjectileID.Flairon
         };
 
         public override bool PreAI(Projectile projectile)
@@ -963,7 +966,7 @@ namespace FargowiltasSouls.Projectiles
                                 for (int i = -2; i <= 2; i++)
                                 {
                                     Projectile.NewProjectile(projectile.Center,
-                                        1.5f * Vector2.Normalize(projectile.velocity).RotatedBy(MathHelper.ToRadians(5 * i)),
+                                        1.5f * Vector2.Normalize(projectile.velocity).RotatedBy(Math.PI / 2 / 2 * i),
                                         ModContent.ProjectileType<PhantasmalBolt2>(), projectile.damage, 0f, Main.myPlayer);
                                 }
                                 projectile.Kill();
@@ -1219,7 +1222,7 @@ namespace FargowiltasSouls.Projectiles
                         {
                             if (projectile.ai[0] == 2 && ++counter > 60) //diving down and homing
                             {
-                                projectile.velocity.Y = 6;
+                                projectile.velocity.Y = 9;
                             }
                             else
                             {
@@ -1247,10 +1250,12 @@ namespace FargowiltasSouls.Projectiles
                             }
                         }
 
+                        canHurt = projectile.alpha == 0;
+
                         if (projectile.ai[0] == -1 && projectile.localAI[0] > 0) //sent to fly, flagged as from hand
                         {
                             if (++projectile.localAI[1] < 150)
-                                projectile.velocity *= 1.02f;
+                                projectile.velocity *= 1.018f;
 
                             if (projectile.localAI[0] == 1 && projectile.velocity.Length() > 11) //only do this once
                             {
@@ -1379,7 +1384,7 @@ namespace FargowiltasSouls.Projectiles
                         if (fargoPlayer.CyclonicFin)
                             grazeGain *= 2;
 
-                        GrazeCD = 30;
+                        GrazeCD = 30 * projectile.MaxUpdates;
                         fargoPlayer.GrazeBonus += grazeGain;
                         if (fargoPlayer.GrazeBonus > grazeCap)
                             fargoPlayer.GrazeBonus = grazeCap;
@@ -1430,7 +1435,12 @@ namespace FargowiltasSouls.Projectiles
 
         public override bool CanHitPlayer(Projectile projectile, Player target)
         {
-            return canHurt;
+            if (!canHurt)
+            {
+                GrazeCD = 2; //dont run graze checks
+                return false;
+            }
+            return true;
         }
 
         public override bool? CanHitNPC(Projectile projectile, NPC target)
@@ -1699,7 +1709,7 @@ namespace FargowiltasSouls.Projectiles
                     case ProjectileID.EyeLaser:
                     case ProjectileID.GoldenShowerHostile:
                     case ProjectileID.CursedFlameHostile:
-                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.wallBoss, NPCID.WallofFlesh))
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.wallBoss, NPCID.WallofFlesh) && target.ZoneUnderworldHeight)
                             target.AddBuff(BuffID.OnFire, 300);
                         break;
 
@@ -1942,20 +1952,17 @@ namespace FargowiltasSouls.Projectiles
                         break;
 
                     case ProjectileID.NebulaSphere:
-                        target.AddBuff(BuffID.VortexDebuff, 300);
-                        break;
-
                     case ProjectileID.NebulaLaser:
                     case ProjectileID.NebulaBolt:
-                        target.AddBuff(ModContent.BuffType<Hexed>(), 120);
+                        target.AddBuff(ModContent.BuffType<Berserked>(), 300);
+                        target.AddBuff(ModContent.BuffType<Lethargic>(), 300);
                         break;
 
                     case ProjectileID.StardustJellyfishSmall:
-                        target.AddBuff(BuffID.Frostburn, 180);
-                        break;
-
                     case ProjectileID.StardustSoldierLaser:
-                        target.AddBuff(BuffID.VortexDebuff, 120);
+                    case ProjectileID.Twinkle:
+                        target.AddBuff(BuffID.Obstructed, 20);
+                        target.AddBuff(BuffID.Blackout, 300);
                         break;
 
                     case ProjectileID.Sharknado:
@@ -1997,6 +2004,8 @@ namespace FargowiltasSouls.Projectiles
                     case ProjectileID.DeathLaser:
                         if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.retiBoss, NPCID.Retinazer))
                             target.AddBuff(BuffID.Ichor, 600);
+                        if (EModeGlobalNPC.BossIsAlive(ref EModeGlobalNPC.destroyBoss, NPCID.TheDestroyer))
+                            target.AddBuff(BuffID.Electrified, 60);
                         break;
 
                     case ProjectileID.BulletDeadeye:
