@@ -209,3 +209,5 @@ blood moon no longer increases natural boss spawn rates
 eow/boc despawn even faster when you're dead or too far away
 tried implementing eow segment check to fix worms that are just a head existing
 adjusted velocity of big sting projectiles so it doesnt clip through thin walls
+
+fixed mythril ench and force of earth inflicting disrupted focus while the toggle is disabled
