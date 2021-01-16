@@ -213,3 +213,4 @@ adjusted velocity of big sting projectiles so it doesnt clip through thin walls
 fixed mythril ench and force of earth inflicting disrupted focus while the toggle is disabled
 xeno staff is now -15% damage (was -25%)
 fixed gutted heart working on moon lord suns
+skeletron bones and baby guardians can no longer combo with regular hits
