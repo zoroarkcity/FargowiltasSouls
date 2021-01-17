@@ -50,7 +50,7 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
         {
             FargoPlayer modPlayer = player.GetModPlayer<FargoPlayer>();
             modPlayer.SilverEnchant = true;
-            modPlayer.AddMinion(SoulConfig.Instance.SilverSword, mod.ProjectileType("SilverSword"), (int)(15 * player.minionDamage), 0f);
+            modPlayer.AddMinion(SoulConfig.Instance.SilverSword, mod.ProjectileType("SilverSword"), (int)(30 * player.minionDamage), 0f);
         }
 
         public override void AddRecipes()
