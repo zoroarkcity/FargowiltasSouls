@@ -61,11 +61,11 @@ namespace FargowiltasSouls.Items.Accessories.Enchantments
             recipe.AddIngredient(ItemID.SilverChainmail);
             recipe.AddIngredient(ItemID.SilverGreaves);
             recipe.AddIngredient(ItemID.SilverBroadsword);
-            //silver bow
+            recipe.AddIngredient(ItemID.SilverBow);
             recipe.AddIngredient(ItemID.SapphireStaff);
             recipe.AddIngredient(ItemID.BluePhaseblade);
             //leather whip
-            recipe.AddIngredient(ItemID.TreeNymphButterfly);
+            //recipe.AddIngredient(ItemID.TreeNymphButterfly);
             //roasted duck
 
             recipe.AddTile(TileID.DemonAltar);

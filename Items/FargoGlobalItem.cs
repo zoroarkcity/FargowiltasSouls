@@ -32,7 +32,7 @@ namespace FargowiltasSouls.Items
             FargoPlayer p = (FargoPlayer)player.GetModPlayer(mod, "FargoPlayer");
             //ignore money, hearts, mana stars
             if (p.IronEnchant && item.type != ItemID.CopperCoin && item.type != ItemID.SilverCoin && item.type != ItemID.GoldCoin && item.type != ItemID.PlatinumCoin && item.type != ItemID.HermesBoots && item.type != ItemID.CandyApple && item.type != ItemID.SoulCake &&
-                item.type != ItemID.Star && item.type != ItemID.CandyCane && item.type != ItemID.SugarPlum) grabRange += (p.TerraForce || p.WizardEnchant) ? 1000 : 250;
+                item.type != ItemID.Star && item.type != ItemID.CandyCane && item.type != ItemID.SugarPlum && item.type != ItemID.Heart) grabRange += (p.TerraForce || p.WizardEnchant) ? 1000 : 250;
         }
 
         public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref int damage, ref float knockback)
@@ -131,7 +131,7 @@ namespace FargowiltasSouls.Items
             if (modPlayer.AdditionalAttacks && modPlayer.AdditionalAttacksTimer <= 0 //non weapons and weapons with no ammo begone
                 && item.damage > 0 && player.HasAmmo(item, true) && !(item.mana > 0 && player.statMana < item.mana)
                 && item.type != ItemID.ExplosiveBunny && item.type != ItemID.Cannonball
-                && item.useTime > 0 && item.createTile == -1 && item.createWall == -1 && item.ammo == AmmoID.None)
+                && item.useTime > 0 && item.createTile == -1 && item.createWall == -1 && item.ammo == AmmoID.None && item.hammer == 0 && item.pick == 0 && item.axe == 0)
             {
                 modPlayer.AdditionalAttacksTimer = 60;
 

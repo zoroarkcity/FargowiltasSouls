@@ -65,7 +65,7 @@ namespace FargowiltasSouls.NPCs
                     for (int i = 0; i < 5; i++)
                     {
                         int p = Projectile.NewProjectile(npc.Center, vel.RotatedBy(2 * Math.PI / 5 * i),
-                            ProjectileID.RuneBlast, 25, 0f, Main.myPlayer, 1);
+                            ProjectileID.RuneBlast, 30, 0f, Main.myPlayer, 1);
                         if (p != 1000)
                             Main.projectile[p].timeLeft = 300;
                     }

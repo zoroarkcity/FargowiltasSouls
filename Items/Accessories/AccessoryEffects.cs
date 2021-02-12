@@ -13,6 +13,7 @@ using FargowiltasSouls.Buffs.Souls;
 using FargowiltasSouls.Projectiles.Souls;
 using FargowiltasSouls.NPCs.MutantBoss;
 using FargowiltasSouls.Projectiles.Minions;
+using System.Collections.Generic;
 
 namespace FargowiltasSouls
 {
@@ -377,11 +378,136 @@ namespace FargowiltasSouls
         {
             if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.ForbiddenStorm)) return;
 
-            player.setForbidden = true;
-            player.UpdateForbiddenSetLock();
+            //player.setForbidden = true;
+            //add cd
+
+            if ((player.controlDown && player.releaseDown))
+            {
+                if (player.doubleTapCardinalTimer[0] > 0 && player.doubleTapCardinalTimer[0] != 15)
+                {
+                    CommandForbiddenStorm();
+
+                    /*Vector2 mouse = Main.MouseWorld;
+
+                    if (player.ownedProjectileCounts[ModContent.ProjectileType<ForbiddenTornado>()] > 0)
+                    {
+                        for (int i = 0; i < 1000; i++)
+                        {
+                            Projectile proj = Main.projectile[i];
+
+                            if (proj.type == ModContent.ProjectileType<ForbiddenTornado>())
+                            {
+                                proj.Kill();
+                            }
+                        }
+                    }
+
+                    Projectile.NewProjectile(mouse.X, mouse.Y - 10, 0f, 0f, ModContent.ProjectileType<ForbiddenTornado>(), (WoodForce || WizardEnchant) ? 45 : 15, 0f, player.whoAmI);*/
+                }
+            }
+
+
+            //player.UpdateForbiddenSetLock();
             Lighting.AddLight(player.Center, 0.8f, 0.7f, 0.2f);
             //storm boosted
             ForbiddenEnchant = true;
+        }
+
+        public void CommandForbiddenStorm()
+        {
+            List<int> list = new List<int>();
+            for (int i = 0; i < 1000; i++)
+            {
+                Projectile projectile = Main.projectile[i];
+                if (projectile.active && projectile.type == ModContent.ProjectileType<ForbiddenTornado>() && projectile.owner == player.whoAmI)
+                {
+                    list.Add(i);
+                }
+            }
+
+            Vector2 center = player.Center;
+            Vector2 mouse = Main.MouseWorld;
+
+            bool flag3 = false;
+            float[] array = new float[10];
+            Vector2 v = mouse - center;
+            Collision.LaserScan(center, v.SafeNormalize(Vector2.Zero), 60f, v.Length(), array);
+            float num = 0f;
+            for (int j = 0; j < array.Length; j++)
+            {
+                if (array[j] > num)
+                {
+                    num = array[j];
+                }
+            }
+            float[] array2 = array;
+            for (int k = 0; k < array2.Length; k++)
+            {
+                float num2 = array2[k];
+                if (Math.Abs(num2 - v.Length()) < 10f)
+                {
+                    flag3 = true;
+                    break;
+                }
+            }
+            if (list.Count <= 1)
+            {
+                Vector2 vector = center + v.SafeNormalize(Vector2.Zero) * num;
+                Vector2 value2 = vector - center;
+                if (value2.Length() > 0f)
+                {
+                    for (float num3 = 0f; num3 < value2.Length(); num3 += 15f)
+                    {
+                        Vector2 position = center + value2 * (num3 / value2.Length());
+                        Dust dust = Main.dust[Dust.NewDust(position, 0, 0, 269, 0f, 0f, 0, default(Color), 1f)];
+                        dust.position = position;
+                        dust.fadeIn = 0.5f;
+                        dust.scale = 0.7f;
+                        dust.velocity *= 0.4f;
+                        dust.noLight = true;
+                    }
+                }
+                for (float num4 = 0f; num4 < 6.28318548f; num4 += 0.209439516f)
+                {
+                    Dust dust2 = Main.dust[Dust.NewDust(vector, 0, 0, 269, 0f, 0f, 0, default(Color), 1f)];
+                    dust2.position = vector;
+                    dust2.fadeIn = 1f;
+                    dust2.scale = 0.3f;
+                    dust2.noLight = true;
+                }
+            }
+
+            //Main.NewText(" " + (list.Count <= 1) + " " + flag3 + " " + player.CheckMana(20, true, false));
+
+            bool flag = (list.Count <= 1);
+            flag &= flag3;
+
+            
+
+            if (flag)
+            {
+                flag = player.CheckMana(20, true, false);
+                if (flag)
+                {
+                    player.manaRegenDelay = (int)player.maxRegenDelay;
+                }
+            }
+            if (!flag)
+            {
+                return;
+            }
+            foreach (int current in list)
+            {
+                Projectile projectile2 = Main.projectile[current];
+                if (projectile2.ai[0] < 780f)
+                {
+                    projectile2.ai[0] = 780f + projectile2.ai[0] % 60f;
+                    projectile2.netUpdate = true;
+                }
+            }
+
+            int damage = (int)(20f * (1f + player.magicDamage + player.minionDamage - 2f));
+            Projectile arg_37A_0 = Main.projectile[Projectile.NewProjectile(mouse, Vector2.Zero, ModContent.ProjectileType<ForbiddenTornado>(), damage, 0f, Main.myPlayer, 0f, 0f)];
         }
 
         public void FossilEffect(bool hideVisual)
@@ -398,7 +524,7 @@ namespace FargowiltasSouls
 
             if (SoulConfig.Instance.GetValue(SoulConfig.Instance.FrostIcicles))
             {
-                if (icicleCD == 0 && IcicleCount < 30 && player.ownedProjectileCounts[ModContent.ProjectileType<FrostIcicle>()] < 30)
+                if (icicleCD == 0 && IcicleCount < 10 && player.ownedProjectileCounts[ModContent.ProjectileType<FrostIcicle>()] < 10)
                 {
                     IcicleCount++;
 
@@ -444,7 +570,7 @@ namespace FargowiltasSouls
                         }
                     }
 
-                    icicleCD = 120 - (IcicleCount * 4);
+                    icicleCD = 30;
                 }
 
                 if (icicleCD != 0)
@@ -454,11 +580,11 @@ namespace FargowiltasSouls
 
                 if (IcicleCount >= 1 && player.controlUseItem && player.HeldItem.damage > 0)
                 {
-                    int dmg = 50;
+                    int dmg = 75;
 
                     if (NatureForce || WizardEnchant)
                     {
-                        dmg = 75;
+                        dmg = 150;
                     }
 
                     for (int i = 0; i < Main.maxProjectiles; i++)
@@ -467,7 +593,7 @@ namespace FargowiltasSouls
 
                         if (proj.active && proj.type == ModContent.ProjectileType<FrostIcicle>() && proj.owner == player.whoAmI)
                         {
-                            Vector2 vel = (Main.MouseWorld - proj.Center).SafeNormalize(-Vector2.UnitY) * 10;
+                            Vector2 vel = (Main.MouseWorld - proj.Center).SafeNormalize(-Vector2.UnitY) * 25;
 
                             int p = Projectile.NewProjectile(proj.Center, vel, ProjectileID.Blizzard, HighestDamageTypeScaling(dmg), 1f, player.whoAmI);
                             proj.Kill();
@@ -828,7 +954,7 @@ namespace FargowiltasSouls
             if (NecroCD != 0)
                 NecroCD--;
 
-            AddPet(SoulConfig.Instance.DGPet, hideVisual, BuffID.BabySkeletronHead, ProjectileID.BabySkeletronHead);
+            //AddPet(SoulConfig.Instance.DGPet, hideVisual, BuffID.BabySkeletronHead, ProjectileID.BabySkeletronHead);
         }
 
         public void NinjaEffect(bool hideVisual)
@@ -856,9 +982,10 @@ namespace FargowiltasSouls
                 player.gravity = Player.defaultGravity;
                 player.ignoreWater = true;
                 player.accFlipper = true;
+                player.AddBuff(ModContent.BuffType<ObsidianLavaWetBuff>(), 600);
             }
 
-            ObsidianEnchant = (TerraForce || WizardEnchant) || player.lavaWet;
+            ObsidianEnchant = (TerraForce || WizardEnchant) || player.lavaWet || LavaWet;
         }
 
         public void OrichalcumEffect()
@@ -1190,6 +1317,7 @@ namespace FargowiltasSouls
         {
             if (!SoulConfig.Instance.GetValue(SoulConfig.Instance.TinCrit, false)) return;
 
+            TinCritMax = HighestCritChance() * 2;
             TinEnchant = true;
         }
 
@@ -1433,22 +1561,66 @@ namespace FargowiltasSouls
         {
             player.setHuntressT2 = true;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.HuntressAbility && !player.HasBuff(ModContent.BuffType<HuntressCD>())) && (player.controlDown && player.releaseDown))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.HuntressAbility))
             {
-                if (player.doubleTapCardinalTimer[0] > 0 && player.doubleTapCardinalTimer[0] != 15)
+                huntressCD++;
+
+                Item firstAmmo = PickAmmo();
+                int arrowType = firstAmmo.shoot;
+                int damage = HighestDamageTypeScaling(firstAmmo.damage);
+
+                //fire arrow at nearby enemy
+                if (huntressCD >= 30)
                 {
-                    Vector2 mouse = Main.MouseWorld;
+                    float range = 1000;
+                    int npcIndex = -1;
+                    for (int i = 0; i < 200; i++)
+                    {
+                        float dist = Vector2.Distance(player.Center, Main.npc[i].Center);
 
-                    Item firstAmmo = PickAmmo();
-                    int arrowType = firstAmmo.shoot;
-                    int damage = HighestDamageTypeScaling(firstAmmo.damage);
+                        if (dist < range && Main.npc[i].CanBeChasedBy(player, false))
+                        {
+                            npcIndex = i;
+                            range = dist;
+                        }
+                    }
 
-                    int heatray = Projectile.NewProjectile(player.Center, new Vector2(0, -6f), ProjectileID.HeatRay, 0, 0, Main.myPlayer);
-                    Main.projectile[heatray].tileCollide = false;
-                    //proj spawns arrows all around it until it dies
-                    Projectile.NewProjectile(mouse.X, player.Center.Y - 500, 0f, 0f, ModContent.ProjectileType<ArrowRain>(), 50, 0f, player.whoAmI, arrowType, player.direction);
+                    if (npcIndex != -1)
+                    {
+                        NPC target = Main.npc[npcIndex];
+                        Vector2 pos = new Vector2(target.Center.X, target.Center.Y - 800);
 
-                    player.AddBuff(ModContent.BuffType<HuntressCD>(), RedEnchant ? 900 : 1800);
+                        if (Collision.CanHit(pos, 2, 2, target.position, target.width, target.height))
+                        {
+                            Vector2 velocity = Vector2.Normalize(target.Center - pos) * 20;
+
+                            int p = Projectile.NewProjectile(pos, velocity, arrowType, damage, 2, player.whoAmI);
+                            Main.projectile[p].noDropItem = true;
+                        }
+                    }
+
+                    huntressCD = 0;
+                }
+
+
+
+
+                //arrow rain ability
+                if (!player.HasBuff(ModContent.BuffType<HuntressCD>()) && (player.controlDown && player.releaseDown))
+                {
+                    if (player.doubleTapCardinalTimer[0] > 0 && player.doubleTapCardinalTimer[0] != 15)
+                    {
+                        Vector2 mouse = Main.MouseWorld;
+
+                        
+
+                        int heatray = Projectile.NewProjectile(player.Center, new Vector2(0, -6f), ProjectileID.HeatRay, 0, 0, Main.myPlayer);
+                        Main.projectile[heatray].tileCollide = false;
+                        //proj spawns arrows all around it until it dies
+                        Projectile.NewProjectile(mouse.X, player.Center.Y - 500, 0f, 0f, ModContent.ProjectileType<ArrowRain>(), 50, 0f, player.whoAmI, arrowType, player.direction);
+
+                        player.AddBuff(ModContent.BuffType<HuntressCD>(), RedEnchant ? 900 : 900);
+                    }
                 }
             }
         }
@@ -1491,15 +1663,16 @@ namespace FargowiltasSouls
             player.setMonkT2 = true;
             MonkEnchant = true;
 
-            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MonkDash) && !player.controlUseItem && !player.mount.Active && !player.HasBuff(ModContent.BuffType<MonkBuff>()))
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.MonkDash) && !player.HasBuff(ModContent.BuffType<MonkBuff>()))
             {
                 monkTimer++;
 
-                if (monkTimer >= 120)
+                if (monkTimer >= 30)
                 {
                     player.AddBuff(ModContent.BuffType<MonkBuff>(), 2);
                     monkTimer = 0;
 
+                    //dust
                     double spread = 2 * Math.PI / 36;
                     for (int i = 0; i < 36; i++)
                     {
@@ -1521,37 +1694,37 @@ namespace FargowiltasSouls
             {
                 SnowVisual = true;
 
-                int dist = 100;
+                //int dist = 200;
 
-                if (FrostEnchant)
-                {
-                    dist = 125;
-                }
+                //if (FrostEnchant)
+                //{
+                //    dist = 300;
+                //}
 
-                //dust
-                for (int i = 0; i < 3; i++)
-                {
-                    Vector2 offset = new Vector2();
-                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                    offset.X += (float)(Math.Sin(angle) * Main.rand.Next(dist + 1));
-                    offset.Y += (float)(Math.Cos(angle) * Main.rand.Next(dist + 1));
-                    Dust dust = Main.dust[Dust.NewDust(
-                        player.Center + offset - new Vector2(4, 4), 0, 0,
-                        76, 0, 0, 100, Color.White, .75f)];
+                ////dust
+                //for (int i = 0; i < 3; i++)
+                //{
+                //    Vector2 offset = new Vector2();
+                //    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                //    offset.X += (float)(Math.Sin(angle) * Main.rand.Next(dist + 1));
+                //    offset.Y += (float)(Math.Cos(angle) * Main.rand.Next(dist + 1));
+                //    Dust dust = Main.dust[Dust.NewDust(
+                //        player.Center + offset - new Vector2(4, 4), 0, 0,
+                //        76, 0, 0, 100, Color.White, .75f)];
 
-                    dust.noGravity = true;
-                }
+                //    dust.noGravity = true;
+                //}
 
-                for (int i = 0; i < 1000; i++)
-                {
-                    Projectile proj = Main.projectile[i];
+                //for (int i = 0; i < 1000; i++)
+                //{
+                //    Projectile proj = Main.projectile[i];
 
-                    if (proj.active && proj.hostile && proj.damage > 0 && Vector2.Distance(proj.Center, player.Center) < dist)
-                    {
-                        proj.GetGlobalProjectile<FargoGlobalProjectile>().ChilledProj = true;
-                        proj.GetGlobalProjectile<FargoGlobalProjectile>().ChilledTimer = 30;
-                    }
-                }
+                //    if (proj.active && proj.hostile && proj.damage > 0 && Vector2.Distance(proj.Center, player.Center) < dist)
+                //    {
+                //        proj.GetGlobalProjectile<FargoGlobalProjectile>().ChilledProj = true;
+                //        proj.GetGlobalProjectile<FargoGlobalProjectile>().ChilledTimer = 30;
+                //    }
+                //}
             }
 
             AddPet(SoulConfig.Instance.PenguinPet, hideVisual, BuffID.BabyPenguin, ProjectileID.Penguin);
@@ -1743,6 +1916,11 @@ namespace FargowiltasSouls
                     extraCarpetDuration = false;
                     player.carpetTime = 1000;
                 }
+            }
+            //EoC Shield
+            if (SoulConfig.Instance.GetValue(SoulConfig.Instance.CthulhuShield))
+            {
+                player.dash = 2;
             }
         }
 

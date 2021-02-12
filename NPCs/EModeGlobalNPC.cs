@@ -170,6 +170,7 @@ namespace FargowiltasSouls.NPCs
                     npc.buffImmune[BuffID.OnFire] = true;
                     npc.lavaImmune = true;
                     npc.lifeMax *= 4;
+                    npc.damage /= 2;
                     break;
 
                 case NPCID.LostGirl:
@@ -724,6 +725,13 @@ namespace FargowiltasSouls.NPCs
                     switch (npc.type)
                     {
                         case NPCID.Zombie:
+
+                            if (Main.LocalPlayer.ZoneSnow && Main.rand.Next(2) == 0)
+                            {
+                                npc.Transform(NPCID.ZombieEskimo);
+                                break;
+                            }
+
                             if (Main.rand.Next(8) == 0)
                                 Horde(npc, 6);
                             if (Main.rand.Next(5) == 0)
@@ -5003,8 +5011,8 @@ namespace FargowiltasSouls.NPCs
                         goto case NPCID.Mimic;
 
                     case NPCID.RuneWizard:
-                        target.AddBuff(ModContent.BuffType<FlamesoftheUniverse>(), 300);
-                        target.AddBuff(BuffID.Suffocation, 300);
+                        //target.AddBuff(ModContent.BuffType<FlamesoftheUniverse>(), 300);
+                        //target.AddBuff(BuffID.Suffocation, 300);
                         break;
 
                     case NPCID.Reaper:
